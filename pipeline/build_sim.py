@@ -1613,6 +1613,134 @@ def quest_board_html(rows: list) -> str:
     return f'{note}<div class="qboard">{"".join(cards)}</div>'
 
 
+def episode_eta_html() -> str:
+    """“When will episode 2 be finished” — the half of it a machine can answer.
+
+    Founder, 2026-08-13: "lets start working on ETA, basically the estimated
+    time we finish something, so we have a good idea of for example when we will
+    finished episode 2, this is an important feature."
+
+    THE SECTION PRINTS TWO CLOCKS AND NEVER ADDS THEM. Machine time is measured:
+    the box has written down when 336 jobs started and stopped. Decision time is
+    a person, and a person is not a quantity — the same call in this project has
+    taken four minutes and it has taken three days. One blended number would put
+    a date on the page whose error bar is the author's week, and it would be
+    read as a promise the moment it appeared. So the line says how many hours of
+    rendering are left and then names, by link, the calls that rendering is
+    waiting behind, and the reader does the addition with their own knowledge of
+    how fast those get answered.
+
+    Everything here is derived at BUILD time from two measured files, for the
+    reason box-queue.yaml's header lays out at length: a stored total keeps
+    printing last night's backlog against this morning's states. A lane flipping
+    one beat to `done` moves this line on the next build with nothing re-run.
+
+    Fails SOFT and fails SILENT: no states file, no section. An ETA section that
+    renders itself as "unknown" on every build teaches the reader to skip the
+    part of the page that will one day carry the answer.
+    """
+    try:
+        import episode_eta as _eta
+        rows = _eta.rows()
+    except Exception:
+        return ""
+    if not rows:
+        return ""
+
+    def _approx(minutes) -> str:
+        # hours_words() already hedges above 90 min ("about 1.8 h") and does not
+        # below it ("46 min"). One tilde, never "~about".
+        w = hours_words(max(1, minutes))
+        return w if w.startswith("about") else f"~{w}"
+
+    lines, stamps, untagged = [], [], 0
+    for r in rows:
+        try:
+            bits = [f'<b>{r["ready"]} of {r["total"]}</b> beats the author has passed']
+            if r["awaiting_founder"]:
+                bits.append(f'{r["awaiting_founder"]} with a take waiting for his look')
+            # The machine clause. `None` means a measurement is missing, and it
+            # says which one is missing rather than printing a zero: "0 h left"
+            # on an unfinished episode is the most confident possible lie this
+            # page could tell.
+            if r["machine_minutes"] is None:
+                bits.append('machine work left is <b>not estimated</b> — no beat '
+                            'has yet finished inside the box’s own records, so '
+                            'there is nothing measured to multiply')
+            elif r["needs_render"]:
+                bits.append(f'<b>{_e(_approx(r["machine_minutes"]))}</b> '
+                            f'of rendering left across {r["needs_render"]} beat'
+                            f'{"s" if r["needs_render"] != 1 else ""}'
+                            + (f' (thin estimate — off {r["sample"]} finished '
+                               f'beat{"s" if r["sample"] != 1 else ""})'
+                               if r["thin"] else ""))
+            else:
+                bits.append('<b>no rendering left</b> that is not waiting on a call')
+            # An undecided beat costs nothing if it is cut, so its hours are
+            # named apart from the firm ones and never folded in.
+            if r["conditional_beats"] and r["conditional_minutes"]:
+                bits.append(f'a further {_e(_approx(r["conditional_minutes"]))} '
+                            f'only if the {r["conditional_beats"]} undecided beat'
+                            f'{"s are" if r["conditional_beats"] != 1 else " is"} kept')
+            if r["decisions"]:
+                # The first clause of each call, linked to the call itself. The
+                # `what` fields run to three lines because they are written for
+                # the author to decide from; the whole paragraph here would bury
+                # the line, and a bare count would make him go hunting for which
+                # three they are — the exact complaint that put the inbox
+                # pointer on this page in the first place.
+                named = []
+                for d in r["decisions"][:3]:
+                    txt = _e(first_sentence(d["what"], 90) or "an open call")
+                    named.append(f'<a href="{_e(d["url"])}">{txt}</a>'
+                                 if d["url"] else txt)
+                more = len(r["decisions"]) - len(named)
+                bits.append(f'gated on <b>{len(r["decisions"])} open call'
+                            f'{"s" if len(r["decisions"]) != 1 else ""}</b> — '
+                            + _and_list(named)
+                            + (f' and {more} more' if more > 0 else "")
+                            + ' · <a href="review/inbox">the full list &rarr;</a>')
+            label = f'Episode {r["number"]}' + (f' — {_e(r["title"])}' if r["title"] else "")
+            lines.append(f'<p class="summary"><b>{label}</b> · ' + " · ".join(bits) + '</p>')
+            if r["measured_at"]:
+                stamps.append(str(r["measured_at"]))
+            # Section-level, not per-episode: the count is a property of the
+            # inbox, and printed under every row it read as two different facts.
+            untagged = max(untagged, r["decisions_untagged"])
+        except Exception:
+            continue
+    if not lines:
+        return ""
+
+    stamp = (f'The rounds-per-beat figure behind these hours was measured '
+             f'{_e(sorted(stamps)[-1])}. ' if stamps else "")
+    return (
+        '<h2 id="eta">🗓 When is an episode finished</h2>'
+        '<p style="margin:.2rem 0 .4rem;color:var(--muted)">An episode is done '
+        'when the card has rendered every beat <i>and</i> the author has passed '
+        'every beat. Those are two different clocks and this page keeps them '
+        'apart: the hours below are machine time, measured off past jobs, and '
+        'the calls beside them are the author’s. How long a call takes is not a '
+        'quantity anyone here can measure, so no date is given for one.</p>'
+        + "".join(lines)
+        + (f'<p class="whyfoot">{untagged} open inbox entr'
+           f'{"ies carry" if untagged != 1 else "y carries"} no episode tag, so '
+           'they are waiting on him but are not attributed to an episode above — '
+           'the gate lists are as complete as the tagging is.</p>'
+           if untagged else "") +
+        f'<p class="whyfoot">{stamp}Hours are (the median number of rounds a beat '
+        'needed before the card had a take he could look at) × (the median '
+        'minutes a job of that kind takes on the box), both off the box’s own '
+        'per-job records on <code>farm-out/box/</code>. The author’s yes is <i>'
+        'not</i> in that measurement, on purpose — it is the other clock. Rounds '
+        'spent before those records begin on 10 Aug are not in them, so every '
+        'figure here is a <b>floor</b>, not a best '
+        f'guess. Method and raw numbers: <a href="https://github.com/{GH}/blob/'
+        'main/pipeline/episode_eta.py">episode_eta.py</a>, states in '
+        f'<a href="https://github.com/{GH}/blob/main/pipeline/measured/'
+        'episode-progress.yaml">measured/episode-progress.yaml</a>.</p>')
+
+
 # ---- files the reader's browser re-reads ------------------------------------
 # The render box's minute-by-minute charts LEFT this page in the 2026-08-11
 # revamp — the long history lives on /pulse, and telemetry_head() still reads
@@ -2642,6 +2770,13 @@ def build(out_dir: Path):
         "tot": tot, "ep2": data.next_episode(), "inbox": inbox,
         "boxq": boxq, "review_open": review_open}, now)
 
+    # --- when each episode is finished, machine half and human half kept
+    # apart. High on the page because it is the question the founder asked of
+    # this page (2026-08-13) and the one a reader arrives holding; empty string
+    # when its states file cannot be read, so a build that lost the file drops
+    # the section rather than publishing an ETA it cannot support.
+    eta_section = episode_eta_html()
+
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
     leaves = ""
     for r in rows:
@@ -2973,6 +3108,8 @@ def build(out_dir: Path):
 </div>
 
 {strip}
+
+{eta_section}
 
 <div class="rise">
 {player}

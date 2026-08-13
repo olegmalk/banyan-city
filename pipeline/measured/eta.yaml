@@ -1,0 +1,54 @@
+# How many rounds a beat costs before the card is finished with it — the one
+# input to the /status ETA that a deploy machine cannot re-derive for itself.
+#
+# Written by `python3 pipeline/episode_eta.py --yaml` on a machine that can read
+# `origin/farm-results-rtx5090`; Vercel's checkout cannot, which is the whole
+# reason this is a file and not a build-time computation. Everything else the
+# ETA needs IS derived at build time — see pipeline/measured/episode-progress.yaml
+# for the states and pipeline/measured/box-queue.yaml for the minutes-per-job.
+#
+# WHAT `rounds_median` IS: the median number of render jobs the box actually ran
+# against a beat before that beat reached a take the author could look at,
+# counted per kind from the per-job sidecars `farm-out/box/<id>.json`. Multiply
+# it by that kind's median minutes (box-queue.yaml) and you have what one more
+# beat costs.
+#
+# WHAT IT IS SAMPLED OVER, and this is the subtle part: beats in `done` OR
+# `candidate-awaiting-founder` — every beat the CARD has finished with, not just
+# the ones the author has passed. The card's deliverable is a showable take; the
+# yes is a different clock. Sampling `done` alone would make a machine estimate
+# depend on how fast a person answers, and it would have reported "not
+# estimable" for episode 2 on the day this was written — nine beats rendered to
+# a showable take, zero passed. Beats still in trouble are excluded from both:
+# an unconverged beat's round count is not an estimate of anything.
+#
+# THREE REASONS EVERY NUMBER DOWNSTREAM IS A FLOOR, not a best guess:
+#   1. The sidecars begin 10 Aug. Rounds spent on a beat before that date are
+#      not in the record — four ep1 beats the card has finished with fall
+#      entirely outside the window, which is why `finished_beats_sampled` is
+#      lower than `machine_finished_beats` and both are printed.
+#   2. A median is not a worst case. Half the beats took longer.
+#   3. Only `ltx` and `still` are counted. Character sheets and inpaints are
+#      per-episode setup, not per-beat, so billing every remaining beat for them
+#      would inflate the figure — but it does mean genuinely new setup work is
+#      not in the estimate either.
+#
+# Re-run it after a wave lands. It is read-only and takes about a minute.
+measured_at: 2026-08-13 10:04Z
+sidecar_branch: origin/farm-results-rtx5090
+sidecar_window: 10 Aug - 13 Aug
+sidecar_jobs: 337
+episodes:
+  - number: 2
+    node: 002b-first-citizen
+    machine_finished_beats: 10
+    finished_beats_sampled: 10
+    rounds_median:
+      ltx: 4.0
+      still: 4.0
+  - number: 1
+    node: 001-capability-inventory
+    machine_finished_beats: 14
+    finished_beats_sampled: 10
+    rounds_median:
+      ltx: 9.5

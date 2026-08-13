@@ -160,3 +160,33 @@ steward marks entries resolved with the founder's verdict verbatim; resolved
 entries fold into the page's history, never deleted. The /status glance can
 count open entries from the yaml; the yaml is the truth, the page is its
 render, and the two travel in one commit so they cannot drift.
+
+An inbox entry may carry an optional `episode: N` key. It is what puts the
+entry in that episode's gate list in the ETA section below; an entry without
+one is still counted, but is not attributed to an episode by guessing at its
+wording, and the section says how many went unattributed. Tag the entries you
+file.
+
+## The episode ETA (/status#eta)
+
+`pipeline/measured/episode-progress.yaml` holds one state per beat per episode,
+and it is the ONLY input that says how far an episode has got.
+
+**The contract: a lane that scores a beat updates that beat's line in the same
+commit as the scoring.** Not at the end of a wave, not "when the page next gets
+touched" — at scoring time, beside the verdict, the way an inbox entry travels
+with its artifact. The five states are defined in the file's header and in
+`pipeline/episode_eta.py`; a state outside that set is dropped rather than
+guessed at, and the beat stops being counted, which is deliberate and visible.
+
+The hours are NOT stored anywhere. `build_sim.py` multiplies at build time:
+states from `episode-progress.yaml` × rounds-per-beat from
+`pipeline/measured/eta.yaml` × job minutes from `pipeline/measured/box-queue.yaml`.
+So flipping one beat to `done` moves the published estimate on the next build
+with nothing re-run. Only `eta.yaml` needs a measurement pass
+(`python3 pipeline/episode_eta.py --yaml`), because the rounds medians come off
+the `farm-results-rtx5090` branch, which a deploy checkout does not have.
+
+Two rules that are the point of the feature, not decoration: machine hours and
+the author's decisions are never added into one number, and a missing
+measurement prints as "not estimated", never as zero.

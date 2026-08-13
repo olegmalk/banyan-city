@@ -45,3 +45,7 @@ jobs:
       # The guards against a check that stays green while the thing it reads is
       # broken (2026-08-10's four silent failures). See the file's docstring.
       - run: python pipeline/test_silent_gates.py
+      # The episode ETA's arithmetic, and the four things it must refuse to
+      # claim — chiefly that a missing measurement is never published as a zero,
+      # and that machine hours are never added to the author's decision time.
+      - run: python pipeline/test_episode_eta.py
