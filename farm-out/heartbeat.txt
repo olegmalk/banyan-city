@@ -1276,3 +1276,4 @@
 21:47:56Z STARTED task=ep2-b21-world-0813B-1786653517 attempt=1 on box-runner
 21:54:15Z DONE task=ep2-b21-world-0813B-1786653517 rc=0 artifacts=2
 21:54:19Z box-runner idle ready=0 failed=11
+22:04:23Z box-runner idle ready=0 failed=11
