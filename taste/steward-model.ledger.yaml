@@ -14703,3 +14703,54 @@
     dislikes them the uniform result goes with them and the beat needs a different non-armour signifier.
     Said before the render and repeated here rather than allowed to harden into canon.
   outcome: null
+
+- id: ep2-guards-direction-ratified-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: "and yes, keep going in that direction for the guards."
+  what_it_ratifies: >-
+    Arm B of the beat-05 fix round, and specifically its three parts: the beat's own action promoted to
+    the DOMINANT clause with the pose it loses to banned; guard-ness carried by named OBJECTS — matching
+    patrol tunic, sash of office, brass badge, belt, bark clipboard — and no armour anywhere; and a
+    second guard NAMED in the prompt on beats whose script stages two.
+  the_flag_it_does_and_does_not_answer: >-
+    I flagged before and after that round that THE SASH AND BADGE ARE MINE, not his words. "Keep going
+    in that direction" is the closest thing to ratification they have, and it is close enough to build
+    on — but it is an approval of a DIRECTION he was shown, not a sentence he wrote. The wave carries
+    them and the flag stays live. If he later says the sash is wrong, the wave's official read goes with
+    it and the beats need a different non-armour signifier.
+  outcome: resolved — wave authored the same hour.
+
+- id: ep2-guard-wave-0813
+  kind: prediction
+  written: 2026-08-13, before enqueue. Six clips, one authoring pass, per-beat named failures.
+  the_common_recipe: >-
+    Every clip: the beat's scripted action as the dominant clause, the standing/loitering pose banned,
+    sash + tunic + badge + belt + clipboard as contents, armour banned in six forms, brightness bans
+    carried, camera locked, subject held large in frame. One init for all six —
+    05-the-patrol-ipa-r2-w015-s2, the approved cast — with its sha asserted at crop time.
+  per_beat_predicates: >-
+    b05twin — the jog and the second man repeat on a different seed, so his pick has a pair;
+    b06 — the board comes up and fills the lower middle, finger tracing, lips moving;
+    b07 — the arm goes out straight and HOLDS, chin up, a decisive wrong accusation;
+    b09 — the face changes and nothing else does, brow down then eyebrows up;
+    b10 — the board flips to camera and its back is BLANK;
+    b11 — both men turn their backs and walk AWAY, arguing with their arms as they go.
+  named_failures_declared_per_beat: >-
+    b05twin twinning again (known init limit); b06 the board staying small because the init is a whole
+    figure and the beat wants it dominant; b07 a goblin being invented at the end of the point, which
+    is a fault and not a bonus, since he is deliberately off frame; b09 FRAMING MISMATCH STATED UP
+    FRONT — the beat asks for a close-up, the init is a whole figure, and the crop chooses the shot, so
+    a pass there is the acting and not the size; b10 writing appearing on a back that must be blank;
+    b11 the pair walking toward camera instead of away.
+  the_probe_this_wave_carries_for_free: >-
+    BEAT 08's TWO-CHARACTER WALL. 08 wants a guard and the goblin in one frame and has never held two
+    characters. This wave asks for two GUARDS on 05twin and 11. If both hold, the wall is about two
+    DIFFERENT characters rather than two characters, and 08 becomes a casting problem instead of a
+    capacity one. Recorded now so the answer is not re-derived later.
+  falsifiable_by: >-
+    Actions not arriving now that the recipe is fixed. Five of six beats move one variable — the action
+    — against a recipe he has ratified, so a miss would say the dominant-clause lever works on jogs and
+    crouches and not on pointing, reading or walking away, which would be worth more than the wave.
+  consumer: his batch screening; nothing published, nothing promoted.
+  outcome: null
