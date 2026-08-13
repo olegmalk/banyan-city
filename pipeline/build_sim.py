@@ -2438,6 +2438,12 @@ LIVE_JS = """
      apart than DEPTH_GAP, and each run is its own path. A zero that IS in the
      series is a real measurement of a real empty queue and is drawn.
 
+     AND A BREAK IS NOT A FAULT, which the first wording quietly implied. The
+     telemetry daemon is restarted by hand every time telemetry.py changes and
+     each restart costs a publish or two, so the ordinary cause of a break in
+     this line is a deploy — not a dead box. The sentence names both and
+     diagnoses neither, because from the series alone the two are identical.
+
      And it is a STEP, not a slope: a reading is the depth until the next one
      replaces it, so the line holds its value and then jumps. Sloping between
      two samples would draw jobs arriving one at a time when in fact eight
@@ -2548,8 +2554,8 @@ LIVE_JS = """
     note.textContent = "Queue depth, " + clean.length + " readings over " +
       spanWords(span) + " — " + deep + " · newest " + words(age) + "." +
       (breaks ? " The line breaks " + breaks + " time" + (breaks === 1 ? "" : "s") +
-                " where the box published nothing; this page will not guess " +
-                "across a gap." : "") +
+                " where no reading was published — a restart or a box gone " +
+                "quiet — and this page will not guess across a gap." : "") +
       " A reading can be up to ten minutes behind the box.";
     svg.setAttribute("aria-label", note.textContent);
   }
