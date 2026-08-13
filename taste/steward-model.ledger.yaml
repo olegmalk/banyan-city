@@ -15989,3 +15989,38 @@
     same job with the crf round-trip removed, one knob, same seed, against the crf-33 world take as
     control. Queued at priority 1, with the beat-01 grass arm behind it.
   outcome: null
+
+- id: ep2-CRF-VERDICT-measurable-and-negligible-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    CRF 33 IS NOT THE ANSWER, and now it is measured rather than eyeballed. On beat 01 — a field
+    of grass blades and flower specks, the textured subject the beat-18 test lacked — the two
+    conditioning frames differ by a MAX CHANNEL DELTA OF 60 OF 255, and the amplified difference
+    map shows where: edge ringing along the stem and leaf outlines plus low-level block noise in
+    the smooth background, which is exactly the signature of block-based compression. Real, and
+    invisible at 1:1 without a difference map. It cannot be what "a lot worse" describes.
+  recipe_recommendation: >-
+    LEAVE image-crf AT 33. Beyond the degradation being negligible, removing it is not free: the
+    round-trip changes the conditioning latent, so the crf-0 clip DIVERGED IN CONTENT from its
+    control at the same seed — at f120 the control holds a crisp ink-outlined fig while the crf-0
+    take is soft painterly background with no fig at that position. Changing this knob does not
+    sharpen a clip, it gives you a different clip, and on this beat a blurrier one.
+  a_side_finding_worth_keeping: >-
+    image-crf is therefore NOT a fidelity dial, it is part of the seed. Any future comparison that
+    varies it cannot be read frame-for-frame against its control, and I nearly read one that way.
+  so_what_is_the_answer_and_the_evidence_now_points_one_place: >-
+    Not a knob. THE PLATES. His first examples were ep1 clips animated off v34 plates that already
+    contained a scene. Almost everything tonight is animated off CHARACTER SHEETS ON WHITE, and
+    tonight proved three times over what that does: the model invents the world AND the drawing
+    style and redraws the character to match — flat poster style at b02 both seeds, at b03 seedB,
+    a silhouette instead of a goblin. Beat 01 is the control that makes the case: its plate IS a
+    scene, a grass field, and its clip is the best-looking thing we produced all night.
+  independent_corroboration: >-
+    The plate lane pulled its five queued plate jobs to redraw them with locations in them, on the
+    founder's own instruction that per-beat plates must carry their own scene. That was decided
+    without reference to my finding and lands on the same cause.
+  what_i_will_not_do: >-
+    Tell him the crf number as if it were the answer. It is a measured negative and it is reported
+    as one.
+  outcome: crf held at 33; the quality answer is the plates
