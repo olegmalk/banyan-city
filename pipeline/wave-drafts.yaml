@@ -2800,6 +2800,41 @@ beats:
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+  12:
+    slug: related
+    kind: guard
+    tag: ''
+    extra_neg: guard
+    gist: the tree's line, tight on the leaves
+    # -- `authored_b12_scene` -- 2026-08-13. BEAT 12 HAD NO BLOCK IN THIS FILE and this
+    # adds one. The header says 01/12/18/21 are plant-only and "already handled" -- the
+    # founder's verdict is that beat 12 is not handled: "in beat 12, it shows a bunch of
+    # leaves, and they look big". That is a CANON violation, not taste. style.md's growth
+    # ladder puts 002b at roughly 40cm with TWO oversized leaves and one thin bare
+    # side-branch, and the prompts have been drawing a bushy crown.
+    #
+    # THE FIX IS A COUNT AND A RELATIONSHIP, not adjectives. `exactly two oversized
+    # cotyledon leaves and one thin bare side-branch` states the count; `the whole plant
+    # no taller than the grass around it` states the scale as a RELATIONSHIP, which is
+    # motion-wave's finding -- a size adjective on its own is inert and a comparison is
+    # not. Both halves have to be in the plate as well as the motion prompt, or the plate
+    # hands the model a bush and the motion words argue with it.
+    #
+    # PLANT-ONLY DISCIPLINE, inherited and not reinvented: `mascot-simple` stays out (beat
+    # 01 measured that word becoming the SUBJECT and returning a chibi creature with
+    # leaves on its head), beat 01's `no chibi, no mascot, no creature, no face` block
+    # comes in -- safe here and ONLY here, per 308c74e, because this beat has no character
+    # -- and `no city, no buildings` stays for the r3 skyline. The empty count tag is
+    # correct and the scene leading the sentence protects it: a person noun in the first
+    # comma-clause would derive a tag and fault. 64/77.
+    authored_b12_scene: >-
+      A tiny sapling in green summer grass, a treeline and pale sky behind, with exactly
+      two oversized cotyledon leaves and one thin bare side-branch, the whole plant no
+      taller than the grass around it. Tight shot, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child, no
+      person, no chibi, no mascot, no creature, no face, no fruit, no city, no buildings,
+      no white background, no plain background. No photorealism, no 3D render look. 9:16
+      vertical, no text.
   13:
     slug: the-shade
     kind: goblin
@@ -2929,6 +2964,24 @@ beats:
     # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b13_idfix_r2; nothing else in it moved.
+    # -- `authored_b13_scene` -- 2026-08-13. Founder on the beat-13 clip: it "has the
+    # blank background problem". Same fault as 03/17/19/20, same fix: the scene goes in
+    # the PLATE, early in the sentence, where beat 10 proved it has to sit. Motion-wave
+    # is explicitly NOT patching this with a harder world paragraph -- he has caught the
+    # arrival artifact twice now, and that paragraph is what produces it.
+    # `two-leaf seedling` is kept verbatim from the adult draft: it is already the
+    # growth-ladder count and beat 12's verdict is that the count must be stated.
+    # Sold to afford the scene: `Static camera` and `medium shot` (a still has no camera
+    # motion, and a trailing framing tag barely binds), `bright midday sunlight` (the
+    # scene clause now carries the light), and the `detailed, newest` style pair. 71/77.
+    authored_b13_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
+      green summer grass, a treeline and pale sky behind, sits hugging his knees in the
+      small patch of shade beside a tiny two-leaf seedling. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no white hair, no white background, no plain
+      background, no character sheet, no night, no dusk. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b13_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, sits
       hugging his knees in the small patch of shade beside a tiny two-leaf seedling rooted
@@ -3924,6 +3977,25 @@ beats:
     # ways). The fix anchors the leaf to a visible stem, makes the seedling the
     # subject, drops `grass` from the positive and bans the fallen reading and
     # the wind that contradicts "dead-still air".
+    # -- `authored_b21_scene` -- 2026-08-13. Founder: "none of them have a good
+    # background, doesnt look like the sapling is outside". Plant-only beat, so the scene
+    # LEADS the sentence -- which is both the strongest position and the correct one here,
+    # because beat 21 declares an EMPTY count tag and a person noun in the first
+    # comma-clause would derive one and fault.
+    # CARRIES THE GROWTH LADDER, which beat 12's verdict ("they look big") made canon
+    # rather than taste: exactly two oversized cotyledon leaves, one thin bare
+    # side-branch, and the SCALE RELATIONSHIP `no taller than the grass around it` --
+    # motion-wave's point that a size adjective is inert where a relationship is not.
+    # The tilt stays the subject and the dead-still grass stays with it, because the
+    # gesture only reads as deliberate if nothing else moves. 63/77.
+    authored_b21_scene: >-
+      A tiny sapling in green summer grass, a treeline and pale sky behind, exactly two
+      oversized cotyledon leaves and one thin bare side-branch, one leaf tilting slowly to
+      one side, the grass dead still. Low amber light, cinematic lighting, masterpiece,
+      best quality, very aesthetic No woman, no girl, no boy, no child, no person, no
+      chibi, no mascot, no creature, no face, no white background, no plain background, no
+      character sheet, no wind. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b21_stemanchor: >-
       One oversized green leaf still joined to the upright stem of a tiny
       seedling, the leaf tilted over to one side and held there, the seedling
