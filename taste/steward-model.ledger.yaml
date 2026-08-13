@@ -16133,3 +16133,63 @@
     sweep is over live authoring and the plate side, and the plate lane has to move in the same
     round because a purple fig on a green-fig plate is worse than either.
   outcome: null
+
+- id: LAW-a-world-in-the-plate-needs-different-words-than-a-world-from-words-0813
+  kind: law
+  date: 2026-08-13
+  credit: plate-drafts caught this; it is their finding and it corrects a recipe of mine.
+  the_problem: >-
+    My adopted world paragraph is phrased as an INSTRUCTION TO DRAW — "BEHIND HIM THE WORLD IS
+    FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: he stands on green summer grass
+    that runs to the bottom edge..." That is correct against a WHITE plate, and it is exactly why
+    the world arrives mid-clip as an iris or a dissolve: the model is being told to produce
+    something that is not there yet, so it produces it, visibly, over the first forty frames.
+  what_breaks_when_the_plate_improves: >-
+    Once the plate CARRIES the scene, the same paragraph is an instruction to draw a world that is
+    already in frame — so the clip spends its opening arguing with its own conditioning image.
+    That is the identical failure shape I flagged for the fig, where a purple prompt over a green
+    plate is worse than either alone.
+  the_law: >-
+    A WORLD IN THE PLATE NEEDS DIFFERENT WORDS THAN A WORLD FROM WORDS. Off a white plate, ASSERT
+    the world into existence. Off a scene-carrying plate, assert it is ALREADY PRESENT AND HOLDING
+    STILL — grass, hedge, treeline and sky already in frame, unchanged, the camera locked — so the
+    prompt defends the plate instead of competing with it. This is law-round-describes-vs-resists
+    at scene scale: adjectives BUILD absent things and DEFEND present ones, and the world is just
+    a very large object.
+  status: >-
+    Not yet exercised. The scene plates are not ready — see below — so the reworded paragraph is
+    written down and unqueued rather than guessed at in a render.
+  outcome: null
+
+- id: ep2-b10-scene-plate-w010-fails-both-requirements-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    The beat-10 patrol scene plate at the 10% window does NOT deliver what beat 10 needs, on
+    either axis. Hash-verified, four seeds, looked at before reporting.
+  no_world: >-
+    s0, s1 and s2 are plain gradient backgrounds with a white panel behind the figure — character
+    sheets again, not scenes. s3 does contain sky and grass, but INSIDE A FRAMED INSET, a
+    picture-of-a-picture with a second back-turned figure beside it. That is an artifact, not a
+    location.
+  no_second_guard: >-
+    One guard in s0, s1 and s2. Beat 10 is a two-hander: shots.md says he "holds up its completely
+    blank back TOWARD HIS PARTNER". s3's second figure is the inset artifact, not a partner.
+  consistent_with_their_own_finding: >-
+    plate-drafts said the 10% window draws a world but costs identity, and that 15% is the route.
+    This batch is 10%. So this is not a contradiction of their result, it is the trade they had
+    already priced — reported so the w015 round is aimed at both requirements, not just the world.
+  a_defect_in_MY_prompt_they_found: >-
+    My beat-10 motion prompt animates ONE guard holding the board to camera. The board is supposed
+    to be held toward his partner. I verified it in shots.md rather than taking the claim on
+    trust, and they are right: I have been animating the wrong staging for this beat.
+  what_I_deliberately_did_NOT_do: >-
+    Render the two-guard fix now off the old white plate. It would be two clips I discard the
+    moment a scene plate lands, and the card is at 5 with their r2 already queued. The fix waits
+    and lands once, with the reworded world paragraph, on a plate that carries the scene.
+  two_things_in_shots_md_worth_flagging_upward: >-
+    Beat 10's board text says "A ROUND guard" and "The blank board DOMINATES THE FRAME". The first
+    is the word the founder just rejected as reading like a kid; the second is the fill-the-frame
+    construction I proved inflates props into slabs. Both sit in the approved board, which is
+    narrative and not mine to edit. Flagged, not touched.
+  outcome: null
