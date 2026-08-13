@@ -7353,6 +7353,120 @@ def test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure():
           "power" not in blank)
 
 
+def test_the_box_publishes_what_it_is_making_and_what_it_just_made():
+    """The dropdown's data (Roman, 2026-08-13: "you should make it so you can see
+    exactly what is being generated on the status page and see the images when
+    its generated").
+
+    THE PUBLISHED PATH CANNOT BE GUESSED FROM THE JOB. A job's `artifacts` records
+    where the render WROTE the file, and the publish step's destination is a
+    string inside an inline python step — on this box the task
+    `ep2-b15-seedC-0813` published into a directory called `ep2-b15-seedB`. So the
+    courier directory is listed and what is there is reported; anything derived
+    from the task name would be a confident 404 in the reader's browser.
+    """
+    import json as _json
+    import os
+    import tempfile
+    import time
+
+    import telemetry
+
+    with tempfile.TemporaryDirectory() as td:
+        out = Path(td) / "courier-box" / "farm-out"
+        now = time.time()
+        d1 = out / "ep2-b05twin-wave-0813"
+        d1.mkdir(parents=True)
+        (d1 / "05-the-patrol.mp4").write_bytes(b"v" * 4000)
+        (d1 / "b05-init-704x1280.png").write_bytes(b"i" * 900)
+        (d1 / "05-the-patrol.mp4.meta.yaml").write_text("m")
+        (d1 / "job.sha256").write_text("s")
+        (d1 / "half-copied.png").write_bytes(b"")
+        (out / "box").mkdir(parents=True)
+        (out / "box" / "a-log-tail.png").write_bytes(b"n" * 10)
+        os.utime(d1 / "05-the-patrol.mp4", (now - 60, now - 60))
+        os.utime(d1 / "b05-init-704x1280.png", (now - 70, now - 70))
+
+        r = telemetry.results_sample(out=out, now=now)
+        names = [i["name"] for i in r["items"]]
+        check("the newest published file comes first", names[0] == "05-the-patrol.mp4")
+        check("its path is the one the branch will serve",
+              r["items"][0]["path"] ==
+              "farm-out/ep2-b05twin-wave-0813/05-the-patrol.mp4")
+        check("a video is paired with the still beside it, so the strip shows a picture",
+              r["items"][0].get("poster") ==
+              "farm-out/ep2-b05twin-wave-0813/b05-init-704x1280.png")
+        check("sidecars and checksums are not results",
+              not any(n.endswith((".yaml", ".sha256")) for n in names))
+        check("a zero-byte file is a copy in progress, not a result",
+              "half-copied.png" not in names)
+        check("the courier's own text drop is not a result",
+              "a-log-tail.png" not in names)
+        check("it names the branch the paths are relative to",
+              r["branch"] == telemetry.COURIER_BRANCH)
+
+    # Nothing published is a fact, and it is not an empty success.
+    with tempfile.TemporaryDirectory() as td:
+        gone = telemetry.results_sample(out=Path(td) / "nope", now=time.time())
+        check("an absent courier directory says so", bool(gone.get("error")))
+        check("and offers no items to render", "items" not in gone)
+
+    # The running job's own record, for the "what is on the card" line.
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        (root / "running").mkdir()
+        spec = {"task": "ep2-b05twin-wave-0813", "node": "002b-first-citizen",
+                "beat": 5, "attempts": 1, "started_at": "2026-08-13T10:18:14Z",
+                "steps": [{"argv": ["py", "ltx_i2v.py", "--stage", "render"]}],
+                "artifacts": ["C:\\banyan-farm\\ep2-b05\\05-the-patrol.mp4"]}
+        (root / "running" / "j.json").write_text(_json.dumps(spec))
+        cur = telemetry.current_job(root, "j")
+        check("the card's work is named by beat and node",
+              cur["beat"] == 5 and cur["node"] == "002b-first-citizen")
+        check("its start is a unix stamp the browser can age",
+              cur["started_at"] == 1786616294)
+        check("its kind is classified so the page can price it", cur["kind"] == "ltx")
+        # A windows path through os.path.basename on a posix box comes back WHOLE,
+        # and this string goes on a public page.
+        check("what it is making is a filename, never somebody's directory tree",
+              cur["makes"] == ["05-the-patrol.mp4"])
+        check("a job record that will not parse yields nothing, not a broken line",
+              telemetry.current_job(root, "missing") == {})
+
+
+def test_the_dropdown_will_not_render_whatever_a_filename_says():
+    """Every string in the dropdown was written by a machine on the render box —
+    job ids, node names, and the filenames a render chose for its own output.
+
+    Two rules hold that safe and both live in LIVE_JS: values reach the DOM
+    through textContent, and a media path becomes a URL only after matching one
+    shape. A filename is an attacker-controllable string the moment anything
+    off-box can queue a job, and "the render named its mp4 that" is a poor reason
+    to have shipped script into the page.
+    """
+    import build_sim
+
+    js = build_sim.LIVE_JS
+    check("the dropdown validates a path before it becomes a URL", "safePath" in js)
+    check("and anchors it to the published directory", "^farm-out" in js)
+    check("and refuses anything that climbs out of it", 'indexOf("..")' in js)
+    # `.innerHTML`, not the bare word: the rule is written down in a comment two
+    # lines above the code that follows it, and a test that cannot tell the
+    # comment from an assignment fails on its own documentation.
+    check("the dropdown never assigns innerHTML", ".innerHTML" not in js)
+    check("videos are not downloaded until asked", 'preload", "none"' in js)
+    check("images load only as they are needed", 'loading", "lazy"' in js)
+    # An unpushed frame must say so rather than showing a broken image.
+    check("a frame the courier has not pushed explains itself",
+          "not on the branch yet" in js)
+
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    check("the fold is emitted collapsed", '<details class="peek"' in src)
+    for el in ("q-peek", "q-peek-body"):
+        check(f"the builder emits {el}", f'id="{el}"' in src)
+        check(f"LIVE_JS looks up {el}", f'"{el}"' in js)
+
+
 def test_the_status_page_can_actually_find_the_numbers_it_rewrites():
     """The live queue tile is a contract between a builder and a string of JS,
     and nothing but this test holds the two ends together.
@@ -7602,6 +7716,9 @@ def main():
     # THE STATUS PAGE MUST GO STALE ON ITS OWN, NOT ON A REMINDER.
     test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure()
     test_the_status_page_can_actually_find_the_numbers_it_rewrites()
+    # AND HE MUST BE ABLE TO SEE WHAT IT IS MAKING.
+    test_the_box_publishes_what_it_is_making_and_what_it_just_made()
+    test_the_dropdown_will_not_render_whatever_a_filename_says()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

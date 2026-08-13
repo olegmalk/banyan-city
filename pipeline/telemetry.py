@@ -159,6 +159,26 @@ QUEUE_KINDS = (("ltx_i2v", "ltx"), ("goblin_ipa_beat", "charref"),
 # stop opening them and publish counts alone — a queue this deep has bigger news
 # in it than its exact composition, and the page's fallback estimate is honest.
 QUEUE_KIND_MAX_FILES = 200
+
+# WHERE FINISHED WORK BECOMES VISIBLE OFF THIS BOX. Each job's last step copies
+# its output into this directory, and box_runner's Courier commits the whole of
+# `farm-out` and pushes it to farm-results-rtx5090 — so a file here is, within a
+# push, a file at the same relative path on that branch, which is what makes the
+# raw URL on the status page resolvable.
+#
+# THE DIRECTORY IS THE ONLY HONEST SOURCE FOR THAT PATH. A job's `artifacts` list
+# records where the render WROTE the file (C:\banyan-farm\<job>\...), not where it
+# was published, and the publish step's destination is a string inside an inline
+# python step — on 2026-08-13 the task `ep2-b15-seedC-0813` published into
+# `ep2-b15-seedB` and `ep2-b04-balloon-pair-0813` into `ep2-b04-balloon-pair`, so
+# deriving the path from the task name would have produced confident 404s. We
+# list what is actually there instead.
+COURIER_OUT = FARM / "courier-box" / "farm-out"
+COURIER_BRANCH = "farm-results-rtx5090"   # where COURIER_OUT lands; box_runner owns it
+RESULTS_MAX = 8                  # newest media files published on the page
+RESULTS_WALK_CAP = 6000          # stop walking rather than stat a runaway tree
+IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif")
+VIDEO_EXTS = (".mp4", ".webm", ".mov")
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -429,6 +449,122 @@ def queue_kinds(root: Path, files: list) -> dict:
     return out
 
 
+def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX) -> dict:
+    """The newest finished work the box has actually PUBLISHED, or {}.
+
+    Roman, 2026-08-13: "you should make it so you can see exactly what is being
+    generated on the status page and see the images when its generated."
+
+    Each item's `path` is relative to the repo root, so the page renders it as
+    https://raw.githubusercontent.com/<slug>/<COURIER_BRANCH>/<path> and needs no
+    knowledge of the box's disk layout.
+
+    WHAT IT DELIBERATELY DOES NOT CLAIM. A file being here means the render
+    finished and the publish step copied it; it does NOT mean the courier has
+    pushed yet. There is no cheap way to ask that from this process — reading git
+    state in the courier's own worktree is the 2026-07-31 two-workers bug wearing
+    a hat, and this daemon does not touch that tree. So the page is told when each
+    file appeared and left to say "once the box pushes" in words, and the browser
+    finds out the real answer the only way that is actually authoritative: the
+    image either loads from the branch or it does not.
+
+    `box/` is skipped. That is where the courier drops each job's json and log
+    tail — text, already on the branch, and not what "see the images" means.
+    """
+    out = Path(out) if out else COURIER_OUT
+    now = now if now is not None else time.time()
+    if not out.is_dir():
+        return {"at": int(now), "error": "nothing has been published on this box yet"}
+    seen, files = 0, []
+    try:
+        for d in out.iterdir():
+            if not d.is_dir() or d.name == "box":
+                continue
+            for p in d.rglob("*"):
+                seen += 1
+                if seen > RESULTS_WALK_CAP:
+                    break
+                ext = p.suffix.lower()
+                if ext not in IMAGE_EXTS and ext not in VIDEO_EXTS:
+                    continue
+                try:
+                    st = p.stat()
+                except OSError:
+                    continue
+                if not st.st_size:
+                    continue          # a copy caught half-done is not a result
+                files.append((st.st_mtime, st.st_size, p, ext))
+            if seen > RESULTS_WALK_CAP:
+                break
+    except OSError as e:
+        return {"at": int(now), "error": "the published directory could not be read: %s" % e}
+    files.sort(key=lambda f: f[0], reverse=True)
+
+    # A motion take is an mp4 next to the still it was grown from. Pairing them
+    # means the dropdown shows a PICTURE for a video the reader has not asked to
+    # download yet, instead of a black rectangle — the whole point being to see
+    # the thing without pulling 40 MB per beat.
+    posters = {}
+    for mtime, _size, p, ext in files:
+        if ext in IMAGE_EXTS:
+            posters.setdefault(str(p.parent), p)
+
+    items = []
+    for mtime, size, p, ext in files[:limit]:
+        rel = p.relative_to(out.parent).as_posix()      # courier-box/farm-out/x → farm-out/x
+        item = {"path": rel, "name": p.name, "at": int(mtime), "bytes": int(size),
+                "kind": "video" if ext in VIDEO_EXTS else "image"}
+        if item["kind"] == "video":
+            poster = posters.get(str(p.parent))
+            if poster is not None and poster != p:
+                item["poster"] = poster.relative_to(out.parent).as_posix()
+        items.append(item)
+    return {"at": int(now), "branch": COURIER_BRANCH, "items": items}
+
+
+def current_job(root: Path, jid: str) -> dict:
+    """What the card is making right now, off the running job's own record.
+
+    Only the fields a stranger can read something from: what beat of what node it
+    belongs to, when it started, and the names of the files it is going to
+    produce. Not argv, not env, not paths on someone's D: drive — the same
+    stranger-eyes rule the machine list already follows (2026-07-30).
+    """
+    out = {}
+    try:
+        with (root / "running" / (jid + ".json")).open(encoding="utf-8",
+                                                       errors="replace") as fh:
+            spec = json.load(fh)
+    except (OSError, ValueError):
+        return out
+    if not isinstance(spec, dict):
+        return out
+    for key in ("task", "node", "beat"):
+        v = spec.get(key)
+        if v not in (None, ""):
+            out[key] = v
+    at = _iso_to_unix(spec.get("started_at"))
+    if at:
+        out["started_at"] = at
+    try:
+        attempts = int(spec.get("attempts") or 0)
+        if attempts > 1:
+            out["attempt"] = attempts       # only worth saying when it is a retry
+    except (TypeError, ValueError):
+        pass
+    # Split on BOTH separators by hand. os.path.basename follows the separator of
+    # the machine it runs on, so a job's `C:\banyan-farm\...\05-the-patrol.mp4`
+    # comes back whole off a posix box — and this string goes on a public page,
+    # where a filename is the point and somebody's directory tree is not.
+    makes = [str(a).replace("\\", "/").rstrip("/").rsplit("/", 1)[-1]
+             for a in (spec.get("artifacts") or [])[:4]]
+    makes = [m for m in makes if m]
+    if makes:
+        out["makes"] = makes
+    out["kind"] = job_kind(spec)
+    return out
+
+
 def queue_sample(root: Path = None, now: float = None) -> dict:
     """What the box's own queue looks like right now. Never raises.
 
@@ -488,6 +624,13 @@ def queue_sample(root: Path = None, now: float = None) -> dict:
             # to any count of files.
             age = _mtime(root / "running" / (jid + ".log"))
             q["running_log_age_sec"] = max(0, int(now - age)) if age else None
+            # The detail behind the dropdown. running_job and running_log_age_sec
+            # stay exactly where they are: a page built before this deploy reads
+            # those two and nothing else, and it goes on working through the
+            # window where the new daemon is publishing to the old page.
+            cur = current_job(root, jid)
+            if cur:
+                q["current"] = cur
     if ready is not None and running is not None:
         # WHAT is queued, not just how much — the page prices a motion take at
         # five minutes and a still at one, so the mix is the difference between
@@ -714,7 +857,7 @@ def _r(v, nd=1):
 
 def distil(rows: list, now: float = None, window_hours: float = WINDOW_HOURS,
            bucket_seconds: int = BUCKET_SECONDS, gpu: str = "",
-           queue: dict = None, power: dict = None) -> dict:
+           queue: dict = None, power: dict = None, results: dict = None) -> dict:
     """CSV rows → the compact object the page draws. Pure: no disk, no network.
 
     `queue` and `power` are HANDED IN, sampled by the caller, for the same reason
@@ -799,6 +942,8 @@ def distil(rows: list, now: float = None, window_hours: float = WINDOW_HOURS,
         out["queue"] = queue
     if power and any(v is not None for v in power.values()):
         out["power"] = power
+    if results:
+        out["results"] = results
     return out
 
 
@@ -906,7 +1051,8 @@ def publish(obj: dict = None) -> str:
     bootstraps a parentless commit carrying only telemetry.json.
     """
     if obj is None:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+                    power=power_sample(), results=results_sample())
     write_json(obj)
     if not ensure_repo():
         return ""
@@ -1064,7 +1210,8 @@ def daemon() -> int:
         if now >= next_publish:
             try:
                 got = publish(distil(read_rows(), now=now, gpu=gpu,
-                                       queue=queue_sample(now=now), power=power_sample()))
+                                       queue=queue_sample(now=now), power=power_sample(),
+                                       results=results_sample(now=now)))
                 log(f"published {'ok ' + got[:8] if got else 'FAILED (will retry)'}")
             except Exception as e:                  # noqa: BLE001
                 log(f"publish failed: {e}")
@@ -1098,12 +1245,14 @@ def main() -> int:
         print(json.dumps(sample(), indent=2, sort_keys=True))
         return 0
     if a.distil:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+                    power=power_sample(), results=results_sample())
         write_json(obj)
         print(f"{JSON_PATH} — {len(obj['t'])} bucket(s), last sample {obj['last_sample']}")
         return 0
     if a.publish_once:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+                    power=power_sample(), results=results_sample())
         commit = publish(obj)
         print(f"{'pushed ' + commit if commit else 'NOT pushed'} "
               f"— {len(obj['t'])} bucket(s) in {JSON_PATH}")

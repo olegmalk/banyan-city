@@ -2231,6 +2231,154 @@ LIVE_JS = """
         BOX_BAKED + ", when this copy was built.";
     }
   }
+  /* ---- what the card is making, behind the fold ------------------------- */
+  /* Rendered from the SAME telemetry object the tile above already fetched, so
+     opening the dropdown costs no extra request — only the frames themselves,
+     and only once someone asks to see them.
+
+     Every value here was written by a machine, so it reaches the DOM through
+     textContent and setAttribute and never through innerHTML, and each media
+     path is checked against one shape before it becomes a URL. A status page
+     that injected whatever a render wrote into its filenames would be a strange
+     way to end up with a cross-site scripting hole. */
+  var lastTel = null;
+  function safePath(p) {
+    /* farm-out/<dir>/<file>, and nothing that could climb out of it or point
+       somewhere else entirely. */
+    return typeof p === "string" && /^farm-out\\/[\\w.\\-\\/]+$/.test(p) &&
+           p.indexOf("..") === -1 ? p : null;
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function sizeWords(b) {
+    if (!b && b !== 0) return "";
+    return b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.round(b / 1024) + " kB";
+  }
+  function renderPeek() {
+    var body = document.getElementById("q-peek-body");
+    var peek = document.getElementById("q-peek");
+    if (!body || !peek || !peek.open) return;
+    body.textContent = "";
+    if (!lastTel) {
+      body.appendChild(el("p", "mono", "The live view is unavailable just now — the " +
+        "render box's report could not be read, so this page will not guess at what " +
+        "it is doing. The queue numbers above are the ones this copy was built with."));
+      return;
+    }
+    var q = lastTel.queue || {}, cur = q.current || {};
+
+    /* --- what is on the card this minute --- */
+    var now = el("p", "peek-now");
+    if (q.running && (cur.task || q.running_job)) {
+      var what = cur.beat ? "Beat " + cur.beat : "A job";
+      var b = el("b", null, what + (cur.node ? " of " + cur.node : ""));
+      now.appendChild(b);
+      var bits = [];
+      if (cur.task) bits.push("job " + cur.task);
+      if (cur.kind === "ltx") bits.push("a motion take");
+      else if (cur.kind === "still") bits.push("a still");
+      else if (cur.kind === "charref") bits.push("a character reference");
+      if (cur.attempt) bits.push("attempt " + cur.attempt);
+      now.appendChild(document.createTextNode(" — " + bits.join(" · ")));
+      if (cur.started_at) {
+        now.appendChild(document.createTextNode(" · started "));
+        now.appendChild(ageEl(cur.started_at));
+      }
+      var est = BOX_MEDIANS[cur.kind] || BOX_MEDIAN_FALLBACK;
+      if (est) {
+        now.appendChild(document.createTextNode(
+          " · jobs of this kind have taken about " + hoursWords(Math.round(est)) +
+          ", measured on this box"));
+      }
+      if (typeof q.running_log_age_sec === "number") {
+        now.appendChild(document.createTextNode(
+          " · it last wrote to its log " + words(q.running_log_age_sec)));
+      }
+      if (cur.makes && cur.makes.length) {
+        now.appendChild(document.createElement("br"));
+        now.appendChild(document.createTextNode("It is making: " + cur.makes.join(", ")));
+      }
+    } else if (q.running) {
+      now.textContent = "One job is rendering, but its record could not be read, so " +
+        "this page will not say which.";
+    } else {
+      now.textContent = "Nothing is rendering on the card at the moment.";
+    }
+    body.appendChild(now);
+
+    /* --- what came off it most recently --- */
+    var res = lastTel.results;
+    if (!res || res.error || !res.items || !res.items.length) {
+      body.appendChild(el("p", "mono", res && res.error
+        ? "Finished frames could not be listed just now (" + res.error + ")."
+        : "Nothing has been published off the box yet. Finished frames appear here " +
+          "once its courier pushes them."));
+      return;
+    }
+    var strip = el("div", "peek-strip");
+    var shown = 0;
+    for (var i = 0; i < res.items.length; i++) {
+      var it = res.items[i], path = safePath(it.path);
+      if (!path) continue;
+      var url = RAW_BASE + "/" + (res.branch || "farm-results-rtx5090") + "/" + path;
+      var fig = el("figure", "peek-fig"), media;
+      if (it.kind === "video") {
+        media = document.createElement("video");
+        media.className = "shot";
+        media.setAttribute("preload", "none");      /* never pull 40 MB unasked */
+        media.setAttribute("controls", "");
+        media.setAttribute("playsinline", "");
+        var poster = safePath(it.poster);
+        if (poster) {
+          media.setAttribute("poster", RAW_BASE + "/" +
+            (res.branch || "farm-results-rtx5090") + "/" + poster);
+        }
+        media.setAttribute("src", url);
+      } else {
+        media = document.createElement("img");
+        media.className = "shot";
+        media.setAttribute("loading", "lazy");      /* only what scrolls into view */
+        media.setAttribute("decoding", "async");
+        media.setAttribute("alt", it.name || "a frame the box rendered");
+        media.setAttribute("src", url);
+      }
+      /* THE ONLY AUTHORITATIVE FRESHNESS CHECK. The box knows the file exists on
+         its own disk; whether the courier has pushed it is a question only the
+         branch can answer, and this is the browser asking. */
+      (function (figure, item) {
+        media.onerror = function () {
+          var miss = el("div", "shot peek-miss",
+            "not on the branch yet — the box has rendered it but its courier has " +
+            "not pushed it");
+          if (figure.firstChild) figure.replaceChild(miss, figure.firstChild);
+        };
+      })(fig, it);
+      fig.appendChild(media);
+      var cap = el("figcaption", "peek-cap", (it.name || "") + " · ");
+      if (it.at) cap.appendChild(ageEl(it.at));
+      if (it.bytes) cap.appendChild(document.createTextNode(" · " + sizeWords(it.bytes)));
+      fig.appendChild(cap);
+      strip.appendChild(fig);
+      shown++;
+    }
+    if (!shown) {
+      body.appendChild(el("p", "mono", "Nothing publishable was listed in the box's " +
+        "last report."));
+      return;
+    }
+    body.appendChild(el("p", "mono", "The " + shown + " newest file" +
+      (shown === 1 ? "" : "s") + " the box has finished and published, newest first. " +
+      "A frame appears here only after the box's courier pushes it, which is usually " +
+      "moments after the job ends and longer when it is on battery or offline — so " +
+      "the job running above will not be in this strip yet. Videos load nothing until " +
+      "you press play."));
+    body.appendChild(strip);
+  }
+
   function readBoxQueue() {
     if (!document.getElementById("q-tile-n") && !document.getElementById("q-notice")) return;
     function grab(u) {
@@ -2240,6 +2388,8 @@ LIVE_JS = """
     grab(BOX_TEL)
       .catch(function () { return grab(BOX_TEL_LEGACY); })
       .then(function (d) {
+        lastTel = d;
+        renderPeek();            /* no-op unless the fold is already open */
         var q = d && d.queue;
         if (!q) throw new Error("the box is publishing vitals but not yet its queue");
         if (q.error) throw new Error("the box could not read its own queue: " + q.error);
@@ -2327,6 +2477,13 @@ LIVE_JS = """
     readQueue();
     readBoxQueue();
   }
+  var peekEl = document.getElementById("q-peek");
+  if (peekEl) {
+    /* Nothing is fetched until it is opened, and the first open may land before
+       the box's report has arrived — renderPeek says so rather than sitting
+       blank, and the fetch calls it again when it lands. */
+    peekEl.addEventListener("toggle", renderPeek);
+  }
   tick();
   setInterval(tick, 20000);
   refresh();
@@ -2396,6 +2553,32 @@ SIM_CSS = """
    what goes here is a sentence explaining why there is no number */
 .noage { color: var(--faint); }
 .livemark { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+/* ---- "what the card is making right now" — the fold over the live view.
+   Everything in here arrives from the box after the page has loaded, so it must
+   look deliberate while empty and must never reflow the page around it. ---- */
+.peek { margin: .6rem 0 0; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel-2); }
+.peek > summary { cursor: pointer; padding: .55rem .75rem; font: 600 .84rem/1.5 var(--mono);
+  color: var(--muted); list-style: none; }
+.peek > summary::-webkit-details-marker { display: none; }
+.peek > summary::before { content: "▸ "; color: var(--sap); }
+.peek[open] > summary::before { content: "▾ "; }
+.peek > summary:hover { color: var(--ink); }
+.peek-body { padding: .1rem .75rem .75rem; }
+.peek-now { font-size: .9rem; margin: .2rem 0 .5rem; }
+.peek-now b { color: var(--sap); }
+.peek-strip { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  margin: .5rem 0 0; }
+.peek-fig { margin: 0; min-width: 0; }
+/* A fixed box before the media lands: without it every arriving frame shoves the
+   rest of the page down, which on a slow line is the strip flickering for
+   seconds. */
+.peek-fig .shot { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.peek-cap { font: 500 .68rem/1.4 var(--mono); color: var(--faint); margin-top: .25rem;
+  overflow-wrap: anywhere; }
+.peek-miss { display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: .5rem; font: 500 .66rem/1.4 var(--mono); color: var(--faint); }
 h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono);
   color: var(--faint); border: 1px solid var(--line); border-radius: 999px;
   padding: .22rem .45rem; vertical-align: .12em; }
@@ -3353,6 +3536,23 @@ def build(out_dir: Path):
                            'id="q-count">0</span></h3>'
                            '<p class="notice" id="q-notice">Nothing in the shared '
                            'queue file is waiting for a machine.' + box_note + '</p>')
+    # WHAT THE CARD IS MAKING, behind a fold (Roman, 2026-08-13: "you should make
+    # it so you can see exactly what is being generated on the status page and see
+    # the images when its generated, probably only seeable by opening some
+    # dropdown though"). Collapsed by default and EMPTY until opened: the strip
+    # pulls finished frames straight off the courier branch, and a page that
+    # fetched a dozen of those on load would spend megabytes on every visitor who
+    # never asked. The baked state is the honest no-JS one — this cannot be
+    # rendered at build time, because the whole point is that it is current.
+    queued_html += (
+        '<details class="peek" id="q-peek">'
+        '<summary>Look inside — what the card is making right now</summary>'
+        '<div class="peek-body" id="q-peek-body">'
+        '<p class="mono" id="q-peek-note">This is a live view: your browser reads '
+        'the render box’s own five-minute report when you open this. With '
+        'JavaScript off there is nothing here to read — the frames it shows '
+        'are fetched from the box’s results branch, not built into this page.'
+        '</p></div></details>')
     if hand_q:
         queued_html += (
             f'<p class="mono">{len(hand_q)} more '
