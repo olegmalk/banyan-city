@@ -1,0 +1,106 @@
+# 2026-08-13, the stills-drafts lane. CONDITIONING KNOB, not wording. Prompt is pose+scene
+# only; identity is the reference's job. Swept against the APPROVED reference (sha 74e7adce),
+# which the 2026-08-10 sweep never saw. See `why`.
+id: ep2-b04-knob-window-0813
+task: ep2-b04-knob-window-0813
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 7
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: the plate recipe for EVERY beat, if an arm reproduces the approved character.
+success: 'Sixteen PNGs read as a strip BESIDE the approved reference itself, so ''matches the reference''
+  is judged by eye and not asserted. The question is whether a wider window reproduces the reference''s
+  face and build. PREDICTION, written before the frames land: the ledgered law says a longer window drains
+  colour (green_share 0.455 at w015 against 0.012 when the reference owns all forty steps), so I expect
+  w040 and w060 to lose green while gaining structure. The question this buys is whether identity fidelity
+  is worth that cost -- if w040 looks like him but grey, colour is a fixable second problem and the knob
+  still wins.'
+why: 'THE ADJECTIVE ROUTE IS OVER. Founder on the adult sheet: "yeah.. these generations arent very good"
+  -- and the lead''s read is that the adult arms were WORSE designs than the before row, with the head-to-body
+  ratio that actually reads as child never moving. His own words point at the fix: "the character reference
+  is good, just the generations". So the prompt drops to POSE + SCENE (authored_b04_poseonly, 54/77, every
+  proportion word and the {{GOBLIN}} slot removed) and identity is left entirely to the reference, while
+  the CONDITIONING KNOB becomes the variable. WHY THIS COSTS CARD WHEN A SWEEP ALREADY EXISTS: ep2-b04-goblin-ipa,
+  -window and -wscale swept both knobs on 2026-08-10, but they conditioned on reference sha dc2d32cc,
+  and the reference APPROVED on 2026-08-12 (ep2-goblin-reference-approved-0812) is sha 74e7adce. Different
+  image. Those frames cannot answer whether a knob reproduces the approved character, so the sweep is
+  bought again against the right reference and only against it. THIS ARM: window width is the variable
+  at fixed scale 0.6 -- 15%, 25%, 40%, 60% of the denoise.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window
+  - --draft-key
+  - authored_b04_poseonly
+  - --arm
+  - window
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window
+  - --draft-key
+  - authored_b04_poseonly
+  - --arm
+  - window
+  - --task
+  - ep2-b04-knob-window-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-knob-window-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b04-knob-window/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-knob-window-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window\04-the-footnote-ipa-r0-w025-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window\04-the-footnote-ipa-r0-w040-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-knob-window\04-the-footnote-ipa-r0-w060-s0.png

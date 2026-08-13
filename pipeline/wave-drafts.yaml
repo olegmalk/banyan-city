@@ -1274,6 +1274,28 @@ beats:
     # cheapness is what lets it keep the FULL style tail where the others sell `detailed,
     # newest`. The line-art block from authored_b04_adult_r2 is carried unchanged -- blush
     # and emphasis lines were real in those frames and the scene does not fix them. 76/77.
+    # -- `authored_b04_poseonly` -- 2026-08-13, on the founder's "yeah.. these generations
+    # arent very good" and the lead's read: the adult ARMS were worse designs than the
+    # before row, and the head-to-body ratio that actually reads as child never moved.
+    # Adjectives pushed cute toward ugly, not toward adult. This is the guards lesson
+    # repeating -- tone words lose to the checkpoint's prior -- so the adjective route
+    # stops here and the conditioning knobs get tested instead.
+    #
+    # WHAT IS DELIBERATELY ABSENT: every proportion word (lean, wiry, narrow angular
+    # skull, adult) and the {{GOBLIN}} slot itself. Identity is left ENTIRELY to the
+    # reference, which is what "the character reference is good, just the generations"
+    # actually asks for. The prompt is reduced to POSE + SCENE and nothing else.
+    #
+    # THE ONE THING THAT COULD NOT BE REMOVED, and why: `A small goblin man` stays as the
+    # head of the sentence because _tag_from_clause derives the count tag from the FIRST
+    # comma-clause, and beat 04 declares `1boy`. Strip the noun and the tag comes back
+    # None, which is a hard fault and nothing renders. So it is a gate requirement, not a
+    # description, and it is the floor of what "no identity wording" can mean here.
+    authored_b04_poseonly: >-
+      A small goblin man, solo, face filling the frame, extreme close-up, cheeks puffed,
+      eyes darting, a blurred green field behind. Soft morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no child. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b04_scene: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, a
       blurred green field behind him, his gaunt narrow face filling the frame, extreme
