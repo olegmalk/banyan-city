@@ -16378,3 +16378,56 @@
     frame. Negative gains the failure itself: one man alone, lone guard, second person arriving
     late.
   outcome: null
+
+- id: ep2-goblin-reference-frozen-0814
+  kind: promotion
+  date: 2026-08-14
+  supersedes: ep2-goblin-reference-approved-0812
+  what_changed: >-
+    The 08-12 reference was REJECTED by the founder on his own look at it -- "thats the
+    cute goblin again.. i'd rather him not be cute" -- which retroactively explains every
+    failed adult round: the reference owns the structure-forming denoise steps, so it was
+    always the ceiling and no wording could outrank it. He then screenshotted one of our
+    own frames and said "like this, it was a good representation". That frame is now the
+    frozen reference.
+  frame: farm-out/ep2-goblin-sheet-a2-bald2-bald-0812/04-the-footnote-wave1-s0.png
+  frame_sha256: 8fa4d780bd927efd685e6d7d8700424cfdade01c0d269c6ee6ac8f209cad0c4f
+  frame_branch: origin/farm-results-rtx5090
+  frame_seed: 20260723
+  frame_draft_variant: authored_b04_sheet_r2
+  staged_as: C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814 (four scopes of the one frame)
+  staging_limitation, stated_not_papered_over: >-
+    This frame carries ONE view. The four slots are four SCOPES of it -- whole frame,
+    full figure, head and shoulders, torso -- not four angles. The six-view finding says
+    angles matter, so this reference is weaker on that axis than the sheet it replaces,
+    and that is a known cost of choosing the design he actually likes.
+  prompt_verbatim: >-
+    1boy, a small goblin boy, green skin, bald head, solo, standing in a plain sunlit
+    grassy field, full body facing camera, arms at his sides. Medium full shot, bright
+    morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very
+    aesthetic
+  negative_verbatim: >-
+    photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry,
+    extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, hair, wig,
+    armor, jewelry, ornament, long eyelashes, lipstick, dark, night, dim lighting, moody
+    lighting, low key, photorealism, female goblin, elf
+  what_i_believe_produced_the_non_cute_read: >-
+    The ABSENCE of everything we were adding, plus two specific negatives. Nothing in it
+    fights cute -- no chibi ban, no cute/moe/baby-face ban, no proportion clause, no
+    head-to-height ratio, no narrow angular skull. `no hair, no wig` makes him bald, and a
+    bald skull with no soft frame is already most of the way out of the cute basin.
+    `no jewelry, no ornament, no long eyelashes, no lipstick` is ANTI-PRETTY rather than
+    anti-cute: it strips the decoration the checkpoint reaches for when it prettifies a
+    face, without ever naming cuteness and thereby summoning it. And the pose is dead
+    plain -- standing, facing camera, arms at his sides -- so there is no action to
+    dramatise and it draws a person rather than a moment. Which of these is load-bearing
+    is NOT claimed here; that is what the conditioning arms change one at a time.
+  overturns: >-
+    IT SAYS "BOY". The man-not-boy rule (48410425) drove a week of work and the motion
+    lane had already downgraded it from decisive to modest. The one prompt that produced
+    what he wanted uses the banned word, so the noun was probably never the lever at all.
+  costume_note: >-
+    The prompt names NO clothing. The crossed-wrap tunic, sash, tan sleeves, grey-blue
+    shorts and dark boots are the checkpoint's own invention on this seed. The frame
+    carries them reliably; words describing them may not.
+  outcome: null

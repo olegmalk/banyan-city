@@ -1291,6 +1291,36 @@ beats:
     # comma-clause, and beat 04 declares `1boy`. Strip the noun and the tag comes back
     # None, which is a hard fault and nothing renders. So it is a gate requirement, not a
     # description, and it is the floor of what "no identity wording" can mean here.
+    # -- `authored_goblin_approved_recipe` -- 2026-08-14. THE FOUNDER-CHOSEN FRAME'S OWN
+    # PROMPT, reconstructed as a draft so it can be re-run under conditioning. It is the
+    # wording that actually produced the non-cute goblin, and it outranks every theory
+    # from yesterday -- including mine.
+    #
+    # WHAT I BELIEVE PRODUCED THE NON-CUTE READ, stated plainly because the lead asked:
+    # it is the ABSENCE of everything we were adding, plus two specific negatives.
+    #  * NOTHING in it fights cute. No chibi ban, no cute/moe/baby-face ban, no
+    #    proportion clause, no head-to-height ratio, no `narrow angular skull`. Every
+    #    anti-cute term we ever wrote is missing from the one prompt that worked.
+    #  * `no hair, no wig` is what makes him bald, and a bald skull with no soft frame
+    #    around it is already most of the way out of the cute basin.
+    #  * `no jewelry, no ornament, no long eyelashes, no lipstick` is ANTI-PRETTY, not
+    #    anti-cute -- it removes the decoration the checkpoint reaches for when it
+    #    prettifies a face, without ever naming cuteness and thereby summoning it.
+    #  * The pose is dead plain: `standing, full body facing camera, arms at his sides`.
+    #    No action verb for the model to dramatise, so it draws a person rather than a
+    #    moment, and a plainly-posed person is not a mascot.
+    #  * It says BOY. So the MAN-not-boy rule -- 48410425, and a week of work -- was
+    #    never the lever. The motion lane had already measured the effect as modest;
+    #    this says it may be nil, and that the noun was never what carried the age read.
+    # The one thing I am NOT claiming: which of these is load-bearing. That is what the
+    # conditioning-strength arms are for, and they change ONE thing at a time.
+    authored_goblin_approved_recipe: >-
+      A small goblin boy, {{GOBLIN}}, solo, standing in a plain sunlit grassy field, full
+      body facing camera, arms at his sides. Medium full shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no hair, no wig, no armor, no jewelry, no ornament, no long
+      eyelashes, no lipstick, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b04_poseonly: >-
       A small goblin man, solo, face filling the frame, extreme close-up, cheeks puffed,
       eyes darting, a blurred green field behind. Soft morning light, cinematic lighting,
@@ -1395,7 +1425,7 @@ beats:
     authored_goblin_design_d1: >-
       A small goblin man reference sheet, three views, squat, round-bellied, big lumpy nose, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -1404,7 +1434,7 @@ beats:
     authored_goblin_design_d2: >-
       A small goblin man reference sheet, three views, lanky, stooped, big lumpy nose, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -1413,7 +1443,7 @@ beats:
     authored_goblin_design_d3: >-
       A small goblin man reference sheet, three views, wide jaw, thick neck, lumpy nose, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -1422,7 +1452,7 @@ beats:
     authored_goblin_design_d4: >-
       A small goblin man reference sheet, three views, long jaw, thick neck, lumpy nose, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -1431,7 +1461,7 @@ beats:
     authored_goblin_design_d5: >-
       A small goblin man reference sheet, three views, snub nose, stubby hands, thick neck, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -1440,7 +1470,7 @@ beats:
     authored_goblin_design_d6: >-
       A small goblin man reference sheet, three views, hook nose, stubby hands, thick neck, heavy sloped brow, small dull
       eyes, slack open mouth, vacant expression, pale yellow-green skin, bald, long
-      pointed ears, red eyes, patched hooded coat. White background, masterpiece, best
+      pointed ears, red eyes, patched tunic and sash. White background, masterpiece, best
       quality, very aesthetic No chibi, no child, no baby face, no big round eyes, no
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
@@ -2390,7 +2420,7 @@ beats:
     # against the LIVE text below, not this one.
     authored: >-
       Two round boys, a guard man in mismatched armor pointing flatly at the
-      belly of a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks
+      belly of a small goblin boy, {{GOBLIN}}, in a patched tunic who looks
       down at himself. Deadpan two-shot, no movement but the pointing arm,
       cinematic lighting, detailed, newest, masterpiece, best quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
@@ -2409,7 +2439,7 @@ beats:
     # still derives from the untouched first clause `Two round boys`.
     authored_staged: >-
       Two round boys, from front, a guard man in armor pointing at the belly of
-      a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks down, face
+      a small goblin boy, {{GOBLIN}}, in a patched tunic who looks down, face
       visible. Deadpan medium two-shot, no movement but the pointing arm, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
@@ -2465,9 +2495,9 @@ beats:
     # already in this beat's positive so the goblin def sends only "green
     # skin, bald head" (never say the same clause twice).
     authored_b08_idfix: >-
-      Two round boys, in a sunny grassy field, a round bald guard in a plain
+      Two round boys, in a sunny grassy field, a bald guard in a plain
       brown tunic pointing at the belly of a small goblin boy, {{GOBLIN}}, in
-      a patchwork cloak who looks down, face visible. Deadpan medium
+      a patched tunic who looks down, face visible. Deadpan medium
       two-shot, bright morning light, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no child, no armor,
       no helmet, no knight, no house, no building, no interior, no dark, no
@@ -2519,7 +2549,7 @@ beats:
     authored_b08_idfix_r2: >-
       Two round boys, in a sunny grassy field, a round bald guard in a plain
       brown tunic pointing at the belly of a small goblin boy, {{GOBLIN}}, in
-      a patchwork cloak who looks down, face visible. Eye level two-shot,
+      a patched tunic who looks down, face visible. Eye level two-shot,
       bright morning light, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no child, no armor,
       no helmet, no knight, no high angle, no from above, no house, no dark,
@@ -2529,7 +2559,7 @@ beats:
     authored_b08_refresh: >-
       Two round boys, from front, in a sunny grassy field, a round bare-headed
       guard in armor pointing at the belly of a small goblin boy, {{GOBLIN}}, in
-      a patchwork cloak who looks down, face visible. Deadpan medium two-shot,
+      a patched tunic who looks down, face visible. Deadpan medium two-shot,
       bright morning light, cinematic lighting, detailed, newest, masterpiece,
       best quality, very aesthetic No girl, no child, no hood, no helmet, no
       house, no building, no interior, no indoors, no architecture, no dark, no
@@ -3625,7 +3655,7 @@ beats:
       photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b17_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
-      wipes dust off his patchwork cloak, and turns away from a tiny sapling
+      wipes dust off his patched tunic, and turns away from a tiny sapling
       rooted in the grass toward the open field. Static camera, afternoon
       light warming toward amber, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no child, no scars,
@@ -3635,7 +3665,7 @@ beats:
       9:16 vertical, no text.
     authored_b17_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
-      brushes dust off his patchwork cloak, and turns away from a tiny sapling
+      brushes dust off his patched tunic, and turns away from a tiny sapling
       rooted in the grass toward the open field. Static camera, afternoon light
       warming toward amber, cinematic lighting, detailed, newest, masterpiece,
       best quality, very aesthetic No girl, no child, no uprooted plant, no
@@ -3644,7 +3674,7 @@ beats:
       render look. 9:16 vertical, no text.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
-      brushes dust off his patchwork cloak, and turns away from a tiny sapling
+      brushes dust off his patched tunic, and turns away from a tiny sapling
       toward the open field. Static camera, afternoon light warming toward
       amber, cinematic lighting, detailed, newest, masterpiece, best quality,
       very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
@@ -3659,7 +3689,7 @@ beats:
     # standing` -> `stands up`, which is the same action in four fewer.
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, stands up, brushes dust off his
-      patchwork cloak, and turns from a tiny sapling rooted in the grass to face
+      patched tunic, and turns from a tiny sapling rooted in the grass to face
       camera, the open field behind him. Static camera, medium shot, amber
       afternoon light, cinematic lighting, detailed, newest, masterpiece, best
       quality, very
