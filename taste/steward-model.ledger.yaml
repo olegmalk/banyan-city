@@ -15778,3 +15778,41 @@
   applied_now: >-
     Three open inbox entries closed with the quote verbatim; the reading group is empty and no
     longer prints. Contract written into SITE.md.
+
+- id: ep2-b13-adult-plate-FAILS-and-priority-parking-is-not-a-hold-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    THE BEAT 13 ADULT PLATE FAILS AT ALL FOUR SEEDS. Every one is the cute-kid read the founder
+    killed: a big round bald cranium, huge eyes, a tiny body standing straight on. It is not the
+    b02 plate's creature, which had a narrow angular skull and a sharper, older face.
+    Hash-verified against the box manifest before scoring.
+  the_one_word: >-
+    These four plates open "A small goblin BOY". The single plate that PASSED the founder's adult
+    test opens "A small goblin MAN". Everything after that word is the same arm-A recipe. I did
+    not call this an error when I found it — "boy" is a deliberate species assertion with history
+    in wave-drafts and negating it was tried and refused — but it was the one word where these
+    four differ from the proven recipe, and the sample now says the difference matters.
+    A one-word substitution to "man" is the next thing to try, and it is a wave-drafts edit,
+    which is outside this lane.
+  THE_OPERATIONAL_FAILURE_AND_IT_IS_MINE: >-
+    I "parked" beats 14, 15 and 04 behind this sample by setting their priority to 900. PRIORITY
+    IS NOT A HOLD. The runner takes the lowest priority available, so when the queue drained, 900
+    became the lowest available and all three ran anyway — 14 started while I was still writing,
+    and 15 and 04 were already claimed by the time I tried to pull them. Three plates rendered on
+    a recipe the sample had just failed.
+  the_law: >-
+    A PARKED JOB RUNS AS SOON AS IT IS THE ONLY THING LEFT. Priority orders a queue; it does not
+    gate one. To actually hold work, MOVE IT OUT OF ready/ — and then the card must be refilled,
+    because a hold that empties the queue idles the card, which is its own violation.
+  what_i_did_instead: >-
+    Created C:/banyan-queue/held/ for real holds, and refilled immediately: the card had reached
+    ZERO ready. Four production re-renders queued on the adopted world recipe — b06, which spends
+    its first forty frames dissolving out of white, and b19, a wide beat that has never had it.
+    Not experiments; an adopted recipe applied to beats that need it.
+  a_check_that_caught_itself: >-
+    My own structural check passed the b19 twins while they shared ONE publish destination — it
+    tested that each job had a single dst, never that dsts were unique ACROSS jobs. I saw it by
+    reading the printed output instead of trusting the "PROBLEMS: none" line I had just printed.
+    The check now compares payload dirs AND publish dsts across every job in the batch.
+  outcome: null
