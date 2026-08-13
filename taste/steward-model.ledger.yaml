@@ -16295,3 +16295,32 @@
     stranger calls that a fig, colour was the whole answer and I spent the evening on the wrong
     axis twice: first geometry, then features.
   outcome: null
+
+- id: ep2-character-first-ungated-set-0813
+  kind: decision
+  date: 2026-08-14
+  founder_decision: '"lets do b, settle the character first with a real reference."'
+  what_it_gates: >-
+    No goblin re-animation until the design is approved and a conditioning recipe is proven.
+    Anything rendered now inherits a character he has rejected, so it is card spent on a known
+    dead end. The adjective route is stopped and I have authored no further adult-wording rounds.
+  nothing_needed_pulling_and_i_checked_rather_than_performed_a_pull: >-
+    I classified every queued and running job against its beat's staging in beats.json. Not one
+    of them has the goblin in frame — b09, b10, b11, b12, b18, b21 are guards, plant or fig. The
+    goblin remakes for 13, 14 and 15 had already rendered before the ruling. So the correct report
+    is "there was nothing to pull", not a pull.
+  the_ungated_set_nine_beats: >-
+    GUARD BEATS with no goblin: 05 the patrol, 06 the clipboard, 09 the pause, 10 no form, 11 they
+    leave. PLANT AND OBJECT BEATS: 01 cold open, 12 related, 18 the decision, 21 the answer.
+    Beat 07 is a guard beat but the guard POINTS AT the scavenger, so the goblin is in frame and
+    it is gated. Beat 16 has him blurred behind a leaf and is outside this lane anyway.
+  what_that_means_for_tonight: >-
+    Nine of twenty-one beats can be driven to finished takes while the character settles, which is
+    the honest way to keep ep2 moving. Every one of them is already queued or scored except the
+    cold open, now authored.
+  cold_open_authored_purple: >-
+    ep2-b01-purple + twin. He accepted the beat — "it is good overall, just the fig thats the
+    problem" — so nothing changes but the fruit: purple per canon, and PLAIN, because the b18
+    round showed the feature clause backfires. Beats 19 and 20 also carry a fig and stay
+    unauthored; both have the goblin in frame.
+  outcome: null
