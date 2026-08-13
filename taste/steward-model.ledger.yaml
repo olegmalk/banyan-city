@@ -16024,3 +16024,46 @@
     Tell him the crf number as if it were the answer. It is a measured negative and it is reported
     as one.
   outcome: crf held at 33; the quality answer is the plates
+
+- id: LAW-the-stranger-test-predicates-are-not-recognition-0813
+  kind: law
+  date: 2026-08-13
+  founder_verbatim: >-
+    "fig still looks like a green ball, i dont think you did any evaluation because it clearly has
+    no features."
+  he_is_right_and_the_fault_is_the_SCORING_not_only_the_prompt: >-
+    I wrote a predicate — "a teardrop, wider at the bottom, narrowing to a neck, not a sphere" —
+    checked the render against that predicate, found it true at both seeds, and declared his
+    green-balls note ANSWERED. The predicate was satisfied. The object still does not read as a
+    fig, because SHAPE IS NOT IDENTITY: a smooth featureless green teardrop is still a green ball
+    with a point on it. I graded my own homework against my own rubric and the rubric was missing
+    the thing that makes a fig recognisable.
+  what_makes_this_worse_than_a_miss: >-
+    It is the COLD-VIEWER AXIS failing on its first application, hours after he made it standing
+    policy and I ledgered it as a north star. I wrote that a beat must be asked "could a viewer
+    with no context tell what this is" and then, on the very next object, scored against our own
+    intent line instead. Recording a law and applying it are different acts and I only did the
+    first.
+  the_law: >-
+    THE STRANGER TEST. For any object the founder has named, the pass condition is NOT a predicate
+    list — it is "would a stranger call this a fig". A written predicate set that a viewer would
+    not recognise as the thing IS NOT A PASS, and the predicates themselves must name the features
+    that make the object recognisable, not merely its outline. Outline is what survives being
+    described; features are what survive being SEEN.
+  how_it_changes_my_scoring_immediately: >-
+    Every object predicate I hold gets re-read for this. "Two distinct people in frame" was the
+    same error in another costume — it was true, and I never asked WHICH people, and he came back
+    with "some random kid". Both times I checked a structural fact and called it recognition.
+  the_prompt_half: >-
+    Features, not shape alone: matte skin with a faint bloom, subtle vertical ribbing, a small
+    dimple at the blossom end, a short woody stem where it joins the branch, and colour deepening
+    toward the base rather than flat green. The teardrop-and-neck clause stays — it was necessary
+    and it was never sufficient.
+  prediction_written_before_enqueue_and_written_as_the_stranger_test: >-
+    Not "the fig will have ribbing". The prediction is: SHOWN THIS FRAME WITH NO CONTEXT AND NO
+    PROMPT, A STRANGER WOULD SAY "FIG" OR AT LEAST "FRUIT", AND WOULD NOT SAY "BALL", "BALLOON" OR
+    "LIGHT BULB". I record that the earlier r2 take fails that test on my own honest reading — its
+    lower half glows pale and it reads closer to a lamp than a fruit, which I noticed at the time,
+    wrote down as an aside, and did not let outweigh my satisfied predicate. That is the whole
+    error in one sentence.
+  outcome: null
