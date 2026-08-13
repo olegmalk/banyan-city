@@ -522,16 +522,70 @@ def queue_sample(root: Path = None, now: float = None) -> dict:
     if at:
         q["last_event_at"] = at
 
-    # Is anything draining the queue at all? A queue with jobs in it and no live
-    # runner is the difference between "busy" and "abandoned", and the counts
-    # alone read identically in both cases.
-    try:
-        pid = int((root / "runner.lock").read_text(encoding="utf-8",
-                                                   errors="replace").strip() or 0)
-        q["runner_alive"] = bool(pid) and pid_alive(pid)
-    except (OSError, ValueError):
-        q["runner_alive"] = None
+    q["runner_alive"] = runner_alive(root)
     return q
+
+
+def boot_id() -> int:
+    """Epoch second this OS booted, to ~10s. 0 where we cannot tell.
+
+    box_runner.boot_id, reimplemented here rather than imported for the same
+    stdlib-only reason as QUEUE_KINDS.
+    """
+    if os.name == "nt":
+        try:
+            ticks = ctypes.windll.kernel32.GetTickCount64()
+        except (AttributeError, OSError):
+            return 0
+        return int((time.time() - ticks / 1000.0) // 10 * 10)
+    try:
+        with open("/proc/stat") as fh:
+            for line in fh:
+                if line.startswith("btime "):
+                    return int(line.split()[1]) // 10 * 10
+    except OSError:
+        pass
+    return 0
+
+
+def runner_alive(root: Path):
+    """Is anything actually draining this queue? True / False / None for unknown.
+
+    A queue with jobs in it and no live runner is the difference between "busy"
+    and "abandoned", and the counts alone read identically in both cases — which
+    is the whole reason this field exists.
+
+    THE LOCK IS NOT A BARE PID and reading it as one is how the first version of
+    this got `null` off a perfectly healthy box: box_runner writes
+    `<pid> <utc> boot=<epoch>` (box_runner.read_lock), so `int()` over the whole
+    file raises and the honest-looking `except ValueError` reported "unknown"
+    about a runner that was rendering at the time.
+
+    The boot check comes FIRST, exactly as box_runner.lock_is_live orders it.
+    Windows recycles pids, the runner starts seconds after boot on a machine that
+    just freed thousands of them, and asking the OS whether a pid is alive is the
+    question that gets a confidently wrong answer after a reboot.
+    """
+    try:
+        fields = (root / "runner.lock").read_text(encoding="utf-8",
+                                                  errors="replace").split()
+    except OSError:
+        return None                      # no lock file: nobody has ever run here
+    try:
+        pid = int(fields[0])
+    except (IndexError, ValueError):
+        return None
+    boot = 0
+    for f in fields[1:]:
+        if f.startswith("boot="):
+            try:
+                boot = int(f[5:])
+            except ValueError:
+                boot = 0
+    mine = boot_id()
+    if boot and mine and abs(boot - mine) > 120:
+        return False                     # written before this boot: a stale lock
+    return bool(pid) and pid_alive(pid)
 
 
 # ---------------------------------------------------------------- the rolling CSV

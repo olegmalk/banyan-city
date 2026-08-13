@@ -7267,7 +7267,39 @@ def test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure():
             '{"event":"runner_up","ts":"2026-08-13T08:00:00Z"}\n'
             '{"event":"job_start","job":"job-r","ts":"2026-08-13T09:00:00Z"}\n')
 
+        # THE LOCK IS NOT A BARE PID. box_runner writes "<pid> <utc> boot=<n>";
+        # reading it with int() over the whole file raises, and the first cut of
+        # this reported "runner unknown" about a box that was rendering at the
+        # time — caught only by running it against the real machine.
+        # boot_id() answers 0 off the box (it reads /proc/stat, and this suite
+        # runs on a Mac), and 0 means "cannot tell", which correctly disables the
+        # boot comparison. Pin it so the Windows logic is actually exercised
+        # here rather than skipped on every machine that runs the tests.
+        real_boot = telemetry.boot_id
+        telemetry.boot_id = lambda: 1786500000
+        try:
+            (root / "runner.lock").write_text(
+                "%d 2026-08-13T09:39:02Z boot=1786500000\n" % os.getpid())
+            check("a live runner is seen through the real lock format",
+                  telemetry.runner_alive(root) is True)
+            (root / "runner.lock").write_text(
+                "%d 2026-08-13T09:39:02Z boot=1786000000\n" % os.getpid())
+            check("a lock from before this boot is stale however alive its pid looks",
+                  telemetry.runner_alive(root) is False)
+            (root / "runner.lock").write_text("not a pid at all\n")
+            check("an unreadable lock is unknown, never a claim either way",
+                  telemetry.runner_alive(root) is None)
+            (root / "runner.lock").unlink()
+            check("no lock file at all is unknown too, not a dead runner",
+                  telemetry.runner_alive(root) is None)
+            (root / "runner.lock").write_text(
+                "%d 2026-08-13T09:39:02Z boot=1786500000\n" % os.getpid())
+        finally:
+            telemetry.boot_id = real_boot
+
         q = telemetry.queue_sample(root=root, now=now)
+        check("the runner's liveness rides along with the counts",
+              q["runner_alive"] is True)
         check("it counts what is waiting", q["ready"] == 2)
         check("it counts what is rendering", q["running"] == 1)
         check("a corpse in failed/ is counted, not hidden", q["failed"] == 1)
