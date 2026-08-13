@@ -52,6 +52,10 @@ episodes:
   - number: 2
     node: 002b-first-citizen
     title: First Citizen
+    # Where the takes waiting on him actually live — the /status card links its
+    # "waiting for your look" count straight here, so the number and the thing
+    # it counts are one click apart.
+    review_url: /review/ep2-picks/motion-0812
     total_beats: 21
     states_read_from: >-
       review/ep2-picks/motion-0812.html (#read-this-first, later than its own
@@ -67,13 +71,13 @@ episodes:
       - {n: 2,  state: candidate-awaiting-founder,  note: "the b02 rerun rendered; he picks the frame that becomes the init"}
       - {n: 3,  state: candidate-awaiting-founder,  note: "will not render the same way twice — four takes on the page to pick from (with 17 and 21)"}
       - {n: 4,  state: blocked-decision,            note: "script length: faces survive 3s of motion, the beat is written 6s. Also an unresolved head-balloon diagnosis — 'honestly stuck rather than queued'; ep2-b04-balloon-pair-0813 is the discriminating render"}
-      - {n: 5,  state: candidate-awaiting-founder,  note: "was fix-known on his verdict ('more like a normal civilian than a guard, and the video doesnt have him jogging at all'); the fix round landed 2026-08-13 and both faults are answered — he jogs, and both men read as officials. Two clips on the page, B is the one to watch. Known fault carried into the ask: B's two men are identical twins"}
-      - {n: 6,  state: blocked-decision,            note: "guards have no character; the call is whether now is the time for the guard character he asked for. See the note under beat 11 — these five may be one b05 result from fix-known"}
-      - {n: 7,  state: blocked-decision,            note: "guard block; also whether these get restaged as single-figure shots that cut to the second person"}
+      - {n: 5,  state: fix-known,                   note: "the jog/uniform fix came back and he ratified 2026-08-13 - 'and yes, keep going in that direction for the guards' (arm B: action as the dominant clause, official read, second guard named where the script stages two). Six-clip wave queued on it; ep2-b05twin-wave-0813 renders the twin. The sash is the steward's invention, not his words, and that flag stays live"}
+      - {n: 6,  state: fix-known,                   note: "guard block UNBLOCKED - ratified 2026-08-13 - 'and yes, keep going in that direction for the guards' (arm B: action as the dominant clause, official read, second guard named where the script stages two). Six-clip wave queued on it; ep2-b06-wave-0813 queued (guard 2 turns the bark clipboard over and reads off it)"}
+      - {n: 7,  state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b07-wave-0813 queued"}
       - {n: 8,  state: blocked-decision,            note: "a model limit — a one-character reference suppresses the second character, so nothing puts the guard in. Not fixed and not attempted"}
-      - {n: 9,  state: blocked-decision,            note: "guard block — 'one decision unblocks six beats, not three'"}
-      - {n: 10, state: blocked-decision,            note: "guard block; a floating disembodied head sits where the second guard belongs"}
-      - {n: 11, state: blocked-decision,            note: "guard block, and its weakest member — 'identity and costume are clean here and need no change ... a staging nudge, not a rebuild'. NOTE: he has since ruled on two adjacent guard questions (inbox 'chase silly via pose and expression staging', and accepting the consistency references), so 06/07/09/10/11 may be one b05-jog-uniform result away from fix-known. The review pages have not caught up; this file records what they say today, and the next lane to score b05 should revisit these five"}
+      - {n: 9,  state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b09-wave-0813 queued"}
+      - {n: 10, state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b10-wave-0813 queued - the floating head should go with a whole-figure init"}
+      - {n: 11, state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b11-wave-0813 queued. Identity and costume were already clean here - this was always the staging nudge"}
       - {n: 12, state: candidate-awaiting-founder,  note: "has a PASSING plate he has never been shown, b12-r4-s2 (supersedes the older 'no plate at all' row)"}
       - {n: 13, state: candidate-awaiting-founder,  note: "may be the first FINISHED shot of episode 2 — his read is asked for, not given"}
       - {n: 14, state: candidate-awaiting-founder,  note: "crouched with his hands in the soil; in 'four beats look ready to cut', which is the steward's read and not a verdict"}
@@ -88,6 +92,7 @@ episodes:
   - number: 1
     node: 001-capability-inventory
     title: Capability Inventory
+    review_url: /review/ep1-audit-0812/
     total_beats: 15
     states_read_from: >-
       review/ep1-audit-0812/index.html (the "Where each beat stands on your word"

@@ -262,6 +262,49 @@ def test_the_checked_in_states_are_well_formed():
               bool(ep["states_read_from"]))
 
 
+def test_a_call_gets_a_name_not_a_sentence_cut_in_half():
+    # Roman, 2026-08-13, on the first version: "im not seeing any eta ... except
+    # this which isn't the best". Part of what made it unreadable was three
+    # inbox paragraphs truncated at 90 characters into ellipsis soup. A label is
+    # the headline clause, whole.
+    import build_sim as bs
+    cases = [
+        ("Cold open fig - in both motion rounds the fig grows detached",
+         "Cold open fig"),
+        ("Beat 04 script length — faces survive 3s of motion, the beat is 6s",
+         "Beat 04 script length"),
+        ("EPISODE 2 - THE MORNING READ. Four beats look ready to cut",
+         "EPISODE 2 - THE MORNING READ"),
+    ]
+    for what, want in cases:
+        got = bs._call_label(what)
+        check(f"“{want}” is the label", got == want)
+    check("no label ends mid-ellipsis", "…" not in bs._call_label("x" * 200))
+    check("a long unbroken title is cut on a word boundary",
+          not bs._call_label("Beat 13 may be the first finished shot of the "
+                             "whole of episode two").endswith(("-", " ")))
+    check("empty text still names something", bs._call_label("") == "an open call")
+
+
+def test_the_glance_cell_says_nothing_when_it_knows_nothing():
+    # The strip must not grow a permanently apologetic sixth tile, and it must
+    # never print a zero for a measurement it does not have.
+    import build_sim as bs
+    check("no rows → no cell at all", bs.eta_cell([]) == "")
+    check("no rows (None) → no cell", bs.eta_cell(None) == "")
+    row = {"number": 2, "machine_minutes": None, "needs_render": 3,
+           "decisions": [], "ready": 0, "total": 21}
+    out = bs.eta_cell([row])
+    check("an unmeasured episode says 'not estimated'", "not estimated" in out)
+    check("and never prints a zero", ">0<" not in out)
+    row2 = dict(row, machine_minutes=222, decisions=[{}, {}, {}])
+    out2 = bs.eta_cell([row2])
+    check("a measured one leads with the hours", "about 3.7 h" in out2)
+    check("names the episode", "episode 2" in out2)
+    check("and counts the calls without timing them", "3 calls of it are yours" in out2)
+    check("the cell is an anchor down to the card", 'href="#eta"' in out2)
+
+
 def main() -> int:
     print("episode ETA — states, arithmetic, and what it refuses to claim")
     with tempfile.TemporaryDirectory() as td:
@@ -278,6 +321,9 @@ def main() -> int:
     test_a_finished_beat_older_than_the_records_is_skipped_not_zeroed()
     test_the_two_clocks_are_never_added()
     test_the_checked_in_states_are_well_formed()
+    # THE CARD HE HAS TO BE ABLE TO READ, not just the numbers on it.
+    test_a_call_gets_a_name_not_a_sentence_cut_in_half()
+    test_the_glance_cell_says_nothing_when_it_knows_nothing()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

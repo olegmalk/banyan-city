@@ -34,18 +34,18 @@
 #      not in the estimate either.
 #
 # Re-run it after a wave lands. It is read-only and takes about a minute.
-measured_at: 2026-08-13 10:04Z
+measured_at: 2026-08-13 10:23Z
 sidecar_branch: origin/farm-results-rtx5090
 sidecar_window: 10 Aug - 13 Aug
-sidecar_jobs: 337
+sidecar_jobs: 342
 episodes:
   - number: 2
     node: 002b-first-citizen
-    machine_finished_beats: 10
-    finished_beats_sampled: 10
+    machine_finished_beats: 9
+    finished_beats_sampled: 9
     rounds_median:
-      ltx: 4.0
-      still: 4.0
+      ltx: 5
+      still: 4
   - number: 1
     node: 001-capability-inventory
     machine_finished_beats: 14

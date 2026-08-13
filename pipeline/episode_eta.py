@@ -158,6 +158,7 @@ def read_progress(path=PROGRESS_FILE) -> list:
                     "title": str(ep.get("title") or ""),
                     "total_beats": ep.get("total_beats") or len(rows),
                     "states_read_from": str(ep.get("states_read_from") or ""),
+                    "review_url": str(ep.get("review_url") or ""),
                     "beats": rows})
     return out
 
@@ -306,6 +307,7 @@ def episode_row(ep: dict, rounds_doc: dict, kind_medians: dict, inbox_path=INBOX
         "measured_at": meas.get("measured_at", ""),
         "window": meas.get("window", ""),
         "states_read_from": ep.get("states_read_from", ""),
+        "review_url": ep.get("review_url", ""),
     }
 
 

@@ -1613,37 +1613,46 @@ def quest_board_html(rows: list) -> str:
     return f'{note}<div class="qboard">{"".join(cards)}</div>'
 
 
-def episode_eta_html() -> str:
+def episode_eta_html(rows) -> str:
     """“When will episode 2 be finished” — the half of it a machine can answer.
 
     Founder, 2026-08-13: "lets start working on ETA, basically the estimated
     time we finish something, so we have a good idea of for example when we will
     finished episode 2, this is an important feature."
 
+    And on the first version of this section, 2026-08-13: "im not seeing any eta
+    ... except this which isn't the best". He found it and could not read it. It
+    had shipped as a paragraph — run-on monospace prose, the numbers buried
+    mid-sentence, decision titles chopped off with ellipses. The data was right
+    and illegible, which on a page whose whole job is being read is the same as
+    being wrong. This is the rebuild: one card per episode in the glance strip's
+    own tile vocabulary, a bar showing where the beats actually are, and the
+    three numbers he would act on, each linked to the place it gets answered.
+
     THE SECTION PRINTS TWO CLOCKS AND NEVER ADDS THEM. Machine time is measured:
-    the box has written down when 336 jobs started and stopped. Decision time is
+    the box has written down when 337 jobs started and stopped. Decision time is
     a person, and a person is not a quantity — the same call in this project has
     taken four minutes and it has taken three days. One blended number would put
     a date on the page whose error bar is the author's week, and it would be
-    read as a promise the moment it appeared. So the line says how many hours of
-    rendering are left and then names, by link, the calls that rendering is
-    waiting behind, and the reader does the addition with their own knowledge of
-    how fast those get answered.
+    read as a promise the moment it appeared. So the card shows the rendering
+    left, and names the calls that rendering waits behind, and lets the reader
+    do the addition with their own knowledge of how fast those get answered.
+
+    THE BAR IS THE ARGUMENT, and it is why this reads in one second where the
+    paragraph did not. Green is the machine's business (passed, still to render);
+    amber is his (a take waiting for a look, a call waiting to be made). Episode
+    2's bar is almost entirely amber, which says in one glance what four clauses
+    could not: the card is not what that episode is waiting for.
 
     Everything here is derived at BUILD time from two measured files, for the
     reason box-queue.yaml's header lays out at length: a stored total keeps
     printing last night's backlog against this morning's states. A lane flipping
-    one beat to `done` moves this line on the next build with nothing re-run.
+    one beat to `done` moves this card on the next build with nothing re-run.
 
     Fails SOFT and fails SILENT: no states file, no section. An ETA section that
     renders itself as "unknown" on every build teaches the reader to skip the
     part of the page that will one day carry the answer.
     """
-    try:
-        import episode_eta as _eta
-        rows = _eta.rows()
-    except Exception:
-        return ""
     if not rows:
         return ""
 
@@ -1653,92 +1662,208 @@ def episode_eta_html() -> str:
         w = hours_words(max(1, minutes))
         return w if w.startswith("about") else f"~{w}"
 
-    lines, stamps, untagged = [], [], 0
+    cards, stamps, untagged = [], [], 0
     for r in rows:
         try:
-            bits = [f'<b>{r["ready"]} of {r["total"]}</b> beats the author has passed']
-            if r["awaiting_founder"]:
-                bits.append(f'{r["awaiting_founder"]} with a take waiting for his look')
-            # The machine clause. `None` means a measurement is missing, and it
-            # says which one is missing rather than printing a zero: "0 h left"
-            # on an unfinished episode is the most confident possible lie this
-            # page could tell.
-            if r["machine_minutes"] is None:
-                bits.append('machine work left is <b>not estimated</b> — no beat '
-                            'has yet finished inside the box’s own records, so '
-                            'there is nothing measured to multiply')
-            elif r["needs_render"]:
-                bits.append(f'<b>{_e(_approx(r["machine_minutes"]))}</b> '
-                            f'of rendering left across {r["needs_render"]} beat'
-                            f'{"s" if r["needs_render"] != 1 else ""}'
-                            + (f' (thin estimate — off {r["sample"]} finished '
-                               f'beat{"s" if r["sample"] != 1 else ""})'
-                               if r["thin"] else ""))
-            else:
-                bits.append('<b>no rendering left</b> that is not waiting on a call')
-            # An undecided beat costs nothing if it is cut, so its hours are
-            # named apart from the firm ones and never folded in.
-            if r["conditional_beats"] and r["conditional_minutes"]:
-                bits.append(f'a further {_e(_approx(r["conditional_minutes"]))} '
-                            f'only if the {r["conditional_beats"]} undecided beat'
-                            f'{"s are" if r["conditional_beats"] != 1 else " is"} kept')
-            if r["decisions"]:
-                # The first clause of each call, linked to the call itself. The
-                # `what` fields run to three lines because they are written for
-                # the author to decide from; the whole paragraph here would bury
-                # the line, and a bare count would make him go hunting for which
-                # three they are — the exact complaint that put the inbox
-                # pointer on this page in the first place.
-                named = []
-                for d in r["decisions"][:3]:
-                    txt = _e(first_sentence(d["what"], 90) or "an open call")
-                    named.append(f'<a href="{_e(d["url"])}">{txt}</a>'
-                                 if d["url"] else txt)
-                more = len(r["decisions"]) - len(named)
-                bits.append(f'gated on <b>{len(r["decisions"])} open call'
-                            f'{"s" if len(r["decisions"]) != 1 else ""}</b> — '
-                            + _and_list(named)
-                            + (f' and {more} more' if more > 0 else "")
-                            + ' · <a href="review/inbox">the full list &rarr;</a>')
-            label = f'Episode {r["number"]}' + (f' — {_e(r["title"])}' if r["title"] else "")
-            lines.append(f'<p class="summary"><b>{label}</b> · ' + " · ".join(bits) + '</p>')
+            cards.append(_eta_card(r, _approx))
             if r["measured_at"]:
                 stamps.append(str(r["measured_at"]))
             # Section-level, not per-episode: the count is a property of the
-            # inbox, and printed under every row it read as two different facts.
+            # inbox, and printed under every card it read as two different facts.
             untagged = max(untagged, r["decisions_untagged"])
         except Exception:
             continue
-    if not lines:
+    if not cards:
         return ""
 
     stamp = (f'The rounds-per-beat figure behind these hours was measured '
              f'{_e(sorted(stamps)[-1])}. ' if stamps else "")
     return (
-        '<h2 id="eta">🗓 When is an episode finished</h2>'
-        '<p style="margin:.2rem 0 .4rem;color:var(--muted)">An episode is done '
-        'when the card has rendered every beat <i>and</i> the author has passed '
-        'every beat. Those are two different clocks and this page keeps them '
-        'apart: the hours below are machine time, measured off past jobs, and '
-        'the calls beside them are the author’s. How long a call takes is not a '
-        'quantity anyone here can measure, so no date is given for one.</p>'
-        + "".join(lines)
-        + (f'<p class="whyfoot">{untagged} open inbox entr'
+        '<div class="eta rise" id="eta">'
+        '<p class="sh">🗓 When is an episode finished</p>'
+        + "".join(cards)
+        + '<details class="drawer"><summary>How these numbers are measured — '
+          'and the one thing they refuse to estimate</summary>'
+          '<div class="drawer-body">'
+          '<p>An episode is finished when the card has rendered every beat '
+          '<i>and</i> the author has passed every beat. Those are two different '
+          'clocks and this page keeps them apart. The hours are machine time, '
+          'measured. How long a call takes to answer is not a quantity anyone '
+          'here can measure — the same call has taken four minutes and it has '
+          'taken three days — so the calls are counted and linked, never timed, '
+          'and no finish date is given for one.</p>'
+        + (f'<p>{untagged} open inbox entr'
            f'{"ies carry" if untagged != 1 else "y carries"} no episode tag, so '
            'they are waiting on him but are not attributed to an episode above — '
-           'the gate lists are as complete as the tagging is.</p>'
-           if untagged else "") +
-        f'<p class="whyfoot">{stamp}Hours are (the median number of rounds a beat '
-        'needed before the card had a take he could look at) × (the median '
-        'minutes a job of that kind takes on the box), both off the box’s own '
-        'per-job records on <code>farm-out/box/</code>. The author’s yes is <i>'
-        'not</i> in that measurement, on purpose — it is the other clock. Rounds '
-        'spent before those records begin on 10 Aug are not in them, so every '
-        'figure here is a <b>floor</b>, not a best '
-        f'guess. Method and raw numbers: <a href="https://github.com/{GH}/blob/'
-        'main/pipeline/episode_eta.py">episode_eta.py</a>, states in '
-        f'<a href="https://github.com/{GH}/blob/main/pipeline/measured/'
-        'episode-progress.yaml">measured/episode-progress.yaml</a>.</p>')
+           'the gate counts are as complete as the tagging is.</p>'
+           if untagged else "")
+        + f'<p>{stamp}Hours are (the median number of rounds a beat needed '
+          'before the card had a take he could look at) × (the median minutes a '
+          'job of that kind takes on the box), both off the box’s own per-job '
+          'records on <code>farm-out/box/</code>. The author’s yes is <i>not</i> '
+          'in that measurement, on purpose — it is the other clock. Rounds spent '
+          'before those records begin on 10 Aug are not in them, so every figure '
+          'here is a <b>floor</b>, not a best guess. A beat waiting on a decision '
+          'is costed separately from the certain work, because a beat that gets '
+          'cut costs nothing. Method and raw numbers: '
+          f'<a href="https://github.com/{GH}/blob/main/pipeline/episode_eta.py">'
+          'episode_eta.py</a>, states in '
+          f'<a href="https://github.com/{GH}/blob/main/pipeline/measured/'
+          'episode-progress.yaml">measured/episode-progress.yaml</a>.</p>'
+          '</div></details></div>')
+
+
+def episode_eta_rows() -> list:
+    """The ETA rows, read ONCE per build. [] when they cannot be read.
+
+    One read, two consumers — the glance cell at the top and the cards below —
+    for the same reason the box snapshot has one read: the strip's standing rule
+    is that it cannot contradict the section it links to, and two reads of one
+    file eventually do.
+    """
+    try:
+        import episode_eta as _eta
+        return _eta.rows()
+    except Exception:
+        return []
+
+
+def eta_cell(rows) -> str:
+    """The glance cell that answers "when is it done" before anyone scrolls.
+
+    Roman, 2026-08-13: "im not seeing any eta". The cards were on the page, one
+    panel below the glance, and he missed them — which on a page he opens to
+    answer one question is the same as their not being there. The number he
+    asked for therefore goes IN the glance, and the cell is an anchor down to
+    the card that shows its workings, exactly as every other tile here behaves.
+
+    It reports the NEWEST episode, which is the one being made and the one he
+    named. Empty string when there is nothing to report: the strip must not grow
+    a permanently apologetic sixth tile.
+    """
+    if not rows:
+        return ""
+    r = rows[0]
+    if r["machine_minutes"] is None:
+        return ('<a class="sx" href="#eta"><span class="sn none">not estimated'
+                f'</span><span class="sl">how long episode {r["number"]} still '
+                'needs on the render box — no beat of it has finished inside '
+                'the box’s own records yet, so nothing is claimed</span></a>')
+    w = hours_words(max(1, r["machine_minutes"]))
+    big = w if w.startswith("about") else f"~{w}"
+    tail = (f' · {len(r["decisions"])} call'
+            f'{"s" if len(r["decisions"]) != 1 else ""} of it are yours'
+            if r["decisions"] else "")
+    if not r["needs_render"]:
+        return ('<a class="sx" href="#eta"><span class="sn ok">nothing</span>'
+                f'<span class="sl">left to render on episode {r["number"]}'
+                f'{tail} · what finishing it still waits on</span></a>')
+    return (f'<a class="sx" href="#eta"><span class="sn ok">{_e(big)}</span>'
+            f'<span class="sl">of rendering left on episode {r["number"]}'
+            f'{tail} · what finishing it still waits on</span></a>')
+
+
+def _call_label(what: str, limit: int = 44) -> str:
+    """A decision's name in a few words — never a sentence cut off mid-clause.
+
+    The inbox's `what` fields are written for the author to DECIDE from, so they
+    run to three lines and open with the headline: "Cold open fig - in both
+    motion rounds...". Truncating one at n characters produced the ellipsis soup
+    he rejected. Cutting at the first clause break gives the headline itself,
+    with one guard — a break so early that the label would be a bare "EPISODE 2"
+    is skipped for the next one, since a label that identifies nothing is worse
+    than a longer one.
+    """
+    t = " ".join(str(what or "").split())
+    if not t:
+        return "an open call"
+    cuts = sorted(i for sep in (" - ", " — ", ". ", "; ", ": ")
+                  for i in [t.find(sep)] if i > 0)
+    lab = next((t[:i] for i in cuts if i >= 10), t)
+    if len(lab) > limit:                    # word boundary, never mid-word
+        lab = lab[:limit].rsplit(" ", 1)[0]
+    return lab.strip(" .,;:—-") or "an open call"
+
+
+def _eta_card(r: dict, approx) -> str:
+    """One episode as a tile: a bar of where its beats are, then three numbers.
+
+    The bar's denominator is the episode's FULL beat count, not the number of
+    beats with a state on file, so a beat nobody has scored shows as a gap
+    rather than quietly shrinking the chart and flattering the progress.
+    """
+    total = max(1, int(r["total"]))
+    c = r["counts"]
+    mach_beats = c["fix-known"] + c["never-rendered"]
+    segs = [("b-done", c["done"], "passed"),
+            ("b-look", c["candidate-awaiting-founder"], "waiting for your look"),
+            ("b-mach", mach_beats, "the card’s to do"),
+            ("b-gate", c["blocked-decision"], "waiting on a decision"),
+            ("b-unk", total - r["counted"], "no state on file")]
+    bar = "".join(f'<i class="{cls}" style="width:{100.0 * n / total:.4g}%"></i>'
+                  for cls, n, _ in segs if n > 0)
+    key = "".join(f'<span class="k-{cls[2:]}">{n} {_e(lab)}</span>'
+                  for cls, n, lab in segs if n > 0)
+
+    # --- the three numbers, in the order he acts on them. Machine first: it is
+    # the answer to the question he asked. Then the two that are his.
+    if r["machine_minutes"] is None:
+        # A missing measurement, never a zero. "0 min left" on an unfinished
+        # episode is the most confident possible lie this page could tell.
+        mach = ('<span class="sn n-none">not estimated</span>'
+                '<span class="sl">no beat has finished inside the box’s own '
+                'records yet, so there is nothing measured to multiply</span>')
+    elif mach_beats:
+        # The tile label stays to one clause. The conditional hours are a real
+        # and separate fact, so they get their own line under the tiles rather
+        # than a fourth wrapped line inside one — the first cut of this card ran
+        # that tile to four lines and threw the row out of alignment.
+        mach = (f'<span class="sn n-mach">{_e(approx(r["machine_minutes"]))}</span>'
+                f'<span class="sl">of rendering left, across {mach_beats} beat'
+                f'{"s" if mach_beats != 1 else ""}'
+                + (f' · thin estimate, off {r["sample"]} beat'
+                   f'{"s" if r["sample"] != 1 else ""}' if r["thin"] else "")
+                + '</span>')
+    else:
+        mach = ('<span class="sn n-mach">nothing</span>'
+                '<span class="sl">left to render that is not behind a call</span>')
+    gated = ""
+    if r["conditional_beats"] and r["conditional_minutes"]:
+        gated = (f'<p class="epnote">A further <b>{_e(approx(r["conditional_minutes"]))}'
+                 f'</b> of rendering, but only if the {r["conditional_beats"]} '
+                 f'gated beat{"s are" if r["conditional_beats"] != 1 else " is"} '
+                 'kept — a beat that gets cut costs nothing, so it is not in the '
+                 'figure beside it.</p>')
+
+    look_url = r["review_url"] or "review/inbox"
+    stats = (
+        f'<span class="sx">{mach}</span>'
+        f'<a class="sx" href="review/inbox"><span class="sn n-you">'
+        f'{len(r["decisions"])}</span><span class="sl">call'
+        f'{"s" if len(r["decisions"]) != 1 else ""} only you can make</span></a>'
+        f'<a class="sx" href="{_e(look_url)}"><span class="sn n-you">'
+        f'{r["awaiting_founder"]}</span><span class="sl">take'
+        f'{"s" if r["awaiting_founder"] != 1 else ""} waiting for your look'
+        '</span></a>')
+
+    # Two named calls, not three sentences. He asked for the wall of prose to go.
+    nxt = ""
+    if r["decisions"]:
+        named = [f'<a href="{_e(d["url"])}">{_e(_call_label(d["what"]))}</a>'
+                 if d["url"] else _e(_call_label(d["what"]))
+                 for d in r["decisions"][:2]]
+        more = len(r["decisions"]) - len(named)
+        nxt = ('<p class="epcalls">Next: ' + " · ".join(named)
+               + (f' · <a href="review/inbox">and {more} more &rarr;</a>'
+                  if more > 0 else ' · <a href="review/inbox">the inbox &rarr;</a>')
+               + '</p>')
+
+    title = f' <span class="ept">{_e(r["title"])}</span>' if r["title"] else ""
+    return (f'<div class="epcard"><div class="ephead"><b>Episode {r["number"]}'
+            f'</b>{title}<span class="epp">{r["ready"]} of {total} passed</span>'
+            f'</div><div class="epbar" role="img" aria-label="{r["ready"]} of '
+            f'{total} beats passed">{bar}</div><div class="epkey">{key}</div>'
+            f'<div class="epstats">{stats}</div>{gated}{nxt}</div>')
 
 
 # ---- files the reader's browser re-reads ------------------------------------
@@ -2685,6 +2810,71 @@ STRIP_CSS = """
 .strip .sline + .sline { margin-top: .3rem; }
 .strip .sfoot { margin: .75rem 0 0; font: 400 .7rem/1.6 var(--sans, inherit);
   color: var(--faint); }
+/* ---- the episode ETA cards ---------------------------------------------
+   Roman, 2026-08-13, on the prose version: "im not seeing any eta ... except
+   this which isn't the best". Same numbers, same refusals, read in a second
+   instead of a paragraph. It borrows the strip's vocabulary on purpose — this
+   sits directly under the glance and should read as its sibling, not as a new
+   kind of thing.
+
+   THE COLOUR CARRIES THE ARGUMENT, so it is not decoration and must not be
+   restyled casually: GREEN is the machine's business (passed, still to render),
+   AMBER is the author's (a take waiting on his eye, a call waiting on his word).
+   The feature exists to keep those two clocks apart, and the bar is where that
+   separation becomes visible without reading anything. */
+.eta { border: 1px solid var(--line); border-radius: 14px; padding: .85rem .95rem;
+  margin: 0 0 1.4rem; background: var(--code-bg); }
+.eta .sh { font: 700 .62rem/1 var(--mono); letter-spacing: .09em;
+  text-transform: uppercase; color: var(--faint); margin: 0 0 .7rem; }
+.epcard { border: 1px solid var(--line); border-radius: 10px; background: var(--bg);
+  padding: .7rem .8rem; margin: 0 0 .55rem; }
+.epcard:last-of-type { margin-bottom: 0; }
+.ephead { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem;
+  margin: 0 0 .5rem; }
+.ephead b { font: 700 1rem/1.2 var(--sans, inherit); color: var(--ink); }
+.ephead .ept { font: 400 .8rem/1.3 var(--sans, inherit); color: var(--muted); }
+.ephead .epp { margin-left: auto; font: 700 .8rem/1.2 var(--mono);
+  color: var(--leaf); font-variant-numeric: tabular-nums; }
+.epbar { display: flex; height: 10px; border-radius: 999px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--code-bg); }
+.epbar i { display: block; height: 100%; }
+.epbar .b-done { background: var(--leaf); }
+.epbar .b-look { background: var(--sap); }
+.epbar .b-mach { background: var(--leaf-deep); }
+.epbar .b-gate { background: var(--sap-deep); }
+.epbar .b-unk  { background: var(--line); }
+.epkey { display: flex; flex-wrap: wrap; gap: .1rem .75rem; margin: .4rem 0 .6rem;
+  font: 400 .68rem/1.7 var(--sans, inherit); color: var(--muted); }
+.epkey span { display: inline-flex; align-items: center; gap: .32rem; }
+.epkey span::before { content: ""; width: .5rem; height: .5rem; border-radius: 2px;
+  background: var(--line); flex: none; }
+.epkey .k-done::before { background: var(--leaf); }
+.epkey .k-look::before { background: var(--sap); }
+.epkey .k-mach::before { background: var(--leaf-deep); }
+.epkey .k-gate::before { background: var(--sap-deep); }
+.epstats { display: grid; gap: .45rem;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); }
+.epstats .sx { display: block; text-decoration: none; color: inherit;
+  border: 1px solid var(--line); border-radius: 9px; padding: .45rem .55rem;
+  background: var(--panel); }
+.epstats a.sx:hover { border-color: var(--sap-deep); }
+.epstats .sn { display: block; font: 700 1.25rem/1.15 var(--mono);
+  font-variant-numeric: tabular-nums; color: var(--sap); }
+.epstats .n-you { color: var(--sap); }
+.epstats .n-mach { color: var(--leaf); }
+.epstats .n-none { font-size: .74rem; font-weight: 600; line-height: 1.6;
+  color: var(--faint); }
+.epstats .sl { display: block; font: 400 .68rem/1.45 var(--sans, inherit);
+  color: var(--muted); margin-top: .12rem; }
+.epnote { margin: .5rem 0 0; font: 400 .72rem/1.65 var(--sans, inherit);
+  color: var(--faint); }
+.epnote b { color: var(--muted); font-weight: 700; }
+.epcalls { margin: .45rem 0 0; font: 400 .74rem/1.7 var(--sans, inherit);
+  color: var(--muted); }
+.epcalls a { color: var(--ink); }
+.eta > details { margin: .6rem 0 0; }
+.eta > details > summary { cursor: pointer; color: var(--faint);
+  font: 500 .72rem/1.7 var(--sans, inherit); }
 .bw { border: 1px solid var(--line); border-radius: 14px; padding: .9rem 1rem;
   margin: .6rem 0 .5rem; text-align: center; }
 .bw .bwn { font: 700 1.7rem/1.2 var(--mono); color: var(--sap); }
@@ -2874,8 +3064,8 @@ def summary_strip(view: dict, now) -> str:
     return (
         '<div class="strip rise">'
         '<p class="sh">At a glance</p>'
-        f'<div class="sgrid">{review_cell}{alive_cell}{made_cell}{queue_cell}'
-        f'{show_cell}</div>'
+        f'<div class="sgrid">{review_cell}{eta_cell(view.get("eta_rows"))}'
+        f'{alive_cell}{made_cell}{queue_cell}{show_cell}</div>'
         f'<p class="sfoot">A snapshot as of <b>{now.strftime("%H:%M")} UTC, '
         f'{now.strftime("%d %b")}</b> — the moment this page was built and the '
         'machines\u2019 own logs were last read. Nothing here claims to be '
@@ -2940,6 +3130,9 @@ def build(out_dir: Path):
     # ONE read for the glance at the top and the pointer beside the waiting
     # list, for the same reason as the box snapshot above it.
     review_open = review_inbox_open()
+    # Likewise ONE read of the episode states, shared by the glance cell and the
+    # cards below it — must be read before the strip, which now quotes it.
+    eta_rows = episode_eta_rows()
     last_activity = max((m["history"][0][0] for m in records if m["history"]),
                         default=None)
 
@@ -2948,14 +3141,14 @@ def build(out_dir: Path):
         "fin": fin, "live": live, "unread": logs_unread(),
         "last_activity": last_activity, "by_id": by_id, "hero": hero,
         "tot": tot, "ep2": data.next_episode(), "inbox": inbox,
-        "boxq": boxq, "review_open": review_open}, now)
+        "boxq": boxq, "review_open": review_open, "eta_rows": eta_rows}, now)
 
     # --- when each episode is finished, machine half and human half kept
     # apart. High on the page because it is the question the founder asked of
     # this page (2026-08-13) and the one a reader arrives holding; empty string
     # when its states file cannot be read, so a build that lost the file drops
     # the section rather than publishing an ETA it cannot support.
-    eta_section = episode_eta_html()
+    eta_section = episode_eta_html(eta_rows)
 
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
     leaves = ""
