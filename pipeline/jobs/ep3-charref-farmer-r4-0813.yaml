@@ -1,0 +1,108 @@
+# 2026-08-13, the stills-drafts lane. Cast round on the founder's verdict. See `why`.
+id: ep3-charref-farmer-r4-0813
+task: ep3-charref-farmer-r4-0813
+node: 004-shade
+beat: 1
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+sample: true
+owner: stills-drafts lane, 2026-08-13
+consumer: his cast pass; I evaluate first per his "then, evaluate".
+success: 'Four frames, read as the STRANGER TEST: would someone who had never read the script describe
+  this man the way 004/005 does -- broad, squarish, sun-cracked, already unimpressed, arms crossed before
+  anyone spoke? Not ''is he a good farmer''. PREDICTION, written before the frames land: A >= B. Everything
+  measured this week says a denial pile does not buy what it asks for and can invert -- b02 arm B swelled
+  the skull it was banning, and every knob arm that fought ''cute'' produced more of it. If B wins, that
+  belief is wrong and it should be recorded as wrong. Page both against the script lines.'
+why: 'Founder: "for the farmer, he looks too much like a generic anime character. the references i''ve
+  seen just dont quite fit the character." THIS IS THE FIG LESSON APPLIED TO A PERSON. A green fig could
+  not be made recognisable by stacking shape adjectives because a fig has no unique silhouette; colour
+  was the axis. `Old farmer` has the same defect -- it is a CATEGORY, and a category summons the checkpoint''s
+  default person however many adjectives ride on it. r3 stacked eleven and still came back generic. So
+  the category noun is GONE (the word farmer does not appear) and the prompt is built from things only
+  this man has, every one lifted from 004/005: broad and squarish with arms already crossed, a straw hat
+  brim shadowing the eyes, boots, sun-cracked skin, three deep lines for his whole face, and the clay
+  jug and half a loaf he sets down in the script. ARM A: specifics with a MINIMAL negative.'
+prediction: 'Written before any frame exists, and unlike r2''s this one is aimed at the failure that actually
+  happened. r2 drew NO PLANT in 4 of 4 and NO WORLD in 4 of 4; r3 makes the sapling its own subject clause
+  growing from the earth and gives the world its own sentence. What should come back: a rooted plant with
+  a visible stem beside a kneeling goblin in a lit meadow. The remaining risks, in order — (1) the fig,
+  absent in 3 of 4 of r2, is still only two words and may not read; (2) `purple fig` may fight the model''s
+  prior for a fig''s colour; (3) with the character adjectives cut to buy tokens, the patchwork cloak
+  is now entirely absent from the prompt, so the costume will be whatever the checkpoint defaults to —
+  r2 gave a dark buttoned jacket every time. If the plant and the world come back and only the fig and
+  costume are wrong, that is a PASS on the dialect question and the costume moves to the reference where
+  it belongs.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_charref_farmer_r4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_charref_farmer_r4
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4
+  - --task
+  - ep3-charref-farmer-r4-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-charref-farmer-r4-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-ep3-charref-farmer-r4/06-the-clipboard-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what\
+    \ this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong\
+    \ file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n       \
+    \ h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    \    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep3-charref-farmer-r4-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-farmer-r4\06-the-clipboard-wave1-s3.yaml

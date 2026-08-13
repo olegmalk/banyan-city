@@ -2007,6 +2007,55 @@ beats:
     # broad squarish, straw hat, and the THREE LINES across the face, which is the one
     # detail no generic anime farmer has. The negative bans the average directly: the
     # pretty-boy default, smooth skin, youth.
+    # -- `authored_ep3_charref_farmer_r4` and `_r4b` -- 2026-08-13. Founder: "for the
+    # farmer, he looks too much like a generic anime character. the references i've seen
+    # just dont quite fit the character."
+    #
+    # THIS IS THE FIG LESSON APPLIED TO A PERSON. A green fig could not be made
+    # recognisable by piling on shape adjectives because a fig has no unique silhouette;
+    # it had an unmistakable COLOUR instead. `Old farmer` has the same problem: it is a
+    # CATEGORY, and a category summons the checkpoint's default person no matter how many
+    # adjectives are stacked on it. r3 stacked eleven -- weathered, leathery, sun-browned,
+    # three creases, broad, heavy, grey stubble, frayed -- and still came back generic.
+    # So the category noun goes and the prompt is built out of things only THIS man has,
+    # every one of them lifted from 004/005 rather than invented:
+    #   "the FARMER, broad and squarish, arms already crossed"  -> silhouette, first
+    #   "Boots and a straw hat at the clearing's edge"          -> hat brim, boots
+    #   "He sets a clay jug and half a loaf at the base"        -> the props he carries
+    #   "sun-cracked"                                            -> his skin, his word
+    #   three lines for his whole face                           -> the face, exactly
+    # `Farmer` never appears. The hat brim SHADOWING THE EYES is the silhouette note: it
+    # is what makes a square hatted shape read as him and not as a handsome young man
+    # under a hat, and it costs three tokens where the denial pile cost eleven.
+    # BUDGET: 73/77 for action+style. `bright morning light`, `brown` and `heavy` sold --
+    # all three are adjectives on nouns the script already names concretely.
+    #
+    # THE TWIN IS THE DENIAL PILE ITSELF, which is the open question and the reason there
+    # are two. r4 sends the specifics with a MINIMAL negative; r4b sends the identical
+    # positive plus r3's seven anti-anime denials (no pretty boy, no bishonen, no handsome
+    # young man, no smooth skin, no flawless skin, no idol face, no anime hero). One
+    # variable. Everything this week says the pile will not help and may actively hurt --
+    # b02 arm B swelled the skull, and every knob arm that fought cute made it cuter -- so
+    # the prediction is r4 >= r4b. If r4b wins, that belief is wrong and I want it on
+    # record that it was testable.
+    #
+    # THE STRANGER TEST, as the read: would someone who had never seen the script describe
+    # this man the way 004/005 describes him -- broad, squarish, sun-cracked, already
+    # unimpressed, arms crossed before anyone spoke? Not "is he a good farmer".
+    authored_ep3_charref_farmer_r4: >-
+      A broad squarish man, wide straw hat brim shadowing his eyes, arms already crossed,
+      three deep lines for his whole face, sun-cracked skin, boots, a clay jug and half a
+      loaf at his feet, in a green field. Medium shot, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no armor. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_ep3_charref_farmer_r4b: >-
+      A broad squarish man, wide straw hat brim shadowing his eyes, arms already crossed,
+      three deep lines for his whole face, sun-cracked skin, boots, a clay jug and half a
+      loaf at his feet, in a green field. Medium shot, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no
+      pretty boy, no bishonen, no handsome young man, no smooth skin, no flawless skin, no
+      idol face, no anime hero. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_ep3_charref_farmer_r3: >-
       A weathered farmer in his fifties stands facing camera, leathery
       sun-browned skin, three deep forehead creases, broad heavy build, grey
@@ -2140,6 +2189,31 @@ beats:
     #    dialect prompts I measured locally passed; these three I wrote from the
     #    guard-sheet template without measuring at all, and this is the one that
     #    was over. Shortened generously rather than tuned to the line.
+    # -- `authored_ep3_charref_assessor_r4` -- 2026-08-13. Founder: "the assessor is good,
+    # just.. unnecessarily bald." ONE CHANGE from r3 and nothing else moves.
+    #
+    # I GREPPED BEFORE ADDING, as instructed, and the answer is worth recording because it
+    # rules out the more interesting hypothesis. r3 contains NO bald or hairless token --
+    # not in the positive, not in the negative. I also checked the slot: the job passes
+    # `--goblin-def "green skin, bald head"`, so for a moment it looked like the goblin's
+    # own definition was being injected into the assessor. It is not. This draft has no
+    # {{GOBLIN}} slot, so that replace is a no-op and the string never reaches the prompt.
+    # Nothing we wrote asked for a bald man; the checkpoint defaults him bald.
+    #
+    # SO HAIR IS ASSERTED, and it is the script's man rather than a generic fix: 005 gives
+    # him dust-grey robes, a ledger chained to his belt and a stub of quill, so thin grey
+    # receding hair is age-appropriate to the character already written. Three tokens.
+    # NOTE FOR THE GUARDS, because it points the other way: the beat-06 conditioning test
+    # measured this checkpoint's prior for a `guard man` as a HAIRED soldier -- it put hair
+    # on two BALD references in ~14 of 16 frames. So the default is not "bald" globally; it
+    # is per-category, and each character has to be checked rather than assumed.
+    authored_ep3_charref_assessor_r4: >-
+      A thin tall man in dust-grey robes stands facing camera in a green morning field,
+      thin grey receding hair, a heavy ledger chained at his belt, a stub of quill in one
+      hand, a humourless face clearly visible. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no armor. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_ep3_charref_assessor_r3: >-
       A thin tall man in dust-grey robes stands facing camera in a green morning
       field, a heavy ledger chained at his belt, a stub of quill in one hand, a
