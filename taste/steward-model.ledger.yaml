@@ -15116,3 +15116,31 @@
     just applied. If he overturns even one, the rule to learn is that the citation was doing less work
     than I thought.
   outcome: resolved
+
+- id: inbox-stale-verdicts-swept-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: "why are some of the decisions i already made still on the wbeiste"
+  the_defect_he_caught: >-
+    Four verdicts he gave in CHAT were converted into rendered work while their inbox entries stayed
+    open, so his own list was asking him things he had already settled. The guard-wave direction, the
+    plan page, the Dubai-grass photo release and the ep3 reference route were all answered and all
+    still showing. The gap is structural: converting a verdict to work and resolving its entry were two
+    steps and only the first had an owner.
+  swept: >-
+    Guard wave — "and yes, keep going in that direction for the guards". The plan — "the shape is
+    right, keep it updated". The photo — "we dont have much grass here in dubai... just dont put too
+    much time into it", taken as RELEASED rather than owed, with the CC0 baobab (e6d49a43) recorded as
+    what the tree work uses instead. Ep3's tree route — "ill choose: a real reference image".
+  kept_open_on_purpose_and_now_says_so: >-
+    The three script entries. D22 delegates §6's read to the steward but is recorded as resolved IN
+    PART and explicitly wants his countersignature in daylight — so those entries ARE the
+    countersignature, not a re-ask, and each now says that in its own text. Beat 04's ballooning head
+    keeps his register verdict appended ("you're making the goblin look like a cute little kid... lets
+    remake him") and stays open only for the widened-pair look, which is genuinely his eye.
+  new_standing_rule: >-
+    Added to SITE.md as the inbox contract: whoever converts a founder chat-verdict into work resolves
+    its inbox entry IN THE SAME COMMIT. A decision answered anywhere is answered everywhere. An entry
+    kept open deliberately must say why in its own text.
+  count: 14 open -> 10 open.
+  outcome: resolved

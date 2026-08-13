@@ -68,6 +68,23 @@ The work chart's data is `pipeline/measured/box-work-daily.yaml`, written by
 `eta.yaml` exists. **Re-run it when you want the bars to move**; nothing else
 updates that file.
 
+## The inbox contract
+
+`review/inbox.yaml` is the founder's open-questions list and `review/inbox/regen.py`
+renders it. Two rules, both learned the hard way:
+
+**1. Edit the yaml and run `regen.py` in the SAME commit.** The page is static and can
+only disagree with the data if someone skips the step.
+
+**2. Whoever converts a founder chat-verdict into work RESOLVES ITS INBOX ENTRY in that
+same commit.** A decision answered anywhere is answered everywhere. Added 2026-08-13
+after he asked, reasonably, *"why are some of the decisions i already made still on the
+wbeiste"* — four verdicts he had given in chat had been turned into rendered work while
+their entries sat open, so his own list was asking him things he had already settled.
+An entry kept open on purpose is fine, but it must SAY why in its own text (the D22
+script entries say "kept open for your countersignature", which reads as deliberate
+rather than stale).
+
 ## Two rules that are not style opinions
 
 **1. `publishable()` decides what reaches the site, and it is a licence gate.**
