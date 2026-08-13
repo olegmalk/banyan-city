@@ -14924,3 +14924,41 @@
     `build_sim.py` has another lane writing it right now, and a second writer is how tonight's other
     breakages happened.
   outcome: resolved
+
+- id: ep2-guard-wave-0813-observed
+  kind: observation
+  date: 2026-08-13
+  scores: ep2-guard-wave-0813 (b05twin, b06, b07, b09, b10, b11)
+  verdict: >-
+    FOUR CLEAN PASSES, TWO WITH ONE SHARED FAULT, and the fault is in my wording again. Every beat
+    performed its own scripted action, which is the thing the wave was testing: the dominant-clause
+    lever now has wins on a jog, a crouch, a point, a face, a flip and a walk-away.
+  per_beat: >-
+    b07 THE POINT — the cleanest clip this lane has made. Arm straight out, finger extended, held from
+    frame 40 to the end, chin up, clipboard down in the other hand, and the thing he points at stays
+    OFF frame exactly as authored. b09 THE PAUSE — the face works through it, mouth opening by the end,
+    and it framed itself CLOSER than the other five, which quietly answers the mismatch I declared:
+    the beat's own words pulled the shot in even though the init is a whole figure. b11 THEY LEAVE —
+    both men from behind, walking away, sashes reading. b05twin — the jog and the second man repeat on
+    a new seed, so his pick has a pair.
+  the_shared_fault_on_06_and_10: >-
+    THE PROP INFLATES INSTEAD OF THE CAMERA MOVING. Both prompts told the board to fill the frame —
+    "filling the lower middle", "fills the middle of the frame" — and the model obeyed the only way an
+    i2v pass with a locked camera can: it SCALED THE CLIPBOARD into a slab the size of his torso. b10's
+    predicate technically passes (the back is blank) and the shot is still unusable. Mine, and the same
+    lesson as every other fault tonight: it drew what the words said. The fix is to describe the
+    ACTION and let the crop decide the size, never to tell an object to fill a frame the camera cannot
+    move in.
+  what_it_settles_about_beat_08: >-
+    THE TWO-CHARACTER WALL IS ABOUT TWO DIFFERENT CHARACTERS, NOT TWO CHARACTERS. b05twin and b11 both
+    hold two guards through a whole clip. So beat 08 — a guard and the goblin — is a casting problem,
+    not a capacity one, and it should be tried with two references rather than written off.
+  the_cost_that_repeats: >-
+    Both two-man clips are TWINS. Predicted twice, landed twice. Two guards from one one-man init will
+    always be one man doubled; the pair needs two references and that is now the blocking item for
+    every two-guard beat.
+  picks: b07 (best of the wave), b09, b11, b05twin. 06 and 10 need one re-round with the fill-the-frame
+    clause removed.
+  ep1_seed_twins_left_unscored: >-
+    Deliberately. Their consumer closed with episode 1 today; they stay on the results branch.
+  outcome: null
