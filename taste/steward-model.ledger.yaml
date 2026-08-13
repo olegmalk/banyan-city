@@ -15497,3 +15497,28 @@
     middle distance and sky, with white/blank/isolated-on-white in the negative. One variable;
     the action sentence and the fill-frame removal are untouched.
   outcome: null
+
+- id: ep2-fig-propagation-audit-0813
+  kind: finding
+  date: 2026-08-13
+  why_this_exists: >-
+    To retire a frightening number I put in my own ledger this morning — "twenty-five live
+    prompts still say round" — before someone acts on it, and the someone would most likely
+    be me.
+  the_audit: >-
+    Every ep2 job prompt that mentions a fig, checked for a "round" within forty characters
+    of the word fig, excluding the deliberate ban "NOT a round ball". Twenty-two files hit.
+    ALL TWENTY-TWO ARE SPENT 0812 JOB FILES — jobs that already ran. They are the record of
+    what was rendered, not instructions for what will be. Editing them would falsify the
+    record and would change no future frame.
+  what_actually_matters: >-
+    The fix propagates by AUTHORING, not by editing history. Beats bearing a fig, off
+    beats.json: 01, 18, 19, 20. Every one of the four has a job queued or running that
+    carries the teardrop clause — b01-shape and shapeB, b18-figshape-r2 and r2B, b19-figshape
+    and figshapeB, b20-shape and shapeB. Propagation is complete for the fig beats.
+  the_general_shape_of_the_error_I_nearly_made_twice_today: >-
+    Both times the alarm came from COUNTING OCCURRENCES rather than reading them. The first
+    was nearly cancelling twelve clean sweep jobs over "round" that turned out to be the ban,
+    the wanted leaf shape and int(round()). The second was this. A grep count is a question,
+    never an answer.
+  outcome: no action needed; fig beats are covered
