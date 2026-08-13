@@ -1,0 +1,108 @@
+# TONIGHT'S TARGET, written BEFORE the rounds it governs (2026-08-14).
+#
+# The record this answers to: today produced roughly a hundred renders and ZERO finished beats.
+# A loop aimed at "better" produces understanding. Tonight is aimed at DONE.
+#
+# DONE means: one clip I would put in the cut and defend. Not a pool, not an improvement.
+# Five conditions, all of them, per beat:
+#   1. ACTION      - the scripted action actually happens, in the clip, legibly.
+#   2. CONTENTS    - everything the beat names is present AND recognisable to a stranger
+#                    (the fig standard: a predicate list is not recognition).
+#   3. SCENE       - the world is there from FRAME ONE. No arrival, no iris, no dissolve.
+#   4. CONTINUITY  - character and costume hold for the whole clip; nobody is redrawn.
+#   5. NO APOLOGY  - no artifact I would have to excuse when handing it over.
+#
+# STOPPING RULE: three rounds per beat tonight. A fourth is not allowed; park it instead,
+# with the specific reason and the named next lever.
+# NO NEW MECHANISMS after midnight. Proven levers only: dominant action clause, named contents
+# with features, positions not relations, scene in the plate, cast wording, frame-one facts.
+
+corrections_to_the_brief:
+  beat_07_is_not_goblin_free: >-
+    07 CONFISCATE is "Guard 1 points at the scavenger" - the goblin is in frame and is the thing
+    being pointed at. It is GATED by the character-first ruling, not available tonight. The
+    goblin-free set is EIGHT beats, not nine, and I would rather say so now than deliver a
+    surprise at 7am.
+
+beats:
+  "05":
+    title: THE PATROL
+    done_when: two guards jog in together FROM FRAME ONE, stop, and scan; both adult men in
+      tunic and sash; field present at frame one; neither redrawn mid-clip.
+    rounds_used: 1
+    round_1: world recipe - world PASSED, count FAILED (one guard f20-f80, second at f100)
+    in_flight: ep2-b05-twoguard + twin (pair stated as a frame-one fact)
+    status: IN ROUND 2
+
+  "06":
+    title: THE CLIPBOARD
+    done_when: the guard turns the bark board over and reads off it; board hand-sized and
+      readable; field present at frame one; no white burst at the head of the clip.
+    rounds_used: 2
+    round_1: noscale - prop fixed, but a 40-frame white dissolve
+    round_2: world - action, board, style and world all good; STILL opens on a white burst to ~f40
+    blocking: condition 3 only. The plate is white, so the world arrives. Words cannot fix this -
+      that is measured, twice.
+    lever: a scene-carrying plate for beat 06 from the plate lane. Guard-only, so not gated.
+    status: ONE ROUND LEFT, and it is wasted without the plate
+
+  "09":
+    title: THE PAUSE
+    done_when: close on Guard 1's face working through the thought, in daylight; face holds,
+      no morphing; a real background behind him.
+    rounds_used: 1
+    in_flight: ep2-b09-world (rendering)
+    status: IN ROUND 1
+
+  "10":
+    title: NO FORM
+    done_when: TWO guards in frame; the near one flips the bark board and holds its blank back
+      TOWARD HIS PARTNER; board hand-sized; field present at frame one.
+    rounds_used: 3
+    round_1: noscale - prop fixed, white void
+    round_2: world - world bound at both seeds, but arrives as an iris, and one guard only
+    round_3: ep2-b10-twohander + twin - scene plate, inverted world paragraph, two-guard staging
+    status: IN ROUND 3 - LAST ROUND. If this misses, it parks.
+
+  "11":
+    title: THEY LEAVE
+    done_when: two guards walk away from camera, backs turned, still arguing; both present the
+      whole clip; field present at frame one.
+    rounds_used: 1
+    in_flight: ep2-b11-world
+    status: IN ROUND 1
+
+  "12":
+    title: RELATED
+    done_when: tight on the sapling's TWO leaves against the sky; exactly two cotyledons and one
+      bare side-branch, per the growth ladder; no bush, no crown; the goblin NOT in frame.
+    rounds_used: 1
+    round_1: leaf clause - leaf shape came back seed-lucky, and the founder called the leaves
+      "a bunch" and "big", which is the canon violation
+    in_flight: ep2-b12-ladder + twin (count and scale relationship stated)
+    status: IN ROUND 2
+
+  "18":
+    title: THE DECISION
+    done_when: extreme close-up of ONE fig on a trembling stem, and A STRANGER WOULD CALL IT A
+      FIG - purple, teardrop, matte. Exactly one fruit in frame for the whole clip.
+    rounds_used: 3
+    round_1: figshape - invalid, my prompt contradicted itself
+    round_2: count/purple - colour made it read as FRUIT, my feature clause made it a pumpkin
+    round_3: ep2-b18-plainfig + twin - purple and teardrop only, every feature deleted
+    status: IN ROUND 3 - LAST ROUND. If this misses, it parks with "colour is right, the
+      remaining gap is silhouette" and the lever is a fig reference image, not more words.
+
+  "21":
+    title: THE ANSWER
+    done_when: the leaf tilts slowly and deliberately in still air and HOLDS; it reads as a
+      deliberate movement, not a wind wobble; outdoors, scene at frame one.
+    rounds_used: 1
+    round_1: >-
+      earlier pool. Founder verdict - "none of them have a good background, doesnt look like
+      the sapling is outside"
+    in_flight: ep2-b21-world
+    status: IN ROUND 2
+
+morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever.
+  If DONE is zero at 7am the loop failed, and it will be reported that way.
