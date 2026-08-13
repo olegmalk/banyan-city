@@ -412,3 +412,11 @@
   kind: clip
   verdict_hint: which of 07/09/11/05 are cuttable as-is / what to fix first / say the word on the sash
     and badge, which are still mine and not yours
+- what: THE PLAN - a standing page for "what you will generate, what i will review, when, how long".
+    Episode 2 to published is five phases; your two passes are the only variable, because every machine
+    phase runs unattended and finishes the same day. Episode 3 and 4-7A are the same loop behind it
+  url: /review/plan
+  since: '2026-08-13'
+  kind: decision
+  verdict_hint: the shape is right, keep it updated / the phases are wrong because X / I want different
+    things on it

@@ -190,3 +190,20 @@ the `farm-results-rtx5090` branch, which a deploy checkout does not have.
 Two rules that are the point of the feature, not decoration: machine hours and
 the author's decisions are never added into one number, and a missing
 measurement prints as "not estimated", never as zero.
+
+**The same commit that updates a beat's state regenerates the plan page**
+(`python3 review/plan/regen.py` → `review/plan/index.html`, served at
+`/review/plan`). It is the founder's standing answer to "what you will
+generate, what i will review, when, how long", and every count and hour on it
+is pulled from `episode_eta.py` — the same rows /status uses — so a stale plan
+page is a page that contradicts /status. Regenerating is one command and it
+travels with the scoring, exactly like the inbox page travels with its entry.
+
+## The colour law (status ETA card and /review/plan)
+
+**Amber is the author's time, green is the machine's.** It holds on the
+`/status#eta` cards and on `/review/plan`, and it is load-bearing rather than
+decorative: the whole ETA feature exists to keep those two clocks apart, and
+the colour is what lets a reader see which one an episode is waiting on without
+reading a word. Do not restyle either page's palette without carrying that
+distinction across.

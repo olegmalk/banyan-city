@@ -158,6 +158,17 @@ SITE_INPUTS=(
   # that skipped that push would leave banyan.city stamped with a stale commit,
   # which is the exact lie the stamp exists to prevent.
   pipeline/build_commit.py
+  # the /status ETA cards and their glance cell. build_sim imports episode_eta
+  # INSIDE the function that reads it, so the sibling-import walk in
+  # test_pipeline (which only follows column-0 imports, to stay out of the paid
+  # render path) does not demand these two — and would not have noticed them
+  # missing. They are listed by hand for the reason the measured/ directory is:
+  # a push that changed only these would skip the build, and banyan.city would
+  # keep publishing yesterday's hours from a file that had already moved.
+  # box_job_minutes comes with it — episode_eta imports it for the job KINDS
+  # table, so the two are one input.
+  pipeline/episode_eta.py
+  pipeline/box_job_minutes.py
   pipeline/generate_shots.py
   pipeline/sd_prompt.py
   # read at build time for the founder's inbox on the status page.
