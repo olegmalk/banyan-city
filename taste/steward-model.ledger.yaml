@@ -15712,3 +15712,34 @@
     at both seeds, and it is what beats 02, 03 and 19 will all do until a plate carries a world.
   what_it_asks_of_the_stills_lane: a plate with a field already drawn in it, for the wide beats.
   outcome: null
+
+- id: ep2-leaf-clause-is-seed-luck-and-white-plates-flip-the-style-0813
+  kind: scoring
+  date: 2026-08-13
+  leaf_verdict: >-
+    NOT SOLVED — divergent. Beat 03 seedA drew broad rounded oval cotyledons exactly as the clause
+    asks. seedB drew narrow pointed black leaves. Same clause, same plate, two seeds, opposite
+    answers, so the leaf half of the shape work is seed luck and must not be reported as solved
+    alongside the fig, which held at both.
+  the_bigger_thing_the_pair_shows: >-
+    seedA is a cel-shaded world with a treeline and a field. seedB is a high-contrast black and
+    cream POSTER style — a different show. Same job, same plate, different seed. Together with
+    ep2-b02-adultplate failing the same way at both its seeds, that is three beats where a plate
+    drawn on plain white produced a coin flip between "our style" and an invented one.
+  the_mechanism_as_i_now_understand_it: >-
+    Outside the character a white plate gives the model nothing to hold to, so it invents the
+    world AND the style, and then redraws the character to match whatever it invented. The
+    background is only the visible half of that; the style and the identity travel with it.
+  the_test_now_queued_and_what_hangs_on_it: >-
+    The b10 pair proved the world paragraph binds the BACKGROUND at both seeds. Nobody has asked
+    whether it also ANCHORS THE STYLE. ep2-b02-world + twin adds that paragraph verbatim to the
+    failing wide beat, with poster art / flat vector art / silhouette in the negative, changing
+    nothing else. If it holds, beats 02, 03 and 19 need no new plates and the stills lane leaves
+    the critical path. If it does not, the wide beats are blocked on plates that carry a field
+    and I will say so plainly rather than trying a fourth wording.
+  b18_count_regression_repaired: >-
+    ep2-b18-count + twin. r2 solved the shape at both seeds but the fill-frame clause I deleted
+    was also keeping a second fruit out, and one drifted in at an edge. Count now stated
+    positively with the edge escape closed, and the failure named as objects in the negative.
+    The shape clause is untouched — it works, so nothing about it changes in the same job.
+  outcome: null
