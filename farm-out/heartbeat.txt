@@ -1212,3 +1212,4 @@
 19:05:21Z STARTED task=ep2-b03-scene-wedge-0813-1786647913 attempt=1 on box-runner
 19:07:01Z DONE task=ep2-b03-scene-wedge-0813-1786647913 rc=0 artifacts=2
 19:07:11Z STARTED task=ep2-b05-world-0813-1786647959 attempt=1 on box-runner
+19:13:30Z DONE task=ep2-b05-world-0813-1786647959 rc=0 artifacts=1
