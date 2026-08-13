@@ -718,6 +718,39 @@ beats:
     # `detailed, newest` are sold off the style tail and `face visible` off the action
     # to buy fourteen tokens of grass, treeline and sky. Identity, MAN and the
     # proportion clause are untouched, as instructed.
+    # -- `authored_b03_scene_r2` -- 2026-08-13, the SCENE-EARLY set. The recipe these belong to,
+    # recorded once here and referenced from the others:
+    #
+    # STAGE 1 (10% window): the words own composition, so the beat's staging AND its world
+    # both appear -- but identity drifts (skin yellows, costume wanders). STAGE 2 (15%,
+    # the normal window): stage 1's frames are staged as the reference, and identity comes
+    # back while the world and the pose survive. ep2-b03-sceneref-0813 is the proof of
+    # stage 2: sky, cloud, grass, hills and the crouch, with the skin properly green.
+    #
+    # SCENE POSITION IS LOAD-BEARING and that is measured, not styled. Beat 10 round 1 put
+    # the scene at the tail of a long clause and got no world at EITHER window; beat 03 put
+    # it early and got the whole world at 10%. compress()'s own comment is the rule: CLIP
+    # weights early tokens most, and whatever leads becomes the composition. So the scene
+    # sits immediately after the identity block and ahead of the action in every one of
+    # these. It cannot lead the SENTENCE -- _tag_from_clause reads the first comma-clause,
+    # and a scene there derives no count tag at all.
+    #
+    # THE STYLE TAIL IS THE LEAN ONE (`detailed, newest` sold) on every beat but 04. That
+    # is what a described scene costs: identity is 29 tokens, the full tail 16, and 77 is
+    # hard -- pipe(prompt=<str>) with no prompt_embeds path. Identity, MAN and the
+    # proportion clause are never what pays.
+    # b03: supersedes `authored_b03_scene`, which put the scene at the TAIL. That key stays
+    # because two runs used it and their sidecars name it. `green scalp` is sold here --
+    # the sceneref frames came back properly green without it, so it was buying a fix the
+    # reference now supplies. 75/77.
+    authored_b03_scene_r2: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
+      green summer grass, a treeline and pale sky behind, crouches behind a tiny sapling's
+      thin stem, broad round cotyledon leaves above, face visible. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no white background, no plain background, no
+      character sheet, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b03_scene: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       crouches behind a tiny sapling's thin stem, broad round cotyledon leaves above, in
@@ -1235,6 +1268,20 @@ beats:
     # five, because dropping `empty hands` and the two held-object bans paid for both
     # the framing clause and the line-art block. DRY OK, STYLE ANCHOR PRESENT, count tag
     # 1boy, 73/77 positive as sent.
+    # -- `authored_b04_scene` -- 2026-08-13, the scene-early set; beat 03's key carries the
+    # recipe note. BEAT 04 IS THE EXCEPTION and gets only what its own fence implies: it is
+    # a face close-up, so the world is a blurred band behind him and nothing more. That
+    # cheapness is what lets it keep the FULL style tail where the others sell `detailed,
+    # newest`. The line-art block from authored_b04_adult_r2 is carried unchanged -- blush
+    # and emphasis lines were real in those frames and the scene does not fix them. 76/77.
+    authored_b04_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, a
+      blurred green field behind him, his gaunt narrow face filling the frame, extreme
+      close-up, cheeks puffed, eyes darting. Soft morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
+      head, no round baby face, no toddler, no child, no blush, no rosy cheeks, no motion
+      lines, no emphasis lines, no sweat drop, no white background, no character sheet. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b04_adult_r2: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       his gaunt narrow face filling the frame, extreme close-up, cheeks puffed, eyes
@@ -3262,6 +3309,18 @@ beats:
     # second buys a shot size), and `rooted in the grass` -> `rooted`, which keeps the
     # word that fights the uprooting and drops the ground it was standing on.
     # DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 74/77 positive as sent.
+    # -- `authored_b17_scene` -- 2026-08-13, the scene-early set; beat 03's key carries the
+    # recipe note. `brushes dust off his cloak` is sold to buy the scene: it is the smaller
+    # half of the beat's action and the standing-and-turning is the half the clip needs.
+    # `rooted` stays -- three of four frames walked off with the sapling. 76/77.
+    authored_b17_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
+      green summer grass, a treeline and pale sky behind, stands up and turns away from a
+      tiny sapling with broad round cotyledon leaves. Afternoon, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no uprooted plant, no glowing eyes, no white
+      background, no character sheet, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b17_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       stands up, brushes dust off his cloak, turning away from a tiny sapling with
@@ -3537,6 +3596,18 @@ beats:
     # grassy field` (the wide shot and `amber afternoon` already place it), `lands in
     # the grass` (the bounce is the event; the landing is beat 20's), `small`, and
     # `two-leaf`. DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 74/77 positive as sent.
+    # -- `authored_b19_scene` -- 2026-08-13, the scene-early set; beat 03's key carries the
+    # recipe note. Carries the PURPLE fig. `Wide shot` is sold -- the scene clause now does
+    # the work the framing tag was supposed to do, and the b04 result showed a trailing
+    # framing tag barely binds anyway. 76/77.
+    authored_b19_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
+      green summer grass, a treeline and pale sky behind, a deep purple-violet fig, green
+      at its neck, drops from the sapling and bounces off his head. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no cartoon, no green fig, no green fruit, no white
+      background, no character sheet, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b19_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       as a deep purple-violet fig, green at its neck, drops from the sapling beside
@@ -3676,6 +3747,19 @@ beats:
     # BUDGET, MEASURED ON THE BOX'S CLIP: 77/77 for action+style, exactly where b13,
     # b14 and b20's own negative sit. Nothing further was sold and nothing needed to be.
     # DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 76/77 positive as sent.
+    # -- `authored_b20_scene` -- 2026-08-13, the scene-early set; beat 03's key carries the
+    # recipe note. Carries the PURPLE fig and keeps `matte`, which is this beat's direct
+    # denial of the glowing orb that came back 4 of 4. `looking up at a bare branch` is
+    # sold to buy the scene -- the raised fig is the shot and the branch was set dressing.
+    # 76/77.
+    authored_b20_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
+      green summer grass, a treeline and pale sky behind, raises a deep purple-violet fig,
+      green at its neck, matte, in both hands like evidence. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no glowing eyes, no glowing orb, no green fig, no
+      white background, no character sheet, no dark, no night. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b20_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       raises a deep purple-violet fig, green at its neck, matte, in both hands like
