@@ -1,0 +1,101 @@
+# 2026-08-14, stills-drafts lane. Beat 06 scene plate, at motion-wave's request.
+# Guard-only, so the goblin character-first gate does not apply. See `why`.
+id: ep2-b06-scene-0814
+task: ep2-b06-scene-0814
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 06. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, who has ONE round left on beat 06 and would otherwise have to park it.
+success: 'Eight PNGs at the 10% and 20% windows. Pass is ONE guard with the field already around him --
+  grass, hedge, treeline, sky -- and a hand-sized bark board at reading height. The board must NOT inflate:
+  the old draft said it fills the lower third, which is the construction motion-wave measured turning
+  props into slabs, and it is gone. If the world is present at either window this is a DONE for beat 06
+  rather than a park, which is the whole reason it is priority 5.'
+why: 'motion-wave: beat 06''s world take passes on every condition except one -- the clip opens on a white
+  burst and the world does not settle until ~frame 40, because the plate is white and the world is being
+  BUILT by the motion words. They measured it twice; it is not fixable from their side. NOT GATED BY THE
+  CHARACTER-FIRST RULING: that ruling is about the unsettled GOBLIN reference, and beat 06 is guard-only
+  with no goblin in frame, on the cast the founder already ruled and my b10 plate came back matching.
+  Scene sits ahead of the action, the placement beat 10 round 1 proved is required. Cast words corrected
+  off `A round bald guard man`, which carried both the rejected body-type word and the baldness.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-scene
+  - --draft-key
+  - authored_b06_scene
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-scene
+  - --draft-key
+  - authored_b06_scene
+  - --arm
+  - wedge
+  - --task
+  - ep2-b06-scene-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-scene-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b06-scene/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-scene-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-scene\06-the-clipboard-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-scene\06-the-clipboard-ipa-r0-w020-s0.png

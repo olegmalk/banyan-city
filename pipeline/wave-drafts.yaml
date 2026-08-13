@@ -1956,6 +1956,32 @@ beats:
     # `with one finger` is sold to pay for the hair -- the same three tokens
     # `authored_staged` sold on this very beat, for the same stated reason: a detail no
     # medium close-up resolves anyway. Nothing else moved.
+    # -- `authored_b06_scene` -- 2026-08-14, at motion-wave's request. Beat 06's world take
+    # passed on every condition except one: the clip opens on a white burst and the world
+    # does not settle until ~frame 40, because the plate is white and the world is being
+    # BUILT by the motion words. They have measured that twice and it is not fixable from
+    # their side. This puts the world in frame one.
+    #
+    # NOT GATED BY THE CHARACTER-FIRST RULING, and the reason is worth stating rather than
+    # assumed: that ruling is about the GOBLIN reference being unsettled. Beat 06 is
+    # guard-only -- no goblin in frame -- and the guard cast is the one the founder already
+    # ruled on and that my b10 plate came back matching. So this inherits nothing unsettled.
+    #
+    # THE OLD WORDS ARE GONE: `A round bald guard man` carried both the body-type word he
+    # rejected and the baldness. Replaced with the ruled cast -- adult, short brown hair,
+    # brown tunic, sash, belly covered by the tunic. Scene sits immediately after the cast
+    # and ahead of the action, which is the placement beat 10 round 1 proved is required
+    # (scene at the tail returned no world at either window; scene early returned it).
+    # The clipboard stays at READING HEIGHT rather than `filling the lower third` -- that
+    # fill-the-frame construction is the one motion-wave measured inflating props into
+    # slabs, and beat 06's own take already reads the board correctly at hand size.
+    authored_b06_scene: >-
+      A guard man in a brown tunic and sash stands in green summer grass, a hedge and dark
+      treeline behind, pale blue morning sky above, short brown hair, turning over a bark
+      clipboard at reading height and looking down at it. Cinematic lighting, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+      white background, no plain background, no character sheet, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b06_idfix_r3: >-
       A round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it as he reads, brow furrowed. Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no house, no interior, no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_guards_r5: >-
