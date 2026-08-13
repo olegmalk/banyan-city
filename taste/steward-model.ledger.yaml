@@ -15016,3 +15016,103 @@
     reading that two DIFFERENT characters need two references, and hands the beat back to them
     with a plate to make. Either answer retires a two-day-old wall.
   outcome: null
+
+- id: ep2-founder-verdict-goblin-register-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: >-
+    "i think you're making the goblin look like a cute little kid, which i personally don't
+    think we should do, lets remake him, not too much of a major change, the character
+    reference is good, just the generations.."
+  archaeology_before_acting_and_it_moved_where_i_would_have_looked: >-
+    I grepped every live goblin prompt for kid-coding — boy, 1boy, child, chibi, cute, plump,
+    huge eyes, blush, doll. Nine prompts hit on exactly two words, "little" and "young", AND
+    BOTH ARE ABOUT THE TREE ("the little tree", "a healthy young plant"). Not one kid word is
+    attached to the goblin. So the obvious fix — delete the childish adjectives — had nothing
+    to delete.
+  what_is_actually_doing_it: >-
+    Two things that read as childhood without naming it. "A SMALL GOBLIN" — he IS small, and
+    the model resolves small as YOUNG rather than SHORT. And "A BALD DOMED HEAD" — a high
+    round cranium is infant anatomy, and it is the same word already under suspicion in beat
+    04's ballooning skull. Both are mine. His note explicitly protects the reference ("the
+    character reference is good"), so the plates are not in scope.
+  queued: >-
+    ep2-b13-adult + twin. One variable class: register. Frozen identity facts UNTOUCHED and
+    verified present in the generated prompt — pale yellow-green, bald, long pointed ears, red
+    eyes, patched hooded coat. What changes around them: wiry, weathered, lean, scrappy, hard
+    bony skull, sharp angular features, a lined leathery face, and the load-bearing line
+    "He is SHORT, not YOUNG: an adult in miniature, never a child." "Domed" is deleted. The
+    negative gains the read he named — child, baby face, chibi, cute, big round eyes,
+    doll-like, rosy blush.
+  scope_discipline: >-
+    His words were "not too much of a major change", so this is wording only, on a beat that
+    already passes at three seeds, with a twin so a register that lands once is not mistaken
+    for a fix. NOT flagging the night's passed takes wholesale — that needs his word, and only
+    where the kid-read is actually strong.
+
+- id: ep2-founder-verdict-steward-picks-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: >-
+    "this doesn't seem like something i should decide, i am not a software engineer or some
+    mastermind, you need to do more heavylifting using your intelligence, why rely on me for
+    things like this? i am more here to decide taste"
+  he_is_right_and_the_specific_failure_is_mine: >-
+    I built four-take pools for beats 03, 17 and 21 and handed him the choice, describing it
+    as "his eye rather than a fourth adjective from me". That reframing was honest about the
+    wording being exhausted and dishonest about whose job the next step was. Choosing which of
+    four near-identical takes has the steadiest composition is MECHANICAL, and mechanical is
+    mine. Taste — does this shot feel right for the show — is his. I had blurred the two and
+    called it deference.
+  what_changed_tonight: >-
+    I picked, by eye, on four mechanical criteria only: does the action fire, does it match the
+    shot as written, does the character hold, is the composition stable. b03 → the crouch take,
+    the only one where he crouches AND the tree stays thin enough for the size joke. b17 → the
+    motion take, the only one where BOTH halves of the beat are visible (brush with dust, then
+    turn away); the prettier meadow versions shrink him to a dot against his own fence. b21 →
+    the warm take, the most decisive tilt-and-hold with the rest of the plant dead still,
+    declared with its one flaw (a curl artifact near the stem the cooler take lacks).
+  the_page_shape_now: >-
+    THE PICK large with one line of reasoning, runners-up collapsed underneath for veto, and a
+    link to all fifteen takes side by side so he can check my working rather than take it on
+    trust. Reasons state what would make someone prefer the runner-up, so the veto is informed.
+  outcome: null
+
+- id: ep-inbox-triage-self-answer-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: "also i think you can filter some of the decisions for yourself, decisions
+    which you can answer yourself."
+  what_it_changes: >-
+    His inbox stops being every open question and becomes the ones only he can answer. Anything his own
+    recorded words, a ledgered law, or today's boundaries already decide is mine to rule and record.
+  the_pass: 22 open -> 14 open. Nine closed — eight inbox entries and one pending-founder item — each
+    citing the exact thing that already decided it.
+  self_answered_with_citations: >-
+    [0] COLD-OPEN FIG — his own two words compose the route: "inpaint" for the still (2026-08-10) plus
+    node 002b's condition that the growth be SEEN. Ruled: inpaint a small fig into frame 1, motion grows
+    it. Nothing new decided.
+    [6] GOBLIN DEFINITION — a word-ORDER bug, not taste: `patchwork cloak` beside `bald head` sewed
+    patches into the skull. The cloak is clothing and moves to each beat's clause; his frozen
+    `green skin, bald head` is untouched.
+    [10] STAGING DIRECTION — already answered by him on 2026-08-12, "a consistent goblin standing still
+    is a usable base... yes". Same question in older words; closed rather than asked twice.
+    [14] and [16] — informational, never decisions. The environment paragraph's two measured costs and
+    the name-what-is-in-the-shot law are both ledgered and need no ruling.
+    [20] THREE PLANT BEATS — done; all three plated and handed to motion. The one live question in them
+    (leaf shape) keeps its own entry.
+    [23] — duplicate of the plates entry beside it, folded in.
+    [28] SEED VARIATION — steward-owned under today's boundary: I pick the best of four and show the
+    pick. Exactly the class he told me to stop asking about.
+    pending-founder `ep2-staging-direction` — the same question as [10], retired on the same ruling.
+  what_I_deliberately_did_NOT_take: >-
+    Beat 16 in/out and beat 04's length (re-timing touches an approved script), every script approval,
+    the licence entry, the cast candidates, the photo he offered to take, the clip verdicts, and the
+    plan page. Taste — what a thing looks like, what ships, what a character IS — and the reserved list
+    stay his however answerable they look. The temptation on [4] was real and it is a script change.
+  the_risk_I_am_carrying: >-
+    A self-answer is a prediction about his taste wearing a citation. Each one names the exact word or
+    law it rests on so he can overturn it in a sentence, and every one is recorded here rather than
+    just applied. If he overturns even one, the rule to learn is that the citation was doing less work
+    than I thought.
+  outcome: resolved

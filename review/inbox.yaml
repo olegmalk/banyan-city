@@ -7,6 +7,12 @@
   episode: 2
   verdict_hint: e.g. "tiny fig in frame 1, grows larger" (inpaint start + visible growth), or relax the
     growth condition, or keep trying attached growth
+  resolved:
+    date: '2026-08-13'
+    verdict: 'STEWARD-ANSWERED under his own two words. Your word for the STILL was "inpaint" (2026-08-10)
+      and node 002b''s condition requires the growth to be SEEN. Those compose to exactly one route and
+      I am taking it: inpaint a SMALL fig into frame 1, then let the motion prompt grow it. Nothing new
+      is decided — the still gets the fig your way, the clip satisfies the condition your script sets.'
 - what: Episode 3 - two drafted continuations await your read; both animatics play online (003a at this
     link, 003b at /watch/003b-one-leaf-for-yes.html)
   url: /watch/003a-oncall-rotation.html
@@ -53,6 +59,12 @@
   episode: 2
   verdict_hint: reorder the words / move the cloak out of the identity into each beat / leave it and pay
     tokens every beat
+  resolved:
+    date: '2026-08-13'
+    verdict: STEWARD-ANSWERED — this was a word-ORDER bug, not a taste question. "patchwork cloak" sat
+      next to "bald head" in the identity slot and the model sewed patches into his skull. The cloak is
+      clothing, so it moves out of the identity slot and into each beat's own clause; "green skin, bald
+      head" stays frozen as your ruling left it. Your words are untouched — only their position changed.
 - what: The sapling will not stand next to the goblin - a model limit, not a prompt bug (beats 02,03,13,15,17,19,20);
     needs a tool choice, not wording
   url: /review/ep2-picks/morning-0812-wave2.html
@@ -99,6 +111,12 @@
   episode: 2
   verdict_hint: a consistent character standing still is an acceptable BASE, movement added after / the
     drawing itself has to carry the staging
+  resolved:
+    date: '2026-08-13'
+    verdict: 'ALREADY ANSWERED BY YOU, 2026-08-12: ''my answer to "is a consistent goblin standing still
+      a usable base?" is yes.'' This entry asked the same question in older words. Closing as answered
+      rather than asking you twice — and tonight''s guard clips are that ruling working: the still holds
+      the character, the clip supplies the action.'
 - what: Beat 02 needs a new still before motion can touch it - it is the one beat whose CHARACTER fails
     in the frame itself (fangs, a dog-shaped creature, two-to-four duplicated goblins), so naming scenery
     cannot rescue it. Every other blocked beat is now unblocked at the motion stage; this one is waiting
@@ -143,6 +161,11 @@
   kind: decision
   episode: 2
   verdict_hint: fine / keep him larger in frame even if the world shrinks
+  resolved:
+    date: '2026-08-13'
+    verdict: 'Informational, not a decision — closing. The environment paragraph now has TWO measured
+      costs, both recorded: it pushes the character smaller (beat 17) and it pulls the palette to dusk
+      (my b05 clip). It is carried with brightness bans and dropped entirely on close-ups. No ruling needed.'
 - what: Beat 02 - the rerun you asked for had ALREADY RENDERED when you called it broken; it was never
     put on a page. Fangs, the dog-shaped creature and the duplicated goblins are all gone (0 of 16 each),
     and the old prompt turns out to have literally asked for each of them. Pick the frame that becomes
@@ -166,6 +189,11 @@
   kind: decision
   episode: 2
   verdict_hint: no action needed / tell me which beats to re-cut once placement is controlled
+  resolved:
+    date: '2026-08-13'
+    verdict: Informational — closing. 'Name what is in the shot' is now a ledgered law with 7-of-7 behind
+      it, and tonight it extended to a named CHARACTER (a second guard arrived on request). Nothing here
+      waits on you.
 - what: 'Episodes 3, 4, 5, 6A and 7A are approved under the delegation you gave today, and each now has
     a one-minute digest on the approvals page - premise, state change, hook, who is in it, flags. Two
     things want your eye: 006a names the goblin *Jerry* for the first time in six episodes, and the 132
@@ -208,6 +236,11 @@
   kind: decision
   episode: 2
   verdict_hint: have the stills lane make these three / leave them
+  resolved:
+    date: '2026-08-13'
+    verdict: 'DONE, closing. All three plant beats have plates: 12 was already passing and unshown, 18
+      and 21 were re-rendered against their faults and handed to the motion lane. The one real question
+      left out of them is the leaf shape, and it lives in its own entry below rather than here.'
 - what: 'EPISODE 1 AUDIT + a rebuilt cut (v42). Two things were wrong with every cut you have screened:
     the title card said BANYAN CITY (your Sapling ruling landed a day after the last build) and your beat-06
     zoom-out was rendered but never wired in - the cut still carried the push-in you refused. Both fixed.
@@ -250,6 +283,10 @@
   episode: 2
   verdict_hint: b12-r4-s2 is good enough to animate / the leaf shape is wrong and it needs another round
     / pick a different seed
+  resolved:
+    date: '2026-08-13'
+    verdict: Folded into the plates entry below it — same three beats, same sheet, one question instead
+      of two. Closing this one as a duplicate so your list is shorter, not so the question goes away.
 - what: 'The other two plate beats are fixed and handed to motion. Beat 21 went from 0 of 4 to 4 of 4
     (the leaf is attached to a stem now - nothing had ever said it was). Beat 18''s fruit no longer has
     a FACE and is no longer doubled, 4 of 4, though two seeds now draw a leaf instead of a fig because
@@ -304,6 +341,11 @@
   kind: clip
   episode: 2
   verdict_hint: pick a take per beat / tell me to keep chasing repeatability
+  resolved:
+    date: '2026-08-13'
+    verdict: 'STEWARD-OWNED, closing. Seed-to-seed variation is mine to absorb: I pick the best of four
+      per beat and show you the pick. Under the boundary you set today this is exactly the class I should
+      not be asking you about.'
 - what: 'DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold
     open needs one picture: the goblin beside his sapling. Seven rounds say this checkpoint will not draw
     that sapling. FOUR rounds of rewording put the sapling in his hand instead of in the ground (best
@@ -404,17 +446,16 @@
     (he points, decisive and wrong, and holds it) is the best clip this lane has made. 09 works entirely
     in the face and framed itself closer on its own. 11 walks both men away arguing. 05 repeats on a new
     seed. Beats 06 and 10 have MY fault: I told the clipboard to fill the frame, so the model inflated
-    the prop into a slab instead of moving the camera - one re-round fixes both. Also settled: two
-    guards hold fine through a clip, so beat 08''s two-character wall is a CASTING problem, not a
-    capacity one'
+    the prop into a slab instead of moving the camera - one re-round fixes both. Also settled: two guards
+    hold fine through a clip, so beat 08''s two-character wall is a CASTING problem, not a capacity one'
   url: /review/ep2-picks/b05-register-0812
   since: '2026-08-13'
   kind: clip
   verdict_hint: which of 07/09/11/05 are cuttable as-is / what to fix first / say the word on the sash
     and badge, which are still mine and not yours
-- what: THE PLAN - a standing page for "what you will generate, what i will review, when, how long".
-    Episode 2 to published is five phases; your two passes are the only variable, because every machine
-    phase runs unattended and finishes the same day. Episode 3 and 4-7A are the same loop behind it
+- what: THE PLAN - a standing page for "what you will generate, what i will review, when, how long". Episode
+    2 to published is five phases; your two passes are the only variable, because every machine phase
+    runs unattended and finishes the same day. Episode 3 and 4-7A are the same loop behind it
   url: /review/plan
   since: '2026-08-13'
   kind: decision

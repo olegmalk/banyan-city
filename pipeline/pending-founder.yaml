@@ -1,145 +1,56 @@
-# The founder's inbox — decisions only the founder can make. The status board
-# renders these publicly, so write them for a STRANGER: no filenames, no
-# internal jargon, and a public link whenever the thing can be looked at.
-#
-# The rule that outranks all of that, and it is not optional (2026-08-07):
-# `link_text:` must name what is actually behind `public:`. On 2026-08-06 this
-# item sent the author to the published July cut of episode 1 while asking him to
-# pass the August remake, and he watched the wrong film. A link that is not the
-# thing is worse than none. Where a decision is about something UNPUBLISHED, say
-# so and say where his own copy is, even if that means naming a local file.
-#
-# What changed on 2026-08-07 (D17): working cuts may now publish to the unlisted
-# review area, so "the only copy is on the author's laptop" is no longer the
-# default answer for footage he has not passed — /review/ is. Media he has not
-# passed still never becomes THE episode without his verdict.
-#
-# HOW AN ITEM LEAVES: it is deleted. There is no `retired:` list and there never
-# has been — the board renders `pending:` and nothing else, so a "retired" entry
-# would either be invisible or be a second inbox. The reason goes in the commit
-# message and in STATE.md, where a reader can find it; the deletion goes here.
-#
-# Removed 2026-08-07, both in the same commit as the founder's "r3-s3 and retire":
-#   002b-b01-frame  ANSWERED. He picked r3-s3 for episode 2's opening frame; it is
-#                   promoted to 002b-first-citizen/stills/01-cold-open.png and four
-#                   queue entries lost their founder gate with it.
-#   hires-review    RETIRED UNANSWERED, and it should never have been asked. Opened
-#                   13:32 on 2026-07-30 (c999476) off a plan, not artifacts; the plan
-#                   was cancelled by his own pushback nine hours later ("are we just
-#                   doing unnecessary work?", 284bbdf). What exists is 20 PNGs on
-#                   origin/farm-results-msi covering beats 11-15 only — new pictures
-#                   at a bigger size, not sharper versions of the 15 approved shots
-#                   the item described — none with a provenance sidecar (8d7ceed:
-#                   farm_worker.py:430 writes none), so none publishable. The episode
-#                   ships at 720x1280 and the canon stills are already 832x1216, so
-#                   there is no consumer for the resolution either. Full trace in
-#                   STATE.md 2026-08-07.
-#
-# Removed 2026-08-08:
-#   ep2-beat16-line ANSWERED, and the answer was to change nothing: "for beat 16's
-#                   line, lets keep 'I can't even wave.'" The replacement we
-#                   proposed is declined and the line stands, which also releases
-#                   the approval condition he set on 2026-08-03 asking for it to be
-#                   rewritten. Recorded in the script's approval leaf
-#                   (002b-t0-c.yaml revisions) and on review item 09, which stays
-#                   published as the record. Beat 16's voice take stopped being a
-#                   question for him with it.
-#   ep2-beat01-line ANSWERED, and it is the last of episode 2's narration. He asked
-#                   for one listen and gave one verdict: "yeah its good" — beat 1's
-#                   second take, the deadpan read on the wording he picked, is
-#                   approved. The take he refused stays beside it in
-#                   clips/vo-archive/ (R6). With this, episode 2's narration is
-#                   COMPLETE and founder-approved: 17 takes plus beat 16, all in the
-#                   voice he passed on beat 03, beats 02/19/21 silent by design.
-#                   His words live on review item 08, which stays published as the
-#                   record; the VO manifests have no per-take approval field and one
-#                   was not invented for this. Full trace in STATE.md 2026-08-08.
-#
-# Removed 2026-08-09, on the founder's "the status page is wrong btw":
-#   ep2-scripts     ANSWERED SIX DAYS AGO, and the board went on asking. His words,
-#                   2026-08-03, recorded in
-#                   genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
-#                   (`approved_by: founder`, `approved_on: 2026-08-03`): "approve
-#                   002b except.. we need to make SURE the fig growing on the sapling
-#                   is mentioned, last time we generated 002b it just.. appeared.
-#                   also, the sapling was able to flail a leaf in episode 1? why
-#                   couldnt it do that in 002b?" Both conditions were carried out and
-#                   both of his later revisions to the same script (beats 1 and 16,
-#                   2026-08-08) are recorded in that leaf beside the approval.
-#                   Everything the item said this read would unblock has since
-#                   happened on it: 21 shots, 18 voice takes in the voice he passed,
-#                   80 candidate frames and a first-pass cut he can watch on the
-#                   review page. The item was telling strangers the next episode was
-#                   blocked on a read that had already unblocked it — six days of the
-#                   public board being wrong because deleting an entry is a hand step
-#                   and nobody took it. Nothing about episode 3 is retired with it;
-#                   that item stays below and stops claiming to wait on this one.
-#
-# Removed 2026-08-12, on the founder's "why is it showing these old tasks?":
-#   v6-verdict      ANSWERED, and the answer was yes. He watched the rebuilt cut on
-#                   2026-08-11 and said publish; episode 1 was promoted to canon the
-#                   same hour — ninety-four seconds, fifteen beats (227c047, leaf
-#                   001-t3-e) — and it is the film playing on /watch today. The board
-#                   went on asking for a verdict on a film he had already passed, and
-#                   asking it in the loudest slot. Two of the notes it recited are
-#                   also spent: he cleared the licence question that morning (D16)
-#                   and the cut ships with the camera rate he confirmed. Not retired
-#                   with it: the one drawing he has never picked, which is the beat 6
-#                   item below and now changes a PUBLISHED episode rather than
-#                   unblocking an unpublished one.
-#   bakeoff-pick    RETIRED UNANSWERED, because the question stopped being the one
-#                   that decides anything. It asked him to pick a drawing model off
-#                   four sheets rendered the old way — one prompt, one shot, four
-#                   engines. What actually settled the show's look since is a
-#                   different mechanism on the model already in the house seat:
-#                   beats are now drawn conditioned on a reference PICTURE of the
-#                   character rather than on adjectives, and he has been giving
-#                   verdicts on that pipeline's output all week, through 2026-08-12
-#                   (ledger ep2-consistency-verdicts-0812). Answering the old sheet
-#                   would not move a single frame the show is drawing now. The
-#                   sheets stay published at /lab/model-bakeoff; if he wants the
-#                   comparison re-run on the current recipe, that is a new item and
-#                   a new render, not this one.
-#   animegen-       RETIRED MOOT, and it said so itself: "NOTHING IS WAITING ON THIS
-#   speedup-licence TODAY". It asked whether a licence the makers published in their
-#                   code repository but not on the download page counts as proof for
-#                   published footage. The file in question only fits the larger
-#                   anime model, which has been parked since 2026-08-04 for not
-#                   fitting the machine; motion has since moved to LTX (a separate
-#                   licence, and his own D16 call on 2026-08-11), and stills go
-#                   through the smaller model where the fast file does not apply.
-#                   Nothing in the machine can use it, so the rule can be settled
-#                   the day something needs it. NOT resolved by D16 and not recorded
-#                   as resolved: D16 is the LTX question. The standing rule is
-#                   unchanged — nothing publishes unless every part of it has a
-#                   licence we can quote — and the evidence stays written up in
-#                   pipeline/research/models-licence.md.
 pending:
-  - id: ep2-staging-direction
-    title: "Decide how the characters get their ACTION back, now that they hold still"
-    detail: "The characters hold their identity now, and the trick that did it also freezes them into one standing pose, so where the action comes from is a direction only you can set. Conditioning a beat on a picture of the character, rather than on words describing him, gives back one goblin across ten beats — the same face, ears, colour and coat — and that was the fault you kept having to review. It came at a cost nobody expected: he arrives in the reference's own pose. He stands, arms down, facing the camera. He does not tip his head back at the sapling, does not raise the fig, and where a beat needs a second character the reference tends to suppress him rather than merely fail to draw him. Three settings were tried against it and none separated the pose from the likeness. Then a moving take answered part of it by accident: given one of these standing portraits, the motion pass had him perform the beat — chin up, eyes up, mouth working — without his face drifting into someone else's, and it invented a landscape behind him where the drawing had left blank white. So the two routes are both real and the choice between them is a direction, not a verdict on a frame: is a consistent character standing still an acceptable BASE, with the movement added afterwards by the motion pass, or does the drawing itself have to carry the staging? The answer decides how the remaining beats of episode 2 are made. Two honest caveats on the moving route: it flattens the style away from the show's look, and it does not conjure a sapling that was never drawn."
-    public: "review/ep2-picks/consistency-0812/"
-    link_text: "the same beat before and after, and the standing pose it comes with"
-    since: 2026-08-12
-  - id: ep2-guard-register
-    title: "Say what the guards ARE — the drawings are correct and the tone is wrong"
-    detail: "Every fact you set for the guards now lands in the picture, and what comes out is two solemn men doing paperwork rather than the silly harmless pair you wrote. Bald, tunic, clipboard, two men you can tell apart — all of it correct, and the tone wrong. The written brief calls for a silly harmless bureaucrat, and that phrase has now scored nothing in four rounds — it was sent word for word into a round and still drew a hard, muscular man. So the wording is known not to bind, and a fifth sheet is not the fix. This is a taste call and it is yours by rule: either the solemn version is fine and we stop chasing the word silly, or the tone matters more than the facts do, in which case the casting is wrong and needs your own words for who these two are — the way you fixed the goblin by describing him rather than by rejecting drawings."
-    public: "review/ep2-picks/morning-0812-wave2.html"
-    link_text: "this morning's sheets, the guards among them, with what each round was testing"
-    since: 2026-08-12
-  - id: ep2-beat04-length
-    title: "Choose how to shorten the six-second beat, because six seconds breaks the face"
-    detail: "One of episode 2's beats is written for six seconds on a close-up, and six seconds is measured to destroy the character's face where three seconds comes out clean. The two takes were rendered against each other this morning: the long one has both eyes gone, and not only at the end — frame for frame it is already coming apart a third of the way in, so it cannot be rescued by trimming afterwards. The shorter clip has to be asked for. That makes this a writing and editing call rather than a machine setting, and it is yours: the beat can become two shots, or be written shorter, or keep its length by re-timing the narration under it. Nothing else in the episode turns on it — the other beats' trouble is staging, and no clip length fixes that. The two takes are on the render machine and not published anywhere you can click; say the word and they go on the review page beside each other."
-    since: 2026-08-12
-  - id: ep1-frame-picks
-    title: "Choose the last drawing in episode 1 — the one shot you have never passed"
-    detail: "Fourteen of episode 1's fifteen shots stand on a drawing you chose and one does not — scene 6, the shot you refused every candidate for, which went out in the published episode anyway. You turned that round down flat — \"none of the beat 6 images will work\" — and named two ways out, tall grass or no ground at all. Both are now drawn, twice over, sixteen frames on one sheet, and none of them puts flat ground or a city in the picture. What changed on 2026-08-11 is the stake: the episode went out. It is canon and playing on the site, running scene 6 on a provisional frame you never passed. So this is no longer the thing standing between you and a finished film — it is the one shot in a published episode that is not yours, and picking a frame replaces it. Name a frame, or name an arm, or say neither and why. Twenty more sheets for episode 2 sit on the same page; any order is fine, and a sheet you skip simply stays a set of candidates."
-    public: "review/index.html#item-10"
-    link_text: "the sheet itself — sixteen frames, one row per option, on your morning checklist"
-    since: 2026-08-07
-  - id: ep3-scripts
-    title: "Read episode 3 — the script that grows out of the episode 2 you approved"
-    detail: "Episode 3's script is written and unread, and nothing may be filmed from it until the author has read it. This item used to say it was waiting on the episode 2 choice; that is no longer true — he read the first-citizen script and approved it on 2026-08-03, and episode 2 has been made from it ever since. What follows it is one script rather than three — the other two episode 3 candidates grow out of the episode 2 branches he did not take, and they stay on the tree unread, which is how a branching story is supposed to work. The page below is the whole node: the script, its state change, and the silent storyboard reel already built from it, so the read and the look are the same click. Nothing may be filmed from it until he has read it, and with episode 1 published and episode 2 in the machine, this read is what keeps a third episode possible at all."
-    public: "sapling/003b-one-leaf-for-yes.html"
-    link_text: "the episode 3 script on the tree, with the storyboard reel built from it"
-    since: 2026-07-30
+- id: ep2-guard-register
+  title: Say what the guards ARE — the drawings are correct and the tone is wrong
+  detail: 'Every fact you set for the guards now lands in the picture, and what comes out is two solemn
+    men doing paperwork rather than the silly harmless pair you wrote. Bald, tunic, clipboard, two men
+    you can tell apart — all of it correct, and the tone wrong. The written brief calls for a silly harmless
+    bureaucrat, and that phrase has now scored nothing in four rounds — it was sent word for word into
+    a round and still drew a hard, muscular man. So the wording is known not to bind, and a fifth sheet
+    is not the fix. This is a taste call and it is yours by rule: either the solemn version is fine and
+    we stop chasing the word silly, or the tone matters more than the facts do, in which case the casting
+    is wrong and needs your own words for who these two are — the way you fixed the goblin by describing
+    him rather than by rejecting drawings.'
+  public: review/ep2-picks/morning-0812-wave2.html
+  link_text: this morning's sheets, the guards among them, with what each round was testing
+  since: 2026-08-12
+- id: ep2-beat04-length
+  title: Choose how to shorten the six-second beat, because six seconds breaks the face
+  detail: 'One of episode 2''s beats is written for six seconds on a close-up, and six seconds is measured
+    to destroy the character''s face where three seconds comes out clean. The two takes were rendered
+    against each other this morning: the long one has both eyes gone, and not only at the end — frame
+    for frame it is already coming apart a third of the way in, so it cannot be rescued by trimming afterwards.
+    The shorter clip has to be asked for. That makes this a writing and editing call rather than a machine
+    setting, and it is yours: the beat can become two shots, or be written shorter, or keep its length
+    by re-timing the narration under it. Nothing else in the episode turns on it — the other beats'' trouble
+    is staging, and no clip length fixes that. The two takes are on the render machine and not published
+    anywhere you can click; say the word and they go on the review page beside each other.'
+  since: 2026-08-12
+- id: ep1-frame-picks
+  title: Choose the last drawing in episode 1 — the one shot you have never passed
+  detail: 'Fourteen of episode 1''s fifteen shots stand on a drawing you chose and one does not — scene
+    6, the shot you refused every candidate for, which went out in the published episode anyway. You turned
+    that round down flat — "none of the beat 6 images will work" — and named two ways out, tall grass
+    or no ground at all. Both are now drawn, twice over, sixteen frames on one sheet, and none of them
+    puts flat ground or a city in the picture. What changed on 2026-08-11 is the stake: the episode went
+    out. It is canon and playing on the site, running scene 6 on a provisional frame you never passed.
+    So this is no longer the thing standing between you and a finished film — it is the one shot in a
+    published episode that is not yours, and picking a frame replaces it. Name a frame, or name an arm,
+    or say neither and why. Twenty more sheets for episode 2 sit on the same page; any order is fine,
+    and a sheet you skip simply stays a set of candidates.'
+  public: review/index.html#item-10
+  link_text: the sheet itself — sixteen frames, one row per option, on your morning checklist
+  since: 2026-08-07
+- id: ep3-scripts
+  title: Read episode 3 — the script that grows out of the episode 2 you approved
+  detail: 'Episode 3''s script is written and unread, and nothing may be filmed from it until the author
+    has read it. This item used to say it was waiting on the episode 2 choice; that is no longer true
+    — he read the first-citizen script and approved it on 2026-08-03, and episode 2 has been made from
+    it ever since. What follows it is one script rather than three — the other two episode 3 candidates
+    grow out of the episode 2 branches he did not take, and they stay on the tree unread, which is how
+    a branching story is supposed to work. The page below is the whole node: the script, its state change,
+    and the silent storyboard reel already built from it, so the read and the look are the same click.
+    Nothing may be filmed from it until he has read it, and with episode 1 published and episode 2 in
+    the machine, this read is what keeps a third episode possible at all.'
+  public: sapling/003b-one-leaf-for-yes.html
+  link_text: the episode 3 script on the tree, with the storyboard reel built from it
+  since: 2026-07-30
