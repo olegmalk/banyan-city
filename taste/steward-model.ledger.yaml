@@ -15584,3 +15584,39 @@
     The durable fix is a guard in box_enqueue that refuses a job whose payload paths collide
     with an already-queued job's. pipeline code is outside this lane; passed to team-lead.
   outcome: null
+
+- id: ep2-b01-fig-shape-SOLVED-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    THE TEARDROP CLAUSE WORKS. Beat 01 seedB came back with an unmistakable fig — wider and
+    heavier at the bottom, a narrow neck where it meets the stem, swelling across 233 frames.
+    Not a ball, not an apple. The founder's "weird green balls" note is answered by wording.
+  why_this_and_not_b18_is_the_evidence: >-
+    b01 carried the clause in a CLEAN prompt. b18 carried it alongside "ONE SINGLE ROUND GREEN
+    FIG" three times in capitals, which is why b18 has no verdict. The valid test turned out
+    to be the sweep job, not the sample I designed — the sample was the contaminated one.
+  seed_status: >-
+    ONE SEED ONLY, and I am not calling it solved-at-both until the twin lands. The seed-A half
+    was destroyed by the payload collision (see law-payload-dirs-are-shared-state-0813) and is
+    re-queued as ep2-b01-shape-a2-0813.
+  three_defects_the_same_clip_exposed_all_of_them_mine: >-
+    (1) "under low warm amber light" washed the shot golden when beat 01's own intent line asks
+    for a GREEN field — I asserted the opposite of the beat and the model obeyed. (2) "it slowly
+    DARKENS and settles heavier" turned the fig nearly black; the beat wants a green fig
+    swelling. (3) "on a fixed tripod" is BACK, in a job derived from a parent that never got the
+    2026-08-03 fix, where I proved the phrase gets drawn as a scene object — three of five clips
+    with it, none of six after. No tripod appeared this time, which is luck and not safety.
+  a_defect_removed_once_is_not_removed: >-
+    This is the second time today an old fix failed to reach a new job because the job was
+    derived from a parent that predates the fix. The teardrop clause not propagating was the
+    first. Derivation inherits defects as faithfully as it inherits the recipe, and the fix
+    lives in whichever file I happened to edit.
+  fixed_in: >-
+    ep2-b01-cold-r2-0813 + twin. Three changes at once, deliberately: each is the removal of a
+    defect proven elsewhere, not a new hypothesis, and the clause under test is untouched.
+  still_open: >-
+    The clip is heavily photographic — bokeh, volumetric light rays, depth of field — while the
+    negative already bans "photorealism, 3D render look, photorealistic, photograph". Those bans
+    are losing to something. Not chased tonight; recorded so it is not rediscovered.
+  outcome: null
