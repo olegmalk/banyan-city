@@ -1214,3 +1214,4 @@
 19:07:11Z STARTED task=ep2-b05-world-0813-1786647959 attempt=1 on box-runner
 19:13:30Z DONE task=ep2-b05-world-0813-1786647959 rc=0 artifacts=1
 19:13:36Z STARTED task=ep2-b18-figfeat-0813-1786648376 attempt=1 on box-runner
+19:19:54Z DONE task=ep2-b18-figfeat-0813-1786648376 rc=0 artifacts=2
