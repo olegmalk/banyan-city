@@ -1136,7 +1136,7 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b04_train_r1; nothing else in it moved.
     authored_b04_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, face
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, face
       filling the frame, cheeks puffed, eyes darting, ears twitching, empty hands. Close-up,
       soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
       very aesthetic No girl, no chibi, no big head, no round baby face, no toddler, no
@@ -2702,7 +2702,7 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b13_idfix_r2; nothing else in it moved.
     authored_b13_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, sits
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, sits
       hugging his knees in the small patch of shade beside a tiny two-leaf seedling rooted
       in the grass. Static camera, medium shot, bright midday sunlight, cinematic lighting,
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
@@ -2812,7 +2812,7 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_staged; nothing else in it moved.
     authored_b14_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       clawed fingers picking at dirt and flicking pebbles, face above them, eyes glancing
       away embarrassed, green field and treeline behind. Low close-up, cinematic lighting,
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
@@ -2963,7 +2963,7 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b15_idfix_r2; nothing else in it moved.
     authored_b15_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       talks up at a tiny sapling with broad round cotyledon leaves beside him, green field
       behind. Warm midday light, cinematic lighting, detailed, newest, masterpiece, best
       quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
