@@ -62,6 +62,13 @@ review/**/*.jpg
 review/**/*.mp3
 review/**/*.wav
 
+# box_enqueue.py's record of which box payload paths it has handed out, so a
+# second job cannot overwrite a queued job's prompt before it runs. Machine-local
+# by nature: it describes what THIS laptop sent to the card, and committing it
+# would have every lane's copy contradicting the others. Append-only; deleting it
+# only costs the guard its memory of enqueues younger than the grace window.
+pipeline/.box-payload-index.jsonl
+
 # poll_decisions.py's "when did we last look" note. Not the watermark — the
 # watermark is pipeline/founder-answers.jsonl, whose comment ids are what stop a
 # reply being recorded twice. This file is a convenience, so it is local-only and

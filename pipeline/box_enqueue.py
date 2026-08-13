@@ -15,6 +15,12 @@ the three failures this script exists to prevent:
   3. A half-written job file being claimed mid-copy. The runner claims by
      renaming out of ready/, and scp writes in place -- so the file lands in a
      staging dir and is MOVED into ready/ as the last step.
+  4. Two queued jobs whose `payload:` blocks name the SAME box paths. Payloads
+     are written at ENQUEUE time, so the second enqueue overwrites the first
+     job's prompt before either job runs, and the box renders the second job's
+     picture under both names. On 2026-08-13 ep2-b01-shape and its twin did
+     exactly that, five seconds apart, into one parent-named directory; only the
+     declared-artifact check noticed. See reserve_payload/payload_collisions.
 
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--dry-run]
     python3 pipeline/box_enqueue.py --list        # what is queued right now
@@ -27,6 +33,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +41,18 @@ SSH_HOST = "rtx5090"
 QUEUE_ROOT = r"C:\banyan-queue"
 STAGING = QUEUE_ROOT + r"\incoming"
 NODES = os.path.join(REPO, "genomes", "sapling", "nodes")
+
+# Where this machine remembers which box payload paths it has handed out. The
+# box cannot answer the question itself: `to_job` deliberately does not copy
+# `payload:` into the job json, so a queued job on the card carries no record of
+# the files it was given. Local, gitignored, append-only -- see reserve_payload.
+PAYLOAD_INDEX = os.path.join(REPO, "pipeline", ".box-payload-index.jsonl")
+
+# How long a reservation counts as live on its own, before the box queue is the
+# only thing keeping it alive. It has to outlast the gap between reserving a
+# path and the job appearing in ready/ -- an scp of five payload files plus a
+# move, seconds -- because that gap is precisely when the twin slipped in.
+RESERVE_GRACE_SEC = 120
 
 
 def ssh(command: str, timeout: int = 90):
@@ -144,6 +163,141 @@ def gate_checks(spec: dict, job: dict) -> list:
     return problems
 
 
+def norm_dest(dest: str) -> str:
+    """A box path in the one spelling two specs can be compared in.
+
+    The box is Windows: `C:\\banyan-farm\\X` and `c:/banyan-farm/x` are one file,
+    and a spec written by hand may use either. Comparing the raw strings would
+    let a collision through on nothing but a capital letter.
+    """
+    s = str(dest).strip().replace("/", "\\").rstrip("\\")
+    while "\\\\" in s:
+        s = s.replace("\\\\", "\\")
+    return s.lower()
+
+
+def payload_dests(spec: dict) -> list:
+    """The box paths a spec writes before its job runs."""
+    return [str(d) for d in (spec.get("payload") or {})]
+
+
+def payload_collisions(mine: dict, entries: list, live_ids, now: float,
+                       grace: float = RESERVE_GRACE_SEC) -> list:
+    """Problems naming every payload path already claimed by a live job.
+
+    `mine` is a reservation dict (rid/job/ts/dests); `entries` are the ones
+    already in the index, which on the second (post-reservation) call includes
+    `mine` itself -- matched by `rid`, so a job never collides with its own
+    claim. `live_ids` is the set of job ids sitting in the box's ready/ and
+    running/ right now, or None for "could not look", which drops the check back
+    to the grace window alone.
+
+    A recorded claim blocks when its job is still queued on the box, or when it
+    is younger than `grace` -- the second half is what catches a twin enqueued
+    during the seconds before its sibling reaches ready/, which is the whole
+    original bug and the one case the box could not have answered.
+
+    Two claims written in that same gap would otherwise refuse each other and
+    both stall, so ties go to the earlier (ts, job): the first writer proceeds,
+    the second is told whose path it is. Refusal is by PATH, not by id -- a job
+    re-enqueued while its previous run is still queued is refused too, because
+    the harm is identical (its payload overwrites what the queued job will read)
+    and it stops being a collision the moment that run leaves the queue.
+    """
+    mine_paths = {norm_dest(d): d for d in mine.get("dests") or []}
+    problems = []
+    for e in entries:
+        if e.get("rid") == mine.get("rid"):
+            continue
+        queued = live_ids is not None and e.get("job") in live_ids
+        reserved = (now - float(e.get("ts") or 0)) < grace
+        if not (queued or reserved):
+            continue
+        for dest in e.get("dests") or []:
+            key = norm_dest(dest)
+            if key not in mine_paths:
+                continue
+            if not queued and (mine.get("ts"), mine.get("job")) < (e.get("ts"), e.get("job")):
+                continue  # we claimed it first; the other writer is the one that yields
+            problems.append(
+                "BLOCKED: payload path %s is already claimed by %s job %s -- payloads "
+                "are written at enqueue time, so this one would overwrite that job's "
+                "inputs before it runs and the box would render one clip under both "
+                "names. Give this job its own directory or its own filenames."
+                % (mine_paths[key], "queued" if queued else "just-enqueued", e.get("job")))
+    return problems
+
+
+def read_payload_index(path: str = None) -> list:
+    """Every reservation this machine has recorded. Missing file = none yet.
+
+    A damaged line is skipped rather than fatal: the index is a guard's memory,
+    and one unparseable row must not become the thing that stops every render.
+    """
+    path = path or PAYLOAD_INDEX  # read at call time so a test can redirect it
+    entries = []
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(row, dict) and row.get("dests"):
+                    entries.append(row)
+    except OSError:
+        pass
+    return entries
+
+
+def reserve_payload(mine: dict, path: str = None) -> None:
+    """Claim this job's payload paths BEFORE a byte of payload is sent.
+
+    Recording after the scp would leave the claim unwritten during the seconds
+    the scp takes -- which is the window the twin arrived in. One line, one
+    append, so a peer lane appending at the same moment cannot interleave with
+    it or clobber it the way a rewritten json would.
+    """
+    path = path or PAYLOAD_INDEX
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(mine, ensure_ascii=False) + "\n")
+
+
+QUEUE_MARKER = "QUEUE-LISTED"
+
+
+def parse_queue_listing(stdout: str):
+    """Job ids out of a `dir /b` of ready/ and running/, or None for "no answer".
+
+    `dir /b` exits 1 on an EMPTY directory, so a return code cannot tell an empty
+    queue from a dead ssh -- and reading a dead ssh as an empty queue is what
+    would wave the next collision through. The marker echoed after both listings
+    is the difference: it only appears if cmd ran our line to the end.
+    """
+    out = stdout or ""
+    if QUEUE_MARKER not in out:
+        return None
+    ids = set()
+    for line in out.splitlines():
+        line = line.strip()
+        if line.lower().endswith(".json"):
+            ids.add(line[:-5])
+    return ids
+
+
+def queued_job_ids():
+    """(ids, None) for what is in ready/ and running/, or (None, why-not)."""
+    r = ssh('dir /b %s\\ready\\*.json 2>nul & dir /b %s\\running\\*.json 2>nul & '
+            'echo %s' % (QUEUE_ROOT, QUEUE_ROOT, QUEUE_MARKER))
+    ids = parse_queue_listing(r.stdout)
+    if ids is None:
+        return None, (r.stderr or r.stdout or "ssh returned nothing").strip()[:200]
+    return ids, None
+
+
 def send_payload(payload: dict) -> None:
     """Write a spec's `payload:` files onto the box before the job goes live.
 
@@ -156,8 +310,15 @@ def send_payload(payload: dict) -> None:
     Files land BEFORE the job is moved into ready/, so the runner can never
     claim a job whose inputs are still in flight.
     """
-    for dest, body in (payload or {}).items():
-        local = os.path.join("/tmp", "payload-" + os.path.basename(dest))
+    if not payload:
+        return
+    # Its own directory, not /tmp/payload-<basename>: the box-side collision this
+    # script now refuses had a local twin sitting right here. Two lanes sending a
+    # payload named b01-fig-prompt.txt shared one staging file, so one lane's text
+    # could be scp'd under the other's name -- the same swap, one machine earlier.
+    stage = tempfile.mkdtemp(prefix="box-payload-")
+    for dest, body in payload.items():
+        local = os.path.join(stage, os.path.basename(dest))
         with open(local, "w", encoding="utf-8", newline="\n") as fh:
             fh.write(body if isinstance(body, str) else json.dumps(body, indent=2))
         parent = dest.rsplit("\\", 1)[0]
@@ -215,23 +376,62 @@ def main(argv=None) -> int:
     if not args.spec:
         ap.error("give at least one spec, or --list")
 
+    # What the box has queued right now, read ONCE. A real enqueue may not
+    # proceed without it: writing payloads while unable to check whose paths
+    # they are is the failure this guard exists for, and "the check could not
+    # run" is not a pass. A dry run stays usable off the network -- it writes
+    # nothing -- and says out loud that it only checked the grace window.
+    live_ids = None
+    if args.dry_run:
+        print("(dry run: box queue not read -- collision check covers only "
+              "enqueues from the last %ds)" % RESERVE_GRACE_SEC)
+    else:
+        live_ids, why = queued_job_ids()
+        if live_ids is None:
+            sys.exit("!! cannot read the box queue (%s) -- the payload collision "
+                     "guard cannot run, so nothing was sent or queued" % why)
+
     failures = 0
+    # A dry run writes no reservation, so specs named together on one command
+    # line would not see each other -- and checking a pair before sending it is
+    # the whole reason to dry-run a pair. These stand in for the index lines a
+    # real run would have written.
+    pending = []
     for path in args.spec:
         print("%s" % path)
         spec = load_spec(path)
         job = to_job(spec)
         problems = gate_checks(spec, job)
+        # rid identifies THIS claim, so the re-read below can tell our own line
+        # from a peer's. pid+ns is unique across lanes on one machine.
+        mine = {"rid": "%d-%d" % (os.getpid(), time.time_ns()),
+                "job": job["id"], "ts": time.time(), "spec": path,
+                "dests": payload_dests(spec)}
+        problems += payload_collisions(mine, read_payload_index() + pending,
+                                       live_ids, mine["ts"])
         if problems:
             for p in problems:
                 print("  !! %s" % p)
             failures += 1
             continue
         if args.dry_run:
+            pending.append(mine)
             for dest in (spec.get("payload") or {}):
                 print("  would send payload -> %s" % dest)
             print(json.dumps(job, indent=2)[:2000])
             print("  (dry run -- not queued)")
             continue
+        if mine["dests"]:
+            # Claim, then re-read: a peer lane that appended between our check and
+            # our claim is only visible on the second look, and one of the two has
+            # to lose. Still nothing written to the box at this point.
+            reserve_payload(mine)
+            problems = payload_collisions(mine, read_payload_index(), live_ids, mine["ts"])
+            if problems:
+                for p in problems:
+                    print("  !! %s" % p)
+                failures += 1
+                continue
         send_payload(spec.get("payload"))
         enqueue(job)
     return 1 if failures else 0

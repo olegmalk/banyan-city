@@ -42,6 +42,12 @@ jobs:
       # tests for: it reports nothing, and nothing is read as fine. Pure stdlib
       # and no GPU, so it belongs here beside the others.
       - run: python pipeline/test_box_runner.py
+      # Two jobs from one parent declared the same payload paths and the second
+      # overwrote the first's prompt before either ran (2026-08-13). The guard
+      # that refuses that is pure functions over a local index — no ssh, no box —
+      # so the machine that would send the payloads is not the only thing that
+      # ever checks it.
+      - run: python pipeline/test_box_enqueue.py
       # The guards against a check that stays green while the thing it reads is
       # broken (2026-08-10's four silent failures). See the file's docstring.
       - run: python pipeline/test_silent_gates.py
