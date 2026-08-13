@@ -1326,6 +1326,38 @@ beats:
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child, no held object, no item in hand, no sign, no placard. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # ==========================================================================
+    # SUPERSEDED 2026-08-14 BEFORE RENDERING. He pointed at an existing frame:
+    # "like this, it was a good representation". It is
+    #   farm-out/ep2-goblin-sheet-a2-bald2-bald-0812/04-the-footnote-wave1-s0.png
+    #   sha256 8fa4d780bd927efd685e6d7d8700424cfdade01c0d269c6ee6ac8f209cad0c4f
+    #   (origin/farm-results-rtx5090, seed 20260723, draft `authored_b04_sheet_r2`)
+    # matched by eye on every element of his description. All six d1..d6 jobs were
+    # pulled from ready/ UNCLAIMED; no design-spread frame was ever rendered.
+    #
+    # THE PROMPT THAT PRODUCED IT, VERBATIM, AND IT OVERTURNS THE WEEK:
+    #   "1boy, a small goblin boy, green skin, bald head, solo, standing in a plain
+    #    sunlit grassy field, full body facing camera, arms at his sides. Medium full
+    #    shot, bright morning light, cinematic lighting, detailed, newest, masterpiece,
+    #    best quality, very aesthetic"
+    #
+    # It says BOY -- the word banned since 48410425 and the reason for the whole
+    # MAN campaign. It has no adult wording, no proportion clause, no head-to-height
+    # ratio, no `narrow angular skull`, no `small dull eyes`, and its negative carries
+    # NO anti-cute terms at all: no chibi, no cute, no moe, no baby face. What it does
+    # carry is `hair, wig` (which is what makes him bald) and `armor, jewelry, ornament,
+    # long eyelashes, lipstick` -- anti-pretty, not anti-cute.
+    #
+    # So the non-cute goblin came from a SIMPLE prompt with a scene and a plain pose,
+    # and every adjective added to fight cute made it worse. That is consistent with
+    # every measurement of the last two days: denial piles backfire, tone words lose to
+    # the prior, and every knob arm that fought cute produced more cute.
+    #
+    # AND THE OUTFIT IS UNPROMPTED. The prompt names no clothing whatsoever. The
+    # crossed-wrap tunic, sash, shorts and boots the lead has now made canon are the
+    # checkpoint's own invention on this seed. Writing them into prompts describes
+    # something the model volunteered; the FRAME carries it and words may not.
+    # ==========================================================================
     # -- `authored_goblin_design_d1..d6` -- 2026-08-14, RETARGETED TWICE IN ONE PASS and
     # neither version rendered, so these keys are rewritten in place rather than versioned.
     #
