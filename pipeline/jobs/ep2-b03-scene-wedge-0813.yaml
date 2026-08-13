@@ -1,0 +1,102 @@
+# 2026-08-13, the stills-drafts lane. A DIAGNOSTIC, not a wave entry -- see `why`.
+# Draft key `authored_b03_scene`; its comment in pipeline/wave-drafts.yaml carries the
+# evidence and the token arithmetic behind the compressed scene clause.
+id: ep2-b03-scene-wedge-0813
+task: ep2-b03-scene-wedge-0813
+node: 002b-first-citizen
+beat: 3
+runner: box
+needs_gpu: true
+priority: 15
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: 'Nobody animates this. It is a diagnostic: it decides whether the plate route can draw a beat''s
+  scene at all, or whether the reference set has to be rebuilt.'
+success: 'Eight PNGs, r0-w010 and r0-w020 at four seeds each, read against the white control already on
+  farm-results-rtx5090. The question is BINARY and it is not about the goblin: does grass, treeline or
+  sky appear at 10% or 20%. If yes, the plate route is fixable with a knob and the wave can be rewritten
+  with scene clauses. If 10% is still white on plain white, the window is not the variable, the founder''s
+  own answer is the only one left -- the reference must carry the scene -- and that is a new reference
+  set and his call. A worse goblin at 10% is EXPECTED and is not a failure: the measured sweep says a
+  shorter window trades identity for freedom, and this run is buying the measurement, not a plate.'
+why: 'THE FOUNDER: "why arent you putting the background in the reference itself?" -- and he is more exactly
+  right than a draft rewrite would be. ep2-b03-adultplate-0813 asked for a crouch behind a sapling in
+  a field and returned a standing figure on plain white; its twin ep2-b04-adultplate-r2-0813 put `extreme
+  close-up` early in the sentence, where CLIP weights hardest, and returned the same standing figure on
+  the same white. Two beats, eight references, thirty-two seeds, one composition. The adapter owns steps
+  0-5 of 40 -- the structure-forming steps -- and every reference in refs-goblin-frozen-0812 is a white
+  standing character sheet. So words cannot put a world in these plates. This tests the ONE lever that
+  needs no new reference set: the wedge arm''s 10% and 20% windows against the 15% that produced the white.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-scene-wedge
+  - --draft-key
+  - authored_b03_scene
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-scene-wedge
+  - --draft-key
+  - authored_b03_scene
+  - --arm
+  - wedge
+  - --task
+  - ep2-b03-scene-wedge-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-scene-wedge-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b03-scene-wedge/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-scene-wedge-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b03-scene-wedge\03-bad-cover-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-scene-wedge\03-bad-cover-ipa-r0-w020-s0.png

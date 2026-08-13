@@ -688,6 +688,44 @@ beats:
     # sold to buy the leaf clause. Both are scenery; the frozen facts, MAN, the
     # proportion clause and `green scalp` are untouched. DRY OK, STYLE ANCHOR PRESENT,
     # count tag 1boy, 75/77 positive as sent.
+    # -- `authored_b03_scene` -- 2026-08-13, on the founder's "why arent you putting the
+    # background in the reference itself?" A DIAGNOSTIC DRAFT, not a wave entry.
+    #
+    # WHY IT MAY NOT MATTER WHAT THIS SAYS. `ep2-b03-adultplate-0813` ran the draft
+    # above and came back a STANDING FIGURE ON PLAIN WHITE: no crouch, no sapling, no
+    # field, and a pale yellow cranium despite the affirmative `green scalp`. Its twin
+    # `ep2-b04-adultplate-r2-0813` put `extreme close-up` early in the sentence, where
+    # CLIP weights hardest, and came back the same standing figure on the same white.
+    # Two beats, eight references, thirty-two seeds, two very different prompts, one
+    # composition. The IP-Adapter runs at scale 0.6 on steps 0-5 of 40 -- its own
+    # sidecar calls those "the early, structure-forming steps" -- and all four
+    # references in refs-goblin-frozen-0812 are white-background standing character
+    # sheets. So the REFERENCE is choosing pose and background, and the words only
+    # reach the late steps, where they can move colour and costume but not staging.
+    #
+    # WHAT THIS DRAFT IS FOR. It is one half of a single cheap test of the one lever
+    # that needs no new reference set: the `wedge` arm, which runs the 10% and 20%
+    # windows instead of 15%. If a shorter structure window lets the scene through, the
+    # plate route is fixable by a knob. If 10% is still white, the window is not the
+    # variable and the founder's own answer is the only one left -- the reference has to
+    # carry the scene -- and that is a new reference set, which is his call, not mine.
+    #
+    # THE SCENE IS DESCRIBED, NOT NAMED, but it is a THIRD of the motion lane's world
+    # paragraph, because it has to be. The plate calls pipe(prompt=<str>), so diffusers
+    # truncates at 77 tokens hard -- there is no prompt_embeds or compel path here.
+    # Measured on the box: identity costs 29, the style tail 16, leaving 34 for action
+    # plus scene, and the motion lane's world paragraph is 42 tokens ON ITS OWN. So
+    # `detailed, newest` are sold off the style tail and `face visible` off the action
+    # to buy fourteen tokens of grass, treeline and sky. Identity, MAN and the
+    # proportion clause are untouched, as instructed.
+    authored_b03_scene: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      crouches behind a tiny sapling's thin stem, broad round cotyledon leaves above, in
+      tall green summer grass, a dark treeline behind, pale blue sky above. Cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no chibi, no big head,
+      no round baby face, no toddler, no child, no white background, no plain background,
+      no character sheet, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b03_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       green scalp, crouches behind a tiny sapling's thin stem, broad round
