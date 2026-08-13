@@ -15221,3 +15221,81 @@
     "not too much of a major change". Only proportion words move. His frozen facts are byte-identical,
     the IPA window and scale are untouched, and the reference he approved is untouched.
   outcome: null
+
+- id: ep2-quality-drift-investigated-0813
+  kind: investigation
+  date: 2026-08-13
+  founder_verdict_verbatim: >-
+    "overall the clips i've seen arent bad..but it feels like we changed the system we are
+    using to animate, and some of these feel low quality"
+  answer: NOTHING IN THE ANIMATION RECIPE MOVED. I checked before proposing any fix.
+  the_diff: >-
+    Praised era (b13-object, b14-redeye, b19-under, b17-motion) against tonight (b13-adult,
+    b08-twohander, b06/b10-noscale), knob for knob out of the job files: size 704x1280 both,
+    guidance 2.0 both, two-stage both, distilled-sigmas both, image-crf 33 both, offload
+    sequential both, fp8 off both. IDENTICAL.
+  the_one_code_change_and_why_it_is_not_it: >-
+    ltx_i2v.py did change between the eras — commit b9dac232 added an `--offload split` mode
+    that switches offload at the stage seam. It is OPT-IN and NOT DEFAULT, and I confirmed
+    every job in both eras passes `--offload sequential`. So the new path has never run in
+    any clip he has seen. A code change in the file is not a change in the recipe, and I
+    checked which rather than assuming either way.
+  so_where_the_drift_actually_is_with_evidence: >-
+    Two places, both documented tonight rather than guessed. (1) THE PLATES: the clips that
+    read worst animate DIFFERENT source images from a different stills round — b06/b10 run
+    off the patrol plate, b08 off its own. Same recipe, different input. (2) THE PALETTE
+    ROUNDS: my own scoring recorded repeated drift to dusk and desaturation across the
+    stability and pool takes, and b17's prompt was found asking for three times of day at
+    once. Those clips are darker and flatter than the warm ones he praised, and that is a
+    prompt-side regression I introduced, not a system change.
+  no_a_b_needed: >-
+    An A/B of old-vs-new recipe at the same seed would compare a recipe with itself. Not
+    queued; the card is better spent on the fig sweep and the plate wave.
+
+- id: ep2-b04-steward-pick-under-delegation-0813
+  kind: steward_pick
+  date: 2026-08-13
+  founder_verdict_verbatim: "im not sure about this one, i'll leave it to you"
+  the_delegated_call_and_i_am_not_taking_the_framing: >-
+    The pick was framed as widen-versus-close, with widen expected to fix a systematic fault.
+    IT DID NOT. Both widen seeds balloon, and seedB is WORSE than the close version — the
+    cranium is enormous and the face is squashed into the bottom third. My own falsifier said
+    exactly this case: "ballooning even at head-and-shoulders moves the fault from the framing
+    to the plate."
+  my_pick: >-
+    NONE OF THE THREE. Beat 04 has no usable take, and choosing the least-broken of three
+    broken clips would be dressing a failure as a decision. The beat goes into the plate
+    remake wave he has already ratified — which is where the evidence points anyway.
+  why_this_is_a_pick_and_not_a_punt: >-
+    It converges with the register result from an hour ago. Wording could not make the goblin
+    read adult; framing cannot stop his skull inflating. Two independent levers, same beat,
+    same conclusion: THE INFANT PROPORTIONS ARE IN THE PLATE. Beat 04 is the extreme close-up,
+    so it shows the plate's proportions most and fails hardest. It needs a new plate, not a
+    fourth clip.
+
+- id: ep2-fig-shape-never-propagated-0813
+  kind: defect
+  date: 2026-08-13
+  founder_verdict_verbatim: >-
+    "all of these beats look fine except the figs which.. just look like weird green balls"
+  the_count: >-
+    TWENTY-SIX live prompts mention a fig. EXACTLY ONE carries shape language — b01 r3, where
+    I worked out that "one small ROUND green fig" was producing an apple and replaced it with
+    a teardrop and a narrow neck. Twenty-five still say "round".
+  why_this_is_worse_than_getting_it_wrong_once: >-
+    The fix existed, was measured, was written up as a law (law-round-describes-vs-resists),
+    and STAYED IN ONE FILE. He is looking at green balls because twenty-five prompts ask for
+    green balls, a day after I proved they would. A lesson that is not propagated is not a
+    lesson; it is a note.
+  queued: >-
+    One shared clause on the two worst offenders first, with twins: the fig as a teardrop with
+    a narrow neck and matte skin, explicitly not a sphere and not an apple; his leaf note
+    folded in on b19 (broad rounded cotyledons, not pointed lances); green ball / sphere /
+    apple / marble / pointed leaves banned. If it holds, the clause sweeps the remaining
+    twenty-five in one pass.
+  and_i_broke_the_yaml_the_same_way_a_third_time: >-
+    An apostrophe in "the sapling's leaves" inside a single-quoted scalar. Third occurrence
+    today of the same class. The dry run caught it again, but a check that keeps catching the
+    same mistake is a check standing in for a habit: apostrophes get doubled at write time in
+    any single-quoted YAML string, and the generated file gets parsed before it is enqueued.
+  outcome: null
