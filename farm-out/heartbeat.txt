@@ -1466,3 +1466,4 @@
 11:44:17Z FAIL task=ep2-b07-plate-0814-1786707394 rc=30 step=dry
 11:44:22Z STARTED task=ep2-b08-plate-0814-1786707396 attempt=1 on box-runner
 11:47:12Z DONE task=ep2-b08-plate-0814-1786707396 rc=0 artifacts=4
+11:47:25Z STARTED task=ep2-b02-wave-0814-1786707592 attempt=1 on box-runner
