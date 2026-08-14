@@ -16786,3 +16786,33 @@
     ask whether a tile can answer it.
   outcome: null
 
+
+- id: FINDING-the-goblin-is-unreadable-because-the-shot-WIDENS-0814
+  kind: finding
+  date: 2026-08-14
+  founder_verbatim: '"for the is this your goblin question, i cannot tell, the clips are too bad."'
+  the_measurement: >-
+    Beat 13, the approved s0 plate against frame 60 of the clip animated FROM that plate - same character,
+    same scene, same beat. The goblin's head is roughly HALF the frame height in the plate and NINE PER
+    CENT of it in the clip. About a fivefold reduction. At 9% of a 1280px frame the head is ~115px and the
+    face inside it a few dozen - there is no face left to read at phone size.
+  what_it_is_NOT: >-
+    Not motion smear, not identity drift frame to frame, not the distillation losing temporal coherence,
+    and not encode quality - all four were the candidates on the table and none of them is what the
+    pictures show. The character is not degraded. HE IS SMALL. The clip re-composes to a wide shot and
+    puts him in the lower third with a tree trunk and empty sky taking the frame.
+  why_this_matters_more_than_it_sounds: >-
+    It means the model CAN hold the character - the plate's creature survives into the clip intact, just
+    tiny. So "the model cannot carry a character through motion at this clip length" is NOT the answer,
+    and episode 2 does not have to become something smaller. The fix is framing.
+  the_lever_already_exists_and_is_proven: >-
+    THE CAMERA FOLLOWS THE DESCRIBED CONTENTS. Near-field words give a close shot; size adjectives are
+    inert. That is the lever that pulled beat 09 from a chest-up medium into a tight close-up in one
+    round. Every goblin beat needs the same treatment: name what is near, crop at the collar or the
+    shoulders, and stop letting the shot widen.
+  what_i_got_wrong_for_a_day: >-
+    I spent a day measuring FIDELITY - crf, guidance, encode passes, resolution - because "low quality" is
+    a fidelity-shaped complaint. Every measurement was sound and every one was aimed at the wrong axis. He
+    was not describing softness. He was describing a character he could not see, and the reason is scale.
+    Two words of his - "i cannot tell" - carried more diagnostic information than four A/B renders.
+  outcome: null
