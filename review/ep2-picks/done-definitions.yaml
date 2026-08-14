@@ -234,6 +234,21 @@ beats:
     understandable: CONFUSING
     rounds_used: 2
     status: THIRD ROUND EARNED - confusing
+  '16':
+    title: WHY
+    rounds_used: 1
+    done_when: close on one leaf with the scavenger blurred behind it; the leaf is the subject and he
+      is depth
+    round_1_result: WORKS. A large leaf fills the frame from f40 on with the goblin behind it, blurred
+      and out of focus - the leaf is the subject and he is depth, exactly as the plate was written. The
+      failure plate-drafts told me to watch for (the goblin pulling focus) did not happen.
+    status: SHIP WITH FAULT NAMED
+    shipping_fault: the opening frame is goblin-forward and sharp, then the composition jumps to leaf-forward
+      by f40 - a change of subject in the first second
+    unexpected_finding: 'THE LEAF CAME OUT LOBED - a five-to-seven lobed palmate leaf, which is exactly
+      the 3-5 lobed fig leaf the cold reader said would identify the fruit by itself. It contradicts the
+      canon ''two broad round cotyledons''. That collision is already a question with him and I am not
+      resolving it by accident: recorded, not adopted.'
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
@@ -262,13 +277,10 @@ shipping_rule:
   supersedes: the three-round park. Park left a beat with no clip; this ships the clip and names the fault.
     Park optimised for a clean record rather than for the episode existing.
 coverage:
-  beats_with_a_take: 20
-  beats_with_zero_takes:
-  - '16'
-  counted_from: published mp4s on origin/farm-results-rtx5090, not from these notes
-  beat_16: no draft exists. Its wave-drafts.yaml block is occupied by the ep3 magistrate charref (tag
-    1girl), so any beat-16 draft inherits it. Also outside the motion lane by brief. This is the episode's
-    only coverage hole.
+  beats_with_a_take: 21
+  beats_with_zero_takes: []
+  milestone: ALL 21 BEATS OF EPISODE 2 NOW HAVE A TAKE, as of beat 16 publishing 2026-08-14.
+  counted_from: published mp4s on origin/farm-results-rtx5090
 ship_ceiling:
   date: '2026-08-14'
   authority: R4
