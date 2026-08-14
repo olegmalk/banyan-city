@@ -16735,3 +16735,31 @@
     instruction was coverage over polish. The refire is coverage - those beats have no usable take - but it
     is coverage I destroyed and then rebought.
   outcome: null
+
+- id: CLOSED-the-quality-investigation-0814
+  kind: decision
+  date: 2026-08-14
+  verbatim: '"the resolution doesnt freakin matter! we are targeting phone users."'
+  closed: >-
+    THE WHOLE "why does it feel low quality" INVESTIGATION IS CLOSED. No further card and no further
+    context goes into it, and no lane reopens it.
+  what_was_eliminated_and_how: >-
+    Five candidates. CONDITIONING CRF - measured with ffmpeg, mean 2.94/255, all edge ringing. GUIDANCE
+    1.0 - rendered it, came back worse. THE PLATE - he refuted it himself, "even scenes with plants felt
+    low quality", and the scene-plate panel on his page is that test. THE ENCODE CHAIN, both passes -
+    measured, mean 2.56 and 1.74 of 255, together under 2%. RESOLUTION - dead by his ruling: 704x1280 is
+    phone-native and phones are the target.
+  the_honest_residue: >-
+    If anything remains it is the model's own motion fidelity, which is not a knob. Saying so is the
+    result; four of the five were killed with numbers rather than opinion, and that is the part worth
+    keeping.
+  what_it_cost_and_the_lesson: >-
+    Most of a day, four GPU A/B rounds of which three were waste, and a comparison page built against a
+    reference clip he had never chosen. The lesson is not "measure more" - the measurements were good. It
+    is that I never asked him WHICH CLIP he meant before spending a day diffing against my guess, and when
+    he finally described it - camera movement, a person in it - it was nothing like the one I had picked.
+    Ask what the complaint is ABOUT before instrumenting it.
+  the_bar_from_here: >-
+    The ship rule, judged on the assembled cut: understandable to a cold viewer, and an upgrade on the
+    published episode 2. Not sharpness, not bitrate, not resolution.
+  outcome: closed
