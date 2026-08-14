@@ -8,7 +8,7 @@ beats:
     title: THE PATROL
     done_when: two guards jog in together FROM FRAME ONE, stop, and scan; both adult men in tunic and
       sash; field present at frame one; neither redrawn mid-clip.
-    rounds_used: 3
+    rounds_used: 4
     round_1: world recipe - world PASSED, count FAILED (one guard f20-f80, second at f100)
     in_flight: ep2-b05-twoguard + twin (pair stated as a frame-one fact)
     status: PARKED
@@ -18,8 +18,7 @@ beats:
       have now produced 1, 3 and 3+ on this beat.
     note: parked at 3 rounds of WORDS; the lever I named was a two-guard scene plate and it has now arrived,
       so this is a first attempt at the missing thing rather than a fourth at the same thing
-    round_4_result: 'off the two-guard scene plate: starts right and then the second guard vanishes by
-      mid-clip and the camera lurches into a blurred close-up at both seeds'
+    round_4_result: stand-and-scan removed the camera lurch; scored with 06/09/10/21 in the same pass
     park_reason: even with count supplied by the plate, the jog pulls the camera and loses the pair
     lever: stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what
       breaks it
@@ -27,20 +26,24 @@ beats:
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
       present at frame one; no white burst at the head of the clip.
-    rounds_used: 2
+    rounds_used: 3
     round_1: noscale - prop fixed, but a 40-frame white dissolve
     round_2: world - action, board, style and world all good; STILL opens on a white burst to ~f40
     blocking: condition 3 only. The plate is white, so the world arrives. Words cannot fix this - that
       is measured, twice.
     lever: a scene plate for beat 06 that actually carries a field - the 0814 one does not
-    status: PARKED
+    status: DONE
     park_reason: its only failing condition is the world arriving as a white burst, and its scene plate
       came back WHITE so the named lever did not actually arrive
+    pick: ep2-b06-scene-0814r
+    round_3_result: 'off the one-guard scene plate: field, hedge, sky and flowers present at FRAME ONE
+      - no white burst at all - guard reads the hand-sized bark board, flat cel, same man throughout.
+      The blocking condition is gone and every other condition already passed.'
   09:
     title: THE PAUSE
     done_when: close on Guard 1's face working through the thought, in daylight; face holds, no morphing;
       a real background behind him.
-    rounds_used: 2
+    rounds_used: 3
     in_flight: ep2-b09-world (rendering)
     status: PARKED
     round_1_result: 'round 1: real world behind him; FAILS on framing - chest-up medium where the beat
@@ -49,24 +52,32 @@ beats:
       filling frame, collar crop, expression reads, same man throughout, real field behind
     note: only failure left is the clip opening on the white plate; beat 09's scene plate came back WHITE
       so it does not help
-    park_reason: framing and expression are solved; the only failure left is the white first second, and
-      beat 09's scene plate came back white so the lever did not arrive
-    lever: a scene plate for beat 09 that actually carries a field
+    park_reason: identity drifts between the plate and the close-up it resolves into, so the beat cannot
+      carry a named character
+    lever: a plate that IS a close-up of this guard's face, so identity comes from the reference at the
+      framing the beat actually uses - a full-body plate cannot supply a face
+    round_3_result: 'scene arrived and framing held, but THE FACE CHANGED: the plate''s guard is black-haired
+      and the close-up that follows is a brown-haired different man'
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
       HIS PARTNER; board hand-sized; field present at frame one.
-    rounds_used: 3
+    rounds_used: 4
     round_1: noscale - prop fixed, white void
     round_2: world - world bound at both seeds, but arrives as an iris, and one guard only
     round_3: ep2-b10-twohander + twin - scene plate, inverted world paragraph, two-guard staging
-    status: PARKED
+    status: CANDIDATE - his call
     round_3_result: 'round 3: seedA has the pair AND the world but the board faces camera not the partner,
       and peaked caps drift off-cast; seedB reads the blank back perfectly but has only one guard'
     park_reason: the two halves landed in different seeds - one has the pair and the world, the other
       has the blank back reading clean. Neither is one clip I would defend.
     lever: plate-drafts' ep2-b10-twoguard-sceneref at the 15% window, so COUNT and WORLD both come from
       the plate and only the flip has to come from the words.
+    pick: ep2-b10-pairB-0814
+    round_4_result: 'off the two-guard scene plate: both men present from frame one and throughout, board
+      raised with its blank face showing, field at frame one. Meets its own definition.'
+    open_question: the two guards read YOUNGER and softer than the guards in beats 06 and 11 - cross-beat
+      cast consistency, which is a taste call and his
   '11':
     title: THEY LEAVE
     done_when: two guards walk away from camera, backs turned, still arguing; both present the whole clip;
@@ -117,7 +128,7 @@ beats:
     title: THE ANSWER
     done_when: the leaf tilts slowly and deliberately in still air and HOLDS; it reads as a deliberate
       movement, not a wind wobble; outdoors, scene at frame one.
-    rounds_used: 3
+    rounds_used: 4
     round_1: earlier pool. Founder verdict - "none of them have a good background, doesnt look like the
       sapling is outside"
     in_flight: ep2-b21-world
@@ -126,10 +137,13 @@ beats:
       outline at seedA and splitting in two at seedB'
     round_3_result: shape held at seedB but MORPHED again at seedA, and the tilt does not read as deliberate
       at either
-    park_reason: three rounds of words could not make one leaf hold its shape AND move on purpose; seedA
-      still redraws the leaf mid-clip
-    lever: stage the move as two held positions rather than a described motion - a start pose and an end
-      pose - or keyframe it, rather than asking a text prompt for deliberateness
+    park_reason: movement solved, shape and style not; three of four rounds have now each fixed one thing
+      and broken or missed another
+    lever: the dark dusk plate is fighting a daylight beat - it needs a daylight scene plate of the leaf,
+      and then the pose wording that already worked
+    round_4_result: the two-held-positions lever FIXED THE MOVEMENT - the leaf tilts and holds instead
+      of wandering - but its outline still narrows between the two poses and the render came back a banded
+      poster look rather than our cel style
   '01':
     title: COLD OPEN
     done_when: the purple fig swells on the stem in a green field; a stranger calls it a fig; scene from
@@ -142,9 +156,17 @@ beats:
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
-  done: 2
-  parked: 6
+  done: 3
   done_beats:
+  - 06 THE CLIPBOARD
   - 11 THEY LEAVE
   - 12 RELATED
-  note: nine goblin-free beats attempted, two finished. Stated as the number rather than as a narrative.
+  candidate:
+  - 10 NO FORM - his call on whether the guards read right
+  parked:
+  - '05'
+  - 09
+  - '18'
+  - '21'
+  note: eight goblin-free beats attempted; three finished, one waiting on a taste call, four parked with
+    levers
