@@ -53,6 +53,11 @@
   kind: decision
   episode: 2
   verdict_hint: split into two shots / trim the beat / re-time the VO
+  resolved:
+    date: '2026-08-14'
+    verdict: 'superseded 2026-08-14: beat 04 is in the goblin remake (his ''beat 04 has the cute goblin,
+      needs to be changed''), so the 3s-vs-6s length question is re-asked only if the remade beat still
+      needs it.'
 - what: 'Approve the ready scripts - five scripts (003b, 004, 005, 006a, 007a) are written and unread;
     approving them makes 132 render jobs legal (~33 min of reading) — KEPT OPEN ON PURPOSE: D22 delegates
     §6''s read to the steward, but it is recorded as resolved IN PART and explicitly wants your countersignature
@@ -169,6 +174,10 @@
   kind: clip
   episode: 2
   verdict_hint: is beat 13 cuttable as-is / what still bothers you about it
+  resolved:
+    date: '2026-08-14'
+    verdict: 'superseded 2026-08-14: b13 was re-animated for the adult goblin and then the character itself
+      changed again on his chosen frame; it re-enters review as a new take, not this one.'
 - what: 'Motion recipe change, for your awareness: an environment PARAGRAPH now joins every prompt (the
     blank-background fix). Side effect being tested next - a described world pushes the character smaller
     in frame, so shot scale needs a clause of its own'
@@ -334,6 +343,11 @@
   episode: 2
   verdict_hint: the picks are fine, animate them / fix the leaf shape across all plant beats first (one
     vocabulary change, then re-plate 12, 18, 21 together)
+  resolved:
+    date: '2026-08-14'
+    verdict: 'answered by his later verdicts, 2026-08-13: beat 21 — ''none of them have a good background,
+      doesnt look like the sapling is outside'' (re-rendered with a scene); beat 18''s fig — ''just look
+      like weird green balls'' (now purple canon with features).'
 - what: 'A real limit found: WE CANNOT TELL IT HOW MANY OF SOMETHING TO DRAW. Beat 19 says ''a small sapling'',
     singular, and bans ''row of saplings'' in the negative, and still draws several. Colour we CAN now
     control. Number we cannot - if the last workaround (describing a frame too tight to hold two) also
@@ -359,6 +373,11 @@
   kind: sheet
   episode: 3
   verdict_hint: cast the farmer / cast the assessor / redraw either, and how you want the magistrate approached
+  resolved:
+    date: '2026-08-14'
+    verdict: '2026-08-13, verbatim: ''for the farmer, he looks too much like a generic anime character.
+      the references i''ve seen just dont quite fit the character. the assessor is good, just.. unnecessarily
+      bald.'' Farmer rebuilt from script nouns; assessor gains hair; both re-rendered.'
 - what: Episode 3's cold open took four rounds and the tree still only stands up in one frame of four,
     so the 21-still wave is NOT queued. Round 4's s2 is the shot. The world was fixed by giving it its
     own sentence; the plant was not fixed by wording, which is the same wall the goblin hit before he
@@ -534,9 +553,7 @@
     sinister and I left it out of the picks for that reason)
   resolved:
     date: '2026-08-14'
-    verdict: >-
-      these generations arent very good
-
+    verdict: these generations arent very good
 - what: Your silly bureaucrat arrived, and he may have arrived too hard. You asked for a round harmless
     bureaucrat instead of a soldier and the words produced exactly that - but "his tunic straining A LITTLE
     over his belly" came back as a bare exposed gut at both seeds. The softener did nothing. Is that funny
@@ -561,8 +578,7 @@
   verdict_hint: that is still him, carry on / he loses too much at that size, keep him closer
   resolved:
     date: '2026-08-13'
-    verdict: >-
-      beat 04 has the cute goblin, needs to be changed
+    verdict: beat 04 has the cute goblin, needs to be changed
 - what: The figs are fixed - a teardrop with a narrow neck instead of a green ball, holding at BOTH seeds.
     Same beat as the botched test, with the three shouted "ROUND"s taken out of my own prompt. Your green-balls
     note is answered
@@ -584,8 +600,7 @@
   verdict_hint: good, that is the open / the look is off and here is how
   resolved:
     date: '2026-08-13'
-    verdict: >-
-      it is good overall, just the fig thats the problem
+    verdict: it is good overall, just the fig thats the problem
 - what: The giant clipboard is gone and beat 10 now plays its whole joke - he flips the board round and
     the back of it is blank. The cause was one clause of mine telling the board to fill the frame, which
     a locked camera can only obey by growing the prop
@@ -626,6 +641,10 @@
   since: '2026-08-13'
   kind: clip
   verdict_hint: all three stand / veto one and say which
+  resolved:
+    date: '2026-08-14'
+    verdict: '2026-08-13: 03 and 17 accepted by silence; 21 vetoed on its background (''doesnt look like
+      the sapling is outside'') and re-rendered with a scene plate.'
 - what: Beat 10 again, and you were shown the wrong take - my fault. The blank background you saw was
     fixed hours before you looked at it; I left the old take embedded as the clip while the fixed one
     sat further down the same page as a still. The clip is now the fixed take, with sky, hedge, fence
@@ -635,28 +654,34 @@
   since: '2026-08-13'
   kind: clip
   verdict_hint: the background is right now / still not right, and here is what is wrong
-- what: 'PURPLE FIG - one question only, and it is the one I should not answer for you. Your
-    purple fig is canon from here and every new prompt carries it. But 002b''s approved script and
-    the ep1/ep2 shots already published show a GREEN fig, and the fig that falls in 002b is the
-    same fruit. Does purple apply back to what is already out, or only from here on?'
+  resolved:
+    date: '2026-08-14'
+    verdict: '2026-08-13, verbatim: ''the new beat 10 is just.. blank background, and midway it gets drawn?
+      i asked you, why aren''t you drawing the background in the reference of each beat?'' — answered
+      by the scene-in-plate fix; beat 10 re-rendered off a scene-carrying plate.'
+- what: PURPLE FIG - one question only, and it is the one I should not answer for you. Your purple fig
+    is canon from here and every new prompt carries it. But 002b's approved script and the ep1/ep2 shots
+    already published show a GREEN fig, and the fig that falls in 002b is the same fruit. Does purple
+    apply back to what is already out, or only from here on?
   url: /review/ep2-picks/motion-0812#e-purple-canon
   group: taste
   since: '2026-08-13'
   kind: decision
-  verdict_hint: only from here, leave what is published / go back and redo the published ones too
-    / decide later, keep making them purple meanwhile
-- what: 'ONE QUESTION THAT SETTLES TWO BEATS - are these two your guards? Beats 05 and 10 both work
-    now: two men in frame the whole way, the field there from the first frame, and in 10 the blank board
-    comes up. But this pair reads YOUNGER and softer-drawn than the guards in beats 06 and 11, so they are
-    consistent with each other and not with the rest of the episode. Say they are the guards and both beats
-    are done; say no and both need a plate of the ruled cast'
+  verdict_hint: only from here, leave what is published / go back and redo the published ones too / decide
+    later, keep making them purple meanwhile
+- what: 'ONE QUESTION THAT SETTLES TWO BEATS - are these two your guards? Beats 05 and 10 both work now:
+    two men in frame the whole way, the field there from the first frame, and in 10 the blank board comes
+    up. But this pair reads YOUNGER and softer-drawn than the guards in beats 06 and 11, so they are consistent
+    with each other and not with the rest of the episode. Say they are the guards and both beats are done;
+    say no and both need a plate of the ruled cast'
   url: /review/ep2-picks/motion-0812#e-b10-candidate
   group: taste
   since: '2026-08-14'
   kind: clip
-  verdict_hint: those are the guards - 05 and 10 are both done / no, too young - redraw the cast and redo both
-- what: 'BEAT 06 THE CLIPBOARD - is this the shot? He turns the bark board over and reads off it, in
-    a field that is there from the first frame. This beat was stuck on a white flash for three rounds and
+  verdict_hint: those are the guards - 05 and 10 are both done / no, too young - redraw the cast and redo
+    both
+- what: 'BEAT 06 THE CLIPBOARD - is this the shot? He turns the bark board over and reads off it, in a
+    field that is there from the first frame. This beat was stuck on a white flash for three rounds and
     the flash is gone. One caveat I will not hide: it is my pick from one seed, because the second seed
     raised the board like a shield instead of reading it'
   url: /review/ep2-picks/motion-0812#e-b06-done
@@ -664,9 +689,9 @@
   since: '2026-08-14'
   kind: clip
   verdict_hint: that is the shot / not yet, and here is what is wrong
-- what: 'BEAT 11 THEY LEAVE - is this the shot? The two guards walk away across the field, backs turned,
-    still arguing, and the field is there from the first frame. This one held at BOTH seeds, which is the
-    only beat tonight that did'
+- what: BEAT 11 THEY LEAVE - is this the shot? The two guards walk away across the field, backs turned,
+    still arguing, and the field is there from the first frame. This one held at BOTH seeds, which is
+    the only beat tonight that did
   url: /review/ep2-picks/motion-0812#e-b11-done
   group: taste
   since: '2026-08-14'
@@ -680,27 +705,28 @@
   since: '2026-08-14'
   kind: clip
   verdict_hint: that is the shot / the colour shift is too much, redo it / not yet for another reason
-- what: 'BEAT 01 COLD OPEN - is the fig right now? You said the beat was good and only the fig was wrong,
-    so this is the same shot with the fruit changed to your purple. It is the first shot of the episode'
+- what: BEAT 01 COLD OPEN - is the fig right now? You said the beat was good and only the fig was wrong,
+    so this is the same shot with the fruit changed to your purple. It is the first shot of the episode
   url: /review/ep2-picks/motion-0812#e-b01-candidate
   group: taste
   since: '2026-08-14'
   kind: clip
   verdict_hint: the fig is right, that is the open / still not a fig, and here is what is off
 - what: 'THE GOBLIN PLATES - this is the gate on TWELVE of the twenty-one beats and you have never seen
-    them. Six plates drawn on the reference frame you chose, shown next to that frame so you can judge the
-    match. MY READ, so you are not guessing at mine: they hold together as one creature, they carry the new
-    tunic with no hood, and each has a real place around it instead of white - but they READ YOUNGER than
-    your reference does, which has the narrower face. I have animated nothing off them and will not until
-    you say'
+    them. Six plates drawn on the reference frame you chose, shown next to that frame so you can judge
+    the match. MY READ, so you are not guessing at mine: they hold together as one creature, they carry
+    the new tunic with no hood, and each has a real place around it instead of white - but they READ YOUNGER
+    than your reference does, which has the narrower face. I have animated nothing off them and will not
+    until you say'
   url: /review/ep2-picks/motion-0812#e-adult-goblin-sheet
   group: taste
   since: '2026-08-14'
   kind: sheet
-  verdict_hint: that is him, start animating / too young still, redraw / it is close - change this one thing
-- what: 'THE NIGHT IN ONE PLACE - three beats finished, two waiting on the guard question, two parked with
+  verdict_hint: that is him, start animating / too young still, redraw / it is close - change this one
+    thing
+- what: THE NIGHT IN ONE PLACE - three beats finished, two waiting on the guard question, two parked with
     named reasons, and a per-beat line for all of them. Nothing to answer here; it is the state of episode
-    2 on one screen if you want the whole picture before answering the others'
+    2 on one screen if you want the whole picture before answering the others
   url: /review/ep2-picks/motion-0812#e-overnight
   since: '2026-08-14'
   kind: decision
