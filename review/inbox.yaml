@@ -936,3 +936,20 @@
   kind: decision
   group: taste
   verdict_hint: draw the new plate, keep the drop / change the beat to him finding it
+- what: 'FIRST REAL MOVEMENT TONIGHT - and the action in it is still wrong. Beat 02 came back on the fixed
+    prompt and a blind reader, shown all 97 frames with no idea what the clip is meant to be, described
+    this: "the torso pitches forward at the waist and the clasped hands drop from the chest and extend
+    forward onto the ground. By the end the body is horizontal, face buried." Same character throughout,
+    no cut, and no invented tree. Every other clip tonight got called a still by the same kind of reader,
+    so this is the first one that actually animates a person. What made the difference was deleting three
+    words: the prompt said "behind the sapling" and there is no sapling in that picture, so the model
+    had been drawing itself one - a full-grown tree - instead of doing the action. THE CAVEAT IS REAL
+    THOUGH. The beat is called the sprint and there is no sprint in it: he tips over like a felled post
+    and his legs never take a step. It also only moves for the middle two seconds, and the movement lands
+    on every other frame so it will read as judder. Those are machine problems, not writing problems,
+    and they are ours. I am not calling this beat done and I have not picked it as canon'
+  url: /review/ep2-picks/motion-0812#e-wave2
+  since: '2026-08-15'
+  kind: clip
+  group: result
+  verdict_hint: nothing to answer - say nothing and it stands as a step forward, not a finished beat

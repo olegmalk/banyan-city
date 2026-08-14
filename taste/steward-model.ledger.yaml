@@ -17211,3 +17211,53 @@
     not stop me because it was a sentence. Team lead's reading, which is right: a law that has to be
     remembered gets obeyed until the night someone is in a hurry.
   outcome: null
+
+- id: DEFECT-the-motion-lands-on-every-other-frame-0815
+  date: 2026-08-15
+  kind: defect
+  what: >-
+    Team lead read a sawtooth in beat 02's frame differences and called it 12fps content in a 24fps
+    container. Measured rather than repeated, and it is real but it is not what the name says.
+    Inside the motion window the alternating medians are 11.97 against 2.70 at full resolution, a
+    ratio of 4.4 on beat 02; across eight clips, four are doubled - b02-nw 13.2, b17 14.3, b15 9.6,
+    b20 4.7 - and four are not - b04 1.6, b09 1.0, b12 1.1, b13 1.5. It is not universal, so it is
+    not a container or encoder setting.
+  not_the_encoder: >-
+    There are ZERO exact duplicate frames in either doubled clip, and among their near-still pairs
+    individual pixels deviate by 33 to 208 levels. So no frame is being copied. The model is
+    advancing the subject on every other frame while the frames between it only shimmer. That makes
+    it a sampler or scheduler behaviour, not a publish or encode bug, and it means re-encoding cannot
+    fix it. Visually it is still judder on the only part of the clip that moves.
+  method_correction_worth_more_than_the_finding: >-
+    My first cut of cadence_check.py reported beat 02 as FINE at a ratio of 1.2 - it filtered pairs
+    against a floor and took medians across the whole clip, which pools a frozen head, a moving
+    middle and a frozen tail into one population and averages the defect away. Measuring inside the
+    contiguous motion window gives 13.2 for the same clip. A statistic computed over the wrong
+    population is not a weak measurement, it is a wrong one, and it would have let me tell the lead
+    his finding was mistaken.
+  tool: review/ep2-picks/cadence_check.py, exits nonzero on a doubled clip.
+  outcome: null
+
+- id: EVIDENCE-AGAINST-my-own-arm-A-prediction-0815
+  date: 2026-08-15
+  kind: evidence
+  logged_before_the_arm_returned: true
+  what: >-
+    I predicted 193 frames would fail because "the model is not short of temporal room, it is
+    spending it on the camera rather than the character". The blind read of beat 02 says the clip is
+    BIMODAL, not uniformly slow: frames 2-30 frozen, 31-84 the only motion, 85-97 frozen, with
+    segment averages 0.47 / 9.14 / 0.38. That is a late motion onset with a dead tail, and external
+    reporters describe the same 1-2 second ramp while Lightricks' own preset is 121 frames rather
+    than our 97. If onset is roughly fixed in time, a 97-frame clip spends 40 percent of itself in
+    the ramp and more frames buys proportionally more usable motion - which is arm A winning.
+  what_i_am_doing_about_it: >-
+    Not withdrawing the prediction. A prediction that can lose is the only kind worth writing, and
+    amending it after seeing evidence that bears on it would destroy the only thing it is for. It is
+    recorded here as evidence against, before the arm returned, so that if A wins the ledger shows I
+    saw it coming and kept my answer, and if A loses that is not retroactively impressive.
+  a_note_on_my_own_reading: >-
+    Independently, the two 121-frame clips in the cadence sample - b09 and b12 - are both clean at
+    ratios of 1.0 and 1.1 while three of the four 97-frame clips are doubled. Two of those are
+    character cards with almost no motion, so this is weak and I would not act on it, but it points
+    the same way as arm A.
+  outcome: null
