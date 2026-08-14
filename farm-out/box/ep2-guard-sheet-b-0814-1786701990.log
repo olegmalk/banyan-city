@@ -1,0 +1,9 @@
+#### job ep2-guard-sheet-b-0814-1786701990 attempt 1 start 2026-08-14T10:08:13Z
+
+==== step measure START 2026-08-14T10:08:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "7", "--goblin-def", "green skin, bald head", "--variant", "authored_guard_sheet_b", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+!! beat 07 (confiscate) has no `authored_guard_sheet_b` key in wave-drafts.yaml. Keys present: ['authored', 'authored_b07_idfix', 'authored_b07_idfix_r2', 'authored_b07_refresh', 'authored_ep3_charref_assessor', 'authored_ep3_charref_assessor_r3', 'authored_ep3_charref_assessor_r4', 'authored_staged']. This box's copy of wave-drafts.yaml is older than the job that was queued against it — copy the repo's pipeline/wave-drafts.yaml over and re-run. Refusing rather than falling back.
+==== step measure END rc=4 2026-08-14T10:08:19Z ====
+#### job ep2-guard-sheet-b-0814-1786701990 finished rc=4 2026-08-14T10:08:19Z
