@@ -1,0 +1,159 @@
+# 2026-08-14. ALL-21 WAVE, authored and NOT enqueued. It fires the moment he approves the plates.
+#
+# Every settled thing is in here and nothing new is: the goblin as a small ADULT MAN with the narrow
+# angular skull and the new CROSSED-WRAP TUNIC, no hood and no cloak; any fig PURPLE, teardrop, smooth
+# and plain; the scene asserted as ALREADY PRESENT rather than instructed to be drawn, which is the
+# wording that stopped the world arriving mid-clip; and the beat's own action as the dominant clause.
+#
+# The plate is the one drawn on the reference frame he chose. Count, world and identity come from it;
+# the words carry only the action. That division is what finished beats 06, 11 and 12.
+#
+# No new mechanism. This is execution.
+#
+# 2026-08-14, AFTER HIS RULING: "for the goblin, s1 was the best overall. honestly i dont want him to be
+# old, i just dont want him to be some cute little baby."
+#
+# THE AGE WORDS ARE OUT OF THIS PROMPT, both directions. It used to assert "a small ADULT MAN, lean and
+# wiry with a narrow angular skull" and to ban boy/child/chibi/baby-face in the negative. Both are gone.
+# His direction is that s1's own recipe already sits where he wants it, between old and cute-baby, so the
+# age is a property of the PLATE and nothing the prompt should be arguing about. Every time I have argued
+# with it in words I made it worse - the fourteen denial terms that inflated the skull, and "MAN" which I
+# reported as decisive and which measured out as a nudge.
+#
+# What is left is frozen FACTS - green skin, bald, pointed ears, red eyes, the patched wrap tunic, no hood
+# - plus an instruction to draw him as the plate draws him. Identity from the plate; the prompt carries
+# pose, action and scene only.
+#
+# 2026-08-14, from plate-drafts: THE PLATES NAME NO CLOTHING, deliberately. The crossed-wrap
+# tunic is the checkpoint's own invention on the chosen seed and the reference carries it where
+# words would be guessing. So my costume clause is out too - it described the outfit AND banned
+# a hood, and both are claims about a garment the plate already draws. Same reasoning that took
+# the age words out an hour ago: identity, costume and world all come from the plate now, and
+# the prompt is left with pose, action and the instruction not to redraw him.
+#
+# 2026-08-14 REFIRE. THE FIRST WAVE MANUFACTURED AN EGGPLANT AND IT WAS MY CLAUSE.
+# I put the purple-fig canon into ALL TWELVE wave prompts as a blanket rule - 'Any fig in shot is
+# a small PURPLE FIG...'. Only beats 19 and 20 have a fig in them. In the other seven the clause
+# had no fig to describe, so the model supplied one: a large purple elongated object reading as an
+# aubergine, wrapped round the trunk in b03, held in b14, floating over the face in b04. Several
+# goblins went pale at the same time.
+#
+# THE LAW I BROKE IS MY OWN, TWICE OVER. Naming a thing in a prompt puts it in the frame - that is
+# the sapling finding from two days ago, the one where the tree was missing because nobody had
+# written the word. A canon rule about how an object LOOKS is not a licence to mention the object
+# in a beat that does not contain it. Canon describes; it does not summon.
+#
+# The fig clause is removed from the seven beats with no fig. Beats 19 and 20 keep it because they
+# actually have one. Nothing else changes.
+id: ep2-b15-refire-0814
+task: ep2-b15-refire-0814
+node: 002b-first-citizen
+beat: 15
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.'
+success: 'A 704x1280 mp4, 121 frames, in which a LEAN ADULT goblin sprints in, skids and dives behind a sapling that has broad rounded leaves — both in frame, the dive reading, the character an adult in miniature rather than a round-headed child. Read beside its twin. The failure worth reporting is the kid-read surviving the new plate, which would mean the proportions are not in the plate after all and I have been wrong about where this lives.'
+why: The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b15-refire-0814\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b15-refire-0814\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the field, the grass and the sky are present from the first frame and stay exactly as they are. Nothing is added to the background and nothing is redrawn. The goblin is the creature already in this frame and he is drawn exactly as the starting picture draws him - the same face, the same build, the same clothes - and none of that changes for the whole shot. HE LOOKS UP AT THE SAPLING AND TALKS: he raises his head toward the tiny sapling beside him and speaks up at it, his mouth moving, and both he and the whole sapling stay inside the frame together the whole time. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b15-refire-0814\b13-negative.txt: background appearing, scene forming, iris, wipe, dissolve, white background, character sheet, green fig, green fruit, ribbed, pumpkin, gourd, second goblin, duplicate character, white background, blank background, isolated on white, character sheet, poster art, flat vector art, silhouette, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b15-refire-0814\b13-jobs-encode.json: "[{\"beat\": 15,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b15-refire-0814\b13-jobs-render.json: "[{\"beat\": 15,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b15-refire-0814\\\\13-remake-LTX-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-refire-0814\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b15-plate-0814\15-good-listener-ipa-r0-w015-s0.png
+  - --sha256
+  - 43648513f936a52f6b83f8c66b3f15b102f1c73c2a4fe2899c3e477e75618fb9
+  - --out
+  - C:\banyan-farm\ep2-b15-refire-0814\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b15-refire-0814\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b15-refire-0814\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b15-refire-0814
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b15-refire-0814\bench-b13-remake.jsonl
+  - --bench-label
+  - ep2-b15-refire-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b15-refire"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b15-refire-0814/13-remake-LTX-0813.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b15-refire-0814/b13-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b15-refire-0814/bench-b13-remake.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b15-refire-0814.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b15-refire-0814\13-remake-LTX-0813.mp4
+- C:\banyan-farm\ep2-b15-refire-0814\b13-init-704x1280.png

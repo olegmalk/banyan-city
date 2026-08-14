@@ -16704,3 +16704,34 @@
     side-by-side and, if any part is worse than what is already published, I name it rather than shipping
     a downgrade quietly.
   outcome: null
+
+- id: ep2-the-wave-manufactured-an-eggplant-and-the-clause-was-mine-0814
+  kind: scoring
+  date: 2026-08-14
+  verdict: >-
+    THE FIRST GOBLIN WAVE LARGELY FAILED and the cause is a clause I put in every prompt. Six beats
+    scored: a large purple elongated object - reading as an aubergine - appears in most of them. Wrapped
+    round the trunk in b03, held in the hands in b14, floating over the face in b04, on a stalk in b15.
+    Several goblins went pale at the same time.
+  the_cause: >-
+    I applied the purple-fig canon as a BLANKET RULE to all twelve wave prompts: "Any fig in shot is a
+    small PURPLE FIG...". Only beats 19 and 20 contain a fig. In the other seven the clause had no fig to
+    describe, so the model supplied one.
+  it_is_my_own_law_broken_twice_over: >-
+    NAMING A THING PUTS IT IN THE FRAME. That is the sapling finding from two days ago - the tree was
+    missing from shot after shot because nobody had written the word, and I ledgered it as a law. A canon
+    rule about how an object LOOKS is not a licence to mention that object in a beat which does not
+    contain it. Canon describes; it does not summon. I had also just written that every deletion from
+    these prompts has been the improvement, and then shipped an addition to twelve of them.
+  how_it_got_past_me: >-
+    I authored the canon block once and pasted it into every beat, which is exactly the efficiency that
+    makes a single wrong sentence twelve wrong sentences. The per-beat check I did run was "does this
+    carry the settled canon", not "does this beat contain the thing the canon is about".
+  fixed: >-
+    Fig clause removed from the seven beats with no fig; 19 and 20 keep it because they have one. Fourteen
+    refire jobs queued, verified fig-free by reading the generated prompt rather than trusting the edit.
+  what_it_cost: >-
+    Twelve renders, about seventy minutes of card, in a two-hour window where the founder is away and the
+    instruction was coverage over polish. The refire is coverage - those beats have no usable take - but it
+    is coverage I destroyed and then rebought.
+  outcome: null
