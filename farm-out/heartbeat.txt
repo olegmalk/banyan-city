@@ -1709,3 +1709,4 @@
 23:33:04Z STARTED task=ep2-b03-negconf-mot-0815-1786748118 attempt=1 on box-runner
 23:38:56Z DONE task=ep2-b03-negconf-mot-0815-1786748118 rc=0 artifacts=2
 23:39:03Z STARTED task=ep2-b07-mixedrefs-0815-1786750637 attempt=1 on box-runner
+23:42:02Z DONE task=ep2-b07-mixedrefs-0815-1786750637 rc=0 artifacts=4
