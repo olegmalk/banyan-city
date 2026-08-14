@@ -16478,3 +16478,34 @@
     next line. The guard works because it REFUSES rather than reports. Where I cannot make a check
     refuse, I have to read it as if it could.
   outcome: null
+
+- id: publish-glob-masks-render-success-0814
+  kind: mechanism
+  date: 2026-08-14
+  what_happened: >-
+    Six scene-plate jobs (ep2-b{05,09,11,12,18,21}-scene-0814) reported rc=92 and read as
+    six lost plates. They had all RENDERED correctly -- 60 frames, every seed, rc=0 on the
+    sample step. They failed on their own PUBLISH step: I cloned the spec template and
+    rewrote the output filename stem as `<beat>-wave1` / `<beat>-ipa`, dropping the beat
+    SLUG that render_wave_sample and goblin_ipa_sample actually write
+    (`<beat>-<slug>-wave1-sN.png`). The glob matched zero files, published zero, and the
+    declared-artifact check failed the job.
+  why_it_matters: >-
+    A job that renders and then fails on its own publish glob is INDISTINGUISHABLE from a
+    render failure in the queue counts. Six successes looked like six failures, the card
+    read as blocked on plates, and the correct response (re-publish, ~40 seconds) looks
+    identical to the wrong one (re-render, ~90 minutes of GPU). Nothing in the failure
+    surface says which.
+  fix_applied: >-
+    Slug restored at all 4-5 sites per spec (publish glob AND declared artifacts, which
+    carried the same wrong shape); existing outputs re-published from the box into
+    courier-box/farm-out without re-rendering. A scan of every other spec authored in the
+    last two days found the bug NOWHERE else -- it was introduced by one bulk-clone that
+    used a slugless stem, and the other clones kept the slug.
+  worth_doing_next, not_done_here: >-
+    The declared-artifact check knows the exact filenames it expects and the publish step
+    knows what it globbed; a job that publishes 0 files while its sample step exited 0
+    could say "rendered N, published 0, glob likely wrong" instead of a bare rc. That
+    would have turned this from a diagnosis into a message.
+  outcome: null
+

@@ -96,7 +96,7 @@ steps:
     w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
     \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
 artifacts:
-- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-ipa-r0-w015-s0.png
-- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-ipa-r1-w015-s0.png
-- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-ipa-r2-w015-s0.png
-- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-ipa-r3-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-they-leave-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-they-leave-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-they-leave-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-scene\11-they-leave-ipa-r3-w015-s0.png

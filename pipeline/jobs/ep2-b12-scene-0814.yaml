@@ -85,7 +85,7 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
   - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-scene-0814\"\
-    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-b12-scene/12-wave1-s*.*\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-b12-scene/12-related-wave1-s*.*\"\
     ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what\
     \ this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong\
     \ file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n       \
@@ -94,7 +94,7 @@ steps:
     ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
     , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
 artifacts:
-- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-wave1-s0.png
-- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-wave1-s1.png
-- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-wave1-s2.png
-- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-related-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-related-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-related-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b12-scene\12-related-wave1-s3.png
