@@ -17442,3 +17442,77 @@
     Read the faces myself and call it. I have been wrong in both directions tonight reading frames
     off a strip, and identity is exactly the judgement a blind reader is for.
   outcome: null
+
+- id: FAMILY-the-statistic-that-answers-a-different-question-0815
+  date: 2026-08-15
+  kind: law
+  what: >-
+    Four times in one night a measurement was arithmetically correct and answered a question nobody
+    had asked. They are not four bugs, they are one failure mode wearing four costumes, and the
+    family is worth more than any member of it.
+  the_four:
+    - >-
+      THE POOLED POPULATION. cadence_check filtered pairs against a floor and took medians across the
+      whole clip. Asked "does this judder", it answered "what is the average alternation over a
+      frozen head, a moving middle and a frozen tail combined" - and reported beat 02 FINE at 1.2
+      where the motion phase alone reads 13.2.
+    - >-
+      THE SAMPLING INTERVAL. Contact sheets take about sixteen frames evenly across ninety-seven, so
+      consecutive tiles sit eight source frames apart. Asked "is the movement smooth", they answered
+      "do frames eight apart differ" - and a textbook ease-in with no step anywhere came back
+      described as a cut.
+    - >-
+      THE RELATIVE REFERENCE. My onset was the first pair above a quarter of each clip's OWN peak.
+      Asked "when does motion start", it answered "when does this clip first reach a quarter of
+      whatever it manages" - so a clip that never moves reports an early onset off its first wobble.
+      I nearly refuted the plate hypothesis on that, which would have been the right conclusion for
+      entirely the wrong reason.
+    - >-
+      THE UR-EXAMPLE, which is the one we lived inside for days. Mean absolute frame difference.
+      Asked "did a character act", it answers "how much did pixels change" - and it rises the same
+      for a camera push-in, a lighting ramp and a fall. Every other member of this family is a
+      variation on it.
+  the_common_shape: >-
+    In none of the four was the arithmetic wrong. Each computed exactly what it said over the wrong
+    POPULATION, the wrong SAMPLING, the wrong REFERENCE, or the wrong QUANTITY. That is why review
+    does not catch them: the code is correct, the number is real, and the label on it is a promise
+    the number cannot keep. A wrong number gets argued with; a number answering a different question
+    gets believed.
+  how_all_four_were_actually_caught: >-
+    By someone re-deriving a result instead of banking it. Not one was caught by reading the code,
+    by a test, or by a reviewer. The pooled median fell when the same clip was measured a second way;
+    the sampling artifact fell when frames were pulled consecutively; the relative onset fell when an
+    absolute threshold was tried; the frame-difference metric fell when a blind reader looked at
+    clips it had called good. So the practice that pays is: BEFORE REPORTING A MEASUREMENT, COMPUTE
+    IT A SECOND WAY THAT SHOULD AGREE. If the two disagree the first one was answering something
+    else.
+  the_standing_rule: >-
+    State, next to every number, the population it was computed over and the question it is meant to
+    answer. If those two sentences cannot be written down the measurement is not ready to be
+    reported. And do not respond to this family by building another statistic - a burst detector for
+    "is this a real action" would be the fifth costume, since a discrete fall and a sustained walk
+    are both real actions with opposite signatures. The blind reader is not a stopgap until we
+    automate this; it is the instrument.
+  outcome: null
+
+- id: CORRECTION-the-universal-ramp-was-never-real-0815
+  date: 2026-08-15
+  kind: correction
+  whose: >-
+    Team lead's, stated by them plainly and recorded here at their request rather than left in a
+    message thread.
+  the_premise: >-
+    "Every clip sits frozen for roughly the first 1.0-1.5s regardless of crf, negative, guidance or
+    frame count." It was generalised from beat 02 and repeated through the night, and it shaped the
+    four-arm sweep, the frame-count arms and the staging test.
+  what_is_true: >-
+    Nine of ten clips measured against an absolute threshold start inside a quarter second, costume
+    cards included. Beat 02 is the exception, not the rule, and it is the only clip in the set with a
+    real ramp. Anyone reading this ledger later should not carry the universal claim forward.
+  why_it_matters_beyond_the_fact: >-
+    A premise held by the lane that relays findings gets built on by every other lane before anyone
+    tests it. This one cost a sweep and two frame-count arms aimed at a phenomenon nine of ten clips
+    do not have. The lead's own reading of it - that they repeat a conclusion at speed instead of
+    testing what it rests on - is the more useful half, and it is the same failure as mine one level
+    up: I built a hypothesis on their relayed research within the hour and had to retract that too.
+  outcome: null
