@@ -1,0 +1,122 @@
+# NEGATIVE-PROMPT CONFIRMATION, beat 03, 2026-08-15. ONE experiment, two
+# clips, one variable: the negative prompt.
+#
+# WHY THIS EXISTS: the beat-02 motion sweep (R0/R1/R2/R3, 2026-08-15) found
+# NO arm that adds motion. image-crf 42 and guidance 1.0 both raised the
+# frame-diff number while a blind look at the frames showed the character's
+# pose just as frozen for the first ~1.2s as the baseline -- the extra
+# number was background/lighting drift in one and a drifting camera plus a
+# pose that REVERSED in the other. The metric and the eye disagreed and the
+# eye won. The single real difference was R2's negative cutting the
+# frame0->frame1 restyle flash 5x, which preserves the approved plate.
+#
+# PREDICTION, written before either clip renders: on this plate too the
+# motion negative cuts the flash to under 10 MAD against roughly 25-35 MAD
+# for the base negative, and the body of the motion window stays within
+# +/-25% of the control with the same late onset near 1.0-1.3s -- i.e. it
+# buys plate fidelity and buys NO motion. If the flash stays near the
+# control's, the beat-02 result was plate-specific and the negative change
+# is dropped. If the body mean collapses, the negative costs motion and is
+# dropped. Either of those is a real answer.
+#
+# HELD CONSTANT across both: source plate + sha, cover-crop program, seed
+# 20260815, positive prompt, 704x1280, 97 frames, 24 fps, image-crf 33,
+# guidance 2.0, two-stage distilled sigmas, sequential offload.
+#
+# THE ONE VARIABLE HERE:
+#   CONTROL. The negative beat 02's R0 baseline used. Establishes what the restyle flash costs on THIS plate.
+id: ep2-b03-negconf-base-0815
+task: ep2-b03-negconf-base-0815
+node: 002b-first-citizen
+beat: 3
+runner: box
+priority: 18
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: negative-prompt confirmation, 2026-08-15
+consumer: The episode-2 render recipe decision. The beat-02 sweep cleared the four held jobs by finding NO motion win; this decides the one remaining open question -- whether the motion negative's 5x smaller restyle flash is a property of the recipe or of beat 02's plate.
+success: 'A 704x1280 97-frame mp4 scored the same two ways as the beat-02 arms: the pair-0 restyle flash and a SEGMENTED per-pair |diff| series (head / motion body / tail, pair 0 dropped, cadence by index parity), plus a BLIND cold read that names the action or says there is none. The pair of clips answers one question: does the negative change the flash on a plate that is not beat 02''s, and does it cost any motion.'
+why: CONTROL. The negative beat 02's R0 baseline used. Establishes what the restyle flash costs on THIS plate.
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b03-negconf-base-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b03-negconf-base-0815\b03-prompt.txt: He crouches low behind the thin trunk of a small sapling, failing to hide. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b03-negconf-base-0815\b03-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b03-negconf-base-0815\b03-jobs-encode.json: "[{\"beat\": 3,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\b03-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\b03-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\b03-negative.txt\"}]"
+  C:\banyan-farm\ep2-b03-negconf-base-0815\b03-jobs-render.json: "[{\"beat\": 3,\n  \"seed\": 20260815,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\b03-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\b03-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b03-negconf-base-0815\\\\03-negconf-base.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-negconf-base-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b03-plate-0814\03-bad-cover-ipa-r0-w015-s0.png
+  - --sha256
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
+  - --out
+  - C:\banyan-farm\ep2-b03-negconf-base-0815\b03-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b03-negconf-base-0815\b03-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b03-negconf-base-0815\b03-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b03-negconf-base-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b03-negconf-base-0815\bench-base.jsonl
+  - --bench-label
+  - ep2-b03-negconf-base-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-negconf-base-0815\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b03-negconf-base-0815/03-negconf-base.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b03-negconf-base-0815/b03-init-*.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b03-negconf-base-0815/bench-*.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-negconf-base-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b03-negconf-base-0815\03-negconf-base.mp4
+- C:\banyan-farm\ep2-b03-negconf-base-0815\b03-init-704x1280.png
