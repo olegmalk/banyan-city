@@ -8298,11 +8298,20 @@ def test_the_queue_page_prints_the_prompt_that_made_the_frame():
     quality... we need to see a history of the queue, what has been generated,
     what image reference did it use, what was the prompt".
 
-    So the load-bearing claim of /queue is that THE PROMPT IS IN THE BYTES —
-    not a link to it, not a truncation with an ellipsis, not a summary. This
-    test renders a one-job history and looks for the prompt's own words and for
-    the media URLs on the box's branch, because a page that lost either would
-    still be several megabytes and still look built.
+    His second verdict, the same day, is why the page is now a gallery: *"looks
+    like you were pretty lazy with the queue history.. i expected you to be able
+    to scroll, see images and prompts and these details all with a nice
+    interface, more visuals."*
+
+    So the load-bearing claim of /queue is that THE PROMPT IS SHIPPED IN FULL —
+    not a link out to it, not a truncation with an ellipsis as the only copy,
+    not a summary. What changed with the gallery is WHERE: the baked HTML holds
+    the grid, a thumbnail and one prompt line per card, and the untruncated
+    prompts, negatives and recipes ride in `queue-data.json` and
+    `queue-detail.json`, which the page fetches. That is the whole reason the
+    page went from 2.8 MB to a fifth of it. This test therefore checks each fact
+    on the surface that actually carries it, because "in the page's own bytes"
+    was a claim about the old fold layout and not about the founder's ask.
     """
     import build_queue as bq
 
@@ -8331,31 +8340,60 @@ def test_the_queue_page_prints_the_prompt_that_made_the_frame():
     }
     out = bq.render(hist)
 
-    check("the positive prompt is printed in full, in the page's own bytes",
+    # THE GRID IS THE PAGE, and it is in the baked bytes — so the gallery is
+    # there with JavaScript off and is greppable in the built file.
+    check("the render is a card you can see, not a row you must open",
+          '<button type="button" class="qc' in out and "beat 18" in out)
+    check("the card carries a readable line of the prompt",
           "a fig lit from the side so its purple skin reads" in out)
-    check("the negative prompt is printed too — the half he cannot see otherwise",
-          "backlit silhouette, black shape against bright sky" in out)
-    check("both are labelled, so neither can be mistaken for the other",
-          "Positive prompt" in out and "Negative prompt" in out)
 
     # Media is REFERENCED, never copied: the frames live on the courier branch
-    # and the page must point at exactly that branch on the raw CDN.
-    check("the init frame is served from the box's own results branch",
-          f"{bq.RESULTS_BASE}/farm-out/ep2-b18/init.png" in out)
-    check("and so is every output it made",
-          f"{bq.RESULTS_BASE}/farm-out/ep2-b18/18-the-decision-r0.png" in out)
+    # and the page must point at exactly that branch on the raw CDN. The card
+    # asks the thumb branch first and keeps the original as the fallback, so a
+    # frame the thumbnailer missed costs one slow card and never a hole.
+    check("the card's picture comes from the thumb branch",
+          f'src="{bq.thumb_url("farm-out/ep2-b18/18-the-decision-r0.png")}"' in out)
+    check("with the full-size original on the same card as the fallback",
+          f'{bq.RESULTS_BASE}/farm-out/ep2-b18/18-the-decision-r0.png' in out)
     check("the media base is the raw CDN, not a path inside _site",
           "raw.githubusercontent.com" in bq.RESULTS_BASE
+          and "raw.githubusercontent.com" in bq.THUMB_BASE
           and bq.RESULTS_BASE in out)
 
-    # A page holding 1,700 artifacts must cost nothing until a card is opened.
+    # THE FULL TEXT IS SHIPPED, in the payloads the page fetches. Untruncated:
+    # the card's line may be cut on a word boundary, the payload's never is.
+    idx = bq.index_payload(hist)
+    det = bq.detail_payload(hist)["jobs"]["ep2-b18-figlit-0814-1786724010"]
+    check("the index ships the positive prompt whole, for the search box",
+          idx["jobs"][0]["prompt"] == "a fig lit from the side so its purple skin reads")
+    check("the opened record ships the negative too — the half he cannot see otherwise",
+          det["negative"] == "backlit silhouette, black shape against bright sky")
+    check("they are separate fields, so neither can be mistaken for the other",
+          det["prompt"] != det["negative"])
+    check("and the page labels both where it prints them",
+          "Positive prompt" in bq.LIVE_JS and "Negative prompt" in bq.LIVE_JS)
+    check("the init frame travels with the record, on the box's own branch",
+          det["init"]["path"] == "farm-out/ep2-b18/init.png"
+          and bq.art_url(det["init"]["path"]).startswith(bq.RESULTS_BASE))
+    check("and so does every output it made",
+          [a["path"] for a in det["outputs"]]
+          == ["farm-out/ep2-b18/18-the-decision-r0.png",
+              "farm-out/ep2-b18/18-the-decision-r0.mp4"])
+    check("a long prompt is cut only on the card, never in the payload",
+          bq.snippet("x " * 200).endswith("…") and len(bq.snippet("x " * 200)) <= 90)
+
+    # A page holding 1,700 artifacts must cost nothing until it is scrolled to.
     check("images are lazy", 'loading="lazy"' in out)
-    check("video downloads nothing until asked", 'preload="none"' in out)
-    check("the card is folded shut, so opening one is a choice",
-          '<details class="qjob"' in out and '<details class="qjob" open' not in out)
-    # The summary line is what he scans: beat, kind, clock, duration, outcome.
-    check("the fold's summary carries beat, duration and outcome",
-          "beat 18" in out and "2m 53s" in out and "rc 0" in out)
+    # A job that produced only a clip gets a <video> card, and that one must not
+    # pull the file down to show a poster frame.
+    clip_only = {"id": "v1", "beat": 4, "kind": "motion", "rc": 0,
+                 "finished_at": "2026-08-14T16:24:58Z", "duration_s": 173,
+                 "outputs": [{"path": "farm-out/v/04.mp4", "name": "04.mp4",
+                              "kind": "video"}]}
+    check("video downloads nothing until asked", 'preload="none"' in bq.card_html(clip_only, 0))
+    # The line he scans on the grid: which beat, what kind, when, how many files.
+    check("the card's own line carries beat, kind, clock and file count",
+          "beat 18" in out and "2 files" in out)
 
 
 def test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty():
@@ -8378,29 +8416,46 @@ def test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty():
     out = bq.render({"_meta": {}, "jobs": [lost], "upcoming": []})
     check("an unrecoverable prompt prints the honest marker",
           bq.NO_PROMPT in out)
-    check("and prints the reason the generator gave for the gap",
-          "no artifact sidecar was written for this run" in out)
+    check("and the card is marked as a gap, not left looking blank",
+          'class="p gap"' in out)
     check("nothing was invented in its place",
-          "<pre class=\"qtext\">" not in out)
+          "a slow push" not in out and "prompt: </p><p></p>" not in out)
+
+    # The gap and its reason travel in the index row, so the grid can print the
+    # honest marker on first paint without a second fetch and without inventing
+    # a cause. A row carrying `prompt` and a row carrying `prompt_gap` are the
+    # two different facts, and no row may carry both.
+    row = bq.index_row(lost)
+    check("the row states the gap rather than shipping an empty prompt",
+          row["prompt_gap"] == "no artifact sidecar was written for this run"
+          and "prompt" not in row)
+    check("and the opened record does not invent a prompt either",
+          "prompt" not in bq.detail_row(lost))
+    check("a gap with no recorded cause still refuses to imply one",
+          bq.index_row(dict(lost, prompt_source=None))["prompt_gap"]
+          == "no reason recorded")
 
     # The opposite case must stay distinguishable: a run that really carried a
-    # positive and really carried no negative says THAT, in its own words. Read
-    # off the card's own fragment, because the page footer explains what the
-    # marker means and would answer a whole-page substring search either way.
+    # positive and really carried no negative is a different fact from a run
+    # that recorded neither, and the record is what the page reads to tell them
+    # apart. (Careful if you ever assert these markers by substring: NO_NEGATIVE
+    # ENDS WITH NO_PROMPT — "NEGATIVE PROMPT NOT RECORDED" contains "PROMPT NOT
+    # RECORDED" — so a bare `NO_PROMPT in x` is true whenever the negative
+    # marker is present. Asserting on the record's keys cannot make that mistake.)
     half = dict(lost, prompt="a slow push in on the sprout",
                 prompt_source="artifact sidecar")
-    # Careful: NO_NEGATIVE *ends with* NO_PROMPT ("NEGATIVE PROMPT NOT
-    # RECORDED"), so a bare substring search for the positive marker is true
-    # whenever the negative one is. The gap paragraph it opens is what
-    # distinguishes them, and that is what this asserts.
-    card = bq.prompt_html(half)
-    gap_positive = f'<p class="qgap">{bq.NO_PROMPT}'
-    check("a recovered positive with no negative names the missing half only",
-          bq.NO_NEGATIVE in card and gap_positive not in card)
-    check("and the positive it did recover is printed",
-          "a slow push in on the sprout" in card)
-    check("the card for a wholly unrecovered run opens that same gap",
-          gap_positive in bq.prompt_html(lost))
+    hrow, hdet = bq.index_row(half), bq.detail_row(half)
+    check("a recovered positive is shipped whole and opens no gap",
+          hrow["prompt"] == "a slow push in on the sprout" and "prompt_gap" not in hrow)
+    check("and the missing half is missing, not empty",
+          hdet["prompt"] == "a slow push in on the sprout" and "negative" not in hdet)
+    check("the marker for that missing half is its own words",
+          bq.NO_NEGATIVE.startswith("NEGATIVE") and bq.NO_NEGATIVE != bq.NO_PROMPT)
+    # The opened record is drawn in the browser, so the markers must reach it as
+    # constants rather than as strings retyped in the JS — two copies of a
+    # promise are one copy away from disagreeing.
+    check("the record view prints the markers from the module's own constants",
+          "NO_PROMPT" in bq.LIVE_JS and "NO_NEGATIVE" in bq.LIVE_JS)
 
     # A history file that cannot be read at all must degrade to a sentence, not
     # to a fabricated empty page and not to a build crash — several lanes share

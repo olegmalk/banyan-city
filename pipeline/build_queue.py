@@ -1,60 +1,61 @@
 #!/usr/bin/env python3
-"""THE QUEUE — every render job, the exact prompt it ran, and what it made.
+"""THE QUEUE — a gallery of every render, what it was told, and what it made.
 
-The founder, 2026-08-14: "i cant keep blindly saying these videos are low
-quality, lets improve the queue so i actually understand exactly how these
-beats are being generated. we need to see a history of the queue, what has
-been generated, what image reference did it use, what was the prompt, etc. and
-also we need to see future things in the queue." Oleg, the same day: show when
-something FINISHED, so progress is visible without asking anyone.
+The founder asked for this page twice. First, 2026-08-14: "i cant keep blindly
+saying these videos are low quality, lets improve the queue so i actually
+understand exactly how these beats are being generated." That shipped as folds
+of text — 641 jobs, 3,361 artifact URLs, and NOTHING VISIBLE until you opened
+one. His verdict, the same day: *"looks like you were pretty lazy with the queue
+history.. i expected you to be able to scroll, see images and prompts and these
+details all with a nice interface, more visuals, can you do that?"*
 
-So this page answers three questions in that order, newest first:
+He was right, and the fix is not decoration. A page about how frames look that
+shows no frames is a data dump wearing a page's clothes. So:
 
-  1. WHAT IS THE BOX DOING RIGHT NOW — fetched in the reader's own browser off
-     the render box's telemetry branch, on exactly the pattern `/status` uses
-     (build_sim.LIVE_JS.readBoxQueue): cache-busted, `no-store`, and stale
-     after three missed five-minute publishes, at which point the numbers keep
-     their value but lose the word "now".
-  2. WHAT IS COMING — the committed specs in `pipeline/jobs/` that have no run
-     record anywhere, with the consumer / success / why each one was written
-     with. This is where a job says WHAT IT WILL MAKE AND WHY before it costs
-     a GPU-hour.
-  3. WHAT ALREADY RAN — 500-odd finished jobs grouped by day, each one a fold
-     holding its full positive and negative prompt, its init frame, its
-     reference, its recipe and every file it produced.
+  THE GRID IS THE PAGE. Every finished job is a card with its output visible as
+  a thumbnail, newest first, grouped under the day it finished. Clicking one
+  opens the record — the output large, the frame it started from, the reference
+  it was conditioned on, both prompts as readable prose, the recipe, and who was
+  waiting for it.
 
-WHERE THE HISTORY COMES FROM, and why it is a committed file. `queue_history.py`
-joins the box's run sidecars (on `farm-results-rtx5090`) against the committed
-specs on `main` and writes `pipeline/measured/queue-history.json`. A Vercel
-deploy checkout has no farm branches and a reader's browser cannot join yaml
-across two of them, so the join happens on a laptop and the answer is committed.
-THE PAGE IS THEREFORE EXACTLY AS OLD AS THAT FILE, it says so at the top in the
-same breath as the counts, and re-running the generator is the only thing that
-moves it (SITE.md, "the queue history's refresh duty").
+FOUR THINGS THAT ARE NOT STYLE OPINIONS, each of which cost something to learn:
 
-WHY THE CARDS ARE BAKED AND NOT DRAWN IN JAVASCRIPT. The history is ~1.8 MB of
-JSON. Baking the cards costs about the same bytes as inlining the JSON would —
-and inlining the JSON *and* rendering from it would cost both. Baked wins on
-every other axis: the prompts are in the HTML, so they are readable with
-JavaScript off, greppable in the built file, and checkable by a pure-logic test
-that never opens a browser. The one thing JavaScript does here is FILTER, and
-it filters the DOM it was handed rather than a second copy of the data.
+1. **The thumbnails are a separate branch, and they have to be.** The artifacts
+   are full-resolution PNGs with a median of 862 KB. A grid of 348 of them costs
+   300 MB to scroll — `loading="lazy"` does not save that, it only spreads it
+   over the scroll, on his phone, on cellular. `pipeline/queue_thumbs.py` writes
+   a 512 px JPEG for each one (~15 KB, a 58× cut) onto the `site-thumbs` branch,
+   and every `<img>` here points at the thumb with `data-f` holding the
+   original. A thumb that is missing falls back to the full frame in the
+   browser: a slower card, never an empty one.
 
-MEDIA IS NEVER COPIED INTO THE SITE. Every frame and clip is referenced
-straight from `raw.githubusercontent.com/<owner>/<repo>/farm-results-rtx5090/…`
-— the branch the box already pushes to — with `loading="lazy"` on images and
-`preload="none"` on video, inside a fold that starts closed. A page holding
-1,700 artifacts downloads none of them until something is opened.
+2. **The bulk of the record is fetched, not baked.** The cards are in these
+   bytes — markup, thumbnails, beats, outcomes, a prompt line each — so the
+   gallery works with JavaScript off and is greppable in the built file. The
+   FULL prompts, recipes and purposes are `queue-data.json` (the index and the
+   search corpus) and `queue-detail.json` (opened on the first click). That is
+   what took the page from 2.8 MB to a fifth of that without hiding anything:
+   the same facts, one fetch away instead of one megabyte away.
 
-HONESTY RULES, inherited from /pulse and /status:
-  * a prompt the generator could not recover prints NOT RECORDED and the reason
-    it gives, never a reconstruction — the 77-token fit happened on the box's
-    tokenizer and a recomputation can differ exactly where it matters;
-  * the box publishes how MANY jobs are waiting and of what kind, never their
-    names, so this page does not pretend to name them (see `LIVE_JS`);
-  * green is machine work, amber is waiting on the author, and the failed count
-    is the alarm colour. A held spec is amber because the machine is not the
-    thing holding it up.
+3. **A prompt nobody recorded says so, with the reason.** Never reconstructed —
+   the 77-token fit happened on the box's tokenizer and a recomputation can
+   differ exactly where it would matter. Same for a job whose artifacts are not
+   on the branch: the card says the artifact is missing rather than showing an
+   empty tile that reads as "this render produced nothing".
+
+4. **Green is the machine's clock, amber is the author's**, here as everywhere
+   on this site. A held spec is amber because the machine is not what is holding
+   it up.
+
+WHERE THE HISTORY COMES FROM. `queue_history.py` joins the box's run sidecars
+(on `farm-results-rtx5090`) against the committed specs on `main` and writes
+`pipeline/measured/queue-history.json`. A Vercel deploy checkout has no farm
+branches and a reader's browser cannot join yaml across two of them, so the join
+happens on a laptop and the answer is committed. THE PAGE IS EXACTLY AS OLD AS
+THAT FILE, it says so at the top in the same breath as the counts, and
+re-running the generator is the only thing that moves it (SITE.md, "the queue
+history's refresh duty"). The one block a reader can trust as *now* is the live
+one, which reads the box's telemetry branch in their own browser.
 """
 from __future__ import annotations
 
@@ -67,6 +68,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 import repo_slug  # noqa: E402  one source for "which repo is this"
+from queue_thumbs import THUMB_BRANCH, thumb_rel  # noqa: E402  one naming rule
 
 HISTORY = REPO / "pipeline" / "measured" / "queue-history.json"
 JOBS_DIR = REPO / "pipeline" / "jobs"
@@ -74,14 +76,15 @@ JOBS_DIR = REPO / "pipeline" / "jobs"
 RAW = repo_slug.RAW_URL
 REPO_URL = repo_slug.REPO_URL
 
-# The branch the courier pushes artifacts to, and the branch the telemetry
-# daemon publishes vitals to. They are deliberately different files on
-# deliberately different branches — see test_the_courier_and_the_telemetry_
-# daemon_own_different_branches. The legacy URL stays because the box's
-# scheduled task is re-enabled by hand and the old place can be the fresher one
-# for a while after a daemon change.
+# The branch the courier pushes artifacts to, the branch the thumbnailer writes
+# to, and the branch the telemetry daemon publishes vitals to. Three branches on
+# purpose — see test_the_courier_and_the_telemetry_daemon_own_different_branches
+# and queue_thumbs.py's note on why the thumbs are not in with the originals.
+# The legacy telemetry URL stays because the box's scheduled task is re-enabled
+# by hand and the old place can be the fresher one for a while after a change.
 RESULTS_BRANCH = "farm-results-rtx5090"
 RESULTS_BASE = f"{RAW}/{RESULTS_BRANCH}"
+THUMB_BASE = f"{RAW}/{THUMB_BRANCH}"
 TELEMETRY_URL = f"{RAW}/farm-telemetry-rtx5090/telemetry.json"
 TELEMETRY_URL_LEGACY = f"{RAW}/{RESULTS_BRANCH}/telemetry.json"
 
@@ -95,21 +98,24 @@ STALE_MINUTES = 15
 TZ = datetime.timezone(datetime.timedelta(hours=4))
 TZ_LABEL = "+04"
 
-# What the page prints where a prompt should be and is not. One constant
-# because the test checks the page for exactly this, and a page that quietly
-# stopped saying it would be a page that quietly started implying the prompt
-# was empty.
+# What the page prints where a prompt should be and is not. Constants because
+# the tests check for exactly these, and a page that quietly stopped saying it
+# would be a page that quietly started implying the prompt was empty.
 NO_PROMPT = "PROMPT NOT RECORDED"
 NO_NEGATIVE = "NEGATIVE PROMPT NOT RECORDED"
+NO_ARTIFACT = "NO ARTIFACT ON THE BRANCH"
 
-# The founder does not need 573 open folds. Every day is a section; the newest
-# one is open on arrival and the rest are one tap away.
-DAYS_OPEN = 1
+# The card's one-line prompt. Long enough to tell two renders of the same beat
+# apart at a glance, short enough that 573 of them are a page and not a book.
+SNIPPET = 88
+
+DATA_FILE = "queue-data.json"
+DETAIL_FILE = "queue-detail.json"
 
 KIND_WORDS = {
     "motion": "motion take",
     "still": "still",
-    "still-ipa": "still (reference-conditioned)",
+    "still-ipa": "still · reference",
     "inpaint": "inpaint",
     "other": "job",
 }
@@ -122,14 +128,19 @@ STATE_WORDS = {
 
 
 CSS = """
+/* A gallery needs the width. Every other page on this site is a column of
+   prose at 720px; this one is a contact sheet, and at 720px it is three
+   thumbnails wide on a laptop. */
+main { max-width: 1180px; }
+
 .qlede { color: var(--muted); }
 .qprov { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .4rem 0 0; }
 
 /* ---- the counters across the top ---- */
-.qstats { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 0; padding: 0;
-  list-style: none; }
-.qstats li { flex: 1 1 140px; padding: .6rem .8rem; border: 1px solid var(--line);
-  border-radius: 10px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.qstats { display: grid; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
+.qstats li { padding: .6rem .8rem; border: 1px solid var(--line); border-radius: 10px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
 .qstats b { display: block; font: 700 1.28rem/1.25 var(--mono); color: var(--ink);
   font-variant-numeric: tabular-nums; }
 .qstats span { font: 500 .72rem/1.5 var(--mono); color: var(--faint); }
@@ -140,7 +151,7 @@ CSS = """
 /* ---- live block ---- */
 .qlive { margin: 1rem 0 0; padding: .9rem 1rem; border: 1px solid var(--line);
   border-radius: 14px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.qlive .qnow-t { font: 700 .95rem/1.4 var(--mono); color: var(--leaf); }
+.qlive .qnow-t { font: 700 .95rem/1.4 var(--mono); color: var(--leaf); margin: .2rem 0 0; }
 .qlive .qsay { font: 500 .82rem/1.7 var(--mono); color: var(--muted); margin: .35rem 0 0; }
 .qlive .qsay.none { color: var(--faint); }
 .qchips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .55rem 0 0; }
@@ -151,85 +162,119 @@ CSS = """
 .qchip.wait { color: var(--sap); border-color: var(--sap-deep); }
 .qchip.bad { color: var(--alarm, #e2564d); border-color: var(--alarm, #e2564d); }
 
-/* ---- job cards ---- */
-.qday { margin: 1.6rem 0 0; }
-.qday > summary { cursor: pointer; list-style: none; padding: .6rem 0;
-  font: 700 .82rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--muted); border-bottom: 1px solid var(--line); }
-.qday > summary::-webkit-details-marker { display: none; }
-.qday > summary::before { content: "\\25b8"; display: inline-block; margin-right: .55rem;
-  color: var(--sap); transition: transform .2s ease; }
-.qday[open] > summary::before { transform: rotate(90deg); }
-.qday > summary .n { color: var(--faint); font-weight: 500; text-transform: none;
-  letter-spacing: 0; }
-.qjob { border: 1px solid var(--line); border-radius: 12px; margin: .55rem 0 0;
-  background: var(--panel); overflow: hidden; }
-.qjob > summary { cursor: pointer; list-style: none; padding: .6rem .75rem;
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .6rem;
-  font: 500 .8rem/1.5 var(--mono); color: var(--muted); }
-.qjob > summary::-webkit-details-marker { display: none; }
-.qjob > summary:hover { color: var(--ink); }
-.qjob .beat { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-.qjob .kind { color: var(--leaf); }
-.qjob .when, .qjob .dur { color: var(--faint); font-variant-numeric: tabular-nums; }
-.qjob .rc-ok { color: var(--leaf); }
-.qjob .rc-bad { color: var(--alarm, #e2564d); font-weight: 700; }
-.qjob .body { padding: 0 .75rem .85rem; border-top: 1px solid var(--line-soft); }
-.qjob.failed { border-color: var(--alarm, #e2564d); }
-
-.qh { font: 700 .68rem/1.6 var(--mono); letter-spacing: .12em; text-transform: uppercase;
-  color: var(--faint); margin: .85rem 0 .25rem; }
-.qtext { font: 500 .82rem/1.6 var(--mono); color: var(--ink); background: var(--code-bg);
-  border: 1px solid var(--line-soft); border-radius: 8px; padding: .6rem .7rem;
-  margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.qtext.neg { color: var(--muted); }
-.qgap { font: 500 .8rem/1.6 var(--mono); color: var(--sap); margin: 0; }
-.qgap i { color: var(--faint); font-style: normal; }
-.qmeta { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .3rem 0 0;
-  overflow-wrap: anywhere; }
-.qmeta b { color: var(--muted); font-weight: 700; }
-
-/* mobile-first: as many columns as fit, never narrower than a thumbnail worth
-   looking at, and one column on a phone without a media query saying so. */
-.qgrid { display: grid; gap: .5rem; margin: .35rem 0 0;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-.qgrid figure { margin: 0; }
-.qgrid img, .qgrid video { width: 100%; display: block; border-radius: 8px;
-  border: 1px solid var(--line); background: var(--code-bg); }
-.qgrid figcaption { font: 500 .68rem/1.5 var(--mono); color: var(--faint);
-  margin-top: .25rem; overflow-wrap: anywhere; }
-.qinit { max-width: 260px; }
-
 /* ---- upcoming ---- */
-.qup { border: 1px solid var(--line); border-radius: 12px; margin: .55rem 0 0;
-  background: var(--panel); overflow: hidden; }
-.qup > summary { cursor: pointer; list-style: none; padding: .6rem .75rem;
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .6rem;
-  font: 500 .8rem/1.5 var(--mono); color: var(--muted); }
-.qup > summary::-webkit-details-marker { display: none; }
-.qup .beat { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-.qup.amber { border-left: 3px solid var(--sap); }
-.qup.green { border-left: 3px solid var(--leaf-deep); }
+.qupgrid { display: grid; gap: .6rem; margin: .6rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.qup { border: 1px solid var(--line); border-left-width: 3px; border-radius: 12px;
+  padding: .65rem .8rem .75rem; background: var(--panel); }
+.qup.amber { border-left-color: var(--sap); }
+.qup.green { border-left-color: var(--leaf-deep); }
 .qup.muted { opacity: .72; }
+.qup .top { display: flex; flex-wrap: wrap; gap: .3rem .6rem; align-items: baseline;
+  font: 500 .78rem/1.5 var(--mono); color: var(--faint); }
+.qup .beat { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 .qup .state { font-weight: 700; }
 .qup.amber .state { color: var(--sap); }
 .qup.green .state { color: var(--leaf); }
-.qup .body { padding: 0 .75rem .8rem; border-top: 1px solid var(--line-soft); }
 
-/* ---- the filter ---- */
-.qfilter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .8rem;
-  margin: 1.4rem 0 .2rem; padding: .7rem .85rem; border: 1px solid var(--line);
-  border-radius: 12px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.qfilter label { font: 700 .68rem/1.6 var(--mono); letter-spacing: .08em;
-  text-transform: uppercase; color: var(--faint); }
-.qfilter input { flex: 1 1 200px; min-height: 38px; font: 500 .88rem/1.4 var(--mono);
-  color: var(--ink); background: var(--code-bg); border: 1px solid var(--line);
-  border-radius: 999px; padding: .4rem .9rem; }
-.qfilter input:focus-visible { outline: 2px solid var(--sap); outline-offset: 1px; }
-.qfilter .count { flex: 1 1 100%; margin: 0; font: 500 .76rem/1.6 var(--mono);
+/* ---- the sticky control bar ---- */
+.qbar { position: sticky; top: 0; z-index: 6; margin: 1.4rem 0 0;
+  padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--bg); box-shadow: 0 10px 24px -18px rgba(0,0,0,.9);
+  display: flex; flex-wrap: wrap; gap: .45rem .6rem; align-items: center; }
+.qbar input[type=search] { flex: 1 1 220px; min-height: 40px; min-width: 0;
+  font: 500 .88rem/1.4 var(--mono); color: var(--ink); background: var(--code-bg);
+  border: 1px solid var(--line); border-radius: 999px; padding: .4rem .9rem; }
+.qbar input:focus-visible, .qbar button:focus-visible { outline: 2px solid var(--sap);
+  outline-offset: 1px; }
+.qset { display: flex; flex-wrap: wrap; gap: .3rem; }
+.qbtn { font: 700 .7rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase;
+  min-height: 34px; padding: .3rem .65rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--code-bg); color: var(--muted); }
+.qbtn:hover { color: var(--ink); }
+.qbtn[aria-pressed=true] { background: var(--leaf-dim); color: var(--ink);
+  border-color: var(--leaf-deep); }
+.qbtn.bad[aria-pressed=true] { background: transparent; color: var(--alarm, #e2564d);
+  border-color: var(--alarm, #e2564d); }
+.qcount { flex: 1 1 100%; margin: 0; font: 500 .74rem/1.5 var(--mono);
   color: var(--faint); font-variant-numeric: tabular-nums; }
-.qfilter[hidden] { display: none; }
-.qhide { display: none; }
+
+/* ---- the gallery ---- */
+.qdaysec { margin: 1.1rem 0 0; }
+.qdh { position: sticky; top: var(--qbarh, 3.6rem); z-index: 4; margin: 0;
+  padding: .45rem .1rem; background: var(--bg);
+  font: 700 .76rem/1.5 var(--mono); letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--line); }
+.qdh .n { color: var(--faint); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.qgrid { display: grid; gap: .55rem; margin: .55rem 0 0;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
+
+.qc { position: relative; display: block; width: 100%; text-align: left; padding: 0;
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  background: var(--panel); color: inherit; cursor: pointer; font: inherit; }
+.qc:hover { border-color: var(--leaf-deep); }
+.qc:focus-visible { outline: 2px solid var(--sap); outline-offset: 2px; }
+.qc.failed { border-color: var(--alarm, #e2564d); }
+.qc .shot { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+  background: var(--code-bg); border-bottom: 1px solid var(--line-soft); }
+.qc .none { display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: .6rem; aspect-ratio: 3 / 4; background: var(--code-bg);
+  font: 700 .62rem/1.5 var(--mono); letter-spacing: .06em; color: var(--faint);
+  border-bottom: 1px solid var(--line-soft); }
+.qc .play { position: absolute; top: .4rem; right: .4rem; width: 26px; height: 26px;
+  border-radius: 50%; background: rgba(6,12,8,.72); color: #eaf6ec;
+  font: 700 .62rem/26px var(--mono); text-align: center; pointer-events: none; }
+.qc .m { padding: .4rem .5rem .55rem; }
+.qc .row { display: flex; flex-wrap: wrap; gap: .25rem .45rem; align-items: baseline;
+  font: 500 .68rem/1.4 var(--mono); color: var(--faint); }
+.qc .beat { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.qc .kind { color: var(--leaf); }
+.qc.failed .kind { color: var(--alarm, #e2564d); }
+.qc .p { margin: .3rem 0 0; font: 500 .7rem/1.45 var(--mono); color: var(--muted);
+  overflow-wrap: anywhere; }
+.qc .p.gap { color: var(--sap); }
+.qhide { display: none !important; }
+
+.qmore { margin: 1rem 0 0; }
+.qnote { font: 500 .8rem/1.7 var(--mono); color: var(--faint); margin: .8rem 0 0; }
+
+/* ---- the record, opened ---- */
+.qbox[hidden] { display: none; }
+.qbox { position: fixed; inset: 0; z-index: 50; overflow-y: auto;
+  background: rgba(3,8,5,.88); padding: .6rem; }
+.qbox-in { max-width: 1100px; margin: 0 auto 3rem; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+.qbox-bar { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap;
+  gap: .4rem; align-items: center; justify-content: space-between;
+  padding: .55rem .7rem; background: var(--panel-2);
+  border-bottom: 1px solid var(--line); border-radius: 16px 16px 0 0; }
+.qbox-bar .who { font: 700 .8rem/1.4 var(--mono); color: var(--ink); }
+.qbox-body { padding: .8rem .9rem 1.2rem; }
+.qmedia { display: grid; gap: .7rem; margin: 0 0 .3rem; }
+@media (min-width: 860px) { .qmedia { grid-template-columns: 3fr 2fr; align-items: start; } }
+.qbig img, .qbig video { width: 100%; display: block; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--code-bg); }
+.qstrip { display: grid; gap: .35rem; margin: .4rem 0 0;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+.qstrip img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  border-radius: 6px; border: 1px solid var(--line); cursor: pointer; }
+.qstrip img[aria-current=true] { border-color: var(--sap); }
+.qside figure { margin: 0 0 .6rem; }
+.qside img { width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--code-bg); }
+.qh { font: 700 .66rem/1.6 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--faint); margin: .9rem 0 .25rem; }
+.qprose { font: 400 .95rem/1.65 var(--body); color: var(--ink); background: var(--code-bg);
+  border: 1px solid var(--line-soft); border-radius: 10px; padding: .65rem .8rem;
+  margin: 0; overflow-wrap: anywhere; }
+.qprose.neg { color: var(--muted); }
+.qgap { font: 700 .8rem/1.6 var(--mono); color: var(--sap); margin: 0; }
+.qgap i { color: var(--faint); font-style: normal; font-weight: 500; }
+.qmeta { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .3rem 0 0;
+  overflow-wrap: anywhere; }
+.qmeta b { color: var(--muted); font-weight: 700; }
+.qbox .rc-ok { color: var(--leaf); }
+.qbox .rc-bad, .qc .rc-bad { color: var(--alarm, #e2564d); font-weight: 700; }
 """
 
 
@@ -341,216 +386,97 @@ def art_url(path: str) -> str:
     Windows separator would produce a 404 that looks like a missing render, so
     both are normalised here rather than at 1,700 call sites.
     """
-    p = str(path or "").replace("\\", "/").lstrip("/")
-    return f"{RESULTS_BASE}/{p}"
+    return f"{RESULTS_BASE}/{_rel(path)}"
 
 
-# ---------------------------------------------------------------- fragments
+def thumb_url(path: str) -> str:
+    """The same artifact's 512 px preview on the thumb branch.
 
-def prompt_html(job: dict) -> str:
-    """The two prompt blocks, or the honest marker and the reason.
-
-    This is the whole point of the page — the founder asked to stop guessing
-    why a beat looks the way it does — so the text is printed in full, wrapped,
-    selectable, and never truncated with an ellipsis.
+    Every card points here first and carries the full-size URL alongside, so a
+    frame the thumbnailer has not caught up with costs one card a slow load
+    instead of showing a hole. `queue_thumbs.thumb_rel` is imported rather than
+    reimplemented: two functions agreeing on a filename by coincidence is how a
+    gallery quietly loses half its pictures.
     """
-    src = job.get("prompt_source")
-    out = []
-    if job.get("prompt"):
-        out.append('<p class="qh">Positive prompt</p>')
-        out.append(f'<pre class="qtext">{_e(job["prompt"])}</pre>')
-    else:
-        out.append(f'<p class="qh">Prompt</p><p class="qgap">{NO_PROMPT}'
-                   + (f' — <i>{_e(src)}</i>' if src else "") + "</p>")
-    if job.get("negative"):
-        out.append('<p class="qh">Negative prompt</p>')
-        out.append(f'<pre class="qtext neg">{_e(job["negative"])}</pre>')
-    elif job.get("prompt"):
-        # A recovered positive with no negative is a real fact about the run
-        # (some recipes carry none) and is worth one line; a job with neither
-        # already said why above and does not need it twice.
-        out.append(f'<p class="qh">Negative prompt</p><p class="qgap">{NO_NEGATIVE}</p>')
-    if job.get("prompt") and src:
-        out.append(f'<p class="qmeta">read from: {_e(src)}</p>')
-    return "".join(out)
+    return f"{THUMB_BASE}/{thumb_rel(_rel(path))}"
 
 
-def media_html(job: dict) -> str:
-    """Init frame, reference, and everything the job produced.
+def _rel(path: str) -> str:
+    return str(path or "").replace("\\", "/").lstrip("/")
 
-    `loading="lazy"` and `preload="none"`, inside a fold that starts closed:
-    the page can reference 1,700 artifacts and cost a reader nothing until they
-    open one card.
+
+def snippet(text: str, limit: int = SNIPPET) -> str:
+    """The card's one prompt line. Cut on a word boundary and marked with an
+    ellipsis — the full text is one tap away and is never what this returns."""
+    t = " ".join(str(text or "").split())
+    if len(t) <= limit:
+        return t
+    cut = t[:limit].rsplit(" ", 1)[0]
+    return (cut or t[:limit]) + "…"
+
+
+def first_of(job: dict, kind: str) -> dict | None:
+    for out in job.get("outputs") or []:
+        if isinstance(out, dict) and out.get("kind") == kind and out.get("path"):
+            return out
+    return None
+
+
+# ---------------------------------------------------------------- the cards
+
+def card_html(job: dict, i: int) -> str:
+    """One finished render, as a tile you can see.
+
+    A button and not a div: it is the page's main control, it must be reachable
+    by keyboard and announced as pressable, and every card on this grid does the
+    same thing when you hit it.
     """
-    out = []
-    init = job.get("init") or {}
-    if init.get("path"):
-        out.append('<p class="qh">Init frame — the image this render started from</p>')
-        out.append(
-            f'<div class="qgrid qinit"><figure>'
-            f'<a href="{_e(art_url(init["path"]))}">'
-            f'<img loading="lazy" decoding="async" alt="init frame for beat '
-            f'{_e(job.get("beat"))}" src="{_e(art_url(init["path"]))}"></a>'
-            f'<figcaption>{_e(str(init["path"]).rsplit("/", 1)[-1])}'
-            + (f'<br>sha {_e(str(init.get("sha256"))[:12])}' if init.get("sha256") else "")
-            + '</figcaption></figure></div>')
-
-    ref = job.get("reference") or {}
-    if ref:
-        bits = []
-        if ref.get("name"):
-            bits.append(f'<b>{_e(ref["name"])}</b>')
-        if ref.get("scale") is not None:
-            bits.append(f'scale {_e(ref["scale"])}')
-        if ref.get("step_window"):
-            bits.append(_e(ref["step_window"]))
-        if ref.get("sha256"):
-            bits.append(f'sha {_e(str(ref["sha256"])[:12])}')
-        out.append('<p class="qh">Reference image (IP-Adapter)</p>')
-        if ref.get("path"):
-            out.append(
-                f'<div class="qgrid qinit"><figure>'
-                f'<a href="{_e(art_url(ref["path"]))}">'
-                f'<img loading="lazy" decoding="async" alt="reference image" '
-                f'src="{_e(art_url(ref["path"]))}"></a>'
-                f'<figcaption>{_e(ref.get("name") or "reference")}</figcaption>'
-                f'</figure></div>')
-        out.append(f'<p class="qmeta">{" · ".join(bits)}</p>')
-        if not ref.get("path"):
-            out.append('<p class="qmeta">The reference bytes live on the box only — '
-                       'the sha above is what was recorded, and there is no URL to '
-                       'show. Not an error, and not a picture this page can produce.</p>')
-        if ref.get("note"):
-            out.append(f'<p class="qmeta">{_e(ref["note"])}</p>')
-
-    outs = job.get("outputs") or []
-    if outs:
-        out.append(f'<p class="qh">What it made — {len(outs)} file'
-                   f'{"" if len(outs) == 1 else "s"}</p>')
-        cells = []
-        for o in outs:
-            url, name = art_url(o.get("path")), o.get("name") or ""
-            kb = o.get("bytes")
-            cap = _e(name) + (f'<br>{int(kb) // 1024} KB' if isinstance(kb, int) else "")
-            if o.get("kind") == "video":
-                cells.append(f'<figure><video preload="none" controls playsinline '
-                             f'src="{_e(url)}"></video>'
-                             f'<figcaption>{cap}</figcaption></figure>')
-            else:
-                cells.append(f'<figure><a href="{_e(url)}">'
-                             f'<img loading="lazy" decoding="async" alt="{_e(name)}" '
-                             f'src="{_e(url)}"></a>'
-                             f'<figcaption>{cap}</figcaption></figure>')
-        out.append(f'<div class="qgrid">{"".join(cells)}</div>')
-    elif not job.get("rc"):
-        out.append('<p class="qh">What it made</p>'
-                   '<p class="qgap">NO ARTIFACTS RECORDED <i>— the job reported '
-                   'success and the branch carries no files under its name</i></p>')
-    return "".join(out)
-
-
-def recipe_html(job: dict) -> str:
-    r = job.get("recipe") or {}
-    bits = []
-    for key, label in (("model", "model"), ("size", "size"), ("steps", "steps"),
-                       ("guidance", "guidance"), ("scheduler", "scheduler"),
-                       ("lora", "lora"), ("render_seconds", "s/frame"),
-                       ("extra_negative_tier", "negative tier"),
-                       ("negative_terms_removed", "negative terms removed")):
-        v = r.get(key)
-        if v not in (None, "", [], {}):
-            bits.append(f"<b>{label}</b> {_e(v)}")
-    seeds = r.get("seeds")
-    if seeds:
-        bits.append(f"<b>seeds</b> {_e(', '.join(str(s) for s in seeds[:8]))}"
-                    + (" …" if len(seeds) > 8 else ""))
-    for key in sorted(k for k in r if k not in
-                      {"model", "size", "steps", "guidance", "scheduler", "lora",
-                       "render_seconds", "extra_negative_tier",
-                       "negative_terms_removed", "seeds"}):
-        v = r.get(key)
-        if v not in (None, "", [], {}):
-            bits.append(f"<b>{_e(key)}</b> {_e(v)}")
-    if not bits:
-        return '<p class="qh">Recipe</p><p class="qgap">RECIPE NOT RECORDED ' \
-               '<i>— no artifact sidecar carried the settings for this run</i></p>'
-    return f'<p class="qh">Recipe</p><p class="qmeta">{" · ".join(bits)}</p>'
-
-
-def purpose_html(job: dict) -> str:
-    """Why the job was queued, in the words of whoever queued it. Clipped by
-    the generator, not here — the page links the spec for the full text."""
-    p = job.get("purpose") or {}
-    out = []
-    if p.get("consumer"):
-        out.append(f'<p class="qh">Consumer — who is waiting for this</p>'
-                   f'<p class="qmeta">{_e(p["consumer"])}</p>')
-    if p.get("why"):
-        out.append(f'<p class="qh">Why it was run</p><p class="qmeta">{_e(p["why"])}</p>')
-    if p.get("success"):
-        out.append(f'<p class="qh">What would count as success</p>'
-                   f'<p class="qmeta">{_e(p["success"])}</p>')
-    if job.get("purpose_note"):
-        out.append(f'<p class="qmeta">{_e(job["purpose_note"])}</p>')
-    v = job.get("verdict") or {}
-    if v.get("beat_state") or v.get("beat_note") or v.get("gate"):
-        line = " · ".join(_e(v[k]) for k in ("beat_state", "gate", "beat_note")
-                          if v.get(k))
-        out.append(f'<p class="qh">Where the beat stands</p><p class="qmeta">{line}</p>')
-    return "".join(out)
-
-
-def job_card(job: dict) -> str:
-    """One finished job, folded. The summary is what a reader scans; everything
-    the founder asked to see is inside, and inside is closed until asked for."""
     beat = job.get("beat")
     rc = job.get("rc")
     failed = bool(rc)
-    rc_html = ('<span class="rc-ok">rc 0</span>' if not failed else
-               f'<span class="rc-bad">rc {_e(rc)}'
-               + (f' · failed at <b>{_e(job.get("failed_step"))}</b>'
-                  if job.get("failed_step") else "") + "</span>")
-    attempts = job.get("attempts")
-    att = f' · attempt {_e(attempts)}' if isinstance(attempts, int) and attempts > 1 else ""
-    beat_html = (f'<span class="beat">beat {int(beat):02d}</span>'
-                 if isinstance(beat, int) else '<span class="beat">no beat</span>')
-    summary = (
-        f'{beat_html}'
+    img = first_of(job, "image")
+    vid = first_of(job, "video")
+
+    if img:
+        # The poster for a motion take is the still the same job wrote beside
+        # it; a <video> per card would be 243 media elements on a phone to show
+        # 243 first frames.
+        shot = (f'<img class="shot" loading="lazy" decoding="async" alt="" '
+                f'src="{_e(thumb_url(img["path"]))}" '
+                f'data-f="{_e(art_url(img["path"]))}" '
+                f'onerror="this.onerror=null;this.src=this.dataset.f">')
+    elif vid:
+        shot = (f'<video class="shot" preload="none" muted playsinline '
+                f'src="{_e(art_url(vid["path"]))}"></video>')
+    else:
+        # Not an empty tile: an empty tile reads as "this render produced
+        # nothing", and what is true is that the branch carries no file under
+        # this job's name.
+        shot = f'<div class="none">{NO_ARTIFACT}</div>'
+
+    play = '<span class="play">&#9654;</span>' if vid else ""
+    beat_txt = f"beat {int(beat):02d}" if isinstance(beat, int) else "no beat"
+    outcome = ('<span class="rc-bad">FAILED</span>' if failed else
+               f'<span>{_e(clock(job.get("finished_at")))}</span>')
+    n = len(job.get("outputs") or [])
+    files = f'<span>{n} file{"" if n == 1 else "s"}</span>' if n else ""
+    line = (snippet(job["prompt"]) if job.get("prompt") else NO_PROMPT)
+    gap = "" if job.get("prompt") else " gap"
+
+    return (
+        f'<button type="button" class="qc{" failed" if failed else ""}" '
+        f'data-i="{i}" data-b="{_e(beat) if beat is not None else ""}" '
+        f'data-k="{_e(job.get("kind") or "other")}" data-r="{1 if failed else 0}">'
+        f'{shot}{play}'
+        f'<span class="m">'
+        f'<span class="row"><span class="beat">{_e(beat_txt)}</span>'
         f'<span class="kind">{_e(kind_word(job.get("kind")))}</span>'
-        f'<span class="when">{_e(clock(job.get("finished_at")))} {TZ_LABEL}</span>'
-        f'<span class="dur">{_e(dur_words(job.get("duration_s")))}</span>'
-        f'{rc_html}{att}')
-
-    ident = []
-    if job.get("id"):
-        ident.append(f'<b>job</b> {_e(job["id"])}')
-    if job.get("node"):
-        ident.append(f'<b>node</b> {_e(job["node"])}')
-    if job.get("runner_host"):
-        ident.append(f'<b>ran on</b> {_e(job["runner_host"])}')
-    if job.get("started_at"):
-        ident.append(f'<b>started</b> {_e(clock(job["started_at"]))} {TZ_LABEL}')
-    links = []
-    if job.get("spec_file"):
-        links.append(f'<a href="{REPO_URL}/blob/main/{_e(job["spec_file"])}">spec</a>')
-    if job.get("artifacts_dir"):
-        links.append(f'<a href="{REPO_URL}/tree/{RESULTS_BRANCH}/'
-                     f'{_e(job["artifacts_dir"])}">artifacts</a>')
-    if job.get("sidecar"):
-        links.append(f'<a href="{REPO_URL}/blob/{RESULTS_BRANCH}/'
-                     f'{_e(job["sidecar"])}">run record</a>')
-    if links:
-        ident.append(" · ".join(links))
-
-    body = (prompt_html(job) + recipe_html(job) + media_html(job) + purpose_html(job)
-            + (f'<p class="qmeta">{" · ".join(ident)}</p>' if ident else ""))
-    cls = "qjob failed" if failed else "qjob"
-    return (f'<details class="{cls}" data-b="{_e(beat) if beat is not None else ""}">'
-            f'<summary>{summary}</summary>'
-            f'<div class="body">{body}</div></details>')
+        f'{outcome}{files}</span>'
+        f'<span class="p{gap}">{_e(line)}</span>'
+        f'</span></button>')
 
 
-def day_section(key: str, jobs: list, open_it: bool) -> str:
+def day_section(key: str, jobs: list, start: int) -> str:
     ok = sum(1 for j in jobs if not j.get("rc"))
     bad = len(jobs) - ok
     mins = sum(int(j.get("duration_s") or 0) for j in jobs) / 60.0
@@ -559,24 +485,18 @@ def day_section(key: str, jobs: list, open_it: bool) -> str:
             + (f" · {mins / 60:.1f} h of machine time" if mins >= 60
                else f" · {mins:.0f} min of machine time" if mins else "")
             + "</span>")
-    cards = "".join(job_card(j) for j in jobs)
-    return (f'<details class="qday" data-day="{_e(key)}"{" open" if open_it else ""}>'
-            f'<summary>{_e(day_title(key))} {note}</summary>{cards}</details>')
+    cards = "".join(card_html(j, start + n) for n, j in enumerate(jobs))
+    return (f'<section class="qdaysec" data-day="{_e(key)}">'
+            f'<h3 class="qdh">{_e(day_title(key))} {note}</h3>'
+            f'<div class="qgrid">{cards}</div></section>')
 
 
 def upcoming_card(row: dict, success: str | None) -> str:
     state = row.get("state") or "authored"
     colour, words = STATE_WORDS.get(state, ("green", state.upper()))
     beat = row.get("beat")
-    beat_html = (f'<span class="beat">beat {int(beat):02d}</span>'
-                 if isinstance(beat, int) else '<span class="beat">no beat</span>')
+    beat_txt = f"beat {int(beat):02d}" if isinstance(beat, int) else "no beat"
     est = row.get("est_minutes")
-    summary = (
-        f'{beat_html}<span class="kind">{_e(kind_word(row.get("kind")))}</span>'
-        f'<span class="state">{_e(words)}</span>'
-        + (f'<span class="when">~{_e(est)} min</span>' if est else "")
-        + (f'<span class="when">priority {_e(row.get("priority"))}</span>'
-           if row.get("priority") is not None else ""))
     body = []
     if row.get("consumer"):
         body.append(f'<p class="qh">Consumer — who is waiting for it</p>'
@@ -584,20 +504,123 @@ def upcoming_card(row: dict, success: str | None) -> str:
     if success:
         body.append(f'<p class="qh">What would count as success</p>'
                     f'<p class="qmeta">{_e(success)}</p>')
-    if row.get("why_first"):
-        body.append(f'<p class="qh">Why</p><p class="qmeta">{_e(row["why_first"])}</p>')
     if row.get("hold_reason"):
         body.append(f'<p class="qh">What is holding it</p>'
                     f'<p class="qmeta">{_e(row["hold_reason"])}</p>')
+    elif row.get("why_first"):
+        body.append(f'<p class="qh">Why</p><p class="qmeta">{_e(row["why_first"])}</p>')
     tail = [f'<b>job</b> {_e(row.get("id"))}']
-    if row.get("node"):
-        tail.append(f'<b>node</b> {_e(row["node"])}')
     if row.get("spec_file"):
         tail.append(f'<a href="{REPO_URL}/blob/main/{_e(row["spec_file"])}">spec</a>')
     body.append(f'<p class="qmeta">{" · ".join(tail)}</p>')
-    return (f'<details class="qup {colour}" data-b="{_e(beat) if beat is not None else ""}">'
-            f'<summary>{summary}</summary>'
-            f'<div class="body">{"".join(body)}</div></details>')
+    return (
+        f'<article class="qup {colour}" data-b="{_e(beat) if beat is not None else ""}">'
+        f'<p class="top"><span class="beat">{_e(beat_txt)}</span>'
+        f'<span>{_e(kind_word(row.get("kind")))}</span>'
+        f'<span class="state">{_e(words)}</span>'
+        + (f'<span>~{_e(est)} min</span>' if est else "")
+        + f'</p>{"".join(body)}</article>')
+
+
+# ---------------------------------------------------------------- the payloads
+
+def index_row(job: dict) -> dict:
+    """One job as the grid, the filter and the search need it — and no more.
+
+    This is the file every reader downloads, so it holds the prompt (the thing
+    the founder searches by) and drops everything only a click needs. 424 KB for
+    573 jobs, against 1.6 MB for the same jobs' full records.
+    """
+    img, vid = first_of(job, "image"), first_of(job, "video")
+    row = {
+        "id": job.get("id"),
+        "beat": job.get("beat"),
+        "kind": job.get("kind") or "other",
+        "rc": 1 if job.get("rc") else 0,
+        "finished": job.get("finished_at"),
+        "duration_s": job.get("duration_s"),
+        "files": len(job.get("outputs") or []),
+    }
+    if img:
+        row["still"] = _rel(img["path"])
+    if vid:
+        row["clip"] = _rel(vid["path"])
+    if job.get("prompt"):
+        row["prompt"] = job["prompt"]
+    else:
+        # The gap and its reason travel with the row, so the page can print the
+        # honest marker without a second fetch and without inventing a cause.
+        row["prompt_gap"] = job.get("prompt_source") or "no reason recorded"
+    return row
+
+
+def detail_row(job: dict) -> dict:
+    """Everything the opened record shows. Fetched on the first click, once."""
+    out = {}
+    for key in ("id", "beat", "kind", "rc", "failed_step", "attempts", "node",
+                "runner_host", "started_at", "finished_at", "duration_s",
+                "prompt", "negative", "prompt_source", "recipe", "spec_file",
+                "sidecar", "artifacts_dir", "purpose_note"):
+        val = job.get(key)
+        if val not in (None, "", [], {}):
+            out[key] = val
+    init = job.get("init") or {}
+    if init.get("path"):
+        out["init"] = {"path": _rel(init["path"]),
+                       "sha256": str(init.get("sha256") or "")[:12]}
+    ref = job.get("reference") or {}
+    if ref:
+        keep = {k: v for k, v in ref.items() if v not in (None, "", [], {})}
+        if keep.get("path"):
+            keep["path"] = _rel(keep["path"])
+        out["reference"] = keep
+    outs = []
+    for art in job.get("outputs") or []:
+        if not isinstance(art, dict) or not art.get("path"):
+            continue
+        outs.append({"path": _rel(art["path"]), "bytes": art.get("bytes"),
+                     "kind": art.get("kind")})
+    if outs:
+        out["outputs"] = outs
+    purpose = job.get("purpose") or {}
+    keep = {k: v for k, v in purpose.items()
+            if k in ("consumer", "why", "success", "owner") and v}
+    if keep:
+        out["purpose"] = keep
+    verdict = {k: v for k, v in (job.get("verdict") or {}).items() if v}
+    if verdict:
+        out["verdict"] = verdict
+    return out
+
+
+def sorted_jobs(data: dict | None) -> list:
+    """Newest finished first — the one order the whole page agrees on. The
+    baked cards' `data-i`, the index array and the arrow keys all count in it,
+    so it is computed here once and never re-derived."""
+    if not data or not isinstance(data.get("jobs"), list):
+        return []
+    jobs = [j for j in data["jobs"] if isinstance(j, dict)]
+    jobs.sort(key=lambda j: str(j.get("finished_at") or ""), reverse=True)
+    return jobs
+
+
+def index_payload(data: dict | None) -> dict:
+    jobs = sorted_jobs(data)
+    upcoming = [u for u in ((data or {}).get("upcoming") or []) if isinstance(u, dict)]
+    return {"_meta": (data or {}).get("_meta") or {},
+            "results_base": RESULTS_BASE,
+            "thumb_base": THUMB_BASE,
+            "jobs": [index_row(j) for j in jobs],
+            "upcoming": upcoming}
+
+
+def detail_payload(data: dict | None) -> dict:
+    out = {}
+    for job in sorted_jobs(data):
+        jid = job.get("id")
+        if jid:
+            out[str(jid)] = detail_row(job)
+    return {"jobs": out}
 
 
 # ---------------------------------------------------------------- the page
@@ -616,9 +639,8 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
             'page is empty rather than inventing one.</p>')
 
     meta = data.get("_meta") or {}
-    jobs = [j for j in data["jobs"] if isinstance(j, dict)]
+    jobs = sorted_jobs(data)
     upcoming = [u for u in (data.get("upcoming") or []) if isinstance(u, dict)]
-    jobs.sort(key=lambda j: str(j.get("finished_at") or ""), reverse=True)
 
     ok = sum(1 for j in jobs if not j.get("rc"))
     bad = len(jobs) - ok
@@ -626,10 +648,11 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
     runnable = sum(1 for u in upcoming if u.get("state") == "authored")
     files = sum(len(j.get("outputs") or []) for j in jobs)
     machine_h = sum(int(j.get("duration_s") or 0) for j in jobs) / 3600.0
+    kinds = sorted({str(j.get("kind") or "other") for j in jobs})
 
     days: dict = {}
-    for j in jobs:
-        days.setdefault(day_key(j.get("finished_at")), []).append(j)
+    for job in jobs:
+        days.setdefault(day_key(job.get("finished_at")), []).append(job)
     ordered = sorted((k for k in days if k != "undated"), reverse=True)
     if "undated" in days:
         ordered.append("undated")
@@ -639,7 +662,7 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
 
     stats = (
         '<ul class="qstats">'
-        f'<li class="work"><b>{len(jobs)}</b><span>jobs finished, all time</span></li>'
+        f'<li class="work"><b>{len(jobs)}</b><span>renders finished</span></li>'
         f'<li class="work"><b>{files}</b><span>files they produced</span></li>'
         f'<li class="work"><b>{machine_h:.1f} h</b><span>of measured machine time</span></li>'
         f'<li class="bad"><b>{bad}</b><span>failed</span></li>'
@@ -657,11 +680,11 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
         '<div class="qchips" id="q-live-chips"></div>'
         '<div id="q-live-now"></div>'
         '</div>'
-        f'<p class="qmeta">The box publishes HOW MANY jobs are waiting and of what '
-        f'kind — never their names (<code>pipeline/telemetry.py</code>). So the named '
-        f'list below is the committed specs with no run record: what is authored, and '
-        f'what is held. When the box names the job it is running, its spec is matched '
-        f'by id and opened here.</p>')
+        '<p class="qmeta">The box publishes HOW MANY jobs are waiting and of what '
+        'kind — never their names (<code>pipeline/telemetry.py</code>). So the named '
+        'list below is the committed specs with no run record: what is authored, and '
+        'what is held. When the box names the job it is running, its spec is matched '
+        'by id and opened here.</p>')
 
     up_cards = "".join(upcoming_card(u, spec_success(u.get("spec_file")))
                        for u in upcoming)
@@ -672,40 +695,58 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
         f'<code>pipeline/jobs/</code> that no run record anywhere accounts for. '
         f'<b>Amber is waiting on you</b> — a held job is held by a question only '
         f'the author can answer, and the machine cannot start it. Green is runnable.</p>'
-        + (up_cards or '<p class="notice">Nothing is authored and unrun: every '
-                       'committed spec has a run record.</p>'))
+        + (f'<div class="qupgrid">{up_cards}</div>' if up_cards else
+           '<p class="notice">Nothing is authored and unrun: every committed spec '
+           'has a run record.</p>'))
 
-    filt = (
-        '<div class="qfilter" id="q-filter" hidden>'
-        '<label for="q-q">Filter</label>'
+    kind_btns = "".join(
+        f'<button type="button" class="qbtn" data-f="kind" data-v="{_e(k)}" '
+        f'aria-pressed="false">{_e(kind_word(k))}</button>' for k in kinds)
+    bar = (
+        '<div class="qbar" id="q-bar">'
+        '<label class="qhide" for="q-q">Search the prompts</label>'
         '<input id="q-q" type="search" inputmode="search" autocomplete="off" '
         'placeholder="a beat number, a word from a prompt, a model, a job id">'
-        f'<p class="count" id="q-count">{len(jobs)} finished jobs, '
-        f'{len(upcoming)} coming</p></div>')
+        '<div class="qset" role="group" aria-label="filter by kind">'
+        '<button type="button" class="qbtn" data-f="kind" data-v="" '
+        'aria-pressed="true">all kinds</button>'
+        f'{kind_btns}</div>'
+        '<div class="qset" role="group" aria-label="filter by outcome">'
+        '<button type="button" class="qbtn" data-f="rc" data-v="" '
+        'aria-pressed="true">any outcome</button>'
+        '<button type="button" class="qbtn" data-f="rc" data-v="0" '
+        'aria-pressed="false">ran clean</button>'
+        '<button type="button" class="qbtn bad" data-f="rc" data-v="1" '
+        f'aria-pressed="false">failed</button></div>'
+        f'<p class="qcount" id="q-count">{len(jobs)} renders</p></div>')
 
-    history = "".join(day_section(k, days[k], i < DAYS_OPEN)
-                      for i, k in enumerate(ordered))
+    gallery, start = [], 0
+    for key in ordered:
+        gallery.append(day_section(key, days[key], start))
+        start += len(days[key])
 
     return f"""
 <p class="eyebrow">the queue</p>
-<h1>The queue — every job, its prompt, and what it made</h1>
-<p class="lede qlede">Each finished render below opens onto the exact positive and
-negative prompt it ran, the frame it started from, the reference it was conditioned
-on, its recipe, and every file it produced. Nothing here is a summary of a render:
-it is the render's own record.</p>
+<h1>The queue — every render, and what made it</h1>
+<p class="lede qlede">Every finished render the farm has produced, newest first.
+Tap any frame for the record behind it: the exact positive and negative prompt, the
+image it started from, the reference it was conditioned on, the recipe, and every
+file it wrote.</p>
 <p class="qprov">History measured <b>{_e(measured)}</b> from
 <code>{_e(RESULTS_BRANCH)}</code> at <code>{_e(src_commit)}</code> ·
-{len(jobs)} jobs · written by <code>pipeline/queue_history.py</code> and committed,
+{len(jobs)} renders · written by <code>pipeline/queue_history.py</code> and committed,
 so this page is exactly as fresh as that file and no fresher. The block below it is
 live.</p>
 {stats}
 {live}
 {up_section}
-{filt}
 <h2 id="finished">Finished — newest day first</h2>
-<p class="qlede">Grouped by the day each job finished, on a {TZ_LABEL} clock. Frames
-and clips load from the render box's own branch only when you open a card.</p>
-{history}
+<p class="qlede">Grouped by the day each render finished, on a {TZ_LABEL} clock.
+Thumbnails are 512&nbsp;px previews from the <code>{THUMB_BRANCH}</code> branch; the
+full-resolution frame is in the record and on the results branch.</p>
+{bar}
+{"".join(gallery)}
+<p class="qnote" id="q-empty" hidden>Nothing matches that filter.</p>
 <h2>What this page can and cannot know</h2>
 <p class="qprov">
 <b>Clocks are {TZ_LABEL}.</b> The record underneath is UTC; every face here is
@@ -715,20 +756,39 @@ reason — for a motion job whose spec was deleted, or a render from before the 
 wrote artifact sidecars, the bytes are genuinely gone. They are never reconstructed:
 the 77-token fit happened on the box's tokenizer and a recomputation can differ
 exactly where it would matter.<br>
-<b>Nothing here was copied into the site.</b> Every image and clip is served from
-<code>{_e(RESULTS_BRANCH)}</code> on GitHub's raw CDN, lazily, on open. A card you
-do not open costs nothing.<br>
+<b>{NO_ARTIFACT}</b> on a tile means the run reported an outcome and the branch
+carries no file under its name. That is a fact about the record, not a render that
+made nothing.<br>
+<b>Nothing here was copied into the site.</b> Frames and clips are served from
+<code>{_e(RESULTS_BRANCH)}</code> and their previews from
+<code>{THUMB_BRANCH}</code>, both on GitHub's raw CDN, lazily.<br>
 <b>Finished is not approved.</b> rc 0 means the box ran the job, and nothing more.
 Whether a frame is any good is the author's call and it lives on
 <a href="review">the review board</a>.<br>
 <b>{bad} of {len(jobs)} runs failed</b> and they are here with the rest, red, with
 the step they died at. A queue history that showed only the successes would be an
-advertisement.</p>
+advertisement.<br>
+<b>The full record is <a href="{DATA_FILE}">{DATA_FILE}</a> and
+<a href="{DETAIL_FILE}">{DETAIL_FILE}</a></b> — the same bytes this page reads, if
+you would rather grep than scroll.</p>
+<div class="qbox" id="q-box" hidden>
+  <div class="qbox-in" role="dialog" aria-modal="true" aria-labelledby="q-box-who">
+    <div class="qbox-bar">
+      <span class="who" id="q-box-who">Render</span>
+      <span class="qset">
+        <button type="button" class="qbtn" id="q-prev">&#8592; newer</button>
+        <button type="button" class="qbtn" id="q-next">older &#8594;</button>
+        <button type="button" class="qbtn" id="q-close">close</button>
+      </span>
+    </div>
+    <div class="qbox-body" id="q-box-body"></div>
+  </div>
+</div>
 """
 
 
-# Plain string, not an f-string: JavaScript, full of braces. The three URLs and
-# the staleness rule are substituted by build().
+# Plain string, not an f-string: JavaScript, full of braces. The URLs, the
+# staleness rule and the two data files are substituted by build().
 LIVE_JS = """
 /* ---- what the box is doing, read by the reader's own browser ----------------
    The same source, the same cache-busting and the same staleness rule as the
@@ -738,11 +798,11 @@ LIVE_JS = """
    a record rather than a claim about now.
 
    THE BOX NAMES ONE JOB AND COUNTS THE REST. `queue_sample` publishes counts,
-   a kind mix, and the running job's own record — never the names of the jobs
-   waiting. So this block reports exactly that, and where the running job's id
-   matches a spec baked into this page it opens the spec's consumer / success /
-   why underneath. A page that listed names the box never published would be
-   inventing the most checkable thing on it. */
+   a kind mix, and — when it has one — the running job's own record, never the
+   names of the jobs waiting. So this block reports exactly that, and where the
+   running job's id matches a spec baked into this page it opens the spec's
+   consumer / success / why underneath. A page that listed names the box never
+   published would be inventing the most checkable thing on it. */
 (function () {
   var say = document.getElementById("q-live-say");
   var chips = document.getElementById("q-live-chips");
@@ -765,7 +825,6 @@ LIVE_JS = """
   }
   function clear(e) { while (e && e.firstChild) e.removeChild(e.firstChild); }
   function chip(cls, text) { chips.appendChild(el("span", "qchip " + cls, text)); }
-
   function line(parent, head, body) {
     parent.appendChild(el("p", "qh", head));
     parent.appendChild(el("p", "qmeta", body));
@@ -791,8 +850,7 @@ LIVE_JS = """
     if (cur.kind) head += " \\u00b7 " + cur.kind;
     if (cur.attempt) head += " \\u00b7 attempt " + cur.attempt;
     nowEl.appendChild(el("p", "qnow-t", head));
-    var meta = [];
-    meta.push("job " + id);
+    var meta = ["job " + id];
     if (cur.node) meta.push("node " + cur.node);
     if (cur.started_at) {
       meta.push("started " +
@@ -802,9 +860,18 @@ LIVE_JS = """
     if (cur.makes && cur.makes.length) {
       line(nowEl, "What it will make", cur.makes.join(", "));
     }
-    /* THE SPEC, matched by id. SPECS holds every committed spec with no run
-       record — which is exactly the set a running or waiting job is drawn
-       from, because a job that has finished is no longer in it. */
+    /* The frame it is animating, if the box named one. Straight off the results
+       branch, same as every other picture here. */
+    if (cur.init) {
+      var fig = el("figure", "qside");
+      var im = document.createElement("img");
+      im.loading = "lazy"; im.alt = "the frame the running job started from";
+      im.src = RESULTS_BASE + "/" + String(cur.init).replace(/^\\/+/, "");
+      im.style.maxWidth = "260px";
+      fig.appendChild(im);
+      nowEl.appendChild(el("p", "qh", "The frame it is working from"));
+      nowEl.appendChild(fig);
+    }
     var spec = SPECS[id];
     if (spec) {
       if (spec.consumer) line(nowEl, "Consumer \\u2014 who is waiting for it", spec.consumer);
@@ -837,9 +904,7 @@ LIVE_JS = """
         chip(ready ? "work" : "", ready + " waiting on the card");
         if (q.failed) chip("bad", q.failed + " sitting failed");
         if (typeof q.done_24h === "number") chip("", q.done_24h + " finished in 24 h");
-        if (q.runner_alive === false) {
-          chip("bad", "nothing is draining this queue");
-        }
+        if (q.runner_alive === false) chip("bad", "nothing is draining this queue");
         if (q.kinds) {
           var ks = [];
           for (var k in q.kinds) {
@@ -859,7 +924,7 @@ LIVE_JS = """
       .catch(function (e) {
         say.className = "qsay none";
         say.textContent = "The live reading is unavailable: " + e.message +
-          ". Nothing else on this page depends on it \\u2014 the history below is " +
+          ". Nothing else on this page depends on it \\u2014 the gallery below is " +
           "baked into these bytes.";
         clear(nowEl);
       });
@@ -869,55 +934,452 @@ LIVE_JS = """
   setInterval(function () { if (!document.hidden) read(); }, 300000);
 })();
 
-/* ---- the filter -------------------------------------------------------------
-   Over the DOM this page was built with, not over a second copy of the data.
-   Inlining the history JSON as well as the cards would have doubled a 2 MB page
-   to say the same thing twice; instead each card's searchable text is taken
-   from the card itself, once, the first time anyone types. A bare number is
-   read as a beat number (that is what the founder types), anything else is a
-   substring over the whole card — prompt, model, seed, node, job id. */
+
+/* ---- the gallery: filtering, and the record behind a card -------------------
+   The cards are already in the HTML — they render, and they are legible, with
+   this file blocked. What JavaScript adds is the two things markup cannot do
+   for 573 renders: search across prompts that are not all in the page, and open
+   one render's full record without shipping all 573 of them.
+
+   INDEX (queue-data.json) is the search corpus and arrives first. DETAIL
+   (queue-detail.json) is 1.6 MB and is fetched on the first card anyone opens,
+   once. Both failures are stated on the page rather than swallowed: a filter
+   that silently matched nothing, or a record that silently showed half of
+   itself, is exactly the kind of quiet wrong this page exists to end. */
 (function () {
-  var box = document.getElementById("q-filter");
+  var bar = document.getElementById("q-bar");
   var input = document.getElementById("q-q");
   var count = document.getElementById("q-count");
-  if (!box || !input) return;
-  box.hidden = false;                      /* dead control never shown */
-  var cards = [].slice.call(document.querySelectorAll(".qjob, .qup"));
-  var days = [].slice.call(document.querySelectorAll(".qday"));
-  var index = null;
+  var empty = document.getElementById("q-empty");
+  var box = document.getElementById("q-box");
+  var body = document.getElementById("q-box-body");
+  var who = document.getElementById("q-box-who");
+  if (!bar || !box) return;
 
-  function build() {
-    index = cards.map(function (c) {
-      return {el: c, beat: c.getAttribute("data-b") || "",
-              text: (c.textContent || "").toLowerCase()};
-    });
+  var cards = [].slice.call(document.querySelectorAll(".qc"));
+  var sections = [].slice.call(document.querySelectorAll(".qdaysec"));
+  var INDEX = null, DETAIL = null, detailWanted = false, detailError = null;
+  var open = -1;
+  var state = {q: "", kind: "", rc: ""};
+
+  /* The day headers stick under the control bar, and the bar's height changes
+     with the viewport (it wraps to three rows on a phone). Measured rather than
+     guessed: a guessed offset puts a header behind the bar on exactly the
+     screen size nobody tested. */
+  function measure() {
+    document.documentElement.style.setProperty(
+      "--qbarh", bar.getBoundingClientRect().height + "px");
   }
+  measure();
+  window.addEventListener("resize", measure);
+
+  function esc(s) { return String(s === undefined || s === null ? "" : s); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = text;
+    return e;
+  }
+  function clear(e) { while (e && e.firstChild) e.removeChild(e.firstChild); }
+  function artUrl(p) { return RESULTS_BASE + "/" + esc(p).replace(/^\\/+/, ""); }
+  function thumbUrl(p) {
+    var r = esc(p).replace(/^\\/+/, "");
+    return THUMB_BASE + "/" + r.replace(/\\.[^./]+$/, "") + ".jpg";
+  }
+  function dur(s) {
+    if (typeof s !== "number" || s < 0) return "\\u2014";
+    if (s < 60) return s + "s";
+    var m = Math.floor(s / 60), r = s % 60;
+    if (m < 60) return m + "m " + (r < 10 ? "0" : "") + r + "s";
+    return Math.floor(m / 60) + "h " + (m % 60) + "m";
+  }
+  function stamp(iso) {
+    if (!iso) return "\\u2014";
+    var d = new Date(String(iso).replace(" ", "T"));
+    if (isNaN(d.getTime())) return String(iso);
+    var s = new Date(d.getTime() + 4 * 3600 * 1000);   /* +04, like every clock here */
+    return s.toISOString().slice(0, 16).replace("T", " ") + " " + TZ_LABEL;
+  }
+
+  /* ---------------------------------------------------------------- filter */
+  function matches(i) {
+    var row = INDEX ? INDEX[i] : null;
+    var card = cards[i];
+    if (state.kind && card.getAttribute("data-k") !== state.kind) return false;
+    if (state.rc !== "" && card.getAttribute("data-r") !== state.rc) return false;
+    if (!state.q) return true;
+    var beatOnly = /^b?(\\d{1,3})$/.exec(state.q);
+    if (beatOnly) {
+      var b = card.getAttribute("data-b");
+      if (b !== "" && String(parseInt(b, 10)) === String(parseInt(beatOnly[1], 10))) {
+        return true;
+      }
+    }
+    var hay = row
+      ? [row.id, row.kind, row.prompt, row.prompt_gap, row.still, row.clip].join(" ")
+      : card.textContent;
+    return hay.toLowerCase().indexOf(state.q) !== -1;
+  }
+
   function apply() {
-    var q = input.value.trim().toLowerCase();
-    if (!index) build();
-    var beatOnly = /^b?(\\d{1,3})$/.exec(q);
-    var shown = 0, hidden = 0;
-    for (var i = 0; i < index.length; i++) {
-      var row = index[i], hit;
-      if (!q) hit = true;
-      else if (beatOnly) hit = row.beat === beatOnly[1] ||
-                               row.beat === String(parseInt(beatOnly[1], 10));
-      else hit = row.text.indexOf(q) !== -1;
-      row.el.classList.toggle("qhide", !hit);
-      if (hit) shown++; else hidden++;
+    var shown = 0;
+    for (var i = 0; i < cards.length; i++) {
+      var hit = matches(i);
+      cards[i].classList.toggle("qhide", !hit);
+      if (hit) shown++;
     }
-    for (var d = 0; d < days.length; d++) {
-      var day = days[d];
-      var any = day.querySelector(".qjob:not(.qhide)");
-      day.classList.toggle("qhide", !any);
-      if (q && any) day.open = true;
+    for (var s = 0; s < sections.length; s++) {
+      sections[s].classList.toggle(
+        "qhide", !sections[s].querySelector(".qc:not(.qhide)"));
     }
-    count.textContent = q
-      ? shown + " matching \\u00b7 " + hidden + " hidden \\u00b7 filter: " + input.value
-      : QCOUNT_ALL;
+    empty.hidden = shown !== 0;
+    var filtered = state.q || state.kind || state.rc !== "";
+    count.textContent = filtered
+      ? shown + " of " + cards.length + " renders match"
+        + (INDEX ? "" : " \\u2014 searching card text only, the prompt index has not loaded")
+      : cards.length + " renders";
   }
-  input.addEventListener("input", apply);
-  input.addEventListener("search", apply);
+
+  input.addEventListener("input", function () {
+    state.q = input.value.trim().toLowerCase();
+    apply();
+  });
+  bar.addEventListener("click", function (ev) {
+    var btn = ev.target.closest ? ev.target.closest(".qbtn[data-f]") : null;
+    if (!btn) return;
+    var f = btn.getAttribute("data-f");
+    state[f] = btn.getAttribute("data-v");
+    var group = btn.parentNode.querySelectorAll(".qbtn[data-f=" + f + "]");
+    for (var i = 0; i < group.length; i++) {
+      group[i].setAttribute("aria-pressed",
+        group[i].getAttribute("data-v") === state[f] ? "true" : "false");
+    }
+    apply();
+  });
+
+  /* ---------------------------------------------------------------- record */
+  function mediaBlock(row, det) {
+    var wrap = el("div", "qmedia");
+    var main = el("div", "qbig");
+    var outs = (det && det.outputs) || [];
+    var vids = outs.filter(function (o) { return o.kind === "video"; });
+    var imgs = outs.filter(function (o) { return o.kind === "image"; });
+
+    function show(art) {
+      clear(main);
+      if (!art) {
+        main.appendChild(el("p", "qgap", NO_ARTIFACT));
+        return;
+      }
+      var node;
+      if (art.kind === "video") {
+        node = document.createElement("video");
+        node.controls = true; node.playsInline = true; node.preload = "metadata";
+        node.src = artUrl(art.path);
+        if (imgs.length) node.poster = thumbUrl(imgs[0].path);
+      } else {
+        node = document.createElement("img");
+        node.loading = "lazy"; node.decoding = "async"; node.alt = "";
+        node.src = artUrl(art.path);
+      }
+      main.appendChild(node);
+      var cap = el("p", "qmeta", art.path.split("/").pop()
+        + (typeof art.bytes === "number" ? " \\u00b7 " + Math.round(art.bytes / 1024) + " KB" : ""));
+      var a = document.createElement("a");
+      a.href = artUrl(art.path); a.textContent = "open the file";
+      cap.appendChild(document.createTextNode(" \\u00b7 "));
+      cap.appendChild(a);
+      main.appendChild(cap);
+    }
+
+    show(vids[0] || imgs[0] || null);
+    wrap.appendChild(main);
+
+    if (outs.length > 1) {
+      var strip = el("div", "qstrip");
+      outs.forEach(function (art) {
+        var t = document.createElement("img");
+        t.loading = "lazy"; t.alt = art.path.split("/").pop();
+        t.title = t.alt;
+        t.src = art.kind === "video" && imgs.length
+          ? thumbUrl(imgs[0].path) : thumbUrl(art.path);
+        t.onerror = function () { t.onerror = null; t.src = artUrl(art.path); };
+        t.addEventListener("click", function () {
+          show(art);
+          [].forEach.call(strip.children, function (c) { c.removeAttribute("aria-current"); });
+          t.setAttribute("aria-current", "true");
+        });
+        strip.appendChild(t);
+      });
+      main.appendChild(el("p", "qh", "Every file this render wrote \\u2014 "
+        + outs.length + ", tap to enlarge"));
+      main.appendChild(strip);
+    }
+
+    /* The inputs, beside the output: the whole reason he asked for the page is
+       to see what went in next to what came out. */
+    var side = el("div", "qside");
+    var any = false;
+    if (det && det.init && det.init.path) {
+      any = true;
+      side.appendChild(el("p", "qh", "Init frame \\u2014 what it started from"));
+      var fig = document.createElement("figure");
+      var im = document.createElement("img");
+      im.loading = "lazy"; im.alt = "init frame"; im.src = thumbUrl(det.init.path);
+      im.onerror = function () { im.onerror = null; im.src = artUrl(det.init.path); };
+      var a = document.createElement("a");
+      a.href = artUrl(det.init.path); a.appendChild(im);
+      fig.appendChild(a);
+      side.appendChild(fig);
+      side.appendChild(el("p", "qmeta", det.init.path.split("/").pop()
+        + (det.init.sha256 ? " \\u00b7 sha " + det.init.sha256 : "")));
+    }
+    var ref = det && det.reference;
+    if (ref) {
+      any = true;
+      side.appendChild(el("p", "qh", "Reference image (IP-Adapter)"));
+      if (ref.path) {
+        var rfig = document.createElement("figure");
+        var rim = document.createElement("img");
+        rim.loading = "lazy"; rim.alt = "reference image"; rim.src = thumbUrl(ref.path);
+        rim.onerror = function () { rim.onerror = null; rim.src = artUrl(ref.path); };
+        var ra = document.createElement("a");
+        ra.href = artUrl(ref.path); ra.appendChild(rim);
+        rfig.appendChild(ra);
+        side.appendChild(rfig);
+      }
+      var bits = [];
+      if (ref.name) bits.push(ref.name);
+      if (ref.scale !== undefined) bits.push("scale " + ref.scale);
+      if (ref.sha256) bits.push("sha " + String(ref.sha256).slice(0, 12));
+      if (bits.length) side.appendChild(el("p", "qmeta", bits.join(" \\u00b7 ")));
+      if (!ref.path) {
+        side.appendChild(el("p", "qmeta",
+          "The reference bytes live on the box only \\u2014 the sha above is what " +
+          "was recorded, and there is no URL to show. Not an error, and not a " +
+          "picture this page can produce."));
+      }
+      if (ref.step_window) side.appendChild(el("p", "qmeta", ref.step_window));
+      if (ref.note) side.appendChild(el("p", "qmeta", ref.note));
+    }
+    if (!any) {
+      side.appendChild(el("p", "qh", "What went in"));
+      side.appendChild(el("p", "qmeta",
+        "No init frame and no reference image were recorded for this run \\u2014 it "
+        + "was generated from the prompt alone, or from a record that predates the "
+        + "box writing those fields."));
+    }
+    wrap.appendChild(side);
+    return wrap;
+  }
+
+  function promptBlock(row, det) {
+    var frag = document.createDocumentFragment();
+    var pos = (det && det.prompt) || row.prompt;
+    if (pos) {
+      frag.appendChild(el("p", "qh", "Positive prompt"));
+      frag.appendChild(el("p", "qprose", pos));
+    } else {
+      frag.appendChild(el("p", "qh", "Prompt"));
+      var gap = el("p", "qgap", NO_PROMPT + " ");
+      gap.appendChild(el("i", null, "\\u2014 " + (row.prompt_gap ||
+        (det && det.prompt_source) || "no reason recorded")));
+      frag.appendChild(gap);
+    }
+    var neg = det && det.negative;
+    if (neg) {
+      frag.appendChild(el("p", "qh", "Negative prompt"));
+      frag.appendChild(el("p", "qprose neg", neg));
+    } else if (pos) {
+      frag.appendChild(el("p", "qh", "Negative prompt"));
+      frag.appendChild(el("p", "qgap", NO_NEGATIVE));
+    }
+    var src = det && det.prompt_source;
+    if (pos && src) frag.appendChild(el("p", "qmeta", "read from: " + src));
+    return frag;
+  }
+
+  var RECIPE_ORDER = ["model", "size", "steps", "guidance", "scheduler", "lora",
+    "frames", "fps", "seed", "seeds", "render_seconds", "extra_negative_tier",
+    "negative_terms_removed"];
+
+  function recipeBlock(det) {
+    var frag = document.createDocumentFragment();
+    var r = det && det.recipe;
+    frag.appendChild(el("p", "qh", "Recipe"));
+    if (!r) {
+      var g = el("p", "qgap", "RECIPE NOT RECORDED ");
+      g.appendChild(el("i", null,
+        "\\u2014 no artifact sidecar carried the settings for this run"));
+      frag.appendChild(g);
+      return frag;
+    }
+    var keys = RECIPE_ORDER.filter(function (k) { return r[k] !== undefined; });
+    Object.keys(r).sort().forEach(function (k) {
+      if (RECIPE_ORDER.indexOf(k) === -1) keys.push(k);
+    });
+    var p = el("p", "qmeta");
+    keys.forEach(function (k, n) {
+      if (n) p.appendChild(document.createTextNode(" \\u00b7 "));
+      p.appendChild(el("b", null, k));
+      p.appendChild(document.createTextNode(" " + (Array.isArray(r[k])
+        ? r[k].slice(0, 8).join(", ") : r[k])));
+    });
+    frag.appendChild(p);
+    return frag;
+  }
+
+  function draw() {
+    var row = INDEX ? INDEX[open] : null;
+    var card = cards[open];
+    if (!row) {
+      /* The index has not arrived, so the record is drawn from what the card
+         itself carries rather than from nothing. */
+      row = {id: card.getAttribute("data-i"), beat: card.getAttribute("data-b"),
+             kind: card.getAttribute("data-k"), rc: +card.getAttribute("data-r")};
+    }
+    var det = DETAIL ? DETAIL[row.id] : null;
+    clear(body);
+    who.textContent = (row.beat === null || row.beat === "" || row.beat === undefined
+      ? "No beat" : "Beat " + row.beat) + " \\u00b7 " + (KINDS[row.kind] || row.kind);
+
+    var top = el("p", "qmeta");
+    top.appendChild(el("span", row.rc ? "rc-bad" : "rc-ok",
+      row.rc ? "FAILED" + (det && det.failed_step ? " at " + det.failed_step : "")
+             : "ran clean (rc 0)"));
+    top.appendChild(document.createTextNode(" \\u00b7 finished " + stamp(row.finished)
+      + " \\u00b7 took " + dur(row.duration_s)
+      + " \\u00b7 " + row.files + (row.files === 1 ? " file" : " files")));
+    body.appendChild(top);
+
+    body.appendChild(mediaBlock(row, det));
+    body.appendChild(promptBlock(row, det));
+    body.appendChild(recipeBlock(det));
+
+    if (det && det.purpose) {
+      if (det.purpose.consumer) {
+        body.appendChild(el("p", "qh", "Consumer \\u2014 who was waiting for this"));
+        body.appendChild(el("p", "qmeta", det.purpose.consumer));
+      }
+      if (det.purpose.why) {
+        body.appendChild(el("p", "qh", "Why it was run"));
+        body.appendChild(el("p", "qmeta", det.purpose.why));
+      }
+      if (det.purpose.success) {
+        body.appendChild(el("p", "qh", "What would count as success"));
+        body.appendChild(el("p", "qmeta", det.purpose.success));
+      }
+    }
+    if (det && det.verdict) {
+      var v = [det.verdict.beat_state, det.verdict.gate, det.verdict.beat_note]
+        .filter(Boolean).join(" \\u00b7 ");
+      if (v) {
+        body.appendChild(el("p", "qh", "Where the beat stands"));
+        body.appendChild(el("p", "qmeta", v));
+      }
+    }
+
+    var ident = el("p", "qmeta");
+    function bit(label, text) {
+      if (!text) return;
+      if (ident.firstChild) ident.appendChild(document.createTextNode(" \\u00b7 "));
+      ident.appendChild(el("b", null, label));
+      ident.appendChild(document.createTextNode(" " + text));
+    }
+    bit("job", row.id);
+    if (det) { bit("node", det.node); bit("ran on", det.runner_host); }
+    body.appendChild(ident);
+
+    if (det) {
+      var links = el("p", "qmeta");
+      function link(href, text) {
+        if (links.firstChild) links.appendChild(document.createTextNode(" \\u00b7 "));
+        var a = document.createElement("a");
+        a.href = href; a.textContent = text;
+        links.appendChild(a);
+      }
+      if (det.spec_file) link(REPO_URL + "/blob/main/" + det.spec_file, "spec");
+      if (det.artifacts_dir) {
+        link(REPO_URL + "/tree/" + RESULTS_BRANCH + "/" + det.artifacts_dir, "artifacts");
+      }
+      if (det.sidecar) {
+        link(REPO_URL + "/blob/" + RESULTS_BRANCH + "/" + det.sidecar, "run record");
+      }
+      if (links.firstChild) body.appendChild(links);
+    } else {
+      body.appendChild(el("p", "qmeta", detailError
+        ? "The full record could not be loaded: " + detailError
+          + ". What you see above is what the page itself carries."
+        : "Loading the rest of this record\\u2026"));
+    }
+  }
+
+  function needDetail() {
+    if (DETAIL || detailWanted) return;
+    detailWanted = true;
+    fetch(DETAIL_URL)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) { DETAIL = (d && d.jobs) || {}; if (open >= 0) draw(); })
+      .catch(function (e) { detailError = e.message; if (open >= 0) draw(); });
+  }
+
+  function openAt(i) {
+    if (i < 0 || i >= cards.length) return;
+    open = i;
+    box.hidden = false;
+    document.body.style.overflow = "hidden";
+    needDetail();
+    draw();
+    box.scrollTop = 0;
+    document.getElementById("q-close").focus();
+  }
+  function close() {
+    box.hidden = true;
+    document.body.style.overflow = "";
+    if (open >= 0 && cards[open]) cards[open].focus();
+    open = -1;
+  }
+  function step(dir) {
+    for (var i = open + dir; i >= 0 && i < cards.length; i += dir) {
+      if (!cards[i].classList.contains("qhide")) { openAt(i); return; }
+    }
+  }
+
+  cards.forEach(function (c, i) {
+    c.addEventListener("click", function () { openAt(i); });
+  });
+  document.getElementById("q-close").addEventListener("click", close);
+  document.getElementById("q-prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("q-next").addEventListener("click", function () { step(1); });
+  box.addEventListener("click", function (ev) { if (ev.target === box) close(); });
+  document.addEventListener("keydown", function (ev) {
+    if (box.hidden) return;
+    if (ev.key === "Escape") { close(); }
+    else if (ev.key === "ArrowLeft") { step(-1); }
+    else if (ev.key === "ArrowRight") { step(1); }
+  });
+
+  /* The index: the search corpus, and the record's first half. Small enough to
+     fetch on load, and the page says so if it does not arrive. */
+  fetch(DATA_URL)
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) {
+      INDEX = (d && d.jobs) || null;
+      if (INDEX && INDEX.length !== cards.length) {
+        /* The cards and the index are the same list in the same order, built in
+           one pass. If they ever disagree, say so rather than opening the wrong
+           record for a card. */
+        count.textContent = cards.length + " renders \\u00b7 the prompt index is out " +
+          "of step with the gallery (" + INDEX.length + " rows), so search is off";
+        INDEX = null;
+        return;
+      }
+      if (open >= 0) draw();
+    })
+    .catch(function (e) {
+      count.textContent = cards.length + " renders \\u00b7 prompt search unavailable: "
+        + e.message;
+    });
 })();
 """
 
@@ -940,9 +1402,9 @@ def specs_js(upcoming: list) -> str:
             entry["consumer"] = row["consumer"]
         if row.get("why_first"):
             entry["why"] = row["why_first"]
-        s = spec_success(row.get("spec_file"))
-        if s:
-            entry["success"] = s[:600]
+        success = spec_success(row.get("spec_file"))
+        if success:
+            entry["success"] = success[:600]
         if entry:
             out[str(sid)] = entry
     return json.dumps(out, ensure_ascii=False, separators=(",", ":"))
@@ -952,25 +1414,50 @@ def build(out_dir: Path):
     from build_site import page          # late import: build_site calls us
     data = load()
     body = render(data)
+    out_dir = Path(out_dir)
     upcoming = [u for u in ((data or {}).get("upcoming") or []) if isinstance(u, dict)]
-    jobs = [j for j in ((data or {}).get("jobs") or []) if isinstance(j, dict)]
+    jobs = sorted_jobs(data)
+
+    # The two payloads. Written whatever happened to the history: an empty pair
+    # of files is a readable answer to "what does the page know", and a stale
+    # pair left behind by an earlier build would be a lie.
+    index = index_payload(data)
+    detail = detail_payload(data)
+    (out_dir / DATA_FILE).write_text(
+        json.dumps(index, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    (out_dir / DETAIL_FILE).write_text(
+        json.dumps(detail, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
     consts = (f"var TEL_URL={json.dumps(TELEMETRY_URL)},"
               f"TEL_URL_LEGACY={json.dumps(TELEMETRY_URL_LEGACY)},"
               f"STALE_MIN={STALE_MINUTES},"
-              f"QCOUNT_ALL={json.dumps(f'{len(jobs)} finished jobs, {len(upcoming)} coming')},"
+              f"RESULTS_BASE={json.dumps(RESULTS_BASE)},"
+              f"RESULTS_BRANCH={json.dumps(RESULTS_BRANCH)},"
+              f"THUMB_BASE={json.dumps(THUMB_BASE)},"
+              f"REPO_URL={json.dumps(REPO_URL)},"
+              f"TZ_LABEL={json.dumps(TZ_LABEL)},"
+              f"DATA_URL={json.dumps(DATA_FILE)},"
+              f"DETAIL_URL={json.dumps(DETAIL_FILE)},"
+              f"NO_PROMPT={json.dumps(NO_PROMPT)},"
+              f"NO_NEGATIVE={json.dumps(NO_NEGATIVE)},"
+              f"NO_ARTIFACT={json.dumps(NO_ARTIFACT)},"
+              f"KINDS={json.dumps(KIND_WORDS, ensure_ascii=False)},"
               f"SPECS={specs_js(upcoming)};")
     tail = "<script>" + consts + LIVE_JS + "</script>"
-    out = Path(out_dir) / "queue.html"
+    out = out_dir / "queue.html"
     out.write_text(page(
-        "The queue — every job, its prompt, and what it made",
+        "The queue — every render, and what made it",
         f"<style>{CSS}</style>" + body,
         path="queue.html",
-        desc="Every render job the farm has run, with the exact prompt, the "
-             "reference frame and the files it produced — plus what is queued next.",
+        desc="Every render the farm has produced as a browsable gallery — the "
+             "frame, the prompt that made it, the reference it used and the recipe.",
         tail=tail,
     ))
     kb = out.stat().st_size / 1024
-    print(f"✓ queue.html — {len(jobs)} finished, {len(upcoming)} coming, {kb:.0f} KB")
+    dkb = (out_dir / DATA_FILE).stat().st_size / 1024
+    xkb = (out_dir / DETAIL_FILE).stat().st_size / 1024
+    print(f"✓ queue.html — {len(jobs)} renders, {len(upcoming)} coming, {kb:.0f} KB "
+          f"(+ {DATA_FILE} {dkb:.0f} KB, {DETAIL_FILE} {xkb:.0f} KB on demand)")
 
 
 if __name__ == "__main__":
