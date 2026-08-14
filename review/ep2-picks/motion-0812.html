@@ -86,6 +86,69 @@
   below is provisional and yours to overturn.</p>
 </header>
 
+<section id="quality" style="border-bottom:3px solid var(--accent)">
+  <span id="e-quality"></span>
+  <h2 class="t" style="font-size:25px">Why the clips feel low quality — the comparison you asked for</h2>
+  <p style="font-size:18px;border-left:3px solid var(--accent);padding-left:12px"><strong>Short answer: I
+  have now measured four suspects and eliminated all four. I do not yet know, and I would rather show you
+  the measurements than give you a fifth theory.</strong></p>
+
+  <h3 style="margin:22px 0 6px;font-size:17px">The clip you approved, beside today's</h3>
+  <p class="muted">No same-beat pair exists — the one you approved is episode 1 beat 8, and episode 1 is
+  closed, so nothing current re-renders it. These are different shots, and that is a real limit on the
+  comparison. What they share is the recipe.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <div style="flex:1 1 300px;min-width:270px">
+      <video controls preload="metadata" playsinline style="width:100%" src="/review/ep2-picks/motion-0812/CMP-old-ep1b08-313f.mp4"></video>
+      <p class="muted"><strong>THEN — ep1 beat 8, 11 Aug.</strong> You said "beat 8 looks good".<br>
+      313 frames · 24 fps · 8 steps · guidance 1.0 · distilled sigmas · two-stage · no image-crf<br>
+      <strong>574 kbps</strong></p>
+    </div>
+    <div style="flex:1 1 300px;min-width:270px">
+      <video controls preload="metadata" playsinline style="width:100%" src="/review/ep2-picks/motion-0812/CMP-new-whiteplate.mp4"></video>
+      <p class="muted"><strong>NOW — off a plate with no scene in it.</strong><br>
+      121 frames · 24 fps · 8 steps · guidance 2.0 · distilled sigmas · two-stage · image-crf 33<br>
+      <strong>713 kbps</strong></p>
+    </div>
+    <div style="flex:1 1 300px;min-width:270px">
+      <video controls preload="metadata" playsinline style="width:100%" src="/review/ep2-picks/motion-0812/CMP-new-sceneplate.mp4"></video>
+      <p class="muted"><strong>NOW — off a plate that already had a field in it.</strong> Same beat, same
+      words as the middle one; only the starting picture differs.<br>
+      121 frames · same recipe · <strong>713 kbps</strong></p>
+    </div>
+  </div>
+
+  <h3 style="margin:26px 0 6px;font-size:17px">What I measured, and what each one ruled out</h3>
+  <ol style="line-height:1.75">
+    <li><strong>The conditioning round-trip (image-crf 33).</strong> The one knob that genuinely changed
+    between then and now. Measured directly with ffmpeg, no GPU: max channel delta 158/255 but a mean of
+    2.94, all of it ringing on ink edges. Real, and far too small to be this.</li>
+    <li><strong>Guidance 1.0 versus 2.0.</strong> The other knob that changed. Rendered both: guidance 1.0
+    — the old value — came back <em>worse</em>, deforming the fruit by frame 118. Reverting is not the answer.</li>
+    <li><strong>The plate.</strong> You refuted this one yourself: "even scenes with plants felt low
+    quality." The third panel above is the test — same beat, same words, scene-carrying plate — and you are
+    right that it does not fix the feeling.</li>
+    <li><strong>The encode chain, both passes.</strong> Our clips ship at 574–1494 kbps, which sounded
+    damning until I measured it. First pass, a lossless plate put through what the renderer delivers: mean
+    2.56/255. Second pass, the assembly re-encode at crf 23: mean 1.74/255. Together under 2%, and
+    invisible at 1:1 below.</li>
+  </ol>
+  <img src="/review/ep2-picks/motion-0812/0814-encode-firstpass.png" alt="A lossless plate, the same plate encoded at 1.5 Mbps as the renderer delivers, and the same plate at crf 16 with lanczos — visually identical at 1:1.">
+
+  <h3 style="margin:26px 0 6px;font-size:17px">What is still worth changing anyway</h3>
+  <p>Two cheap fixes that are real improvements even though they are not the answer: the assembly re-encode
+  should be crf 16 rather than 23, and it currently resizes with ffmpeg's default filter where lanczos is
+  sharper on line art. Free quality, no GPU, but do not expect either to be what you are seeing.</p>
+
+  <h3 style="margin:26px 0 6px;font-size:17px">The one thing I have not ruled out</h3>
+  <p><strong>Your clips are drawn at 352×640 for eight of their eleven steps</strong>, then upsampled and
+  refined for three. The file says 704×1280; the detail is decided at a quarter of that area. That is the
+  model's own intended recipe, and our code argues that a single-stage full-resolution run would come out
+  <em>softer</em>, not sharper — so the fix is not more steps, it would be rendering at a larger size so
+  both stages get more pixels. That costs real GPU time per clip and it is the next thing I would test, on
+  a plant beat, if you want me to.</p>
+</section>
+
 <section id="eta" style="border-bottom:3px solid var(--accent)">
   <span id="e-eta"></span>
   <h2 class="t" style="font-size:25px">How long until episode 2 is finished</h2>
