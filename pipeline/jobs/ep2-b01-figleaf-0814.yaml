@@ -1,0 +1,108 @@
+# 2026-08-14, stills-drafts lane. The cold read's four fixes plus the lobed leaf.
+id: ep2-b01-figleaf-0814
+task: ep2-b01-figleaf-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: Sixteen frames, and the strip must be read along the SEED axis, not the reference axis. Cold
+  read again with no context. Pass is a majority calling it a FIG rather than an eggplant or plum, with
+  the star-shaped eye visible at the base and a matte surface. The lobed leaf is the variable most likely
+  to carry it; if the leaf lands and the fruit still reads as an aubergine, the fruit is not the problem
+  and the leaf should simply be in every fig shot from here.
+why: 'THE COLD READ CALLED IT AN EGGPLANT, fairly confident, second guess a dark plum. Four faults named
+  and all four fixed in this round: no ostiole (the most diagnostic fig feature, still missing after the
+  purple ruling, five wording fixes and a reference - now named at the base in words AND given a reference
+  crop tight on the base), too dark (near-black is the aubergine tell; pulled back to purple with a green
+  shoulder, which is what the 1839 plate actually shows), too glossy (the dusty bloom came back as speculars;
+  gloss banned by name, bloom described as dust), and a green stripe artifact the reader flagged unprompted,
+  now banned. PLUS THE LEVER THE READ FOUND BY ACCIDENT: a FIG LEAF in frame. It is deeply lobed and instantly
+  identifying, where nothing done to the fruit itself has worked in seven rounds - a fig beside a fig
+  leaf is a fig, the same fruit alone is an aubergine. Never tried, costs four tokens. AND THE REFERENCE
+  SET IS FIXED: the previous one was the SAME CROP SAVED FOUR TIMES, so the reference axis was degenerate
+  - identical refs at one seed produce identical frames, which is why the reader correctly reported four
+  pixel-identical images. My bug, twice: I staged duplicates and then sampled that axis for the strip.
+  Four distinct crops now, one of them tight on the base.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-r2-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf
+  - --draft-key
+  - authored_b01_figleaf
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-r2-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf
+  - --draft-key
+  - authored_b01_figleaf
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-figleaf-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figleaf-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figleaf/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figleaf-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf\01-cold-open-ipa-r3-w015-s0.png

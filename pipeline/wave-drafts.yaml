@@ -227,6 +227,36 @@ beats:
     # the checkpoint's own gloss prior. One variable: `matte skin, no shine` restored to
     # the prompt. If the word fixes what the reference could not, that is the boundary of
     # what an object reference carries: shape and colour yes, surface no.
+    # -- `authored_b01_figleaf` -- 2026-08-14. THE COLD READ'S FOUR FIXES IN ONE ROUND,
+    # plus the lever it found by accident.
+    # Its verdict on the reference round was "an eggplant/aubergine, fairly confident",
+    # second guess a dark plum. Four faults, all named:
+    #   NO OSTIOLE - "the bottom of the fruit is a smooth unbroken curve, all the
+    #     structure is at the top". The single most diagnostic fig feature, still missing
+    #     after the purple ruling, five wording fixes and a reference. So it is NAMED, at
+    #     the base, in words - and the reference set is restaged with one crop tight on
+    #     the base so the picture says it too.
+    #   TOO DARK - "very dark purple-black, near-black in the body". His word was purple,
+    #     not black, and near-black IS the aubergine tell. Pulled back to a purple with a
+    #     green shoulder, which is also what the 1839 plate actually shows.
+    #   TOO GLOSSY - "a hard star/sparkle flare, nothing about it reads matte". The dusty
+    #     bloom we asked for came back as specular highlights, so gloss is banned
+    #     explicitly and bloom is described as dust rather than sheen.
+    #   AN ARTIFACT it flagged unprompted - "a thin pale green stem-like line runs down
+    #     over the front of the fruit". Banned by name.
+    #
+    # THE LEVER IS THE LEAF, and it came from beat 16 by accident: a FIG LEAF is deeply
+    # lobed and instantly identifying, where nothing done to the fruit itself has worked
+    # in seven rounds. A fig beside a fig leaf is a fig; the same fruit alone is an
+    # aubergine. That is the one thing never tried, and it costs four tokens.
+    authored_b01_figleaf: >-
+      A tiny seedling in a sunlit grassy field, one purple fig with a green shoulder and a
+      small star-shaped eye at its base, matte dusty skin, hanging beside a deeply lobed
+      fig leaf. Medium shot, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child, no
+      person, no eggplant, no aubergine, no plum, no gloss, no shine, no wet look, no
+      black fruit, no stripe down the fruit, no dark, no night. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b01_figref_matte: >-
       A tiny seedling in an open grassy field, one small purple fig with matte skin and no
       shine hanging from its thin stem below the leaves, two oversized cotyledon leaves,
