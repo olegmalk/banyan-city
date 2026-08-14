@@ -143,7 +143,13 @@ def check(beat: int, d: dict, authored: str, sd, verbose: bool = True) -> dict:
     # every one of this wave's 15 beats is PEOPLED. Negating `boy` or `person`
     # here would forbid the subject. So the rule inverts: the assertion is that
     # these terms are ABSENT, not present.
-    selfneg = [t for t in ("boy", "person", "man", "male") if t in neg_parts]
+    # ONLY on beats that declare a person. The comment above was written when every
+    # beat in the wave was peopled; beats 12/18/21 are plant-only, and for them the
+    # person-singulars block is the CORRECT defence, not a self-negation -- it is how
+    # 002b beat 01 returned 0 people in 4 of 4. `tag` is the predicate: an empty count
+    # tag means the draft declares nobody in frame.
+    selfneg = ([t for t in ("boy", "person", "man", "male") if t in neg_parts]
+               if d.get("tag") else [])
     if selfneg:
         faults.append(f"peopled beat negates its own subject: {selfneg} — the "
                       "person-singulars block belongs on plant-only plates only")

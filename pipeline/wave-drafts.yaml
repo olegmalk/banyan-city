@@ -1822,6 +1822,21 @@ beats:
     # to near-chibi infants (s2) instead of "round soft bodies". That is a taste
     # axis, it is R4's, and stacking it on would make the camera result
     # unattributable. It is recorded in wave2-faults-fixer.yaml for the founder.
+    # -- `authored_b05_scene` -- 2026-08-14, the goblin-free scene-plate batch. Motion cannot finish
+    # these beats off a white plate: the world has to be in frame one or it arrives
+    # mid-clip, which is the artifact the founder has now caught three times. Scene sits
+    # immediately after the cast and ahead of the action, the placement beat 10 round 1
+    # proved is required. Cast is the RULED one -- adult, short brown hair, brown tunic
+    # and sash, belly covered -- and every `round`, `soft` and `bald` from the older
+    # drafts is gone, along with `silly harmless bureaucrats`, which is a register phrase
+    # and register words have lost every time this week.
+    authored_b05_scene: >-
+      Two adult guard men in brown tunics and sashes walk in green summer grass, a hedge
+      and dark treeline behind, pale blue morning sky above, short brown hair, one holding
+      a bark clipboard. Cinematic lighting, masterpiece, best quality, very aesthetic No
+      girl, no child, no armor, no helmet, no knight, no white background, no plain
+      background, no character sheet, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b05_idfix_r2: >-
       Two round guard men in plain brown tunics stand side by side facing
       camera in a warm green grassy morning field, silly harmless bureaucrats
@@ -2723,6 +2738,23 @@ beats:
     # PLUS A BAN, AND IT COSTS NOTHING TO ADD. `no extra heads, no disembodied
     # head` go in a negative that sends 71 of 77 with six tokens spare, so nothing
     # is evicted to pay for them and no existing guard is disturbed.
+    # -- `authored_b09_scene` -- 2026-08-14, the goblin-free scene-plate batch. Motion cannot finish
+    # these beats off a white plate: the world has to be in frame one or it arrives
+    # mid-clip, which is the artifact the founder has now caught three times. Scene sits
+    # immediately after the cast and ahead of the action, the placement beat 10 round 1
+    # proved is required. Cast is the RULED one -- adult, short brown hair, brown tunic
+    # and sash, belly covered -- and every `round`, `soft` and `bald` from the older
+    # drafts is gone, along with `silly harmless bureaucrats`, which is a register phrase
+    # and register words have lost every time this week.
+    # Beat 09 is a close-up, so the world is a band behind him rather than a full
+    # landscape -- the same concession beat 04 got, and for the same reason.
+    authored_b09_scene: >-
+      A guard man in a brown tunic and sash in green summer grass, a treeline and pale sky
+      behind, short brown hair, close on his face working slowly through an idea, eyes
+      drifting, mouth slightly open. Cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no white background, no plain
+      background, no character sheet, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b09_idfix_r2: >-
       Close-up on a bald guard man in a plain brown tunic, in a sunny grassy
       field, a silly harmless bureaucrat with a round soft body, his face
@@ -3010,6 +3042,21 @@ beats:
     # taught that a positive cannot assert what the negative bans.
     # -- `_idfix` 2026-08-12 ~02:5x: tunics for the rejected armor; long
     # shadows kept, shadow ban still omitted (beat 09 lesson).
+    # -- `authored_b11_scene` -- 2026-08-14, the goblin-free scene-plate batch. Motion cannot finish
+    # these beats off a white plate: the world has to be in frame one or it arrives
+    # mid-clip, which is the artifact the founder has now caught three times. Scene sits
+    # immediately after the cast and ahead of the action, the placement beat 10 round 1
+    # proved is required. Cast is the RULED one -- adult, short brown hair, brown tunic
+    # and sash, belly covered -- and every `round`, `soft` and `bald` from the older
+    # drafts is gone, along with `silly harmless bureaucrats`, which is a register phrase
+    # and register words have lost every time this week.
+    authored_b11_scene: >-
+      Two adult guard men in brown tunics and sashes walk away from camera across green
+      summer grass, a hedge and dark treeline behind, pale morning sky above, gesturing at
+      each other, growing smaller. Cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no knight, no white background, no
+      plain background, no character sheet, no dark, no night. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b11_idfix: >-
       Two round bald guard men in plain brown tunics walk away from camera
       across an empty grassy field, gesturing at each other, growing smaller
@@ -3799,6 +3846,19 @@ beats:
       no apple, no red fruit, no pale fruit, no chibi, no mascot, no creature,
       no face, no eyes, no mouth, no girl, no child, no thick branch. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b18_scene` -- 2026-08-14, goblin-free scene batch. Plant-only, so the
+    # scene LEADS and the person-singulars block is correct rather than self-negating
+    # (that gate predicate was fixed this pass -- it assumed every beat was peopled).
+    # CARRIES THE PURPLE FIG, which is canon now, and the growth ladder: one fruit only,
+    # on a THIN branch, on a tiny sapling. Beat 12's bushy crown was the violation this
+    # avoids.
+    authored_b18_scene: >-
+      A deep purple-violet fig, green at its neck, matte, hangs from the thin branch of a
+      tiny sapling in green summer grass, a treeline and pale sky behind, the only fruit
+      in frame. Cinematic lighting, masterpiece, best quality, very aesthetic No woman, no
+      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no
+      green fig, no green fruit, no white background, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
     authored_b18_refresh: >-
       A single small round green fig on the thinnest branch of a tiny sapling,
       the only fruit in frame, its stem flexing under the weight, warm amber

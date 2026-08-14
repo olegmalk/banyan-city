@@ -1,0 +1,102 @@
+# 2026-08-14, stills-drafts lane. Scene-carrying plate for beat 05.
+id: ep2-b05-scene-0814
+task: ep2-b05-scene-0814
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 10. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which finishes this beat off the plate.
+success: 'Plate frames with the beat''s own location ALREADY IN THEM -- grass, hedge/treeline, sky as
+  the beat requires. Pass is a usable frame-one for motion: the world present, the cast/plant on-canon.
+  The failure worth reporting is the world absent, which would mean the scene clause is still losing to
+  the reference on this beat and it needs the bootstrap route rather than a re-run.'
+why: 'SCENE-CARRYING PLATE so motion can finish this beat. Motion cannot fix the white-burst opening from
+  its side -- it has measured that twice -- because a white plate means the world is built by the motion
+  words and can only arrive mid-clip, which is the artifact the founder has now caught three times. The
+  world goes in frame one instead. Scene sits ahead of the action, the placement beat 10 round 1 proved
+  is required (scene at the tail returned no world at either window). 2 guards on patrol, walking. Cast
+  is the RULED one: adult, short brown hair, brown tunic and sash, belly covered. Every `round`, `soft`
+  and `bald` is gone from the wording, along with `silly harmless bureaucrats` -- a register phrase, and
+  register words have lost every time this week.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-scene
+  - --draft-key
+  - authored_b05_scene
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-scene
+  - --draft-key
+  - authored_b05_scene
+  - --arm
+  - window4
+  - --task
+  - ep2-b05-scene-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-scene-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b05-scene/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b05-scene-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b05-scene\05-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-scene\05-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-scene\05-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-scene\05-ipa-r3-w015-s0.png
