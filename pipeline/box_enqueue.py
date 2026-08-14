@@ -178,6 +178,41 @@ def to_job(spec: dict) -> dict:
 # because a card's ground can carry a gradient and a night scene can be dim.
 # Flatness asks how much of the border is ONE colour, which is what "blank"
 # actually means; spread is not.
+#
+# WHAT IT CANNOT SEE, and this is why a PASS here is not a clearance. The
+# statistic measures UNIFORMITY of the border, not whether a place is depicted,
+# and on 2026-08-15 two lanes re-measured it and found the two questions have
+# come apart. Everything below is a measured number on a real file, cropped
+# exactly as this code crops it:
+#
+#   * a card whose border carries the texture passes. The same guardpick sweeps
+#     that produced the six refused cards also produced tight portraits -- one
+#     figure, no location, no second character, a token hedge behind and in two
+#     cases a printed card border -- that read 0.236 (b06 r2-s0), 0.287
+#     (b07 r2-s1), 0.052 (b09 r2-s3) and 0.056 (b10 r2-s3). A printed border is
+#     texture; the statistic rewards it. None of those four was any job's --src,
+#     so the wave that broke is still 6/6 refused, but a source map that had
+#     picked a different seed would have walked straight through this guard.
+#   * a WORLD-ABSENT frame passes by a mile. farm-out/ep2-b18-purplefig/
+#     b13-init-704x1280.png -- one glossy fruit on a cream-and-mauve gradient
+#     with a hard diagonal shadow, no sapling, no sky, no world -- reads 0.060.
+#     A gradient with a shadow sweeping across it is SMOOTH but not UNIFORM, so
+#     it measures as "textured" while containing nothing.
+#
+# AND NO THRESHOLD MOVE FIXES THAT, so do not retune it: beat 21's legitimate
+# night field reads 0.489, ABOVE those four cards and above the fruit. The
+# classes are interleaved, not merely close, and any cut point that catches
+# 0.236 has already failed 0.489. What survives retuning is the shape of the
+# claim: a refusal here is EVIDENCE (blank paper behind a figure, 6/6 on the
+# labelled wave, zero false alarms), a pass here is only the ABSENCE of that one
+# piece of evidence, and the pass line must never say more than that. A lane
+# that reads "a scene" and skips opening the init is doing exactly what cost
+# nineteen renders.
+#
+# THE UNFETCHABLE REFUSAL IS THE PART THAT HAS NOT FAILED, and it earned its
+# keep on its first outing: it caught a silently-swapped plate whose path was
+# built from the new beat's directory and the old beat's filename. "I could not
+# check" must keep exiting nonzero whatever happens to the border statistic.
 RESULTS_BRANCH = "origin/farm-results-rtx5090"
 BOX_OUT_PREFIX = "c:\\banyan-farm\\courier-box\\farm-out\\"
 PLATE_FLAT_MAX = 0.62      # midpoint of the 0.489 -> 0.750 gap; see above
@@ -335,7 +370,17 @@ def plate_problems(spec: dict, fetch=None) -> list:
                 "one job with plate_ack: \"unfetchable: <why>\"."
                 % (type(exc).__name__, exc, src)]
     if flat < PLATE_FLAT_MAX:
-        print("  plate    flatness %.3f of %.2f -- a scene" % (flat, PLATE_FLAT_MAX))
+        # Say only what was established. This measured the BORDER, so all it
+        # can report is "no blank paper behind the figure" -- it has passed a
+        # tight portrait card at 0.236 and a fruit on a bare gradient at 0.060.
+        # See the note above; the init still wants a pair of eyes.
+        print("  plate    flatness %.3f of %.2f -- no blank-paper card detected. "
+              "This measures the BORDER only:" % (flat, PLATE_FLAT_MAX))
+        print("           it does NOT establish that a place is depicted, and it "
+              "has passed both a")
+        print("           tight portrait card and a world-absent macro. OPEN THE "
+              "INIT before you")
+        print("           trust the wave -- %s" % src)
         return []
     if ack.lower().startswith("card"):
         print("  plate    flatness %.3f of %.2f reads as a CARD, waived by the spec "
