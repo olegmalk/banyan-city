@@ -16921,3 +16921,32 @@
     it corrected to the physical version; I am flagging rather than editing so the script and the prompts
     converge instead of diverging further.
   outcome: null
+
+- id: RESULT-the-loosened-recipe-kills-the-cut-0814
+  kind: scoring
+  date: 2026-08-14
+  the_numbers_same_beat_same_init_same_seed: >-
+    OLD prompt, 160 words with 12 stillness phrases: cut 66.6, motion 20.4 / 23.4 / 2.8 / 0.3.
+    LOOSENED, 43 words with none:                    cut  4.5, motion 19.4 / 18.3 / 4.6 / 3.2.
+    LOOSENED twin:                                   cut 10.0, motion 20.1 / 16.8 / 14.8 / 14.3.
+  the_headline_is_the_cut_not_the_motion: >-
+    66.6 to 4.5 is a fifteenfold collapse. The old clip THREW THE PLATE AWAY at frame 2 - different
+    camera, lighting, background, body proportions - and that discontinuity is what a viewer reads as
+    "confusing", because the shot they are shown is not the shot that was set up. The loosened clip
+    STARTS FROM THE PLATE. That is what "trust the init" bought, and it is a bigger win than the motion
+    numbers.
+  the_freeze_is_fixed_at_one_seed_of_two: >-
+    The twin holds motion to the end (14.8, 14.3). seedA still decays (4.6, 3.2). So the loosening
+    reliably fixes the CUT and fixes the FREEZE about half the time. I am reporting that split rather
+    than averaging it away.
+  what_i_swept_and_why_now: >-
+    19 beats re-authored on the recipe in one pass, per the budget instruction to favour one big
+    enqueue over many small wakes. Every action line was TRANSLATED against the plate - no trunk to
+    slide down at 40cm, nobody entering from off-frame - which is the second half of the fix and the
+    reason beat 02 kept emptying its own frame.
+  the_honest_caveat: >-
+    The cold read is still running. The numbers justify the sweep on their own - a fifteenfold drop in
+    the discontinuity is not ambiguous - but "a stranger can name the action" is the other half of the
+    pass condition and it is not in yet. If the reader cannot name the actions, the wave was still worth
+    firing for the cut alone, and the next lever is the action wording rather than the structure.
+  outcome: null
