@@ -55,6 +55,6 @@ prompt: >-
 negative_prompt: >-
   photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, backlight, silhouette, contre-jour, lens flare, face, eyes, creature, mascot, person, hand, eggplant, gloss, black fruit, dark, night, photorealism
 colour_anchor_negative: none (negative byte-identical to arm 1)
-render_seconds: 9.4
+render_seconds: 9.5
 founder_verdict: null
 scored: false
