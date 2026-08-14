@@ -1,0 +1,191 @@
+# THE 49-FRAME TEST, beat 02, 2026-08-15. ONE CLIP. Not a sweep, not a batch.
+#
+# ================== WHAT IS HELD AND WHAT MOVES ==================
+# EVERY field is byte-identical to ep2-b02-stg-headup-0815 except ONE: --frames
+# goes 97 -> 49. Same plate + same asserted sha256, same cover_crop.py, same seed
+# 20260815, same positive prompt, same negative, 704x1280, 24 fps, guidance 2.0,
+# distilled sigmas, two-stage, image-crf 33, sequential offload. LTX requires
+# (frames - 1) % 8 == 0; 49 satisfies it. 49 frames at 24 fps = 2.04s.
+#
+# ================== WHY ==================
+# The staging test won where it was aimed (the face came back) but its blind
+# reader named dead air twice, unprompted: "roughly a third of the sequence is a
+# still image at the end and another third is a still image at the start". The
+# measured window agrees -- the whole performance lives in 0.54s -> 2.58s of a
+# 4.04s clip, i.e. 2.04s of movement inside twice that much runtime. 2.04s is
+# exactly 49 frames. So the question this clip asks is simple: does the model
+# spend its motion arc PROPORTIONALLY to the runtime it is given (in which case
+# a shorter clip is mostly performance and the dead air was a length artifact),
+# or does it spend a FIXED-LENGTH arc and pad (in which case 49 frames buys the
+# arc with no padding), or does it TRUNCATE (in which case the head lift will be
+# caught unfinished at the last frame and 49 is too short for this action)?
+# Those three answers have different signatures and the scoring below separates
+# them.
+#
+# ================== THE PREDICTION (written BEFORE enqueue) ==================
+# Measured references, both scored with the same validated window rule:
+#   control ep2-b02-nw-0815:      head 0.478 | body 7.83 | tail 0.116 |
+#                                 window 1.04 -> 3.42s | cadence 2.21x | flash 30.68
+#   staged  ep2-b02-stg-headup:   head 0.569 | body 2.13 | tail 0.415 |
+#                                 window 0.54 -> 2.58s | cadence 17.75x | flash 47.87
+# The staged clip's window covers 50.5% of its runtime.
+#
+# 1. THE MOTION WINDOW WILL COVER A LARGER FRACTION OF THE CLIP. I predict the
+#    window spans at least 70% of the 2.04s runtime -- head and tail freezes
+#    shrink in absolute seconds, not just in proportion. THIS IS THE LOAD-BEARING
+#    CLAIM; it is the only reason to spend the render.
+# 2. BODY-WINDOW MEAN WILL RISE ABOVE 2.13, into 2.5-6.0. The same chin arc
+#    across half the frames is more pixel change per frame. I say the range now
+#    so that a number landing outside it cannot be re-narrated afterwards as the
+#    thing I meant.
+# 3. CADENCE WILL STAY BAD, 8x or worse. The period-2 near-duplicate is a
+#    sampler/decoder property and has no reason to know how long the clip is.
+# 4. THE BLIND READER WILL NOT NAME DEAD AIR AT BOTH ENDS. At most one end, and
+#    not as "a third of the sequence". This is the prediction the founder's
+#    complaint actually rides on.
+# 5. THE ACTION WILL STILL COMPLETE: face readable at the LAST frame and more
+#    readable than at frame 0, chin up, eyes open -- the win the staging test
+#    bought must survive the shortening or the shortening is not free.
+#
+# ================== WHAT WOULD FALSIFY IT ==================
+#   a. Window fraction <= 50.5%, i.e. no better than the 97-frame clip. Then the
+#      model pads proportionally, frame count is not a dead-air lever at all, and
+#      the fix has to come from staging or from cutting in post instead.
+#   b. Body mean BELOW 2.13 while the blind reader reports the head still rising
+#      at the last frame. That is the TRUNCATION signature: 49 frames is simply
+#      not enough runtime for this action, and the answer is a shorter ACTION,
+#      not a shorter clip.
+#   c. The reader still says a third at each end is a still image. Prediction 4
+#      dead, and with it the whole premise of this test.
+#   d. Cadence drops below 4x. Then cadence is coupled to frame count, the
+#      17.75x reading on the staged clip was partly a length artifact, and every
+#      cadence comparison we have made across clips of different lengths needs
+#      re-doing. This one would be a FINDING even though it falsifies me.
+#
+# A shorter clip that is mostly performance is a win even if every absolute
+# number moves. A shorter clip that merely cuts the arc off is a loss and will be
+# reported as one. The metric is a floor, never a verdict; where number and eye
+# disagree the eye wins.
+#
+# ================== HOW IT WILL BE SCORED ==================
+# Segmented frame-difference with PAIR 0 DROPPED (frame 0->1 is a restyle flash,
+# not motion), motion window found on a PARITY-COLLAPSED difference series, plus
+# a blind cold read taken from pipeline/coldread_frames.py -- a DENSE CONSECUTIVE
+# strip through the motion window plus a whole-clip overview. The old 16-of-97
+# even spread is retired: it samples ~7 source frames apart and made a continuous
+# 1.7s head lift read as a cut to a blind reader on this very beat.
+#
+# NOTHING HERE IS PROMOTED TO CANON. ONE CLIP. ONE SAMPLE BEFORE ANY BATCH.
+#
+id: ep2-b02-stg-headup-49f-0815
+task: ep2-b02-stg-headup-49f-0815
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 18
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: 'staging lane, 2026-08-15 (49-frame test)'
+consumer: 'The episode-2 clip-length decision. The staging test recovered the face but the blind reader named dead air at BOTH ends -- the performance lives in 0.54-2.58s of a 4.04s clip. Its reader is the founder, screening this beside the 97-frame staged clip.'
+success: 'A 704x1280 49-frame mp4 from a byte-identical recipe, scored the same way (segmented frame-difference, pair 0 dropped, plus a blind cold read on a DENSE CONSECUTIVE frame strip). The finding worth reporting is either way it falls: that frame count buys back the dead air, or that the model spends a fixed-length arc regardless and 49 frames simply truncates the performance.'
+why: 'A whole third of the staged clip is a still image at the start and another third at the end. Frame count is the one field that addresses that directly, and it costs half the render.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b02-stg-headup-49f-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-prompt.txt: He raises his head from looking down until he is looking straight up at the camera, and his eyes open wide. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-jobs-encode.json: "[{\"beat\": 2,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\b02-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\b02-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\b02-negative.txt\"}]"
+  C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-jobs-render.json: "[{\"beat\": 2,\n  \"seed\": 20260815,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\b02-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\b02-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b02-stg-headup-49f-0815\\\\02-stage-headup-49f.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b02-stg-headup-49f-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b02-plate-0814\02-the-sprint-ipa-r0-w015-s0.png
+  - --sha256
+  - 8519ed910d70da5c9c66cf38a9d27cd4b7a62ae9d537b5ca4c1adbcff7c4e942
+  - --out
+  - C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b02-stg-headup-49f-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b02-stg-headup-49f-0815\bench-stg-headup-49f.jsonl
+  - --bench-label
+  - ep2-b02-stg-headup-49f-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-stg-headup-49f-0815"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b02-stg-headup-49f-0815/02-stage-headup-49f.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b02-stg-headup-49f-0815/b02-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b02-stg-headup-49f-0815/bench-stg-headup-49f.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b02-stg-headup-49f-0815.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b02-stg-headup-49f-0815\02-stage-headup-49f.mp4
+- C:\banyan-farm\ep2-b02-stg-headup-49f-0815\b02-init-704x1280.png
