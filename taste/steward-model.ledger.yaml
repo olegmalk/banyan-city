@@ -16763,3 +16763,26 @@
     The ship rule, judged on the assembled cut: understandable to a cold viewer, and an upgrade on the
     published episode 2. Not sharpness, not bitrate, not resolution.
   outcome: closed
+
+- id: picker-must-match-the-question-0814
+  kind: mechanism
+  date: 2026-08-14
+  what_happened: >-
+    The guard picker asked "WHICH TWO ARE THE GUARDS?" and laid out eight numbered tiles,
+    each of which was ONE man's turnaround. The founder answered "1 for the guards.
+    although it only shows one guard.. front and back" - he picked, and in the same
+    sentence caught that the sheet could not answer its own question.
+  the_rule: >-
+    A PICKER MUST SHOW CANDIDATES IN THE SHAPE OF THE QUESTION. A pair question needs pair
+    tiles: two men together in one frame, numbered as a pair. A single-character question
+    needs single tiles. The goblin picker got this right by accident - "which number is
+    the goblin" is a one-thing question and every tile was one goblin - so the defect only
+    surfaced when the question became plural.
+  why_it_cost_something: >-
+    Not much, this time, because he answered anyway and his answer was usable as the
+    DESIGN rather than the pair. But the recoverable version is luck: a reader who took
+    the question literally would have had no answer to give, and the round would have been
+    spent. The cheap fix is one line of thought before baking - read the headline back and
+    ask whether a tile can answer it.
+  outcome: null
+

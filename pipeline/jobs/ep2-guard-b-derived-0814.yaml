@@ -1,0 +1,106 @@
+# 2026-08-14, stills-drafts lane. Guard B, derived from the approved #1.
+id: ep2-guard-b-derived-0814
+task: ep2-guard-b-derived-0814
+node: 005-the-assessor
+beat: 6
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+sample: true
+owner: stills-drafts lane, 2026-08-14
+consumer: the four two-guard beats (05, 07, 08, 10, 11), which cannot render until a second man exists.
+success: 'Four sheets. Pass is a man who is plainly the same class as A - same tunic shape, same sash,
+  same register - and plainly a DIFFERENT person at a glance in a two-shot. If he reads as A in a different
+  shirt, the costume-only differentiation is too weak and the next lever is build. This is steward-derived,
+  not a taste call: it goes to the board as a VETO entry, not a pick, and the beats do not wait for it.'
+why: 'HE PICKED #1 AND CAUGHT THE PICKER''S DEFECT IN THE SAME BREATH: ''although it only shows one guard..
+  front and back''. Each numbered tile was ONE man''s turnaround, so a sheet asking ''which two are the
+  guards?'' could only be answered with one. His pick names the DESIGN. #1 is farm-out/ep2-guard-sheet-a-r2-0814/06-the-clipboard-wave1-s0.png,
+  sha256 2b507cea475659d997bc315569c62e9836291a114a40e89790fec0556c45e1cd, now frozen as refs-guards-chosen-0814
+  (four crops cut from that turnaround: front, back, head, whole). B is DERIVED rather than picked, on
+  his ratified direction that the two are told apart more by COSTUME than by face. Conditioned on A''s
+  own reference so build and register match, separated by three things readable in a two-shot: darker
+  tunic, light sandy hair against A''s dark, and the bark clipboard - which is also the prop the script
+  gives the clipboard guard. The approved silhouette does not move.'
+prediction: 'Written before any frame exists, and unlike r2''s this one is aimed at the failure that actually
+  happened. r2 drew NO PLANT in 4 of 4 and NO WORLD in 4 of 4; r3 makes the sapling its own subject clause
+  growing from the earth and gives the world its own sentence. What should come back: a rooted plant with
+  a visible stem beside a kneeling goblin in a lit meadow. The remaining risks, in order — (1) the fig,
+  absent in 3 of 4 of r2, is still only two words and may not read; (2) `purple fig` may fight the model''s
+  prior for a fig''s colour; (3) with the character adjectives cut to buy tokens, the patchwork cloak
+  is now entirely absent from the prompt, so the costume will be whatever the checkpoint defaults to —
+  r2 gave a dark buttoned jacket every time. If the plant and the world come back and only the fig and
+  costume are wrong, that is a PASS on the dialect question and the costume moves to the reference where
+  it belongs.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_guard_b_derived
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_guard_b_derived
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-guard-b-derived
+  - --task
+  - ep2-guard-b-derived-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guard-b-derived-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-guard-b-derived/06-the-clipboard-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what\
+    \ this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong\
+    \ file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n       \
+    \ h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    \    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep2-guard-b-derived-0814.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-b-derived\06-the-clipboard-wave1-s3.yaml
