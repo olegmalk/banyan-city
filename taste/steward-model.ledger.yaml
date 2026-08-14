@@ -17109,3 +17109,45 @@
     answer before another set gets rendered.
   outcome: >-
     Second seed queued. Nothing promoted to canon.
+
+- id: PREDICTION-is-the-stillness-the-frame-budget-or-the-model-0815
+  date: 2026-08-15
+  kind: prediction
+  written_before_the_render: true
+  question: >-
+    A loosened prompt with an explicit action still yields a clip a blind reader calls static. Two
+    candidate causes are testable tonight without leaving the pipeline: the clip is too SHORT for an
+    articulated movement to fit, or one sentence naming one action gives the model no intermediate
+    pose to interpolate through. Beat 15 is the test bed because it already has a blind read to beat:
+    "a static, head-bowed standing pose with a slow camera push-in", the plant only nearing because
+    the camera moves. Control is ep2-b15-lw as it stands - cut 17.9, transitions 25.6 14.1 11.5 15.7,
+    and static to a stranger.
+  arm_a: >-
+    ep2-b15-long-0815. Byte-identical to the control except 193 frames instead of 97. Same plate,
+    same prompt, same seed, same everything else.
+  arm_b: >-
+    ep2-b15-twobeat-0815. 97 frames, the action split into two named sub-movements with an explicit
+    order - "He raises his head until he is looking straight ahead. Then his mouth opens and closes
+    as he speaks." - instead of one compound clause.
+  my_prediction: >-
+    ARM A FAILS. I do not think the frame budget is the constraint, and I will say why before seeing
+    it: the clips are already spending their 97 frames on something - a camera push-in and a lighting
+    ramp - so the model is not running out of room, it is using the room on the camera instead of on
+    the character. I expect 193 frames to give a longer, slower camera move over the same motionless
+    figure, per-transition numbers similar or slightly lower, and a blind reader to call it static
+    again. ARM B I GIVE ABOUT ONE IN THREE. An explicit second sub-movement is the one lever that has
+    worked before on this model - describing content is what it responds to - but head-and-mouth
+    articulation from a single still may simply be outside what a distilled 8+3-step i2v does, and
+    if so no wording fixes it.
+  what_each_outcome_means: >-
+    If A moves and B does not, the frame count was the constraint and every beat needs re-timing, not
+    re-wording. If B moves and A does not, the constraint is prompt structure and the recipe gains a
+    sub-movement rule. If NEITHER moves, the wording lever is exhausted and the next move is outside
+    this repo - a different checkpoint, more steps, or a motion-specific LoRA - and I should stop
+    spending the card on prompt variants, which is the failure mode this whole night has been about.
+    If BOTH move, prefer B: it is free, and 193 frames doubles every render on the card.
+  scored_how: >-
+    freeze_check.py per-transition plus a blind cold read against the control's read. The number
+    alone cannot settle it - that is the mistake already logged tonight - so a stranger naming the
+    action is the pass condition, not the delta.
+  outcome: null

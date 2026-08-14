@@ -70,7 +70,7 @@ def tokens(text: str) -> dict:
 
 
 def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
-           prompt: str = "", plate: str = "", seed: int = 0) -> str:
+           prompt: str = "", plate: str = "", seed: int = 0, frames: int = 0) -> str:
     text = src_yaml.read_text(encoding="utf-8")
     old = tokens(text)
     for k in ("bench", "mp4", "png", "prefix", "id"):
@@ -114,6 +114,15 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
                       lambda m: m.group(1) + f"'{prompt} {style}'", text, count=1)
     if seed:
         text = re.sub(r'\\"seed\\": \d+', f'\\\\"seed\\\\": {seed}', text)
+    if frames:
+        # Anchored to the flag, never to the bare number: "97" also appears in
+        # seeds, sha prefixes and est_minutes, and a loose replace would hit
+        # them. LTX wants 8n+1.
+        if (frames - 1) % 8:
+            sys.exit(f"!! frames must be 8n+1, got {frames}")
+        text, n = re.subn(r"(--frames\n\s+- )'?\d+'?", lambda m: m.group(1) + f"'{frames}'", text)
+        if n != 1:
+            sys.exit(f"!! expected one --frames value, replaced {n}")
 
     doc = yaml.safe_load(text)          # refuse anything that will not parse
     if doc.get("id") != new_id:
@@ -135,9 +144,11 @@ def main() -> int:
     ap.add_argument("--prompt", default="")
     ap.add_argument("--plate", default="", help="path on the results branch")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--frames", type=int, default=0, help="LTX frame count, 8n+1")
     a = ap.parse_args()
 
-    text = derive(Path(a.src), a.id, a.beat, a.slug, a.tag, a.prompt, a.plate, a.seed)
+    text = derive(Path(a.src), a.id, a.beat, a.slug, a.tag, a.prompt, a.plate, a.seed,
+                  a.frames)
     out = REPO / "pipeline" / "jobs" / f"{a.id}.yaml"
     out.write_text(text, encoding="utf-8")
     print(f"wrote {out.relative_to(REPO)}")
