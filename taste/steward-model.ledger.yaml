@@ -16431,3 +16431,50 @@
     shorts and dark boots are the checkpoint's own invention on this seed. The frame
     carries them reliably; words describing them may not.
   outcome: null
+
+- id: ep2-honest-capacity-the-blocker-is-plates-not-authoring-0814
+  kind: decision
+  date: 2026-08-14
+  the_ask: refill the card 3h+ deep; "the sweeps alone should cover it".
+  the_honest_number: >-
+    I cannot fill three hours. I can fill about ten minutes of new work, and the reason is not
+    that I am being conservative — it is that seven of the eight goblin-free beats are either
+    parked, waiting on a plate, or already in flight.
+  beat_by_beat_capacity: >-
+    10 and 18 are PARKED at three rounds; authoring more would break the stopping rule I asked
+    for. 05, 09 and 21 have their round-3 fixes RUNNING right now. 12's round 3 is queued. 01 is
+    a done-candidate needing a veto, not a round. That leaves 06 and 11, and both fail on exactly
+    one condition — the scene present from frame one — which no wording of mine reaches; I have
+    measured that twice and plate-drafts has explained the mechanism.
+  why_the_sweeps_cannot_fill_it: >-
+    THE COSTUME SWEEP IS A NO-OP UNDER THE CURRENT GATE. The new costume — patched crossed-wrap
+    tunic with sash, no hood, no cloak — applies to the goblin, and no goblin beat may render
+    until the character is settled. Authoring sixteen files that cannot be enqueued is not card
+    depth; it is work that will be re-authored anyway once the approved reference exists, because
+    the reference will change the wording. THE PURPLE SWEEP IS ALREADY DONE for every beat that
+    can render: 18 and 01 carry purple, and the only other fig beats are 19 and 20, both gated.
+  what_is_actually_missing_and_it_is_one_thing: >-
+    SCENE-CARRYING PLATES for beats 05, 06, 09, 11, 12 and 21. Five of the eight fail on the
+    frame-one condition alone; everything else about them works. Those plates need draft keys in
+    wave-drafts.yaml, which is the plate lane's file. One plate per beat converts five near-misses
+    into probable DONEs, and it is the only thing on the board that does.
+  outcome: null
+
+- id: LAW-the-collision-guard-is-in-box-enqueue-now-and-it-caught-me-0814
+  kind: law
+  date: 2026-08-14
+  what_happened: >-
+    I authored a b12 twin that shared its parent's publish destination — the same defect that made
+    b01-shape render its twin's clip — my own check PRINTED the collision, and I enqueued anyway
+    because I read the "DRY OK" line underneath it instead of the warning above it.
+  what_saved_it: >-
+    Someone has implemented the guard in box_enqueue that I recommended after the b01 incident,
+    and it blocked the re-enqueue outright with an explanation. The tool now refuses what my
+    attention did not. That is the right place for the check to live and I am recording that
+    passing it upward rather than writing it myself was correct — it is pipeline code and outside
+    this lane — but also that it took a second incident before it existed.
+  the_lesson_that_is_mine: >-
+    A check whose output I skim is not a check. Mine printed "shared dst: {...}" and I read the
+    next line. The guard works because it REFUSES rather than reports. Where I cannot make a check
+    refuse, I have to read it as if it could.
+  outcome: null
