@@ -115,6 +115,78 @@
 #
 # NOTHING HERE IS PROMOTED TO CANON. One clip. If it works the next test is named
 # in the report and then this stops -- ONE SAMPLE BEFORE ANY BATCH.
+#
+# ================== THE RESULT (rendered rc=0 in 235s, 2026-08-15) ==================
+# Scored with a window rule validated against the control first: the same rule
+# reproduces ep2-b02-nw-0815's published window to the pair (1.04s->3.42s, head
+# 0.478 vs 0.461, body 7.83 vs 7.687, tail 0.116 vs 0.075, cadence 2.21 vs 2.14,
+# flash 30.68 vs 30.6), so the two clips are graded identically.
+#
+#                    control        this clip
+#   flash (pair 0)     30.68          47.87     WORSE
+#   head                0.478          0.569
+#   body                7.83           2.13     lower, as predicted
+#   tail                0.116          0.415
+#   motion window   1.04 -> 3.42s   0.54 -> 2.58s
+#   cadence            2.21x         17.75x     MUCH worse
+#
+# PREDICTION 1 WON. Body mean 2.13, inside the predicted 2.0-6.0 and below the
+#   control, exactly because a neck rotation moves fewer pixels than a fold.
+# PREDICTION 2 SPLIT. Onset 0.54s beat the predicted <=1.04s. But the window ENDS
+#   at 2.58s, not "live past 3.42s" -- it is SHORTER than the control's, not
+#   longer. Lost the half that mattered.
+# PREDICTION 3 LOST, and the header pre-committed to saying so rather than
+#   claiming the credit. Cadence did not "survive at ~2x"; it went to 17.75x. Odd
+#   pairs sit at 0.1-0.27 MAD the whole way through, so every other frame is a
+#   near-duplicate and the clip runs at an effective 12fps. Staging is therefore
+#   NOT independent of the duplicate-frame cadence, which is what I asserted.
+# PREDICTION 4 WON -- the load-bearing one. The face is readable in the final
+#   frame and is far MORE readable than in frame 0. Blind reader, verbatim:
+#   "Readable. In frame-16 the face is fully front-on, both eyes are drawn open
+#   with visible grey irises, pupils, upper lids and brows... Least readable:
+#   frames 1-6".
+# PREDICTION 5 PARTIAL. The reader named the action ("it lifts its head and lowers
+#   its hands") and reported the first expression change this protocol has ever
+#   found here ("Frames 1-7: eyes as downcast slits... reads sullen/withdrawn.
+#   Frames 8-16: eyes wide open... reads neutral, wary"). It avoided the words
+#   lurch, stumble and reverse -- but replaced them with "It lands, but badly",
+#   "single abrupt jump", "That is a cut, not an in-between." Not claimed as a win.
+#
+# NO FALSIFIER FIRED. (a) the face is not gone, it is the most readable it has
+# been; (b) body 2.13 is not a collapse to <1.0 and the movement is visible;
+# (c) no reversal was reported.
+#
+# THE READER'S "CUT" IS A SAMPLING ARTIFACT, and this is a finding about the
+# PROTOCOL, not the clip. The blind set is 16 frames drawn from 97, so its
+# "frames 7 -> 8" is source frames 38 -> 45, seven frames apart across the
+# steepest part of the arc. Pulling frames 38-49 CONSECUTIVELY shows a smooth
+# eased head lift -- the chin rises frame by frame and the eyes open from slits
+# through half-lidded to full irises with no step anywhere. The raw series agrees:
+# 1.32, 1.72, 3.39, 3.58, 4.19, 3.42, 3.37, 4.94, 5.11, 4.73, 4.15, 4.15, 3.66,
+# 3.13, 2.36, 1.59, 0.79 -- a textbook ease-in/ease-out arc, not a jump. A
+# 16-of-97 contact set CANNOT TELL A CONTINUOUS 1.7s MOVE FROM A CUT, which means
+# the earlier verdict "the fold happens in about three frames" is also suspect.
+#
+# REAL DEFECTS THIS CLIP DOES HAVE, all new or worsened:
+#   - flash 47.87, worse than the control's 30.68, on the original negative (by
+#     design -- the motion-worded negative's flash fix is being confirmed on b03).
+#   - a FOUR-FRAME EXPOSURE FLICKER at frames 21-24: whole-frame brightness goes
+#     115.4 -> 136.9 and back to 116.9 with no pose change. That is the pair-20 and
+#     pair-24 spikes (22.1 and 18.0 MAD). The control is rock steady at 134.x.
+#   - global exposure drift away from the approved plate: 166.7 -> 111.7 here vs
+#     166.8 -> 136.4 for the control, so this clip lands ~25 levels darker.
+#   - 12fps judder (the cadence above).
+#   - dead air at both ends: the whole performance lives in 0.54-2.58s of a 4.04s
+#     clip. Reader: "roughly a third of the sequence is a still image at the end
+#     and another third is a still image at the start."
+#   - an uncommanded arm drop: the clasped hands unclasp and fall to his sides.
+#     Nothing in the prompt asked for that.
+#
+# VERDICT: the hypothesis won where it was aimed. Restaging recovered the face
+# and the expression that four rounds of parameter tuning could not, so shot
+# design is a real lever and was the missing one. It did NOT fix motion quality,
+# and it made the flash, the exposure stability and the frame cadence worse. This
+# clip is a diagnosis, not a keeper. NOT PROMOTED.
 id: ep2-b02-stg-headup-0815
 task: ep2-b02-stg-headup-0815
 node: 002b-first-citizen
