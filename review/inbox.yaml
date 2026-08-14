@@ -1001,3 +1001,30 @@
   kind: clip
   group: result
   verdict_hint: nothing to answer - say nothing and it stands as a step forward, not a finished beat
+- what: 'THE DOCUMENTS NOW CONTRADICT YOU - you removed the script-reading gate on 2026-08-13 and three
+    governance files still enforce it. Only you can change them. Your words, verbatim: "lets not waste
+    time by having me read the entire script of each episode, lets remove that task, you can review it
+    yourself if you''d like, but im fine with it." That was your answer to the board entry staged to collect
+    exactly this countersignature, so it is a ratification, not a passing remark. WHAT IS STILL OUT OF
+    DATE, by name: STEWARDSHIP.md §7 (added 2026-08-11) still reads "This does not loosen §6 - the founder''s
+    read still gates what may be produced"; §6 itself is untouched and still forbids rendering or assembling
+    from a script you have not read and approved, and records nothing about the delegation; CLAUDE.md
+    restates §6 as non-negotiable and never mentions D22 or the delegation; DECISIONS.md D22 still calls
+    itself "RESOLVED IN PART ... awaiting a daylight countersignature" when the countersignature is the
+    sentence above. Small correction while it is open: D22 dates your "but this is the original sapling
+    path" quote to 2026-08-12; the transcript timestamp is 2026-08-11T17:32Z, and D22 has gained a trailing
+    period the message did not have - in a section that says its quotes are verbatim and unedited. WHAT
+    I AM NOT READING INTO IT. The release covers the AI-authored Sapling trunk. Nobody has put a crowd-written
+    or founder-written script in front of you, so D22''s carve-out for those is genuinely unresolved -
+    not released, and not surviving either. It does not touch publication, taste verdicts on rendered
+    material, kill authority, spending, or ONE SAMPLE BEFORE ANY BATCH. AND IT ADDED AN OBLIGATION AS
+    WELL AS REMOVING ONE: "the best way for me to review something is by seeing the full video of it"
+    means each episode reaches you as one assembled cut, not a pile of stills. I am treating that as binding.
+    Why this is on your board and not fixed already: governance changes are yours, and a lane reading
+    the documents as written will either block on a gate you removed or drop it with nothing in writing
+    behind it. I have edited none of the three files.'
+  url: https://github.com/olegmalk/banyan-city/blob/HEAD/STEWARDSHIP.md
+  group: taste
+  since: '2026-08-15'
+  kind: decision
+  verdict_hint: yes, update the documents to match what i said / no, i want the script gate back
