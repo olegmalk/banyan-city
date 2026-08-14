@@ -21,6 +21,12 @@ the three failures this script exists to prevent:
      picture under both names. On 2026-08-13 ep2-b01-shape and its twin did
      exactly that, five seconds apart, into one parent-named directory; only the
      declared-artifact check noticed. See reserve_payload/payload_collisions.
+  5. A motion job whose starting picture is a CHARACTER CARD rather than a
+     scene. On 2026-08-14 nineteen renders went out and six animated a costume
+     identity sheet -- one figure on blank pale paper, no location -- because the
+     wave pointed each beat at "its newest good job". Two of the six scored at
+     the TOP of the wave on frame-difference, so nothing downstream caught it: a
+     card breathing measures exactly like a shot. See plate_problems.
 
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--dry-run]
     python3 pipeline/box_enqueue.py --list        # what is queued right now
@@ -139,6 +145,214 @@ def to_job(spec: dict) -> dict:
     return job
 
 
+# --------------------------------------------------------------------------
+# The plate check. Lifted, threshold and statistic unchanged, from
+# review/ep2-picks/plate_check.py, which the motion-wave lane wrote and
+# validated on 2026-08-14 against the wave that broke: of the nineteen `-lw`
+# jobs it refuses exactly the six that animated cards and no others, and of the
+# eleven jobs re-cut afterwards it passes all eleven. It lives here as well
+# because a law that must be remembered before every enqueue is a law that gets
+# skipped on the night someone is in a hurry.
+#
+# WHAT IT MEASURES. The job's --src is cover-cropped exactly as the box will
+# crop it, then the OUTER 8% BAND is measured: what fraction of those border
+# pixels sit within +/-8 autocontrast-normalised luminance levels of the
+# border's own median. A drawn place -- grass, sky, a field, a room -- has
+# texture out to its edges. A reference card is flat paper behind a figure.
+#
+# THE THRESHOLD IS MEASURED, NOT GUESSED, and the margin is thinner than the
+# bulk of the data suggests. Labelled by eye over that wave:
+#
+#     scenes    0.016 .. 0.350, then 0.489      (the 0.489 is beat 21)
+#     cards     0.750 .. 0.968                  (b05 b06 b07 b09 b10 b11)
+#
+# 0.62 is the middle of that gap. Beat 21 -- a night field, mostly dark sky --
+# reads 0.489 and is the TIGHTEST LEGITIMATE CASE KNOWN: a nearly empty night
+# shot genuinely is close to flat. The next fog or night plate will land near
+# it, so whoever meets a refusal in the 0.5s should look at the picture rather
+# than assume the guard is right. Do not retune either number without re-running
+# the labelled set; they were measured off the wave that broke.
+#
+# BORDER STANDARD DEVIATION WAS TRIED FIRST AND REJECTED. It does not separate
+# the two groups even a little -- card b09 reads 33.0 against scene b13's 44.0 --
+# because a card's ground can carry a gradient and a night scene can be dim.
+# Flatness asks how much of the border is ONE colour, which is what "blank"
+# actually means; spread is not.
+RESULTS_BRANCH = "origin/farm-results-rtx5090"
+BOX_OUT_PREFIX = "c:\\banyan-farm\\courier-box\\farm-out\\"
+PLATE_FLAT_MAX = 0.62      # midpoint of the 0.489 -> 0.750 gap; see above
+PLATE_BAND = 0.08          # outer fraction of the short side sampled as "border"
+PLATE_TOL = 8              # luminance levels either side of the border median
+PLATE_SIZE = (704, 1280)   # what the box crops to, so we measure what LTX sees
+
+
+def job_animates(spec: dict) -> bool:
+    """True when this job actually renders motion. Read off argv, not the id.
+
+    SCOPE IS THE POINT HERE, not a convenience. A figure on blank paper is the
+    CORRECT output for the stills lane's identity work -- charref sheets,
+    costume picks, turnarounds all want exactly the picture the plate check
+    refuses. What is wrong is feeding one to an i2v render, so only i2v jobs are
+    checked and the shared queue stays open to every other lane.
+
+    Classified the way box_job_minutes.job_kind classifies: by the scripts the
+    steps actually run. Ids are written by whoever filed the job and drift into
+    nicknames (-lw, -nw, -gp, -figloop); the argv is what runs.
+    """
+    blob = " ".join(" ".join(s.get("argv") or []) for s in spec.get("steps") or [])
+    return "ltx_i2v" in blob
+
+
+def crop_src(spec: dict):
+    """The picture a job conditions on: the --src its crop step reads."""
+    for step in spec.get("steps") or []:
+        argv = step.get("argv") or []
+        if "--src" in argv:
+            i = argv.index("--src")
+            if i + 1 < len(argv):
+                return str(argv[i + 1])
+    return None
+
+
+def results_branch_path(src: str):
+    """The results-branch path for a box --src, or None if it is not from there.
+
+    Only farm-out/ is fetchable from this machine. A --src under plates-local or
+    any other box-only directory returns None, which is a refusal and not a
+    shrug -- see plate_problems.
+    """
+    s = str(src).replace("/", "\\")
+    if s.lower().startswith(BOX_OUT_PREFIX):
+        return "farm-out/" + s[len(BOX_OUT_PREFIX):].replace("\\", "/")
+    return None
+
+
+def fetch_results_blob(path: str):
+    """The bytes of a file on the results branch, or None. Read-only, no fetch."""
+    out = subprocess.run(["git", "show", "%s:%s" % (RESULTS_BRANCH, path)],
+                         cwd=REPO, capture_output=True)
+    if out.returncode != 0 or not out.stdout:
+        return None
+    return out.stdout
+
+
+def cover_crop(im):
+    """The box's cover_crop.py, so the number describes the real init image."""
+    from PIL import Image
+
+    W, H = PLATE_SIZE
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    return im.crop((left, top, left + W, top + H))
+
+
+def border_flatness(im) -> float:
+    """Fraction of the outer band within PLATE_TOL levels of that band's median.
+
+    Autocontrast first, and that is what buys the margin: without it beat 21's
+    night plate reads 0.547 and clears the old 0.55 threshold by three
+    thousandths, while the cards do not move at all because they already span
+    the full range.
+    """
+    import statistics
+
+    from PIL import ImageOps
+
+    g = ImageOps.autocontrast(im.convert("L"), cutoff=1)
+    w, h = g.size
+    band = max(2, int(min(w, h) * PLATE_BAND))
+    px = g.load()
+    vals = []
+    for y in range(0, h, 2):                    # every other row/col: the same
+        for x in range(0, w, 2):                # answer, a quarter of the work
+            if x < band or x >= w - band or y < band or y >= h - band:
+                vals.append(px[x, y])
+    med = statistics.median(vals)
+    return sum(1 for v in vals if abs(v - med) <= PLATE_TOL) / len(vals)
+
+
+def measure_plate(blob: bytes) -> float:
+    """Flatness of an image's bytes, cropped as the box crops it."""
+    import io
+
+    from PIL import Image
+
+    return border_flatness(cover_crop(Image.open(io.BytesIO(blob))))
+
+
+def plate_problems(spec: dict, fetch=None) -> list:
+    """Refuse a motion job whose starting picture is not a scene, or is unseen.
+
+    TWO REFUSALS, and the second is deliberate: "I could not check" must never
+    read as "fine". An unfetchable or unreadable --src is refused, because half
+    this guard's demonstrated value is declining to wave through a picture it
+    cannot see -- one of the two the original check could not fetch turned out
+    to be cropping the WRONG BEAT'S plate.
+
+    Both are waivable per job and never globally, so the waiver has to name what
+    it is waiving, in the spec where a person reads it:
+
+        plate_ack: "card: a deliberate macro close-up of the fruit"
+        plate_ack: "unfetchable: hand-staged plate, eyeballed by <who> on <date>"
+    """
+    if not job_animates(spec):
+        return []                 # a blank ground is correct for identity work
+    ack = str(spec.get("plate_ack") or "").strip()
+    src = crop_src(spec)
+    if not src:
+        # No crop step: this job names no source picture, so there is nothing
+        # for this guard to point at. Its init came from somewhere else and is
+        # somebody's eyes to check.
+        print("  plate    no --src in any step -- no picture to measure")
+        return []
+    path = results_branch_path(src)
+    blob = (fetch or fetch_results_blob)(path) if path else None
+    if blob is None:
+        if ack.lower().startswith("unfetchable"):
+            print("  plate    UNFETCHABLE, waived by the spec -- %s" % ack)
+            return []
+        return ["BLOCKED: could not fetch this job's --src, so its picture was NOT "
+                "checked -- and 'could not check' is not 'fine'.\n"
+                "      --src %s\n"
+                "      The check reads %s, i.e. plates published through a farm-out "
+                "job. Publish the plate that way and point --src at it, or waive this "
+                "one job with plate_ack: \"unfetchable: <why>\". Two of the 2026-08-14 "
+                "wave landed here and one of them was cropping the WRONG BEAT'S plate."
+                % (src, RESULTS_BRANCH)]
+    try:
+        flat = measure_plate(blob)
+    except Exception as exc:      # unreadable bytes, no Pillow, a truncated png
+        if ack.lower().startswith("unfetchable"):
+            print("  plate    UNREADABLE, waived by the spec -- %s" % ack)
+            return []
+        return ["BLOCKED: this job's --src could not be measured (%s: %s), so its "
+                "picture was NOT checked, which is a refusal and not a pass.\n"
+                "      --src %s\n"
+                "      Fix the reader (Pillow must be importable here) or waive this "
+                "one job with plate_ack: \"unfetchable: <why>\"."
+                % (type(exc).__name__, exc, src)]
+    if flat < PLATE_FLAT_MAX:
+        print("  plate    flatness %.3f of %.2f -- a scene" % (flat, PLATE_FLAT_MAX))
+        return []
+    if ack.lower().startswith("card"):
+        print("  plate    flatness %.3f of %.2f reads as a CARD, waived by the spec "
+              "-- %s" % (flat, PLATE_FLAT_MAX, ack))
+        return []
+    return ["BLOCKED: the picture this job would animate looks like a CHARACTER CARD, "
+            "not a scene -- a figure on flat blank paper with no location.\n"
+            "      border flatness %.3f, and %.2f or above is blank paper\n"
+            "      --src %s\n"
+            "      Point the job at a real scene plate and enqueue it again. Do not "
+            "just re-run it: an animated reference sheet is worthless footage that "
+            "still scores near the TOP on frame-difference, which is how six of these "
+            "got past everything on 2026-08-14. If it really is a deliberate macro or "
+            "close-up, say so in the spec: plate_ack: \"card: <why>\"."
+            % (flat, PLATE_FLAT_MAX, src)]
+
+
 def gate_checks(spec: dict, job: dict) -> list:
     problems = []
     for key in ("gate", "gate_ref"):
@@ -160,6 +374,7 @@ def gate_checks(spec: dict, job: dict) -> list:
                             "SystemExit the daemon, not just fail the job" % node)
     elif job["needs_gpu"]:
         problems.append("gpu job names no node, so approval cannot be checked")
+    problems += plate_problems(spec)
     return problems
 
 

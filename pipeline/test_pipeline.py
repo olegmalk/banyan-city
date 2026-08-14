@@ -8436,6 +8436,190 @@ def test_the_queue_page_is_actually_published_and_actually_swept():
           "queue.html" in sim and "full history" in sim)
 
 
+# ---------------------------------------------------------------------------
+# THE PICTURE A MOTION JOB STARTS FROM MUST BE A PLACE.
+#
+# 2026-08-14: nineteen motion renders went out and six animated a COSTUME
+# IDENTITY CARD — one figure on flat blank paper, no location, no second
+# character — because the wave sent each beat to "its newest good job" and for
+# the guards that job was the identity pick. Two of the six scored at the top of
+# the wave on frame-difference: a card breathing measures exactly like a shot,
+# so nothing downstream could catch it. The check that catches it was written
+# and validated by the motion-wave lane in review/ep2-picks/plate_check.py and
+# promoted into pipeline/box_enqueue.py so it cannot be forgotten.
+# ---------------------------------------------------------------------------
+
+
+def _plate_png(kind: str) -> bytes:
+    """A 704x1280 png that is either a place or a figure on blank paper."""
+    import io
+    import random
+
+    from PIL import Image
+
+    W, H = 704, 1280
+    if kind == "card":
+        im = Image.new("L", (W, H), 236)                     # pale blank paper
+        im.paste(40, (W // 3, H // 3, 2 * W // 3, 2 * H // 3))   # centred figure
+    else:
+        # Texture out to the edges, which is what a drawn place has.
+        im = Image.frombytes("L", (W, H), random.Random(20260814).randbytes(W * H))
+    buf = io.BytesIO()
+    im.convert("RGB").save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def _motion_spec(src: str, **extra) -> dict:
+    spec = {
+        "id": "ep2-b09-probe-0815",
+        "consumer": "this test",
+        "steps": [
+            {"name": "crop", "argv": ["python.exe", "cover_crop.py", "--src", src,
+                                      "--out", "init.png", "--size", "704x1280"]},
+            {"name": "render", "argv": ["python.exe",
+                                        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+                                        "--stage", "render", "--jobs", "jobs.json"]},
+        ],
+    }
+    spec.update(extra)
+    return spec
+
+
+FARM_SRC = ("C:\\banyan-farm\\courier-box\\farm-out\\ep2-b09-guardpick-0814\\"
+            "09-the-pause-ipa-r0-w015-s0.png")
+
+
+def test_only_a_motion_job_is_asked_what_its_picture_is():
+    """The scoping is the point, not a convenience.
+
+    A figure on blank paper is the CORRECT output for the stills lane's identity
+    work — charref sheets, costume picks, turnarounds all want exactly the
+    picture this refuses. A blanket gate on the shared queue would refuse
+    legitimate work from another lane, so only i2v jobs are checked, decided the
+    way box_job_minutes.py decides: off the steps' argv, never off the job id,
+    because ids drift into nicknames while argv is what runs.
+    """
+    import box_enqueue as be
+    import box_job_minutes as bjm
+
+    def never(_path):
+        raise AssertionError("a non-motion job must not even fetch a plate")
+
+    card = _motion_spec(FARM_SRC)
+    stills = {"id": "ep2-b01-figleaf-0814", "steps": [
+        {"argv": ["python.exe", "cover_crop.py", "--src", FARM_SRC, "--out", "x.png"]},
+        {"argv": ["python.exe", "goblin_ipa_beat.py", "--beat", "1"]}]}
+    check("a job whose argv runs ltx_i2v animates", be.job_animates(card))
+    check("a charref job does not, even naming the same picture",
+          not be.job_animates(stills))
+    check("and so it is never gated", be.plate_problems(stills, fetch=never) == [])
+    check("which is the same classification box_job_minutes makes",
+          bjm.job_kind(card) == "ltx" and bjm.job_kind(stills) == "charref")
+
+    nickname = _motion_spec(FARM_SRC, id="a-perfectly-innocent-name")
+    check("the id has no vote — a nicknamed motion job is still checked",
+          be.job_animates(nickname))
+
+    no_src = {"id": "x", "steps": [{"argv": ["python.exe", "ltx_i2v.py", "--stage",
+                                             "render", "--jobs", "j.json"]}]}
+    check("a motion job that crops nothing names no picture to measure",
+          be.crop_src(no_src) is None and be.plate_problems(no_src, fetch=never) == [])
+
+
+def test_a_motion_job_starting_from_a_costume_card_is_refused():
+    """Flat border → refuse; textured border → pass; could not look → REFUSE.
+
+    The third is half the guard's value and the easiest thing to lose in a move:
+    "I could not check" must never exit zero. Two of the nineteen landed there,
+    and one of those two was cropping the WRONG BEAT'S plate.
+    """
+    import box_enqueue as be
+
+    card, scene = _plate_png("card"), _plate_png("scene")
+    check("a figure on blank paper measures as blank",
+          be.measure_plate(card) >= be.PLATE_FLAT_MAX)
+    check("a picture with texture to its edges does not",
+          be.measure_plate(scene) < be.PLATE_FLAT_MAX)
+
+    refused = be.plate_problems(_motion_spec(FARM_SRC), fetch=lambda p: card)
+    check("the card is refused", len(refused) == 1)
+    said = refused[0] if refused else ""
+    check("and the refusal names the picture, not just the verdict",
+          "09-the-pause-ipa-r0-w015-s0.png" in said)
+    check("prints what it measured against what it required",
+          "0.62" in said and "flatness" in said.lower())
+    check("says plainly that it looks like a card rather than a scene",
+          "CHARACTER CARD" in said and "not a scene" in said)
+    check("and says what to DO about it",
+          "real scene plate" in said and "plate_ack" in said)
+
+    check("the scene passes",
+          be.plate_problems(_motion_spec(FARM_SRC), fetch=lambda p: scene) == [])
+
+    # Could not look. Both shapes: nothing came back, and bytes that are not an
+    # image. Neither may read as "fine".
+    unfetchable = be.plate_problems(_motion_spec(FARM_SRC), fetch=lambda p: None)
+    check("a plate that could not be fetched is REFUSED, not waved through",
+          len(unfetchable) == 1 and "NOT checked" in unfetchable[0])
+    local = _motion_spec("C:\\banyan-farm\\plates-local\\12-related-r4-s2.png")
+    check("a --src off the results branch is unfetchable by definition",
+          be.results_branch_path(local["steps"][0]["argv"][3]) is None)
+    check("and is refused rather than skipped — this is the b12/b21 case",
+          len(be.plate_problems(local, fetch=lambda p: None)) == 1)
+    check("bytes that are not an image are refused too",
+          len(be.plate_problems(_motion_spec(FARM_SRC),
+                                fetch=lambda p: b"not a png")) == 1)
+
+    # Waivable per job, never globally, and the waiver has to name itself.
+    check("a deliberate macro can be acknowledged in the spec",
+          be.plate_problems(_motion_spec(FARM_SRC, plate_ack="card: a macro of the fruit"),
+                            fetch=lambda p: card) == [])
+    check("an unfetchable plate can be acknowledged separately",
+          be.plate_problems(_motion_spec(FARM_SRC, plate_ack="unfetchable: hand-staged"),
+                            fetch=lambda p: None) == [])
+    check("and the card waiver does not silently cover the unseen case",
+          len(be.plate_problems(_motion_spec(FARM_SRC, plate_ack="card: a macro"),
+                                fetch=lambda p: None)) == 1)
+
+
+def test_the_plate_check_actually_runs_on_the_shared_enqueue_path():
+    """A guard defined and never called is the lane-local script we started with.
+
+    Also pins the two numbers whoever meets a borderline plate will need, and
+    the statistic that was tried and rejected — a later reader with a foggy
+    night plate in front of them cannot re-derive either from the code.
+    """
+    import box_enqueue as be
+
+    real = be.fetch_results_blob
+    be.fetch_results_blob = lambda p: _plate_png("card")
+    try:
+        spec = _motion_spec(FARM_SRC, node="002b-first-citizen")
+        problems = be.gate_checks(spec, be.to_job(spec))
+    finally:
+        be.fetch_results_blob = real
+    check("gate_checks refuses a card alongside the gate and approval checks",
+          any("CHARACTER CARD" in p for p in problems))
+
+    src = (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
+    check("the tightest legitimate scene is recorded with its number",
+          "0.489" in src and "beat 21" in src)
+    check("and why border stdev was rejected as the statistic",
+          "33.0" in src and "44.0" in src)
+
+    # The threshold was measured off the wave that broke. If the lane-local
+    # original is still here, the promoted copy must not have drifted from it.
+    origin = REPO / "review" / "ep2-picks" / "plate_check.py"
+    if origin.exists():
+        ns = {}
+        exec(compile("\n".join(l for l in origin.read_text(encoding="utf-8").splitlines()
+                               if l.startswith(("FLAT_MAX", "BAND", "TOL", "SIZE"))),
+                     str(origin), "exec"), ns)
+        check("threshold, band, tolerance and crop size match the original",
+              (ns["FLAT_MAX"], ns["BAND"], ns["TOL"], ns["SIZE"])
+              == (be.PLATE_FLAT_MAX, be.PLATE_BAND, be.PLATE_TOL, be.PLATE_SIZE))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -8670,6 +8854,11 @@ def main():
     test_the_queue_page_prints_the_prompt_that_made_the_frame()
     test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty()
     test_the_queue_page_is_actually_published_and_actually_swept()
+
+    # AND A MOTION JOB MUST START FROM A PLACE, NOT FROM A COSTUME CARD.
+    test_only_a_motion_job_is_asked_what_its_picture_is()
+    test_a_motion_job_starting_from_a_costume_card_is_refused()
+    test_the_plate_check_actually_runs_on_the_shared_enqueue_path()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
