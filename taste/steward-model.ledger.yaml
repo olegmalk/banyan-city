@@ -16888,3 +16888,36 @@
     Two numbers and a stranger: continuous frame-to-frame change with no flatline after f1, and a blind
     reader who can name the action. Old clip on record at cut 66.6 then 20.4 / 23.4 / 2.8 / 0.3.
   outcome: null
+
+- id: LAW-the-prompt-describes-what-a-camera-SEES-not-what-the-script-SAYS-0814
+  kind: law
+  date: 2026-08-14
+  founder_verbatim: '"thats ridiculous, lmao. the sapling is tiny."'
+  what_he_caught: >-
+    Beat 13's prompt says "HE SLIDES DOWN THE THIN TRUNK" because 002b's node.md says the scavenger
+    slides down the trunk. The growth ladder puts 002b at about FORTY CENTIMETRES. There is no trunk to
+    slide down. To obey us the model had to invent a climbable tree AND lift him up it first - which is
+    exactly the "summoned tree and flying goblin" in the clip. Both artifacts were us being obeyed
+    precisely.
+  the_law: >-
+    THE SHOT PROMPT DESCRIBES WHAT A CAMERA WOULD SEE, NOT WHAT THE SCRIPT SAYS. A script verb is written
+    for a reader who imagines the whole world; a prompt is read by a model that can only draw the frame.
+    Verbs implying off-frame geometry, a prior position, or impossible scale - slides down, climbs,
+    arrives, returns, walks in, leans against, reaches up, stands up - must be TRANSLATED into visible
+    physical action against the node's ladder row before they reach the model. If the plate does not
+    contain the thing the verb needs, the model will manufacture it.
+  the_sweep: >-
+    42 occurrences across 23 live prompts, in five beats. "sprints in" and "runs in" 8 each and "arrives"
+    twice - all needing off-frame space to enter from, which is how beat 02 kept emptying its own frame.
+    "slides down" 7 and "slides" 7, needing a climbable surface. "stands up" 6 and "turns to go" 4,
+    needing a prior state or somewhere to go. Beats 02 (16), 13 (14), 17 (8), 09 and 14 (2 each).
+  translated_for_b13_and_it_is_the_better_shot: >-
+    "He draws his knees up to his chest and wraps his arms around them, then lowers his head." No trunk,
+    no descent, nothing to invent - and it is funnier, because a grown goblin folding into a dinner-plate
+    of shade is what the line "Thanks for the shade" is for. The impossible version was also the weaker
+    one.
+  not_mine_to_change: >-
+    002b's node.md carries the original stage direction. Under his script delegation team-lead is having
+    it corrected to the physical version; I am flagging rather than editing so the script and the prompts
+    converge instead of diverging further.
+  outcome: null
