@@ -16854,3 +16854,37 @@
     mask. Added the movement as the dominant clause. Pass condition is the NUMBER plus a cold reader who
     can name the action, not my eye.
   outcome: null
+
+- id: RECIPE-loosen-up-action-first-trust-the-init-0814
+  kind: law
+  date: 2026-08-14
+  founder_verbatim: >-
+    "the real problem is we have been too restrictive, not letting ltx do anything... we are being tooo
+    restrictive, gotta loosen up."
+  he_is_right_and_here_is_the_count: >-
+    Beat 13's prompt was 160 words: 111 before the action, 37 of action, and TWELVE separate stillness or
+    negation phrases. Across the tree, 264 of 459 live ep2 prompts carry stillness language and 193 also
+    ban camera motion in the negative. We asked for a still picture in writing, hundreds of times, and the
+    frame-difference measurement found exactly that.
+  the_second_thing_he_caught: >-
+    The old clip "summons a tree behind him, he flies up then slides down it" - because the prompt said
+    HE SLIDES DOWN THE THIN TRUNK and beat 13's plate HAS NO TRUNK. He is already seated in grass in it.
+    We described an end state and a path, so the model manufactured both the tree and the climb. Describe
+    only what the plate contains; if a beat needs a trunk, the plate needs one first.
+  the_recipe: >-
+    1. THE ACTION LEADS - what happens, in shot order, plain physical language, first sentence, nothing
+    before it. 2. NO STILLNESS OR NO-CHANGE CLAUSES in the positive at all; camera bans go in the negative
+    where they cannot read as "produce a still". 3. TRUST THE INIT for identity and scene - no face, no
+    build, no clothes, no background contents. Restating them is what taught the model to redraw the plate
+    and then hold. 4. ONLY WHAT IS IN THE PLATE. 5. Keep the style tail.
+  first_application: 160 words to 43, twelve stillness phrases to none, on the same beat, init and seed.
+  the_uncomfortable_part: >-
+    Nearly every clause I deleted tonight is one I ADDED, each to fix a real defect I had measured - the
+    tripod that got drawn, the world that arrived mid-clip, the second character that doubled, the fig
+    that came out round. Each fix worked on its own axis. Together they became a prompt that asks for a
+    photograph. That is the failure mode of fixing things one at a time and never re-reading the whole
+    instruction, and no single round of mine would have caught it.
+  pass_condition: >-
+    Two numbers and a stranger: continuous frame-to-frame change with no flatline after f1, and a blind
+    reader who can name the action. Old clip on record at cut 66.6 then 20.4 / 23.4 / 2.8 / 0.3.
+  outcome: null
