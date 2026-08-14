@@ -8675,6 +8675,219 @@ def test_the_plate_check_actually_runs_on_the_shared_enqueue_path():
               == (be.PLATE_FLAT_MAX, be.PLATE_BAND, be.PLATE_TOL, be.PLATE_SIZE))
 
 
+# ---------------------------------------------------------------------------
+# AND THE SAME WAVE CAUGHT BY ITS ARGUMENT RATHER THAN ITS PIXELS.
+#
+# The flatness check above measures the picture, and on 2026-08-15 two lanes
+# established that the picture is not enough: the classes interleave, a tight
+# portrait card reads 0.236 and a legitimate night field reads 0.489, so no cut
+# point separates them. Grouped instead by the reference SET of the job that
+# produced each plate, the split is clean — refs-charref-guards-r5-0812 (18 of
+# 24 flagged), refs-guards-chosen-0814 (20 of 24) and refs-goblin-frozen-0812
+# (63 of 84) against refs-guards-twoinfield-0813 (0 of 28, max 0.462) and
+# refs-goblin-approved-0814 (0 of 48). b09's plates flip from >=0.94 to <=0.09
+# on the same beat and the same prompt when only the refs change; b06 and b10 do
+# the same. So box_enqueue traces a motion job's --src back to the job that
+# published it and reads THAT job's --refs.
+#
+# BOTH GUARDS STAY, and these tests hold both: refs is exact but is a denylist a
+# new set walks past, flatness is fuzzy but sees blank paper from any source.
+# ---------------------------------------------------------------------------
+
+
+def _producer_spec(*refs) -> dict:
+    """A plate-generation spec that names `refs` on both its steps."""
+    argv = ["python.exe", "goblin_ipa_beat.py", "--beat", "9"]
+    for r in refs:
+        argv += ["--refs", "C:\\banyan-farm\\wave-goblin-prep\\" + r]
+    return {"id": "ep2-b09-guardpick-0814",
+            "steps": [{"name": "dry", "argv": argv + ["--dry"]},
+                      {"name": "sample", "argv": list(argv)}]}
+
+
+def test_a_motion_jobs_plate_is_traced_back_to_the_job_that_drew_it():
+    """Resolution is the whole mechanism: no --refs rides on the motion job.
+
+    farm-out/<job-id>/<file> is written by the producing job's publish step under
+    its own id, so the --src path is the one link back to the arguments the
+    picture was drawn with. If that link breaks the check is blind, which is why
+    a broken link is a refusal further down rather than a shrug.
+    """
+    import box_enqueue as be
+
+    check("the --src names the job that published it",
+          be.producing_job_id(FARM_SRC) == "ep2-b09-guardpick-0814")
+    check("a --src that is not from farm-out has no producer to name",
+          be.producing_job_id("C:\\banyan-farm\\plates-local\\12-related-r4-s2.png")
+          is None)
+    check("nor does a farm-out path with no job directory in it",
+          be.producing_job_id("C:\\banyan-farm\\courier-box\\farm-out\\loose.png") is None)
+
+    check("refs are read off every step, not just the first, and deduped by use",
+          be.spec_refs(_producer_spec("refs-guards-chosen-0814"))
+          == ["refs-guards-chosen-0814"] * 2)
+    check("and are compared as basenames, not as box paths",
+          be.spec_refs(_producer_spec("refs-a", "refs-b"))[:2] == ["refs-a", "refs-b"])
+    check("a producer that named no reference set yields none",
+          be.spec_refs({"steps": [{"argv": ["python.exe", "x.py"]}]}) == [])
+
+    # The producer is looked up on disk, so the real specs must still resolve.
+    real = be.producer_spec_path("ep2-b09-guardpick-0814")
+    check("the real b09 guardpick spec resolves in pipeline/jobs",
+          real is not None and real.endswith("ep2-b09-guardpick-0814.yaml"))
+    check("and it is one of the sets the evidence condemns",
+          any(r in be.CARD_REFS_DENYLIST for r in be.spec_refs(be.load_spec(real))))
+    check("a job id with no spec on this machine resolves to nothing",
+          be.producer_spec_path("ep2-b01-final055-r3") is None)
+
+
+def test_a_plate_drawn_from_a_card_reference_set_is_refused():
+    """Denylisted refs → refuse; a clean set → pass; unresolvable → REFUSE.
+
+    The third is the same law the plate check learned: "I could not check" must
+    never exit zero. It is also not hypothetical — ep2-b01-final055-r3 is a real
+    --src on disk whose producing spec is simply absent.
+    """
+    import box_enqueue as be
+
+    def producer(refs):
+        return lambda _path: _producer_spec(refs)
+
+    refused = be.refs_problems(_motion_spec(FARM_SRC),
+                               load=producer("refs-guards-chosen-0814"))
+    check("a plate drawn from a card reference set is refused", len(refused) == 1)
+    said = refused[0] if refused else ""
+    check("and the refusal names the set and the job that used it",
+          "refs-guards-chosen-0814" in said and "ep2-b09-guardpick-0814" in said)
+    check("and the picture, so a reader can go and look at it",
+          "09-the-pause-ipa-r0-w015-s0.png" in said)
+    check("says what is wrong with those sets in plain words",
+          "COSTUME CARD" in said and "blank paper" in said)
+    check("and says what to DO about it",
+          "scene reference set" in said and "plate_ack" in said)
+
+    # THE LOAD-BEARING HONESTY. A denylist cannot see a set nobody listed, and
+    # the refusal has to say so — the flatness pass line was rewritten this week
+    # for implying more than it had established.
+    check("the refusal admits it is a denylist, not a detector",
+          "DENYLIST" in said.upper() and "slip straight past" in said)
+    check("and admits a producer that named no refs passes too",
+          "named no refs" in said)
+
+    check("a plate drawn from a scene reference set passes",
+          be.refs_problems(_motion_spec(FARM_SRC),
+                           load=producer("refs-guards-twoinfield-0813")) == [])
+    check("so does a producer that named no reference set at all",
+          be.refs_problems(_motion_spec(FARM_SRC),
+                           load=lambda p: {"steps": [{"argv": ["x.py"]}]}) == [])
+
+    # A NAME PATTERN WOULD NOT DO THIS, which is why the list is explicit: the
+    # worst set by hit rate and the cleanest set share every word in their names
+    # but one, and neither carries a `charref` tell.
+    check("the two sets a pattern would confuse land on opposite verdicts",
+          "refs-guards-chosen-0814" in be.CARD_REFS_DENYLIST
+          and "refs-guards-twoinfield-0813" not in be.CARD_REFS_DENYLIST)
+
+    # Could not resolve the producer. Two shapes: no job id in the path, and a
+    # job id with no spec. Neither may read as "fine".
+    local = _motion_spec("C:\\banyan-farm\\plates-local\\12-related-r4-s2.png")
+    unresolved = be.refs_problems(local, load=producer("refs-guards-chosen-0814"))
+    check("a --src with no traceable producer is REFUSED, not waved through",
+          len(unresolved) == 1 and "NOT checked" in unresolved[0])
+    absent = be.refs_problems(
+        _motion_spec("C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-final055-r3\\"
+                     "b01-final055-i55-s0.png"))
+    check("and so is a farm-out job whose spec is absent — the real b01 case",
+          len(absent) == 1 and "ep2-b01-final055-r3" in absent[0])
+
+    def unreadable(_path):
+        raise ValueError("mapping values are not allowed here")
+
+    broken = be.refs_problems(_motion_spec(FARM_SRC), load=unreadable)
+    check("a producer spec that will not parse is a REFUSAL, not a traceback",
+          len(broken) == 1 and "NOT checked" in broken[0]
+          and "could not be read" in broken[0])
+
+    # Waivable per job, never globally, and — as with card/unfetchable — each
+    # waiver names the one thing it waives.
+    check("a card set can be acknowledged in the spec",
+          be.refs_problems(_motion_spec(FARM_SRC, plate_ack="refs: b21 seed is a field"),
+                           load=producer("refs-guards-chosen-0814")) == [])
+    check("an unresolvable producer can be acknowledged on its own",
+          be.refs_problems(_motion_spec(
+              "C:\\banyan-farm\\plates-local\\12-related-r4-s2.png",
+              plate_ack="unresolved: hand-staged, refs read by the lane")) == [])
+    check("and the refs waiver does not silently cover the untraceable case",
+          len(be.refs_problems(_motion_spec(
+              "C:\\banyan-farm\\plates-local\\12-related-r4-s2.png",
+              plate_ack="refs: this set is fine"))) == 1)
+
+    # Scope, same as the plate check: card refs are the POINT of identity work.
+    stills = {"id": "ep2-b01-figleaf-0814", "steps": [
+        {"argv": ["python.exe", "cover_crop.py", "--src", FARM_SRC, "--out", "x.png"]},
+        {"argv": ["python.exe", "goblin_ipa_beat.py", "--beat", "1"]}]}
+    check("a charref job is never asked, even off a denylisted producer",
+          be.refs_problems(stills, load=producer("refs-guards-chosen-0814")) == [])
+
+
+def test_the_refs_check_runs_on_the_shared_enqueue_path_beside_the_flatness_one():
+    """Both guards, both wired, neither standing in for the other.
+
+    A job can honestly trip both — a plates-local --src is unfetchable AND
+    untraceable — and one `plate_ack:` has to be able to say both things, or the
+    jobs that need a waiver most cannot get one.
+    """
+    import box_enqueue as be
+
+    real_fetch, real_load = be.fetch_results_blob, be.load_spec
+    be.fetch_results_blob = lambda p: _plate_png("scene")   # flatness says fine
+    be.load_spec = lambda p: _producer_spec("refs-guards-chosen-0814")
+    try:
+        spec = _motion_spec(FARM_SRC, node="002b-first-citizen")
+        problems = be.gate_checks(spec, be.to_job(spec))
+    finally:
+        be.fetch_results_blob, be.load_spec = real_fetch, real_load
+    check("gate_checks refuses on the refs even when the border looks textured",
+          any("COSTUME CARD" in p for p in problems))
+
+    # And the complement in the other direction: the flatness block is NOT
+    # weakened by having a second guard beside it. A card from an unlisted set
+    # is still caught by the pixels alone.
+    be.fetch_results_blob = lambda p: _plate_png("card")
+    be.load_spec = lambda p: _producer_spec("refs-nobody-has-listed-yet-0899")
+    try:
+        spec = _motion_spec(FARM_SRC, node="002b-first-citizen")
+        problems = be.gate_checks(spec, be.to_job(spec))
+    finally:
+        be.fetch_results_blob, be.load_spec = real_fetch, real_load
+    check("an unlisted card set slips the denylist and the pixels catch it",
+          any("CHARACTER CARD" in p for p in problems))
+
+    # One job, two honest refusals, and a waiver that can name both.
+    both = be.plate_problems(local := _motion_spec(
+        "C:\\banyan-farm\\plates-local\\12-related-r4-s2.png"), fetch=lambda p: None)
+    both += be.refs_problems(local)
+    check("a plates-local src is refused twice, once per reason", len(both) == 2)
+    cleared = _motion_spec("C:\\banyan-farm\\plates-local\\12-related-r4-s2.png",
+                           plate_ack=["unfetchable: hand-staged by the lane",
+                                      "unresolved: refs read by hand"])
+    check("and a list of acknowledgements can waive both",
+          be.plate_problems(cleared, fetch=lambda p: None) == []
+          and be.refs_problems(cleared) == [])
+    check("a single-string ack still reads exactly as it always did",
+          be.acked(_motion_spec(FARM_SRC, plate_ack="card: a macro"), "card")
+          == "card: a macro")
+
+    # The denylist is a named constant, not a literal buried in a function, so
+    # that adding a set is an edit to a list a reader can find.
+    src = (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
+    check("the denylist is a module-level named constant",
+          "\nCARD_REFS_DENYLIST = (" in src)
+    check("the evidence table that justifies each entry is recorded with it",
+          "refs-guards-twoinfield-0813" in src and "0 of 28" in src)
+    check("and the reason a name pattern was rejected", "no `charref` tell" in src)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -8914,6 +9127,9 @@ def main():
     test_only_a_motion_job_is_asked_what_its_picture_is()
     test_a_motion_job_starting_from_a_costume_card_is_refused()
     test_the_plate_check_actually_runs_on_the_shared_enqueue_path()
+    test_a_motion_jobs_plate_is_traced_back_to_the_job_that_drew_it()
+    test_a_plate_drawn_from_a_card_reference_set_is_refused()
+    test_the_refs_check_runs_on_the_shared_enqueue_path_beside_the_flatness_one()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

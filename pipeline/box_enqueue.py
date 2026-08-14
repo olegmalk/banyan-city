@@ -27,6 +27,13 @@ the three failures this script exists to prevent:
      wave pointed each beat at "its newest good job". Two of the six scored at
      the TOP of the wave on frame-difference, so nothing downstream caught it: a
      card breathing measures exactly like a shot. See plate_problems.
+  6. The same wave, caught a second way. The border statistic and "is a place
+     depicted" have come apart -- the classes interleave, a tight portrait card
+     reads 0.236 and a legitimate night field reads 0.489 -- so the picture
+     alone cannot carry the check. The reference SET that drew the plate does
+     split cleanly, and a motion job's --src names the job that produced it. See
+     refs_problems. Neither guard replaces the other: refs is exact but is a
+     denylist, flatness is fuzzy but sees blank paper from any source.
 
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--dry-run]
     python3 pipeline/box_enqueue.py --list        # what is queued right now
@@ -318,6 +325,37 @@ def measure_plate(blob: bytes) -> float:
     return border_flatness(cover_crop(Image.open(io.BytesIO(blob))))
 
 
+def plate_acks(spec: dict) -> list:
+    """Every acknowledgement written on a spec: one string, or a list of them.
+
+    A single job can trip more than one of these guards at once -- a --src under
+    plates-local is BOTH unfetchable and unresolvable -- and a waiver that can
+    only ever name one of them is a dead end for exactly the jobs that need it
+    most. So `plate_ack:` accepts a list as well as a string; one string stays
+    the common case and reads the same as it always did.
+    """
+    ack = spec.get("plate_ack")
+    if ack is None:
+        return []
+    if isinstance(ack, (list, tuple)):
+        return [str(a).strip() for a in ack]
+    return [str(ack).strip()]
+
+
+def acked(spec: dict, reason: str) -> str:
+    """The acknowledgement waiving `reason`, or "" if none does.
+
+    Every waiver in this file names the ONE thing it waives, and that is load-
+    bearing rather than tidy: "I looked and it is fine" must never cover "I
+    could not look". A `card:` ack does not clear an unfetchable --src, and a
+    `refs:` ack does not clear a producer that could not be identified.
+    """
+    for a in plate_acks(spec):
+        if a.lower().startswith(reason):
+            return a
+    return ""
+
+
 def plate_problems(spec: dict, fetch=None) -> list:
     """Refuse a motion job whose starting picture is not a scene, or is unseen.
 
@@ -335,7 +373,6 @@ def plate_problems(spec: dict, fetch=None) -> list:
     """
     if not job_animates(spec):
         return []                 # a blank ground is correct for identity work
-    ack = str(spec.get("plate_ack") or "").strip()
     src = crop_src(spec)
     if not src:
         # No crop step: this job names no source picture, so there is nothing
@@ -346,7 +383,8 @@ def plate_problems(spec: dict, fetch=None) -> list:
     path = results_branch_path(src)
     blob = (fetch or fetch_results_blob)(path) if path else None
     if blob is None:
-        if ack.lower().startswith("unfetchable"):
+        ack = acked(spec, "unfetchable")
+        if ack:
             print("  plate    UNFETCHABLE, waived by the spec -- %s" % ack)
             return []
         return ["BLOCKED: could not fetch this job's --src, so its picture was NOT "
@@ -360,7 +398,8 @@ def plate_problems(spec: dict, fetch=None) -> list:
     try:
         flat = measure_plate(blob)
     except Exception as exc:      # unreadable bytes, no Pillow, a truncated png
-        if ack.lower().startswith("unfetchable"):
+        ack = acked(spec, "unfetchable")
+        if ack:
             print("  plate    UNREADABLE, waived by the spec -- %s" % ack)
             return []
         return ["BLOCKED: this job's --src could not be measured (%s: %s), so its "
@@ -382,7 +421,8 @@ def plate_problems(spec: dict, fetch=None) -> list:
               "INIT before you")
         print("           trust the wave -- %s" % src)
         return []
-    if ack.lower().startswith("card"):
+    ack = acked(spec, "card")
+    if ack:
         print("  plate    flatness %.3f of %.2f reads as a CARD, waived by the spec "
               "-- %s" % (flat, PLATE_FLAT_MAX, ack))
         return []
@@ -396,6 +436,203 @@ def plate_problems(spec: dict, fetch=None) -> list:
             "got past everything on 2026-08-14. If it really is a deliberate macro or "
             "close-up, say so in the spec: plate_ack: \"card: <why>\"."
             % (flat, PLATE_FLAT_MAX, src)]
+
+
+# --------------------------------------------------------------------------
+# The refs check: WHICH REFERENCE SET DREW THE PLATE.
+#
+# The same 2026-08-14 wave, asked a different question. The flatness check above
+# measures the PICTURE; this one checks the ARGUMENT that produced it, and on
+# this failure the argument is the better witness -- because the two classes are
+# interleaved at the image level and CLEAN at the reference-set level.
+#
+# MEASURED over every fetchable plate on the results branch, each grouped by the
+# reference set of the job that PRODUCED it, scored by the cropped flatness
+# above at >=0.62:
+#
+#     refs set                        n     flagged
+#     refs-charref-guards-r5-0812    24     18
+#     refs-guards-chosen-0814        24     20
+#     refs-goblin-frozen-0812        84     63
+#     refs-guards-twoinfield-0813    28      0     (max 0.462)
+#     refs-goblin-approved-0814      48      0
+#     refs-goblin-head-0812          24      0
+#     refs-goblin-scene-0813          -      0
+#     refs-founder-pick               -      0
+#
+# ONE-VARIABLE CONFIRMATION on three beats, same beat and same prompt, only the
+# reference set changed: b09's scene-0814 plates (charref-r5 refs) all score
+# >=0.94 while its scene-r2-0815 plates (twoinfield refs) all score <=0.09. b06
+# and b10 behave identically. So the split is a property of the refs, not of the
+# beat or the wording.
+#
+# AND THIS IS WHY IT IS WORTH CHECKING THE ARGUMENT AT ALL: within the bad sets,
+# flatness scores 0.282, 0.492 and 0.583 on sibling seeds -- cards the flatness
+# guard walks straight past, from a job whose refs it can name for certain. A
+# deterministic fact about the job beats a heuristic about the pixels, when the
+# fact is available.
+#
+# HOW THE PRODUCER IS FOUND. A motion job carries no --refs of its own; refs
+# live on the plate-GENERATION job. But the --src path names its producer --
+# farm-out/<job-id>/<file> is written by that job's publish step under its own
+# id -- so <job-id> maps back to pipeline/jobs/<job-id>.yaml and its --refs. On
+# the 27 motion jobs on disk that name a --src, that resolves for 24.
+#
+# A NAME PATTERN IS NOT ENOUGH, and this is the load-bearing part of the design:
+# refs-guards-chosen-0814 contains no `charref` tell, no `card`, nothing a
+# substring rule could key on, and it is the set with the worst hit rate in the
+# table (20 of 24). Any pattern that catches it also catches
+# refs-guards-twoinfield-0813, which is 0 of 28. So the list is EXPLICIT.
+#
+# WHICH MAKES THE LIMIT PLAIN, and the refusal text says it out loud: this is a
+# DENYLIST. A card set nobody has listed yet passes unnoticed, and so does a
+# producer that used no refs at all. That is the honest shape of the claim --
+# a refusal here is a named fact, a pass here is only "not one of the three sets
+# we have caught". The flatness pass line was just rewritten for implying more
+# than it had; this one is not going to repeat it.
+#
+# WHICH IS ALSO WHY BOTH GUARDS STAY. They fail in opposite directions: refs is
+# deterministic but blind to an unlisted set, flatness is a heuristic but sees
+# blank paper whoever drew it. Neither is a substitute for the other and neither
+# is a substitute for opening the init.
+JOBS_DIR = os.path.join(REPO, "pipeline", "jobs")
+
+# The reference sets that produce costume identity cards. EXPLICIT, because no
+# name pattern separates these three from the clean sets -- see the table above.
+CARD_REFS_DENYLIST = (
+    "refs-charref-guards-r5-0812",
+    "refs-guards-chosen-0814",
+    "refs-goblin-frozen-0812",
+)
+
+
+def producing_job_id(src: str):
+    """The farm-out job id that published this --src, or None.
+
+    farm-out/<job-id>/<file>: the directory is written by the producing job's
+    publish step under its own id, so it is the one link a motion job has back
+    to the arguments its picture was drawn with.
+    """
+    path = results_branch_path(src)
+    if not path:
+        return None                      # plates-local and friends: no producer
+    parts = path.split("/")
+    return parts[1] if len(parts) > 2 and parts[1] else None
+
+
+def producer_spec_path(job_id: str, jobs_dir: str = None):
+    """The repo spec for a job id, or None if this machine has no copy of it."""
+    for ext in (".yaml", ".yml", ".json"):
+        p = os.path.join(jobs_dir or JOBS_DIR, job_id + ext)
+        if os.path.isfile(p):
+            return p
+    return None
+
+
+def spec_refs(spec: dict) -> list:
+    """Every --refs basename named anywhere in a spec's steps.
+
+    Every step, not the first: a goblin spec names the same refs on its dry and
+    its sample step, and a spec that changed refs half way through is exactly
+    the one worth catching.
+    """
+    names = []
+    for step in spec.get("steps") or []:
+        argv = step.get("argv") or []
+        for i, a in enumerate(argv):
+            if str(a) == "--refs" and i + 1 < len(argv):
+                raw = str(argv[i + 1]).replace("\\", "/").rstrip("/")
+                names.append(raw.rsplit("/", 1)[-1])
+    return names
+
+
+def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
+    """Refuse a motion job whose plate was drawn with a card reference set.
+
+    TWO REFUSALS again, and the second for the same reason as the plate check's:
+    a producer that cannot be identified was not checked, and "could not check"
+    must not exit zero. The three unresolvable jobs on disk are the two
+    plates-local srcs the unfetchable branch already blocks and
+    ep2-b01-final055-r3, whose spec is simply absent from pipeline/jobs.
+
+    Each is waivable per job, and separately, because they are different claims:
+
+        plate_ack: "refs: this set's b21 seed is a real field, checked by <who>"
+        plate_ack: "unresolved: plate hand-staged from <job>, refs read by <who>"
+    """
+    if not job_animates(spec):
+        return []                 # card refs are the POINT of identity work
+    src = crop_src(spec)
+    if not src:
+        # Same stance as the plate check: this job names no source picture, so
+        # there is no producer to trace. Its init came from somewhere else.
+        print("  refs     no --src in any step -- no producing job to trace")
+        return []
+    job_id = producing_job_id(src)
+    path = producer_spec_path(job_id, jobs_dir) if job_id else None
+    why = None
+    if path is None:
+        why = ("no farm-out job id in that path" if not job_id
+               else "no spec in pipeline/jobs for producing job %r" % job_id)
+        producer = {}
+    else:
+        try:
+            producer = (load or load_spec)(path) or {}
+        except Exception as exc:   # malformed yaml, no pyyaml, unreadable file
+            # A crash here would abort the enqueue with a traceback instead of a
+            # refusal. Same law, said the same way: unreadable is unchecked.
+            why = "producer spec %s could not be read (%s: %s)" % (
+                os.path.basename(path), type(exc).__name__, exc)
+            producer = {}
+    if why:
+        ack = acked(spec, "unresolved")
+        if ack:
+            print("  refs     UNRESOLVED producer, waived by the spec -- %s" % ack)
+            return []
+        return ["BLOCKED: could not work out which job produced this job's --src, so "
+                "the reference set it was drawn with was NOT checked -- and 'could "
+                "not check' is not 'fine'.\n"
+                "      --src %s\n"
+                "      %s\n"
+                "      The check reads farm-out/<job-id>/<file> and looks up "
+                "pipeline/jobs/<job-id>.yaml. Publish the plate through a farm-out "
+                "job whose spec is in the repo and point --src at it, or waive this "
+                "one job with plate_ack: \"unresolved: <why>\"." % (src, why)]
+    refs = spec_refs(producer)
+    bad = sorted({r for r in refs if r in CARD_REFS_DENYLIST})
+    if not bad:
+        # Say only what was established. This is a DENYLIST of three sets; it
+        # cannot know anything about a fourth.
+        print("  refs     producer %s used %s -- none on the card denylist. That is a "
+              "DENYLIST"
+              % (job_id, ", ".join(sorted(set(refs))) if refs else "no reference set"))
+        print("           of %d known card sets, so a NEW unlisted set passes here "
+              "unseen, and so" % len(CARD_REFS_DENYLIST))
+        print("           does a producer that used no refs at all. It does NOT "
+              "establish the plate is a scene.")
+        return []
+    ack = acked(spec, "refs")
+    if ack:
+        print("  refs     producer %s used card set %s, waived by the spec -- %s"
+              % (job_id, ", ".join(bad), ack))
+        return []
+    return ["BLOCKED: the plate this job would animate was drawn by job %s from the "
+            "COSTUME CARD reference set %s -- the sets that produce a figure on blank "
+            "paper with no location and no second character.\n"
+            "      --src %s\n"
+            "      Measured over every fetchable plate on the results branch: that "
+            "set flags on border flatness where refs-guards-twoinfield-0813 (0 of 28) "
+            "and refs-goblin-approved-0814 (0 of 48) never do, and b06/b09/b10 flip "
+            "clean when only the refs change. Six of the 2026-08-14 wave's nineteen "
+            "renders animated a card from these sets.\n"
+            "      Re-cut the plate from a scene reference set and point --src at "
+            "that job, or waive this one job with plate_ack: \"refs: <why>\".\n"
+            "      LIMIT, stated rather than glossed: this is an EXPLICIT DENYLIST of "
+            "%d sets and no name pattern would do (refs-guards-chosen-0814 carries no "
+            "'charref' tell). A card set nobody has added here yet will slip straight "
+            "past this check, as will a producer that named no refs. A pass is not a "
+            "clearance -- open the init."
+            % (job_id, ", ".join(bad), src, len(CARD_REFS_DENYLIST))]
 
 
 def gate_checks(spec: dict, job: dict) -> list:
@@ -419,7 +656,13 @@ def gate_checks(spec: dict, job: dict) -> list:
                             "SystemExit the daemon, not just fail the job" % node)
     elif job["needs_gpu"]:
         problems.append("gpu job names no node, so approval cannot be checked")
+    # Two independent readings of the same failure, and both stay. The plate
+    # check runs first because its unfetchable refusal is the one that has never
+    # been wrong; the refs check then asks what the picture was drawn FROM. A
+    # job can honestly trip both -- a plates-local --src is unfetchable AND
+    # untraceable -- and hearing both reasons is the point of having two.
     problems += plate_problems(spec)
+    problems += refs_problems(spec)
     return problems
 
 
