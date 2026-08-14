@@ -30,6 +30,9 @@ beats:
     open_question: the same one as beat 10 - the two guards read younger and softer than the guards in
       06 and 11. ONE answer settles both beats.
     shipping_fault: the two guards read younger and softer-drawn than the guards in beats 06 and 11
+    understandable: UNFINISHED
+    understandable_reason: the guards read young. A viewer still sees two guards arrive and scan a field
+      - the beat happens.
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -53,13 +56,16 @@ beats:
       with his eyes down, which is the beat. The pick stands; the confirmation does not.
     shipping_fault: picked from one seed; the second seed raised the board like a shield instead of reading
       it
+    understandable: UNFINISHED
+    understandable_reason: picked from one seed. The shipped take shows a guard reading a board; nothing
+      about it misleads.
   09:
     title: THE PAUSE
     done_when: close on Guard 1's face working through the thought, in daylight; face holds, no morphing;
       a real background behind him.
     rounds_used: 3
     in_flight: ep2-b09-world (rendering)
-    status: SHIP WITH FAULT NAMED
+    status: THIRD ROUND EARNED - confusing, not merely unfinished
     round_1_result: 'round 1: real world behind him; FAILS on framing - chest-up medium where the beat
       is an expression; seedB drew a PANEL around him'
     round_2_result: FRAMING LEVER WORKED - tight close-up on the face at both seeds, head and shoulders
@@ -75,6 +81,9 @@ beats:
     seed_status: park CONFIRMED at both seeds - seedB drifts to the same brown-haired stranger, so the
       identity drift is the recipe and not one unlucky roll
     shipping_fault: the face changes between the starting picture and the close-up it resolves into
+    understandable: CONFUSING
+    understandable_reason: THE FACE CHANGES between the first frame and the close-up. A cold viewer cannot
+      tell whether this is the same man, and the beat IS a face working through a thought.
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -96,6 +105,9 @@ beats:
     open_question: the two guards read YOUNGER and softer than the guards in beats 06 and 11 - cross-beat
       cast consistency, which is a taste call and his
     shipping_fault: same guard-consistency fault as beat 05
+    understandable: UNFINISHED
+    understandable_reason: same guard-consistency fault as 05. The board still flips and the back is still
+      blank.
   '11':
     title: THEY LEAVE
     done_when: two guards walk away from camera, backs turned, still arguing; both present the whole clip;
@@ -128,6 +140,9 @@ beats:
     blemish: a palette shift in the first second, warm plate to cool daylight sky. I would still put it
       in the cut.
     shipping_fault: the colour shifts warm-to-cool across the first second
+    understandable: UNFINISHED
+    understandable_reason: a colour shift in the first second. The two leaves against the sky read exactly
+      as written.
   '18':
     title: THE DECISION
     done_when: extreme close-up of ONE fig on a trembling stem, and A STRANGER WOULD CALL IT A FIG - purple,
@@ -136,7 +151,7 @@ beats:
     round_1: figshape - invalid, my prompt contradicted itself
     round_2: count/purple - colour made it read as FRUIT, my feature clause made it a pumpkin
     round_3: ep2-b18-plainfig + twin - purple and teardrop only, every feature deleted
-    status: SHIP WITH FAULT NAMED
+    status: THIRD ROUND EARNED - confusing, not merely unfinished
     round_3_result: 'round 3: purple and plain. seedA is the most fig-like thing we have made; seedB is
       spotted and reads diseased, and a black outline artifact appears at f96'
     park_reason: colour is settled - purple reads as fruit where green never did - but the silhouette
@@ -144,6 +159,9 @@ beats:
     lever: a fig REFERENCE IMAGE conditioned like the cast references, not more words. Shape has resisted
       every wording lever I have; it is a composition property and composition comes from the reference.
     shipping_fault: a no-context reader ranks the fruit as a plum; fig comes fifth
+    understandable: CONFUSING
+    understandable_reason: a cold reader ranked the fruit as a PLUM, with fig fifth. The beat is the fig
+      that is about to be spent - if the object is not the fig, the beat is about nothing.
   '21':
     title: THE ANSWER
     done_when: the leaf tilts slowly and deliberately in still air and HOLDS; it reads as a deliberate
@@ -153,7 +171,7 @@ beats:
       sapling is outside"
     in_flight: ep2-b21-daylight + twin - identical wording, beat 12's daylight leaf plate instead of the
       dusk one. Third time a beat's missing plate turned out to already exist under another beat's name.
-    status: SHIP WITH FAULT NAMED
+    status: SHIP — the daylight round fixed it
     round_2_result: 'round 2: outdoors and correct - and the leaf MORPHS instead of tilting, changing
       outline at seedA and splitting in two at seedB'
     round_3_result: shape held at seedB but MORPHED again at seedA, and the tilt does not read as deliberate
@@ -166,7 +184,11 @@ beats:
       of wandering - but its outline still narrows between the two poses and the render came back a banded
       poster look rather than our cel style
     lever_result: the two-held-positions WORDING worked; the dusk plate is what remained wrong
-    shipping_fault: the leaf's outline narrows as it tilts, and the render is a banded poster look
+    shipping_fault: stylised banded sky and a palette jump in the first frames
+    understandable: UNDERSTANDABLE
+    understandable_reason: the daylight plate swap landed and the leaf now holds its outline, tilts over
+      and STOPS. The move reads as deliberate, which is the whole beat. Residual is a banded poster sky
+      and a palette jump at frame one - unfinished, not confusing.
   '01':
     title: COLD OPEN
     done_when: the purple fig swells on the stem in a green field; a stranger calls it a fig; scene from
@@ -211,3 +233,32 @@ coverage:
   beat_16: no draft exists. Its wave-drafts.yaml block is occupied by the ep3 magistrate charref (tag
     1girl), so any beat-16 draft inherits it. Also outside the motion lane by brief. This is the episode's
     only coverage hole.
+ship_ceiling:
+  date: '2026-08-14'
+  authority: R4
+  verbatim: just make sure its actually understandable and is an upgrade from the original episode 2.
+  rule: UNDERSTANDABLE and AN UPGRADE outrank the two-round floor. A beat that is merely unfinished ships;
+    a beat that is CONFUSING gets its third round, because confusion is the failure the whole rewrite
+    exists to fix.
+  earns_a_third_round:
+  - 09
+  - '18'
+  ships_as_is:
+  - '05'
+  - '06'
+  - '10'
+  - '12'
+  - '21'
+  note_on_09: Beat 09 EARNS a third round on the understandable test - the face changes between the plate
+    and the close-up - but it is a GUARD beat, and 'lets do the guards on my taste' forbids animating
+    guard beats off an unapproved cast. So its third round is owed and BLOCKED, and it must not be quietly
+    shipped as merely unfinished to dodge that. It waits for the guard sheet.
+  note_on_18: Beat 18's third round is the fig REFERENCE route plate-drafts already has in flight, not
+    a seventh wording round. Round one transferred the teardrop and the purple faithfully onto a LEAF,
+    because nothing bound which object was meant; the retry restores exactly one noun.
+guards:
+  date: '2026-08-14'
+  verbatim: lets do the guards on my taste
+  rule: Do not cast them and do not animate guard beats off an unapproved cast. The sheet renders, goes
+    on his board, and waits.
+  held: six guard jobs remain out of the ready queue since 11:0xZ
