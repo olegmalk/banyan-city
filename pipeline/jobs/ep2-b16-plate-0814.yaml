@@ -1,0 +1,99 @@
+# 2026-08-14, stills-drafts lane. Beat 16 - the last uncovered beat in ep2.
+id: ep2-b16-plate-0814
+task: ep2-b16-plate-0814
+node: 002b-first-citizen
+beat: 16
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave. With beat 16 covered, all 21 beats of episode 2 have a plate.
+success: Sixteen frames. Pass is the LEAF as the subject - filling the frame, one oversized cotyledon
+  - with the goblin readable but out of focus behind it, and the field present at frame one. The failure
+  worth reporting is the goblin pulling focus, which would mean an extreme close-up cannot hold a background
+  character at this window and the beat needs a depth-of-field pass instead.
+why: 'HE SAID YES TO BEAT 16 - the last uncovered beat in the episode. It was out of scope only while
+  the goblin was unsettled; s0 plates now carry the goblin AND a scene, so the gate is gone. Written off
+  beat 16''s own fence rather than by analogy: the camera is ON THE LEAF, which fills the frame and turns
+  slightly in still air, and the goblin is far behind it, small and OUT OF FOCUS. So the leaf is the subject,
+  the goblin is depth, and the count tag is empty because the first comma-clause is the leaf. `cotyledon`
+  keeps the growth ladder. No fig - the fence has none. UNBLOCKING NOTE: beat 16''s block in wave-drafts.yaml
+  was occupied by the ep3 magistrate charref (slug charref-magistrate, tag 1girl), which is why this beat
+  could never be authored. The magistrate moved to block 30, outside 002b''s 1..21 range, and both its
+  job specs were updated in the same commit; neither was queued or running.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '16'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b16-plate
+  - --draft-key
+  - authored_b16_plate
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '16'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b16-plate
+  - --draft-key
+  - authored_b16_plate
+  - --arm
+  - window4
+  - --task
+  - ep2-b16-plate-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-plate-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b16-plate/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b16-plate-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b16-plate\16-why-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b16-plate\16-why-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b16-plate\16-why-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b16-plate\16-why-ipa-r3-w015-s0.png

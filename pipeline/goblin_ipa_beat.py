@@ -67,8 +67,13 @@ from pathlib import Path
 # founder's consistency mandate (2026-08-12, "you need to create proper
 # character consistency") covers the guards too — the reference is whatever
 # --refs holds, no longer only beat 04's goblin frames.
-GOBLIN_BEATS = (2, 3, 4, 8, 13, 14, 15, 17, 19, 20)
+GOBLIN_BEATS = (2, 3, 4, 8, 13, 14, 15, 16, 17, 19, 20)
 GUARD_BEATS = (5, 6, 7, 8, 9, 10, 11)
+# 16 joined GOBLIN_BEATS on 2026-08-14, the same way 8 and 13 did: its block gained a
+# goblin draft. He is far behind the leaf and out of focus there, but he is in frame,
+# so the guard's own rule — a beat without the character cannot answer whether they
+# hold — is satisfied. Beat 16 was unauthorable until that day because the ep3
+# magistrate charref was squatting its block; the magistrate now lives at 30.
 # THE FIG IS NOT A CHARACTER, and this list is the admission that the gate above
 # was written as if every reference depicted a person. It does not: the fig is a
 # frozen OBJECT with its own canon (deep purple-violet, green at the neck, matte)

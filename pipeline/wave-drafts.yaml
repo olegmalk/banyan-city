@@ -3796,7 +3796,14 @@ beats:
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
-  16:
+  # 30 IS THE MAGISTRATE'S OWN BLOCK, moved here 2026-08-14. It was sitting on 16,
+  # which is a REAL 002b beat (WHY - the leaf close-up), and squatting it meant beat 16
+  # could never be authored: any draft there inherited slug `charref-magistrate` and
+  # `tag: 1girl`, so the count-tag gate would have demanded a girl and the output would
+  # have been named for the magistrate. 30 is outside 002b's 1..21 range so it cannot
+  # collide with a beat. Both magistrate job specs were updated to --beat 30 in the same
+  # commit; neither was queued or running when this moved.
+  30:
     # BEAT 16 EXISTS AS A BLOCK ONLY TO CARRY A FEMALE COUNT TAG. Every other
     # block in this file declares '', '1boy' or '2boys', and the tag is checked
     # against the block's declaration — so the magistrate, who is `she` in 006a,
@@ -3821,6 +3828,30 @@ beats:
       quality, very aesthetic No child, no armor, no helmet, no weapon, no dark,
       no night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+
+  16:
+    slug: why
+    kind: goblin
+    tag: ''
+    extra_neg: full
+    gist: the tree's longest thought, camera on the leaf
+    # -- `authored_b16_plate` -- 2026-08-14. THE LAST UNCOVERED BEAT IN EPISODE 2. It was
+    # out of scope only while the goblin was unsettled; s0 plates now carry the goblin AND
+    # a scene, so the gate is gone and he said yes to making it.
+    # Read off beat 16's own fence in shots.md before writing: the camera is ON THE LEAF,
+    # which fills the frame and turns slightly in still air, and the goblin is far behind
+    # it, small and OUT OF FOCUS. So the leaf is the subject and the goblin is depth --
+    # which is also why the count tag is empty: the first comma-clause is the leaf.
+    # `cotyledon` keeps the growth ladder his beat-12 verdict made canon. No fig: the
+    # fence has none in frame. Recipe is s0's - it says BOY, no proportion clause, no
+    # anti-cute denials, no costume words, and the anti-pretty block carried over.
+    authored_b16_plate: >-
+      One oversized green cotyledon leaf of a tiny sapling fills the frame, turning
+      slightly in still air, a small goblin boy sitting out of focus far behind in green
+      summer grass. Extreme close-up, bright morning light, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no hair, no
+      wig, no jewelry, no ornament, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
 
   17:
     slug: goodbye
