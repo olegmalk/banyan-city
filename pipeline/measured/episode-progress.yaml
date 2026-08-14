@@ -1,122 +1,143 @@
-# Where every beat of every episode actually stands. Read by episode_eta.py and,
-# through it, by the ETA section at the top of banyan.city/status.
-#
-# Founder, 2026-08-13: "lets start working on ETA, basically the estimated time
-# we finish something, so we have a good idea of for example when we will
-# finished episode 2".
-#
-# THE CONTRACT, and it is the whole reason this file can be trusted:
-# A LANE THAT SCORES A BEAT UPDATES THAT BEAT'S LINE IN THE SAME COMMIT AS THE
-# SCORING. Not at the end of a wave, not when someone next touches the page — at
-# scoring time, beside the verdict, the way an inbox entry travels with its
-# artifact (SITE.md). This file is the ONLY input that says how far an episode
-# has got; a lane that renders a fix and leaves the line saying `fix-known` has
-# published a wrong ETA, and nothing else in the repo will catch it.
-#
-# THE FIVE STATES. Every beat carries exactly one. They are exhaustive so that a
-# beat can never fall out of the arithmetic by being unlabelled, and a value
-# outside this set is DROPPED rather than guessed at — the beat stops being
-# counted and the page's total stops matching, which is deliberate and visible.
-#
-#   done                        the author has passed it. His word, never the
-#                               steward's read of it (R4 — taste is his).
-#   candidate-awaiting-founder  a take exists and is in front of him. The CARD
-#                               is finished with this beat; a person is not.
-#   fix-known                   we know what is wrong and what to do about it.
-#                               Costed as firm machine work.
-#   blocked-decision            it cannot proceed until a human decides. Costed
-#                               SEPARATELY, because a beat that gets cut or
-#                               restaged costs nothing like a beat that does not.
-#   never-rendered              no candidate has ever been produced.
-#
-# WHAT IS NOT IN HERE, on purpose: hours. The hours are multiplied at build time
-# from this file x pipeline/measured/eta.yaml x pipeline/measured/box-queue.yaml,
-# so flipping one beat below moves the published estimate on the next build with
-# nothing re-run. A stored total would keep printing last night's backlog against
-# this morning's states — see box-queue.yaml's header for that argument in full.
-#
-# HOW THIS SEEDING WAS DONE (2026-08-13). Every line below was read off the
-# founder-facing review pages, not inferred from what is on disk, and the source
-# is named per episode. One ordering trap is worth recording because it will
-# catch the next person: review/ep2-picks/motion-0812.html is NOT chronological.
-# Its `#where-ep2-stands` table landed 08-11 22:54; the `#read-this-first`
-# summary above it landed 08-12 05:23; and review/inbox.yaml entries from 08-12
-# 10:40 and 11:32 are later than both. Several rows of the pretty table are
-# already stale and the later sources win.
-measured_at: 2026-08-13 09:20Z
-source: >-
-  read off the founder-facing review pages named per episode below, cross-checked
-  against review/inbox.yaml (which is later than both review pages)
-
+measured_at: 2026-08-14 08:05Z
+source: 'per-beat states written by the motion lane at scoring time, against the definitions of done in
+  review/ep2-picks/done-definitions.yaml. NOTHING here is `done`: `done` means the author has passed it
+  and he has not seen last night''s work yet, so the two beats the card has finished sit as candidate-awaiting-founder.'
 episodes:
-  - number: 2
-    node: 002b-first-citizen
-    title: First Citizen
-    # Where the takes waiting on him actually live — the /status card links its
-    # "waiting for your look" count straight here, so the number and the thing
-    # it counts are one click apart.
-    review_url: /review/ep2-picks/motion-0812
-    total_beats: 21
-    states_read_from: >-
-      review/ep2-picks/motion-0812.html (#read-this-first, later than its own
-      #where-ep2-stands table), review/ep2-picks/morning-0812-wave2.html,
-      review/ep2-picks/wave2-needs-founder.md, review/inbox.yaml
-    # NOT ONE BEAT OF EPISODE 2 IS `done`. That is not an oversight in this file,
-    # it is the finding: the strongest claim anywhere on the review pages is the
-    # steward's own hedge — "All four are my read, not a verdict. None of them
-    # has your eye on it yet." Nine beats have a take sitting in front of the
-    # author. The card is not what episode 2 is waiting for.
-    beats:
-      - {n: 1,  state: blocked-decision,            note: "cold open — the fig grows detached from the sapling in both motion rounds; needs one ruling that satisfies the earlier 'inpaint' word and the 002b 'growth SEEN' condition"}
-      - {n: 2,  state: candidate-awaiting-founder,  note: "the b02 rerun rendered; he picks the frame that becomes the init"}
-      - {n: 3,  state: candidate-awaiting-founder,  note: "will not render the same way twice — four takes on the page to pick from (with 17 and 21)"}
-      - {n: 4,  state: blocked-decision,            note: "script length: faces survive 3s of motion, the beat is written 6s. Also an unresolved head-balloon diagnosis — 'honestly stuck rather than queued'; ep2-b04-balloon-pair-0813 is the discriminating render"}
-      - {n: 5,  state: fix-known,                   note: "the jog/uniform fix came back and he ratified 2026-08-13 - 'and yes, keep going in that direction for the guards' (arm B: action as the dominant clause, official read, second guard named where the script stages two). Six-clip wave queued on it; ep2-b05twin-wave-0813 renders the twin. The sash is the steward's invention, not his words, and that flag stays live"}
-      - {n: 6,  state: fix-known,                   note: "guard block UNBLOCKED - ratified 2026-08-13 - 'and yes, keep going in that direction for the guards' (arm B: action as the dominant clause, official read, second guard named where the script stages two). Six-clip wave queued on it; ep2-b06-wave-0813 queued (guard 2 turns the bark clipboard over and reads off it)"}
-      - {n: 7,  state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b07-wave-0813 queued"}
-      - {n: 8,  state: blocked-decision,            note: "a model limit — a one-character reference suppresses the second character, so nothing puts the guard in. Not fixed and not attempted"}
-      - {n: 9,  state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b09-wave-0813 queued"}
-      - {n: 10, state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b10-wave-0813 queued - the floating head should go with a whole-figure init"}
-      - {n: 11, state: fix-known,                   note: "guard block unblocked by the same ratification; ep2-b11-wave-0813 queued. Identity and costume were already clean here - this was always the staging nudge"}
-      - {n: 12, state: candidate-awaiting-founder,  note: "has a PASSING plate he has never been shown, b12-r4-s2 (supersedes the older 'no plate at all' row)"}
-      - {n: 13, state: candidate-awaiting-founder,  note: "may be the first FINISHED shot of episode 2 — his read is asked for, not given"}
-      - {n: 14, state: candidate-awaiting-founder,  note: "crouched with his hands in the soil; in 'four beats look ready to cut', which is the steward's read and not a verdict"}
-      - {n: 15, state: candidate-awaiting-founder,  note: "already finished — the sapling clip contains the full action and it passed the check; still unwatched by him"}
-      - {n: 16, state: blocked-decision,            note: "outside this lane by standing instruction — waits on the goblin being drawn into the plate, which is his call. A provisional still pick (r3-s2) exists, so this is not never-rendered"}
-      - {n: 17, state: candidate-awaiting-founder,  note: "does its whole beat but will not render the same way twice — four takes to pick from (with 03 and 21)"}
-      - {n: 18, state: candidate-awaiting-founder,  note: "the fruit no longer has a face and is no longer doubled, 4 of 4; pick is b18 s3. This is a PLATE result — there is no beat-18 motion clip in the current picks dir"}
-      - {n: 19, state: fix-known,                   note: "the whole chain works; the sapling partly copied onto his skull and the placement fix is rendering. Listed under 'a fix exists and I know what it is', NOT under ready to cut"}
-      - {n: 20, state: fix-known,                   note: "the bare branch arced over his head like antlers; same placement fix"}
-      - {n: 21, state: candidate-awaiting-founder,  note: "went 0 of 4 to 4 of 4, the leaf is attached to a stem now; pick is b21 s0. Also in the 03/17/21 won't-repeat pool"}
-
-  - number: 1
-    node: 001-capability-inventory
-    title: Capability Inventory
-    review_url: /review/ep1-audit-0812/
-    total_beats: 15
-    states_read_from: >-
-      review/ep1-audit-0812/index.html (the "Where each beat stands on your word"
-      table), superseded in one place by review/inbox.yaml
-    # Episode 1 is published, so `done` here means the author has passed the
-    # BEAT, not that the episode is closed. Four beats carry his word. Beats 06,
-    # 09, 12 and 15 are additionally refused by the licence gate (CreativeML
-    # Open RAIL++-M) — that is an episode-level PUBLICATION gate, orthogonal to
-    # these five states, and it is tracked where it belongs: as an open inbox
-    # entry tagged to this episode, so it appears in the gate list rather than
-    # being smuggled into a beat state it does not fit.
-    beats:
-      - {n: 1,  state: candidate-awaiting-founder,  note: "never judged, ever — no verdict has ever been recorded. A seed twin (ep1-b11/b13 pattern) is landing a second candidate before he looks"}
-      - {n: 2,  state: blocked-decision,            note: "his pick, but the loop is the open question — 'shorten the line, accept the loop, or pick differently?'"}
-      - {n: 3,  state: candidate-awaiting-founder,  note: "still is canon, motion unjudged — the frame is settled, the movement over it is not"}
-      - {n: 4,  state: candidate-awaiting-founder,  note: "fix wired, unjudged — answers a note he gave, not screened since"}
-      - {n: 5,  state: candidate-awaiting-founder,  note: "his sapling-reveal ask HAS four candidate frames he has never seen — the audit line saying no candidate existed was true of the node and false of the repo"}
-      - {n: 6,  state: candidate-awaiting-founder,  note: "his zoom-out is in the cut for the first time and he has not seen it in context; separately, sixteen frames on one sheet await a pick. Licence-gated for publication"}
-      - {n: 7,  state: candidate-awaiting-founder,  note: "fix wired, unjudged. Open secondary: the beat throws away half its footage — flagged, not fixed"}
-      - {n: 8,  state: done,                        note: "DONE on his word — 'beat 8 looks good'. The only beat in the episode with a positive verdict on its motion"}
-      - {n: 9,  state: done,                        note: "held still under 'yeah keep em still'. Licence-gated for publication"}
-      - {n: 10, state: candidate-awaiting-founder,  note: "fix wired, unjudged"}
-      - {n: 11, state: candidate-awaiting-founder,  note: "never judged, ever; seed twin ep1-b11-seedB-0813 queued so he has two candidates"}
-      - {n: 12, state: done,                        note: "held still under 'yeah keep em still'. Licence-gated for publication"}
-      - {n: 13, state: candidate-awaiting-founder,  note: "never judged, ever; seed twin ep1-b13-seedB-0813 queued"}
-      - {n: 14, state: candidate-awaiting-founder,  note: "still is canon, motion unjudged"}
-      - {n: 15, state: done,                        note: "held still under 'yeah keep em still'. Licence-gated for publication"}
+- number: 2
+  node: 002b-first-citizen
+  title: First Citizen
+  review_url: /review/ep2-picks/motion-0812
+  total_beats: 21
+  states_read_from: review/ep2-picks/done-definitions.yaml (written before each round) plus the overnight
+    scoring pass; review/ep2-picks/motion-0812#overnight is the founder-facing rendering of the same thing
+  beats:
+  - n: 1
+    state: candidate-awaiting-founder
+    note: purple fig on the stem in a green field; seedA is the pick and is in front of him. Scene present
+      from frame one.
+  - n: 2
+    state: blocked-decision
+    note: goblin beat — held by the character-first ruling; no animation until the design is approved
+  - n: 3
+    state: blocked-decision
+    note: goblin beat — character gate
+  - n: 4
+    state: blocked-decision
+    note: goblin beat — character gate; also the only face close-up, where the age read has nowhere to
+      hide
+  - n: 5
+    state: fix-known
+    note: two-guard plate supplied count and world, then the jog pulled the camera and lost the second
+      man; lever queued — they stand and scan instead of jogging in
+  - n: 6
+    state: fix-known
+    note: everything passes but the field arrives a second late as a white flash; lever queued — animate
+      off the one-guard scene plate that already exists
+  - n: 7
+    state: blocked-decision
+    note: guard beat but the guard points AT the scavenger, so the goblin is in frame — character gate
+  - n: 8
+    state: blocked-decision
+    note: goblin beat — character gate; the guard half is solved, the goblin half is not
+  - n: 9
+    state: fix-known
+    note: framing and expression solved this round — tight on the face, thinking readable; only the white
+      first second remains; lever queued
+  - n: 10
+    state: fix-known
+    note: one seed has both guards, the other has the blank board reading clean, never both; lever queued
+      — the two-guard scene plate supplies count and cast
+  - n: 11
+    state: candidate-awaiting-founder
+    note: 'FINISHED off the two-guard scene plate: both men from frame one, walking away arguing across
+      a real field. Card is done with this beat.'
+  - n: 12
+    state: candidate-awaiting-founder
+    note: 'FINISHED: exactly two leaves and the bare side-branch against sky. One blemish named — a palette
+      shift in the first second.'
+  - n: 13
+    state: blocked-decision
+    note: goblin beat — character gate; plate exists on the frozen reference
+  - n: 14
+    state: blocked-decision
+    note: goblin beat — character gate
+  - n: 15
+    state: blocked-decision
+    note: goblin beat — character gate
+  - n: 16
+    state: blocked-decision
+    note: goblin beat — character gate; outside the motion lane's scope
+  - n: 17
+    state: blocked-decision
+    note: goblin beat — character gate; plate exists on the frozen reference
+  - n: 18
+    state: fix-known
+    note: purple settled the recognition; the silhouette is still round and seed-divergent after three
+      rounds of wording. Lever is a fig REFERENCE IMAGE, which is plate-lane work, not another prompt.
+  - n: 19
+    state: blocked-decision
+    note: goblin beat — character gate; its plate already carries the purple fig
+  - n: 20
+    state: blocked-decision
+    note: goblin beat — character gate
+  - n: 21
+    state: fix-known
+    note: outdoors and correct, but the leaf redraws itself instead of tilting so the move never reads
+      as deliberate; lever queued — two held positions rather than a described motion
+- number: 1
+  node: 001-capability-inventory
+  title: Capability Inventory
+  review_url: /review/ep1-audit-0812/
+  total_beats: 15
+  states_read_from: review/ep1-audit-0812/index.html (the "Where each beat stands on your word" table),
+    superseded in one place by review/inbox.yaml
+  beats:
+  - n: 1
+    state: candidate-awaiting-founder
+    note: never judged, ever — no verdict has ever been recorded. A seed twin (ep1-b11/b13 pattern) is
+      landing a second candidate before he looks
+  - n: 2
+    state: blocked-decision
+    note: his pick, but the loop is the open question — 'shorten the line, accept the loop, or pick differently?'
+  - n: 3
+    state: candidate-awaiting-founder
+    note: still is canon, motion unjudged — the frame is settled, the movement over it is not
+  - n: 4
+    state: candidate-awaiting-founder
+    note: fix wired, unjudged — answers a note he gave, not screened since
+  - n: 5
+    state: candidate-awaiting-founder
+    note: his sapling-reveal ask HAS four candidate frames he has never seen — the audit line saying no
+      candidate existed was true of the node and false of the repo
+  - n: 6
+    state: candidate-awaiting-founder
+    note: his zoom-out is in the cut for the first time and he has not seen it in context; separately,
+      sixteen frames on one sheet await a pick. Licence-gated for publication
+  - n: 7
+    state: candidate-awaiting-founder
+    note: 'fix wired, unjudged. Open secondary: the beat throws away half its footage — flagged, not fixed'
+  - n: 8
+    state: done
+    note: DONE on his word — 'beat 8 looks good'. The only beat in the episode with a positive verdict
+      on its motion
+  - n: 9
+    state: done
+    note: held still under 'yeah keep em still'. Licence-gated for publication
+  - n: 10
+    state: candidate-awaiting-founder
+    note: fix wired, unjudged
+  - n: 11
+    state: candidate-awaiting-founder
+    note: never judged, ever; seed twin ep1-b11-seedB-0813 queued so he has two candidates
+  - n: 12
+    state: done
+    note: held still under 'yeah keep em still'. Licence-gated for publication
+  - n: 13
+    state: candidate-awaiting-founder
+    note: never judged, ever; seed twin ep1-b13-seedB-0813 queued
+  - n: 14
+    state: candidate-awaiting-founder
+    note: still is canon, motion unjudged
+  - n: 15
+    state: done
+    note: held still under 'yeah keep em still'. Licence-gated for publication

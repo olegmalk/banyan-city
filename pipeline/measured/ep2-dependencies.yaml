@@ -1,0 +1,146 @@
+# WHAT HAS TO HAPPEN BEFORE EPISODE 2 IS FINISHED, each item with the machine time
+# it costs and whether it needs the founder or only the card.
+#
+# Founder, 2026-08-14: "how much time we have left until we finish episode 2 and
+# also the estimated time of many other things, such as things required in order
+# to progress towards episode 2."
+#
+# The existing ETA answers "how many machine-hours of beats are left". This file
+# answers the other half: the DEPENDENCY CHAIN — the things that unblock those
+# beats, costed separately, so the sentence he can read is "episode 2 needs about
+# X hours of card plus these N calls of mine".
+#
+# EVERY NUMBER IS MULTIPLIED FROM A MEASURED MEDIAN. Nothing here is estimated by
+# feel. The medians come from pipeline/measured/box-queue.yaml, which is derived
+# from the box's own per-job sidecars by pipeline/box_job_minutes.py:
+#   ltx 5.7 min/job   charref 2.9 min/job   still 0.9 min/job
+# A fresher window (the 36 ltx jobs of 13–14 Aug) measures 6.3 min; the stored
+# figure is used for the arithmetic so these numbers agree with /status#eta
+# rather than quietly disagreeing with it by half a minute.
+#
+# WHERE A THING IS NOT MEASURED IT SAYS SO AND CONTRIBUTES NOTHING. There is no
+# guessed zero and no placeholder: an unmeasured step is visible as unmeasured,
+# because a total that silently omits a step is worse than a total with a hole
+# you can see.
+#
+# A ROUND IS A PAIR. Every motion round is two jobs, one per seed, because a beat
+# that holds at one seed has not been shown to hold — five of nine beats once
+# called solved turned out to be seed luck. So one lever round = 2 x ltx.
+
+measured_at: 2026-08-14 08:10Z
+medians_from: pipeline/measured/box-queue.yaml (350 box jobs, 10-13 Aug)
+round_definition: one motion round = 2 ltx jobs (a seed pair) = 11.4 min
+
+chains:
+
+  - name: The six beats we know how to fix
+    needs: card only
+    note: >-
+      Each has a named lever and five of the six are already queued or running.
+      This is the only part of episode 2 that needs nothing from the founder.
+    items:
+      - id: beat 05 stand-and-scan instead of jogging in
+        cost_min: 11.4
+        state: queued
+        needs: card
+      - id: beat 06 animate off the one-guard scene plate
+        cost_min: 11.4
+        state: queued
+        needs: card
+      - id: beat 09 same plate, close framing already solved
+        cost_min: 11.4
+        state: queued
+        needs: card
+      - id: beat 10 two-guard scene plate supplies count and cast
+        cost_min: 11.4
+        state: queued
+        needs: card
+      - id: beat 21 two held positions instead of a described motion
+        cost_min: 11.4
+        state: queued
+        needs: card
+      - id: beat 18 fig REFERENCE IMAGE, then one motion round
+        cost_min: 14.3
+        state: not started — the reference is plate-lane work, not another prompt
+        needs: card
+        detail: 1 charref (2.9) + 1 motion round (11.4)
+    subtotal_min: 71.4
+    subtotal_h: 1.2
+
+  - name: The goblin, which gates twelve beats
+    needs: HIM once, then card
+    note: >-
+      Twelve of twenty-one beats have the goblin in them and none can be animated
+      until the design is approved. This is the single biggest dependency in the
+      episode and its first step is a decision, not a render.
+    items:
+      - id: reference frozen
+        cost_min: 0
+        state: done
+        needs: nobody
+      - id: six plates drawn on the frozen reference
+        cost_min: 0
+        state: done — 6 rendered, they hold as one creature in the new hoodless tunic
+        needs: nobody
+      - id: HE APPROVES THE DESIGN
+        cost_min: null
+        state: waiting on him
+        needs: HIM
+        detail: >-
+          not timed. How long a taste call takes is not a measurable quantity and
+          this file will not invent one. Everything below it is blocked until it
+          happens.
+      - id: conditioning proof — does identity survive motion off these plates
+        cost_min: 11.4
+        state: blocked on the approval above
+        needs: card
+      - id: twelve re-animations, one round each
+        cost_min: 136.8
+        state: blocked on the proof above
+        needs: card
+        detail: 12 beats x 1 round (2 ltx) = 24 ltx jobs
+    subtotal_min: 148.2
+    subtotal_h: 2.5
+
+  - name: Finishing the episode once the beats exist
+    needs: card, then HIM
+    items:
+      - id: voice-over for all 21 beats
+        cost_min: 0
+        state: done — 18 mp3+json pairs with measured chunk timings
+        needs: nobody
+      - id: assembly — render_t3 cuts the beats into the episode
+        cost_min: null
+        state: NOT MEASURED
+        needs: card
+        detail: >-
+          no ep2 assembly has been timed on this machine, so there is no median to
+          multiply. It is a local ffmpeg job, not a box job, so the box medians do
+          not apply to it. This is a hole in the estimate and it is left visible.
+      - id: site build and screening gate
+        cost_min: 0.4
+        state: measured today
+        needs: card
+        detail: build_site 21s + qa_local 2s, timed 2026-08-14 08:08Z
+      - id: HE WATCHES THE ASSEMBLED EPISODE
+        cost_min: null
+        state: waiting on the beats
+        needs: HIM
+        detail: his review artifact of record per episode is the full video (SITE.md)
+    subtotal_min: 0.4
+    subtotal_h: 0.0
+
+totals:
+  card_only_h: 1.2
+  card_after_his_approval_h: 2.5
+  card_total_h: 3.7
+  his_calls_required: 3
+  his_calls:
+    - approve the goblin design (unblocks 12 of 21 beats)
+    - pass or veto the two finished beats, 11 and 12
+    - watch the assembled episode
+  unmeasured_steps: 1
+  unmeasured_detail: episode assembly has never been timed on this machine
+  the_sentence: >-
+    Episode 2 needs about 3.7 hours of card time plus three calls from you — and
+    2.5 of those hours cannot start until you approve the goblin.
