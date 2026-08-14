@@ -7,6 +7,8 @@ skips this step, and the pre-push gates catch a page/data mismatch only in
 spirit; the contract (SITE.md) is the enforcement.
 """
 import html
+import re
+import subprocess  # noqa: F401 — used by _in_flight
 import sys
 from pathlib import Path
 
@@ -60,6 +62,36 @@ sections = "".join(
     f'<h2 class="grp">{esc(title)}</h2><p class="grpsub">{esc(sub)}</p>{"".join(grouped[g])}'
     for g, title, sub in GROUPS if grouped[g])
 
+# WHAT IS RENDERING, so the board is not bare when he has answered everything.
+#
+# Founder, 2026-08-14, opening /review: "only shows one thing." He was right and the page was also
+# right — he had answered every other question that day, so one open entry was the honest count.
+# But a board that says "1 thing waiting" and nothing else reads as though the project stopped.
+#
+# So the board now also shows what is IN FLIGHT: the beats on the card right now, read live from
+# the box queue. It is not a question and needs no answer — it is the difference between "nothing
+# needs you" and "nothing is happening", which are not the same sentence and he cannot tell them
+# apart from an empty list.
+def _in_flight():
+    import subprocess
+    try:
+        out = subprocess.run(["python3", "pipeline/box_enqueue.py", "--list"], cwd=str(REPO),
+                             capture_output=True, text=True, timeout=60).stdout
+    except Exception:
+        return ""
+    if "[ready]" not in out:
+        return ""
+    ready = out.split("[ready]")[1].split("[running]")[0]
+    run = out.split("[running]")[1].split("[done]")[0] if "[running]" in out else ""
+    jobs = re.findall(r"(ep2-b(\d\d)-[A-Za-z0-9]+)", ready + run)
+    if not jobs:
+        return ('<p class="sub">Nothing is rendering right now either — the card is empty.</p>')
+    beats = sorted({b for _, b in jobs})
+    n = len(set(j for j, _ in jobs))
+    return (f'<h2 class="grp">Rendering right now — no answer needed</h2>'
+            f'<p class="grpsub">{n} jobs on the card, covering beats '
+            f'{", ".join(beats)}. These come back to you as takes when they land.</p>')
+
 doc = f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Review inbox — {len(open_rows)} waiting</title>
@@ -89,6 +121,7 @@ doc = f"""<meta charset="utf-8">
 <p class="standing">Answer any entry by telling the chat one line — or ignore what doesn't need you.
 This page is always the complete list.</p>
 {sections if open_rows else '<p class="sub">Nothing waiting. The machine is rendering or blocked on itself, not on you.</p>'}
+{_in_flight()}
 <details><summary>Resolved — the record</summary>{''.join(done_rows) or '<p class="sub">none yet</p>'}</details>
 """
 # THE BOARD LIVES AT /review, and /review/inbox stays alive as a copy.
