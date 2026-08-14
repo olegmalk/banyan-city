@@ -1088,7 +1088,7 @@ One small round purple fruit trembles on the thinnest branch of a tiny sapling, 
 No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take.
 
 ```
-A small ripe fig drops from the branch of a tiny sapling standing tall, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+One small round purple fruit drops from the branch of a tiny sapling standing tall, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 20 — EVIDENCE (1:39–1:42) ⬜ needs footage
@@ -1096,7 +1096,7 @@ A small ripe fig drops from the branch of a tiny sapling standing tall, bounces 
 Line: "…Did you just answer me?" Camera on the goblin holding the fig like evidence.
 
 ```
-A small round goblin crouches, picks a fig up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin crouches, picks one small round purple fruit up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 21 — THE ANSWER (1:42–1:47) ⬜ needs footage
