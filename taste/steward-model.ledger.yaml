@@ -16816,3 +16816,41 @@
     was not describing softness. He was describing a character he could not see, and the reason is scale.
     Two words of his - "i cannot tell" - carried more diagnostic information than four A/B renders.
   outcome: null
+
+- id: FINDING-the-clips-are-a-cut-then-a-freeze-and-we-taught-it-that-0814
+  kind: finding
+  date: 2026-08-14
+  founder_verbatim: '"the videos are indeed, not doing their purpose. very confusing."'
+  the_measurement_that_a_blind_reader_made_and_i_had_not: >-
+    Frame-to-frame mean pixel change on four beats. 03, 13 and 15 all show a first transition of 38-46
+    levels and then 0.5-7 for every transition after it. The clip CUTS AWAY from the plate we conditioned
+    on - different camera, lighting, background, and on b13 different body proportions - and then holds a
+    still image. Beat 21, the only one of the four with no character in it, was the only clip that moved
+    throughout. Reproduced independently with my own checker: 03 mean 7.5 FREEZE, 15 mean 6.8 FREEZE,
+    21 mean 23.4 moves.
+  the_readers_sentence_worth_keeping: >-
+    "Holding a stick, sitting, and opening a mouth are states, not events. Ask what the character did and
+    the honest answer is: appeared in a second, different picture."
+  the_likely_cause_is_ours_and_it_is_everywhere: >-
+    264 OF 459 live ep2 prompts carry stillness language. "the frame never moves" is in 250 of them,
+    "static locked framing" in 203, and 193 ALSO ban camera motion in the negative. We spent days killing
+    tripods and pans - I wrote several of those bans myself and ledgered the tripod one as a win - and we
+    may have taught the model to produce a still picture instead of a locked camera. Those are different
+    things and our wording does not distinguish them.
+  why_i_missed_it_for_days: >-
+    I assessed FRAMES and never TRANSITIONS. Every scoring pass I ran was a filmstrip, and a filmstrip
+    cannot show you that nothing happened between the frames - it shows five pictures and the eye supplies
+    the motion. Several clips I marked ship-ready are frozen. The founder said "confusing" and I went to
+    fidelity, framing and encode, three measured dead ends, because I kept looking at pictures.
+  standing_check_adopted: >-
+    review/ep2-picks/freeze_check.py. Mean absolute luminance change between consecutive frames; the first
+    transition is reported but never counted, because a cut is not movement. Mean post-cut change under 10
+    is a FREEZE and fails regardless of how good any single frame looks. Known limit: a clip that moves
+    early and freezes late can pass on the mean - b13 scores 11.7 with a tail of 2.8 and 0.3 - so the
+    per-transition sequence is printed and not just the average.
+  the_one_test_now_running: >-
+    ep2-b13-unfreeze + twin. Same beat, same init, same seed. Removed every stillness clause from the
+    prompt AND the camera-motion bans from the negative, since those are the same instruction wearing a
+    mask. Added the movement as the dominant clause. Pass condition is the NUMBER plus a cold reader who
+    can name the action, not my eye.
+  outcome: null
