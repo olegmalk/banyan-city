@@ -176,7 +176,9 @@ def probe_fps(path: str) -> float:
     out = subprocess.run(
         ["ffprobe", "-v", "error", "-select_streams", "v:0",
          "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", path],
-        capture_output=True, text=True, check=True).stdout.strip()
+        # encoding named on purpose: text mode alone decodes with the locale
+        # codec, on a reader thread where a decode error never reaches us.
+        capture_output=True, text=True, encoding="utf-8", check=True).stdout.strip()
     if "/" in out:
         a, b = out.split("/")
         return float(a) / float(b)
