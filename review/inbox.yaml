@@ -838,7 +838,11 @@
   note_for_lanes: This entry exists in the YAML as well as review/inbox/index.html because the HTML is
     hand-authored and a wholesale rewrite by another lane deleted this card once already (a59ee1d1), leaving
     the sheet live at its URL and invisible on the board. The YAML is the durable record; the HTML is
-    what is served. Anyone regenerating the HTML should diff open cards against this file first.
+    what is served. Anyone regenerating the HTML should diff open cards against this file first. The
+    eight tiles are baked from rounds ep2-guard-sheet-a-r2-0814 and ep2-guard-sheet-b-r2-0814 (four
+    frames each, box sidecars on farm-results-rtx5090) - named here because a baked JPG carries no
+    filename of its own, so this note is the only thread from the picture back to what drew it, and
+    pipeline/unpaged.py reads it as the proof these rounds reached him.
 - what: DOES THIS READ AS A FIG NOW? Probably not yet, and the third answer is the real one. Six wording
     rounds and a licence-clean reference painting failed; a cold reader called the last batch an eggplant
     or plum 3 of 4. This round stopped describing the fruit and used LOBED FIG LEAVES to carry the identification
