@@ -1,0 +1,120 @@
+# 2026-08-15, stills lane. ONE SAMPLE. Beat 07 on a two-character reference set.
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815\07-confiscate-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815\07-confiscate-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815\07-confiscate-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815\07-confiscate-ipa-r3-w015-s0.png
+beat: 7
+consumer: the stills lane's own eye first, then motion-wave, which still has no usable init for beat 07.
+  The 2026-08-14 wave animated beats 05 06 07 09 10 11 from `ep2-bNN-guardpick-0814`; this lane has now
+  opened all 96 of those frames and every one is a costume identity card, so those six clips are worthless.
+env:
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  PYTHONUTF8: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+est_minutes: 3
+id: ep2-b07-mixedrefs-0815
+max_attempts: 1
+needs:
+- cuda
+- vram20
+- farm-venv
+needs_gpu: true
+node: 002b-first-citizen
+owner: stills lane, 2026-08-15
+priority: 2
+runner: box
+sample: true
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 07 is unconditioned in that leaf. This is a still plate on an approved
+  node, not an episode assembly.'
+steps:
+- argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-b07-mixed-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815
+  - --draft-key
+  - authored_b07_plate
+  - --arm
+  - window4
+  - --dry
+  name: dry
+- argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-b07-mixed-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-mixedrefs-0815
+  - --draft-key
+  - authored_b07_plate
+  - --arm
+  - window4
+  - --task
+  - ep2-b07-mixedrefs-0815
+  name: sample
+- allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-mixedrefs-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b07-mixedrefs-0815/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-mixedrefs-0815.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+  name: publish
+success: 'A frame carrying its LOCATION -- green grass, treeline, sky reaching the edges -- with TWO
+  characters on canon: an ADULT guard, short brown hair, brown tunic and sash, and beside him a goblin
+  that reads as the founder-approved seed-s0 goblin. The two failures worth reporting are (a) the cast
+  still coming out juvenile -- guard as pointy-eared elf child, goblin as green plant-sprite mascot --
+  which would mean the elf/sprite reads are a WORDS problem after all and not a missing-reference one,
+  and (b) the two-figure reference imposing TWO GUARDS or two of anything on a beat that wants one of
+  each, which is the risk beat 10 flagged from the opposite direction.'
+task: ep2-b07-mixedrefs-0815
+why: 'ONE SAMPLE, ONE VARIABLE. Everything here is byte-identical to `ep2-b07-scene-0815` (which ran,
+  rc=0) except `--refs`. That job used refs-guards-twoinfield-0813 and got its LOCATION but not its CAST:
+  the guard came back a pointy-eared elf child and the goblin a green plant-sprite mascot, consistently
+  across seeds, because those refs contain two guards in a field and NO GOBLIN AT ALL. Beat 07 is a
+  two-character beat pointed at a one-character reference set. The refs-decide law says the reference
+  wins over the sentence, so the fix is a reference and not an adjective. refs-b07-mixed-0815 was staged
+  box-side by the previous stills lane and left UNTESTED; this lane verified it by CONTENT HASH rather
+  than by filename or slot order, because every file in it is still named `04-the-footnote-wave1-sN.png`
+  from the goblin wave and the names now lie about what is inside. Verified 2026-08-15:
+    s0 582e5ab5.. = refs-goblin-approved-0814/s0  (founder-approved goblin, seed s0)
+    s1 466b18bb.. = refs-goblin-approved-0814/s1
+    s2 8e680225.. = refs-guards-chosen-0814/s0    (guard A, frozen 2026-08-14)
+    s3 9b4a0a14.. = refs-guards-chosen-0814/s1
+  CONSEQUENCE FOR PROVENANCE: the sidecars this job writes will record `ip_adapter_reference:
+  04-the-footnote-wave1-sN.png` for all four rounds, and for s2/s3 that string is WRONG -- those rounds
+  are conditioned on guard A. Read the hashes above, not the filename, when citing this run.
+  NOT A LICENCE TO SCALE: a two-figure reference set has never been tried on this harness, and beat 10
+  measured that a SINGLE-figure reference imposes a single figure. The symmetric risk is that this set
+  imposes two figures on beats that want one. Nobody reuses refs-b07-mixed-0815 on a single-character
+  beat until this sample has been opened and judged.'
