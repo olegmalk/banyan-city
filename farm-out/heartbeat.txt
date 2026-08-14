@@ -1548,3 +1548,4 @@
 15:43:37Z STARTED task=ep2-b01-figref-wedge-0814-1786722023 attempt=1 on box-runner
 15:45:10Z DONE task=ep2-b01-figref-wedge-0814-1786722023 rc=0 artifacts=2
 15:45:19Z STARTED task=ep2-b01-figleaf-0814-1786722311 attempt=1 on box-runner
+15:48:09Z DONE task=ep2-b01-figleaf-0814-1786722311 rc=0 artifacts=4
