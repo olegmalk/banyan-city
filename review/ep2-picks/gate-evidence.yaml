@@ -1,0 +1,119 @@
+generated: '2026-08-14'
+counted_from: published mp4s on origin/farm-results-rtx5090 and the live box queue
+question: is anything left that is not gated on his approvals?
+answer: No. Every one of the 21 beats is either rendering, gated on his guard approval, gated on the fig
+  reference route, or shipping under the two-round rule.
+checks_i_ran_rather_than_asserted:
+- 'confirmation seeds: every beat''s newest round has TWO seeds except 14, 19 and 20 - and those three
+  twins are IN FLIGHT right now, so there is nothing to author'
+- the two beats that hid their action (02, 14) had their final rounds FIRED this pass
+- beat 16 has BOTH seeds published - it was never a single-seed beat
+- 'retroactive purple: the only fig beats are 01, 18, 19, 20. 19 and 20 are re-rendering purple in the
+  wave right now; 01 and 18 already have purple takes. What is NOT done is making the fruit READ as a
+  fig, and that lever is the reference route on the plate lane, not another render from me'
+beats:
+- beat: '01'
+  takes: 14
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - fig reference route (plate lane)
+- beat: '02'
+  takes: 10
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '03'
+  takes: 17
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '04'
+  takes: 10
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '05'
+  takes: 16
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: '06'
+  takes: 11
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: '07'
+  takes: 2
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: 08
+  takes: 5
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: 09
+  takes: 7
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: '10'
+  takes: 10
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: '11'
+  takes: 5
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - guard cast unapproved (his call)
+- beat: '12'
+  takes: 12
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '13'
+  takes: 15
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '14'
+  takes: 12
+  in_flight: 2
+  authorable_by_me_now: false
+  gate: rendering now (2 jobs)
+- beat: '15'
+  takes: 13
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '16'
+  takes: 2
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '17'
+  takes: 16
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
+- beat: '18'
+  takes: 20
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: GATED - fig reference route (plate lane)
+- beat: '19'
+  takes: 15
+  in_flight: 1
+  authorable_by_me_now: false
+  gate: rendering now (1 jobs)
+- beat: '20'
+  takes: 6
+  in_flight: 2
+  authorable_by_me_now: false
+  gate: rendering now (2 jobs)
+- beat: '21'
+  takes: 18
+  in_flight: 0
+  authorable_by_me_now: false
+  gate: ships under the two-round rule
