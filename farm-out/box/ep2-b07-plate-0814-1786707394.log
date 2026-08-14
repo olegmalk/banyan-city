@@ -1,0 +1,7 @@
+#### job ep2-b07-plate-0814-1786707394 attempt 1 start 2026-08-14T11:44:13Z
+
+==== step dry START 2026-08-14T11:44:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "7", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\wave-goblin-prep\\refs-goblin-approved-0814", "--out", "C:\\banyan-farm\\goblin-ipa-0812\\out-b07-plate", "--draft-key", "authored_b07_plate", "--arm", "window4", "--dry"]
+!! beat 7 is not one of the goblin beats (2, 3, 4, 8, 13, 14, 15, 17, 19, 20) — its draft has no goblin, so nothing it drew could answer whether they hold. Refusing.
+==== step dry END rc=30 2026-08-14T11:44:17Z ====
+#### job ep2-b07-plate-0814-1786707394 finished rc=30 2026-08-14T11:44:17Z
