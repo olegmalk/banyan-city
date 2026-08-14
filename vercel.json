@@ -12,11 +12,6 @@
       "permanent": false
     },
     {
-      "source": "/review",
-      "destination": "/review/inbox",
-      "permanent": false
-    },
-    {
       "source": "/fork",
       "destination": "/create",
       "permanent": false
