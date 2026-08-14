@@ -8188,6 +8188,149 @@ def test_a_tree_that_cannot_see_the_farm_branch_says_so_instead_of_zero():
           "ep2-guard-sheet-a-r2-0814" in line and "1 finished render " in line)
 
 
+def test_the_queue_page_prints_the_prompt_that_made_the_frame():
+    """The founder, 2026-08-14: "i cant keep blindly saying these videos are low
+    quality... we need to see a history of the queue, what has been generated,
+    what image reference did it use, what was the prompt".
+
+    So the load-bearing claim of /queue is that THE PROMPT IS IN THE BYTES —
+    not a link to it, not a truncation with an ellipsis, not a summary. This
+    test renders a one-job history and looks for the prompt's own words and for
+    the media URLs on the box's branch, because a page that lost either would
+    still be several megabytes and still look built.
+    """
+    import build_queue as bq
+
+    hist = {
+        "_meta": {"measured_at": "2026-08-14T16:56:46Z",
+                  "source_commit": "33f0f42eccc6f89732e3c1c1a2a7a4cf0933b178"},
+        "jobs": [{
+            "id": "ep2-b18-figlit-0814-1786724010",
+            "beat": 18, "node": "002b-first-citizen", "kind": "still-ipa",
+            "rc": 0, "failed_step": None, "attempts": 1,
+            "started_at": "2026-08-14T16:22:05Z",
+            "finished_at": "2026-08-14T16:24:58Z", "duration_s": 173,
+            "prompt": "a fig lit from the side so its purple skin reads",
+            "negative": "backlit silhouette, black shape against bright sky",
+            "prompt_source": "artifact sidecar",
+            "init": {"path": "farm-out/ep2-b18/init.png"},
+            "outputs": [{"path": "farm-out/ep2-b18/18-the-decision-r0.png",
+                         "name": "18-the-decision-r0.png",
+                         "bytes": 1233830, "kind": "image"},
+                        {"path": "farm-out/ep2-b18/18-the-decision-r0.mp4",
+                         "name": "18-the-decision-r0.mp4",
+                         "bytes": 2200000, "kind": "video"}],
+            "recipe": {"model": "flux", "steps": 28},
+        }],
+        "upcoming": [],
+    }
+    out = bq.render(hist)
+
+    check("the positive prompt is printed in full, in the page's own bytes",
+          "a fig lit from the side so its purple skin reads" in out)
+    check("the negative prompt is printed too — the half he cannot see otherwise",
+          "backlit silhouette, black shape against bright sky" in out)
+    check("both are labelled, so neither can be mistaken for the other",
+          "Positive prompt" in out and "Negative prompt" in out)
+
+    # Media is REFERENCED, never copied: the frames live on the courier branch
+    # and the page must point at exactly that branch on the raw CDN.
+    check("the init frame is served from the box's own results branch",
+          f"{bq.RESULTS_BASE}/farm-out/ep2-b18/init.png" in out)
+    check("and so is every output it made",
+          f"{bq.RESULTS_BASE}/farm-out/ep2-b18/18-the-decision-r0.png" in out)
+    check("the media base is the raw CDN, not a path inside _site",
+          "raw.githubusercontent.com" in bq.RESULTS_BASE
+          and bq.RESULTS_BASE in out)
+
+    # A page holding 1,700 artifacts must cost nothing until a card is opened.
+    check("images are lazy", 'loading="lazy"' in out)
+    check("video downloads nothing until asked", 'preload="none"' in out)
+    check("the card is folded shut, so opening one is a choice",
+          '<details class="qjob"' in out and '<details class="qjob" open' not in out)
+    # The summary line is what he scans: beat, kind, clock, duration, outcome.
+    check("the fold's summary carries beat, duration and outcome",
+          "beat 18" in out and "2m 53s" in out and "rc 0" in out)
+
+
+def test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty():
+    """The dangerous failure of this page is not a missing prompt — it is a
+    missing prompt that renders as an empty box, because an empty box reads as
+    "the render had no negative prompt" and that is a different, false fact.
+
+    A prompt the generator could not recover is named, with the reason it gave.
+    Never reconstructed: the 77-token fit happened on the box's tokenizer and a
+    recomputation can differ exactly where it would matter.
+    """
+    import build_queue as bq
+
+    lost = {"id": "old-job-1", "beat": 3, "kind": "motion", "rc": 0,
+            "finished_at": "2026-08-01T09:00:00Z", "duration_s": 400,
+            "prompt": None, "negative": None,
+            "prompt_source": "no artifact sidecar was written for this run",
+            "outputs": [{"path": "farm-out/old/03.mp4", "name": "03.mp4",
+                         "kind": "video"}]}
+    out = bq.render({"_meta": {}, "jobs": [lost], "upcoming": []})
+    check("an unrecoverable prompt prints the honest marker",
+          bq.NO_PROMPT in out)
+    check("and prints the reason the generator gave for the gap",
+          "no artifact sidecar was written for this run" in out)
+    check("nothing was invented in its place",
+          "<pre class=\"qtext\">" not in out)
+
+    # The opposite case must stay distinguishable: a run that really carried a
+    # positive and really carried no negative says THAT, in its own words. Read
+    # off the card's own fragment, because the page footer explains what the
+    # marker means and would answer a whole-page substring search either way.
+    half = dict(lost, prompt="a slow push in on the sprout",
+                prompt_source="artifact sidecar")
+    # Careful: NO_NEGATIVE *ends with* NO_PROMPT ("NEGATIVE PROMPT NOT
+    # RECORDED"), so a bare substring search for the positive marker is true
+    # whenever the negative one is. The gap paragraph it opens is what
+    # distinguishes them, and that is what this asserts.
+    card = bq.prompt_html(half)
+    gap_positive = f'<p class="qgap">{bq.NO_PROMPT}'
+    check("a recovered positive with no negative names the missing half only",
+          bq.NO_NEGATIVE in card and gap_positive not in card)
+    check("and the positive it did recover is printed",
+          "a slow push in on the sprout" in card)
+    check("the card for a wholly unrecovered run opens that same gap",
+          gap_positive in bq.prompt_html(lost))
+
+    # A history file that cannot be read at all must degrade to a sentence, not
+    # to a fabricated empty page and not to a build crash — several lanes share
+    # this tree and one of them can be mid-write.
+    empty = bq.render(None)
+    check("an unreadable history says so rather than showing an empty queue",
+          "queue-history.json" in empty and "queue_history.py" in empty)
+
+
+def test_the_queue_page_is_actually_published_and_actually_swept():
+    """A page that exists only when someone runs its builder by hand is a page
+    the founder will find as a 404 (this one already was, once). The wiring is
+    three lines in three files and every one of them is a silent failure.
+    """
+    site = (REPO / "pipeline" / "build_site.py").read_text(encoding="utf-8")
+    check("build_site.py runs the queue builder, so a deploy emits the page",
+          "from build_queue import build" in site)
+
+    qa = (REPO / "pipeline" / "qa_local.py").read_text(encoding="utf-8")
+    check("the screening gate runs that builder too",
+          "build_queue.py" in qa)
+    check("and /queue is content-checked, not merely counted as a route",
+          '"/queue"' in qa)
+
+    import json as _json
+    vercel = _json.loads((REPO / "vercel.json").read_text(encoding="utf-8"))
+    sources = [h.get("source", "") for h in vercel.get("headers", [])]
+    check("/queue is in the no-cache block with the other live pages",
+          any("queue" in s and "status" in s for s in sources))
+
+    sim = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    check("/status points at the full history from its queue section",
+          "queue.html" in sim and "full history" in sim)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -8414,6 +8557,11 @@ def main():
     test_the_count_is_promises_to_him_and_not_every_render_on_the_farm()
     test_one_round_asked_twice_is_one_unshown_picture()
     test_a_tree_that_cannot_see_the_farm_branch_says_so_instead_of_zero()
+
+    # AND HE MUST BE ABLE TO READ THE PROMPT THAT MADE THE FRAME HE IS JUDGING.
+    test_the_queue_page_prints_the_prompt_that_made_the_frame()
+    test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty()
+    test_the_queue_page_is_actually_published_and_actually_swept()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

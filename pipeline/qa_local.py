@@ -59,7 +59,7 @@ REPO_SERVER = os.path.join(REPO, REPO_SERVER_REL)
 
 # Builders that contribute to _site/, in dependency order. build_site.py lays
 # down the tree; the others write pages into it and must run after.
-BUILDERS = ["build_site.py", "build_sim.py", "build_pulse.py"]
+BUILDERS = ["build_site.py", "build_sim.py", "build_pulse.py", "build_queue.py"]
 
 # Every page must clear this. Redirect stubs (sim.html) are legitimately tiny.
 DEFAULT_MIN_BYTES = 200
@@ -83,6 +83,14 @@ LOAD_BEARING = {
         "any_of_label": "work-queue/scene marker",
     },
     "/pulse": {"min_bytes": LOAD_BEARING_MIN_BYTES, "all_of": ["<svg"]},
+    # /queue is the founder's answer to "why does this beat look like that": if
+    # the prompts are not in the bytes the page is decoration. `raw.
+    # githubusercontent.com` is checked too, because a history that lost its
+    # media base would render 600 cards with no frames in them and still be big.
+    "/queue": {
+        "min_bytes": LOAD_BEARING_MIN_BYTES,
+        "all_of": ["Positive prompt", "raw.githubusercontent.com"],
+    },
     "/city": {"min_bytes": LOAD_BEARING_MIN_BYTES},
     "/create": {"min_bytes": LOAD_BEARING_MIN_BYTES},
     "/watch": {"min_bytes": LOAD_BEARING_MIN_BYTES},

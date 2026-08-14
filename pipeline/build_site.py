@@ -3181,6 +3181,8 @@ def main() -> None:
     _build_sim(OUT)
     from build_pulse import build as _build_pulse
     _build_pulse(OUT)
+    from build_queue import build as _build_queue
+    _build_queue(OUT)
     import shutil as _sh
     if (REPO / 'lab').is_dir():
         _sh.copytree(REPO / 'lab', OUT / 'lab', dirs_exist_ok=True)

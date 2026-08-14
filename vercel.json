@@ -39,7 +39,7 @@
   },
   "headers": [
     {
-      "source": "/(review|status|pulse)(.*)",
+      "source": "/(review|status|pulse|queue)(.*)",
       "headers": [
         {
           "key": "Cache-Control",

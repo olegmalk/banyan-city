@@ -34,6 +34,7 @@ type, spacing) instead.
 | `machine.html` | how the machine works, publicly |
 | `<genome>/<node>-shots.html` | per-node shot board, one page per node |
 | `trials/index.html` | the T3 provider trials |
+| `queue.html` | **/queue** — every render job with its exact prompt, reference frame and output files, plus what is coming. Built by `pipeline/build_queue.py` from a committed measurement — see "the queue history's refresh duty" below |
 | `review/index.html` | **unlisted** — working cuts the author has not passed, for his screening (D17). `noindex`, absent from the nav, linked only from his inbox on the status page. Content comes from `cuts/cuts.yaml`; the mp4s in `cuts/` are the one place media is committed |
 
 Page builders worth knowing in `build_site.py`: `page()` (the shell every page
@@ -347,6 +348,45 @@ generate, what i will review, when, how long", and every count and hour on it
 is pulled from `episode_eta.py` — the same rows /status uses — so a stale plan
 page is a page that contradicts /status. Regenerating is one command and it
 travels with the scoring, exactly like the inbox page travels with its entry.
+
+## The queue history's refresh duty (/queue)
+
+The founder, 2026-08-14: *"i cant keep blindly saying these videos are low
+quality, lets improve the queue so i actually understand exactly how these beats
+are being generated."* `/queue` is that page: every finished job as a fold
+holding its full positive and negative prompt, the frame it started from, the
+reference it was conditioned on, its recipe, and every file it produced —
+plus the specs that are authored and not yet run, and a live block reading the
+box's own telemetry.
+
+**The history is a committed measurement, and it only moves when someone re-runs
+the generator.**
+
+```
+python3 pipeline/queue_history.py        # writes pipeline/measured/queue-history.json
+git commit -- pipeline/measured/queue-history.json
+```
+
+Why it cannot be live: the run records are sidecars on `farm-results-rtx5090`
+and the specs are yaml on `main`. A Vercel deploy checkout has neither branch
+pair, and a reader's browser cannot join yaml across two branches, so the join
+happens on a laptop and the answer is committed. **The page is therefore exactly
+as old as that file, and it says so at the top in the same breath as its
+counts.** The block a reader can trust as *now* is the live one, which reads the
+telemetry branch in their own browser on the same pattern `/status` uses.
+
+The duty: **a wave that lands renders re-runs the generator and commits the
+JSON**, the way a scored beat updates `episode-progress.yaml` in the same
+commit. Skipping it does not break the build — it publishes a page that quietly
+stops at yesterday, which is the failure mode this note exists to prevent.
+
+Two more things not to undo. Nothing on this page is copied into `_site/`:
+every frame and clip is referenced from `farm-results-rtx5090` on GitHub's raw
+CDN, `loading="lazy"` / `preload="none"`, inside folds that start closed — so a
+page naming 1,700 artifacts downloads none of them until a card is opened. And a
+prompt the generator could not recover prints `PROMPT NOT RECORDED` with the
+reason, never a reconstruction: the 77-token fit happened on the box's
+tokenizer and a recomputation can differ exactly where it would matter.
 
 ## The colour law (status ETA card and /review/plan)
 

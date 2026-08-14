@@ -4324,7 +4324,14 @@ def build(out_dir: Path):
     live_queue = (
         '<section class="qsec rise" id="queue">'
         '<h2>⏭ The queue — what the render box is doing now</h2>'
-        '<p class="chead">Live — everything below this box is a snapshot.</p>'
+        '<p class="chead">Live — everything below this box is a snapshot. '
+        # This section can only ever say how MANY jobs are waiting: the box
+        # publishes counts, never names (telemetry.py). /queue is where a job
+        # becomes a thing you can read — its prompt, its reference frame, the
+        # files it made — so the pointer belongs here, next to the counts that
+        # cannot answer "why does that beat look like that".
+        'Every job\'s exact prompt, reference frame and output files: '
+        '<a href="queue.html">full history →</a></p>'
         f'<div class="qhead">{queue_head_html(boxq)}</div>'
         f'{queued_html}</section>')
 
