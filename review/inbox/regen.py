@@ -137,8 +137,17 @@ This page is always the complete list.</p>
 # _site/review/index.html from cuts/cuts.yaml, and it runs after this. Until that generator is
 # retired it OVERWRITES the board in the built site, so writing here is necessary and not
 # sufficient. That retirement is pipeline code and is handed upward rather than done here.
-for rel in ("review/index.html", "review/inbox/index.html"):
-    (REPO / rel).parent.mkdir(parents=True, exist_ok=True)
-    (REPO / rel).write_text(doc, encoding="utf-8")
-print(f"wrote review/index.html + review/inbox/index.html — "
+# ONE BOARD, ONE URL. 2026-08-14, founder: "why did you leave /review/inbox?"
+# The first cut of this wrote the same page to both paths so old links would not
+# 404 — which left two surfaces showing the same thing, the duplication he has
+# asked to be rid of repeatedly. The board lives at /review; the old path is a
+# REDIRECT in vercel.json, which keeps every existing link working without a
+# second copy that can drift.
+rel = "review/index.html"
+(REPO / rel).parent.mkdir(parents=True, exist_ok=True)
+(REPO / rel).write_text(doc, encoding="utf-8")
+stale = REPO / "review" / "inbox" / "index.html"
+if stale.exists():
+    stale.unlink()
+print(f"wrote review/index.html — "
       f"{len(open_rows)} open, {len(done_rows)} resolved")

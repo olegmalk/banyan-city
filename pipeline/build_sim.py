@@ -1670,7 +1670,7 @@ def review_pointer(n_open) -> str:
         head = 'The full list of what is waiting'
     return (f'{head} — this section shows only the calls with queued machine '
             'work parked behind them. The complete list, and the one the author '
-            'answers from, is <a href="review/inbox">the review inbox &rarr;</a>')
+            'answers from, is <a href="review">the review inbox &rarr;</a>')
 
 
 def waiting_html(inbox: list, backlog: list, now=None) -> str:
@@ -2037,10 +2037,10 @@ def _eta_card(r: dict, approx) -> str:
                  'kept — a beat that gets cut costs nothing, so it is not in the '
                  'figure beside it.</p>')
 
-    look_url = r["review_url"] or "review/inbox"
+    look_url = r["review_url"] or "review"
     stats = (
         f'<span class="sx">{mach}</span>'
-        f'<a class="sx" href="review/inbox"><span class="sn n-you">'
+        f'<a class="sx" href="review"><span class="sn n-you">'
         f'{len(r["decisions"])}</span><span class="sl">call'
         f'{"s" if len(r["decisions"]) != 1 else ""} only you can make</span></a>'
         f'<a class="sx" href="{_e(look_url)}"><span class="sn n-you">'
@@ -2056,8 +2056,8 @@ def _eta_card(r: dict, approx) -> str:
                  for d in r["decisions"][:2]]
         more = len(r["decisions"]) - len(named)
         nxt = ('<p class="epcalls">Next: ' + " · ".join(named)
-               + (f' · <a href="review/inbox">and {more} more &rarr;</a>'
-                  if more > 0 else ' · <a href="review/inbox">the inbox &rarr;</a>')
+               + (f' · <a href="review">and {more} more &rarr;</a>'
+                  if more > 0 else ' · <a href="review">the inbox &rarr;</a>')
                + '</p>')
 
     title = f' <span class="ept">{_e(r["title"])}</span>' if r["title"] else ""
@@ -3841,18 +3841,18 @@ def summary_strip(view: dict, now) -> str:
     # never drift from the page it links to.
     nrev = view.get("review_open")
     if nrev:
-        review_cell = (f'<a class="sx" href="review/inbox"><span class="sn">{nrev}'
+        review_cell = (f'<a class="sx" href="review"><span class="sn">{nrev}'
                        f'</span><span class="sl">thing{"s" if nrev != 1 else ""} '
                        'waiting on the author · the review inbox — every open '
                        'call in one list, with what answering it would '
                        'unblock</span></a>')
     elif nrev == 0:
-        review_cell = ('<a class="sx" href="review/inbox"><span class="sn zero">0'
+        review_cell = ('<a class="sx" href="review"><span class="sn zero">0'
                        '</span><span class="sl">waiting on the author — the review '
                        'inbox is empty, so nothing published is held up by a call '
                        'only he can make</span></a>')
     else:
-        review_cell = ('<a class="sx" href="review/inbox"><span class="sn none">not '
+        review_cell = ('<a class="sx" href="review"><span class="sn none">not '
                        'read</span><span class="sl">the review inbox’s list '
                        'could not be read this build, so no count is claimed — the '
                        'inbox itself is still there</span></a>')
