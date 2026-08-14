@@ -1340,3 +1340,4 @@
 02:27:49Z STARTED task=ep2-b05-final-0814-1786674455 attempt=1 on box-runner
 02:34:09Z DONE task=ep2-b05-final-0814-1786674455 rc=0 artifacts=1
 02:34:16Z STARTED task=ep2-b05-finalB-0814-1786674459 attempt=1 on box-runner
+02:40:36Z DONE task=ep2-b05-finalB-0814-1786674459 rc=0 artifacts=1
