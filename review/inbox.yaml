@@ -532,6 +532,11 @@
   kind: sheet
   verdict_hint: this is the goblin, carry on / still not old enough / too far, he reads mean now (s1 went
     sinister and I left it out of the picks for that reason)
+  resolved:
+    date: '2026-08-14'
+    verdict: >-
+      these generations arent very good
+
 - what: Your silly bureaucrat arrived, and he may have arrived too hard. You asked for a round harmless
     bureaucrat instead of a soldier and the words produced exactly that - but "his tunic straining A LITTLE
     over his belly" came back as a bare exposed gut at both seeds. The softener did nothing. Is that funny
@@ -650,11 +655,53 @@
   since: '2026-08-14'
   kind: clip
   verdict_hint: those are the guards - 05 and 10 are both done / no, too young - redraw the cast and redo both
-- what: 'THREE BEATS ARE FINISHED and waiting only on you - 06 the clipboard, 11 they leave, 12 related.
-    Each is one clip I would put in the cut and defend, and each is linked from the line about it. Nothing
-    downstream needs you first; this is just the pass or the veto'
-  url: /review/ep2-picks/motion-0812#e-overnight
+- what: 'BEAT 06 THE CLIPBOARD - is this the shot? He turns the bark board over and reads off it, in
+    a field that is there from the first frame. This beat was stuck on a white flash for three rounds and
+    the flash is gone. One caveat I will not hide: it is my pick from one seed, because the second seed
+    raised the board like a shield instead of reading it'
+  url: /review/ep2-picks/motion-0812#e-b06-done
   group: taste
   since: '2026-08-14'
   kind: clip
-  verdict_hint: all three are in / one of them is not, and here is which
+  verdict_hint: that is the shot / not yet, and here is what is wrong
+- what: 'BEAT 11 THEY LEAVE - is this the shot? The two guards walk away across the field, backs turned,
+    still arguing, and the field is there from the first frame. This one held at BOTH seeds, which is the
+    only beat tonight that did'
+  url: /review/ep2-picks/motion-0812#e-b11-done
+  group: taste
+  since: '2026-08-14'
+  kind: clip
+  verdict_hint: that is the shot / not yet, and here is what is wrong
+- what: 'BEAT 12 RELATED - is this the shot? The sapling''s two leaves against the sky, exactly two, with
+    the one bare side-branch, after two rounds that kept drawing a bush. One blemish I am naming rather
+    than hiding: the colour shifts warm-to-cool in the first second'
+  url: /review/ep2-picks/motion-0812#e-b12-done
+  group: taste
+  since: '2026-08-14'
+  kind: clip
+  verdict_hint: that is the shot / the colour shift is too much, redo it / not yet for another reason
+- what: 'BEAT 01 COLD OPEN - is the fig right now? You said the beat was good and only the fig was wrong,
+    so this is the same shot with the fruit changed to your purple. It is the first shot of the episode'
+  url: /review/ep2-picks/motion-0812#e-b01-candidate
+  group: taste
+  since: '2026-08-14'
+  kind: clip
+  verdict_hint: the fig is right, that is the open / still not a fig, and here is what is off
+- what: 'THE GOBLIN PLATES - this is the gate on TWELVE of the twenty-one beats and you have never seen
+    them. Six plates drawn on the reference frame you chose, shown next to that frame so you can judge the
+    match. MY READ, so you are not guessing at mine: they hold together as one creature, they carry the new
+    tunic with no hood, and each has a real place around it instead of white - but they READ YOUNGER than
+    your reference does, which has the narrower face. I have animated nothing off them and will not until
+    you say'
+  url: /review/ep2-picks/motion-0812#e-adult-goblin-sheet
+  group: taste
+  since: '2026-08-14'
+  kind: sheet
+  verdict_hint: that is him, start animating / too young still, redraw / it is close - change this one thing
+- what: 'THE NIGHT IN ONE PLACE - three beats finished, two waiting on the guard question, two parked with
+    named reasons, and a per-beat line for all of them. Nothing to answer here; it is the state of episode
+    2 on one screen if you want the whole picture before answering the others'
+  url: /review/ep2-picks/motion-0812#e-overnight
+  since: '2026-08-14'
+  kind: decision
+  verdict_hint: noted / this is not how I want to see it

@@ -1,4 +1,4 @@
-measured_at: 2026-08-14 08:05Z
+measured_at: 2026-08-14 09:40Z
 source: 'per-beat states written by the motion lane at scoring time, against the definitions of done in
   review/ep2-picks/done-definitions.yaml. NOTHING here is `done`: `done` means the author has passed it
   and he has not seen last night''s work yet, so the two beats the card has finished sit as candidate-awaiting-founder.'
@@ -26,13 +26,13 @@ episodes:
     note: goblin beat — character gate; also the only face close-up, where the age read has nowhere to
       hide
   - n: 5
-    state: fix-known
-    note: two-guard plate supplied count and world, then the jog pulled the camera and lost the second
-      man; lever queued — they stand and scan instead of jogging in
+    state: candidate-awaiting-founder
+    note: seedB holds two guards the whole clip in a field present at frame one and the scan reads; waiting
+      on the same cast question as beat 10
   - n: 6
-    state: fix-known
-    note: everything passes but the field arrives a second late as a white flash; lever queued — animate
-      off the one-guard scene plate that already exists
+    state: candidate-awaiting-founder
+    note: 'FINISHED at seedA: reads the bark board in a field present at frame one, after three rounds
+      stuck on a white flash. In front of him.'
   - n: 7
     state: blocked-decision
     note: guard beat but the guard points AT the scavenger, so the goblin is in frame — character gate
@@ -41,12 +41,11 @@ episodes:
     note: goblin beat — character gate; the guard half is solved, the goblin half is not
   - n: 9
     state: fix-known
-    note: framing and expression solved this round — tight on the face, thinking readable; only the white
-      first second remains; lever queued
+    note: framing and expression solved; the face changes between the plate and the close-up at BOTH seeds.
+      Needs a plate that IS the close-up - a full-body plate cannot supply a face.
   - n: 10
-    state: fix-known
-    note: one seed has both guards, the other has the blank board reading clean, never both; lever queued
-      — the two-guard scene plate supplies count and cast
+    state: candidate-awaiting-founder
+    note: both guards from frame one, blank board raised; waiting on whether this pair reads as the guards
   - n: 11
     state: candidate-awaiting-founder
     note: 'FINISHED off the two-guard scene plate: both men from frame one, walking away arguing across
@@ -82,8 +81,8 @@ episodes:
     note: goblin beat — character gate
   - n: 21
     state: fix-known
-    note: outdoors and correct, but the leaf redraws itself instead of tilting so the move never reads
-      as deliberate; lever queued — two held positions rather than a described motion
+    note: two-held-positions fixed the movement; the dusk plate was fighting a daylight beat, so it is
+      re-running on beat 12's daylight leaf plate
 - number: 1
   node: 001-capability-inventory
   title: Capability Inventory
