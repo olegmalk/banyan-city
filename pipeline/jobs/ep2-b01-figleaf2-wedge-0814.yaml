@@ -1,0 +1,99 @@
+# 2026-08-14, stills-drafts lane. Window twin of the leaf round.
+id: ep2-b01-figleaf2-wedge-0814
+task: ep2-b01-figleaf2-wedge-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: 'Eight frames at w010 and w020, read beside the parent''s w015. The question is a trade: does
+  the leaf survive a looser window, and does the plant come back. If the leaf holds at 10% and the composition
+  returns, 10% is the fig recipe and 15% never was. If the leaf dissolves at 10%, the leaf is reference-carried
+  rather than word-carried, which is itself the answer and means the reference has to stay strong and
+  the composition problem needs a different lever.'
+why: 'TWIN of ep2-b01-figleaf2-0814, one variable: the WINDOW. The parent runs the standard 15%; this
+  runs 10% and 20%. Every fig round so far has been fought at 15%, where the reference grips hardest -
+  and that grip is what turned beat 01 into a macro of one fruit when the prompt asked for a whole plant
+  in a field. 10% is the setting that handed beat 03 its entire world back. So this asks whether a looser
+  window keeps the lobed LEAF while letting the plant composition return. Same draft, same reference,
+  same seeds as the parent, so the pair is readable as a pair.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf2-wedge
+  - --draft-key
+  - authored_b01_figleaf2
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf2-wedge
+  - --draft-key
+  - authored_b01_figleaf2
+  - --arm
+  - wedge
+  - --task
+  - ep2-b01-figleaf2-wedge-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figleaf2-wedge-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figleaf2-wedge/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figleaf2-wedge-0814.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf2-wedge\01-cold-open-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleaf2-wedge\01-cold-open-ipa-r0-w020-s0.png
