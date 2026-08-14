@@ -17147,24 +17147,55 @@
     spending the card on prompt variants, which is the failure mode this whole night has been about.
     If BOTH move, prefer B: it is free, and 193 frames doubles every render on the card.
   confound_recorded_before_the_results: >-
-    Added the same night, after the arms were queued and before either landed. External research came
-    back saying LTX-2.3-Distilled is CFG 1.0 per its model card and Lightricks' own workflow, that the
-    reference distilled pipeline has no CFG code path at all, and that we have been running guidance
-    2.0 with a negative prompt full of anti-movement terms. Both arms above run at guidance 2.0, so a
-    NULL result from them does NOT establish what I said it would. If neither moves I may only
-    conclude that neither frames nor sub-movements rescue motion AT OUR CURRENT GUIDANCE - not that
-    the wording lever is exhausted. That conclusion needs the guidance arm of the sweep first. I am
-    leaving both arms running because they are already on the card and answer a real question, but
-    the interpretation above is hereby narrowed rather than quietly reused later.
-  a_question_for_the_sweep: >-
-    If the distilled pipeline genuinely has no CFG path, then our negative prompt may be INERT - never
-    applied at all - and every negative-side conclusion drawn in this ledger for weeks would be about
-    a string the model never read. That is cheap to settle before the sweep spends renders varying
-    negative CONTENT: render one beat with a deliberately absurd negative, something like "green
-    grass, goblin, field", against the same seed with the real negative. Identical output means the
-    negative is not wired in, and the whole negative arm can be dropped. Different output means it is
-    live and worth sweeping. Handing this to the sweep lane rather than building it - they own that
-    variable and two lanes rendering the same question is the waste I have been logging all night.
+    Added the same night, after the arms were queued and before either landed. External research
+    came back saying LTX-2.3-Distilled is CFG 1.0 per its model card and Lightricks' own workflow,
+    that the reference distilled pipeline has no CFG code path at all, and that we have been running
+    guidance 2.0. Both arms above run at guidance 2.0, so a NULL result from them does NOT establish
+    what I said it would. If neither moves I may only conclude that neither frames nor sub-movements
+    rescue motion AT OUR CURRENT GUIDANCE - not that the wording lever is exhausted. That conclusion
+    needs the guidance arm of the sweep first. I am leaving both arms running because they are
+    already on the card and answer a real question, but the interpretation above is hereby narrowed
+    rather than quietly reused later.
+  RETRACTED_a_question_for_the_sweep: >-
+    WRONG, and disproven at zero renders within the hour. I proposed that the distilled pipeline
+    might have no CFG path, making our negative prompt INERT and every negative-side conclusion in
+    this ledger a statement about a string the model never read. The sweep lane traced the wiring and
+    then checked the tensors on the box: ltx_i2v.py calls encode_prompt with
+    do_classifier_free_guidance=True, diffusers sets that flag true for any guidance above 1.0 and we
+    run 2.0, it concatenates the negative and positive embeddings and doubles the latents so the
+    unconditional pass genuinely runs, and it would RAISE on a wrong-shaped negative rather than drop
+    it. Empirically all four tensors are present in every job, identical=False, mean absolute
+    difference 8.11 to 9.04 between positive and negative. The negative is LIVE.
+  what_i_should_have_asked_instead: >-
+    I have a law for this and did not apply it to myself. "WHEN A KNOB APPEARS INERT, LOOK FOR
+    ANOTHER PART OF THE SAME PROMPT ALREADY DETERMINING IT - inert and outvoted are different" is my
+    own entry, written weeks ago about camera instructions. Faced with a banned camera push-in that
+    happens anyway, I jumped straight to "the negative is not wired in" rather than to "the negative
+    is wired in and losing", which is the ordinary case and turned out to be the true one: thirteen
+    concepts sharing thirty-eight tokens at CFG 2.0 on a distilled model is weak per-concept
+    pressure. Banned-but-present is normal negative-prompt behaviour, not evidence of a wiring bug. A
+    law only protects you if you run it against your own hypotheses and not only against other
+    people's results.
+  two_relayed_claims_that_did_not_survive: >-
+    Both retracted by the lead who sent them, and both had already reached this ledger or my
+    messages. First, our negative does NOT contain "motion blur, camera shake, jittery movement" -
+    verbatim it is camera pan, tilt, zoom, dolly, push in, pull back, tripod, cut to another shot,
+    scene change, different location, split screen, still image, freeze frame. It carries no
+    motion-blur terms at all and it bans "still image" and "freeze frame", which pushes AWAY from
+    static, the direction we want. So "we spent CFG suppressing movement" was never true; the real
+    and narrower finding is that we ban seven camera moves and the model pushes in regardless.
+    Second, the Lightricks maintainer quotes about raising image compression to escape static results
+    do not exist - LTX-2 issues 11 and 24 are an unanswered frozen-i2v report and an unanswered
+    parameter question, neither naming image_crf or 42. There is still a real mechanism behind the
+    crf idea from the HF discussion record, that LTX handles conditioning frames sourced from real
+    video far better than from photographs or AI-generated stills, which is a genuine domain-match
+    argument for compressing our AI-made plate harder. But it is an argument, not a sanctioned fix.
+  the_standing_lesson: >-
+    A relayed research finding is not a verified one. Two of four claims in a single relay did not
+    survive checking, and I had already built a hypothesis and a ledger clause on one of them within
+    the hour. Treat anything arriving as "research says" the way a render result is treated: it does
+    not count until someone has opened the actual source. The lead checking their own relay and
+    retracting it unprompted is the behaviour that caught this.
   scored_how: >-
     freeze_check.py per-transition plus a blind cold read against the control's read. The number
     alone cannot settle it - that is the mistake already logged tonight - so a stranger naming the
