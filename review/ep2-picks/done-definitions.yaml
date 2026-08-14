@@ -11,13 +11,18 @@ beats:
     rounds_used: 3
     round_1: world recipe - world PASSED, count FAILED (one guard f20-f80, second at f100)
     in_flight: ep2-b05-twoguard + twin (pair stated as a frame-one fact)
-    status: ROUND 4 ON THE NAMED LEVER
+    status: PARKED
     round_2_result: 'round 2: arrival FIXED - both men present from frame one - but count OVERSHOT to
       THREE guards at both seeds'
     round_3_result: geometry lever did NOT bind count - THREE guards at seedA, four-ish at seedB. Words
       have now produced 1, 3 and 3+ on this beat.
     note: parked at 3 rounds of WORDS; the lever I named was a two-guard scene plate and it has now arrived,
       so this is a first attempt at the missing thing rather than a fourth at the same thing
+    round_4_result: 'off the two-guard scene plate: starts right and then the second guard vanishes by
+      mid-clip and the camera lurches into a blurred close-up at both seeds'
+    park_reason: even with count supplied by the plate, the jog pulls the camera and loses the pair
+    lever: stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what
+      breaks it
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -37,13 +42,16 @@ beats:
       a real background behind him.
     rounds_used: 2
     in_flight: ep2-b09-world (rendering)
-    status: IN ROUND 3
+    status: PARKED
     round_1_result: 'round 1: real world behind him; FAILS on framing - chest-up medium where the beat
       is an expression; seedB drew a PANEL around him'
     round_2_result: FRAMING LEVER WORKED - tight close-up on the face at both seeds, head and shoulders
       filling frame, collar crop, expression reads, same man throughout, real field behind
     note: only failure left is the clip opening on the white plate; beat 09's scene plate came back WHITE
       so it does not help
+    park_reason: framing and expression are solved; the only failure left is the white first second, and
+      beat 09's scene plate came back white so the lever did not arrive
+    lever: a scene plate for beat 09 that actually carries a field
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -63,12 +71,16 @@ beats:
     title: THEY LEAVE
     done_when: two guards walk away from camera, backs turned, still arguing; both present the whole clip;
       field present at frame one.
-    rounds_used: 2
+    rounds_used: 3
     in_flight: ep2-b11-world
-    status: ROUND 3 ON THE NAMED LEVER
+    status: DONE
     round_1_result: 'round 1: two guards, backs turned, arguing across a real field, at BOTH seeds - every
       condition met except the clip opening on the white plate for ~1s'
     round_2_result: unchanged and still the closest to done; only failure is the ~1s white opening
+    pick: ep2-b11-finalB-0814
+    round_3_result: 'off the two-guard scene plate: both men present from FRAME ONE, walking away backs
+      turned across a real field, costume and cast hold the whole clip, no arrival artifact. All five
+      conditions met.'
   '12':
     title: RELATED
     done_when: tight on the sapling's TWO leaves against the sky; exactly two cotyledons and one bare
@@ -129,3 +141,10 @@ beats:
     status: IN ROUND 2
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
+morning_result:
+  done: 2
+  parked: 6
+  done_beats:
+  - 11 THEY LEAVE
+  - 12 RELATED
+  note: nine goblin-free beats attempted, two finished. Stated as the number rather than as a narrative.
