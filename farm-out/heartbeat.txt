@@ -1505,3 +1505,4 @@
 13:32:50Z STARTED task=ep2-b03-refireB-0814-1786712777 attempt=1 on box-runner
 13:38:44Z DONE task=ep2-b03-refireB-0814-1786712777 rc=0 artifacts=2
 13:38:50Z STARTED task=ep2-b04-refire-0814-1786712781 attempt=1 on box-runner
+13:44:40Z DONE task=ep2-b04-refire-0814-1786712781 rc=0 artifacts=2
