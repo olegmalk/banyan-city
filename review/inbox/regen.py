@@ -91,5 +91,21 @@ This page is always the complete list.</p>
 {sections if open_rows else '<p class="sub">Nothing waiting. The machine is rendering or blocked on itself, not on you.</p>'}
 <details><summary>Resolved — the record</summary>{''.join(done_rows) or '<p class="sub">none yet</p>'}</details>
 """
-(REPO / "review/inbox/index.html").write_text(doc, encoding="utf-8")
-print(f"wrote review/inbox/index.html — {len(open_rows)} open, {len(done_rows)} resolved")
+# THE BOARD LIVES AT /review, and /review/inbox stays alive as a copy.
+#
+# Founder, 2026-08-14: "then how about you just move everything from /review/inbox to /review?"
+# /review used to serve the old Working-cuts page, stale since episode 1 closed.
+#
+# Both paths are written from the same string, so they cannot drift. /review/inbox is not a
+# redirect but a real copy, because it is linked from the status page, from resolved entries and
+# from messages already sent — a bookmark that 404s is a worse outcome than a duplicate file.
+#
+# ONE THING THIS FILE CANNOT DO ALONE: pipeline/build_site.py also generates
+# _site/review/index.html from cuts/cuts.yaml, and it runs after this. Until that generator is
+# retired it OVERWRITES the board in the built site, so writing here is necessary and not
+# sufficient. That retirement is pipeline code and is handed upward rather than done here.
+for rel in ("review/index.html", "review/inbox/index.html"):
+    (REPO / rel).parent.mkdir(parents=True, exist_ok=True)
+    (REPO / rel).write_text(doc, encoding="utf-8")
+print(f"wrote review/index.html + review/inbox/index.html — "
+      f"{len(open_rows)} open, {len(done_rows)} resolved")

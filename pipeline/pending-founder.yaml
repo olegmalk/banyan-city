@@ -13,6 +13,14 @@ pending:
   public: review/ep2-picks/morning-0812-wave2.html
   link_text: this morning's sheets, the guards among them, with what each round was testing
   since: 2026-08-12
+  resolved:
+    date: '2026-08-14'
+    verdict: i haven't seen the guards characters yet, i need to know how they should look like and also
+      make some of my own changes perhaps
+    why: Not dropped, superseded and made bigger. This asked him to say what the guards ARE in words;
+      he has since said the real gap is that no guard REFERENCE exists and he has never seen one. plate-drafts
+      is paging a guard sheet for his approval and that sheet carries this question, so re-filing it here
+      would be the same decision asked twice.
 - id: ep2-beat04-length
   title: Choose how to shorten the six-second beat, because six seconds breaks the face
   detail: 'One of episode 2''s beats is written for six seconds on a close-up, and six seconds is measured
@@ -25,6 +33,13 @@ pending:
     is staging, and no clip length fixes that. The two takes are on the render machine and not published
     anywhere you can click; say the word and they go on the review page beside each other.'
   since: 2026-08-12
+  resolved:
+    date: '2026-08-14'
+    verdict: beat 04 has the cute goblin, needs to be changed
+    why: Superseded. The 3s-vs-6s length question was about a face that survives three seconds and breaks
+      at six - but beat 04 is now in the goblin remake and its plate has failed twice, so the length question
+      cannot be answered until there is a face to time. Already resolved under the same reasoning in the
+      inbox.
 - id: ep1-frame-picks
   title: Choose the last drawing in episode 1 — the one shot you have never passed
   detail: 'Fourteen of episode 1''s fifteen shots stand on a drawing you chose and one does not — scene
@@ -40,6 +55,11 @@ pending:
   public: review/index.html#item-10
   link_text: the sheet itself — sixteen frames, one row per option, on your morning checklist
   since: 2026-08-07
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done
+    why: Episode 1 is CLOSED by his own words. Asking him to choose a drawing for a shot in a published
+      episode is asking him to re-open something he shut.
 - id: ep3-scripts
   title: Read episode 3 — the script that grows out of the episode 2 you approved
   detail: 'Episode 3''s script is written and unread, and nothing may be filmed from it until the author
@@ -54,3 +74,19 @@ pending:
   public: sapling/003b-one-leaf-for-yes.html
   link_text: the episode 3 script on the tree, with the storyboard reel built from it
   since: 2026-07-30
+  resolved:
+    date: '2026-08-13'
+    verdict: the best way for me to review something is by seeing the full video of it... lets not waste
+      time by having me read the entire script of each episode, lets remove that task, you can review
+      it yourself if you'd like, but im fine with it.
+    why: Removed by ruling, not by neglect. Script reads are off his plate permanently; his review artifact
+      per episode is the assembled video. This item is the exact task he abolished.
+retired:
+  date: '2026-08-14'
+  reason: 'Founder: "then how about you just move everything from /review/inbox to /review?" This file
+    fed the old Working-cuts board and is superseded by review/inbox.yaml, which is the single board.
+    Every item above was dispositioned against a ruling he had already given rather than migrated blind
+    - two were superseded by later verdicts, one died with episode 1, one was abolished when he removed
+    script reads. NOTHING was carried forward as open, because every one of them would have been a decision
+    asked twice.'
+  successor: review/inbox.yaml

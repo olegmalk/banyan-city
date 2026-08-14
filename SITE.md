@@ -194,7 +194,22 @@ taste-axis scores and trunk/graft calls, governance changes, opening money rails
 A site session will be tempted by the first one — building a share button is fine,
 pressing it is not.
 
-## The review inbox (/review/inbox)
+## The review board (/review, and /review/inbox as a living copy)
+
+**The board moved to the short URL** (founder, 2026-08-14: "then how about you
+just move everything from /review/inbox to /review?"). `/review` used to serve
+the old Working-cuts page, stale since episode 1 closed. `review/inbox/regen.py`
+now writes the SAME string to both `review/index.html` and
+`review/inbox/index.html`, so the two cannot drift, and `/review/inbox` stays a
+real page rather than a redirect because it is linked from the status page, from
+resolved entries and from messages already sent — a bookmark that 404s is worse
+than a duplicate file. `#item-NN` anchors died with the old page and no entry
+may point at one.
+
+NOT YET COMPLETE: `pipeline/build_site.py` still generates
+`_site/review/index.html` from `cuts/cuts.yaml` and runs after regen, so it
+overwrites the board in the built site. Retiring that block is the last step and
+it is pipeline code.
 
 The founder must always be able to SEE what awaits him without asking in
 chat (his order, 2026-08-12). `review/inbox.yaml` is the data; the page is
