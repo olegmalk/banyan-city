@@ -8,12 +8,16 @@ beats:
     title: THE PATROL
     done_when: two guards jog in together FROM FRAME ONE, stop, and scan; both adult men in tunic and
       sash; field present at frame one; neither redrawn mid-clip.
-    rounds_used: 2
+    rounds_used: 3
     round_1: world recipe - world PASSED, count FAILED (one guard f20-f80, second at f100)
     in_flight: ep2-b05-twoguard + twin (pair stated as a frame-one fact)
-    status: IN ROUND 3 (last)
+    status: ROUND 4 ON THE NAMED LEVER
     round_2_result: 'round 2: arrival FIXED - both men present from frame one - but count OVERSHOT to
       THREE guards at both seeds'
+    round_3_result: geometry lever did NOT bind count - THREE guards at seedA, four-ish at seedB. Words
+      have now produced 1, 3 and 3+ on this beat.
+    note: parked at 3 rounds of WORDS; the lever I named was a two-guard scene plate and it has now arrived,
+      so this is a first attempt at the missing thing rather than a fourth at the same thing
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -23,17 +27,23 @@ beats:
     round_2: world - action, board, style and world all good; STILL opens on a white burst to ~f40
     blocking: condition 3 only. The plate is white, so the world arrives. Words cannot fix this - that
       is measured, twice.
-    lever: a scene-carrying plate for beat 06 from the plate lane. Guard-only, so not gated.
-    status: ONE ROUND LEFT, and it is wasted without the plate
+    lever: a scene plate for beat 06 that actually carries a field - the 0814 one does not
+    status: PARKED
+    park_reason: its only failing condition is the world arriving as a white burst, and its scene plate
+      came back WHITE so the named lever did not actually arrive
   09:
     title: THE PAUSE
     done_when: close on Guard 1's face working through the thought, in daylight; face holds, no morphing;
       a real background behind him.
-    rounds_used: 1
+    rounds_used: 2
     in_flight: ep2-b09-world (rendering)
-    status: IN ROUND 2
+    status: IN ROUND 3
     round_1_result: 'round 1: real world behind him; FAILS on framing - chest-up medium where the beat
       is an expression; seedB drew a PANEL around him'
+    round_2_result: FRAMING LEVER WORKED - tight close-up on the face at both seeds, head and shoulders
+      filling frame, collar crop, expression reads, same man throughout, real field behind
+    note: only failure left is the clip opening on the white plate; beat 09's scene plate came back WHITE
+      so it does not help
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -53,22 +63,29 @@ beats:
     title: THEY LEAVE
     done_when: two guards walk away from camera, backs turned, still arguing; both present the whole clip;
       field present at frame one.
-    rounds_used: 1
+    rounds_used: 2
     in_flight: ep2-b11-world
-    status: IN ROUND 2
+    status: ROUND 3 ON THE NAMED LEVER
     round_1_result: 'round 1: two guards, backs turned, arguing across a real field, at BOTH seeds - every
       condition met except the clip opening on the white plate for ~1s'
+    round_2_result: unchanged and still the closest to done; only failure is the ~1s white opening
   '12':
     title: RELATED
     done_when: tight on the sapling's TWO leaves against the sky; exactly two cotyledons and one bare
       side-branch, per the growth ladder; no bush, no crown; the goblin NOT in frame.
-    rounds_used: 2
+    rounds_used: 3
     round_1: leaf clause - leaf shape came back seed-lucky, and the founder called the leaves "a bunch"
       and "big", which is the canon violation
     in_flight: ep2-b12-ladder + twin (count and scale relationship stated)
-    status: IN ROUND 3 (last)
+    status: DONE (seedB), with a blemish
     round_2_result: 'round 2: growth-ladder wording did not bind - still a bush of six-plus leaves at
       both seeds'
+    round_3_result: GEOMETRY LEVER WORKED - exactly two oval leaves on one stem against sky at both seeds,
+      with the thin bare side-branch at seedB. Count is finally right after two failures of counting in
+      words.
+    pick: ep2-b12-tightB - two leaves, one bare side-branch, sky, no bush
+    blemish: a palette shift in the first second, warm plate to cool daylight sky. I would still put it
+      in the cut.
   '18':
     title: THE DECISION
     done_when: extreme close-up of ONE fig on a trembling stem, and A STRANGER WOULD CALL IT A FIG - purple,
@@ -88,13 +105,19 @@ beats:
     title: THE ANSWER
     done_when: the leaf tilts slowly and deliberately in still air and HOLDS; it reads as a deliberate
       movement, not a wind wobble; outdoors, scene at frame one.
-    rounds_used: 2
+    rounds_used: 3
     round_1: earlier pool. Founder verdict - "none of them have a good background, doesnt look like the
       sapling is outside"
     in_flight: ep2-b21-world
-    status: IN ROUND 3 (last)
+    status: PARKED
     round_2_result: 'round 2: outdoors and correct - and the leaf MORPHS instead of tilting, changing
       outline at seedA and splitting in two at seedB'
+    round_3_result: shape held at seedB but MORPHED again at seedA, and the tilt does not read as deliberate
+      at either
+    park_reason: three rounds of words could not make one leaf hold its shape AND move on purpose; seedA
+      still redraws the leaf mid-clip
+    lever: stage the move as two held positions rather than a described motion - a start pose and an end
+      pose - or keyframe it, rather than asking a text prompt for deliberateness
   '01':
     title: COLD OPEN
     done_when: the purple fig swells on the stem in a green field; a stranger calls it a fig; scene from
