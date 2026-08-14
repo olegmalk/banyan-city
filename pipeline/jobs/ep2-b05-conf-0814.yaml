@@ -1,0 +1,149 @@
+id: ep2-b05-conf-0814
+task: ep2-b05-conf-0814
+node: 002b-first-citizen
+beat: 5
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: 'stills lane, 2026-08-12 (his verdict: civilian not guard, and no jog)'
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+consumer: review/ep2-picks/b05-register-0812, routed to him by the lead.
+success: A 704x1280 mp4, 121 frames, in which a JOG is visible — legs alternating, body travelling — before
+  he pulls up short. Success is a readable clip, NOT that he reads as a guard. 'He jogs and still looks
+  like a civilian' is a successful run and the more decisive answer.
+why: 'His two named faults were both in my prompt: it never said `jog` and it did say `he stays standing
+  in the same spot`, and the only thing saying guard was the noun. Arm B: same plus a NAMED second guard.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b05-conf-0814\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b05-conf-0814\b05-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: THE TWO GUARDS ARE ALREADY STANDING STILL IN THE FIELD AND THEY DO NOT WALK OR RUN ANYWHERE. They stand side by side on their marks, planted, and the only movement in the shot is that they TURN THEIR HEADS SLOWLY TO SCAN the field - one looks left, the other looks right, their shoulders barely moving. Neither man steps toward the camera, neither crosses the frame, and neither leaves it. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are for the whole shot. Nothing is added to the background and nothing is redrawn. BOTH MEN ARE ALREADY IN THIS FRAME TOO, from the first frame to the last, and no third man is anywhere in it. EXACTLY TWO GUARDS ARE IN THIS SHOT AND THERE IS NO THIRD MAN ANYWHERE IN THE FRAME - not behind them, not at an edge, not out of focus. Two men, a pair, and the frame is too tight to hold a third. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE IN THIS SHOT TOGETHER FROM THE FIRST FRAME AND BOTH STAY IN IT: two different men side by side, not one man twice — the near one carrying a bark clipboard, the second walking level with him a stride to his side. Both are in a brown patrol tunic with a cloth sash of office and a wide belt. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or white. a uniformed patrol guard in a summer field — short brown hair, a matching
+    brown patrol tunic with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on
+    it, a wide belt, dark trousers and boots, a bark clipboard in one hand. HE JOGS. He is RUNNING FORWARD
+    at a heavy trot from the first frame — knees lifting, boots leaving the ground one after the other,
+    free arm pumping, tunic and sash swinging with the stride, body driving toward camera. He keeps jogging,
+    then pulls up short: he plants both feet, rocks forward over them and rocks back, shoulders coming
+    up, and looks off to one side. THE JOG IS THE SHOT — he is moving for most of it, not standing. A
+    SECOND uniformed guard in the same brown patrol tunic and sash jogs beside him, a half step behind,
+    and pulls up short with him. TWO MEN, both in frame, both running. They stay large in frame — knees
+    to head, near enough to read their faces; the field does not push them small. A green summer field
+    behind, a dark treeline on the horizon. Bright midday sunlight, clear and even, cinematic lighting,
+    detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b05-conf-0814\b05-negative.txt: jogging, running, walking toward camera, approaching, camera lurch, motion blur, blurred figure, cropped torso, extreme close-up, one man alone, background appearing, scene forming, world fading in, iris, wipe, dissolve, white background, third guard, extra soldier, a crowd, peaked cap, military cap, three guards, third man, a crowd, a squad, extra soldier, group of men, one man alone, single figure, solo, lone guard, second person arriving late, empty field, boy, child, round soft body, white background, blank background, isolated on white, character sheet, poster art, flat vector art, silhouette, standing still, standing in one spot, standing
+    at attention, stationary, motionless, frozen, still frame, no movement, loitering, reading a clipboard,
+    looking down at a clipboard, armor, armour, breastplate, helmet, chainmail, knight, plate mail, weapon,
+    sword, spear, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull
+    back, tripod, camera, camera equipment, face morphing, distorted face, warped face, extra eyes, bald,
+    walking out of frame, leaving the frame, floating head, disembodied head, scene change, shot change,
+    dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic, 3D render, CGI,
+    live action, motion blur, text
+  C:\banyan-farm\ep2-b05-conf-0814\b05-jobs-encode.json: "[{\"beat\": 5,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b05-conf-0814\\\\b05-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b05-conf-0814\\\\b05-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b05-conf-0814\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b05-conf-0814\b05-jobs-render.json: "[{\"beat\": 5,\n  \"seed\": 20260920,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b05-conf-0814\\\\b05-embeds.pt\",\n  \"init\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b05-conf-0814\\\\b05-init-704x1280.png\",\n  \"out\": \"C:\\\
+    \\banyan-farm\\\\ep2-b05-conf-0814\\\\05-the-patrol-LTX-jog-b-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b05-conf-0814\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b05-scene-0814\05-the-patrol-ipa-r0-w015-s0.png
+  - --sha256
+  - e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa
+  - --out
+  - C:\banyan-farm\ep2-b05-conf-0814\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b05-conf-0814\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b05-conf-0814\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b05-conf-0814
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b05-conf-0814\bench-ep2-b05-conf-0814.jsonl
+  - --bench-label
+  - ep2-b05-conf-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-conf-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b05-conf-0814/05-the-patrol-LTX-jog-b-0812.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b05-conf-0814/b05-init-704x1280.png\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b05-conf-0814/bench-ep2-b05-conf-0814.jsonl\"))\n\
+    lines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b05-conf-0814.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b05-conf-0814\05-the-patrol-LTX-jog-b-0812.mp4

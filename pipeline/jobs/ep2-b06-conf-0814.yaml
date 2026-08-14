@@ -1,0 +1,143 @@
+id: ep2-b06-conf-0814
+task: ep2-b06-conf-0814
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: 'stills lane, 2026-08-13 (his ratification: keep going in that direction for the guards)'
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+consumer: review/ep2-picks/b05-register-0812 and his batch screening.
+success: 'A 704x1280 mp4 in which the bark clipboard stays a HAND-SIZED BOARD — readable but no bigger than his own forearm — while he performs beat 6''s action. The failure worth reporting is the prop inflating even with every fill-the-frame clause removed, which would mean object scale is not controlled by the words that mention it.'
+why: The prop inflated because the prompt asked it to fill a frame a locked camera cannot reframe; the action survives, only the size clause goes.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b06-conf-0814\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b06-conf-0814\b05-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are. Nothing is added to the background and nothing is redrawn. ONE uniformed patrol guard, a grown man, is alone in this shot and no second person is anywhere in the frame. HE TURNS THE BARK BOARD OVER AND READS OFF IT: he rotates the hand-sized bark board face-up, brings it to chest height at a natural reading distance, runs a fingertip down it and his lips move as he reads. His eyes stay down on the board. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or white. a uniformed patrol guard in a summer field — short brown hair, a matching brown
+    patrol tunic with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on it, a
+    wide belt, dark trousers and boots, a bark clipboard in one hand. HE TURNS THE CLIPBOARD OVER AND
+    READS OFF IT. He rotates the bark board face-up in both hands, brings it up in front of his chest at a natural reading distance,
+    runs a fingertip down it line by line, and his lips move as he reads. The BOARD IS THE SUBJECT — held
+    high and large,. His eyes stay down on it. He is working the
+    board, not standing holding it. He stays large in frame — knees to head, near enough to read his face;
+    the field does not push him small. A green summer field behind, a dark treeline on the horizon. Bright
+    midday sunlight, clear and even, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.'
+  C:\banyan-farm\ep2-b06-conf-0814\b05-negative.txt: background appearing, scene forming, iris, wipe, dissolve, white background, blank background, two men, second guard, a pair, giant board, oversized board, white background, blank background, empty background, isolated on white, character sheet, studio backdrop, poster art, flat vector art, silhouette, standing still, standing in one spot, standing at
+    attention, stationary, motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate,
+    helmet, chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame, prop larger than his torso, camera pan, camera tilt, panning, tilting, camera
+    movement, dolly, zoom, push in, pull back, tripod, camera, face morphing, distorted face, warped face,
+    extra eyes, bald, walking out of frame, floating head, disembodied head, scene change, shot change,
+    dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic, 3D render, CGI,
+    live action, motion blur, text
+  C:\banyan-farm\ep2-b06-conf-0814\b05-jobs-encode.json: "[{\"beat\": 6,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-conf-0814\\\\b05-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b06-conf-0814\\\
+    \\b05-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b06-conf-0814\\\\b05-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b06-conf-0814\b05-jobs-render.json: "[{\"beat\": 6,\n  \"seed\": 20260920,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b06-conf-0814\\\\b05-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-conf-0814\\\\b05-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b06-conf-0814\\\
+    \\06-the-clipboard-LTX-world-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b06-conf-0814\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b10-patrol-scene-r2-0813\10-no-form-ipa-r0-w010-s1.png
+  - --sha256
+  - 441a4fd115fa2d0b5194b61b4317be8ee0e14ef6045a9507372062ef3e4cd98c
+  - --out
+  - C:\banyan-farm\ep2-b06-conf-0814\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b06-conf-0814\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b06-conf-0814\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b06-conf-0814
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b06-conf-0814\bench-b06-world.jsonl
+  - --bench-label
+  - ep2-b06-conf-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-conf-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-conf-0814/06-the-clipboard-LTX-world-0813.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b06-conf-0814/b05-init-704x1280.png\")\n        \
+    \     + glob.glob(\"C:/banyan-farm/ep2-b06-conf-0814/bench-b06-world.jsonl\"))\nlines = []\nfor\
+    \ f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-conf-0814.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b06-conf-0814\06-the-clipboard-LTX-world-0813.mp4
