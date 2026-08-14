@@ -17356,3 +17356,57 @@
     them. A single seed showing motion cannot settle either arm, so both arms need their twin before
     I call anything, and I should have queued twins for them rather than only for b02 and b05.
   outcome: null
+
+- id: REFUTED-the-ramp-is-not-caused-by-an-empty-plate-0815
+  date: 2026-08-15
+  kind: refuted
+  hypothesis: >-
+    Team lead, from my own report that beat 05 on a real scene plate showed continuous motion from
+    frame 1: if a proper plate removes the ramp entirely then the ramp was never a sampler property,
+    it was the model having nothing in frame to start animating - making plate quality a MOTION
+    lever and the most useful thing learned tonight.
+  measured: >-
+    Motion onset across ten clips against an ABSOLUTE threshold of 4.0 MAD with the restyle flash
+    dropped. Card plates start as early as scene plates: b06 0.12s, b09 0.12s, b11 0.25s, b10 0.75s.
+    Scene plates: b05a 0.08s, b05b 0.08s, b04 0.08s, b15 0.08s, b02-lw 0.08s. Nine of ten start
+    inside a quarter second. The single late starter is b02-nw at 1.38s.
+  the_decisive_pair: >-
+    b02-lw and b02-nw are the SAME PLATE with different prompt wording, and they start at 0.08s and
+    1.38s. The ramp travels with the prompt, not the plate. So beat 05's early start is not evidence
+    for the hypothesis - almost every clip already starts early, including the emptiest frames we
+    have, the costume cards. The premise that "every clip sits frozen for 1.0-1.5s" was generalised
+    from beat 02, which turns out to be the exception rather than the rule.
+  a_caveat_i_had_to_fix_mid_measurement: >-
+    My first pass used cadence_check's onset, which is relative to each clip's own peak, so a clip
+    that never really moves reports an early onset for its first small wobble. That would have let
+    me "refute" the hypothesis on an artifact. Re-run against a fixed absolute threshold the
+    conclusion holds, and the numbers above are the absolute ones.
+  the_more_interesting_leftover: >-
+    The one clip with a long ramp, b02-nw, is also one of only two clips a blind reader has ever
+    called a real action. Its shape is a quiet head then a concentrated burst - 35 percent of pairs
+    above threshold with a peak of 23.3 - while b02-lw, which invented a tree, is constant low-level
+    drift at 85 percent above threshold with a peak of 14.9. That suggests the ramp may be a SIGN of
+    a discrete action rather than a defect to remove. But b05b, the other confirmed real action,
+    starts at 0.08s with 75 percent coverage, so a sustained walk looks nothing like a discrete
+    fall. Two real actions, two different signatures, and therefore no metric signature identifies
+    "a real action" - which is the floor-not-verdict law arriving for the third time tonight.
+  outcome: null
+
+- id: DEFECT-a-job-can-render-correctly-and-record-the-wrong-beat-0815
+  date: 2026-08-15
+  kind: defect
+  what: >-
+    Three motion jobs were enqueued cropping beats 6, 7 and 9's plates with beats 6, 7 and 9's
+    prompts while their spec recorded beat 5, inherited from the parent they were derived from. The
+    footage would have been correct in every frame. Only the yaml lied.
+  why_it_is_its_own_class: >-
+    Every other defect this night announced itself in the picture - a summoned tree, a costume card,
+    a frozen clip. This one is invisible in the footage by construction, so no screening, no blind
+    read and no metric can catch it, and it lands in the leaf provenance that §7.2 requires to be
+    true. A job that renders correctly while recording the wrong beat poisons the record silently
+    and would be believed later precisely because the clip looks right.
+  fix: >-
+    derive_nw.py now rewrites the beat field and refuses if it does not find exactly one. The three
+    jobs were held and re-fired under fresh ids rather than overwritten, because the payload guard
+    correctly refused to let a second enqueue clobber the first one's inputs.
+  outcome: null
