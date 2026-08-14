@@ -17292,3 +17292,67 @@
     character cards with almost no motion, so this is weak and I would not act on it, but it points
     the same way as arm A.
   outcome: null
+
+- id: CORRECTION-one-cadence-ratio-is-a-lie-and-I-published-two-0815
+  date: 2026-08-15
+  kind: correction
+  what: >-
+    The cadence numbers I committed hours ago - b02 13.2, b17 14.3, b15 9.6, b20 4.7 doubled against
+    b04 1.6, b09 1.0, b12 1.1, b13 1.5 clean - are window artifacts and the doubled/clean split is
+    not trustworthy. The same beat 02 clip measures 15.2, 10.6, 4.4, 1.8, 9.5 or 1.3 depending only
+    on which span the medians are taken over. That is the third time in one night that a statistic
+    computed over the wrong population gave me a confident wrong answer, and the second time on this
+    exact file.
+  the_real_structure: >-
+    The spread is not noise and there is no better single window. The clip STARTS doubled and ANNEALS
+    SMOOTH as motion builds, so any one window is reporting how much ramp it happened to include. On
+    beat 02 the body's first half reads 7.8 and its second half 1.4. The sweep lane found the same
+    annealing independently from the other side, duplicate-side values climbing 1.41 to 11.67 while
+    the peaks held at 18-23.
+  re_measured_honestly: >-
+    Reporting both halves of the body: b02-nw 7.8 then 1.4 and b02-nwB 4.5 then 1.4, both annealing;
+    b15 9.7 then 10.0, doubled the whole way through and NOT annealing; b04 1.5 then 1.8, clean
+    throughout. So three distinct behaviours exist and my original binary was hiding them. Note b15
+    is the test bed for the frame-count arms and its control is doubled end to end.
+  tool: >-
+    cadence_check.py now prints both halves, flags on the EARLY body only, and labels the whole-body
+    figure "window-dependent, do not quote alone" because that is the number someone will quote.
+  outcome: null
+
+- id: FINDING-the-restyle-flash-is-not-universal-0815
+  date: 2026-08-15
+  kind: finding
+  what: >-
+    The lead read beat 02's 30.6 first-pair jump - the model redrawing the plate sharper, brighter,
+    eyes open - and reasoned that every clip we make probably opens with a one-frame flash, which
+    would follow from diffusers pinning frame 0 and leaving frames 1+ unconstrained. Measured across
+    seven clips, it does not: b02-nw is 30.3 and everything else is small - b02-nwB 0.2, b04 0.6,
+    b12 1.1, b13 1.4, b09 1.7, b15 2.3, b17 6.0.
+  reading: >-
+    The pinned-frame-0 mechanism is presumably still real, but it does not always express, and it
+    does not even express on the SAME PROMPT AND PLATE at a different seed - b02-nw flashes at 30.3
+    and its twin b02-nwB at 0.2. So the flash is a seed-level accident, not a standing property of
+    the pipeline, and it should not be quoted as one. Pair 0 still gets dropped from every score,
+    because when it does fire it is the largest number in the clip and it is not motion.
+  outcome: null
+
+- id: RESULT-the-noun-deletion-fix-held-on-one-seed-of-two-0815
+  date: 2026-08-15
+  kind: result
+  what: >-
+    Beat 02's twin landed. Same plate, same prompt with "behind the sapling" removed, seed 20260902
+    instead of 20260815. Segmented, pair 0 dropped: seed A has a body of 35 pairs at mean 11.19 with
+    onset at 1.46s; seed B has a body of 51 pairs at mean 1.95 with onset at 1.58s. The twin moves
+    roughly five and a half times less, which at that magnitude is drift rather than an action.
+  reading: >-
+    The noun deletion is still validated on what it was claimed for - no tree grows in either seed,
+    so removing the absent noun reliably stops the invented geometry. What did NOT replicate is the
+    body movement: one seed produced a real fall, the other produced almost nothing. That is the same
+    one-of-two pattern the loosened recipe showed on beat 13, and it is now the second time a result
+    I paged as a win rests on a single seed. The founder page says the clip is the night's first real
+    movement; it now also says the twin barely moved.
+  what_this_costs_the_prediction: >-
+    Nothing directly - the b15 arms are a different question - but it raises the bar for scoring
+    them. A single seed showing motion cannot settle either arm, so both arms need their twin before
+    I call anything, and I should have queued twins for them rather than only for b02 and b05.
+  outcome: null
