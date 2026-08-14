@@ -2190,6 +2190,44 @@ beats:
     # The clipboard stays at READING HEIGHT rather than `filling the lower third` -- that
     # fill-the-frame construction is the one motion-wave measured inflating props into
     # slabs, and beat 06's own take already reads the board correctly at hand size.
+    # -- `authored_guard_sheet_a` / `_b` -- 2026-08-14. THE GUARDS GET THE TREATMENT THE
+    # GOBLIN JUST GOT. Founder: "i haven't seen the guards characters yet, i need to know
+    # how they should look like and also make some of my own changes perhaps", and "so
+    # far i haven't seen character consistency between the clips of the guards you made."
+    # That is the same gate the goblin was, and for the same reason: there is no approved
+    # guard reference, so every guard beat has been inventing its own man.
+    #
+    # TWO SHEETS, ONE MAN EACH, because he has to be able to tell them apart and a single
+    # sheet with two figures gives the adapter no clean per-man view to condition on.
+    # They differ on BUILD AND FACE, not on register: tall and lean with a long face and
+    # dark cropped hair, against shorter and solid with a broad face and light tousled
+    # hair. `silly harmless bureaucrats`, `round`, `soft` and `bald` are all absent --
+    # register words have lost every time this week, and those three are his own vetoes.
+    #
+    # RECIPE SHAPE FROM THE GOBLIN PICK, adapted where it must be: plain wording, no
+    # proportion clause, no denial pile, and the winning negative's ANTI-PRETTY block
+    # (no jewelry, no ornament, no long eyelashes, no lipstick). What does NOT transfer is
+    # `no hair, no wig` -- that is what made the goblin bald and the guards need hair.
+    # Multi-view per the six-view finding, so a sheet he approves becomes its own
+    # conditioning set the way the goblin frame did.
+    #
+    # THIS IS A PROPOSAL HE CAN REDLINE, not a fait accompli -- he said he wants to make
+    # his own changes. It gates beats 05, 06, 07, 09, 10 and 11.
+    authored_guard_sheet_a: >-
+      A guard man reference sheet, front side and three-quarter views, tall and lean, long
+      face, dark cropped hair, a plain brown tunic with a cloth sash of office across his
+      chest, dark trousers and boots, face clearly visible. Full body, white background,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no
+      knight, no weapon, no jewelry, no ornament, no long eyelashes, no lipstick, no dark,
+      no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_guard_sheet_b: >-
+      A guard man reference sheet, front side and three-quarter views, shorter and solid,
+      broad face, light tousled hair, a plain brown tunic with a cloth sash of office
+      across his chest, dark trousers and boots, face clearly visible. Full body, white
+      background, masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no weapon, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b06_scene: >-
       A guard man in a brown tunic and sash stands in green summer grass, a hedge and dark
       treeline behind, pale blue morning sky above, short brown hair, turning over a bark

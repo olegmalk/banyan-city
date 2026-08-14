@@ -1,0 +1,104 @@
+# 2026-08-14, stills-drafts lane. Guard character sheet A of 2, for his approval.
+# Gates beats 05/06/07/09/10/11. A proposal to redline, not a fait accompli.
+id: ep2-guard-sheet-a-0814
+task: ep2-guard-sheet-a-0814
+node: 005-the-assessor
+beat: 6
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+sample: true
+owner: stills-drafts lane, 2026-08-14
+consumer: the founder, as a redlineable proposal. Gates beats 05, 06, 07, 09, 10, 11.
+success: Four sheets per man. This is a PROPOSAL HE CAN REDLINE -- he said he wants to make his own changes
+  -- so the read is whether these are two men he can tell apart and wants, not whether they are finished.
+  If he redlines, the change goes into the wording and it re-runs; if he approves, the sheet becomes the
+  conditioning set for all six guard beats the way the goblin frame did.
+why: 'THE GUARDS HAVE NEVER HAD AN APPROVED REFERENCE, which is why he has not seen consistency between
+  guard clips -- every beat has been inventing its own man. Same gate the goblin was. Guard A of 2: they
+  differ on BUILD AND FACE, not register, so he can tell them apart. Recipe shape from the goblin pick:
+  plain wording, no proportion clause, no denial pile, and the winning negative''s ANTI-PRETTY block.
+  What does not transfer is `no hair, no wig` -- that made the goblin bald and the guards need hair. `silly
+  harmless bureaucrats`, `round`, `soft` and `bald` are absent; all three of those are his own vetoes.'
+prediction: 'Written before any frame exists, and unlike r2''s this one is aimed at the failure that actually
+  happened. r2 drew NO PLANT in 4 of 4 and NO WORLD in 4 of 4; r3 makes the sapling its own subject clause
+  growing from the earth and gives the world its own sentence. What should come back: a rooted plant with
+  a visible stem beside a kneeling goblin in a lit meadow. The remaining risks, in order — (1) the fig,
+  absent in 3 of 4 of r2, is still only two words and may not read; (2) `purple fig` may fight the model''s
+  prior for a fig''s colour; (3) with the character adjectives cut to buy tokens, the patchwork cloak
+  is now entirely absent from the prompt, so the costume will be whatever the checkpoint defaults to —
+  r2 gave a dark buttoned jacket every time. If the plant and the world come back and only the fig and
+  costume are wrong, that is a PASS on the dialect question and the costume moves to the reference where
+  it belongs.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '7'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_guard_sheet_a
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '7'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_guard_sheet_a
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a
+  - --task
+  - ep2-guard-sheet-a-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guard-sheet-a-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-guard-sheet-a/06-the-clipboard-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what\
+    \ this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong\
+    \ file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n       \
+    \ h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    \    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep2-guard-sheet-a-0814.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guard-sheet-a\06-the-clipboard-wave1-s3.yaml
