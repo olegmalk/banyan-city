@@ -1551,3 +1551,4 @@
 15:48:09Z DONE task=ep2-b01-figleaf-0814-1786722311 rc=0 artifacts=4
 15:48:20Z box-runner idle ready=0 failed=20
 15:51:05Z STARTED task=ep2-b01-figleaf2-0814-1786722658 attempt=1 on box-runner
+15:53:55Z DONE task=ep2-b01-figleaf2-0814-1786722658 rc=0 artifacts=4
