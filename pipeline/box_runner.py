@@ -49,6 +49,57 @@ POLL_SECONDS = 10
 HEARTBEAT_SECONDS = 60
 MAX_CONSECUTIVE_ERRORS = 10
 
+# --------------------------------------------------------------------------
+# THE RC TABLE. Every code the runner invents lives here, and nowhere else.
+#
+# A job's rc is the runner's whole answer to "what do I do about this?", and the
+# answers differ by ninety minutes of card time, so two failures must never
+# spell themselves the same way. Codes below 90 are NOT ours -- they are the
+# step's own exit status, passed through untouched (a sampler that exits 3 is
+# recorded as 3). 90+ is reserved for the runner's own verdicts:
+#
+#   90  RC_STEP_NO_ARGV      a step in the job file declares no argv. The spec
+#                            is malformed; nothing ran. Fix the job file.
+#   91  RC_STEP_RAISED       launching the step raised inside the runner
+#                            (missing binary, bad cwd). Nothing ran either.
+#   92  RC_ARTIFACTS_MISSING SOME declared artifacts landed and some did not.
+#                            A partial render. Re-render the gap.
+#   93  RC_INTERRUPTED       the runner died mid-job and adopted it on restart
+#                            (adopt_interrupted). Nobody knows how far it got;
+#                            not re-run automatically.
+#   94  RC_JOB_UNREADABLE    the job json would not parse. The runner never
+#                            learned what the job even was.
+#   95  RC_PUBLISHED_NOTHING every step exited 0 and NOT ONE declared artifact
+#                            exists.
+#
+# Why 95 exists, since it looks like a shade of 92 (2026-08-14): six scene
+# plates rendered perfectly and published 32 files apiece, but their specs had
+# been cloned from a template predating the beat SLUG in the filenames, so the
+# four names each spec declared were not on disk. All six retired FAILED on 92
+# -- the same code a crashed render gets -- beats 05, 09 and 11 sat unused for a
+# day, and the wave that followed animated costume identity cards because the
+# real plates read as lost. "Published nothing" is fixed by re-publishing in
+# seconds; "render crashed" by re-rendering in ninety minutes. The queue used to
+# spell them identically and the wrong one was chosen.
+#
+# It is 95 and not 94, and not 93 (2026-08-15): 93 was reached for first and
+# collided head-on with RC_INTERRUPTED, which merely MOVED the ambiguity from
+# {crashed, published nothing} to {interrupted, published nothing} and broke CI;
+# 94 was already RC_JOB_UNREADABLE. If you add a code, add it here, give it the
+# next free number, and say what it means -- a number with no note beside it is
+# exactly how the collision happened.
+#
+# test_box_runner.py pins all of these as mutually distinct. That test failing
+# means two verdicts have collapsed into one, which is a real bug, not a stale
+# expectation to be edited to match.
+# --------------------------------------------------------------------------
+RC_STEP_NO_ARGV = 90
+RC_STEP_RAISED = 91
+RC_ARTIFACTS_MISSING = 92
+RC_INTERRUPTED = 93
+RC_JOB_UNREADABLE = 94
+RC_PUBLISHED_NOTHING = 95
+
 # Hand lanes still launch renders on this card directly, so the runner has to
 # yield to them. Matching on the script name is what actually works: an LTX job
 # spends its first minutes in the encode stage with the text encoder in system
@@ -716,7 +767,7 @@ def run_step(step: dict, log_fh, job_env: dict) -> int:
     argv = step.get("argv")
     if not argv:
         log_fh.write("!! step %r has no argv\n" % step.get("name"))
-        return 90
+        return RC_STEP_NO_ARGV
     env = dict(os.environ)
     env.update({str(k): str(v) for k, v in (job_env or {}).items()})
     env.update({str(k): str(v) for k, v in (step.get("env") or {}).items()})
@@ -804,11 +855,11 @@ def with_sidecars(artifacts) -> tuple:
 
 # Two failures that look identical in the queue and are ninety minutes apart in
 # the correct response. 92 has always meant "the artifacts this job declared are
-# not on disk" and it was returned for BOTH of them; 93 splits off the one where
-# every step exited zero and NOTHING the job declared landed, which is what a
-# wrong publish glob or a wrong artifacts declaration looks like from here.
-RC_ARTIFACTS_MISSING = 92
-RC_PUBLISHED_NOTHING = 93
+# not on disk" and it was returned for BOTH of them; RC_PUBLISHED_NOTHING splits
+# off the one where every step exited zero and NOTHING the job declared landed,
+# which is what a wrong publish glob or a wrong artifacts declaration looks like
+# from here. Both codes are defined once, in THE RC TABLE at the top of this
+# file -- read it before inventing a third.
 
 # `05-the-patrol-ipa-r0-w015-s0.png` is what the sampler writes; a spec cloned
 # without the beat SLUG declares `05-ipa-r0-w015-s0.png`. Same beat number, same
@@ -922,7 +973,7 @@ def execute(job: dict, job_path: str, queue: Queue) -> tuple:
                     rc = run_step(step, log_fh, job.get("env") or {})
                 except Exception:
                     log_fh.write("!! step raised\n" + traceback.format_exc())
-                    rc = 91
+                    rc = RC_STEP_RAISED
                 if rc != 0 and not step.get("allow_fail"):
                     failed_step = step.get("name")
                     break
@@ -1038,14 +1089,14 @@ def adopt_interrupted(queue: Queue) -> None:
                         "claimed_by": "box-runner"})
             continue
 
-        job["rc"] = 93
+        job["rc"] = RC_INTERRUPTED
         job["failed_step"] = "interrupted"
         write_json(path, job)
         queue.retire(path, "failed")
         stray = os.path.join(queue.dir("running"), jid + ".log")
         if os.path.exists(stray):
             shutil.move(stray, os.path.join(queue.dir("failed"), jid + ".log"))
-        queue.beat({"event": "job_failed", "job": jid, "rc": 93,
+        queue.beat({"event": "job_failed", "job": jid, "rc": RC_INTERRUPTED,
                     "failed_step": "interrupted", "claimed_by": "box-runner",
                     "note": "runner died mid-render; not re-run automatically"})
 
@@ -1169,7 +1220,8 @@ def main(argv=None) -> int:
                 except Exception:
                     say("unreadable job %s -- failing it" % name)
                     queue.retire(claimed, "failed")
-                    queue.beat({"event": "job_failed", "job": name[:-5], "rc": 94,
+                    queue.beat({"event": "job_failed", "job": name[:-5],
+                                "rc": RC_JOB_UNREADABLE,
                                 "failed_step": "parse", "claimed_by": "box-runner"})
                     continue
 

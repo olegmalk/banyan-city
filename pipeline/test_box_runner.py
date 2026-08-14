@@ -135,21 +135,81 @@ def test_allow_fail_continues():
         check(os.path.exists(art), "allow_fail: later step ran")
 
 
-def test_missing_artifact_fails_a_zero_rc_job():
-    """A job whose steps all succeed but which produced nothing is a failure.
+def test_the_runner_verdicts_never_share_a_code():
+    """The rc table's one invariant: no two verdicts spell themselves alike.
 
-    This is the check that stops a silently-broken render from being reported as
-    a finished one -- the whole point of naming artifacts in the job file.
+    An rc is the runner's whole answer to "what do I do about this?", and the
+    answers are minutes apart from hours apart. On 2026-08-14 "published
+    nothing" and "render crashed" were both 92 and six good plates were retired
+    as crashes. The fix gave published-nothing its own code -- but reached for
+    93, which adopt_interrupted already owned, so the ambiguity merely moved to
+    {interrupted, published nothing} and CI went red.
+
+    This check is deliberately about the PROPERTY, not the numbers: renumber the
+    table freely, collapse any two of them and this fails.
+    """
+    codes = {
+        "step declares no argv": br.RC_STEP_NO_ARGV,
+        "step raised in the runner": br.RC_STEP_RAISED,
+        "some artifacts missing": br.RC_ARTIFACTS_MISSING,
+        "interrupted mid-render": br.RC_INTERRUPTED,
+        "job json unreadable": br.RC_JOB_UNREADABLE,
+        "published nothing": br.RC_PUBLISHED_NOTHING,
+    }
+    eq(len(set(codes.values())), len(codes),
+       "rc table: every verdict has a code of its own (%r)" % (codes,))
+    check(all(v >= 90 for v in codes.values()),
+          "rc table: runner verdicts stay out of the steps' own exit range")
+    # The three the 2026-08-14/15 defect ran together, named one more time so a
+    # reader of a failure sees which pair collapsed.
+    check(br.RC_ARTIFACTS_MISSING != br.RC_PUBLISHED_NOTHING,
+          "rc table: a crashed render is not a job that published nothing")
+    check(br.RC_INTERRUPTED != br.RC_PUBLISHED_NOTHING,
+          "rc table: an interrupted runner is not a job that published nothing")
+    check(br.RC_ARTIFACTS_MISSING != br.RC_INTERRUPTED,
+          "rc table: a crashed render is not an interrupted runner")
+
+
+def test_publishing_nothing_is_its_own_verdict():
+    """All steps exited 0 and NOT ONE declared artifact landed.
+
+    Not a crash: a wrong publish glob or a wrong artifacts declaration. Fixed by
+    re-publishing in seconds, so it must not read as the ninety-minute failure.
     """
     with TempRoot() as root:
         enqueue(root, job("j-noart", [py_step("nop", "pass")],
                           artifacts=[os.path.join(root, "never.mp4")]))
         drain(root)
-        eq(listing(root, "failed"), ["j-noart.json", "j-noart.log"], "artifact: failed")
+        eq(listing(root, "failed"), ["j-noart.json", "j-noart.log"], "publish-empty: failed")
         with open(os.path.join(root, "failed", "j-noart.json"), encoding="utf-8") as fh:
             rec = json.load(fh)
-        eq(rec["rc"], 92, "artifact: rc 92")
+        eq(rec["rc"], br.RC_PUBLISHED_NOTHING, "publish-empty: its own rc")
+        eq(rec["failed_step"], "publish-empty", "publish-empty: named step")
+        check(rec["rc"] != br.RC_ARTIFACTS_MISSING,
+              "publish-empty: not spelled like a partial render")
+        check(rec["rc"] != br.RC_INTERRUPTED,
+              "publish-empty: not spelled like an interrupted runner")
+
+
+def test_missing_artifact_fails_a_zero_rc_job():
+    """A job whose steps all succeed but which produced only SOME of what it
+    declared is a failure, and a different one from publishing nothing.
+
+    This is the check that stops a silently-broken render from being reported as
+    a finished one -- the whole point of naming artifacts in the job file.
+    """
+    with TempRoot() as root:
+        landed = os.path.join(root, "landed.txt")
+        enqueue(root, job("j-part", [py_step("half", "open(%r,'w').write('x')" % landed)],
+                          artifacts=[landed, os.path.join(root, "never.mp4")]))
+        drain(root)
+        eq(listing(root, "failed"), ["j-part.json", "j-part.log"], "artifact: failed")
+        with open(os.path.join(root, "failed", "j-part.json"), encoding="utf-8") as fh:
+            rec = json.load(fh)
+        eq(rec["rc"], br.RC_ARTIFACTS_MISSING, "artifact: rc 92")
         eq(rec["failed_step"], "artifact-check", "artifact: named step")
+        check(rec["rc"] != br.RC_PUBLISHED_NOTHING,
+              "artifact: a partial landing is not 'published nothing'")
 
 
 def test_priority_then_name_order():
@@ -174,8 +234,11 @@ def test_interrupted_job_is_retired_not_rerun():
         eq(listing(root, "ready"), [], "interrupt: not requeued")
         with open(os.path.join(root, "failed", "j-int.json"), encoding="utf-8") as fh:
             rec = json.load(fh)
-        eq(rec["rc"], 93, "interrupt: rc 93")
+        eq(rec["rc"], br.RC_INTERRUPTED, "interrupt: rc 93")
+        eq(rec["failed_step"], "interrupted", "interrupt: named step")
         check(rec["interrupted"] is True, "interrupt: flagged")
+        check(rec["rc"] != br.RC_PUBLISHED_NOTHING,
+              "interrupt: not spelled like a job that published nothing")
 
 
 def test_interrupted_job_requeues_when_it_opted_in():
@@ -201,6 +264,12 @@ def test_unreadable_job_fails_without_killing_the_runner():
         eq(drain(root), 0, "junk: runner survived")
         eq(listing(root, "failed"), ["j-junk.json"], "junk: retired")
         check(os.path.exists(art), "junk: later job still ran")
+        # The job file is junk, so its verdict exists only in the heartbeat.
+        junk = [b for b in beats(root)
+                if b.get("event") == "job_failed" and b.get("job") == "j-junk"]
+        eq([b["rc"] for b in junk], [br.RC_JOB_UNREADABLE], "junk: rc 94")
+        check(br.RC_JOB_UNREADABLE not in (br.RC_PUBLISHED_NOTHING, br.RC_INTERRUPTED),
+              "junk: unparseable is not published-nothing or interrupted")
 
 
 def test_step_with_no_argv_is_a_clean_failure():
@@ -208,7 +277,7 @@ def test_step_with_no_argv_is_a_clean_failure():
         enqueue(root, job("j-noargv", [{"name": "empty"}]))
         eq(drain(root), 0, "noargv: runner survived")
         with open(os.path.join(root, "failed", "j-noargv.json"), encoding="utf-8") as fh:
-            eq(json.load(fh)["rc"], 90, "noargv: rc 90")
+            eq(json.load(fh)["rc"], br.RC_STEP_NO_ARGV, "noargv: rc 90")
 
 
 def test_env_reaches_the_step():
