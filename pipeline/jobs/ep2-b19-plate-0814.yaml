@@ -1,0 +1,98 @@
+# 2026-08-14, stills-drafts lane. Goblin plate for beat 19 on the proven
+# recipe, conditioned on the frozen reference. See `why`.
+id: ep2-b19-plate-0814
+task: ep2-b19-plate-0814
+node: 002b-first-citizen
+beat: 19
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: Sixteen frames. Pass is the chosen goblin, in THIS beat's location, doing this beat's action
+  -- world present at frame one so motion has nothing to invent. Read against the chosen frame. The failure
+  worth reporting is cuteness returning, which would mean the recipe does not survive a beat action, or
+  the world absent, which would send this beat to the bootstrap route.
+why: 'GOBLIN PLATE ON THE PROVEN RECIPE, conditioned on the frozen reference (refs-goblin-approved-0814,
+  the frame the founder chose). Wording copied from that frame''s own prompt -- the only wording that
+  has produced the non-cute goblin -- with this beat''s action and its scene. It says BOY, carries no
+  proportion clause, no anti-cute denials and NO COSTUME WORDS: the winning prompt names no clothing,
+  the tunic is the checkpoint''s own invention on that seed, and the reference carries it where words
+  would be guessing. Those tokens buy the scene instead, which is the white-plate fault the founder has
+  caught three times.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-plate
+  - --draft-key
+  - authored_b19_plate
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-plate
+  - --draft-key
+  - authored_b19_plate
+  - --arm
+  - window4
+  - --task
+  - ep2-b19-plate-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-plate-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b19-plate/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b19-plate-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b19-plate\19-the-drop-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-plate\19-the-drop-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-plate\19-the-drop-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-plate\19-the-drop-ipa-r3-w015-s0.png

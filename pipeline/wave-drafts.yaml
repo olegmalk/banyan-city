@@ -767,6 +767,32 @@ beats:
       aesthetic No girl, no chibi, no big head, no round baby face, no toddler, no child,
       no house, no indoors, no pale skin, no dark, no night. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    # -- `authored_b03_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b03_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, crouches behind a tiny sapling's thin stem, broad round cotyledon
+      leaves above, face visible. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b03_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, green scalp, crouches in an open
       grassy field behind the pencil-thin stem of a tiny sapling that hides
@@ -1334,6 +1360,31 @@ beats:
       head, no round baby face, no toddler, no child, no blush, no rosy cheeks, no motion
       lines, no emphasis lines, no sweat drop, no white background, no character sheet. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b04_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b04_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, his face filling the frame, cheeks puffed, eyes darting. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b04_adult_r2: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       his gaunt narrow face filling the frame, extreme close-up, cheeks puffed, eyes
@@ -3278,6 +3329,31 @@ beats:
       baby face, no toddler, no child, no white hair, no white background, no plain
       background, no character sheet, no night, no dusk. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # -- `authored_b13_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b13_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, sits hugging his knees in the shade beside a tiny two-leaf seedling. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b13_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, sits
       hugging his knees in the small patch of shade beside a tiny two-leaf seedling rooted
@@ -3692,6 +3768,32 @@ beats:
       baby face, no toddler, no child, no uprooted plant, no glowing eyes, no white
       background, no character sheet, no dark, no night. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # -- `authored_b17_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b17_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, stands up and turns away from a tiny sapling with broad round cotyledon
+      leaves. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b17_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       stands up, brushes dust off his cloak, turning away from a tiny sapling with
@@ -3992,6 +4094,32 @@ beats:
       baby face, no toddler, no child, no cartoon, no green fig, no green fruit, no white
       background, no character sheet, no dark, no night. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # -- `authored_b19_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b19_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, a purple-violet fig, green at its neck, drops from the sapling and
+      bounces off his head. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b19_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       as a deep purple-violet fig, green at its neck, drops from the sapling beside
@@ -4144,6 +4272,32 @@ beats:
       baby face, no toddler, no child, no glowing eyes, no glowing orb, no green fig, no
       white background, no character sheet, no dark, no night. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    # -- `authored_b20_plate` -- 2026-08-14, THE PROVEN RECIPE APPLIED. Shape copied from
+    # the frame the founder chose, whose prompt is the only wording that has produced the
+    # non-cute goblin, and confirmed by ep2-goblin-freeze-w015-0814 reproducing him at
+    # three of four reference scopes.
+    #
+    # WHAT IS DELIBERATELY ABSENT, and every item of it cost us a round this week:
+    #  * no `man`. It says BOY, because the winning prompt does, and the man-not-boy rule
+    #    (48410425) turned out not to be the lever.
+    #  * no proportion clause -- no `lean and wiry`, no `narrow angular skull`, no `adult`,
+    #    no head-to-height ratio.
+    #  * no anti-cute denials at all. Every arm that fought cute produced more of it.
+    #  * NO COSTUME WORDS. The winning prompt names no clothing; the crossed-wrap tunic
+    #    and sash are the checkpoint's own invention on that seed, and the REFERENCE
+    #    carries them reliably where words would be guessing at what the model
+    #    volunteered. Those tokens go to the scene instead.
+    # What it keeps is the winning negative's ANTI-PRETTY block -- no hair/wig for the
+    # bald skull, no jewelry/ornament/eyelashes/lipstick -- which never names cuteness
+    # and so never summons it.
+    authored_b20_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, raises a deep purple-violet fig, green at its neck, matte, in both hands like
+      evidence. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b20_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       raises a deep purple-violet fig, green at its neck, matte, in both hands like
