@@ -1310,3 +1310,4 @@
 00:38:51Z FAIL task=ep2-b11-scene-0814-1786667332 rc=92 step=artifact-check
 00:39:01Z STARTED task=ep2-b12-scene-0814-1786667333 attempt=1 on box-runner
 00:39:53Z FAIL task=ep2-b12-scene-0814-1786667333 rc=92 step=artifact-check
+00:39:59Z STARTED task=ep2-b18-scene-0814-1786667335 attempt=1 on box-runner
