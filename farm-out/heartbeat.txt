@@ -1412,3 +1412,4 @@
 09:10:31Z STARTED task=ep2-b06-read-0814-1786696855 attempt=1 on box-runner
 09:16:51Z DONE task=ep2-b06-read-0814-1786696855 rc=0 artifacts=1
 09:16:59Z STARTED task=ep2-b06-readBB-0814-1786696859 attempt=1 on box-runner
+09:23:14Z DONE task=ep2-b06-readBB-0814-1786696859 rc=0 artifacts=1
