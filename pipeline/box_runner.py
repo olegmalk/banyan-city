@@ -32,8 +32,10 @@ import argparse
 import atexit
 import ctypes
 import datetime
+import glob
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -800,6 +802,95 @@ def with_sidecars(artifacts) -> tuple:
     return out, missing
 
 
+# Two failures that look identical in the queue and are ninety minutes apart in
+# the correct response. 92 has always meant "the artifacts this job declared are
+# not on disk" and it was returned for BOTH of them; 93 splits off the one where
+# every step exited zero and NOTHING the job declared landed, which is what a
+# wrong publish glob or a wrong artifacts declaration looks like from here.
+RC_ARTIFACTS_MISSING = 92
+RC_PUBLISHED_NOTHING = 93
+
+# `05-the-patrol-ipa-r0-w015-s0.png` is what the sampler writes; a spec cloned
+# without the beat SLUG declares `05-ipa-r0-w015-s0.png`. Same beat number, same
+# tail, one missing segment in between.
+_BEAT_STEM = re.compile(r"^(\d{1,3})-(.+)$")
+
+
+def resolve_artifact(declared: str):
+    """(path on disk, note) for one declared artifact, tolerating the beat slug.
+
+    THE DEFECT THIS ABSORBS (2026-08-14, six plates). The samplers name their
+    output `<beat>-<slug>-<rest>` -- the slug is the beat's own name, `the-patrol`,
+    `the-clipboard` -- and a spec cloned from a template that predates the slug
+    declares `<beat>-<rest>`. Six scene plates rendered perfectly, published 32
+    files apiece, and were retired FAILED because the four filenames their spec
+    named did not exist. Re-publishing them took forty seconds; re-rendering
+    them, the response the queue's rc invited, would have been ninety minutes of
+    card time redrawing frames already on disk.
+
+    So a declared name that is missing is retried once with the slug wildcarded
+    in: `05-*-ipa-r0-w015-s0.png`. A SINGLE match resolves, and says so in the
+    log and in the job record -- the spec is still wrong and the note is how
+    anyone learns that. Several matches do not resolve: guessing which frame a
+    job meant is exactly the silent substitution the declared-artifact check
+    exists to prevent.
+    """
+    if os.path.exists(declared):
+        return declared, None
+    m = _BEAT_STEM.match(os.path.basename(declared))
+    if not m:
+        return None, None
+    pattern = os.path.join(os.path.dirname(declared),
+                           "%s-*-%s" % (m.group(1), m.group(2)))
+    hits = sorted(p for p in glob.glob(pattern) if os.path.exists(p))
+    if len(hits) == 1:
+        return hits[0], ("declared %s, found %s -- the spec dropped the beat "
+                         "slug; resolved, but FIX THE SPEC"
+                         % (os.path.basename(declared), os.path.basename(hits[0])))
+    if len(hits) > 1:
+        return None, ("declared %s matches %d slugged files (%s) -- ambiguous, "
+                      "not resolving; name one in the spec"
+                      % (os.path.basename(declared), len(hits),
+                         ", ".join(os.path.basename(h) for h in hits[:4])))
+    return None, None
+
+
+def resolve_artifacts(declared) -> tuple:
+    """(present, missing, notes) over a job's whole declared artifact list."""
+    present, missing, notes = [], [], []
+    for a in declared:
+        got, note = resolve_artifact(a)
+        if note:
+            notes.append(note)
+        (present if got else missing).append(got or a)
+    return present, missing, notes
+
+
+def neighbours_of(paths, limit: int = 12):
+    """What IS in the directories a job's missing artifacts point at.
+
+    A bare "declared artifacts missing" names only the files that are absent,
+    which is the half of the comparison nobody needs: the question is always
+    "then what did the sampler write?", and answering it took an ssh session
+    and a directory listing. It is two lines of listing here.
+    """
+    seen, out = set(), []
+    for p in paths:
+        d = os.path.dirname(p) or "."
+        if d in seen:
+            continue
+        seen.add(d)
+        try:
+            names = sorted(os.listdir(d))
+        except OSError as exc:
+            out.append("%s -- unreadable (%s)" % (d, exc.__class__.__name__))
+            continue
+        out.append("%s -- %d file(s): %s%s"
+                   % (d, len(names), ", ".join(names[:limit]),
+                      " ..." if len(names) > limit else ""))
+    return out
+
+
 def execute(job: dict, job_path: str, queue: Queue) -> tuple:
     """Run every step. Returns (outcome, rc, log_path)."""
     jid = job.get("id") or os.path.basename(job_path)[:-5]
@@ -840,12 +931,33 @@ def execute(job: dict, job_path: str, queue: Queue) -> tuple:
             if holds_card:
                 drop_claim(jid)
 
-        missing = [a for a in job.get("artifacts", []) if not os.path.exists(a)]
+        declared = job.get("artifacts", [])
+        present, missing, slug_notes = resolve_artifacts(declared)
+        for note in slug_notes:
+            log_fh.write("!! SLUG-TOLERANT MATCH: %s\n" % note)
+        job["artifact_notes"] = slug_notes
         if rc == 0 and missing:
             log_fh.write("!! declared artifacts missing: %s\n" % json.dumps(missing))
-            rc = 92
-            failed_step = "artifact-check"
-        present = [a for a in job.get("artifacts", []) if os.path.exists(a)]
+            for line in neighbours_of(missing):
+                log_fh.write("   on disk: %s\n" % line)
+            if not present:
+                # EVERY step exited zero and not one declared file landed. That
+                # is not a render that crashed -- it is a job that published
+                # nothing, and on 2026-08-14 the two were indistinguishable in
+                # the queue for six plates that had rendered fine. Say which
+                # one it is, in the log and in the rc.
+                log_fh.write(
+                    "!! PUBLISHED NOTHING. Every step exited 0 and NONE of the "
+                    "%d declared artifacts exist. The render did not crash: "
+                    "either the publish glob or the artifacts list does not "
+                    "match what the sampler wrote (the beat slug is the usual "
+                    "culprit -- see the listing above). Re-publishing is "
+                    "seconds; re-rendering is not the fix.\n" % len(declared))
+                rc = RC_PUBLISHED_NOTHING
+                failed_step = "publish-empty"
+            else:
+                rc = RC_ARTIFACTS_MISSING
+                failed_step = "artifact-check"
         present, unprovenanced = with_sidecars(present)
         if unprovenanced:
             log_fh.write("!! NO PROVENANCE RECORD beside: %s\n"

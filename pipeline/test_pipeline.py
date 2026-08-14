@@ -7181,6 +7181,111 @@ def test_the_courier_and_the_telemetry_daemon_own_different_branches():
           telemetry.BRANCH == "farm-telemetry-rtx5090")
 
 
+def test_a_plate_that_rendered_is_not_a_plate_that_failed():
+    """The beat slug, and the six plates it cost us.
+
+    2026-08-14: six scene-plate specs were cloned from a template whose filename
+    stem predated the beat SLUG the samplers write. `05-the-patrol-ipa-r0-w015-s0.png`
+    landed on disk; `05-ipa-r0-w015-s0.png` was what the spec declared. Every step
+    exited 0, thirty-two files published, and the runner retired all six FAILED on
+    rc 92 — the same rc a crashed render gets. Beats 05, 09 and 11 sat unused for a
+    day, and the wave that followed animated costume identity cards for six beats
+    because the real plates read as lost.
+
+    Two things are pinned here. The declared name resolves through the missing
+    slug when exactly one file can be meant, and a job where NOTHING landed is a
+    different rc from a job where some of it did — because "published nothing" is
+    fixed by re-publishing in seconds and "render crashed" by re-rendering in
+    ninety minutes, and the queue used to spell them identically.
+    """
+    import tempfile
+
+    import box_runner as br
+
+    with tempfile.TemporaryDirectory() as td:
+        d = Path(td)
+        (d / "05-the-patrol-ipa-r0-w015-s0.png").write_bytes(b"x")
+        declared = str(d / "05-ipa-r0-w015-s0.png")
+        got, note = br.resolve_artifact(declared)
+        check("the slugless declared name resolves to the file on disk",
+              got == str(d / "05-the-patrol-ipa-r0-w015-s0.png"))
+        check("and it says the spec is still wrong",
+              bool(note) and "FIX THE SPEC" in note)
+
+        exact = str(d / "05-the-patrol-ipa-r0-w015-s0.png")
+        check("an exact match resolves with nothing to report",
+              br.resolve_artifact(exact) == (exact, None))
+
+        # Two slugged candidates for one declared name: guessing which frame the
+        # job meant is the silent substitution the check exists to prevent.
+        (d / "05-the-sprint-ipa-r0-w015-s0.png").write_bytes(b"x")
+        got2, note2 = br.resolve_artifact(declared)
+        check("two candidates resolve to neither", got2 is None)
+        check("and the ambiguity is named", bool(note2) and "ambiguous" in note2)
+
+        missing = str(d / "05-nothing-like-this.png")
+        check("a name nothing on disk can satisfy stays missing",
+              br.resolve_artifact(missing) == (None, None))
+
+        present, absent, notes = br.resolve_artifacts(
+            [exact, str(d / "05-gone-s9.png")])
+        check("resolve_artifacts keeps the found and the absent apart",
+              present == [exact] and absent == [str(d / "05-gone-s9.png")])
+        check("and reports no slug note when there was no slug rescue",
+              notes == [])
+
+        listing = br.neighbours_of([str(d / "05-gone-s9.png")])
+        check("the listing answers 'then what DID it write?'",
+              len(listing) == 1 and "05-the-patrol-ipa-r0-w015-s0.png" in listing[0])
+
+    check("published-nothing has an rc of its own",
+          br.RC_PUBLISHED_NOTHING != br.RC_ARTIFACTS_MISSING)
+    src = (REPO / "pipeline" / "box_runner.py").read_text(encoding="utf-8")
+    check("the runner still distinguishes the two in execute()",
+          "failed_step = \"publish-empty\"" in src
+          and "rc = RC_PUBLISHED_NOTHING" in src)
+    check("and it says so out loud rather than only in an rc",
+          "PUBLISHED NOTHING" in src)
+    check("a partial landing is still the old artifact-check failure",
+          "rc = RC_ARTIFACTS_MISSING" in src)
+
+
+def test_the_scene_plate_specs_declare_the_names_the_sampler_writes():
+    """The same defect, checked where it is actually authored.
+
+    The runner now tolerates a slugless declaration, but tolerating it is not
+    the same as it being right: the resolver refuses the moment two frames could
+    be meant. Every spec that names a `<beat>-...` png under a sampler out-dir
+    must carry the beat slug, so no clone re-introduces this.
+    """
+    import re as _re
+
+    import yaml
+
+    # A sampler frame is `<beat>-<slug>-<wave1|ipa>-...`. If the marker follows
+    # the beat number directly, the slug was dropped and the name matches nothing.
+    slugless = _re.compile(r"^\d{2}-(wave\d|ipa)\b")
+    bad = []
+    for spec in sorted((REPO / "pipeline" / "jobs").glob("*.yaml")):
+        if spec.name == "index.yaml":
+            continue
+        try:
+            doc = yaml.safe_load(spec.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(doc, dict):
+            continue
+        arts = doc.get("artifacts")
+        for art in (arts if isinstance(arts, list) else []):
+            name = str(art).replace("\\", "/").rsplit("/", 1)[-1]
+            if slugless.match(name):
+                bad.append(spec.name + " -> " + name)
+    check("no job spec declares a sampler frame without its beat slug",
+          not bad)
+    if bad:
+        print("      " + "; ".join(bad[:6]))
+
+
 def test_every_reader_falls_back_to_where_the_vitals_used_to_be():
     """A reader pointed at the new branch alone would go blind on the old data.
 
@@ -8531,6 +8636,9 @@ def main():
     test_the_repo_owner_is_read_from_the_platform_that_is_building()
     # TWO WRITERS MUST NEVER SHARE ONE BRANCH AGAIN.
     test_the_courier_and_the_telemetry_daemon_own_different_branches()
+    # A RENDER THAT LANDED MUST NEVER READ AS A RENDER THAT CRASHED.
+    test_a_plate_that_rendered_is_not_a_plate_that_failed()
+    test_the_scene_plate_specs_declare_the_names_the_sampler_writes()
     test_every_reader_falls_back_to_where_the_vitals_used_to_be()
     test_a_rev_parse_that_failed_is_not_a_sha()
     # THE STATUS PAGE MUST GO STALE ON ITS OWN, NOT ON A REMINDER.

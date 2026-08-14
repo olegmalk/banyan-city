@@ -2435,6 +2435,26 @@ beats:
       no helmet, no knight, no weapon, no jewelry, no ornament, no long eyelashes, no
       lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
+    # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
+    # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used
+    # the SAME kind of scene sentence and came back with a real field in frame, and the one
+    # thing that differed is the IP-Adapter reference: 05 and 11 conditioned on
+    # `refs-guards-twoinfield-0813` (two guards standing in a field), 06 and 09 conditioned on
+    # `refs-charref-guards-r5-0812`, whose own draft says "reference sheet, multiple views,
+    # turnaround, white background". A character-sheet reference returns a character sheet
+    # however the prompt is worded -- the adapter owns the composition. So this key changes the
+    # WORDING only as far as beat 05's proven shape requires (two men in frame, matching the
+    # two-in-field reference) and the job changes the reference; everything else -- arm
+    # window4, the 15% window, the negatives, the cast ruling (adult, short brown hair, brown
+    # tunic and sash, no `round`, no `bald`, no register phrases) -- is beat 05's, unpicked-at.
+    authored_b06_scene2: >-
+      Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
+      and dark treeline behind, pale blue morning sky above, short brown hair, the nearer
+      one turning over a bark clipboard at reading height and looking down at it.
+      Cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no
+      armor, no helmet, no knight, no white background, no plain background, no character
+      sheet, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b06_scene: >-
       A guard man in a brown tunic and sash stands in green summer grass, a hedge and dark
       treeline behind, pale blue morning sky above, short brown hair, turning over a bark

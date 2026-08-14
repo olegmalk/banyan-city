@@ -1,0 +1,114 @@
+# 2026-08-15, plate lane. ONE SAMPLE. Scene-carrying plate for beat 06.
+id: ep2-b06-plate-0815
+task: ep2-b06-plate-0815
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 18
+max_attempts: 1
+owner: plate lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 06 is THE CLIPBOARD -- "GUARD 2 turns over a clipboard
+  made of bark and reads" -- guards only, no goblin, so nothing unsettled about the goblin design
+  is inherited here.'
+consumer: 'motion-wave, which has no usable init for beat 06 and animated a costume identity card
+  instead on 2026-08-14. This plate is the frame-one it needs.'
+success: 'A frame with beat 06''s LOCATION in it -- green field, hedge/treeline, sky -- and two adult
+  short-brown-haired guards in brown tunics, the nearer one reading a bark clipboard. The failure
+  worth reporting is another blank pale ground with one standing figure, which would mean the
+  reference is NOT what decides composition and the diagnosis below is wrong.'
+why: 'ONE SAMPLE BEFORE ANY BATCH (founder, 2026-08-03). Five beats -- 06, 07, 09, 10 and possibly
+  18 -- have no usable scene plate, and the last wave animated costume cards for six beats because
+  nobody opened an init first. This job tests ONE recipe change on ONE beat before any of the others
+  are queued.
+
+  THE RECIPE CHANGE, and it is a single variable: the IP-Adapter REFERENCE. Beats 05 and 11 came
+  back with a real field in frame; beats 06 and 09 came back as costume cards. Same sampler, same
+  arm (window4, 15% window), same scene-first prompt shape, same day. What differed is --refs:
+  05 and 11 used `refs-guards-twoinfield-0813` (two guards standing in a field); 06 and 09 used
+  `refs-charref-guards-r5-0812`, whose own draft reads "reference sheet, multiple views, turnaround,
+  ... white background". The adapter owns the composition, so a character-sheet reference returns
+  a character sheet whatever the prompt says. This job runs beat 06 on the two-in-field reference.
+
+  The draft `authored_b06_scene2` is beat 05''s proven sentence with beat 06''s action swapped in
+  (two men in frame, matching the two-figure reference); the cast ruling, the negatives and the arm
+  are beat 05''s byte for byte.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815
+  - --draft-key
+  - authored_b06_scene2
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815
+  - --draft-key
+  - authored_b06_scene2
+  - --arm
+  - window4
+  - --task
+  - ep2-b06-plate-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # The glob carries the beat SLUG the sampler actually writes (06-the-clipboard-...).
+  # Dropping it is what made six rendered plates read as six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-plate-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b06-plate-0815/06-the-clipboard-*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-plate-0815.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815\06-the-clipboard-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815\06-the-clipboard-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-plate-0815\06-the-clipboard-ipa-r3-w015-s0.png
