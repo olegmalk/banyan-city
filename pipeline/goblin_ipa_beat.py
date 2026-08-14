@@ -69,6 +69,14 @@ from pathlib import Path
 # --refs holds, no longer only beat 04's goblin frames.
 GOBLIN_BEATS = (2, 3, 4, 8, 13, 14, 15, 17, 19, 20)
 GUARD_BEATS = (5, 6, 7, 8, 9, 10, 11)
+# THE FIG IS NOT A CHARACTER, and this list is the admission that the gate above
+# was written as if every reference depicted a person. It does not: the fig is a
+# frozen OBJECT with its own canon (deep purple-violet, green at the neck, matte)
+# and, since 2026-08-14, its own licence-clean reference. The rationale of the
+# guard still applies unchanged — a beat with no fig in it cannot answer whether
+# the fig holds — so the list is the beats where a fig is actually in frame.
+FIG_BEATS = (1, 18, 19, 20)
+BEAT_LISTS = {"goblin": GOBLIN_BEATS, "guard": GUARD_BEATS, "fig": FIG_BEATS}
 
 
 def main() -> int:
@@ -79,13 +87,15 @@ def main() -> int:
     ap.add_argument("--sampler-dir", default=None,
                     help="directory holding goblin_ipa_sample.py; defaults to "
                          "this file's own directory")
-    ap.add_argument("--character", choices=("goblin", "guard"),
+    ap.add_argument("--character", choices=tuple(BEAT_LISTS),
                     default="goblin",
-                    help="which character the reference in --refs depicts; "
-                         "gates which beats may be conditioned")
+                    help="what the reference in --refs depicts; gates which "
+                         "beats may be conditioned. `fig` is an OBJECT rather "
+                         "than a character and its beats are where a fig is in "
+                         "frame.")
     known, rest = ap.parse_known_args()
 
-    allowed = GOBLIN_BEATS if known.character == "goblin" else GUARD_BEATS
+    allowed = BEAT_LISTS[known.character]
     if known.beat not in allowed:
         print(f"!! beat {known.beat} is not one of the {known.character} "
               f"beats {allowed} — its draft has no {known.character}, so "

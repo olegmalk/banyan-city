@@ -187,6 +187,30 @@ beats:
       foliage, no white fruit, no pale fruit, no dark, no night, no dusk, no
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b01_figref` -- 2026-08-14. THE FIG GETS A REFERENCE, because the
+    # wording lever is spent: six rounds (round-green, teardrop, features, purple,
+    # purple-plain, five-diagnostics) each fixed what they named and broke or missed
+    # something else, and the last pair split the difference - one seed finally got the
+    # neck, flat base and ostiole while the other turned the meridian ribbing into
+    # horizontal bands and read as a planet. That is the same wall the goblin hit, and
+    # the same answer: condition on an image.
+    #
+    # THE PROMPT IS DELIBERATELY EMPTY OF FIG DESCRIPTION. No purple, no teardrop, no
+    # neck, no matte, no ostiole - placement and scene only, and the identity of the
+    # fruit is left entirely to the reference. That is the whole experiment. If the
+    # purple arrives without the word, the reference is carrying the object and the six
+    # rounds of adjectives were the wrong instrument all along.
+    #
+    # WHAT SURVIVES from the plant canon, because it is not about the fig: two oversized
+    # cotyledon leaves and the whole plant in frame, which is beat 12's growth-ladder
+    # ruling, and the person-singulars block, which is the plant-only plate's defence.
+    authored_b01_figref: >-
+      A tiny seedling in an open grassy field, one fig hanging from its thin stem below
+      the leaves, two oversized cotyledon leaves, whole plant in frame. Medium shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No woman, no girl, no boy, no child, no person, no chibi,
+      no mascot, no creature, no face, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b01_t2i_fig: >-
       A tiny seedling in an open grassy field, one small round green fig
       growing on its thin stem, only three or four leaves, whole plant in

@@ -1,0 +1,107 @@
+# 2026-08-14, stills-drafts lane. ONE conditioned fig sample on beat 01.
+# Reference: Wellcome Collection wvyexwsa, Public Domain Mark. Prompt carries NO fig words.
+id: ep2-b01-figref-0814
+task: ep2-b01-figref-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 3
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: the fig across every beat that shows one, if the object survives conditioning.
+success: 'Sixteen frames. THE PROMPT CONTAINS NO FIG DESCRIPTION AT ALL - no purple, no teardrop, no neck,
+  no matte - only placement and scene. PREDICTION, written before the frames land, as the stranger test:
+  someone shown these with no context should call the fruit a FIG rather than a plum, a berry or a ball,
+  and should call it purple without having been told. If the purple arrives without the word, the reference
+  is carrying the object and six rounds of adjectives were the wrong instrument. If it comes back green,
+  the reference does not reach the fruit at this window and the next move is scale, not more words. SCORE
+  IT COLD: a reader with no context, not me.'
+why: 'THE FIG WORDING LEVER IS SPENT - six rounds, each fixing what it named and breaking or missing another,
+  ending with one seed that got the neck, flat base and ostiole and another that turned the ribbing into
+  horizontal bands and read as a planet. Same wall the goblin hit, same answer: condition on an image.
+  REFERENCE: Wellcome Collection wvyexwsa, "A fig (Ficus carica cv.): one fruit. Coloured aquatint, c.
+  1839", licence PUBLIC DOMAIN MARK verified on the institution''s own catalogue record, access Open,
+  pulled from their IIIF endpoint; sha256 of the 1200px original 0bdba503ccd9bf18fbdc3f6c15e911b965b32d1873d6b82a54375d4f55204d16.
+  It is an ILLUSTRATION, not a photograph, so the photorealism-bleed risk we named for the sapling does
+  not arise and did not need measuring. The plate independently matches the canon: deep purple-violet
+  body, GREEN at the neck, matte, visible ostiole, side-on, flat-ish base.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figref
+  - --draft-key
+  - authored_b01_figref
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figref
+  - --draft-key
+  - authored_b01_figref
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-figref-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figref-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figref/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figref-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref\01-cold-open-ipa-r3-w015-s0.png
