@@ -1,0 +1,16 @@
+# fig_study.py sample -- NOT canon, NOT approved.
+{
+  "generated_utc": "2026-08-14T22:53:11.752119+00:00",
+  "model": "cagliostrolab/animagine-xl-3.1",
+  "device": "mps",
+  "width": 1024,
+  "height": 1024,
+  "steps": 40,
+  "cfg": 7.0,
+  "seed": 20260815,
+  "positive": "a single ripe fruit on a plain table, teardrop shape with a broad heavy rounded bottom tapering upward, widest point low near the base, wide flat bottom the fruit sits on, small puckered dark eye in the centre of the bottom, a single amber nectar droplet at that eye, shoulders turning inward sharply into a short thick neck, thin short woody twig stem at the very top, bare top with nothing on it, matte deep purple black skin, olive green bronze colour across the shoulders, pale dusty lavender bloom, tiny white speckles, faint darker vertical ribs running from top to bottom, three-quarter view from slightly below, soft diffuse front light, botanical still life, detailed, newest, masterpiece, best quality, very aesthetic",
+  "negative": "green leafy cap, calyx, crown, star shaped leaves on top, sepals, leaf, leaves, foliage, stalk with leaves, eggplant, aubergine, plum, grape, berry, apple, pear, onion, beet, elongated, long narrow body, tall body, sausage shape, perfectly round, sphere, ball, glossy, shiny, wet, reflective, specular highlight, glowing, sunken stem, dent, dimple at the top, crease, groove, suture line, split, cut open, slice, backlight, silhouette, contre-jour, lens flare, photorealistic, 3d render, text, watermark, signature, low quality, blurry, hand, fingers, person, face, child, plate, bowl, basket, many fruit, two fruit",
+  "sha256": "73e108e04eb6bc25cd3a0b1d42c32d3fe940c33a9496e2d047fba88186b22beb",
+  "approved": false,
+  "cost_usd": 0.0
+}
