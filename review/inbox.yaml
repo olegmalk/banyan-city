@@ -755,6 +755,13 @@
   kind: sheet
   verdict_hint: that is him, start animating / too young still, redraw / it is close - change this one
     thing
+  resolved:
+    date: '2026-08-14'
+    verdict: >-
+      seed s0 is the goblin
+    note: >-
+      Superseded by the picker he answered - same decision, and he answered it on the numbered sheet rather than here. Twelve beats unblocked.
+
 - what: THE NIGHT IN ONE PLACE - three beats finished, two waiting on the guard question, two parked with
     named reasons, and a per-beat line for all of them. Nothing to answer here; it is the state of episode
     2 on one screen if you want the whole picture before answering the others
@@ -776,6 +783,13 @@
   kind: pick
   verdict_hint: a number / none of these, and here is what is wrong with all of them
   fallback_url: https://claude.ai/code/artifact/f5ba1b5e-151f-4fa6-b2e4-6f60418ee09d
+  resolved:
+    date: '2026-08-14'
+    verdict: >-
+      seed s0 is the goblin
+    note: >-
+      Gate open. plate-drafts froze s0 as refs-goblin-approved-0814 and all nine authorable goblin plates published; the twelve animations fired off them at 12:0xZ.
+
 - what: 'WHY THE CLIPS FEEL LOW QUALITY - the comparison you asked for, with the clip you approved
     beside two of today''s, the full recipe printed under each, and the four suspects I have now measured
     and ELIMINATED: the conditioning round-trip, the guidance change, the plate, and both encode passes.
@@ -786,6 +800,13 @@
   since: '2026-08-14'
   kind: clip
   verdict_hint: yes that is it / no, the difference is something else on the page / test the last candidate
+  resolved:
+    date: '2026-08-14'
+    verdict: >-
+      i dont care about high quality resolution i mean general qualityy / the clip i liked was not static for sure, it had a lot of camera movement and it had the random guy
+    note: >-
+      Closed as ANSWERING THE WRONG QUESTION. Four suspects were measured against a reference clip he never chose - a static sprout with nobody in it. Replaced by the numbered picker below, which asks him which clip he actually meant instead of inferring it.
+
 - what: 'WHICH CLIP DID YOU MEAN? You said the one you liked had a lot of camera movement and the
     random guy in it - and the clip I have been measuring against is a static shot of a sprout with nobody
     in it. So every number I gave you was answering the wrong question. Eleven early clips with a person
