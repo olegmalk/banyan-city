@@ -1542,3 +1542,4 @@
 15:27:22Z DONE task=ep2-b20-wave-0814-1786707221 rc=0 artifacts=2
 15:27:29Z STARTED task=ep2-b20-waveB-0814-1786707226 attempt=1 on box-runner
 15:33:33Z DONE task=ep2-b20-waveB-0814-1786707226 rc=0 artifacts=2
+15:33:38Z box-runner idle ready=0 failed=20
