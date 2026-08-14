@@ -198,6 +198,42 @@ beats:
       seedB is a dark speckled elongated fruit with tendrils. Scene present from frame one - its plate
       is a real scene.'
     status: IN ROUND 2
+  '02':
+    refire_result: the purple object is gone, but the frame goes nearly EMPTY by mid-clip - he sprints
+      out of shot instead of skidding and diving. A viewer cannot see the beat happen at all.
+    understandable: CONFUSING
+    rounds_used: 2
+    status: THIRD ROUND EARNED - confusing
+  '03':
+    refire_result: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
+      joke reads weakly but it reads.
+    understandable: UNFINISHED
+    rounds_used: 2
+    status: SHIP WITH FAULT NAMED
+    shipping_fault: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
+      joke reads weakly but it reads.
+  '04':
+    refire_result: purple gone; a clean close-up on his face holding his breath. It reads young, but that
+      is the s0 reference he chose, not a prompt fault.
+    understandable: UNFINISHED
+    rounds_used: 2
+    status: SHIP WITH FAULT NAMED
+    shipping_fault: purple gone; a clean close-up on his face holding his breath. It reads young, but
+      that is the s0 reference he chose, not a prompt fault.
+  '13':
+    refire_result: purple gone; he settles at the base of the stem. The shade is thin but the fold-into-it
+      happens.
+    understandable: UNFINISHED
+    rounds_used: 2
+    status: SHIP WITH FAULT NAMED
+    shipping_fault: purple gone; he settles at the base of the stem. The shade is thin but the fold-into-it
+      happens.
+  '14':
+    refire_result: purple gone, and the action does not happen - he stands and looks down instead of picking
+      at the dirt. The beat IS the hands, and there are no hands in it.
+    understandable: CONFUSING
+    rounds_used: 2
+    status: THIRD ROUND EARNED - confusing
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
@@ -262,3 +298,8 @@ guards:
   rule: Do not cast them and do not animate guard beats off an unapproved cast. The sheet renders, goes
     on his board, and waits.
   held: six guard jobs remain out of the ready queue since 11:0xZ
+eggplant_fix:
+  date: '2026-08-14'
+  result: the purple object is GONE from all five refires. Removing the blanket fig clause fixed it completely,
+    which confirms the clause was the whole cause.
+  cost: 12 wasted renders and about 70 minutes of card, all of it mine.

@@ -54,9 +54,9 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b16-animB-0814\cover_crop.py
   - --src
-  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b16-plate-0814\16-why-ipa-r0-w015-s0.png
   - --sha256
-  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - 13006885497ab9dd63f8bbc9d1a3edcdc6a4c491bb5ecb2945f395f131011d5d
   - --out
   - C:\banyan-farm\ep2-b16-animB-0814\b13-init-704x1280.png
   - --size
