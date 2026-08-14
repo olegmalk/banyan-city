@@ -1498,3 +1498,4 @@
 13:16:42Z DONE task=ep2-b02-refire-0814-1786712759 rc=0 artifacts=2
 13:16:49Z STARTED task=ep2-b16-plate-0814-1786713341 attempt=1 on box-runner
 13:19:45Z DONE task=ep2-b16-plate-0814-1786713341 rc=0 artifacts=4
+13:20:43Z STARTED task=ep2-b02-refireB-0814-1786712764 attempt=1 on box-runner
