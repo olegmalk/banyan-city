@@ -757,11 +757,9 @@
     thing
   resolved:
     date: '2026-08-14'
-    verdict: >-
-      seed s0 is the goblin
-    note: >-
-      Superseded by the picker he answered - same decision, and he answered it on the numbered sheet rather than here. Twelve beats unblocked.
-
+    verdict: seed s0 is the goblin
+    note: Superseded by the picker he answered - same decision, and he answered it on the numbered sheet
+      rather than here. Twelve beats unblocked.
 - what: THE NIGHT IN ONE PLACE - three beats finished, two waiting on the guard question, two parked with
     named reasons, and a per-beat line for all of them. Nothing to answer here; it is the state of episode
     2 on one screen if you want the whole picture before answering the others
@@ -785,15 +783,13 @@
   fallback_url: https://claude.ai/code/artifact/f5ba1b5e-151f-4fa6-b2e4-6f60418ee09d
   resolved:
     date: '2026-08-14'
-    verdict: >-
-      seed s0 is the goblin
-    note: >-
-      Gate open. plate-drafts froze s0 as refs-goblin-approved-0814 and all nine authorable goblin plates published; the twelve animations fired off them at 12:0xZ.
-
-- what: 'WHY THE CLIPS FEEL LOW QUALITY - the comparison you asked for, with the clip you approved
-    beside two of today''s, the full recipe printed under each, and the four suspects I have now measured
-    and ELIMINATED: the conditioning round-trip, the guidance change, the plate, and both encode passes.
-    Is this the difference you are seeing? I have one candidate left and I would rather you look before I
+    verdict: seed s0 is the goblin
+    note: Gate open. plate-drafts froze s0 as refs-goblin-approved-0814 and all nine authorable goblin
+      plates published; the twelve animations fired off them at 12:0xZ.
+- what: 'WHY THE CLIPS FEEL LOW QUALITY - the comparison you asked for, with the clip you approved beside
+    two of today''s, the full recipe printed under each, and the four suspects I have now measured and
+    ELIMINATED: the conditioning round-trip, the guidance change, the plate, and both encode passes. Is
+    this the difference you are seeing? I have one candidate left and I would rather you look before I
     spend GPU on it'
   url: /review/ep2-picks/motion-0812#e-quality
   group: taste
@@ -802,30 +798,44 @@
   verdict_hint: yes that is it / no, the difference is something else on the page / test the last candidate
   resolved:
     date: '2026-08-14'
-    verdict: >-
-      i dont care about high quality resolution i mean general qualityy / the clip i liked was not static for sure, it had a lot of camera movement and it had the random guy
-    note: >-
-      Closed as ANSWERING THE WRONG QUESTION. Four suspects were measured against a reference clip he never chose - a static sprout with nobody in it. Replaced by the numbered picker below, which asks him which clip he actually meant instead of inferring it.
-
-- what: 'WHICH CLIP DID YOU MEAN? You said the one you liked had a lot of camera movement and the
-    random guy in it - and the clip I have been measuring against is a static shot of a sprout with nobody
-    in it. So every number I gave you was answering the wrong question. Eleven early clips with a person
+    verdict: i dont care about high quality resolution i mean general qualityy / the clip i liked was
+      not static for sure, it had a lot of camera movement and it had the random guy
+    note: Closed as ANSWERING THE WRONG QUESTION. Four suspects were measured against a reference clip
+      he never chose - a static sprout with nobody in it. Replaced by the numbered picker below, which
+      asks him which clip he actually meant instead of inferring it.
+- what: WHICH CLIP DID YOU MEAN? You said the one you liked had a lot of camera movement and the random
+    guy in it - and the clip I have been measuring against is a static shot of a sprout with nobody in
+    it. So every number I gave you was answering the wrong question. Eleven early clips with a person
     and camera movement are on the page, numbered. Tell me the number and I will diff THAT clip against
-    today''s - its recipe and, more likely, its starting picture'
+    today's - its recipe and, more likely, its starting picture
   url: /review/ep2-picks/motion-0812#e-whichclip
   group: taste
   since: '2026-08-14'
   kind: clip
   verdict_hint: it is number N / none of these, it was something else
 - what: 'YOUR GOBLIN, ANIMATED - first look. Six beats back on the s0 goblin you picked, contact strip
-    plus two playable clips. The character is right in all of them. One fault and it is mine: I pasted the
-    purple-fig rule into every prompt and only two beats have a fig, so the rest invented one - a purple
-    object round the trunk, in his hands, over the face. Fourteen re-runs without that line are on the
-    card. Also on the page in one line each: 20 of 21 beats now ship under your two-round rule, and BEAT
-    16 has never been rendered and has no script block of its own - does it get made, or does the episode
-    ship without it?'
+    plus two playable clips. The character is right in all of them. One fault and it is mine: I pasted
+    the purple-fig rule into every prompt and only two beats have a fig, so the rest invented one - a
+    purple object round the trunk, in his hands, over the face. Fourteen re-runs without that line are
+    on the card. Also on the page in one line each: 20 of 21 beats now ship under your two-round rule,
+    and BEAT 16 has never been rendered and has no script block of its own - does it get made, or does
+    the episode ship without it?'
   url: /review/ep2-picks/motion-0812#e-goblinwave
   group: taste
   since: '2026-08-14'
   kind: clip
   verdict_hint: that is the goblin, keep going / beat 16 gets made / ship without beat 16
+- what: 'WHICH TWO ARE THE GUARDS? Two proposed men, four takes each, numbered 1 to 8, with front, back
+    and profile views of each so you can tell them apart. Cast is the one you ruled: adult, short hair,
+    plain brown tunic, sash of office, belly covered, nothing round or soft. Quote a NUMBER for each guard,
+    or redline what to change. THIS GATES SIX BEATS (05, 06, 07, 09, 10, 11) - none of them can be animated
+    until the two men are fixed.'
+  url: /review/ep2-picks/sheets/guard-picker-0814.jpg
+  group: taste
+  since: '2026-08-14'
+  kind: pick
+  verdict_hint: two numbers / change this and re-run
+  note_for_lanes: This entry exists in the YAML as well as review/inbox/index.html because the HTML is
+    hand-authored and a wholesale rewrite by another lane deleted this card once already (a59ee1d1), leaving
+    the sheet live at its URL and invisible on the board. The YAML is the durable record; the HTML is
+    what is served. Anyone regenerating the HTML should diff open cards against this file first.
