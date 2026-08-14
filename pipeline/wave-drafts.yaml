@@ -274,6 +274,35 @@ beats:
     # the fruit and stops mid-body" - so it is in the recipe and it gets a negative.
     # `ostiole` as a word never landed once in seven rounds, so it is described instead:
     # a small puckered eye at the tip.
+    # -- `authored_b01_figleaf3` -- 2026-08-14. THE LEAF LEVER WORKS AND I BROKE
+    # SOMETHING ELSE TO GET IT.
+    # figleaf2 read across the SEED axis: s2 and s3 came back with a DEEPLY LOBED,
+    # five-fingered fig leaf - the first time in the project that shape has appeared, so
+    # the leaf reference carries what seven rounds of fruit wording could not. s0, s1 and
+    # the w010 twin came back simple ovals, so it is roughly 2 of 4 and 15% beats 10% on
+    # leaf shape: a looser window loses the leaf, which answers the twin's question.
+    #
+    # BUT THE FRUIT WENT WRONG IN A NEW AND WORSE WAY. In s0 and in the w010 twin the
+    # fruit came back as a small grey-blue ball WITH A FACE - eyes, a mouth - and in s1,
+    # s2 and s3 there is no fruit at all. Nothing purple anywhere.
+    #
+    # THAT FACE IS MY REGRESSION, not the model's caprice. When I rewrote for the leaf I
+    # dropped the plant-only creature block - `no chibi, no mascot, no creature, no face`
+    # - which every earlier fig draft carried and which beat 01 recorded on 2026-08-06 as
+    # the fix for exactly this: a fruit that grows a face. I removed the guard and the
+    # fault it guards against came straight back. It is restored here, with `no eyes`
+    # added because that is the specific thing on the paper.
+    #
+    # AND THE FRUIT IS RE-ASSERTED, because the leaf is now dominating the frame and the
+    # fruit vanished in three of four. It gets its own clause and its colour twice.
+    authored_b01_figleaf3: >-
+      A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
+      below them one small purple fig, a plain purple teardrop of fruit with matte dusty
+      skin. Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No face, no eyes, no creature, no mascot, no chibi, no person, no
+      girl, no boy, no child, no eggplant, no aubergine, no gloss, no shine, no black
+      fruit, no simple oval leaves, no stem crossing the fruit, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b01_figleaf2: >-
       A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, one purple
       fig hanging under them with a small puckered eye at its tip, matte dusty skin.
@@ -4239,6 +4268,35 @@ beats:
     # the fruit and stops mid-body" - so it is in the recipe and it gets a negative.
     # `ostiole` as a word never landed once in seven rounds, so it is described instead:
     # a small puckered eye at the tip.
+    # -- `authored_b18_figleaf3` -- 2026-08-14. THE LEAF LEVER WORKS AND I BROKE
+    # SOMETHING ELSE TO GET IT.
+    # figleaf2 read across the SEED axis: s2 and s3 came back with a DEEPLY LOBED,
+    # five-fingered fig leaf - the first time in the project that shape has appeared, so
+    # the leaf reference carries what seven rounds of fruit wording could not. s0, s1 and
+    # the w010 twin came back simple ovals, so it is roughly 2 of 4 and 15% beats 10% on
+    # leaf shape: a looser window loses the leaf, which answers the twin's question.
+    #
+    # BUT THE FRUIT WENT WRONG IN A NEW AND WORSE WAY. In s0 and in the w010 twin the
+    # fruit came back as a small grey-blue ball WITH A FACE - eyes, a mouth - and in s1,
+    # s2 and s3 there is no fruit at all. Nothing purple anywhere.
+    #
+    # THAT FACE IS MY REGRESSION, not the model's caprice. When I rewrote for the leaf I
+    # dropped the plant-only creature block - `no chibi, no mascot, no creature, no face`
+    # - which every earlier fig draft carried and which beat 01 recorded on 2026-08-06 as
+    # the fix for exactly this: a fruit that grows a face. I removed the guard and the
+    # fault it guards against came straight back. It is restored here, with `no eyes`
+    # added because that is the specific thing on the paper.
+    #
+    # AND THE FRUIT IS RE-ASSERTED, because the leaf is now dominating the frame and the
+    # fruit vanished in three of four. It gets its own clause and its colour twice.
+    authored_b18_figleaf3: >-
+      A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, and hanging
+      below them one small purple fig, a plain purple teardrop of fruit with matte dusty
+      skin. Held macro, warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No face, no eyes, no creature, no mascot, no chibi, no person, no
+      girl, no boy, no child, no eggplant, no aubergine, no gloss, no shine, no black
+      fruit, no simple oval leaves, no stem crossing the fruit, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b18_figleaf2: >-
       A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, one purple
       fig hanging under them with a small puckered eye at its tip, matte dusty skin.
