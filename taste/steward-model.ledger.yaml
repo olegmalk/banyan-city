@@ -17516,3 +17516,74 @@
     testing what it rests on - is the more useful half, and it is the same failure as mine one level
     up: I built a hypothesis on their relayed research within the hour and had to retract that too.
   outcome: null
+
+- id: LAW-a-blind-reader-sees-the-screen-not-the-intention-0815
+  date: 2026-08-15
+  kind: law
+  what: >-
+    A context-free reader was shown beat 12 and reported no creature or person in frame at any point,
+    which we both read as the beat being absent. Beat 12's definition of done reads "tight on the
+    sapling's TWO leaves against the sky... the goblin NOT in frame". The absence of a character is
+    the REQUIREMENT. The reader was completely right about what was on screen and completely unable
+    to know whether that was what we asked for.
+  law: >-
+    A BLIND READER TELLS YOU WHAT IS ON SCREEN. IT CANNOT TELL YOU WHETHER THAT IS WHAT THE BEAT
+    WANTED. So a read is never a verdict on its own: score its answer against that beat's definition
+    of done, not against a general picture of what a good clip looks like. This sits directly beside
+    floor-not-verdict - the metric cannot tell an action from a camera, and the reader cannot tell a
+    fulfilled brief from a failed one. Neither instrument is weak; each is answering the only
+    question it can see.
+  the_second_half_of_my_error: >-
+    I also scored the wrong clip. I measured ep2-b12-lw while the recorded pick is ep2-b12-tightB, a
+    later and better take with three rounds already spent on it. Same root cause as reporting beats
+    10 and 11 as parked when both carried picks: I measured what was reachable on the results branch
+    instead of what was recorded in done-definitions.yaml.
+  mechanical_fix: >-
+    done-definitions.yaml IS the record. Any status report that does not cite it is a guess, and any
+    clip scored without checking whether that beat has a recorded pick is probably the wrong clip.
+    Read the record first, then go to the branch for the file it names.
+  outcome: null
+
+- id: RULE-closed-stays-closed-and-faults-get-named-0815
+  date: 2026-08-15
+  kind: rule
+  set_by: >-
+    Team lead, 2026-08-15, on my escalation asking whether beats closed under the older bar should be
+    re-checked against the identity-drift bar added tonight. Recorded here so the next case does not
+    need a second escalation.
+  the_rule: >-
+    Closed stays closed. A beat already marked DONE or SHIP WITH FAULT NAMED stays that way - not
+    re-rendered, not re-litigated, not demoted. Run the CHEAP drift check on the existing picks,
+    since the clips exist and a read costs minutes and no GPU, and where drift is present ADD it to
+    that beat's named faults. Extend the record, do not change the verdict. Escalate only if a pick's
+    drift is severe enough that the character is unrecognisable, which is a broken beat rather than a
+    named fault and is a different call.
+  the_reasoning_so_it_generalises: >-
+    The founder wants episode 2 finished and his father's standing direction is to polish less and
+    publish sooner. SHIP WITH FAULT NAMED already exists as the category for exactly this situation,
+    so no new one is needed. And his review artifact is the fully assembled video - "the best way for
+    me to review something is by seeing the full video of it" - so he will see the drift in context
+    with the fault named beside it, which is the honest handover. A bar introduced at three in the
+    morning does not retroactively invalidate work closed under the bar that existed at the time; it
+    governs what we close from here.
+  outcome: null
+
+- id: METHOD-a-label-can-leak-the-hypothesis-to-a-blind-reader-0815
+  date: 2026-08-15
+  kind: method
+  what: >-
+    My identity comparison of the 49-frame and 97-frame clips passed the reader files named
+    ID-SHORT.png and ID-LONG.png. The paths are visible to the reader, so the one fact the test
+    exists to isolate - which clip is shorter - was written on the tin. A reader that knows which arm
+    is which can no longer be blind about the variable, however honest it is about the pixels.
+  fix: >-
+    Neutral, shuffled labels. The drift check on the five recorded picks uses CLIP-A through CLIP-E
+    with a seeded shuffle and the mapping kept out of the reader's reach, so the filename carries no
+    beat number, no pick name and no ordering. Also told the reader the clips are unrelated and must
+    not be ranked against each other until the final question, so that a comparison set does not turn
+    into an anchoring exercise.
+  reading: >-
+    Caught by the lead, not by me, and it is the same family as the four statistics that answered a
+    different question: the instrument was fine and its framing carried the answer. A blind read is
+    only blind if everything the reader can see is blind, filenames included.
+  outcome: null
