@@ -17146,6 +17146,25 @@
     this repo - a different checkpoint, more steps, or a motion-specific LoRA - and I should stop
     spending the card on prompt variants, which is the failure mode this whole night has been about.
     If BOTH move, prefer B: it is free, and 193 frames doubles every render on the card.
+  confound_recorded_before_the_results: >-
+    Added the same night, after the arms were queued and before either landed. External research came
+    back saying LTX-2.3-Distilled is CFG 1.0 per its model card and Lightricks' own workflow, that the
+    reference distilled pipeline has no CFG code path at all, and that we have been running guidance
+    2.0 with a negative prompt full of anti-movement terms. Both arms above run at guidance 2.0, so a
+    NULL result from them does NOT establish what I said it would. If neither moves I may only
+    conclude that neither frames nor sub-movements rescue motion AT OUR CURRENT GUIDANCE - not that
+    the wording lever is exhausted. That conclusion needs the guidance arm of the sweep first. I am
+    leaving both arms running because they are already on the card and answer a real question, but
+    the interpretation above is hereby narrowed rather than quietly reused later.
+  a_question_for_the_sweep: >-
+    If the distilled pipeline genuinely has no CFG path, then our negative prompt may be INERT - never
+    applied at all - and every negative-side conclusion drawn in this ledger for weeks would be about
+    a string the model never read. That is cheap to settle before the sweep spends renders varying
+    negative CONTENT: render one beat with a deliberately absurd negative, something like "green
+    grass, goblin, field", against the same seed with the real negative. Identical output means the
+    negative is not wired in, and the whole negative arm can be dropped. Different output means it is
+    live and worth sweeping. Handing this to the sweep lane rather than building it - they own that
+    variable and two lanes rendering the same question is the waste I have been logging all night.
   scored_how: >-
     freeze_check.py per-transition plus a blind cold read against the control's read. The number
     alone cannot settle it - that is the mistake already logged tonight - so a stranger naming the
