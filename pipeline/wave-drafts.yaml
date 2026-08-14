@@ -295,6 +295,28 @@ beats:
     #
     # AND THE FRUIT IS RE-ASSERTED, because the leaf is now dominating the frame and the
     # fruit vanished in three of four. It gets its own clause and its colour twice.
+    # -- `authored_b01_figlit` -- 2026-08-14. NOT ANOTHER WORDING ROUND ON THE FRUIT.
+    # The fruit-weighted reference (3 fruit crops : 1 leaf) did not fix it either, and
+    # the four frames say why: EVERY ONE IS A BACKLIT SILHOUETTE. Shot into the sun, the
+    # fruit is a black shape against a bright sky - so its purple, its matte skin and its
+    # ostiole are all physically invisible, and what the eye gets is an outline. Nine
+    # rounds have been judged on silhouettes.
+    # That is a LIGHTING fault, not an identity fault, and it is the one variable never
+    # touched: every fig draft since the first has said `bright morning light` or `warm
+    # amber afternoon`, both of which the model has been reading as contre-jour against a
+    # pale sky. So the light is turned around - front-lit, sun behind camera, backlight
+    # and silhouette banned by name - and NOTHING ELSE MOVES. The fruit wording, the leaf
+    # wording and the reference are byte-identical to the previous round.
+    # If the fruit is visible and still does not read as a fig, that is the honest end of
+    # the mechanical route and the board entry already offers him the third answer.
+    authored_b01_figlit: >-
+      A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
+      below them one small purple fig, a plain purple teardrop of fruit with matte dusty
+      skin. Medium shot, even front light, the sun behind the camera, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No backlight, no silhouette, no
+      contre-jour, no lens flare, no face, no eyes, no creature, no mascot, no person, no
+      hand, no eggplant, no gloss, no black fruit, no dark, no night. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     authored_b01_figleaf3: >-
       A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
@@ -4289,6 +4311,28 @@ beats:
     #
     # AND THE FRUIT IS RE-ASSERTED, because the leaf is now dominating the frame and the
     # fruit vanished in three of four. It gets its own clause and its colour twice.
+    # -- `authored_b18_figlit` -- 2026-08-14. NOT ANOTHER WORDING ROUND ON THE FRUIT.
+    # The fruit-weighted reference (3 fruit crops : 1 leaf) did not fix it either, and
+    # the four frames say why: EVERY ONE IS A BACKLIT SILHOUETTE. Shot into the sun, the
+    # fruit is a black shape against a bright sky - so its purple, its matte skin and its
+    # ostiole are all physically invisible, and what the eye gets is an outline. Nine
+    # rounds have been judged on silhouettes.
+    # That is a LIGHTING fault, not an identity fault, and it is the one variable never
+    # touched: every fig draft since the first has said `bright morning light` or `warm
+    # amber afternoon`, both of which the model has been reading as contre-jour against a
+    # pale sky. So the light is turned around - front-lit, sun behind camera, backlight
+    # and silhouette banned by name - and NOTHING ELSE MOVES. The fruit wording, the leaf
+    # wording and the reference are byte-identical to the previous round.
+    # If the fruit is visible and still does not read as a fig, that is the honest end of
+    # the mechanical route and the board entry already offers him the third answer.
+    authored_b18_figlit: >-
+      A tiny fig sapling's thinnest branch, deeply lobed fig leaves with five fingers, and hanging
+      below them one small purple fig, a plain purple teardrop of fruit with matte dusty
+      skin. Held macro, even front light, the sun behind the camera, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No backlight, no silhouette, no
+      contre-jour, no lens flare, no face, no eyes, no creature, no mascot, no person, no
+      hand, no eggplant, no gloss, no black fruit, no dark, no night. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     authored_b18_figleaf3: >-
       A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty

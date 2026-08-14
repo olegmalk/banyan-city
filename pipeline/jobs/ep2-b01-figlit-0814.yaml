@@ -1,0 +1,106 @@
+# 2026-08-14, stills-drafts lane. The fig has been judged on silhouettes.
+id: ep2-b01-figlit-0814
+task: ep2-b01-figlit-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: 'Sixteen frames, read along the SEED axis. The first question is simply whether the fruit is
+  VISIBLE as a coloured object rather than a black outline - if it is not, nothing else on this list can
+  be judged. Then: is it purple, is it matte, does it read as a fig. Cold read with no context. THIS IS
+  THE DECLARED END OF THE MECHANICAL ROUTE. If the fruit is lit and still does not read as a fig, the
+  answer is not a tenth round - it is the third option already on his board: ship it as a purple fruit,
+  or draw it by hand. That is his call about time and money and the entry offers it.'
+why: 'NOT ANOTHER WORDING ROUND ON THE FRUIT. The fruit-weighted reference (3 fruit crops : 1 leaf) did
+  not fix it either, and the four frames say why: EVERY ONE IS A BACKLIT SILHOUETTE. Shot into the sun,
+  the fruit is a black shape against a bright sky, so its purple, its matte skin and its ostiole are all
+  physically invisible and the eye only gets an outline. Nine rounds have been judged on silhouettes.
+  That is a LIGHTING fault, not an identity fault, and it is the one variable never touched: every fig
+  draft since the first said `bright morning light` or `warm amber afternoon`, and the model has been
+  reading both as contre-jour against a pale sky. So the light turns around - front-lit, sun behind camera,
+  backlight/silhouette/contre-jour/lens-flare banned by name - and NOTHING ELSE MOVES. Fruit wording,
+  leaf wording and the reference are byte-identical to the previous round. `no hand` is added because
+  a human hand has now appeared in three separate fig rounds.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-fruitweighted-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figlit
+  - --draft-key
+  - authored_b01_figlit
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-fruitweighted-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figlit
+  - --draft-key
+  - authored_b01_figlit
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-figlit-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figlit-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figlit/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figlit-0814.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figlit\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figlit\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figlit\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figlit\01-cold-open-ipa-r3-w015-s0.png
