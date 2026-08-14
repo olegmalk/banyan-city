@@ -1315,3 +1315,4 @@
 00:40:57Z STARTED task=ep2-b21-scene-0814-1786667336 attempt=1 on box-runner
 00:41:50Z FAIL task=ep2-b21-scene-0814-1786667336 rc=92 step=artifact-check
 00:41:54Z STARTED task=ep2-b12-tightB-0813-1786666994 attempt=1 on box-runner
+00:48:16Z DONE task=ep2-b12-tightB-0813-1786666994 rc=0 artifacts=2
