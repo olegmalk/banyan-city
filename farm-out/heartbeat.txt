@@ -1462,3 +1462,4 @@
 11:41:05Z DONE task=ep2-guard-sheet-b-r2-0814-1786707393 rc=0 artifacts=8
 11:41:11Z STARTED task=ep2-b01-figref-r2-0814-1786707397 attempt=1 on box-runner
 11:44:03Z DONE task=ep2-b01-figref-r2-0814-1786707397 rc=0 artifacts=4
+11:44:13Z STARTED task=ep2-b07-plate-0814-1786707394 attempt=1 on box-runner
