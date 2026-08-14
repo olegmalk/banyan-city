@@ -557,6 +557,18 @@ beats:
       proportions, no short stubby limbs, no cute, no kawaii, no scars, no dark,
       no night, no dim lighting, no low key. No photorealism, no 3D render look.
       9:16 vertical, no text.
+    # -- `authored_b02_plate` -- 2026-08-14, the proven recipe, conditioned on the
+    # frozen reference. Same shape as b03/b04/b13/b17/b19/b20: it says BOY because the
+    # winning prompt does, carries no proportion clause, no anti-cute denials and NO
+    # COSTUME WORDS -- the reference supplies the tunic, and those tokens buy the scene.
+    authored_b02_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, cowers with both hands to his chest behind a tiny sapling's thin stem,
+      face peeking around it. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b02_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, behind the thin upright stem of a
       tiny sapling in an open field, cowers with both hands to his chest, his
@@ -3533,6 +3545,18 @@ beats:
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
       head, no round baby face, no toddler, no child. No photorealism, no 3D render look.
       9:16 vertical, no text.
+    # -- `authored_b14_plate` -- 2026-08-14, the proven recipe, conditioned on the
+    # frozen reference. Same shape as b03/b04/b13/b17/b19/b20: it says BOY because the
+    # winning prompt does, carries no proportion clause, no anti-cute denials and NO
+    # COSTUME WORDS -- the reference supplies the tunic, and those tokens buy the scene.
+    authored_b14_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, clawed fingers picking at loose dirt and flicking pebbles, face glancing
+      away embarrassed. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b14_idfix_r3: >-
       A small goblin boy, {{GOBLIN}}, solo, green scalp, his clawed fingers
       picking at loose dirt and flicking pebbles aside, his face glancing away
@@ -3684,6 +3708,18 @@ beats:
       quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
       toddler, no child, no house, no indoors, no houseplant, no dark, no night. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b15_plate` -- 2026-08-14, the proven recipe, conditioned on the
+    # frozen reference. Same shape as b03/b04/b13/b17/b19/b20: it says BOY because the
+    # winning prompt does, carries no proportion clause, no anti-cute denials and NO
+    # COSTUME WORDS -- the reference supplies the tunic, and those tokens buy the scene.
+    authored_b15_plate: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale sky
+      behind, tips his head back talking up at a tiny sapling with broad round cotyledon
+      leaves beside him. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored_b15_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
       head back talking up at a tiny sapling standing tall beside him, its two
