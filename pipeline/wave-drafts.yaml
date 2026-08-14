@@ -204,6 +204,27 @@ beats:
     # WHAT SURVIVES from the plant canon, because it is not about the fig: two oversized
     # cotyledon leaves and the whole plant in frame, which is beat 12's growth-ladder
     # ruling, and the person-singulars block, which is the plant-only plate's defence.
+    # -- `authored_b01_figref_r2` -- 2026-08-14. ROUND 1 FAILED AND NAMED ITS OWN CAUSE.
+    # With NO fig words at all, the reference's teardrop silhouette and deep purple both
+    # transferred - onto a LEAF filling the frame, veined and backlit - and the plate's
+    # cream paper ground came through as a framed inset, the same picture-in-a-picture
+    # artifact beat 10 s3 produced. The reference carried colour and shape faithfully and
+    # the model bound them to the wrong object, because a fig's teardrop matches a leaf
+    # and nothing in the prompt said which object was meant.
+    #
+    # THE LESSON, worth more than the round: identity-left-to-the-reference works when the
+    # reference is a CHARACTER in a scene, because a character is the subject by default.
+    # It fails for a small OBJECT among other objects, where the reference needs a noun to
+    # attach to. So this restores the minimum - `one small purple fig hanging from the
+    # stem` - and nothing else. Still no teardrop, no neck, no matte, no ostiole: those
+    # are what the reference is for. This only says WHICH THING it is.
+    authored_b01_figref_r2: >-
+      A tiny seedling in an open grassy field, one small purple fig hanging from its thin
+      stem below the leaves, two oversized cotyledon leaves, whole plant in frame. Medium
+      shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No woman, no girl, no boy, no child, no person, no chibi,
+      no mascot, no creature, no face, no giant leaf, no framed border, no paper texture,
+      no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b01_figref: >-
       A tiny seedling in an open grassy field, one fig hanging from its thin stem below
       the leaves, two oversized cotyledon leaves, whole plant in frame. Medium shot,
@@ -2442,6 +2463,21 @@ beats:
     # Beats 05, 06 and 07 all show it and beat 05 SENDS the bureaucrat words and
     # still misses, so this is now a wave-level note for the founder rather than
     # something a single round should quietly chase.
+    # -- `authored_b07_plate` -- 2026-08-14. A TWO-CHARACTER BEAT ON A ONE-CHARACTER
+    # REFERENCE, run as a test rather than shipped as a plate. The goblin reference is
+    # frozen and correct; there is no approved guard reference yet, so the guard can only
+    # come from words. Beat 10 already measured what that costs: a single-figure reference
+    # imposed a single figure and the words asking for two lost. The expected failure here
+    # is ONE figure, and if that is what comes back it is the evidence that 07 and 08 need
+    # a two-character reference rather than another wording round.
+    authored_b07_plate: >-
+      A guard man in a brown tunic and sash stands in green summer grass, a treeline and
+      pale sky behind, thrusting one arm out to point at a small goblin boy crouching low
+      beside a tiny sapling. Medium
+      full shot, bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+      jewelry, no ornament, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b07_idfix_r2: >-
       A round bald guard man in a plain brown tunic thrusts one arm out,
       pointing away off-frame to his left with the confidence of a man who has
@@ -2634,6 +2670,21 @@ beats:
     # -- `_idfix` 2026-08-12 ~03:0x: tunic for the guard's armor; the cloak is
     # already in this beat's positive so the goblin def sends only "green
     # skin, bald head" (never say the same clause twice).
+    # -- `authored_b08_plate` -- 2026-08-14. A TWO-CHARACTER BEAT ON A ONE-CHARACTER
+    # REFERENCE, run as a test rather than shipped as a plate. The goblin reference is
+    # frozen and correct; there is no approved guard reference yet, so the guard can only
+    # come from words. Beat 10 already measured what that costs: a single-figure reference
+    # imposed a single figure and the words asking for two lost. The expected failure here
+    # is ONE figure, and if that is what comes back it is the evidence that 07 and 08 need
+    # a two-character reference rather than another wording round.
+    authored_b08_plate: >-
+      Two men in green summer grass, a treeline and pale sky behind, a guard in a brown
+      tunic and sash pointing at the belly of a small goblin boy who looks down at it.
+      Medium
+      full shot, bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+      jewelry, no ornament, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b08_idfix: >-
       Two round boys, in a sunny grassy field, a bald guard in a plain
       brown tunic pointing at the belly of a small goblin boy, {{GOBLIN}}, in
