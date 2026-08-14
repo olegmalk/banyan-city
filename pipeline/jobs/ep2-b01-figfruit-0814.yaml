@@ -1,0 +1,103 @@
+# 2026-08-14, stills-drafts lane. Reference BALANCE as the variable: 3 fruit : 1 leaf.
+id: ep2-b01-figfruit-0814
+task: ep2-b01-figfruit-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: Sixteen frames, read along the SEED axis. Pass needs the FRUIT present and purple in a majority,
+  with the lobed leaf surviving in at least one - that combination is the cold open. Cold read with no
+  context. IF THE FRUIT IS STILL ABSENT with a fruit-weighted reference, the reference cannot put this
+  fruit in a wide plant shot at all, and the fig goes to the founder as a question - either the cold open
+  gets a tighter shot that the reference can serve, or the fig is drawn by hand. That is the escalation
+  and it is a founder decision about time and money, not another round.
+why: 'ONE VARIABLE: THE REFERENCE''S OWN BALANCE. figleaf3 fixed the face - restoring the plant-only creature
+  block removed the eyes completely - and the lobed leaf held in 2 of 4. But THE FRUIT VANISHED in 3 of
+  4, and beat 01''s subject IS the fruit: its fence is one small fig growing on the seedling''s stem.
+  A leaf-only frame does not serve the cold open. The reference was 2 leaf crops to 2 fruit crops and
+  the leaf won, so the grip moves rather than the words: 3 fruit crops (whole fruit, base, neck-and-shoulder)
+  to 1 leaf slot. Draft is byte-identical to figleaf3, so this is a clean test of reference BALANCE as
+  a lever - which is untried, where a ninth wording round would not be.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-fruitweighted-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit
+  - --draft-key
+  - authored_b01_figleaf3
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-fruitweighted-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit
+  - --draft-key
+  - authored_b01_figleaf3
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-figfruit-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figfruit-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figfruit/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figfruit-0814.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figfruit\01-cold-open-ipa-r3-w015-s0.png
