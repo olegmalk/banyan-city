@@ -1429,3 +1429,4 @@
 10:08:08Z FAIL task=ep2-guard-sheet-a-0814-1786701989 rc=4 step=measure
 10:08:13Z STARTED task=ep2-guard-sheet-b-0814-1786701990 attempt=1 on box-runner
 10:08:19Z FAIL task=ep2-guard-sheet-b-0814-1786701990 rc=4 step=measure
+10:08:24Z STARTED task=ep2-b01-figfive-0814-1786701726 attempt=1 on box-runner
