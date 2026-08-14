@@ -16950,3 +16950,143 @@
     pass condition and it is not in yet. If the reader cannot name the actions, the wave was still worth
     firing for the cut alone, and the next lever is the action wording rather than the structure.
   outcome: null
+
+- id: RESULT-the-loosened-wave-scored-the-freeze-is-mostly-dead-0815
+  date: 2026-08-15
+  kind: result
+  what: >-
+    Seventeen of the nineteen loosened jobs landed and were measured against the old baseline of a
+    38-66 level hard cut followed by 0.5-7 levels of nothing. Eleven now move: b02 47.8, b09 28.8,
+    b11 25.1, b12 22.2, b15 16.7, b04 16.1, b17 15.6, b05 14.0, b03 12.4, b13 11.2, b10 10.5. Six
+    still flatline: b06 5.9, b07 6.0, b14 7.5, b16 9.0, b18 4.5, b19 4.4. The cut itself came down
+    on almost everything - b13 2.9, b07 5.9, b18 5.2, b06 7.4 - with two stubborn exceptions, b16
+    at 66.8 and b02 at 63.2, which are still the old cut-to-a-different-picture.
+  reading: >-
+    Written before checking what was already committed, and wrong where it counts. An hour earlier
+    this lane had already run the blind cold read on beats 04, 15 and 17 - the three of these the
+    numbers liked - and it failed all three: "All three clips are static. None of the three contains
+    an action a viewer could name." Beat 04 is a still with lighting drift and camera jitter over it;
+    beat 15's plant only grows because the camera pushes in; beat 17 still has the cut. So "eleven of
+    them move" is not a finding, it is the metric agreeing with me, and the wave is not a result.
+  law: >-
+    A FRAME-DIFFERENCE NUMBER CANNOT TELL AN ACTION FROM A CAMERA. Luminance change between frames
+    goes up for a push-in, a lighting ramp or encoder noise exactly as it does for a character
+    moving, so a clip can score 16 and contain nobody doing anything. The check is sound in one
+    direction only: below the floor the clip is certainly dead, above it the clip is merely not
+    provably dead. Nothing gets called moving on the number alone - a blind reader has to be able to
+    name the action.
+  outcome: >-
+    Corrected the same night, before the page went out. The scoring section that called beats 04, 15
+    and 17 "honestly good" was rewritten to show them as what my eye wrongly approved.
+
+- id: FINDING-six-beats-animated-a-character-card-instead-of-a-scene-0815
+  date: 2026-08-15
+  kind: finding
+  what: >-
+    Beats 05, 06, 07, 09, 10 and 11 were rendered from the guard PICK plates in
+    farm-out/ep2-bNN-guardpick-0814. Every one of those is a single figure standing on a blank or
+    near-blank background - a costume reference card. No location, no goblin, no sapling, no second
+    guard, in some of them a visible card border. Six of the seventeen clips are therefore a
+    turnaround sheet with a little motion applied, and three of them are the ones the numbers liked
+    best (b09 28.8, b11 25.1). They cannot be cut into an episode at any quality of motion.
+  cause: >-
+    Mine. The wave's source map sent each beat to "its newest good job", and for the guard beats the
+    newest job was the identity pick, whose whole purpose was a figure on a plain ground. The stills
+    lane had already said the guard plates at world-weight 0.15 mostly carry no scene; I read that
+    as a note about two beats rather than a bar on the other six, and did not open a single init
+    before firing nineteen renders.
+  law: >-
+    LOOK AT THE INIT, NOT THE JOB IT CAME FROM. A plate is fit for motion only if it is a place with
+    the right people in it. The provenance of the file - newest, best-scored, most recently praised -
+    says nothing about whether it is a shot. One contact sheet of nineteen first frames, which cost
+    three minutes after the fact, would have stopped six of these before they rendered.
+  outcome: null
+
+- id: LAW-the-motion-number-is-two-sided-0815
+  date: 2026-08-15
+  kind: law
+  what: >-
+    freeze_check.py catches a still. It cannot catch a clip that changes too much. Beat 02 scored
+    the highest motion in the wave, a mean of 47.8, and what it is measuring is a full-grown tree
+    growing into an empty field while the goblin shrinks into the corner - the summoned-geometry
+    defect, scoring like excellent animation. Beat 16 scored a 66.8 cut and a costume flip from a
+    green robe to a white one, and reads as a FREEZE because everything after the cut is placid.
+  law: >-
+    A frame-difference number is a floor, never a verdict. Below the threshold the clip is certainly
+    dead; above it the clip is merely alive, and could be thrashing. Motion is read from the number,
+    content is read from the frames, and neither one substitutes for the other. Pair every score
+    with a contact sheet before any clip is called good.
+  outcome: null
+
+- id: DEFECT-derived-jobs-inherited-every-filename-from-their-parent-0815
+  date: 2026-08-15
+  kind: defect
+  what: >-
+    Team lead reported beat 18 publishing a file called 18-the-decision-LTX-count-0813.mp4 and a
+    b13-init png inside a beat 18 job, and asked whether b18 had animated beat 13's plate.
+    Established that it had not. All nineteen -lw jobs were copied from a parent and only the id,
+    the crop --src and the prompt were edited; the payload prefix, the init png name, the output mp4
+    name, the bench jsonl and the publish destination all kept the parent's tokens. Fifteen jobs
+    wrote an init called b13-init-704x1280.png and six an mp4 called
+    06-the-clipboard-LTX-world-0813.mp4. Every mp4 and every init on the branch is byte-distinct and
+    every --src is the right beat's plate, so not one pixel is wrong.
+  reading: >-
+    Cosmetic in its effect and serious in its shape. The publish dst was the id MINUS its date
+    suffix, which is the exact prefix collision that has published a twin into its sibling's
+    directory four times; it survived here only because no two jobs shared a prefix. An artifact
+    that cannot be identified from its own filename also costs an hour every time someone asks what
+    it is, which is what it cost tonight.
+  fix: >-
+    review/ep2-picks/derive_nw.py derives a job from a parent and renames the tokens as a set -
+    bench, mp4, init png, payload prefix, id, and a publish dst that is the FULL id and never a
+    prefix of it. It refuses any result that will not parse or in which an inherited token survived.
+    The nine jobs fired tonight came out of it and each publishes to its own uniquely named dir.
+  outcome: null
+
+- id: CAUGHT-beat-21-was-queued-to-animate-beat-12s-plate-0815
+  date: 2026-08-15
+  kind: caught
+  what: >-
+    ep2-b21-lw-0814 sat first in the ready queue with its crop --src set to
+    plates-local/12-related-r4-s2.png - beat 12's leaf macro, the same file beat 12's own job used.
+    It would have rendered the episode's closing beat from another beat's picture. Renamed to
+    .HOLD-wrong-init in the queue directory before it fired; the runner globs *.json so it will not
+    pick it up, and the rename is reversible.
+  reading: >-
+    The only reason this was found is that the wave was audited rather than scored. Beat 21 has its
+    own plate, farm-out/ep2-b21-scene-0814/21-the-answer-wave1-s0.png, a night field with a glowing
+    sprout; the replacement job points at it. Its prompt also ended "and stops", which is stillness
+    language of exactly the kind the loosened recipe forbids, in a job I wrote after writing the
+    rule.
+  outcome: null
+
+- id: RESULT-nine-fixes-fired-and-what-is-blocked-on-a-plate-0815
+  date: 2026-08-15
+  kind: result
+  what: >-
+    Fired, one attempt each, nothing promoted to canon. Same plate, action rewritten to what the
+    picture can actually show: b02 and b02B lose "behind the sapling" - there is no sapling in that
+    plate, which is why it grew a tree; b03 loses "behind the thin stem"; b14 loses "his fingers
+    scratch at the soil and flick a pebble aside", impossible for a figure standing in a field with
+    no soil or pebble in frame, which is why it froze; b16 and b16B lose "the leaf turns on its
+    stem", a leaf the plate does not contain. New plate: b05 and b05B move to the real scene plates
+    in ep2-b05-scene-0814, two guards with clipboards walking a green field; b21 moves to its own
+    beat's plate. Every one of the six prompt fixes is the same law - the prompt describes what the
+    camera sees, and each of these named something absent.
+  pulled_back_within_the_hour: >-
+    Four of the nine - b03, b14, b16, b16B - were renamed .HOLD-awaiting-motion-research in the queue
+    before they fired. They were the same mistake in a smaller size: re-rendering a SET on a recipe
+    that has not passed a screening, which is the one-sample rule. What stayed on the card is three
+    distinct questions at one beat each: b02 and its twin ask whether deleting an absent noun stops
+    the invented geometry, b05 and its twin ask whether a real scene plate changes anything by
+    itself, b21 is a correctness fix. Those are samples. Six prompt rewrites across six beats were
+    not.
+  blocked_needs_a_plate: >-
+    Beats 06, 07, 10 and 11 have no scene plate in existence - the guardpick and the -scene- dirs
+    both hold costume cards - so no motion job on them is worth GPU time. Beat 09's -scene- plates
+    are cards too. Beat 18's -scene- plate is a long-haired woman in near-darkness, and its current
+    init carries a GREEN fruit, which fails purple canon at the plate. Beat 19's action is the fruit
+    dropping onto his head, and the plate has the fruit already lying on the grass, so the drop
+    cannot be shot from it; a fruit that starts aloft is a plate request, not a prompt fix, and
+    inventing a different action there would be a story change rather than a repair.
+  outcome: null
