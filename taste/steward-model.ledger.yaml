@@ -17410,3 +17410,35 @@
     jobs were held and re-fired under fresh ids rather than overwritten, because the payload guard
     correctly refused to let a second enqueue clobber the first one's inputs.
   outcome: null
+
+- id: PREDICTION-does-a-shorter-clip-drift-less-0815
+  date: 2026-08-15
+  kind: prediction
+  written_before_looking: true
+  question: >-
+    Identity drift is a documented open LTX-2.3 behaviour - Lightricks' own issue 255, "image
+    conditioning does not preserve identity... face, hairstyle, clothes, overall appearance", open
+    with no maintainer reply. If drift ACCUMULATES frame over frame, as an unconstrained-after-frame-0
+    conditioning model would, then a shorter clip should drift less and clip length becomes our only
+    lever on an upstream defect. The comparison exists for free: ep2-b02-stg-headup-49f-0815 and
+    ep2-b02-stg-headup-0815 are 49 and 97 frames of the same staging, same plate, same everything
+    else.
+  my_prediction: >-
+    PARTIAL. I expect the 49-frame to drift LESS but not to hold identity cleanly, and I will say why
+    before looking: on beat 02 the single largest frame-to-frame change in the whole clip is pair 0,
+    a 30.3 restyle flash in which the model redraws the conditioning plate sharper, brighter and with
+    the eyes open, before any action begins. That is drift arriving in ONE frame, not accumulating
+    over ninety-seven. If the bulk of identity loss is that immediate redraw, halving the length
+    removes almost none of it. I put maybe 30 percent on the clean result the lever needs - 49
+    holding and 97 not.
+  what_each_outcome_means: >-
+    If 49 holds and 97 drifts, clip length is a real drift lever, it costs nothing but frame count,
+    and every beat should be cut as short as its action allows. If BOTH drift about equally, the loss
+    is front-loaded into the conditioning redraw, length is not a lever, and the only remaining moves
+    are upstream - conditioning strength via the sibling pipeline, or a different checkpoint. If
+    NEITHER drifts, the drift seen on beat 05 is specific to two-character plates, which would be
+    worth knowing on its own since every guard beat has two characters in it.
+  a_thing_i_will_not_do: >-
+    Read the faces myself and call it. I have been wrong in both directions tonight reading frames
+    off a strip, and identity is exactly the judgement a blind reader is for.
+  outcome: null
