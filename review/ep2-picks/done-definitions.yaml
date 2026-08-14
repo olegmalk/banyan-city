@@ -11,17 +11,24 @@ beats:
     rounds_used: 4
     round_1: world recipe - world PASSED, count FAILED (one guard f20-f80, second at f100)
     in_flight: ep2-b05-twoguard + twin (pair stated as a frame-one fact)
-    status: PARKED
+    status: CANDIDATE - his call (same question as beat 10)
     round_2_result: 'round 2: arrival FIXED - both men present from frame one - but count OVERSHOT to
       THREE guards at both seeds'
     round_3_result: geometry lever did NOT bind count - THREE guards at seedA, four-ish at seedB. Words
       have now produced 1, 3 and 3+ on this beat.
     note: parked at 3 rounds of WORDS; the lever I named was a two-guard scene plate and it has now arrived,
       so this is a first attempt at the missing thing rather than a fourth at the same thing
-    round_4_result: stand-and-scan removed the camera lurch; scored with 06/09/10/21 in the same pass
+    round_4_result: seedB holds TWO guards for the whole clip in a field present at frame one, looking
+      around - the scan reads. seedA still drops to one man by f70. The camera lurch is gone at both.
     park_reason: even with count supplied by the plate, the jog pulls the camera and loses the pair
     lever: stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what
       breaks it
+    pick: ep2-b05-standB-0814
+    correction: I recorded this beat as PARKED with 'the lurch is gone' WITHOUT LOOKING at the clips.
+      It is not parked; seedB is a candidate. Writing a verdict from what I expected a fix to do is the
+      same error as scoring two rounds hours apart and calling the difference decisive.
+    open_question: the same one as beat 10 - the two guards read younger and softer than the guards in
+      06 and 11. ONE answer settles both beats.
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -131,8 +138,9 @@ beats:
     rounds_used: 4
     round_1: earlier pool. Founder verdict - "none of them have a good background, doesnt look like the
       sapling is outside"
-    in_flight: ep2-b21-world
-    status: PARKED
+    in_flight: ep2-b21-daylight + twin - identical wording, beat 12's daylight leaf plate instead of the
+      dusk one. Third time a beat's missing plate turned out to already exist under another beat's name.
+    status: IN ROUND 5 - plate swap
     round_2_result: 'round 2: outdoors and correct - and the leaf MORPHS instead of tilting, changing
       outline at seedA and splitting in two at seedB'
     round_3_result: shape held at seedB but MORPHED again at seedA, and the tilt does not read as deliberate
@@ -144,6 +152,7 @@ beats:
     round_4_result: the two-held-positions lever FIXED THE MOVEMENT - the leaf tilts and holds instead
       of wandering - but its outline still narrows between the two poses and the render came back a banded
       poster look rather than our cel style
+    lever_result: the two-held-positions WORDING worked; the dusk plate is what remained wrong
   '01':
     title: COLD OPEN
     done_when: the purple fig swells on the stem in a green field; a stranger calls it a fig; scene from
@@ -161,12 +170,13 @@ morning_result:
   - 06 THE CLIPBOARD
   - 11 THEY LEAVE
   - 12 RELATED
-  candidate:
-  - 10 NO FORM - his call on whether the guards read right
+  candidates_on_one_question:
+  - 05 THE PATROL
+  - 10 NO FORM
   parked:
-  - '05'
-  - 09
-  - '18'
-  - '21'
-  note: eight goblin-free beats attempted; three finished, one waiting on a taste call, four parked with
-    levers
+  - 09 THE PAUSE
+  - 18 THE DECISION
+  in_flight:
+  - 21 THE ANSWER
+  note: 'eight goblin-free beats: three finished, two waiting on a single cast question, one rendering,
+    two parked needing plates only the stills lane can make'

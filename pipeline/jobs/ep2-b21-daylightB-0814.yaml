@@ -1,0 +1,122 @@
+# 2026-08-14. Beat 21, and the change is the PLATE, not the words.
+# The two-held-positions wording WORKED - the leaf tilts and holds instead of wandering, which was
+# the failure that had beaten three rounds. What it could not fix is that beat 21's own plate is a
+# dark dusk frame, so the clip came back a banded poster look fighting a daylight beat, and the
+# outline still narrowed under it.
+#
+# So the wording is kept EXACTLY as it is and only the starting picture changes: beat 12's plate,
+# 12-related-r4-s2, a leaf against a daylight sky - the same plate that produced one of the three
+# finished shots. Third time this trick has worked: the plate a beat needs is often already on the
+# branch under another beat's name.
+id: ep2-b21-daylightB-0814
+task: ep2-b21-daylightB-0814
+node: 002b-first-citizen
+beat: 21
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'His morning screening, and the answer to whether beat 21 is solved or seed-luck.'
+success: 'A fourth and fifth take of beat 21 at the best wording found, for him to choose between. There is no pass/fail here — the point is a pool, because three rounds of wording did not make this beat repeatable.'
+why: Wording has stopped improving this beat; a variable process wants more samples and a human pick, not another adjective.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b21-daylightB-0814\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b21-daylightB-0814\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE LEAF IS IN ONE POSITION AND THEN IT IS IN ANOTHER, AND THAT IS THE WHOLE MOVEMENT. It begins UPRIGHT and perfectly still. Then it PIVOTS AT ITS BASE, as one rigid piece, until it is leaning clearly over to one side - and there it STOPS DEAD and stays completely motionless for the rest of the shot. It is the SAME leaf in both positions: the same outline, the same size, the same edges, turned to a different angle like a hand on a clock. It never changes shape while it moves. THE LEAF KEEPS ITS EXACT SHAPE FOR THE WHOLE SHOT AND ONLY ITS ANGLE CHANGES: it is one leaf, the same leaf, the same outline and the same size from the first frame to the last, and the ONLY thing that happens is that it TILTS SLOWLY on its stem and then STOPS and HOLDS STILL. It does not grow, it does not curl, it does not unfurl, it does not split, and no second leaf appears. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or white. The sapling is a HEALTHY YOUNG PLANT: a green upright stem with two broad green leaves, alive and leafy, not a bare stick, not a dried stalk and not a withered twig. a close-up of ONE upright leaf on a slender stem, lit warmly from behind, in completely still air. No creature and no person is in this shot. THE AIR IS DEAD STILL AND NOTHING IN THE FRAME MOVES EXCEPT THIS ONE LEAF: slowly and deliberately it TILTS, turning steadily over on its stalk through a small clear arc, and then it HOLDS in the new position and stays there, still. The movement is smooth, purposeful and one-directional — not a flutter, not a wobble, not wind. The stem below it does not sway and the other leaves do not move at all. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, The light is WARM GOLDEN SUNLIGHT — warm, yellow-gold and bright, NOT blue, NOT teal, NOT grey and NOT a cold or dusky grade. very aesthetic.'
+  C:\banyan-farm\ep2-b21-daylightB-0814\b13-negative.txt: leaf changing shape, growing, unfurling, curling, splitting, morphing, second leaf, continuous swaying, wobbling, fluttering, wind, drifting, leaf changing shape, leaf growing, unfurling, curling, splitting, morphing, second leaf, extra leaves, shape shifting, white background, blank background, isolated on white, character sheet, poster art, flat vector art, silhouette, wind, breeze, fluttering, thrashing, swaying stem, all leaves moving, creature, goblin, person, face, hands, dark, dusk, dim lighting, low key, night, blue cast, teal tint, cold colour grade, grey palette, dusk, gloom, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b21-daylightB-0814\b13-jobs-encode.json: "[{\"beat\": 21,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b21-daylightB-0814\b13-jobs-render.json: "[{\"beat\": 21,\n  \"seed\": 20260918,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b21-daylightB-0814\\\\21-the-answer-LTX-poolD-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b21-daylightB-0814\cover_crop.py
+  - --src
+  - C:\banyan-farm\plates-local\12-related-r4-s2.png
+  - --sha256
+  - cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074
+  - --out
+  - C:\banyan-farm\ep2-b21-daylightB-0814\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b21-daylightB-0814\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b21-daylightB-0814\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b21-daylightB-0814
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b21-daylightB-0814\bench-ep2-b21-daylightB-0814.jsonl
+  - --bench-label
+  - ep2-b21-daylightB-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b21-daylightB-0814"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b21-daylightB-0814/21-the-answer-LTX-poolD-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b21-daylightB-0814/b13-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b21-daylightB-0814/bench-ep2-b21-daylightB-0814.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b21-daylightB-0814.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b21-daylightB-0814\21-the-answer-LTX-poolD-0812.mp4
+- C:\banyan-farm\ep2-b21-daylightB-0814\b13-init-704x1280.png
