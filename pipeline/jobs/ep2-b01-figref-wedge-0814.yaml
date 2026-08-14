@@ -1,0 +1,101 @@
+# 2026-08-14, stills-drafts lane. Fig twin, one variable against figref_r2.
+id: ep2-b01-figref-wedge-0814
+task: ep2-b01-figref-wedge-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 3
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: 'Eight frames at w010 and w020. Pass is the PLANT returning as the subject - seedling, two cotyledons,
+  field, whole plant in frame - with the fruit still purple and still fig-shaped. The trade to watch is
+  the one measured everywhere else: a shorter window hands composition back to the prompt and loosens
+  the reference''s grip on the object, so if the fruit goes green or round at 10% that is the boundary
+  and 20% is the answer, or neither is and a single-fruit reference cannot serve a wide plant shot.'
+why: 'TWIN A - THE COMPOSITION FAULT. Round 2 fixed the binding (one restored noun turned the leaf into
+  a fruit: deep purple, teardrop, hanging from a stem) but the reference then OWNED the composition. The
+  prompt asked for a tiny seedling in an open field, two cotyledons, whole plant in frame; what came back
+  was a macro of one fruit filling the frame with blurred grass, at dusk instead of morning, and all four
+  references were near-identical - very low variance, which is the adapter dominating. Beat 01''s own
+  fence is a WIDE shot of the whole 40cm plant, so a macro is the wrong shot and the beat cannot be animated
+  from it. ONE VARIABLE: the window shortens to 10% and 20% instead of 15%, which is the lever that gave
+  beat 03 its whole world back when the reference was overriding the scene.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figref-wedge
+  - --draft-key
+  - authored_b01_figref_r2
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-wellcome-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figref-wedge
+  - --draft-key
+  - authored_b01_figref_r2
+  - --arm
+  - wedge
+  - --task
+  - ep2-b01-figref-wedge-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figref-wedge-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figref-wedge/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figref-wedge-0814.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref-wedge\01-cold-open-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figref-wedge\01-cold-open-ipa-r0-w020-s0.png

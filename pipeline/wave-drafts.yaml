@@ -218,6 +218,23 @@ beats:
     # attach to. So this restores the minimum - `one small purple fig hanging from the
     # stem` - and nothing else. Still no teardrop, no neck, no matte, no ostiole: those
     # are what the reference is for. This only says WHICH THING it is.
+    # -- `authored_b01_figref_matte` -- 2026-08-14, TWIN B against figref_r2. Round 2
+    # fixed the binding: restoring one noun turned the leaf into a FRUIT, deep purple,
+    # teardrop, hanging from a stem. Two faults remain and they are different in kind.
+    # This twin attacks the SURFACE one only: the fruit came back GLOSSY, with hard
+    # specular highlights and a wet look, where the canon is matte with no shine at all -
+    # and the reference IS matte, being an aquatint, so the reference did not suppress
+    # the checkpoint's own gloss prior. One variable: `matte skin, no shine` restored to
+    # the prompt. If the word fixes what the reference could not, that is the boundary of
+    # what an object reference carries: shape and colour yes, surface no.
+    authored_b01_figref_matte: >-
+      A tiny seedling in an open grassy field, one small purple fig with matte skin and no
+      shine hanging from its thin stem below the leaves, two oversized cotyledon leaves,
+      whole plant in frame. Medium shot, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No woman, no girl, no
+      boy, no child, no person, no chibi, no mascot, no creature, no face, no giant leaf,
+      no gloss, no wet look, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b01_figref_r2: >-
       A tiny seedling in an open grassy field, one small purple fig hanging from its thin
       stem below the leaves, two oversized cotyledon leaves, whole plant in frame. Medium
