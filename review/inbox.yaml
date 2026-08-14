@@ -853,3 +853,21 @@
   since: '2026-08-14'
   kind: pick
   verdict_hint: yes, done / still not a fig / stop trying, ship it as a purple fruit
+- what: 'THE GUARDS - which number? Eight turnarounds from two proposals, front and back, numbered. You
+    said you had never seen them and wanted your own changes, so point at one or mark up what to change.
+    They GATE SIX BEATS - 05, 06, 07, 09, 10, 11 - and nothing on those moves until you pick. They had
+    been rendered and unpaged for five hours, which is on us'
+  url: /review/ep2-picks/motion-0812#e-guards
+  group: taste
+  since: '2026-08-14'
+  kind: sheet
+  verdict_hint: number N / none of them, change this and redraw
+- what: 'WHY EPISODE 2 SHOWS ZERO APPROVED FRAMES - it is a counting question, not a work question. The
+    site counts APPROVED STILLS per episode, and episode 2 never went through per-beat still promotion
+    because we moved to picking clips instead. So the zero is honest and also misleading: 21 of 21 beats
+    have a clip. Do you want animated episodes counted by BEATS WITH AN APPROVED CLIP instead? The change
+    is written and NOT shipped'
+  url: /review/ep2-picks/motion-0812#e-goblinwave
+  since: '2026-08-14'
+  kind: decision
+  verdict_hint: yes count clips for animated episodes / leave it counting stills / show both numbers
