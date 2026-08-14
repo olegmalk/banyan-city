@@ -249,6 +249,39 @@ beats:
     # lobed and instantly identifying, where nothing done to the fruit itself has worked
     # in seven rounds. A fig beside a fig leaf is a fig; the same fruit alone is an
     # aubergine. That is the one thing never tried, and it costs four tokens.
+    # -- `authored_b01_figleaf2` -- 2026-08-14. THE PLANT SAYS FIG, NOT THE FRUIT.
+    # Seven rounds of describing the fruit have produced 0 of 4 reads as a fig: two
+    # eggplant, one plum, one "not a fruit at all". The lead's call is to stop working on
+    # the fruit and let the LEAF carry the identification, and the cold reader said the
+    # same thing independently. A deeply lobed fig leaf is unmistakable; the fruit under
+    # it can then just be a purple teardrop.
+    #
+    # WHERE THE LEAF CAME FROM, because the premise needed correcting: beat 16 did NOT
+    # produce a lobed leaf. Its four plate frames are close-ups of the GOBLIN - he pulled
+    # focus and the leaf never became the subject, which is the exact failure that beat's
+    # own spec predicted. So there was no accidental win to harvest. Instead the leaf is
+    # licence-clean and sourced: Wellcome Collection j92sfxzp, "Fig (Ficus carica L.):
+    # fruit and leaves, coloured aquatint by G. Pera c.1825", PUBLIC DOMAIN MARK, sha256
+    # ba9b3b2cf9455c595939b94855e81a15c7aabe891e5ec6f235238e91c18641a8. It carries a
+    # textbook five-fingered fig leaf. (Wellcome's y5c3yxzt was rejected: cc-by-nc.)
+    #
+    # THE REFERENCE SET IS NOW TWO SOURCES, FOUR SLOTS: two crops of the lobed leaf, and
+    # two of the purple Brunswick fruit including one tight on its base. The leaf tells
+    # the model what plant this is; the fruit tells it the colour and the matte surface.
+    #
+    # THE CROSSING-STEM ARTIFACT IS BANNED BY NAME. The cold reader flagged it as
+    # systematic, not accidental - "in three of four a stem or twig crosses in front of
+    # the fruit and stops mid-body" - so it is in the recipe and it gets a negative.
+    # `ostiole` as a word never landed once in seven rounds, so it is described instead:
+    # a small puckered eye at the tip.
+    authored_b01_figleaf2: >-
+      A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, one purple
+      fig hanging under them with a small puckered eye at its tip, matte dusty skin.
+      Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No woman, no girl, no boy, no child, no person, no eggplant, no aubergine,
+      no plum, no gloss, no shine, no wet look, no black fruit, no stem crossing the
+      fruit, no simple oval leaves, no dark, no night. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b01_figleaf: >-
       A tiny seedling in a sunlit grassy field, one purple fig with a green shoulder and a
       small star-shaped eye at its base, matte dusty skin, hanging beside a deeply lobed
@@ -4181,6 +4214,39 @@ beats:
     # CARRIES THE PURPLE FIG, which is canon now, and the growth ladder: one fruit only,
     # on a THIN branch, on a tiny sapling. Beat 12's bushy crown was the violation this
     # avoids.
+    # -- `authored_b18_figleaf2` -- 2026-08-14. THE PLANT SAYS FIG, NOT THE FRUIT.
+    # Seven rounds of describing the fruit have produced 0 of 4 reads as a fig: two
+    # eggplant, one plum, one "not a fruit at all". The lead's call is to stop working on
+    # the fruit and let the LEAF carry the identification, and the cold reader said the
+    # same thing independently. A deeply lobed fig leaf is unmistakable; the fruit under
+    # it can then just be a purple teardrop.
+    #
+    # WHERE THE LEAF CAME FROM, because the premise needed correcting: beat 16 did NOT
+    # produce a lobed leaf. Its four plate frames are close-ups of the GOBLIN - he pulled
+    # focus and the leaf never became the subject, which is the exact failure that beat's
+    # own spec predicted. So there was no accidental win to harvest. Instead the leaf is
+    # licence-clean and sourced: Wellcome Collection j92sfxzp, "Fig (Ficus carica L.):
+    # fruit and leaves, coloured aquatint by G. Pera c.1825", PUBLIC DOMAIN MARK, sha256
+    # ba9b3b2cf9455c595939b94855e81a15c7aabe891e5ec6f235238e91c18641a8. It carries a
+    # textbook five-fingered fig leaf. (Wellcome's y5c3yxzt was rejected: cc-by-nc.)
+    #
+    # THE REFERENCE SET IS NOW TWO SOURCES, FOUR SLOTS: two crops of the lobed leaf, and
+    # two of the purple Brunswick fruit including one tight on its base. The leaf tells
+    # the model what plant this is; the fruit tells it the colour and the matte surface.
+    #
+    # THE CROSSING-STEM ARTIFACT IS BANNED BY NAME. The cold reader flagged it as
+    # systematic, not accidental - "in three of four a stem or twig crosses in front of
+    # the fruit and stops mid-body" - so it is in the recipe and it gets a negative.
+    # `ostiole` as a word never landed once in seven rounds, so it is described instead:
+    # a small puckered eye at the tip.
+    authored_b18_figleaf2: >-
+      A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, one purple
+      fig hanging under them with a small puckered eye at its tip, matte dusty skin.
+      Held macro, warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No woman, no girl, no boy, no child, no person, no eggplant, no aubergine,
+      no plum, no gloss, no shine, no wet look, no black fruit, no stem crossing the
+      fruit, no simple oval leaves, no dark, no night. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b18_scene: >-
       A deep purple-violet fig, green at its neck, matte, hangs from the thin branch of a
       tiny sapling in green summer grass, a treeline and pale sky behind, the only fruit

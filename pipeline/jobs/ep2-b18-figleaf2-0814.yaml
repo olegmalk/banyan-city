@@ -1,0 +1,110 @@
+# 2026-08-14, stills-drafts lane. The LEAF carries the fig, not the fruit.
+id: ep2-b18-figleaf2-0814
+task: ep2-b18-figleaf2-0814
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 2
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates this beat off the plate.
+success: Sixteen frames. Read the strip along the SEED axis, not the reference axis - the previous fig
+  set was the same crop four times and the first cold read saw one picture four times as a result. Cold
+  read again with no context. Pass is a majority calling it a FIG. THE DECISIVE QUESTION is whether the
+  LEAF reads as lobed with fingers; if the leaf lands and the fruit still reads as an aubergine, then
+  the fruit was never the problem and a fig leaf belongs in every fig shot in the show. If the leaf comes
+  back as simple ovals again, the reference is not reaching leaf shape either and the fig goes to the
+  founder as a question rather than another round.
+why: 'STOP DESCRIBING THE FRUIT. Seven rounds on the fruit produced 0 of 4 reads as a fig - two eggplant,
+  one plum, one ''not a fruit at all''. The LEAF carries the identification instead: a deeply lobed fig
+  leaf is unmistakable and the fruit under it can just be a purple teardrop. The cold reader said the
+  same thing independently. PREMISE CORRECTED: beat 16 did NOT produce a lobed leaf. Its four plate frames
+  are close-ups of the GOBLIN - he pulled focus and the leaf never became the subject, the exact failure
+  that beat''s own spec predicted - so there was no accidental win to harvest. The leaf is sourced licence-clean
+  instead: Wellcome Collection j92sfxzp, ''Fig (Ficus carica L.): fruit and leaves'', coloured aquatint
+  by G. Pera c.1825, PUBLIC DOMAIN MARK, sha256 ba9b3b2cf9455c595939b94855e81a15c7aabe891e5ec6f235238e91c18641a8.
+  Wellcome''s y5c3yxzt was rejected on licence: cc-by-nc. REFERENCE IS NOW TWO SOURCES IN FOUR SLOTS -
+  two crops of the lobed leaf, two of the purple Brunswick fruit including one tight on its base. The
+  leaf says what plant this is; the fruit says the colour and the matte surface. The crossing-stem artifact
+  the reader called systematic is banned by name, and ''ostiole'' is described rather than named because
+  the word never landed once in seven rounds.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2
+  - --draft-key
+  - authored_b18_figleaf2
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2
+  - --draft-key
+  - authored_b18_figleaf2
+  - --arm
+  - window4
+  - --task
+  - ep2-b18-figleaf2-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b18-figleaf2-0814\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b18-figleaf2/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b18-figleaf2-0814.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2\18-the-decision-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2\18-the-decision-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2\18-the-decision-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleaf2\18-the-decision-ipa-r3-w015-s0.png
