@@ -1561,3 +1561,4 @@
 16:01:55Z STARTED task=ep2-b18-figleaf2-wedge-0814-1786722771 attempt=1 on box-runner
 16:03:29Z DONE task=ep2-b18-figleaf2-wedge-0814-1786722771 rc=0 artifacts=2
 16:03:37Z STARTED task=ep2-b18-figleaf3-0814-1786723093 attempt=1 on box-runner
+16:06:27Z DONE task=ep2-b18-figleaf3-0814-1786723093 rc=0 artifacts=4
