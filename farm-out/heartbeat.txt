@@ -1467,3 +1467,4 @@
 11:44:22Z STARTED task=ep2-b08-plate-0814-1786707396 attempt=1 on box-runner
 11:47:12Z DONE task=ep2-b08-plate-0814-1786707396 rc=0 artifacts=4
 11:47:25Z STARTED task=ep2-b02-wave-0814-1786707592 attempt=1 on box-runner
+11:53:15Z DONE task=ep2-b02-wave-0814-1786707592 rc=0 artifacts=2
