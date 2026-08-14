@@ -1352,3 +1352,4 @@
 03:29:20Z STARTED task=ep2-b05-stand-0814-1786678145 attempt=1 on box-runner
 03:35:40Z DONE task=ep2-b05-stand-0814-1786678145 rc=0 artifacts=1
 03:35:50Z STARTED task=ep2-b05-standB-0814-1786678152 attempt=1 on box-runner
+03:42:12Z DONE task=ep2-b05-standB-0814-1786678152 rc=0 artifacts=1
