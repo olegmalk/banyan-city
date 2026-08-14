@@ -315,3 +315,27 @@ eggplant_fix:
   result: the purple object is GONE from all five refires. Removing the blanket fig clause fixed it completely,
     which confirms the clause was the whole cause.
   cost: 12 wasted renders and about 70 minutes of card, all of it mine.
+standard_0815:
+  written: 2026-08-15, before any render in this stretch, at the lead's instruction
+  a_beat_is_DONE_when:
+  - a BLIND reader, given the frames with no context, names the action correctly without being led
+  - the same character is recognisably present throughout - face, costume and proportions hold
+  - the action is one the plate's camera can actually show (see staging_law)
+  - every noun in the prompt exists in the plate
+  a_beat_is_NOT_done_because: 'a frame-difference number improved. The metric is a floor, never a verdict:
+    it rises identically for a camera push-in, a lighting ramp and a character acting, and it has now
+    told me the wrong thing in both directions in one night.'
+  staging_law: 'CHECK THE ACTION AGAINST THE PLATE CAMERA BEFORE RENDERING. Beat 02 proved it: its plate
+    is a high angle looking down, so any forward fold carries the face away from the lens from frame 1,
+    and four arms of sampler tuning never recovered what one restaging did. Actions that raise the head
+    or open the eyes keep the face in shot; actions that bend, crouch or turn away lose it.'
+  scoring_method: 'Segmented inside the contiguous motion window with pair 0 dropped - frame 0 to 1 is
+    a restyle flash, not motion. Judge smoothness ONLY from consecutive frames: an evenly-spread contact
+    sheet puts sampled frames ~8 apart and makes a smooth move read as a cut, so no beat fails for "cutting"
+    on a spread sheet alone.'
+  rounds: three per beat maximum, then it ships with its fault named or it parks with the reason
+  recipe_frozen: 704x1280, 97 frames, 24fps, two-stage, distilled sigmas, image-crf 33, guidance 2.0,
+    original negative, sequential offload. A four-arm sweep found no arm improves subject motion; crf
+    42 was a whole-frame regrade and guidance 1.0 breaks the action outright. Do not re-litigate.
+  prompt_rules: The word "fig" summons a LEAF in this checkpoint and is banned from prompt text - the
+    fruit is PURPLE FRUIT in prompts, while narrative and VO may still say fig.

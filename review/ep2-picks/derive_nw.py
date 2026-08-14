@@ -85,14 +85,29 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
         "prefix": f"{bb}-",
         "id": new_id,
     }
-    # Longest first: b13- lives inside b13-init-...png and bench-b13-....jsonl.
-    for k in ("bench", "mp4", "png", "prefix", "id"):
+    # Order is load-bearing twice over. bench/mp4/png come before "prefix"
+    # because b13- lives inside b13-init-...png and bench-b13-....jsonl. And
+    # "id" must come before "prefix" too: when the parent was itself derived,
+    # its id CONTAINS its beat prefix -- ep2-b05-nw-0815 holds "b05-" -- so
+    # swapping the prefix first rewrites the id out from under the id swap and
+    # the job silently comes out named for the wrong beat. It failed loudly
+    # here only because the parse check compares the id afterwards.
+    for k in ("bench", "mp4", "png", "id", "prefix"):
         text = text.replace(old[k], new[k])
     # The dst was the id minus its date suffix; whatever survives the id
     # replacement is that prefix, and it becomes the full id.
     stale_dst = re.sub(r"-\d{4}$", "", old["id"])
     if stale_dst != old["id"]:
         text = text.replace(stale_dst, new_id)
+
+    # The beat NUMBER, which is metadata rather than conditioning and so was
+    # silently inherited: three jobs went out recording beat 5 while cropping
+    # beat 6, 7 and 9's plates. The render would have been correct and the
+    # provenance a lie, which is the same defect class as the inherited
+    # filenames this whole script exists to stop.
+    text, n = re.subn(r"^beat:\s*\d+\s*$", f"beat: {beat}", text, count=1, flags=re.M)
+    if n != 1:
+        sys.exit(f"!! expected one beat field, replaced {n}")
 
     if plate:
         # Exact-string swap, not a pattern. The crop argv is a YAML block
@@ -104,6 +119,15 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
                     if s.get("name") == "crop"][0]["argv"]
         old_src = old_argv[old_argv.index("--src") + 1]
         old_sha = old_argv[old_argv.index("--sha256") + 1]
+        # The token loop above has ALREADY rewritten the text, and a parent's
+        # plate path can contain its beat prefix -- ep2-b05-scene-0814 holds
+        # "b05-". So the string to search for is the source's path AFTER the
+        # same substitutions, not as it appears in the source file. Skipping
+        # this made the swap silently miss: the job kept a mangled path built
+        # from the new beat's directory and the old beat's filename, and only
+        # plate_check.py noticed, by failing to fetch it.
+        for k in ("bench", "mp4", "png", "id", "prefix"):
+            old_src = old_src.replace(old[k], new[k])
         win = BOX_FARM_OUT + "\\" + plate.split("farm-out/", 1)[1].replace("/", "\\")
         text = text.replace(old_src, win).replace(old_sha, blob_sha(plate))
     if prompt:
@@ -127,8 +151,13 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
     doc = yaml.safe_load(text)          # refuse anything that will not parse
     if doc.get("id") != new_id:
         sys.exit(f"!! id did not take: {doc.get('id')}")
-    leftover = [k for k in ("b13-", "b05-init", "13-remake", "06-the-clipboard-LTX")
-                if k in text and not k.startswith(f"b{beat:02d}")]
+    # Check the tokens THIS derivation actually replaced, not a hardcoded list.
+    # The hardcoded version false-fired on beat 6: its correct new filename is
+    # 06-the-clipboard-LTX-scn.mp4, which contains the very token the list was
+    # watching for. A guard that fails on a correct output teaches people to
+    # bypass guards.
+    leftover = [old[k] for k in ("bench", "mp4", "png", "id", "prefix")
+                if old[k] != new[k] and old[k] in text]
     if leftover:
         sys.exit(f"!! inherited tokens survived in {new_id}: {leftover}")
     return text
