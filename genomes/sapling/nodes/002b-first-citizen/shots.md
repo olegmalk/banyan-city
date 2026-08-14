@@ -348,7 +348,7 @@ creature / no face`. Four candidates on this beat's own four seeds; the sheet
 carries labels and seeds only — no favourite, no ordering (R4).
 
 ```
-A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round purple fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **r6 RENDERED AND REFUSED — two of the three changes worked and the beat still has
@@ -1080,7 +1080,7 @@ A small round goblin pushes himself up to standing, brushes dust off his patchwo
 Line: the tree deciding to spend everything. Camera on the FIG — the thing being spent.
 
 ```
-One small round green fruit trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut, extreme close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+One small round purple fruit trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut, extreme close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 19 — THE DROP (1:34–1:39) ⬜ needs footage
