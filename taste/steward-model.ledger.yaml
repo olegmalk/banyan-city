@@ -16625,3 +16625,43 @@
     Run a seventh wording round. The founder asked for a two-day finish and the honest way to serve that
     is to stop spending card on a lever that is measurably exhausted.
   outcome: null
+
+- id: RULE-two-fix-rounds-then-it-ships-0814
+  kind: law
+  date: 2026-08-14
+  authority: R4, relaying his father
+  verbatim: >-
+    "i guess dad did say that we need to focus less on polishing and more on publishing it as soon as it
+    is completed."
+  the_rule: >-
+    A beat gets its definition-of-done round and AT MOST TWO FIXES. If it still fails it goes in the cut
+    with its remaining fault NAMED - in the assembly notes and on the review page - not held back and not
+    quietly passed off as fine. No third round unless he asks for one. Coverage over polish; first take
+    over best take.
+  it_supersedes_my_own_stopping_rule_and_tightens_it: >-
+    I had been working to three rounds then park. Two is tighter, and the difference is what happens at
+    the end: a park leaves a beat with no clip, this ships the clip and names what is wrong with it. Park
+    was the wrong terminal state - it optimised for my record being clean rather than for the episode
+    existing.
+  what_it_immediately_promotes: >-
+    TWENTY OF TWENTY-ONE BEATS. I counted published takes off the results branch rather than trusting my
+    own notes: every beat except 16 has at least one clip on disk, so under this rule every one of them is
+    ship-ready today with its fault named. Beats I had PARKED - 09 with the face that changes between
+    plate and close-up, 18 with a fig that a cold reader ranks fifth, 21 with a leaf that narrows as it
+    tilts, 05 and 10 with guards who read younger than the guards in 06 and 11 - all ship, faults named.
+  the_one_real_coverage_hole: >-
+    BEAT 16 has ZERO takes and is not rendering. Its block in wave-drafts.yaml is occupied by the ep3
+    magistrate charref (slug charref-magistrate, tag 1girl), so any beat-16 draft inherits those and the
+    count-tag gate would demand 1girl. It is also explicitly outside this lane by my original brief. So
+    the entire episode's coverage now hinges on one beat that is blocked by a data collision in another
+    lane's file - flagged, not touched.
+  what_it_changes_about_what_i_queue: >-
+    The sixteen jobs in flight are NOT polish and I am letting them run: they are the first takes on the
+    goblin he approved, and every earlier take of those beats carries a character he rejected. Making a
+    take match canon is coverage. But nothing new gets queued to improve a beat that already has a take,
+    which retires the fig round, the guard consistency pass and the b09 close-up plate request.
+  the_thing_i_have_to_watch_in_myself: >-
+    Every round today felt necessary while I was authoring it, and most of them moved one axis and broke
+    another. A rule that stops me at two is worth more than my judgement about whether round three is
+    different this time - it has been "different this time" six times on the fig alone.
+  outcome: null
