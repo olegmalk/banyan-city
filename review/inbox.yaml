@@ -882,12 +882,22 @@
   since: '2026-08-14'
   kind: decision
   verdict_hint: understood, fix the framing / no, what I meant was something else
-- what: 'YOU WERE RIGHT ABOUT THE RESTRICTIVENESS - and the measurement is not close. Beat 13''s prompt
-    was 160 words with TWELVE phrases telling it not to move, and 264 of 459 prompts across the episode
-    carried that language. Rewritten to 43 words with none: the clip stopped throwing away the starting
-    picture, 66.6 down to 4.5 on the jump-away measurement. Before and after clips side by side, same
-    beat, same seed. Nineteen beats are re-rendering on it. Nothing to answer - it is the night''s result'
+- what: 'YOU WERE RIGHT ABOUT THE RESTRICTIVENESS - and it was not the whole cause. Your diagnosis holds
+    and the numbers are real: beat 13''s prompt was 160 words with TWELVE phrases telling it not to move,
+    264 of 459 prompts across the episode carried that language, and rewriting it to 43 words with none
+    took the jump-away measurement from 66.6 to 4.5. The metric improved. The clips still do not move.
+    A blind cold read - an agent shown six frames per clip, no context, asked what happens - failed three
+    from the loosened wave: beat 04 "a still image with lighting drift and camera jitter on top", beat 15
+    a head-bowed stand where the plant beside him never grows, it only gets nearer as the camera pushes in,
+    and beat 17 STILL HAS THE CUT - frame 1 does not match frames 2-6, different costume shade, different
+    facial proportions, a whole crop of sprouts simply present afterwards. Its verdict across all three:
+    "All three clips are static. None of the three contains an action a viewer could name." What went wrong
+    on my side is one sentence: I scaled to nineteen beats on a metric agreeing with me instead of on a
+    screened sample, which is the ONE-SAMPLE-BEFORE-ANY-BATCH rule in CLAUDE.md. Next: research is running
+    now outside this repo into what actually controls how much motion an LTX image-to-video clip produces,
+    and the change after it is ONE test on ONE beat with the prediction stated first, not another nineteen'
   url: /review/ep2-picks/motion-0812#e-loosened
   since: '2026-08-15'
   kind: clip
-  verdict_hint: good, keep going / it still looks wrong to me and here is how
+  verdict_hint: nothing to answer - this is me correcting my own report / or tell me I am still reading
+    it wrong
