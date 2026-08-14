@@ -1679,3 +1679,4 @@
 22:13:11Z STARTED task=ep2-b02-sw-r1crf42-0815-1786745171 attempt=1 on box-runner
 22:19:05Z DONE task=ep2-b02-sw-r1crf42-0815-1786745171 rc=0 artifacts=2
 22:19:11Z STARTED task=ep2-b06-plate-0815-1786745325 attempt=1 on box-runner
+22:19:19Z FAIL task=ep2-b06-plate-0815-1786745325 rc=1 step=dry

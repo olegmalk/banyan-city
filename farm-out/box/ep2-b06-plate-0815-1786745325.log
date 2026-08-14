@@ -1,0 +1,24 @@
+#### job ep2-b06-plate-0815-1786745325 attempt 1 start 2026-08-14T22:19:11Z
+
+==== step dry START 2026-08-14T22:19:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "6", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\wave-goblin-prep\\refs-guards-twoinfield-0813", "--out", "C:\\banyan-farm\\goblin-ipa-0812\\out-b06-plate-0815", "--draft-key", "authored_b06_scene2", "--arm", "window4", "--dry"]
+== goblin window mechanism on BEAT 06, references held at beat 04. Recipe unchanged; the beat is the variable.
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+
+== beat 06 the-clipboard [guard] — clipboard
+   AUTHORED: Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge and dark treeline behind, pale blue morning sky above, short brown hair, the nearer one turning over a bark clipboard at reading height and looking down at it. Cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no white background, no plain background, no character sheet, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 2boys, two adult guard men in brown tunics and sashes stand in green summer grass, a hedge and dark treeline behind, pale blue morning sky above, short brown hair, the nearer one turning over a bark clipboard at reading height and looking down at it. Cinematic lighting, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, knight, white background, plain background, character sheet, dark, night, photorealism, text
+   positive tokens (real CLIP): 69/77   headroom for the goblin definition: 8
+   negative tokens: recipe 64 -> sent 64 (budget 77)
+   count tag: '2boys' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   !! COUNT TAG is '2boys', draft declares '1boy'
+
+!! FAULTS — nothing drawn: COUNT TAG is '2boys', draft declares '1boy'
+==== step dry END rc=1 2026-08-14T22:19:19Z ====
+#### job ep2-b06-plate-0815-1786745325 finished rc=1 2026-08-14T22:19:19Z
