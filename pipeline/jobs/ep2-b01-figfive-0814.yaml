@@ -1,0 +1,138 @@
+# 2026-08-14. HIS VERDICT: "for beat 01, its still not a fig.. but we are getting closer." Then he
+# did the thing I should have done days ago and had an agent with NO CONTEXT look at it cold.
+#
+# THE COLD READ IS DECISIVE AND IT IS NOT WHAT I WOULD HAVE GUESSED: the fruit reads as a PLUM at 30-35%
+# confidence, with FIG ranked fourth or fifth at under 10%. Every round I have run judged the fruit
+# against my own idea of a fig. A stranger ranked it against every fruit there is, and fig came fifth.
+#
+# FIVE NAMED DIAGNOSTICS, in the reader's order of importance, all five in this prompt:
+#   1. THE OSTIOLE - the puckered eye at the BOTTOM. The single most diagnostic feature of a fig and
+#      ours has never had one. Not once, in any round.
+#   2. THE NECK AND BODY - a fig PINCHES below the stem then FLARES into a broad, almost flat-bottomed
+#      body, wider than tall. My "teardrop" wording produced an even egg, which is the plum silhouette.
+#   3. THE STEM - short, thick, angled. Ours was a long thin vertical wire, which is itself a plum tell.
+#   4. RIBBING - about eight even meridian lines, replacing the random dashes that read as shading.
+#   5. COLOUR - purple-black at the base grading to green and bronze at the shoulder. Flat lavender IS
+#      the plum read, and flat lavender is exactly what I asked for when I said "deep purple-violet".
+#
+# The negative now names the misreads themselves: plum, damson, sloe, grape, egg-shaped, long thin stem,
+# flat lavender, smooth featureless base.
+#
+# WHAT IS NOT CHANGED: the leaf. The reader also flagged that a 3-5 lobed fig leaf would carry the
+# identification alone and that our strap-like blades argue against fig - but that collides with the
+# canon "two broad round cotyledons", so it is his call and no lane touches leaf shape until he answers.
+#
+# PREDICTION, as the stranger test and nothing softer: shown one frame with no context, a reader with no
+# knowledge of this project ranks FIG FIRST. Not "fruit", not "closer" - first. Anything less and the
+# lever is not words, it is a reference image, which is where beat 18 has already been parked.
+id: ep2-b01-figfive-0814
+task: ep2-b01-figfive-0814
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2-b01 motion lane, 2026-08-11
+consumer: 'The episode-2 cold open: first motion sample from the beat-01 frame carrying his two approvals (s2 composition, 0.55 style). One sample; his look decides scale.'
+success: 'A 704x1280 mp4 of beat 1 with the shape notes applied — the fig a teardrop with a narrow neck rather than a green ball, the beat''s own action unchanged, matching its twin. The failure worth reporting is the shape not moving, which would put it in the plate and not the prompt.'
+why: His two shape notes, propagated to every beat that shows the thing rather than left in the one file where I first proved them.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-figfive-0814\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRUIT IS A FIG AND IT HAS THE FIVE THINGS THAT MAKE A FIG READ AS ONE. SHAPE: it PINCHES IN just under the stem into a narrow shoulder, then FLARES OUT into a broad body that is WIDER THAN IT IS TALL and almost FLAT ACROSS THE BOTTOM - squat, not egg-shaped, not a smooth even oval. THE EYE: a small dark PUCKERED OSTIOLE, a closed round eye, sits in the very CENTRE OF THE FLAT BASE at the bottom of the fruit, facing down. THE STEM: SHORT and THICK and ANGLED off to one side where it joins the twig - a stubby woody stub, never a long thin vertical wire. RIBBING: about eight faint MERIDIAN LINES running from the shoulder down the sides to the base, evenly spaced like the seams of a melon. COLOUR: DEEP PURPLE-BLACK at the base, grading upward to GREEN and BRONZE at the shoulder and neck, with a dusty pale bloom over it - a two-tone fruit, never a flat even lavender. a tiny seedling with two oversized cotyledon leaves on one slender stem, standing in tall grass in clear bright green daylight, the grass and the leaves a fresh living green, a few slow drifting motes of light in the air behind it. One small PURPLE FIG hangs from the stem below the leaves on a narrow stem neck, wider and heavier at its lower end and tapering up to where it joins the stem, and it slowly swells and grows, deepening to purple as it fills out, the only thing in frame that moves. Static camera, the grass and the leaves holding still, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b01-figfive-0814\b01-negative.txt: plum, damson, sloe, grape, egg-shaped, smooth even oval, tall narrow fruit, long thin stem, wire stem, vertical stem, flat lavender, flat violet, pastel purple, single flat colour, no eye, smooth featureless base, green fig, green fruit, unripe green, ribbed, ribbing, ridges, grooves, pumpkin, gourd, spiral, target, white patch, tripod, camera, camera equipment, film equipment, stool, stake, plant support, amber light, golden hour, sunset, dusk, orange light, warm light, backlit, autumn colours, brown leaves, dark fruit, black fruit, green ball, round ball, sphere, spherical fruit, apple, marble, camera pan, camera tilt, tilting down, panning down, camera movement, dolly, zoom, apple, green apple, round fruit, spherical fruit, cherry, berry, humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism, 3D render look, text, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-jobs-encode.json: "[{\"beat\": 1,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\b01-fig-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\b01-fig-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\b01-negative.txt\"}]"
+  C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-jobs-render.json: "[{\"beat\": 1,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\b01-fig-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\b01-fig-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b01-figfive-0814\\\\01-cold-open-LTX-cold-r2-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-figfive-0814\cover_crop.py
+  - --src
+  - C:\banyan-farm\out-b01-final055r3\b01-final055-i55-s0.png
+  - --sha256
+  - 61f311b8b971002b39043d73e4a9d319655b00db7e866a636a9e09c4c0fe9a90
+  - --out
+  - C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '233'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-figfive-0814
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-figfive-0814\bench-b01-cold-r2.jsonl
+  - --bench-label
+  - ep2-b01-figfive-0814
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-figfive"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b01-figfive-0814/01-cold-open-LTX-cold-r2-0813.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b01-figfive-0814/b01-fig-704x1280.png"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b01-figfive-0814.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b01-figfive-0814\01-cold-open-LTX-cold-r2-0813.mp4
+- C:\banyan-farm\ep2-b01-figfive-0814\b01-fig-704x1280.png
