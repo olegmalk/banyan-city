@@ -96,8 +96,12 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
         text = text.replace(old[k], new[k])
     # The dst was the id minus its date suffix; whatever survives the id
     # replacement is that prefix, and it becomes the full id.
+    # Only for parents whose dst really was the id-minus-date PREFIX. Jobs this
+    # script already produced use the FULL id as their dst, and for those the
+    # stale prefix is also a prefix of the NEW id -- so replacing it a second
+    # time rewrites the id inside itself and yields ep2-b06-scnbB-0815B-0815.
     stale_dst = re.sub(r"-\d{4}$", "", old["id"])
-    if stale_dst != old["id"]:
+    if stale_dst != old["id"] and not new_id.startswith(stale_dst):
         text = text.replace(stale_dst, new_id)
 
     # The beat NUMBER, which is metadata rather than conditioning and so was

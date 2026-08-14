@@ -322,6 +322,7 @@ standard_0815:
   - the same character is recognisably present throughout - face, costume and proportions hold
   - the action is one the plate's camera can actually show (see staging_law)
   - every noun in the prompt exists in the plate
+  - the FACE is the same face at the end as at the start - not merely the same costume
   a_beat_is_NOT_done_because: 'a frame-difference number improved. The metric is a floor, never a verdict:
     it rises identically for a camera push-in, a lighting ramp and a character acting, and it has now
     told me the wrong thing in both directions in one night.'
@@ -339,3 +340,19 @@ standard_0815:
     42 was a whole-frame regrade and guidance 1.0 breaks the action outright. Do not re-litigate.
   prompt_rules: The word "fig" summons a LEAF in this checkpoint and is banned from prompt text - the
     fruit is PURPLE FRUIT in prompts, while narrative and VO may still say fig.
+  identity_drift_bar: 'Added 2026-08-15 after a blind read found it in BOTH beat 05 clips including the
+    one whose action works: costumes hold while faces and hair do not. One guard''s "short, neat dark
+    spikes" became "a large wind-blown spiky mane" reading as "a different, older character"; the other
+    read "notably younger and rounder-faced" partway through. The reader''s phrase for it is "roughly
+    the same costume, drifting face." No metric we own detects this and none is being built for it - it
+    is a blind-read question, and it now goes into every read I commission. A beat whose ACTION lands
+    but whose FACE drifts is NOT done: park it with that reason rather than passing it, because across
+    21 beats an audience notices the continuity break even when the movement reads.'
+  seed_variance_rule: 'Beats 05a and 05b are seed twins - same plate, same prompt, same recipe - and one
+    produced a complete readable walk-away while the other was a near-freeze with a slow zoom. So a SINGLE
+    FAILED clip is weak evidence: do not declare a beat or a recipe dead on one. ONE SAMPLE BEFORE ANY
+    BATCH is untouched, because that rule exists to stop SCALING on an unscreened result and this does
+    not weaken it - the converse simply does not follow. Every DONE or PARKED line must say whether it
+    was judged on one clip or two, and a beat that failed once on a recipe proven elsewhere gets a second
+    seed before it parks. The exception is a failure a second seed cannot touch: if the plate has no subject
+    in it, no seed adds one.'
