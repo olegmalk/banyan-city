@@ -16545,3 +16545,53 @@
     leaf in frame would carry the identification by itself. That collides with the canon "two broad round
     cotyledons", so it is R4's and no lane changes leaf shape until he answers.
   outcome: null
+
+- id: CANON-purple-fig-is-RETROACTIVE-0814
+  kind: canon
+  date: 2026-08-14
+  authority: R4
+  verbatim: '"for the green fig already being canon problem, just go back and redo the published ones too."'
+  the_ruling: >-
+    Purple is not "from here". Every shot that shows a fig gets re-rendered purple, including anything
+    already paged or published. I filed this as an open question yesterday and deliberately did not answer
+    it; he has answered it the expensive way rather than the cheap way, and that is his call to make.
+  the_audit_and_it_is_smaller_than_it_sounds: >-
+    Four beats in episode 2 carry a fig: 01, 18, 19 and 20. Nothing else does. Episode 2 is not published,
+    so "the published ones" turns out to mean the paged review takes rather than a live episode - twelve
+    clips across those four beats currently sit on the review page showing a green fig, and they are all
+    superseded by work already in flight or already parked.
+  cost: >-
+    4 beats x 2 seeds = 8 jobs x 5.7 min measured = 46 minutes of card. Half of it is ungated right now
+    (beats 01 and 18); half sits behind the goblin gate (19 and 20 both have him in frame).
+  scheduling_per_his_instruction: >-
+    Queued BEHIND the live work and it must not starve the beats. In practice it barely competes: beat 01
+    is already re-rendering with the five cold-read fixes, which IS the retroactive fix for that beat, and
+    beats 19 and 20 cannot start until the goblin gate lifts regardless.
+  the_one_thing_that_is_not_mine: >-
+    genomes/sapling/nodes/002b-first-citizen/shots.md - the APPROVED shot list - says in prose that "the
+    fig is small, green". That is narrative text under R4 and I do not edit it. Flagged upward: the board
+    and the canon now disagree, and someone with R4 has to close that rather than let two sources drift.
+    The .meta.yaml provenance records that also say "green" are HISTORY of what was rendered and are
+    correctly left alone.
+  outcome: null
+
+- id: ep2-guard-beats-gated-by-his-own-cast-verdict-0814
+  kind: founder-verdict
+  date: 2026-08-14
+  verbatim: >-
+    "i haven't seen the guards characters yet, i need to know how they should look like and also make some
+    of my own changes perhaps" / "so far i haven't seen character consistency between the clips of the
+    guards you made."
+  he_confirmed_the_fault_i_had_found: >-
+    The cross-beat cast inconsistency is exactly what I paged as a taste call two hours ago - the guards in
+    05 and 10 reading younger and softer than those in 06 and 11. He reached it independently and went one
+    better: the reason there is no consistency is that no guard reference exists and he has never seen one.
+    I had been treating it as a per-beat defect to fix beat by beat when it is a missing character.
+  action_taken_immediately: >-
+    Held six queued guard jobs out of ready before they could run - the b06, b10 and b11 halves of my
+    consistency pass and a b10 confirmation. Anything rendered now inherits an unapproved cast, which is
+    the identical trap as the goblin, and I had just filled the card with exactly that.
+  what_is_left_ungated: >-
+    Four beats: 01 and 18 (fig), 12 and 21 (plant). That is the entire renderable surface until either the
+    guard sheet or the goblin plates come back approved.
+  outcome: null
