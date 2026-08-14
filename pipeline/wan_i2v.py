@@ -33,6 +33,11 @@ import threading
 import time
 from pathlib import Path
 
+# Sibling module, pure stdlib — importing it does not pull torch/diffusers into
+# this script's own venv, which is the whole reason wan_i2v is a separate file.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_budget import check_prompt_budget  # noqa: E402
+
 DEFAULT_MODEL = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
 # Publish-safe alternatives, verified 2026-08-01 against fetched primary sources
 # (see drops/MODEL-RESEARCH-2026-08-01.md). Keyed by short name so a queue entry
@@ -421,6 +426,34 @@ def stage_encode(a) -> int:
     pipe = WanImageToVideoPipeline.from_pretrained(
         a.model, transformer=None, vae=None, image_encoder=None,
         torch_dtype=torch.bfloat16)
+    # THIS IS THE EXPOSED ONE. Wan's encode_prompt defaults max_sequence_length
+    # to 226 — LTX's is 1024 — and several episode-1 prompts run 207-297 tokens.
+    # Wan is dormant (no job spec has referenced it since the 2026-07-27 pilot),
+    # so nothing has been lost yet; reviving it with present-day prompt lengths
+    # would silently drop the tail of the longer ones.
+    #
+    # Silently is meant literally. encode_prompt tokenizes with
+    # padding="max_length", max_length=max_sequence_length, truncation=True and
+    # emits nothing on any channel when it cuts: probed on the box 2026-08-14
+    # against the LTX pipeline of the same shape, a 2,601-token prompt came back
+    # as exactly 1024 tokens with zero python warnings, zero stderr, zero stdout.
+    # The clip renders, the sidecar publishes the prompt we thought we sent, and
+    # the only symptom is a shot that does not match its own text.
+    #
+    # The 226 is READ from pipe.encode_prompt's signature and deliberately not
+    # written here: hardcoding it would leave the guard passing after a diffusers
+    # bump moved the real cliff, which reads as covered and is worse than no
+    # guard. This call passes no max_sequence_length, hence explicit=None — if it
+    # ever starts passing one, hand the same value in so the check follows suit.
+    #
+    # NEG is checked too, and with the exact value handed to the call below: the
+    # negative is truncated by the same code path, and Wan's default negative is
+    # a long one.
+    check_prompt_budget(pipe.encode_prompt, pipe.tokenizer,
+                        [("--prompt", a.prompt), ("NEG (wan_i2v.py)", NEG)],
+                        explicit=None,
+                        job=f"beat {a.beat} -> {a.embeds}" if a.beat is not None
+                            else str(a.embeds))
     with torch.no_grad():
         pos, neg = pipe.encode_prompt(prompt=a.prompt, negative_prompt=NEG,
                                       do_classifier_free_guidance=True,

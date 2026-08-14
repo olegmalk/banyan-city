@@ -97,6 +97,13 @@ import threading
 import time
 from pathlib import Path
 
+# Sibling module, pure stdlib. This script is launched by absolute path out of
+# the repo checkout (video_task.py: REPO/"pipeline"/"ltx_i2v.py"), so the
+# script's own directory is already sys.path[0]; the insert is belt-and-braces
+# for the hand lanes that run it from elsewhere.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_budget import check_prompt_budget  # noqa: E402
+
 
 class _MEMORYSTATUSEX(ctypes.Structure):
     _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
@@ -465,6 +472,17 @@ def _jobs_for(a, stage: str) -> list:
                      if j.get("prompt_file") else a.prompt)
         ja.negative = (Path(j["negative_file"]).read_text(encoding="utf-8").strip()
                        if j.get("negative_file") else a.negative)
+        # Carry the SOURCE forward, not just the text. The token-budget guard in
+        # stage_encode has to be able to say which file to shorten, and by the
+        # time it runs the prompt is a bare string a dozen beats deep in a batch.
+        # getattr, not attribute access: the tests (and any hand-built namespace)
+        # construct these args by hand and only set the keys under test, so
+        # requiring --prompt-file to exist would make this function fail on
+        # callers it served fine before. Additive means additive.
+        ja.prompt_file = str(j.get("prompt_file")
+                             or getattr(a, "prompt_file", "") or "")
+        ja.negative_file = str(j.get("negative_file")
+                               or getattr(a, "negative_file", "") or "")
         jobs.append(ja)
     outs = [ja.out for ja in jobs if ja.out]
     if stage == "render" and len(set(outs)) != len(outs):
@@ -506,6 +524,36 @@ def stage_encode(a) -> int:
         processor=processor)
 
     jobs = _jobs_for(a, "encode")
+    # EVERY BEAT IS CHECKED BEFORE ANY BEAT IS ENCODED. A batch that refuses on
+    # beat 12 after eleven .pt files are on disk is a half-written run someone
+    # has to reason about; refusing before the loop leaves the tree untouched.
+    #
+    # What this prevents: encode_prompt below tokenizes with
+    # padding="max_length", max_length=max_sequence_length, truncation=True, and
+    # LTX2's version in diffusers 0.39.0 — unlike most diffusers pipelines — keeps
+    # no untruncated copy and logs no `removed_text` warning. Truncation here is
+    # SILENT ON EVERY CHANNEL: probed on the box 2026-08-14, a 2,601-token prompt
+    # returned exactly 1024 tokens with zero python warnings, zero stderr, zero
+    # stdout. The overflow would just be gone, the clip would render, and the
+    # sidecar would publish the full prompt we believed we sent.
+    #
+    # Headroom today: 871 prompt files on the box max out at 684 tokens and the
+    # 73 committed job specs at 297, against a 1024 limit — 67% of budget at
+    # worst. This has never fired and is not a live defect. It is the number with
+    # no check next to it, which is the shape of the two silent failures closed
+    # the same week.
+    #
+    # The limit is READ from pipe.encode_prompt's signature, never written here:
+    # a hardcoded 1024 would keep passing after a diffusers bump moved the real
+    # cliff, and a guard that has silently stopped checking is worse than none.
+    # We pass no max_sequence_length below, hence explicit=None — if that ever
+    # changes, hand the same value in as `explicit` so the check follows the call.
+    for ja in jobs:
+        check_prompt_budget(
+            pipe.encode_prompt, tokenizer,
+            [(getattr(ja, "prompt_file", "") or "--prompt", ja.prompt),
+             (getattr(ja, "negative_file", "") or "--negative", ja.negative)],
+            explicit=None, job=f"beat {ja.beat:02d} -> {ja.embeds}")
     for i, ja in enumerate(jobs, 1):
         mark(f"encode-beat-{ja.beat:02d}")
         with torch.no_grad():
