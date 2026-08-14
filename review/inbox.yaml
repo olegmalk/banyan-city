@@ -765,3 +765,13 @@
   resolved:
     date: '2026-08-14'
     verdict: Read 2026-08-14; superseded by the day's verdicts.
+- what: 'WHICH NUMBER IS THE GOBLIN? Every candidate in one numbered grid - the 0814 plates at all four
+    seeds across six beats, plus the frame you pointed at on 13 August so it stays in the running. Quote
+    a NUMBER, not an s-code: the seed labels repeat across beats, six different pictures answer to "s1",
+    and that is why the last pick could not be pinned down. This gates TWELVE of the twenty-one beats
+    - the plates are built the moment you name one.'
+  url: https://claude.ai/code/artifact/f5ba1b5e-151f-4fa6-b2e4-6f60418ee09d
+  group: taste
+  since: '2026-08-14'
+  kind: pick
+  verdict_hint: a number / none of these, and here is what is wrong with all of them
