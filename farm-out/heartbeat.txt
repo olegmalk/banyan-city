@@ -1579,3 +1579,4 @@
 16:48:53Z STARTED task=ep2-guard-b-derived-0814-1786726124 attempt=1 on box-runner
 16:49:45Z DONE task=ep2-guard-b-derived-0814-1786726124 rc=0 artifacts=8
 16:49:53Z STARTED task=ep2-b06-guardpick-0814-1786726125 attempt=1 on box-runner
+16:52:42Z DONE task=ep2-b06-guardpick-0814-1786726125 rc=0 artifacts=4
