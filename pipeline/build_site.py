@@ -3194,10 +3194,16 @@ def main() -> None:
     # The review area (D17). Deliberately NOT in `mine`'s nav and not linked
     # from any page — unlisted, reachable by URL. It is still swept by
     # check_links, which walks every html file in the output.
+    # 2026-08-14, founder: "then how about you just move everything from
+    # /review/inbox to /review?" — /review is now the BOARD (written by
+    # review/inbox/regen.py), so the working-cuts page moves aside to
+    # /review/cuts rather than overwriting it. cuts.yaml stays where it is:
+    # poll_decisions.py reads it for the card numbers his answers match
+    # against, so retiring the data to retire the page would break that.
     if (CUTS / "cuts.yaml").exists():
-        (OUT / "review" / "index.html").write_text(render_review())
-        mine.append("review/index.html")
-        print("✓ review/ published — unlisted working cuts")
+        (OUT / "review" / "cuts.html").write_text(render_review())
+        mine.append("review/cuts.html")
+        print("✓ review/cuts published — unlisted working cuts")
         # Not fatal, and named rather than silent. Each line is a clip whose own
         # record cannot say which pixels it holds, so it ships with no poster
         # instead of one that promises a frame it does not contain. On a host
@@ -3216,6 +3222,22 @@ def main() -> None:
     # an untracked page is on one laptop and not on the deploy, and publishing
     # it locally would let a lane screen a URL that CI cannot build. The line
     # below is what tells them which of the two situations they are in.
+    # THE BOARD ITSELF, at /review. 2026-08-14: the founder asked for the inbox
+    # to live at the short URL, so review/inbox/regen.py now writes the same
+    # page to review/index.html. review_page_dirs() only sees DIRECTORIES that
+    # carry an index.html, so the top-level file needs its own line or the board
+    # is written and never published — the exact invisible-page hole that
+    # function's docstring exists to close, one level up.
+    board = REPO / "review" / "index.html"
+    if board.exists() and in_the_tree([board]):
+        (OUT / "review").mkdir(parents=True, exist_ok=True)
+        shutil.copy(board, OUT / "review" / "index.html")
+        mine.append("review/index.html")
+        print("✓ review/ published — the board")
+    elif board.exists():
+        print("  ! review/index.html is NOT in the tree — not published "
+              "(commit it; the deploy does not have this file)")
+
     for d in review_page_dirs():
         rel_dir = f"review/{d.name}"
         files = in_the_tree(sorted(p for p in d.rglob("*") if p.is_file()))
