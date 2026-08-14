@@ -17151,3 +17151,44 @@
     alone cannot settle it - that is the mistake already logged tonight - so a stranger naming the
     action is the pass condition, not the delta.
   outcome: null
+
+- id: BUILT-the-init-check-refuses-a-wave-that-would-animate-a-card-0815
+  date: 2026-08-15
+  kind: built
+  what: >-
+    review/ep2-picks/plate_check.py. Cover-crops each motion job's --src exactly as the box will,
+    then measures the outer 8 percent band of the result: the fraction of border pixels within eight
+    autocontrast-normalised luminance levels of that border's own median. A drawn place has texture
+    to its edges; a reference card is flat paper behind a centred figure. Refuses nonzero, writes a
+    contact sheet of every plate in the batch pass or fail, and is chained ahead of box_enqueue with
+    && the way the collision guard is.
+  the_threshold_is_measured: >-
+    Against the seventeen inits of the wave plus beat 21's night plate, labelled by eye: scenes
+    0.016-0.350 and then 0.489, cards 0.750-0.968. FLAT_MAX is 0.62, the middle of the real gap. The
+    margin is NOT the 0.40 the bulk of the scenes suggest - beat 21's night field reads 0.489 because
+    a nearly empty night shot genuinely is close to flat, and that is the tightest legitimate case
+    known. Autocontrast is what buys that margin: without it beat 21 reads 0.547 and clears the
+    original 0.55 threshold by three thousandths, while the cards do not move because they already
+    span the range.
+  what_was_tried_and_rejected: >-
+    Border standard deviation, which was the obvious first statistic and does not separate the two
+    groups at all - card b09 reads 33.0 against scene b13's 44.0, because a card's ground can carry a
+    gradient and a night scene can be dim. Flatness asks how much of the border is ONE colour, which
+    is what blank means; spread is not.
+  validated: >-
+    Run against the nineteen -lw jobs it refuses exactly the six that animated cards - b05 0.910,
+    b06 0.828, b07 0.913, b09 0.968, b10 0.751, b11 0.835 - and separately refuses b12 and b21 as
+    UNFETCHABLE, their srcs being plates-local rather than the results branch. That second refusal is
+    worth as much as the first: b21 is the job that was queued to crop beat 12's plate, so the check
+    would have stopped both of the night's plate defects, one by measurement and one by declining to
+    wave through a picture it could not see. Against tonight's eleven live jobs it passes all eleven.
+  scoped_on_purpose: >-
+    Only jobs whose steps run ltx_i2v are checked. A figure on blank paper is the CORRECT output for
+    the stills lane's identity work - charref sheets, costume picks, turnarounds all want exactly the
+    picture this refuses - so a blanket gate on a shared queue would block another lane. Skips are
+    reported as skips and a batch where nothing was measured says so rather than printing OK.
+  why_code_and_not_a_law: >-
+    LOOK AT THE INIT, NOT THE JOB IT CAME FROM was already ledgered hours earlier, by me, and it did
+    not stop me because it was a sentence. Team lead's reading, which is right: a law that has to be
+    remembered gets obeyed until the night someone is in a hurry.
+  outcome: null
