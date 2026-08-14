@@ -1,0 +1,95 @@
+{
+  "id": "ep2-b14-plate-0814-1786705893",
+  "task": "ep2-b14-plate-0814",
+  "node": "002b-first-citizen",
+  "beat": 14,
+  "worker": "box-runner",
+  "priority": 3,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "14",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-goblin-approved-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate",
+        "--draft-key",
+        "authored_b14_plate",
+        "--arm",
+        "window4",
+        "--dry"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "14",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-goblin-approved-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate",
+        "--draft-key",
+        "authored_b14_plate",
+        "--arm",
+        "window4",
+        "--task",
+        "ep2-b14-plate-0814"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b14-plate-0814\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b14-plate/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b14-plate-0814.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r3-w015-s0.png"
+  ],
+  "started_at": "2026-08-14T11:14:40Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-14T11:17:30Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b14-plate\\14-the-defense-ipa-r3-w015-s0.png"
+  ]
+}
