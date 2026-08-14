@@ -1444,3 +1444,4 @@
 10:52:44Z STARTED task=ep2-b21-posesB-0814-1786691760 attempt=1 on box-runner
 10:59:08Z DONE task=ep2-b21-posesB-0814-1786691760 rc=0 artifacts=2
 10:59:14Z STARTED task=ep2-b01-figref-0814-1786704852 attempt=1 on box-runner
+11:02:10Z DONE task=ep2-b01-figref-0814-1786704852 rc=0 artifacts=4
