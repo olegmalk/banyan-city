@@ -8019,6 +8019,175 @@ def test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure():
           js.index("drawDepth(q);") < js.index("carries no counts"))
 
 
+# ---------------------------------------------------------------------------
+# A RENDER HE WAS NEVER SHOWN IS A RENDER THAT DID NOT HAPPEN.
+#
+# Four times in three days he reported work as undone that had in fact
+# rendered — the guard sheets, the sapling-reveal frames, beat 02's rerun,
+# beat 12's plate. box_enqueue already refuses a job with no `consumer:`;
+# nothing ever checked the promise was kept. pipeline/unpaged.py is that check
+# and these are its edges. Pure logic: no git, no disk, no clock.
+
+from datetime import datetime, timezone
+
+
+def _sidecar(jid, present=(), steps=(), finished="2026-08-14T09:00:00Z", rc=0):
+    return {"id": jid, "rc": rc, "finished_at": finished,
+            "artifacts_present": list(present),
+            "steps": [{"argv": list(a)} for a in steps]}
+
+
+def test_a_render_that_reached_a_page_is_not_an_unpaged_render():
+    import unpaged
+    now = datetime(2026, 8, 14, 21, 0, tzinfo=timezone.utc)
+    job = _sidecar("ep2-guard-sheet-a-0814-1786707392",
+                   present=[r"C:\out\06-the-clipboard-s0.png"])
+    page = unpaged.tokens_of(
+        '<h2 id="e-guards">Guards</h2>'
+        '<img src="/review/ep2-picks/06-the-clipboard-s0.png">')
+    r = unpaged.audit([job], {"ep2-guard-sheet-a-0814": "Roman picks one"},
+                      page, now)
+    check("a frame the review page links is paged, not flagged",
+          not r["unpaged"] and len(r["paged"]) == 1)
+    check("and it records HOW it was found, so the claim is checkable",
+          r["paged"][0]["shown_as"] == "file 06-the-clipboard-s0.png")
+
+    # The real-world case: a contact sheet BAKES the frames, so no filename
+    # survives onto the page and the only thread back is the publish directory.
+    baked = _sidecar("ep2-b02-idfix-0812-1786500000",
+                     present=[r"C:\out\02-s0.png"],
+                     steps=[["python", "-c",
+                             'dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-idfix"']])
+    sheet = unpaged.tokens_of('<img src="/review/sheets/wave2-b02.jpg">'
+                              "<p>round ep2-b02-idfix, four seeds</p>")
+    r = unpaged.audit([baked], {"ep2-b02-idfix-0812": "Roman's next look"},
+                      sheet, now)
+    check("a sheet that names the round credits the round it baked",
+          not r["unpaged"] and r["paged"][0]["shown_as"] == "publish ep2-b02-idfix")
+
+
+def test_a_render_no_page_names_is_the_number_this_exists_to_report():
+    import unpaged
+    now = datetime(2026, 8, 14, 21, 0, tzinfo=timezone.utc)
+    job = _sidecar("ep1-b05-sapling-reveal-0811-1786400000",
+                   present=[r"C:\out\05-reveal-s0.png"],
+                   finished="2026-08-11T15:55:00Z")
+    r = unpaged.audit([job], {"ep1-b05-sapling-reveal-0811": "Roman's next look"},
+                      unpaged.tokens_of("<p>nothing to do with it</p>"), now)
+    check("frames on disk that no page names are flagged",
+          [x["task"] for x in r["unpaged"]] == ["ep1-b05-sapling-reveal-0811"])
+    check("and the age is what makes it a complaint rather than a note",
+          round(r["unpaged"][0]["age_hours"]) == 77)
+
+    # THE NEAR MISS THAT MATTERS. Round names are hyphenated and one is
+    # routinely a prefix of the next; substring matching would credit the round
+    # he DID see for the one he did not.
+    occl = _sidecar("ep2-b02-goblin-occl-0811-1786440000",
+                    present=[r"C:\out\02-s0.png"],
+                    steps=[["python", "-c",
+                            'dst="C:/x/courier-box/farm-out/ep2-b02-goblin-occl"']])
+    bright = unpaged.tokens_of("<p>see ep2-b02-goblin-occlbright</p>")
+    r = unpaged.audit([occl], {"ep2-b02-goblin-occl-0811": "Roman's next look"},
+                      bright, now)
+    check("a longer round name does not page the shorter one inside it",
+          len(r["unpaged"]) == 1)
+
+
+def test_a_render_that_produced_nothing_is_a_failed_render_not_an_unpaged_one():
+    import unpaged
+    now = datetime(2026, 8, 14, 21, 0, tzinfo=timezone.utc)
+    empty = unpaged.tokens_of("")
+    consumers = {"ep2-b09-wave-0814": "Roman's next look"}
+
+    died = _sidecar("ep2-b09-wave-0814-1786700000", present=[], rc=92)
+    r = unpaged.audit([died], consumers, empty, now)
+    check("a job whose artifacts never appeared is not counted here",
+          not r["unpaged"] and not r["paged"])
+
+    # Same discipline one step further in: a job that made only its provenance
+    # sidecars made nothing anybody can look at.
+    yaml_only = _sidecar("ep2-b09-wave-0814-1786700001",
+                         present=[r"C:\out\09-s0.yaml", r"C:\out\bench.jsonl"])
+    check("yaml and jsonl are records, not something to show him",
+          not unpaged.audit([yaml_only], consumers, empty, now)["unpaged"])
+
+    # And one that is still going: no finished_at at all.
+    running = {"id": "ep2-b09-wave-0814-1786700002", "steps": [],
+               "artifacts_present": [r"C:\out\09-s0.png"]}
+    check("a job still running is not yet a broken promise",
+          not unpaged.audit([running], consumers, empty, now)["unpaged"])
+
+
+def test_the_count_is_promises_to_him_and_not_every_render_on_the_farm():
+    import unpaged
+    now = datetime(2026, 8, 14, 21, 0, tzinfo=timezone.utc)
+    empty = unpaged.tokens_of("")
+    art = [r"C:\out\x-s0.png"]
+
+    rows = unpaged.audit(
+        [_sidecar("a-0814-1786400000", present=art),
+         _sidecar("b-0814-1786400000", present=art),
+         _sidecar("c-0814-1786400000", present=art)],
+        {"a-0814": "Roman picks one of the four",
+         "b-0814": "the v35 screening cut, which cannot take a stretched ingredient"},
+        empty, now)
+    check("a job whose consumer names him is the promise being audited",
+          [x["task"] for x in rows["unpaged"]] == ["a-0814"])
+    check("a job feeding another artifact is an ingredient, not his backlog",
+          [x["task"] for x in rows["ingredient"]] == ["b-0814"])
+    check("a job whose spec is gone is reported apart — no promise to read",
+          [x["task"] for x in rows["no_spec"]] == ["c-0814"])
+
+    # `R4` means "his call, eventually" in a consumer sentence, not "his screen
+    # now". Reading it as him put eleven v34 plate twins in the count.
+    twin = _sidecar("ep1-b03-v34-plate-twin-r3-1786300000", present=art)
+    r = unpaged.audit([twin],
+                      {"ep1-b03-v34-plate-twin-r3":
+                       "the v35 screening cut. Which ROUND the cut uses is R4's open call"},
+                      empty, now)
+    check("R4 in a consumer is the taste rule, not a promise of a look",
+          not r["unpaged"] and len(r["ingredient"]) == 1)
+
+    # In flight: finished minutes ago, still the firing lane's to page.
+    fresh = _sidecar("d-0814-1786400000", present=art,
+                     finished="2026-08-14T20:30:00Z")
+    r = unpaged.audit([fresh], {"d-0814": "Roman picks one"}, empty, now)
+    check("a wave that landed half an hour ago is in flight, not a failure",
+          not r["unpaged"] and len(r["in_flight"]) == 1)
+
+
+def test_one_round_asked_twice_is_one_unshown_picture():
+    import unpaged
+    now = datetime(2026, 8, 14, 21, 0, tzinfo=timezone.utc)
+    runs = [_sidecar("ep2-b05-x-0814-1786400000", present=[r"C:\out\a.png"],
+                     finished="2026-08-14T09:00:00Z"),
+            _sidecar("ep2-b05-x-0814-1786410000", present=[r"C:\out\b.png"],
+                     finished="2026-08-14T12:00:00Z")]
+    r = unpaged.audit(runs, {"ep2-b05-x-0814": "Roman picks one"},
+                      unpaged.tokens_of(""), now)
+    check("two runs of one round are one row, not two",
+          len(r["unpaged"]) == 1 and r["unpaged"][0]["runs"] == 2)
+    check("and the age is the NEWEST run's — the round is that fresh",
+          r["unpaged"][0]["age_hours"] == 9.0)
+    check("a page naming EITHER run has shown this round's pictures",
+          not unpaged.audit(runs, {"ep2-b05-x-0814": "Roman picks one"},
+                            unpaged.tokens_of("<img src='a.png'>"), now)["unpaged"])
+
+
+def test_a_tree_that_cannot_see_the_farm_branch_says_so_instead_of_zero():
+    import unpaged
+    # CI and the deploy box clone main alone. A green "0 unpaged" there would be
+    # a claim made out of an absent branch, and this warning runs in build_site.
+    check("no sidecars anywhere is not the same as nothing unpaged",
+          unpaged.warn_line({"measurable": False, "unpaged": []}) == "")
+    check("nothing unpaged is silence too — a build log is not a scoreboard",
+          unpaged.warn_line({"measurable": True, "unpaged": []}) == "")
+    line = unpaged.warn_line({"measurable": True, "unpaged": [
+        {"task": "ep2-guard-sheet-a-r2-0814", "age_hours": 4.6, "artifacts": 4}]})
+    check("and one unpaged render names itself in the build log",
+          "ep2-guard-sheet-a-r2-0814" in line and "1 finished render " in line)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -8237,6 +8406,14 @@ def main():
     test_a_bar_is_as_tall_as_its_minutes_and_a_part_day_says_so()
     test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read()
     test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure()
+
+    # AND WORK HE WAS NEVER SHOWN MUST BE A NUMBER SOMEBODY READS.
+    test_a_render_that_reached_a_page_is_not_an_unpaged_render()
+    test_a_render_no_page_names_is_the_number_this_exists_to_report()
+    test_a_render_that_produced_nothing_is_a_failed_render_not_an_unpaged_one()
+    test_the_count_is_promises_to_him_and_not_every_render_on_the_farm()
+    test_one_round_asked_twice_is_one_unshown_picture()
+    test_a_tree_that_cannot_see_the_farm_branch_says_so_instead_of_zero()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

@@ -414,6 +414,48 @@ def shadowed_routes():
     return out
 
 
+def unpaged_warning(repo=REPO, recent_hours=12.0):
+    """Lines about finished renders that reach no page he can open, or [].
+
+    Separate from the route sweep on purpose. Every route can be green and the
+    site still be missing the four things he has been asking for — that is not
+    a hypothetical, it is what he reported on 2026-08-13 and again on 08-14, and
+    the guard is `pipeline/unpaged.py`. Two numbers rather than one: the whole
+    standing backlog, which moves slowly, and the last `recent_hours`, which is
+    the slice a supervisor's own pass is answerable for and the one that should
+    be zero when they hand the URL over.
+
+    Wrapped, and returns [] on anything unexpected: this is a warning about
+    completeness, and a warning that can fail the gate would stop good pages
+    reaching him to complain about a bad one.
+    """
+    try:
+        import unpaged
+        r = unpaged.survey(repo)
+    except Exception:
+        return []
+    if not r.get("measurable") or not r["unpaged"]:
+        return []
+    rows = r["unpaged"]
+    recent = [x for x in rows if x["age_hours"] <= recent_hours]
+    out = [bold("RENDERED FOR HIM AND NEVER SHOWN (%d)" % len(rows))]
+    for x in (recent or rows)[:8]:
+        out.append("  %s %-44s %s old, %d file(s)"
+                   % (yellow("warn"), x["task"], unpaged.ago(x["age_hours"]),
+                      x["artifacts"]))
+    if recent:
+        out.append("  %d of these finished in the last %g h — if your pass "
+                   "rendered one, page it before handing over this URL."
+                   % (len(recent), recent_hours))
+    else:
+        out.append("  None in the last %g h; the oldest is %s. Backlog, not "
+                   "this pass." % (recent_hours, unpaged.ago(rows[0]["age_hours"])))
+    out.append("  Not a failure — a wave still being written up counts here too. "
+               "Full list: python3 pipeline/unpaged.py")
+    out.append("")
+    return out
+
+
 # ------------------------------------------------------- pages that never ran
 
 
@@ -1041,6 +1083,17 @@ def main():
             print("  %s %-*s %s" % (yellow("warn"), width, "/" + stem, detail))
         print("  Not a failure while the routes above are green — a standing hazard.")
         print()
+
+    # RENDERS THAT FINISHED AND REACHED NO PAGE. This gate exists so nobody
+    # hands him a URL that is broken; this block is the other half of the same
+    # question — whether the URL has on it the work he has been waiting for.
+    # Every route above can be green while the four things he asked about are
+    # sitting on the results branch unlinked, which is exactly what happened on
+    # 2026-08-13/14. A WARNING and never a failure: the count includes rounds a
+    # lane is still writing up, and blocking a handover on that would keep the
+    # good pages away from him too.
+    for line in unpaged_warning():
+        print(line)
 
     if public_failures:
         print(bold("PUBLIC SITE IS NOT SERVING CURRENT WORK"))

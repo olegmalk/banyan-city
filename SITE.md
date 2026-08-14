@@ -275,6 +275,47 @@ one is still counted, but is not attributed to an episode by guessing at its
 wording, and the section says how many went unattributed. Tag the entries you
 file.
 
+## The paging duty, and the guard that counts what nobody paged
+
+**A render he was never shown is, to him, a render that never happened.** In
+three days he reported four pieces of finished work as undone: the guard
+character sheets (rendered, asked for three times, never linked), the
+sapling-reveal candidates (rendered a day before he asked for them), beat 02's
+rerun (already done when he called it broken) and beat 12's passing plate. None
+of those was a render failure. Every one was a lane that finished and moved on.
+
+So the inbox contract above extends one step down, from entries to ARTIFACTS:
+
+**A lane that renders something for the founder pages it in the same pass that
+lands it.** Not "when the wave finishes", not "when someone next touches the
+page" — the same pass, the way an inbox entry travels with its artifact and a
+beat's state travels with its scoring. `box_enqueue.py` already refuses a job
+that names no `consumer:`; paging is that promise being kept, and until this
+week nothing checked it ever was.
+
+**The supervisor tick reads the count.** `python3 pipeline/unpaged.py --since 12`
+is the view to act on: rounds that finished in your window and reach no page he
+can open. The bare `python3 pipeline/unpaged.py` is the whole standing backlog,
+which moves slowly and is a triage list rather than a to-do. It cross-references
+the box's own per-job sidecars on `farm-results-rtx5090` against every
+founder-facing page — the board, the inbox, the ep2-picks pages and everything
+generated into `_site/` — and a round counts as shown when a page NAMES it: its
+task id, its publish directory, or one of its artifact filenames.
+
+**Name the round on the page.** That is the whole of what the guard asks, and it
+is also what makes a sheet readable: a contact sheet bakes four frames into one
+JPG, so the publish directory beside it (`ep2-b02-idfix`, the way
+`morning-0812-wave2.html` does it) is the only thread from the picture back to
+what drew it. A page that shows frames without naming their round reads as
+unpaged here, and it reads as unattributable to him.
+
+It **warns, and never fails a build** — a wave that landed ninety seconds ago is
+a job in flight, and stopping the deploy over it would keep the good pages away
+from him too. `build_site.py` prints the count as a `!` line beside the
+untracked-takes line; `qa_local.py` prints the last twelve hours' worth before
+you hand anyone a URL. Both are silent on a checkout with no farm branch (CI,
+the deploy box) rather than claiming a green zero they cannot back up.
+
 ## The episode ETA (/status#eta)
 
 `pipeline/measured/episode-progress.yaml` holds one state per beat per episode,

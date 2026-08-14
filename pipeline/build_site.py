@@ -3365,6 +3365,24 @@ def main() -> None:
     swept = sum(1 for _ in OUT.rglob("*.html"))
     print(f"✓ link check: {swept} pages swept, no broken local references")
 
+    # Say this number out loud too, for the same reason as the line above: the
+    # failure it closes is one nobody's build ever mentioned. A render that
+    # finished and reached no page he can open is, from where he sits, a render
+    # that never happened -- he said so four times in three days. Deliberately a
+    # WARNING and never an exit: a wave that landed ninety seconds ago is a job
+    # in flight, and failing the build over it would stop the deploy to punish
+    # work that is going fine. Runs last, on a complete `_site/`, because the
+    # generated pages are half of what counts as "shown". Silent on a checkout
+    # with no farm branch (CI, the deploy box) rather than falsely green.
+    try:
+        import unpaged
+        line = unpaged.warn_line(unpaged.survey(str(REPO)))
+    except Exception as e:                      # never break a build over a warning
+        line = ""
+        print(f"  · unpaged check skipped ({type(e).__name__}: {e})")
+    if line:
+        print(f"  ! {line}")
+
 
 if __name__ == "__main__":
     main()
