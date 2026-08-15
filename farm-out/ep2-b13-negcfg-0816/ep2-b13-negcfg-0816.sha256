@@ -1,0 +1,11 @@
+c304cfc2508d8cd1078fcd40dfb53d8a5847ffbc705dec7546b1dc04a1095206  b13-embeds-verify.txt
+210932b760f70ef34b97f41a28d1905ef5358e5f6982110c3f2440884b8b5199  b13-init-704x1280.png
+8ee05f5afb9686deb7d8b0d13ce29b56c9b570c79a111c1742e857ebf30643c6  13-the-shade-NEG-empty-cfg2p0.mp4
+b3b047c217da8a7fdf5356c58a20b70cd287d7253e978d6cb036516d9f044cfc  13-the-shade-NEG-empty-cfg2p0.mp4.meta.yaml
+ea5c9497252c2356a0d5e3e4cf1909c382a269af035223f4bec015653bf161a1  13-the-shade-NEG-full-cfg1p5.mp4
+ecd20c75182be1419b45de41999aaa3a9577cff454ee47677b2a76dc21f8048b  13-the-shade-NEG-full-cfg1p5.mp4.meta.yaml
+42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a  13-the-shade-NEG-full-cfg2p0-control.mp4
+3cdae87a5ac195166c74141849178f56bc4ef76508a4a5cea8f98d85c416bdb8  13-the-shade-NEG-full-cfg2p0-control.mp4.meta.yaml
+5a6ef472647f9ee66e99c3f11a1ef3d1b84d98e089dcd007563c53a4962c9de2  bench-b13-cfg15.jsonl
+241e03001a8e9ecdaa557ac17982e9cfd23055e360e1ecfbf98b21163e6d6d7e  bench-b13-control.jsonl
+4ddcd5e54d033a7f85e28d3436b955b1a8bfa4a4b666a22e959c709f72235ec0  bench-b13-emptyneg.jsonl

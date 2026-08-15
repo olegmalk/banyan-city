@@ -1,0 +1,188 @@
+{
+  "id": "ep2-b13-negcfg-0816-1786825194",
+  "task": "ep2-b13-negcfg-0816",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 40,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-plate-0814\\13-the-shade-ipa-r0-w015-s0.png",
+        "--sha256",
+        "1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921",
+        "--out",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "verify-embeds",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\verify_embeds.py"
+      ]
+    },
+    {
+      "name": "render-control",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-jobs-render-control.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b13-negcfg-0816-control",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\bench-b13-control.jsonl",
+        "--bench-label",
+        "ep2-b13-negcfg-0816-control"
+      ]
+    },
+    {
+      "name": "render-emptyneg",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-jobs-render-emptyneg.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b13-negcfg-0816-emptyneg",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\bench-b13-emptyneg.jsonl",
+        "--bench-label",
+        "ep2-b13-negcfg-0816-emptyneg"
+      ]
+    },
+    {
+      "name": "render-cfg15",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-jobs-render-cfg15.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "1.5",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b13-negcfg-0816-cfg15",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b13-negcfg-0816\\bench-b13-cfg15.jsonl",
+        "--bench-label",
+        "ep2-b13-negcfg-0816-cfg15"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-negcfg-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/13-the-shade-NEG-*.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/b13-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/b13-embeds-verify.txt\")\n             + glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/bench-b13-*.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-negcfg-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 8 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-full-cfg2p0-control.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-empty-cfg2p0.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-full-cfg1p5.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-init-704x1280.png"
+  ],
+  "started_at": "2026-08-15T20:49:18Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T21:02:29Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-full-cfg2p0-control.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-empty-cfg2p0.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\13-the-shade-NEG-full-cfg1p5.mp4",
+    "C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-init-704x1280.png"
+  ]
+}

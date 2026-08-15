@@ -1,0 +1,5 @@
+prompt_embeds                  FULL 87b76c09cc5d8775  EMPTY 87b76c09cc5d8775  IDENTICAL
+prompt_attention_mask          FULL aa37b27eb329fac1  EMPTY aa37b27eb329fac1  IDENTICAL
+negative_prompt_embeds         FULL d9315dc3a2590609  EMPTY 9989bd17efb4f47c  DIFFERS (expected)
+negative_prompt_attention_mask FULL f9717b8d3ce844a9  EMPTY e585d1393cd6fee9  DIFFERS (expected)
+shapes pos (1, 1024, 188160) neg (1, 1024, 188160)
