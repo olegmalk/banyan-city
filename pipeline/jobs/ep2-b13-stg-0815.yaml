@@ -1,0 +1,319 @@
+# 2026-08-15, STG lane. Beat 13, THE SHADE. THE FIRST RENDER THIS PIPELINE HAS
+# EVER MADE WITH SPATIOTEMPORAL GUIDANCE ON, AND A MATCHED CONTROL BESIDE IT.
+# STG IS THE ONLY VARIABLE. Generated, not hand-typed, so that the two arms are
+# provably one argv list plus two entries -- see the assertions at the bottom of
+# the generator quoted in section 7.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#      > SCAVENGER: "...Thanks for the shade."
+#
+# 2. WHAT IS ALREADY RULED OUT, EACH BY MEASUREMENT. None of it is re-derived here.
+#    * WORDING. Five wordings, three seeds, seven clips on this beat: no arm
+#      produced a figure still acting after frame 64. Blind "no" on every one.
+#    * THE INIT PLATE. Motion onset measured across ten clips, 9/10 inside 0.25s.
+#      The ramp travels with the prompt, not with the still.
+#    * THE RECIPE. No parameter change tried has improved motion, across many
+#      samples. That is why NOTHING in the recipe below moves.
+#    * THE 13-LATENT COUNT. (97-1)//8+1 = 13 is correct arithmetic and the latent
+#      grid is period-8 while we measure period-3, so it is not the grid showing
+#      through (pipeline/research/ltx23-motion-source.md, commit dfa87c27).
+#    * THE DECODE SIDE, END TO END. A real plate panned a fixed integer pixels
+#      per frame and round-tripped through the VAE at production geometry came
+#      back moving on every frame; tiling ON vs OFF differed by 0.4 dB and
+#      nothing else, and a known period-3 hold fed in came back period 3 in both
+#      arms, so the negative is a measurement and not a blind spot. We also never
+#      run the temporal-tiled VAE path at all, and our upsampler is
+#      spatial-only (pipeline/research/ltx23-vae-roundtrip-0815.md, 70e3c79a).
+#
+#    So the hold is IN THE LATENTS -- the transformer put it there. That is what
+#    makes a GUIDANCE lever the right next thing and a decode or plate lever the
+#    wrong one.
+#
+# 3. WHY STG, AND WHOSE WORDS THOSE ARE.
+#    github.com/Lightricks/LTX-Video/issues/184 is titled "For the ltx13B model,
+#    how to increase the motion size of the generated video?". The first reply is
+#    from `ybitterman`, author_association COLLABORATOR, an author on the
+#    LTX-Video paper, and is in full:
+#
+#      "Playing with the STG blocks will help with that. There's a lot of info
+#       about it in the Discord server: https://discord.gg/Mn8BRgUKKy"
+#
+#    That is the only maintainer answer to our exact symptom that exists.
+#    Alongside it: Lightricks' own multimodal-guidance doc says "higher
+#    `cfg_scale` = stronger prompt adherence but potentially LESS NATURAL
+#    MOTION"; the STG paper (arxiv.org/abs/2411.18664) opens "While sampling
+#    guidance techniques like CFG improve quality, THEY REDUCE DIVERSITY AND
+#    MOTION"; the official ltxv-13b-0.9.8-DISTILLED config sets `stg_scale: 0` in
+#    both passes while the DEV config schedules it to `[0,0,4,4,4,2,1]`. The one
+#    documented motion lever is off BY CONSTRUCTION on the path we run, and it
+#    was never off because anyone here measured it.
+#
+#    IT IS REACHABLE FROM OUR CALL PATH, read in the installed source on the box
+#    and re-verified by this lane with findstr before the flag was written:
+#    `LTX2ImageToVideoPipeline.__call__` takes `stg_scale: float = 0.0` (line
+#    883) and `spatio_temporal_guidance_blocks` (890); check_inputs refuses
+#    scale>0 without blocks (536); the perturbed forward runs under
+#    cache_context("uncond_stg") (1371) and enters the update as
+#    `video_stg_delta = self.stg_scale * (noise_pred_video -
+#    noise_pred_video_uncond_stg)` (1407). `findstr /i "stg"` over our own
+#    ltx_i2v.py returned NOTHING until commit 369e4101. Cost: one extra
+#    transformer forward per step.
+#
+# 4. THE NUMBERS ARE UPSTREAM'S, NOT OURS. The installed docstring says verbatim
+#    that `spatio_temporal_guidance_blocks` "must be supplied if STG is used" and
+#    that "`[28]` is recommended for LTX-2.3", and the `audio_stg_scale` entry
+#    says "For LTX-2.3, a value of 1.0 is suggested for both video and audio".
+#    So: scale 1.0, blocks [28]. Neither number was chosen here.
+#
+# 5. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    The control is a re-run of ep2-b13-shade-cycle-s2-0815 -- same plate, same
+#    asserted sha, same seed 20260815, same prompt, same negative, same flags --
+#    whose published clip measures, on pipeline/hold_period.py (commit d820bf3f)
+#    with the trough/peak DEPTH from pipeline/vae_roundtrip.py beside it:
+#
+#      period 3 | strength 0.923 | DEPTH 0.038 | 32 distinct pictures | 8.0 fps
+#      pair diffs: 0.23 10.45 0.24 | 0.53 7.89 0.24 | 0.28 11.75 0.46 | ...
+#
+#    Depth is reported because the metric is SCALE-FREE and reads a +-3% ripple
+#    like a freeze: a VAE round trip whose frames provably advance 4px reported
+#    period 2 strength 0.90 at depth 0.971. 0.038 is a real hold; 0.971 is not.
+#    Reference depths: b13-AFTER 0.029, b06-DONE 0.181, b02-FIXED 0.431.
+#
+#    PASS = the STG arm's period falls, or its depth rises materially, or the
+#    figure is still acting after frame 64. FAIL = period 3 at depth ~0.03 again,
+#    in which case the only maintainer-named motion lever does not move our hold
+#    and that is reported exactly as loudly as a win. A third outcome is live and
+#    must not be misread as a win: STG could produce apparent movement that is
+#    THE CAMERA rather than the subject -- one bark clip judged tonight shows an
+#    unrequested 1.26x push-in despite "zoom, dolly, push in" being in the
+#    negative. So scale and drift are settled by FRAME ALIGNMENT, never by
+#    eyeballing a contact sheet; a lane made that error twice on this beat.
+#
+# 6. THE FRAME-62 WALL IS SCORED TOO. Two bark clips judged tonight are
+#    BIT-IDENTICAL from frame 62 to frame 96 -- the last 35 frames are a literal
+#    still, measured at ncc 1.000 -- and no beat-13 arm has ever produced a
+#    figure still acting after frame 64. Three beats, three plates, three
+#    prompts, one stop at roughly the same frame index. That is a different
+#    phenomenon from "motion is weak", so both arms are asked where they go
+#    bit-identical, and an arm whose PERIOD improves while the clip still dies at
+#    f62 is a PARTIAL result and gets reported as one.
+#
+# 7. HOW THE TWO ARMS ARE KEPT MATCHED. One crop, ONE ENCODE feeding both arms
+#    (so "identical text conditioning" is the same file read twice and not an
+#    assumption about Gemma's determinism), one plate sha asserted before
+#    anything is written, one seed. The two render steps are built from a single
+#    argv list; the generator asserts that the STG arm's argv is the control's
+#    argv plus exactly ["--stg-scale","1.0","--stg-blocks","28"], and that the
+#    only other differences sit after --jobs, --task, --bench-jsonl and
+#    --bench-label. Recipe, unchanged and NOT under test: 704x1280, 97 frames,
+#    24fps, two-stage 8@352x640 + 3@704x1280, distilled sigmas, image-crf 33,
+#    guidance 2.0, sequential offload.
+#
+# 8. THE CONTROL DOUBLES AS THE PROOF THAT THE DEFAULT PATH IS UNCHANGED.
+#    ep2-b13-shade-cycle-s2-0815 published 13-the-shade-LTX-cycle-s2.mp4 at
+#    sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a.
+#    The control arm asks the patched renderer for that clip again. The static
+#    proof is already in hand -- the diff that added STG is 123 insertions and
+#    ZERO deletions, and stg_kwargs returns an EMPTY DICT rather than
+#    stg_scale=0.0 when off, so `pipe()` is called with the arguments it always
+#    was -- and this is the empirical half of it.
+#
+# 9. THIS IS ONE SAMPLE. Whatever it shows, nothing scales off it. On 2026-08-03
+#    a recipe was picked on a steward's own metric, rendered across all fifteen
+#    beats, and came back "literally just frozen frames". A metric agreeing with
+#    the steward is not a sample, and one sample is not a batch.
+id: ep2-b13-stg-0815
+task: ep2-b13-stg-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 40
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: STG lane (beat 13), 2026-08-15
+consumer: 'The FIRST render this pipeline has ever made with spatiotemporal guidance on, against a matched control
+  in the same job. Two clips, identical plate, identical asserted sha, identical embeds (ONE encode feeds both),
+  identical seed 20260815, identical prompt, negative, frame count, sigmas, guidance, crf and offload. THE ONLY
+  DIFFERENCE IS --stg-scale 1.0 --stg-blocks 28 on the second render. Consumed by the STG lane''s report: hold period,
+  trough/peak depth, distinct-picture count and effective fps for both arms from pipeline/hold_period.py, plus a
+  frame alignment answering whether either arm goes bit-identical at the frame-62 wall.'
+success: Two 704x1280 97-frame mp4s that differ only by STG, answering three questions. (1) DOES STG MOVE THE HOLD?
+  The seed-20260815 take of this exact wording reads period 3, strength 0.92, DEPTH 0.038, 32 distinct pictures
+  in 97 frames, effective 8.0 fps (measured on 13-the-shade-LTX-cycle-s2.mp4 from ep2-b13-shade-cycle-s2-0815 with
+  pipeline/hold_period.py, commit d820bf3f). If the STG arm's period drops to 1 or its depth rises toward 0.4, STG
+  is the lever; if it reads period 3 at depth 0.03 again, the only maintainer-named motion lever does not move our
+  hold and that is reported just as loudly. (2) DOES STG MOVE THE FRAME-62 WALL? Two bark clips judged tonight are
+  BIT-IDENTICAL from frame 62 to 96 and no beat-13 arm has produced a figure still acting after frame 64. Both arms
+  get a frame alignment; where each one goes bit-identical is reported, and a period that improves while the clip
+  still dies at f62 is a PARTIAL result. (3) IS THE DEFAULT PATH UNCHANGED? The control arm is a byte-for-byte re-run
+  of ep2-b13-shade-cycle-s2-0815, whose published mp4 is sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a;
+  the control's sha is compared against it. NOTHING SCALES OFF THIS. One sample per recipe change.
+why: 'STG is the only motion lever a Lightricks person has ever named for this exact symptom -- ybitterman (COLLABORATOR,
+  an LTX-Video paper author) answered ''how to increase the motion size of the generated video?'' with ''Playing
+  with the STG blocks will help with that'' (github.com/Lightricks/LTX-Video/issues/184). The official ltxv-13b-0.9.8-distilled
+  config sets stg_scale 0 in both passes while the dev config schedules it to 4, and the STG paper''s abstract says
+  CFG-family guidance ''reduce[s] diversity and motion''. It is reachable from our call path (stg_scale line 883
+  of the installed pipeline_ltx2_image2video.py) and we have never passed it. Cost: one extra transformer forward
+  per step. $0, local card, no provider.'
+est_minutes: 22
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-stg-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image\
+    \ to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\n\
+    ap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-stg-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees. He rocks
+    slowly forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-stg-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back, tripod,
+    cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\\\
+    ep2-b13-stg-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\b13-motion-prompt.txt\"\
+    ,\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-render-OFF-control.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\
+    \\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\13-the-shade-STG-OFF-control.mp4\"\
+    }]"
+  C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-render-ON-b28-s1p0.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\
+    \\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-stg-0815\\\\13-the-shade-STG-ON-b28-s1p0.mp4\"\
+    }]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-stg-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-stg-0815\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-encode.json
+- name: render-control
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-render-OFF-control.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-stg-0815-control
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-stg-0815\bench-b13-stg-control.jsonl
+  - --bench-label
+  - ep2-b13-stg-0815-control
+- name: render-stg
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-stg-0815\b13-jobs-render-ON-b28-s1p0.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-stg-0815-stgon
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-stg-0815\bench-b13-stg-on.jsonl
+  - --bench-label
+  - ep2-b13-stg-0815-stgon
+  - --stg-scale
+  - '1.0'
+  - --stg-blocks
+  - '28'
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-stg-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-stg-0815/13-the-shade-STG-*.mp4*\")\n    \
+    \         + glob.glob(\"C:/banyan-farm/ep2-b13-stg-0815/b13-init-704x1280.png\")\n             + glob.glob(\"\
+    C:/banyan-farm/ep2-b13-stg-0815/bench-b13-stg-*.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-stg-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-stg-0815\13-the-shade-STG-OFF-control.mp4
+- C:\banyan-farm\ep2-b13-stg-0815\13-the-shade-STG-ON-b28-s1p0.mp4
+- C:\banyan-farm\ep2-b13-stg-0815\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  Beat 13 is THE SHADE: "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees up
+  around his ears." One scavenger, no guards. Two silent motion takes on an approved node; no voice synthesis, no
+  episode assembly. The wording is arm 4''s word for word (ep2-b13-shade-cycle-s2-0815) and is NOT under test here
+  -- STG is the only variable.'
