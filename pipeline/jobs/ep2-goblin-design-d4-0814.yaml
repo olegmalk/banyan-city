@@ -64,7 +64,7 @@ steps:
   - --beat
   - '4'
   - --goblin-def
-  - green skin, bald head
+  - pale yellow-green skin, bald
   - --variant
   - authored_goblin_design_d4
   - --dry
@@ -79,7 +79,7 @@ steps:
   - --beat
   - '4'
   - --goblin-def
-  - green skin, bald head
+  - pale yellow-green skin, bald
   - --variant
   - authored_goblin_design_d4
   - --out
