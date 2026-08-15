@@ -1,0 +1,22 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 2",
+   "text": "The apple is inside him, Dren.",
+   "start": 0.0,
+   "end": 1.855,
+   "chunks": [
+    {
+     "text": "The apple is inside him, Dren.",
+     "start": 0.0,
+     "end": 1.855
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.155
+}

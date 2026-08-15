@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — episode 2 DEMO CUT, 2026-08-15</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  p { max-width: 78ch; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  video { width: 100%; max-width: 420px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); } .warn { color: var(--warn); }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Sapling — episode 2, DEMO CUT</h1>
+  <p class="sub">Assembled 2026-08-15 from takes that already existed. 1:55, 14 beats of real
+  footage and 7 slates. No render, no voice synthesis, $0.</p>
+</header>
+
+<p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF.</p>
+
+<div class="callout">
+  <p><strong>What you asked for, and what this is.</strong> Your words today: <q>use the best
+  clips we have generated so far for each beat and make a demo of episode 2 with our new
+  methods</q>, and <q>just make sure its actually understandable and is an upgrade from the
+  original episode 2.</q></p>
+  <p>So: every beat that has a usable clip has one, every beat that does not gets a slate that
+  says <q>footage pending</q>, and <strong>nothing is hidden to make the cut look better.</strong>
+  Beat 11's take is <em>known broken</em> and is in here anyway, because you should see it.</p>
+</div>
+
+<h2>The cut</h2>
+<video controls playsinline preload="metadata" src="/review/ep2-demo-0815/ep2-demo-0815.mp4"></video>
+<p class="sub">1:55 · 11.7 MB · 9:16 · captions burnt in · existing Chatterbox VO muxed in sync.</p>
+
+<h2>Is it an upgrade on the live episode 2?</h2>
+<div class="scroll">
+<table>
+  <tr><th></th><th>live <code>002b-t3-b</code></th><th>this demo</th></tr>
+  <tr><td>beats with real footage</td><td class="n">5 of 21</td><td class="n ok">14 of 21</td></tr>
+  <tr><td>engine</td><td>wan2.7-t2v (paid API)</td><td>LTX-2.3 distilled, local GPU, $0</td></tr>
+  <tr><td>runtime</td><td class="n">1:43</td><td class="n">1:55</td></tr>
+  <tr><td>dead air</td><td>untrimmed</td><td>trimmed on 4 beats (beat 06 drops 5.04s&nbsp;→&nbsp;1.92s)</td></tr>
+</table>
+</div>
+<p>That is the honest comparison and it is the only claim this page makes. Whether it is
+<em>better</em> is a taste call and it is yours.</p>
+
+<h2>Every beat, what is in it, and what is wrong with it</h2>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>Beat</th><th>What is in the cut</th><th>Named fault</th></tr>
+
+  <tr><td class="n">01</td><td>COLD OPEN</td><td class="ok">ep2-b01-purple · 9.7s</td>
+      <td>Steward pick — beat 01 has no recorded pick and is still <q>IN ROUND 2</q>. The record
+      calls this seed <q>a clean purple teardrop on the stem and the best fig yet</q>; I confirmed
+      it against the figgrow-r3 (dusk field, dark gourd) and lw-0815 (yellow blob) alternatives.</td></tr>
+
+  <tr><td class="n">02</td><td>THE SPRINT</td><td class="bad">SLATE</td>
+      <td>The only take has him sprint straight out of frame and the frame goes empty. The record:
+      <q>a viewer cannot see the beat happen at all.</q> The 0815 <code>stg-headup</code> files are
+      staging probes, not takes — he never sprints in them.</td></tr>
+
+  <tr><td class="n">03</td><td>BAD COVER</td><td class="ok">ep2-b03-refire-0814 · 4.0s</td>
+      <td>He ends small at the frame edge; the size-mismatch joke reads weakly but it reads.
+      Leg A of an A/B pair — the record does not say which leg shipped.</td></tr>
+
+  <tr><td class="n">04</td><td>THE FOOTNOTE</td><td class="ok">ep2-b04-refire-0814 · 4.0s</td>
+      <td>Clean close-up on his held breath. Reads young — but that is the s0 reference you chose,
+      not a prompt fault. Leg A of an A/B pair.</td></tr>
+
+  <tr><td class="n">05</td><td>THE PATROL</td><td class="ok">ep2-b05-standB-0814 · trimmed 5.04→4.92s</td>
+      <td>The two guards read younger and softer-drawn than the guards in 06 and 11. A blind read
+      also found identity drift — hair texture and a hardening jaw on one boy.</td></tr>
+
+  <tr><td class="n">06</td><td>THE CLIPBOARD</td><td class="ok">ep2-b06-scene-0814r · trimmed 5.04→1.92s</td>
+      <td>Picked from ONE seed; the second seed raised the board like a shield instead of reading
+      it. The trim removed 72 frames of a held finished pose — three seconds of nothing.</td></tr>
+
+  <tr><td class="n">07</td><td>CONFISCATE</td><td class="bad">SLATE</td>
+      <td>All three 2026-08-15 re-rounds (<code>s49</code>, <code>scnb</code>, <code>scnc</code>)
+      still animate a hand closing around a sprout. No guard, no point — the wrong action, again.
+      Their own sidecars carry <code>shot_beat: 5</code>, so the jobs were built off the wrong
+      template.</td></tr>
+
+  <tr><td class="n">08</td><td>INSIDE HIM</td><td class="warn">ep2-b08-twohander · 5.0s</td>
+      <td>Steward pick, no verdict on record. A guard does extend his arm at the scavenger — but
+      <strong>the clipboard never comes down</strong>, which is half the beat's action; only one
+      guard where the beat wants both; dusk-yellow field instead of daylight cel.</td></tr>
+
+  <tr><td class="n">09</td><td>THE PAUSE</td><td class="bad">SLATE</td>
+      <td>The round-3 take changes face between the opening plate and the close-up — the record
+      calls it CONFUSING. The 0815 re-rounds do not fix it: they render the <em>scavenger</em>,
+      not Guard 1.</td></tr>
+
+  <tr><td class="n">10</td><td>NO FORM</td><td class="ok">ep2-b10-pairB-0814 · trimmed 5.04→4.04s</td>
+      <td>Same guard-consistency fault as 05. A blind read adds: the left boy loses a hard angular
+      older face for a rounder paler one, and the carried board changes colour, shape and hands.</td></tr>
+
+  <tr><td class="n">11</td><td>THEY LEAVE</td><td class="bad">ep2-b11-finalB-0814 · 5.0s — BROKEN, INCLUDED ON PURPOSE</td>
+      <td><strong>This take is broken and I did not hide it.</strong> The near guard's identity
+      collapses away from the plate across f16–f21: a bald adult continuously becomes a
+      brown-haired, teen-proportioned figure, and the shot ends on two indistinguishable backs. A
+      blind reader scored it 1/10 — <q>It does not read as one continuous shot at all.</q> It is a
+      slate-or-show call and I chose show, because a slate would have told you nothing about a
+      failure mode we need to fix.</td></tr>
+
+  <tr><td class="n">12</td><td>RELATED</td><td class="ok">ep2-b12-tightB · 5.0s, UNTRIMMED</td>
+      <td>The colour shifts warm-to-cool across the first second. <strong>The recorded 1.38s trim
+      is deliberately NOT used</strong> — re-measured today, the motion runs the whole clip and the
+      last quarter is livelier than the middle, so that trim would have deleted three quarters of
+      the beat. The fault ships intact instead.</td></tr>
+
+  <tr><td class="n">13</td><td>THE SHADE</td><td class="ok">ep2-b13-refire-0814 · 4.0s</td>
+      <td>He settles at the base of the stem; the shade is thin but the fold-into-it happens.
+      Leg A of an A/B pair.</td></tr>
+
+  <tr><td class="n">14</td><td>THE DEFENSE</td><td class="bad">SLATE</td>
+      <td>Both takes, including the 0815 <code>nw</code> round, have him standing and looking down.
+      The beat IS his hands at the dirt and there are no hands in it.</td></tr>
+
+  <tr><td class="n">15</td><td>GOOD LISTENER</td><td class="bad">SLATE</td>
+      <td>The 0815 <code>lookup</code> and <code>twobeat</code> rounds do get him looking up — but
+      <strong>the sapling is not in frame</strong>, which the beat's definition calls the whole
+      point. They are also badly washed out.</td></tr>
+
+  <tr><td class="n">16</td><td>WHY</td><td class="ok">ep2-b16-anim-0814 · 4.0s</td>
+      <td>Opens goblin-forward and sharp, then jumps to leaf-forward by f40 — a change of subject
+      inside the first second. The leaf also came out lobed and palmate, which contradicts the
+      canon two round cotyledons; recorded, not adopted.</td></tr>
+
+  <tr><td class="n">17</td><td>GOODBYE</td><td class="bad">SLATE</td>
+      <td>The 0815 <code>turn</code>/<code>turnB</code> rounds have him bend down and stand back
+      up. The beat is stand, brush, turn — none of the three happens.</td></tr>
+
+  <tr><td class="n">18</td><td>THE DECISION</td><td class="warn">ep2-b18-plainfig · 5.0s</td>
+      <td>Steward pick from the recorded round-3 seedA, <q>the most fig-like thing we have made</q>.
+      Faults: a no-context reader ranks the fruit a PLUM, with fig fifth — and the background is a
+      flat peach void, not a field.</td></tr>
+
+  <tr><td class="n">19</td><td>THE DROP</td><td class="bad">SLATE</td>
+      <td>The fruit never leaves the branch. Every plate we have starts the fruit on the ground,
+      and a fall cannot be shot from that.</td></tr>
+
+  <tr><td class="n">20</td><td>EVIDENCE</td><td class="warn">ep2-b20-shape · head-trimmed 3.04→2.38s</td>
+      <td>Steward pick — beat 20 had only a <em>stills</em> pick on record, no clip. The fruit IS
+      in both hands. I cut 16 head frames of init plate and white burst. Faults: near-static after
+      that trim, dusk banded sky, and the fruit reads dark rather than purple.</td></tr>
+
+  <tr><td class="n">21</td><td>THE ANSWER</td><td class="ok">ep2-b21-daylight-0814 · 5.0s</td>
+      <td>The leaf tilts over and stops — the move reads as deliberate, which is the whole beat.
+      Residual: a banded poster sky and a palette jump at frame one. Leg A of an A/B pair.</td></tr>
+</table>
+</div>
+
+<h2>Rules this cut was made under</h2>
+<p><strong>STEWARDSHIP §6 — narrative approval precedes media.</strong> Satisfied, and recorded
+rather than assumed. Your words, 2026-08-15: <q>i did read the script, just a while ago when we
+were making the first versions of the episodes. and i approved it.</q> No voice was synthesised
+for this cut — the VO is the Chatterbox take set that already existed in the node.</p>
+<p><strong>$0 and no new renders.</strong> Every clip already existed on
+<code>origin/farm-results-rtx5090</code>. No GPU ran. The only new work is ffmpeg assembly and two
+head trims.</p>
+<p><strong>Provenance (§7.2).</strong> Every source clip is published beside this page under
+<code>sources/</code> with its own render sidecar — model, seed, task, cost. Beat identity was
+verified from each sidecar's <code>shot_beat</code>, never from the filename: most farm outputs
+are misnamed <code>13-remake-LTX-0813.mp4</code> regardless of which beat they are.</p>
+<p><strong>Not canon.</strong> This is a bench render. It has no leaf, it is not in
+<code>lineage.yaml</code>, and no beat's verdict was changed to make it.</p>
+
+<footer>
+  Sapling · banyan.city · unlisted working page, 2026-08-15.
+  Sources: <code>review/ep2-picks/done-definitions.yaml</code>,
+  <code>review/ep2-picks/steward-picks-0815.yaml</code>.
+</footer>
+
+</div>
+</body>
+</html>
