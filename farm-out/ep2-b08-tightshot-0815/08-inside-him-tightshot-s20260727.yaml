@@ -1,0 +1,28 @@
+# Still provenance (7.2), beat 08 lane, the SHOT-SCALE round.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-mac Apple MPS (m1pro)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b08-tightshot-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # he lowers the clipboard and points at the scavenger's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260727
+round: r5 (tightshot)
+prompt_tokens_measured: 76/77   # real CLIPTokenizer for this checkpoint, before firing
+negative_tokens_measured: 74/77
+prompts_from: authored for this shot-scale test (shots.md UNTOUCHED)
+sole_variable_vs_r3: "`cowboy shot` -> `upper body`. Nothing else moved, seed included."
+prompt: "upper body, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, holding clipboard with both hands, green skinned goblin, pointed ears, patched cloak, looking down, grass field, treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, huge tree trunk"
+what_this_frame_shows: >-
+  THE ONLY FRAME THAT CLEARS AXIS 8. Two whole figures, a goblin LEFT and a bald HUMAN man RIGHT, adjacent in one depth plane on sunlit grass, no blush, neither infantile. Guard head y 150..340 = 190px = 15.6% of frame height, against beat 06's passing 16.0% and beat 08 r3-s0's failing 10.3% -- the framing tag did exactly what it was asked to do. The board is LARGE, FLAT TO CAMERA and unoccluded over most of its face: ~200x265 at x 128..330 y 550..820, dark maroon-brown with a chrome clip, four straight edges and rounded corners. Belly in frame with margin and open frame below the board. FAILS on THREE axes and none of them is soft: axis 2, the man has clearly POINTED ELF EARS; axis 4, the board is in the GOBLIN'S hands, not the guard's -- the 9-of-12 binding failure; axis 1, the goblin's left shoulder and arm run out of the LEFT frame edge. Axis 7 also fails, a green hand lies across the upper-left of the face. NOT A PLATE. Kept as the DIAGNOSTIC CARRIER for the shot-scale question, which needs only register and a board face.
+verdict_against_pre_registered_bar: "FAIL -- bar in pipeline/jobs/ep2-b08-tightshot-0815.yaml, committed at 755036a6 BEFORE any pixel was drawn and not softened."
+approved: false
+provisional: true
+founder_verdict: null
+scored: false
