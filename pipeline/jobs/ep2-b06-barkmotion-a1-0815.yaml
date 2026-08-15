@@ -33,10 +33,10 @@
 #    CLAUSE NAMES THE MATERIAL OF THE FACE THE TURN REVEALS:
 #
 #      arm B (unnamed, control):
-#        "He turns the board over and looks down to read it."
+#        "He turns the bark board over and looks down to read it."
 #
 #      arm A (named):
-#        "He turns the board over, its other side the same rough bark, and looks down to read it."
+#        "He turns the bark board over, its other side the same rough bark, and looks down to read it."
 #
 #    Both beats turn the board so a face that DOES NOT EXIST IN THE PLATE comes
 #    toward camera. The inpaint bought exactly one face. If the model fills the
@@ -51,6 +51,15 @@
 #    peer lost a whole render to a TRAILING framing tag and got a close-up with the
 #    subject missing. So the pose the plate is already in leads the prompt:
 #      "holding a rough bark board angled across his chest, two guards standing in a mown field."
+#
+# 4b. THE ACTION CLAUSE SAYS "THE BARK BOARD", NOT "THE BOARD", AND THAT IS A
+#    CORRECTION MADE BY OPENING THE PLATE. Both plates hold TWO boards: the bark
+#    slab, and the other guard's clipboard -- pale blue and fully in frame on beat
+#    06, navy at the right edge on beat 10. A bare "the board" names neither, and a
+#    take that turned the wrong prop would have been a wasted render that taught
+#    nothing about the bark. The word is in BOTH arms, so the independent variable
+#    is untouched: what separates A from B is still only whether the REVEALED face's
+#    material is named.
 #
 # 5. THE NEGATIVE IS NOT EXTENDED WITH THE PROP'S FENCES, on purpose. It would have
 #    been easy to add `chrome clip, white paper, planed timber` -- and then a clip
@@ -144,9 +153,10 @@ payload:
     print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
     \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
   C:\banyan-farm\ep2-b06-barkmotion-a1-0815\b06-motion-prompt.txt: holding a rough bark board angled across
-    his chest, two guards standing in a mown field. He turns the board over, its other side the same rough
-    bark, and looks down to read it. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework,
-    anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+    his chest, two guards standing in a mown field. He turns the bark board over, its other side the same
+    rough bark, and looks down to read it. 2D anime, hand-drawn cel animation, flat cel shading, clean
+    ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very
+    aesthetic.
   C:\banyan-farm\ep2-b06-barkmotion-a1-0815\b06-negative.txt: camera pan, camera tilt, zoom, dolly, push
     in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
     image, freeze frame
