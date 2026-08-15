@@ -1,0 +1,20 @@
+# Still provenance (7.2), written AT RENDER TIME by a scratch
+# runner on the Mac (Apple M1 Pro, MPS). ONE SAMPLE, not a batch.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 17
+beat_slug: goodbye
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260736
+render_seconds: 183.6
+luma_spread: 253
+png_sha256: 9429a76fc36efc4981864ee131c45e2d56292ff90335587c28e449ba8b810a94
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "1boy, solo, full body, wide shot, scenery, sitting on grass in an open field, empty hands resting on his knees, lean wiry adult goblin man, green skin, bald head, patchwork cloak, small figure low in frame; vast blue sky and clouds fill the space above him. sunny day, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, broom, spear, staff, mallet, hammer, sword, stick, basket, holding object, stitches, scars, 2boys, close-up, portrait, baby, child, chibi, blush, red cheeks, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+founder_verdict: null
+scored: false

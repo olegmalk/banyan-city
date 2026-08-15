@@ -1,0 +1,20 @@
+# Still provenance (7.2), written AT RENDER TIME by a scratch
+# runner on the Mac (Apple M1 Pro, MPS). ONE SAMPLE, not a batch.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 15
+beat_slug: good-listener
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260734
+render_seconds: 194.9
+luma_spread: 255
+png_sha256: d2399909ddffa871372f7f6abc31917b8c64aed099a6d1b745252d66aeb8304e
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "1boy, solo, full body, wide shot, sitting on grass, looking up, lean wiry adult goblin man, green skin, bald head, patchwork cloak; beside him a young seedling plant, one bare green stalk rising from the soil, two huge broad leaves at its top. outdoors, cinematic lighting, detailed, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, scars, stitched skin, close-up, portrait, upper body, face focus, blurry foreground, baby, child, chibi, blush, red cheeks, mature tree, large tree, forest, bush, leaf on head, plant girl, alraune, monster girl, female goblin, photorealism, 3d render, night"
+founder_verdict: null
+scored: false
