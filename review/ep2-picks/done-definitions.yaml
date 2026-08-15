@@ -59,6 +59,21 @@ beats:
     understandable: UNFINISHED
     understandable_reason: picked from one seed. The shipped take shows a guard reading a board; nothing
       about it misleads.
+    superseded_spec_0815: >-
+      DO NOT FIRE pipeline/jobs/ep2-b06-plate-0815.yaml. It is superseded by
+      pipeline/jobs/ep2-b06-scene-0815.yaml, and as written it fails its own gate: plate-0815 builds on
+      the draft `authored_b06_scene2`, which opens "Two adult guard men" and therefore derives a `2boys`
+      count tag against beat 06's `1boy` block, and it died at its dry step for $0 on 2026-08-14 on
+      exactly that. `authored_b06_scene`, used by scene-0815, opens "A guard man" and matches. Recorded
+      here so the next lane does not try to fire it. NOTE ON ITS MODIFIED STATE, because it has been
+      misread once already: the file shows as modified in git, and that has been reported as "a lane is
+      working a new beat-06 plate right now". It is not. The diff dates from early in this session and
+      the lane that made it has since died. The whole of it is a three-line priority bump (18 -> 4) plus
+      a comment claiming "Bumped on the queued copy too" - and there is NO queued copy; `grep ep2-b06
+      pipeline/farm-queue.yaml` returns nothing. A modified job file is not evidence of a live lane (see
+      the standing lane-liveness caution: an uncommitted diff proves a lane WAS alive, never that it
+      still is). The file itself is deliberately left exactly as it stands, untouched, and belongs to
+      that dead lane; this record is the correction, not a deletion.
   09:
     title: THE PAUSE
     done_when: close on Guard 1's face working through the thought, in daylight; face holds, no morphing;
@@ -380,6 +395,8 @@ standard_0815:
   - the action is one the plate's camera can actually show (see staging_law)
   - every noun in the prompt exists in the plate
   - the FACE is the same face at the end as at the start - not merely the same costume
+  - every object a character CARRIES OR WEARS in the init plate still exists in the rendered frames, as
+    the SAME object, held by the SAME character (see prop_identity_bar)
   a_beat_is_NOT_done_because: 'a frame-difference number improved. The metric is a floor, never a verdict:
     it rises identically for a camera push-in, a lighting ramp and a character acting, and it has now
     told me the wrong thing in both directions in one night.'
@@ -405,6 +422,39 @@ standard_0815:
     is a blind-read question, and it now goes into every read I commission. A beat whose ACTION lands
     but whose FACE drifts is NOT done: park it with that reason rather than passing it, because across
     21 beats an audience notices the continuity break even when the movement reads.'
+  prop_identity_bar: >-
+    Added 2026-08-15, after the one blind reader who returned compared three CLOSED picks against their
+    own init plates and found a prop fault in every one. See blind_read_0815_b05_b06_b10.verdicts and
+    reconciliation.named_faults_are_understated_and_are_extended_here, which already says in as many
+    words that prop identity is not a clause here and that three of three picks fail it. That is a gap
+    in the standard, not three coincidences, so the clause goes in.
+    THE TEST, phrased so a blind reader with nothing but the plate and the frames can answer it: does
+    every object a character CARRIES OR WEARS in the init plate still exist in the rendered frames, as
+    the SAME object - same kind of thing, same shape, same orientation, same colour, roughly the same
+    size - and held or worn by the SAME character? A clause nobody can check by looking is not worth
+    adding, so that is the whole question; anything needing story context to answer is some other
+    clause. Note it is a PLATE-to-FRAMES question, like identity_drift_bar and unlike scoring_method -
+    a prop that is wrong identically in all ten frames still fails it.
+    WHY IT MATTERS FOR A STORY, briefly - these beats turn on props. Beat 06 IS the clipboard; beat 20
+    is the goblin holding the fruit up like evidence. A prop that changes identity mid-shot is a
+    continuity break in the very thing the beat is about, which costs more than the same break on
+    scenery.
+    THE THREE FINDINGS IT IS BUILT FROM. (05) The props SWAPPED HANDS - the reference has the boy
+    holding the teal clipboard and the man carrying a grey-blue slab; in the frames the man holds BOTH
+    and the boy's hands are empty. (06) The prop is REPLACED ENTIRELY - a wide shallow dark-rimmed tray
+    held horizontally, carrying loose white sheets and a pen, becomes a tall vertical brown board,
+    densely scribbled, with a pale-blue clip tab. That is a different object, not a redraw of the same
+    one. (10) BOTH separate objects are replaced by a single blank orange-tan board, held jointly.
+    SCOPE, and this half is load-bearing: THIS CLAUSE GOVERNS WHAT WE CLOSE FROM HERE. It does NOT
+    reopen beats already closed. RULE-closed-stays-closed-and-faults-get-named-0815 holds unchanged;
+    beats 05, 06 and 10 stay SHIP WITH FAULT NAMED, with their prop faults already recorded as named
+    faults in blind_read_0815_b05_b06_b10.verdicts. A shipped fault gets named, not re-litigated. Read
+    this clause forward only.
+    PROVENANCE, which is the argument for keeping the instrument: it was found by a BLIND reader
+    comparing rendered frames against the init plate, with no filenames, no beat numbers and no story
+    context. The SIGHTED read of the same three picks did not catch it, and no metric we own detects it
+    either. Blind reads keep earning their cost; this clause is the second bar (after identity_drift_bar)
+    that only a blind read produced.
   seed_variance_rule: 'Beats 05a and 05b are seed twins - same plate, same prompt, same recipe - and one
     produced a complete readable walk-away while the other was a near-freeze with a slow zoom. So a SINGLE
     FAILED clip is weak evidence: do not declare a beat or a recipe dead on one. ONE SAMPLE BEFORE ANY
