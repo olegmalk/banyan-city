@@ -1,4 +1,10 @@
-# ep1 beat 08 "sev-1" — LTX motion re-render, round 2.
+# ep1 beat 08 "sev-1" — LTX motion re-render.
+#
+# HISTORY OF THIS FILE, because the id changed under it: as written it fired r2
+# at 03:11:47Z (rc=0 03:21:59Z, clip 927734ba.., scored REJECT in ledger record
+# ep1-b08-v34-motion-r2-sample). It is now retargeted to r3-plate after the
+# geometry defect below was found. The r2 wording analysis stands; the r2
+# ARTIFACT does not ship. Nothing here has been fired since the retarget.
 #
 # THE LAST UNGATED FROZEN BEAT. QA-v34-0810.md names seven dead beats in the
 # v34 cut (03, 04, 06, 07, 08, 10, 14). Six now have motion rounds beyond r1:
@@ -36,6 +42,28 @@
 # degraded the steam into a smear. So this spec states the lock once and spends
 # no further budget on it.
 #
+# GEOMETRY DEFECT — FOUND AFTER THE r2 RENDER, AND IT MAKES THAT CLIP
+# UNSHIPPABLE. This spec as originally fired passed the 832x1216 still straight
+# to --init with no plate step, and LTX's preprocessor resizes to the target
+# without preserving aspect. 0.6842 / 0.5500 = 1.2440, so the clip came back
+# 24.4% TALLER than the composition the founder approved. Measured, not
+# inferred: frame 0 of 08-ltx-r2 sits at mean-abs-diff 2.75 against a naive
+# stretch of its own still and 17.19 against a cover-centre crop, while frame 0
+# of the v34 CUT's own beat 08 inverts it exactly — 17.09 naive, 2.09 cover.
+# The cut is geometrically right and every LTX motion render in this series is
+# not. plate_prep.py's docstring named this mechanism on 2026-08-08 and named
+# ltx_i2v.py as one of the two offenders; the fix existed and was never wired in.
+#
+# The plate step below is the fix, and it is NOT cosmetic. It also changes the
+# output name, because a plate-corrected clip is a different artifact and must
+# not overwrite the stretched one that the r2 ledger record describes.
+#
+# DO NOT FIRE THIS UNCOORDINATED. A plate-corrected beat 08 is NOT comparable to
+# r1, which is stretched — isolating the wording variable again would need r1
+# re-rendered on a plate too. This belongs to a plate-corrected re-render of the
+# whole beat set, which the queue-fill lane is already opening with b14. Queuing
+# it alone would burn the card on a comparison whose baseline does not exist yet.
+#
 # PROVENANCE FLAG, DELIBERATE: the script below is C:\banyan-farm\ltx_i2v.py,
 # sha256 d49f8ecb.., which matches NEITHER repo HEAD (8cdd186e..) NOR the
 # working tree (ef6e8533..). It is what every clip in this series was rendered
@@ -44,8 +72,8 @@
 # here rather than quietly swapped, because swapping the binary mid-series
 # would change the recipe on the one beat meant to isolate a wording change.
 
-id: ep1-b08-v34-motion-r2
-task: ep1-b08-v34-motion-r2-0810
+id: ep1-b08-v34-motion-r3-plate
+task: ep1-b08-v34-motion-r3-plate-0810
 node: 001-capability-inventory
 beat: 8
 runner: box
@@ -63,7 +91,7 @@ consumer: >-
 
 success: >-
   A 704x1280 65-frame mp4 at
-  C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4.
+  C:\banyan-farm\v34-motion-0810\08-ltx-r3-plate-s20260739.mp4.
   Judged on FRAMING and CONTENT, not on the flow number: pan and rise under
   ~20px of 704/1280 and implied zoom within 1.00 +/- 0.02 (r1 measured pan 21,
   rise -89, zoomH 0.991 — the rise is the defect this round targets), the plant
@@ -96,6 +124,17 @@ env:
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 
 steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png",
+            "704x1280", r"C:\banyan-farm\v34-motion-0810", "08")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
   - name: encode
     argv:
       - C:\banyan-video\venv\Scripts\python.exe
@@ -121,9 +160,9 @@ steps:
       - --negative-file
       - C:\banyan-farm\b08r2-negative.txt
       - --init
-      - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png
+      - C:\banyan-farm\v34-motion-0810\08-704x1280.png
       - --out
-      - C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4
+      - C:\banyan-farm\v34-motion-0810\08-ltx-r3-plate-s20260739.mp4
       - --size
       - 704x1280
       - --frames
@@ -141,9 +180,9 @@ steps:
       - --beat
       - "8"
       - --task
-      - ep1-b08-v34-motion-r2-0810
+      - ep1-b08-v34-motion-r3-plate-0810
       - --worker
       - rtx5090
 
 artifacts:
-  - C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4
+  - C:\banyan-farm\v34-motion-0810\08-ltx-r3-plate-s20260739.mp4
