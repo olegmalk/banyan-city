@@ -516,7 +516,25 @@ beats:
     status: NO VERDICT YET
   '19':
     title: THE DROP
-    script: the stem lets go, the fig falls, bounces off his head, and lands in the grass at his feet.
+    script: the stem lets go, the fig falls, and lands in the grass at his feet. He notices.
+    script_CORRECTION_0816:
+      date: '2026-08-16'
+      what_it_said_until_today: 'the stem lets go, the fig falls, bounces off his head, and lands in
+        the grass at his feet.'
+      why_it_changed: NOT a rewrite of the author's text — a RE-TRANSCRIPTION of it. This key has always
+        been a copy of node.md, and the copy went stale. The author changed the source on 2026-08-15
+        (`genomes/sapling/nodes/002b-first-citizen/node.md:118`, commit a483eb52, "the fig falls on the
+        ground now, so the board entry that foreclosed that has to say so"), and node.md now reads "the
+        stem lets go, the fig falls, and lands in the grass at his feet. He notices." The value above
+        is that line verbatim. `He notices.` is new to this key because it is new to node.md, and it
+        is the half of the beat `done_when` below already requires.
+      what_this_fixes: 'For one day this entry contradicted itself: the `script` key asked for the bounce
+        two lines above a `done_when` that disqualifies any contact with his body. Anyone reading top-down
+        got the dead staging first. `ruling_0815.script_line_now_stale` below said so at the time and
+        correctly declined to edit the author''s words on the steward''s own authority — that restraint
+        was right, and the author has since made the edit himself, which is what discharges it.'
+      nothing_else_moved: The `done_when`, the superseded text kept beside it, `ruling_0815` and the
+        plate requirement are untouched. This changes only the transcription and adds this record.
     done_when: 'WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls,
       and LANDS ON THE GROUND; and he NOTICES it. Three things, in that order: the fall, the landing,
       the noticing. NO CONTACT WITH HIS BODY — a take where the fruit touches him fails this beat now,
@@ -548,6 +566,17 @@ beats:
         the grass at his feet" because it is transcribed from node.md and is the author's text, not the
         steward's to rewrite. It is stale as to the bounce and this ruling governs. Flagged for the author
         rather than edited here.
+      script_line_now_stale_CORRECTION_0816: 'CLOSED 2026-08-16, and the paragraph above is left standing
+        because it is the reasoning that has to be visibly discharged rather than deleted. The flag worked:
+        the author changed node.md himself on 2026-08-15 (line 118, commit a483eb52), so the `script`
+        key was no longer the author''s current text — it was a stale COPY of it, and re-transcribing
+        a copy needs no author. Done above; see `script_CORRECTION_0816`. WHAT THIS EPISODE IS WORTH
+        NAMING: three job specs — ep2-b19-wave-0814:76, ep2-b19-waveB-0814:76 and ep2-b19-lw-0814:40
+        — already carried the sentence "done-definitions.yaml''s own script key for beat 19 still reads
+        ''bounces off his head'', which its ruling_0815 killed the same day." All three have FIRED. The
+        defect was found, written down, and written down in a receipt, which is the one kind of place
+        that can never act on it. Those three specs stay exactly as they are: they are the record of
+        bytes actually sent and correcting them would falsify it.'
     plate_requirement_0815:
       why_this_is_here: This is what unblocks the beat. Recorded as a requirement, not a job — the plate
         still needs commissioning and that is a separate decision.

@@ -5697,6 +5697,62 @@ beats:
     tag: 1boy
     extra_neg: full
     gist: fig drop
+    # =======================================================================
+    # BEAT 19 -- THE HEAD-BOUNCE IS DEAD. Recorded 2026-08-16.
+    #
+    # The founder ruled 2026-08-15: "ok then just make the fig fall on the
+    # ground and the goblin will notice it", superseding "lets make it drop on
+    # his head". node.md:118 carries it in the author's own words -- "the stem
+    # lets go, the fig falls, and lands in the grass at his feet. He notices."
+    # -- and beat 19's `done_when` in review/ep2-picks/done-definitions.yaml
+    # makes NO CONTACT WITH HIS BODY disqualifying: "a take where the fruit
+    # touches him fails this beat now, however well it moves."
+    #
+    # Eight drafts below asked for the bounce. FOUR ARE CORRECTED and FOUR ARE
+    # DELIBERATELY NOT, and the split is fireability, read off
+    # pipeline/measured/queue-history.json and the --variant/--draft-key argv of
+    # every spec -- never off directory existence, because 456 of 509 sidecars
+    # are untracked and a directory proves nothing.
+    #
+    #   CORRECTED, because a job can still name them and this file is read at
+    #   RUN TIME, not at authoring time:
+    #     authored_staged     -- held by  pipeline/jobs/ep2-b19-goblin-wave1.yaml
+    #     authored_b19_adult  -- authored pipeline/jobs/ep2-b19-adultplate-0813.yaml
+    #     authored            -- no consumer, never fired; a future job's base text
+    #     authored_b19_scene  -- no consumer, never fired; likewise
+    #
+    #   LEFT ALONE, because their only consumer has already FIRED (all rc=0,
+    #   verified by task name against queue-history.json):
+    #     authored_b19_idfix     -> ep2-b19-idfix-0812
+    #     authored_b19_idfix_r2  -> ep2-b19-idfix-r2-0812
+    #     authored_b19_refresh   -> ep2-b19-refresh-0811
+    #     authored_b19_plate     -> ep2-b19-plate-0814
+    #   For a run whose sidecar is untracked these keys are the only committed
+    #   record of the bytes that were actually sent. Correcting one would not
+    #   fix a render; it would falsify a receipt. They are stale as to the
+    #   bounce and they lose to the ruling. They are receipts, not instructions.
+    #
+    # `authored_staged` is both -- it fired on 2026-08-11 and is held for
+    # another run. A key that can still fire is an instruction first, so it is
+    # corrected; that run's receipt is its sidecar and its spec, untouched.
+    #
+    # WHERE THIS WAS FOUND BEFORE AND NOT FIXED, said plainly because it is the
+    # actual failure: three job specs -- ep2-b19-wave-0814, ep2-b19-waveB-0814
+    # and ep2-b19-lw-0814 -- already carry the sentence "done-definitions.yaml's
+    # own script key for beat 19 still reads 'bounces off his head', which its
+    # ruling_0815 killed the same day." All three have FIRED. A defect written
+    # into a receipt is a defect recorded in the one place that can never act on
+    # it. Those three specs stay exactly as they are; the source they describe
+    # is what got fixed.
+    #
+    # BOX COPY. render_wave_sample.py resolves the drafts as `harness /
+    # "wave-drafts.yaml"`, i.e. C:\banyan-farm\wave-goblin-prep\wave-drafts.yaml
+    # -- NOT the repo checkout it is handed as --root. That copy was sha256
+    # 83b10b2bb1405a2fa4bddb9816989e59bf4a720251dff618723d150cd8a7289a on
+    # 2026-08-16 and is NOT touched by this change. It must be refreshed from
+    # this file before either live beat-19 job fires, or the box will render the
+    # bounce under the new job id and nobody will see it in the frames.
+    # =======================================================================
     # -- `authored_b19_refresh` -- 2026-08-12 ~00:2x, the beats 14-20 lane. This
     # is the worst-drifted beat of the five. `review/ep2-picks/wave-0811/
     # b19-s0..s3.jpg`, all four opened before the fix was written:
@@ -5807,10 +5863,14 @@ beats:
     # recipe note. Carries the PURPLE fig. `Wide shot` is sold -- the scene clause now does
     # the work the framing tag was supposed to do, and the b04 result showed a trailing
     # framing tag barely binds anyway. 76/77.
+    # -- CORRECTED 2026-08-16, the head-bounce ruling (see the beat note above).
+    # `bounces off his head` -> `lands at his feet`: four tokens for four, because
+    # this draft was measured at 76/77 and has no room for the longer form. Nothing
+    # else moves -- the purple fig, the scene clause and the light are untouched.
     authored_b19_scene: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in
       green summer grass, a treeline and pale sky behind, a deep purple-violet fig, green
-      at its neck, drops from the sapling and bounces off his head. Cinematic lighting,
+      at its neck, drops from the sapling and lands at his feet. Cinematic lighting,
       masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
       baby face, no toddler, no child, no cartoon, no green fig, no green fruit, no white
       background, no character sheet, no dark, no night. No photorealism, no 3D render
@@ -5841,10 +5901,14 @@ beats:
       child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
       lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- CORRECTED 2026-08-16, the head-bounce ruling (see the beat note above).
+    # `bounces off his head` -> `lands at his feet`, token-neutral. THIS KEY IS
+    # LIVE: it is the text ep2-b19-adultplate-0813 (state: authored) will send
+    # when it fires, which is why it is corrected rather than left as written.
     authored_b19_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
       as a deep purple-violet fig, green at its neck, drops from the sapling beside
-      him and bounces off his head.
+      him and lands at his feet.
       Wide shot, amber afternoon, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
       baby face, no toddler, no child, no cartoon, no green fig, no green fruit, no
@@ -5867,10 +5931,17 @@ beats:
       masterpiece, best quality, very aesthetic No girl, no child, no chibi, no
       speech bubble, no dusk, no sunset. No photorealism, no 3D render look.
       9:16 vertical, no text.
+    # -- CORRECTED 2026-08-16, the head-bounce ruling (see the beat note above).
+    # `bounces off his head, and lands in the grass` -> `and lands in the grass at
+    # his feet`, node.md:118's own words. This is the shortest block on the beat,
+    # so it can afford the full phrasing and still comes out two tokens under
+    # where it started. It has no consumer today: beat 19 is not one of the beats
+    # (2, 15, 20) the ungated goblin_ipa_* crossbeat jobs read `authored` for, so
+    # nothing that reads those beats is affected by this edit.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, stops mid-step as a ripe fig drops
-      from a tiny sapling standing tall, bounces off his head, and lands in the
-      grass. Static camera, amber afternoon, cinematic lighting, detailed,
+      from a tiny sapling standing tall and lands in the grass at his feet.
+      Static camera, amber afternoon, cinematic lighting, detailed,
       newest, masterpiece, best quality, very aesthetic No girl, no child. No
       photorealism, no 3D render look. 9:16 vertical, no text.
     # STAGED, both axes: `stops mid-step as` -> `stops mid-step with a surprised
@@ -5884,10 +5955,23 @@ beats:
     # goes with it. It costs nothing real here — this renders a STILL, and the
     # still is the bounce, not the landing. The motion beat keeps the full
     # clause in `authored`, which is untouched.
+    # -- CORRECTED 2026-08-16. THE PARAGRAPH ABOVE IS SUPERSEDED AND LEFT
+    # STANDING, because it is the reasoning that has to be visibly withdrawn
+    # rather than quietly deleted. It was sound and it is now void: "the still
+    # is the bounce, not the landing" was true only while the bounce existed.
+    # The founder killed it on 2026-08-15, so on this beat the still IS the
+    # landing and selling the landing is no longer free.
+    # `and bounces off his head` -> `and lands at his feet`: token-neutral, four
+    # for four, so the measured budget behind the rest of that rewrite stands
+    # and the style anchor is not put at risk. `surprised face toward camera`
+    # is kept and now carries the noticing the ruling asks for.
+    # THIS KEY IS LIVE: ep2-b19-goblin-wave1 (state: held) names it, and that
+    # spec's own preflight --dry step will measure this text on the box's real
+    # CLIP tokenizer before anything is drawn.
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, stops mid-step, surprised face
       toward camera, as a ripe fig drops from a tiny sapling rooted in the
-      ground and bounces off his head. Static camera, medium shot, amber
+      ground and lands at his feet. Static camera, medium shot, amber
       afternoon, cinematic lighting, detailed, newest, masterpiece, best
       quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no

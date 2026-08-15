@@ -96,14 +96,18 @@ because it is structure, not look:
 | **002a/b/c** | **~40 cm** | **two leaves + one thin side-branch** |
 | 003b | ~55 cm | three leaves, bare fig branch |
 
-The figure is corroborated by the show's own approved VO, beat 03 of 002b:
+The figure is stated outright by the show's own approved VO, beat 03 of 002b:
 
 > **VO:** *"A creature is using me as cover. I am forty centimeters tall."*
 
-That line is voiced, in `node.md`, in `shots.md` and in `clips/03-vo.json`. It
-is canon and it is arithmetic: the sapling is **shorter than the goblin**, which
-is the entire joke of beat 03 — he hides behind a plant *"that hides almost none
-of him"*.
+That line is voiced, in `node.md`, in `shots.md` and in `clips/03-vo.json`.
+**Read the speaker label: VO is the SAPLING** (`node.md:30`, *"I used to be an
+engineer. Now I'm a tree."*), and the goblin is **SCAVENGER**. So this is the
+plant saying how tall the plant is — not the goblin, and not a measurement of
+the goblin. It is canon. What follows from it is **not** arithmetic, because the
+goblin's height is stated nowhere: the sapling is **shorter than the goblin**
+because that is the entire joke of beat 03 — he hides behind a plant *"that
+hides almost none of him"*.
 
 ### 3.2 The height is a RELATION, not a number the model has to hit
 
@@ -111,8 +115,62 @@ He said height is hard to make exact and asked us not to go crazy on it. So the
 canon is expressed as a relation, which a model *can* hit and a reader *can*
 adjudicate:
 
-> **The sapling is knee-high on the goblin: about 40 cm, always shorter than he
-> is, in every beat of 002b.**
+> **The sapling is about 40 cm, always shorter than he is, in every beat of
+> 002b.**
+
+**CORRECTED 2026-08-16 — the words "knee-high on the goblin" are withdrawn.**
+Until today this line read:
+
+> ~~The sapling is knee-high on the goblin: about 40 cm, always shorter than he
+> is, in every beat of 002b.~~
+
+It is left standing above rather than erased, so that nobody restores it by
+finding it quoted somewhere else. Three things about the correction:
+
+**1. Why "knee-high" was wrong: it is already spoken for, one rung up the same
+ladder.** The growth ladder in `genomes/sapling/style.md` assigns **"knee-high"
+to node 004 at ~90 cm** — the row whose whole point is that the plant finally
+casts a shade patch big enough for a goblin to sit in, which is why the town is
+called Shade. Using the same word for **~40 cm at 002b** put one label on two
+heights **2.25× apart in the same document family**, which is exactly the
+continuity trap §3 exists to close. And it resolved in the wrong direction: read
+literally, a 40 cm knee puts the goblin at roughly 1.4 m, and then **004's 90 cm
+plant is thigh-high and the ladder's own row label breaks.**
+
+**2. What survives, because both halves are sourced.** The **figure** — ~40 cm
+is the ladder's own `002a/b/c` row (§3.1), and the VO states it (see 3 below). The
+**relation** — `always shorter than he is` — is beat 03's cover joke and is
+untouched. Only the body-part metaphor is gone, and **nothing replaces it**: the
+canon now uses the 002a/b/c row's own height cell as its vocabulary, so it can
+no longer collide with a row label.
+
+**3. THE PREMISE THIS ALSO CORRECTS — who says "forty centimeters".** It is
+**not the goblin**. `node.md:40` is spoken by **VO**, and VO is **the sapling**,
+established ten lines earlier at `node.md:30`: *"VO (dry, flat, engineer): I
+used to be an engineer. Now I'm a tree."* The goblin's speaker label is
+**SCAVENGER** throughout. So *"I am forty centimeters tall"* is the **sapling
+stating its own height** — direct evidence for the figure, and stronger than
+"corroboration" — and **the goblin's height is stated nowhere in this repo.**
+"Knee-high on the goblin" quietly converted the plant's own stated height into a
+measurement of the goblin's body and thereby invented a number for him. The
+replacement wording states the plant's height and the relation, and **says
+nothing whatever about how tall he is** — which is the correct posture, and not
+merely a cautious one. **How the plant and the goblin stand relative to each
+other is an open R4 question and this correction must not pre-empt it.** It is
+deliberately silent on the goblin's height, and it anchors no beat's staging.
+
+**Known and NOT fixed here, recorded so it is not lost a second time:**
+`knee high` is also an accepted *prompt* scale anchor — `pipeline/canon.yaml`
+`below-the-goblin`, `pipeline/check_sapling_scale.py:120`, `sd_prompt.py:79`,
+and roughly twenty live drafts in `pipeline/wave-drafts.yaml` use it to mean the
+40 cm plant. Those inherit the same collision with the ladder's 004 row. Changing
+the anchor vocabulary is a corpus-wide sweep with test consequences
+(`pipeline/test_pipeline.py` and `pipeline/test_sapling_scale.py` both assert on
+the string) and it is not this correction. Two prose restatements of the
+withdrawn wording also survive, in a file this pass had no licence to edit:
+`pipeline/check_sapling_scale.py:125` and `:245`. All of it is written down
+**here**, in the canon that governs it, rather than in a job spec that cannot
+act on it.
 
 ### 3.3 `standing tall` is POSTURE, not height — and this was already ruled
 

@@ -346,11 +346,29 @@ subjects:
 
 - id: sapling-height
   what: >-
-    The sapling is knee-high on the goblin -- about 40 cm, ALWAYS SHORTER THAN HE
-    IS -- in every beat of 002b. Ruled 2026-08-16 ("has a set height ... just dont
-    make it double in size suddenly"); the figure is the 002a/b/c row of the
-    canonical growth ladder and is corroborated by the show's own voiced VO on
-    beat 03, "I am forty centimeters tall".
+    The sapling is about 40 cm, ALWAYS SHORTER THAN HE IS, in every beat of 002b.
+    Ruled 2026-08-16 ("has a set height ... just dont make it double in size
+    suddenly"); the figure is the 002a/b/c row of the canonical growth ladder and
+    is stated outright by the show's own voiced VO on beat 03, "I am forty
+    centimeters tall".
+    CORRECTED 2026-08-16, AND THE OLD WORDING IS QUOTED SO NOBODY RESTORES IT:
+    this entry read "The sapling is knee-high on the goblin -- about 40 cm" until
+    today. `knee-high` is wrong here because the growth ladder in
+    genomes/sapling/style.md already assigns it to NODE 004 AT ~90 CM -- the same
+    word at two heights 2.25x apart in one document family, and read literally it
+    puts the goblin at ~1.4 m and makes 004's own row label ("knee-high") false
+    for 004's own plant. The FIGURE and the RELATION are both sourced and both
+    stay; only the body-part metaphor goes, and nothing replaces it, so the canon
+    now speaks in the ladder's own 002a/b/c height cell and can no longer collide
+    with a row label.
+    AND THE PREMISE UNDER IT, corrected in the same pass: the VO is THE SAPLING
+    (node.md:30, "I used to be an engineer. Now I'm a tree."); the goblin's
+    speaker label is SCAVENGER. "I am forty centimeters tall" is therefore the
+    PLANT stating its own height -- direct evidence, not corroboration -- and THE
+    GOBLIN'S HEIGHT IS STATED NOWHERE IN THIS REPO. "Knee-high on the goblin"
+    converted the plant's own line into a measurement of the goblin's body and so
+    invented a number for him. This entry now says nothing about how tall he is,
+    deliberately: that question is live and it is the founder's (R4).
     TWO THINGS THIS ENTRY DELIBERATELY DOES NOT FORBID, both verified against the
     corpus first: `standing tall` (nine drafts) is POSTURE, not height -- ledgered
     in taste/steward-model.v1.md A7, "'Reads tall' is about how the subject sits in
@@ -415,11 +433,17 @@ axes:
   # WHAT THIS AXIS DELIBERATELY DOES NOT CONTAIN, on the sapling lane's judgement:
   #  * `standing tall` — 17 prompts, and it is POSTURE, not a height claim.
   #    Banning it would fire seventeen times for no defect.
-  #  * `no taller than the grass` is NOT counted as a violation of a knee-high
+  #  * `no taller than the grass` is NOT counted as a violation of the height
   #    canon; 40 cm in summer grass satisfies both. It is recorded as the
   #    below-the-goblin reading, which is what it is.
   # AND WHAT IT CANNOT DO. The canon that lane is actually writing is a RELATION —
-  # knee-high on the goblin, ~40 cm, always shorter than he is. This checker
+  # ~40 cm, always shorter than he is. (This comment said "knee-high on the
+  # goblin, ~40 cm" until 2026-08-16; the words were withdrawn because the growth
+  # ladder gives `knee-high` to node 004 at ~90 cm. See the `sapling-height`
+  # subject above. The `knee[- ]high` string in `values:` below is NOT touched by
+  # that: it is a PROMPT anchor this checker matches on, not a statement of the
+  # canon, and rewriting the anchor vocabulary is a corpus-wide sweep nobody has
+  # ruled on.) This checker
   # compares strings. It can catch the one phrase that states the opposite
   # relation in words; it cannot evaluate a relation against a scene, and it will
   # never notice a prompt that violates the relation without saying so. See the
