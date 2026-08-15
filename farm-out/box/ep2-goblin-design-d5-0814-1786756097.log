@@ -1,0 +1,9 @@
+#### job ep2-goblin-design-d5-0814-1786756097 attempt 1 start 2026-08-15T01:12:22Z
+
+==== step measure START 2026-08-15T01:12:25Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "4", "--goblin-def", "green skin, bald head", "--variant", "authored_goblin_design_d5", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+!! beat 04 (the-footnote, kind=goblin) carries no {{GOBLIN}} marker, so the founder's definition would have nowhere to go and this render would test nothing about the goblin. Pick a beat whose kind is goblin or two-subject.
+==== step measure END rc=4 2026-08-15T01:12:28Z ====
+#### job ep2-goblin-design-d5-0814-1786756097 finished rc=4 2026-08-15T01:12:28Z
