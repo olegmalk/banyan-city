@@ -1921,3 +1921,4 @@
 15:13:53Z DONE task=ep2-b13-shade-state-0815-1786806376 rc=0 artifacts=2
 15:14:03Z STARTED task=ep2-b10-noform-mv3s2-0815-1786806738 attempt=1 on box-runner
 15:19:05Z DONE task=ep2-b10-noform-mv3s2-0815-1786806738 rc=0 artifacts=2
+15:19:17Z STARTED task=ep2-b13-shade-chain-0815-1786806932 attempt=1 on box-runner
