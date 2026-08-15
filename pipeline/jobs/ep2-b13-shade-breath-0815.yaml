@@ -46,6 +46,27 @@
 #           STAYS READABLE TO FRAME 96 instead of being buried behind the knees by
 #           frame 26 -- the terminal clause was what was destroying the face.
 #
+#    CORRECTION, WRITTEN AFTER THIS ARM HAD ALREADY RENDERED. THE THREE SENTENCES
+#    ABOVE ABOUT SCALE ARE WRONG AND ARE LEFT STANDING SO THE ERROR IS READABLE.
+#    "What kept changing was the scale of the whole picture" was MY EYE ON A
+#    CONTACT SHEET, not a measurement, and it is the reason this arm was aimed
+#    where it was. Two blind readers who ALIGNED the frames instead of eyeballing
+#    them refute it:
+#      s 20260815 -- best-fit scale 1.00x on all 16 sampled frames, no frame
+#        matching better at any rescale from 0.72x to 1.30x, horizontal shift 0px
+#        throughout, vertical shift 0..+4px and NON-MONOTONIC.
+#      s 20260731 -- the figure's dark silhouette measures 153-156 px wide and
+#        215-219 px tall across the whole clip, drifting 1-3px one way and back.
+#    There is no push-in, no pull-back and no swell on either seed. What those
+#    clips actually do is HOLD: s 20260815 shows new picture content only every
+#    third frame, s 20260731 only every second, and the high body/tail figures on
+#    20260815 (4.191/3.702, the largest in the sweep) are line-work churn --
+#    fingers, cuffs and trouser folds re-forming in place -- not a camera and not
+#    an actor. So arm 5's premise, that the cycle needed somewhere to live "that
+#    the camera cannot impersonate", was built on a defect that was not there.
+#    The arm still answers its own question and its result stands; the reason it
+#    was chosen does not. Only the FACE finding above survives unchanged.
+#
 # 3. WHAT IS BEING TESTED HERE, AND WHY IT IS ONE VARIABLE.
 #    Arm 4 proved a cyclical clause survives to the end of the clip and disproved
 #    that the FIGURE is what performs it. The hypothesis now is that "rocks
