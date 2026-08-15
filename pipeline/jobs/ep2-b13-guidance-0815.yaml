@@ -1,0 +1,306 @@
+# 2026-08-15, CFG lane. Beat 13, THE SHADE. ONE SAMPLE OF LEVER L4:
+# GUIDANCE 2.0 -> 1.0, AND A MATCHED CONTROL BESIDE IT IN THE SAME JOB.
+# GUIDANCE IS THE ONLY VARIABLE. Generated, not hand-typed, and the control's
+# prompt/negative/plate/sha are READ OUT OF pipeline/jobs/ep2-b13-stg-0815.yaml
+# rather than retyped -- see the assertions at the bottom of the generator.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#
+# 2. WHAT IS ALREADY RULED OUT, EACH BY MEASUREMENT. None of it is re-derived.
+#    * WORDING. Five wordings, three seeds: no arm produced a figure still
+#      acting after frame 64.
+#    * THE INIT PLATE (onset). Measured across ten clips, 9/10 inside 0.25s.
+#    * THE 13-LATENT COUNT. (97-1)//8+1 = 13 is correct arithmetic and the
+#      latent grid is period-8 while we measure period-3 (dfa87c27).
+#    * THE DECODE SIDE, END TO END. A real plate panned a fixed integer px per
+#      frame came back moving on every frame; tiling ON vs OFF differed by
+#      0.4 dB and nothing else, and a known period-3 hold fed in came back
+#      period 3 in both arms (70e3c79a).
+#    * STG AT UPSTREAM'S RECOMMENDED SETTING. stg_scale 1.0, blocks [28]:
+#      period 3 -> 3, 32.0 -> 32.0 distinct pictures, 8.0 -> 8.0 effective fps.
+#      Unmoved. It bought a crisper picture, +25% travel per ten frames after
+#      alignment, an unrequested 1.036x push-in and +21% render time (369e4101).
+#
+#    So the hold is in the latents and the remaining levers are the ones that
+#    change what the transformer is asked for. Guidance is the best-sourced of
+#    those, and it is the last one with a PRIMARY source behind it.
+#
+# 3. WHY GUIDANCE, AND WHOSE WORDS THOSE ARE.
+#    Lightricks' own packages/ltx-pipelines/docs/multimodal-guidance.md:
+#
+#      "Higher `cfg_scale` = stronger prompt adherence but potentially LESS
+#       NATURAL MOTION"
+#
+#    The STG paper, arxiv.org/abs/2411.18664, first line of the abstract:
+#
+#      "While sampling guidance techniques like CFG improve quality, THEY
+#       REDUCE DIVERSITY AND MOTION."
+#
+#    And the official ltxv-13b-0.9.8-DISTILLED config sets `guidance_scale: 1`
+#    in BOTH passes. We run 2.0. ltx_i2v.py's own --guidance default is already
+#    1.0 -- 2.0 is what our job specs pass, presumably so the anti-static
+#    negative (which contains "still image, freeze frame") would bite.
+#
+# 4. WHAT GUIDANCE 1.0 ALSO DOES, STATED UP FRONT RATHER THAN DISCOVERED LATER.
+#    do_classifier_free_guidance is (guidance_scale > 1.0), so at 1.0 there is
+#    NO UNCOND PASS AND THE NEGATIVE PROMPT IS NEVER READ. That is inherent to
+#    the flag, not a second variable smuggled in: you cannot have CFG 1.0 and a
+#    live negative. It is called out here because "zoom, dolly, push in" lives
+#    in that negative, so the 1.0 arm has nothing suppressing camera motion.
+#
+# 5. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    The control is a re-run of the STG lane's control -- same plate, same
+#    asserted sha, same seed 20260815, same prompt, negative and flags -- whose
+#    published clip measures, on pipeline/hold_period.py (d820bf3f) with the
+#    trough/peak DEPTH from pipeline/vae_roundtrip.py (70e3c79a) beside it:
+#
+#      period 3 | strength 0.923 | DEPTH 0.038 | 32 distinct pictures | 8.0 fps
+#      no terminal freeze: last change at frame 96 of 96
+#
+#    Depth travels with every number because the metric is SCALE-FREE and reads
+#    a +-3% ripple like a freeze: a VAE round trip whose frames provably advance
+#    4px reported period 2 strength 0.90 at depth 0.971. Reference depths:
+#    b13-AFTER 0.029, STG arm 0.059, b06-DONE 0.181, b02-FIXED 0.431.
+#
+#    PASS = period falls, or distinct pictures rise materially above 32, or the
+#    figure is still acting after frame 64. FAIL = period 3 at depth ~0.03
+#    again, reported exactly as loudly as a win would have been. A third
+#    outcome is live and MUST NOT be misread as a win: APPARENT MOVEMENT THAT
+#    IS THE CAMERA. Three clips on 2026-08-15 showed unrequested push-ins
+#    (1.036x, 1.26x) WITH the negative active; the 1.0 arm has no negative at
+#    all. Scale and drift are settled by FRAME ALIGNMENT, never by eyeballing a
+#    contact sheet -- a lane made that exact error twice on this beat, and the
+#    second time it reached a committed spec.
+#
+# 6. THE FRAME-62 WALL IS SCORED SEPARATELY AND MUST NOT BE CONFLATED WITH THE
+#    HOLD. Two bark clips on beats 06 and 10 are BIT-IDENTICAL from frame 62 to
+#    96 (ncc 1.000). Beat 13's STG sample had NO terminal freeze in either arm.
+#    So a clip can hold every picture for three frames and still be changing at
+#    frame 96: two phenomena, measured separately. Both arms are asked where
+#    they go bit-identical, and an arm whose period improves while the clip
+#    dies at f62 is a PARTIAL result and gets reported as one.
+#
+# 7. HOW THE TWO ARMS ARE KEPT MATCHED. One crop from an asserted plate sha,
+#    ONE ENCODE FEEDING BOTH ARMS (so "identical text conditioning" is the same
+#    .pt read twice and not an assumption about Gemma's determinism), one seed,
+#    both renders in one job. The two render steps are built from a single argv
+#    function whose ONLY recipe parameter is guidance; the generator asserts
+#    that the sole recipe-flag difference is --guidance and that every other
+#    difference sits after --jobs, --task, --bench-jsonl or --bench-label. It
+#    further asserts our control's argv IS the STG lane's control argv modulo
+#    job-name plumbing, so the sha comparison in section 8 is meaningful.
+#    Recipe, unchanged and NOT under test: 704x1280, 97 frames, 24fps,
+#    two-stage 8@352x640 + 3@704x1280, distilled sigmas, image-crf 33,
+#    sequential offload, STG unpassed on both arms.
+#
+# 8. NO RENDERER CODE IS TOUCHED. `--guidance` has been a flag on ltx_i2v.py
+#    since long before tonight, so there is no "did the patch change the
+#    default path" question to answer: this job yaml is the entire diff. The
+#    control still doubles as the harness check -- the STG lane's control
+#    published 13-the-shade-STG-OFF-control.mp4 at sha256
+#    42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a and the
+#    init png at 210932b7..., and this job's control asks for both again. A
+#    mismatch invalidates the comparison rather than being explained away.
+#
+# 9. THIS IS ONE SAMPLE. Whatever it shows, nothing scales off it. On
+#    2026-08-03 a recipe was picked on a steward's own metric, rendered across
+#    all fifteen beats, and came back "literally just frozen frames". A metric
+#    agreeing with the steward is not a sample, and one sample is not a batch.
+id: ep2-b13-guidance-0815
+task: ep2-b13-guidance-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 45
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: CFG lane (beat 13), 2026-08-15
+consumer: 'One sample of lever L4 (pipeline/research/ltx23-motion-source.md, dfa87c27) against a matched control
+  in the same job. Two clips, identical plate, identical asserted sha, identical embeds (ONE encode feeds both),
+  identical seed 20260815, identical prompt, negative, frame count, sigmas, crf, offload and STG (off, unpassed).
+  THE ONLY DIFFERENCE IS --guidance 2.0 vs 1.0. Consumed by the CFG lane''s report: hold period, trough/peak DEPTH,
+  distinct-picture count, effective fps and terminal-freeze index for both arms, plus a frame alignment so that
+  apparent movement is not read as the figure acting.'
+success: 'Two 704x1280 97-frame mp4s that differ only by guidance. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED
+  AT: the recorded control reads period 3, strength 0.923, DEPTH 0.038, 32 distinct pictures in 97 frames, effective
+  8.0 fps, no terminal freeze (last change at frame 96 of 96). PASS = the guidance-1.0 arm''s period falls, or its
+  distinct-picture count rises materially above 32, or the figure is still acting after frame 64. FAIL = period
+  3 at depth ~0.03 again, in which case the best-sourced remaining lever does not move our hold and that is reported
+  exactly as loudly as a win. A third outcome is live and must not be misread as a win: guidance 1.0 turns the negative
+  prompt OFF entirely (do_classifier_free_guidance is guidance_scale > 1.0), and ''zoom, dolly, push in'' lives
+  in that negative, so a bigger-looking picture may be an unrequested CAMERA push rather than the subject. Three
+  clips on 2026-08-15 showed push-ins of 1.036x and 1.26x WITH the negative active. Scale and drift are therefore
+  settled by FRAME ALIGNMENT, never by eyeballing a contact sheet; a lane made that error twice on this beat. IS
+  THE HARNESS THE SAME ONE? The control arm is a byte-for-byte re-run of the STG lane''s control, published at sha256
+  42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a; the control''s sha is compared against it, and
+  a mismatch invalidates the comparison rather than being explained away. NOTHING SCALES OFF THIS. One sample per
+  recipe change.'
+why: 'Two primary sources name CFG as a motion cost. Lightricks'' own multimodal-guidance doc: ''Higher cfg_scale
+  = stronger prompt adherence but potentially less natural motion''. The STG paper abstract (arxiv.org/abs/2411.18664):
+  ''While sampling guidance techniques like CFG improve quality, they reduce diversity and motion''. And the official
+  ltxv-13b-0.9.8-distilled config runs guidance_scale 1 in BOTH passes while we run 2.0 -- a documented divergence
+  from the recipe the checkpoint ships with. ltx_i2v.py''s own --guidance default is already 1.0; 2.0 is what our
+  job specs pass, presumably to make the anti-static negative bite. This sample asks whether that negative costs
+  more motion than it buys. It is the best-sourced lever left after wording (five wordings, three seeds), the init
+  plate (onset measured across ten clips), the 13-latent count (correct arithmetic), the decode side (70e3c79a)
+  and STG at upstream''s recommended 1.0/[28] (369e4101) were each eliminated by measurement. NO RENDERER CODE CHANGES:
+  --guidance is an existing flag, so this job is the entire diff. $0, local card, no provider.'
+est_minutes: 20
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-guidance-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-guidance-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees. He
+    rocks slowly forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime
+    key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-guidance-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back,
+    tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-guidance-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\\b13-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-render-CFG-2p0-control.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-guidance-0815\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\
+    \\13-the-shade-CFG-2p0-control.mp4\"}]"
+  C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-render-CFG-1p0.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n \
+    \ \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-guidance-0815\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-guidance-0815\\\
+    \\13-the-shade-CFG-1p0.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-guidance-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-guidance-0815\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-encode.json
+- name: render-control
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-render-CFG-2p0-control.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-guidance-0815-cfg2p0
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-guidance-0815\bench-b13-cfg-2p0.jsonl
+  - --bench-label
+  - ep2-b13-guidance-0815-cfg2p0
+- name: render-cfg1
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-guidance-0815\b13-jobs-render-CFG-1p0.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-guidance-0815-cfg1p0
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-guidance-0815\bench-b13-cfg-1p0.jsonl
+  - --bench-label
+  - ep2-b13-guidance-0815-cfg1p0
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-guidance-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-guidance-0815/13-the-shade-CFG-*.mp4*\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b13-guidance-0815/b13-init-704x1280.png\")\n             + glob.glob(\"\
+    C:/banyan-farm/ep2-b13-guidance-0815/bench-b13-cfg-*.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f,\
+    \ dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-guidance-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-guidance-0815\13-the-shade-CFG-2p0-control.mp4
+- C:\banyan-farm\ep2-b13-guidance-0815\13-the-shade-CFG-1p0.mp4
+- C:\banyan-farm\ep2-b13-guidance-0815\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  Beat 13 is THE SHADE: "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees up
+  around his ears." One scavenger, no guards. Two silent motion takes on an approved node; no voice synthesis, no
+  episode assembly. The wording is arm 4''s word for word (ep2-b13-shade-cycle-s2-0815), read out of the STG job''s
+  payload rather than retyped, and is NOT under test here -- guidance is the only variable.'

@@ -1,0 +1,322 @@
+# 2026-08-15, plate-blur lane. Beat 13, THE SHADE. ONE SAMPLE OF LEVER L5:
+# A MOTION-BLURRED INIT PLATE, AND A MATCHED CLEAN CONTROL BESIDE IT IN THE
+# SAME JOB. THE INIT PNG IS THE ONLY VARIABLE -- the two render argvs are
+# byte-identical apart from --jobs/--task/--bench-*, which the generator
+# asserts. Generated, not hand-typed; the prompt, negative, source plate and
+# plate sha are READ OUT OF pipeline/jobs/ep2-b13-stg-0815.yaml, not retyped.
+#
+# 1. THE SCRIPT LINE, from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#
+# 2. WHAT IS ALREADY RULED OUT, EACH BY MEASUREMENT. Not re-derived here.
+#    * WORDING. Five wordings, three seeds: no arm produced a figure still
+#      acting after frame 64.
+#    * THE INIT PLATE AS AN ONSET QUESTION. Onset measured across ten clips,
+#      9/10 inside 0.25s. THAT IS A DIFFERENT CLAIM FROM THIS ONE -- it asked
+#      WHEN motion starts and WHICH plate, never whether the plate DEPICTS
+#      motion. See section 3.
+#    * THE 13-LATENT COUNT. (97-1)//8+1 = 13 is correct arithmetic and the
+#      latent grid is period-8 while we measure period-3 (dfa87c27).
+#    * THE DECODE SIDE, END TO END. A real plate panned a fixed integer px per
+#      frame came back moving on every frame; tiling ON vs OFF differed by
+#      0.4 dB and nothing else (70e3c79a).
+#    * STG AT UPSTREAM'S RECOMMENDED SETTING (1.0, blocks [28]): period 3 -> 3,
+#      32.0 -> 32.0 distinct pictures, 8.0 -> 8.0 fps. Unmoved (369e4101).
+#    * GUIDANCE 2.0 -> 1.0, the best-sourced remaining lever: see
+#      pipeline/jobs/ep2-b13-guidance-0815.yaml and the CFG lane's report.
+#
+# 3. WHY A BLURRED PLATE, AND WHOSE WORDS THOSE ARE.
+#    `Shecht-ltx`, answering "For the ltx13B model, how to increase the motion
+#    size of the generated video?" in
+#    github.com/Lightricks/LTX-Video/issues/184:
+#
+#      "You should try INCREASING THE CRF and also IF THE INITIAL FRAMES
+#       CONTAINS MOTION CUES (SUCH AS MOTION BLUR) IT MAY HELP"
+#
+#    Semi-official at best: the handle carries the -ltx suffix but
+#    author_association is NONE. We already run image-crf 33, inside the 30->35
+#    band the same person names, so the CRF half is near-exhausted. The
+#    motion-cue half has never been tried: our plates are clean, crisp,
+#    blur-free stills.
+#
+# 4. THE BLUR IS DECLARED, NOT TUNED. One axis, one length. The scripted action
+#    is "He rocks slowly forward and back", whose screen projection is
+#    dominantly VERTICAL, so the streak runs along y; 9 px on a 1280-tall frame
+#    is ~0.7% of frame height, visible as a smear without destroying the
+#    linework the model is asked to continue. A different length or axis is a
+#    FURTHER sample, one variable each, and this job does not license one.
+#
+# 5. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    The recorded control (same plate, sha, seed, prompt, negative, flags)
+#    measures on pipeline/hold_period.py (d820bf3f) with the trough/peak DEPTH
+#    from pipeline/vae_roundtrip.py (70e3c79a) beside it:
+#
+#      period 3 | strength 0.923 | DEPTH 0.038 | 32 distinct pictures | 8.0 fps
+#      no terminal freeze: last change at frame 96 of 96
+#
+#    Depth travels with every number because the metric is SCALE-FREE and reads
+#    a +-3% ripple like a freeze: a VAE round trip whose frames provably
+#    advance 4px reported period 2 strength 0.90 at depth 0.971. Reference
+#    depths: b13-AFTER 0.029, STG arm 0.059, b06-DONE 0.181, b02-FIXED 0.431.
+#
+#    PASS = period falls, or distinct pictures rise materially above 32, or the
+#    figure is still acting after frame 64. FAIL = period 3 at depth ~0.03
+#    again, reported exactly as loudly as a win would have been.
+#    THE TRAP SPECIFIC TO THIS LEVER: a blurred plate makes the opening frames
+#    SOFTER, and softness is not motion. A softer clip will also read a lower
+#    absolute MAD without holding any less. The reading is the PERIOD and the
+#    DISTINCT-PICTURE COUNT, both scale-free, plus depth; it is never "it looks
+#    like it is moving more". Scale and drift are settled by FRAME ALIGNMENT --
+#    a lane eyeballed a contact sheet twice on this beat and was wrong twice.
+#
+# 6. THE FRAME-62 WALL IS SCORED SEPARATELY AND MUST NOT BE CONFLATED WITH THE
+#    HOLD. Two bark clips on beats 06 and 10 are BIT-IDENTICAL from frame 62 to
+#    96 (ncc 1.000). Beat 13's STG sample had NO terminal freeze in either arm.
+#    A clip can hold every picture for three frames and still change at frame
+#    96: two phenomena, measured separately.
+#
+# 7. HOW THE TWO ARMS ARE KEPT MATCHED, AND THE PROOF THE DEFAULT PATH IS
+#    UNCHANGED. ONE source plate at an asserted sha, cropped TWICE BY ONE
+#    SCRIPT; ONE ENCODE feeding both arms; one seed; both renders in one job.
+#    pipeline/ltx_i2v.py IS NOT TOUCHED -- the blur lives in this job's own
+#    payload crop script, which is the STG lane's crop script plus three
+#    argparse lines and one guarded block, with --motion-blur defaulting to 0.
+#    THE CLEAN ARM PROVES IT: its crop step asserts its own output hashes to
+#    210932b760f70ef34b97f41a28d1905ef5358e5f6982110c3f2440884b8b5199 -- the
+#    init png the STG and CFG lanes rendered from -- and FAILS THE JOB rather
+#    than continuing if it does not. An option that changed the default path
+#    could not produce that file.
+#    Recipe, unchanged and NOT under test: 704x1280, 97 frames, 24fps,
+#    two-stage 8@352x640 + 3@704x1280, distilled sigmas, guidance 2.0,
+#    image-crf 33, sequential offload, STG unpassed on both arms.
+#
+# 8. THIS IS ONE SAMPLE. Whatever it shows, nothing scales off it. On
+#    2026-08-03 a recipe was picked on a steward's own metric, rendered across
+#    all fifteen beats, and came back "literally just frozen frames".
+id: ep2-b13-blurplate-0815
+task: ep2-b13-blurplate-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 46
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: plate-blur lane (beat 13), 2026-08-15
+consumer: 'One sample of lever L5 (pipeline/research/ltx23-motion-source.md, dfa87c27) against a matched control
+  in the same job. Two clips, ONE asserted source plate cropped TWICE by ONE script, identical embeds (ONE encode
+  feeds both), identical seed 20260815, identical prompt, negative, guidance 2.0, frame count, sigmas, crf, offload
+  and STG (off, unpassed). THE ONLY DIFFERENCE IS THE INIT PNG: clean, or the same crop with a 9 px directional
+  motion blur along y. Consumed by the plate-blur lane''s report: hold period, trough/peak DEPTH, distinct-picture
+  count, effective fps and terminal-freeze index for both arms, plus a frame alignment so that apparent movement
+  is not read as the figure acting.'
+success: 'Two 704x1280 97-frame mp4s that differ only by the init plate. THE BAR, WRITTEN BEFORE THE FRAMES ARE
+  LOOKED AT: the recorded control reads period 3, strength 0.923, DEPTH 0.038, 32 distinct pictures in 97 frames,
+  effective 8.0 fps, no terminal freeze (last change at frame 96 of 96). PASS = the blurred-plate arm''s period
+  falls, or its distinct-picture count rises materially above 32, or the figure is still acting after frame 64.
+  FAIL = period 3 at depth ~0.03 again, reported exactly as loudly as a win. A blurred plate will make the FIRST
+  FRAMES softer, and softness is not motion: the reading is the period and the distinct count, not how smeared frame
+  0 looks. Scale and drift are settled by FRAME ALIGNMENT, never by eyeballing a contact sheet. THE CLEAN ARM IS
+  ALSO THE PROOF THAT THE ADDED BLUR OPTION CHANGED NOTHING: its crop must hash to 210932b760f70ef34b97f41a28d1905ef5358e5f6982110c3f2440884b8b5199,
+  the init the STG and CFG lanes rendered from, and the crop step FAILS the job rather than continuing if it does
+  not. NOTHING SCALES OFF THIS. One sample per recipe change.'
+why: 'The plate is closed as an ONSET question -- motion onset was measured across ten clips, 9/10 inside 0.25s
+  -- but it was never asked whether the plate DEPICTS motion. Shecht-ltx, answering ''how to increase the motion
+  size of the generated video?'' in github.com/Lightricks/LTX-Video/issues/184: ''You should try increasing the
+  CRF and also if the initial frames contains motion cues (such as motion blur) it may help''. We already run image-crf
+  33, inside the 30->35 band they name, so the CRF half is near-exhausted; the motion-cue half is untested. Our
+  plates are clean, crisp, blur-free stills. This is the last lever in the ranked list with any source behind it
+  after wording, the plate''s onset, the 13-latent count, the decode side (70e3c79a), STG at upstream''s recommended
+  1.0/[28] (369e4101) and guidance 2.0->1.0 were each fired and measured. $0, local card, no provider.'
+est_minutes: 20
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-blurplate-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\nap.add_argument(\"--motion-blur\", type=int, default=0,\n                help=\"\
+    directional box blur in px; 0 (default) = OFF, nothing happens\")\nap.add_argument(\"--blur-axis\", default=\"\
+    y\", choices=[\"x\", \"y\"])\nap.add_argument(\"--assert-out-sha256\", default=\"\",\n                help=\"\
+    refuse to finish unless the written file hashes to this\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n   \
+    \ for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256\
+    \ and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256,\
+    \ have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh =\
+    \ im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\n\
+    im = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top,\
+    \ left + W, top + H))\nif a.motion_blur > 0:\n    # A directional box blur: average the frame against copies\
+    \ of itself shifted\n    # 1..k px along one axis. That is a linear motion smear, which is what a\n    # camera\
+    \ integrating over an exposure produces. Done in numpy on floats so\n    # no intermediate rounding accumulates.\n\
+    \    import numpy as np\n    arr = np.asarray(im, dtype=np.float64)\n    k = a.motion_blur\n    acc = np.zeros_like(arr)\n\
+    \    for s in range(-(k // 2), k // 2 + 1):\n        acc += np.roll(arr, s, axis=(0 if a.blur_axis == \"y\"\
+    \ else 1))\n    arr = acc / float(2 * (k // 2) + 1)\n    im = Image.fromarray(arr.round().clip(0, 255).astype(\"\
+    uint8\"))\n    print(\"motion blur: %d px along %s\" % (k, a.blur_axis), flush=True)\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)\nif a.assert_out_sha256:\n    oh = hashlib.sha256()\n    with open(a.out, \"rb\"\
+    ) as fh:\n        for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n            oh.update(chunk)\n    got\
+    \ = oh.hexdigest()\n    if got != a.assert_out_sha256:\n        sys.exit(\"!! OUT SHA MISMATCH -- the clean\
+    \ crop is NOT the one the STG and \"\n                 \"CFG lanes rendered from, so this job's control is not\
+    \ their control.\\n\"\n                 \"   want %s\\n   have %s\" % (a.assert_out_sha256, got))\n    print(\"\
+    OUT SHA OK %s\" % got, flush=True)"
+  C:\banyan-farm\ep2-b13-blurplate-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees. He
+    rocks slowly forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime
+    key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-blurplate-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back,
+    tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-blurplate-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\\b13-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-render-PLATE-clean-control.json: "[{\"beat\": 13,\n  \"seed\":\
+    \ 20260815,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\\b13-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\\b13-init-704x1280-clean.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-blurplate-0815\\\\13-the-shade-PLATE-clean-control.mp4\"}]"
+  C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-render-PLATE-blur.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-blurplate-0815\\\\b13-init-704x1280-blur9px-y.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-blurplate-0815\\\
+    \\13-the-shade-PLATE-blur9px-y.mp4\"}]"
+steps:
+- name: crop-clean
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-blurplate-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-blurplate-0815\b13-init-704x1280-clean.png
+  - --size
+  - 704x1280
+  - --assert-out-sha256
+  - 210932b760f70ef34b97f41a28d1905ef5358e5f6982110c3f2440884b8b5199
+- name: crop-blur
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-blurplate-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-blurplate-0815\b13-init-704x1280-blur9px-y.png
+  - --size
+  - 704x1280
+  - --motion-blur
+  - '9'
+  - --blur-axis
+  - y
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-encode.json
+- name: render-control
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-render-PLATE-clean-control.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-blurplate-0815-clean
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-blurplate-0815\bench-b13-plate-clean.jsonl
+  - --bench-label
+  - ep2-b13-blurplate-0815-clean
+- name: render-blur
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-blurplate-0815\b13-jobs-render-PLATE-blur.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-blurplate-0815-blur
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-blurplate-0815\bench-b13-plate-blur.jsonl
+  - --bench-label
+  - ep2-b13-blurplate-0815-blur
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-blurplate-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-blurplate-0815/13-the-shade-PLATE-*.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b13-blurplate-0815/b13-init-704x1280-*.png\")\n           \
+    \  + glob.glob(\"C:/banyan-farm/ep2-b13-blurplate-0815/bench-b13-plate-*.jsonl\"))\nlines = []\nfor f in src:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n\
+    \        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith\
+    \ open(os.path.join(dst, \"ep2-b13-blurplate-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0\
+    \ if len(src) >= 5 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-blurplate-0815\13-the-shade-PLATE-clean-control.mp4
+- C:\banyan-farm\ep2-b13-blurplate-0815\13-the-shade-PLATE-blur9px-y.mp4
+- C:\banyan-farm\ep2-b13-blurplate-0815\b13-init-704x1280-clean.png
+- C:\banyan-farm\ep2-b13-blurplate-0815\b13-init-704x1280-blur9px-y.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  Beat 13 is THE SHADE: "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees up
+  around his ears." One scavenger, no guards. Two silent motion takes on an approved node; no voice synthesis, no
+  episode assembly. The wording is arm 4''s word for word, read out of the STG job''s payload rather than retyped,
+  and is NOT under test -- the init plate is the only variable.'
