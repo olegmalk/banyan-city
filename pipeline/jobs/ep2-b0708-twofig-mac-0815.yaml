@@ -1,0 +1,215 @@
+# 2026-08-15, plate lane (beats 07 + 08 only). THE MISSING TWO-FIGURE PLATE.
+#
+# WHAT IS MISSING, established by inspection and not by guesswork. Beats 07 and
+# 08 are both two-character beats and NOTHING ON DISK HOLDS TWO CHARACTERS.
+#   beat 07  every 0815 re-round animates a hand closing on a sprout; the plate
+#            carries ONE figure, and goblin ears turn up on a guard tunic.
+#   beat 08  its twelve `ep2-b08-plate-0814` frames (r1/r2/r3 x s0-s3) are the
+#            scavenger ALONE — high angle down (r1), waist-up portrait (r3),
+#            head close-up (r2). A guard appears only as a stray hand, forearm
+#            or leg at the frame edge. No board and no second figure in any of
+#            the twelve. `ep2-b08-lw-0815` names this itself: "this plate is a
+#            single figure with the goblin a few dozen pixels away in the far
+#            background, so the beat's scripted two-shot is NOT in frame."
+# So one artefact gates both beats: A PLATE HOLDING A GUARD AND THE GOBLIN
+# TOGETHER, AT A DISTANCE WHERE A POINTING GESTURE READS. It has never existed.
+#
+# SCRIPT LINES, quoted beside the action they gate (shots.md, 002b-first-citizen):
+#   beat 07  "So we confiscate the apple."   Camera on the pointing guard.
+#   beat 08  "The apple is inside him, Dren." Camera follows the pointing finger
+#            to the goblin's belly.
+#
+# WHY THIS IS A PLATE PROBLEM AND NOT A MOTION OR WORDING PROBLEM. The harness's
+# own header finding, confirmed: IMG2IMG WILL NOT ADD AN OBJECT THE INIT LACKS.
+# Whatever gets animated has to be in the plate at plate time, so both beats are
+# blocked on staging and neither is reachable by a better motion clause.
+#
+# WHY NO IP-ADAPTER AND NO REFERENCE SET. Two independent reasons, either alone
+# sufficient:
+#   1. refs-b07-mixed-d1-0815 is STAGED, NOT FIRED, and its own record says why:
+#      slots s0 and s1 are the goblin CROUCH tiles that read most infantile of
+#      the four. Pose does not transfer through a reference either (0/48 frames
+#      landed the requested crouch), so a reference cannot buy the staging this
+#      beat needs. The guard half is worse: refs-guards-chosen-0814 is on
+#      box_enqueue.py's CARD_REFS_DENYLIST, 20 of its 24 downstream plates
+#      scored as costume identity cards, and every tile in it is a default idle
+#      on a flat pale-grey studio void.
+#   2. `goblin_ipa_sample.py` is CUDA-hardcoded (`pipe.to("cuda")`, bfloat16).
+#      The IPA path CANNOT run on Apple MPS at all, and the 5090's queue is full
+#      with beat-17 motion and is not to be disturbed.
+# So this is TAGS-ONLY on the same checkpoint the box uses
+# (cagliostrolab/animagine-xl-3.1), drawn locally at $0.
+#
+# THE THREE MEASURED LAWS THIS RECIPE IS BUILT ON, none re-derived here:
+#   - LEADING Danbooru framing tags carry real weight; TRAILING ones have almost
+#     none (a peer lost a render to a trailing `wide two-shot` and got a
+#     close-up with the subject missing). So `full body, wide shot` is FIRST.
+#   - STATE TAGS BEAT VERBS for staging (beat 17: 24 candidates failed on
+#     "pushes himself up to standing" because the model rendered the verb's END
+#     state; the state tag `sitting on grass` fixed it on the first sample). So
+#     `standing`, `crouching`, `arm outstretched`, `looking down` rather than
+#     prose verbs.
+#   - MEASURE ON THE REAL TOKENIZER BEFORE EVERY FIRE. A live draft was found
+#     today at 139 tokens against CLIP's 77, and nine rounds of work were fenced
+#     in text the model never received. MEASURED, on
+#     `CLIPTokenizer.from_pretrained("cagliostrolab/animagine-xl-3.1",
+#     subfolder="tokenizer")`, before this file was committed:
+#         b08 positive  69/77   OK, style tail intact
+#         b07 positive  73/77   OK, style tail intact
+#     Nothing here is truncated, so the style block actually reaches the model.
+#
+# THE BOARD, AND THE ONE THING THIS PLATE DELIBERATELY DOES NOT TRY TO DO.
+# Beat 08's action is the clipboard coming down, so a board has to be IN the
+# plate. Its MATERIAL DOES NOT HAVE TO BE RIGHT: the working method on this prop
+# is that a mask preserves geometry the plate already holds while words supply
+# material, so a correct RECTANGLE - navy, chrome clip, anything - is exactly
+# what is wanted and bark is added afterwards. Four wording attempts already
+# proved wording cannot reach a prop's geometry ("the bark never had a chance
+# against the word clipboard"; deleting the noun killed the clipboard in 12
+# frames of 12 and left "a thing you cup rather than a thing you read"). So the
+# noun `clipboard` STAYS and material is not scored below.
+#
+# STAGING STATE, per beat, so motion has something left to do. Beat 13's lesson
+# was that a prompt asking for a pose the plate is already in wastes the clip.
+#   beat 08 plate = the PRE state: clipboard still held up, guard NOT yet
+#           pointing. Motion lowers the board and extends the arm.
+#   beat 07 plate = the point itself, because beat 07 IS the point and its own
+#           draft asks for it; motion carries the thrust and the chin.
+
+id: ep2-b0708-twofig-mac-0815
+task: ep2-b0708-twofig-mac-0815
+node: 002b-first-citizen
+beats: [7, 8]
+runner: local-mac-m1pro        # NOT a box job. No box steps, nothing to enqueue.
+sample: true
+owner: plate lane (beats 07 + 08), 2026-08-15
+cost: $0 — local Apple MPS, no provider, no key, nothing billable.
+
+script_authority: >-
+  Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. These are STILL PLATES on an approved node, not an
+  episode assembly, so STEWARDSHIP §6 is satisfied; `still_local.py` re-checks
+  the same gate in code via `render_local.approved()` and refuses otherwise.
+
+consumer: >-
+  Beat 07 motion and beat 08 motion, both of which currently have no init that
+  contains their scripted two-shot, plus the beat-08 board inpaint, which needs
+  a rectangle to mask before it can supply bark.
+
+recipe:
+  script: pipeline/still_local.py --raw
+  python: /Users/artovonkugler/banyan-farm-m1pro/venv/bin/python3
+  torch: 2.13.0 / diffusers 0.29.2 / MPS, float32 (fp16 NaNs to black on this box)
+  base: cagliostrolab/animagine-xl-3.1     # the checkpoint the box uses
+  size: 832x1216
+  steps: 40
+  cfg: 7.5
+  seeds: 3            # ~1 take in 3 fails its action regardless of framing
+  env: BANYAN_NO_OPEN=1   # agent-driven: unratified frames must not land on a screen
+
+  positive_b08: >-
+    full body, wide shot, 2boys, size difference, standing, adult man, bald,
+    brown tunic, sash, holding clipboard, green skinned goblin boy, pointed
+    ears, patched cloak, looking down, grass field, treeline, blue sky,
+    outdoors, day, anime key visual, cel shading, masterpiece, best quality
+  positive_b07: >-
+    full body, wide shot, 2boys, size difference, standing, adult man, bald,
+    brown tunic, sash, arm outstretched, pointing at another, green skinned
+    goblin boy, pointed ears, patched cloak, crouching, grass field, treeline,
+    blue sky, outdoors, day, anime key visual, cel shading, masterpiece, best
+    quality
+  extra_neg: >-
+    solo, 1boy, blush, blushing, red cheeks, chibi, child, toddler, baby,
+    pointed ears on man, elf man, blank background, simple background, white
+    background, studio background
+  extra_neg_why: >-
+    `solo` and `1boy` in the negative are the whole two-figure lever on a
+    Danbooru-trained checkpoint and are the reason this is not just the old
+    prompt again. `blush, blushing, red cheeks` is the founder's own diagnosis
+    of why the goblin reads as a baby - "many of the beat references with the
+    goblin make him have red cheeks/blushing which is unnecessary". `chibi,
+    child, toddler, baby` is the infantile read the crouch tiles produced.
+    `pointed ears on man, elf man` is the named beat-07 defect, goblin ears
+    turning up on a guard tunic. The four background terms are the
+    costume-identity-card failure that voided 20 of 24 earlier plates.
+    `extra_neg` reaches `fit_negative` as the `explicit` tier, which is the
+    highest-protection tier, so none of these is dropped for budget.
+
+# ============================================================================
+# PRE-REGISTERED BAR. Written and committed BEFORE the first pixel is drawn.
+# IT WILL NOT BE SOFTENED AFTERWARDS. A lane this morning wrote a bar that
+# certified material and never mentioned SHAPE, scored 8/12 "passes" against
+# 0/12 usable, and recorded that as its own error. Every load-bearing axis is
+# named here, and each is judged BY OPENING THE IMAGE — never by a metric, a
+# file size, a process list or a summary. `du` under-reported a complete cache
+# by 60% today and a summary claimed a plate satisfied both clauses of its bar
+# while the frames held a stray second goblin.
+# ============================================================================
+bar:
+  1_two_figures: >-
+    TWO whole distinct figures in frame. A single figure fails. A figure plus a
+    stray hand, forearm or leg at the frame edge fails - that is exactly what
+    all twelve existing beat-08 plates are. Three or more figures fails.
+  2_identities: >-
+    One is an ADULT HUMAN guard: adult proportions, brown tunic and sash, and
+    ROUND HUMAN EARS. The other is a GOBLIN: green skin, pointed ears, patched
+    cloak. They must be two different species. A guard with pointed ears is a
+    FAIL however good the rest is.
+  3_workable_distance: >-
+    Both figures whole - heads and torsos inside the frame, neither sliced by an
+    edge - standing in the SAME depth plane, separated by roughly one figure
+    width or less, so an arm extended from one reaches toward the other. A
+    goblin a few dozen pixels away in the far background is a FAIL; that is the
+    named fault of the plate beat 08 is using today.
+  4_board_b08_only: >-
+    A clipboard-shaped RECTANGLE in the guard's hand, long edge at least about
+    one eighth of the frame height, unoccluded, and turned so its flat face is
+    visible rather than edge-on. MATERIAL IS EXPLICITLY NOT SCORED: navy with a
+    chrome clip PASSES. Bark is a later mask-and-words step and four attempts
+    have already proved wording cannot reach a prop's geometry.
+  5_not_infantile: >-
+    The goblin has adult-or-adolescent head-to-body proportion. A chibi head, a
+    toddler body or a mascot-sprite read is a FAIL.
+  6_no_blush: >-
+    No red or pink cheek patches on either figure. The founder named this
+    directly as why the goblin reads as a baby.
+
+kill_conditions:
+  - The guard rendered with pointed or goblin ears (fails 2 outright).
+  - Two goblins, or two guards, instead of one of each - the beat-10
+    single-figure-reference law read backwards.
+  - A blank or pale studio void instead of the outdoor location, i.e. another
+    costume identity card.
+  - Either figure a green plant-sprite mascot or a pointy-eared elf child, the
+    consistent cast failure of `ep2-b07-scene-0815`.
+
+pass_threshold: >-
+  At least 1 of the 3 seeds meeting ALL of 1, 2, 3, 5 and 6 - plus 4 for the b08
+  variant - is a usable plate and releases the second variant. 0 of 3 means the
+  tags-only two-figure recipe does not hold on this checkpoint, and that is what
+  gets reported: not a softened bar and not a partial credit.
+
+one_sample_rule: >-
+  The b08 variant fires FIRST and ALONE, because it carries one more
+  load-bearing axis than b07 (the board) and therefore fails in more ways. It is
+  opened and judged before the b07 variant is queued. CLAUDE.md, founder
+  2026-08-03: a recipe change gets one sample, not fifteen beats and then
+  "literally just frozen frames". A tags-only two-figure plate has never been
+  drawn on this checkpoint, so this IS a recipe change.
+
+waiver: >-
+  THE BOX PLATE CHECK IS WAIVED, AND THIS IS A WAIVER AND NOT A PASS. Nothing
+  here runs through box_enqueue.py, so its dry-run, its distinct-payload-and-out
+  rule, its beat-slug publish glob and its CARD_REFS_DENYLIST never execute -
+  they cannot, this is a local MPS draw with no payload, no out dir on the box
+  and no reference set. The failure modes those guards exist to catch are
+  discharged BY HAND instead, and here is how, each one: (a) the prompt is
+  measured on the real CLIP tokenizer before firing rather than trusted, numbers
+  above; (b) the reference-set denylist is moot because NO reference set is used
+  at all, which is the strongest possible form of that guard; (c) the output
+  path carries the beat slug by construction - still_local.py names every file
+  `STILL-002b-NN-<slug>-...` from shots.md; (d) the dry run is replaced by the
+  tokenizer measurement plus the ONE-SAMPLE rule above, which is a stricter gate
+  than a dry run because it is judged on pixels; (e) the frames and this spec
+  are committed and pushed so the next lane can open them rather than take this
+  lane's word.
