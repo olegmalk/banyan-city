@@ -2645,6 +2645,71 @@ beats:
       white paper, no lined paper, no white background, no plain background, no
       character sheet, no dark, no night. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # -- `authored_barkboard_obj` -- 2026-08-15, the prop lane. THE WORDING LEVER IS
+    # RETIRED AND THIS IS THE PREREQUISITE FOR BOTH REMAINING LEVERS.
+    #
+    # Two pre-registered rounds settled the prop question and they split cleanly:
+    #   MATERIAL -- SOLVED BY WORDING. Deleting the noun `clipboard` and fencing it with
+    #   its hardware took the chrome spring clip and the white lined paper from 24/24
+    #   present to 0/24 across both rounds. Wording reaches the prop.
+    #   GEOMETRY -- NOT REACHED BY WORDING, twice. `authored_b06_prop2` added `large`,
+    #   `flat` and `rectangular` and 0 of 12 frames put a readable board in the guard's
+    #   hands: bark scraps and lumps cupped in the palms, round wood discs, a branch, an
+    #   oval slice, and four frames with nothing held at all.
+    #
+    # AND THE SECOND ROUND SAID EXACTLY WHY, which is the finding that makes this key
+    # worth firing rather than guessing: THE GEOMETRY WORDS RENDERED, THEY JUST DID NOT
+    # BIND TO THE HELD OBJECT. `large flat rectangular board` drew flat rectangular
+    # wooden boards into the SCENERY -- fence rails, planks and beams leaning at the
+    # frame edge in r0 s0/s2, r2 s1/s2/s3 -- while the hands kept cupping a scrap. The
+    # model can draw the board. It will not attach it to the verb.
+    #
+    # SO THE NEXT LEVER IS A REFERENCE OR AN INPAINT, exactly as round 2 pre-registered,
+    # and BOTH need the same artifact first: a picture of the object. This key is that
+    # artifact's test, and it is a sharp cheap question on its own -- CAN THE MODEL DRAW
+    # A BARK WRITING BOARD AT ALL when the whole prompt is spent on it and nothing
+    # competes for the composition? If yes, the tile is cut and the choice between
+    # conditioning and inpainting is a real choice. If no, neither lever is reachable and
+    # the honest options are a prop redesign or a script change, which is a taste call
+    # and the founder's (R4), not the steward's.
+    #
+    # NO PEOPLE IN THIS FRAME BY CONSTRUCTION -- `no people` and `no hands` are fenced,
+    # and the compressed positive carries NO count tag, which is how an object sheet
+    # should read. The hardware fences stay because they are what worked.
+    #
+    # !! AUTHORED BUT NOT RENDERED -- THE HARNESS REFUSES IT, AND THE REFUSAL IS
+    # REPORTED RATHER THAN WORKED AROUND. `render_wave_sample.py --beat 6 --variant
+    # authored_barkboard_obj --dry` exits 1 with:
+    #     !! FAULTS - nothing drawn: COUNT TAG is '', draft declares '1boy'
+    # Measured clean otherwise: positive 54/77, negative 64/77, nothing dropped, style
+    # anchor present. The ONLY fault is the count guard.
+    #
+    # THE GUARD IS RIGHT AND THE SITUATION IS GENUINELY AWKWARD, so it is written down
+    # instead of dodged. Every beat slot in this harness declares a person, because every
+    # beat HAS one; that guard is what caught ep2-b06-plate-0815 on 2026-08-14 when its
+    # draft said "Two adult guard men" under a 1boy block, and it has paid for itself. An
+    # OBJECT sheet has no person by design, so no beat slot can ever satisfy it and the
+    # mismatch is structural, not a typo in this draft.
+    #
+    # WHAT WAS NOT DONE, deliberately: the guard sheets dodged this by riding `--beat 7`,
+    # but a character sheet contains a person and derives '1boy' honestly, so that was
+    # never the same move -- and beats 07, 08, 18 and 19 are off-limits to this lane in
+    # any case. Adding a person to the draft would defeat the entire point, since the
+    # thing being tested is whether the board can be drawn WITHOUT a figure competing for
+    # the composition. Editing the guard out of the harness is a `pipeline/*.py` change,
+    # which is both a guard waiver and a file a live Mac bring-up lane is holding.
+    #
+    # SO THIS KEY IS PARKED, DELIBERATELY, and it needs a decision this lane does not own:
+    # either an object-sheet path in the harness that declares no count, or the inpaint
+    # lever instead, which needs no object sheet rendered ahead of it. The draft is left
+    # in place, measured and ready, so whoever takes that decision does not re-derive it.
+    authored_barkboard_obj: >-
+      A flat rectangular writing board made of tree bark, object reference sheet, front
+      view and back view, rough brown bark on the outer face, smooth pale wood on the
+      inner face, standing upright, simple background, white background. Masterpiece,
+      best quality, very aesthetic No people, no hands, no clipboard, no metal clip, no
+      spring clip, no white paper, no lined paper, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used
