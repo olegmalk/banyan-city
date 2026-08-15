@@ -1,0 +1,195 @@
+# CYCLE 017'S WAVE -- see pipeline/loop/cycle-017.md, which is the verdict this
+# job follows from. Two wordings that had been carried as levers turned at 1 of 3
+# and 1 of 4, which is this engine's base rate for any action, so neither is a
+# lever. The one variable shared by every clip that passed, on BOTH beats, is the
+# EXPANDED CAMERA NEGATIVE -- the base negative plus the push-in's other names
+# (zoom in, dolly in, crane, handheld, the camera moves closer, framing change,
+# scale change, cropping in). The dominant failure mode is an uncommanded push-in
+# that takes the second guard out of frame, and both beats are two-guard beats.
+#
+# The negative has ONE watched sample per beat, which is exactly the evidence
+# `slow` and `f1` had when they were wrongly promoted. So it gets seeds, not a
+# conclusion.
+#
+# NO NEW TEXT IS INTRODUCED BY THIS SPEC. Its prompt and its negative are copied
+# byte-for-byte from ep2-b10-bark-pathneg-0815.yaml, which has already
+# encoded and rendered on this box under the live 1024-token guard in ltx_i2v.py.
+# THIS JOB: one seed replicate, seed 20260819 of the beat-10 pathneg arm. The seed inside the render payload is the only
+# thing that differs from the watched sample.
+#
+# THE BAR, pre-registered in cycle-017 before the renders so it cannot be softened
+# afterwards -- of 5 samples on this arm at least 4 must hold ALL of: (1) both
+# guards in frame at f0 AND at f96 -- this is the one the last wave actually
+# failed; (2) the board passes through profile (a visibly narrow edge) and returns
+# to a face -- a lift, a tuck or a slide is not a turn; (3) terminal freeze under
+# 4 frames -- the trailing run of consecutive-frame ncc == 1.0000, which is
+# orthogonal to hold and invisible to both metrics; (4) no scale change large
+# enough to crop a guard out. 3 of 5 or fewer and the expanded negative joins the
+# wordings as base-rate noise and the lane STOPS rather than seeding a sixth
+# thing.
+#
+# Depth is not the judge. The highest depth in the last wave (0.606, f1s3) was a
+# total failure -- the push-in manufactured it by closing steadily on a static
+# subject. Depth and period are filters; the frames decide.
+#
+id: ep2-b10-pathneg-s2-0816
+task: ep2-b10-pathneg-s2-0816
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 50
+max_attempts: 1
+owner: bark-board motion lane, 2026-08-16 (cycle 017 -- the camera-negative wave, filed to backlog so
+  the card has runnable work all night)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 10 is NO FORM -- 0:45-0:50 -- "Guard 2 flips the clipboard around: the
+  back is blank." -- two guards, no goblin. This is a silent motion take on an approved node, not an episode
+  assembly and not a voice synthesis.'
+consumer: 'Cycle 017 (pipeline/loop/cycle-017.md). The expanded camera negative is the only variable that
+  separated every passing clip from every failing one across beats 06 and 10, but it has exactly one watched
+  sample per beat -- the same evidence that wrongly promoted the `slow` and `f1` wordings. This clip is
+  one of five samples on its arm, read against cycle-017''s pre-registered bar: at least 4 of 5 must hold
+  (1) both guards in frame at f0 AND f96, (2) the board passes through profile and returns to a face,
+  (3) terminal freeze under 4 frames, (4) no scale change large enough to crop a guard out. 3 of 5 or
+  fewer and the negative joins the wordings as base-rate noise and the lane stops. Judged by opening consecutive
+  frames via pipeline/coldread_frames.py, never by a motion number.'
+success: 'A 704x1280 mp4, 97 frames, in which the board turns AND its far face arrives as rough bark.
+  The bar is pre-registered and unsoftenable: (1) the board turns -- the face visible at frame 0 rotates
+  away and a different face comes toward camera, readable on consecutive frames; (2) the bark survives
+  -- at the last frame the visible face is still irregular fissured bark, not planed timber, not navy,
+  not white paper, not chrome; (3) the board stays a rigid four-edged rectangle through the turn -- no
+  melt, no curl, no split, no dissolve into the tunic; (4) no camera move and no cut; (5) still the same
+  two guards. Pre-registered FAIL modes: FAIL-REVERT (the revealed face comes back as clipboard, paper
+  or planed timber -- the mode this lane exists to detect, because four days and twenty-three inpaint
+  samples bought that face and a video model can un-buy it in one denoise); FAIL-MELT; FAIL-FROZEN (the
+  board never leaves its frame-0 pose -- roughly one take in three fails its action here whatever the
+  wording, so one clip cannot separate a wording lever from seed luck); FAIL-CAMERA (the turn performed
+  by a moving camera rather than by the board -- caught on beat 13 in c870f08f, and it is ruled on by
+  ALIGNING frames, never by eyeballing a contact sheet). NOT part of the bar: that the action fills the
+  clip. No wording arm on beat 13 produced a figure still acting after frame 64 and the renderer logs
+  a 13-latent-timestep ceiling; these are short prop gestures, the best case for this engine, and the
+  honest expectation is a turn that completes early and then holds.'
+why: 'The card must not idle overnight and this is one render of a five-sample arm whose question is already
+  written down. ONE variable against its siblings: the seed. Prompt, negative, plate, asserted sha and
+  every render flag are the watched sample''s, byte for byte. $0, local card, no provider.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-pathneg-s2-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-motion-prompt.txt: holding a rough bark board upright in
+    both hands, two guards standing in a mown field. He slowly turns the bark board around to face the
+    camera, rotating it edge over edge through every angle; its back is the same rough bark, blank and
+    unmarked. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art,
+    cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame, zoom in, dolly in, crane, handheld, the camera moves closer, framing change,
+    scale change, cropping in
+  C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b10-pathneg-s2-0816\\\\b10-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-pathneg-s2-0816\\\\b10-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b10-pathneg-s2-0816\\\\b10-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260819,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-pathneg-s2-0816\\\\b10-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b10-pathneg-s2-0816\\\\b10-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-pathneg-s2-0816\\\\10-no-form-LTX-pathneg-s2.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-pathneg-s2-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-bark-plates-0815\b10-barkboard-pass-s13.png
+  - --sha256
+  - f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b
+  - --out
+  - C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-pathneg-s2-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-pathneg-s2-0816\bench-pathneg-s2.jsonl
+  - --bench-label
+  - ep2-b10-pathneg-s2-0816
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (10-no-form). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b10-pathneg-s2-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-pathneg-s2-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/10-no-form-LTX-pathneg-s2.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b10-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-pathneg-s2.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-pathneg-s2-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-pathneg-s2-0816\10-no-form-LTX-pathneg-s2.mp4
+- C:\banyan-farm\ep2-b10-pathneg-s2-0816\b10-init-704x1280.png
+sample: true
