@@ -1754,3 +1754,4 @@
 01:22:45Z box-runner idle ready=0 failed=27
 01:30:10Z STARTED task=ep2-goblin-design-d1-0814-1786757405 attempt=1 on box-runner
 01:31:07Z DONE task=ep2-goblin-design-d1-0814-1786757405 rc=0 artifacts=4
+01:31:21Z STARTED task=ep2-goblin-design-d2-0814-1786757406 attempt=1 on box-runner
