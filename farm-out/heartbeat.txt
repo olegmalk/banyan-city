@@ -1884,3 +1884,4 @@
 11:34:21Z DONE task=ep2-b10-noform-s1-49fB-0815-1786792732 rc=0 artifacts=2
 11:34:26Z STARTED task=ep2-b09-pause-tightB-0815-1786793452 attempt=1 on box-runner
 11:39:31Z DONE task=ep2-b09-pause-tightB-0815-1786793452 rc=0 artifacts=2
+11:39:36Z box-runner idle ready=0 failed=28
