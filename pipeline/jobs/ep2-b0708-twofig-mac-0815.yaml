@@ -167,6 +167,25 @@ bar:
     visible rather than edge-on. MATERIAL IS EXPLICITLY NOT SCORED: navy with a
     chrome clip PASSES. Bark is a later mask-and-words step and four attempts
     have already proved wording cannot reach a prop's geometry.
+  7_unoccluded_face_b08_only: >-
+    NAMED AS ITS OWN AXIS SO IT CANNOT BE QUIETLY DROPPED. NO HAND MAY CROSS THE
+    BOARD'S FACE. The board must be held at its EDGE - pinched at a corner,
+    gripped along one side, or held at the top rim - never under a palm and never
+    with fingers spread across the face. What is scored is the LARGEST FULLY
+    UNOCCLUDED RECTANGLE of board face, measured in pixels by segmentation and
+    checked by opening a mask overlay, not estimated by eye. Closer to square is
+    better than long and thin.
+      REFERENCE, beat 10, the geometry that PASSED its inpaint:  223x197, 1.13:1
+      REFERENCE, beat 06, the geometry that FAILED its inpaint:  190x82,  2.32:1
+    UNOCCLUDED BEATS LARGE. Beat 06's board has the BIGGER outline and the
+    SMALLER usable face, and the bigger outline did it no good whatever: both
+    guards' hands lie across the face, so the mask had to take the full
+    silhouette, which put a crossing hand INSIDE the mask, and the region then
+    dissolves at exactly the strength that starts restyling that hand. Where it
+    survived it never got past planed timber; where it broke it went TRANSLUCENT
+    - tunic reading through the board, hand deleted. Its shape ceiling (0.638)
+    sits below its material floor, so there is no seam to find at any strength.
+    That is a PLATE defect and it is fixable only here.
   5_not_infantile: >-
     The goblin has adult-or-adolescent head-to-body proportion. A chibi head, a
     toddler body or a mascot-sprite read is a FAIL.
@@ -182,6 +201,22 @@ kill_conditions:
     costume identity card.
   - Either figure a green plant-sprite mascot or a pointy-eared elf child, the
     consistent cast failure of `ep2-b07-scene-0815`.
+
+axis_7_provenance: >-
+  SAID PLAINLY RATHER THAN BACKDATED. Axis 7 did NOT exist when rounds 1, 2 and 3
+  were fired; it arrived from the beat-06 and beat-10 inpaint lanes after round 3
+  had already rendered, and it is written in here before round 4. So round 3's
+  s0 was measured against axis 7 AFTER THE FACT, and this file says so rather
+  than implying the axis was pre-registered for it. What that measurement found
+  is reported with its method: a flood fill from inside the board face, the mask
+  overlay OPENED and confirmed not to have leaked, largest fully unoccluded
+  inscribed rectangle 83x144 at 1.73:1, whole exposed face component 20141 px.
+  That clears the decisive property - NO HAND CROSSES THE FACE, the grip is at
+  the two side edges with only fingertips notching the rim - but its clean
+  rectangle is smaller than beat 10's 223x197, which is why round 4 exists.
+  ROUND 4 IS THE FIRST RENDER FIRED WITH AXIS 7 PRE-REGISTERED, and its one
+  variable is a one-handed grip at a corner instead of two hands at both edges,
+  so that no fingertip notches the face at all.
 
 pass_threshold: >-
   At least 1 of the 3 seeds meeting ALL of 1, 2, 3, 5 and 6 - plus 4 for the b08
