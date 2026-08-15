@@ -2002,3 +2002,4 @@
 19:42:26Z STARTED task=ep2-b13-guidance-0815-1786822934 attempt=1 on box-runner
 19:50:41Z DONE task=ep2-b13-guidance-0815-1786822934 rc=0 artifacts=3
 19:50:47Z box-runner idle ready=0 failed=28
+19:51:32Z STARTED task=ep2-b13-blurplate-0815-1786823481 attempt=1 on box-runner
