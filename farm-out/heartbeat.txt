@@ -1987,3 +1987,4 @@
 18:45:51Z DONE task=ep2-b06-bark-c1-0815-1786817426 rc=0 artifacts=2
 18:46:00Z STARTED task=ep2-b10-bark-slow-0815-1786817415 attempt=1 on box-runner
 18:51:53Z DONE task=ep2-b10-bark-slow-0815-1786817415 rc=0 artifacts=2
+18:51:59Z STARTED task=ep2-b10-bark-camB-0815-1786817409 attempt=1 on box-runner
