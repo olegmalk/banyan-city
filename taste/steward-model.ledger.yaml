@@ -17798,3 +17798,35 @@
     precisely what the reader says the 193f does. The claim should not be carried as evidence that
     nothing moves.
   outcome: null
+
+- id: COMMISSION-blind-read-of-the-scene-plate-beats-0815
+  date: 2026-08-15
+  kind: commission
+  mapping_committed_before_dispatch: true
+  what: >-
+    Blind read of beats 06, 07 and 09, two seeds each, the beats that were plate-blocked for days and
+    only got real scene plates last night. Each reader package is the job's own INIT PLATE plus twelve
+    truly consecutive frames from the middle of that clip's motion window - never an evenly-spread
+    sheet, since a reader shown the same clip both ways called one STEPS and the other CONTINUOUS.
+  mapping:
+    TAKE-1: ep2-b09-scnc-0815
+    TAKE-2: ep2-b07-scnb-0815
+    TAKE-3: ep2-b07-scnc-0815
+    TAKE-4: ep2-b06-scnc-0815
+    TAKE-5: ep2-b06-scnb-0815
+    TAKE-6: ep2-b09-scnb-0815
+  why_committed_first: >-
+    Because a verdict whose mapping is lost is uninterpretable rather than merely weak, the lead could
+    not recover one earlier tonight when a reader's transcript was gone, and I have already died once
+    on an API error in this session. The mapping is worth nothing after the fact and costs nothing now.
+  what_the_reader_is_asked: >-
+    Name the action; is the character at the end the character in the PLATE, not the character in its
+    own frame 0 which is already a redraw; does every object carried or worn in the plate still exist,
+    as the same object, in the same hands; is the movement continuous frame to frame. Scored afterwards
+    against each beat's own definition of done rather than a general idea of a good clip.
+  measured_alongside: >-
+    b06 both seeds have their entire motion window in the last quarter - frames 91-108 and 87-104 of
+    121, roughly 0.75s of movement after four seconds of nothing - with clean cadence at 1.2 and 1.59.
+    b07 and b09 move across the whole clip, bodies 11.9 / 7.9 and 9.3 / 6.1, cadence 5.34 / 3.12 and
+    3.84 / 1.75.
+  outcome: null
