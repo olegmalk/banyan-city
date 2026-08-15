@@ -107,16 +107,29 @@ Pure description, no verdict; the metric is a floor and never a verdict.
   head    : mean per-pair difference from pair 1 to the window start
   body    : mean per-pair difference INSIDE the window
   tail    : mean per-pair difference from window end to the last pair
-  cadence : inside the window, mean of the louder index parity over mean of the
-            quieter one. 1.0 = every frame is new. 2x = the odd frames carry half
-            the change. 17x = every other frame is a duplicate and the clip is
-            running at half its nominal rate.
+  hold    : the hold period — how many frames each distinct picture is held
+            for — from the peak lag of the autocorrelation of the per-pair
+            difference series, computed in `pipeline/hold_period.py`. Reported
+            with the number of distinct pictures and the effective frame rate,
+            because "holds every 3 frames / effective 8 fps" is checkable by
+            opening frames N, N+1, N+2 and a ratio is not.
+
+  `cadence` WAS HERE AND IS RETIRED (2026-08-15). It was the louder-parity over
+  quieter-parity mean, and it is a parity-2 detector: period 2 reads 26.67x,
+  period 3 reads **1.00x**, period 4 reads 14.12x, period 5 reads **1.00x**.
+  EVERY ODD HOLD PERIOD ALIASES TO 1.00x BY CONSTRUCTION, and 1.00x was
+  documented right here as "every frame is new". It reported 1.06x on a clip
+  holding every picture for three frames and a lane read that as clean. The
+  number is still printed on its own RETIRED line, and only so that a reader
+  holding a job spec from before this date can match it up. It is not a
+  reading. Do not gate on it, quote it, or compare two clips with it. Full
+  proof and the executable aliasing test: `pipeline/hold_period.py`.
 
 Difference metric: mean absolute difference of 8-bit luma over the whole frame
 (MAD). Validated 2026-08-15 against the published control ep2-b02-nw-0815: the
 per-pair series is identical, ONSET lands on the same pair (25 = 1.04s), and head
-reproduces exactly (0.478). Body reads 7.706 against a published 7.83 and cadence
-2.14x against a published 2.21x, from a ONE-PAIR difference in where the window
+reproduces exactly (0.478). Body reads 7.706 against a published 7.83 and the
+retired ratio 2.14x against a published 2.21x, from a ONE-PAIR difference in where the window
 is declared to end — pair 82 measures 0.59 MAD, above threshold, so this file
 counts it as the last moving pair and the earlier scorer counted it as the first
 tail pair. (Two slightly different scorings of that same control are already on
@@ -146,6 +159,9 @@ import tempfile
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import hold_period  # noqa: E402  (path fixed above so this runs from any cwd)
 
 # --- the window rule -------------------------------------------------------
 # 0.5 MAD: the level that reproduces the published control window exactly. Below
@@ -237,23 +253,45 @@ def motion_window(d: np.ndarray, threshold: float = THRESHOLD):
     return best
 
 
-def segment_stats(d: np.ndarray, win) -> dict:
+def segment_stats(d: np.ndarray, win, fps: float = 24.0) -> dict:
     s, e = win
     head = d[1:s]
     body = d[s:e]
     tail = d[e:]
-    idx = np.arange(s, e)
-    even = d[s:e][idx % 2 == 0]
-    odd = d[s:e][idx % 2 == 1]
-    loud, quiet = (even, odd) if even.mean() >= odd.mean() else (odd, even)
-    cadence = float(loud.mean() / quiet.mean()) if len(quiet) and quiet.mean() > 0 else float("inf")
-    return {
+    # THE HOLD PERIOD, which is what `cadence` was trying and failing to be.
+    # Measured on the window's own pairs, so a frozen head and tail cannot
+    # dilute it. `hold_period` is a filter and never a verdict: it exists to
+    # stop a frozen clip reaching a human as "fine", not to pass anything.
+    # The cold read — the frames this script writes — decides.
+    hold = hold_period.hold_period([float(v) for v in body], fps=fps)
+    # AND ON THE WHOLE CLIP MINUS THE FLASH, always, because the window can be
+    # narrower than the 24 pairs a lag estimate needs and a tool that goes quiet
+    # is how a frozen clip gets called fine. 0815-b13-AFTER's window is 8 pairs;
+    # its whole-clip reading is period 3 at 0.96. The window reading is the more
+    # specific one when it exists — read both, they answer different questions.
+    whole = hold_period.hold_period([float(v) for v in d[1:]], fps=fps)
+    stats = {
         "flash_pair0": round(float(d[0]), 3),
         "head": round(float(head.mean()), 3) if len(head) else None,
         "body": round(float(body.mean()), 3),
         "tail": round(float(tail.mean()), 3) if len(tail) else None,
-        "cadence": round(cadence, 2),
+        "hold_period": hold["period"],
+        "hold_strength": hold["strength"],
+        "distinct_pictures": hold["distinct_pictures"],
+        "effective_fps": hold["effective_fps"],
+        "hold_reading": hold["reading"],
+        "autocorrelation_lags": hold["lags"],
+        "wholeclip_hold_period": whole["period"],
+        "wholeclip_hold_strength": whole["strength"],
+        "wholeclip_hold_reading": whole["reading"],
+        "wholeclip_autocorrelation_lags": whole["lags"],
     }
+    # RETIRED, kept under a name that cannot be mistaken for a measurement, so
+    # that a job spec written before 2026-08-15 can still be matched to its
+    # clip. Blind to every odd period — see this module's docstring.
+    stats["RETIRED_parity_ratio_blind_to_odd_periods"] = round(
+        hold_period.legacy_parity_ratio([float(v) for v in body]), 2)
+    return stats
 
 
 def _font(size: int):
@@ -321,7 +359,7 @@ def main() -> int:
             return 2
 
         s, e = win
-        stats = segment_stats(d, win)
+        stats = segment_stats(d, win, fps)
         os.makedirs(a.out, exist_ok=True)
 
         # --- dense consecutive strip through the motion, plus its frozen edges
@@ -368,9 +406,23 @@ def main() -> int:
         print("frames %d @ %.2f fps (%.2fs)" % (n, fps, (n - 1) / fps))
         print("motion window pairs %d..%d  = %.2fs -> %.2fs  (%.1f%% of the clip)"
               % (s, e, s / fps, e / fps, 100.0 * (e - s) / len(d)))
-        print("flash(pair0) %.2f | head %s | body %.3f | tail %s | cadence %.2fx"
+        print("flash(pair0) %.2f | head %s | body %.3f | tail %s"
               % (stats["flash_pair0"], stats["head"], stats["body"],
-                 stats["tail"], stats["cadence"]))
+                 stats["tail"]))
+        print("HOLD in window: %s" % stats["hold_reading"])
+        if stats["autocorrelation_lags"]:
+            print("  autocorrelation  " + "  ".join(
+                "lag%d %+.2f" % (k, v)
+                for k, v in sorted(stats["autocorrelation_lags"].items())[:6]))
+        print("HOLD whole clip: %s" % stats["wholeclip_hold_reading"])
+        if stats["wholeclip_autocorrelation_lags"]:
+            print("  autocorrelation  " + "  ".join(
+                "lag%d %+.2f" % (k, v)
+                for k, v in sorted(stats["wholeclip_autocorrelation_lags"].items())[:6]))
+        print("RETIRED cadence %.2fx — parity-2 ratio, reads 1.00x on EVERY odd "
+              "hold period; printed only to match old job specs, not a reading"
+              % stats["RETIRED_parity_ratio_blind_to_odd_periods"])
+        print("The metric is a FILTER, NEVER A VERDICT — the cold read decides.")
         print("strip: %d CONSECUTIVE source frames %d..%d over %d sheet(s)"
               % (len(strip), strip[0], strip[-1], need))
         print("overview: %s" % ", ".join(str(i) for i in ov))

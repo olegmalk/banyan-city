@@ -1,136 +1,119 @@
 #!/usr/bin/env python3
-"""Is this clip really running at its container frame rate, or is it doubled?
+"""Is this clip holding each picture for more than one frame -- and does it anneal?
 
-Written 2026-08-15 to check a claim rather than repeat it: that our 24fps
-clips are 12fps content in a 24fps container, every second frame a near
-duplicate of the one before. If true it is a pipeline defect that touches
-every clip we have ever made, so it gets measured before it gets ledgered.
+RETIRED AND REPLACED 2026-08-15. This file used to compute a second, independent
+copy of the `cadence` parity ratio (medians of even-indexed against odd-indexed
+pairs). That ratio is a **parity-2 detector** and is blind to every ODD hold
+period by construction:
 
-WHAT IT MEASURES. Mean absolute luminance difference between EVERY pair of
-consecutive frames -- not six samples, all of them, because a sawtooth is
-invisible at any sampling interval coarser than the tooth. Then it splits the
-pairs into even-indexed and odd-indexed and compares the two medians. In
-honest 24fps material the two are about equal. In doubled 12fps material one
-set sits near zero while the other carries all the change.
+    true hold period   the old ratio read
+        2                  26.67x
+        3                   1.00x   <-- BLIND
+        4                  14.12x
+        5                   1.00x   <-- BLIND
+        6                   9.56x
 
-ONE RATIO FOR A CLIP IS A LIE, AND THIS TOOL TOLD IT TWICE BEFORE SAYING SO.
-The same beat 02 clip measures anywhere from 1.3 to 15.2 depending only on which
-window you take the medians over:
+So this file's `DOUBLED = 3.0` gate would have passed a clip that holds every
+picture for THREE frames, silently, as "cadence ok" -- which is the exact defect
+our clips have. It is not repaired by tuning; the number cannot represent an odd
+period. Proof and the executable aliasing test live in
+`pipeline/hold_period.py` and `pipeline/research/ltx23-motion-source.md` §4.1.
 
-    whole clip minus the flash      15.2
-    first-to-last above the floor   10.6
-    the cold read's motion phase     4.4
-    the smoothed body window         1.8
-    first half of the body           9.5
-    second half of the body          1.3
+WHAT IT DOES NOW. The same segmentation as before -- flash, head, body, tail,
+onset time -- but the cadence line is the **hold period** from the peak lag of
+the autocorrelation of the per-pair difference series. The peak lag IS the hold
+period, for any period, odd or even.
 
-That spread is not noise and it is not a choice of a better window. It is the
-structure of the defect: the clip STARTS doubled and ANNEALS SMOOTH as motion
-builds, so any single window is really reporting how much ramp it happened to
-include. The sweep lane found the same annealing independently, duplicate-side
-values climbing 1.41 to 11.67 while the peaks held.
+THE ANNEALING FINDING SURVIVES AND IS WHY THIS FILE STILL EXISTS. These clips
+start doubled and smooth out as motion builds, so one number for a whole clip is
+really reporting how much ramp the window happened to include. The old parity
+ratio on the same beat-02 clip read anywhere from 1.3 to 15.2 depending only on
+the window. So the body is still split in half and BOTH halves are reported. A
+clip whose early body holds and whose late body does not is annealing; a clip
+that holds in both halves is held end to end. Those are different defects and
+one number cannot tell them apart.
 
-So this reports the trend -- the body's first half against its second -- and
-refuses to print one number as the clip's cadence. A clip is flagged when the
-EARLY body is doubled, which is the part a viewer sees as judder on the motion
-starting, and the report always shows both halves so the annealing is visible
-rather than averaged away.
-
-IT ALSO SEGMENTS, because an average over a whole clip grades the wrong thing.
-These clips are bimodal: a frozen head, a moving body, a frozen tail. Beat 02
-reads 0.47 / 9.14 / 0.38 across those three, and one number for the clip is
-none of them. The segmentation is reported alongside the cadence so a take is
-judged on how long it takes to start moving and how long it actually moves,
-not on a mean that mixes the three.
-
-PAIR 0 IS ALWAYS DROPPED AND REPORTED SEPARATELY. Frame 0 to frame 1 is not
-motion: the model redraws the conditioning plate sharper, brighter and with the
-eyes open, a one-frame restyle flash measuring around 30 on beat 02, larger than
-any real movement in the clip. Averaging it in grades the flash.
+READ AT 1/8 SCALE, which is a change and a deliberate one. At quarter scale the
+1-2px line-work churn on anime line art -- fingers, cuffs, trouser folds
+re-forming in place -- inflates the difference series and makes a frozen clip
+look alive. The hold reading is scale-stable (0.97 -> 0.96 from 352x640 to
+88x160) so dropping to 1/8 costs nothing and removes the churn.
 
     cadence_check.py clip.mp4 [more.mp4 ...]
 
-Exit is nonzero if any clip looks doubled, so it can gate a publish step.
+**A FILTER, NEVER A VERDICT. THE COLD READ DECIDES.** Exit is nonzero when the
+early body shows a strong hold, so this can gate a publish step -- but a
+nonzero exit is "somebody open the frames", not a rejection, and a zero exit is
+never permission to skip looking. A metric agreeing with the steward is not a
+sample.
 """
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "pipeline"))
+import hold_period as hp  # noqa: E402
 
-FFMPEG = "/opt/homebrew/bin/ffmpeg"
-W, H = 176, 320          # a quarter-scale grey proxy; cadence survives downscaling
-FLOOR = 2.0              # below this a pair is "nothing happened", not a beat
-DOUBLED = 3.0            # higher/lower median above this reads as doubled
+import numpy as np  # noqa: E402
 
-
-def frames(path: str) -> np.ndarray:
-    out = subprocess.run(
-        [FFMPEG, "-v", "error", "-i", path, "-vf", f"scale={W}:{H},format=gray",
-         "-f", "rawvideo", "-"], capture_output=True)
-    if out.returncode != 0:
-        sys.exit(f"!! ffmpeg failed on {path}: {out.stderr.decode()[:200]}")
-    buf = np.frombuffer(out.stdout, dtype=np.uint8)
-    n = buf.size // (W * H)
-    return buf[:n * W * H].reshape(n, H, W).astype(np.int16)
+FLOOR = 2.0        # below this a pair is "nothing happened", not a beat
+SCALE = 8          # 1/8 resolution; suppresses line-work churn, reading is stable
+FLAG = hp.STRONG   # early-body hold strength at or above this raises the flag
 
 
 def report(path: str) -> bool:
-    f = frames(path)
-    if len(f) < 8:
-        print(f"{Path(path).name}: only {len(f)} frames, skipped")
+    try:
+        d_all, fps, size, n = hp.pair_differences(path, scale=SCALE)
+    except Exception as exc:                              # noqa: BLE001
+        print(f"!! could not read {path}: {exc}")
         return False
-    d_all = np.abs(np.diff(f, axis=0)).mean(axis=(1, 2))
     name = Path(path).name
+    if n < 8:
+        print(f"{name}: only {n} frames, skipped")
+        return False
 
     # Pair 0 is the restyle flash, never motion. Everything below works on the
     # rest, and the flash is reported on its own line so it cannot hide.
-    flash, d = float(d_all[0]), d_all[1:]
+    flash, d = d_all[0], np.array(d_all[1:], dtype=np.float64)
 
     # The body is the contiguous span carrying the motion: pairs above a
     # quarter of the clip's smoothed peak. Head and tail are what bracket it.
     k = 3
     sm = np.convolve(d, np.ones(k) / k, mode="same")
     live = np.flatnonzero(sm > max(FLOOR, 0.25 * sm.max()))
-
     if live.size < 8:
-        print(f"{name}: {len(f)} frames, too little movement to judge cadence")
+        print(f"{name}: {n} frames, too little movement to judge a hold period")
         return False
     lo_i, hi_i = int(live[0]), int(live[-1]) + 1
-    win = d[lo_i:hi_i]
-    even, odd = win[0::2], win[1::2]
-    if len(even) < 3 or len(odd) < 3:
-        print(f"{name}: {len(f)} frames, motion window too short to judge cadence")
-        return False
-    def _ratio(seg):
-        e, o = seg[0::2], seg[1::2]
-        if len(e) < 2 or len(o) < 2:
-            return float("nan")
-        a, b = np.median(e), np.median(o)
-        hi_, lo_ = max(a, b), min(a, b)
-        return float(hi_ / lo_) if lo_ > 0 else float("inf")
-
-    mid = len(win) // 2
-    r_early, r_late = _ratio(win[:mid]), _ratio(win[mid:])
-    hi, lo = max(np.median(even), np.median(odd)), min(np.median(even), np.median(odd))
-    ratio = float(hi / lo) if lo > 0 else float("inf")
-    verdict = ("DOUBLED at motion onset, annealing" if r_early >= DOUBLED
-               else "cadence ok")
-    fps = 24.0
+    win = [float(v) for v in d[lo_i:hi_i]]
     head, tail = d[:lo_i], d[hi_i:]
-    print(f"{name}: {len(f)} frames")
+
+    whole = hp.hold_period(win, fps=fps)
+    mid = len(win) // 2
+    early, late = hp.hold_period(win[:mid], fps=fps), hp.hold_period(win[mid:], fps=fps)
+
+    print(f"{name}: {n} frames @ {fps:.2f} fps, read at {size[0]}x{size[1]}")
     print(f"   restyle flash (pair 0, excluded): {flash:.1f}")
     print(f"   head  {len(head):3d} pairs  mean {head.mean() if len(head) else 0:6.2f}   "
           f"onset at {(lo_i + 1) / fps:.2f}s")
-    print(f"   BODY  {len(win):3d} pairs  mean {win.mean():6.2f}   "
+    print(f"   BODY  {len(win):3d} pairs  mean {np.mean(win):6.2f}   "
           f"{len(win) / fps:.2f}s of movement")
     print(f"   tail  {len(tail):3d} pairs  mean {tail.mean() if len(tail) else 0:6.2f}")
-    # Both halves, always. The whole-body figure is printed last and labelled
-    # as the misleading one, because it is the number someone will quote.
-    print(f"   cadence: body first half {r_early:.1f}, second half {r_late:.1f}   {verdict}")
-    print(f"            (whole-body {ratio:.1f} -- window-dependent, do not quote alone)")
-    return bool(r_early >= DOUBLED)
+    print(f"   BODY HOLD: {whole['reading']}")
+    # Both halves, always -- the annealing is the finding, not an average of it.
+    for label, r in (("first half ", early), ("second half", late)):
+        per = r["period"] if r["period"] else "-"
+        st = "%.2f" % r["strength"] if r["strength"] is not None else "  - "
+        print(f"     body {label}: period {per}  strength {st}   {r['reading'][:60]}")
+    flagged = bool(early["period"] and early["period"] > 1
+                   and (early["strength"] or 0) >= FLAG)
+    if flagged and not (late["period"] and late["period"] > 1
+                        and (late["strength"] or 0) >= FLAG):
+        print("   -> HOLDS AT ONSET, ANNEALS as motion builds")
+    elif flagged:
+        print("   -> HOLDS THROUGH THE BODY, no annealing")
+    print("   (a filter, never a verdict -- open the frames)")
+    return flagged
 
 
 def main() -> int:
@@ -140,7 +123,8 @@ def main() -> int:
     a = ap.parse_args()
     bad = [c for c in a.clips if report(c)]
     if bad:
-        print(f"\n!! {len(bad)} clip(s) are frame-doubled.")
+        print(f"\n!! {len(bad)} clip(s) hold a picture across frames at motion onset. "
+              f"That is a flag to go and LOOK, not a rejection.")
         return 1
     return 0
 

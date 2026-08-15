@@ -1,0 +1,481 @@
+# Hold period, measured on every clip that carried a `cadence` verdict.
+#
+# WRITTEN BY pipeline/hold_period.py ON 2026-08-15. Do not hand-edit — re-run
+#   python3 pipeline/hold_period.py <clip.mp4>
+# or the file publishes a number nothing measured.
+#
+# THIS FILE IS A MEASUREMENT, NOT A VERDICT, AND NOTHING HERE RE-JUDGES ANY
+# TAKE. `period: 3` is a FACT about the frames — a picture changes every third
+# frame and the two between it differ by ~0.2 MAD where the change frame is
+# ~2.7. Whether that is a defect is taste, and taste is the founder's (R4).
+# The owning lanes decide what to do with their own beats. A metric errs in
+# both directions and is a filter, never a verdict: THE COLD READ DECIDES.
+#
+# WHY IT EXISTS. `cadence` — the parity-2 ratio these clips were scored on —
+# reads exactly 1.00x on EVERY ODD hold period by construction (period 2 =
+# 26.67x, period 3 = 1.00x, period 4 = 14.12x, period 5 = 1.00x). It called
+# ep2-b13-shade-cycle-s2-0815 "1.06x — every frame is new" while that clip
+# changes its picture once every three frames. Proof:
+# pipeline/research/ltx23-motion-source.md §4.1 (commit dfa87c27), and the
+# aliasing table is pinned as a regression test in pipeline/test_pipeline.py.
+#
+# HOW TO READ A ROW.
+#   period    frames each distinct picture is held for = peak autocorrelation
+#             lag of the per-pair luma difference series. 1 = no frame hold.
+#   strength  that peak's autocorrelation, 0..1. >=0.50 dominant, >=0.30 partial.
+#   eff_fps   fps / period — the rate a viewer actually experiences.
+#   was_cadence  what the retired metric said, so the discrepancy is one line.
+# Read at 1/8 scale (suppresses anime line-work churn; the reading is
+# scale-stable, 0.97 -> 0.96 from 352x640 to 88x160).
+
+measured_at: "2026-08-15"
+tool: pipeline/hold_period.py
+results_branch: 574bdc58eaba41b6ed1f4357fc0e34e907c45499
+results_branch_name: origin/farm-results-rtx5090
+read_at_scale: 8
+is_a_verdict: false
+clips:
+  - clip: "0815-b13-AFTER"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.965
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.42, 2: -0.42, 3: 0.96, 4: -0.42, 5: -0.41, 6: 0.91}
+    was_cadence: "1.02"
+    recorded_verdict: "research reference"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.96). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0815-b13-BEFORE"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.603
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: 0.18, 2: 0.26, 3: 0.60, 4: 0.12, 5: 0.18, 6: 0.37}
+    was_cadence: "1.26"
+    recorded_verdict: "research reference"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.60). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0814-b10-candidate"
+    frames: 121
+    fps: 24.0
+    period: 2
+    strength: 0.868
+    distinct_pictures: 60.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: 0.18, 2: 0.87, 3: 0.14, 4: 0.76, 5: 0.11, 6: 0.65}
+    was_cadence: "3.62"
+    recorded_verdict: "research reference"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.87). 120 frames carry about 60 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "b05 trimmed pick"
+    frames: 118
+    fps: 24.0
+    period: 2
+    strength: 0.875
+    distinct_pictures: 58.5
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.54, 2: 0.88, 3: -0.49, 4: 0.78, 5: -0.43, 6: 0.67}
+    was_cadence: "3.78"
+    recorded_verdict: "trim-pass, called period-2 (right)"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.87). 117 frames carry about 58 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "b06 trimmed pick"
+    frames: 46
+    fps: 24.0
+    period: 3
+    strength: 0.684
+    distinct_pictures: 15.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.30, 2: -0.24, 3: 0.68, 4: -0.32, 5: -0.24, 6: 0.71}
+    was_cadence: "1.2 / 1.59"
+    recorded_verdict: "blind read: CLEAN"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.68). 45 frames carry about 15 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "b10 trimmed pick"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.871
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.04, 2: 0.87, 3: -0.07, 4: 0.74, 5: -0.10, 6: 0.61}
+    was_cadence: "3.58"
+    recorded_verdict: "trim-pass, called period-2 (right)"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.87). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "b11 trimmed pick"
+    frames: 121
+    fps: 24.0
+    period: 2
+    strength: 0.941
+    distinct_pictures: 60.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.08, 2: 0.94, 3: -0.09, 4: 0.87, 5: -0.10, 6: 0.80}
+    was_cadence: "-"
+    recorded_verdict: "pick"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.94). 120 frames carry about 60 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "b12 trimmed pick"
+    frames: 33
+    fps: 24.0
+    period: 6
+    strength: 0.548
+    distinct_pictures: 5.3
+    effective_fps: 4.0
+    autocorrelation_lags: {1: -0.23, 2: 0.21, 3: -0.23, 4: 0.36, 5: -0.21, 6: 0.55}
+    was_cadence: "9.59"
+    recorded_verdict: "trim-pass; window later called invalid"
+    reading: >-
+      HOLD: holds every 6 frames (lag 6 autocorrelation 0.55). 32 frames carry about 5 distinct pictures -- effective 4.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0814-b01-candidate"
+    frames: 233
+    fps: 24.0
+    period: 1
+    strength: 0.882
+    distinct_pictures: null
+    effective_fps: null
+    autocorrelation_lags: {1: 0.88, 2: 0.83, 3: 0.86, 4: 0.75, 5: 0.70, 6: 0.72}
+    was_cadence: "-"
+    recorded_verdict: "candidate"
+    reading: >-
+      no frame hold: the peak is lag 1 (0.88), i.e. the change varies smoothly pair to pair rather than repeating. NOT a claim the motion is good — aperiodic wrongness has no peak lag either.
+  - clip: "0814-b06-DONE"
+    frames: 121
+    fps: 24.0
+    period: 6
+    strength: 0.646
+    distinct_pictures: 20.0
+    effective_fps: 4.0
+    autocorrelation_lags: {1: 0.15, 2: -0.02, 3: 0.44, 4: -0.04, 5: -0.00, 6: 0.65}
+    was_cadence: "1.2 / 1.59"
+    recorded_verdict: "DONE"
+    reading: >-
+      HOLD: holds every 6 frames (lag 6 autocorrelation 0.65). 120 frames carry about 20 distinct pictures -- effective 4.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0814-b11-DONE"
+    frames: 121
+    fps: 24.0
+    period: 2
+    strength: 0.941
+    distinct_pictures: 60.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.08, 2: 0.94, 3: -0.09, 4: 0.87, 5: -0.09, 6: 0.80}
+    was_cadence: "-"
+    recorded_verdict: "DONE"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.94). 120 frames carry about 60 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0814-b12-DONE"
+    frames: 121
+    fps: 24.0
+    period: 2
+    strength: 0.488
+    distinct_pictures: 60.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: 0.01, 2: 0.49, 3: 0.09, 4: 0.16, 5: -0.09, 6: 0.30}
+    was_cadence: "9.59"
+    recorded_verdict: "DONE"
+    reading: >-
+      PARTIAL HOLD: holds every 2 frames (lag 2 autocorrelation 0.49). 120 frames carry about 60 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0815-b02-FIXED"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.962
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: 0.50, 2: 0.96, 3: 0.48, 4: 0.91, 5: 0.45, 6: 0.81}
+    was_cadence: "13.2 retracted -> 1.4"
+    recorded_verdict: "annealing"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.96). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0815-b04"
+    frames: 97
+    fps: 24.0
+    period: 12
+    strength: 0.602
+    distinct_pictures: 8.0
+    effective_fps: 2.0
+    autocorrelation_lags: {1: -0.48, 2: -0.01, 3: 0.15, 4: 0.09, 5: -0.35, 6: 0.41}
+    was_cadence: "1.6 -> 1.8"
+    recorded_verdict: "clean throughout"
+    reading: >-
+      HOLD: holds every 12 frames (lag 12 autocorrelation 0.60). 96 frames carry about 8 distinct pictures -- effective 2.0 fps. Open frames N, N+1, N+2 and look before calling it. CAVEAT: 12 frames is 0.3s+ — that is a PULSE OR SCENE RHYTHM, not a frame hold; do not read it as animation on 12s without opening the frames. CAVEAT: the peak sits at the edge of the lag range examined (max_lag=12), so it is not confirmed to BE the maximum. Re-run with a wider --max-lag.
+  - clip: "0815-b09-card"
+    frames: 121
+    fps: 24.0
+    period: 3
+    strength: 0.854
+    distinct_pictures: 40.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.25, 2: -0.26, 3: 0.85, 4: -0.28, 5: -0.28, 6: 0.75}
+    was_cadence: "1.0 / 3.84 / 1.75"
+    recorded_verdict: "clean"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.85). 120 frames carry about 40 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0815-b15"
+    frames: 97
+    fps: 24.0
+    period: 8
+    strength: 0.677
+    distinct_pictures: 12.0
+    effective_fps: 3.0
+    autocorrelation_lags: {1: -0.68, 2: 0.58, 3: -0.66, 4: 0.62, 5: -0.63, 6: 0.58}
+    was_cadence: "9.6 -> 10.0"
+    recorded_verdict: "doubled end to end"
+    reading: >-
+      HOLD: holds every 8 frames (lag 8 autocorrelation 0.68). 96 frames carry about 12 distinct pictures -- effective 3.0 fps. Open frames N, N+1, N+2 and look before calling it. CAVEAT: 8 frames is 0.3s+ — that is a PULSE OR SCENE RHYTHM, not a frame hold; do not read it as animation on 8s without opening the frames.
+  - clip: "0815-b17"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.846
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.47, 2: 0.85, 3: -0.44, 4: 0.64, 5: -0.40, 6: 0.51}
+    was_cadence: "14.3 retracted"
+    recorded_verdict: "retracted"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.85). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0814-b13-goblin"
+    frames: 97
+    fps: 24.0
+    period: 1
+    strength: 0.661
+    distinct_pictures: null
+    effective_fps: null
+    autocorrelation_lags: {1: 0.66, 2: 0.49, 3: 0.40, 4: 0.30, 5: 0.31, 6: 0.23}
+    was_cadence: "1.5"
+    recorded_verdict: "clean (retracted set)"
+    reading: >-
+      no frame hold: the peak is lag 1 (0.66), i.e. the change varies smoothly pair to pair rather than repeating. NOT a claim the motion is good — aperiodic wrongness has no peak lag either.
+  - clip: "0814-b15-goblin"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.462
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: 0.38, 2: 0.36, 3: 0.46, 4: 0.06, 5: 0.10, 6: 0.08}
+    was_cadence: "-"
+    recorded_verdict: "candidate"
+    reading: >-
+      PARTIAL HOLD: holds every 3 frames (lag 3 autocorrelation 0.46). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "0815-b02-tree"
+    frames: 97
+    fps: 24.0
+    period: 1
+    strength: 0.85
+    distinct_pictures: null
+    effective_fps: null
+    autocorrelation_lags: {1: 0.85, 2: 0.89, 3: 0.78, 4: 0.77, 5: 0.72, 6: 0.69}
+    was_cadence: "-"
+    recorded_verdict: "candidate"
+    reading: >-
+      no frame hold: the peak is lag 1 (0.85), i.e. the change varies smoothly pair to pair rather than repeating. NOT a claim the motion is good — aperiodic wrongness has no peak lag either.
+  - clip: "ep2-b02-nw-0815 (CONTROL)"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.962
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: 0.50, 2: 0.96, 3: 0.48, 4: 0.91, 5: 0.45, 6: 0.81}
+    was_cadence: "2.21 / 2.14"
+    recorded_verdict: "control/reference"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.96). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-nwB-0815"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.559
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.21, 2: -0.05, 3: 0.56, 4: -0.12, 5: 0.06, 6: 0.39}
+    was_cadence: "(4.5 -> 1.4 retracted)"
+    recorded_verdict: "annealing"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.56). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-stg-headup-0815"
+    frames: 97
+    fps: 24.0
+    period: 4
+    strength: 0.505
+    distinct_pictures: 24.0
+    effective_fps: 6.0
+    autocorrelation_lags: {1: -0.08, 2: 0.10, 3: -0.09, 4: 0.51, 5: -0.10, 6: 0.05}
+    was_cadence: "17.75 / 16.12"
+    recorded_verdict: "NOT PROMOTED"
+    reading: >-
+      HOLD: holds every 4 frames (lag 4 autocorrelation 0.51). 96 frames carry about 24 distinct pictures -- effective 6.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-stg-headup-49f-0815"
+    frames: 49
+    fps: 24.0
+    period: 2
+    strength: 0.922
+    distinct_pictures: 24.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.73, 2: 0.92, 3: -0.72, 4: 0.86, 5: -0.70, 6: 0.78}
+    was_cadence: "11.21"
+    recorded_verdict: "NOT PROMOTED"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.92). 48 frames carry about 24 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-stg-headup-193f-0815"
+    frames: 193
+    fps: 24.0
+    period: 2
+    strength: 0.989
+    distinct_pictures: 96.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.94, 2: 0.99, 3: -0.93, 4: 0.98, 5: -0.92, 6: 0.97}
+    was_cadence: "(copied block)"
+    recorded_verdict: "unsourced"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.99). 192 frames carry about 96 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-sw-r1crf42-0815"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.972
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.77, 2: 0.97, 3: -0.76, 4: 0.94, 5: -0.75, 6: 0.91}
+    was_cadence: "-"
+    recorded_verdict: "period-2 sweep arm"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.97). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-sw-r2neg-0815"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.948
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: 0.43, 2: 0.95, 3: 0.41, 4: 0.86, 5: 0.39, 6: 0.75}
+    was_cadence: "-"
+    recorded_verdict: "period-2 sweep arm"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.95). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b02-sw-r3g10-0815"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.9
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.40, 2: 0.90, 3: -0.42, 4: 0.79, 5: -0.43, 6: 0.69}
+    was_cadence: "-"
+    recorded_verdict: "period-2 sweep arm"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.90). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b03-negconf-base-0815"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.962
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.16, 2: 0.96, 3: -0.16, 4: 0.89, 5: -0.16, 6: 0.78}
+    was_cadence: "-"
+    recorded_verdict: "scoring asked for cadence"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.96). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b03-negconf-mot-0815"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.945
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.13, 2: 0.94, 3: -0.12, 4: 0.87, 5: -0.13, 6: 0.79}
+    was_cadence: "-"
+    recorded_verdict: "scoring asked for cadence"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.95). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-lw (arm1 CONTROL)"
+    frames: 97
+    fps: 24.0
+    period: 11
+    strength: 0.308
+    distinct_pictures: 8.7
+    effective_fps: 2.18
+    autocorrelation_lags: {1: -0.03, 2: -0.04, 3: 0.28, 4: 0.29, 5: -0.09, 6: 0.19}
+    was_cadence: "1.00"
+    recorded_verdict: "control, 'action barely happens'"
+    reading: >-
+      PARTIAL HOLD: holds every 11 frames (lag 11 autocorrelation 0.31). 96 frames carry about 9 distinct pictures -- effective 2.2 fps. Open frames N, N+1, N+2 and look before calling it. CAVEAT: 11 frames is 0.3s+ — that is a PULSE OR SCENE RHYTHM, not a frame hold; do not read it as animation on 11s without opening the frames.
+  - clip: "ep2-b13-shade-state-0815 (arm2)"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.95
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.27, 2: -0.26, 3: 0.95, 4: -0.26, 5: -0.25, 6: 0.88}
+    was_cadence: "1.39"
+    recorded_verdict: "onset at f0, dead after 26"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.95). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-shade-chain-0815 (arm3)"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.933
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.15, 2: -0.14, 3: 0.93, 4: -0.14, 5: -0.13, 6: 0.82}
+    was_cadence: "1.53"
+    recorded_verdict: "DID NOT BUY DURATION"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.93). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-shade-cycle-0815 (arm4 s20260806)"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.868
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.19, 2: -0.17, 3: 0.87, 4: -0.17, 5: -0.15, 6: 0.75}
+    was_cadence: "2.33"
+    recorded_verdict: "half its frames are duplicates"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.87). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-shade-cycle-s2-0815 (s20260815)"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.923
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.48, 2: -0.47, 3: 0.92, 4: -0.46, 5: -0.45, 6: 0.90}
+    was_cadence: "1.06"
+    recorded_verdict: "THE FALSE CLEAN"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.92). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-shade-cycle-s3-0815 (s20260731)"
+    frames: 97
+    fps: 24.0
+    period: 2
+    strength: 0.926
+    distinct_pictures: 48.0
+    effective_fps: 12.0
+    autocorrelation_lags: {1: -0.92, 2: 0.93, 3: -0.89, 4: 0.91, 5: -0.88, 6: 0.87}
+    was_cadence: "5.68"
+    recorded_verdict: "scale swells and shrinks"
+    reading: >-
+      HOLD: holds every 2 frames (lag 2 autocorrelation 0.93). 96 frames carry about 48 distinct pictures -- effective 12.0 fps. Open frames N, N+1, N+2 and look before calling it.
+  - clip: "ep2-b13-shade-breath-0815"
+    frames: 97
+    fps: 24.0
+    period: 3
+    strength: 0.874
+    distinct_pictures: 32.0
+    effective_fps: 8.0
+    autocorrelation_lags: {1: -0.16, 2: -0.15, 3: 0.87, 4: -0.15, 5: -0.14, 6: 0.72}
+    was_cadence: "-"
+    recorded_verdict: "breath arm"
+    reading: >-
+      HOLD: holds every 3 frames (lag 3 autocorrelation 0.87). 96 frames carry about 32 distinct pictures -- effective 8.0 fps. Open frames N, N+1, N+2 and look before calling it.

@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import render_t2 as t2
 import render_t3 as t3
 import hold_still as hs
+import hold_period as hp
 from render_t1 import extract_script, parse_frames
 
 REPO = Path(__file__).resolve().parent.parent
@@ -9025,6 +9026,147 @@ def test_the_refs_check_runs_on_the_shared_enqueue_path_beside_the_flatness_one(
     check("and the reason a name pattern was rejected", "no `charref` tell" in src)
 
 
+# ==============================================================================
+# A METRIC THAT CANNOT SEE A THREE-FRAME HOLD MUST NEVER BE THE ONE WE READ.
+#
+# `cadence` — louder index parity mean over quieter index parity mean — reported
+# 1.06x, documented as "every frame is new", on a clip that holds every picture
+# for three frames. It is a parity-2 detector: every ODD hold period aliases to
+# exactly 1.00x by construction. These tests pin the aliasing table so the old
+# number can never quietly come back, and pin the replacement — autocorrelation
+# of the per-pair difference series, where the peak lag IS the hold period — on
+# the same synthetic series the research used.
+# Evidence: pipeline/research/ltx23-motion-source.md §4.1-4.2 (commit dfa87c27).
+# ==============================================================================
+
+def _comb(period, n=90, loud=8.0, quiet=0.3):
+    """One loud pair every `period`: a clip holding each picture `period` frames."""
+    return [loud if i % period == 0 else quiet for i in range(n)]
+
+
+def test_the_retired_parity_ratio_is_blind_to_odd_holds():
+    # The exact table from the research, reproduced as code. If any of these
+    # numbers move, somebody has changed the retired function and it is only
+    # kept so this test can exist.
+    for period, expected in ((2, 26.67), (3, 1.00), (4, 14.12), (5, 1.00), (6, 9.56)):
+        got = hp.legacy_parity_ratio(_comb(period))
+        check("retired cadence on a period-%d hold reads %.2fx" % (period, expected),
+              abs(got - expected) < 0.01)
+    check("retired cadence is EXACTLY 1.00 on period 3 — the blindness",
+          abs(hp.legacy_parity_ratio(_comb(3)) - 1.0) < 1e-9)
+    check("retired cadence is EXACTLY 1.00 on period 5 — the blindness",
+          abs(hp.legacy_parity_ratio(_comb(5)) - 1.0) < 1e-9)
+
+
+def test_the_hold_period_is_the_peak_lag_for_every_period():
+    for period in (2, 3, 4, 5, 6):
+        r = hp.hold_period(_comb(period))
+        check("a period-%d hold is read as period %d" % (period, period),
+              r["period"] == period)
+        check("and read strongly (%d)" % period, r["strength"] >= 0.9)
+    # The two the old metric could not see at all.
+    check("period 3 — invisible to the retired ratio — is caught at lag 3",
+          hp.hold_period(_comb(3))["lags"][3] > 0.9)
+    check("period 5 — invisible to the retired ratio — is caught at lag 5",
+          hp.hold_period(_comb(5))["lags"][5] > 0.9)
+
+
+def test_a_hold_shows_a_comb_and_not_just_a_peak():
+    # A real period-3 hold anti-correlates at 1, 2, 4, 5 (-0.42 measured on
+    # 0815-b13-AFTER). A lone peak with no trough around it is a different
+    # animal, and the lag table is printed so a human can tell them apart.
+    lags = hp.hold_period(_comb(3))["lags"]
+    check("period 3 anti-correlates at the non-multiple lags",
+          all(lags[k] < 0 for k in (1, 2, 4, 5)))
+    check("and correlates again at its own harmonic", lags[6] > 0.9)
+    check("but the harmonic never outranks the fundamental", lags[3] > lags[6])
+
+
+def test_the_fundamental_wins_over_its_harmonic():
+    # The period a human counts by opening frames is 3, never 6.
+    check("a period-3 hold is reported as 3 and not 6",
+          hp.hold_period(_comb(3))["period"] == 3)
+    check("a period-2 hold is reported as 2 and not 4",
+          hp.hold_period(_comb(2))["period"] == 2)
+
+
+def test_it_reports_a_period_a_human_can_check_not_a_bare_score():
+    r = hp.hold_period(_comb(3, n=96), fps=24.0)
+    check("it reports how many distinct pictures the frames carry",
+          r["distinct_pictures"] is not None and 31 <= r["distinct_pictures"] <= 33)
+    check("it reports the effective frame rate a viewer experiences",
+          abs(r["effective_fps"] - 8.0) < 0.01)
+    check("and the reading names the period in words",
+          "holds every 3 frames" in r["reading"])
+
+
+def test_it_refuses_to_call_aperiodic_motion_a_hold():
+    # Smooth, non-repeating motion: no peak lag. This must NOT read as a hold,
+    # and equally must not be reported as a pass — the reading says so itself.
+    ramp = [1.0 + 0.05 * i for i in range(90)]
+    r = hp.hold_period(ramp)
+    check("a smooth ramp is not a hold", r["period"] == 1)
+    check("and the reading refuses to be read as approval",
+          "NOT a claim" in r["reading"] and "motion is good" in r["reading"])
+    check("a lag-1 peak is named as smooth variation, not as a period-1 hold",
+          "peak is lag 1" in r["reading"])
+    # Noise with no structure at all: below the floor, and it says the lag.
+    import random
+    random.seed(7)
+    noise = [5.0 + random.random() for _ in range(90)]
+    r = hp.hold_period(noise)
+    check("structureless noise is not a hold either", r["period"] == 1)
+    check("and it names the lag it looked at", "best lag" in r["reading"])
+
+
+def test_a_long_period_is_not_reported_as_a_frame_hold():
+    # ep2-b13-lw read period 11 and 0815-b04 read period 12 on 2026-08-15.
+    # Eleven frames is half a second — a pulse, not a picture being held — and
+    # a lane would have quoted "effective 2 fps" straight into a verdict.
+    r = hp.hold_period(_comb(10, n=120))
+    check("a 10-frame period is flagged as a pulse, not a frame hold",
+          "PULSE OR SCENE RHYTHM" in r["reading"])
+    r3 = hp.hold_period(_comb(3))
+    check("and a real 3-frame hold carries no such caveat",
+          "PULSE OR SCENE RHYTHM" not in r3["reading"])
+
+
+def test_a_peak_at_the_edge_of_the_range_is_not_called_a_maximum():
+    # A peak at max_lag has nothing above it to be higher than, so it has not
+    # been shown to be the peak. Say so rather than report it as one.
+    r = hp.hold_period(_comb(12, n=140), max_lag=12)
+    check("a peak at the edge of the lag range says it is unconfirmed",
+          "edge of the lag range" in r["reading"])
+    check("and a peak inside the range does not",
+          "edge of the lag range" not in hp.hold_period(_comb(3))["reading"])
+
+
+def test_a_clip_that_never_changed_a_pixel_is_the_loudest_finding():
+    r = hp.hold_period([0.0] * 90)
+    check("a constant difference series has no period", r["period"] is None)
+    check("and says FROZEN SOLID rather than falling through to 'no hold'",
+          "FROZEN SOLID" in r["reading"])
+
+
+def test_it_says_too_short_instead_of_guessing():
+    r = hp.hold_period(_comb(3, n=10))
+    check("ten pairs is too short to claim a period", r["period"] is None)
+    check("and it says so", "too short" in r["reading"])
+
+
+def test_the_metric_is_labelled_a_filter_everywhere_it_is_printed():
+    # The rule that does not change: a metric errs in both directions and is a
+    # filter, never a verdict. If it is ever printed without saying so, a lane
+    # will quote it as one — which is how a 15-beat batch shipped frozen.
+    for rel in ("pipeline/hold_period.py", "pipeline/coldread_frames.py",
+                "review/ep2-picks/cadence_check.py"):
+        src = (REPO / rel).read_text(encoding="utf-8")
+        check("%s says the cold read decides" % rel,
+              "cold read decides" in src or "COLD READ DECIDES" in src.upper())
+        check("%s carries the aliasing table so nobody reinstates cadence" % rel,
+              "1.00x" in src and "odd" in src.lower())
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -9269,6 +9411,19 @@ def main():
     test_a_motion_jobs_plate_is_traced_back_to_the_job_that_drew_it()
     test_a_plate_drawn_from_a_card_reference_set_is_refused()
     test_the_refs_check_runs_on_the_shared_enqueue_path_beside_the_flatness_one()
+
+    # AND A METRIC THAT CANNOT SEE A THREE-FRAME HOLD MUST NEVER BE READ AGAIN.
+    test_the_retired_parity_ratio_is_blind_to_odd_holds()
+    test_the_hold_period_is_the_peak_lag_for_every_period()
+    test_a_hold_shows_a_comb_and_not_just_a_peak()
+    test_the_fundamental_wins_over_its_harmonic()
+    test_it_reports_a_period_a_human_can_check_not_a_bare_score()
+    test_it_refuses_to_call_aperiodic_motion_a_hold()
+    test_a_long_period_is_not_reported_as_a_frame_hold()
+    test_a_peak_at_the_edge_of_the_range_is_not_called_a_maximum()
+    test_a_clip_that_never_changed_a_pixel_is_the_loudest_finding()
+    test_it_says_too_short_instead_of_guessing()
+    test_the_metric_is_labelled_a_filter_everywhere_it_is_printed()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
