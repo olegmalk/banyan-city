@@ -1813,3 +1813,4 @@
 08:07:37Z STARTED task=ep2-b06-turn-0815-1786780959 attempt=1 on box-runner
 08:12:40Z DONE task=ep2-b06-turn-0815-1786780959 rc=0 artifacts=1
 08:12:48Z STARTED task=ep2-b06-turnB-0815-1786780964 attempt=1 on box-runner
+08:17:47Z DONE task=ep2-b06-turnB-0815-1786780964 rc=0 artifacts=1
