@@ -817,13 +817,13 @@
     date: '2026-08-15'
     verdict: 'STEWARD-ANSWERED, not asked again. Covering words, 2026-08-14 verbatim: ''also i think you
       can filter some of the decisions for yourself, decisions which you can answer yourself'' and ''i
-      am more here to decide taste.'' Identifying which archived clip you meant is not taste, and you already
-      named its two properties for me — ''the clip i liked was not static for sure, it had a lot of camera
-      movement and it had the random guy'' — so the diff target is a clip with a person in frame and real
-      camera movement, and I match it myself instead of making you count tiles. It is also no longer the
-      route to the answer: the static cause is now measured directly (twelve don''t-move phrases in one
-      prompt; removing them moved the metric 66.6 → 4.5 and did NOT move the clips), so diffing against
-      an old clip would add nothing. Overturn this by naming a number any time.'
+      am more here to decide taste.'' Identifying which archived clip you meant is not taste, and you
+      already named its two properties for me — ''the clip i liked was not static for sure, it had a lot
+      of camera movement and it had the random guy'' — so the diff target is a clip with a person in frame
+      and real camera movement, and I match it myself instead of making you count tiles. It is also no
+      longer the route to the answer: the static cause is now measured directly (twelve don''t-move phrases
+      in one prompt; removing them moved the metric 66.6 → 4.5 and did NOT move the clips), so diffing
+      against an old clip would add nothing. Overturn this by naming a number any time.'
 - what: 'YOUR GOBLIN, ANIMATED - first look. Six beats back on the s0 goblin you picked, contact strip
     plus two playable clips. The character is right in all of them. One fault and it is mine: I pasted
     the purple-fig rule into every prompt and only two beats have a fig, so the rest invented one - a
@@ -869,6 +869,16 @@
     reads it as the proof these rounds reached him. Added 2026-08-15 - a second card asking the same question
     ("THE GUARDS - which number?", at anchor motion-0812#e-guards) was merged into this one and marked
     resolved-as-duplicate; the same eight tiles are reachable from that anchor too.
+  resolved:
+    date: '2026-08-15'
+    verdict: 'ANSWERED IN BOTH HALVES, AND THIS IS THE OTHER STALE CARD YOU REPORTED. You picked guard
+      A as #1 on 2026-08-14 — the pair sheet records it, "You picked #1 and you were right that it showed
+      only one man" — and today you closed the second half: "ill take the guard b you chose." Both men
+      are cast, so nothing this card asks is still open. Why it looked like an old image: it IS the old
+      image, correctly. The eight 0814 turnarounds are the right picture for this card''s own text; the
+      fault is that the card was answered and never closed, so the board kept serving last round''s sheet
+      beside a question you had already settled — the same defect as the fig card, one step earlier in
+      the chain. The guards as they now stand are the pair sheet, /review/ep2-picks/sheets/guard-pair-0815.jpg.'
 - what: 'PURPLE FRUIT STANDS - this is news about a closed question, not a re-ask. Your rule was applied:
     three loops, a blind reader each, no fig, so we stopped. Two things came out of them that you should
     see before they go stale. First, the job that was supposed to test the fruit never tested it - eight
@@ -877,11 +887,23 @@
     when it was tried, one reference set moved the needle for the first time: blind readers put fig 2nd
     and 3rd instead of 5th or unranked. It still has not got anyone to say "fig". Costs you nothing to
     ignore - say nothing and purple fruit is final.'
-  url: /review/ep2-picks/sheets/fig-leafround-0814.jpg
+  url: /review/ep2-picks/sheets/fig-three-loops-0815.jpg
   group: taste
   since: '2026-08-14'
   kind: pick
   verdict_hint: one more round on the reference route / no, purple fruit is final
+  resolved:
+    date: '2026-08-15'
+    verdict: 'STALE LINK FIXED, THEN CLOSED ON ITS OWN TERMS. This is the card you reported: it linked
+      fig-leafround-0814.jpg, which is the PREVIOUS round''s sheet and is literally headed "DOES THIS
+      READ AS A FIG NOW?" — the picture you said you were seeing. Cause: on 2026-08-15 the card''s text
+      was rewritten in place from that question into this report and the url: was left behind, so the
+      board asked you a new thing over an old picture. It now points at /review/ep2-picks/sheets/fig-three-loops-0815.jpg,
+      which is the three loops this card''s own text describes. The question itself closes on the default
+      the card states: "Costs you nothing to ignore - say nothing and purple fruit is final." You said
+      nothing and answered five other things today, so purple fruit is final and the reference route stops.
+      Reopen it by saying so. The separate question of a beat that renders the fruit RED rather than purple
+      is a new card below.'
 - what: THE GUARDS - which number? Eight turnarounds from two proposals, front and back, numbered. You
     said you had never seen them and wanted your own changes, so point at one or mark up what to change.
     They GATE SIX BEATS - 05, 06, 07, 09, 10, 11 - and nothing on those moves until you pick. They had
@@ -911,10 +933,10 @@
       these. Verbatim: ''this doesn''t seem like something i should decide, i am not a software engineer
       or some mastermind, you need to do more heavylifting using your intelligence, why rely on me for
       things like this? i am more here to decide taste'', and ''i think you can filter some of the decisions
-      for yourself.'' Taking the third option, BOTH NUMBERS: an animated episode counts beats with an approved
-      clip AND keeps showing the approved-stills number, so nothing is hidden and the honest zero stops
-      reading as ''no work done''. Chosen that way because it is the only option where no true number disappears
-      from the site. Handed to the site lane to ship; no taste content in it.'
+      for yourself.'' Taking the third option, BOTH NUMBERS: an animated episode counts beats with an
+      approved clip AND keeps showing the approved-stills number, so nothing is hidden and the honest
+      zero stops reading as ''no work done''. Chosen that way because it is the only option where no true
+      number disappears from the site. Handed to the site lane to ship; no taste content in it.'
 - what: 'WHY YOU CANNOT SEE THE GOBLIN - measured, and it is not what any of us guessed. Your approved
     plate beside frame 60 of the clip made FROM it, same beat: his head is about HALF the frame height
     in the plate and NINE PER CENT of it in the clip. He is not blurry or melted or drifting - HE IS SMALL.
@@ -953,6 +975,17 @@
   kind: clip
   verdict_hint: nothing to answer - this is me correcting my own report / or tell me I am still reading
     it wrong
+  resolved:
+    date: '2026-08-15'
+    verdict: 'NOT A QUESTION — it is me correcting my own report, and its own answer line says so. Closed
+      under your standing instruction: "i think you can filter some of the decisions for yourself, decisions
+      which you can answer yourself", and "i am more here to decide taste". Your diagnosis stands as recorded:
+      the restrictive wording was real (twelve don''t-move phrases in beat 13''s prompt, 264 of 459 prompts
+      across the episode) and it was not the whole cause — rewriting it moved the metric from 66.6 to
+      4.5 and did not move the clips. The lesson is filed against me, not you: I scaled to nineteen beats
+      on a metric agreeing with me instead of on a screened sample, which is ONE SAMPLE BEFORE ANY BATCH.
+      The next change is one test on one beat with the prediction written first. Nothing here needs your
+      taste; the clips that come out of it will.'
 - what: 'SIX OF THE NINETEEN BEATS WERE ANIMATED FROM A COSTUME DRAWING, not a scene. Separate from the
     motion problem and worse: beats 05, 06, 07, 09, 10 and 11 were rendered from the guard IDENTITY plates
     - one man standing on a blank pale background, no place, no goblin, no second guard, some with a visible
@@ -972,6 +1005,18 @@
   group: result
   verdict_hint: nothing to answer - the one real question in it, beat 19's fruit, has its own entry above
     and is the only part that is yours
+  resolved:
+    date: '2026-08-15'
+    verdict: 'CLOSED — its own answer line says the only part that was yours is beat 19''s fruit, and
+      you have now ruled on that ("lets make it drop on his head"). Everything else in it is machine fault
+      and machine fix, closed under your standing instruction: "i think you can filter some of the decisions
+      for yourself, decisions which you can answer yourself", and "i am more here to decide taste". Kept
+      on the record: beats 05, 06, 07, 09, 10 and 11 were animated from guard identity plates rather than
+      scenes and cannot be cut at any quality of motion; beat 21 was queued pointing at beat 12''s picture
+      and was held before it fired; real staged plates for beat 05 existed on disk in a job filed as failed.
+      One correction to it: the naming defect it calls cosmetic is the same defect that cost you time
+      on this board today, so it is written up with a rule rather than left as an aside — see the filename
+      note in the resolved record.'
 - what: 'BEAT 19 - THE FRUIT DROPS ON HIS HEAD, AND THE PICTURE WE HAVE CANNOT SHOW IT. In the plate for
     beat 19 the fruit is already lying in the grass beside him, so there is nothing up there to fall.
     When I asked for the drop anyway, the model did what it always does with a thing that is not in frame:
@@ -987,6 +1032,16 @@
   kind: decision
   group: taste
   verdict_hint: draw the new plate, keep the drop / change the beat to him finding it
+  resolved:
+    date: '2026-08-15'
+    verdict: 'THE DROP STAYS. Your words: "lets make it drop on his head." So the beat is not rewritten
+      — no version where he merely finds the fruit already fallen — and the taste question is closed.
+      WHAT THAT COSTS, recorded as a requirement rather than a hope: BEAT 19 NEEDS A NEW PLATE WITH THE
+      FRUIT STILL UP ON THE STEM ABOVE HIM. The plate we have puts the fruit already lying in the grass
+      beside him, which is why asking for a drop made fruit materialise in mid-air and one of them sit
+      on his head like a hat. Nothing up there to fall means nothing can fall. The stills lane draws the
+      new plate — fruit on the stem, above him, in frame — and beat 19 is not animated again until it
+      exists. $0, local card.'
 - what: 'FIRST REAL MOVEMENT TONIGHT - and the action in it is still wrong. Beat 02 came back on the fixed
     prompt and a blind reader, shown all 97 frames with no idea what the clip is meant to be, described
     this: "the torso pitches forward at the waist and the clasped hands drop from the chest and extend
@@ -1004,6 +1059,15 @@
   kind: clip
   group: result
   verdict_hint: nothing to answer - say nothing and it stands as a step forward, not a finished beat
+  resolved:
+    date: '2026-08-15'
+    verdict: 'NOTHING TO ANSWER — its own answer line says so, and closed under your standing instruction:
+      "i think you can filter some of the decisions for yourself, decisions which you can answer yourself",
+      and "i am more here to decide taste". It stands as recorded: beat 02 is the first clip a blind reader
+      described as a person doing something rather than a still, the cause was deleting three words that
+      named a sapling not in the picture, and the beat is still wrong — he tips over like a felled post
+      instead of sprinting, and the movement lands on every other frame so it will judder. Not called
+      done, not picked as canon. It reaches you as part of a full cut, which is how you asked to review.'
 - what: 'THE DOCUMENTS NOW CONTRADICT YOU - you removed the script-reading gate on 2026-08-13 and three
     governance files still enforce it. Only you can change them. Your words, verbatim: "lets not waste
     time by having me read the entire script of each episode, lets remove that task, you can review it
@@ -1031,6 +1095,18 @@
   since: '2026-08-15'
   kind: decision
   verdict_hint: yes, update the documents to match what i said / no, i want the script gate back
+  resolved:
+    date: '2026-08-15'
+    verdict: 'ANSWERED — YOU HAD ALREADY READ THEM. Your words: "i did read the script, just a while ago
+      when we were making the first versions of the episodes. and i approved it." That settles the §6
+      worry this card was really about: nothing was made from a script you had not read, so there is no
+      breach standing behind the contradiction and no lane is blocked. THE DOCUMENTS ARE STILL OUT OF
+      DATE AND THAT IS YOURS TO FIX, not mine: STEWARDSHIP.md §6 and §7, CLAUDE.md''s restatement of §6,
+      and DECISIONS.md D22 (which also mis-dates your "but this is the original sapling path" quote to
+      2026-08-12 — the transcript says 2026-08-11T17:32Z — and has grown a trailing period the message
+      did not have). I have edited none of the three files and will not; governance edits are founder-reserved.
+      This is now a note on the record rather than a question on your board: your answer is written down,
+      and the amendment waits for you whenever you want to make it.'
 - what: 'THE TWO GUARDS, PICKED - VETO ONLY. You said "lets do the guards on my taste", so whether these
     are your guards is yours. Which take to use is mine and I have made it: the pick stands unless you
     object. Guard A is frozen as the reference. Guard B was drawn FROM A, four seeds, and all four came
@@ -1045,42 +1121,119 @@
   since: '2026-08-15'
   kind: sheet
   verdict_hint: they're right / no, and here is what is wrong with them
+  resolved:
+    date: '2026-08-15'
+    verdict: 'ACCEPTED, WITH ONE FAULT NAMED. Your words: "ill take the guard b you chose." So guard A
+      (your #1, frozen) and guard B = s2 of the derived round are the two guards, and the veto window
+      is closed. THE FAULT, in your words: "there is a clipboard floating behind him." It is on the pair
+      sheet — B''s bark clipboard hangs at his right shoulder attached to nothing, and no hand is on it.
+      Recorded as a named defect on the guard B reference: A FLOATING CLIPBOARD MUST NOT BE CARRIED INTO
+      THE FROZEN REFERENCE SET. Either the clipboard is held in a hand or it is not in the frame; a reference
+      frame with an object floating in it teaches every beat derived from it to float one too, and six
+      beats (05, 06, 07, 09, 10, 11) derive from these two men. You have cast the men; the clipboard is
+      a machine fault and is ours to clear before the set is frozen.'
 - what: 'THE GOBLIN - SIX DESIGNS, PICK A NUMBER. Your words are the brief: "i just want him to be a dumb
-    ol goblin", "not old..", "actually a young dumb goblin, but not cute" - and last time, "thats the cute
-    goblin again.. i''d rather him not be cute." Same goblin, same identity seed (s0, already settled); this
-    is the DESIGN BUILD only, not a re-open of who he is. My read, argue with it: 1 has the dullest, most
-    vacant face and is the closest thing here to "dumb"; 6 is the most consistent across views; 3 and 4 came
-    back old and mean. Pick a number and nothing has changed. BUT IF YOUR ANSWER IS "ALL SIX ARE WRONG", ONE
-    THING TO KNOW BEFORE YOU SAY IT: more wording will not fix it on this model. A sample tonight asked for
-    "squat, round-bellied" and got it 0 times in 4 - every one came back slim - and the six on your sheet differ
-    ONLY in build tags, so they are one face wearing six builds, less different than they look. There is no
-    reference image anywhere on this path either (pure text-to-image), so words were the only lever and they
-    are spent. From there the path is a reference image, a LoRA, or a design drawn by a person - a bigger
-    decision, and yours to make knowingly. The round was not wasted: two culprits are now known - "sash" was
-    drawing the kimono/robe look, "heavy sloped brow" was drawing the anger (a lowered forward-sloping brow IS
-    a scowl), and cutting both gave 0 of 4 scowling, fanged or robed. But it traded an angry middle-aged monk
-    for a sleepy teenage elf, so it is no seventh option and it is not on the sheet. Our error, not the model''s:
-    these jobs were passing "pale yellow-green skin, bald", the motion lane''s sentence, not yours - the frame
-    you called "a good representation" says "green skin, bald head". Reverted; green in 2 of 4. THIS GATES SIX
-    BEATS (07, 08, 15, 17, 19, 20) - no goblin gets animated until the design is fixed.'
+    ol goblin", "not old..", "actually a young dumb goblin, but not cute" - and last time, "thats the
+    cute goblin again.. i''d rather him not be cute." Same goblin, same identity seed (s0, already settled);
+    this is the DESIGN BUILD only, not a re-open of who he is. My read, argue with it: 1 has the dullest,
+    most vacant face and is the closest thing here to "dumb"; 6 is the most consistent across views; 3
+    and 4 came back old and mean. Pick a number and nothing has changed. BUT IF YOUR ANSWER IS "ALL SIX
+    ARE WRONG", ONE THING TO KNOW BEFORE YOU SAY IT: more wording will not fix it on this model. A sample
+    tonight asked for "squat, round-bellied" and got it 0 times in 4 - every one came back slim - and
+    the six on your sheet differ ONLY in build tags, so they are one face wearing six builds, less different
+    than they look. There is no reference image anywhere on this path either (pure text-to-image), so
+    words were the only lever and they are spent. From there the path is a reference image, a LoRA, or
+    a design drawn by a person - a bigger decision, and yours to make knowingly. The round was not wasted:
+    two culprits are now known - "sash" was drawing the kimono/robe look, "heavy sloped brow" was drawing
+    the anger (a lowered forward-sloping brow IS a scowl), and cutting both gave 0 of 4 scowling, fanged
+    or robed. But it traded an angry middle-aged monk for a sleepy teenage elf, so it is no seventh option
+    and it is not on the sheet. Our error, not the model''s: these jobs were passing "pale yellow-green
+    skin, bald", the motion lane''s sentence, not yours - the frame you called "a good representation"
+    says "green skin, bald head". Reverted; green in 2 of 4. THIS GATES SIX BEATS (07, 08, 15, 17, 19,
+    20) - no goblin gets animated until the design is fixed.'
   url: /review/ep2-picks/sheets/goblin-design-0815.jpg
   group: taste
   since: '2026-08-15'
   kind: pick
-  verdict_hint: one number / all six are wrong because X / all six are wrong, go get a reference or a drawn design
-  note_for_lanes: 'The six tiles are seed s0 of jobs ep2-goblin-design-d1-0814 through d6-0814 (four seeds each,
-    box sidecars on farm-results-rtx5090 under farm-out/ep2-goblin-design-dN-0814/). s0 is used because the goblin''s
-    identity seed is settled as s0. The six differ ONLY in build tags: d1 squat/round-bellied, d2 lanky/stooped,
-    d3 wide jaw, d4 long jaw, d5 snub nose, d6 hook nose - everything else in the prompt is identical. All 24
-    renders were opened before this card was written; the other three seeds per design are on the results branch,
-    unpublished. A baked JPG carries no filename of its own, so this note is the only thread from the picture
-    back to what drew it. $0, local GPU, animagine-xl-3.1. UPDATED 2026-08-15 after a follow-up sample, all $0:
-    (a) the harness builds a plain text-to-image pipeline on cagliostrolab/animagine-xl-3.1 - no img2img, no
-    IPAdapter, no control image - so nothing outranked the prompt here and every miss is attributable to the
-    words or the model''s own prior; the "a reference image beats the prompt" finding from the motion lane does
-    NOT apply on this path. (b) "squat, round-bellied" rendered 0 of 4 (all slim), which is the second piece of
-    evidence for the same wall - the six sheets also differed only in build tags and came back as one face wearing
-    six builds. (c) removing "sash" and "heavy sloped brow" closed the robe and anger faults (0 of 4 scowling,
-    0 of 4 fanged, 0 of 4 robed) but regressed on not-cute and overshot age to 14-16, so it is NOT published as
-    a seventh option. (d) the specs were carrying the motion lane''s "pale yellow-green skin, bald"; reverted to
-    the approved-frame wording "green skin, bald head", which gave properly green skin in 2 of 4.'
+  verdict_hint: one number / all six are wrong because X / all six are wrong, go get a reference or a
+    drawn design
+  note_for_lanes: 'The six tiles are seed s0 of jobs ep2-goblin-design-d1-0814 through d6-0814 (four seeds
+    each, box sidecars on farm-results-rtx5090 under farm-out/ep2-goblin-design-dN-0814/). s0 is used
+    because the goblin''s identity seed is settled as s0. The six differ ONLY in build tags: d1 squat/round-bellied,
+    d2 lanky/stooped, d3 wide jaw, d4 long jaw, d5 snub nose, d6 hook nose - everything else in the prompt
+    is identical. All 24 renders were opened before this card was written; the other three seeds per design
+    are on the results branch, unpublished. A baked JPG carries no filename of its own, so this note is
+    the only thread from the picture back to what drew it. $0, local GPU, animagine-xl-3.1. UPDATED 2026-08-15
+    after a follow-up sample, all $0: (a) the harness builds a plain text-to-image pipeline on cagliostrolab/animagine-xl-3.1
+    - no img2img, no IPAdapter, no control image - so nothing outranked the prompt here and every miss
+    is attributable to the words or the model''s own prior; the "a reference image beats the prompt" finding
+    from the motion lane does NOT apply on this path. (b) "squat, round-bellied" rendered 0 of 4 (all
+    slim), which is the second piece of evidence for the same wall - the six sheets also differed only
+    in build tags and came back as one face wearing six builds. (c) removing "sash" and "heavy sloped
+    brow" closed the robe and anger faults (0 of 4 scowling, 0 of 4 fanged, 0 of 4 robed) but regressed
+    on not-cute and overshot age to 14-16, so it is NOT published as a seventh option. (d) the specs were
+    carrying the motion lane''s "pale yellow-green skin, bald"; reverted to the approved-frame wording
+    "green skin, bald head", which gave properly green skin in 2 of 4.'
+  resolved:
+    date: '2026-08-15'
+    verdict: 'DESIGN 1 IS THE GOBLIN. Your words: "ill take 1 for the goblin, although some of the heads
+      in the reference are dismorphed or something, so just, beware." Recorded as the pick AND as a caveat
+      that binds the next step: design 1 (job ep2-goblin-design-d1-0814, seed s0, squat/round-bellied
+      build tags on identity seed s0) is the goblin, and the DEFORMED HEADS ON THAT SHEET ARE NOT PART
+      OF WHAT WAS PICKED. The reference build must not inherit them: any frame from d1 whose skull is
+      misshapen is excluded from the frozen reference set rather than averaged into it, and the frames
+      that go in get looked at one by one for that fault before anything is frozen. You picked a design,
+      not a sheet. The six beats this gated — 07, 08, 15, 17, 19, 20 — are unblocked on the design; they
+      still wait on the reference build passing that check.'
+- what: BEAT 20 - IS THE FRUIT ALLOWED TO BE RED? All four seeds of beat 20 came back a dark red-brown
+    fruit - an apple or a plum - not purple, and beat 18's whole shipping fault is already a cold reader
+    calling its fruit a plum, so shipping red two beats later repeats it and makes it look deliberate.
+    Purple stays canon either way; this asks only whether beat 20 is allowed to break it. Re-rendering
+    is $0 on the local card.
+  url: /review/ep2-picks/sheets/b20-fruit-colour-0815.jpg
+  group: taste
+  since: '2026-08-15'
+  kind: pick
+  verdict_hint: red is fine, ship it / no, re-render beat 20 purple
+  note_for_lanes: Tiles are seeds s0-s3 of ep2-b20-idfix (farm-out/ep2-b20-idfix/20-evidence-wave1-sN.png
+    on origin/farm-results-rtx5090); s3 is the recorded pick. Baked 2026-08-15, $0, no render - the PNGs
+    were already on the branch. A baked JPG carries no filename of its own, so this note is the only thread
+    from the picture back to what drew it. The fault text is quoted from review/ep2-picks/done-definitions.yaml,
+    which recorded it and had no way to ask him.
+- what: BEAT 16 - A SECOND TAKE YOU HAVE NEVER SEEN. Beat 16 rendered as a pair and only leg A was ever
+    shown to you; leg B is the same beat from a different seed with a proper daylight sky and clouds where
+    leg A blows out to near-white (its leaf is also the round canon one rather than leg A's lobed fig
+    leaf, which cuts both ways). Nothing else about the beat changes. Both already exist - picking B costs
+    nothing.
+  url: /review/ep2-picks/sheets/b16-leg-b-0815.jpg
+  group: taste
+  since: '2026-08-15'
+  kind: pick
+  verdict_hint: leg B, the daylight one / leg A stands
+  note_for_lanes: 'Leg A = ep2-b16-anim-0814, seed 20260806, blob 5e656e958d6ed841e3706eba0da0a9e2d7c6c229;
+    leg B = ep2-b16-animB-0814, seed 20260961, blob 131675cdadb07f732d5ad093b71bcb31caae2d73; both farm-out/<job>/13-remake-LTX-0813.mp4
+    on origin/farm-results-rtx5090. Frames 0, 40 and 90 pulled with ffmpeg, $0, no render. NOTE THE FILENAME:
+    both legs of beat 16 are called 13-remake-LTX-0813.mp4 and their init is called b13-init-704x1280.png
+    - beat 13''s names on beat 16''s files. That is the reuse defect named in the card below.'
+- what: 'FILENAMES ARE BEING REUSED ACROSS ROUNDS AND IT HAS NOW COST YOU TWICE - a note, not a question.
+    Two cards on this board pointed at the wrong picture today because a card''s text was rewritten in
+    place and its link was left on the previous round''s sheet; separately, fifteen render jobs wrote
+    an init called b13-init.png and both legs of beat 16 are files called 13-remake-LTX-0813.mp4, which
+    is the same defect one layer down and is what made five beats indistinguishable by filename. Nothing
+    rendered from the wrong picture - every source was checked and every output is byte-distinct - but
+    a name that does not identify its round is a name that cannot be verified, and both times the check
+    that caught it was a human opening the file. Rule adopted, ours to keep: A NAME IS CLAIMED ONCE. New
+    round, new filename with its date and subject in it; a card whose text changes gets its url: re-checked
+    in the same edit.'
+  url: /review/ep2-picks/sheets/fig-three-loops-0815.jpg
+  group: result
+  since: '2026-08-15'
+  kind: decision
+  verdict_hint: nothing to answer - tell me if you want it enforced in code rather than by rule
+  resolved:
+    date: '2026-08-15'
+    verdict: 'RECORDED, NOT ASKED. This is ours to keep, not yours to rule on, so it goes on the record
+      rather than the board — "lets keep working towards me spending less and less time on banyan city
+      so i can focus on other projects." The rule is in force from today: a name is claimed once, a new
+      round gets a new dated filename, and any card whose text is rewritten has its url: re-checked in
+      the same edit. Say the word and it becomes a check in code instead of a rule in writing.'
