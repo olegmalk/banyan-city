@@ -55,3 +55,9 @@ jobs:
       # claim — chiefly that a missing measurement is never published as a zero,
       # and that machine hours are never added to the author's decision time.
       - run: python pipeline/test_episode_eta.py
+      # 40% of the IP-Adapter renders drawn to 2026-08-15 (112 of 280) were exact
+      # byte-duplicates, because reference sets smaller than four were poured into
+      # four fixed slots. The dedup that stops it and the sidecar header that used
+      # to say "beat 04" over every beat are pure functions — no GPU, no box — so
+      # the card that would waste the time is not the only thing that checks.
+      - run: python pipeline/test_goblin_ipa.py

@@ -47,6 +47,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import sys
 import time
 from pathlib import Path
@@ -247,23 +248,154 @@ def square(img):
     return img.crop(((w - s) // 2, (h - s) // 2, (w - s) // 2 + s, (h - s) // 2 + s))
 
 
+def canonical_slots(slot_sha):
+    """Map each of the four reference SLOTS to the first slot holding its bytes.
+
+    THE DEFECT THIS EXISTS FOR, measured 2026-08-15 across 18 IP-Adapter jobs
+    (280 renders): 112 of them — 40% — were exact byte-duplicates of another
+    render in the same job. The harness has four fixed slots
+    (`<prefix>-s0..3.png`) and a reference set was often built from fewer than
+    four distinct pictures poured into them, so `refs r0..r3` drew the same
+    image two, three or four times at the same scale with the same seed. The
+    law held exactly in all 17 measurable jobs: unique PNGs == seeds x number of
+    DISTINCT reference sha256. That is GPU time spent to reproduce a file that
+    was already on disk, and it is invisible in the output because the
+    duplicates have different filenames.
+
+    Identity is by CONTENT HASH, not filename: the same picture copied under two
+    slot names is one reference, and two different pictures that happen to share
+    a name are not our problem here (the paths are distinct by construction).
+    """
+    first, canon = {}, []
+    for i, sha in enumerate(slot_sha):
+        canon.append(first.setdefault(sha, i))
+    return canon
+
+
+def dedup_cells(cells, slot_sha):
+    """Drop cells that would redraw a reference this run has already drawn.
+
+    A cell is (ref_index, scale[, end_frac]). Two cells are the SAME RENDER when
+    everything but the reference index matches and their references are the same
+    bytes — the seeds are per-cell and identical, so such a pair produces two
+    byte-identical PNGs under two names.
+
+    Returns (kept, skipped, canon). `kept` holds the ORIGINAL cell tuples, so a
+    genuinely 4-distinct set comes back untouched and every existing filename on
+    disk stays exactly what it was. `skipped` is [(cell, cell_it_duplicates)] and
+    exists so the run can SAY what it did not draw — silently rendering 8 where
+    the arm asked for 16 would be its own kind of lie.
+    """
+    canon = canonical_slots(slot_sha)
+    kept, skipped, seen = [], [], {}
+    for cell in cells:
+        c = tuple(cell)
+        key = (canon[c[0]],) + c[1:]
+        if key in seen:
+            skipped.append((c, seen[key]))
+        else:
+            seen[key] = c
+            kept.append(c)
+    return kept, skipped, canon
+
+
+def dup_groups(slot_sha):
+    """Slots grouped by shared bytes, first-slot order. Groups of 1 included."""
+    order, groups = [], {}
+    for i, sha in enumerate(slot_sha):
+        if sha not in groups:
+            groups[sha] = []
+            order.append(sha)
+        groups[sha].append(i)
+    return [groups[s] for s in order]
+
+
+def dedup_report(slot_sha, skipped, n_seeds):
+    """The loud part. Lines a human reads before the frame count they expected.
+
+    Reports the duplication rather than hiding it: if someone asks for four
+    references and hands over two, the run says so at the top and says how many
+    renders that removed.
+    """
+    groups = dup_groups(slot_sha)
+    n_distinct = len(groups)
+    out = []
+    if n_distinct == len(slot_sha) and not skipped:
+        out.append(f"   references: {n_distinct} distinct of {len(slot_sha)} "
+                   "slots — nothing deduplicated")
+        return out
+    out.append("")
+    out.append("!! REFERENCE SET IS NOT %d DISTINCT IMAGES — %d distinct of %d "
+               "slots" % (len(slot_sha), n_distinct, len(slot_sha)))
+    for g in groups:
+        if len(g) > 1:
+            out.append("   slots " + ", ".join("r%d" % i for i in g) +
+                       " are BYTE-IDENTICAL (sha256 %s)" % slot_sha[g[0]][:12])
+    for cell, dup_of in skipped:
+        out.append("   SKIPPED cell r%d (scale=%s%s): same bytes and same "
+                   "config as r%d — it would have redrawn it exactly"
+                   % (cell[0], cell[1],
+                      "" if len(cell) < 3 or cell[2] is None
+                      else ", window=%s" % (cell[2],),
+                      dup_of[0]))
+    out.append("   %d renders NOT spent (%d skipped cells x %d seeds). The "
+               "frames the skipped cells would have written do not exist; the "
+               "bytes are already on disk under the surviving cell's name."
+               % (len(skipped) * n_seeds, len(skipped), n_seeds))
+    return out
+
+
+def ref_name_reliable(ref_name: str, beat) -> bool:
+    """Does a reference FILENAME's beat prefix match the beat being drawn?
+
+    The slot filenames default to `04-the-footnote-wave1-s{i}.png` and are
+    deliberately reused for other beats' references (goblin_ipa_beat.py holds
+    the names fixed while the beat varies), so `ip_adapter_reference: <name>` has
+    been writing a beat-04 filename onto frames of beat 02, 06, 15, 20... Only
+    the sha256 identifies the bytes. Returns None when the name claims no beat.
+    """
+    m = re.match(r"(\d{2})[-_]", str(ref_name))
+    if not m:
+        return None
+    try:
+        return int(m.group(1)) == int(beat)
+    except (TypeError, ValueError):
+        return None
+
+
 def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
             harness_sha: str, drafts_sha: str, self_sha: str, wg,
             ref: Path, ref_sha: str, scale: float,
-            window: tuple = None, n_seeds: int = 4) -> None:
+            window: tuple = None, n_seeds: int = 4,
+            ref_slot: int = None, dup_slots=(), n_slots: int = 4,
+            n_distinct: int = None) -> None:
     """§7.2 provenance, written at render time beside the frame."""
     def block(text: str) -> str:
         return "\n".join("  " + ln for ln in text.strip().splitlines())
 
+    # THE HEADER USED TO SAY "beat 04" NO MATTER WHAT. goblin_ipa_beat.py draws
+    # other beats by rebinding this module's BEAT, and 248 of the 280 sidecars
+    # written to 2026-08-15 — 89% — carried a hardcoded "beat 04" over a frame
+    # of some other beat. The machine field `shot_beat` below was right all
+    # along; the prose a human reads was not. It now comes from the same value.
+    beat = row["beat"]
+    try:
+        beat_txt = "%02d" % int(beat)
+    except (TypeError, ValueError):
+        beat_txt = str(beat)
+    _name_ok = ref_name_reliable(ref.name, beat)
     lines = [
         "# Still provenance (7.2), written AT RENDER TIME by goblin_ipa_sample.py",
-        "# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat 04 —",
+        f"# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat "
+        f"{beat_txt} —",
         "# not a wave, and not a candidate for the founder to pick from. The",
         "# prompt, seeds, steps, guidance and negative are byte-identical to the",
         "# wave-1 sample (commit 406909c); the ONLY change is the IP-Adapter",
-        "# conditioning recorded below. The reference image is one of the four",
-        "# wave-1 frames, used because all four are used in turn — it is NOT a",
-        "# canonical goblin and nobody has picked one.",
+        "# conditioning recorded below. The reference image is one of the",
+        "# reference SLOTS listed under --refs, used because every distinct one",
+        "# is used in turn — it is NOT a canonical goblin and nobody has picked",
+        "# one. The slot FILENAMES are historic and may name a different beat;",
+        "# only ip_adapter_reference_sha256 identifies the bytes.",
     ]
     lines += [f"#   NEGWARN: {w}" for w in row["warns"]]
     body = [
@@ -303,10 +435,38 @@ def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
              % (window[0] - 1, wg.STEPS, window[1] * 100, wg.STEPS - window[0]))),
         f"ip_adapter_reference: {ref.name}",
         f"ip_adapter_reference_sha256: {ref_sha}",
+        # The NAME is the unreliable half of this pair and now says so. The slot
+        # filenames are held fixed across beats on purpose, so a beat-04 name on
+        # a beat-20 frame is expected — what was not acceptable is recording it
+        # as though it identified the picture.
+        ("ip_adapter_reference_name_reliable: true"
+         if _name_ok is True else
+         "ip_adapter_reference_name_reliable: unknown (filename names no beat)"
+         if _name_ok is None else
+         "ip_adapter_reference_name_reliable: false"),
+        "ip_adapter_reference_name_note: >-",
+        block("the filename above is a SLOT name under --refs, not a fact about "
+              "these bytes: the slots keep their historic prefix while the beat "
+              "varies%s. Identify the reference by "
+              "ip_adapter_reference_sha256, never by this name."
+              % ("" if _name_ok is not False else
+                 f", and this one claims a different beat than {beat_txt}")),
+        f"ip_adapter_reference_slot: r{ref_slot}" if ref_slot is not None
+        else "ip_adapter_reference_slot: null (not recorded)",
+        # Written on EVERY frame, not only the deduplicated runs, so a reader can
+        # tell "this set really had four pictures in it" from "nobody checked".
+        ("reference_set_distinct: %s of %s slots"
+         % (n_slots if n_distinct is None else n_distinct, n_slots)),
+        ("ip_adapter_reference_duplicate_slots: none (these bytes appear in one slot)"
+         if not dup_slots else
+         "ip_adapter_reference_duplicate_slots: [%s]  # byte-identical to this "
+         "one; each was rendered ONCE, not once per slot"
+         % ", ".join("r%d" % s for s in dup_slots)),
         "ip_adapter_reference_prep: centre-cropped to square, then the pipeline's CLIPImageProcessor",
         "ip_adapter_reference_note: >-",
-        block("one of the four wave-1 frames. All four are used as the "
-              "reference in turn across this run, so the agreement number is a "
+        block("one of the reference slots given to this run. Every DISTINCT "
+              "reference is used in turn — slots holding the same bytes are "
+              "rendered once, not once each — so the agreement number is a "
               "property of the mechanism and not an endorsement of any one "
               "creature. Choosing the goblin is R4's call and this run does "
               "not make it."),
@@ -475,6 +635,16 @@ def main() -> int:
         (harness / "render_wave_goblin.py").read_bytes()).hexdigest()
     drafts_sha = hashlib.sha256(drafts_path.read_bytes()).hexdigest()
     ref_sha = {r.name: hashlib.sha256(r.read_bytes()).hexdigest() for r in refs}
+    slot_sha = [ref_sha[r.name] for r in refs]
+    # DO NOT RENDER THE SAME REFERENCE TWICE. Deduplicated by CONTENT before a
+    # single step of denoise is spent; see dedup_cells(). The cells that survive
+    # keep their original names, so a genuinely 4-distinct set is byte-identical
+    # to every run made before this existed.
+    cells_asked = cells
+    cells, skipped_cells, canon = dedup_cells(cells, slot_sha)
+    groups = dup_groups(slot_sha)
+    n_distinct = len(groups)
+    slot_dups = {i: [j for j in g if j != i] for g in groups for i in g}
     task = a.task or f"ep2-b04-ipa-{int(time.time())}"
     # The arithmetic is unchanged and indexed ABSOLUTELY: seed index i is the
     # same number whether it is drawn in this run or a later one, so s4 in an
@@ -487,6 +657,12 @@ def main() -> int:
           flush=True)
     print(f"   mechanism: IP-Adapter Plus, arm={a.arm}, {len(cells)} cells "
           f"x {len(seeds)} seeds = {n_frames} frames", flush=True)
+    for ln in dedup_report(slot_sha, skipped_cells, len(seeds)):
+        print(ln, flush=True)
+    if skipped_cells:
+        print(f"   arm {a.arm} asked for {len(cells_asked)} cells "
+              f"({len(cells_asked) * len(seeds)} frames); {len(cells)} cells "
+              f"({n_frames} frames) are distinct renders.", flush=True)
     print(f"   seed indices s{idx[0]}..s{idx[-1]} (s0..s3 are the wave-1 seeds): "
           f"{seeds}", flush=True)
     print(f"   prompt tokens: {row['pos_tok']} (mechanism adds 0)", flush=True)
@@ -499,6 +675,34 @@ def main() -> int:
 
     out = Path(a.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
+
+    # The run-level record of what the slots actually held, written whether or
+    # not anything was skipped. A reader counting PNGs against an arm's cell
+    # count needs this to tell "the job dropped frames" from "the reference set
+    # was two pictures in four slots".
+    (out / "refs-dedup.yaml").write_text(
+        "# Which reference SLOTS held which bytes, by sha256, at render time.\n"
+        "# Cells whose reference is a byte-duplicate of an earlier cell's are\n"
+        "# NOT rendered: the output would be byte-identical under a second name.\n"
+        f"task: {task}\n"
+        f"arm: {a.arm}\n"
+        f"ref_prefix: {a.ref_prefix}\n"
+        f"slots: {len(refs)}\n"
+        f"distinct_references: {n_distinct}\n"
+        f"seeds: {len(seeds)}\n"
+        f"cells_asked: {len(cells_asked)}\n"
+        f"cells_rendered: {len(cells)}\n"
+        f"frames_asked: {len(cells_asked) * len(seeds)}\n"
+        f"frames_rendered: {n_frames}\n"
+        "slot_sha256:\n"
+        + "".join(f"  r{i}: {s}\n" for i, s in enumerate(slot_sha))
+        + "duplicate_slot_groups:\n"
+        + ("".join("  - [%s]\n" % ", ".join("r%d" % i for i in g)
+                   for g in groups if len(g) > 1) or "  []\n")
+        + "cells_skipped_as_duplicates:\n"
+        + ("".join(f"  - cell: {list(c)}\n    duplicate_of: {list(d)}\n"
+                   for c, d in skipped_cells) or "  []\n"),
+        encoding="utf-8")
 
     import torch                                                     # noqa: E402
     from PIL import Image                                            # noqa: E402
@@ -586,7 +790,9 @@ def main() -> int:
                     harness_sha=harness_sha, drafts_sha=drafts_sha,
                     self_sha=self_sha, wg=wg, ref=refs[ref_i],
                     ref_sha=ref_sha[refs[ref_i].name],
-                    scale=applied, window=window, n_seeds=len(seeds))
+                    scale=applied, window=window, n_seeds=len(seeds),
+                    ref_slot=ref_i, dup_slots=slot_dups.get(ref_i, ()),
+                    n_slots=len(refs), n_distinct=n_distinct)
             print(f"   {f.name} seed={seed} {secs:.0f}s  ({n}/{n_frames})",
                   flush=True)
 
