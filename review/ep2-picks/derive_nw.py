@@ -26,6 +26,7 @@ end and refused if it does not load.
 """
 import argparse
 import hashlib
+import json
 import re
 import subprocess
 import sys
@@ -70,7 +71,8 @@ def tokens(text: str) -> dict:
 
 
 def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
-           prompt: str = "", plate: str = "", seed: int = 0, frames: int = 0) -> str:
+           prompt: str = "", plate: str = "", seed: int = 0, frames: int = 0,
+           script: str = "") -> str:
     text = src_yaml.read_text(encoding="utf-8")
     old = tokens(text)
     for k in ("bench", "mp4", "png", "prefix", "id"):
@@ -152,6 +154,18 @@ def derive(src_yaml: Path, new_id: str, beat: int, slug: str, tag: str,
         if n != 1:
             sys.exit(f"!! expected one --frames value, replaced {n}")
 
+    # THE BEAT'S OWN LINE, STORED BESIDE THE ACTION. Four jobs were authored
+    # animating an action their beat does not call for -- a look-up where the
+    # script said turn a board over, a hand closing on a sprout where it said
+    # point at the scavenger -- because comparing the two meant opening
+    # node.md in another window and nobody did. Putting the line in the spec
+    # makes the mismatch visible where the action is written.
+    if script:
+        note = ("the beat's line from node.md. If the action above does not animate THIS, "
+                "the job is wrong however well it renders.")
+        text += ("script_line: " + json.dumps(script, ensure_ascii=False) + "\n"
+                 "script_line_note: " + json.dumps(note, ensure_ascii=False) + "\n")
+
     doc = yaml.safe_load(text)          # refuse anything that will not parse
     if doc.get("id") != new_id:
         sys.exit(f"!! id did not take: {doc.get('id')}")
@@ -178,10 +192,11 @@ def main() -> int:
     ap.add_argument("--plate", default="", help="path on the results branch")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--frames", type=int, default=0, help="LTX frame count, 8n+1")
+    ap.add_argument("--script", default="", help="the beat's line from node.md, stored beside the action")
     a = ap.parse_args()
 
     text = derive(Path(a.src), a.id, a.beat, a.slug, a.tag, a.prompt, a.plate, a.seed,
-                  a.frames)
+                  a.frames, a.script)
     out = REPO / "pipeline" / "jobs" / f"{a.id}.yaml"
     out.write_text(text, encoding="utf-8")
     print(f"wrote {out.relative_to(REPO)}")
