@@ -1,0 +1,181 @@
+# 2026-08-15, deep-queue lane. EXTENSION of a sample that has LANDED AND BEEN OPENED.
+#
+# NOT A NEW RECIPE, and that is why it carries no `sample: true`. Every knob --
+# beat, draft key, arm, reference set, ref prefix, harness, sampler -- is held at
+# ep2-b04-standing-views-0815's values byte for byte. The ONLY thing that moves is
+# the seed index, via the sampler's own `--seed-start`, which exists for this:
+# "index of the first seed, so a later run can EXTEND an existing one". The seed
+# arithmetic is `SEED + BEAT + i*1000` indexed ABSOLUTELY, so s6..s7 here are the
+# seeds a single run of eight would have drawn. They cannot collide with s0..s5, and
+# the output filenames end -s6/-s7 so they cannot overwrite them either.
+#
+# WHAT THE SAMPLE ACTUALLY SHOWED, opened frame by frame by this lane rather than
+# read off the job name (the rule that caught five aspirational "fixes" today):
+#   PASS -- the goblin. Lean, dour, half-lidded, long robe, sash, boots, head to
+#     toe, ~5.5-6 heads on r1/r2. ZERO blush across the frames opened. The adult
+#     wording plus the blush/chibi/baby negative block holds for a second run.
+#   FAIL -- the background, and it is the sample's own sharpest prediction:
+#     "grass and sky in all sixteen, and NO blank-paper frames". The frames came
+#     back on BLANK WHITE with a tuft of grass under the boots. `pale sky above
+#     him` in the positive and `no white background, no simple background` in the
+#     negative did not buy a location. That is the sample's stated redirect
+#     condition, verbatim: "the blank paper was coming from the REFERENCE tile's
+#     white field and not from the prompt". It is rule 5 again -- THE REFERENCE
+#     DECIDES, THE PROMPT LOSES, for framing and location.
+#     This job does NOT try to fix that. Fixing it is a reference-set change and
+#     therefore a new sample, which is a different job. This one buys the thing
+#     the white paper does not spoil.
+#
+# WHY MORE SEEDS IS STILL WORTH SEVEN MINUTES DESPITE THAT FAILURE: the blocker
+# this chain exists to clear is VIEW SPREAD, not location. A reference tile is
+# allowed to be on white -- that is what a reference tile normally is. The sample
+# could not commission four views because a round varies the REFERENCE and all
+# four rounds share one prompt; the only thing that varies WITHIN a round is the
+# seed, and it predicted in advance that it might come back "four-distinct by
+# sha256 but weak in angle coverage". Every frame this lane opened was frontal.
+# So seeds are the ONLY lever left that can produce a three-quarter or a profile
+# without changing the recipe, and two more seeds per job is the cheapest honest
+# draw at it.
+#
+# WHAT WOULD MAKE THIS A WASTE, said before it runs: if s6 and s7 are frontal in
+# all four rounds too, then seed does not move body angle either, and the answer
+# is a drawn or sourced turnaround rather than another sampler round. That is a
+# real finding and it is worth seven minutes to have it stated rather than assumed.
+id: ep2-b04-stdviews-s6-0815
+task: ep2-b04-stdviews-s6-0815
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+owner: deep-queue lane, 2026-08-15
+after:
+- ep2-b04-standing-views-0815
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. THIS JOB STAGES NO BEAT ACTION. Beat 04 is the
+  block the reference arithmetic is anchored in and its `extra_neg` tier is what the draft
+  was measured against; what is being drawn is a REFERENCE TILE of a standing figure, not
+  beat 04''s moment. Beat 04''s script line -- "The scavenger holds his breath, eyes darting"
+  -- is deliberately NOT staged here, and no frame from this job may be cut into beat 04 as
+  a plate. Beat 04''s `extra_neg` is shared with every other job on this beat and is not
+  touched.'
+consumer: 'The standing-views lane''s own eye, then the frozen reference set
+  refs-goblin-d1std2-0815. These frames are CANDIDATE TILES that join s0..s3 in one pool of
+  candidates; the four soundest and most VIEW-DISTINCT get cut, hashed and frozen, and that
+  set gets ONE plate sample before any beat is re-pointed at it. NO BEAT IS RE-POINTED BY
+  THIS JOB. The twelve beats on refs-goblin-approved-0814 stay exactly where they are.'
+success: 'Eight frames, opened one at a time. The result that is worth the render is AT LEAST
+  ONE sound standing full body whose BODY ANGLE differs from the frontal pose s0..s3 all
+  drew, and different from whatever s4..s5 draw -- a three-quarter or a profile, correct species, no blush, head and feet both in
+  frame, no melted midface. A clean failure is worth the same seven minutes: eight more
+  frontal frames means seed does not move body angle and the next lever is a drawn or
+  sourced turnaround, which is reported as the blocker it is rather than swept.'
+why: 'Two more seeds of a recipe that has already rendered and already been opened. Zero new
+  wording, zero new references, zero new knobs -- the ONE SAMPLE rule is satisfied by
+  ep2-b04-standing-views-0815, which this job carries in `after:` and does not scale beyond
+  more draws of the identical draft. $0, local card, no provider.
+
+  TOKEN BUDGET: NOT RE-MEASURED HERE, AND IT DOES NOT NEED TO BE. The prompt is not
+  edited by this job -- same `--draft-key authored_b04_standing_views`, same beat block,
+  same `extra_neg` tier -- so the string the sampler builds is the identical string the
+  sample measured ON THE BOX with the real CLIP tokenizer via its own `dry` step:
+    positive 61/77  (16 tokens of headroom)
+    negative 71/77  (recipe 71 -> sent 71: NOTHING dropped)
+  `photorealistic` and `3d render` are the negative''s first two terms and both survive at
+  71, which is what holds back the 3D-CG look the founder killed. This job runs its own
+  `dry` step anyway, first, so that claim is re-asserted by the box and not by me.'
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815
+  - --draft-key
+  - authored_b04_standing_views
+  - --arm
+  - window4
+  - --seed-start
+  - '6'
+  - --seeds
+  - '2'
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815
+  - --draft-key
+  - authored_b04_standing_views
+  - --arm
+  - window4
+  - --seed-start
+  - '6'
+  - --seeds
+  - '2'
+  - --task
+  - ep2-b04-stdviews-s6-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # The glob carries THE BEAT SLUG (`04-the-footnote`). A glob without it matches
+  # nothing, publishes nothing, and still returns like a render failure -- that is
+  # what made six rendered plates read as six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b04-stdviews-s6-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-stdviews-s6-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/04-the-footnote-*\")) + sorted(glob.glob(srcdir\
+    \ + \"/refs-dedup.yaml\"))\npngs = [f for f in src if f.lower().endswith(\".png\")]\nlines\
+    \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-stdviews-s6-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s),\", len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs)\
+    \ >= 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r0-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r1-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r2-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r3-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r0-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r1-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r2-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-stdviews-s6-0815\04-the-footnote-ipa-r3-w015-s7.png

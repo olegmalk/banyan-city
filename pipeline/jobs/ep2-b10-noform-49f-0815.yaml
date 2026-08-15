@@ -1,0 +1,211 @@
+# 2026-08-15, deep-queue lane. Beat 10 motion, seed A. GUARD-ONLY BEAT.
+#
+# 1. THE SCRIPT LINE, quoted from the live approved script so a mismatch would be
+#    VISIBLE rather than buried:
+#
+#      **NO FORM — 0:45-0:50**
+#      "Guard 2 flips the clipboard around: the back is blank."
+#      > GUARD 2: "There's no form for that. There's *barely* a form for the apple."
+#
+#    THE ACTION THIS JOB ANIMATES: he turns the board in his hands around to face
+#    the camera, showing its blank back.
+#
+#    THAT IS THE BEAT'S OWN ACTION, not an action chosen to suit the picture. The
+#    beat IS the board being turned around and the back being blank -- the blankness
+#    is the joke, and it only lands if the turn actually happens on screen. Three
+#    beats rendered the wrong action this morning because the action was written to
+#    suit the plate instead of the beat, and the overnight "fixes" for 07/09/14/15/17
+#    fixed nothing while carrying names like `turn` and `lookup` that were purely
+#    aspirational. The staging law constrains HOW an action is shot, never WHICH
+#    action is shot.
+#
+# 2. THE INIT IS THIS BEAT'S OWN PLATE, AND I OPENED IT RATHER THAN TRUSTING ITS NAME.
+#    `10-no-form-ipa-r1-w015-s0.png` from ep2-b10-scene-0815. What is actually in
+#    the frame, described from opening it and not from its name: TWO adult guards
+#    standing in green summer grass with a hedge, treeline and pale sky behind, each
+#    holding a dark clipboard, the right-hand one holding his with the back edge already
+#    turned partly toward camera. A REAL LOCATION.
+#    HONEST DEFECT, RECORDED BEFORE THE RENDER: the cast has DRIFTED off the ruling.
+#    The brief rules adult, SHORT BROWN HAIR, brown tunic and sash; this plate has one
+#    black-haired and one white-haired guard in cream coats with brass buttons. The
+#    location is right and the prop and the action are stageable, so it is worth a
+#    motion take -- but the cast is a known miss and must not be read as approved.
+#    A REAL LOCATION, not a costume identity card on blank paper -- which is the exact
+#    defect that made six of nineteen renders worthless on 2026-08-14 and which two of
+#    them survived by scoring at the TOP of the wave on frame-difference, because a
+#    card breathing measures exactly like a shot.
+#
+#    THE SHA IS ASSERTED AND IT IS THE SHA OF THE BYTES I LOOKED AT. I copied the file
+#    down, opened it, and recomputed:
+#      8895955b038bfd02d334ced19633724aff764268f0aef12eec32b0a803863503
+#    which matches ep2-b09-scene4-0815.sha256 on the box. The crop step asserts it
+#    again before anything is written, so if the file moves under us this job refuses
+#    instead of animating a different picture.
+#
+#    Beat 10's sidecars were among those found carrying `shot_beat: 5` -- built off the
+#    wrong template. This job inherits NO sidecar and no wave template: its init is
+#    named by full path, its sha is asserted, and its prompt is written here.
+#
+# 3. NO GOBLIN IS IN THIS FRAME, so none of the goblin design questions -- blush, head
+#    ratio, adult wording, the frozen reference set -- touch this render at all. The
+#    guard cast is founder-approved. That is why beat 10 is queueable tonight while
+#    07, 08, 18 and 19 are not.
+#
+# 4. STANDING ACTION ONLY, AND BARELY THAT. Pose is unreachable through reference or
+#    prompt (48 frames today, nothing crouched), so this job asks for no change of
+#    pose whatever -- only the face moves. It cannot fail on the pose axis because it
+#    does not spend a token on one.
+#
+# 5. THE LOOSENED PROMPT RECIPE, measured on beat 13 at fixed init and seed:
+#      old prompt (160 words, 12 stillness phrases): cut 66.6 | motion 20.4 23.4 2.8 0.3
+#      loosened   (43 words,  0 stillness phrases): cut  4.5 | motion 19.4 18.3 4.6 3.2
+#    The cut collapsed from 66.6 to 4.5 -- the clip starts FROM the plate instead of
+#    discarding it at frame 2. Its five rules, all obeyed here:
+#      1. the action leads and nothing precedes it
+#      2. no stillness or no-change clause anywhere in the positive; camera bans live
+#         in the negative only
+#      3. identity, costume and scene are TRUSTED TO THE INIT and not restated -- which
+#         is why this prompt never says "guard", "tunic", "grass" or "treeline"
+#      4. only what the plate contains: the board is already in his hands in the init, so
+#         the prompt asks only that it be TURNED, never that it be picked up, and
+#         nothing enters frame
+#      5. style tail kept
+#
+# 6. 49 FRAMES, which is the default and not a guess: 49 held identity at 9/10 where
+#    193 frames scored 4/10 and lost the action as well.
+#
+# 7. TWO SEEDS, this being A of two. The twin ep2-b10-noform-49fB-0815 is
+#    byte-identical except for its seed, its payload directory and its output name, so
+#    the pair reads as one A/B and a single bad draw cannot be mistaken for a verdict
+#    on the recipe.
+id: ep2-b10-noform-49f-0815
+task: ep2-b10-noform-49f-0815
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 8
+max_attempts: 1
+owner: deep-queue lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 10 is THE PAUSE -- "Guard 1''s face works through
+  it, slowly." -- one guard, no goblin. This is a silent motion take on an approved node, not an
+  episode assembly and not a voice synthesis.'
+consumer: 'The ep2 cut. Beat 10 is one of the beats the demo cut had to leave broken, and it has
+  had no motion take off a scene plate -- only takes off inits nobody opened. This is the first.
+  Read as a pair with its twin, and scored on whether the FACE moves while the frame does not.'
+success: 'A 704x1280 mp4, 49 frames, that opens on the plate rather than discarding it, in which
+  the board is turned around to show its blank back while the men stay put in the same field --
+  the location holding for the whole clip, no cut, no scene change, no camera move. The failure
+  worth reporting is a frozen clip: if nothing moves at all, the loosened recipe does not reach
+  a prop-handling beat and beat 10 needs a different lever, which is a real finding and gets said
+  rather than swept. A clip that pans, zooms or relocates is also a failure and the negative is
+  where that is fought.'
+why: 'A guard-only beat with a verified scene plate, the correct scripted action, the loosened
+  prompt recipe that collapsed the cut metric today, and 49 frames. Nothing here is a new recipe
+  -- it is today''s proven motion recipe pointed at a beat that had no usable init until this
+  afternoon. $0, local card, no provider.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-noform-49f-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b10-noform-49f-0815\b10-motion-prompt.txt: 'He turns the board in his hands around to face the camera, showing its blank back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b10-noform-49f-0815\b10-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b10-noform-49f-0815\b10-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\b10-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\b10-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\b10-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-noform-49f-0815\b10-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260815,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\b10-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\b10-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-49f-0815\\\\10-no-form-LTX-noform-a.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-noform-49f-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b10-scene-0815\10-no-form-ipa-r1-w015-s0.png
+  - --sha256
+  - 8895955b038bfd02d334ced19633724aff764268f0aef12eec32b0a803863503
+  - --out
+  - C:\banyan-farm\ep2-b10-noform-49f-0815\b10-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-49f-0815\b10-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-49f-0815\b10-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-noform-49f-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-noform-49f-0815\bench-b10-noform-a.jsonl
+  - --bench-label
+  - ep2-b10-noform-49f-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    # THE GLOB CARRIES THE BEAT SLUG (10-no-form). Without it the glob matches
+    # nothing and the step publishes nothing while returning a code that reads like
+    # a render failure.
+    import glob, hashlib, os, shutil
+    src_dir = "C:/banyan-farm/ep2-b10-noform-49f-0815"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b10-noform-49f-0815"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(src_dir + "/10-no-form-LTX-noform-a.mp4*")
+                 + glob.glob(src_dir + "/b10-init-704x1280.png")
+                 + glob.glob(src_dir + "/bench-b10-noform-a.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b10-noform-49f-0815.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b10-noform-49f-0815\10-no-form-LTX-noform-a.mp4
+- C:\banyan-farm\ep2-b10-noform-49f-0815\b10-init-704x1280.png

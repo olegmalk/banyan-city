@@ -1,0 +1,181 @@
+# 2026-08-15, deep-queue lane. Guard-only scene plate for beat 09, s2 EXCLUDED.
+#
+# 0. WHY BEAT 09 AGAIN WHEN ep2-b09-scene4-0815 ALREADY LANDED TODAY. Two reasons,
+#    both concrete. First, scene4 ran on refs-guards-twoinfield-0813 WITH the s2 tile
+#    in slot 2 -- the tile that degrades the cast to balloon heads across four beats --
+#    so one of its four rounds was spent on a reference known to be bad. This round
+#    spends all four on tiles that are not.
+#    Second, and this is the practical one: beat 09's MOTION jobs are BLOCKED right
+#    now because box_enqueue's plate check cannot fetch scene4's frames -- they have
+#    not reached origin/farm-results-rtx5090 -- and the only beat-09 plates that HAVE
+#    reached it are `-guardpick-` sets, which are identity cards on blank paper and
+#    are barred. The guard's own prescribed remedy is 'publish the plate through a
+#    farm-out job and point --src at it'. That is exactly what this job does, so it
+#    CLEARS the block instead of waiving it. No guard is waived anywhere in this batch.
+#
+# 1. THE SCRIPT LINE THIS BEAT IS, quoted from the live approved script so the
+#    mismatch would be VISIBLE if there were one:
+#
+#      "Guard 1's face works through it, slowly."
+#
+#    THE ACTION THIS JOB DRAWS: close on his face, head and shoulders, working slowly through an idea, eyes drifting, mouth slightly open.
+#
+#    The draft's action IS the script's, almost word for word: a face working slowly
+#    through an idea. There is no other event in this beat, so there is no other
+#    action it could have drawn.
+#    The staging law constrains HOW an action is shot, not WHICH action is shot.
+#    A well-executed wrong action is worse than a failed right one because it
+#    looks like progress -- three beats rendered the wrong action this morning
+#    because the action was written to suit the plate instead of the beat.
+#
+# 2. NO GOBLIN IS IN THIS FRAME. Beat 09 is a guard beat (1boy), the guard cast is
+#    founder-approved, and nothing unsettled about the goblin design is inherited
+#    here. That is the whole reason this beat is queueable tonight while 07, 08,
+#    18 and 19 are not.
+#
+# 3. STANDING ACTION ONLY. Pose is unreachable through reference or prompt --
+#    confirmed across 48 frames today, nothing crouched. This draft asks for no
+#    crouch, no fold and no kneel, so it spends no render on a pose the mechanism
+#    cannot produce.
+#
+# 4. THE REFERENCE, AND WHY IT IS NOT THE OBVIOUS ONE. The adapter owns
+#    composition: rule 5, THE REFERENCE DECIDES AND THE PROMPT LOSES, for framing,
+#    location and proportion. Beats 05 and 11 came back with a real field in frame
+#    off `refs-guards-twoinfield-0813`; beats 06 and 09 came back as COSTUME CARDS
+#    off `refs-charref-guards-r5-0812`, whose own draft reads "reference sheet,
+#    multiple views, turnaround, ... white background". Same sampler, same arm,
+#    same day. So this job uses the two-in-field reference and never a sheet.
+#
+#    IT USES A SET WITH THE s2 SLOT EXCLUDED, built for this batch and verified by
+#    hash. Source `refs-guards-twoinfield-0813` s2 = a98aa7c261afab4b... is the
+#    tile that degraded the cast to balloon heads across four beats. In
+#    `refs-guards-twoinfield-nos2-0815` that hash appears in NO slot:
+#      s0 26062b66dfcf9b22  (source s0)
+#      s1 725a2c1163971f85  (source s1)
+#      s2 293afe8187731764  (source s3, PROMOTED into the excluded slot)
+#      s3 26062b66dfcf9b22  (source s0 again -- a DECLARED duplicate)
+#    The harness builds four slots `{prefix}-s{i}` for i in 0..3 and refuses on a
+#    missing file, so a set must have four files even when only three are trusted.
+#    SCORE r0, r1 and r2. r3 is a known duplicate of r0 and its frames are
+#    discarded -- said here, before the render, so it cannot be read as a finding.
+#
+# 5. TOKEN BUDGET, MEASURED ON THE BOX WITH THE REAL CLIP TOKENIZER, not estimated
+#    on the Mac (the Mac estimator lies by ~3 tokens). I ran this exact draft
+#    through the harness's own `--dry` before writing this file:
+#      positive 67/77
+#      negative recipe 72 -> sent 72  (NOTHING was dropped)
+#    Terms that overflow 77 are dropped silently and the first casualties are
+#    `photorealistic` and `3d render`, which are what hold back the 3D-CG look the
+#    founder killed. Both are the negative's leading terms and both are in the
+#    sent string. The count tag derived '1boy' and the block declares '1boy' --
+#    that check is exactly what failed ep2-b06-plate-0815 at its dry step for $0
+#    on 2026-08-14 (its draft said "Two adult guard men" under a 1boy block), and
+#    it is why this job runs `dry` first too.
+id: ep2-b09-plate-nos2-0815
+task: ep2-b09-plate-nos2-0815
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+owner: deep-queue lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 09 is THE PAUSE -- "Guard 1''s face works through it, slowly."
+  -- guards only, no goblin. This is a still plate on an approved node, not an episode assembly.'
+consumer: 'The ep2 motion lane, which has no scene init for beat 09 that is not a costume
+  identity card, and animated one on 2026-08-14 because nobody opened an init first. This
+  plate is the frame-one that beat needs. It is also the founder-facing still for beat 09
+  on the review page.'
+success: 'Sixteen frames; r0, r1 and r2 scored, r3 discarded as a declared duplicate. Pass is
+  a frame with beat 09''s LOCATION in it -- green summer grass, hedge or dark treeline,
+  pale sky -- and the guard cast as ruled: adult, short brown hair, brown tunic and sash, no
+  armor, no helmet, bellies covered, and the beat''s own action reading. The failure worth
+  reporting is another blank pale ground with a figure on it, which would mean the two-in-field
+  reference is NOT what decides composition and the diagnosis in clause 4 is wrong.'
+why: 'A guard-only beat whose plate does not exist, drawn on the reference that has already
+  produced a real field twice and with the tile that produced balloon heads removed. One
+  recipe, three beats, each measured through its own dry step before it was written down.
+  $0, local card, no provider.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815
+  - --draft-key
+  - authored_b09_scene4
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815
+  - --draft-key
+  - authored_b09_scene4
+  - --arm
+  - window4
+  - --task
+  - ep2-b09-plate-nos2-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (09-the-pause) the sampler actually writes. A glob
+  # without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure -- that is what made six rendered plates read
+  # as six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b09-plate-nos2-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-plate-nos2-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/09-the-pause-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b09-plate-nos2-0815.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815\09-the-pause-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815\09-the-pause-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815\09-the-pause-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-plate-nos2-0815\09-the-pause-ipa-r3-w015-s0.png
