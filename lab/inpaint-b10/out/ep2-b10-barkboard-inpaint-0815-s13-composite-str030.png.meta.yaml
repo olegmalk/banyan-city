@@ -1,0 +1,40 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 704x1280
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260815
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/ep2-b10-barkboard-inpaint-0815/b10-composite-c1-704x1280.png
+init_sha256: 96e0a449afbdb4b2e683b34cf382b77e67f7248539bef6ccd8bb73f7f2c9a43e
+mask_png: ep2-b10-barkboard-inpaint-0815-s13-composite-str030-mask.png
+mask_shape: quad
+mask_corners_px: [[228, 518], [410, 531], [359, 715], [187, 693]]
+mask_bbox_px: [187, 518, 410, 715]
+mask_width_frac: 0.3168
+mask_height_frac: 0.1539
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-15T16:23:25Z
+render_seconds: 3.7
+wall_seconds: 9.1
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  beat 10 COMPOSITE lever, sample 2. Identical to s12 in every parameter and the same composite init sha 96e0a449; the ONLY changed variable is strength, 0.45 to 0.30. s12 proved the composite separates the thresholds - bark crust arrived at 0.45, a sigma where the bare plate (s1, same 0.45) produced none at all - but the model read the deepest composited fissure as an object boundary and split the slab in two. With the relief already in the init the material is no longer at risk from low sigma, so strength can move DOWN, the one direction whose effect on the outline is known across all twelve prior samples.
+prompt: |-
+  a slab of rough tree bark, dry grey-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  chrome clip, metal clip, spring clip, clipboard, white paper, lined paper, sheet of paper, writing, text, navy, dark blue, plastic, glossy, polished, planed timber, sanded plank, varnish, tree trunk, standing tree, branches, leaves, 1girl, 1boy, face, extra hands, photorealistic, 3d render
