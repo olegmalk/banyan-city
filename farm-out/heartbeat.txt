@@ -2004,3 +2004,4 @@
 19:50:47Z box-runner idle ready=0 failed=28
 19:51:32Z STARTED task=ep2-b13-blurplate-0815-1786823481 attempt=1 on box-runner
 20:00:52Z DONE task=ep2-b13-blurplate-0815-1786823481 rc=0 artifacts=4
+20:00:59Z STARTED task=ep2-b10-bark-barkface-0815-1786823814 attempt=1 on box-runner
