@@ -7768,3 +7768,27 @@ normally (`done` 728 → 732):
 --verify-deployed` hashes repo against box and currently says same. If it ever
 flaps again the signature is a growing `watchdog.log` — disable the task and read
 that file, and `--deploy` re-lands the whole thing in one idempotent command.
+
+### AMENDMENT, same night — macbook4's "hang" is the network, and I watched it happen
+
+After macbook4 finished the full production recipe clean (2.6 min, latents
+identical to macbook2's, same output PNG), it **dropped off the LAN
+entirely** — no mDNS name, no ARP entry, absent from a full subnet ping
+sweep, while macbook1/2/3/5 stayed reachable. Twenty minutes later it came
+back, and macbook5 flapped out in the same sweep. Then an SSH session to
+macbook4 connected, printed `up 10 days, 12:38, load 1.39`, and **stalled
+mid-command for over ten minutes**.
+
+So: the machine never rebooted, never crashed, is not loaded, and its weights
+hash clean. **A stalled SSH session is indistinguishable, from the driving
+end, from a seed that is taking 30+ minutes.** That is the most likely
+reading of the original macbook4 report, and it is an observation, not a
+proof — I did not catch the original event.
+
+The actionable part is not macbook4, it is the LAN: **this fleet is on WiFi
+at ~1.5–2 MB/s with intermittent mDNS/association drops**, which is why one
+5.1 GB model took ~35 min per machine to re-copy. Anything that drives these
+Macs over SSH should assume the connection can vanish and use detached runs
+with a result file to poll — the pattern the repair itself used — rather than
+holding a live session across a long job. Wired Ethernet for the fleet is a
+founder-touch decision; nothing here was reconfigured.
