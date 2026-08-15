@@ -1745,3 +1745,4 @@
 01:12:02Z STARTED task=ep2-goblin-design-d3-0814-1786756095 attempt=1 on box-runner
 01:12:07Z FAIL task=ep2-goblin-design-d3-0814-1786756095 rc=4 step=measure
 01:12:12Z STARTED task=ep2-goblin-design-d4-0814-1786756096 attempt=1 on box-runner
+01:12:17Z FAIL task=ep2-goblin-design-d4-0814-1786756096 rc=4 step=measure
