@@ -232,15 +232,48 @@ results:
         - "`rounds_used: 1` — beat 16 had exactly ONE round, so the pick must come from it, and the anim/animB pair committed 2026-08-14 18:32:41 and 18:38:45 is the only beat 16 animation round on the branch."
         - "Sidecars carry `shot_beat: 16`, `task: ep2-b16-anim-0814`."
         - "`ep2-b16-nw-0815/16-why-LTX-nw.mp4` is EXCLUDED: it is dated 0815, is a negative-weight probe, and postdates the verdict, so it cannot be what the verdict was about."
-      how_to_settle_the_A_B_leg: >-
-        Beat 16 is the only one of the five whose verdict names a frame-level
-        property that can be tested against the video: "the opening frame is
-        goblin-forward and sharp, then the composition jumps to leaf-forward by
-        f40", and the round result says "A large leaf fills the frame from f40
-        on". Extract both clips and check which one actually makes that jump at
-        f40. This is $0 and needs no GPU — `git show` the blob to a local file
-        and read it with pipeline/coldread_frames.py using DENSE CONSECUTIVE
-        frames. NOT ATTEMPTED YET; named here so it is not lost.
+      A_B_leg: SETTLED — LEG A, ep2-b16-anim-0814, seed 20260806
+      how_the_leg_was_settled:
+        method: >-
+          Both clips pulled off the results branch with `git show` into the
+          scratchpad and sampled at f0/f20/f40/f60/f90. $0, no GPU, no render.
+          ffprobe confirms both are 704x1280, 24fps, 97 frames.
+        the_test_that_FAILED_to_discriminate: >-
+          The property I expected to settle it does not. The recorded fault
+          "the opening frame is goblin-forward and sharp, then the composition
+          jumps to leaf-forward by f40" is true of BOTH legs — they share an
+          identical init plate (same git blob) so f0 is the same seated goblin in
+          both, and both cut to leaf-forward together. It is a property of the
+          round, not of a seed, and it cannot separate A from B.
+        the_test_that_DID_discriminate: >-
+          LEAF SHAPE. The beat 16 entry records an `unexpected_finding`: "THE
+          LEAF CAME OUT LOBED - a five-to-seven lobed palmate leaf, which is
+          exactly the 3-5 lobed fig leaf the cold reader said would identify the
+          fruit by itself. It contradicts the canon 'two broad round
+          cotyledons'." That is true of leg A and FALSE of leg B. Leg A's leaf is
+          a deeply cut palmate leaf with seven radiating lobes off a central
+          point. Leg B's leaf is a single broad ovate blade with one central
+          midrib and simple pinnate veins — round-edged, not lobed at all, and
+          it does not contradict the canon.
+        conclusion: >-
+          The verdict recorded for beat 16 describes a lobed palmate leaf, and
+          only one of the two legs has one. The verdict was written about leg A.
+          This is the same species of evidence that let beat 11 be overturned —
+          a named property checked against a fetched file.
+      correction_to_the_record: >-
+        The recorded fault says the composition jumps to leaf-forward "by f40".
+        Measured, the jump is already complete by f20 in BOTH legs — at f20 the
+        leaf fills the frame exactly as it does at f90. The subject change is
+        faster than the record says, which makes the fault slightly worse than
+        written, not better: the change of subject lands inside the first second
+        rather than approaching it.
+      incidental_difference_worth_naming: >-
+        The two legs also differ in sky. Leg A's background is a blown-out
+        near-white sky; leg B has a proper daylight sky with clouds and a warm
+        horizon. Nobody has recorded a preference between them and I am not
+        making one — that is a look question and belongs to R4. Naming it because
+        if beat 16 is ever re-picked, leg B is the better-looking plate and the
+        record currently gives no hint that a second leg exists.
 
     '21':
       status: RECOVERED TO THE ROUND AND THE PAIR
@@ -346,4 +379,125 @@ results:
       landed was formed against nothing, and is being re-checked against the
       definition rather than kept.
 
-  job_3_next_steps: PENDING — see the report; recorded in the next commit.
+  # =====================================================================
+  # JOB 3 — THE TWO BLOCKED PLATES. The concrete next step for each.
+  # =====================================================================
+  job_3_next_steps:
+
+    '08':
+      title: INSIDE HIM
+      definition_of_done: >-
+        "the clipboard comes DOWN and the point goes to the BELLY, both legible;
+        both guards and the scavenger in frame, since a point needs its target
+        visible."
+      the_next_step_is_NOT_a_plate_job: >-
+        My first framing of this was wrong and is corrected here. I set out to
+        write a beat 08 plate job with clipboard/waist/full-height wording, on the
+        theory that the two-shot had only ever been asked of the animator and never
+        baked into a plate. The scan does confirm no plate carries that wording.
+        But wording is not the missing thing.
+      THE_ACTUAL_BLOCKER: >-
+        Beat 08 is blocked on the same missing capability as beat 07: A PLATE WITH
+        TWO NAMED CHARACTERS AT A WORKABLE DISTANCE. That capability is a
+        REFERENCE property, not a prompt property. The only thing that has ever
+        put two figures in one frame is a reference set that itself contains two
+        figures, and nothing on disk has a guard and a goblin together. So the
+        two-figure reference has to be MADE.
+      what_it_is_gated_on: >-
+        Making that reference is gated on THE FOUNDER'S GOBLIN PICK. You cannot
+        build a guard-plus-goblin reference until it is settled which goblin is
+        the goblin. The 0812 IP-Adapter sidecars say so themselves in as many
+        words: "it is NOT a canonical goblin and nobody has picked one" and
+        "Choosing the goblin is R4's call and this run does not make it."
+      the_second_gate_underneath_it: >-
+        Beat 08 is a GUARD beat, so the guards ruling also applies — "lets do the
+        guards on my taste", recorded 2026-08-14: "Do not cast them and do not
+        animate guard beats off an unapproved cast. The sheet renders, goes on his
+        board, and waits." Note what that permits: rendering a SHEET is explicitly
+        allowed, casting and animating are not. Six guard jobs are already held out
+        of the ready queue on it.
+      concrete_next_step: >-
+        Do not queue a beat 08 plate job. Put the goblin pick in front of the
+        founder, because it is the gate under both this beat and the two-figure
+        reference that beat 07 also needs. Once the goblin is picked, the job to
+        write is a two-figure REFERENCE, not a beat 08 prompt — and the beat 08
+        plate then conditions on it the way the cast references already do.
+      why_this_ordering_matters: >-
+        A beat 08 plate job written now would render a lone guard or a lone
+        goblin however carefully the words are chosen, because the words are not
+        what was missing. That is the same mistake the record already names once,
+        in `action_vs_script_audit_0815`: staging effort spent on the wrong
+        question, and "a well-executed wrong action is still the wrong action".
+      status: BLOCKED ON A FOUNDER TASTE CALL (the goblin pick), correctly, and it is NOT idle GPU time.
+
+    '18':
+      title: THE DECISION
+      is_it_already_shippable: >-
+        NO — and this was worth checking first rather than proposing rounds.
+        `shipping_rule` (R4, 2026-08-14) says one definition-of-done round plus at
+        most TWO fixes, then it ships with its fault named, and beat 18 has
+        `rounds_used: 3`, which on that rule alone would mean ship now. But
+        `ship_ceiling` (R4, 2026-08-14) overrides it explicitly: "UNDERSTANDABLE
+        and AN UPGRADE outrank the two-round floor. A beat that is merely
+        unfinished ships; a beat that is CONFUSING gets its third round, because
+        confusion is the failure the whole rewrite exists to fix." Beat 18 is
+        recorded `understandable: CONFUSING`, and it is named in
+        `ship_ceiling.earns_a_third_round`. Confusion is the one fault that is not
+        allowed to ship, so beat 18 does not ship as-is.
+      why_the_confusion_is_disqualifying_here_specifically: >-
+        The beat's own reason is that the object IS the beat: "The beat is the fig
+        that is about to be spent - if the object is not the fig, the beat is
+        about nothing." A cold reader ranked the fruit as a PLUM, with fig fifth.
+      the_defect_is_prompt_adherence_and_the_fix_is_DELETION_not_more_negation:
+        symptom_1: >-
+          A beat 18 render drew a long-haired woman while the prompt negated "no
+          woman, no girl, no person, no face" five separate ways. Five negations
+          did not remove her, which is the signal that negation is not the lever.
+        symptom_2: >-
+          The prompt injects a goblin definition into a beat that HAS NO GOBLIN IN
+          IT — an extreme close-up of a single fruit. That injection is the most
+          likely source of the humanoid: the prompt is being told to draw a person
+          in a shot that contains no person.
+        the_repo_has_already_proven_this_exact_fix: >-
+          `eggplant_fix`, 2026-08-14: "the purple object is GONE from all five
+          refires. Removing the blanket fig clause fixed it completely, which
+          confirms the clause was the whole cause." Cost recorded: "12 wasted
+          renders and about 70 minutes of card." An inherited blanket clause was
+          the entire cause of an unwanted object, and DELETING it fixed it
+          outright with no negations added. The goblin-def injection into beat 18
+          is the same shape of bug, and the same fix applies.
+        a_second_mechanism_worth_checking_before_any_render: >-
+          Several sidecars in this repo carry "NEGWARN: negative prompt over
+          CLIP's 77-token budget" with an explicit DROPPED list. If beat 18's five
+          woman/girl/person/face negations overflow 77 tokens, they are being
+          SILENTLY DROPPED before they ever reach the model — which would explain
+          why five negations did nothing, and would mean the fix is to SHORTEN the
+          negative so the negations survive, the exact opposite of adding more.
+          This is free to check and must be checked before spending a round.
+      the_shape_fix_is_a_reference_not_words: >-
+        The record already reached this conclusion and it survives review.
+        `beats.'18'.lever`: "a fig REFERENCE IMAGE conditioned like the cast
+        references, not more words. Shape has resisted every wording lever I have;
+        it is a composition property and composition comes from the reference."
+        Colour is already solved — purple reads as fruit where green never did.
+        Only silhouette is outstanding.
+      concrete_next_step: >-
+        ONE sample, not a batch, in this order: (1) delete the goblin-def
+        injection from the beat 18 prompt and count the negative's tokens, cutting
+        it under 77 so the surviving negations are the ones that matter — both are
+        free and neither needs a round; (2) run the fig REFERENCE route that
+        plate-drafts already has in flight, conditioning shape the way the cast
+        references condition character. Under the one-sample rule that is ONE
+        image reviewed before anything is scaled.
+      what_is_the_founders_and_what_is_mine: >-
+        Deleting a goblin definition from a beat with no goblin, and fitting the
+        negative inside the token budget, are mechanical corrections and are mine.
+        Whether the resulting silhouette reads as a fig is taste and is his.
+
+    beat_19_is_the_third_blocked_plate_and_was_not_on_the_list: >-
+      Recorded here because it emerged from the scoring and belongs with these
+      two. Beat 19's own definition of done says every plate we have puts the
+      fruit already on the ground, and a fall cannot be shot from that. It is
+      awaiting a founder call between two options the record already names: a new
+      plate with the fruit aloft, or the beat becomes him FINDING the fruit. The
+      second changes what the story shows, so both branches are R4's.
