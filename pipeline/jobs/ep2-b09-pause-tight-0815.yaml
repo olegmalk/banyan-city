@@ -1,0 +1,191 @@
+# 2026-08-15, refill lane. Beat 09 motion off a TIGHTER init. GUARD-ONLY BEAT.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE PAUSE -- 0:42-0:45**
+#      "Guard 1's face works through it, slowly."
+#      > GUARD 1: "...We confiscate the goblin?"
+#
+#    THE ACTION THIS JOB ANIMATES: his eyes drift slowly to one side and his mouth
+#    opens a little as the thought works through his face. That is the beat's own
+#    action -- the beat IS a face working through an idea, there is no other event
+#    in it. The prompt is byte-identical to the ep2-b09-pause-49f/49fB pair.
+#
+# 2. WHAT THIS JOB CHANGES, AND IT IS ONLY ONE THING: THE FRAMING OF THE INIT.
+#    The 49f/49fB pair runs off r1-s0, which is a WAIST-UP shot -- his head is
+#    about a quarter of the frame height. That is a legible face, but it is not a
+#    close one, and beat 09 is the one beat in the guard set whose entire content
+#    is an expression. If a face-only action reads at all, it should read best at
+#    the tightest framing the plate set offers. This job is that test.
+#
+#    This is NOT a reseed and NOT a recipe change: same prompt, same negative, same
+#    49 frames, same guidance, same seed as arm A. ONLY the init differs, so a
+#    difference in the result is attributable to framing and to nothing else.
+#
+# 3. THE INIT, OPENED RATHER THAN TRUSTED BY NAME.
+#    09-the-pause-ipa-r0-w015-s0.png from ep2-b09-scene4-0815. What is actually in
+#    the frame: one adult guard, short brown hair, brown tunic over a pale collar
+#    with a green sash, his hand raised to his brow, in TALL GRASS with a treeline,
+#    distant peaks and cloud behind him. A REAL LOCATION, and a genuine medium
+#    close-up -- his head fills roughly a third of the frame against a quarter in
+#    r1-s0. Both eyes stay readable past the raised hand.
+#
+#    THE SHA IS THE SHA OF THE BYTES I OPENED. Extracted from the results branch,
+#    viewed, recomputed locally:
+#      3acc4122249fd3639ede823ef07ef6398cbf8d7f754fbe335d0695196b5b830c
+#    matching ep2-b09-scene4-0815.sha256. Its sidecar reads `shot_beat: 9` and
+#    `beat_slug: the-pause` -- this is beat 09's own plate, not a wave template's.
+#
+# 4. THE s2 SLOT IS EXCLUDED; this init is s0, round r0.
+#
+# 5. NO GOBLIN IS IN THIS FRAME. The guard cast is founder-approved, which is why
+#    beat 09 is queueable while 07, 08, 18 and 19 are not.
+#
+# 6. STANDING ACTION ONLY. The hand is already at his brow in the init, so the
+#    prompt does not ask him to raise or lower it and nothing enters frame.
+#
+# 7. TOKEN BUDGET MEASURED ON THE BOX with the real Gemma tokenizer at
+#    C:\banyan-video\venv, against the exact strings in this file's payload: this
+#    positive is 61 tokens and this negative 38, against the 1024 the encoder
+#    allows -- 6% of budget. Nothing is truncated, so no term is silently dropped.
+#    (The number first written here was 58, from memory rather than measurement.
+#    It was wrong. This one was read off the box.)
+#
+# 8. 49 FRAMES, the default.
+id: ep2-b09-pause-tight-0815
+task: ep2-b09-pause-tight-0815
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 7
+max_attempts: 1
+owner: refill lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. Beat 09 is THE
+  PAUSE -- "Guard 1''s face works through it, slowly." -- one guard, no goblin. A silent motion take on
+  an approved node, not an episode assembly and not a voice synthesis.'
+consumer: The ep2 cut, and the framing question behind it. Read against ep2-b09-pause-49f-0815, which
+  is the same prompt and the same seed on a waist-up init. If the tight init reads better, beat 09 is
+  a close-up beat and the plate sets for the other face beats should be cut that way.
+success: 'A 704x1280 mp4, 49 frames, opening on the plate, in which his eyes drift and his mouth opens
+  slightly while he stays put in the same tall grass -- no cut, no scene change, no camera move. The finding
+  worth reporting either way is the COMPARISON with arm A: whether the same face action reads more clearly
+  at the tighter framing. A frozen clip is also a real finding and gets said rather than swept.'
+why: Beat 09's whole content is an expression, and the pair already running is cut waist-up. This isolates
+  framing as the single variable at $0 on the local card, with no provider.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-pause-tight-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-pause-tight-0815\b09-motion-prompt.txt: His eyes drift slowly to one side and
+    his mouth opens a little as the thought works through his face. 2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.
+  C:\banyan-farm\ep2-b09-pause-tight-0815\b09-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b09-pause-tight-0815\b09-jobs-encode.json: "[\n {\n  \"beat\": 9,\n  \"embeds\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b09-pause-tight-0815\\\\b09-embeds.pt\",\n  \"prompt_file\": \"C:\\\\\
+    banyan-farm\\\\ep2-b09-pause-tight-0815\\\\b09-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\\
+    banyan-farm\\\\ep2-b09-pause-tight-0815\\\\b09-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b09-pause-tight-0815\b09-jobs-render.json: "[\n {\n  \"beat\": 9,\n  \"seed\": 20260815,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b09-pause-tight-0815\\\\b09-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b09-pause-tight-0815\\\\b09-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b09-pause-tight-0815\\\\09-the-pause-LTX-pause-tight.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-pause-tight-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-scene4-0815\09-the-pause-ipa-r0-w015-s0.png
+  - --sha256
+  - 3acc4122249fd3639ede823ef07ef6398cbf8d7f754fbe335d0695196b5b830c
+  - --out
+  - C:\banyan-farm\ep2-b09-pause-tight-0815\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-pause-tight-0815\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-pause-tight-0815\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-pause-tight-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-pause-tight-0815\bench-b09-pause-tight.jsonl
+  - --bench-label
+  - ep2-b09-pause-tight-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (09-the-pause).\nimport glob, hashlib, os, shutil\nsrc_dir = \"\
+    C:/banyan-farm/ep2-b09-pause-tight-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-pause-tight-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/09-the-pause-LTX-pause-tight.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b09-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-b09-pause-tight.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c\
+    \ = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b09-pause-tight-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b09-pause-tight-0815\09-the-pause-LTX-pause-tight.mp4
+- C:\banyan-farm\ep2-b09-pause-tight-0815\b09-init-704x1280.png
