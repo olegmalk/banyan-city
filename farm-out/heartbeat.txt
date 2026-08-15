@@ -2000,3 +2000,4 @@
 19:27:08Z box-runner idle ready=0 failed=28
 19:37:11Z box-runner idle ready=0 failed=28
 19:42:26Z STARTED task=ep2-b13-guidance-0815-1786822934 attempt=1 on box-runner
+19:50:41Z DONE task=ep2-b13-guidance-0815-1786822934 rc=0 artifacts=3
