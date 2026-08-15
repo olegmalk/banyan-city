@@ -2032,3 +2032,4 @@
 21:14:08Z DONE task=ep2-b10-bark-camBs4-0815-1786823771 rc=0 artifacts=2
 21:14:16Z STARTED task=ep2-b10-bark-camBs3-0815-1786823767 attempt=1 on box-runner
 21:19:58Z DONE task=ep2-b10-bark-camBs3-0815-1786823767 rc=0 artifacts=2
+21:20:06Z STARTED task=ep2-b10-bark-camBs2-0815-1786823763 attempt=1 on box-runner
