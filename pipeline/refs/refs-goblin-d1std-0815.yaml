@@ -101,10 +101,71 @@ not_these:
 # the goblin reads infantile. Measured before sending: positive 75/77 with the
 # style anchor surviving, negative 70/77 with `photorealistic` and `3d render`
 # still the first two terms.
+# THE VERDICT, opened frame by frame 2026-08-15. It splits three ways and two of
+# the three are wins:
+#
+# 1. THE BABY IS FIXED. Zero blush in sixteen frames — the first clean sixteen
+#    this effort has produced. Every frame is dour, half-lidded, scowling; none
+#    is cute. "A lean wiry adult goblin man" instead of "a small goblin boy",
+#    plus `blush, red cheeks, chibi, big head, baby face, toddler` in the
+#    negative, did the whole job. The founder's actual complaint is answered.
+#
+# 2. THE MARGIN HYPOTHESIS IS CONFIRMED, and it has an optimum rather than a
+#    direction. Proportion moves monotonically with margin and then collapses:
+#      r0  100%  ~4.5 heads, big cranium, adult-ish and dour. ≈ d1refs r2.
+#      r1   75%  ~5 to 5.5 heads, longer, lankier. Adolescent.
+#      r2   55%  ~5.5 to 6 heads, lean and wiry. BEST ROW — this is the first
+#                goblin we have drawn that reads as a young adult: not cute,
+#                not old, not a baby. It is the brief.
+#      r3   40%  COLLAPSE. The figure is too small in frame and the model
+#                invents: a giant head with a tiny man standing on it, a hooded
+#                figure with a staff, a sprout growing out of a toddler's skull.
+#    So the lever is real, it is the CROP, and it runs out between 55% and 40%.
+#
+# 3. THE POSE DID NOT LAND, AND THIS IS THE FINDING THAT STOPS THE PLAN. NOT ONE
+#    OF THE SIXTEEN IS CROUCHING. Every frame is a standing full figure. The
+#    previous sample proved pose does not come from the REFERENCE; this one
+#    proves it does not come from the PROMPT either, even when the pose is named
+#    as a state ("crouched on his heels") in a draft measured to fit the budget
+#    with nothing dropped. Two of the three staged poses the episode needs —
+#    CROUCHED (beats 03 04 07 08 12) and FOLDED on the ground (beats 13-end 14
+#    15 16 17-start) — are UNREACHABLE by this mechanism. Only the third,
+#    STANDING (beats 17-end 18 19 20), is reachable, and only because standing
+#    is what the mechanism produces whatever it is asked for.
+#    NEXT LEVER IS A POSE CONDITIONER, not more wording: ControlNet openpose, or
+#    img2img off a hand-staged posed plate. Nothing else in the prompt is left
+#    to try — this draft used every rule the audit produced.
+#
+# TWO SECONDARY DEFECTS, both caused by the fix and both with an obvious answer:
+#
+#   THE MARGIN BOUGHT PROPORTION AND SOLD THE LOCATION. r0 (no margin) came back
+#   with sky and clouds behind him; r2 and r3 are on BLANK WHITE. The white
+#   padding I added is doing exactly what an identity-card reference does — it
+#   imposes blank paper on a scene. Fix: pad with a grass-and-sky plate instead
+#   of white, or point the margin sweep at refs-goblin-scene-0813.
+#
+#   THE PLANT STILL HAS NO BODY, and worse, it fuses to him. "A thin stem with
+#   two oversized leaves rising from the grass beside him" produced: nothing at
+#   all in most frames; loose leaves drifting in the air; a leaf sprouting from
+#   his EAR in r0-s2 and r0-s3; a sprout growing out of his skull in r3-s3. The
+#   one frame where the plant is an object is r2-s1, where he is HOLDING a leafy
+#   stem — rooted in his hands, not in the grass. Beat 04 declares
+#   `extra_neg: species`, and the tier that carries `leaf on head, plant hair,
+#   alraune, flower on head, head wreath` is `full`. The plant-fusion guard this
+#   wave already owns was simply not switched on for this beat. Fix: run the
+#   plant-bearing plates on a beat whose tier is `full`, or raise beat 04's.
 sample:
   job: ep2-b04-crouchplate-0815
   control: ep2-b04-d1refs-0815 (round r2)
   beat: 4
   arm: window4
   draft_key: authored_b04_crouch_plate
-  verdict: pending — queued 2026-08-15
+  rc: 0
+  frames: 16
+  out: C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815
+  measured_on_box: positive 64/77 with the style anchor surviving; negative 65/77 with
+    `photorealistic` and `3d render` still the first two terms and `female goblin` intact
+  verdict: SPLIT. The infantile read is FIXED and the margin lever is confirmed with an
+    optimum at ~55% (row r2 is the first goblin inside the brief). The CROUCH did not land
+    in any of the sixteen, so pose comes from neither the reference nor the prompt and the
+    other two staged poses are NOT written. No wave fired, no beat re-pointed.
