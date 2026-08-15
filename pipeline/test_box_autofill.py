@@ -297,6 +297,20 @@ def test_a_job_id_in_ready_is_not_filed_twice(root):
 # the guards on the way IN
 # --------------------------------------------------------------------------
 
+def test_a_fill_that_moved_nothing_does_not_report_filled(root):
+    """A green tick over a queue that did not grow is this project's signature bug."""
+    write(root, "backlog", "one.json", job("one"))
+    real_rename = os.rename
+    try:
+        os.rename = lambda *a, **k: (_ for _ in ()).throw(OSError("locked"))
+        st = af.tick(root)
+    finally:
+        os.rename = real_rename
+    check("a fill where every move failed is not 'filled'", st["status"] == "blocked")
+    check("and it names how many it wanted", "1 job(s)" in st["why"])
+    check("and nothing is claimed to have been filed", st["filed"] == [])
+
+
 def test_a_wedged_drainer_is_not_reported_as_a_healthy_queue(root):
     """A full queue and a dead card look identical unless this is asked."""
     now = time.time()
@@ -399,7 +413,8 @@ def main():
              test_an_entry_with_no_clock_at_all_is_refused,
              test_a_wedged_drainer_is_not_reported_as_a_healthy_queue,
              test_a_stall_is_not_declared_over_a_live_or_quiet_card,
-             test_filing_work_does_not_look_like_a_stall]
+             test_filing_work_does_not_look_like_a_stall,
+             test_a_fill_that_moved_nothing_does_not_report_filled]
     for fn in cases:
         with tempfile.TemporaryDirectory() as td:
             fn(td)

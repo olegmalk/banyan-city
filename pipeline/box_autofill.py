@@ -548,10 +548,22 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
     else:
         filed = list(plan["file"])
 
+    status, why = plan["status"], plan["why"]
+    if status == "filled" and not filed and not dry_run:
+        # Every intended move failed -- a locked directory, a read-only volume,
+        # a name already taken. Reporting "filled" with an empty list would be a
+        # green tick over a queue that did not grow, which is this project's
+        # signature failure. Say it did not happen.
+        status = "blocked"
+        why = ("wanted to file %d job(s) and moved NONE of them -- see the !! lines "
+               "above. The queue is still %.1f min under a %.0f min floor."
+               % (len(plan["file"]), ready_minutes, floor))
+        log_line(root, "!! BLOCKED -- %s" % why)
+
     state = {
         "at": utcnow(),
-        "status": plan["status"],
-        "why": plan["why"],
+        "status": status,
+        "why": why,
         "floor_minutes": floor,
         "ready_minutes": ready_minutes,
         "ready_jobs": ready_count,
@@ -572,12 +584,12 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
     prefix = "(dry-run) " if dry_run else ""
     if drainer["stalled"]:
         log_line(root, "%s!! DRAINER STALLED -- %s" % (prefix, drainer["why"]))
-    if plan["status"] == "backlog_empty":
+    if status == "backlog_empty":
         log_line(root, "%s!! BACKLOG EMPTY -- %s" % (prefix, plan["why"]))
-    elif plan["status"] == "filled":
+    elif status == "filled":
         log_line(root, "%sfilled %s | %s" % (prefix, ", ".join(filed) or "nothing",
                                              plan["why"]))
-    else:
+    elif status == "full":
         log_line(root, "%sok %s | backlog %d waiting, running %d"
                  % (prefix, plan["why"], state["backlog_remaining"], running))
     return state
