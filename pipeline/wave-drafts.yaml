@@ -2829,6 +2829,98 @@ beats:
     # board someone could hold and read from, no chrome clip, no white paper, no person
     # introduced. Beat 06's script line, for whoever builds it:
     #   "GUARD 2 turns over a clipboard made of bark and reads."
+    #
+    # -- `ep2-b06-barkboard-inpaint-0815`, PRE-REGISTERED 2026-08-15 BEFORE ANY RENDER
+    # EXISTS. The beat-10 lane proved the route and found its wall: on that plate the mask
+    # supplies the GEOMETRY and the words supply the MATERIAL, and six single samples
+    # bracketed it to 0.79 (clean rectangle, no bark) against 0.82 (bark crust, notched
+    # edge), which `int(steps*strength)` makes ADJACENT positions at 40 steps -- 31 and 32
+    # discarded steps, nothing in between. Beat 10 has no window at that recipe. THE
+    # QUESTION HERE IS WHETHER THE BOUNDARY IS A PROPERTY OF THE REGION rather than a
+    # constant, so this fires on beat 06's own plate with everything else held byte-
+    # identical to beat 10's six renders: the same positive (sha 623ed767...), the same
+    # negative (sha 8b3f6236...), seed 20260815, 40 steps, cfg 7.5, pad-crop 64, blur 8.
+    # ONLY THE INIT AND THE QUAD DIFFER. This is not a fifth wording variant of the prop:
+    # the prompt files are not edited, and the positive still contains no geometry word.
+    #
+    # THE SCRIPT LINE, beside the action, so the beat cannot drift:
+    #   "GUARD 2 turns over a clipboard made of bark and reads."
+    #
+    # THE INIT is `ep2-b06-turnnos2-49f-0815\b06-init-704x1280.png`, sha
+    # f72ec8df8519c87fcc105f82ea13342c66533eccf2c7308c34b77961287638d4, the cover-crop the
+    # 49-frame turnnos2 takes ran from -- asserted by the tool before anything loads. The
+    # OTHER live init, `ep2-b06-turn-0815`, is not the candidate: its left board is nearly
+    # edge-on with no readable face and its right board carries white paper under a clip
+    # with an open hand across it.
+    #
+    # ONE BOARD IS MASKED, NOT BOTH, AND IT IS THE LEFT GUARD'S.
+    #   * It is the LARGER rectangle -- silhouette 247x216 against the right board's
+    #     ~160x120 -- and its face is the one a bark crust would actually read on.
+    #   * It starts DARK NAVY WITH A CHROME CLIP BAR, which is beat 10's board's exact
+    #     starting material. The right board is pale blue. Masking the pale one would
+    #     change the region AND the starting material at once and the comparison against
+    #     beat 10's bracket would answer nothing.
+    #   * Only one guard should hold the bark clipboard -- beat 05 says "One holds a
+    #     clipboard made of bark" -- so the second board must survive as itself anyway.
+    # THE RIGHT GUARD'S PALE BLUE BOARD IS THE CONTROL and must come back unchanged: same
+    # prop class, same light, ~120px away, so a leak would be visible rather than argued.
+    #
+    # THE QUAD IS 52,502 228,487 299,697 124,703 -- bbox 52,487..299,703, 0.3509 x 0.1688
+    # of the 704x1280 frame -- traced on the board's own tilted silhouette, four straight
+    # edges, NOT an ellipse (an ellipse is the rounded blob all four wording attempts
+    # failed into). Dry-run first, mask sha b4c0594fd49adf53a5d52805c0308e292978ee51b7aec-
+    # 0d4d2ab3ef8409ef3f8, composited over the plate and opened by eye before any model
+    # loaded; that sha is re-asserted before every fire.
+    #
+    # AND HERE IS THE THING THE PLATE INSPECTION GOT WRONG, said plainly because the next
+    # lane will otherwise inherit it. The note above calls beat 06 "arguably a BETTER
+    # candidate ... larger in frame and less occluded". THE OUTLINE IS LARGER; THE
+    # MASKABLE FACE IS SMALLER. Beat 10's hands grip the board at its top edge and bottom
+    # corner, so its mask took essentially the WHOLE face, 223x197 and near-square. On
+    # beat 06 both guards' hands lie ACROSS the face. Measured by scanline: the left
+    # board's unoccluded face is a strip x 55..246 by y 488..570, 190x82; the right
+    # board's is 157x70. A 2.3:1 bark strip across the top of a board that stays navy
+    # below it CANNOT satisfy the bar however the material lands, so masking only the
+    # clean region would be a rigged test with a PASS that does not exist. The quad
+    # therefore takes the board's full silhouette and the left guard's crossing hand sits
+    # INSIDE it -- a real departure from beat 10, stated here rather than discovered in
+    # the frame. His OTHER hand, gripping the board's right edge, is outside the mask and
+    # is untouched, so the board stays visibly held even if the inside hand does not
+    # survive. Whether it survives is an observation this makes, not a thing it assumes.
+    #
+    # TOKENS MEASURED ON THE REAL CLIP TOKENIZER on the box before the first fire, both
+    # SDXL text encoders, not estimated: positive 52/77, negative 77/77, truncated=False
+    # on both. The negative sits EXACTLY on the limit -- nothing is dropped, and
+    # `photorealistic, 3d render` at its tail did reach the model in beat 10's six renders
+    # too -- but there is zero headroom, so any term added to it silently costs another.
+    #
+    # THE BAR, PRE-REGISTERED HERE BEFORE THE RENDER EXISTS AND CARRIED OVER UNSOFTENED:
+    #   a flat rectangular slab of rough bark that reads as a board someone could hold and
+    #   read from -- large, flat, rectangular, rough bark texture rather than planed
+    #   timber, no chrome clip, no white paper, no tree trunk.
+    # PASS requires ALL of it. Named failure modes, any one of which is a FAIL:
+    #   FAIL-SHAPE     straight edges or square corners lost inside the mask -- lozenge,
+    #                  dome, oval, blob, or an edge notched, chewed or bowed.
+    #   FAIL-MATERIAL  chrome clip or white paper survives, or the face is planed timber,
+    #                  varnish or tree trunk rather than rough bark crust.
+    #   FAIL-SEAM      the patch does not sit in the hands -- a floating rectangle, a
+    #                  visible paste box, or a hand mangled inside or at the mask edge.
+    # The terms are NOT independent and a partial score is not a partial pass: every one
+    # of beat 10's six samples passed five, six or seven of the seven terms and every one
+    # was correctly called a FAIL. A material-only bar would have called a ragged hide a
+    # win, which is the error a lane made this morning -- 8/12 "passes", 0/12 usable.
+    # Judged BY OPENING THE FRAME. A metric is a filter, never a verdict.
+    #
+    # METHOD: bisect the 0.79..0.855 region where beat 10's boundary sat, ONE SAMPLE AT A
+    # TIME, each opened and judged before the next is authored. Not a sweep. First fire is
+    # 0.82, beat 10's first FAIL and the first place bark appeared there -- if beat 06
+    # holds its edges at 0.82 the boundary has MOVED and a window exists; if it tears, the
+    # next value goes down. Every sample changes exactly one variable and the control
+    # board plus the pixel diff (inside mask bbox + pad-crop only) is checked each time.
+    # IF THE ADJACENT-STEP WALL REAPPEARS -- two neighbouring `int(steps*strength)`
+    # positions straddling the bar -- THE STEP COUNT GOES UP rather than the finding being
+    # written as impossible: more steps are finer positions of the same knob.
+    #
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used
