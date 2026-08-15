@@ -17703,3 +17703,98 @@
     ep2-b10-pairB-0814 = beat 10. CLIP-D = ep2-b12-tightB = beat 12. CLIP-E = ep2-b05-standB-0814 =
     beat 05. Verified by sha against the results branch rather than from memory.
   outcome: null
+
+- id: LOST-my-30-percent-prediction-on-shorter-clips-drifting-less-0815
+  date: 2026-08-15
+  kind: prediction_scored
+  verdict: LOST
+  what_i_said: >-
+    PARTIAL, about 30 percent on the clean result. I expected the 49-frame clip to drift somewhat less
+    but not to hold identity cleanly, reasoning that the largest single frame-to-frame change on beat
+    02 is pair 0 - a restyle flash where the model redraws the plate - so the loss was front-loaded
+    into one frame and halving the length would remove almost none of it.
+  what_happened: >-
+    Shorter clips drift markedly less. Against the shared init a blind reader scored 49f at 9/10, 97f
+    at 9/10 and 193f at 4/10 on same-individual, and on an earlier first-frame comparison 5/5, 4/5,
+    3/5. The lever is real.
+  the_reasoning_is_what_failed_not_the_guess: >-
+    My premise was the artifact. The pair-0 flash is not a constant of the pipeline at all - the three
+    arms measure 16.8, 47.9 and 3.5 on the SAME plate and prompt with only frame count differing. I
+    built an inference on a quantity I had already seen vary wildly and had not yet noticed varied. A
+    prediction resting on a measurement whose stability was never checked is a guess wearing a
+    mechanism.
+  outcome: >-
+    Recorded as lost. The shorter-is-better default is reinstated on both axes and the ten jobs I
+    fired are already 49-frame, so nothing needs re-authoring.
+
+- id: REFUTED-the-restyle-flash-is-not-a-property-of-the-pipeline-0815
+  date: 2026-08-15
+  kind: refuted
+  hypothesis: >-
+    Team lead's, and told to the founder: diffusers pins frame 0 and leaves frames 1+ unconstrained,
+    so every clip we make probably opens with a one-frame restyle flash.
+  measured: >-
+    Two independent lines. Across seven wave clips the flash is 30.3 on b02-nw and 0.2 to 6.0 on every
+    other, including b02-nw's OWN TWIN at 0.2 on the same prompt and plate. Across the three beat-02
+    staging arms it is 16.8, 47.9 and 3.5 with only the frame count differing. An order of magnitude
+    on identical inputs is not a property of a pipeline.
+  consequence_for_an_earlier_inference: >-
+    The 49-frame arm's flash of 16.8 was reported as evidence that shorter clips reduce the flash.
+    That inference dies with the theory - the 193-frame arm reads 3.5, lower than either shorter one.
+  what_survives: >-
+    Pair 0 is still dropped from every score, because when it does fire it is the largest number in
+    the clip and it is not motion. Dropping it is sound practice independent of why it happens.
+  outcome: null
+
+- id: REVERSED-my-193-frame-conclusion-and-I-flagged-it-in-advance-0815
+  date: 2026-08-15
+  kind: reversed
+  what_i_measured: >-
+    On beat 02's staging, 193 frames against 97: mean per-pair motion 2.61 against 1.22, coverage 50
+    percent of pairs above threshold against 16, total movement 498 against 116, and no dead tail
+    against 44 percent of the 97 frozen. I wrote that more frames is decisively better on this beat.
+  what_the_blind_read_says: >-
+    The opposite. 193f scored 4/10 on identity and NO NAMEABLE ACTION - "I cannot name one. Nobody
+    does anything: the camera simply ends up rammed into his face." 97f and 49f both scored 9/10 and
+    both got the action named: "he lifts his bowed head and opens his eyes, looking straight at you."
+    The reader's summary is the entry: "A is the take with the wrecked identity, and it is ALSO the
+    take with the least readable action. It doesn't buy movement with identity - it loses both."
+  the_measurement_was_right_and_the_conclusion_was_wrong: >-
+    Every number holds. All of them were measuring a camera pushing into a face and a background
+    churning. Fifth appearance of the family law tonight, and the first time I had already written the
+    caveat before the read came back - I said in the same report that this is the floor not the
+    verdict and that the 193's motion could be sustained drift as easily as sustained performance. The
+    caveat did not stop me putting "decisively better" in the same paragraph, which is the part to fix:
+    a caveat that does not change the headline is decoration.
+  outcome: null
+
+- id: SCOPED-animated-on-twos-is-not-universal-0815
+  date: 2026-08-15
+  kind: finding
+  what: >-
+    A reader reported all six rows of the beat-02 three-way as animated on twos or worse, with six
+    consecutive frames carrying only three or four distinct images. Checked independently by counting
+    distinct images per sliding six-frame window, a frame counting as new when it differs from its
+    predecessor by more than 1.0 MAD.
+  measured: >-
+    True of what it saw and false of the corpus. The three beat-02 staging arms give 2.2, 3.5 and 3.5
+    distinct images per six frames, with 77, 50 and 49 percent of pairs duplicates - on twos or worse,
+    exactly as reported. But b04 and b09 from the -lw wave give 5.7 and 5.8 distinct per six, with
+    only 5 and 6 percent duplicates: those are animated on ONES. The b05 scene-plate pair sits between
+    at 4.4 and 4.7.
+  why_the_scope_matters: >-
+    "Everything we make is on twos" would be a false statement to the founder about the recipe. It is
+    a property of some clips, not of the pipeline, and the beat-02 staging arms happen to be the most
+    duplicated clips I have measured all night.
+  the_uncomfortable_correlation: >-
+    The clips animated on ones are the constant-drift ones, and the clips with a discrete action are
+    the duplicated ones. If that holds, smoothness and action pull opposite ways in the same manner
+    identity and length do. n is three families and I am not calling it a law - but it is the third
+    axis tonight where the thing we want and the thing we measure point in opposite directions.
+  a_scope_note_on_the_translation_claim: >-
+    Zero global translation in every row is also reported. That is expected and not damning: a locked
+    camera with a character acting in place produces no whole-frame shift, which is the shot we want.
+    It also cannot detect a push-in, which is a zoom rather than a translation - and a push-in is
+    precisely what the reader says the 193f does. The claim should not be carried as evidence that
+    nothing moves.
+  outcome: null
