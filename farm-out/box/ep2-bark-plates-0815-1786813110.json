@@ -1,0 +1,40 @@
+{
+  "id": "ep2-bark-plates-0815-1786813110",
+  "task": "ep2-bark-plates-0815",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 20,
+  "needs_gpu": false,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "steps": [
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Assert BEFORE copying. A hash checked after the fact is a log line, not a gate.\nimport hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-bark-plates-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-bark-plates-0815\"\nWANT = {\n  \"b10-barkboard-pass-s13.png\": \"f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b\",\n  \"b06-barkboard-pass-s10.png\": \"063ad56112a718006b6eb2d883e3c01bcb579aef90ea0b201de27a29123565f9\",\n}\nhave = {}\nfor name, want in sorted(WANT.items()):\n    p = os.path.join(src_dir, name)\n    if not os.path.isfile(p):\n        raise SystemExit(\"!! missing %s\" % p)\n    h = hashlib.sha256()\n    with open(p, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n            h.update(chunk)\n    got = h.hexdigest()\n    if got != want:\n        raise SystemExit(\"!! SHA MISMATCH, refusing to publish %s\\n   want %s\\n   have %s\" % (name, want, got))\n    have[name] = got\n    print(\"asserted %s %s\" % (got[:12], name), flush=True)\nos.makedirs(dst, exist_ok=True)\nfor name in sorted(have):\n    shutil.copy2(os.path.join(src_dir, name), os.path.join(dst, name))\nwith open(os.path.join(dst, \"ep2-bark-plates-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(\"%s  %s\" % (have[n], n) for n in sorted(have)) + \"\\n\")\nprint(\"published\", len(have), \"plate(s) + manifest ->\", dst)\nraise SystemExit(0)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b10-barkboard-pass-s13.png",
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b06-barkboard-pass-s10.png"
+  ],
+  "started_at": "2026-08-15T17:02:54Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T17:02:58Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b10-barkboard-pass-s13.png",
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b06-barkboard-pass-s10.png"
+  ]
+}
