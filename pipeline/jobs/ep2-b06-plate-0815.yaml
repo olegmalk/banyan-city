@@ -5,7 +5,35 @@ node: 002b-first-citizen
 beat: 6
 runner: box
 needs_gpu: true
-priority: 18
+priority: 4
+# priority 4, not 18: 4 is what every other scene-plate spec in this batch carries
+# (b03/b04/b13/b16/b17/b19/b20-plate-0814, b05/b21-scene-0814 all read 4). VERIFIED
+# 2026-08-15 16:50.
+#
+# THE ORIGINAL COMMENT HERE CLAIMED "Bumped on the queued copy too". THAT WAS FALSE
+# and is corrected rather than carried: `grep ep2-b06 pipeline/farm-queue.yaml`
+# returns nothing, and `box_enqueue.py --list` shows no copy of this id in ready/,
+# running/ or done/. There was never a queued copy to bump. The bump is kept
+# because the priority number is right on its own merits; the claim is dropped.
+#
+# SUPERSEDED, DO NOT FIRE. This spec is obsolete and is left here as history only:
+#
+#   1. Its --refs is `refs-guards-twoinfield-0813`, the set INCLUDING the s2 tile
+#      (a98aa7c261afab4b) that degraded the cast to balloon heads across four
+#      beats. The corrected set `refs-guards-twoinfield-nos2-0815` excludes it.
+#   2. Its --draft-key is `authored_b06_scene2`, which opens "Two adult guard men"
+#      under a 1boy count block -- the mismatch the harness's own dry step is
+#      built to catch.
+#   3. Its work is DONE, better: `ep2-b06-plate-nos2-0815` (commit 5ce5a94e) ran
+#      on the corrected set at 2026-08-15 14:16-14:18 and published 16 frames to
+#      C:\banyan-farm\courier-box\farm-out\ep2-b06-plate-nos2-0815. Motion has
+#      already consumed them (`ep2-b06-turnnos2-49f-0815`, 15:13).
+#
+# Firing this now would spend the card reproducing a known-worse duplicate of a
+# plate that already exists. See the frame judgement in the 2026-08-15 report:
+# the reference fix solved LOCATION (24/24 frames across beats 06 and 10 have a
+# real field) and did NOT solve the PROP (0/24 bark clipboards -- every frame
+# returns a modern dark board with a chrome spring clip).
 max_attempts: 1
 owner: plate lane, 2026-08-15
 script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
