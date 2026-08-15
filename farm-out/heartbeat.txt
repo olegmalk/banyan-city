@@ -1818,3 +1818,4 @@
 08:22:55Z DONE task=ep2-b09-s49B-0815-1786780331 rc=0 artifacts=1
 08:23:02Z STARTED task=ep2-b15-lookup-0815-1786781207 attempt=1 on box-runner
 08:28:09Z DONE task=ep2-b15-lookup-0815-1786781207 rc=0 artifacts=2
+08:28:15Z STARTED task=ep2-b15-lookupB-0815-1786781212 attempt=1 on box-runner
