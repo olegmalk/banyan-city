@@ -7535,3 +7535,163 @@ the job wrote. No session, no human, no hand in the loop.
   telemetry and box_autofill and prints the drift instead of leaving it
   invisible. Re-copying the runner restarts the drainer and adopts any live job
   as INTERRUPTED, so it is an idle-card job, not a mid-render one.
+
+## 2026-08-16 — two thirds of the Mac fleet was rendering noise, and the file was the right size the whole time
+
+**Fixed and verified.** macbook1 and macbook3 are back; the fleet is five
+usable Macs plus this one, not two.
+
+**The symptom.** macbook1 (an M1 Max, the fastest machine we have) and
+macbook3 rendered SDXL as pure noise — deterministically, silently, no error
+anywhere. Reproduced before anything was theorised: the production recipe
+(832x1216, 40 steps, fp32, seed 20260719) on both machines produced the
+*same* PNG, sha256 `aa7550624d51c3…`, while the same seed on macbook2 gave a
+picture. macbook4 hung >30 min on one seed.
+
+**Not the things it looked like.** All five Macs run the identical torch
+build (git `cf30153c`) and diffusers 0.29.2 — verified by git hash, not by
+version string. All five have **32 GiB**, so nothing was RAM-starved and the
+23.55 GB fp32 allocation fits. MPS itself is fine: a 2048² matmul agreed with
+CPU to 0.0039 on every machine. macOS versions differ (26.3.1 / 26.4 / 26.5 /
+26.5.1) and it correlated with the failure, which was a red herring.
+
+**The cause: the UNet weights were holes.** One blob, `blobs/c1e43f5fa892…`,
+5,135,149,760 bytes on every machine:
+
+| | content sha256 | all-zero | physically allocated |
+|---|---|---|---|
+| macbook1 | `813587173c50…` **≠ name** | **87.7%** | 637 MB / 5135 MB |
+| macbook3 | `28a83ca78be0…` **≠ name** | **92.6%** | 386 MB / 5135 MB |
+| macbook2, macbook4, this Mac | `c1e43f5fa892…` ✓ | 0% | full |
+
+Zeroed weights predict ~no noise, so the sampler never contracts: final latent
+std **17.03** on both broken machines against **1.02** on macbook2, from an
+initial sigma of ~14.6. That is also why both broken machines agreed
+byte-for-byte — once the mid and up blocks are zero it stops mattering what
+survived below them.
+
+**Every proxy passed, and one had already been run.** A lane compared the
+caches and reported "byte-identical — 33 files, 25 symlinks, 6940 MB". All
+three numbers were correct. A file can carry its full length over unallocated
+blocks, and only reading it can see that. This is the fourth proxy to lie in
+two days, after `du`, a process list and a Windows file size.
+
+**Why the copy was trusted.** `farm-six-macs.md` §2 provisioned these Macs by
+`rsync -a` and ended "it also guarantees byte-identical weights across all
+seven machines." It does not. rsync's automatic post-transfer check is an MD4
+accumulated over the bytes *as they stream past*, never a re-read of what
+landed (`rsync(1)`, under `--checksum`); and macOS now ships **openrsync** as
+`/usr/bin/rsync`, whose receiver ends every file with `ftruncate()` to the
+final offset — exactly how full logical length sits on top of holes. There is
+**no documented openrsync bug** matching this; the closest primary source is a
+2004 rsync report where a sender-side read error produced "a destination file
+full of null bytes" with correct size and mtime
+(<https://lists.samba.org/archive/rsync/2004-May/009471.html>). That sentence
+in the runbook has been replaced with a verify step.
+
+**The repair, verified by content not by size.** The good blob was streamed
+from this Mac and hashed *on arrival*, installing only on a match — a bad
+transfer can never become the live weight file. Both now hash
+`c1e43f5fa892…`. Proof it worked is end-to-end, not a checksum: the same seed
+on the repaired macbook1 and macbook3 now produces
+`aec4f618f243930ff8df86020f3745632191086db6b19fbf39c8ed6f6c8ac0c8` — **byte
+identical to macbook2 and macbook4** — at latent std 1.0161.
+
+**macbook1 is as fast as claimed**: 2.05 s/step against 3.85 on an M1 Pro,
+**1.88x**, on the production recipe.
+
+**What catches it now — `pipeline/mac_preflight.py`.** It re-reads every
+weight blob and compares its sha256 to the blob's own filename;
+`huggingface_hub` names an LFS blob after the sha256 of its content, so the
+expected digest ships with the file. No network, no torch, no venv — it runs
+on the system python of a machine that has not been provisioned. **Proven on
+the hardware while the machines were still broken**: BLOCKED exit 1 on
+macbook1 and macbook3 naming the file and the zero fraction, READY exit 0 on
+macbook2 and macbook4. `farm_worker` calls it at startup *before it claims a
+task* and again before every model load, and refuses via `courier.blame` so
+the refusal reaches the branch instead of dying with the console. Cost on a
+healthy machine: **3.8 s**. Tests pin the part that actually failed — the same
+fixture at identical size and file count passes a manifest check and fails the
+content check.
+
+**macbook4's hang is a separate fault and did not reproduce.** Its weights
+hash clean, and the full production recipe completed in 2.6 min with latents
+*identical* to macbook2's and the same output PNG. Its HF cache was written
+22:47–23:03 the same evening, so a "seed" taking 30+ minutes most plausibly
+overlapped its own provisioning (weights still arriving, first-run Metal
+kernel specialisation). No fault found; watch it, do not chase it.
+
+**Still needs a human, one click:** **macbook5 is unprovisioned** — no Xcode
+Command Line Tools, so no working `python3` and no usable `git`, no venv, no
+weights. That is `farm-six-macs.md` §1 step 2, the one manual step per Mac,
+and it cannot be done over SSH. Until then the fleet is five, not six.
+
+**Also worth knowing:** the fleet is on WiFi at roughly 1.5–2 MB/s. Re-copying
+one 5.1 GB model took ~35 min per machine. Weight provisioning is the slow
+step, not the render. macbook4 is missing
+`models--madebyollin--sdxl-vae-fp16-fix` (4 blobs, not 5) — harmless on the
+fp32 MPS path, which does not load it.
+
+## 2026-08-16 — the bark-board wave was judged, and it retires both wordings
+
+Eight clips from the 2026-08-15/16 bark-board wave had landed and nobody had read
+them. Judged; full verdicts, per-clip metrics and the pre-registered bar for the
+next wave are in `pipeline/loop/cycle-017.md` (commit daaa92a5).
+
+**The headline, because it contradicts what was being reported upward:** beat 10's
+`slow` and beat 06's `f1` are NOT levers. Seeded out they turn at **1 of 3** and
+**1 of 4** — the engine's base rate, the same number that retired "turns the board
+around to face the camera" at 5d9a94e8. Both had been promoted on a single watched
+sample, and one sample cannot separate a lever from a lucky seed at a 25% base rate.
+
+**What performs is the EXPANDED CAMERA NEGATIVE**, appended to the baseline:
+
+    , zoom in, dolly in, crane, handheld, the camera moves closer,
+      framing change, scale change, cropping in
+
+Every clip carrying it turned AND held both guards in frame to f96 — `pathneg`
+(b10), `f1neg` (b06), `camB` (b10, the round before). The dominant failure across
+the whole wave is an **uncommanded push-in that takes guard 2 out of frame with
+it**; beats 06 and 10 are both two-guard beats, and once the shot becomes a chest
+crop there is nothing left to turn. The board was never the primary defect. The
+framing was. This is cycle 016's law (you stop motion by NAMING it in the negative)
+aimed at the camera rather than the subject — it is NOT the retired
+negative-against-prop-deformation lever.
+
+**Two metric traps now written into `pipeline/judge_clip.py`**, which reports three
+readings and refuses to blend them:
+
+- `f1s3` has the HIGHEST depth of the wave (0.606) and is a total failure — a
+  camera closing on a static subject manufactures large evenly-spaced pair
+  differences and reads as healthy motion. Depth says how deep the hold is, never
+  whether the right thing is moving.
+- Terminal freeze is orthogonal to hold and invisible to it: 27, 6, 3 and 1 frames
+  across the b06 arms while period and strength sat in one band. `f1s3` is dead for
+  its last 27 frames of 97. Measure it directly — the trailing run of
+  consecutive-frame ncc == 1.0000 — or it is not seen at all.
+
+**Retired:** the leading state tag on beat 10 (`barkface` slammed to an extreme
+close-up at f17, rocketed to a wide two-shot by f35, changed character designs and
+turned the board into a scroll; min ncc 0.197 — f4dd75d8's beat-13 finding on
+another beat). And any further plain-wording seed on either beat.
+
+**Filed in consequence** (commit c9e9a613, 10 specs, ~57 min of card work): four
+fresh seeds each on `pathneg` and `f1neg` (20260819-22; 20260815-18 are spent on
+both beats), plus two one-sample rescues asking whether the negative revives the
+beat-06 wordings that died on staging (`c1neg`, `d1neg` — same seed and prompt as
+their originals, the negative the only variable). No new prompt or negative text
+was introduced by any of the ten: every string is byte-identical to a spec that has
+already rendered, which is what makes the wave safe to fire unattended and settles
+the token-budget question without a tokenizer run.
+
+The bar is written down BEFORE the renders in cycle-017 and must not be softened:
+of 5 samples per arm, at least 4 must hold both guards at f0 and f96, pass the
+board through profile and back, keep terminal freeze under 4 frames, and not crop a
+guard out. 3 of 5 or fewer and the negative joins the wordings as base-rate noise
+and the lane stops rather than seeding a sixth thing.
+
+**The autofill door was proven live under real hunger**, not asserted: at
+`21:13:01Z` ready had fallen to 11.4 min of the 45 min floor and the timer filed
+four backlogged jobs by itself, `status: filled`, "ready held 11.4 min of the 45
+min floor -- filed 4, now 34.2 min". Backlog went in at 10 and stood at 6 after the
+fill. Nobody was awake for it.
