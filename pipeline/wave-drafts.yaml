@@ -3885,6 +3885,57 @@ beats:
     # Judged BY OPENING THE FRAME, never by a score; a metric errs both ways and is a
     # filter, never a verdict. ONE SAMPLE, one seed, opened before any batch is discussed.
     # This is beat 10's board only -- 06 and 08 wait on this sample's verdict.
+    #
+    # -- THE SAMPLE CAME BACK, AND IT IS A FAIL-SHAPE. `ep2-b10-barkboard-inpaint-0815-s0`,
+    # seed 20260815, 40 steps, cfg 7.5, strength 0.99, padding_mask_crop 64, blur 8, 9.7s,
+    # $0 on the rtx5090. rc=0, unet.in_channels=4 (the latent-blend branch), mask sha
+    # 3aef49b2... byte-identical to the one dry-run and eyeballed here first. I opened the
+    # frame.
+    #
+    # WHAT THE FRAME SHOWS. Outside the mask the plate is untouched -- the second guard's
+    # navy board at the right edge is still navy, which is the control that says only the
+    # mask moved. Inside the mask the rectangle is GONE. What is held now is a dark brown
+    # shaggy mass: the top edge and the left edge are spiky and torn, like fur or a pelt or
+    # a mat of dark fibres, and the corners are destroyed. Only the bottom-right survives as
+    # a straight edge, and that is the one place the mask edge happened to sit on the plate's
+    # own high-contrast panel. It does not read as a board someone could hold and read from.
+    # It reads as a hide.
+    #
+    # SCORED AGAINST THE BAR ABOVE, TERM BY TERM, and the shape terms are the ones that
+    # decide it: large YES; flat PARTLY (the lower right is flat, the upper left is a 3D
+    # tuft); RECTANGULAR NO -- this is FAIL-SHAPE and it ends the sample; rough rather than
+    # planed timber YES, and genuinely so; no chrome clip PASS -- the clip is gone; no white
+    # paper PASS; no tree trunk PASS. So five of seven terms pass and the render is still a
+    # FAIL, which is exactly the trap the bar was written to avoid: a material-only bar would
+    # have called this a win.
+    #
+    # THE MATERIAL LEVER WORKED AGAIN AND THE GEOMETRY LEVER DID NOT. Navy plastic and a
+    # chrome spring clip became a rough dark organic surface from words alone -- the fifth
+    # independent confirmation that wording reaches MATERIAL. The mask did NOT deliver the
+    # geometry that four prompts could not.
+    #
+    # WHY, AND THIS IS THE FINDING: A MASK IS A PERMISSION REGION, NOT A STENCIL. It says
+    # where pixels MAY change; it does not say what silhouette must be drawn inside them. At
+    # strength 0.99 the init's content inside the mask is discarded, so the model was free to
+    # draw a ragged object that fills part of the region and blend the rest into the coat --
+    # and it did. Drawing a straight-edged quad does not make the thing inside it straight.
+    # A second reading is available and is not excluded by this render: "a slab of rough tree
+    # bark" is SEMANTICALLY a torn ragged thing, so the ragged edge may be the material word
+    # doing it rather than the mask failing. One sample cannot separate those two, and it is
+    # not separated here.
+    #
+    # WHAT THIS RULES IN, and it is not a fifth wording draft -- the prompt stays byte
+    # identical. The thing this render destroyed was ALREADY CORRECT: the plate's own
+    # rectangle. Strength 0.99 threw it away. `inpaint_fruit.py`'s header finding is that
+    # img2img will not ADD an object the init lacks -- but beat 10 is not the adding case,
+    # because the board is already there with the right geometry and only its surface is
+    # wrong. Preserving a shape and restyling its surface is the case low strength is FOR.
+    # So the next single sample is a STRENGTH change and nothing else: same mask, same seed,
+    # same words, strength ~0.45. Pre-registered prediction, before it is run -- if the
+    # straight edges survive and the surface turns bark, geometry is reachable by
+    # PRESERVATION rather than by drawing, and 06 and 08 (which have no such rectangle in
+    # their plates) do NOT inherit that route. If it comes back navy, strength that low does
+    # not reach the material and inpaint is spent on this prop too.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back

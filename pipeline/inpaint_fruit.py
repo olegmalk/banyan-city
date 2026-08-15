@@ -258,7 +258,7 @@ def main() -> int:
         fh.write("\n".join([
             "# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py",
             "# on the rtx5090. The plate outside the mask is the founder's own",
-            "# pixels; only the ellipse below was redrawn.",
+            "# pixels; only the region described below was redrawn.",
             "platform: local-gpu (rtx5090)",
             "model: %s" % BASE,
             "model_licence: %s" % BASE_LICENCE,
@@ -276,10 +276,11 @@ def main() -> int:
         ] + mask_lines + [
             "mask_is_the_stewards: >-",
             yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
-                       "`inpaint` and named no size, no position on the stem, no "
-                       "colour and no ripeness. The ellipse above is the steward's "
-                       "and is the first thing his correction should move; the "
-                       "words in the prompt are his own approved shots.md wording."),
+                       "`inpaint` and named no size, no position, no colour and no "
+                       "shape. The mask above is the steward's and is the first "
+                       "thing his correction should move -- 'lower', 'smaller', "
+                       "'other side' is one number here; the words in the prompt "
+                       "are his own approved shots.md wording."),
             "rendered_utc: %s" % stamp,
             "render_seconds: %.1f" % render_s,
             "wall_seconds: %.1f" % (time.time() - t0),
