@@ -1,0 +1,127 @@
+# 2026-08-15, guard lane. ONE variable against `ep2-b09-scene-r2-0815`: the draft.
+# Supersedes `ep2-b09-scene2-0815`, which the dry step refused at rc=1 in six seconds
+# for $0 -- `authored_b09_scene2` opens "Two adult guard men", `_tag_from_clause`
+# derives `2boys`, and beat 09 is registered `tag: 1boy`. That refusal is the guard
+# working; `authored_b09_scene3` is the same intent at one man, which is also the
+# truer reading of "Guard 1's face works through it, slowly".
+id: ep2-b09-scene3-0815
+task: ep2-b09-scene3-0815
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 3
+max_attempts: 1
+owner: guard lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 09 THE PAUSE is unconditioned in that leaf, and the
+  guard cast was approved by the founder on 2026-08-15 ("ill take the guard b you chose"), so this
+  beat needs no goblin and waits on nothing. Still plate on an approved node, not an episode.'
+consumer: 'motion-wave, which still has no close-up init for beat 09. `ep2-b09-scene-r2-0815` gave it
+  sixteen real places but every one of them is a MID shot -- the beat is "Guard 1''s face works
+  through it, slowly" and only two of the sixteen (r3-s0, r3-s2) came back as an actual face close.
+  This job asks for the close in the sentence instead of hoping for it.'
+success: 'A face close -- head and shoulders, the near guard filling the frame -- in a real place
+  (grass, hedge or treeline, sky), on an ADULT man on canon: short brown hair, brown tunic and sash.
+  The two failures worth reporting rather than reseeding: (a) mid shots again, which would mean the
+  reference set fixes shot SIZE the way it fixes location and the close has to come from a
+  close-framed reference, not a clause; (b) the floating white rectangle -- the chosen guard''s waist
+  sash rendering as a rigid slab, which the founder read as "a clipboard floating behind him" and
+  which already appears in four of scene-r2''s sixteen.'
+why: 'ONE SAMPLE PER RECIPE CHANGE (CLAUDE.md, founder 2026-08-03). The recipe change is the DRAFT and
+  nothing else: same beat, same refs, same arm, same seed count as `ep2-b09-scene-r2-0815`, so the two
+  sixteens are directly comparable and any difference is the words.
+
+  Refs stay `refs-guards-twoinfield-0813` because the reference decides card-or-place and the prompt
+  loses to it -- established three ways, most recently by scene-r2 itself, which swapped ONLY the refs
+  off the `refs-charref-guards-r5-0812` identity sheets and took beat 09 from a pale-grey void to
+  16/16 real fields. `refs-guards-chosen-0814` and the `-guardpick-` sets are identity cards on blank
+  paper and would impose blank paper again. That question is CLOSED and this job does not reopen it.
+
+  KNOWN DEFECT IN THIS REFERENCE SET, expected in the output and not a reason to re-run: slot r2
+  (reference `04-the-footnote-wave1-s2.png`) degrades the cast -- child proportions, oversized heads,
+  bowl haircuts -- on prompts with no child words. It did so across beats 06, 09, 10 and 11, and it
+  did so again in all four of scene-r2''s r2 cells. The set is 3-of-4 usable; SCORE r0, r1 and r3 and
+  discard r2 unread. The sampler builds its slot list as `{prefix}-s{i} for i in range(4)` and refuses
+  on a missing file, so r2 cannot be dropped from the run -- only from the scoring.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-scene3
+  - --draft-key
+  - authored_b09_scene3
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-scene3
+  - --draft-key
+  - authored_b09_scene3
+  - --arm
+  - window4
+  - --task
+  - ep2-b09-scene3-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-scene3-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b09-scene3/09-the-pause-ipa-*\"\
+    ) + glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b09-scene3/refs-dedup.yaml\"))\nlines = []\nfor\
+    \ f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b09-scene3-0815.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 32 else 1)\n"
+# The publish glob and every declared artifact carry the beat SLUG (`09-the-pause-`),
+# not the bare number. The 2026-08-14 scene jobs all landed in `failed` at rc=92 with
+# every file present on disk because they globbed `09-ipa-*` and the sampler writes
+# `09-the-pause-ipa-*`; the job looked like a render failure and was not one.
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b09-scene3\09-the-pause-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-scene3\09-the-pause-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-scene3\09-the-pause-ipa-r3-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-scene3\09-the-pause-ipa-r3-w015-s3.png

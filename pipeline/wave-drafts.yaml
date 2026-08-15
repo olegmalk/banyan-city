@@ -3183,6 +3183,40 @@ beats:
     # men (matching the reference, and beat 09 has both in the field) and the close is stated
     # as the shot -- `close on the nearer one's face` -- immediately after the scene, where
     # beat 10 round 1 proved a clause has to sit to get any weight at all.
+    # -- `authored_b09_scene3` -- 2026-08-15, the guard lane. `authored_b09_scene2` CANNOT BE
+    # RENDERED and was never queued: it opens "Two adult guard men", `_tag_from_clause` reads
+    # `2boys` off that first comma-clause, beat 09 is registered `tag: 1boy`, and the dry step
+    # refuses -- "!! FAULTS, nothing drawn: COUNT TAG is '2boys', draft declares '1boy'".
+    # `ep2-b09-scene2-0815` died there at rc=1 in six seconds for $0 on 2026-08-15 09:15Z, which
+    # is the refusal working. This is that draft with the count put back to one man.
+    #
+    # ONE MAN IS ALSO THE RIGHT READING. The beat is "Guard 1's face works through it, slowly"
+    # -- one face, thinking. scene2 carried two only to match a two-figure reference, and that
+    # was an unnecessary concession: `ep2-b09-scene-r2-0815` ran the ONE-man `authored_b09_scene`
+    # against the same `refs-guards-twoinfield-0813` and came back 16/16 REAL PLACES. The
+    # reference imposes the place whatever the count says, so the count is free.
+    #
+    # WHAT SCENE-R2 DID NOT FIX, and what this draft is aimed at. Of its sixteen:
+    #   * SHOT SIZE. Fourteen are mid shots; only r3-s0 and r3-s2 are an actual face close. The
+    #     clause `close on his face` sat late, after the scene. Here the close leads the shot and
+    #     `head and shoulders` states the frame in words the tagger cannot mistake for a location.
+    #   * A FLOATING WHITE SLAB, bottom-left of r0-s3, r3-s0, r3-s1 and r3-s3 -- the chosen
+    #     guard's white waist sash rendering as a rigid rectangular board. The founder read it as
+    #     "a clipboard floating behind him". `no clipboard, no sign` negates it by name, and the
+    #     sash is described as green so the white one is not being asked for.
+    #   * A GLOWING FLOWER cupped in his hands in five cells -- content bleeding out of the
+    #     reference set itself, whose four images ARE `04-the-footnote-wave1-s0..s3`, i.e. beat
+    #     04's sprout. `no glowing flower` names it.
+    # Slot r2 (`04-the-footnote-wave1-s2.png`) will degrade the cast to a bowl-cut child again --
+    # it did in all four of its scene-r2 cells and across beats 06, 10 and 11. Score r0/r1/r3.
+    authored_b09_scene3: >-
+      A grown guard man in a brown tunic and green sash, close on his face, head and
+      shoulders, working slowly through an idea, eyes drifting, mouth slightly open, green
+      summer grass and a dark treeline behind him, pale sky. Cinematic lighting, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+      white background, no plain background, no character sheet, no dark, no night, no
+      clipboard, no sign, no glowing flower. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b09_scene2: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, short brown hair, close on the
