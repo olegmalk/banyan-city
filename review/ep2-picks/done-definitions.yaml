@@ -401,12 +401,61 @@ beats:
     title: THE DROP
     script: the stem lets go, the fig falls, bounces off his head, and lands in the grass at his feet.
     done_when: 'WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls,
-      strikes his head and lands. Blocked: every plate we have puts the fruit already on the ground, and
-      a fall cannot be shot from that. Awaiting the founder''s call — new plate with the fruit aloft,
-      or the beat becomes him finding it.'
+      and LANDS ON THE GROUND; and he NOTICES it. Three things, in that order: the fall, the landing,
+      the noticing. NO CONTACT WITH HIS BODY — a take where the fruit touches him fails this beat now,
+      however well it moves.'
+    done_when_superseded_0815: 'The bounce version, kept verbatim so the change is visible and nobody
+      restores it by finding it quoted somewhere else: "WIDE enough to hold the whole sapling and him
+      at once; the fruit STARTS ON THE STEM, falls, strikes his head and lands. Blocked: every plate we
+      have puts the fruit already on the ground, and a fall cannot be shot from that. Awaiting the founder''s
+      call — new plate with the fruit aloft, or the beat becomes him finding it." That call has now been
+      made — see `ruling_0815`.'
+    ruling_0815:
+      date: '2026-08-15'
+      ruling: ok then just make the fig fall on the ground and the goblin will notice it
+      supersedes: lets make it drop on his head
+      status: THE HEAD-BOUNCE IS DEAD. Both quotes are the founder's own words, recorded verbatim; the
+        second one is the older of the two and no longer describes this beat. If a note, a board entry,
+        a prompt or a job anywhere still asks for the fruit to strike him, it is stale and loses to this
+        line.
+      why_it_changed: A continuity audit found the bounce geometrically impossible, not merely awkward.
+        The sapling at this node is ~40 cm (the founder's own height ruling — `genomes/sapling/style.md`,
+        node row 002a/b/c, "the branch is where the fig grew and fell"), and beat 03's whole joke is the
+        size mismatch, the scavenger far taller than the plant. A fruit released from a 40 cm branch cannot
+        reach a standing man's head. Beat 17 compounds it by standing him up and turning him away, so
+        he is not down beside the sapling any more either. The ruling resolves the conflict by dropping
+        the contact, not by shrinking the man or growing the tree.
+      what_the_beat_is_now: The fruit falls from the stem, lands on the ground, and the scavenger notices
+        it. That is the whole beat. No impact, no bounce, no contact.
+      script_line_now_stale: The `script` field above still reads "bounces off his head, and lands in
+        the grass at his feet" because it is transcribed from node.md and is the author's text, not the
+        steward's to rewrite. It is stale as to the bounce and this ruling governs. Flagged for the author
+        rather than edited here.
+    plate_requirement_0815:
+      why_this_is_here: This is what unblocks the beat. Recorded as a requirement, not a job — the plate
+        still needs commissioning and that is a separate decision.
+      fruit_must_be_on_the_stem: UNCHANGED AND STILL DISQUALIFYING. The fruit has to have somewhere to
+        fall from, so it must be ON THE STEM in the plate. Every beat-19 plate we own shows it already
+        lying in the grass, which is exactly why the beat was blocked; the ruling changed where the fruit
+        LANDS, not where it STARTS, so no existing plate is rescued by it. Asking a plate with the fruit
+        already down for a fall is what made fruit materialise in mid-air.
+      scavenger_in_frame: He must be in frame and able to notice — so his face is visible, or becomes
+        visible when he looks. The noticing is now half the beat, and a noticing you cannot see on his
+        face is not one.
+      body_position: OPEN QUESTION — FLAGGED, NOT INVENTED. Beat 17 ends with him standing and turned
+        away, so where his body is at the start of beat 19 is not established by anything we hold. The
+        plate has to establish it, and the pose is an author call the chain must answer before the plate
+        is commissioned. Do not let a render pick this by default.
+    handoff_19_to_20_0815:
+      status: CLOSED. This was previously a second, separate conflict and it is now consistent.
+      detail: The ruling puts the fruit on the ground at the end of beat 19, which is exactly the state
+        beat 20 opens in — "The scavenger picks the fig up with both hands and looks up at the bare branch."
+        Under the bounce version the two beats had to be reconciled; under this one they simply agree.
+        Beat 20's own done_when is unaffected and still stands.
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
-      so it could not be bent to fit the clips that already exist.
-    status: NO VERDICT YET
+      so it could not be bent to fit the clips that already exist. Revised the same day to carry the founder's
+      ruling above; the superseded text is preserved rather than replaced.
+    status: NO VERDICT YET — and not renderable until the plate exists.
   '20':
     title: EVIDENCE
     script: The scavenger picks the fig up with both hands and looks up at the bare branch.
