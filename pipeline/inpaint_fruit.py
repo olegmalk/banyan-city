@@ -48,10 +48,27 @@ PNG beside the output so it can be looked at, and reported in the sidecar in bot
 pixels and as a fraction of the frame, so the first correction he makes can be
 "lower", "smaller", "other side" and it is one number.
 
+SECOND CALLER, 2026-08-15: THE BARK BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.
+A prop -- a clipboard made of bark -- gates three beats of 002b (06 "turns over a
+clipboard made of bark and reads", 08 "lowers the clipboard and points", 10
+"flips the clipboard around: the back is blank"). Four wording attempts closed
+the wording lever for good (see `a5e61487`, `c7a11ff0`): they established that
+wording reaches the prop's MATERIAL -- deleting the noun killed the chrome clip
+and white paper in 12 frames of 12 -- and that wording does NOT reach its
+GEOMETRY. `large flat rectangular` was in the positive of a clean, uncontested
+prompt and all four seeds still rounded the object into a lozenge, a dome, a
+surfboard blank and a basket lid. So the geometry has to come from the mask, and
+an ELLIPSE MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four
+prompts already failed against, and masking a board with one would re-draw the
+defect under test. Hence `--quad`, four corners and four straight edges. A
+rectangle is a quad; a rectangular board held at an angle is a quad in
+perspective, which an axis-aligned rectangle would not fit either.
+
     python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \
-        --ellipse cx,cy,rx,ry --prompt-file p.txt --negative-file n.txt \
+        (--ellipse cx,cy,rx,ry | --quad x0,y0,x1,y1,x2,y2,x3,y3) \
+        --prompt-file p.txt --negative-file n.txt \
         --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \
-        [--seed N] [--pad-crop 64] [--blur 8]
+        [--seed N] [--pad-crop 64] [--blur 8] [--dry-run]
 """
 
 from __future__ import annotations
@@ -97,8 +114,17 @@ def main() -> int:
     ap.add_argument("--init", required=True)
     ap.add_argument("--init-sha256", required=True,
                     help="asserted before anything loads; a mismatch is a hard stop")
-    ap.add_argument("--ellipse", required=True,
+    ap.add_argument("--ellipse", default="",
                     help="cx,cy,rx,ry in pixels of the init image")
+    ap.add_argument("--quad", default="",
+                    help="x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in order, a "
+                         "STRAIGHT-EDGED mask. A rectangle is a quad, and a "
+                         "rectangular board seen at an angle is a quad and is NOT "
+                         "an ellipse. Exactly one of --ellipse/--quad is required.")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="assert the sha, draw the mask PNG beside --out and stop "
+                         "BEFORE loading any model. Costs nothing and is the step "
+                         "where a misplaced mask gets caught by eye.")
     ap.add_argument("--prompt-file", required=True)
     ap.add_argument("--negative-file", required=True)
     ap.add_argument("--out", required=True)
@@ -121,23 +147,64 @@ def main() -> int:
               % (a.init_sha256, have), flush=True)
         return 3
 
-    try:
-        cx, cy, rx, ry = (int(v) for v in a.ellipse.split(","))
-    except Exception:
-        print("!! --ellipse wants cx,cy,rx,ry", flush=True)
+    if bool(a.ellipse) == bool(a.quad):
+        print("!! pass exactly one of --ellipse or --quad", flush=True)
         return 2
 
-    import torch
+    cx = cy = rx = ry = 0
+    corners: list = []
+    if a.ellipse:
+        try:
+            cx, cy, rx, ry = (int(v) for v in a.ellipse.split(","))
+        except Exception:
+            print("!! --ellipse wants cx,cy,rx,ry", flush=True)
+            return 2
+        shape = "ellipse"
+        bbox = [cx - rx, cy - ry, cx + rx, cy + ry]
+    else:
+        try:
+            vals = [int(v) for v in a.quad.split(",")]
+        except Exception:
+            vals = []
+        if len(vals) != 8:
+            print("!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3 (8 integers)", flush=True)
+            return 2
+        corners = list(zip(vals[0::2], vals[1::2]))
+        xs = [p[0] for p in corners]
+        ys = [p[1] for p in corners]
+        shape = "quad"
+        bbox = [min(xs), min(ys), max(xs), max(ys)]
+
     from PIL import Image, ImageDraw
-    from diffusers import StableDiffusionXLInpaintPipeline
 
     plate = Image.open(a.init).convert("RGB")
     W, H = plate.size
     mask = Image.new("L", (W, H), 0)
-    ImageDraw.Draw(mask).ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=255)
+    if shape == "ellipse":
+        ImageDraw.Draw(mask).ellipse(bbox, fill=255)
+    else:
+        ImageDraw.Draw(mask).polygon(corners, fill=255)
+
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    mask_png = os.path.splitext(a.out)[0] + "-mask.png"
+    mask.save(mask_png)
 
     prompt = read_text(a.prompt_file)
     negative = read_text(a.negative_file)
+
+    if a.dry_run:
+        print("DRY RUN -- no model loaded, nothing rendered.", flush=True)
+        print("init_sha256 OK %s" % have, flush=True)
+        print("mask %s corners=%s bbox=%s  %.4f x %.4f of %dx%d"
+              % (shape, corners or "-", bbox,
+                 (bbox[2] - bbox[0]) / float(W),
+                 (bbox[3] - bbox[1]) / float(H), W, H), flush=True)
+        print("WROTE %s" % mask_png, flush=True)
+        print("rc=0 dry_run=1", flush=True)
+        return 0
+
+    import torch
+    from diffusers import StableDiffusionXLInpaintPipeline
 
     if not torch.cuda.is_available():
         print("!! no CUDA. This is the box's job; stopping.", flush=True)
@@ -169,14 +236,23 @@ def main() -> int:
     out = pipe(**kwargs).images[0]
     render_s = time.time() - t1
 
-    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
     out.save(a.out)
-    mask_png = os.path.splitext(a.out)[0] + "-mask.png"
-    mask.save(mask_png)
 
     versions = {"python": sys.version.split()[0], "torch": module_version("torch"),
                 "diffusers": module_version("diffusers")}
     stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    mask_lines = ["mask_shape: %s" % shape]
+    if shape == "ellipse":
+        mask_lines += ["mask_centre_px: [%d, %d]" % (cx, cy),
+                       "mask_radii_px: [%d, %d]" % (rx, ry)]
+    else:
+        mask_lines += ["mask_corners_px: %s"
+                       % str([[int(x), int(y)] for x, y in corners])]
+    mask_lines += [
+        "mask_bbox_px: [%d, %d, %d, %d]" % tuple(bbox),
+        "mask_width_frac: %.4f" % ((bbox[2] - bbox[0]) / float(W)),
+        "mask_height_frac: %.4f" % ((bbox[3] - bbox[1]) / float(H)),
+    ]
     sidecar = a.out + ".meta.yaml"
     with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("\n".join([
@@ -197,12 +273,7 @@ def main() -> int:
             "init_image: %s" % a.init.replace("\\", "/"),
             "init_sha256: %s" % have,
             "mask_png: %s" % os.path.basename(mask_png),
-            "mask_shape: ellipse",
-            "mask_centre_px: [%d, %d]" % (cx, cy),
-            "mask_radii_px: [%d, %d]" % (rx, ry),
-            "mask_bbox_px: [%d, %d, %d, %d]" % (cx - rx, cy - ry, cx + rx, cy + ry),
-            "mask_width_frac: %.4f" % (2 * rx / float(W)),
-            "mask_height_frac: %.4f" % (2 * ry / float(H)),
+        ] + mask_lines + [
             "mask_is_the_stewards: >-",
             yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
                        "`inpaint` and named no size, no position on the stem, no "

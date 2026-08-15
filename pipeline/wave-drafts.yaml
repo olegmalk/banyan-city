@@ -3837,6 +3837,54 @@ beats:
     # mask the prop region on an approved plate, where a drawn rectangle sets the geometry
     # that a sentence could not. Beat 10's plate and init already exist and are verified,
     # so this beat is a candidate for the FIRST inpaint pass rather than a blocked one.
+    #
+    # -- THE FIRST INPAINT PASS, PRE-REGISTERED 2026-08-15 BEFORE THE RENDER EXISTED.
+    # `ep2-b10-barkboard-inpaint-0815`. This is the next lever, not a fifth wording draft:
+    # no draft below is edited, no seed is rolled, and the positive prompt contains NO
+    # geometry word at all.
+    #
+    # WHAT THE PLATE ALREADY GIVES US, which is the finding that picked the recipe. The
+    # verified beat-10 init (`b10-init-704x1280.png`, sha 1249cb41..., the cover-crop of
+    # `10-no-form-ipa-r1-w015-s0.png` that the 49-frame takes ran from) ALREADY CONTAINS A
+    # LARGE FLAT RECTANGLE held in two hands at a readable angle. Its GEOMETRY is already
+    # right -- the thing four prompts could never draw. What is wrong with it is only its
+    # MATERIAL: dark navy board, chrome spring clip. That is attempt 1's exact failure
+    # sitting in the plate, and MATERIAL is the one axis wording was proven to REACH
+    # (deleting the noun killed chrome and paper 12 frames of 12).
+    #
+    # SO EACH LEVER IS POINTED AT THE AXIS IT ACTUALLY REACHES, and that is the whole
+    # design: the MASK supplies the geometry, the WORDS supply the material. The mask is a
+    # `--quad` -- four corners, four straight edges -- traced onto the board's own
+    # silhouette: 228,518 410,531 359,715 187,693, bbox 187,518..410,715, 4.8% of the
+    # frame. It is deliberately NOT an ellipse: an ellipse is the rounded blob all four
+    # wording attempts already failed into, so masking a board with one would redraw the
+    # defect under test. `inpaint_fruit.py` only drew ellipses before today; `--quad` and
+    # `--dry-run` were added for this and the ellipse path is unchanged.
+    # The positive is MATERIAL ONLY -- "a slab of rough tree bark, dry grey-brown bark,
+    # deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte
+    # and dusty" + the style tail. It says nothing about flat, rectangular, large or board.
+    # That is on purpose: if geometry words were in the positive we could not tell whether
+    # the mask or the sentence delivered the shape, and the sentence has failed four times.
+    # The gripping fingers sit OUTSIDE the mask on both hands, so no hand is redrawn.
+    #
+    # THE BAR, CARRIED OVER UNCHANGED FROM THE WORDING ROUNDS, and it is about SHAPE
+    # because shape is the whole question -- an earlier lane today wrote a bar that
+    # certified a prop's MATERIAL and never mentioned its shape, scored 8/12 "passes" with
+    # 0/12 usable, and logged that as its own error:
+    #   a flat rectangular slab of rough bark that reads as a board someone could hold and
+    #   read from -- large, flat, rectangular, rough bark texture rather than planed
+    #   timber, no chrome clip, no white paper, no tree trunk.
+    # PASS requires ALL of it. Named failure modes, any one of which is a FAIL:
+    #   FAIL-SHAPE   the board loses its straight edges or square corners inside the mask
+    #                -- a lozenge, dome, oval or blob. This is the one the lever exists to
+    #                beat, and if the mask cannot hold a shape it drew, inpaint is spent too.
+    #   FAIL-MATERIAL  chrome clip or white paper survives, or the face is planed/varnished
+    #                timber or a tree trunk rather than rough bark crust.
+    #   FAIL-SEAM    the patch does not sit in the hands -- a floating rectangle, a visible
+    #                paste box, or hands mangled at the mask edge.
+    # Judged BY OPENING THE FRAME, never by a score; a metric errs both ways and is a
+    # filter, never a verdict. ONE SAMPLE, one seed, opened before any batch is discussed.
+    # This is beat 10's board only -- 06 and 08 wait on this sample's verdict.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back
