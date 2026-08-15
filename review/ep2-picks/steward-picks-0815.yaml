@@ -345,32 +345,103 @@ results:
       but_superseded: See job_3_next_steps.'08' — beat 08 is blocked on a missing capability, so a pick from the existing stills cannot close it either way.
 
     '15':
-      status: NOT SCORED YET — scorer dispatched and asked to report partial; result not returned at time of writing
-      note: >-
-        Its definition of done was written mid-flight, so the scorer was re-briefed
-        against it: "he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in
-        shot is the whole point of the beat — a close-up of him looking up at
-        nothing fails it however well he acts."
-      candidate_count: 28 stills across 4 directories, only 8 of which are a real candidate set.
+      status: ALL CANDIDATES FAIL — scored directly against the definition
+      definition_used: >-
+        "he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in shot is the
+        whole point of the beat — a close-up of him looking up at nothing fails it
+        however well he acts."
+      examined: 12 candidates — 4 ep2-b15-idfix, 4 ep2-b15-idfix-r2, 4 review/tonight (ep2-b15-goblin-simple).
+      why_all_twelve_fail:
+        idfix_and_idfix_r2_8_of_12: >-
+          THERE IS NO SAPLING IN ANY OF THEM. They are outdoors in the field, which
+          is right, but the greenery is DETACHED LEAVES FLOATING FREE at the frame
+          edges — no stem, no root, nothing growing out of the ground. A floating
+          leaf is not the sapling, and the beat's whole point is that the sapling
+          shares the frame. He is also not looking up in any of the eight: s1 has
+          his eyes shut, s2 is a full back view, s3 is a side profile looking level.
+        tonight_4_of_12: >-
+          These DO contain a real rooted plant with a visible stem, but they are
+          INDOORS — pale vertical wall panels and a doorway, not a field. The
+          founder has already ruled on exactly this failure, on beat 21: "none of
+          them have a good background, doesnt look like the sapling is outside."
+      closest_candidate: review/tonight/15-good-listener-wave1-s1.png
+      why_it_is_closest_and_still_fails: >-
+        Viewed full size, it is the ONLY one of the twelve that does the thing the
+        beat asks: his head is tipped up and a rooted plant with a stem is in the
+        same frame. It fails on two counts. The background reads as an interior
+        wall, and the plant is a multi-leaf specimen with long pointed banana-like
+        blades, not the canon two broad round cotyledons on a thin stem. Naming it
+        rather than picking it, because a beat whose subject is a conversation with
+        a sapling cannot ship on a plate where the sapling is a houseplant indoors.
+      what_a_passing_plate_needs: >-
+        Outdoors in the open field. The sapling ROOTED IN THE GROUND with a thin
+        visible stem and its two oversized leaves — attached, not floating. The
+        goblin standing or sitting beside it, small relative to nothing else in
+        frame, with his head tipped UP toward the leaves. Both subjects entirely
+        inside the frame. The failure across all twelve is one of two halves being
+        present at a time: the idfix sets have the field but no sapling, the
+        tonight set has a plant but no outdoors.
 
     '17':
-      status: NOT SCORED YET — scorer dispatched, result not returned
-      note: >-
-        Its new definition CORRECTS the criteria this scorer was originally given.
-        I briefed it on the staging law; the definition says the staging law does
-        NOT apply to beat 17: "NOTE the turn takes his face away from the lens by
-        design, so the staging law does not apply here: this is the one beat where
-        turning away IS the action." The scorer has been re-briefed. Any verdict
-        it produced before that re-brief would have failed candidates for the one
-        thing this beat is supposed to do.
+      status: ALL CANDIDATES FAIL — scored directly against the definition
+      definition_used: >-
+        "stand, brush, turn — a departure. NOTE the turn takes his face away from
+        the lens by design, so the staging law does not apply here: this is the one
+        beat where turning away IS the action."
+      examined: 8 candidates — 4 ep2-b17-idfix, 4 ep2-b17-idfix-r2.
+      fault_1_the_stand_has_nowhere_to_start: >-
+        HE IS ALREADY STANDING AT FRAME ONE IN ALL EIGHT. Upright, full height,
+        weight on both feet. The beat's action is stand, brush, turn — and the
+        first third of it cannot be animated from a plate where he has already
+        stood up. This is the staging law applied to the plate rather than the
+        camera: the plate has to hold the START of the action, and none of these do.
+      fault_2_every_one_of_them_arms_him: >-
+        All eight put an object in his hand that the beat never asks for — a
+        spear or pole in s0, s3 and r2-s0, a shovel or ladle in s3, a cut sprout in
+        s1, s2 and r2-s2, a rag or cloth in r2-s1 and r2-s3. Two problems. He
+        cannot BRUSH HIMSELF OFF with his hands full, so the middle third of the
+        action is blocked too. And under the new prop_identity_bar every one of
+        those objects must then persist as the same object in the same hand for the
+        whole clip, which is a continuity liability taken on for no story reason.
+      combined: >-
+        Between the two faults, all three verbs of "stand, brush, turn" are
+        unsupported by every candidate. There is nothing to pick.
+      what_a_passing_plate_needs: >-
+        The goblin SEATED or folded low in the sapling's shade at frame one, HANDS
+        EMPTY, outdoors in the field, framed with enough headroom above him that he
+        stays in shot when he rises to full height. Note this is continuous with
+        beat 13's end state — "he ends FOLDED SMALL in the sapling's shade, knees
+        up" — so beat 17's opening plate should look like beat 13's closing frame,
+        and building it that way buys continuity between two adjacent beats for
+        free.
 
     '20':
-      status: NOT SCORED YET — scorer dispatched, result not returned
-      note: >-
-        Definition of done: "BOTH HANDS to the fruit, then the look UP to a branch
-        that is visibly BARE — the empty stem is the evidence and must be in
-        frame." The bare-branch clause is the hard one and is the same physical
-        state beat 19 lacks, from the other side.
+      status: PICK MADE, WITH FAULTS NAMED
+      definition_used: >-
+        "BOTH HANDS to the fruit, then the look UP to a branch that is visibly
+        BARE — the empty stem is the evidence and must be in frame."
+      examined: 8 candidates — 4 ep2-b20-idfix, 4 ep2-b20-idfix-r2.
+      pick: farm-out/ep2-b20-idfix/20-evidence-wave1-s3.png
+      one_line_reason: >-
+        It is the only candidate that satisfies the beat's primary clause and the
+        secondary one at once — the fruit is cupped in BOTH hands at chest height
+        in the "holding it like evidence" gesture, and a bare branch is in frame
+        above him for him to look up to.
+      runner_up: farm-out/ep2-b20-idfix-r2/20-evidence-wave1-s3.png — same both-hands gesture, but the fruit is held low at waist rather than up, so the lift into the look has further to travel.
+      faults_named_and_not_hidden:
+        - "THE BRANCH IS THE WRONG TREE. The bare branch in frame is a thick, dark, gnarled MATURE-TREE limb entering from the top corner. The beat needs the SAPLING's own thinnest branch, now empty, because the empty stem is what makes it evidence. A dead oak limb overhead is not the stem the fruit fell from, and mature tree / thick trunk are negated terms in our own prompts."
+        - "THE FRUIT IS THE WRONG COLOUR. It reads dark red-brown, an apple or a plum. The record settled purple: 'colour is settled - purple reads as fruit where green never did.' Beat 18's whole shipping fault is that a cold reader called the fruit a plum; shipping beat 20 on a red fruit repeats that error two beats later and makes it look deliberate."
+        - "HE IS NOT LOOKING UP. In this and every candidate the gaze is level, into the lens. The look UP is the second half of the definition and no plate stages it."
+      why_a_pick_and_not_ALL_FAIL: >-
+        Unlike beats 15, 17 and 19, beat 20's central physical requirement — the
+        fruit in both hands — IS met, by four of the eight. The faults are colour
+        and set-dressing, which are the kind a beat ships with named. That is the
+        distinction shipping_rule draws, and it is why this one gets a pick and the
+        others get a diagnosis.
+      NOTE_this_is_a_pick_not_a_verdict: >-
+        Which take ships is the steward's call and is made here. Whether a red
+        fruit is acceptable when the record says purple is a taste question and
+        goes to the founder.
 
     scoring_caveat_that_applies_to_all_of_them: >-
       Ten beats had no definition of done until 2026-08-15 — 02, 03, 04, 08, 13,
