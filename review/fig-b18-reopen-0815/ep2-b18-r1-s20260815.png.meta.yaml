@@ -1,0 +1,16 @@
+# fig_study.py sample -- NOT canon, NOT approved.
+{
+  "generated_utc": "2026-08-15T15:12:02.324746+00:00",
+  "model": "cagliostrolab/animagine-xl-3.1",
+  "device": "mps",
+  "width": 1024,
+  "height": 1024,
+  "steps": 40,
+  "cfg": 7.0,
+  "seed": 20260815,
+  "positive": "no humans, food focus, one ripe purple fruit on a wooden table, teardrop shape, heavy round bottom, widest low, broad flat base it sits on, shoulders turning in to a short thick neck, small woody stem, matte deep purple skin, olive green shoulders, pale bloom, faint darker ribs, macro close up, front light, masterpiece, best quality",
+  "negative": "person, girl, boy, woman, man, face, eyes, mouth, hair, skin, body, mascot, chibi, leaf, leaves, foliage, branch, twig, plant, tree, leafy cap, calyx, crown, eggplant, plum, glossy, shiny, backlight, silhouette, photorealistic, text, watermark, low quality, blurry",
+  "sha256": "6f95f51d50a09dc62a6e07ea87f1bd8215dbed48800dd1534021f9470c1c1355",
+  "approved": false,
+  "cost_usd": 0.0
+}
