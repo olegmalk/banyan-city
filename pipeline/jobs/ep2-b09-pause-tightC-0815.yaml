@@ -199,3 +199,20 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b09-pause-tightC-0815\09-the-pause-LTX-pause-tight-c.mp4
 - C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-init-704x1280.png
+
+# ---------------------------------------------------------------------------
+# RESULT, scored 2026-08-15 by opening frames (refill lane).
+# TIGHT, SEED 20260817 -> NO MOUTH ACTION. The brow furrows, the head shifts and
+# the expression changes, but the mouth stays a closed line in all 49 frames --
+# no cavity, no tongue, nothing resembling the open mouth plainly visible in
+# ep2-b09-pause-tight-0815 and -tightB. The beat's action does not happen.
+# Section 3 pre-registered this exact outcome: "if this tight cell comes back
+# with a closed mouth, tight drops to 2 of 3 and THE CROP CLAIM IS DEAD
+# regardless of what 49fC does." It did, and it is.
+#
+# FINAL BEAT-09 MATRIX, every cell scored the same way, by eye, on the mouth:
+#   seed 20260815:  waist-up DEAD    |  tight ACTION
+#   seed 20260816:  waist-up ACTION  |  tight ACTION
+#   seed 20260817:  waist-up ACTION  |  tight DEAD
+# Tight 2 of 3. Waist-up 2 of 3. IDENTICAL. The init crop is not a lever.
+# ---------------------------------------------------------------------------
