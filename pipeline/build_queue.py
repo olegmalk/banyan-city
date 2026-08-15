@@ -103,7 +103,15 @@ TZ_LABEL = "+04"
 # would be a page that quietly started implying the prompt was empty.
 NO_PROMPT = "PROMPT NOT RECORDED"
 NO_NEGATIVE = "NEGATIVE PROMPT NOT RECORDED"
-NO_ARTIFACT = "NO ARTIFACT ON THE BRANCH"
+# NOT "no artifact on the branch", which this page spent a build claiming and
+# could not support: nothing here ever reads the results branch. The builder
+# reads one thing — the `outputs` list in queue-history.json — so the only fact
+# it can state is that the list is empty. Measured 2026-08-15: all 222 tiles
+# carrying this marker also have no `artifacts_dir`, and at least 25 of them DO
+# have frames sitting on farm-results-rtx5090 under a directory named after the
+# job, which the history file never linked. The old wording called those renders
+# fileless; they are records missing a field.
+NO_ARTIFACT = "NO FILE IN THIS RUN'S RECORD"
 
 # The card's one-line prompt. Long enough to tell two renders of the same beat
 # apart at a glance, short enough that 573 of them are a page and not a book.
@@ -162,7 +170,25 @@ main { max-width: 1180px; }
 .qchip.wait { color: var(--sap); border-color: var(--sap-deep); }
 .qchip.bad { color: var(--alarm, #e2564d); border-color: var(--alarm, #e2564d); }
 
+/* ---- the jump bar: the gallery is 43 screens down on a phone without it ---- */
+.qjump { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 0; }
+.qjump a { font: 700 .7rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase;
+  min-height: 34px; display: inline-flex; align-items: center; padding: .3rem .7rem;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--code-bg);
+  color: var(--muted); text-decoration: none; }
+.qjump a:hover { color: var(--ink); border-color: var(--leaf-deep); }
+
 /* ---- upcoming ---- */
+.qupwrap { margin: .6rem 0 0; }
+.qupwrap > summary { cursor: pointer; list-style: none; padding: .5rem .7rem;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--panel);
+  font: 700 .74rem/1.4 var(--mono); letter-spacing: .04em; color: var(--muted); }
+.qupwrap > summary::-webkit-details-marker { display: none; }
+.qupwrap > summary::after { content: " \\2014 tap to open"; color: var(--faint);
+  font-weight: 500; letter-spacing: 0; }
+.qupwrap[open] > summary { color: var(--ink); border-color: var(--leaf-deep); }
+.qupwrap[open] > summary::after { content: " \\2014 tap to fold away"; }
+.qupwrap > summary:focus-visible { outline: 2px solid var(--sap); outline-offset: 1px; }
 .qupgrid { display: grid; gap: .6rem; margin: .6rem 0 0;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .qup { border: 1px solid var(--line); border-left-width: 3px; border-radius: 12px;
@@ -185,8 +211,18 @@ main { max-width: 1180px; }
 .qbar input[type=search] { flex: 1 1 220px; min-height: 40px; min-width: 0;
   font: 500 .88rem/1.4 var(--mono); color: var(--ink); background: var(--code-bg);
   border: 1px solid var(--line); border-radius: 999px; padding: .4rem .9rem; }
-.qbar input:focus-visible, .qbar button:focus-visible { outline: 2px solid var(--sap);
-  outline-offset: 1px; }
+.qbar select { min-height: 34px; font: 700 .7rem/1 var(--mono); letter-spacing: .04em;
+  text-transform: uppercase; padding: .3rem 1.6rem .3rem .65rem; border-radius: 999px;
+  cursor: pointer; border: 1px solid var(--line); background: var(--code-bg);
+  color: var(--muted); -webkit-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right .78rem center, right .58rem center;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+.qbar select.on { background-color: var(--leaf-dim); color: var(--ink);
+  border-color: var(--leaf-deep); }
+.qbar input:focus-visible, .qbar button:focus-visible,
+.qbar select:focus-visible { outline: 2px solid var(--sap); outline-offset: 1px; }
 .qset { display: flex; flex-wrap: wrap; gap: .3rem; }
 .qbtn { font: 700 .7rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase;
   min-height: 34px; padding: .3rem .65rem; border-radius: 999px; cursor: pointer;
@@ -275,6 +311,25 @@ main { max-width: 1180px; }
 .qmeta b { color: var(--muted); font-weight: 700; }
 .qbox .rc-ok { color: var(--leaf); }
 .qbox .rc-bad, .qc .rc-bad { color: var(--alarm, #e2564d); font-weight: 700; }
+
+/* ---- the lens: any frame at full size, without leaving the page ----
+   Every picture on the record is a thumbnail or a fitted copy. Tapping one used
+   to navigate to raw.githubusercontent.com, which on a phone is a one-way trip
+   out of the gallery and back through a cold page load. The lens shows the
+   full-resolution bytes over the record and hands the scroll position back. */
+.qzoom { cursor: zoom-in; }
+.qlens[hidden] { display: none; }
+.qlens { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
+  background: rgba(2,6,4,.96); padding: .5rem; }
+.qlens-bar { display: flex; gap: .4rem; align-items: center; justify-content: space-between;
+  flex: 0 0 auto; }
+.qlens-bar .cap { font: 500 .74rem/1.5 var(--mono); color: var(--muted);
+  overflow-wrap: anywhere; }
+.qlens-fig { flex: 1 1 auto; min-height: 0; display: flex; align-items: center;
+  justify-content: center; margin: .4rem 0 0; }
+.qlens-fig img, .qlens-fig video { max-width: 100%; max-height: 100%;
+  width: auto; height: auto; object-fit: contain; border-radius: 8px;
+  background: var(--code-bg); }
 """
 
 
@@ -650,6 +705,17 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
     machine_h = sum(int(j.get("duration_s") or 0) for j in jobs) / 3600.0
     kinds = sorted({str(j.get("kind") or "other") for j in jobs})
 
+    # "find one beat's history quickly" is the founder's own use of this page, and
+    # 21 beats will not fit the bar as chips on a phone. A native <select> is one
+    # control tall, opens as the platform's own picker, and carries the count so
+    # the choice is informed before it is made.
+    beat_counts: dict = {}
+    for j in jobs:
+        b = j.get("beat")
+        if isinstance(b, int):
+            beat_counts[b] = beat_counts.get(b, 0) + 1
+    beatless = sum(1 for j in jobs if not isinstance(j.get("beat"), int))
+
     days: dict = {}
     for job in jobs:
         days.setdefault(day_key(job.get("finished_at")), []).append(job)
@@ -695,18 +761,40 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
         f'<code>pipeline/jobs/</code> that no run record anywhere accounts for. '
         f'<b>Amber is waiting on you</b> — a held job is held by a question only '
         f'the author can answer, and the machine cannot start it. Green is runnable.</p>'
-        + (f'<div class="qupgrid">{up_cards}</div>' if up_cards else
+        # MEASURED 2026-08-15, at 390 px: these cards ran 34,500 px tall and put
+        # the first finished render 43 SCREENS down. He reviews on a phone and
+        # the gallery is what he asked this page for, so an unrun job list must
+        # not be a wall in front of it. `open` in the markup, closed by the
+        # script only on a narrow viewport: with JavaScript off nothing is
+        # folded, and the count is in the summary either way, so this hides no
+        # fact — it just stops one section from burying the other.
+        + (f'<details class="qupwrap" id="q-up" open>'
+           f'<summary>{len(upcoming)} job'
+           f'{"" if len(upcoming) == 1 else "s"} authored and not yet run'
+           + (f' — {held} held on you, {runnable} runnable' if upcoming else "")
+           + f'</summary><div class="qupgrid">{up_cards}</div></details>'
+           if up_cards else
            '<p class="notice">Nothing is authored and unrun: every committed spec '
            'has a run record.</p>'))
 
     kind_btns = "".join(
         f'<button type="button" class="qbtn" data-f="kind" data-v="{_e(k)}" '
         f'aria-pressed="false">{_e(kind_word(k))}</button>' for k in kinds)
+    beat_opts = "".join(
+        f'<option value="{b}">beat {b:02d} — {beat_counts[b]} '
+        f'render{"" if beat_counts[b] == 1 else "s"}</option>'
+        for b in sorted(beat_counts))
+    if beatless:
+        beat_opts += (f'<option value="none">no beat recorded — {beatless} '
+                      f'render{"" if beatless == 1 else "s"}</option>')
     bar = (
         '<div class="qbar" id="q-bar">'
         '<label class="qhide" for="q-q">Search the prompts</label>'
         '<input id="q-q" type="search" inputmode="search" autocomplete="off" '
         'placeholder="a beat number, a word from a prompt, a model, a job id">'
+        '<label class="qhide" for="q-beat">Filter by beat</label>'
+        f'<select id="q-beat"><option value="">all {len(beat_counts)} beats</option>'
+        f'{beat_opts}</select>'
         '<div class="qset" role="group" aria-label="filter by kind">'
         '<button type="button" class="qbtn" data-f="kind" data-v="" '
         'aria-pressed="true">all kinds</button>'
@@ -732,6 +820,10 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
 Tap any frame for the record behind it: the exact positive and negative prompt, the
 image it started from, the reference it was conditioned on, the recipe, and every
 file it wrote.</p>
+<nav class="qjump" aria-label="jump to a section">
+<a href="#finished">{len(jobs)} finished renders &#8595;</a>
+<a href="#upcoming">{len(upcoming)} coming &#8595;</a>
+<a href="#now">what the box is doing &#8595;</a></nav>
 <p class="qprov">History measured <b>{_e(measured)}</b> from
 <code>{_e(RESULTS_BRANCH)}</code> at <code>{_e(src_commit)}</code> ·
 {len(jobs)} renders · written by <code>pipeline/queue_history.py</code> and committed,
@@ -756,9 +848,16 @@ reason — for a motion job whose spec was deleted, or a render from before the 
 wrote artifact sidecars, the bytes are genuinely gone. They are never reconstructed:
 the 77-token fit happened on the box's tokenizer and a recomputation can differ
 exactly where it would matter.<br>
-<b>{NO_ARTIFACT}</b> on a tile means the run reported an outcome and the branch
-carries no file under its name. That is a fact about the record, not a render that
-made nothing.<br>
+<b>{NO_ARTIFACT}</b> on a tile means exactly that and nothing more: the history file
+lists no output for that run. This page never reads the results branch to check —
+it cannot, it is built once and the branch moves — so it does not claim the frame
+is missing, only that the record does not name one. Some of these ran clean and
+their frames ARE on <code>{_e(RESULTS_BRANCH)}</code> under a directory named after
+the job; the history simply never linked them. That is a gap in
+<code>pipeline/queue_history.py</code>, which is where it has to be fixed, and it is
+left visible here rather than papered over with a guessed path — a tile showing a
+frame this page inferred rather than read would be the one lie that makes every
+other frame on it worthless.<br>
 <b>Nothing here was copied into the site.</b> Frames and clips are served from
 <code>{_e(RESULTS_BRANCH)}</code> and their previews from
 <code>{THUMB_BRANCH}</code>, both on GitHub's raw CDN, lazily.<br>
@@ -783,6 +882,16 @@ you would rather grep than scroll.</p>
     </div>
     <div class="qbox-body" id="q-box-body"></div>
   </div>
+</div>
+<div class="qlens" id="q-lens" hidden>
+  <div class="qlens-bar">
+    <span class="cap" id="q-lens-cap"></span>
+    <span class="qset">
+      <a class="qbtn" id="q-lens-raw" href="#">open the file</a>
+      <button type="button" class="qbtn" id="q-lens-close">close</button>
+    </span>
+  </div>
+  <div class="qlens-fig" id="q-lens-fig"></div>
 </div>
 """
 
@@ -960,7 +1069,8 @@ LIVE_JS = """
   var sections = [].slice.call(document.querySelectorAll(".qdaysec"));
   var INDEX = null, DETAIL = null, detailWanted = false, detailError = null;
   var open = -1;
-  var state = {q: "", kind: "", rc: ""};
+  var state = {q: "", kind: "", rc: "", beat: ""};
+  var beatSel = document.getElementById("q-beat");
 
   /* The day headers stick under the control bar, and the bar's height changes
      with the viewport (it wraps to three rows on a phone). Measured rather than
@@ -1001,12 +1111,81 @@ LIVE_JS = """
     return s.toISOString().slice(0, 16).replace("T", " ") + " " + TZ_LABEL;
   }
 
+  /* ------------------------------------------------------------------ lens
+     Full-resolution bytes over the record, rather than a link out to the raw
+     CDN. Every picture in the record is a 512 px preview or a fitted copy, so
+     "is that the fig or a smear" was a question the page could not answer
+     without leaving itself — on a phone, a one-way trip that loses the scroll
+     position and every filter set to get there. */
+  var lens = document.getElementById("q-lens");
+  var lensFig = document.getElementById("q-lens-fig");
+  var lensCap = document.getElementById("q-lens-cap");
+  var lensRaw = document.getElementById("q-lens-raw");
+  var lensBack = null;
+
+  function openLens(path, kind) {
+    if (!lens || !path) return;
+    var url = artUrl(path);
+    clear(lensFig);
+    var node;
+    if (kind === "video") {
+      node = document.createElement("video");
+      node.controls = true; node.playsInline = true; node.preload = "metadata";
+    } else {
+      node = document.createElement("img");
+      node.decoding = "async"; node.alt = path.split("/").pop();
+    }
+    node.src = url;
+    lensFig.appendChild(node);
+    /* The whole path, not the filename: ten beats ship a clip called
+       13-remake-LTX-0813.mp4, so the directory is the only thing that says
+       which render this is. */
+    lensCap.textContent = path;
+    lensRaw.href = url;
+    lensBack = document.activeElement;
+    lens.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.getElementById("q-lens-close").focus();
+  }
+  function closeLens() {
+    if (!lens || lens.hidden) return;
+    lens.hidden = true;
+    clear(lensFig);                       /* stops a clip that was playing */
+    if (!box || box.hidden) document.body.style.overflow = "";
+    if (lensBack && lensBack.focus) lensBack.focus();
+    lensBack = null;
+  }
+  /* Any picture in the record becomes its own full-size view. The click is
+     stopped here so it never also reaches the card underneath. */
+  function zoomable(node, path, kind) {
+    node.classList.add("qzoom");
+    node.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openLens(path, kind);
+    });
+    return node;
+  }
+  if (lens) {
+    document.getElementById("q-lens-close").addEventListener("click", closeLens);
+    lens.addEventListener("click", function (ev) {
+      if (ev.target === lens || ev.target === lensFig) closeLens();
+    });
+  }
+
   /* ---------------------------------------------------------------- filter */
   function matches(i) {
     var row = INDEX ? INDEX[i] : null;
     var card = cards[i];
     if (state.kind && card.getAttribute("data-k") !== state.kind) return false;
     if (state.rc !== "" && card.getAttribute("data-r") !== state.rc) return false;
+    if (state.beat !== "") {
+      var cb = card.getAttribute("data-b");
+      /* "none" is its own answer, not a missing one: a run whose beat nobody
+         recorded is a fact this page keeps rather than filing under beat 0. */
+      if (state.beat === "none") { if (cb !== "") return false; }
+      else if (cb === "" || parseInt(cb, 10) !== parseInt(state.beat, 10)) return false;
+    }
     if (!state.q) return true;
     var beatOnly = /^b?(\\d{1,3})$/.exec(state.q);
     if (beatOnly) {
@@ -1033,7 +1212,7 @@ LIVE_JS = """
         "qhide", !sections[s].querySelector(".qc:not(.qhide)"));
     }
     empty.hidden = shown !== 0;
-    var filtered = state.q || state.kind || state.rc !== "";
+    var filtered = state.q || state.kind || state.rc !== "" || state.beat !== "";
     count.textContent = filtered
       ? shown + " of " + cards.length + " renders match"
         + (INDEX ? "" : " \\u2014 searching card text only, the prompt index has not loaded")
@@ -1044,6 +1223,30 @@ LIVE_JS = """
     state.q = input.value.trim().toLowerCase();
     apply();
   });
+  /* The unrun list is 54 cards and, at 390 px, 34,500 px of them — 43 screens
+     between the top of the page and the first finished render. It ships open so
+     a reader with no JavaScript loses nothing; here, and only on a viewport too
+     narrow to afford it, it starts folded. Anyone who asks for it — by tapping
+     the summary, by following the jump link, by arriving on #upcoming — gets it
+     back, and the summary states the count while folded. */
+  var upBox = document.getElementById("q-up");
+  if (upBox && window.innerWidth < 760 && location.hash !== "#upcoming") {
+    upBox.open = false;
+  }
+  function openUpcoming() { if (upBox) upBox.open = true; }
+  window.addEventListener("hashchange", function () {
+    if (location.hash === "#upcoming") openUpcoming();
+  });
+  var upJump = document.querySelector('.qjump a[href="#upcoming"]');
+  if (upJump) upJump.addEventListener("click", openUpcoming);
+
+  if (beatSel) {
+    beatSel.addEventListener("change", function () {
+      state.beat = beatSel.value;
+      beatSel.classList.toggle("on", state.beat !== "");
+      apply();
+    });
+  }
   bar.addEventListener("click", function (ev) {
     var btn = ev.target.closest ? ev.target.closest(".qbtn[data-f]") : null;
     if (!btn) return;
@@ -1081,6 +1284,7 @@ LIVE_JS = """
         node = document.createElement("img");
         node.loading = "lazy"; node.decoding = "async"; node.alt = "";
         node.src = artUrl(art.path);
+        zoomable(node, art.path, art.kind);
       }
       main.appendChild(node);
       var cap = el("p", "qmeta", art.path.split("/").pop()
@@ -1127,6 +1331,7 @@ LIVE_JS = """
       var im = document.createElement("img");
       im.loading = "lazy"; im.alt = "init frame"; im.src = thumbUrl(det.init.path);
       im.onerror = function () { im.onerror = null; im.src = artUrl(det.init.path); };
+      zoomable(im, det.init.path, "image");
       var a = document.createElement("a");
       a.href = artUrl(det.init.path); a.appendChild(im);
       fig.appendChild(a);
@@ -1143,6 +1348,7 @@ LIVE_JS = """
         var rim = document.createElement("img");
         rim.loading = "lazy"; rim.alt = "reference image"; rim.src = thumbUrl(ref.path);
         rim.onerror = function () { rim.onerror = null; rim.src = artUrl(ref.path); };
+        zoomable(rim, ref.path, "image");
         var ra = document.createElement("a");
         ra.href = artUrl(ref.path); ra.appendChild(rim);
         rfig.appendChild(ra);
@@ -1353,6 +1559,12 @@ LIVE_JS = """
   document.getElementById("q-next").addEventListener("click", function () { step(1); });
   box.addEventListener("click", function (ev) { if (ev.target === box) close(); });
   document.addEventListener("keydown", function (ev) {
+    /* The lens sits above the record, so it takes Escape first — otherwise one
+       key would shut both and lose his place in the grid. */
+    if (lens && !lens.hidden) {
+      if (ev.key === "Escape") { closeLens(); }
+      return;
+    }
     if (box.hidden) return;
     if (ev.key === "Escape") { close(); }
     else if (ev.key === "ArrowLeft") { step(-1); }

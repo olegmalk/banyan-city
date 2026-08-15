@@ -8465,6 +8465,143 @@ def test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty():
           "queue-history.json" in empty and "queue_history.py" in empty)
 
 
+def test_the_queue_gallery_can_be_narrowed_to_one_beat_and_opened_full_size():
+    """The founder's ask has a second half the first gallery did not answer:
+    *"scroll, see images and prompts and these details all with a nice
+    interface"* — and he reviews on a phone. Two things that needs and did not
+    have:
+
+    ONE BEAT AT A TIME. He does not browse 573 renders, he asks "what has beat 13
+    ever looked like". Typing `b13` into the search box worked by accident; a
+    control that says so did not exist. It is a <select> and not a row of 21
+    chips because 21 chips is four rows of a sticky bar on a phone, which is the
+    whole screen.
+
+    FULL SIZE WITHOUT LEAVING. Every picture on this page is a 512 px preview or
+    a fitted copy, so "is that a fig or a smear" could only be settled by
+    following a link to raw.githubusercontent.com — a cold page load away from
+    the gallery that loses the scroll position and the filters, and on a phone a
+    one-way trip.
+    """
+    import build_queue as bq
+
+    def job(i, beat, kind="still"):
+        return {"id": "j%d" % i, "beat": beat, "kind": kind, "rc": 0,
+                "finished_at": "2026-08-14T16:24:58Z", "duration_s": 10,
+                "prompt": "p", "prompt_source": "artifact sidecar",
+                "outputs": [{"path": "farm-out/d%d/f.png" % i, "kind": "image"}]}
+
+    hist = {"_meta": {}, "upcoming": [],
+            "jobs": [job(1, 13), job(2, 13), job(3, 4), job(4, None)]}
+    out = bq.render(hist)
+
+    # The beat control is built from the beats that are actually there, and
+    # carries the count, so choosing is informed before it is chosen.
+    check("the bar offers a beat filter", 'id="q-beat"' in out)
+    check("built from the beats present, not a hardcoded 1..21",
+          'value="13">beat 13 — 2 renders' in out
+          and 'value="4">beat 04 — 1 render<' in out)
+    check("and it counts the beats it is offering", "all 2 beats" in out)
+    # A run whose beat nobody recorded is its own answer, not beat 0 and not
+    # hidden: it gets an option, so it stays reachable.
+    check("a run with no recorded beat is selectable rather than lost",
+          'value="none">no beat recorded — 1 render' in out)
+    check("the filter reads the beat off the card the page already stamped",
+          'data-b="13"' in out and 'data-b=""' in out)
+    check("and the script knows that option by the same name",
+          'state.beat === "none"' in bq.LIVE_JS
+          and "state.beat" in bq.LIVE_JS)
+    # The count line must call itself filtered when only the beat is set, or a
+    # narrowed grid reads as the whole history.
+    check("a beat-only filter still reports itself as a filter",
+          'state.beat !== ""' in bq.LIVE_JS)
+
+    # The lens: full-resolution bytes over the record, never a navigation away.
+    check("the page ships a lens", 'id="q-lens"' in out and 'class="qlens"' in out)
+    check("it is closed until asked for", '<div class="qlens" id="q-lens" hidden>' in out)
+    check("the output, the init frame and the reference all open in it",
+          bq.LIVE_JS.count("zoomable(") >= 4)
+    check("the lens shows the full-size file, not the 512 px preview",
+          "var url = artUrl(path);" in bq.LIVE_JS)
+    # Ten beats ship a clip called 13-remake-LTX-0813.mp4 and thirteen carry an
+    # init called b13-init-704x1280.png, so a caption naming the file names
+    # nothing. The directory is the identifier.
+    check("and captions the whole path, because the filename is not an identifier",
+          "lensCap.textContent = path;" in bq.LIVE_JS)
+    check("escape closes the lens before the record underneath it",
+          "if (lens && !lens.hidden)" in bq.LIVE_JS)
+    check("the raw file is still one tap away for anyone who wants the bytes",
+          'id="q-lens-raw"' in out)
+
+    # THE GALLERY MUST NOT BE BURIED. Measured at 390 px before this changed: the
+    # 54 unrun job cards ran 34,500 px and put the first finished render 43
+    # screens down, on the page he opens to look at renders. Folded on a narrow
+    # viewport it is 2.7 screens. Both sections still exist and both are still
+    # reachable — he asked for the coming work too.
+    up = bq.render({"_meta": {}, "jobs": [job(1, 13)],
+                    "upcoming": [{"id": "u1", "beat": 3, "kind": "still",
+                                  "state": "held", "hold_reason": "needs a call"},
+                                 {"id": "u2", "beat": 4, "kind": "still",
+                                  "state": "authored"}]})
+    check("the unrun list is foldable", 'class="qupwrap"' in up and "<summary>" in up)
+    check("and ships OPEN, so a reader with no JavaScript is shown everything",
+          '<details class="qupwrap" id="q-up" open>' in up)
+    check("the script folds it only where the screen cannot afford it",
+          "window.innerWidth < 760" in bq.LIVE_JS)
+    check("the summary states the count while folded, so nothing is concealed",
+          "2 jobs authored and not yet run" in up
+          and "1 held on you, 1 runnable" in up)
+    check("every upcoming card is still in the page, not dropped",
+          up.count('class="qup ') == 2)
+    check("and following the jump link opens it rather than landing on a fold",
+          "openUpcoming" in bq.LIVE_JS and 'href="#upcoming"' in up)
+    check("the jump bar reaches the gallery, the coming work and the live block",
+          'class="qjump"' in up and 'href="#finished"' in up and 'href="#now"' in up)
+
+
+def test_the_queue_never_claims_to_have_checked_the_results_branch():
+    """The marker on a picture-less tile used to read "NO ARTIFACT ON THE
+    BRANCH", and the page's own explainer expanded that to "the run reported an
+    outcome and the branch carries no file under its name".
+
+    THE BUILDER NEVER READS THE BRANCH. It reads one thing, the `outputs` list
+    in queue-history.json. Measured 2026-08-15: all 222 tiles carrying the
+    marker also carry no `artifacts_dir`, and at least 25 of them have frames
+    sitting on farm-results-rtx5090 in a directory named after the job — the
+    history file simply never linked them. So the old marker stated, on 25
+    tiles, a fact that was false, and blamed the render for a gap in the
+    generator.
+
+    The fix is the wording, not a guessed path: a tile that showed a frame this
+    page INFERRED rather than read would put every other frame on the page in
+    doubt, which is a worse page than one with 222 honest holes in it.
+    """
+    import build_queue as bq
+
+    check("the marker claims the record, which is what the builder read",
+          "RECORD" in bq.NO_ARTIFACT.upper())
+    check("and no longer claims a branch it never opened",
+          "BRANCH" not in bq.NO_ARTIFACT.upper())
+
+    blank = {"id": "b1", "beat": 7, "kind": "motion", "rc": 0,
+             "finished_at": "2026-08-14T16:24:58Z", "duration_s": 10,
+             "prompt": "p", "prompt_source": "artifact sidecar", "outputs": []}
+    out = bq.render({"_meta": {}, "upcoming": [], "jobs": [blank]})
+    check("a run with no recorded output still says so on its tile",
+          bq.NO_ARTIFACT in out)
+    check("the tile is not left blank, which would read as a render that failed",
+          'class="none"' in out)
+    check("the explainer names the generator as where the gap has to be fixed",
+          "queue_history.py" in out)
+    check("and states that the page cannot check the branch itself",
+          "never reads the results branch" in out)
+    # The honest markers are a set, and a redesign that tidied one away would be
+    # the exact failure this page exists to avoid.
+    check("every marker still reaches the browser as a constant, not a retyping",
+          "NO_ARTIFACT" in bq.LIVE_JS and "NO_PROMPT" in bq.LIVE_JS
+          and "NO_NEGATIVE" in bq.LIVE_JS)
+
+
 def test_the_queue_page_is_actually_published_and_actually_swept():
     """A page that exists only when someone runs its builder by hand is a page
     the founder will find as a 404 (this one already was, once). The wiring is
@@ -9121,6 +9258,8 @@ def main():
     # AND HE MUST BE ABLE TO READ THE PROMPT THAT MADE THE FRAME HE IS JUDGING.
     test_the_queue_page_prints_the_prompt_that_made_the_frame()
     test_a_prompt_nobody_recorded_says_so_instead_of_looking_empty()
+    test_the_queue_gallery_can_be_narrowed_to_one_beat_and_opened_full_size()
+    test_the_queue_never_claims_to_have_checked_the_results_branch()
     test_the_queue_page_is_actually_published_and_actually_swept()
 
     # AND A MOTION JOB MUST START FROM A PLACE, NOT FROM A COSTUME CARD.
