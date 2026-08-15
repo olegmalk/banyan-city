@@ -19,7 +19,9 @@ the proving step.
 Run: python3 pipeline/test_box_cache.py
 """
 
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -241,6 +243,128 @@ def test_the_previous_reading_round_trips():
           flat["box_checked_on"] == "2026-08-11T09:00:00")
 
 
+# ------------------------------------------------ the git repack litter sweep
+#
+# Same asymmetry as everything above, one directory over. Leaving a dead
+# tmp_pack_* costs 350 MB; removing a live repack's working file corrupts the
+# operation, and removing anything else in .git/objects/pack destroys history.
+# So the two conditions — the tmp_pack_ prefix and the one-hour age — are tested
+# as the product they are.
+
+
+HOUR = 3600.0
+
+
+def _pack_dir(files, tmp):
+    """A fake .git/objects/pack. `files` = {name: age_in_seconds}."""
+    d = Path(tmp) / "pack"
+    d.mkdir()
+    now = 1_700_000_000.0
+    for name, age in files.items():
+        p = d / name
+        p.write_bytes(b"x" * 100)
+        os.utime(p, (now - age, now - age))
+    return d, now
+
+
+def _counts(garbage=2, in_pack=5):
+    return lambda: {"garbage": garbage, "in-pack": in_pack, "count": 3}
+
+
+def test_a_tmp_pack_younger_than_an_hour_is_never_removed():
+    """It may be the working file of a repack running RIGHT NOW.
+
+    A dozen lanes commit into this worktree, so `git gc --auto` fires often and
+    a repack usually IS in flight. Unlinking its temp file corrupts it.
+    """
+    check("a 5-minute-old tmp_pack is left alone",
+          bc.stale_tmp_packs([("tmp_pack_abc", 0.0)], now=300.0) == [])
+    check("59 minutes is still too young",
+          bc.stale_tmp_packs([("tmp_pack_abc", 0.0)], now=59 * 60.0) == [])
+    check("an hour old is wreckage and goes",
+          bc.stale_tmp_packs([("tmp_pack_abc", 0.0)], now=HOUR)
+          == ["tmp_pack_abc"])
+
+    with tempfile.TemporaryDirectory() as tmp:
+        d, now = _pack_dir({"tmp_pack_young": 60, "tmp_pack_old": 3 * HOUR}, tmp)
+        got = bc.sweep_git_tmp_packs(pack_dir=d, now=now, counts=_counts(),
+                                     log=lambda *a: None)
+        check("the sweep unlinks only the old one",
+              got["removed"] == ["tmp_pack_old"])
+        check("and the young one is still on disk",
+              (d / "tmp_pack_young").exists())
+        check("freed bytes are counted from the file that actually went",
+              got["freed"] == 100)
+
+
+def test_nothing_but_a_tmp_pack_is_ever_touched():
+    """A wrong glob here does not waste disk — it destroys the repository."""
+    others = [("pack-9c1.pack", 0.0), ("pack-9c1.idx", 0.0),
+              ("pack-9c1.rev", 0.0), ("pack-9c1.mtimes", 0.0),
+              ("tmp_idx_991", 0.0), ("multi-pack-index", 0.0)]
+    check("real packs, idx, rev, mtimes and the midx all survive, however old",
+          bc.stale_tmp_packs(others, now=90 * 24 * HOUR) == [])
+
+    with tempfile.TemporaryDirectory() as tmp:
+        names = {"pack-9c1.pack": 9 * HOUR, "pack-9c1.idx": 9 * HOUR,
+                 "tmp_pack_dead": 9 * HOUR}
+        d, now = _pack_dir(names, tmp)
+        got = bc.sweep_git_tmp_packs(pack_dir=d, now=now, counts=_counts(),
+                                     log=lambda *a: None)
+        check("only the tmp_pack_ file is unlinked",
+              got["removed"] == ["tmp_pack_dead"])
+        check("the real pack is still there", (d / "pack-9c1.pack").exists())
+        check("and so is its index", (d / "pack-9c1.idx").exists())
+
+
+def test_the_sweep_reports_garbage_and_in_pack_on_both_sides():
+    """in-pack is the number that proves wreckage went and history did not."""
+    with tempfile.TemporaryDirectory() as tmp:
+        d, now = _pack_dir({"tmp_pack_dead": 9 * HOUR}, tmp)
+        seen = iter([{"garbage": 1, "in-pack": 38710},
+                     {"garbage": 0, "in-pack": 38710}])
+        got = bc.sweep_git_tmp_packs(pack_dir=d, now=now,
+                                     counts=lambda: next(seen),
+                                     log=lambda *a: None)
+        check("the before reading is returned", got["before"]["garbage"] == 1)
+        check("the after reading is returned", got["after"]["garbage"] == 0)
+        check("in-pack is reported on both sides and unchanged",
+              got["before"]["in-pack"] == got["after"]["in-pack"] == 38710)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        d, now = _pack_dir({"tmp_pack_dead": 9 * HOUR}, tmp)
+        seen = iter([{"garbage": 1, "in-pack": 38710},
+                     {"garbage": 0, "in-pack": 12}])
+        said = []
+        bc.sweep_git_tmp_packs(pack_dir=d, now=now, counts=lambda: next(seen),
+                               log=said.append)
+        check("an in-pack that moved is called out, not reported as success",
+              any("in-pack CHANGED" in s for s in said))
+
+
+def test_a_broken_or_absent_git_never_stops_the_caller():
+    """This runs at the top of an encode. It may cost disk; it may not cost a render."""
+    def explode():
+        raise FileNotFoundError("git")
+
+    said = []
+    got = bc.sweep_git_tmp_packs(counts=explode, log=said.append)
+    check("git missing = empty result, no exception", got == {})
+    check("and it says why", any("skipped" in s for s in said))
+
+    got = bc.sweep_git_tmp_packs(counts=lambda: {}, log=lambda *a: None)
+    check("a git that answered nothing deletes nothing", got["removed"] == [])
+
+    got = bc.sweep_git_tmp_packs(pack_dir="/nope/not/here", now=0.0,
+                                 counts=_counts(), log=lambda *a: None)
+    check("a pack dir that is not there is not an error either", got == {})
+
+    got = bc.sweep_git_tmp_packs(counts=_counts(garbage=0),
+                                 log=lambda *a: None)
+    check("git reporting no garbage means the dir is not even opened",
+          got["removed"] == [] and got["freed"] == 0)
+
+
 def main() -> int:
     for fn in [
         test_a_file_with_a_verified_twin_is_reclaimable,
@@ -259,6 +383,10 @@ def main() -> int:
         test_the_disk_reading_carries_a_date_and_the_warn_line,
         test_a_reading_taken_without_the_box_claims_nothing_about_the_box,
         test_the_previous_reading_round_trips,
+        test_a_tmp_pack_younger_than_an_hour_is_never_removed,
+        test_nothing_but_a_tmp_pack_is_ever_touched,
+        test_the_sweep_reports_garbage_and_in_pack_on_both_sides,
+        test_a_broken_or_absent_git_never_stops_the_caller,
     ]:
         print(fn.__name__)
         fn()

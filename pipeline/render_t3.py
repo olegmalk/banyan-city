@@ -928,6 +928,25 @@ def main() -> int:
                          "(bench cuts included — a cut IS media).")
     check_clips_dir(args.clips)
 
+    # Before the first byte of this encode is written, take back the disk a
+    # FAILED repack is sitting on. The loop: when free disk is low `git repack`
+    # (fired by `git gc --auto` after commits, and a dozen lanes commit into
+    # this tree) dies partway and leaves a ~350 MB `tmp_pack_*` in
+    # .git/objects/pack; that lowers free disk, so the next repack is likelier
+    # to die the same way. Five had piled up by 2026-08-15 — 389 MB, one of them
+    # wreckage from that night's own disk incident — accumulating ~0.6 GB/day,
+    # and nothing else ever removes them. Only files older than an hour go, so a
+    # repack running right now is never touched; full story and the before/after
+    # in-pack proof in box_cache.sweep_git_tmp_packs.
+    #
+    # The import is inside the try with the call: housekeeping bolted to the
+    # front of an encode must never be the reason an encode does not happen.
+    try:
+        from box_cache import sweep_git_tmp_packs
+        sweep_git_tmp_packs()
+    except Exception as _e:               # noqa: BLE001 — see above
+        print(f"  tmp_pack sweep skipped ({type(_e).__name__}: {_e})")
+
     genome_dir = REPO / "genomes" / args.genome
     lineage_text = (genome_dir / "lineage.yaml").read_text()
     lineage = yaml.safe_load(lineage_text)

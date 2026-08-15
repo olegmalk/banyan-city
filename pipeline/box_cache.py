@@ -246,6 +246,48 @@ def words(n: int) -> str:
     return f"{n} B"
 
 
+# A tmp_pack younger than an hour may belong to a repack RUNNING RIGHT NOW.
+# Deleting it would corrupt an in-flight operation, and this tree has a dozen
+# lanes committing into it at any moment, so some repack usually is running. An
+# hour is far longer than a repack of this repo takes (~2 min for the 4 GB pack
+# on 2026-08-15) and far shorter than the wreckage sits around for.
+TMP_PACK_MIN_AGE_S = 60 * 60
+
+
+def stale_tmp_packs(entries, now: float, min_age_s=TMP_PACK_MIN_AGE_S) -> list:
+    """Which `(name, mtime)` pairs in `.git/objects/pack` are dead repack litter.
+
+    WHY THIS EXISTS — a self-reinforcing loop, measured here on 2026-08-15.
+    When free disk is low, `git repack` (which `git gc --auto` fires after
+    commits, and this is a shared worktree where lanes commit constantly) dies
+    partway and leaves its half-written `tmp_pack_*` behind — ~350 MB each
+    against a 4 GB pack. That lowers free disk, which makes the NEXT repack more
+    likely to die the same way. Five had accumulated, 389 MB total, and one of
+    them was almost certainly wreckage from that night's own disk incident (the
+    Mac hit 5.8 GiB free). Measured accumulation: ~0.6 GB/day. Nothing else
+    removes them: `git gc` prunes loose objects and old packs, not the temp files
+    of a repack that never finished.
+
+    Git itself is the one calling them garbage — they are what
+    `git count-objects -v` reports under `garbage:`, which is why the caller uses
+    that as the signal instead of guessing from filenames.
+
+    TWO CONDITIONS, BOTH LOAD-BEARING:
+
+      * the name starts with `tmp_pack_` — and NOTHING else in that directory is
+        ever touched. Not loose objects, not `pack-*.pack`, not `.idx`, not
+        `.rev`, not `.mtimes`. A wrong glob here does not waste disk, it damages
+        the repository, and `in-pack` is the number that proves which one
+        happened (see `sweep_git_tmp_packs`).
+      * the file is OLDER THAN AN HOUR (`min_age_s`). See TMP_PACK_MIN_AGE_S:
+        a young one may be a live repack's working file.
+
+    Pure, so both conditions can be checked without a repository to break.
+    """
+    return sorted(name for name, mtime in entries
+                  if name.startswith("tmp_pack_") and now - mtime >= min_age_s)
+
+
 # ------------------------------------------------------------ impure edges
 
 
@@ -264,6 +306,85 @@ def git(*args) -> str:
 
 def tracked_paths() -> set:
     return {p for p in git("ls-files", "-z").split("\0") if p}
+
+
+def count_objects() -> dict:
+    """`git count-objects -v` as `{key: int}`. `{}` if git could not answer."""
+    out = {}
+    for line in git("count-objects", "-v").splitlines():
+        key, _, val = line.partition(":")
+        try:
+            out[key.strip()] = int(val.strip())
+        except ValueError:
+            continue
+    return out
+
+
+def sweep_git_tmp_packs(pack_dir=None, now=None, min_age_s=TMP_PACK_MIN_AGE_S,
+                        counts=count_objects, log=print) -> dict:
+    """Remove dead `tmp_pack_*` litter, and prove that is all that was removed.
+
+    The loop this breaks, and the numbers behind it, are in `stale_tmp_packs`.
+    Short version: a failed repack under low disk leaves a ~350 MB `tmp_pack_*`,
+    which makes the next repack likelier to fail the same way; 389 MB across
+    five files on 2026-08-15, accumulating at ~0.6 GB/day, and nothing else ever
+    deletes them.
+
+    VERIFICATION IS THE POINT. `garbage:` and `in-pack:` are read before and
+    after and both are returned. `in-pack` MUST NOT CHANGE — that is the check
+    that says we removed wreckage and not history. If it moves, this says so
+    loudly rather than reporting a tidy success.
+
+    FAIL-SOFT, DELIBERATELY. Every failure path here returns instead of raising:
+    no git on PATH, a `.git` that is a file (worktree/submodule), a permission
+    error on unlink, a race where the file vanished under us. This is
+    housekeeping bolted to the front of a render — it exists to buy disk back,
+    and a render that dies because the housekeeping check was unhappy costs far
+    more than the disk it was going to save. Nothing downstream reads the return
+    value; it is there for tests and for the log line.
+    """
+    try:
+        before = counts()
+        # git's own label decides whether there is anything to look at. If it
+        # reports no garbage there are no tmp_pack_* files, and if it could not
+        # answer at all (`{}`) we are in no position to be deleting things.
+        if not before or before.get("garbage", 0) <= 0:
+            return {"before": before, "after": before, "removed": [], "freed": 0}
+
+        pd = Path(pack_dir) if pack_dir else REPO / ".git" / "objects" / "pack"
+        entries = [(p.name, p.stat().st_mtime) for p in pd.iterdir()
+                   if p.is_file() and not p.is_symlink()]
+        doomed = stale_tmp_packs(entries, now if now is not None else time.time(),
+                                 min_age_s)
+
+        freed, removed = 0, []
+        for name in doomed:
+            p = pd / name
+            try:
+                size = p.stat().st_size
+                p.unlink()
+            except OSError as e:          # vanished, or not ours to remove
+                log(f"  tmp_pack sweep: left {name} ({type(e).__name__})")
+                continue
+            freed += size
+            removed.append(name)
+
+        after = counts()
+        if removed:
+            log(f"  git repack litter: removed {len(removed)} tmp_pack_* "
+                f"({words(freed)}); garbage {before.get('garbage')} -> "
+                f"{after.get('garbage')}, in-pack {before.get('in-pack')} -> "
+                f"{after.get('in-pack')}")
+        if before.get("in-pack") != after.get("in-pack"):
+            log("  !! in-pack CHANGED across the tmp_pack sweep "
+                f"({before.get('in-pack')} -> {after.get('in-pack')}) — this "
+                "sweep only unlinks tmp_pack_*, so something else touched the "
+                "object store. Check `git fsck` before trusting this clone.")
+        return {"before": before, "after": after, "removed": removed,
+                "freed": freed}
+    except Exception as e:                # never block the caller — see docstring
+        log(f"  tmp_pack sweep skipped ({type(e).__name__}: {e})")
+        return {}
 
 
 def local_candidates(hash_files=True) -> list:
