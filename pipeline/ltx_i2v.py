@@ -197,6 +197,71 @@ def _scheduler_shift(pipe):
     return None
 
 
+def stg_kwargs(stg_scale, stg_blocks) -> dict:
+    """The STG kwargs for one pipe() call — {} unless STG was explicitly asked for.
+
+    SPATIOTEMPORAL GUIDANCE, and why it is a flag on this file at all. LTX-Video
+    collaborator `ybitterman` (an author on the LTX-Video paper), answering
+    "how to increase the motion size of the generated video?" in
+    <https://github.com/Lightricks/LTX-Video/issues/184>, replied in full:
+    "Playing with the STG blocks will help with that." That is the only
+    maintainer answer to our exact symptom that exists. Lightricks' own
+    multimodal-guidance doc pairs it with the CFG warning ("higher `cfg_scale` =
+    ... potentially less natural motion"), and the STG paper
+    (<https://arxiv.org/abs/2411.18664>) opens by saying CFG-family guidance
+    "reduce[s] diversity and motion" while STG boosts quality "without
+    compromising diversity or dynamic degree". The official
+    ltxv-13b-0.9.8-DISTILLED config sets `stg_scale: 0` in both passes; the DEV
+    config schedules it to 4. So the one documented motion lever is off BY
+    CONSTRUCTION on the distilled path we run — not because anyone measured it
+    here. All of that is written up in `pipeline/research/ltx23-motion-source.md`
+    §2.2/§3.1 (commit dfa87c27) with the URLs.
+
+    IT IS REACHABLE FROM OUR CALL PATH, read in the installed source on the box
+    rather than in the docs: `LTX2ImageToVideoPipeline.__call__` takes
+    `stg_scale: float = 0.0` (line 883) and
+    `spatio_temporal_guidance_blocks: list[int] | None = None` (890);
+    `check_inputs` refuses scale>0 without blocks (536); a second uncond forward
+    runs under `cache_context("uncond_stg")` (1371) and enters the update as
+    `video_stg_delta = self.stg_scale * (noise_pred_video -
+    noise_pred_video_uncond_stg)` (1407). Cost: ONE extra transformer forward per
+    step, nothing else.
+
+    THE NUMBERS ARE UPSTREAM'S, not ours. The `spatio_temporal_guidance_blocks`
+    docstring says verbatim "A value of `[29]` is recommended for LTX-2.0 and
+    `[28]` is recommended for LTX-2.3", and the `audio_stg_scale` docstring says
+    "For LTX-2.3, a value of 1.0 is suggested for both video and audio". We run
+    LTX-2.3, so [28] and 1.0 are the documented starting point and are what the
+    first sample used. `audio_stg_scale` is deliberately NOT passed: upstream
+    defaults it to the video value (`audio_stg_scale = audio_stg_scale or
+    stg_scale`, line 1072) and we discard the audio stream anyway.
+
+    OFF IS EMPTY, NOT ZERO, and that is the whole design of this function. When
+    `--stg-scale` is absent this returns `{}`, so the kwargs handed to `pipe()`
+    are the same dict this file has always built — no `stg_scale=0.0` argument
+    appears, no default is restated, and a job that does not ask for STG cannot
+    be changed by this code path. That is the property the byte-identity check
+    rests on (see the STG note in `_render_one`).
+    """
+    try:
+        scale = float(stg_scale or 0.0)
+    except (TypeError, ValueError):
+        raise ValueError("--stg-scale %r is not a number" % (stg_scale,))
+    if scale <= 0.0:
+        return {}
+    blocks = [int(b) for b in str(stg_blocks or "").replace(",", " ").split()]
+    if not blocks:
+        # Upstream raises the same refusal at check_inputs (line 536), but ninety
+        # seconds of weight loading later. Refusing here means the mistake costs
+        # nothing, and the message carries the recommended value so nobody has to
+        # go and find it.
+        raise ValueError(
+            "--stg-scale %g needs --stg-blocks: the pipeline's own docstring says "
+            "the blocks 'must be supplied if STG is used' and that '[28] is "
+            "recommended for LTX-2.3'. Pass --stg-blocks 28." % scale)
+    return {"stg_scale": scale, "spatio_temporal_guidance_blocks": blocks}
+
+
 def _weight_gib(module) -> float:
     """GiB of parameters + buffers, from element_size — a MEASUREMENT of the cast.
 
@@ -1055,6 +1120,25 @@ def _render_one(a, pipe, w, h) -> int:
     # sidecar, because what we ASKED for is provenance, but it changes no pixel.
     common = dict(guidance_scale=a.guidance, output_type="np", return_dict=False, **e)
 
+    # STG, AND THE ONLY LINE IN THIS FUNCTION THAT CAN TOUCH IT. `stg_kwargs`
+    # returns {} unless --stg-scale was given a positive value, so on every run
+    # that does not ask for STG `common` is the identical dict it was before this
+    # block existed and `pipe()` is called with the identical arguments. The
+    # update applies to BOTH stages of the two-stage recipe, which is the shape
+    # upstream's own dev config uses (first_pass stg_scale [0,0,4,4,4,2,1],
+    # second_pass [1]) — one number, both passes, rather than a schedule we would
+    # be inventing. See stg_kwargs for the sources and the recommended values.
+    stg = stg_kwargs(getattr(a, "stg_scale", 0.0), getattr(a, "stg_blocks", ""))
+    if stg:
+        common.update(stg)
+        # Printed only when it is on, so the default run's stdout is unchanged
+        # too. A recipe change that does not announce itself in the log is one
+        # nobody can attribute a look to afterwards.
+        print("STG ON: stg_scale=%g blocks=%s (one extra transformer forward per "
+              "step; applies to both stages)"
+              % (stg["stg_scale"], stg["spatio_temporal_guidance_blocks"]),
+              flush=True)
+
     # WHAT THE RECORD WILL SAY. Every mode but `split` names itself, and `split` is
     # only allowed to name itself once the switch has actually executed — hence the
     # assignment from _switch_to_sequential's return rather than from a.offload.
@@ -1224,6 +1308,17 @@ def _render_one(a, pipe, w, h) -> int:
             # "not quantised", which is exactly true.
             extra={"mode": a.mode, "batch": batch, "batch_slot": s,
                    "offload": offload_ran,
+                   # PROVENANCE §7.2: an STG clip is a different artifact from a
+                   # clip of the same prompt and seed without it — a second
+                   # perturbed forward per step entered every update. None on the
+                   # default path, and write_sidecar OMITS None, so a run that did
+                   # not ask for STG writes the byte-identical sidecar it always
+                   # did and an absent field reads as "no STG", which is true.
+                   "stg": ("scale %g blocks %s"
+                           % (stg["stg_scale"],
+                              ",".join(str(b) for b in
+                                       stg["spatio_temporal_guidance_blocks"]))
+                           if stg else None),
                    "quantisation": ("fp8-layerwise storage / bf16 compute"
                                     if a.fp8_layerwise else None),
                    "throughput_s_video_per_s_wall":
@@ -1342,6 +1437,20 @@ def main() -> int:
     ap.add_argument("--fps", type=int, default=24)
     ap.add_argument("--steps", type=int, default=8, help="distilled recommendation")
     ap.add_argument("--guidance", type=float, default=1.0, help="distilled: CFG 1")
+    # SPATIOTEMPORAL GUIDANCE. Both default to OFF and the default is 0.0/"" so
+    # that stg_kwargs returns {} and the pipe() call is untouched — see
+    # stg_kwargs for why "off" is an empty dict rather than an explicit zero, and
+    # for the maintainer quote and upstream config that motivate the lever at all.
+    ap.add_argument("--stg-scale", type=float, default=0.0,
+                    help="spatiotemporal guidance scale; 0 (default) = OFF and "
+                         "no STG argument is passed at all. Upstream's own "
+                         "docstring suggests 1.0 for LTX-2.3. Costs one extra "
+                         "transformer forward per step.")
+    ap.add_argument("--stg-blocks", default="",
+                    help="comma- or space-separated zero-indexed transformer "
+                         "block indices to apply STG at. REQUIRED whenever "
+                         "--stg-scale is positive; upstream recommends 28 for "
+                         "LTX-2.3 (29 for LTX-2.0).")
     ap.add_argument("--distilled-sigmas", action="store_true")
     # Retained, not removed: the 9GB fp8 partial is still on disk against a future
     # torchao / torch._scaled_mm path. It refuses immediately on this diffusers.
@@ -1451,10 +1560,24 @@ def main() -> int:
               "it this would render all of 704x1280 resident, which is the "
               "configuration that spilled and bugchecked the host.", flush=True)
         return 2
+    # REFUSED AT PARSE TIME, not ninety seconds into a weight load. The pipeline
+    # makes the same check in check_inputs, but only after the transformer is
+    # resident; here it costs nothing and the message names the recommended
+    # block. Calling stg_kwargs is the check — it is the same function the render
+    # will call, so the two cannot disagree.
+    try:
+        _stg = stg_kwargs(a.stg_scale, a.stg_blocks)
+    except ValueError as exc:
+        print("!! %s" % exc, flush=True)
+        return 2
     if a.stage == "render":
         print(f"recipe: offload={a.offload} "
               f"quantisation={'fp8-layerwise' if a.fp8_layerwise else 'none (bf16)'}",
               flush=True)
+        if _stg:
+            print("recipe: STG stg_scale=%g blocks=%s"
+                  % (_stg["stg_scale"],
+                     _stg["spatio_temporal_guidance_blocks"]), flush=True)
     if a.prompt_file:
         a.prompt = Path(a.prompt_file).read_text(encoding="utf-8").strip()
     if a.negative_file:

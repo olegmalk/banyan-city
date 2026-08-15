@@ -9167,6 +9167,74 @@ def test_the_metric_is_labelled_a_filter_everywhere_it_is_printed():
               "1.00x" in src and "odd" in src.lower())
 
 
+def test_stg_off_adds_no_argument_at_all():
+    # THE PROMISE THIS PINS: a job that does not ask for STG must render exactly
+    # what it rendered before the flag existed. The way that is guaranteed is
+    # that "off" is an EMPTY DICT and not `stg_scale=0.0` — nothing is added to
+    # the kwargs, so `pipe()` is called with the identical arguments and the
+    # identical defaults. If someone ever "tidies" this into always passing a
+    # zero, the call changes for every existing job and this test says so.
+    import ltx_i2v
+    for off in (0.0, 0, None, "", -1.0):
+        check("stg_kwargs(%r, '') is empty — nothing is passed" % (off,),
+              ltx_i2v.stg_kwargs(off, "") == {})
+    check("stg_kwargs off ignores blocks entirely",
+          ltx_i2v.stg_kwargs(0.0, "28") == {})
+
+
+def test_stg_on_passes_exactly_the_two_upstream_arguments():
+    # The names are the installed pipeline's, read off
+    # LTX2ImageToVideoPipeline.__call__ (stg_scale line 883,
+    # spatio_temporal_guidance_blocks line 890 in diffusers 0.39.0 on the box).
+    # A misspelling here would be swallowed by **kwargs-shaped call sites and
+    # render a silent control arm labelled as an STG one.
+    import ltx_i2v
+    got = ltx_i2v.stg_kwargs(1.0, "28")
+    check("STG on passes exactly two keys, both upstream's names",
+          set(got) == {"stg_scale", "spatio_temporal_guidance_blocks"})
+    check("STG scale is a float", got["stg_scale"] == 1.0)
+    check("STG blocks is a list of ints", got["spatio_temporal_guidance_blocks"] == [28])
+    check("comma-separated blocks parse",
+          ltx_i2v.stg_kwargs(2, "11,25,35")["spatio_temporal_guidance_blocks"]
+          == [11, 25, 35])
+    check("space-separated blocks parse",
+          ltx_i2v.stg_kwargs(2, "11 25")["spatio_temporal_guidance_blocks"] == [11, 25])
+
+
+def test_stg_without_blocks_is_refused_before_any_weight_loads():
+    # Upstream refuses the same combination in check_inputs — but only after the
+    # transformer is resident, i.e. ~90s and a full model load into a traceback.
+    # Refusing in the pure helper means the CLI can refuse at parse time.
+    import ltx_i2v
+    try:
+        ltx_i2v.stg_kwargs(1.0, "")
+        check("stg_scale>0 without blocks is refused", False)
+    except ValueError as exc:
+        check("stg_scale>0 without blocks is refused", True)
+        check("the refusal names the recommended block for LTX-2.3",
+              "28" in str(exc))
+
+
+def test_the_stg_flags_default_to_off_on_the_command_line():
+    # argparse defaults are half the promise; the other half is that the render
+    # path reads them through stg_kwargs. Both are checked in the source rather
+    # than by running a render, because running one needs a 5090.
+    src = (REPO / "pipeline" / "ltx_i2v.py").read_text(encoding="utf-8")
+    check("--stg-scale defaults to 0.0",
+          '"--stg-scale", type=float, default=0.0' in src)
+    check("--stg-blocks defaults to empty", '"--stg-blocks", default=""' in src)
+    check("the render path adds STG only through stg_kwargs",
+          "stg = stg_kwargs(getattr(a" in src and "if stg:\n        common.update(stg)" in src)
+    # The two pipe() call sites take the recipe through **common. If STG were
+    # ever written as a literal keyword on one of them the two stages of the
+    # two-stage recipe could silently disagree, so there must be exactly one
+    # place STG enters the kwargs and it must be the update above.
+    check("STG enters the kwargs in exactly one place",
+          src.count("common.update(stg)") == 1)
+    check("the sidecar records STG and omits it when off",
+          '"stg": ("scale %g blocks %s"' in src)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -9424,6 +9492,11 @@ def main():
     test_a_clip_that_never_changed_a_pixel_is_the_loudest_finding()
     test_it_says_too_short_instead_of_guessing()
     test_the_metric_is_labelled_a_filter_everywhere_it_is_printed()
+    # AND THE ONE MOTION LEVER A MAINTAINER NAMED MUST BE OFF UNLESS ASKED FOR.
+    test_stg_off_adds_no_argument_at_all()
+    test_stg_on_passes_exactly_the_two_upstream_arguments()
+    test_stg_without_blocks_is_refused_before_any_weight_loads()
+    test_the_stg_flags_default_to_off_on_the_command_line()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
