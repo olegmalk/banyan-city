@@ -1,0 +1,24 @@
+#### job ep2-b09-scene2-0815-1786785307 attempt 1 start 2026-08-15T09:15:10Z
+
+==== step dry START 2026-08-15T09:15:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "9", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\wave-goblin-prep\\refs-guards-twoinfield-0813", "--out", "C:\\banyan-farm\\goblin-ipa-0812\\out-b09-scene2", "--draft-key", "authored_b09_scene2", "--arm", "window4", "--dry"]
+== goblin window mechanism on BEAT 09, references held at beat 04. Recipe unchanged; the beat is the variable.
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+
+== beat 09 the-pause [guard] — pause
+   AUTHORED: Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge and dark treeline behind, pale blue morning sky above, short brown hair, close on the nearer one's face working slowly through an idea, eyes drifting, mouth slightly open. Cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no white background, no plain background, no character sheet, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 2boys, two adult guard men in brown tunics and sashes stand in green summer grass, a hedge and dark treeline behind, pale blue morning sky above, short brown hair, close on the nearer one's face working slowly through an idea, eyes drifting, mouth slightly open. Cinematic lighting, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, knight, white background, plain background, character sheet, dark, night, photorealism, text
+   positive tokens (real CLIP): 71/77   headroom for the goblin definition: 6
+   negative tokens: recipe 64 -> sent 64 (budget 77)
+   count tag: '2boys' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   !! COUNT TAG is '2boys', draft declares '1boy'
+
+!! FAULTS — nothing drawn: COUNT TAG is '2boys', draft declares '1boy'
+==== step dry END rc=1 2026-08-15T09:15:16Z ====
+#### job ep2-b09-scene2-0815-1786785307 finished rc=1 2026-08-15T09:15:16Z
