@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r2 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260727
+round: r2
+prompt_tokens_measured: 72/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 76/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, adult man, bald, brown tunic, sash, holding clipboard, small green skinned goblin, pointed ears, patched cloak, looking down, sunny grass field, distant treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, photorealism, solo, 1boy, size difference, giant, giantess, towering, from behind, back turned, blush, red cheeks, chibi, child, baby, elf man, dark, huge tree trunk"
+what_this_frame_shows: >-
+  EXACTLY TWO whole figures, both facing viewer, both large in frame at cowboy-shot scale, standing shoulder to shoulder in the SAME depth plane on sunlit grass with a treeline and blue sky. LEFT is a green-skinned goblin with large pointed ears, adult angular face, brown tunic and a maroon sash. RIGHT is a bald HUMAN man with ROUND human ears, adult stern face, brown cloak over a tan tunic and a white-blue sash. No blush on either. No chibi proportion on either. The guard holds TWO board-shaped objects: a green-teal one clutched at his chest, occluded by his own forearm, and a dark navy one with a white edge at his right hip, unoccluded and about one seventh of frame height but turned nearly EDGE-ON so its flat face barely reads.
+verdict_against_pre_registered_bar: "PASSES bars 1, 2, 3, 5 and 6 - this is the first frame in the project holding a guard and the goblin together at pointing distance. FAILS bar 4: two boards were drawn, the unoccluded one is edge-on and the flat-faced one is occluded, so neither single board satisfies all of bar 4's clauses. USABLE AS THE BEAT 07 PLATE, NOT AS THE BEAT 08 PLATE."
+founder_verdict: null
+scored: false

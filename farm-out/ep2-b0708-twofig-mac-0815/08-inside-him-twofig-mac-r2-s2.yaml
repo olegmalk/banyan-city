@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r2 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262727
+round: r2
+prompt_tokens_measured: 72/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 76/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, adult man, bald, brown tunic, sash, holding clipboard, small green skinned goblin, pointed ears, patched cloak, looking down, sunny grass field, distant treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, photorealism, solo, 1boy, size difference, giant, giantess, towering, from behind, back turned, blush, red cheeks, chibi, child, baby, elf man, dark, huge tree trunk"
+what_this_frame_shows: >-
+  Two whole figures, both facing viewer, both large, same depth plane, adjacent. LEFT is a tall adult green goblin, pointed ears, brown robe and blue sash, holding a board whose far edge and his own arm are SLICED BY THE LEFT FRAME EDGE. RIGHT is a bald round-eared human holding a black clipboard with a silver clip - flat face fully visible, unoccluded, about one eighth of frame height, which is exactly what bar 4 asks for - but that human has huge round eyes, a small soft face and a worried expression, and reads as a CHILD rather than an adult guard. No blush on either.
+verdict_against_pre_registered_bar: "FAIL - bar 2 (the human guard reads as a child, not an adult), bar 3 (the goblin's arm and board are sliced by the frame edge). Bar 4 is met in isolation, which proves `holding clipboard` draws a clean readable clipboard on this checkpoint when a character holds it with both hands at chest height."
+founder_verdict: null
+scored: false

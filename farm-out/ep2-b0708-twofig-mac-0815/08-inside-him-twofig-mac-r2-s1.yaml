@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r2 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261727
+round: r2
+prompt_tokens_measured: 72/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 76/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, adult man, bald, brown tunic, sash, holding clipboard, small green skinned goblin, pointed ears, patched cloak, looking down, sunny grass field, distant treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, photorealism, solo, 1boy, size difference, giant, giantess, towering, from behind, back turned, blush, red cheeks, chibi, child, baby, elf man, dark, huge tree trunk"
+what_this_frame_shows: >-
+  KILL CONDITION FIRED. The foreground human guard is drawn with LARGE POINTED ELF EARS - the exact named beat-07 defect, goblin ears on a guard tunic - even though `elf man` was in the negative. The goblin is pushed to the right BACKGROUND, smaller and further back in a different depth plane. The board is textbook - a black rectangle with a silver clip, flat face fully visible, unoccluded - but it is held by the GOBLIN, not by the guard.
+verdict_against_pre_registered_bar: "FAIL - kill condition 1 (pointed ears on the guard), bar 3 (goblin in a background depth plane, not beside him), bar 4 (board is on the wrong character)"
+founder_verdict: null
+scored: false
