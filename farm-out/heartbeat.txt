@@ -1918,3 +1918,4 @@
 15:02:51Z STARTED task=ep2-b10-noform-mv3-0815-1786806142 attempt=1 on box-runner
 15:07:56Z DONE task=ep2-b10-noform-mv3-0815-1786806142 rc=0 artifacts=2
 15:08:09Z STARTED task=ep2-b13-shade-state-0815-1786806376 attempt=1 on box-runner
+15:13:53Z DONE task=ep2-b13-shade-state-0815-1786806376 rc=0 artifacts=2
