@@ -1,0 +1,177 @@
+# 2026-08-15, pose-plate lane. ONE SAMPLE. The CROUCHED staged pose, on the one
+# beat that has a byte-identical control, against a reference set built from the
+# only slot of refs-goblin-d1-0815 that did not come back a baby.
+id: ep2-b04-crouchplate-0815
+task: ep2-b04-crouchplate-0815
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 1
+max_attempts: 1
+sample: true
+owner: pose-plate lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 04 is unconditioned in that leaf. This is a still
+  plate on an approved node, not an episode assembly.'
+consumer: this lane''s own eye. Nothing else. The other two staged poses (FOLDED on the ground,
+  STANDING beside the sapling) are NOT written as job specs and no beat is re-pointed at
+  refs-goblin-d1std-0815 until these sixteen frames have been opened and judged.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+success: 'Sixteen frames in which the scavenger is (a) CROUCHED -- none of the sixteen frames of
+  ep2-b04-d1refs-0815 is, at any margin -- and (b) not a baby: no blush, no round baby face, a
+  neck, and a body appreciably longer than four of his own heads. Secondary: a PLANT with a body
+  -- a thin stem whose base is in shot carrying exactly two leaves -- rather than leaves floating
+  in mid-air, and clear space above his head. The failure worth reporting is the crouch not
+  landing, which would mean pose comes from neither the reference nor the prompt and the three
+  staged poses need an actual pose conditioner (ControlNet / img2img off a posed plate) before
+  any of the nine beats can be plated.'
+why: 'ONE SAMPLE. The finding it acts on is ep2-b04-d1refs-0815, opened 2026-08-15 and recorded in
+  pipeline/refs/refs-goblin-d1-0815.yaml, which split by reference slot:
+
+    r0, r1 (the two knees-up CROUCH slots)  3 to 3.5 heads tall, oversized bald cranium, stubby
+                                            limbs, pink cheek patches. Babies. The founder''s
+                                            exact complaint, unchanged by the design swap.
+    r2 (the STANDING full-body slot)        4.5 to 5 heads, longer robe, NO blush, dour and
+                                            half-lidded. The only round arguably inside the brief.
+    r3 (the BUST slot)                      good adolescent faces, but a portrait is not a plate.
+
+  NOT ONE OF THE SIXTEEN IS CROUCHING. At this 15% window the reference carries FRAMING and
+  PROPORTION, not POSE -- and the tighter it crops to the head, the more infantile the output,
+  which is why the two crouch tiles (in which the head fills much of the frame) produced the
+  roundest goblins. So this job inverts the previous one on both axes:
+
+  THE REFERENCE. refs-goblin-d1std-0815 is four copies of the ONE slot that worked --
+  goblin-d1s1-s2.png, sha256 9526882e..., the standing full-body tile of d1 seed s1 -- at four
+  MARGINS. Slot s0 is that file BYTE-IDENTICAL (sha256 9526882e...), so round r0 of this job is a
+  true one-variable A/B against round r2 of ep2-b04-d1refs-0815: same beat, same arm, same seeds,
+  same reference bytes, and the ONLY difference is the draft. Slots s1, s2 and s3 are the same
+  figure at 75%, 55% and 40% of the 832x832 canvas on white, centred, so the head occupies a
+  progressively smaller fraction of the frame. If margin is what carries proportion -- the
+  hypothesis the d1refs verdict argues for and nobody has tested -- r3 is the least infantile
+  round and the effect is monotonic across r0..r3. If proportion does not move with margin, that
+  hypothesis is dead in one sample and the next lever is the model, not the crop.
+
+  THE POSE COMES FROM THE PROMPT, because the previous sample proved it cannot come from the
+  reference. New draft key `authored_b04_crouch_plate`, inserted additively into wave-drafts.yaml
+  on the box by pipeline/insert_b04_crouch_plate_0815.py (backup written alongside; no existing
+  key read, rewritten or reordered). Verbatim, before the {{GOBLIN}} slot is filled:
+
+    A lean wiry adult goblin man, {{GOBLIN}}, crouched on his heels, a thin stem with two
+    oversized leaves rising from the grass beside him, sky overhead. Medium full shot, bright
+    morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very
+    aesthetic No girl, no chibi, no big head, no baby face, no toddler, no child, no blush, no
+    red cheeks. No photorealism, no 3D render look. 9:16 vertical, no text.
+
+  Four clauses, four losses they answer:
+
+    "a lean wiry adult goblin man"  -- and NOT "a small goblin boy", which is what every other
+        beat-04 draft including authored_goblin_approved_recipe still says. The founder''s
+        complaint is that the goblin reads as a baby; `small` and `boy` are the words asking for
+        one. Borrowed from authored_b04_adult, which already had this right.
+    "crouched on his heels"         -- a STARTING POSE named as a state, never the verb. A plate
+        prompt naming an action renders the action''s END state: every beat-17 plate written as
+        "pushes himself up to standing" came back already standing.
+    "a thin stem with two oversized leaves rising from the grass beside him" -- the plant gets a
+        BODY. "its two oversized leaves hanging above him" renders as leaves drifting in mid-air
+        with no plant, and "a tiny sapling standing tall beside him" never lands as an object at
+        all. Stem, base, and the leaf count, described as one thing.
+    "sky overhead"                  -- HEADROOM. The crouch has to be able to RISE: beats 13-end
+        through 17 need the folded pose to stand up, and across 24 beat-17 candidates the only
+        two whose pose could rise were the two with the least headroom above the skull.
+
+  THE NEGATIVE IS MEASURED, NOT ASSUMED. `no blush, no red cheeks` is the founder''s own
+  diagnosis, verbatim: "many of the beat references with the goblin make him have red cheeks/
+  blushing which is unnessecary". It is worth nothing if it overflows -- an over-budget negative
+  is not truncated per-term in any way we can predict, and the terms holding back the killed 3D-CG
+  look are exactly what fell off the last time one did. Run through render_wave_goblin.check on
+  this machine before a byte was sent:
+
+    positive  75/77, style anchor `very aesthetic` SURVIVES, nothing dropped
+    negative  70/77, and `photorealistic` and `3d render` are still the first two terms; `text`
+              negated; `female goblin` survives, which is the failure he ordered fixed
+
+  A first draft of this prompt measured 82/77 positive and 76/77 negative on beat 03''s heavier
+  `full` negative tier, and the overflow silently dropped `photorealistic`, `3d render`,
+  `deformed`, `extra limbs` and `blurry`. That draft is not what is queued. The `dry` step below
+  re-runs the same check on the box''s REAL CLIP tokenizer -- this machine has none and its
+  numbers are estimates -- and it is not allow_fail, so an over-budget prompt stops the job
+  before a step of denoise is spent.
+
+  NOT A LICENCE TO SCALE. Nine beats need three staged poses. This queues ONE of the three, on
+  ONE beat, and the other two are unwritten on purpose.'
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815
+  - --draft-key
+  - authored_b04_crouch_plate
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815
+  - --draft-key
+  - authored_b04_crouch_plate
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-crouchplate-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-crouchplate-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b04-crouchplate-0815/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-crouchplate-0815.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-crouchplate-0815\04-the-footnote-ipa-r3-w015-s0.png

@@ -1,0 +1,110 @@
+# refs-goblin-d1std-0815 — the margin sweep, 2026-08-15.
+#
+# WHY THIS SET EXISTS, and it is the opposite of what its predecessor was built
+# for. refs-goblin-d1-0815 weighted itself to the CROUCH — two of four slots —
+# on the body-position ruling that a reference must answer WHERE IS HIS BODY.
+# Its one sample, ep2-b04-d1refs-0815, measured the reverse:
+#
+#   r0, r1  the two knees-up CROUCH slots   3 to 3.5 heads tall, oversized bald
+#           cranium, no neck, stubby limbs, pink cheek patches. Babies.
+#   r2      the STANDING full-body slot     4.5 to 5 heads, longer robe, NO
+#           blush, dour and half-lidded. The only round inside the brief.
+#   r3      the BUST slot                   good adolescent faces; a portrait is
+#           not a plate.
+#
+# NOT ONE OF THE SIXTEEN IS CROUCHING. At the 15% window the reference carries
+# FRAMING and PROPORTION, not POSE — and the two crouch tiles, in which the head
+# fills much of the frame, produced the ROUNDEST goblins. That is the hypothesis
+# this set exists to test in one variable: is HEAD MARGIN what carries the
+# infantile proportion?
+#
+# ------------------------------------------------------------------- THE SWEEP
+# Four copies of the one slot that worked, at four margins. No new tile is cut,
+# no new figure is introduced, and the isolation work that separated the
+# standing figure from the tiles it overlaps is preserved rather than redone —
+# expanding the crop box in the source would pull the neighbouring figures back
+# in, because the sheet's figures touch.
+#
+#   s0  the standing tile BYTE-IDENTICAL (sha256 9526882e...), 100% of canvas
+#   s1  the same figure at 75% of the 832x832 canvas, centred, on white
+#   s2  the same figure at 55%
+#   s3  the same figure at 40%
+#
+# s0 being byte-identical is the point: round r0 of ep2-b04-crouchplate-0815 is
+# a TRUE ONE-VARIABLE A/B against round r2 of ep2-b04-d1refs-0815 — same beat,
+# same arm, same seeds, same reference bytes — and the only difference is the
+# draft. Everything the margin does shows up as the difference between r0 and
+# r1/r2/r3 within the SAME job. If proportion moves monotonically with margin,
+# the crop is the lever; if it does not, that hypothesis is dead and the next
+# lever is the model, not the crop.
+#
+# POSITION IS NOT EVIDENCE — the mapping below is by CONTENT HASH, as
+# refs-goblin-d1-0815 established after a lane lost a day to an s0/s1 mix-up.
+
+set: refs-goblin-d1std-0815
+frozen_on: '2026-08-15'
+box_path: C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+ref_prefix: goblin-d1std
+character: goblin
+derived_from: refs-goblin-d1-0815 (slot s2 only)
+source_file: refs-goblin-d1-0815/goblin-d1s1-s2.png
+source_sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+source_pose: full body, three-quarter, hands on hips, cream robe with red collar and
+  blue sash, bare green feet — the standing tile of d1 seed s1, itself cut from
+  farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png (sha256 389c7637...)
+  on origin/farm-results-rtx5090
+
+# figure_fraction is the side length the source is resampled to, as a fraction of
+# the 832x832 canvas; the figure is centred and the remainder is white (255,255,255),
+# matching the white halo the source tile already sits on. Resample: PIL LANCZOS.
+images:
+- slot: s0
+  file: goblin-d1std-s0.png
+  sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+  figure_fraction: 1.00
+  note: byte-identical to refs-goblin-d1-0815 slot s2. The control round.
+- slot: s1
+  file: goblin-d1std-s1.png
+  sha256: 61fd5d78f524d5cda51f4281807fe8f5d8b34e8525e61552036796ff6881479c
+  figure_fraction: 0.75
+- slot: s2
+  file: goblin-d1std-s2.png
+  sha256: 1dc8a8883696a67630de258845329866b4b1491ea26f8278534585c0a2128b6b
+  figure_fraction: 0.55
+- slot: s3
+  file: goblin-d1std-s3.png
+  sha256: 7e66416fb41a85ed2022334b42b8d730e70f4ea1b4e2323740ec642a845f2cf3
+  figure_fraction: 0.40
+
+# What this set is NOT to be confused with. Every set below imposes something
+# this one is trying to avoid:
+not_these:
+- refs-goblin-d1-0815      # its two crouch slots are what made him a baby
+- refs-goblin-approved-0814  # ~4 heads, oversized cranium, toddler stance
+- refs-goblin-frozen-0812  # blush, retired
+- refs-goblin-head-0812    # one file duplicated four times, blush, retired
+- refs-charref-goblin-0812  # identity card — imposes blank paper on a scene
+- refs-charref-goblin-scope-0812
+
+# ---------------------------------------------------------------- THE SAMPLE
+# ONE SAMPLE: ep2-b04-crouchplate-0815, beat 04, arm window4, draft key
+# authored_b04_crouch_plate. $0, local GPU. Nothing is published and no beat is
+# re-pointed at this set until the sixteen frames have been opened.
+#
+# The draft is the OTHER half of the change and it is deliberate: pose has to
+# come from the prompt because this sample proved it cannot come from the
+# reference. It names the pose as a STATE ("crouched on his heels", never
+# "crouches"), gives the plant a body (a thin stem rising from the grass with
+# exactly two oversized leaves, base in shot), leaves headroom above the skull
+# for a rise, says "a lean wiry adult goblin man" rather than "a small goblin
+# boy", and negates blush and red cheeks — the founder's own diagnosis of why
+# the goblin reads infantile. Measured before sending: positive 75/77 with the
+# style anchor surviving, negative 70/77 with `photorealistic` and `3d render`
+# still the first two terms.
+sample:
+  job: ep2-b04-crouchplate-0815
+  control: ep2-b04-d1refs-0815 (round r2)
+  beat: 4
+  arm: window4
+  draft_key: authored_b04_crouch_plate
+  verdict: pending — queued 2026-08-15
