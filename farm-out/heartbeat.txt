@@ -1955,3 +1955,4 @@
 16:50:50Z DONE task=ep2-b17-turn-s1-0815-1786807211 rc=0 artifacts=2
 16:50:58Z STARTED task=ep2-b17-rise-s1-0815-1786807178 attempt=1 on box-runner
 16:56:51Z DONE task=ep2-b17-rise-s1-0815-1786807178 rc=0 artifacts=2
+16:56:58Z STARTED task=ep2-b17-full-s1-0815-1786807145 attempt=1 on box-runner
