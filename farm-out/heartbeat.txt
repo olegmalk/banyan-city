@@ -1750,3 +1750,4 @@
 01:12:28Z FAIL task=ep2-goblin-design-d5-0814-1786756097 rc=4 step=measure
 01:12:32Z STARTED task=ep2-goblin-design-d6-0814-1786756099 attempt=1 on box-runner
 01:12:38Z FAIL task=ep2-goblin-design-d6-0814-1786756099 rc=4 step=measure
+01:12:42Z box-runner idle ready=0 failed=27
