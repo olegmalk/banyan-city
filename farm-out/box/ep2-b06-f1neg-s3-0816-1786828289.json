@@ -1,0 +1,114 @@
+{
+  "id": "ep2-b06-f1neg-s3-0816-1786828289",
+  "task": "ep2-b06-f1neg-s3-0816",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 55,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b06-barkboard-pass-s10.png",
+        "--sha256",
+        "063ad56112a718006b6eb2d883e3c01bcb579aef90ea0b201de27a29123565f9",
+        "--out",
+        "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\b06-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\b06-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\b06-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b06-f1neg-s3-0816",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\bench-f1neg-s3.jsonl",
+        "--bench-label",
+        "ep2-b06-f1neg-s3-0816"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# THE GLOB CARRIES THE BEAT SLUG (06-the-clipboard). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b06-f1neg-s3-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-f1neg-s3-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/06-the-clipboard-LTX-f1neg-s3.mp4*\")\n             + glob.glob(src_dir + \"/b06-init-704x1280.png\")\n             + glob.glob(src_dir + \"/bench-f1neg-s3.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-f1neg-s3-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\06-the-clipboard-LTX-f1neg-s3.mp4",
+    "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\b06-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1786828289,
+    "filed_at_iso": "2026-08-15T21:11:29Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b06-f1neg-s3-0816.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-15T21:55:40Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T22:01:29Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\06-the-clipboard-LTX-f1neg-s3.mp4",
+    "C:\\banyan-farm\\ep2-b06-f1neg-s3-0816\\b06-init-704x1280.png"
+  ]
+}
