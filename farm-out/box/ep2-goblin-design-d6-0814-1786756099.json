@@ -1,0 +1,84 @@
+{
+  "id": "ep2-goblin-design-d6-0814-1786756099",
+  "task": "ep2-goblin-design-d6-0814",
+  "node": "005-the-assessor",
+  "beat": 4,
+  "worker": "box-runner",
+  "priority": 2,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "measure",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--beat",
+        "4",
+        "--goblin-def",
+        "green skin, bald head",
+        "--variant",
+        "authored_goblin_design_d6",
+        "--dry"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--beat",
+        "4",
+        "--goblin-def",
+        "green skin, bald head",
+        "--variant",
+        "authored_goblin_design_d6",
+        "--out",
+        "C:\\banyan-farm\\wave-goblin-prep\\out-goblin-design-d6",
+        "--task",
+        "ep2-goblin-design-d6-0814"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-goblin-design-d6-0814\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-goblin-design-d6/04-the-footnote-wave1-s*.*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep2-goblin-design-d6-0814.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\wave-goblin-prep\\out-goblin-design-d6\\04-the-footnote-wave1-s0.png",
+    "C:\\banyan-farm\\wave-goblin-prep\\out-goblin-design-d6\\04-the-footnote-wave1-s1.png",
+    "C:\\banyan-farm\\wave-goblin-prep\\out-goblin-design-d6\\04-the-footnote-wave1-s2.png",
+    "C:\\banyan-farm\\wave-goblin-prep\\out-goblin-design-d6\\04-the-footnote-wave1-s3.png"
+  ],
+  "started_at": "2026-08-15T01:12:32Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T01:12:38Z",
+  "rc": 4,
+  "failed_step": "measure",
+  "artifacts_present": []
+}
