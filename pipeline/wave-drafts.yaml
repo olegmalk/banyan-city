@@ -4152,6 +4152,141 @@ beats:
     # lacks. If beat 08 is to carry the prop, the board has to enter at PLATE time -- a new
     # beat-08 plate composed with the board in it -- and only then can it be inpainted. That
     # is a staging question and it belongs to whoever owns beat 08's plate, not to this lane.
+    #
+    # -- THE WINDOW DOES NOT EXIST, AND IT IS NOT A RESOLUTION PROBLEM. 2026-08-15, the
+    # beat-10 lane, continuing directly from the bisection above. Five more single samples,
+    # every one opened at 3x before the next was authored, all $0 on the rtx5090, 7-19s
+    # each, rc=0. Four levers, in the order the bisection left them: more steps, a repair
+    # pass, the material words, the seed. Every one is a FAIL and the four failures share
+    # one mechanism, which is the finding.
+    #
+    # FIRST, THE ARITHMETIC WAS RE-DERIVED FROM THE SCHEDULER INSTEAD OF FROM strength.
+    # `int(steps * strength)` is the denoising-step COUNT; what the model actually sees is
+    # the starting noise level, sigma at t_start = steps - int(steps*strength). animagine's
+    # scheduler is EulerAncestralDiscreteScheduler, whose sigmas are NOT uniform in the step
+    # index, so "80 steps doubles the resolution" had to be measured rather than assumed.
+    # Measured on the box against the model's own scheduler_config.json:
+    #
+    #   40 steps  0.79 -> denoise 31, t_start 9,  sigma 4.1167   (s4, clean edges, no bark)
+    #   40 steps  0.82 -> denoise 32, t_start 8,  sigma 4.5888   (s5, bark, torn edge)
+    #   inside [4.1167, 4.5888]:  40 steps 0 positions, 80 steps 2, 120 steps 3,
+    #                             160 steps 4, 240 steps 6.
+    #
+    # So the earlier "40 positions, 31 -> 32 adjacent" is confirmed independently and given
+    # its physical unit: at 40 steps there are literally ZERO reachable noise levels inside
+    # the gap. Raising the step count does create real new positions. It does not help, and
+    # here is what happened when they were taken.
+    #
+    #   s7   80 steps 0.82  denoise 65, t_start 15, sigma 4.4498  -- FAIL. Only --steps
+    #        changed from s5. The board has NOT gained bark; it is a smooth dark brown-black
+    #        panel with a few long soft streaks and a red smear at the top left. Worse
+    #        material than s5 at the same strength number, which is correct, because 4.4498
+    #        is BELOW 4.5888. And it is not shape-clean either: a hard diagonal fold runs
+    #        the width of the board and a second crease crosses it, so the slab reads as a
+    #        soft sheet bending in the hands, with a rounded lobe at the lower left. A new
+    #        failure mode neither 40-step neighbour had.
+    #   s8   80 steps 0.83  denoise 66, t_start 14, sigma 4.6917  -- FAIL-SHAPE. Only
+    #        --strength changed from s7, one rung UP. The whole upper-left edge is a row of
+    #        sharp sawtooth spikes, like a torn feather; the lower-left corner is a rounded
+    #        lobe. The face is warmer brown with long sweeping strokes that read as fur or
+    #        hair, not as furrowed crust.
+    #
+    # s7 and s8 are ADJACENT rungs at 80 steps and they straddle the transition -- and they
+    # straddle s5's 4.5888 too. So the boundary sits at sigma ~4.5-4.6 and it does not move
+    # when the step count doubles. The step count is not a fine adjustment of one trajectory
+    # either: EulerAncestral injects fresh noise every step, so 80 steps is a DIFFERENT
+    # sample, not a refinement of the 40-step one, which is why s7 landed off the s4-s5 line
+    # entirely instead of between them. Bisecting in sigma across step counts is therefore
+    # not bisecting between two known outcomes, and the one-dimensional "window" picture the
+    # bracket implied is wrong.
+    #
+    #   s9   40 steps 0.72 over s5's OWN OUTPUT (init sha 4b761192..., not the plate)
+    #        denoise 28, t_start 12, sigma 3.0333 -- FAIL-SHAPE, and it fails in the
+    #        direction that matters. 0.72 is the highest strength that on the original plate
+    #        kept a perfect rectangle (s2), so if edge damage were repairable this was the
+    #        setting. It is not repairable: the second pass did not straighten the notched
+    #        left edge, it ROUNDED the whole object. The top edge dissolves into a black
+    #        mass that merges with the guard's sleeve, the left edge bulges outward, the
+    #        lower left is a soft lobe, and only a faint bottom-right stays straight. What
+    #        is left reads as folded cloth or a shoulder bag. Damage is not repairable by a
+    #        second pass; a second pass compounds toward the rounded attractor.
+    #   s10  40 steps 0.79 with the material words tuned, denoise 31, sigma 4.1167 --
+    #        FAIL-MATERIAL. The s4 recipe exactly, one phrase of the positive changed and
+    #        nothing else: `dry grey-brown bark` -> `dark blackish-brown bark`. Material
+    #        class, no shape word added or removed, so this is not a fifth geometry-wording
+    #        variant. The reasoning came off the frames: at every geometry-safe strength the
+    #        board stays near-black, because low strength preserves the init's low-frequency
+    #        luminance, so a grey-brown target is simply unreachable and only a dark bark
+    #        could be. It did not work. Shape holds -- top, left and bottom edges straight,
+    #        one small notch mid-left, the best silhouette of this whole round -- and the
+    #        face is a smooth dark plum-brown panel with thin vertical drips. Value-matching
+    #        the words bought drips, not crust. Inside-mask mean RGB (69,59,58) against s4's
+    #        near-identical value: the phrase moved almost nothing.
+    #   s11  40 steps 0.82, seed 20260816 instead of 20260815, denoise 32, sigma 4.5888 --
+    #        FAIL-SHAPE. The s5 recipe with the ORIGINAL prompt files byte-identical, seed
+    #        the only variable; seed had been held constant through all ten prior renders.
+    #        The seed does not open a window, it MOVES the damage. The outer silhouette is
+    #        the cleanest of any 0.82 sample -- straight top, straight bottom, only a small
+    #        notch at the upper left -- but a large rounded dome has grown INSIDE the
+    #        rectangle, occupying the lower two thirds, with curved claw-like scratch marks
+    #        over it. The board no longer reads as flat. Same rounded attractor, relocated
+    #        from the edge to the face.
+    #
+    # THE MECHANISM, WHICH ALL FOUR LEVERS AGREE ON. Bark crust is high-frequency relief.
+    # The board's straight silhouette is also carried in the high-frequency band. In this
+    # pipeline they are the SAME band, so any noise level high enough to write crust is high
+    # enough to rewrite the silhouette, and any noise level low enough to preserve the
+    # silhouette leaves the init's smooth dark face untouched. That is why the material and
+    # shape thresholds coincide in sigma instead of being separated by a gap. Strength
+    # cannot separate them (six samples), step count cannot (two), a repair pass cannot
+    # (one), value-matched material words cannot (one), and the seed cannot (one). Eleven
+    # samples, one plate, one mask.
+    #
+    # CONTROLS HELD ON ALL FIVE, verified per sample and not by proxy: --dry-run re-asserted
+    # the mask before every render and the mask PNG came back sha 3aef49b2... every time,
+    # byte-identical to s0's; the pixel diff against the init stayed inside the mask bbox
+    # +/- pad-crop 64 on all five (s9 checked against BOTH its s5 init and the original
+    # plate); the second guard's navy board at frame right has maxdiff 0 in all five, as
+    # does the left edge of frame. FAIL-SEAM still has never fired at any strength, any step
+    # count or any seed. Every output was hashed on the box and again after transfer -- all
+    # five byte-identical.
+    #
+    # THE BAR IS THE PRE-REGISTERED ONE AND IS NOT SOFTENED. s10 has the best silhouette of
+    # the round and no bark; s5 still has the best material and a chewed edge; nothing in
+    # this round is closer to the bar than s5 was. A board-shaped hole in the middle of the
+    # shot is still not a partial win, because beat 10's line makes the board the subject.
+    #
+    # PROMPTS MEASURED ON THE REAL TOKENIZER BEFORE EVERY FIRE, and one thing was found.
+    # Against animagine's own CLIPTokenizer: positive 52/77, tuned positive 53/77, NEGATIVE
+    # EXACTLY 77/77. The negative is not truncated -- confirmed by tokenizing it with a
+    # probe word appended, which went to 81, so the count is real and not a silent clamp --
+    # but it has ZERO headroom. Any word added to `b10-bark-negative.txt` from here silently
+    # drops the tail, which is currently `no photorealistic, 3d render`. That is why this
+    # round changed only the positive.
+    #
+    # WHAT IS NOW RULED OUT for this prop on this plate: strength (40 and 80 steps), step
+    # count, a second repair pass, the seed, and value-matched material wording. What is NOT
+    # ruled out and is the lever the mechanism actually points at: give the INIT the
+    # high-frequency bark before any model runs. Composite a bark texture into the quad on
+    # the plate with plain image processing, $0 and no sampler, then run a LOW-strength pass
+    # -- the regime that is already proven to preserve a rectangle perfectly (s1) -- so the
+    # init carries both the geometry AND the crust and the model only has to make them
+    # agree. Every failure above is the model being asked to invent relief at a noise level
+    # that also dissolves the outline; this asks it to invent nothing. It is a new mechanism
+    # rather than one of the four the bisection named, so it is left authored-not-fired for
+    # whoever picks this lane up.
+    #
+    # HOUSEKEEPING. The stale "ellipse" strings were in SEVEN sidecars, not one: s0 through
+    # s6 all carry them, because the box's copy of inpaint_fruit.py was the pre-`a072909e`
+    # build (sha 070ad433...) for that whole round. The box copy is now the repo's own
+    # 02e2a99c..., so s7-s11 wrote the corrected text at render time, and the seven older
+    # sidecars were corrected in place to exactly the string the current script emits. Only
+    # those two describe-only fields were touched; no numeric, hash or prompt field in any
+    # sidecar was edited. NOTE FOR THE NEXT LANE: the box copy of wave-drafts.yaml at
+    # `C:\banyan-farm\wave-goblin-prep\wave-drafts.yaml` is STALE -- 83b10b2b... there
+    # against 789b4957... in the repo, because a peer lane committed to the repo copy since.
+    # This lane edited the repo copy only and deliberately did not push over the box copy,
+    # which belongs to a running prep job.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back

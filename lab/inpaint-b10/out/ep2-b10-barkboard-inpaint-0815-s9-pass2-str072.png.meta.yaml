@@ -8,13 +8,13 @@ pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
 size: 704x1280
 steps: 40
 guidance: 7.5
-strength: 0.82
+strength: 0.72
 seed: 20260815
 padding_mask_crop: 64
 mask_blur_factor: 8
-init_image: C:/banyan-farm/ep2-b10-barkboard-inpaint-0815/b10-init-704x1280.png
-init_sha256: 1249cb41024e30f17c219c62ceb35cb8d703327b6245854224691f7325298bfe
-mask_png: ep2-b10-barkboard-inpaint-0815-s5-str082-mask.png
+init_image: C:/banyan-farm/ep2-b10-barkboard-inpaint-0815/b10-s5-str082-init.png
+init_sha256: 4b761192401ec62fd6a06061cd84e2f533509bbf3c99b22d7df82be26a34caaf
+mask_png: ep2-b10-barkboard-inpaint-0815-s9-pass2-str072-mask.png
 mask_shape: quad
 mask_corners_px: [[228, 518], [410, 531], [359, 715], [187, 693]]
 mask_bbox_px: [187, 518, 410, 715]
@@ -22,9 +22,9 @@ mask_width_frac: 0.3168
 mask_height_frac: 0.1539
 mask_is_the_stewards: >-
   THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
-rendered_utc: 2026-08-15T15:36:33Z
-render_seconds: 12.9
-wall_seconds: 22.5
+rendered_utc: 2026-08-15T15:57:51Z
+render_seconds: 7.0
+wall_seconds: 13.5
 cost_usd: 0
 python_version: 3.12.10
 torch_version: 2.11.0+cu128
@@ -33,7 +33,7 @@ approved: false
 provisional: >-
   PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
 note: >-
-  beat 10 bracket bisection 4: identical mask, seed and prompt files, strength 0.82 - the last untested gap between 0.79 shape-pass/material-fail and 0.855 material-partial/shape-bowed.
+  beat 10 REPAIR lever, sample 1. Second pass: init is the s5 output itself (sha 4b761192, the strength 0.82 frame where bark arrived with a notched left edge), not the original plate. Same quad mask sha 3aef49b2, same seed, same prompt files, same cfg, pad-crop and blur. Strength 0.72 is the highest value that on the ORIGINAL plate kept a perfectly clean rectangle (s2), so it asks whether the edge damage the material cost is repairable rather than avoidable.
 prompt: |-
   a slab of rough tree bark, dry grey-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
 negative: |-

@@ -1,6 +1,6 @@
 # Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
 # on the rtx5090. The plate outside the mask is the founder's own
-# pixels; only the ellipse below was redrawn.
+# pixels; only the region described below was redrawn.
 platform: local-gpu (rtx5090)
 model: cagliostrolab/animagine-xl-3.1
 model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
@@ -21,7 +21,7 @@ mask_bbox_px: [187, 518, 410, 715]
 mask_width_frac: 0.3168
 mask_height_frac: 0.1539
 mask_is_the_stewards: >-
-  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position on the stem, no colour and no ripeness. The ellipse above is the steward's and is the first thing his correction should move; the words in the prompt are his own approved shots.md wording.
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
 rendered_utc: 2026-08-15T15:33:16Z
 render_seconds: 7.3
 wall_seconds: 17.4

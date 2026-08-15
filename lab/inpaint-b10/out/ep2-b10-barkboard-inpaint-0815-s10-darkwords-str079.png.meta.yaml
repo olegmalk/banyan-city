@@ -8,13 +8,13 @@ pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
 size: 704x1280
 steps: 40
 guidance: 7.5
-strength: 0.82
+strength: 0.79
 seed: 20260815
 padding_mask_crop: 64
 mask_blur_factor: 8
 init_image: C:/banyan-farm/ep2-b10-barkboard-inpaint-0815/b10-init-704x1280.png
 init_sha256: 1249cb41024e30f17c219c62ceb35cb8d703327b6245854224691f7325298bfe
-mask_png: ep2-b10-barkboard-inpaint-0815-s5-str082-mask.png
+mask_png: ep2-b10-barkboard-inpaint-0815-s10-darkwords-str079-mask.png
 mask_shape: quad
 mask_corners_px: [[228, 518], [410, 531], [359, 715], [187, 693]]
 mask_bbox_px: [187, 518, 410, 715]
@@ -22,9 +22,9 @@ mask_width_frac: 0.3168
 mask_height_frac: 0.1539
 mask_is_the_stewards: >-
   THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
-rendered_utc: 2026-08-15T15:36:33Z
-render_seconds: 12.9
-wall_seconds: 22.5
+rendered_utc: 2026-08-15T16:00:09Z
+render_seconds: 10.2
+wall_seconds: 26.8
 cost_usd: 0
 python_version: 3.12.10
 torch_version: 2.11.0+cu128
@@ -33,8 +33,8 @@ approved: false
 provisional: >-
   PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
 note: >-
-  beat 10 bracket bisection 4: identical mask, seed and prompt files, strength 0.82 - the last untested gap between 0.79 shape-pass/material-fail and 0.855 material-partial/shape-bowed.
+  beat 10 MATERIAL-WORDS lever, sample 1. This is the s4 recipe exactly - same plate, mask sha 3aef49b2, seed 20260815, 40 steps, cfg 7.5, strength 0.79, pad-crop 64, blur 8, same negative - and the ONLY changed variable is one phrase of the positive: dry grey-brown bark becomes dark blackish-brown bark. Material class, not geometry: no shape word is added or removed. Rationale from the frames: at every geometry-safe strength the board stays near-black because low strength preserves the init low-frequency luminance, so a grey-brown target is unreachable and only a dark bark is. Positive measures 53 of 77 CLIP tokens, not truncated.
 prompt: |-
-  a slab of rough tree bark, dry grey-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+  a slab of rough tree bark, dark blackish-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
 negative: |-
   chrome clip, metal clip, spring clip, clipboard, white paper, lined paper, sheet of paper, writing, text, navy, dark blue, plastic, glossy, polished, planed timber, sanded plank, varnish, tree trunk, standing tree, branches, leaves, 1girl, 1boy, face, extra hands, photorealistic, 3d render
