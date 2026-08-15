@@ -1,0 +1,233 @@
+# 2026-08-15, motion-wording lane. Beat 13, THE SHADE. ARM 5: THE CYCLICAL CLAUSE
+# NAMES A SMALL BODY PART INSTEAD OF THE WHOLE BODY. ONE VARIABLE ON ARM 4.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#      > SCAVENGER: "...Thanks for the shade."
+#
+# 2. THE SWEEP SO FAR. ONE PLATE, ONE ASSERTED SHA, ONE NEGATIVE, ONE STYLE TAIL,
+#    97 FRAMES, IDENTICAL FLAGS. THE ACTION CLAUSE IS THE ONLY THING THAT MOVES.
+#
+#    ARM 1  ep2-b13-lw-0814, seed 20260806 -- "He draws his knees up to his chest
+#           and wraps his arms around them, then lowers his head."
+#           Two of its three sub-movements are already true in the plate. Dead to
+#           frame 26, tucks 32-45, held 45-96.
+#           window 6.2% | body 0.740 | tail 1.585 | cadence 1.00x
+#
+#    ARM 2  ep2-b13-shade-state-0815, seed 20260806 -- leading state tag, then
+#           "He lowers his head until his face is hidden behind his knees."
+#           Onset at frame 0, bigger move, face gone by 26, dead 26-96.
+#           window 5.2% | body 2.931 | tail 1.616 | cadence 1.39x
+#
+#    ARM 3  ep2-b13-shade-chain-0815, seed 20260806 -- that state tag plus three
+#           ordered sub-movements. The chain bought amplitude, not duration: the
+#           whole fold blends into frames 0-26 and 32-96 is one held tuck. A blind
+#           reader also caught a cost nobody was testing for: across 000-032 the
+#           head roughly DOUBLES in apparent diameter while the body does not, and
+#           the face loses its features to a blank pale dome.
+#           window 5.2% | head 2.898 | body 3.661 | tail 0.898 | cadence 1.53x
+#
+#    ARM 4  ep2-b13-shade-cycle-0815 and its two replication seeds -- that state
+#           tag plus a CYCLICAL clause with no end state, "He rocks slowly forward
+#           and back." Run at three seeds because roughly one take in three fails
+#           to perform its action.
+#             s 20260806: window 8.3%  | body 1.201 | tail 0.758 | cadence 2.33x
+#             s 20260815: window 17.7% | body 4.191 | tail 3.702 | cadence 1.06x
+#             s 20260731: window 99%   | body 1.961 | tail None  | cadence 5.68x
+#           IT DID NOT ROCK. On every seed the body reached a pose early and held
+#           it; what kept changing was the SCALE OF THE WHOLE PICTURE, background
+#           and grass and shadow included -- a smooth enlargement on 20260815, a
+#           swell-and-shrink on 20260731. The cyclical instruction was answered by
+#           the camera, in a render whose negative says "zoom, dolly, push in,
+#           pull back". Its one clean gain, on all three seeds, is that THE FACE
+#           STAYS READABLE TO FRAME 96 instead of being buried behind the knees by
+#           frame 26 -- the terminal clause was what was destroying the face.
+#
+# 3. WHAT IS BEING TESTED HERE, AND WHY IT IS ONE VARIABLE.
+#    Arm 4 proved a cyclical clause survives to the end of the clip and disproved
+#    that the FIGURE is what performs it. The hypothesis now is that "rocks
+#    forward and back" describes a translation of the whole subject, which is the
+#    one thing an i2v model can satisfy by moving the frame instead -- and that
+#    naming a SMALL PART OF THE BODY gives the cycle somewhere to live that the
+#    camera cannot impersonate. Shoulders cannot be simulated by a zoom.
+#
+#      arm 4:  "... He rocks slowly forward and back."
+#      arm 5:  "... His shoulders rise and fall as he breathes."
+#
+#    The leading state tag is carried over word for word. The recipe is closed and
+#    untouched: 704x1280, 97 frames, 24fps, two-stage, distilled sigmas,
+#    image-crf 33, guidance 2.0, sequential offload.
+#
+# 4. THE PREDICTION, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    If it is right, the shoulders sit differently at frame 90 than at frame 70
+#    and the scale is quieter than arm 4's. IF THE SCALE DRIFTS AGAIN AND THE
+#    SHOULDERS DO NOT MOVE, the cyclical clause is answered by the camera whatever
+#    body part it names, and beat 13's duration is not reachable by action wording
+#    -- a bigger finding than a win, reported as loudly. Third outcome, live: a
+#    breathing shoulder on a figure this small may be below the resolution of the
+#    line work and read as shimmer.
+#
+#    ONE RENDER. Its replication seeds do not go in until it has been looked at.
+#
+# 5. SCORING. OPEN THE FRAMES. Where are the shoulders at 0, 32, 64, 96; does the
+#    BACKGROUND change scale; and is the face still readable at 96. Report window,
+#    body, tail and cadence beside arms 1-4 above and beside a BLIND cold read.
+#    The comparison is the result and a bare figure is not.
+#
+# 6. THE INIT, HELD CONSTANT AND ASSERTED RATHER THAN TRUSTED BY NAME.
+#    13-the-shade-ipa-r0-w015-s0.png from ep2-b13-plate-0814, sha 1745a491db3c95c7...
+#    asserted in the crop step, which refuses before anything is written. Same
+#    file and same hash as arms 1, 2, 3 and 4.
+#
+id: ep2-b13-shade-breath-0815
+task: ep2-b13-shade-breath-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: motion-wording lane (beat 13), 2026-08-15
+consumer: 'Beat-13 motion-wording sweep, arm 5. Read against ep2-b13-shade-cycle-0815 (arm 4), which shares its
+  plate, asserted sha, seed 20260806, negative, style tail, frame count and every render flag. THE LEADING STATE
+  TAG IS CARRIED OVER WORD FOR WORD. The only difference is which cyclical clause follows it: arm 4''s whole-body
+  ''He rocks slowly forward and back.'' becomes a NAMED SMALL BODY PART, ''His shoulders rise and fall as he breathes.''
+  Judged on consecutive frames via pipeline/coldread_frames.py and by a blind cold read. The cold read decides;
+  the number is a filter and never a verdict.'
+success: 'A 704x1280 mp4, 97 frames, in which the SHOULDERS -- not the frame, not the scale -- are in a different
+  position at frame 90 than at frame 70. Arm 4 was run at three seeds today and the finding it produced is what
+  this arm tests. On all three seeds the BODY reached a pose early and held it; what kept changing was the SCALE
+  of the whole picture, background included. Seed 20260806: window 8.3%% body 1.201 tail 0.758 cadence 2.33x,
+  held from frame 32. Seed 20260815: window 17.7%% head 3.767 body 4.191 tail 3.702 cadence 1.06x -- the highest
+  figures in the whole sweep, and the consecutive strip shows them to be a smooth frame-by-frame enlargement of
+  the entire image. Seed 20260731: window 99%% body 1.961 cadence 5.68x -- a scale that swells and shrinks, with
+  half the frames duplicates of their neighbours. So ''rocks forward and back'' was answered by the CAMERA and
+  not by the figure, against a negative that explicitly forbids zoom, dolly, push in and pull back. The hypothesis
+  here is that naming a SMALL PART OF THE BODY gives the cyclical motion somewhere to live that is not the camera.
+  IF THE SCALE DRIFTS AGAIN AND THE SHOULDERS DO NOT MOVE, the cyclical clause is answered by the camera whatever
+  body part it names, and beat 13''s duration problem is not reachable by action wording at all -- which is the
+  finding and gets said as loudly as a win. A clip that cuts, relocates, loses the figure or stands him up is
+  a failure either way.'
+why: ONE render, $0, local card, no provider, one variable against a clip already opened frame by frame at three
+  seeds.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-shade-breath-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import\
+    \ Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\"\
+    , default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\n\
+    ap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n \
+    \   for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif\
+    \ a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\"\
+    \ % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\"\
+    )\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh\
+    \ * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left,\
+    \ top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\n\
+    im.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f ->\
+    \ %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-shade-breath-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees.
+    His shoulders rise and fall as he breathes. 2D anime, hand-drawn cel animation, flat cel shading, clean ink
+    linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-shade-breath-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-shade-breath-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-breath-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-breath-0815\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-breath-0815\\\\b13-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b13-shade-breath-0815\b13-jobs-render.json: "[{\"beat\": 13,\n  \"seed\": 20260806,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-breath-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-breath-0815\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-breath-0815\\\
+    \\13-the-shade-LTX-breath.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shade-breath-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-shade-breath-0815\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-breath-0815\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-breath-0815\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-shade-breath-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-shade-breath-0815\bench-b13-shade-breath.jsonl
+  - --bench-label
+  - ep2-b13-shade-breath-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-shade-breath-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-shade-breath-0815/13-the-shade-LTX-breath.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b13-shade-breath-0815/b13-init-704x1280.png\")\n        \
+    \     + glob.glob(\"C:/banyan-farm/ep2-b13-shade-breath-0815/bench-b13-shade-breath.jsonl\"))\nlines = []\n\
+    for f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b13-shade-breath-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0\
+    \ if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-shade-breath-0815\13-the-shade-LTX-breath.mp4
+- C:\banyan-farm\ep2-b13-shade-breath-0815\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render gate itself reads.
+  Beat 13 is THE SHADE -- "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees
+  up around his ears." -- one scavenger, no guards. This is a silent motion take on an approved node, not an episode
+  assembly and not a voice synthesis.'
