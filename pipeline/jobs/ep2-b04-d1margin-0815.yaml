@@ -129,6 +129,67 @@ why: 'ONE SAMPLE, ONE VARIABLE. Every argument here is byte-identical to ep2-b04
   NOT A LICENCE TO SCALE. Twelve beats stay on refs-goblin-approved-0814 no matter what these
   sixteen frames show. The budget is at the freeze boundary and this is the only render
   authorised.'
+verdict: 'RAN 2026-08-15, rc=0, 16 frames in about three minutes, $0. Sidecars confirm the
+  margined tiles by sha256 (r0 154c99aa.., r3 71a0417f..), same seed set, same 15% window at
+  scale 0.6. All sixteen opened by the lane that fired it.
+
+  HEADS-TALL, measured on the full-resolution frame, top of skull to chin against top of skull
+  to sole, seed s0 in each round, against ep2-b04-d1refs-0815 at the same seed:
+
+    round  reference tile        head frac  CONTROL   MARGIN   change
+    r0     crouch A              .33 -> .17   ~3.0     ~3.3     +0.3
+    r1     crouch B              .34 -> .17   ~2.9     ~3.4     +0.5
+    r2     standing full body    .19 -> .095  ~4.9     ~5.8     +0.9
+    r3     bust                  .65 -> .33   busts    ~3.0     shot size changed, not ratio
+
+  THE MECHANISM IS HALF RIGHT, AND THE LOAD-BEARING HALF IS WRONG.
+
+  CONFIRMED — crop tightness sets SHOT SIZE. Every margined round is a wider shot with a smaller
+  figure, and r3 stopped being a portrait: the bust tile drew a full standing figure on seeds s1
+  and s3 and an upper body in grass on s0 and s2, where the control drew four busts. Predicted
+  falsifier F3 did NOT fire.
+
+  KILLED — crop tightness does NOT set HEAD-TO-BODY RATIO, which is the part that matters. The
+  prediction was that both crouch rounds would clear 4 heads. They did not: r0 moved 0.3 of a
+  head and r1 moved 0.5, both still 3-to-3.5-head babies, r0 still blushing and round-eyed. That
+  is falsifier F2, and for r0 it is close to F1.
+
+  THE DECISIVE PAIR, which the head-fraction model cannot survive. Margined crouch tiles sit at
+  head fraction .17. The control''s STANDING tile sat at .19 — the same rung. If head fraction
+  were the driver they would draw the same creature. They draw 3.3 heads and 4.9 heads. The tile
+  that differs is the one holding a CROUCHED BODY.
+
+  So the reference hands over two things by separate routes: framing, which the crop controls,
+  and body proportion, which comes from the proportions of the body depicted. A crouched figure
+  is a compressed figure, and the model copies that compression into a standing plate. Cropping
+  wider does not un-crouch him. The one place head fraction did predict correctly — the bust tile
+  at .33 landing on the control crouch slots'' ~3.0 heads — is explained the same way without
+  framing: a bust is a head, and a head is the most compressed body there is.
+
+  F4 did not fire: four rounds remain four visibly different pictures, green skin, ears and red
+  eyes intact. Two real costs did appear. r2''s face carries much less detail because the figure
+  is small in frame, and r3 washes out toward the legs.
+
+  POSE, unchanged and reconfirmed: NONE of the sixteen is crouching. Margin does not recover pose
+  and nothing here revises the standing finding — pose must come from the prompt or a real pose
+  conditioner. What this run adds is that a crouch reference is worse than neutral: it costs
+  proportion and buys no pose at all.
+
+  AGAINST THE FOUNDER''S BRIEF -- "a young dumb goblin, but not cute", not old, not a baby:
+    r0  FAIL. Pink cheeks, large round eyes, 3.3 heads. Cute toddler. His exact complaint.
+    r1  FAIL. Dourer and less blushy than r0, small fangs on s3, but 3.4 heads is a child.
+    r2  PASS, and the best goblin this lane has drawn. 5.8 heads, lean, long robe, no blush,
+        half-lidded. Not cute, not old. Two reservations: the face is too small in frame to
+        carry a beat plate as drawn, and he reads serene rather than dumb.
+    r3  FAIL as a plate. Chibi and blushing where it is a figure at all.
+
+  RECOMMENDATION, not applied — the twelve beats on refs-goblin-approved-0814 stay where they
+  are. Re-cropping is not the fix and neither margined set should be pointed at anything. What
+  the two samples together argue for is a reference set built from STANDING FULL BODIES ONLY,
+  with generous margin as a second and smaller lever on top. The obstacle is that d1 seed s1
+  holds exactly one sound standing tile, and a set of four copies of it is one distinct reference
+  — the sampler''s dedup would draw four frames, not sixteen. So the next step is more standing
+  tiles, not more crops of these.'
 steps:
 - name: dry
   argv:

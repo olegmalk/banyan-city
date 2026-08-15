@@ -114,3 +114,16 @@ sample:
   control: ep2-b04-d1refs-0815
   beat: 4
   arm: window4
+  rc: 0
+  frames: 16
+  out: C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815
+  heads_tall_control_vs_margin: {r0: 3.0 -> 3.3, r1: 2.9 -> 3.4, r2: 4.9 -> 5.8, r3: busts ->
+    full figure at 3.0}
+  verdict: SPLIT, and it does not go the way the set was built. Margin moves SHOT SIZE — the bust
+    tile drew full figures — and barely moves PROPORTION. Both crouch rounds are still 3-to-3.5-head
+    babies. Margined crouch tiles (head fraction .17) and the control's standing tile (.19) sit on
+    the same rung and draw 3.3 heads against 4.9, so head fraction is not the driver; the crouched
+    BODY is. Re-cropping is not the fix for the baby read.
+  do_not_use_for: any beat. This set exists to answer a question and it answered it. The standing
+    slot is the only one worth building on, and building on it needs MORE standing tiles rather
+    than more crops of this one.
