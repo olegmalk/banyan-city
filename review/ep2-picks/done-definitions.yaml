@@ -356,3 +356,91 @@ standard_0815:
     was judged on one clip or two, and a beat that failed once on a recipe proven elsewhere gets a second
     seed before it parks. The exception is a failure a second seed cannot touch: if the plate has no subject
     in it, no seed adds one.'
+trim_pass_0815:
+  date: '2026-08-15'
+  what: >-
+    A free, no-GPU pass over the five RECORDED PICKS to cut dead air off the tails. No re-render, no
+    recipe change, no verdict changed. Motion windows measured with pipeline/coldread_frames.py on the
+    parity-collapsed per-pair MAD series, then each window verified against a second measurement
+    (cumulative distance of every later frame from the frame at the window end) before any cut was made.
+  first_finding_the_premise_was_wrong: >-
+    The dead-air finding that prompted this pass was measured on a 97-frame clip (the current frozen
+    recipe) and DOES NOT TRANSFER to the recorded picks. All five picks are 121 frames at 24fps = 5.00s,
+    from the older 0813/0814 recipe, and NONE of them has a frozen head: the motion window opens at
+    pair 1 in every one of the five, so there is no "38 frames of standing still at the head" to remove.
+    Head trim available across all five picks: ZERO frames. Only tails had anything to give.
+  lead_in: >-
+    None taken, because none was available - see above. Frame 0 is kept in every trimmed output, which
+    also protects the "field present at frame one" clause that four of these five definitions carry.
+  settle: >-
+    12 frames = 0.50s kept after the last moving frame. Chosen as the shortest hold that still reads as
+    the movement STOPPING rather than being cut off: coldread's own PAD of 3 frames is a reading aid,
+    not an edit, and 3 frames of hold reads as a hard out. 0.50s also preserves beat 10's "and HOLDS
+    its blank back toward his partner", which is part of that beat's definition of done.
+  outputs: >-
+    review/ep2-picks/trims/ - originals untouched on origin/farm-results-rtx5090, nothing overwritten.
+    NOTE: .gitignore:57 ignores review/**/*.mp4, so the trimmed files are LOCAL ONLY and are not being
+    force-added - that ignore rule is repo policy and not mine to change. They are exactly reproducible
+    from the frame counts below, which is why the counts are recorded here rather than just the seconds.
+  reproduce: >-
+    git show origin/farm-results-rtx5090:farm-out/<pick-dir>/<clip>.mp4 > in.mp4 && ffmpeg -i in.mp4
+    -frames:v <frames_kept> -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p -an out-trim.mp4
+    (head is never cut, so a plain -frames:v is the whole edit)
+  results:
+    '05':
+      pick: ep2-b05-standB-0814
+      motion_window_pairs: 1-119 of 120
+      before_s: 5.0
+      after_s: 5.0
+      action: NO TRIM - moving edge to edge, 98.3% of the clip is inside the window
+    '06':
+      pick: ep2-b06-scene-0814r
+      motion_window_pairs: 1-42 of 120
+      before_s: 5.0
+      after_s: 2.333
+      trimmed_file: review/ep2-picks/trims/ep2-b06-scene-0814r-trim.mp4
+      frames_kept: 56 of 121
+      verified: >-
+        the tail is genuinely dead - across the 78 frames after the window the image drifts a cumulative
+        3.6 MAD total, against 49 MAD of change inside the window
+      definition_check: >-
+        nothing the definition requires is in the removed stretch; the board turn and the read both
+        complete inside the kept frames, and frame one is unchanged
+    '10':
+      pick: ep2-b10-pairB-0814
+      motion_window_pairs: 1-93 of 120
+      before_s: 5.0
+      after_s: 4.458
+      trimmed_file: review/ep2-picks/trims/ep2-b10-pairB-0814-trim.mp4
+      frames_kept: 107 of 121
+      verified: >-
+        a long slow decel rather than a freeze - the tail drifts 6 MAD over its 27 frames - so the saving
+        is small and honest at that
+      definition_check: both guards, the flip and the hold all survive the cut
+    '11':
+      pick: ep2-b11-finalB-0814
+      motion_window_pairs: 1-120 of 120
+      before_s: 5.0
+      after_s: 5.0
+      action: NO TRIM - moving edge to edge, 99.2% of the clip is inside the window
+    '12':
+      pick: ep2-b12-tightB
+      motion_window_pairs: 1-31 of 120 - REPORTED WINDOW IS WRONG, DO NOT TRIM ON IT
+      before_s: 5.0
+      after_s: 5.0
+      action: STOPPED - no trim made
+      why_stopped: >-
+        coldread_frames parity-collapses with a sliding max of WIDTH 2, which removes a period-2 dropout.
+        This clip's difference series is PERIOD 3 - one loud pair then two quiet ones - so the collapse
+        does not close the gaps and the longest-run search terminates at pair 31 while the clip is still
+        animating. Measured directly: frames after the window end drift up to 30 MAD away from the frame
+        at pair 31, peaking around f73, and the leaf visibly grows and sways all the way to f120. Trimming
+        this clip to 1.29s would have deleted three quarters of its actual content.
+      generalises: >-
+        the width-2 collapse is calibrated to the 97-frame recipe. On these 121-frame clips the cadence
+        is period 3 (b12 reads 9.59x, b05 3.78x, b10 3.58x), so a window from this tool on a 0813/0814
+        clip must be checked against a distance-from-window-end curve before anything is cut on it.
+        Not filed as a bug in the tool - it is a bug in applying it across recipes.
+  what_this_means_for_the_cut: >-
+    Four of the five recorded picks keep 4.46-5.00s of real content. Episode 2 is not an episode of
+    one-second shots. Total saving across all five picks is 3.21s.
