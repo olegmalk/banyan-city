@@ -1,0 +1,89 @@
+# refs-b07-mixed-d1-0815 — beat 07's two-character reference set, corrected.
+#
+# WHAT IT REPLACES AND WHY. refs-b07-mixed-0815, staged by the previous stills
+# lane, held four files all named `04-the-footnote-wave1-sN.png` — names that lie
+# about their contents — and two of the four were wrong for this beat:
+#
+#   old s0  582e5ab5..  refs-goblin-approved-0814/s0   the INFANTILE goblin
+#   old s1  466b18bb..  refs-goblin-approved-0814/s1   the INFANTILE goblin
+#   old s2  8e680225..  refs-guards-chosen-0814/s0     guard A, FRONT view   (kept)
+#   old s3  9b4a0a14..  refs-guards-chosen-0814/s1     guard A, BACK view    (dropped)
+#
+# THE BACK VIEW IS THE FOUNDER'S "FLOATING CLIPBOARD". Opened and confirmed
+# 2026-08-15: the guard's white waist sash is drawn as a rigid rectangular slab,
+# and in the BACK view (9b4a0a14..) it reads as a board strapped across his lower
+# back. Worse for this beat than the artefact itself: beat 07's action is
+# POINTING AT SOMEONE, and a quarter of its conditioning was a man turned fully
+# away from camera. That slot is gone.
+#
+# ALSO DROPPED: refs-guards-chosen-0814/s3 (955c75f4..) was never in the old set
+# and must not be added — it is a TWO-PANEL turnaround, front and back side by
+# side in one image, so conditioning on it risks imposing two guards on a beat
+# that wants one guard and one goblin. Beat 10 already measured that a
+# single-figure reference imposes a single figure; this is the same law read
+# backwards.
+#
+# NOT FIXED HERE, AND SAY IT OUT LOUD: refs-guards-chosen-0814 is on
+# box_enqueue.py's CARD_REFS_DENYLIST — 20 of its 24 downstream plates scored as
+# costume identity cards. Every tile in it is a DEFAULT IDLE on a flat pale-grey
+# studio void: arms at sides, no location, no action. Swapping the back view for
+# the head view removes a turned-away guard; it does not give beat 07 a guard
+# who is doing anything. A guard reference that answers "where is his body when
+# he points" does not exist yet and has to be commissioned.
+#
+# AND A COSTUME FACT NO JOB FILE HAS EVER MENTIONED: the reference guard wears
+# WIRE-RIM GLASSES. They are plainly there in s0, s2 and s3. Nothing in
+# wave-drafts or any beat prompt says so, so every render either invents them or
+# drops them at random.
+
+set: refs-b07-mixed-d1-0815
+frozen_on: '2026-08-15'
+box_path: C:\banyan-farm\wave-goblin-prep\refs-b07-mixed-d1-0815
+ref_prefix: b07mixed-d1
+replaces: refs-b07-mixed-0815
+beats: [7]
+character_flag: guard        # --character guard, as the beat-07 job already passes
+
+# POSITION IS NOT EVIDENCE — read the sha256, never the slot index or the name.
+images:
+- slot: s0
+  file: b07mixed-d1-s0.png
+  sha256: dd4b30cd3ab74902c9bf80ae90aa214da2555a802bc6b17e3c655e062937a4e8
+  depicts: goblin
+  pose: crouch
+  source: refs-goblin-d1-0815/goblin-d1s1-s0.png (crop of d1 seed s1, 389c7637..)
+- slot: s1
+  file: b07mixed-d1-s1.png
+  sha256: c51c6467829f29db79514ed5721c310d04b7afef2b97372779714306516a0b8c
+  depicts: goblin
+  pose: crouch
+  source: refs-goblin-d1-0815/goblin-d1s1-s1.png (crop of d1 seed s1, 389c7637..)
+- slot: s2
+  file: b07mixed-d1-s2.png
+  sha256: 8e6802259079c605c58ce606c59e437ea73ebe14e0e3d7f2030d10f9d9467cd2
+  depicts: guard A
+  pose: standing front, default idle, arms at sides
+  source: refs-guards-chosen-0814/04-the-footnote-wave1-s0.png (= its A-front.png), byte-identical
+  note: wire-rim glasses; white waist sash renders as a rigid slab at the front
+- slot: s3
+  file: b07mixed-d1-s3.png
+  sha256: 31b93292b4cea29c8fa97926839ba3e864144e162d53b103a3951ddba5531868
+  depicts: guard A
+  pose: head and shoulders, front
+  source: refs-guards-chosen-0814/04-the-footnote-wave1-s2.png (= its A-head.png), byte-identical
+  note: replaces the dropped BACK view; wire-rim glasses clearly visible
+
+excluded:
+- sha256: 9b4a0a1468cb2c8b680fca09d4969c76671ad0d6c6a2c1a143667a5cd1bee50d
+  what: refs-guards-chosen-0814 A-back.png — the back view, the "floating clipboard"
+- sha256: 955c75f46fe2b91f43d1b8409004695666f965dac895f5a7e351a1228de2d690
+  what: refs-guards-chosen-0814 A-whole.png — a two-figure front+back turnaround
+- sha256: 582e5ab5
+  what: refs-goblin-approved-0814 s0, the infantile goblin (prefix only, from the old set's record)
+- sha256: 466b18bb
+  what: refs-goblin-approved-0814 s1, the infantile goblin (prefix only, from the old set's record)
+
+status: STAGED, NOT FIRED. No beat-07 job has been run on this set. It is held
+  behind the finding recorded in pipeline/refs/refs-goblin-d1-0815.yaml — that
+  the goblin crouch slots produce the most infantile output of the four — because
+  slots s0 and s1 here are exactly those two crouches.

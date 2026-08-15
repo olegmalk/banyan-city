@@ -1,0 +1,137 @@
+# 2026-08-15, goblin-d1 lane. ONE SAMPLE. The founder's design pick, staged as a
+# reference set, on the one beat that has a byte-identical control.
+id: ep2-b04-d1refs-0815
+task: ep2-b04-d1refs-0815
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 1
+max_attempts: 1
+sample: true
+owner: goblin-d1 lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 04 is unconditioned in that leaf. This is a still
+  plate on an approved node, not an episode assembly.'
+consumer: this lane''s own eye, then the eleven other goblin beats -- none of which are re-pointed
+  at refs-goblin-d1-0815 until this frame has been opened and judged.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+success: Sixteen frames read beside ep2-goblin-freeze-w015-0814's sixteen, which used the SAME beat,
+  the SAME draft key, the SAME arm and the SAME seeds. Pass is a goblin who reads ADULT-ish -- a
+  young dumb goblin, not cute, not old, and above all NOT A BABY. The failure worth reporting is
+  the infantile read surviving the reference swap, which would mean the baby is coming from the
+  wording or the harness and not from refs-goblin-approved-0814, and would stop the wave here.
+why: 'ONE SAMPLE, ONE VARIABLE. Every argument below is byte-identical to
+  ep2-goblin-freeze-w015-0814 except --refs, --ref-prefix and --out, so the sixteen frames this
+  draws are a true A/B against the forty-eight frames refs-goblin-approved-0814 has already
+  produced on this beat.
+
+  WHAT CHANGED AND WHY. The founder picked goblin design #1 on 2026-08-14 and warned that "some of
+  the heads in the reference are dismorphed or something". Of the four d1 seeds only s1 is sound
+  (sha256 389c7637..., published on origin/farm-results-rtx5090 as
+  farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png; the file is NOT on main). s0, s2
+  and s3 are rejected -- s3 droops a pelican jowl on every head, s0 melts the midface on roughly
+  four of nine, s2 carries a faceless egg-head, a beaked profile and Japanese onomatopoeia that
+  would leak into anything conditioned on it. NO TILE FROM s0, s2 OR s3 IS IN THIS SET.
+
+  THE SET IS FOUR CROPS OF s1 AND NOTHING ELSE, and the mapping is recorded BY HASH because a
+  prior lane lost a day to an s0/s1 position mix-up and position is not evidence:
+
+    goblin-d1s1-s0.png  dd4b30cd..  crouch A, knees up, mouth open
+    goblin-d1s1-s1.png  c51c6467..  crouch B, knees up, eyes closed
+    goblin-d1s1-s2.png  9526882e..  standing full body, hands on hips
+    goblin-d1s1-s3.png  d84abe2f..  bust, three-quarter
+
+  all four cut from the ONE source file sha256 389c7637..., and the full slot -> source-crop-box ->
+  sha256 table is frozen at pipeline/refs/refs-goblin-d1-0815.yaml.
+
+  WHAT THE OLD REFERENCE WAS DOING. refs-goblin-approved-0814 carries no blush -- the blush sets
+  (refs-goblin-frozen-0812, refs-goblin-head-0812, refs-charref-goblin-0812,
+  refs-charref-goblin-scope-0812, all 2026-08-12) are already retired -- and it is STILL the most
+  infantile reference we own: roughly four heads tall, oversized bald cranium, stubby limbs,
+  toddler stance. It is what beats 02, 03, 04, 07, 08, 13, 14, 15, 16, 17, 19 and 20 currently
+  point at. All four d1 seeds read markedly more adult. That is the claim this sample tests.
+
+  POSES, NOT PORTRAITS (body-position ruling, 2026-08-15). A reference has to answer WHERE IS HIS
+  BODY at the start of the beat, not only what the character looks like, so two of the four slots
+  are the two sound KNEES-UP CROUCHES from s1 -- the pose the chain needs for beats 03, 04, 07, 08
+  and 12 -- one is the standing full-body that beats 17-end to 20 need, and one is a bust for the
+  face. The bad mid-centre profile tile, whose mouth floats as a red dot on the cheek, is excluded.
+
+  NOT A LICENCE TO SCALE. Eleven other goblin beats stay on refs-goblin-approved-0814 until this
+  frame is opened.'
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-0815
+  - --ref-prefix
+  - goblin-d1s1
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815
+  - --draft-key
+  - authored_goblin_approved_recipe
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-0815
+  - --ref-prefix
+  - goblin-d1s1
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815
+  - --draft-key
+  - authored_goblin_approved_recipe
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-d1refs-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-d1refs-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b04-d1refs-0815/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-d1refs-0815.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815\04-the-footnote-ipa-r3-w015-s0.png

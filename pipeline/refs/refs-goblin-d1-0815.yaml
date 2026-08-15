@@ -1,0 +1,172 @@
+# refs-goblin-d1-0815 — the frozen goblin reference set, 2026-08-15.
+#
+# WHY THIS FILE EXISTS. A reference set on the box is four PNGs in a directory
+# whose names the harness fixes (`<ref-prefix>-s0..s3.png`), so the filename can
+# say nothing true about what is inside. On 2026-08-15 a lane found
+# refs-b07-mixed-0815 holding four files all still named
+# `04-the-footnote-wave1-sN.png` from a goblin wave, two of which were guards —
+# the sidecars that run writes therefore record a reference filename that is
+# WRONG. Before that, a lane lost a day to an s0/s1 position mix-up. So the
+# standing rule: POSITION IS NOT EVIDENCE, the mapping is by CONTENT HASH, and
+# it is written down here rather than in a job comment that only one job reads.
+#
+# This set uses an honest --ref-prefix (`goblin-d1s1`) instead of inheriting the
+# beat-04 wave names, so the sidecars it produces name their own source.
+#
+# ------------------------------------------------------------------ PROVENANCE
+# The founder picked goblin design #1 on 2026-08-14, with a warning: "some of
+# the heads in the reference are dismorphed or something, so just, beware."
+#
+# Of the four d1 seeds only s1 is sound. The other three are REJECTED and no
+# tile from any of them is in this set:
+#   s0  dd73eb20..  roughly four of nine heads have a melted midface
+#   s2  516a3651..  a faceless egg-head, a beaked profile, and Japanese
+#                   onomatopoeia text that would leak into any conditioned render
+#   s3  dacdef09..  a drooping pelican jowl on every head
+#
+# Every image below is a crop of ONE file:
+#   source:        farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png
+#   source_sha256: 389c763783efdb1057f56ac8116200519427b4da2aff28f44ce23838868f5910
+#   source_branch: origin/farm-results-rtx5090   (NOT on main)
+#   source_size:   832x1216
+#
+# The one bad tile in s1 — the mid-centre profile head, whose mouth floats as a
+# red dot on the cheek, source box roughly (340,370)-(573,670) — is EXCLUDED.
+#
+# ------------------------------------------------------------- POSES, NOT FACES
+# Body-position ruling, 2026-08-15: a reference must answer WHERE IS HIS BODY at
+# the start of the beat, not only what the character looks like. Nine of nine
+# beats whose plate must hold the scavenger's body were failing their required
+# starting pose, most often to a standing "default idle". So this set is
+# weighted to the CROUCH — two of four slots — and every slot's pose is named,
+# so a later lane picks the right one per beat instead of taking whatever is
+# first.
+#
+# The three staged poses the chain needs:
+#   crouched behind the sapling   beats 03 04 07 08 12   -> slots s0, s1
+#   folded on the ground knees up beats 13-end 14 15 16 17-start -> slots s0, s1
+#   standing beside the sapling   beats 17-end 18 19 20  -> slot  s2
+#
+# NOTE FOR THE TWO-FIGURE SET beat 08 is waiting on: commission it CROUCHED.
+# Beat 08 points at his belly, which a knees-up crouch occludes, so the pose is
+# load-bearing twice over.
+
+set: refs-goblin-d1-0815
+frozen_on: '2026-08-15'
+box_path: C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-0815
+ref_prefix: goblin-d1s1
+character: goblin
+source_file: farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png
+source_sha256: 389c763783efdb1057f56ac8116200519427b4da2aff28f44ce23838868f5910
+source_branch: origin/farm-results-rtx5090
+
+# crop_box is (left, top, right, bottom) in the 832x1216 source. Each crop is
+# then padded with white to a square and resampled to 832x832, so the harness's
+# own centre-crop-to-square is a no-op and cannot silently eat a head or a foot.
+# `isolation` records how the tile was separated from its neighbours: the sheet's
+# figures touch, so a white-halo connected-component split works for three of
+# them and the standing figure needed a hand-placed cut.
+images:
+- slot: s0
+  file: goblin-d1s1-s0.png
+  sha256: dd4b30cd3ab74902c9bf80ae90aa214da2555a802bc6b17e3c655e062937a4e8
+  pose: crouch
+  pose_detail: knees-up crouch, hands clasped low, mouth open, sandals, brown under-trousers
+  source_tile: bottom-centre
+  crop_box: [173, 648, 495, 1208]
+  isolation: hand-placed right-edge cut along the white halo, which also removes the
+    standing figure it overlaps
+- slot: s1
+  file: goblin-d1s1-s1.png
+  sha256: c51c6467829f29db79514ed5721c310d04b7afef2b97372779714306516a0b8c
+  pose: crouch
+  pose_detail: knees-up crouch, hands clasped, eyes closed, sandals
+  source_tile: bottom-right
+  crop_box: [483, 683, 832, 1212]
+  isolation: connected component, cleanly separated by its white halo
+- slot: s2
+  file: goblin-d1s1-s2.png
+  sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+  pose: standing
+  pose_detail: full body, three-quarter, hands on hips, cream robe with red collar and
+    blue sash, bare green feet
+  source_tile: left column
+  crop_box: [0, 60, 354, 975]
+  isolation: hand-placed cuts removing the bust tile's ear tip at the top right and the
+    bottom-centre crouch that overlaps the robe
+- slot: s3
+  file: goblin-d1s1-s3.png
+  sha256: d84abe2f359034c7a99862791350374a011f4cb939a37324c3139a19dc9dba2e
+  pose: bust
+  pose_detail: head and shoulders, three-quarter, red eyes, no blush, red collar
+  source_tile: top-right
+  crop_box: [336, 20, 690, 378]
+  isolation: connected component, cleanly separated by its white halo
+
+# What this set is NOT to be confused with. All 2026-08-12, all carrying the
+# blush the founder rejected, all retired:
+retired_predecessors:
+- refs-goblin-frozen-0812
+- refs-goblin-head-0812          # one file duplicated four times
+- refs-charref-goblin-0812
+- refs-charref-goblin-scope-0812
+# And the one this set REPLACES, which carries no blush and is still the most
+# infantile reference we own — roughly four heads tall, oversized bald cranium,
+# stubby limbs, toddler stance:
+replaces: refs-goblin-approved-0814
+
+# ---------------------------------------------------------------- THE SAMPLE
+# ONE SAMPLE, ONE VARIABLE: job ep2-b04-d1refs-0815, beat 04, arm window4, the
+# same draft key, arm and seeds as ep2-goblin-freeze-w015-0814, which used
+# refs-goblin-approved-0814. rc=0, 16 frames, ~4 min, $0 local GPU. Opened by
+# the lane that fired it, 2026-08-15.
+#
+# THE VERDICT IS SPLIT BY SLOT, and that is the whole finding:
+#
+#   r0 (s0, crouch A)   FAIL. 3 to 3.5 heads tall. Oversized bald cranium,
+#   r1 (s1, crouch B)   FAIL. stubby limbs, tiny hands. Pink cheek patches on
+#                       three of eight frames. r0-s2 has large blue-green eyes
+#                       and reads outright CUTE. These are babies. This is the
+#                       founder's exact complaint, unchanged by the swap.
+#
+#   r2 (s2, standing)   BEST OF FOUR. Roughly 4.5 to 5 heads, longer robe, no
+#                       blush, dour half-lidded expression, red eyes. Reads as a
+#                       lanky adolescent rather than a toddler. Still short-
+#                       limbed and large-craniumed; not an adult, but it is the
+#                       only round that is arguably inside the brief — "a young
+#                       dumb goblin, but not cute", not old, not a baby.
+#
+#   r3 (s3, bust)       Busts, as asked. Adolescent-to-young-adult faces, dour,
+#                       red eyes; faint blush on two of four. Good faces, but a
+#                       portrait is not a beat plate.
+#
+# WHAT THIS MEASURES, and it is the opposite of what the set was weighted for:
+# at this 15% window the reference transfers FRAMING and PROPORTION, NOT POSE.
+# NONE of the sixteen frames is crouching. A bust reference produced busts; a
+# standing full-body reference produced standing full-body; the two crouch
+# references produced standing full-body too — but chibi, because in a crouch
+# tile the head fills a large fraction of the frame and the model reads that as
+# "big head relative to body". The tighter the reference crops to the head, the
+# more infantile the output.
+#
+# CONSEQUENCE FOR THE POSES-NOT-PORTRAITS PLAN: staging a crouched reference
+# will NOT make a plate start crouched. Pose has to come from the prompt or from
+# an actual pose conditioner (ControlNet / img2img off a posed plate). Beat 08's
+# pending two-figure reference cannot deliver a crouched, belly-occluded start
+# through this mechanism, and commissioning it crouched will only make the
+# scavenger smaller and rounder.
+#
+# NEXT SAMPLE THIS ARGUES FOR (not run — budget, and the founder is awake): the
+# same beat and arm on a set whose four slots are the SAME tiles re-cropped with
+# generous margin, so the head is small in every frame. If margin is what carries
+# proportion, that is a one-variable test of it and it costs four minutes.
+sample:
+  job: ep2-b04-d1refs-0815
+  control: ep2-goblin-freeze-w015-0814
+  beat: 4
+  arm: window4
+  rc: 0
+  frames: 16
+  out: C:\banyan-farm\goblin-ipa-0812\out-b04-d1refs-0815
+  verdict: HELD. r0/r1 (crouch slots) fail the brief outright; r2 (standing slot)
+    is the only round arguably inside it. No wave fired, no beat re-pointed.
