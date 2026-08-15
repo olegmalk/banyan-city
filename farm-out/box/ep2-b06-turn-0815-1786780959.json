@@ -1,0 +1,105 @@
+{
+  "id": "ep2-b06-turn-0815-1786780959",
+  "task": "ep2-b06-turn-0815",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 19,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b06-turn-0815\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b06-scene-0815\\06-the-clipboard-ipa-r0-w015-s0.png",
+        "--sha256",
+        "4689ab225ea971f8c965eaaeceb2e9bee70b4f9d15095f40b2f8b7a7d81c63e4",
+        "--out",
+        "C:\\banyan-farm\\ep2-b06-turn-0815\\b06-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b06-turn-0815\\b06-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b06-turn-0815\\b06-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "49",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b06-turn-0815",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b06-turn-0815\\bench-b06-turn.jsonl",
+        "--bench-label",
+        "ep2-b06-turn-0815"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-turn-0815\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-turn-0815/06-the-clipboard-LTX-turn.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b06-turn-0815/b06-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b06-turn-0815/bench-b06-turn.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-turn-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b06-turn-0815\\06-the-clipboard-LTX-turn.mp4"
+  ],
+  "started_at": "2026-08-15T08:07:37Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T08:12:40Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b06-turn-0815\\06-the-clipboard-LTX-turn.mp4"
+  ]
+}
