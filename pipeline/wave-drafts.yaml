@@ -1714,6 +1714,84 @@ beats:
       doll, no cute, no moe, no bishounen, no handsome, no elegant, no sharp features, no
       clever expression, no smirk, no girl. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # -- `authored_goblin_design_d7_dumb` -- 2026-08-15. ONE VARIANT against d1, the
+    # best of the six, aimed at the two failure modes a lane read off all 24 frames:
+    # THEY READ AS PALE NAMEKIAN MONKS, AND THE DOMINANT EXPRESSION IS ANGRY.
+    # Not a seventh design. d1's build tags (`squat, round-bellied`) are kept byte
+    # for byte so this is a delta on a known baseline, not another spread entry.
+    #
+    # THERE IS NO REFERENCE SET TO BLAME AND THAT IS THE FIRST FINDING.
+    # `render_wave_sample.py` builds a `StableDiffusionXLPipeline` and calls it with
+    # `prompt=`/`negative_prompt=` only -- no img2img, no IPAdapter, no control image.
+    # All six d-jobs are pure txt2img on animagine-xl-3.1. So the refs-decide law does
+    # not apply here: nothing outranked the words, and every element of the monk read
+    # is attributable to the string below or to the checkpoint's own prior. Words are
+    # the only lever there is on this path, which is why this variant is words.
+    #
+    # THE SPECIES CHANNEL. What the six sent was, tag for tag, a Namekian: bald +
+    # green + `long pointed ears` + `sash`. `sash` is the most kimono-coded token in
+    # the string and it is the one that makes `patched tunic` read as a robe, so the
+    # garment clause becomes `ragged sleeveless vest, bare arms, short trousers` --
+    # bare arms are the structural opposite of a robe, and no adjective on `tunic`
+    # can do that. `big lumpy nose` is KEPT and is load-bearing anti-Namekian:
+    # Namekians are noseless. `long pointed ears` and `red eyes` are NOT touched --
+    # they are ruled identity and this is a design build, not an identity re-open.
+    #
+    # THE SKIN IS FIXED IN `--goblin-def`, NOT HERE, and it is a revert rather than a
+    # new colour. `pale yellow-green skin, bald` is not his definition: it is the
+    # MOTION lane's i2v sentence (pipeline/measured/queue-history.json, ~20 rows),
+    # borrowed into these specs. The prompt that drew the frame he called "a good
+    # representation" says `green skin, bald head`. So the spec passes `green skin,
+    # bald` -- his own words, and the `pale yellow-` that made him sickly is gone.
+    #
+    # THE EXPRESSION CHANNEL. `heavy sloped brow` is the anger, not the dumbness: a
+    # lowered, forward-sloping brow is the anatomical signature of anger and the model
+    # draws it as one. It becomes `thick eyebrows` -- still heavy, still non-cute, no
+    # longer scowling -- and the eyes gain `half-closed`, which is the danbooru-native
+    # tag for the dopey half-lidded look. `small dull eyes`, `slack open mouth` and
+    # `vacant expression` are kept verbatim: they are the part of d1 that worked.
+    # `empty eyes` was drafted here and CUT -- it is the strongest vacancy tag on the
+    # site and it draws pupil-less horror, and he asked for dumb, not soulless.
+    #
+    # `young adult` is the third named miss (#3 and #4 read fifty), answered in the
+    # positive rather than the negative because the budget below is already full.
+    #
+    # THE NEGATIVE STAYS AT FOURTEEN PHRASES -- every addition is PAID FOR, because a
+    # longer chain evicts `female goblin` from the species tier and that is a fault,
+    # not a warning. Retired: `doll` (subsumed by chibi/baby face), `bishounen` (by
+    # handsome), `elegant` and `sharp features` (by handsome, and both were aimed at
+    # the trickster read that this variant does not contain), `clever expression` and
+    # `moe`. Bought: `angry`, `v-shaped eyebrows` (the site's own tag for angry brows),
+    # `frown`, `fangs` and `sharp teeth` (two of the six came back fanged monsters),
+    # and `robe` against the read this whole variant exists to break.
+    # WHAT THE BUDGET COST, MEASURED AND NOT GUESSED. d1 sits at 74/77 with the
+    # anchor, so the first sentence has 65 tokens and no more. The first draft of
+    # this variant ran 69 and the harness dropped the whole style sentence -- rc=1,
+    # STYLE ANCHOR MISSING, nothing drawn, $0. Two terms paid for the fit:
+    #   * `short trousers` -- `ragged sleeveless vest` already breaks the silhouette
+    #     and the lower half was the weaker half of that clause.
+    #   * `vacant expression` -- and this one is a deliberate application of the
+    #     file's own law, that structural terms beat tone words. `vacant expression`
+    #     is a tone word; `slack open mouth` and `dull half-closed eyes` ARE a vacant
+    #     expression, drawn as anatomy. It paid for `bare arms`, which is the single
+    #     most robe-breaking token in the string. If the face comes back less vacant
+    #     than d1's, this trade is the first thing to reverse.
+    # `no frown` and `no sharp teeth` came out of the negative for the same reason --
+    # they duplicate `angry`/`v-shaped eyebrows` and `fangs` -- and buying that space
+    # back is what keeps `jpeg artifacts` in the sent negative, which the 14-phrase
+    # draft had evicted. MEASURED ON THE BOX'S REAL CLIP, both runs, rc=0: positive
+    # 74/77 with the style anchor PRESENT -- the same 74 d1 sits at, so this variant
+    # spends exactly the control's budget -- negative 76 sent with NOTHING dropped,
+    # which is one term better than d1 (it loses `realistic skin texture`). `female
+    # goblin` and `elf` both survive the tier, count tag derives `1boy`, DRY OK.
+    authored_goblin_design_d7_dumb: >-
+      A small goblin man reference sheet, three views, young adult, squat,
+      round-bellied, big lumpy nose, thick eyebrows, small dull half-closed
+      eyes, slack open mouth, {{GOBLIN}}, long pointed ears, red eyes, ragged
+      sleeveless vest, bare arms. White background, masterpiece, best quality,
+      very aesthetic No chibi, no child, no baby face, no big round eyes, no
+      cute, no handsome, no smirk, no angry, no v-shaped eyebrows, no fangs, no
+      robe, no girl. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_goblin: >-
       A small goblin boy, {{GOBLIN}}, character reference sheet, multiple views,
       front view, side view, three quarter view, red eyes, simple background,

@@ -1,0 +1,119 @@
+# 2026-08-15, goblin-fix lane. ONE VARIANT, not a seventh design and not a spread.
+# It is a delta on d1 -- the best of the six -- aimed at the two failure modes a lane
+# read off all 24 design frames: they render as pale Namekian-style monks in robes,
+# and the dominant expression is ANGRY rather than DUMB.
+id: ep2-goblin-design-d7-dumb-0815
+task: ep2-goblin-design-d7-dumb-0815
+node: 005-the-assessor
+beat: 4
+runner: box
+needs_gpu: true
+priority: 1
+max_attempts: 1
+sample: true
+owner: goblin-fix lane, 2026-08-15
+consumer: 'NOT his board. The six-option picker at review/ep2-picks/sheets/goblin-design-0815.jpg
+  is already filed and a single writer owns it; this does not go near review/inbox.yaml. The
+  consumer is the ANSWER "all six are wrong because X": that option is on the card, six beats
+  (07, 08, 15, 17, 19, 20) are recorded blocked-decision behind it, and if he takes it the fix
+  is already rendered and a whole cycle is saved. If he picks a number instead this cost four
+  GPU-minutes and is discarded. Result is read by the lane and reported up, not published.'
+success: 'Four frames of ONE variant. The read is narrow and it is against his brief, not against
+  taste: (1) does it read GOBLIN rather than bald-green-monk -- green not sickly yellow, a garment
+  that is not a robe; (2) is the face DUMB rather than ANGRY -- no scowl, no snarl, no fangs;
+  (3) does it read YOUNG rather than fifty. It has to beat d1 on 2 and 3 without losing d1''s
+  non-cuteness, which is the thing d1 got right. THE NEGATIVE FINDING IS WORTH AS MUCH: if the
+  monk read survives a string with no sash, no tunic, bare arms and `no robe` in the negative,
+  then it is the checkpoint''s prior for `bald + green skin + long pointed ears` and no prompt
+  on this path will fix it -- that is a report saying the design must be drawn or sourced, not
+  another wording round.'
+why: 'THE REFS QUESTION WAS ASKED FIRST AND IT HAS A SURPRISING ANSWER: there is no reference set.
+  render_wave_sample.py builds a StableDiffusionXLPipeline and calls it with prompt/negative_prompt
+  only -- no img2img, no IPAdapter, no control image. All six d-jobs are pure txt2img on
+  animagine-xl-3.1. So the refs-decide law does not apply on this path, nothing outranked the words,
+  and every element of the monk read is attributable to the string or to the checkpoint prior.
+  Words are the only lever here, which is why this variant is words. What moved: `sash` (the most
+  kimono-coded token in the six) becomes `ragged sleeveless vest, bare arms`, because bare arms are
+  the structural opposite of a robe and no adjective on `tunic` can do that; `heavy sloped brow`
+  (a lowered forward brow is the anatomy of anger, and the model drew it as one) becomes `thick
+  eyebrows`, keeping the weight and losing the scowl, with `half-closed` added to the eyes for the
+  dopey lid; `young adult` answers the third miss. d1''s build tags `squat, round-bellied` are kept
+  byte for byte so this is one delta against a known baseline.'
+prediction: 'Written before any frame exists. The skin should be plainly green, because `pale
+  yellow-` is gone -- and that phrase was never his: it is the MOTION lane''s i2v sentence borrowed
+  into these specs, while the prompt that drew the frame he called "a good representation" says
+  `green skin, bald head`. So --goblin-def is a REVERT to his own words, not a new colour, and I
+  expect that single change to carry most of the species fix on its own. Lower confidence on the
+  garment: `ragged sleeveless vest` may still be drawn as a wrap. LOWEST confidence on the face --
+  removing the heavy brow is the one change that could cost d1''s non-cuteness, and if these come
+  back cuter than d1 that trade is what did it. The likeliest partial outcome is green-and-not-angry
+  but blander than d1, which is still the right direction because bland is recoverable and angry is
+  off-brief. I also expect `bald` + `long pointed ears` to keep pulling Namekian no matter what,
+  since both are frozen identity and neither moved.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald
+  - --variant
+  - authored_goblin_design_d7_dumb
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald
+  - --variant
+  - authored_goblin_design_d7_dumb
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-goblin-design-d7
+  - --task
+  - ep2-goblin-design-d7-dumb-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-goblin-design-d7-dumb-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-goblin-design-d7/04-the-footnote-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the original: what\
+    \ this records has to be the bytes\n    # that get committed, or the manifest attests to the wrong\
+    \ file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n       \
+    \ h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    \    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep2-goblin-design-d7-dumb-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-goblin-design-d7\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-goblin-design-d7\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-goblin-design-d7\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-goblin-design-d7\04-the-footnote-wave1-s3.png
