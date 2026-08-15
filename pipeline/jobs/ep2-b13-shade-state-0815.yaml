@@ -1,0 +1,233 @@
+# 2026-08-15, motion-wording lane. Beat 13, THE SHADE. THE ONE SAMPLE OF THE
+# LEADING-STATE-TAG ARM.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#      > SCAVENGER: "...Thanks for the shade."
+#
+# 2. WHAT IS BEING TESTED, AND IT IS NOT THE RECIPE.
+#    The recipe is closed and untouched: 704x1280, 97 frames, 24fps, two-stage,
+#    distilled sigmas, image-crf 33, guidance 2.0, sequential offload. The plate,
+#    the plate's asserted sha, the seed (20260806), the negative prompt and the
+#    style tail are copied from the control job ep2-b13-lw-0814 and checked equal
+#    by the deriving script, which refuses if the negative moves at all. THE ONLY
+#    DIFFERENCE BETWEEN THE TWO CLIPS IS THE ACTION CLAUSE:
+#
+#      control (rendered, opened frame by frame today):
+#        "He draws his knees up to his chest and wraps his arms around them,
+#         then lowers his head."
+#
+#      this arm:
+#        "sitting on grass, knees up, arms around knees. He lowers his head until
+#         his face is hidden behind his knees."
+#
+#    The changed variable, stated in one line: THE SUB-MOVEMENTS THE PLATE HAS
+#    ALREADY COMPLETED BECOME A LEADING STATE TAG, LEAVING ONE MOVEMENT AS THE
+#    ACTION. Nothing else in the clause is reworded.
+#
+# 3. WHY THAT VARIABLE, FROM THE CONTROL'S OWN FRAMES RATHER THAN FROM A SCORE.
+#    ep2-b13-lw-0814 was read today on a CONSECUTIVE frame strip and on a
+#    whole-clip overview. What it shows:
+#
+#      frame 000   he is ALREADY sitting on grass, knees drawn up, hands clasped
+#                  on his shins, head up, facing camera
+#      000 - 026   nothing happens
+#      032 - 045   the only real movement in the clip: his arms cross over his
+#                  knees and his head tucks down behind them
+#      045 - 096   a held still, 51 of 97 frames
+#      throughout  a slow inward creep -- the figure grows and the background
+#                  softens across the clip, though the negative bans push in
+#
+#    coldread's figures for that clip, quoted here so this arm can be read against
+#    them rather than against an absolute threshold:
+#
+#      frames 97 @ 24fps (4.00s)
+#      motion window pairs 15..21 = 0.62s -> 0.88s = 6.2% OF THE CLIP
+#      flash 1.51 | head 0.700 | body 0.740 | tail 1.585 | cadence 1.00x
+#
+#    Note that tail (1.585) is larger than body (0.740): the declared window is
+#    not even where most of the change is. This is a clip with no action in it,
+#    and a bare number would not have said so.
+#
+#    THE DIAGNOSIS THIS ARM ACTS ON: two of the control's three sub-movements --
+#    knees up, arms around them -- ARE ALREADY TRUE IN THE INIT. The prompt asks
+#    for a state the picture is already in, so there is nothing for the model to
+#    animate, and it very nearly does nothing. The same shape was seen the same
+#    hour on beats 07 and 10: the action, where one is actually available, is
+#    performed in a burst and then the clip holds. A peer lane reports the twin of
+#    this on beat 17 -- a verb was rendered as its END state and a leading state
+#    tag fixed it on the first sample -- and reports that LEADING tags carry weight
+#    while trailing ones carry almost none. Both point at the same edit.
+#
+# 4. THE PREDICTION, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    If the leading-state-tag lever is real, the head-lower is spread across the
+#    clip instead of being confined to a thirteen-frame burst, the motion window
+#    covers materially more than 6.2%, and something is still changing after frame
+#    64. IF IT FREEZES IN THE SAME PLACE the lever is not it for beat 13, and that
+#    is reported exactly as loudly as a win. A third outcome is live and would also
+#    be a finding: a leading state tag may pin the pose so hard that the head never
+#    moves at all, which is worse than the control.
+#
+#    This is ONE render. Nothing scales off it until it has been looked at.
+#
+# 5. SCORING. OPEN THE FRAMES. The question is WHERE THE HEAD IS at frames 0, 32,
+#    64 and 96, and whether anything changes between 64 and 96. Report coldread's
+#    window percentage, body, tail and cadence SIDE BY SIDE with the control's
+#    figures above -- the comparison is the result, a bare figure is not. The
+#    number is a filter and never a verdict: a frozen clip can score well, and one
+#    did today, at body 7.556 on beat 07, carried entirely by windblown grass.
+#
+# 6. THE INIT, HELD CONSTANT AND ASSERTED RATHER THAN TRUSTED BY NAME.
+#    13-the-shade-ipa-r0-w015-s0.png from ep2-b13-plate-0814, sha 1745a491db3c95c7...
+#    asserted in the crop step, which refuses before anything is written. It is the
+#    same file and the same hash the control clip was built from.
+#
+id: ep2-b13-shade-state-0815
+task: ep2-b13-shade-state-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: motion-wording lane, 2026-08-15
+consumer: The beat-13 motion-wording sweep. This arm is read against ep2-b13-lw-0814, which shares its
+  plate, its asserted sha, its seed 20260806, its negative, its 97-frame length and every render flag
+  -- the ACTION CLAUSE of the positive prompt is the only difference between the two clips. Judged by
+  opening consecutive frames via pipeline/coldread_frames.py AND by the same frame-change figures the
+  control produced, reported side by side. The cold read decides; the number is a filter and never a verdict.
+success: 'A 704x1280 mp4, 97 frames, in which the scavenger''s head goes down into his knees ACROSS THE
+  CLIP rather than in one thirteen-frame move, and something is still changing in the last third. The
+  control at this exact plate and seed was opened frame by frame today: he is ALREADY sitting folded with
+  his knees up and his hands clasped at frame 0, nothing at all happens through frame 26, his arms cross
+  and his head tucks between frames 32 and 45, and frames 45-96 are a held still -- 51 of 97 frames frozen,
+  a 6.2% motion window, body 0.740, cadence 1.00x. It also creeps inward the whole way despite the negative.
+  Either outcome is the finding: if this arm freezes in the same place the leading-state-tag lever is
+  not it for beat 13 and that gets said as loudly as a win. A clip that cuts, relocates or loses the figure
+  is a failure whichever way the action goes.'
+why: The card is idle and this is ONE render. One variable against a control clip that has already been
+  opened frame by frame and whose figures are recorded above. $0, local card, no provider.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-shade-state-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-shade-state-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around
+    knees. He lowers his head until his face is hidden behind his knees. 2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-shade-state-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b13-shade-state-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b13-shade-state-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-state-0815\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-state-0815\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b13-shade-state-0815\b13-jobs-render.json: "[{\"beat\": 13,\n  \"seed\": 20260806,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-state-0815\\\\b13-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b13-shade-state-0815\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-state-0815\\\\13-the-shade-LTX-state.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shade-state-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-shade-state-0815\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-state-0815\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-state-0815\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-shade-state-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-shade-state-0815\bench-b13-shade-state.jsonl
+  - --bench-label
+  - ep2-b13-shade-state-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-shade-state-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-shade-state-0815/13-the-shade-LTX-state.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b13-shade-state-0815/b13-init-704x1280.png\")\n \
+    \            + glob.glob(\"C:/banyan-farm/ep2-b13-shade-state-0815/bench-b13-shade-state.jsonl\"))\n\
+    lines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-shade-state-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-shade-state-0815\13-the-shade-LTX-state.mp4
+- C:\banyan-farm\ep2-b13-shade-state-0815\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 13 is THE SHADE -- "The scavenger slides down the trunk and folds into
+  the sapling''s tiny shade, knees up around his ears." -- one scavenger, no guards. This is a silent
+  motion take on an approved node, not an episode assembly and not a voice synthesis.'
