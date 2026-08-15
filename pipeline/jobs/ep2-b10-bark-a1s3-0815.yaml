@@ -1,0 +1,188 @@
+# WHAT THE FOUR 0815 MOTION CLIPS SAID, read 2026-08-15 with pipeline/hold_period.py
+# and pipeline/coldread_frames.py, frames opened consecutively, camera ruled on by
+# FRAME ALIGNMENT and not by eye:
+#
+#   ep2-b10-barkmotion-a1-0815  period 2 (lag2 0.94)  THE ONLY CLIP WHOSE BOARD TURNS.
+#       Face rotates away f0-19, edge-on plank f20-42, then f42->f43 it SNAPS to a full
+#       frontal bark rectangle in ONE frame -- the last 90 degrees is not in-betweened.
+#       f43-96 a large flat four-edged rough-bark rectangle gripped at both side edges:
+#       8/8 of the bar. Bit-identical f62 onward. BUT chained alignment f2->f42 reads
+#       scale 1.08 / 1.06 / 1.05 / 1.05 per ten frames = ~1.26x cumulative PUSH-IN,
+#       which the negative already banned and did not prevent. FAIL-CAMERA is real.
+#   ep2-b10-barkmotion-b1-0815  period 2 (lag2 0.98, negative odd lags) FAIL-FROZEN.
+#       Board never turns, flattens onto the torso, both hands leave it for the belt by
+#       f64, and by f96 it is a bark-textured panel fused into the tunic -- material
+#       survived, rectangle did not.
+#   ep2-b06-barkmotion-a1-0815  period 2 (0.93). Bark survives to f96, 8/8. Action FAILS:
+#       a lift and a tilt, never a turn; the same face is toward camera at f0 and f96.
+#   ep2-b06-barkmotion-b1-0815  period 2 (0.92). FAIL-REVERT: bark gone by f43, the guard
+#       reads a plain blue clipboard with a white sheet for the last 54 frames.
+#
+# THE BARK ITSELF IS NOT THE PROBLEM ANY MORE. At 2x zoom on b10-a1 f43/45/48/52 the
+# composite's faint basket-weave is NOT visible -- the sampler broke it into irregular
+# mottled fissures and dark vertical cracks, stable frame to frame, no crawl, no beat,
+# no smear. Naming the revealed face's material is what keeps it (b06 arm A held to f96,
+# arm B reverted at f43 off that one word).
+#
+# THIS JOB: arm A's wording, plate, negative and every render flag UNCHANGED. The seed
+# is the only difference. One take in three fails its action on this engine whatever the
+# wording, so a single clip cannot tell a wording lever from seed luck -- with the
+# original that makes FOUR takes of arm A, which can. The question is narrow and stated
+# before the render: does the board turn, and does the far face arrive as bark, in more
+# than one of four? Seed 20260817.
+#
+id: ep2-b10-bark-a1s3-0815
+task: ep2-b10-bark-a1s3-0815
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 39
+max_attempts: 1
+owner: bark-board motion lane, 2026-08-15 (round 2, after the four 0815 motion clips were read)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 10 is NO FORM -- 0:45-0:50 -- "Guard 2 flips the clipboard around: the
+  back is blank." -- two guards, no goblin. This is a silent motion take on an approved node, not an episode
+  assembly and not a voice synthesis.'
+consumer: The bark-board prop lane. This clip is the first motion ever rendered from a plate whose board
+  is the composited-bark inpaint pass, and it is read against its twin ep2-b10-barkmotion-b1-0815, which
+  shares its plate, its asserted sha, its seed, its negative and every render flag -- whether the REVEALED
+  face's material is named in the action clause is the only difference. Judged by opening consecutive
+  frames via pipeline/coldread_frames.py, never by a motion number.
+success: 'A 704x1280 mp4, 97 frames, in which the board turns AND its far face arrives as rough bark.
+  The bar is pre-registered and unsoftenable: (1) the board turns -- the face visible at frame 0 rotates
+  away and a different face comes toward camera, readable on consecutive frames; (2) the bark survives
+  -- at the last frame the visible face is still irregular fissured bark, not planed timber, not navy,
+  not white paper, not chrome; (3) the board stays a rigid four-edged rectangle through the turn -- no
+  melt, no curl, no split, no dissolve into the tunic; (4) no camera move and no cut; (5) still the same
+  two guards. Pre-registered FAIL modes: FAIL-REVERT (the revealed face comes back as clipboard, paper
+  or planed timber -- the mode this lane exists to detect, because four days and twenty-three inpaint
+  samples bought that face and a video model can un-buy it in one denoise); FAIL-MELT; FAIL-FROZEN (the
+  board never leaves its frame-0 pose -- roughly one take in three fails its action here whatever the
+  wording, so one clip cannot separate a wording lever from seed luck); FAIL-CAMERA (the turn performed
+  by a moving camera rather than by the board -- caught on beat 13 in c870f08f, and it is ruled on by
+  ALIGNING frames, never by eyeballing a contact sheet). NOT part of the bar: that the action fills the
+  clip. No wording arm on beat 13 produced a figure still acting after frame 64 and the renderer logs
+  a 13-latent-timestep ceiling; these are short prop gestures, the best case for this engine, and the
+  honest expectation is a turn that completes early and then holds.'
+why: The card has a runnable job and this is one render. ONE variable against its twin. $0, local card,
+  no provider.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-bark-a1s3-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-motion-prompt.txt: holding a rough bark board upright in both
+    hands, two guards standing in a mown field. He turns the bark board around to face the camera; its
+    back is the same rough bark, blank and unmarked. 2D anime, hand-drawn cel animation, flat cel shading,
+    clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.
+  C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-negative.txt: camera pan, camera tilt, zoom, dolly, push in,
+    pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame
+  C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b10-bark-a1s3-0815\\\\b10-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-bark-a1s3-0815\\\\b10-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b10-bark-a1s3-0815\\\\b10-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260817,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-bark-a1s3-0815\\\\b10-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b10-bark-a1s3-0815\\\\b10-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-bark-a1s3-0815\\\\10-no-form-LTX-a1s3.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-bark-a1s3-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-bark-plates-0815\b10-barkboard-pass-s13.png
+  - --sha256
+  - f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b
+  - --out
+  - C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-bark-a1s3-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-bark-a1s3-0815\bench-a1s3.jsonl
+  - --bench-label
+  - ep2-b10-bark-a1s3-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (10-no-form). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b10-bark-a1s3-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-bark-a1s3-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/10-no-form-LTX-a1s3.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b10-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-a1s3.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-bark-a1s3-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-bark-a1s3-0815\10-no-form-LTX-a1s3.mp4
+- C:\banyan-farm\ep2-b10-bark-a1s3-0815\b10-init-704x1280.png
+sample: true
