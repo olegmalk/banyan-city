@@ -3936,6 +3936,37 @@ beats:
     # PRESERVATION rather than by drawing, and 06 and 08 (which have no such rectangle in
     # their plates) do NOT inherit that route. If it comes back navy, strength that low does
     # not reach the material and inpaint is spent on this prop too.
+    #
+    # -- THE STRENGTH SAMPLE RAN AND IT BRACKETS THE ANSWER.
+    # `ep2-b10-barkboard-inpaint-0815-s1-str045`: byte-identical mask, seed and prompt files
+    # to s0, strength 0.45 instead of 0.99, 5.9s, $0, rc=0. The SECOND pre-registered branch
+    # is the one that fired, and the first one half-fired with it.
+    #
+    # THE RECTANGLE SURVIVES, PERFECTLY. Straight edges, square corners, flat, held in both
+    # hands at a readable angle -- it is unmistakably a board someone could hold and read
+    # from. Every shape term of the bar passes, on the beat where s0 failed all of them.
+    # The chrome clip is also GONE, so the negative reached that much. But the FACE IS STILL
+    # NAVY: a dark slate panel with a few thin scratch lines and a faint grain starting, and
+    # nothing anyone would call rough bark. FAIL-MATERIAL, where s0 was FAIL-SHAPE.
+    #
+    # SO STRENGTH IS THE KNOB, AND IT TRADES THE TWO AXES AGAINST EACH OTHER:
+    #   0.99 -> material reached (rough dark organic), geometry destroyed (a shaggy pelt)
+    #   0.45 -> geometry preserved (a true rectangle), material not reached (still navy)
+    # That is a real bracket, measured, on one mask and one seed with the words held
+    # constant. It also settles the ambiguity s0 left open: the raggedness at 0.99 was NOT
+    # the word `bark` being semantically torn, because the same word at 0.45 drew no ragged
+    # edge at all. It was the strength discarding the init.
+    #
+    # WHAT THIS MEANS FOR THE PROP, and it is better news than the wording rounds ever got.
+    # The geometry IS reachable -- not by drawing it and not by asking for it, but by
+    # PRESERVING the rectangle the plate already contains. That is a route wording never had.
+    # The next single sample is one more strength value inside the bracket, nothing else
+    # changed. NOT A SWEEP AND NOT A SET: one value, opened by eye, before any batch.
+    #
+    # AND IT DOES NOT TRANSFER TO 06 AND 08 FOR FREE. This route depends on the plate
+    # ALREADY holding a correct rectangle, which beat 10's does and which is why it was the
+    # right first candidate. Whether 06 and 08 have one is now the question they turn on,
+    # and it is a question about their PLATES, not about their prompts.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back
