@@ -7296,3 +7296,195 @@ itself founder-reserved. The definition authorises none of them.
   02 is the pose, and the only untried lever for it is the one whose answer is his.
   Also settled in passing: the comic-panel ban is dead weight — five guard rounds, zero
   panels, including the round that sold the ban to pay for the face terms.
+
+## 2026-08-15 (overnight) — the instrument was lying, the recipe does not change, and the lever is staging
+
+**Fifty-six commits on `main` between 23:00 and 08:03. Nothing was promoted to
+canon and no beat was marked DONE.** Every render ran on the local card at $0 —
+`ledger/render-spend.csv`'s last row is still 2026-07-29. CI on the last main
+push (`b7084a9f`) is green on all three: lint-genome, pages, mirror.
+
+### DECIDED — none of this needs you
+
+- **THE RENDER RECIPE DOES NOT CHANGE.** A four-arm sweep on beat 02 (`69d2d3c2`)
+  isolated three knobs against a control: R1 image-crf 42, R2 a motion-worded
+  negative, R3 guidance 1.0. **No arm makes the character act sooner, longer, or
+  at all more than the baseline.** R1's better number is a whole-frame restyle at
+  frame 1 plus a shadow band sweeping the grass. R3 is worse than useless —
+  guidance 1.0 switches CFG off, so its own negative (the one banning pan/tilt/
+  zoom) stopped being applied at all, 29% of its end-to-end change is a single
+  global camera translation, and its crouch **reverses back to standing** before
+  the clip ends. Recipe stands: 704x1280, 97f @24fps, two-stage, distilled
+  sigmas, image-crf 33, guidance 2.0, original negative, sequential offload.
+  One real single-variable result did come out of it, and it is plate fidelity
+  rather than motion: R2's frame0→frame1 restyle flash fell 30.6 → 5.9 MAD, so
+  the approved plate survives into the clip instead of being redrawn. That is
+  being confirmed on a second plate (`ep2-b03-negconf-base/mot-0815`) before it
+  goes near a batch.
+- **STAGING IS A REAL LEVER, and it was the one we were not pulling.** The plate's
+  camera is already a high angle and his head is already down, so the control's
+  forward fold carries the face away from the lens from frame 1 — no sampler
+  setting recovers a face the staging is hiding. Restaged to "he raises his head
+  from looking down until he is looking straight up at the camera", one variable,
+  everything else byte-identical (`ep2-b02-stg-headup-0815`, rc=0 in 235s). The
+  blind reader: *"Readable. In frame-16 the face is fully front-on, both eyes are
+  drawn open with visible grey irises, pupils, upper lids and brows."* It also
+  reported **the first EXPRESSION CHANGE this protocol has ever found here** —
+  sullen-and-downcast to wide-eyed-and-wary. Four rounds of sampler tuning
+  produced neither. Costs, predicted in advance and owned: the motion window got
+  shorter not longer, cadence went 2.21x → 17.75x, the restyle flash got worse
+  (30.7 → 47.9), and a four-frame exposure flicker appeared at frames 21-24.
+  A diagnosis, not a keeper. **NOT PROMOTED.**
+- **SHORTER CLIPS ARE CHEAPER AND CLEANER, and are NOT a motion lever.** 49 frames
+  of the same staging on a byte-identical init (`ep2-b02-stg-headup-49f-0815`,
+  rc=0 in 184s): restyle flash 16.93 against 47.87 at 97 frames, exposure drift
+  half (lands 20 luma levels off the plate against 55), the four-frame flicker
+  gone, and **the action completes inside the clip**. But body motion 1.528
+  against the 97-frame version's 1.569 measured the same way — unchanged, against
+  a predicted 2.5-6.0, which was written down in advance precisely so it could
+  not be renarrated. Cheaper, cleaner, finishes the move; does not make the model
+  move more. **NOT PROMOTED.**
+- **THE FRUIT IS PURPLE FRUIT**, closed under your own stopping rule — three
+  loops, a blind reader each, zero fig reads. The word `fig` in a *prompt* summons
+  the *leaf* in this checkpoint (`17416d5e`), so prompts say purple fruit; the
+  script and the VO still say fig and are untouched. Two things fell out of the
+  last loop and are on your board as news, not as a re-ask: the eight rounds
+  named "figlit" were all conditioned on the same four **goblin** frames, so nine
+  earlier rounds were testing wording and nothing else; and when a fig *reference
+  image* was finally tried, blind readers moved fig from 5th-or-unranked to 2nd
+  and 3rd. Still nobody says "fig". Say nothing and purple fruit is final.
+- **CLOSED STAYS CLOSED** (`RULE-closed-stays-closed-and-faults-get-named-0815`,
+  `taste/steward-model.ledger.yaml`; set by the team lead, not by you). A beat
+  already DONE or SHIP WITH FAULT NAMED is not re-rendered, re-litigated or
+  demoted when a new bar appears. The cheap drift check runs on the existing
+  picks and anything found is **ADDED to that beat's named faults**. Extend the
+  record, do not change the verdict. Escalate only if a character is
+  unrecognisable, which is a broken beat and a different call.
+
+### THE HEADLINE FOR ANYONE READING THIS LATER — the instrument was lying
+
+Our blind-read contact sheets took **sixteen frames evenly across ninety-seven**,
+so consecutive tiles sat seven or eight source frames apart. Asked "is the
+movement smooth", they answered "do frames eight apart differ" — **and converted
+a textbook ease-in into a reported cut.** The reader's verdict *"that is a cut,
+not an in-between"* on frames 7→8 is source frames 38→45; pulled consecutively,
+frames 38-49 are a smooth eased head lift with the eyes opening slits to half to
+full and no step anywhere (raw series 1.32, 1.72, 3.39, 3.58, 4.19, 3.42, 3.37,
+4.94, 5.11, 4.73, 4.15, 4.15, 3.66, 3.13, 2.36, 1.59, 0.79 — ease-in/ease-out).
+**A three-frame "lurch" that shaped a whole diagnosis never existed**, and the
+earlier verdict "the fold happens in about three frames" went with it. Fixed in
+`pipeline/coldread_frames.py` (`c32224d5`).
+
+**It is one of four, and they are one bug wearing four costumes.** Ledgered as a
+family (`FAMILY-the-statistic-that-answers-a-different-question-0815`): the
+pooled population (cadence reported beat 02 FINE at 1.2 where the motion phase
+alone reads 13.2), the sampling interval above, the relative reference (onset
+measured against each clip's own peak, so a clip that never moves reports an
+early start off its first wobble), and the one we lived inside for days — mean
+absolute frame difference, asked "did a character act" and answering "how much
+did pixels change". **In none of the four was the arithmetic wrong.** Each
+computed exactly what it said, over the wrong population, sampling, reference or
+quantity — which is why review does not catch them: a wrong number gets argued
+with, a number answering a different question gets believed. **All four were
+caught by someone re-deriving a result, none by a test, a reviewer or reading
+the code.** The standing practice is now: compute a measurement a second way
+before reporting it, and write beside every number the population it covers and
+the question it answers. And explicitly — do not answer this family with another
+statistic. The blind reader is not a stopgap until we automate this; it is the
+instrument.
+
+**The same fix immediately caught its own successor.** The corrected sampling
+gave the real shape of one 97-frame clip — roughly 38 frames still, 22-24 of
+movement, ~35 holding a finished pose, i.e. the performance lives in 0.54-2.58s
+of 4.04s. That finding was then generalised, and the generalisation is false:
+**nine of ten clips start inside a quarter second.** By 08:03 a free no-GPU trim
+pass over the five recorded picks (`trim_pass_0815` in
+`review/ep2-picks/done-definitions.yaml`) found it does not transfer at all —
+all five are 121 frames at 24fps, their motion window opens at pair 1 in every
+one, and **the head trim available across all five picks is ZERO frames.** Total
+saving from tails: 3.21s across five clips. Beat 12's reported window was wrong
+and was caught before anything was cut: its cadence is period-3 and the tool's
+parity collapse is width-2, so trimming on the reported number would have
+deleted three quarters of the clip. Episode 2 is not an episode of one-second
+shots.
+
+### FIVE SILENT FAILURES — each one produced output that looked correct
+
+| what | where | what it cost |
+|---|---|---|
+| `rc 92` meant both "the runner crashed" and "it published nothing"; the first fix moved it to 93, which `adopt_interrupted` already used, so the ambiguity relocated and the tests pinning 93 went red on every push | `pipeline/box_runner.py` (`91fe94dd`, `24a8eb9f`) | beats 05/09/11 had usable field plates on disk from 08-14 04:32 and sat unused for a day because the queue said FAILED — and the wave that followed animated costume identity cards for six beats |
+| the text encoder discarded overflow silently — LTX2's `encode_prompt` truncates, keeps no untruncated copy and logs nothing; a 2,601-token prompt came back as exactly 1024 with zero warnings, zero stderr, zero stdout | `pipeline/prompt_budget.py` + tests, wired into `ltx_i2v.py` and `wan_i2v.py` (`a36202d9`) | **nothing was actually lost** — 871 prompt files max out at 684 of 1024 and the 73 committed job specs at 297. The guard now refuses instead of truncating, and reads the limit from `inspect.signature(pipe.encode_prompt)` rather than a literal, because a hardcoded 1024 keeps passing after a diffusers bump moves the real cliff |
+| six real plate renders read as six crashes: one bulk clone rewrote the filename stem and dropped the beat SLUG the samplers actually write, so the publish glob matched nothing and the declared-artifact check failed the job | six specs for beats 05, 09, 11, 12, 18, 21 (`e011cc3e`, 08-14) | re-publish is forty seconds, re-render is ninety minutes of GPU, and the queue could not tell you which one you needed. Ledgered `publish-glob-masks-render-success-0814` |
+| a module the site build imports was **untracked** — not gitignored, just never added | `pipeline/queue_thumbs.py`, imported by `build_queue.py` (`18a1610a`) | one `git clean -fd` in a shared tree from destroying it, and a fresh checkout or CI runner could not import `build_queue` at all, which takes `build_site.py` and the whole site down |
+| derived jobs inherited the parent's beat NUMBER — three jobs recorded beat 5 while cropping beats 6, 7 and 9 | `review/ep2-picks/derive_nw.py` (`a2393d30`, four bugs, three caught by the checks rather than by the author) | right footage, lying provenance, and **invisible in the output by construction** — no screening and no blind read can catch it, and it lands in the leaf provenance §7.2 requires to be true |
+
+### WHAT I RETRACTED — the log should show this, not only the conclusions
+
+- **Relayed maintainer quotes that do not exist.** The lead passed on Lightricks
+  maintainer quotes about raising image compression; they are not in the issues
+  cited. Two of four claims in that one relay did not survive. Standing lesson
+  ledgered: a relayed research finding is not a verified one (`02e12e06`).
+- **The negative prompt's composition was described wrongly.** It does not
+  contain motion-blur or camera-shake terms — it bans "still image" and "freeze
+  frame", i.e. it pushes *away* from static, the direction we want.
+- **A working guard was called broken.** The "the negative is not wired in"
+  hypothesis was wrong at zero renders: `encode_prompt` runs with CFG on at
+  guidance 2.0, all four tensors are present in every job on the box, mean
+  |pos−neg| 8.11 to 9.04. The negative is wired in and *losing* — thirteen
+  concepts over thirty-eight tokens at CFG 2.0 is weak per-concept pressure. My
+  own ledger already had the law ("inert and outvoted are different") and I did
+  not run it against my own hypothesis. Separately, the plate border check was
+  impugned on numbers not measured the way the box crops; re-measured, its
+  refusal record is 6 of 6 on the wave that broke with no false alarms, so the
+  block stays and only its pass line changed (`67185ee2`).
+- **The plate is not a motion lever.** Measured across ten clips on an absolute
+  threshold with the restyle flash dropped: card plates start as early as scene
+  plates (b06 0.12s, b09 0.12s, b11 0.25s), and the decisive pair is the SAME
+  plate with different wording starting at 0.08s and 1.38s. The ramp travels with
+  the prompt. The first pass nearly refuted it for entirely the wrong reason —
+  on the relative-onset artifact above (`cb2a7411`).
+- **A blind read that was not blind.** The 49-vs-97 identity comparison passed the
+  reader files named `ID-SHORT.png` and `ID-LONG.png`, so the one variable the
+  test existed to isolate was written on the tin. Caught by the lead, not by me;
+  the drift check on the five picks now uses shuffled `CLIP-A`..`CLIP-E`.
+  **The length-vs-identity question is therefore still open** —
+  `PREDICTION-does-a-shorter-clip-drift-less-0815` carries `outcome: null`, and
+  the 49-frame clip's own blind reader never ran.
+
+### WHAT IS NOT TRUE, however it reads elsewhere
+
+- **"All 21 beats have a take" is a FILE COUNT, not a judgement** (`5e244296`).
+  516 stills sidecars in this tree carry both `scored: false` and
+  `founder_verdict: null`; on the six beats the goblin pick gates (07, 08, 15,
+  17, 19, 20) that is 148, most of them from the 0812 IPA rounds.
+- **Take-counting by filename is wrong.** Every derived job kept its parent's
+  filenames, so fifteen jobs wrote an init called `b13-init.png`. Content was
+  verified per beat — every source picture was the right beat's, every output is
+  byte-distinct, nothing rendered the wrong plate — but the names lie.
+- **Six of the nineteen beats in the loosened wave were animated from a costume
+  drawing, not a scene** (05, 06, 07, 09, 10, 11): one man on a blank pale
+  background, some with a visible card border. They cannot be cut in at any
+  quality of motion, and two of them were the highest-scoring clips in the wave.
+  That is a metric hiding a defect it cannot see, and the nineteen renders were
+  scaled on a metric agreeing with the steward instead of on a screened sample —
+  the ONE SAMPLE BEFORE ANY BATCH rule, broken, and named as broken on the board.
+
+### WAITING ON YOU — nine open at <https://banyan.city/review>
+
+1. **The goblin — six designs, pick a number.** This **gates six beats (07, 08,
+   15, 17, 19, 20)**; no goblin gets animated until the design is fixed. If your
+   answer is "all six are wrong", know before you say it that more wording will
+   not fix it on this model: a sample asked for "squat, round-bellied" and got it
+   **0 times in 4**, and there is no reference image anywhere on that path. From
+   there it is a reference image, a LoRA, or a design drawn by a person.
+2. **The two guards — VETO ONLY.** The pick is made and stands unless you object;
+   whether these are *your* guards is yours. The separate picker sheet gates six
+   beats (05, 06, 07, 09, 10, 11), **beat 09 among them**.
+3. **Beat 19's fruit staging** — the plate has the fruit already lying in the
+   grass, so nothing can drop. Either a new plate (a day in the stills lane,
+   beat unchanged) or the beat becomes him finding it (free, different moment).
+   Not the steward's to choose: the second option changes what happens.
+4. **The governance documents now contradict your own instruction.** You removed
+   the script-reading gate on 2026-08-13; STEWARDSHIP.md §6 and §7, CLAUDE.md and
+   DECISIONS.md D22 still enforce it. None of those three files has been edited.
+
