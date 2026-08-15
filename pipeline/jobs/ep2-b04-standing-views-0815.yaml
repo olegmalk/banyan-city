@@ -1,0 +1,301 @@
+# 2026-08-15, standing-views lane. ONE SAMPLE. It is a GENERATION job, not a plate
+# test: what it is trying to produce is REFERENCE TILES, not a beat.
+#
+# THE BLOCKER IT EXISTS TO CLEAR, in one sentence: d1 seed s1 holds exactly ONE
+# sound standing tile, so any set built from it is one distinct picture poured into
+# four slots -- and the sampler's content dedup would correctly draw four frames
+# instead of sixteen. A reference set of standing full bodies is what the last two
+# samples argued for, and it cannot be built until more standing views exist.
+id: ep2-b04-standing-views-0815
+task: ep2-b04-standing-views-0815
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 1
+max_attempts: 1
+sample: true
+owner: standing-views lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 04 is unconditioned in that leaf. This is a still
+  plate on an approved node, not an episode assembly.'
+consumer: 'THIS LANE''S OWN EYE, and then a frozen reference set. The sixteen frames are
+  CANDIDATE TILES: the four soundest and most view-distinct get cut, hashed and frozen as
+  refs-goblin-d1std2-0815, and that set gets ONE plate sample before anything else happens.
+  NO BEAT IS RE-POINTED BY THIS LANE. The twelve beats on refs-goblin-approved-0814
+  (02 03 04 07 08 13 14 15 16 17 19 20) stay exactly where they are whatever these frames
+  show; what goes to the founder is a recommendation with a sample beside it.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+why: 'WHAT THE TWO SCORED EXPERIMENTS JOINTLY SETTLED, so none of it is re-derived here.
+
+  ep2-b04-d1refs-0815 and ep2-b04-d1margin-0815, thirty-two frames between them, both
+  opened frame by frame:
+
+  1. CROP TIGHTNESS SETS SHOT SIZE, NOT BODY PROPORTION. The decisive pair is arithmetic:
+     margined crouch tiles sit at head fraction .17 and the control''s STANDING tile sat at
+     .19 -- the same rung -- and they drew 3.3 heads against 4.9. The tile that differs is
+     the one holding a CROUCHED BODY. A crouched figure is a compressed figure and the model
+     copies that compression. You cannot crop a crouch away.
+  2. A REFERENCE SET OF STANDING FULL BODIES IS WHAT WORKS. The standing tile at generous
+     margin gave 5.8 heads, lean, long robe, no blush, half-lidded -- the best goblin this
+     project has drawn and inside the brief ("a young dumb goblin, but not cute", not old,
+     not a baby).
+  3. POSE DOES NOT TRANSFER, from the reference OR from the prompt. Zero of forty-eight
+     frames crouched, including a draft that named the pose as a STATE with every rule the
+     audit produced. So this job does not spend one token trying to get a pose. STANDING is
+     the one pose the mechanism reliably produces, standing is what a reference set of
+     standing full bodies needs, and the other two staged poses are a conditioner problem
+     (ControlNet openpose, or img2img off a hand-staged plate) that this lane does not touch.
+
+  WHAT IS NEW HERE, and it is only the DRAFT. Everything else -- beat, arm, seeds, harness,
+  sampler, reference set -- is held at ep2-b04-d1std-0815''s values, so this is one step on
+  the same chain.
+
+  THE DRAFT, `authored_b04_standing_views`, clause by clause:
+
+    "a lean wiry adult goblin man"  -- NOT "a small goblin boy". This is the measured fix,
+        not a theory: the prompt that produced babies said "a small goblin boy" and carried
+        no blush, chibi or baby term in its negative at all. The infantile read was being
+        ASKED FOR in words. Adult wording plus `blush, red cheeks, chibi, big head, baby
+        face, toddler, child` in the negative produced the first clean sixteen this effort
+        has managed -- zero blush, every frame dour and half-lidded.
+    "standing ... arms at his sides"  -- the founder-approved recipe''s dead-plain pose,
+        byte-for-byte in spirit: no action verb, so the model draws a person rather than a
+        moment, and a plainly-posed person is not a mascot.
+    "full body" + "pale sky above him"  -- head to toe WITH headroom. This is the anti-blank-
+        paper measure and it is deliberate. The previous margin sweep bought its margin by
+        PADDING TILES WITH WHITE, and the padded rounds came back on blank paper while the
+        unpadded round had sky -- the lane''s own words, "my own margin did what an identity
+        card does". The fix is to render the margin instead of padding it: a figure standing
+        in grass under sky can be cropped at any fraction and every added pixel is LOCATION.
+    "no white background, no simple background"  -- the same defect attacked from the
+        negative side, and the only two terms this draft adds beyond the proven anti-baby set.
+
+  NO PLANT IS NAMED, AND THAT IS THE ANSWER TO THE FUSION TRAP RATHER THAN AN OVERSIGHT.
+  Beat 04 declares `extra_neg: species`; the tier carrying `leaf on head, plant hair,
+  alraune, flower on head, head wreath` is `full`. The previous sample grew a leaf out of
+  his ear and a sprout out of his skull because it put a plant in a `species`-tier frame.
+  This draft puts NO plant in the frame, so there is no second object to fuse with, and the
+  tier is correct as it stands. Beat 04''s `extra_neg` is NOT changed by this lane -- it is
+  shared with every other job that renders this beat.
+
+  THE REFERENCE SET IS refs-goblin-d1std-0815, unchanged and already staged on the box:
+  four distinct sha256, all four the d1 seed-s1 STANDING tile at four margins (1.00, 0.75,
+  0.55, 0.40). All four are standing -- no crouch tile and no bust tile is fed to this run,
+  which is the whole point.
+
+    goblin-d1std-s0.png  9526882e..  figure at 1.00 of canvas
+    goblin-d1std-s1.png  61fd5d78..  0.75
+    goblin-d1std-s2.png  1dc8a888..  0.55
+    goblin-d1std-s3.png  7e66416f..  0.40
+
+  WHICH ROUNDS TO SCORE, stated in advance because the harness builds four slots
+  (`{prefix}-s{i}` for i in 0..3) and refuses on a missing file, so a set must have four
+  files even when only three are trusted. SCORE r0, r1 and r2. r3 is the 0.40 tile and it
+  is EXPECTED TO COLLAPSE -- at that fraction the previous run invented a giant head with a
+  tiny man standing on it, a hooded figure with a staff, and a sprout growing out of a
+  toddler''s skull. It is rendered because the slot must be filled, and its frames are
+  discarded unless they surprise me.
+
+  MEASURED BEFORE SENDING, on the box, with the real CLIP tokenizer, via this job''s own
+  `dry` step:
+    positive 61/77  (16 tokens of headroom; style anchor `very aesthetic` present)
+    negative 71/77  (recipe 71 -> sent 71: NOTHING was dropped)
+  The negative''s first two terms are `photorealistic, 3d render`, and `deformed`,
+  `extra limbs` and `blurry` are all in the sent string -- those five are exactly what fell
+  off a draft measured at 82/77 earlier this week, and they are the terms holding back the
+  killed 3D-CG look. `female goblin` and `elf` survive, which the dialect gate asserts
+  independently. Count tag `1boy` matches the draft''s declaration.
+
+  NOT A LICENCE TO SCALE. This is the only render this lane is authorised to fire before
+  its result is opened. $0, local card, no provider.'
+
+prediction: 'WRITTEN BEFORE ANY FRAME EXISTS.
+
+  WHAT SHOULD COME BACK: sixteen standing full-body goblins in sunlit grass under sky, head
+  to toe, at four shot sizes set by the four reference margins.
+
+  Per round, in heads-tall, judged the way the last two lanes judged (top of skull to chin
+  against top of skull to sole, on the full-resolution frame):
+
+    r0  ref at 1.00   ~4.5 heads. Big cranium, adult-ish, dour. Tightest shot of the four.
+    r1  ref at 0.75   ~5 to 5.5 heads.
+    r2  ref at 0.55   ~5.5 to 6 heads. THE ROW I EXPECT TO CUT TILES FROM. This is where
+                      the previous sweep found its optimum and the first goblin that read
+                      as a young adult.
+    r3  ref at 0.40   COLLAPSE, as before. Discarded unless it surprises me.
+
+  BLUSH: zero frames in sixteen. That is the claim the adult wording plus the negative
+  block earns, it was clean over sixteen frames once already, and if blush returns here the
+  fix is weaker than reported and I say so.
+
+  BACKGROUND: grass and sky in all sixteen, and NO blank-paper frames. This is the sharpest
+  new prediction in the run, because it is the one thing this draft changes that the margin
+  sweep could not. If frames still come back on white, then the blank paper was coming from
+  the REFERENCE tile''s white field and not from the prompt, and padding is a deeper problem
+  than wording can reach -- that would be a real finding and it redirects the freeze to
+  re-cutting tiles out of a scene rather than out of the sheet.
+
+  VIEW SPREAD, and I am honest that this is the weakest part of the plan: the four views a
+  reference set ideally wants -- front, three-quarter, side, back -- cannot be commissioned
+  one per round, because a round varies the REFERENCE and every round shares one prompt.
+  What varies within a round is the seed. So I expect a spread of frontal and three-quarter
+  bodies, possibly one profile, and I do NOT expect a back view. If the sixteen give me four
+  sound tiles that differ in body angle, the set is genuinely four-distinct and the blocker
+  is cleared; if all sixteen are the same frontal pose, the set will be four-distinct by
+  sha256 but weak in angle coverage, and I will say exactly that rather than calling it a
+  turnaround.
+
+  NOT A PREDICTION ABOUT TASTE. Heads-tall, blush and background are measurables. "A young
+  dumb goblin, but not cute" is the founder''s call and is reported separately, unscored.
+
+  NOT UNDER TEST: POSE. I expect none of the sixteen to crouch and this job does not ask
+  one to. Standing is what is wanted.'
+
+success: 'Sixteen frames, opened one at a time by the lane that fired them. Pass is at least
+  FOUR sound standing full bodies -- correct species, no blush, on grass under sky, head and
+  feet both in frame, no melted midface -- that differ enough in body angle to be worth four
+  slots. Those four get cut with a margin made of grass and sky, hashed, and frozen with a
+  manifest recording each tile''s sha256 and its POSE, mapped by CONTENT HASH and never by
+  slot position.
+
+  A clean failure is worth the same four minutes: if the sixteen cannot yield four sound
+  standing tiles, that is reported as the blocker it is, and the next lever is a drawn or
+  sourced turnaround rather than another wording round.'
+
+verdict: 'RAN 2026-08-15, rc=0, 16 frames in about four minutes, $0. All sixteen opened by the
+  lane that fired them. Sidecars confirm the chain: `drafts_sha256` is 83646eaf.., the exact hash
+  this lane''s insert produced, and r0''s `ip_adapter_reference_sha256` is 9526882e.., the unpadded
+  standing tile.
+
+  IT SPLITS BY ROUND, AND THE SPLIT IS THE FINDING. Border blankness — the fraction of the outer
+  12% of the frame that is near-white — per frame:
+
+    r0  anchor UNPADDED   0.000  0.358  0.005  0.195
+    r1  anchor at 0.75    0.973  1.000  1.000  1.000
+    r2  anchor at 0.55    1.000  1.000  0.591  0.583
+    r3  anchor at 0.40    1.000  1.000  0.460  0.523
+
+  THE BACKGROUND PREDICTION FAILED, AND ITS FALSIFIER IS THE RESULT. I predicted grass and sky in
+  all sixteen. Eleven of twelve padded-anchor frames came back on blank white with at most a tuft
+  of grass under the boots — with "standing in sunlit grass, pale sky above him" in the positive
+  and `white background, simple background` measured present in the sent negative. So the stated
+  falsifier fired exactly as written: THE BLANK PAPER COMES FROM THE REFERENCE TILE''S WHITE FIELD
+  AND NO WORDING REACHES IT. The white padding the previous sweep used to buy margin is the defect.
+
+  THE ROUND WITH NO PADDING CAME BACK IN A PLACE — four frames with sky, cloud streaks, a flowering
+  meadow, distant trees. Those four are the entire yield of this job and the whole of
+  refs-goblin-d1stand-0815.
+
+  THE MARGIN LEVER IS RETIRED FOR THIS PURPOSE, on a second count. r0''s frames measure ~5.5 heads
+  off an UNPADDED anchor — level with the padded rounds. The sweep''s promise was that padding buys
+  head-to-body ratio; once the ask is STANDING and the wording is ADULT, the proportion is already
+  there and the padding only costs the location. My r3 collapse prediction also did NOT fire: at
+  0.40 the figures are small in frame but coherent, not the giant-head-with-a-tiny-man of the
+  previous run — so that collapse was draft-dependent, not a property of the crop.
+
+  BLUSH: ZERO in sixteen. The adult wording plus the anti-baby negative holds on a second,
+  independent draft. This is now two clean sixteens.
+
+  AGAINST THE FOUNDER''S BRIEF — "a young dumb goblin, but not cute", not old, not a baby:
+    NOT CUTE   pass, decisively. Every frame is dour, half-lidded, scowling. No blush anywhere.
+    NOT A BABY pass. ~5.5 heads, lean, long robe, hands at his sides.
+    YOUNG      mixed. He reads ageless rather than young — a bald monk of no particular decade.
+    DUMB       MISS, and it is the honest weak point. The face is stern and closed, not vacant.
+               A heavy brow and a hard scowl is anger, not stupidity, which is the same thing the
+               d7 lane read off all 24 design frames.
+    A caveat R4 should hear in these words: all sixteen read as a pale Namekian-style MONK — bald,
+    green, white crossed-wrap robe, dark sash. That costume is design #1''s own and is inherited
+    from the anchor tile, not invented here, but it is what the spread looks like.
+
+  VIEW SPREAD: FRONTAL IN ALL SIXTEEN. No three-quarter, no profile, no back view. As predicted,
+  and it is a limit of the mechanism rather than of the seeds: a round varies the REFERENCE and
+  every round shares one prompt, so the four views a turnaround wants cannot be commissioned one
+  per round. Seeds varied the face and the ground, not the camera.
+
+  POSE: none of the sixteen crouched, as expected and as asked. Standing throughout.'
+
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815
+  - --draft-key
+  - authored_b04_standing_views
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1std-0815
+  - --ref-prefix
+  - goblin-d1std
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815
+  - --draft-key
+  - authored_b04_standing_views
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-standing-views-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b04-standing-views-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-standing-views-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\n# The glob carries THE BEAT SLUG (`04-the-footnote`) on purpose: a glob\n\
+    # that names the wrong beat matches nothing and publishes nothing while the\n# step still\
+    \ returns like a render failure. The dedup record is picked up by\n# name because it is the\
+    \ evidence that all four slots were distinct.\nsrc = sorted(glob.glob(srcdir + \"/04-the-footnote-*\"\
+    )) + sorted(glob.glob(srcdir + \"/refs-dedup.yaml\"))\npngs = [f for f in src if f.lower().endswith(\"\
+    .png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY, not the\
+    \ original: what this records has to be the bytes\n    # that get committed, or the manifest\
+    \ attests to the wrong file.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"\
+    \  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-standing-views-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s),\", len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs)\
+    \ >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-standing-views-0815\04-the-footnote-ipa-r3-w015-s0.png

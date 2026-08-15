@@ -1,0 +1,279 @@
+# refs-goblin-d1stand-0815 — four STANDING FULL BODIES, all on real ground.
+#
+# WHY THIS SET EXISTS, and it is a blocker rather than a hypothesis. The two
+# scored experiments of 2026-08-15 agreed on what to build next and then ran out
+# of material to build it from:
+#
+#   ep2-b04-d1refs-0815    the two CROUCH slots drew 3-to-3.5-head babies; the
+#                          STANDING slot drew 4.9 heads and was the only round
+#                          inside the brief.
+#   ep2-b04-d1margin-0815  re-cropping the same tiles wider moved the crouch
+#                          rounds by a third of a head and left them babies. The
+#                          decisive pair: margined crouch tiles at head fraction
+#                          .17 and the control's standing tile at .19 sit on the
+#                          same rung and drew 3.3 heads against 4.9. Head
+#                          fraction is not the driver; the CROUCHED BODY is. Its
+#                          own closing line: "the standing slot is the only one
+#                          worth building on, and building on it needs MORE
+#                          standing tiles rather than more crops of this one."
+#
+# And d1 seed s1 holds exactly ONE sound standing tile. Four copies of one
+# picture is ONE distinct reference: the content dedup shipped that morning
+# would have drawn four frames instead of sixteen while the job returned a code
+# that reads like success. So the standing tiles had to be GENERATED.
+#
+# ------------------------------------------------------------------ PROVENANCE
+# Every tile in this set comes from ROUND r0 of ep2-b04-standing-views-0815, a
+# generation job whose IP-Adapter anchor was that one sound standing tile:
+#
+#   anchor:        goblin-d1std-s0.png
+#   anchor_sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+#   which is byte-identical to refs-goblin-d1-0815 slot s2, itself cut from
+#   farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png
+#   sha256 389c763783efdb1057f56ac8116200519427b4da2aff28f44ce23838868f5910
+#   on origin/farm-results-rtx5090 — the founder's design #1, seed s1, the only
+#   sound seed of the four (s0 melted midfaces, s2 a beaked profile and Japanese
+#   onomatopoeia, s3 a pelican jowl).
+#
+# So the design carries by conditioning, not by re-cropping, and the chain from
+# the founder's pick to these four tiles is unbroken and hashed at every hop.
+#
+# ------------------------------------------------- WHY ONLY ROUND r0, AND IT IS
+#                                                    THE RUN'S MAIN FINDING
+# The generation job swept the anchor at four margins — 1.00, 0.75, 0.55, 0.40 —
+# one per round. r0 (UNPADDED) returned four frames in a PLACE: sky, cloud,
+# meadow, flowers, distant trees. r1, r2 and r3 (the same tile WHITE-PADDED)
+# returned blank paper in 11 of 12 frames, with at most a tuft of grass under
+# the boots.
+#
+# The prompt those twelve frames were drawn from says "standing in sunlit grass,
+# pale sky above him" and its negative carries `white background, simple
+# background` — measured present in the sent string. THE WORDING DID NOT
+# OVERRIDE THE REFERENCE. Blank paper is imposed by the reference's white field,
+# and no draft reaches it. That is why re-cropping and re-padding are abandoned
+# here rather than tuned, and why a tile from r1/r2/r3 would have carried the
+# defect straight into the next set.
+#
+# THE SECOND FINDING, which retires the margin lever for this purpose: r0's
+# frames came back at ~5.5 heads off an UNPADDED anchor. The margin sweep's
+# whole promise was that padding buys head-to-body ratio. Once the ask is
+# STANDING and the wording is ADULT, the proportion is already there and the
+# padding only costs the location.
+
+set: refs-goblin-d1stand-0815
+frozen_on: '2026-08-15'
+box_path: C:\banyan-farm\wave-goblin-prep\refs-goblin-d1stand-0815
+ref_prefix: goblin-d1stand
+character: goblin
+generated_by: ep2-b04-standing-views-0815 (round r0 only)
+staged_by: pipeline/refs/stage_standing_refs.py
+anchor_reference: goblin-d1std-s0.png
+anchor_reference_sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+source_design: farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png
+source_design_sha256: 389c763783efdb1057f56ac8116200519427b4da2aff28f44ce23838868f5910
+source_branch: origin/farm-results-rtx5090
+
+# THE SQUARING, and there is no white in it anywhere. The harness centre-crops
+# its reference to a square before the CLIP image processor sees it, which on an
+# 832x1216 portrait would silently eat the skull and the boots — the figure
+# spans about 92% of the frame height. So the square is made at staging and the
+# harness's own crop becomes a no-op:
+#
+#   832x1216 frame -> resample to 569x832 (PIL LANCZOS)
+#                  -> paste centred on an 832x832 canvas
+#                  -> fill the remaining band on each side by stretching that
+#                     frame's own outermost COLUMN sideways
+#
+# Every pixel is its own frame's pixel and the tile is sky-over-grass edge to
+# edge. TWO DEFECTS WERE CAUGHT DOING THIS AND BOTH ARE RECORDED, because both
+# would have been invisible downstream:
+#   * The first revision pasted symmetric side bands. 832*832/1216 rounds to
+#     569, so band*2 + 569 is 831 and the last column stayed unpainted — a BLACK
+#     stripe down the right edge of all four tiles. The corner assertion caught
+#     it; the eye had not.
+#   * The second revision MIRRORED the outer strip instead of stretching a
+#     column, and on two tiles that strip contained his SLEEVE — so the finished
+#     reference showed a detached fragment of arm floating at the frame edge. A
+#     duplicated limb is exactly what `extra limbs` sits in the negative to
+#     prevent, and putting one in the reference would be asking for it. Caught by
+#     eye, replaced with column extension, which cannot duplicate any figure part.
+transform: >-
+  resample the 832x1216 frame to 569x832 (PIL LANCZOS), paste centred on an
+  832x832 canvas, and fill the 131 px / 132 px band on each side by stretching
+  that frame's own outermost column. No white padding and no invented content.
+
+# Mapping is by CONTENT HASH in both directions — the frame it came from and the
+# bytes it is now — because a slot POSITION is not evidence and a lane already
+# lost a day to an s0/s1 position mix-up.
+images:
+- slot: s0
+  file: goblin-d1stand-s0.png
+  sha256: 395e2cdce1905d584bc988e48a39bb08af6babc0f4fb96f8c669c009f5c4d82f
+  source_frame: 04-the-footnote-ipa-r0-w015-s0.png
+  source_frame_sha256: f4273d143c0254b31192a728368bc704aa56b1a52a853b3d7d2107b3e97d410e
+  pose: standing
+  pose_detail: standing full body, frontal, arms hanging at his sides, weight even,
+    brown shoes; dry grass foreground and pale blue sky with cloud streaks
+- slot: s1
+  file: goblin-d1stand-s1.png
+  sha256: a964a94e32f84937ca3fcde3332bbaa2566f31af3aa4098c5ce4f4f32df601c1
+  source_frame: 04-the-footnote-ipa-r0-w015-s1.png
+  source_frame_sha256: 652eb336f671b663545f19ccbca126a24015ac46e37f608aab2a724de5bcd47d
+  pose: standing
+  pose_detail: standing full body, frontal, arms at his sides, hands slightly forward,
+    largest and sharpest ears of the four; grass underfoot, but the sky is a soft pale
+    glow rather than a drawn sky and its lower corners are white
+- slot: s2
+  file: goblin-d1stand-s2.png
+  sha256: a227ddd05f52ecf3b8e1602905eb5bade0662f1ae2781a4398b2e227a6e9a6d5
+  source_frame: 04-the-footnote-ipa-r0-w015-s2.png
+  source_frame_sha256: e482dfb7e25788ce77a27a0467d630f202d8bd1f3e908cafbc6d5ed782e04ed8
+  pose: standing
+  pose_detail: standing full body, frontal, arms at his sides, dark boots, a small
+    cross-shaped scar on the left brow; flowering meadow and clouded sky. The
+    strongest location of the four
+- slot: s3
+  file: goblin-d1stand-s3.png
+  sha256: 51289bd1bb7e0597f31cb8a53012b332a16d9655dfd797e266370a1ebd816737
+  source_frame: 04-the-footnote-ipa-r0-w015-s3.png
+  source_frame_sha256: 051c5a928e956f817472ad0d03785582d210a9ac9106d2cbcef98fd5e08614ee
+  pose: standing
+  pose_detail: standing full body, frontal, arms at his sides; sky, clouds and distant
+    trees. THE OFF-DESIGN SLOT — see not_scored
+
+# All four are distinct sha256, verified at staging, so the sampler's dedup drops
+# no cell and an arm draws all sixteen frames rather than silently fewer. That is
+# the specific blocker this set was built to clear.
+distinct_slots: 4
+
+not_scored:
+- slot: s3
+  why: >-
+    OFF-DESIGN, and it is a drift in the CHARACTER rather than in the picture
+    quality. Its ears came back small and rounded instead of long and pointed and
+    its skin reads grey rather than green, so it is a bald old man rather than the
+    design-#1 goblin. It fills the fourth slot because the sampler builds slots as
+    `{prefix}-s{i}` for i in 0..3 and refuses outright on a missing file.
+- slot: s1
+  why: >-
+    DEMOTED AFTER THE PLATE SAMPLE, on a measurement rather than a look. Border
+    blankness (fraction of the outer 12% of the tile that is near-white) is 0.387
+    on this tile against 0.000 and 0.002 on s0 and s2 — its sky is a pale glow and
+    its lower corners are white paper. The plate sample then showed that number is
+    not cosmetic: see blankness_transfer below.
+
+# THE SET IS USABLE IN TWO SLOTS, NOT FOUR, AND THAT IS MEASURED. Use s0 and s2.
+# s1 and s3 must be REPLACED before this set is pointed at any beat — the material
+# to replace them with is more frames off the UNPADDED anchor, which is what the
+# seed-extension jobs are producing.
+use_slots: [s0, s2]
+replace_before_use: [s1, s3]
+
+# Recorded so a later lane does not have to re-find it: the leanest and tallest
+# figure of the sixteen is NOT in this set.
+alternate_if_proportion_is_wanted_over_location: >-
+  04-the-footnote-ipa-r1-w015-s2.png, sha256
+  3627f58d159b97cb438be46be489b0af331f08e50adc04755f65c072f6963dd2 — roughly 6
+  heads, lean and wiry, excellent pointed ears, dour. It is excluded because it
+  stands on blank white with one tuft of grass, and blank paper in the reference
+  is the defect this set exists to avoid.
+
+# ---------------------------------------------------- WHAT THIS SET IS NOT
+# It teaches the adapter ONE ANGLE, well. All four tiles are frontal standing
+# figures: the generation run produced no three-quarter, no profile and no back
+# view in sixteen frames, because a round varies the REFERENCE and every round
+# shares one prompt, so the four views a turnaround wants cannot be commissioned
+# one per round. Seeds varied the face and the ground, not the camera.
+#
+# AND IT IS NOT A POSE FIX. Nothing here makes a plate start crouched or folded.
+# Across forty-eight frames on three jobs, pose transferred neither from the
+# reference nor from the prompt — including a draft that named the pose as a
+# STATE with every rule the wording audit produced. Two of the three staged poses
+# the episode needs, CROUCHED (beats 03 04 07 08 12) and FOLDED (beats 13-end 14
+# 15 16 17-start), remain unreachable by this mechanism and need a real
+# conditioner: ControlNet openpose, or img2img off a hand-staged posed plate.
+# STANDING (beats 17-end 18 19 20) is the one pose this set serves, and it is the
+# one pose the mechanism reliably produces.
+
+# ---------------------------------------------------------------- THE SAMPLE
+# ONE SAMPLE: ep2-b04-d1stand-0815, beat 04, arm window4, draft key
+# `authored_goblin_approved_recipe` — byte-identical to ep2-b04-d1margin-0815
+# except --refs, --ref-prefix and --out. rc=0, 16 frames, ~4 min, $0 local GPU.
+# All sixteen opened by the lane that fired it, 2026-08-15.
+#
+# 1. THE LOCATION PREDICTION HELD, AND IT IS THE RESULT THIS SET WAS BUILT FOR.
+#    Fifteen of sixteen plates came back OUTDOORS — grass fields, clouded skies,
+#    a sunset treeline, distant hills, a lake. The stated falsifier ("blank or
+#    near-blank backgrounds anyway") did NOT fire.
+#
+# 2. BLANKNESS TRANSFERS FROM THE TILE, ONE FOR ONE. This is the sharpest number
+#    the lane has produced and it is what demoted two slots. Border blankness of
+#    the REFERENCE tile against the mean border blankness of the four PLATES that
+#    tile drew:
+#
+#      tile s0  0.000  ->  plates 0.004     located
+#      tile s2  0.002  ->  plates 0.004     located
+#      tile s3  0.218  ->  plates 0.204     part paper
+#      tile s1  0.387  ->  plates 0.493     half paper, some with a white border
+#
+#    Monotone, and near enough to the identity line to read as a transfer rather
+#    than a correlation. THE REFERENCE DECIDES THE LOCATION — confirmed a third
+#    time, now with a number instead of an adjective. The corollary is the useful
+#    half: a tile that is clean gives plates that are clean, which is why this set
+#    is usable in s0 and s2 and must not be used in s1 and s3.
+#
+# 3. BLUSH CAME BACK, AND THE REFERENCE DID NOT STOP IT. Roughly fourteen of the
+#    sixteen carry pink cheek patches, some with blush whisker-lines, soft round
+#    cheeks and large red eyes. This is NOT a regression in the set and it is not
+#    in tension with the generation run — it is the DRAFT. This sample deliberately
+#    ran `authored_goblin_approved_recipe`, which says "A small goblin boy" and
+#    carries no anti-blush term at all, because holding the draft fixed is what
+#    made the reference the only variable. The generation run
+#    (ep2-b04-standing-views-0815) drew ZERO blush in sixteen off these same
+#    references, using adult wording plus `blush, red cheeks, chibi, big head, baby
+#    face, toddler, child` in the negative.
+#
+#    SO THE TWO CARRY DIFFERENT THINGS, and this is the load-bearing conclusion
+#    for whoever re-points a beat:
+#        the REFERENCE carries the LOCATION and the build.
+#        the DRAFT carries whether he is a blushing child or a dour adult.
+#    Pointing a beat at this set WITHOUT also giving it the adult wording and the
+#    anti-blush negative buys a better background and hands back the baby.
+#
+# 4. PROPORTION HELD at roughly 5 to 5.5 heads, measured on the full-resolution
+#    frame (r2-s0: skull-to-chin 200 px against skull-to-sole 1065 px = 5.3). That
+#    is inside the band the standing references were chosen to produce and it did
+#    not collapse under the "small goblin boy" wording — so the wording's damage
+#    here is to the FACE, not to the height.
+#
+# 5. ONE ARTEFACT worth recording: r3-s1 drew two faded GHOST FIGURES flanking
+#    him. It is the off-design slot and one frame in sixteen, but a second figure
+#    appearing unbidden on a `solo` prompt is the kind of thing that becomes a
+#    wave-wide defect if it is not written down.
+sample:
+  job: ep2-b04-d1stand-0815
+  control: ep2-b04-d1margin-0815
+  beat: 4
+  arm: window4
+  draft_key: authored_goblin_approved_recipe
+  rc: 0
+  frames: 16
+  out: C:\banyan-farm\goblin-ipa-0812\out-b04-d1stand-0815
+  blankness_transfer: {s0: 0.000 -> 0.004, s2: 0.002 -> 0.004, s3: 0.218 -> 0.204,
+    s1: 0.387 -> 0.493}
+  verdict: >-
+    SPLIT, and it splits by SLOT exactly as the tile blankness predicts. The two
+    clean tiles (s0, s2) drew eight plates in a real location — that is the result
+    the set was built for and the blank-paper falsifier did not fire. The two dirty
+    tiles (s1, s3) drew paper in proportion to their own, so they are demoted rather
+    than defended. Blush returned in ~14 of 16 because the control draft carries no
+    anti-blush term; the same references with the adult draft drew zero blush in
+    sixteen. No beat re-pointed, no wave fired, nothing published.
+
+retired_predecessors:
+- refs-goblin-d1-0815         # two crouch slots; they are what made him a baby
+- refs-goblin-d1std-0815      # the margin sweep; white padding put it on paper
+- refs-goblin-d1-margin-0815  # answered its question, do_not_use_for any beat
+- refs-goblin-approved-0814   # ~4 heads, oversized cranium, toddler stance
+- refs-goblin-frozen-0812     # blush, retired
+- refs-goblin-head-0812       # one file duplicated four times, blush, retired
