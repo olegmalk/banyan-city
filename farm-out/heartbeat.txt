@@ -1974,3 +1974,4 @@
 17:58:42Z box-runner idle ready=0 failed=28
 18:08:46Z box-runner idle ready=0 failed=28
 18:09:50Z STARTED task=ep2-b10-bark-a1s2-0815-1786817381 attempt=1 on box-runner
+18:15:39Z DONE task=ep2-b10-bark-a1s2-0815-1786817381 rc=0 artifacts=2
