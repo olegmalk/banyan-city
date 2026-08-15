@@ -122,6 +122,49 @@ beats:
     round_3_result: 'off the two-guard scene plate: both men present from FRAME ONE, walking away backs
       turned across a real field, costume and cast hold the whole clip, no arrival artifact. All five
       conditions met.'
+    status_override_0815: >-
+      BROKEN TAKE - THIS BEAT NEEDS A NEW ONE. This supersedes `status: DONE` and `round_3_result`
+      above. Both are deliberately left in place and NOT edited: the disagreement between them and this
+      entry is itself the evidence, and deleting the old verdict would delete the only record that we
+      once read this clip as finished.
+    override_authority: >-
+      Lead ruling, 2026-08-15, made before this entry was written. Closed-stays-closed carves out
+      exactly this case - "a pick's drift severe enough that the character is unrecognisable is a broken
+      beat rather than a named fault, and is a different call." A bald adult becoming a brown-haired
+      teenager mid-shot is not a fault an audience forgives.
+    override_blind_read_verbatim: >-
+      Scored 1/10 on same-individual by a reader given only frames and no context: "not drift, a break.
+      A bald adult is replaced by a brown-haired teen-proportioned figure in a different location,
+      different framing, different sky... It does not read as one continuous shot at all."
+    override_frame_confirmation: >-
+      A second lane then confirmed that description against the file frame by frame: bald adult at f0, a
+      yellow badge materialising in hand at f8 and on the chest by f12, and by f16-f28 a wide rear shot
+      of two figures walking away with the second man brown-haired and teen-proportioned.
+    override_third_check_0815: >-
+      Checked a third time here, on CONSECUTIVE frames f10-f33 of the pick itself. The file read is
+      review/ep2-picks/motion-0812/0814-b11-DONE.mp4, md5 056afd56d69e1e9d5563f2b1514ba70c, byte-identical
+      to farm-out/ep2-b11-finalB-0814/11-they-leave-LTX-wave-0813.mp4 on origin/farm-results-rtx5090 - so
+      the clip published to the founder IS the recorded pick, and the two verdicts are about one file.
+      The break is confirmed and the ruling stands, with ONE correction of mechanism: there is no splice.
+      The near guard's bald scalp fills in with dark hair CONTINUOUSLY across f16-f21 as he turns his
+      back, and the "different location, different sky" is a continuous camera pull-back that reveals
+      horizon and sky by f24. Frame 0 IS the conditioning plate (two-guard plate, md5 b3079227...,
+      balding older man at left, brown-haired younger man at right); by f21 the model has abandoned the
+      plate's near guard entirely and the shot ends on two indistinguishable brown-haired backs. So the
+      correct name for the fault is TOTAL IDENTITY COLLAPSE AWAY FROM THE PLATE during the turn, not a
+      cut. The blind reader's "does not read as one continuous shot" is a fair audience-level report of
+      what that feels like; recording it as an edit would send the next lane after the wrong lever.
+    rounds_used_note: NOT RESET. This beat has spent 3 rounds; the replacement is round 4.
+    place_in_episode: >-
+      UNCHANGED. Beat 11 keeps its slot in the episode. It needs a new take, not a deletion, and it is
+      not a hole in the cut - it is a beat with a broken take standing in it.
+    blocked_on_0815: >-
+      DO NOT AUTHOR OR FIRE THE REPLACEMENT YET. Beat 11's cast is GUARDS; the guard sheet is on the
+      founder's board awaiting his veto, and "lets do the guards on my taste" (guards block, 2026-08-14)
+      forbids animating guard beats off an unapproved cast. This beat joins 05, 09 and 10 in waiting for
+      that sheet. When it lands, the lever to try first is whatever binds identity to the plate through
+      a turn - the plate itself was right at f0 and the render let go of it.
+    how_round_3_missed_it: see `miss_analysis_b11_0815` at the top level of this file.
   '12':
     title: RELATED
     done_when: tight on the sapling's TWO leaves against the sky; exactly two cotyledons and one bare
@@ -444,3 +487,149 @@ trim_pass_0815:
   what_this_means_for_the_cut: >-
     Four of the five recorded picks keep 4.46-5.00s of real content. Episode 2 is not an episode of
     one-second shots. Total saving across all five picks is 3.21s.
+miss_analysis_b11_0815:
+  date: '2026-08-15'
+  question: >-
+    Beat 11's round-3 verdict says "costume and cast hold the whole clip". The clip's near guard changes
+    from a bald adult to a brown-haired figure between f16 and f21. What evidence was that verdict
+    actually reached on, and could that evidence have shown the change?
+  what_is_recoverable_and_what_is_not: >-
+    The lane that wrote the verdict was `motion-wave`, woken at 03:25Z on 2026-08-14 for the final
+    pre-wake scoring pass; it committed the verdict at 07:28 +0400 as 786f2522. Its own transcript is
+    NOT retained - subagent lanes leave no jsonl in ~/.claude/projects, and the lead's transcript for
+    that window contains only the wake message and the commit line. So the exact ffmpeg command that
+    lane ran cannot be produced. Everything below is from artifacts that survive in the repo, and where
+    it is inference it says so.
+  the_sampling_the_lane_actually_used: >-
+    That lane's own evidence sheets from the same night ARE committed, and they carry their frame
+    numbers burnt into the image. review/ep2-picks/motion-0812/0813-b10-world.png is SIX frames labelled
+    f0 f20 f40 f60 f80 f100. review/ep2-picks/motion-0812/0814-b09-facechange.png is FOUR frames
+    labelled f0 f30 f70 f110. Both are 121-frame clips. So the house sampling that night was 4-6 frames
+    out of 121 - ONE FRAME IN 20 TO 30, not one in seven. review/ep2-picks/bake_clip_sheet.py is the
+    tool and its step is `n_total // --frames`, which reproduces exactly those labels.
+  did_the_sampling_straddle_the_break: >-
+    YES, and by a wide margin. Rebuilt the 6-frame sheet on the beat 11 pick: samples land on f0, f20,
+    f40, f60, f80, f100. The identity change runs f16-f21. It therefore happens ENTIRELY between two
+    adjacent samples, f0 and f20, and nothing about it appears in either. Worse than the straddle: f0 is
+    the ONLY sampled frame in which a face is visible at all. From f20 on the men are walking away and
+    every remaining sample is the back of two heads, so the sheet could not have tested "same man" even
+    in principle. Read against beat 11's written definition - two guards walk away, backs turned, both
+    present the whole clip, field present at frame one - that six-frame sheet PASSES every clause
+    honestly. The verdict is what that evidence supports; the evidence was the wrong evidence.
+  the_second_and_larger_cause: >-
+    The definition had no identity clause to fail. Beat 11's `done_when` asks for count, staging, backs
+    turned and a field at frame one, and says nothing about faces. `standard_0815.identity_drift_bar`
+    was written on 2026-08-15, the DAY AFTER this verdict, and it says so itself: "Added 2026-08-15
+    after a blind read found it in BOTH beat 05 clips." A scorer working strictly to the written
+    definition on 2026-08-14 had no clause under which to fail this clip, and scoring strictly to the
+    written definition was the instruction. So the miss is not one lane being careless: the sheet could
+    not show the fault and the checklist did not ask for it.
+  correction_to_the_hypothesis_i_was_given: >-
+    The lead proposed roughly one frame in seven. It was one in twenty. That makes the mechanism
+    stronger, not weaker, but the number in the record should be the measured one. The lead also
+    proposed that the clip is not one shot; consecutive-frame reading says it is one continuous shot
+    with a continuous identity collapse - see `beats.11.override_third_check_0815`.
+  how_many_other_closed_verdicts_rest_on_this_evidence: >-
+    ALL OF THEM. Every episode-2 verdict was reached by a model reading sampled frames, and every sheet
+    from that lane on that night was 4-6 frames of 121. TEN beats are currently closed - 03, 04, 05, 06,
+    10, 11, 12, 13, 16 and 21 - and beat 11 is the first of the ten to be re-read consecutively. The
+    other nine have not been. See `resurvey_candidates_0815` for the list and the ranking.
+resurvey_candidates_0815:
+  date: '2026-08-15'
+  scope: >-
+    Closed beats whose verdicts rest on sparse-sheet evidence and that a consecutive re-read could
+    overturn. Listed, ranked and NOT re-read - the reads are the lead's to spend. Beat 11 is excluded
+    because it has now been re-read and ruled broken.
+  count: 9
+  highest_risk_re_read_these_first:
+  - beat: '05'
+    pick: ep2-b05-standB-0814
+    why: >-
+      Guard beat, same cast and same recipe generation as 11, and a blind read has ALREADY found
+      drifting faces in BOTH its clips - that finding is what created identity_drift_bar. It is recorded
+      as SHIP WITH FAULT NAMED on the strength of the action working. If 11's collapse is the same
+      failure one degree further on, 05 is the beat most likely to move from "named fault" to "broken".
+  - beat: '10'
+    pick: ep2-b10-pairB-0814
+    why: >-
+      Guard beat, two figures, and its own record already carries the open cross-beat cast question
+      ("the two guards read YOUNGER and softer than the guards in 06 and 11"). Two-figure guard clips
+      are exactly the shape that failed on 11.
+  - beat: '06'
+    pick: ep2-b06-scene-0814r
+    why: >-
+      Guard beat, and its verdict says "same man throughout" - a same-individual claim made off a sparse
+      sheet, which is the specific claim beat 11 proves a sparse sheet cannot support. Also picked from
+      one seed by its own admission.
+  medium_risk:
+  - beat: '21'
+    why: >-
+      No `pick:` key, so the clip cannot be identified without guessing - see `record_gap_0815`. Its
+      recorded faults are already shape and palette faults found on frames, and its subject is a leaf
+      rather than a face, so identity collapse is not the live risk; the live risk is that nobody can
+      say which take shipped.
+  - beat: '16'
+    why: >-
+      No `pick:` key. Its verdict already names a composition jump inside the first second ("goblin-
+      forward and sharp, then leaf-forward by f40"), which is precisely the kind of change a 1-in-20
+      sheet reports as two different shots or misses entirely. Worth a re-read once its take is named.
+  lower_risk_but_unverified:
+  - beat: '03'
+    why: no `pick:` key; single-line refire verdict, goblin beat, no same-individual claim made.
+  - beat: '04'
+    why: no `pick:` key; single-line refire verdict, and it is a close-up on one face, so a drift would
+      be visible in any sample that contains a face.
+  - beat: '13'
+    why: no `pick:` key; single-line refire verdict.
+  - beat: '12'
+    pick: ep2-b12-tightB
+    why: >-
+      Leaf subject, no character to lose, and its verdict is a countable one (exactly two leaves) that a
+      sparse sheet can check honestly. Least likely of the nine to move.
+  tool_to_use: >-
+    pipeline/coldread_frames.py, reading CONSECUTIVE frames rather than a spread sheet - subject to the
+    period caveat immediately below, which bites on every one of these clips because they are all 121
+    frames.
+coldread_period_caveat_0815:
+  date: '2026-08-15'
+  status: caveat on applying the tool, NOT a bug in the tool
+  what: >-
+    pipeline/coldread_frames.py parity-collapses its difference series with a sliding max of WIDTH 2,
+    which is what removes a period-2 stutter. The 121-frame picks stutter with PERIOD 3, so the collapse
+    does not close their gaps and the longest-run window search terminates early. On beat 12 it reported
+    the motion ending at pair 31 when the clip animates all the way to f120; trimming on that reading
+    would have deleted three quarters of the content.
+  why_it_is_not_a_bug: >-
+    The width-2 collapse is calibrated to the 97-frame frozen recipe, where it is correct. The error is
+    applying it across recipes without checking the period first.
+  rule: >-
+    Before trusting a window from this tool on any clip that is not the 97-frame recipe, measure the
+    cadence period, and check the window against a distance-from-window-end curve before cutting
+    anything on it. Measured periods on the 0813/0814 121-frame picks: b12 reads 9.59x, b05 3.78x, b10
+    3.58x.
+  already_recorded_at: >-
+    trim_pass_0815.results.12.why_stopped and .generalises. Restated here as a standing caveat because
+    the next lane to pick the tool up will look for it beside the trim results, not inside one beat's
+    entry.
+record_gap_0815:
+  date: '2026-08-15'
+  finding: FIVE CLOSED BEATS HAVE NO RECORDED PICK.
+  beats_with_no_pick_key:
+  - '03'
+  - '04'
+  - '13'
+  - '16'
+  - '21'
+  verified_how: >-
+    Read every entry under `beats:`. Exactly five of the ten closed beats carry a `pick:` key - 05, 06,
+    10, 11 and 12. 03, 04, 13, 16 and 21 carry a status and a shipping fault and no take identifier of
+    any kind.
+  why_it_matters: >-
+    A beat recorded as shipping with no recorded take is a hole in the record: nobody can say which clip
+    it closed on, nobody can re-read it, and the trim pass could only cover the five picks that were
+    named. Beat 11 is the demonstration of the cost - the only reason its verdict could be overturned at
+    all is that its pick was named and its file could be fetched and hashed.
+  deliberately_not_filled: >-
+    NOT guessing. Several of these beats have a dozen or more takes on the results branch and picking
+    the plausible one would manufacture a record rather than recover one. Named here so it can be filled
+    by whoever actually made the calls, or by re-picking on purpose.
