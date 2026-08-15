@@ -551,6 +551,43 @@ def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
     return text + _yaml_block("prompt", prompt) + _yaml_block("negative", negative)
 
 
+_WEIGHTS_VERDICT = None
+
+
+def require_intact_weights(courier=None) -> None:
+    """Refuse to render if this machine's weight files are not really there.
+
+    macbook1 and macbook3 rendered SDXL as pure noise for days because their
+    5.1 GB UNet blob had the exact right length and was 88%/93% zeros -- an
+    rsync that left holes. Nothing errored. Every size, file-count and
+    manifest check passed, and a lane burned 22 seeds partly around it. A
+    worker that hands back noise is worse than one that stops, so this stops.
+
+    Once per process: the audit reads the cache, which costs a few seconds
+    against a task that costs minutes, but there is no reason to repeat it.
+    """
+    global _WEIGHTS_VERDICT
+    if _WEIGHTS_VERDICT is None:
+        import mac_preflight
+        _WEIGHTS_VERDICT = mac_preflight.weights_ok()
+    ok, why = _WEIGHTS_VERDICT
+    if ok:
+        return
+    msg = ("!! REFUSING TO RENDER — this machine's model weights fail a content "
+           "check, so anything it produced would be noise:\n  " + "\n  ".join(why)
+           + "\n  Repair with a verified copy (hash the result against the blob's "
+             "own name), then re-run: python3 pipeline/mac_preflight.py")
+    if courier is not None:
+        # MARK IT, not just print it — a print dies with the console, and the
+        # whole point is that someone outside the room learns this machine is
+        # not usable rather than reading its noise as art.
+        try:
+            courier.blame(msg)
+        except Exception:
+            pass
+    raise SystemExit(msg)
+
+
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     # video tasks live in their own venv (Wan needs a modern diffusers; the
     # stills path is pinned to 0.29.2 for SDXL) — dispatch before importing
@@ -587,6 +624,7 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
 
     init_rel = task.get("init") or ""
     cls = StableDiffusionXLImg2ImgPipeline if init_rel else StableDiffusionXLPipeline
+    require_intact_weights(courier)
     pipe = cls.from_pretrained(BASE, torch_dtype=dtype, use_safetensors=True)
     pipe.to(device)
     courier.mark(f"MODEL_LOADED {device}/{dtype}".replace("torch.", ""))
@@ -697,6 +735,10 @@ def main() -> int:
     lock = acquire(a.name, force=a.force)
     device, dtype = pick_device()
     courier = Courier(a.name)
+    # BEFORE it claims anything. A worker with holed weights that takes a task
+    # and returns noise costs the queue that task plus the seeds a lane spends
+    # believing the output; a worker that refuses at startup costs nothing.
+    require_intact_weights(courier)
     print(f"farm worker '{a.name}' on {device} — polling {QUEUE} every {POLL_SECONDS}s")
     done_ids, gave_up = finished_tasks(courier)
     if done_ids:

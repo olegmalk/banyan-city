@@ -9287,6 +9287,139 @@ def test_the_stg_flags_default_to_off_on_the_command_line():
           '"stg": ("scale %g blocks %s"' in src)
 
 
+def _fake_hf_cache(root, repo, blobs):
+    """Build a huggingface-shaped cache. `blobs` maps blob NAME -> bytes.
+
+    The name is what the hub would have called the file (the sha256 of the
+    content it served); the bytes are what actually landed on this disk. The
+    two disagreeing IS the defect, so the fixture has to be able to express it.
+    """
+    d = root / ("models--" + repo.replace("/", "--")) / "blobs"
+    d.mkdir(parents=True, exist_ok=True)
+    for name, content in blobs.items():
+        (d / name).write_bytes(content)
+    return d
+
+
+def _sha(b):
+    import hashlib
+    return hashlib.sha256(b).hexdigest()
+
+
+def test_a_weight_file_is_judged_by_its_content_and_not_its_length(td):
+    # THE DEFECT, exactly as it was on macbook1 and macbook3 on 2026-08-15:
+    # a 5.1 GB UNet with the right byte length whose content was 88%/93%
+    # zeros, because an rsync left holes in it. SDXL rendered pure noise,
+    # deterministically, and nothing anywhere errored.
+    import mac_preflight as mp
+    good = b"weights!" * 4096                      # 32 KiB of real content
+    name = _sha(good)
+    holed = b"weights!" * 512 + b"\0" * (len(good) - 4096)   # same length, holes
+
+    root = Path(td) / "hub"
+    _fake_hf_cache(root, "cagliostrolab/animagine-xl-3.1", {name: good})
+    ok, why = mp.weights_ok(str(root), min_bytes=1)
+    check("an intact blob passes", ok and why == [])
+
+    # same path, same name, same LENGTH — only the bytes differ
+    _fake_hf_cache(root, "cagliostrolab/animagine-xl-3.1", {name: holed})
+    ok, why = mp.weights_ok(str(root), min_bytes=1)
+    check("a holed blob of the correct length is CAUGHT", not ok)
+    check("the refusal names the repo, not just a hash",
+          any("animagine" in w for w in why))
+    check("the refusal says how much of the file is nothing",
+          any("all-zero" in w for w in why))
+
+
+def test_the_checks_that_passed_this_defect_still_pass_it(td):
+    # A lane checked "33 files, 25 symlinks, 6940 MB" and concluded the weights
+    # were byte-identical. This pins WHY that was blind: on the good and the
+    # holed tree, file count and total size are identical to the byte. If
+    # someone ever replaces the content check with a cheaper one, this fails.
+    import mac_preflight as mp
+    good = b"weights!" * 4096
+    name = _sha(good)
+    holed = b"weights!" * 512 + b"\0" * (len(good) - 4096)
+
+    a, b = Path(td) / "a", Path(td) / "b"
+    da = _fake_hf_cache(a, "x/y", {name: good})
+    db = _fake_hf_cache(b, "x/y", {name: holed})
+    manifest = lambda d: sorted((p.name, p.stat().st_size) for p in d.iterdir())
+    check("file count and size are IDENTICAL across good and broken",
+          manifest(da) == manifest(db))
+    check("...and the content check separates them anyway",
+          mp.weights_ok(str(a), min_bytes=1)[0]
+          and not mp.weights_ok(str(b), min_bytes=1)[0])
+
+
+def test_an_empty_or_missing_cache_is_not_a_pass(td):
+    # "No corrupt blobs" is trivially true of a machine with no weights at all.
+    # macbook5 is in exactly that state, and a guard that green-lights it would
+    # hand it work it cannot start.
+    import mac_preflight as mp
+    ok, why = mp.weights_ok(str(Path(td) / "nope"), min_bytes=1)
+    check("a missing cache BLOCKS rather than passing empty", not ok)
+    empty = Path(td) / "empty"
+    empty.mkdir()
+    ok, why = mp.weights_ok(str(empty), min_bytes=1)
+    check("a cache with no weights BLOCKS", not ok)
+    check("and says nothing is there to render with",
+          any("nothing to render" in w or "no model weights" in w for w in why))
+
+
+def test_only_content_addressed_blobs_are_compared_to_their_names(td):
+    # A 40-hex blob is a git SHA-1 (`sha1("blob <len>\0" + content)`), NOT a
+    # digest of the content — comparing it with sha256 would flag every small
+    # git-tracked file in the cache and train everyone to ignore the guard.
+    import mac_preflight as mp
+    check("64 hex is content-addressed", mp.is_content_addressed("a" * 64))
+    check("40 hex (git sha1) is skipped", not mp.is_content_addressed("a" * 40))
+    check("a non-hex name is skipped", not mp.is_content_addressed("z" * 64))
+    check("uppercase is not the hub's form", not mp.is_content_addressed("A" * 64))
+
+    root = Path(td) / "hub"
+    good = b"weights!" * 4096
+    _fake_hf_cache(root, "x/y", {_sha(good): good, "b" * 40: b"config" * 1000})
+    ok, why = mp.weights_ok(str(root), min_bytes=1)
+    check("a git-sha1 blob beside a good one raises no false alarm", ok)
+
+
+def test_a_latent_that_never_contracted_is_reported_as_noise():
+    # Measured 2026-08-16 on the real defect: healthy final latent std 1.02 on
+    # macbook2, 17.03 on macbook1 and macbook3 — which decoded to a
+    # byte-identical noise PNG on both. The band has ~5x margin either way.
+    # This is the check that would also catch a cause hashes cannot see, e.g.
+    # pytorch/pytorch#141471, a diffusion model rendering "nothing but noise"
+    # from a torch version bump alone.
+    import mac_preflight as mp
+    check("a healthy final latent passes", not mp.latent_is_degenerate(1.02))
+    check("the measured broken value is caught", mp.latent_is_degenerate(17.03))
+    check("SDXL's initial sigma is caught (never contracted)",
+          mp.latent_is_degenerate(14.6))
+    check("NaN latents are degenerate too",
+          mp.latent_is_degenerate(float("nan")))
+    check("the ceiling sits between the two measured values",
+          1.02 < mp.LATENT_STD_CEILING < 17.03)
+
+
+def test_the_worker_refuses_before_it_loads_a_model():
+    # Placement is the whole value: checking after from_pretrained means the
+    # machine has already claimed the task. Checking at startup means it never
+    # claims one. Both call sites are pinned here because a future edit that
+    # moves the guard below the load would restore the silent-noise behaviour
+    # with every test still green.
+    src = (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8")
+    check("the worker checks weights at startup, before claiming work",
+          "require_intact_weights(courier)\n" in src)
+    check("the guard runs BEFORE from_pretrained, not after",
+          src.index("require_intact_weights(courier)\n    pipe = cls.from_pretrained")
+          < src.index("pipe.to(device)"))
+    check("the refusal is marked to the branch, not only printed",
+          "courier.blame(msg)" in src)
+    check("refusing raises rather than returning a usable pipe",
+          "raise SystemExit(msg)" in src)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -9550,6 +9683,16 @@ def main():
     test_stg_on_passes_exactly_the_two_upstream_arguments()
     test_stg_without_blocks_is_refused_before_any_weight_loads()
     test_the_stg_flags_default_to_off_on_the_command_line()
+    with tempfile.TemporaryDirectory() as td:
+        test_a_weight_file_is_judged_by_its_content_and_not_its_length(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_the_checks_that_passed_this_defect_still_pass_it(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_empty_or_missing_cache_is_not_a_pass(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_only_content_addressed_blobs_are_compared_to_their_names(td)
+    test_a_latent_that_never_contracted_is_reported_as_noise()
+    test_the_worker_refuses_before_it_loads_a_model()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
