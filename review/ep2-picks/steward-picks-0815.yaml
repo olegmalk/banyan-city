@@ -1,0 +1,122 @@
+# Steward picks — evaluation backlog, 2026-08-15
+#
+# WHY THIS FILE EXISTS AND NOT done-definitions.yaml:
+# done-definitions.yaml is held by another lane and was committed at 12:04:57
+# while this work was in flight. Writing into it would have collided. The
+# picks live here instead; done-definitions.yaml should gain a one-line
+# pointer to this file from whoever owns it.
+#
+# AUTHORITY BOUNDARY. Everything in this file is a STEWARD PICK: mechanical
+# selection among takes, made with a stated reason, which is the steward's to
+# make. Nothing here is a taste verdict. The `scored:` and `founder_verdict:`
+# fields in the render sidecars are the FOUNDER's and are deliberately left
+# untouched — a steward pick does not fill them in.
+
+commission:
+  date: '2026-08-15'
+  opened_at: '12:06 +0400'
+  note: >-
+    Recorded at COMMISSION time, before any result came back, because a verdict
+    whose mapping is lost is uninterpretable. The scope below is what was asked,
+    so that what comes back can be checked against what was asked for.
+
+  job_1_score_the_unscored_stills:
+    measured_counts: >-
+      Counted by parsing every *.yaml carrying `scored: false` and reading its
+      `shot_beat` field, EXCLUDING the build-output mirrors `_site/` and
+      `.vercel/output/static/` which duplicate `review/` verbatim.
+    unscored_sidecars_repo_wide: 516
+    unscored_in_the_six_named_beats: 148
+    brief_figure_of_148: CONFIRMED EXACTLY for beats 07+08+15+17+19+20.
+    earlier_figure_of_340: not reproduced; the repo-wide source total is 516, and 612 if the build mirrors are double-counted.
+    per_beat:
+      '07': 12
+      '08': 28
+      '15': 28
+      '17': 24
+      '19': 32
+      '20': 24
+    beat_07_EXCLUDED:
+      reason: >-
+        The brief names beat 07 in Job 1 but its own constraints say a lane is
+        already scoring beats 06/07/09 and not to touch those three. The
+        constraint is the more specific instruction, so 07 was left alone. That
+        leaves 136 stills in scope, not 148.
+    scope_scored: ['08', '15', '17', '19', '20']
+
+  job_2_recover_the_missing_picks:
+    beats: ['03', '04', '13', '16', '21']
+    standing_rule: >-
+      Not guessing. A beat that cannot be tied to a clip with real evidence is
+      recorded UNFILLED. Guessing would manufacture exactly the record we
+      cannot audit.
+
+  job_3_blocked_plates:
+    beats: ['08', '18']
+
+# ---------------------------------------------------------------------------
+# FINDING MADE BEFORE ANY IMAGE WAS OPENED — it reframes Job 1 and is recorded
+# here first so it cannot be presented later as if it came out of the scoring.
+# ---------------------------------------------------------------------------
+
+structural_findings_0815:
+
+  the_five_job_1_beats_have_no_recorded_definition_of_done:
+    finding: >-
+      The brief says to judge each beat against "that beat's own recorded
+      definition of done in review/ep2-picks/done-definitions.yaml". For four of
+      the five beats in scope that document does not have one.
+    verified_how: >-
+      The `beats:` map in done-definitions.yaml contains exactly these keys —
+      01 02 03 04 05 06 07 09 10 11 12 13 14 16 18 21. Beats 08, 15, 17, 19 and
+      20 are absent entirely.
+    the_overlap_is_not_a_coincidence: >-
+      The beats carrying unscored stills are very nearly the same set as the
+      beats with no definition of done. A beat with no standard never got its
+      candidates judged, because there was nothing to judge them against. That
+      is the actual reason these 148 sidecars sat at `scored: false`, and it
+      means the fix is not only "score them" but "write the four missing
+      definitions".
+    what_was_used_instead: >-
+      review/ep2-picks/beats.json carries a per-beat `shows` and `line` for all
+      21 beats. That is a real recorded definition, written for the episode, and
+      it is what each beat was scored against. Every criterion handed to a
+      scorer was derived from its beat's own `shows` string plus the recorded
+      standard_0815 clauses, and nothing else.
+
+  most_of_the_unscored_stills_were_never_a_pick_sheet:
+    finding: >-
+      The bulk of the 0812 stills are IP-Adapter MECHANISM TESTS, not
+      candidates. Their own sidecars say so at render time.
+    verbatim_from_the_sidecars:
+      candidate_set: none (mechanism test, not a pick sheet)
+      header_comment: >-
+        "ONE SAMPLE of a CONSISTENCY MECHANISM on beat 04 - not a wave, and not
+        a candidate for the founder to pick from... The reference image is one
+        of the four wave-1 frames, used because all four are used in turn - it
+        is NOT a canonical goblin and nobody has picked one."
+    which_sets: >-
+      Every ep2-b*-ipa-*-0812 directory. In the five beats in scope that is 80
+      of the 136 stills — b08 16, b15 16, b17 16, b19 24, b20 16.
+    which_sets_ARE_candidates: >-
+      The ep2-b*-idfix and ep2-b*-idfix-r2 sets carry `candidate_set: wave1` and
+      are real candidate sets, 8 per beat. Beat 15 also has 4 in review/tonight
+      from task ep2-b15-goblin-simple.
+    consequence: >-
+      They were still scored, because a mechanism-test frame can happen to be a
+      usable plate and it costs nothing to look. But a pick coming out of an ipa
+      set is a plate the steward is proposing, NOT a set anyone intended as a
+      shortlist, and it is labelled that way in the results below.
+
+  what_the_sidecar_fields_mean:
+    note: >-
+      `scored: false` and `founder_verdict: null` are two halves of the same
+      founder-facing field, not a steward to-do. Filling `founder_verdict` from
+      a steward pick would put words in the founder's mouth, so this pass leaves
+      all 148 sidecars byte-unchanged and records its picks here.
+
+# Results are appended below as each read returns.
+results:
+  job_1_picks: PENDING
+  job_2_recovered_picks: PENDING
+  job_3_next_steps: PENDING
