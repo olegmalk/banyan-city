@@ -1759,3 +1759,4 @@
 01:32:27Z STARTED task=ep2-goblin-design-d3-0814-1786757406 attempt=1 on box-runner
 01:33:19Z DONE task=ep2-goblin-design-d3-0814-1786757406 rc=0 artifacts=4
 01:33:35Z STARTED task=ep2-goblin-design-d4-0814-1786757407 attempt=1 on box-runner
+01:34:28Z DONE task=ep2-goblin-design-d4-0814-1786757407 rc=0 artifacts=4
