@@ -1,0 +1,344 @@
+# 2026-08-15, beat 08 lane (BEAT 08 ONLY). THE SHOT-SCALE TEST.
+#
+# WRITTEN AND COMMITTED BEFORE THE FIRST PIXEL IS DRAWN. Nothing below is
+# softened afterwards; the verdicts are appended under `outcome:` in a later
+# commit and this text is not edited to agree with them.
+#
+# ============================================================================
+# WHY THIS LANE EXISTS
+# ============================================================================
+# A bark clipboard gates beats 06, 08 and 10. Four wording attempts and
+# twenty-three inpaint samples failed before the working method was found
+# (7029e0ff, ec33a46a, 1de34880): composite procedural bark relief INTO the
+# plate with plain image processing -- $0, no sampler -- and then inpaint at LOW
+# strength 0.30. Beats 06 and 10 both cleared an eight-term bar that way.
+#
+# Beat 08 did not. 8ed2711b built its composite carefully (three composites, two
+# rejected by eye at zero GPU cost) and d314e8f4 fired five single samples: ALL
+# FIVE FAILED, every one on MATERIAL ALONE, 7 of 8 terms passing every time. The
+# geometry half of the method transferred completely -- not one FAIL-SHAPE, not
+# one FAIL-SEAM, not one FAIL-DECAL below 0.45. The sampler moves the same
+# amount of pixel on beat 08 as on beat 06 (mean |delta| 14.5 vs 15.9) and
+# relocates it into GRADIENTS instead of hard cel line-work.
+#
+# THE OBVIOUS EXPLANATION IS ALREADY DEAD. The worry was that beat 08's clean
+# unoccluded board face (83x144) was too small against beat 10's passing
+# 223x197. Sample s3 resampled the board region 3.01x so the slab was 516px
+# wide -- TWICE beat 06's passing 254px -- with prompt, strength, seed and mask
+# pinned and scaled, and produced THE SAME SOFT SHADING. The failure is not the
+# board's pixel size. That is a measured result and this lane does not re-derive
+# it.
+#
+# ============================================================================
+# THE HYPOTHESIS THIS LANE TESTS, and the measurement that motivates it
+# ============================================================================
+# d314e8f4 labelled it a hypothesis and deliberately did not spend a sample on
+# it: the one uncontrolled difference left is the SHOT SCALE OF THE SURROUNDING
+# CONTENT, not the board's pixel size. Beat 06's plate is a close two-shot where
+# animagine draws heavy cel line-work; beat 08's is a whole-body two-shot, which
+# the model renders with flat soft shading. s3 scaled pixels but kept the same
+# hands at the same relative size, so it never changed the APPARENT REGISTER.
+#
+# MEASURED HERE, by opening both plates under a 50px ruler overlay rather than
+# by eye or by adjective (scratchpad rulers; the numbers, not the images, are
+# what this file rests on):
+#
+#   b06 plate (b06-nos2-init-704x1280.png, the one whose composite PASSED)
+#     guard head   y 10..215      205px = 16.0% of the 1280-tall frame
+#     board        ~250 x 205     top y 495, bottom y 700
+#     bottom crop  mid-shin; no headroom, the hair touches the top edge
+#   b08 plate (08-inside-him-twofig-mac-r3-s0.png, the one whose composite FAILED)
+#     guard head   y 150..275     125px = 10.3% of the 1216-tall frame
+#     board        ~170 x 160     top y 495, bottom y 655
+#     bottom crop  none -- both figures are whole to the boots, with 150px of
+#                  sky above the goblin's scalp
+#
+#   REGISTER RATIO 1.64x. And note which way the two numbers split: the BOARD is
+#   only 1.28x smaller on beat 08, while the HEAD is 1.64x smaller. Beat 08's
+#   board is if anything LARGE for its figures. It is the FIGURES that are
+#   small, which is exactly what "shot scale of the surrounding content, not the
+#   board's pixel size" means, and it is why s3 could double the board and
+#   change nothing.
+#
+# IF THIS IS RIGHT, beat 08 needs a TIGHTER SHOT, not a bigger face.
+# IF THE TIGHTER SHOT FAILS THE SAME WAY, THAT IS A REAL RESULT: the shot-scale
+# hypothesis is dead, beat 08 needs a different lever entirely, and this lane
+# reports that and stops. It does NOT open a wording campaign on the prop --
+# that branch is permanently closed under any beat number (four attempts,
+# "the bark never had a chance against the word clipboard").
+#
+# ============================================================================
+# THE FRAMING I CHOSE, AND WHY -- STATED BEFORE THE RENDER
+# ============================================================================
+# TARGET: a TORSO-TIGHT TWO-SHOT. Top of the guard's head near the top edge,
+# bottom edge at about the hip or upper thigh. Concretely: the guard's head at
+# 15% or more of frame height (>=182px at 1216), against beat 06's passing 16.0%
+# and beat 08's failing 10.3%.
+#
+# THE TAG I ASK FOR IS ONE NOTCH TIGHTER THAN THE TARGET, DELIBERATELY.
+# Round 3 led with `cowboy shot, eye level` -- mid-thigh up -- and the render
+# came back WHOLE-BODY, boots in frame and 150px of sky to spare. The tag
+# under-delivered by a full notch. On the Danbooru ladder the next rung in is
+# `upper body` (waist up). So:
+#
+#   `upper body, eye level` replaces `cowboy shot, eye level`. SOLE VARIABLE.
+#
+#   - if it under-delivers by the same notch round 3 saw, it lands on a true
+#     cowboy shot, which is beat 06's register and is the target;
+#   - if it lands true, waist-up puts the head near 29% of frame -- tighter than
+#     needed but still holding both bellies, with the goblin's at the bottom
+#     edge. That is the risk this round is watching for, and it is axis 9.
+#
+# WHAT THE ACTION NEEDS, AND WHY I AM NOT CROPPING IT AWAY. Beat 08's line,
+# quoted beside its action (shots.md, 002b-first-citizen, beat 08):
+#
+#   "The apple is inside him, Dren."  -- he LOWERS THE CLIPBOARD and POINTS AT
+#   THE SCAVENGER'S BELLY. Camera follows the pointing finger to the goblin's
+#   belly.
+#
+# So the frame has to hold two things a tighter crop could destroy:
+#   (a) OPEN FRAME BELOW THE BOARD for it to come down into. The plate is the
+#       PRE state -- board still held up, guard not yet pointing -- so the
+#       travel has to exist in frame or the motion has nowhere to go.
+#   (b) THE GOBLIN'S BELLY, with margin, not clipped by the bottom edge. A point
+#       at a belly that is half out of frame does not read.
+# `portrait` and `close-up` are therefore both refused: they crop the belly and
+# they crop the board's travel. Torso-tight is the tightest framing the action
+# survives, and it is the framing asked for.
+#
+# EVERYTHING ELSE IS PINNED TO ROUND 3 VERBATIM, including the seed. still_local
+# derives the seed as SEED(20260719) + beat(8) + seed_bump + 1000*i, so s0 at
+# seed_bump 0 reproduces round 3 s0's own seed 20260727 exactly. Against the
+# only beat-08 plate that ever cleared every axis, the framing tag is then the
+# SOLE VARIABLE, which is the whole design of this round.
+#
+# ============================================================================
+# PLATE KNOWLEDGE INHERITED AND NOT RE-DERIVED (18 frames, 6 rounds, 1384e5fe +
+# aa160c08). None of this is re-tested here.
+# ============================================================================
+#  - `size difference` is a GIANTESS tag on this checkpoint -- it made the
+#    goblin ~8x the guard's height in 2 of 3 frames. It stays in the NEGATIVE.
+#  - LEADING framing tags carry real weight; TRAILING ones almost none. The
+#    framing tag is therefore FIRST, as it was in round 3.
+#  - A VERB OR A PROP DOES NOT BIND TO A NAMED CHARACTER HERE. The board
+#    attached to the GOBLIN in 9 of 12 board-bearing frames; `pointing at
+#    another` attached to the goblin in 3 of 3. `holding clipboard with both
+#    hands` is the ONLY wording that ever put it in the guard's hands, so it is
+#    reproduced character-for-character and WHICH FIGURE HOLDS IT IS CHECKED.
+#  - The guard came back ELF-EARED in 4 of 18 frames, every time with `elf` in
+#    the negative. The negative is not the lever for that. It is not attacked
+#    here -- attacking it would be a second variable -- it is only SCORED.
+#  - STATE TAGS BEAT VERBS for staging. Nothing in this prompt is a prose verb.
+#  - HONEST HIT RATE ON THE LAST PLATE ROUND WAS 1 IN 15. This round budgets for
+#    that: ONE sample first, opened and judged, then seeds in fours, not twos.
+#  - THE BOARD'S MATERIAL DOES NOT NEED TO BE RIGHT IN THE PLATE. Navy or maroon
+#    with a chrome clip is expected and fine. What matters is a large,
+#    FLAT-TO-CAMERA, UNOCCLUDED face held AT THE EDGES. Round 3's grip -- both
+#    hands on the side edges, only fingertips notching the rim -- is exactly
+#    right and is what this round tries to reproduce at a tighter scale.
+#
+# ============================================================================
+
+id: ep2-b08-tightshot-0815
+task: ep2-b08-tightshot-0815
+node: 002b-first-citizen
+beats: [8]
+runner: local-mac (Apple MPS)   # plate work. NOT a box job for the plate half.
+sample: true
+owner: beat 08 lane, 2026-08-15
+cost: $0 — local Apple MPS for the plate, rtx5090 for the inpaint sample, no
+  provider, no key, nothing billable.
+
+script_authority: >-
+  Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. These are STILL PLATES on an approved node, not an
+  episode assembly, so STEWARDSHIP §6 is satisfied; `still_local.py` re-checks
+  the same gate in code via `render_local.approved()` and refuses otherwise.
+
+consumer: >-
+  The beat-08 bark-board inpaint, which is the thing that failed five times on
+  the existing plate, and after it beat 08 motion. Named before any pixel is
+  drawn, per the no-work-without-a-consumer rule. If the inpaint on this plate
+  fails the same way, the consumer disappears and the lane stops rather than
+  rendering more plates.
+
+recipe_plate:
+  script: pipeline/still_local.py --raw
+  host: macbook1 (Apple MPS, ~5.7 min per 4-seed plate)
+  base: cagliostrolab/animagine-xl-3.1     # the checkpoint the box uses
+  size: 832x1216
+  steps: 40
+  cfg: 7.5
+  env: BANYAN_NO_OPEN=1   # agent-driven: unratified frames must not land on a screen
+  seed_s0: 20260727       # SEED 20260719 + beat 8 — round 3 s0's own seed
+  positive: >-
+    upper body, eye level, 2boys, facing viewer, standing side by side, bald
+    human man, adult, stern face, brown tunic, sash, holding clipboard with both
+    hands, green skinned goblin, pointed ears, patched cloak, looking down,
+    grass field, treeline, blue sky, outdoors, anime key visual, cel shading,
+    masterpiece, best quality
+  positive_diff_from_r3: "`cowboy shot` -> `upper body`. Nothing else. One variable."
+  negative: >-
+    reproduced from round 3 by passing the same --extra-neg and CONFIRMING the
+    printed negative matches round 3's sidecar string character for character
+    before firing, rather than retyping it.
+  tokenizer: >-
+    MEASURED on the real CLIPTokenizer for this checkpoint before firing, both
+    sides, and recorded in the sidecar. A live draft was found at 139 tokens
+    against CLIP's 77 today; nothing here is trusted to be short.
+
+# ============================================================================
+# PRE-REGISTERED PLATE BAR. Every axis judged BY OPENING THE IMAGE -- never by a
+# metric, a file size, a process list or a summary. Axes 1-7 are the parent
+# job's (ep2-b0708-twofig-mac-0815) verbatim and are NOT relaxed because the
+# shot got tighter; 8 and 9 are this round's own and are why it exists.
+# ============================================================================
+plate_bar:
+  1_two_figures: >-
+    TWO whole distinct figures in frame. A single figure fails. A figure plus a
+    stray hand, forearm or leg at the frame edge fails. Three or more fails.
+    "Whole" is relaxed EXACTLY as far as the framing tag requires and no
+    further: at torso-tight both figures are cut by the BOTTOM edge, which is
+    the point, but neither may be cut by a SIDE edge and neither head may be
+    cropped.
+  2_identities: >-
+    One is an ADULT HUMAN guard: adult proportions, brown tunic and sash, ROUND
+    HUMAN EARS. The other is a GOBLIN: green skin, pointed ears, patched cloak.
+    A guard with pointed ears is a FAIL however good the rest is. 4 of 18 prior
+    frames failed here.
+  3_workable_distance: >-
+    Both in the SAME depth plane, separated by roughly one figure width or less,
+    so an arm extended from one reaches toward the other.
+  4_board: >-
+    A clipboard-shaped RECTANGLE IN THE GUARD'S HAND -- not the goblin's, which
+    is where it went in 9 of 12 prior board-bearing frames -- long edge at least
+    about one eighth of frame height, unoccluded, flat face to camera rather
+    than edge-on. MATERIAL IS EXPLICITLY NOT SCORED: navy or maroon with a
+    chrome clip PASSES.
+  5_not_infantile: >-
+    The goblin has adult-or-adolescent head-to-body proportion. Chibi head,
+    toddler body or mascot-sprite read is a FAIL.
+  6_no_blush: >-
+    No red or pink cheek patches on either figure.
+  7_unoccluded_face: >-
+    NO HAND MAY CROSS THE BOARD'S FACE. Held at the EDGE -- side grip, corner
+    pinch or top rim -- never under a palm, never with fingers spread across the
+    face. Scored as the LARGEST FULLY UNOCCLUDED RECTANGLE of board face,
+    measured by segmentation with the mask overlay OPENED and confirmed not to
+    have leaked, not estimated by eye.
+      REFERENCE beat 10, geometry that PASSED its inpaint: 223x197
+      REFERENCE beat 08 r3-s0, geometry that FAILED on MATERIAL: 83x144
+    THIS AXIS IS SCORED BUT IT IS NOT THE HYPOTHESIS. s3 proved size is not the
+    limiter, so a face that merely matches r3's 83x144 at the tighter register
+    is ACCEPTABLE here. What must not happen is a REGRESSION into a palm across
+    the face, which is what killed beat 06.
+  8_register_THE_POINT_OF_THIS_ROUND: >-
+    THE GUARD'S HEAD IS AT LEAST 15% OF FRAME HEIGHT (>=182px at 1216), measured
+    by opening the frame under a ruler overlay and reading the scalp and chin
+    rows, not estimated. Against beat 06's passing plate at 16.0% and beat 08's
+    failing plate at 10.3%. Below 15% the round did not actually change the
+    variable it exists to change, and the inpaint sample MUST NOT BE FIRED on
+    it -- firing anyway would burn a sample on an uncontrolled test and report a
+    result the frame cannot support.
+  9_the_action_survives_the_crop: >-
+    THE TIGHTER SHOT MUST NOT CROP THE BEAT AWAY. Both required, because the
+    scripted action is the board coming DOWN and a finger pointing at a BELLY:
+      (a) the goblin's belly is inside the frame with visible margin below it,
+          not clipped by and not sitting on the bottom edge;
+      (b) there is open frame below the board for it to be lowered into, and the
+          guard's arms are at rest with the board held UP -- the PRE state, so
+          motion has something left to do (beat 13's lesson: a prompt asking for
+          a pose the plate is already in wastes the clip).
+    A frame that clears 8 and fails 9 is a FAIL and is not a plate. It is
+    reported as one and the framing is loosened a notch, not the bar.
+
+plate_kill_conditions:
+  - The guard rendered with pointed or goblin ears.
+  - Two goblins or two guards instead of one of each.
+  - The board in the goblin's hands rather than the guard's.
+  - A blank or pale studio void instead of the outdoor location.
+  - The goblin roughly the guard's own height multiplied -- the `size
+    difference` giantess failure, if it returns from the negative side.
+
+plate_pass_threshold: >-
+  At least one seed meeting ALL of 1-9. Anything less is 0, is reported as 0,
+  and does not release the inpaint sample. Partial credit is not a plate: the
+  prior lane's own honest hit rate was 1 in 15 and it is recorded rather than
+  averaged away.
+
+# ============================================================================
+# PRE-REGISTERED INPAINT BAR. Identical to 8ed2711b's, UNSOFTENED, so that this
+# round's result is comparable to the twenty-eight samples before it. Eight
+# terms, ALL REQUIRED. 7 of 8 is a FAIL -- all twenty-eight prior samples sat at
+# 5 to 7 of these and every one of them was correctly a FAIL.
+# ============================================================================
+inpaint_bar:
+  terms: >-
+    large / flat / rectangular / rough bark texture / not planed timber /
+    no chrome clip / no white paper / no tree trunk
+  fail_shape: the silhouette stops being a straight-edged four-sided slab.
+  fail_material: planed timber, fabric, plastic, or navy/maroon instead of crust.
+  fail_seam: a visible join where the mask ended.
+  fail_decal: >-
+    the bark reads as a printed pattern LAID OVER the board rather than as the
+    board's own surface. Its five tells, committed in advance so they cannot be
+    rationalised afterwards: texture axes not following the board's tilt; a
+    pattern ignoring the frame's own light direction; a swatch stopping short
+    of, or overrunning, the object's own edge; visible tiling or a repeat; grain
+    at the wrong scale read against the hand.
+  beat_08_addition: >-
+    THE GOBLIN AND BOTH FACES MUST COME BACK UNTOUCHED. They are the control.
+
+# ============================================================================
+# CONTROLS ON THE INPAINT HALF. All kept, none waivable.
+# ============================================================================
+controls:
+  - "--dry-run re-asserts the mask sha before every render."
+  - "diff against the composite init is maxdiff 0 outside the mask bbox +/- pad-crop."
+  - "the goblin and both faces are the control and are checked byte-wise."
+  - "outputs hashed on the box and again after transfer."
+  - "EXACTLY ONE VARIABLE PER SAMPLE. One sample at a time, starting at 0.30."
+  - >-
+    THE PROMPT FILES ARE NEVER OPENED. Beats 06 and 10 both passed with the init
+    as the sole variable; opening the prompts would make this a wording campaign,
+    which is the closed branch.
+  - "prompts measured on the real tokenizer before every fire."
+  - >-
+    COMPOSITE BUILT AND OPENED BEFORE ANY GPU RUNS. That is the whole point of
+    doing the relief with image processing, and it caught a self-inflicted
+    FAIL-SHAPE at least three times on 2026-08-15.
+
+segmentation_warning_inherited: >-
+  THE SEGMENTATION HAS NEEDED RE-TUNING ON EVERY SINGLE BOARD SO FAR and beat
+  08's INVERTED the colour rule outright. Beat 10's navy face was B-R >= 10;
+  beat 06's near-black board needed B-R >= -2; beat 08 r3-s0's face is dark
+  MAROON with B-R NEGATIVE (-10 to -12), so beat 06's fence would have rejected
+  that entire board, and B-G (+4..+6 on the face against cloak -29, rim -14,
+  tunic -32, hands -26) was the discriminant. NOTHING IS ASSUMED TO TRANSFER TO
+  THE NEW PLATE. The quad is traced afresh by scanlines on rows and columns no
+  hand occludes. AND THE CLIP PROTRUDES ABOVE THE BOARD on beat 08, so no
+  board-shaped quad and no fill_holes reaches it -- it has to be taken
+  deliberately. Noise scale is board-size dependent: 0.52/0.70 read as smoke,
+  1.20 as corduroy, 0.85 was right on beat 08 r3-s0's 170px board, and it is
+  RE-JUDGED BY EYE on whatever width the new plate gives.
+
+guards:
+  - "no gate: / gate_ref: keys anywhere."
+  - "distinct payload and out dirs."
+  - "publish glob carries the beat slug."
+  - "dry-run first."
+  - "sidecars carry approved: false, provisional, cost_usd 0."
+  - >-
+    NO plate_ack WAIVER. A lane tonight hit that refusal twice, declined the
+    waiver and published properly, because a 2026-08-14 job that took the
+    shortcut was cropping THE WRONG BEAT'S PLATE.
+  - >-
+    IF THE BOX PLATE CHECK CANNOT RUN BECAUSE THE PLATE IS LOCAL MPS, THAT IS A
+    WAIVER AND NOT A PASS. It is stated as a waiver and its failure modes are
+    discharged by hand, item by item, in the outcome.
+
+# ============================================================================
+# OUTCOME -- appended after every frame is OPENED. Empty at commit time on
+# purpose: this file is the pre-registration.
+# ============================================================================
+outcome: {}
