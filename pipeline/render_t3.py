@@ -942,8 +942,13 @@ def main() -> int:
     # The import is inside the try with the call: housekeeping bolted to the
     # front of an encode must never be the reason an encode does not happen.
     try:
-        from box_cache import sweep_git_tmp_packs
+        from box_cache import sweep_git_tmp_packs, sweep_stale_worktrees
         sweep_git_tmp_packs()
+        # Same bargain one directory up: a scratchpad worktree that is clean,
+        # already on origin/main and untouched for 12 h is a re-checkout nobody
+        # is using — 1275 MB of one was reclaimed on 2026-08-15. Conditions and
+        # the reasoning are in box_cache.prunable_worktrees.
+        sweep_stale_worktrees(dry_run=False)
     except Exception as _e:               # noqa: BLE001 — see above
         print(f"  tmp_pack sweep skipped ({type(_e).__name__}: {_e})")
 

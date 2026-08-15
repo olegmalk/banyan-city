@@ -238,6 +238,30 @@ def main() -> int:
             "any voice, footage or assembly is made from it. Bring them the script."
         )
 
+    # HOUSEKEEPING BEFORE THE FIRST FRAME. This renderer is the thing that fills
+    # the disk, so it is also the thing that should take some back first.
+    #
+    # Founder, 2026-08-15, at 99% full: "dude! i was running out of memory". The
+    # Mac went to the line three times that day. Two things were eating it and
+    # nothing removed either: failed `git repack` litter (~0.6 GB/day, and each
+    # failure makes the next likelier — see box_cache.stale_tmp_packs) and
+    # abandoned scratchpad worktrees, one of which was 1275 MB of a checkout a
+    # session had walked away from four days earlier. Both are pure waste: the
+    # worktree sweep removes a tree only when it is in the session scratchpad,
+    # untouched for 12 h, has no modified/untracked/IGNORED file, and sits on a
+    # commit already on origin/main — so `git worktree add` reproduces it exactly.
+    # A guard that lives in code beats a habit; that is why this is here and not
+    # in someone's checklist.
+    #
+    # The import is inside the try with the calls: housekeeping bolted to the
+    # front of a render must never be the reason the render does not happen.
+    try:
+        from box_cache import sweep_git_tmp_packs, sweep_stale_worktrees
+        sweep_git_tmp_packs()
+        sweep_stale_worktrees(dry_run=False)
+    except Exception as _e:               # noqa: BLE001 — see above
+        print(f"  disk sweep skipped ({type(_e).__name__}: {_e})")
+
     nodes = REPO / "genomes" / args.genome / "nodes"
     d = next(x for x in sorted(nodes.iterdir()) if x.is_dir() and x.name.startswith(args.node))
     shots = parse_shots((d / "shots.md").read_text())

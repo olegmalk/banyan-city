@@ -6,6 +6,8 @@
     python3 pipeline/box_cache.py fetch --page review/tonight/page.html
     python3 pipeline/box_cache.py fetch review/tonight/02-three-oh-seven.mp4
     python3 pipeline/box_cache.py disk            # refresh the /status tile
+    python3 pipeline/box_cache.py sweep           # report repack + worktree litter
+    python3 pipeline/box_cache.py sweep --yes     # and remove what it proved
 
 WHY THIS EXISTS. Roman, 2026-08-11: "fix the rendering storage issue in the
 background" — the laptop was down to 9.6 GiB free while the render box sat on
@@ -387,6 +389,177 @@ def sweep_git_tmp_packs(pack_dir=None, now=None, min_age_s=TMP_PACK_MIN_AGE_S,
         return {}
 
 
+# A scratchpad worktree younger than this may belong to a lane that is simply
+# between tool calls. Twelve hours is far longer than any lane's quiet spell and
+# far shorter than the days these sit around for: the one reclaimed on
+# 2026-08-15 was checked out on 08-11 and had been untouched for four days.
+SCRATCH_WORKTREE_MIN_AGE_S = 12 * 60 * 60
+
+# Session scratchpads live here. A worktree OUTSIDE this root is somebody's real
+# checkout — the main tree, a farm clone — and is never this function's business.
+SCRATCH_ROOT = Path("/private/tmp/claude-501")
+
+
+@dataclass(frozen=True)
+class WorktreeState:
+    """What must be known about a worktree before it can be called disposable."""
+    path: str
+    newest_mtime: float   # NEWEST FILE in the tree, never the directory's own
+    dirty: int            # `git status --porcelain --ignored` line count
+    on_origin: bool       # HEAD reachable from origin/main
+    in_scratch: bool      # under SCRATCH_ROOT
+
+
+def prunable_worktrees(states, now: float,
+                       min_age_s=SCRATCH_WORKTREE_MIN_AGE_S) -> list:
+    """Which worktrees are pure re-checkouts of pushed history, nothing using them.
+
+    WHY THIS EXISTS — measured on 2026-08-15, the night the Mac hit 98% full and
+    the founder said "dude! i was running out of memory". A session scratchpad
+    held a 1275 MB git worktree checked out four days earlier by a session that
+    had moved on. Nothing prunes these. Scratchpads grow ~4 GB/day and a stale
+    worktree is the single largest thing in one, because it is a whole checkout
+    of a repo whose media makes it a gigabyte a copy.
+
+    FOUR CONDITIONS, ALL LOAD-BEARING. A worktree is removed only if every one
+    holds, because each rules out a different way of destroying work:
+
+      * `in_scratch` — under SCRATCH_ROOT. The main checkout and the farm clones
+        are worktrees too and a path check is all that stands between this and
+        deleting one. Checked first and never inferred from the others.
+      * `now - newest_mtime >= min_age_s` — and `newest_mtime` is the NEWEST FILE
+        IN THE TREE, not the directory's mtime. THIS IS NOT A STYLE CHOICE. On
+        the night this was written, two session directories whose own mtime read
+        08-10 and 08-11 contained files written that same evening at 19:20 and
+        23:34 — lanes were live inside "old" directories. A directory mtime says
+        when its immediate entries last changed and goes stale while work
+        continues in subdirectories. Trusting it would have deleted a running
+        lane's tree, which is exactly what happened to a lane earlier that night
+        when a peer removed its scripts mid-run.
+      * `dirty == 0` — from `git status --porcelain --ignored`, which counts
+        modified, staged, untracked AND ignored files. Plain `--porcelain` is not
+        enough: it hides ignored files, and ignored is precisely what render
+        output is in this repo. A worktree holding one un-pushed clip must
+        survive, and that clip would be invisible without `--ignored`.
+      * `on_origin` — HEAD is an ancestor of origin/main. With the tree clean,
+        this makes every byte reconstructible by checking the commit out again.
+        A worktree sitting on a commit that was never pushed is the only copy of
+        that commit's arrangement of the tree, so it stays.
+
+    Together the last two are the rule "never delete the only copy of evidence"
+    written as something a machine can check: clean means nothing lives here that
+    is not in git, on-origin means what is in git is also somewhere else.
+
+    Pure, so the decision can be tested without a repository to wreck.
+    """
+    return sorted(s.path for s in states
+                  if s.in_scratch and s.dirty == 0 and s.on_origin
+                  and now - s.newest_mtime >= min_age_s)
+
+
+def newest_mtime(root: Path) -> float:
+    """mtime of the most recently touched FILE anywhere under `root`.
+
+    The directory's own mtime is not this number and using it would be a bug —
+    see the second condition in `prunable_worktrees`. `0.0` for an unreadable or
+    empty tree, which reads as "ancient" and is safe only because the other three
+    conditions still have to hold.
+    """
+    newest = 0.0
+    for p in root.rglob("*"):
+        try:
+            if p.is_file() and not p.is_symlink():
+                newest = max(newest, p.stat().st_mtime)
+        except OSError:
+            continue
+    return newest
+
+
+def scan_worktrees(git_fn=None, scratch_root=SCRATCH_ROOT) -> list:
+    """Current `WorktreeState` for every worktree git knows about."""
+    g = git_fn or git
+    states, path = [], None
+    for line in g("worktree", "list", "--porcelain").splitlines():
+        if line.startswith("worktree "):
+            path = line[len("worktree "):].strip()
+        elif line.startswith("HEAD ") and path:
+            head = line[len("HEAD "):].strip()
+            root = Path(path)
+            in_scratch = False
+            try:
+                in_scratch = root.resolve().is_relative_to(Path(scratch_root))
+            except (OSError, ValueError):
+                pass
+            if not in_scratch:            # never even stat the real checkouts
+                states.append(WorktreeState(path, 0.0, 1, False, False))
+                path = None
+                continue
+            dirty = len([x for x in subprocess.run(
+                ["git", "status", "--porcelain", "--ignored"], cwd=path,
+                capture_output=True, text=True, encoding="utf-8",
+                errors="replace"
+            ).stdout.splitlines() if x.strip()])
+            on_origin = subprocess.run(
+                ["git", "merge-base", "--is-ancestor", head, "origin/main"],
+                cwd=str(REPO), capture_output=True).returncode == 0
+            states.append(WorktreeState(path, newest_mtime(root), dirty,
+                                        on_origin, True))
+            path = None
+    return states
+
+
+def sweep_stale_worktrees(dry_run=True, now=None,
+                          min_age_s=SCRATCH_WORKTREE_MIN_AGE_S,
+                          scan=scan_worktrees, log=print) -> dict:
+    """Remove abandoned scratchpad worktrees. Reports by default, deletes on ask.
+
+    DRY RUN IS THE DEFAULT and the caller has to say `dry_run=False`. The reason
+    is the asymmetry: a sweep that reports something it should have deleted costs
+    a gigabyte until someone reads the line, and a sweep that deletes something
+    it should have reported costs a night of unattended rendering.
+
+    Removal goes through `git worktree remove`, not `rm -rf`, so the admin entry
+    under `.git/worktrees` goes with the files instead of being left dangling.
+
+    Fail-soft on every path, for the reason given in `sweep_git_tmp_packs`: this
+    is housekeeping bolted to the front of real work and must never be the thing
+    that stops the real work from happening.
+    """
+    try:
+        now = time.time() if now is None else now
+        states = scan()
+        doomed = prunable_worktrees(states, now, min_age_s)
+        kept = [s for s in states if s.in_scratch and s.path not in doomed]
+        for s in kept:                    # say why, so a wrong keep is visible
+            why = ("uncommitted/ignored files" if s.dirty else
+                   "HEAD not on origin/main" if not s.on_origin else
+                   f"active {(now - s.newest_mtime) / 3600:.1f}h ago")
+            log(f"  worktree kept: {s.path} ({why})")
+        freed, removed = 0, []
+        for p in doomed:
+            size = sum(f.stat().st_size for f in Path(p).rglob("*")
+                       if f.is_file() and not f.is_symlink())
+            if dry_run:
+                log(f"  worktree WOULD remove: {p} ({words(size)})")
+                freed += size
+                removed.append(p)
+                continue
+            r = subprocess.run(["git", "worktree", "remove", p],
+                               cwd=str(REPO), capture_output=True, text=True,
+                               encoding="utf-8", errors="replace")
+            if r.returncode != 0:
+                log(f"  worktree left {p} ({r.stderr.strip()[:120]})")
+                continue
+            log(f"  worktree removed: {p} ({words(size)})")
+            freed += size
+            removed.append(p)
+        return {"removed": removed, "freed": freed, "dry_run": dry_run,
+                "scanned": len(states)}
+    except Exception as e:                # never block the caller
+        log(f"  worktree sweep skipped ({type(e).__name__}: {e})")
+        return {}
+
+
 def local_candidates(hash_files=True) -> list:
     """Every gitignored media file under review/ and takes/, hashed.
 
@@ -722,6 +895,23 @@ def cmd_disk(a) -> int:
     return 0
 
 
+def cmd_sweep(a) -> int:
+    """Housekeeping that needs no box and no network: repack litter + worktrees.
+
+    Reports by default. `--yes` is what makes it delete, matching `reclaim`.
+    """
+    packs = sweep_git_tmp_packs()
+    if packs.get("removed") is not None and not packs.get("removed"):
+        print("  git repack litter: none")
+    wt = sweep_stale_worktrees(dry_run=not a.yes)
+    usage = shutil.disk_usage(str(REPO))
+    print(f"free {words(usage.free)} of {words(usage.total)}"
+          + ("  ⚠ below the warn line" if usage.free < WARN_BELOW else ""))
+    if not a.yes and wt.get("removed"):
+        print("  (report only — re-run `sweep --yes` to remove)")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--host", default=DEFAULT_HOST)
@@ -739,10 +929,12 @@ def main() -> int:
     fet.add_argument("paths", nargs="*")
     fet.add_argument("--page", help="pull back only the media this page embeds")
     sub.add_parser("disk")
+    swp = sub.add_parser("sweep")
+    swp.add_argument("--yes", action="store_true")
     a = ap.parse_args()
     a.root = a.root or list(DEFAULT_ROOTS)
-    return {"plan": cmd_plan, "reclaim": cmd_reclaim,
-            "fetch": cmd_fetch, "disk": cmd_disk}[a.cmd](a)
+    return {"plan": cmd_plan, "reclaim": cmd_reclaim, "fetch": cmd_fetch,
+            "disk": cmd_disk, "sweep": cmd_sweep}[a.cmd](a)
 
 
 if __name__ == "__main__":

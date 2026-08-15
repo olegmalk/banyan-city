@@ -365,6 +365,87 @@ def test_a_broken_or_absent_git_never_stops_the_caller():
           got["removed"] == [] and got["freed"] == 0)
 
 
+# ------------------------------------------------- stale scratchpad worktrees
+#
+# Each of the four conditions in prunable_worktrees gets a test that turns off
+# THAT ONE and leaves the rest good, because the failure being guarded against
+# is a condition quietly going missing. A worktree that is fine on three counts
+# and wrong on the fourth must still survive.
+
+DAY = 24 * 60 * 60
+
+
+def _wt(path="/private/tmp/claude-501/s/pub", newest=0.0, dirty=0,
+        on_origin=True, in_scratch=True):
+    """A worktree that is prunable, so a test can spoil exactly one thing."""
+    return bc.WorktreeState(path, newest, dirty, on_origin, in_scratch)
+
+
+def test_a_worktree_outside_the_scratchpad_is_never_prunable():
+    # The main checkout and the farm clones are worktrees too. This is the only
+    # thing standing between the sweep and somebody's real tree.
+    check("a clean, pushed, ancient worktree outside the scratchpad stays",
+          bc.prunable_worktrees([_wt(in_scratch=False)], now=DAY) == [])
+
+
+def test_a_worktree_with_uncommitted_or_ignored_files_stays():
+    # dirty counts `--porcelain --ignored`, so one un-pushed render output is
+    # enough to save the tree — that clip is the only copy of itself.
+    check("one dirty/ignored file keeps the whole worktree",
+          bc.prunable_worktrees([_wt(dirty=1)], now=DAY) == [])
+
+
+def test_a_worktree_off_origin_main_stays():
+    # Clean but unpushed: the commit exists nowhere else, so this checkout is
+    # the only copy of that arrangement of the tree.
+    check("a clean worktree on an unpushed commit is kept",
+          bc.prunable_worktrees([_wt(on_origin=False)], now=DAY) == [])
+
+
+def test_a_recently_touched_worktree_stays():
+    check("a worktree touched an hour ago is a live lane's",
+          bc.prunable_worktrees([_wt(newest=DAY - 3600)], now=DAY) == [])
+    check("eleven hours is still too young",
+          bc.prunable_worktrees([_wt(newest=0.0)], now=11 * 3600) == [])
+
+
+def test_a_stale_clean_pushed_scratch_worktree_goes():
+    check("twelve hours old, clean, pushed and in the scratchpad — removable",
+          bc.prunable_worktrees([_wt()], now=12 * 3600)
+          == ["/private/tmp/claude-501/s/pub"])
+
+
+def test_newest_mtime_sees_a_file_a_stale_directory_hides():
+    # The bug this exists to prevent, measured 2026-08-15: two session
+    # directories whose OWN mtime read days old held files written that evening.
+    # Reading the directory would have deleted a running lane's tree.
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        deep = root / "a" / "b"
+        deep.mkdir(parents=True)
+        fresh = deep / "lane-is-working.txt"
+        fresh.write_text("x")
+        os.utime(fresh, (2_000_000_000, 2_000_000_000))
+        os.utime(root, (1_000_000, 1_000_000))      # directory looks ancient
+        check("the directory's own mtime is old",
+              root.stat().st_mtime < 2_000_000)
+        check("newest_mtime finds the fresh file buried under it",
+              bc.newest_mtime(root) == 2_000_000_000)
+
+
+def test_the_worktree_sweep_defaults_to_deleting_nothing():
+    # A sweep that reports too much costs a gigabyte; one that deletes too much
+    # costs a night of unattended rendering. So dry_run is the default.
+    said = []
+    got = bc.sweep_stale_worktrees(scan=lambda: [_wt(newest=0.0)],
+                                   now=DAY, log=said.append)
+    check("the default run is a dry run", got["dry_run"] is True)
+    check("it says WOULD rather than claiming it removed anything",
+          any("WOULD remove" in s for s in said))
+    check("nothing was actually removed by a default call",
+          not any("worktree removed:" in s for s in said))
+
+
 def main() -> int:
     for fn in [
         test_a_file_with_a_verified_twin_is_reclaimable,
@@ -387,6 +468,13 @@ def main() -> int:
         test_nothing_but_a_tmp_pack_is_ever_touched,
         test_the_sweep_reports_garbage_and_in_pack_on_both_sides,
         test_a_broken_or_absent_git_never_stops_the_caller,
+        test_a_worktree_outside_the_scratchpad_is_never_prunable,
+        test_a_worktree_with_uncommitted_or_ignored_files_stays,
+        test_a_worktree_off_origin_main_stays,
+        test_a_recently_touched_worktree_stays,
+        test_a_stale_clean_pushed_scratch_worktree_goes,
+        test_newest_mtime_sees_a_file_a_stale_directory_hides,
+        test_the_worktree_sweep_defaults_to_deleting_nothing,
     ]:
         print(fn.__name__)
         fn()
