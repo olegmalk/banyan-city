@@ -98,6 +98,85 @@ def approval_of(node_dir: str) -> dict:
             "why": "" if approved_by else "no approved_by key (gate reads this as 'none')"}
 
 
+def guard_modules(repo: str, renderers=("ltx_i2v.py", "wan_i2v.py")) -> dict:
+    """IMPORT each renderer the way python will, and report what breaks.
+
+    WHY AN IMPORT AND NOT A FILE LIST. The first version of this scanned the
+    renderer's source for `from <mod> import ...` and checked whether
+    `<mod>.py` sat beside it. It passed cleanly against a checkout with
+    `prompt_budget.py` deliberately deleted -- because a scan keyed on "the
+    file is there" cannot see a sibling that is NOT there, which is the entire
+    failure. Listing the expected modules by hand fails the other way: it
+    closes this hole and misses the next guard someone adds.
+
+    Importing the renderer asks the only question that matters and asks it
+    exactly as the render will. It is also cheap: every renderer defers torch,
+    diffusers and transformers into function bodies (ltx_i2v's module docstring
+    is explicit that the encode/render split exists to keep weights out of the
+    process until needed), so module import is stdlib plus the sibling guards
+    and costs milliseconds.
+
+    Run in a SUBPROCESS with the render venv's own interpreter: a renderer that
+    raises on import must not take preflight down with it, and the answer is
+    only true for the python that will actually run the job.
+    """
+    import subprocess
+    pipeline = os.path.join(repo, "pipeline")
+    out = {}
+    for renderer in renderers:
+        script = os.path.join(pipeline, renderer)
+        if not os.path.isfile(script):
+            out[renderer] = "renderer ABSENT from this checkout"
+            continue
+        mod = renderer[:-3]
+        code = ("import sys; sys.path.insert(0, %r); import %s; print('ok')"
+                % (pipeline, mod))
+        try:
+            r = subprocess.run([sys.executable, "-c", code],
+                               capture_output=True, text=True, timeout=120,
+                               encoding="utf-8", errors="replace")
+        except (OSError, subprocess.SubprocessError) as exc:
+            out[renderer] = "could not run import probe: %s" % exc
+            continue
+        if r.returncode == 0 and "ok" in r.stdout:
+            out[renderer] = "imports ok"
+        else:
+            tail = (r.stderr or "").strip().splitlines()
+            out[renderer] = "IMPORT FAILED: %s" % (tail[-1] if tail else
+                                                   "rc=%d" % r.returncode)
+    return out
+
+
+def checkout_age(repo: str) -> dict:
+    """How old the commit under the card actually is. No network, no fetch.
+
+    A fetch here would be wrong twice over: it costs minutes on this repo (the
+    5-day gap that hid the missing guard was 2,171 files and 673 media blobs,
+    a 15-minute transfer) and preflight must never be the thing that stalls a
+    claim. The commit DATE is already on disk and answers the only question
+    that matters -- is the code under the card the code we think it is.
+    """
+    import subprocess
+    try:
+        r = subprocess.run(["git", "-C", repo, "log", "-1", "--format=%H %cI"],
+                           capture_output=True, text=True, timeout=30,
+                           encoding="utf-8", errors="replace")
+    except (OSError, subprocess.SubprocessError) as exc:
+        return {"head": None, "age_days": None,
+                "why": "git unavailable: %s" % exc}
+    if r.returncode != 0:
+        return {"head": None, "age_days": None,
+                "why": "git failed: %s" % r.stderr.strip()}
+    head, _, iso = r.stdout.strip().partition(" ")
+    try:
+        when = datetime.datetime.fromisoformat(iso)
+    except ValueError:
+        return {"head": head, "age_days": None, "why": "unparsable date %r" % iso}
+    now = datetime.datetime.now(datetime.timezone.utc)
+    age = (now - when.astimezone(datetime.timezone.utc)).total_seconds() / 86400.0
+    return {"head": head, "committed": iso, "age_days": round(age, 2), "why": ""}
+
+
 def clip_tokens(repo: str, texts: dict) -> dict:
     """Exact CLIP token counts, or an explicit refusal.
 
@@ -190,6 +269,10 @@ def main(argv=None) -> int:
                     help="absolute path a queued job would pass as --init; repeatable")
     ap.add_argument("--prompt-file", action="append", default=[],
                     help="file whose text is token-measured on the real tokenizer")
+    ap.add_argument("--max-age-days", type=float, default=2.0,
+                    help="BLOCK if the checkout's HEAD commit is older than this "
+                         "(default 2). Not a style rule: the guard that was "
+                         "missing on 2026-08-15 was 5 days out of reach")
     args = ap.parse_args(argv)
 
     nodes = args.node or list(DEFAULT_NODES)
@@ -207,6 +290,29 @@ def main(argv=None) -> int:
         report["repo_present"] = False
     else:
         report["repo_present"] = True
+        # PRESENT IS NOT CURRENT. Until 2026-08-15 this block checked only that
+        # the directory existed, and the box ran five days behind on a checkout
+        # whose renderer had no truncation guard because the guard file was
+        # written after the commit under the card. "The checkout is there" was
+        # true the whole time.
+        age = checkout_age(args.repo)
+        report["checkout"] = age
+        if age.get("age_days") is None:
+            problems.append("cannot determine checkout age (%s) -- an unknown "
+                            "commit under the card is the state this checks for"
+                            % age.get("why"))
+        elif age["age_days"] > args.max_age_days:
+            problems.append(
+                "checkout is %.1f days old (HEAD %s, limit %.1f). The renderer "
+                "under the card predates commits on main; fast-forward it "
+                "between jobs." % (age["age_days"], (age["head"] or "?")[:8],
+                                   args.max_age_days))
+
+        guards = guard_modules(args.repo)
+        report["guard_modules"] = guards
+        for renderer, state in guards.items():
+            if not state.endswith("ok"):
+                problems.append("%s: %s" % (renderer, state))
 
     report["gpu"] = torch_report()
     if not report["gpu"].get("cuda"):
