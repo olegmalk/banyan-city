@@ -1897,3 +1897,4 @@
 12:47:31Z box-runner idle ready=0 failed=28
 12:57:39Z box-runner idle ready=0 failed=28
 13:07:46Z box-runner idle ready=0 failed=28
+13:11:13Z STARTED task=ep2-b06-prop-0815-1786799465 attempt=1 on box-runner
