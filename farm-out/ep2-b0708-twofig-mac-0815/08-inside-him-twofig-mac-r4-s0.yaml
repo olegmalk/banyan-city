@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r4 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260727
+round: r4
+prompt_tokens_measured: 75/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, holding clipboard by one corner, clipboard facing viewer, green skinned goblin, pointed ears, patched cloak, grass field, treeline, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, hand over clipboard"
+what_this_frame_shows: >-
+  Two adult figures, correct identities, adjacent, same depth plane, grass field. But the board is held by the GOBLIN on the left, not by the guard, and the goblin's PALM AND FINGERS ARE SPREAD ACROSS THE MIDDLE OF ITS FACE - the exact beat-06 geometry this round was fired to prevent. The object also reads as a briefcase with a top handle rather than a clipboard. The guard's hands are empty at his sides.
+verdict_against_pre_registered_bar: "FAIL - bar 4 and bar 7 (board on the wrong character AND a hand across its face). The corner-grip wording produced the opposite of what it asked for."
+founder_verdict: null
+scored: false

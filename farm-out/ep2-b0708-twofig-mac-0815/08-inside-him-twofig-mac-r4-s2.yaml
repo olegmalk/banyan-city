@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r4 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262727
+round: r4
+prompt_tokens_measured: 75/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, holding clipboard by one corner, clipboard facing viewer, green skinned goblin, pointed ears, patched cloak, grass field, treeline, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, hand over clipboard"
+what_this_frame_shows: >-
+  TWO boards and a THIRD figure. The goblin at left holds a white clipboard with a chrome clip, gripped at its bottom-left corner with the face fully exposed - geometrically the best board of the whole job, but on the wrong character. The human at right holds a navy board gripped at the top, and a further disembodied arm and sleeve intrudes at the right frame edge attached to nothing. That human again reads as a CHILD: big round eyes, soft worried face, and his ears are slightly pointed.
+verdict_against_pre_registered_bar: "FAIL - bar 1 (a third figure's arm at the frame edge), bar 2 (the human reads as a child with pointed ears), bar 4 and bar 7 (the well-held board belongs to the goblin)."
+founder_verdict: null
+scored: false
