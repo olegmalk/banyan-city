@@ -1827,3 +1827,4 @@
 08:43:51Z box-runner idle ready=0 failed=27
 08:53:54Z box-runner idle ready=0 failed=27
 09:03:57Z box-runner idle ready=0 failed=27
+09:09:42Z STARTED task=ep2-b04-d1refs-0815-1786784975 attempt=1 on box-runner
