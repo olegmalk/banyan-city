@@ -248,3 +248,65 @@ waiver: >-
   than a dry run because it is judged on pixels; (e) the frames and this spec
   are committed and pushed so the next lane can open them rather than take this
   lane's word.
+
+# ============================================================================
+# OUTCOME, written after every frame was OPENED. 18 frames, 6 rounds, $0.
+# ============================================================================
+outcome:
+  beat_07: >-
+    A TWO-FIGURE PLATE NOW EXISTS. `07-confiscate-twofig-mac-r1-s0.png` clears
+    bars 1, 2, 3, 5 and 6: exactly two whole adult figures, an adult human guard
+    with ROUND ears beside an adult goblin with pointed ears, adjacent and in the
+    same depth plane on a sunlit field, no blush, neither infantile. NAMED FAULT
+    CARRIED FORWARD: the outstretched pointing arm is the GOBLIN'S, not the
+    guard's. `08-inside-him-twofig-mac-r3-s0.png` is arguably the BETTER beat-07
+    init, because there both figures stand with arms at rest, so the motion lane
+    has the gesture left to perform - which is exactly what the -lw wave's own
+    success line asks for ("the standing guard's arm lifts and extends with the
+    finger out").
+  beat_08: >-
+    A TWO-FIGURE PLATE WITH A MASKABLE BOARD NOW EXISTS:
+    `08-inside-him-twofig-mac-r3-s0.png`. It is the only frame of eighteen that
+    clears every axis at once, axis 7 included. Its board is gripped at the two
+    SIDE EDGES with only fingertips notching the rim - NO PALM AND NO FINGER
+    CROSSES THE FACE - which is the precise defect that dead-ended beat 06.
+    Measured, with the mask overlay opened and confirmed not to have leaked and
+    committed beside the frame as `...-r3-s0-FACEMASK.png`: exposed face
+    component 20141 px, bbox 215x164, largest fully unoccluded inscribed
+    rectangle 83x144 at 1.73:1, long edge 1/8.4 of frame height. Material is
+    dark maroon-brown with a chrome clip, which the bar deliberately does not
+    score.
+  the_honest_hit_rate: >-
+    ONE frame in fifteen for beat 08 and one in three for beat 07. Rounds 1, 4
+    and 3b were 0 of 3 each and are committed as evidence rather than deleted.
+    This is not a recipe that can be pointed at a batch.
+
+findings:
+  size_difference_is_a_giantess_tag: >-
+    `size difference` is the single worst tag tried here. On this checkpoint its
+    training mass is a GIANT beside a tiny person, and it made the goblin roughly
+    eight times the guard's height in 2 of 3 seeds. Deleting it was most of the
+    fix. It must not be used to express "one character is shorter than another".
+  wide_shot_is_too_wide: >-
+    A leading `wide shot` put the figures at 15-25 percent of frame height and
+    pulled in dark forest interiors with giant foreground trunks. `cowboy shot,
+    eye level` is the framing that makes two figures and a board readable.
+  the_guard_keeps_coming_back_elf_eared: >-
+    4 of 18 frames gave the HUMAN guard pointed elf ears - the named beat-07
+    defect - in every case with `elf` or `elf man` sitting in the negative. THE
+    NEGATIVE IS NOT THE LEVER FOR THIS. Whatever fixes it is positive-side or a
+    reference, and it is the first thing the next lane on these beats should
+    attack.
+  the_board_does_not_bind_to_a_named_character: >-
+    In 9 of 12 beat-08 frames that contained a board at all, the board attached
+    to the GOBLIN rather than to the guard, however the sentence was worded. The
+    two-handed chest grip (round 3) is the only wording that put it in the
+    guard's hands, and asking for a corner grip (round 4) moved it onto the
+    goblin in all three seeds AND put a palm across its face - the opposite of
+    the intent. Same law one level over: `arm outstretched, pointing at another`
+    attached to the goblin in 3 of 3 beat-07 frames. A VERB OR A PROP DOES NOT
+    BIND TO A NAMED CHARACTER IN A TWO-SUBJECT PROMPT ON THIS CHECKPOINT.
+  one_in_three_held: >-
+    The prior that roughly one take in three fails its action regardless of
+    framing held exactly: r3 s1 simply had no clipboard anywhere in frame on a
+    prompt whose whole subject was the clipboard.
