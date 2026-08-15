@@ -1,0 +1,405 @@
+# 2026-08-16, negative-vs-CFG lane. Beat 13, THE SHADE. THE TWO SAMPLES THAT
+# RESOLVE WHAT 68dbe136 LEFT OPEN, plus the matched control, ALL IN ONE JOB.
+# Generated, not hand-typed: the plate path, the plate sha, cover_crop.py's
+# source, the positive prompt, the full negative, the seed and every recipe flag
+# are READ OUT OF pipeline/jobs/ep2-b13-guidance-0815.yaml and asserted (the
+# generator's assertion output is quoted in section 7).
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#
+# 2. WHERE THIS LANE IS. Beat 13's control HOLDS: 32 distinct pictures across 97
+#    frames, effective 8 fps, period 3, depth 0.038. Eliminated by measurement,
+#    and NOT re-derived here:
+#      * WORDING -- five wordings, three seeds.
+#      * THE INIT PLATE AS AN ONSET LEVER -- 9/10 clips onset inside 0.25s.
+#      * THE 13-LATENT COUNT -- (97-1)//8+1 = 13 is correct, and the latent grid
+#        is period-8 while we measure period-3 (dfa87c27).
+#      * THE VAE/DECODE SIDE -- tiling ON vs OFF differed by 0.4 dB and nothing
+#        else, with a `--hold 3` positive control proving the harness could see
+#        a hold if one were there (70e3c79a).
+#      * STG at upstream's recommended stg_scale 1.0 / blocks [28] -- period
+#        3 -> 3, 32.0 -> 32.0 pictures, 8.0 -> 8.0 fps (369e4101).
+#      * THE 200-WORD PROMPT CEILING -- the premise was simply wrong. Beat 13's
+#        control prompt is 37 words / 58 Gemma tokens on the real tokenizer, and
+#        no beat-13 render has ever exceeded 216 words (68dbe136).
+#
+#    TWO levers have moved it, both in 68dbe136, and they are the reason this
+#    job exists:
+#
+#      arm                      period  pictures  eff.fps  depth
+#      control (guidance 2.0)      3      32.0      8.0    0.038
+#      guidance 1.0                2      48.0     12.0    0.035
+#      9px motion-blurred init     2      48.0     12.0    0.041
+#
+#    Two interventions with nothing mechanically in common, landing on EXACTLY
+#    the same three numbers, neither reaching period 1, all three arms holding
+#    at the same depth.
+#
+# 3. WHAT IS AMBIGUOUS, AND WHY EACH ARM IS THE MINIMUM TEST OF IT.
+#
+#    ARM B -- guidance 2.0, EMPTY negative. THE DECISIVE ONE. The guidance-1.0
+#    sample changed TWO things at once and cannot separate them:
+#    `do_classifier_free_guidance` is `(guidance_scale > 1.0)`, so at 1.0 there
+#    is no uncond pass and THE NEGATIVE IS NEVER READ. ltx_i2v.py documents this
+#    itself at `common = dict(...)`. You cannot have CFG 1.0 and a live
+#    negative -- but you CAN have CFG 2.0 and no negative, which is this arm.
+#    CFG strength is held at the control's 2.0; the uncond pass still runs; only
+#    the negative's CONTENT is removed. That content is:
+#
+#      "camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to
+#       another shot, scene change, different location, split screen, still
+#       image, freeze frame"
+#
+#    Eleven of those thirteen clauses forbid MOVEMENT of some kind. A negative
+#    that costs more motion than it buys is a live hypothesis, and if it is the
+#    lever then the fix is far cheaper than turning CFG off: prompt adherence
+#    survives, the uncond pass survives, and only the wording changes.
+#    MECHANICS, verified on the box rather than assumed: diffusers 0.39.0's
+#    LTX2 encode_prompt runs `negative_prompt = negative_prompt or ""`, so an
+#    empty negative file is EXACTLY the canonical unconditional embedding --
+#    the same thing upstream does when no negative is given at all.
+#
+#    ARM C -- guidance 1.5, FULL negative. The obvious untested midpoint, and
+#    the negative stays alive because 1.5 > 1.0. This is the test of the
+#    period-2 FLOOR hypothesis, which 68dbe136 raised explicitly as unproven
+#    from two samples: if period 2 / 48.0 pictures is a floor of this recipe,
+#    1.5 must land on 48.0 exactly. Anything strictly between 32.0 and 48.0
+#    falsifies the floor and says the relationship is continuous.
+#
+# 4. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#      control              period 3 | strength 0.923 | DEPTH 0.038 | 32.0
+#                           pictures | 8.0 eff. fps | no terminal freeze
+#                           (last change at frame 96 of 96)
+#      ARM B period 2 / 48.0  => the lever is THE NEGATIVE'S CONTENT
+#      ARM B period 3 / 32.0  => the lever is CFG STRENGTH
+#      ARM C exactly 48.0     => period 2 is a floor of this recipe
+#      ARM C strictly between => it is not a floor; the relationship is continuous
+#    Depth travels with every number because the metric is SCALE-FREE and reads
+#    a +-3% ripple like a freeze. Reference depths: b13 0.038, STG arm 0.059,
+#    b06-DONE 0.181, b02-FIXED 0.431, a clean VAE round trip 0.971.
+#
+# 5. THE TERMINAL FREEZE IS SCORED SEPARATELY AND MUST NOT BE CONFLATED WITH THE
+#    HOLD. Two bark clips on beats 06 and 10 are BIT-IDENTICAL from frame 62 to
+#    96 (consecutive-frame ncc 1.0000). Beat 13 has the hold and no wall. Two
+#    phenomena, two numbers, and an arm whose period improves while the clip
+#    dies at f62 is a PARTIAL result reported as one.
+#
+# 6. WHAT WILL NOT BE CLAIMED. Camera-scale estimates by chained NCC are
+#    currently UNRELIABLE on this bench: a lane showed the method rails to its
+#    search boundary when the fits fail, and gating it more strictly just
+#    samples frozen tails and reports 1.000x for the wrong reason. What is exact
+#    is consecutive-frame ncc = 1.0000. If this lane claims the camera moved it
+#    will say how that was established and name the method's limits. Apparent
+#    movement is never settled by eyeballing a contact sheet -- a lane made that
+#    exact error twice on this beat and the second time it reached a committed
+#    spec.
+#
+# 7. HOW THE THREE ARMS ARE KEPT MATCHED, AND THE GENERATOR'S OWN PROOF.
+#    ONE crop from an asserted plate sha. ONE ENCODER PROCESS writing both .pt
+#    files (Gemma loads once; `--jobs` carries two entries with the same
+#    prompt_file and different negative_file), so "identical positive
+#    conditioning" is a property of one process rather than an assumption about
+#    Gemma's determinism across runs. Step `verify-embeds` then PROVES it: it
+#    hashes the raw tensor bytes of both files and REFUSES unless
+#    prompt_embeds/prompt_attention_mask are byte-identical AND
+#    negative_prompt_embeds/negative_prompt_attention_mask differ. One seed
+#    (20260815). All three renders in one job. The three render steps are built
+#    from a SINGLE argv function whose only recipe parameter is guidance, and
+#    the generator asserts:
+#
+#      control vs empty-neg : recipe flags differing = NONE (only --jobs, which
+#                             is plumbing -- the variable lives entirely inside
+#                             the embeds file, and verify-embeds bounds it to
+#                             the negative half)
+#      control vs cfg 1.5   : recipe flags differing = ['--guidance']
+#      control vs ep2-b13-guidance-0815's render-control :
+#                             IDENTICAL modulo plumbing
+#
+#    Recipe, unchanged and NOT under test: 704x1280, 97 frames, 24fps, two-stage
+#    8@352x640 + 3@704x1280, distilled sigmas, image-crf 33, sequential offload,
+#    STG unpassed on all three arms.
+#
+# 8. NO RENDERER CODE IS TOUCHED. `--guidance` is a long-standing flag and the
+#    empty negative is a payload FILE, so this job yaml is the entire diff. The
+#    control doubles as the harness check: four independent jobs across three
+#    nights have returned clip sha256 42043851da4b246cfcd4e858cda828da992d0d48f
+#    15ef10d81d3a99c1ceb445a and init sha256 210932b760f70ef34b97f41a28d1905ef5
+#    358e5f6982110c3f2440884b8b5199. A FIFTH non-matching control INVALIDATES
+#    THIS JOB and gets reported as such rather than explained away.
+#
+# 9. THIS IS TWO SAMPLES AND NOTHING SCALES OFF THEM. In every arm measured so
+#    far NEITHER FIGURE ROCKS -- the prompt asks him to rock slowly forward and
+#    back and he holds the same folded pose across the clip. The previous lane's
+#    line is the standard: 48 pictures of the wrong thing is not a better beat
+#    than 32. On 2026-08-03 a recipe was picked on a steward's own metric,
+#    rendered across all fifteen beats, and came back "literally just frozen
+#    frames".
+id: ep2-b13-negcfg-0816
+task: ep2-b13-negcfg-0816
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 40
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: negative-vs-CFG lane (beat 13), 2026-08-16
+consumer: 'The two samples that resolve what ep2-b13-guidance-0815 left open. That job moved guidance 2.0 -> 1.0
+  and got period 3 -> 2, 32.0 -> 48.0 distinct pictures, 8.0 -> 12.0 effective fps -- but it changed TWO things
+  at once, because do_classifier_free_guidance is (guidance_scale > 1.0), so at 1.0 the negative prompt is never
+  read at all. ARM B (guidance 2.0, EMPTY negative) separates them: CFG strength is held at the control''s 2.0 and
+  only the negative''s CONTENT is removed. ARM C (guidance 1.5, FULL negative) is the untested midpoint and keeps
+  the negative alive because 1.5 > 1.0. Consumed by this lane''s report: hold period, trough/peak DEPTH, distinct-picture
+  count, effective fps and terminal-freeze index for all three arms, plus a consecutive-frame evidence sheet so
+  the next lane can cold-read the frames rather than the numbers.'
+success: 'Three 704x1280 97-frame mp4s from ONE crop of one asserted plate sha and ONE encoder process. THE BAR,
+  WRITTEN BEFORE THE FRAMES ARE LOOKED AT. The control has now been rendered by four independent jobs across three
+  nights and returned the same bytes every time -- clip sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a,
+  init 210932b760f70ef34b97f41a28d1905ef5358e5f6982110c3f2440884b8b5199 -- and it reads period 3, strength 0.923,
+  DEPTH 0.038, 32.0 distinct pictures in 97 frames, effective 8.0 fps, no terminal freeze (last change at frame
+  96 of 96). A FIFTH non-matching control INVALIDATES THIS JOB rather than being explained away: it would mean something
+  outside the one variable changed. ARM B, guidance 2.0 + empty negative: if it reads period 2 / 48.0 pictures /
+  12.0 fps then the lever the 1.0 arm pulled was THE NEGATIVE''S CONTENT and not CFG strength -- a far cheaper fix,
+  and one that keeps CFG''s prompt adherence. If it reads period 3 / 32.0 then CFG STRENGTH is the lever and the
+  negative''s text is innocent. ARM C, guidance 1.5: if period 2 is genuinely a FLOOR of this recipe then 1.5 must
+  land on exactly 48.0 as well; anything strictly between 32.0 and 48.0 falsifies the floor and makes the relationship
+  continuous, which is a different and more useful finding. NEITHER OUTCOME SCALES. 48 pictures of the wrong thing
+  is not a better beat than 32, and across every arm measured so far the figure never rocks -- he holds the same
+  folded pose. Apparent movement is settled by measurement and a cold read, never by eyeballing a contact sheet;
+  and note that camera-scale estimates by chained NCC are currently UNRELIABLE (they rail to the search boundary
+  when fits fail), so no camera claim is made from them here.'
+why: 'ep2-b13-guidance-0815 (68dbe136) is the first positive result this investigation has had after eliminating
+  prompt wording (5 wordings, 3 seeds), the init plate as an onset lever, the 13-latent count, the entire VAE/decode
+  side (tiling ON vs OFF: 0.4 dB and nothing else, with a positive control proving the test could see a hold) and
+  STG at upstream''s recommended 1.0/[28] (period 3 -> 3, 32.0 -> 32.0, 8.0 -> 8.0). It found TWO levers -- guidance
+  1.0, and a 9px motion-blurred init plate -- that have nothing mechanically in common and landed on EXACTLY the
+  same numbers. Both open questions it left are answerable with one job. (1) The guidance-1.0 arm is confounded:
+  ltx_i2v.py''s own comment at `common = dict(...)` records that do_classifier_free_guidance is (guidance_scale
+  > 1.0), so dropping to 1.0 both weakened guidance AND deleted the negative, whose text is ''camera pan, camera
+  tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen,
+  still image, freeze frame'' -- eleven of those thirteen clauses forbid MOVEMENT of some kind, so a negative that
+  costs more motion than it buys is a live and cheap hypothesis. diffusers 0.39.0''s LTX2 encode_prompt does `negative_prompt
+  = negative_prompt or ""` (inspected on the box), so an empty negative file is exactly the canonical unconditional
+  embedding, with the uncond pass still running at 2.0. (2) Period 2 was reached from two directions and never beaten;
+  1.5 is the obvious untested midpoint and the cheapest test of whether it is a floor. NO RENDERER CODE IS UNDER
+  TEST: --guidance is a long-standing flag and the empty negative is a payload file, so this job yaml is the entire
+  diff. $0, local card, no provider.'
+est_minutes: 30
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-negcfg-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees. He rocks
+    slowly forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-negative-FULL.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-negative-EMPTY.txt: ''
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-negcfg-0816\\\\b13-embeds-NEGFULL.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-negative-FULL.txt\"\
+    },\n {\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-embeds-NEGEMPTY.pt\",\n\
+    \  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-negative-EMPTY.txt\"}]"
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-control.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-embeds-NEGFULL.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-negcfg-0816\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\\
+    13-the-shade-NEG-full-cfg2p0-control.mp4\"}]"
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-emptyneg.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-embeds-NEGEMPTY.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-negcfg-0816\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\\
+    13-the-shade-NEG-empty-cfg2p0.mp4\"}]"
+  C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-cfg15.json: "[{\"beat\": 13,\n  \"seed\": 20260815,\n  \"embeds\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\b13-embeds-NEGFULL.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\\
+    ep2-b13-negcfg-0816\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-negcfg-0816\\\\13-the-shade-NEG-full-cfg1p5.mp4\"\
+    }]"
+  C:\banyan-farm\ep2-b13-negcfg-0816\verify_embeds.py: "\nimport hashlib, sys, torch\nA = r\"C:\\banyan-farm\\ep2-b13-negcfg-0816\\\
+    b13-embeds-NEGFULL.pt\"\nB = r\"C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-embeds-NEGEMPTY.pt\"\na = torch.load(A,\
+    \ map_location=\"cpu\")\nb = torch.load(B, map_location=\"cpu\")\ndef tb(t):\n    # bf16 has no numpy dtype;\
+    \ an int16 VIEW is the same bytes, not a conversion.\n    t = t.contiguous().cpu()\n    if t.dtype == torch.bfloat16:\n\
+    \        t = t.view(torch.int16)\n    return hashlib.sha256(t.numpy().tobytes()).hexdigest()\nlines = []\nok\
+    \ = True\nfor k in (\"prompt_embeds\", \"prompt_attention_mask\"):\n    ha, hb = tb(a[k]), tb(b[k])\n    same\
+    \ = ha == hb\n    ok = ok and same\n    lines.append(\"%-30s FULL %s  EMPTY %s  %s\" % (k, ha[:16], hb[:16],\
+    \ \"IDENTICAL\" if same else \"!! DIFFERS\"))\nfor k in (\"negative_prompt_embeds\", \"negative_prompt_attention_mask\"\
+    ):\n    ha, hb = tb(a[k]), tb(b[k])\n    diff = ha != hb\n    ok = ok and diff\n    lines.append(\"%-30s FULL\
+    \ %s  EMPTY %s  %s\" % (k, ha[:16], hb[:16], \"DIFFERS (expected)\" if diff else \"!! IDENTICAL\"))\nlines.append(\"\
+    shapes pos %s neg %s\" % (tuple(a[\"prompt_embeds\"].shape), tuple(a[\"negative_prompt_embeds\"].shape)))\n\
+    txt = \"\\n\".join(lines) + \"\\n\"\nopen(r\"C:\\banyan-farm\\ep2-b13-negcfg-0816\\b13-embeds-verify.txt\",\
+    \ \"w\", newline=\"\\n\").write(txt)\nprint(txt, flush=True)\nif not ok:\n    sys.exit(\"!! the two embeds files\
+    \ do not differ ONLY in the negative half -- refusing\")\nprint(\"VERIFIED: positive halves byte-identical,\
+    \ negative halves differ. The arms' only difference is the negative.\", flush=True)\n"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-negcfg-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-negcfg-0816\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-encode.json
+- name: verify-embeds
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-negcfg-0816\verify_embeds.py
+- name: render-control
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-control.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-negcfg-0816-control
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-negcfg-0816\bench-b13-control.jsonl
+  - --bench-label
+  - ep2-b13-negcfg-0816-control
+- name: render-emptyneg
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-emptyneg.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-negcfg-0816-emptyneg
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-negcfg-0816\bench-b13-emptyneg.jsonl
+  - --bench-label
+  - ep2-b13-negcfg-0816-emptyneg
+- name: render-cfg15
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-negcfg-0816\b13-jobs-render-cfg15.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '1.5'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-negcfg-0816-cfg15
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-negcfg-0816\bench-b13-cfg15.jsonl
+  - --bench-label
+  - ep2-b13-negcfg-0816-cfg15
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-negcfg-0816\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/13-the-shade-NEG-*.mp4*\")\n \
+    \            + glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/b13-init-704x1280.png\")\n             + glob.glob(\"\
+    C:/banyan-farm/ep2-b13-negcfg-0816/b13-embeds-verify.txt\")\n             + glob.glob(\"C:/banyan-farm/ep2-b13-negcfg-0816/bench-b13-*.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n  \
+    \  with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \" \
+    \ \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-negcfg-0816.sha256\"), \"w\", newline=\"\\\
+    n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest\
+    \ ->\", dst)\nraise SystemExit(0 if len(src) >= 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-negcfg-0816\13-the-shade-NEG-full-cfg2p0-control.mp4
+- C:\banyan-farm\ep2-b13-negcfg-0816\13-the-shade-NEG-empty-cfg2p0.mp4
+- C:\banyan-farm\ep2-b13-negcfg-0816\13-the-shade-NEG-full-cfg1p5.mp4
+- C:\banyan-farm\ep2-b13-negcfg-0816\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  Beat 13 is THE SHADE: "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees up
+  around his ears." One scavenger, no guards. Two silent motion takes on an approved node; no voice synthesis, no
+  episode assembly. The wording is arm 4''s word for word (ep2-b13-shade-cycle-s2-0815), read out of ep2-b13-guidance-0815''s
+  payload rather than retyped, and is NOT under test here. Three silent motion takes on an approved node; no voice
+  synthesis, no episode assembly.'

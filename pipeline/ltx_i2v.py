@@ -262,6 +262,33 @@ def stg_kwargs(stg_scale, stg_blocks) -> dict:
     return {"stg_scale": scale, "spatio_temporal_guidance_blocks": blocks}
 
 
+def sidecar_negative(negative: str, guidance: float) -> str:
+    """The negative as the sidecar should record it — with the caveat ONLY when true.
+
+    The negative prompt is dead weight on the distilled path AT GUIDANCE 1.0 AND
+    NOT OTHERWISE: `do_classifier_free_guidance` is `(guidance_scale > 1.0) or
+    (audio_guidance_scale > 1.0)` and audio defaults to the video scale, so CFG —
+    and with it the uncond pass that is the only thing that ever reads the
+    negative embeddings — is live for every guidance above 1.0.
+
+    Until 2026-08-16 the caveat was appended UNCONDITIONALLY, which made it FALSE
+    on every render above 1.0: our own job specs pass 2.0, so the sidecars of the
+    renders whose negative genuinely bit all claimed it "changed no pixel". A
+    provenance line that is wrong is worse than an absent one, because the next
+    lane reads it as a measurement. Sidecar text only — this has never touched a
+    pixel, at 1.0 or anywhere else.
+
+    Empty in, empty out: a render that was given no negative gets no caveat about
+    one, at any guidance.
+    """
+    if not negative:
+        return negative
+    if float(guidance) > 1.0:
+        return negative
+    return (negative + "\n[unused: guidance %g on the distilled path runs no "
+            "uncond pass, so this changed no pixel]" % float(guidance))
+
+
 def _weight_gib(module) -> float:
     """GiB of parameters + buffers, from element_size — a MEASUREMENT of the cast.
 
@@ -1259,9 +1286,7 @@ def _render_one(a, pipe, w, h) -> int:
     # own MODEL_LICENCE key rather than sharing the bf16 one and letting a reader
     # assume the look is attributable to the stock checkpoint.
     vmodel = "ltx23-distilled-fp8" if a.fp8_layerwise else "ltx23-distilled"
-    negative = (a.negative + "\n[unused: guidance 1.0 on the distilled path runs "
-                             "no uncond pass, so this changed no pixel]"
-                ) if a.negative else a.negative
+    negative = sidecar_negative(a.negative, a.guidance)
 
     for s in range(batch):
         # slot_out_path returns --out UNCHANGED at batch 1, so the default path
@@ -1296,8 +1321,10 @@ def _render_one(a, pipe, w, h) -> int:
              "seed_base": a.seed + s - a.beat, "id": a.task},
             beat=a.beat, seconds=round(clip_s, 3), steps=steps_note,
             size=a.size, prompt=a.prompt,
-            # Recorded verbatim, with the caveat attached, because a reader of
-            # this sidecar cannot otherwise tell that the negative was inert.
+            # Recorded verbatim, with the "inert" caveat attached ONLY when this
+            # run's guidance actually disabled the uncond pass — see
+            # sidecar_negative. A reader cannot otherwise tell whether the
+            # negative bit, and until 2026-08-16 the caveat said it never did.
             negative=negative,
             # offload and quantisation go in the SIDECAR and nowhere else. They are
             # not bench_row fields and must not become them: BENCH_FIELDS is one

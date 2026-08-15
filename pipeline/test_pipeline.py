@@ -2093,6 +2093,58 @@ def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
            "two beats writing the same file is refused")
 
 
+def test_sidecar_only_calls_the_negative_inert_when_it_is():
+    """The "changed no pixel" caveat must be FALSE-proof, not unconditional.
+
+    THE DEFECT, live from the guidance flag's arrival until 2026-08-16:
+    `_render_one` appended "[unused: guidance 1.0 ... changed no pixel]" to every
+    sidecar whose negative was non-empty, whatever guidance had actually been. Our
+    beat specs pass `--guidance 2.0`, so the sidecars of the renders whose negative
+    genuinely DID bite all published a line saying it had not. Sidecar text only —
+    it never touched a pixel — but a provenance line that is wrong is worse than an
+    absent one, because the next lane reads it as a measurement rather than as a
+    note. The 2026-08-15 CFG lane found it and left it alone because another lane
+    held the file.
+
+    The truth condition is upstream's, not ours: diffusers' LTX2 pipeline sets
+    `do_classifier_free_guidance = (guidance_scale > 1.0) or (audio_guidance_scale
+    > 1.0)` and audio defaults to the video scale, so the uncond pass — the only
+    thing that ever reads the negative embeddings — runs for every guidance ABOVE
+    1.0 and for none at or below it.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import ltx_i2v as L
+
+    NEG = "camera pan, zoom, still image, freeze frame"
+    INERT = "changed no pixel"
+
+    at2 = L.sidecar_negative(NEG, 2.0)
+    check("guidance 2.0 does NOT claim the negative was unused", INERT not in at2)
+    check("guidance 2.0 records the negative verbatim", at2 == NEG)
+    check("guidance 1.5 does NOT claim the negative was unused",
+          INERT not in L.sidecar_negative(NEG, 1.5))
+    # The boundary itself: 1.0 is NOT > 1.0, so CFG is off and the caveat is true.
+    at1 = L.sidecar_negative(NEG, 1.0)
+    check("guidance 1.0 does say the negative was unused", INERT in at1)
+    check("guidance 1.0 still records the negative itself", at1.startswith(NEG))
+    check("guidance 0 says the negative was unused",
+          INERT in L.sidecar_negative(NEG, 0.0))
+    # A run given no negative gets no caveat about one, at any guidance.
+    check("an empty negative stays empty at 1.0", L.sidecar_negative("", 1.0) == "")
+    check("an empty negative stays empty at 2.0", L.sidecar_negative("", 2.0) == "")
+    # argparse hands guidance through as a float, but a jobs-built namespace or a
+    # hand-written test can carry the string; the caveat must not flip on the type.
+    check("a string guidance is read as a number",
+          INERT not in L.sidecar_negative(NEG, "2.0"))
+
+    # And the unconditional form must not come back: no literal caveat text may
+    # sit anywhere in the file except inside sidecar_negative itself.
+    src = (REPO / "pipeline" / "ltx_i2v.py").read_text(encoding="utf-8")
+    fn = src.split("def sidecar_negative", 1)[1].split("\ndef ", 1)[0]
+    check("the caveat text lives in exactly one function",
+          src.count("changed no pixel]") == fn.count("changed no pixel]") == 1)
+
+
 def test_the_conditioning_plate_is_the_episode_crop(tmp: Path):
     """The crop that frames a video plate must be the crop that frames the cut.
 
@@ -9323,6 +9375,7 @@ def main():
         test_ltx_dispatch_routes_by_video_model(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
+    test_sidecar_only_calls_the_negative_inert_when_it_is()
     with tempfile.TemporaryDirectory() as td:
         test_the_conditioning_plate_is_the_episode_crop(Path(td))
     with tempfile.TemporaryDirectory() as td:
