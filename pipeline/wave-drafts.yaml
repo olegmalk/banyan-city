@@ -2598,6 +2598,53 @@ beats:
       no knight, no clipboard, no metal clip, no spring clip, no white paper, no lined
       paper, no white background, no plain background, no character sheet, no dark, no
       night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b06_prop2` -- 2026-08-15, the prop lane, ROUND 2 AND THE LAST WORDING
+    # ROUND. `authored_b06_prop` ANSWERED THE MECHANISM QUESTION AND THE ANSWER WAS YES:
+    # deleting the noun killed the defect outright. Across the 12 scored frames (r0, r1,
+    # r2; r3 discarded as the declared duplicate) the chrome spring clip and the white
+    # lined paper appear ZERO times -- 12/12 clean, against 24/24 defective before it.
+    # WORDING REACHES THE PROP. The "the reference owns the prop the way it owns the
+    # location" reading is DEAD, and it died on frames rather than on an argument.
+    #
+    # BUT THE BEAT IS NOT UNBLOCKED, AND ROUND 1'S PASS BAR WAS TOO LOOSE -- said plainly
+    # because the bar was mine. It required the object to read as "BARK OR WOOD ... and
+    # NO metal hardware and NO white lined paper" and said nothing about BOARD-NESS, so
+    # 8 of 12 satisfied it while ZERO of 12 produced a board anyone could read from. What
+    # the frames actually hold: bark scraps and lumps cupped in the palms (r0 s0/s2/s3,
+    # r1 s3, r2 s3), a curved bark strip (r0 s1), a round log cross-section with growth
+    # rings (r1 s1), a cylindrical branch (r1 s2), and NOTHING AT ALL in four (r1 s0,
+    # r2 s0/s1/s2). Material solved, geometry not. `slab` and `in both hands` together
+    # bought a thing you CUP, not a thing you READ.
+    #
+    # AND A SECOND, NEW DEFECT THE ROUND EXPOSED: r2 went to a LITERAL TREE in 4 of 4 --
+    # a trunk filling the frame, the guard touching bark that is still attached to it.
+    # `a flat slab of TREE bark` put the word `tree` next to a background that already
+    # says `treeline`, and the composition followed it. So `tree` comes OUT of the prop
+    # phrase here; `bark` alone still means bark in a field, and `treeline` stays because
+    # the background wants it.
+    #
+    # THIS ROUND RESTORES BOARD-NESS AND NOTHING ELSE: a NEUTRAL board noun that carries
+    # no office-clip prior (`board`, not `clipboard`), plus the three geometry words the
+    # frames say are missing -- `large`, `flat`, `rectangular`. The five hardware fences
+    # STAY, because they are what worked. This is exactly the one bounded round that
+    # `authored_b06_prop`'s own pre-registered FAIL-ABSENT clause allowed -- "a neutral
+    # noun (`board`, `tablet`) restored to the positive with the hardware fences kept" --
+    # written before that render existed, not invented after seeing it.
+    #
+    # IF THIS ONE ALSO COMES BACK SCRAPS, LOGS OR EMPTY HANDS, THE WORDING LEVER IS DONE.
+    # Round 1 proved wording moves the prop's MATERIAL; round 2 is the test of whether it
+    # can move the prop's GEOMETRY. Two failures on geometry is enough, and the next
+    # lever is a reference tile that CONTAINS a bark board, or an inpaint pass on the
+    # prop region -- not a third draft. No seed-rolling.
+    authored_b06_prop2: >-
+      A guard man in a brown tunic and sash stands in green summer grass, a hedge and
+      dark treeline behind, pale sky, short brown hair, turning over a large flat
+      rectangular board of rough brown bark in both hands and looking down at it.
+      Cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no armor, no helmet, no knight, no clipboard, no metal clip, no spring clip, no
+      white paper, no lined paper, no white background, no plain background, no
+      character sheet, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used

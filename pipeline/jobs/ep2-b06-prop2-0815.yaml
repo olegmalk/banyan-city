@@ -1,0 +1,219 @@
+# 2026-08-15, prop lane, ROUND 2 -- AND THE LAST WORDING ROUND, declared as such here
+# rather than discovered later.
+#
+# 1. THE SCRIPT LINE, quoted from the live approved leaf:
+#
+#      "GUARD 2 turns over a clipboard made of bark and reads."
+#
+#    THE ACTION THIS JOB DRAWS: one guard turning over the bark board in both
+#    hands and looking down at it. Unchanged from round 1 -- only the words
+#    describing the OBJECT'S GEOMETRY have moved.
+#
+# 2. WHAT ROUND 1 SETTLED, ON FRAMES. ep2-b06-prop-0815 fired
+#    `authored_b06_prop`, which deleted the noun `clipboard` from the positive and
+#    fenced it plus its hardware into the negative. Across the 12 scored frames
+#    (r0, r1, r2; r3 discarded as the pre-declared duplicate of r0):
+#
+#      CHROME SPRING CLIP: 0/12.   WHITE LINED PAPER: 0/12.
+#
+#    Against 24/24 defective before it. WORDING REACHES THE PROP -- the reading
+#    that the reference owns the prop the way it owns the location is DEAD, and
+#    it died on frames, not on an argument. That is the finding round 1 bought,
+#    and it is what makes this round worth firing rather than escalating.
+#
+# 3. WHAT ROUND 1 DID NOT BUY, AND MY OWN BAR WAS PART OF THE PROBLEM. Round 1's
+#    pre-registered PASS asked that the object read as "BARK OR WOOD ... and NO
+#    metal hardware and NO white lined paper" and SAID NOTHING ABOUT BOARD-NESS.
+#    8 of 12 satisfied it. ZERO of 12 produced a board anyone could read from.
+#    That bar was too loose and it was mine; it certified the material axis and
+#    quietly let the axis the beat actually needs go unmeasured. Recorded rather
+#    than reinterpreted, because a bar that only ratchets down is worthless.
+#
+#    WHAT THE 12 FRAMES ACTUALLY HOLD:
+#      bark scraps/lumps cupped in the palms  r0 s0, r0 s2, r0 s3, r1 s3, r2 s3
+#      a curved bark strip                    r0 s1
+#      a round log cross-section, growth rings r1 s1
+#      a cylindrical branch                   r1 s2
+#      NOTHING AT ALL / empty hands           r1 s0, r2 s0, r2 s1, r2 s2
+#    Material solved; geometry not. `slab` plus `in both hands` bought a thing
+#    you CUP, not a thing you READ.
+#
+# 4. THE SECOND DEFECT ROUND 1 EXPOSED, and the reason one word is deleted here:
+#    r2 went to a LITERAL TREE in 4 of 4 -- a trunk filling the frame, the guard
+#    touching bark still attached to it. `a flat slab of TREE bark` put `tree`
+#    beside a background that already says `treeline`, and the composition
+#    followed. `tree` therefore comes OUT of the prop phrase. `bark` alone still
+#    means bark in a field; `treeline` stays because the background wants it.
+#
+# 5. THE RECIPE CHANGE, ONE HYPOTHESIS: RESTORE BOARD-NESS, CHANGE NOTHING ELSE.
+#    A neutral board noun that carries no office-clip prior (`board`, never
+#    `clipboard`) plus the three geometry words the frames say are missing --
+#    `large`, `flat`, `rectangular`. THE FIVE HARDWARE FENCES STAY, because they
+#    are precisely what worked: clipboard, metal clip, spring clip, white paper,
+#    lined paper, all lifted by `_NEGATION` at ZERO positive-token cost.
+#
+#    THIS IS THE ONE BOUNDED ROUND ROUND 1 ALREADY AUTHORISED. Its FAIL-ABSENT
+#    clause, written before that render existed, said the absent-object outcome
+#    "buys EXACTLY ONE more round -- a neutral noun (`board`, `tablet`) restored
+#    to the positive with the hardware fences kept". Four of twelve came back
+#    empty-handed, so that clause fired and this is it being spent, not a new
+#    permission invented after seeing the frames.
+#
+# 6. TOKEN BUDGET, MEASURED ON THE BOX WITH THE REAL CLIP TOKENIZER before this
+#    file was written:
+#      positive 65/77   (nothing dropped)
+#      negative recipe 77 -> sent 77   (NOTHING dropped; only `text` deduplicated)
+#      count tag '1boy' (draft declares '1boy')   STYLE ANCHOR PRESENT: True
+#    `realistic skin texture` and `jpeg artifacts` -- the anti-photoreal guards
+#    that eight fences evicted in round 1 -- are both present in the sent string.
+#
+# 7. THE PREDICTION, WRITTEN BEFORE THE RENDER EXISTS, AND IT CAN LOSE.
+#    Judged BY OPENING FRAMES, never by a metric. 12 scored frames (r3 discarded).
+#
+#    PASS -- in a MAJORITY of the 12, the held object reads as A BOARD: flat,
+#    broadly rectangular, and BIG ENOUGH TO READ FROM (spanning the width of both
+#    hands or more -- forearm scale, not palm scale), of bark or wood, with no
+#    metal clip and no white paper. Then the prop is solved, the same construction
+#    goes to beat 10, and both beats get bark-correct plates.
+#
+#    FAIL-GEOMETRY -- the majority still come back scraps, lumps, discs, branches
+#    or empty hands. SAID PLAINLY NOW: THE WORDING LEVER IS THEN DONE. Round 1
+#    proved wording moves the prop's MATERIAL; this round tests whether it moves
+#    the prop's GEOMETRY, and two failures on geometry is enough. The next lever
+#    is a REFERENCE TILE CONTAINING A BARK BOARD, or an inpaint pass on the prop
+#    region -- NOT a third draft, and not seed-rolling. That gets reported as
+#    loudly as a pass.
+#
+#    FAIL-TREE -- if the literal-tree composition persists in the majority even
+#    with `tree` deleted from the prop phrase, then the tree came from the
+#    REFERENCE SLOT and not from the word, which is a different finding with a
+#    different fix (re-cut r2's slot) and it does not by itself retire the
+#    wording lever for geometry.
+#
+# 8. THE REFERENCE SET, VERIFIED BY HASH ON THE BOX, unchanged from round 1 so
+#    that round 1 and round 2 differ ONLY in the draft:
+#      s0 26062b66dfcf9b22   s1 725a2c1163971f85
+#      s2 293afe818773176a   s3 26062b66dfcf9b22  (DECLARED duplicate of s0)
+#    The tile a98aa7c261afab4b that degraded the cast to balloon heads appears in
+#    NO slot. SCORE r0, r1 AND r2 ONLY -- r3 rides the duplicate reference and its
+#    four frames are discarded. Stated BEFORE the render, as in round 1.
+#
+# 9. NO GOBLIN IS IN THIS FRAME. Beat 06 is a guard beat (1boy) on a
+#    founder-approved cast, which is why it is queueable while 07, 08, 18 and 19
+#    are not. A still plate on an approved node -- no voice, no assembly.
+id: ep2-b06-prop2-0815
+task: ep2-b06-prop2-0815
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+sample: true
+owner: prop lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. Beat 06 is THE CLIPBOARD -- "GUARD 2 turns over a clipboard made of
+  bark and reads." -- guards only, no goblin. A still plate on an approved node.'
+consumer: 'The prop geometry, which is the last thing standing between beats 06 and 10 and usable
+  plates now that round 1 has settled both the location (reference) and the material (wording).
+  A pass sends the same construction to beat 10 immediately and hands the ep2 motion lane
+  bark-correct inits for both beats. A failure retires the wording lever for good and redirects
+  the next effort at a reference tile or an inpaint pass -- which is itself the deliverable,
+  because three beats are queued behind this one mechanism and the answer decides which lever
+  the next hour spends itself on.'
+success: 'Sixteen frames; r0, r1 and r2 scored by OPENING FRAMES, r3 discarded as a declared
+  duplicate. Pass is a MAJORITY of the 12 scored frames in which the held object reads as a
+  BOARD -- flat, broadly rectangular, spanning the width of both hands or more, of bark or wood,
+  with no metal clip and no white paper -- while beat 06''s location holds (green grass, hedge or
+  dark treeline, pale sky) and the cast reads as ruled: adult, short brown hair, brown tunic and
+  sash, no armor, no helmet. THE FAILURE IS A REAL RESULT AND GETS REPORTED AS LOUDLY AS A PASS:
+  if the majority are still scraps, discs, branches or empty hands, wording cannot reach the
+  prop''s GEOMETRY, the wording lever is retired, and the next lever is a reference tile
+  containing a bark board or an inpaint pass -- not a third draft. See clause 7 for the third,
+  distinguishable tree outcome.'
+why: 'ONE SAMPLE, one recipe change, one beat -- the single bounded round that round 1''s own
+  pre-registered FAIL-ABSENT clause authorised before that render existed. Round 1 established on
+  frames that wording reaches the prop (chrome clip and white paper 0/12, against 24/24 before),
+  so the remaining question is narrow and worth one more sample: can wording also reach the
+  prop''s geometry. $0, local card, no provider. The GPU went to zero when round 1 published, so
+  this fires now rather than tonight.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815
+  - --draft-key
+  - authored_b06_prop2
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815
+  - --draft-key
+  - authored_b06_prop2
+  - --arm
+  - window4
+  - --task
+  - ep2-b06-prop2-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (06-the-clipboard) the sampler actually writes. A
+  # glob without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b06-prop2-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-prop2-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/06-the-clipboard-*\"))\npngs = [f for f\
+    \ in src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b06-prop2-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815\06-the-clipboard-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815\06-the-clipboard-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-prop2-0815\06-the-clipboard-ipa-r3-w015-s0.png
