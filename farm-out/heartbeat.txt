@@ -1833,3 +1833,4 @@
 09:15:10Z STARTED task=ep2-b09-scene2-0815-1786785307 attempt=1 on box-runner
 09:15:16Z FAIL task=ep2-b09-scene2-0815-1786785307 rc=1 step=dry
 09:19:51Z STARTED task=ep2-b09-scene3-0815-1786785582 attempt=1 on box-runner
+09:22:40Z DONE task=ep2-b09-scene3-0815-1786785582 rc=0 artifacts=4
