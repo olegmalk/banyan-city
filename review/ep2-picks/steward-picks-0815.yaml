@@ -115,8 +115,235 @@ structural_findings_0815:
       a steward pick would put words in the founder's mouth, so this pass leaves
       all 148 sidecars byte-unchanged and records its picks here.
 
-# Results are appended below as each read returns.
 results:
-  job_1_picks: PENDING
-  job_2_recovered_picks: PENDING
-  job_3_next_steps: PENDING
+
+  # =====================================================================
+  # JOB 2 — THE FIVE MISSING PICKS. Done directly, not delegated.
+  # =====================================================================
+  job_2_recovered_picks:
+
+    the_mechanism_of_the_gap:
+      finding: >-
+        The five picks were not lost through carelessness. THE OUTPUT FILENAMES
+        DO NOT NAME THEIR OWN BEAT. Every task directory on the results branch
+        for beats 02, 03, 04, 13, 14, 15, 16, 17, 19 and 20 contains its clip
+        under the name `13-remake-LTX-0813.mp4`, and every beat 21 directory
+        contains `21-the-answer-LTX-poolD-0812.mp4`. The output name was
+        inherited from the job template and never re-derived per beat.
+      corroborating: >-
+        The same carry-over hits the other artifacts in each directory: all of
+        them, including beat 21's, ship an init plate called
+        `b13-init-704x1280.png` and a bench log called `bench-b13-remake.jsonl`.
+        Beat 21's own directories carry a b13 init filename.
+      why_this_caused_the_gap: >-
+        Anyone recording a pick by filename would have written down
+        `13-remake-LTX-0813.mp4` for five different beats, which is worse than
+        writing nothing. Recording nothing was the correct instinct. The fix is
+        that THE DIRECTORY, not the filename, is the identifier.
+      the_record_is_recoverable_after_all: >-
+        The .mp4.meta.yaml sidecar inside each directory carries the correct
+        `shot_beat` and `task`. So beat identity survives in the sidecar even
+        though it is destroyed in the filename. That is what makes the four
+        recoveries below evidence rather than guesses.
+      distinctness_proven: >-
+        The mp4 git blob hashes differ across every directory, so these are
+        genuinely different renders and not one file copied ten times. Within a
+        beat, the A and B twins SHARE an identical init-plate blob and differ
+        only in seed — which is exactly what an A/B seed pair should look like.
+
+    frame_count_discriminator:
+      finding: >-
+        Beats 03, 04, 13 and 16 all ship on 4.042-second clips. At the frozen
+        24fps that is 97 FRAMES. Beat 21 ships on 5.042 s = 121 frames.
+      why_it_matters: >-
+        done-definitions.yaml already records two facts that only make sense
+        together with this one: "the dead-air finding came off a 97-frame clip
+        and none of the five recorded picks is 97 frames", and the resurvey note
+        that the recorded picks "are all 121 frames". The 97-frame clip that
+        produced the dead-air finding was therefore one of the UNRECORDED
+        beats — almost certainly one of these four. The dead-air finding and the
+        record gap are the same set of clips seen from two directions.
+
+    '03':
+      status: RECOVERED TO THE ROUND AND THE PAIR
+      pick: "ep2-b03-refire-0814  (twin: ep2-b03-refireB-0814)"
+      paths:
+        - farm-out/ep2-b03-refire/13-remake-LTX-0813.mp4      # seed 20260806
+        - farm-out/ep2-b03-refireB/13-remake-LTX-0813.mp4     # seed 20260931
+      branch: origin/farm-results-rtx5090
+      blob_sha1_A: 09d64de115bdbd87729aa14e88adbe3e817960f9
+      blob_sha1_B: 059b6a54097b2ea36250fc9f86a873370f9401ee
+      evidence:
+        - "The recorded verdict and shipping fault both begin `purple gone;` — that phrase is only meaningful against the eggplant_fix of 2026-08-14, which reads `the purple object is GONE from all five refires. Removing the blanket fig clause fixed it completely`."
+        - "The only beat 03 renders that postdate that fix are the refire pair, committed to the results branch at 2026-08-14 17:32:42 and 17:38:44 as `hb: DONE ep2-b03-refire-0814` / `-refireB-0814`."
+        - "Their sidecars carry `shot_beat: 3` and `task: ep2-b03-refire-0814`, so beat identity is confirmed from the render's own provenance, not inferred from the directory name."
+        - "`rounds_used: 2` in the record matches a two-legged A/B round and nothing later exists for this beat."
+      residual_ambiguity: >-
+        WHICH LEG, A or B, is not determinable. The verdict is one sentence
+        describing one outcome and never mentions a seed. Both legs are named
+        above rather than one being guessed.
+
+    '04':
+      status: RECOVERED TO THE ROUND AND THE PAIR
+      pick: "ep2-b04-refire-0814  (twin: ep2-b04-refireB-0814)"
+      paths:
+        - farm-out/ep2-b04-refire/13-remake-LTX-0813.mp4      # seed 20260806
+        - farm-out/ep2-b04-refireB/13-remake-LTX-0813.mp4     # seed 20260931
+      branch: origin/farm-results-rtx5090
+      blob_sha1_A: 44d44a7a5d1ff8de0392efb7e4c1aac5abd176c7
+      blob_sha1_B: ce34f594090f61a4e0209acf4f6741638b9ea163
+      evidence:
+        - "Same `purple gone;` opening, so same post-eggplant_fix refire batch."
+        - "Committed 2026-08-14 17:44:41 and 17:50:50, contiguous with the 03 and 13 pairs in one batch that runs 17:32 to 18:02."
+        - "Sidecars carry `shot_beat: 4`, `task: ep2-b04-refire-0814`."
+        - "`rounds_used: 2` matches the A/B pair."
+      residual_ambiguity: >-
+        A vs B undetermined. NOTE the verdict says "it reads young, but that is
+        the s0 reference he chose" — that names a REFERENCE (s0), not a seed, so
+        it does not discriminate the two legs. Reading it as a seed marker would
+        be the exact kind of plausible-looking invention this job forbids.
+
+    '13':
+      status: RECOVERED TO THE ROUND AND THE PAIR
+      pick: "ep2-b13-refire-0814  (twin: ep2-b13-refireB-0814)"
+      paths:
+        - farm-out/ep2-b13-refire/13-remake-LTX-0813.mp4      # seed 20260806
+        - farm-out/ep2-b13-refireB/13-remake-LTX-0813.mp4     # seed 20260931
+      branch: origin/farm-results-rtx5090
+      blob_sha1_A: 9f9b6070bfa1e2593a2eb16fd44d6b76469f0227
+      blob_sha1_B: ea9ef3f461364486e926a5ff68bb891641ccfc3d
+      evidence:
+        - "Same `purple gone;` opening, same batch."
+        - "Committed 2026-08-14 17:56:57 and 18:02:49, closing the batch."
+        - "Sidecars carry `shot_beat: 13`, `task: ep2-b13-refire-0814`."
+        - "This is the ONE beat whose directory name and filename agree by coincidence — the template filename `13-remake-LTX-0813.mp4` happens to be beat 13's. That coincidence is what makes the filename look trustworthy elsewhere and is worth naming so nobody re-derives the wrong lesson from it."
+      residual_ambiguity: A vs B undetermined.
+
+    '16':
+      status: RECOVERED TO THE ROUND AND THE PAIR, and one leg is TESTABLE
+      pick: "ep2-b16-anim-0814  (twin: ep2-b16-animB-0814)"
+      paths:
+        - farm-out/ep2-b16-anim/13-remake-LTX-0813.mp4        # seed 20260806
+        - farm-out/ep2-b16-animB/13-remake-LTX-0813.mp4       # seed 20260961
+      branch: origin/farm-results-rtx5090
+      blob_sha1_A: 5e656e958d6ed841e3706eba0da0a9e2d7c6c229
+      blob_sha1_B: 131675cdadb07f732d5ad093b71bcb31caae2d73
+      evidence:
+        - "`rounds_used: 1` — beat 16 had exactly ONE round, so the pick must come from it, and the anim/animB pair committed 2026-08-14 18:32:41 and 18:38:45 is the only beat 16 animation round on the branch."
+        - "Sidecars carry `shot_beat: 16`, `task: ep2-b16-anim-0814`."
+        - "`ep2-b16-nw-0815/16-why-LTX-nw.mp4` is EXCLUDED: it is dated 0815, is a negative-weight probe, and postdates the verdict, so it cannot be what the verdict was about."
+      how_to_settle_the_A_B_leg: >-
+        Beat 16 is the only one of the five whose verdict names a frame-level
+        property that can be tested against the video: "the opening frame is
+        goblin-forward and sharp, then the composition jumps to leaf-forward by
+        f40", and the round result says "A large leaf fills the frame from f40
+        on". Extract both clips and check which one actually makes that jump at
+        f40. This is $0 and needs no GPU — `git show` the blob to a local file
+        and read it with pipeline/coldread_frames.py using DENSE CONSECUTIVE
+        frames. NOT ATTEMPTED YET; named here so it is not lost.
+
+    '21':
+      status: RECOVERED TO THE ROUND AND THE PAIR
+      pick: "ep2-b21-daylight-0814  (twin: ep2-b21-daylightB-0814)"
+      paths:
+        - farm-out/ep2-b21-daylight-0814/21-the-answer-LTX-poolD-0812.mp4    # seed 20260902
+        - farm-out/ep2-b21-daylightB-0814/21-the-answer-LTX-poolD-0812.mp4   # seed 20260918
+      branch: origin/farm-results-rtx5090
+      blob_sha1_A: 149d1ef0e10b39f230cb578f595d2aa894a95c5f
+      blob_sha1_B: 113c05c65f8265507678eaa3a6392866769dc3f3
+      evidence:
+        - "The recorded status is not a bare SHIP — it is `SHIP — the daylight round fixed it`. The status names the round, and only one round on the branch is the daylight round."
+        - "`in_flight: ep2-b21-daylight + twin` names the task id and its twin verbatim in the beat's own entry. The recovery is the record catching up with a name it already contained."
+        - "`understandable_reason` confirms the same round shipped: `the daylight plate swap landed and the leaf now holds its outline, tilts over and STOPS`."
+        - "Committed 2026-08-14 12:38:15 and 12:44:42, before the 17:32-18:02 refire batch, consistent with beat 21 being further along than 03/04/13."
+        - "5.042 s = 121 frames, matching the recorded picks rather than the 97-frame group — again consistent with it being a later, separate round."
+        - "Rounds 1-4 are all EXCLUDED by the record's own text: rounds 2 and 3 morph or split the leaf, and round 4 is the poses round whose result was `still narrows` plus a banded look. Only the daylight round is described as fixing it."
+      residual_ambiguity: A vs B undetermined.
+
+    honest_summary: >-
+      Five of five recovered to a named task id, a directory, a branch, a git
+      blob hash and a seed — enough to fetch and hash any of them, which is the
+      capability beat 11 proved we need. NONE is resolved to a single A/B leg,
+      because the verdicts are one-sentence and seed-blind. Recording the pair
+      is the truthful state of the record; recording one leg would be the
+      manufactured record this job exists to avoid. Beat 16's leg is settleable
+      by a frame test and that test is specified above.
+
+  # =====================================================================
+  # JOB 1 — SCORING. Partial. State as of writing, per beat.
+  # =====================================================================
+  job_1_picks:
+
+    '07':
+      status: NOT SCORED — DELIBERATELY OUT OF SCOPE, and now moot
+      why_not_scored: A lane is scoring beats 06/07/09; the brief's own constraints ruled 07 out.
+      superseding_finding: >-
+        Beat 07 is stopped at the PLATE, not the score. Its plate has one figure
+        and no scavenger, and it carries goblin ears on a guard tunic because
+        two of its four plate jobs point at goblin references. No pick should be
+        taken from that set at all.
+
+    '19':
+      status: ALL CANDIDATES FAIL — and this is settled by the record, not by a read
+      answered_from: >-
+        Beat 19's own retroactive definition of done, written 2026-08-15, answers
+        the scoring question outright and makes the read unnecessary.
+      verbatim_from_the_definition: >-
+        "WIDE enough to hold the whole sapling and him at once; the fruit STARTS
+        ON THE STEM, falls, strikes his head and lands. Blocked: every plate we
+        have puts the fruit already on the ground, and a fall cannot be shot from
+        that. Awaiting the founder's call — new plate with the fruit aloft, or
+        the beat becomes him finding it."
+      what_a_passing_plate_needs: >-
+        The fruit ALOFT AND ATTACHED TO THE STEM at frame one, with the framing
+        wide enough to hold the branch it hangs from, his head, and the ground at
+        his feet in one shot. Every candidate fails on the first clause alone:
+        a fall cannot be animated from a plate where the fruit has already
+        landed. This is a plate-content failure, not a quality failure, so no
+        amount of re-scoring the 32 existing stills can produce a pick.
+      THIS_IS_A_TASTE_CALL_FOR_THE_FOUNDER: >-
+        The record explicitly parks it on him and names the two options: a new
+        plate with the fruit aloft, or rewriting the beat so it becomes him
+        FINDING the fruit. The second option changes what the story shows, which
+        is R4. Hand this up rather than deciding it.
+
+    '08':
+      status: NOT SCORED YET — scorer dispatched, result not returned
+      but_superseded: See job_3_next_steps.'08' — beat 08 is blocked on a missing capability, so a pick from the existing stills cannot close it either way.
+
+    '15':
+      status: NOT SCORED YET — scorer dispatched and asked to report partial; result not returned at time of writing
+      note: >-
+        Its definition of done was written mid-flight, so the scorer was re-briefed
+        against it: "he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in
+        shot is the whole point of the beat — a close-up of him looking up at
+        nothing fails it however well he acts."
+      candidate_count: 28 stills across 4 directories, only 8 of which are a real candidate set.
+
+    '17':
+      status: NOT SCORED YET — scorer dispatched, result not returned
+      note: >-
+        Its new definition CORRECTS the criteria this scorer was originally given.
+        I briefed it on the staging law; the definition says the staging law does
+        NOT apply to beat 17: "NOTE the turn takes his face away from the lens by
+        design, so the staging law does not apply here: this is the one beat where
+        turning away IS the action." The scorer has been re-briefed. Any verdict
+        it produced before that re-brief would have failed candidates for the one
+        thing this beat is supposed to do.
+
+    '20':
+      status: NOT SCORED YET — scorer dispatched, result not returned
+      note: >-
+        Definition of done: "BOTH HANDS to the fruit, then the look UP to a branch
+        that is visibly BARE — the empty stem is the evidence and must be in
+        frame." The bare-branch clause is the hard one and is the same physical
+        state beat 19 lacks, from the other side.
+
+    scoring_caveat_that_applies_to_all_of_them: >-
+      Ten beats had no definition of done until 2026-08-15 — 02, 03, 04, 08, 13,
+      14, 15, 17, 19 and 20 — and all ten were written retroactively while this
+      scoring pass was in flight. Any verdict formed before its beat's definition
+      landed was formed against nothing, and is being re-checked against the
+      definition rather than kept.
+
+  job_3_next_steps: PENDING — see the report; recorded in the next commit.
