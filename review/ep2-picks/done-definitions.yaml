@@ -662,3 +662,168 @@ record_gap_0815:
     NOT guessing. Several of these beats have a dozen or more takes on the results branch and picking
     the plausible one would manufacture a record rather than recover one. Named here so it can be filled
     by whoever actually made the calls, or by re-picking on purpose.
+blind_read_0815_b05_b06_b10:
+  date: '2026-08-15'
+  status: >-
+    BLIND VERDICTS RECORDED. Nothing above is deleted or rewritten by this block. The sighted ruling it
+    answers stays in the record beside it, and where the two disagree BOTH readings are written down
+    below rather than one being resolved away by assertion.
+  why_this_block_exists: >-
+    Beats 05, 06 and 10 were re-read for identity drift after beat 11's pick was ruled a broken take
+    (`beats.11.override_third_check_0815`, `miss_analysis_b11_0815`, and the ranking in
+    `resurvey_candidates_0815` which put exactly these three at highest risk). The lane running that
+    re-read dispatched SIX blind readers and none returned inside two hours - scheduler saturation - so
+    it ruled on its own SIGHTED read and said so explicitly, calling that "precisely the weaker
+    instrument the identity bar was written to replace". Its ruling was: all three NAMED FAULT, no
+    escalation. That ruling was provisional by its own terms. ONE blind reader has now returned, and its
+    verdicts are recorded here verbatim because the provisional ruling asked for exactly this.
+  reader_conditions: >-
+    Ten consecutive frames per set, scored against that clip's own init plate, grade-matched. The reader
+    had no filenames, no hashes, no beat numbers, no story context and no statement that the three sets
+    were related. The lane kept the mapping out of the reader's tree; it is recorded here so the verdicts
+    can be attached to takes.
+  mapping:
+    N: beat 05, pick ep2-b05-standB-0814, frames f110-f119
+    R: beat 06, pick ep2-b06-scene-0814r, frames f34-f43
+    V: beat 10, pick ep2-b10-pairB-0814, frames f110-f119
+  verdicts:
+    '05':
+      set: N
+      pick: ep2-b05-standB-0814
+      frames_read: f110-f119, ten consecutive
+      score: 5/10
+      ordinary_viewer_test: '"Yes-but."'
+      headline_verbatim: >-
+        "Two figures in both, and you can tell they're meant to be the same pair... but the older man has
+        been visibly de-aged and softened into a different-looking person."
+      marked_morphology_not_pose: >-
+        Reference adult: "mid-30s: heavy straight brow, hard square jaw, deep-set narrow eyes". The frames:
+        "teenager or early-20s - rounder cheeks, soft short chin, thin arched brows, larger rounder eyes".
+        The reader marked this MORPHOLOGY, not pose, and called it "the single biggest change in the set".
+      costume_faults_absent_from_the_reference:
+      - an orange horizontal tab on the LEFT CHEST of BOTH figures, in every frame
+      - two-tone trousers with a pale-teal panel
+      prop_fault: >-
+        THE PROPS SWAPPED HANDS. In the reference the boy holds the teal clipboard and the man carries a
+        grey-blue slab. In the frames the man holds both and the boy's hands are empty.
+      relation_to_the_recorded_shipping_fault: >-
+        The record already says "the two guards read younger and softer-drawn than the guards in beats 06
+        and 11" (`beats.05.shipping_fault`). The blind read does not contradict that - it sharpens it from
+        a drawing-style remark into a MORPHOLOGY finding on a specific figure, and adds a chest tab, a
+        trouser panel and a prop reassignment that the existing fault line does not mention.
+    '06':
+      set: R
+      pick: ep2-b06-scene-0814r
+      frames_read: f34-f43, ten consecutive
+      score: 6/10
+      ordinary_viewer_test: '"Yes-but."'
+      identity_fault: >-
+        EYE COLOUR BLUE -> DARK BROWN, marked morphology by the reader and explicitly "not a lighting
+        effect".
+      costume_fault: a YELLOW-GOLD ROUND BADGE on the left chest in every frame, absent from the reference
+      prop_fault: >-
+        THE PROP IS REPLACED ENTIRELY. The reference is a wide shallow dark-rimmed tray held HORIZONTALLY
+        carrying loose white sheets and a pen; the frames are a tall brown board held VERTICALLY, densely
+        scribbled, with a pale-blue clip tab. Knee-height boots also appear that the reference does not have.
+      what_holds: face, hair, skin tone and coat cut all hold across the ten frames.
+      continuity_within_the_clip: >-
+        One soft step between frame-05 and frame-06 of the set - the board lifts and slides right and its
+        ruled lines redraw - which the reader still read as continuous motion rather than a cut. Consistent
+        with `standard_0815.scoring_method`; not filed as a fault.
+      figure_count_disagreement: SEE reconciliation.contradiction_on_beat_06 - this is the one place the
+        two reads flatly disagree.
+    '10':
+      set: V
+      pick: ep2-b10-pairB-0814
+      frames_read: f110-f119, ten consecutive
+      score: 7/10 - LEAST CHANGED of the three
+      ordinary_viewer_test: '"Yes, with a beat of hesitation on the younger one."'
+      what_holds: >-
+        The adult is "nearly a direct match" - jaw, brow and narrow eyes survive intact. Costume holds
+        throughout, and there is NO badge and NO chest tab in this set.
+      identity_fault: >-
+        The younger figure "has aged up several years in the drawing" - narrower longer face, smaller more
+        angular eyes, sharper chin. The reader marked this MORPHOLOGY, beyond what the head turn explains.
+      prop_fault: >-
+        Both reference props are replaced by a SINGLE BLANK ORANGE-TAN BOARD held jointly by the two figures.
+      note_on_direction: >-
+        Worth seeing beside beat 05: on 05 the adult is de-aged toward the boy, on 10 the boy is aged up
+        toward the adult. Both are the two figures converging in age, from the same shared plate - see
+        corroboration_shared_plate_n_and_v.
+  reconciliation:
+    escalation_ruling_stands: >-
+      CONFIRMED, NOT OVERTURNED. None of the three is a beat-11 case. Beat 11 scored 1/10 with a character
+      plainly replaced mid-clip; these score 5, 6 and 7, and on the ordinary-viewer test the blind reader
+      answered "yes-but", "yes-but" and "yes" - never "no". The sighted lane reached the right escalation
+      call on the weaker instrument, and the blind read is what makes that call safe to keep. All three
+      remain SHIP WITH FAULT NAMED. No beat moves to broken on this read.
+    named_faults_are_understated_and_are_extended_here: >-
+      The escalation call survives; the fault descriptions do not. The sighted ruling's faults are thinner
+      than what the blind reader found, and these additions are part of the shipping record for each beat:
+      (05) the older figure is DE-AGED, marked morphology and the largest single change in the set, not
+      merely "softer-drawn"; (06) EYE COLOUR flips blue to dark brown, marked morphology, plus a background
+      figure the reader says is missing entirely; (10) the YOUNGER figure is AGED UP, marked morphology
+      beyond the head turn; and on ALL THREE the props are reassigned or replaced - swapped hands on 05,
+      a different object on 06, both props collapsed into one shared board on 10. Prop identity is not
+      currently a clause in `standard_0815.a_beat_is_DONE_when`; on this evidence it drifts as reliably as
+      faces do, and three of three picks fail it.
+    contradiction_on_beat_06: >-
+      RECORDED AS A DISAGREEMENT, NOT RESOLVED. The sighted ruling stated that no figure loses its count on
+      beat 06. The blind reader states the opposite about the reference side: "the reference has a SECOND,
+      smaller figure standing in the right background, back turned, arms raised holding up a phone or
+      tablet. That figure is absent from all ten frames." Both readings are on the record above and neither
+      is being deleted. LIKELY EXPLANATION, offered as a hypothesis and not as a finding: these are
+      different claims about different things - the sighted lane was reading count WITHIN the ten frames,
+      where nothing appears or disappears, while the reader is comparing frames to the PLATE, so this would
+      be the RENDER not matching its init plate rather than drift inside the clip. That is plausible and it
+      is unverified. WHAT WOULD SETTLE IT: open ep2-b06-scene-0814r's init plate and its frames f34-f43 and
+      COUNT THE FIGURES in each - one look decides it, costs nothing, needs no render. Until someone does
+      that, beat 06 carries an open question and not an answer.
+    sampling_caveat_do_not_read_as_a_defect: >-
+      The reader found sets N and V "completely static" across their ten frames. Those sets were sampled at
+      f110-f119, the TAIL of 121-frame clips, where stillness is expected and is what the trim pass already
+      measured - `trim_pass_0815.results.05` and `.10` both record long decels into a dead tail. This is NOT
+      evidence of a frozen clip and must not be logged as a new fault. It IS a caveat on the read itself:
+      ten frames from the tail can test identity against the plate, which is what was asked, but they cannot
+      test whether identity drifts DURING the action, which is how beat 11 failed at f16-f21. The one set
+      sampled mid-clip, R at f34-f43, is the only one of the three whose read covers moving frames.
+  corroboration_shared_plate_n_and_v: >-
+    WORTH THE RECORD: with no filenames, no hashes and no statement that the sets were related, the reader
+    independently observed that "N and V share the identical reference image (same file, byte-for-byte size,
+    visually identical)". That matches the md5 finding that beats 05 and 10 were conditioned on the SAME
+    init plate. Two consequences. First, it is a check on the read - a reader who spots a shared conditioning
+    image unprompted is looking at the pixels, which is some evidence the rest of the report is too. Second,
+    and this is the operational one: the "younger and softer" fault that beats 05 and 10 have both carried
+    as an open cross-beat question (`beats.05.open_question` says "the same one as beat 10 ... ONE answer
+    settles both beats") is now attributable to ONE PLATE. It is one fault, not two, and one plate fix
+    addresses both beats.
+  what_this_does_not_cover: >-
+    Five other blind readers never returned; this is ONE reader's verdicts, on three sets, ten frames each,
+    two of the three sampled from the dead tail. It is enough to keep the no-escalation call and to extend
+    the named faults. It is not a two-reader confirmation and is not recorded as one.
+spurious_chest_marking_0815:
+  date: '2026-08-15'
+  status: SYSTEMATIC RENDER ARTIFACT - filed as one pattern, not three incidental faults
+  finding: >-
+    A CHEST MARKING THAT IS NOT IN THE PLATE NOW APPEARS IN THREE BEATS. Beat 05: an orange horizontal tab
+    on the LEFT CHEST of BOTH figures in every frame read, absent from the reference. Beat 06: a yellow-gold
+    round badge on the LEFT CHEST in every frame read, absent from the reference. Beat 11: the materialising
+    yellow badge already on the record around f34. Same body location, same class of object, three different
+    beats, all on the 0814 guard recipe.
+  why_it_is_filed_as_one_thing: >-
+    Recorded separately these read as three cosmetic nits, each too small to hold a beat. Recorded together
+    they are one behaviour of the recipe - it invents insignia on a tunic chest - and that is a single
+    addressable cause. One fix would clear all three. Filing it as three incidental faults would guarantee
+    nobody ever fixes any of them.
+  it_also_moves_beat_11: >-
+    Beat 11's badge was logged as an oddity of a clip that was already broken for a different reason. With
+    05 and 06 beside it, it is not an oddity of that clip - it is the same artifact appearing in a third
+    place, and it is the only one of the three that was observed MATERIALISING mid-clip rather than being
+    present in every frame.
+  next_step_costs_nothing: >-
+    NOT a render question first. Check whether the chest marking is present in the guard PLATES themselves
+    and simply invisible at plate scale, or whether the recipe is adding it - that is a look at the plates
+    and at the prompt text, at $0. Only if the plates are clean is this a recipe fault.
+  not_yet_checked: >-
+    Beats 09 and 10 read for this specifically: beat 10's blind read reports NO badge and NO chest tab, so
+    the artifact is not universal. The other closed guard beats have not been checked for it.
