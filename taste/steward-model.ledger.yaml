@@ -17632,3 +17632,74 @@
     the fix is not more caution in the retelling - it is that the evidence lands in the repo at the
     moment it is produced, so the retelling has somewhere to point.
   outcome: null
+
+- id: CORRECTION-plate-check-DID-refuse-all-six-cards-0815
+  date: 2026-08-15
+  kind: correction
+  what: >-
+    A claim reached two lane reports that plate_check would not have caught the six costume cards,
+    four of them scoring 0.236, 0.287, 0.052 and 0.056, well under the threshold. That is wrong and it
+    should stop being repeated. The six -lw jobs that actually animated cards score 0.750, 0.828,
+    0.909, 0.913, 0.836 and 0.968 cropped, and all six are REFUSED. I ran that measurement myself when
+    the check was built and it is reproducible: on that wave it is six refused, eleven passed, two
+    unfetchable, zero false alarms.
+  what_went_wrong_in_the_other_measurement: >-
+    It measured -r2- SIBLING SEEDS from the same sweeps - files no job ever named as its --src. The
+    code path was right, the numbers were real and reproducible, and the FILE SELECTION was wrong,
+    which is why both sides looked solid from where they stood.
+  this_is_a_fifth_member_of_the_family: >-
+    Same shape as the pooled cadence median and the relative onset reference: a correct computation
+    over the wrong set. It matters because it shows the family is not confined to statistics over time
+    series - it applies to any measurement where "which things did you measure" is a separate question
+    from "did you measure them correctly", and the second question is the one people check.
+  what_is_actually_true_about_the_check: >-
+    A REFUSAL is trustworthy; believe it. A PASS IS NOT CLEARANCE - it means only that no blank-paper
+    card was detected, and it is blind to world-absence, since a single fruit on a flat cream gradient
+    scores 0.060 and sails through. The classes interleave at the image level and no threshold fixes
+    that: a legitimate night field reads 0.489, above tight portraits at 0.052-0.287, and sibling seeds
+    inside the very sweeps that produced the six cards read 0.282, 0.492 and 0.583, so a source map
+    picking one of those walks through the guard. The refs-level split is clean where the image-level
+    split is not. The harm was never the refusal, it was a pass being read as clearance, and the
+    enqueue guard now says so and ends in OPEN THE INIT.
+  outcome: null
+
+- id: FAMILY-members-six-and-seven-the-wrong-set-and-the-unmatched-grade-0815
+  date: 2026-08-15
+  kind: law
+  extends: FAMILY-the-statistic-that-answers-a-different-question-0815
+  what: >-
+    Two more arrived within the hour, from different lanes, neither about time series.
+  member_six_the_wrong_set: >-
+    plate_check's flatness measured over -r2- sibling seeds rather than the files jobs actually pointed
+    at. Arithmetic right, code right, numbers reproducible, POPULATION wrong. "Which things did you
+    measure" is a separate question from "did you measure them correctly", and only the second one
+    tends to get audited.
+  member_seven_the_unmatched_grade: >-
+    Raw pixel distance from the shared init ran 29 / 59 / 65 across three clip lengths; after matching
+    colour it becomes 30 / 26 / 52. Most of the apparent identity drift in the raw numbers was COLOUR,
+    not character - and the graded figure then puts the 97-frame LOWEST, reversing the blind reader's
+    ordering entirely, because global pixel distance is dominated by framing and motion rather than by
+    faces. Any drift measurement must grade-match first or it is measuring the grade.
+  the_line_to_keep: >-
+    From the lane that ran it, and it is the right summary of the whole night: "the blind read is the
+    finding; the metric is not corroboration."
+  outcome: null
+
+- id: METHOD-record-the-blind-read-mapping-when-you-commission-it-0815
+  date: 2026-08-15
+  kind: method
+  what: >-
+    The lead tried to reach a blind reader directly to recover which label was which beat, and its
+    transcript was gone. The mapping existed only in a scratchpad file and in my own context, and I had
+    already died once on an API error earlier the same night. Had that happened again between
+    commissioning and reporting, five clips would have needed re-reading and a broken beat would have
+    sat undiscovered.
+  rule: >-
+    Record the label-to-subject mapping in the ledger AT COMMISSION TIME, not at report time. A blind
+    reader's labels are only recoverable while its dispatcher still holds them, and the dispatcher is
+    the least durable part of the system.
+  for_this_pass: >-
+    CLIP-A = ep2-b11-finalB-0814 = beat 11. CLIP-B = ep2-b06-scene-0814r = beat 06. CLIP-C =
+    ep2-b10-pairB-0814 = beat 10. CLIP-D = ep2-b12-tightB = beat 12. CLIP-E = ep2-b05-standB-0814 =
+    beat 05. Verified by sha against the results branch rather than from memory.
+  outcome: null
