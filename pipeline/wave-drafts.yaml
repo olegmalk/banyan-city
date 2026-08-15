@@ -3094,6 +3094,24 @@ beats:
     # and register words have lost every time this week.
     # Beat 09 is a close-up, so the world is a band behind him rather than a full
     # landscape -- the same concession beat 04 got, and for the same reason.
+    # -- `authored_b09_scene2` -- 2026-08-15, the plate lane. Same correction as beat 06's
+    # `authored_b06_scene2`, and the same evidence: `authored_b09_scene` came back a costume
+    # card on a blank pale ground because it conditioned on `refs-charref-guards-r5-0812`, a
+    # reference SHEET, while beats 05 and 11 got a real field out of the same kind of sentence
+    # by conditioning on `refs-guards-twoinfield-0813`. The adapter owns the composition.
+    #
+    # BEAT 09 IS A CLOSE-UP and that is the one thing this has to hold onto against a
+    # two-figure reference: Guard 1's face working through it. So the cast clause carries both
+    # men (matching the reference, and beat 09 has both in the field) and the close is stated
+    # as the shot -- `close on the nearer one's face` -- immediately after the scene, where
+    # beat 10 round 1 proved a clause has to sit to get any weight at all.
+    authored_b09_scene2: >-
+      Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
+      and dark treeline behind, pale blue morning sky above, short brown hair, close on the
+      nearer one's face working slowly through an idea, eyes drifting, mouth slightly open.
+      Cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no
+      armor, no helmet, no knight, no white background, no plain background, no character
+      sheet, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b09_scene: >-
       A guard man in a brown tunic and sash in green summer grass, a treeline and pale sky
       behind, short brown hair, close on his face working slowly through an idea, eyes
