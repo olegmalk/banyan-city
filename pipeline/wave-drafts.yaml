@@ -2527,6 +2527,77 @@ beats:
       no helmet, no knight, no weapon, no jewelry, no ornament, no long eyelashes, no
       lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_b06_prop` -- 2026-08-15, the prop lane. ONE SAMPLE, ONE QUESTION:
+    # CAN WORDING MOVE THE PROP AT ALL, when the reference does not contain one?
+    #
+    # Beat 06's script line, from the live approved leaf: "GUARD 2 turns over a
+    # clipboard made of bark and reads." The base draft ALREADY SAYS BARK -- and every
+    # one of 24 frames across beats 06 and 10 came back a modern navy board with a
+    # chrome spring clip and white lined paper, the beat-10 close-ups showing the metal
+    # hardware unmistakably. The reference swap to `refs-guards-twoinfield-nos2-0815`
+    # fixed LOCATION 24/24 (real green field, hedge, treeline, sky, zero costume cards)
+    # and did NOTHING for the prop. So wording has failed AND the reference is silent on
+    # it: the prop is a separate, unsolved axis, and this key is the one clean test of
+    # the wording lever before the next lever costs a reference build or an inpaint pass.
+    #
+    # WHY THE WORDING HAS NEVER ACTUALLY BEEN TESTED -- and this is the whole idea:
+    # EVERY ATTEMPT KEPT THE NOUN. "a bark clipboard" is one weak adjective against a
+    # head noun whose training prior IS the navy-board-with-chrome-clip office object,
+    # and CLIP weights the head noun far above its modifiers. The variable under test
+    # was never "bark vs no bark" -- it was "one adjective vs a very strong noun", and
+    # the adjective loses every time. This key DELETES THE NOUN, describes the object by
+    # MATERIAL and SHAPE instead ("a flat slab of tree bark ... rough wood grain"), gives
+    # it SCALE through the hands rather than a framing phrase, and fences the noun and
+    # its hardware into the negative. `sd_prompt._NEGATION` lifts `no <noun>` clauses out
+    # of the positive BEFORE counting, so every fence costs the positive ZERO tokens:
+    # clipboard, metal clip, spring clip, white paper, lined paper. Measured, not
+    # assumed -- all five lift, and `clipboard` is measured ABSENT from the compressed
+    # positive. Those five name the DEFECT THAT WAS ACTUALLY OBSERVED in 24 of 24
+    # frames and nothing else.
+    #
+    # IT WAS EIGHT FENCES UNTIL THE BOX DRY RUN, and the trim is a finding rather than
+    # tidying. `no <noun>` is free in the POSITIVE but it is not free in the NEGATIVE,
+    # which has its own 77-token budget -- and eight fences pushed the negative to 76
+    # and made the harness silently evict `realistic skin texture` and `jpeg artifacts`
+    # off the end of NEG_DROP_ORDER. `realistic skin texture` is an ANTI-PHOTOREAL
+    # guard, and the photoreal look is one the founder killed on 2026-07-27; trading it
+    # for a redundant prop fence would have bought this beat's prop by quietly damaging
+    # every frame's style. So `clamp`, `notepad` and `plastic` come out -- `clamp` is
+    # covered by `metal clip` and `spring clip`, `notepad` by `lined paper`, and
+    # `plastic` by the positive's own `tree bark` and `rough wood grain`. Re-measured on
+    # the box after the trim, not assumed.
+    #
+    # THE TOKEN CEILING IS WHY NOBODY COULD HAVE DONE THIS SOONER, and it is worth
+    # recording as its own finding: `authored_b06_scene` sits at the ceiling with zero
+    # headroom. Every prop expansion tried here -- even a three-word one -- made
+    # `compress()` drop the ENTIRE trailing quality sentence ("Cinematic lighting,
+    # masterpiece, best quality, very aesthetic"), because it drops trailing SENTENCES
+    # before it comma-trims. A prop-focused draft that silently loses the style block is
+    # not a prop test, it is a style regression wearing one. So tokens had to be bought,
+    # and the bill is small: `pale blue morning sky above` becomes `pale sky`, and
+    # `at reading height` becomes `in both hands` -- which does the same anti-inflation
+    # job BETTER, since hands give the object a physical scale reference where a framing
+    # phrase only asks. Everything else is `authored_b06_scene` byte for byte: cast
+    # ruling, grass, hedge, dark treeline, negatives, 1boy count. Verified through the
+    # real `compress()`: dropped == [], count tag 1boy, matching beat 06's declared
+    # block -- the exact check that failed ep2-b06-plate-0815 for $0 on 2026-08-14.
+    #
+    # BASE IS `authored_b06_scene`, NOT `authored_b06_scene2`. scene2's costume-card
+    # result was the OLD reference's fault, and on the corrected nos2 set it is
+    # `authored_b06_scene` that actually ran (ep2-b06-plate-nos2-0815, 16 frames) and
+    # gave the real field. scene2 also declares two men against beat 06's 1boy block.
+    #
+    # `no dark` sits in the negative while `dark treeline` sits in the positive. That
+    # conflict is INHERITED verbatim and deliberately NOT touched -- fixing it here would
+    # put a second variable into a one-variable sample.
+    authored_b06_prop: >-
+      A guard man in a brown tunic and sash stands in green summer grass, a hedge and
+      dark treeline behind, pale sky, short brown hair, turning over a flat slab of tree
+      bark in both hands, rough wood grain, looking down at it. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet,
+      no knight, no clipboard, no metal clip, no spring clip, no white paper, no lined
+      paper, no white background, no plain background, no character sheet, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used
