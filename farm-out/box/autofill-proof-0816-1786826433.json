@@ -1,0 +1,41 @@
+{
+  "id": "autofill-proof-0816-1786826433",
+  "task": "box_autofill end-to-end proof",
+  "node": null,
+  "beat": null,
+  "worker": "box-runner",
+  "priority": 10,
+  "needs_gpu": false,
+  "max_attempts": 1,
+  "env": {},
+  "steps": [
+    {
+      "name": "write-proof",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+chr(10))"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-queue\\autofill-proof.txt"
+  ],
+  "backlog": {
+    "filed_at": 1786826433,
+    "filed_at_iso": "2026-08-15T20:40:33Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/autofill-proof-0816.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-15T20:43:12Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-15T20:43:16Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-queue\\autofill-proof.txt"
+  ]
+}
