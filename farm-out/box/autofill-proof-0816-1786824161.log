@@ -1,0 +1,10 @@
+#### job autofill-proof-0816-1786824161 attempt 1 start 2026-08-15T20:37:07Z
+
+==== step write-proof START 2026-08-15T20:37:11Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "-c", "import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+'\n')"]
+  File "<string>", line 1
+    import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+'
+                                                                                                                                                 ^
+SyntaxError: unterminated string literal (detected at line 1)
+==== step write-proof END rc=1 2026-08-15T20:37:11Z ====
+#### job autofill-proof-0816-1786824161 finished rc=1 2026-08-15T20:37:11Z

@@ -2017,3 +2017,4 @@
 20:31:08Z STARTED task=ep2-b06-bark-f1s2-0815-1786823790 attempt=1 on box-runner
 20:37:00Z DONE task=ep2-b06-bark-f1s2-0815-1786823790 rc=0 artifacts=2
 20:37:07Z STARTED task=autofill-proof-0816-1786824161 attempt=1 on box-runner
+20:37:11Z FAIL task=autofill-proof-0816-1786824161 rc=1 step=write-proof
