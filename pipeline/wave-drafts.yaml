@@ -3812,6 +3812,31 @@ beats:
     # 05/06/07/09/10/11 currently crops from ONE single-guard plate
     # (out-b05-register-pose\05-the-patrol-ipa-r2-w015-s2.png). That is a population
     # defect independent of the background one and it was going to bite regardless.
+    # -- THE BARK-BOARD VERDICT REACHES THIS BEAT, 2026-08-15. Read before touching the
+    # draft below, because THIS is the key a lane would most plausibly re-roll the board
+    # under -- beat 06 is where the four attempts were logged, but beat 10 is where the
+    # board is the SUBJECT. Beat 10's script line is "Guard 2 flips the clipboard around:
+    # the back is blank", and the draft below asks for "the blank back of his bark
+    # clipboard" filling the frame.
+    #
+    # `ep2-b06-barkboard-still-0815` came back FAIL-SHAPE on all four seeds (the full
+    # frame-by-frame reading is on `authored_barkboard_still`, up in beat 06). Four
+    # attempts established that wording reaches the prop's MATERIAL and does NOT reach its
+    # GEOMETRY, and the fourth used a clean uncontested prompt, so the prompt was the last
+    # thing that could be blamed and it is now ruled out. The object-sheet and wording
+    # levers are BOTH CLOSED, and the hard stop was pre-registered before the render
+    # existed: no fifth wording draft, no seed-rolling, under beat 06's name OR THIS ONE.
+    # Rewording `bark clipboard` here is that fifth attempt wearing a different beat
+    # number. Do not open it.
+    #
+    # SO THE PROP GATES THREE BEATS, NOT ONE -- worth stating because nothing else says it
+    # in one place. Beat 06: "GUARD 2 turns over a clipboard made of bark and reads." Beat
+    # 08: "Guard 2 lowers the clipboard and points at the scavenger's belly." Beat 10, this
+    # one. All three name the board in their ACTION, so none can be judged as performing
+    # its action while the board renders as a scrap. NEXT LEVER FOR ALL THREE IS INPAINT --
+    # mask the prop region on an approved plate, where a drawn rectangle sets the geometry
+    # that a sentence could not. Beat 10's plate and init already exist and are verified,
+    # so this beat is a candidate for the FIRST inpaint pass rather than a blocked one.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back
