@@ -1,0 +1,205 @@
+# 2026-08-15, refill lane. Beat 10 motion, seed A, SECOND INIT. GUARD-ONLY BEAT.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **NO FORM -- 0:45-0:50**
+#      "Guard 2 flips the clipboard around: the back is blank."
+#      > GUARD 2: "There's no form for that. There's *barely* a form for the apple."
+#
+#    THE ACTION THIS JOB ANIMATES: he turns the board around to face out and its
+#    back is blank. That is the beat's own action, straight off the script line --
+#    flip the board, reveal a blank back. Nothing was chosen to suit the picture.
+#
+# 2. WHY A SECOND INIT RATHER THAN A RESEED. ep2-b10-noform-49f/49fB already ran
+#    this beat to rc=0 and both published, but BOTH are cut from the same plate,
+#    r1-s0. That pair answers "does this seed draw well"; it cannot answer "is this
+#    the right frame for the beat", because it only ever saw one frame. This job
+#    is the same prompt and the same recipe on a DIFFERENT init, so a difference is
+#    attributable to the plate and to nothing else.
+#
+# 3. THE INIT, OPENED RATHER THAN TRUSTED BY NAME.
+#    10-no-form-ipa-r1-w015-s1.png from ep2-b10-scene-0815. What is actually in the
+#    frame: two adult guards in tan uniforms standing in a green field, trees, low
+#    hills and pale sky behind, the left one holding a LARGE DARK BOARD in both
+#    hands. A REAL LOCATION with legible adult faces, not a costume card on blank
+#    paper.
+#
+#    THE DARK BOARD IS WHY THIS FRAME WAS CHOSEN. The beat turns on a REVEAL -- the
+#    back is blank -- and a reveal needs somewhere to travel from. This plate starts
+#    with the board's dark face toward us, so flipping it to a blank back is a
+#    visible change. r1-s3, the other strong candidate, already shows a large PALE
+#    BLANK board facing the camera, which leaves the reveal nowhere to go.
+#
+#    THE SHA IS THE SHA OF THE BYTES I OPENED. Extracted from the results branch,
+#    viewed at full size, recomputed locally:
+#      b665ce4ce01801f7b1a7314c36225a0d63e6b7726b728c57a91b231408d6f6cf
+#    matching ep2-b10-scene-0815.sha256. Its sidecar reads `shot_beat: 10` and
+#    `beat_slug: no-form` -- beat 10's own plate, not a wave template's.
+#
+# 4. THE s2 SLOT IS EXCLUDED; this init is s1, round r1.
+#
+# 5. THIS INIT IS DELIBERATELY NOT FROM THE nos2 SET, AND THE nos2 SET IS WORSE
+#    THAN "ABOUT ONE NEW ROUND" ON THIS BEAT -- IT IS ZERO. Comparing the two
+#    published manifests by hash, ep2-b10-plate-nos2-0815 r0 and r1 are
+#    byte-identical to ep2-b10-scene-0815 r0 and r1; nos2 r2 is byte-identical to
+#    scene r3; and nos2 r3 is byte-identical to nos2 r0. Every image in the beat 10
+#    nos2 set already existed in ep2-b10-scene-0815. It is a strict subset and it
+#    bought NOTHING. Do not queue more nos2 plate jobs.
+#
+# 6. NO GOBLIN IS IN THIS FRAME. The guard cast is founder-approved, which is why
+#    beat 10 is queueable while 07, 08, 18 and 19 are not.
+#
+# 7. THE LOOSENED PROMPT RECIPE: the action leads and nothing precedes it; no
+#    stillness clause in the positive; camera bans in the negative only; identity,
+#    costume and scene TRUSTED TO THE INIT and never restated (no "guard", no
+#    "uniform", no "field"); only what the plate contains -- the board is already
+#    in his hands, so nothing enters frame; style tail kept.
+#
+# 8. TOKEN BUDGET MEASURED ON THE BOX with the real Gemma tokenizer against the
+#    exact strings in this file's payload: positive 54, negative 38, against the
+#    1024 the encoder allows. 5% of budget, nothing truncated.
+#
+# 9. 49 FRAMES, the default.
+#
+# 10. TWO SEEDS, this being A of two; the twin ep2-b10-noform-s1-49fB-0815 differs only in seed,
+#     payload directory and output name.
+id: ep2-b10-noform-s1-49f-0815
+task: ep2-b10-noform-s1-49f-0815
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 8
+max_attempts: 1
+owner: refill lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 10 is NO FORM -- "Guard 2 flips the clipboard around: the back is blank."
+  -- guards only, no goblin. A silent motion take on an approved node, not an episode assembly and not
+  a voice synthesis.'
+consumer: The ep2 cut. Beat 10 has two clips already and both are off the same plate, so the cut has a
+  seed choice but no frame choice. This pair is the frame choice. Scored on whether the BOARD comes around
+  and reads BLANK while the two guards stay put.
+success: 'A 704x1280 mp4, 49 frames, opening on the plate, in which the dark board rotates to face out
+  and its back reads blank while both guards hold their ground in the same field -- no cut, no scene change,
+  no camera move. The failure worth reporting is a frozen clip, or a board that smears instead of turning:
+  either means the loosened recipe does not reach a held-object reveal and beat 10 needs a different lever,
+  which is a real finding and gets said rather than swept. A clip that pans, zooms or relocates is also
+  a failure.'
+why: A guard-only beat whose only two takes share one init, a verified plate opened at full size, the
+  correct scripted action, the loosened recipe, and a token budget measured on the box. $0, local card,
+  no provider.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-noform-s1-49f-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-motion-prompt.txt: He turns the board around to face out
+    and its back is blank. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime
+    key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-jobs-encode.json: "[\n {\n  \"beat\": 10,\n  \"embeds\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\b10-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\b10-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\b10-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-jobs-render.json: "[\n {\n  \"beat\": 10,\n  \"seed\"\
+    : 20260815,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\b10-embeds.pt\",\n\
+    \  \"init\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\b10-init-704x1280.png\",\n  \"out\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b10-noform-s1-49f-0815\\\\10-no-form-LTX-noform-s1-a.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-noform-s1-49f-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b10-scene-0815\10-no-form-ipa-r1-w015-s1.png
+  - --sha256
+  - b665ce4ce01801f7b1a7314c36225a0d63e6b7726b728c57a91b231408d6f6cf
+  - --out
+  - C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-noform-s1-49f-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-noform-s1-49f-0815\bench-b10-noform-s1-a.jsonl
+  - --bench-label
+  - ep2-b10-noform-s1-49f-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (10-no-form).\nimport glob, hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b10-noform-s1-49f-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-noform-s1-49f-0815\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(src_dir + \"/10-no-form-LTX-noform-s1-a.mp4*\")\n             + glob.glob(src_dir\
+    \ + \"/b10-init-704x1280.png\")\n             + glob.glob(src_dir + \"/bench-b10-noform-s1-a.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-noform-s1-49f-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-noform-s1-49f-0815\10-no-form-LTX-noform-s1-a.mp4
+- C:\banyan-farm\ep2-b10-noform-s1-49f-0815\b10-init-704x1280.png
