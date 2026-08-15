@@ -2036,3 +2036,4 @@
 21:25:58Z DONE task=ep2-b10-bark-camBs2-0815-1786823763 rc=0 artifacts=2
 21:26:03Z STARTED task=ep2-b10-pathneg-s2-0816-1786828265 attempt=1 on box-runner
 21:31:57Z DONE task=ep2-b10-pathneg-s2-0816-1786828265 rc=0 artifacts=2
+21:32:05Z STARTED task=ep2-b10-pathneg-s3-0816-1786828270 attempt=1 on box-runner
