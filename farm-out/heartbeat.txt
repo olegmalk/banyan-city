@@ -2009,3 +2009,4 @@
 20:07:10Z STARTED task=ep2-b06-bark-f1neg-0815-1786823810 attempt=1 on box-runner
 20:13:02Z DONE task=ep2-b06-bark-f1neg-0815-1786823810 rc=0 artifacts=2
 20:13:11Z STARTED task=ep2-b10-bark-pathneg-0815-1786823805 attempt=1 on box-runner
+20:19:04Z DONE task=ep2-b10-bark-pathneg-0815-1786823805 rc=0 artifacts=2
