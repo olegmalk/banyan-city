@@ -9,6 +9,18 @@ on:
   # say nothing about the tree, since the worker syncs its files FROM main and
   # main's own push already lints them. On 2026-08-06, with GitHub Actions in a
   # major outage, those heartbeats were most of the wall of failure mail.
+  #
+  # THIS LINE CANNOT STOP A COURIER ON ITS OWN AND NEVER COULD — read before
+  # re-diagnosing. For a `push`, Actions reads the workflow from the ref being
+  # pushed, so a filter on main governs only branches that already carry this
+  # file. The glob is fine (`farm-results-**` matched, verified on
+  # `farm-results-m1pro`, which turned over on 2026-08-07 and has fired nothing
+  # since); the branches were the problem. `farm-results-rtx5090` was forked
+  # before 2026-08-06 and its courier worktree never syncs from main, so it kept
+  # the unfiltered copy and kept firing this workflow until 2026-08-16, ten days
+  # after the "fix". The branch now carries no `.github` at all — see SITE.md,
+  # "They do NOT heal on their own". Keep this filter anyway: it covers every
+  # future courier branch cut from a current main.
   push:
     branches-ignore: ["farm-results-**"]
   pull_request:

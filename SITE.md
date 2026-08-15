@@ -150,14 +150,38 @@ Actions — three of the four still carry the pre-2026-08-06 `lint.yml` with no
 `branches-ignore`, which is why `lint-genome` and `mirror` still fire on every
 five-minute heartbeat despite that fix having landed on main two days ago.
 
-They do heal, on their own, but only partly. `farm_worker.py:573` runs
-`git checkout -q origin/main -- .` before each task, so a courier branch picks
-up main's *modified* files — including the guarded `vercel.json` — on its next
-task cycle. It never picks up *deletions*: those branches will keep carrying the
-deleted `.github/workflows/vercel.yml` indefinitely. Harmless (it is the same
-no-op that never deployed), but it will not clear itself, and until each branch
-turns over, the dashboard settings are the only thing standing between a courier
-heartbeat and a build.
+**They do NOT heal on their own — corrected 2026-08-16, after eight more days of
+heartbeat runs proved the paragraph that used to sit here wrong.** It claimed
+`farm_worker.py`'s `git checkout -q origin/main -- .` would carry main's
+*modified* files onto a courier branch on the next task cycle. That checkout
+updates the index and the working tree, but the heartbeat commit under it is
+`git commit -- farm-out` — a pathspec commit takes the working-tree state of
+*that path only* and leaves the rest of the index alone, which is the whole
+point of the scar comment above it. So the synced `vercel.json` and `lint.yml`
+sit staged on the box forever and never reach the branch tip. A courier branch
+turns over exactly once: when `git checkout -qB farm-results-<name>` finds no
+local branch and re-creates it at the box's current HEAD. That is what happened
+to `farm-results-m1pro` on 2026-08-07, and it is why that one branch carries the
+filtered `lint.yml` while the others do not.
+
+And the live courier does not run that checkout at all. `box_runner.Courier`
+publishes from a **dedicated worktree** (`C:\banyan-farm\courier-box`, created
+from `origin/farm-results-rtx5090`) precisely so it never touches the render
+checkout — nothing in it ever syncs from main, so its 2026-08-05-era
+`.github/workflows/` was frozen permanently.
+
+**The fix, 2026-08-16: `farm-results-rtx5090` now carries no `.github` at all**
+(commit `04f55161`, made in the box's own courier worktree so the runner's next
+force-push builds on it instead of reverting it — the branch tip is only
+changeable from the machine that force-pushes it). A branch with an empty
+workflow directory cannot be outvoted by the next workflow someone adds without
+a `branches-ignore`, which is the failure mode a filter on main can never cover.
+`farm-results-hand` has been in that state since 2026-08-10 and has never fired
+a run. The dormant `m2` and `msi` branches still carry the unfiltered `lint.yml`
+and would flood again if those machines ever woke; `m1pro` is already safe by
+accident. Deletions still never propagate, so those branches also keep the
+deleted `.github/workflows/vercel.yml` — harmless there, since it is
+`branches: [main]` and cannot fire on a courier ref.
 
 There is no `vercel` GitHub Actions workflow any more — it was deleted
 2026-08-08, having never deployed once in 100 runs (see V4). Vercel git
