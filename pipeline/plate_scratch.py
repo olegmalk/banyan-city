@@ -1676,6 +1676,122 @@ REVS = {
             "holding object, clipboard, armor, helmet, knight, child, "
             "photorealism, 3d render, night"
         ),
+        # ------------------------------------------------------------------
+        # R4 VERDICT, appended by the lane that fired it, same session.
+        # OUTCOME C. THE HYPOTHESIS IS DEAD AND IT IS WRITTEN DOWN AS DEAD.
+        # ------------------------------------------------------------------
+        # THE SASH BOUND. It is not a case of "the anchor failed to reach it":
+        # r4 renders a plainly visible WAIST SASH ON BOTH MEN -- a cream-white
+        # band on the left man, a dark red-brown one on the right -- where r3
+        # had none at all. The four words did exactly what they were asked to
+        # do and the sash now has a home the camera can see.
+        #
+        # AND THE STRAP IS STILL THERE. Same man, same hand: a narrow pale
+        # strap hangs from guard B's LEFT hand down to mid-thigh, judged at 5x
+        # and 8x. So the strap is NOT the sash. The two now coexist in one
+        # frame, which is a stronger refutation than the deletion test the
+        # pre-registration reserved for this outcome -- deleting the clause
+        # can no longer teach us anything the coexistence has not already
+        # shown, so r5 does NOT spend a seed on it and goes straight to the
+        # other instrument. The pre-registered plan is departed from HERE, in
+        # writing, and for a stated reason.
+        #
+        # AND IT COST P1, which is outcome B on top of C. The right man's hair
+        # came back DARK BROWN, not light sandy -- at 4x both heads are dark
+        # and the pair is no longer told apart by hair, which is the single
+        # attribute P1 is built on. The garment values collapsed with it
+        # (mid-brown and grey-brown, not pale tan against dark brown). FOUR
+        # WORDS IN THE MIDDLE OF THE PROMPT MOVED TWO ATTRIBUTES AT THE OTHER
+        # END OF IT, at the same seed. That is the real cost of an edit on
+        # this checkpoint and it is why r3 is not re-opened.
+        #
+        # SCORING, honestly: P1 FAIL, P2 pass, P3 PASS (both heads pure rear,
+        # the three head-turn terms held), P4 pass ~36%, P5 pass, P6 pass as
+        # written, P7 pass, P8 FAIL. TWO OF EIGHT FAIL.
+        # **R3 REMAINS THE BEAT-11 DELIVERABLE.** r4 is an experiment that
+        # returned a negative result and is kept on disk as evidence, not as a
+        # candidate.
+        #
+        # WHAT SURVIVES AND CARRIES FORWARD: giving a homeless garment clause
+        # a camera-visible home DOES bind on this checkpoint (the sash proves
+        # it), so the rule is still worth having for 05/10/09 -- it just is
+        # not the answer to the strap.
+        # ------------------------------------------------------------------
+    },
+    (11, 5): {
+        # ==================================================================
+        # THE SECOND POSITIVE-SIDE INSTRUMENT, AND THE LAST SEED BEAT 11 GETS.
+        # Pre-registered before the pixel, as r4's was.
+        # ==================================================================
+        # WHAT r4 SETTLED: the strap is not the sash, and the negative does
+        # not reach it (`holding object` + `clipboard`, twice, same seed).
+        # What is left is the hand itself. r3 and r4 both describe two men in
+        # full-length rear view and NEVER SAY WHAT THEIR HANDS ARE DOING. An
+        # unspecified hand at a man's side is a region with no noun of its
+        # own, and this checkpoint's answer to a region with no noun is to put
+        # something in it -- which is the vacancy law exactly, at the scale of
+        # a hand instead of a sky.
+        #
+        # THE ONE VARIABLE: r3's positive, BYTE-IDENTICAL, plus one tag that
+        # tells the hands what to be. `loose fists at their sides`.
+        #
+        # WHY THAT WORDING AND NOT `empty hands`. CLIP CANNOT REPRESENT
+        # NEGATION. `empty hands` embeds as something very close to `hands`,
+        # and a phrase that names the unwanted thing in order to deny it is
+        # the same instrument that has now failed three times on this repo's
+        # plates. A FIST IS A POSITIVE SHAPE: it is a closed hand, it is a
+        # real tag on this checkpoint's vocabulary, it leaves no aperture for
+        # a strap to pass through, and `at their sides` puts both arms where
+        # the walk needs them. It also happens to be right for the beat --
+        # the script line is two men ARGUING as they walk away.
+        #
+        # WHY THE BASE IS r3 AND NOT r4. r4 lost P1. r3 is the 7/7 plate and
+        # the only thing wrong with it is the strap, so the strap fix is
+        # tested against the picture that is otherwise correct. The sash goes
+        # back to r3's homeless wording deliberately: it is a KNOWN quantity
+        # there (it renders as nothing visible, which is harmless in a rear
+        # view) and re-anchoring it is a second variable.
+        #
+        # THE BAR IS UNCHANGED: e4279ce5's P1-P7, plus P8 from (11,4) --
+        # nothing hangs from either hand, judged at 8x-10x on all four hands.
+        #
+        # OUTCOMES, named in advance:
+        #   A. STRAP GONE, P1-P7 HOLD -> r5 replaces r3 as the beat-11 plate,
+        #      and THE RULE THAT CARRIES TO 05, 10 AND 09 IS: name what the
+        #      hands are doing, positively, in every guard plate. That rule is
+        #      what those three beats inherit -- not this prompt.
+        #   B. STRAP GONE BUT P1-P7 DEGRADE (r4 showed a mid-prompt edit can
+        #      move hair colour at the far end) -> r3 STANDS, and the rule is
+        #      recorded as "reachable, at a cost", to be applied to 05/10/09
+        #      where their prompts are being authored from scratch anyway and
+        #      pay no such cost.
+        #   C. STRAP SURVIVES A DEFINED HAND -> both positive-side instruments
+        #      have failed, the object is not attributable to any clause in
+        #      the prompt, and BEAT 11 STOPS. r3 stands with the strap logged
+        #      as an open defect, 05/10/09 are drawn WITHOUT any strap-specific
+        #      wording (since none of it works), and each is checked at 8x for
+        #      the same artifact. That is a real answer and it is cheaper than
+        #      a fourth seed guessing.
+        "slug": "they-leave",
+        "prompt": (
+            "2boys, from behind, full body, wide shot, two guard men "
+            "standing together in tall grass, tall grass background, one "
+            "man with dark cropped hair in a plain tan tunic, one man with "
+            "light sandy hair in a dark brown tunic, cloth sash of office, "
+            "loose fists at their sides, dark trousers and boots, sunny day, "
+            "masterpiece, best quality"
+        ),
+        # Restated BYTE FOR BYTE from r3. `holding object, clipboard` stay in
+        # for the same reason as r4: a clearance must be attributable to the
+        # positive edit, and they have already been shown not to reach it.
+        "negative": (
+            "text, looking at viewer, facing viewer, face, looking back, "
+            "profile, from side, close-up, "
+            "portrait, distant, small figure, bald, 1boy, 3boys, solo, "
+            "sky, horizon, white background, simple background, "
+            "holding object, clipboard, armor, helmet, knight, child, "
+            "photorealism, 3d render, night"
+        ),
     },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
