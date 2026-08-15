@@ -34,6 +34,13 @@ steps:
     argv:
       - 'C:\banyan-video\venv\Scripts\python.exe'
       - '-c'
-      - "import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+'\n')"
+      # chr(10) and not "\n": in a double-quoted YAML scalar `\n` is a REAL
+      # newline, so the first filing of this job (1786824161) reached the card,
+      # was claimed at 20:37:07 and died in 4 seconds on
+      # `SyntaxError: unterminated string literal`. Which proved the half of the
+      # path it was pointed at -- backlog -> ready -> claimed -> executed, with
+      # the step's own rc 1 passed through untouched -- and left a corpse in
+      # failed/ that is mine, not a render's.
+      - "import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+chr(10))"
 artifacts:
   - 'C:\banyan-queue\autofill-proof.txt'
