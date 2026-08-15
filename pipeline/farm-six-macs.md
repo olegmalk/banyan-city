@@ -51,13 +51,13 @@ Per Mac, in order:
 1. `ssh-copy-id` / seed my key so the rest is non-interactive.
 2. `xcode-select -p` — if absent, `xcode-select --install`, then wait for
    his one click.
-3. Check the interpreter: `python3 -V`. **This is the one genuinely open
-   item** — see §5.
+3. Put Python **3.11** on it — `uv`, no sudo. See §6: the system `python3`
+   is 3.9.6 and too old, and 3.11 is the version that has actually rendered.
 4. `mkdir -p ~/banyan-farm-<name>` and `git clone --depth 50` the repo into it.
 5. `scp` the deploy key over; `chmod 600`; then the four `git config` lines
    from `farm-join.md` §Setup step 3 (`core.sshCommand`, `remote set-url`,
    `user.email`, `user.name`).
-6. `python3 -m venv venv`; `pip install torch` (plain — Apple Silicon takes
+6. `uv venv --python 3.11 venv`; `pip install torch` (plain — Apple Silicon takes
    the default wheel, no index URL) then
    `pip install "diffusers==0.29.2" "transformers==4.44.2" "accelerate==0.33.0" safetensors pyyaml pillow`.
 7. **`rsync` the weights from this Mac** rather than downloading — see §2.
@@ -360,14 +360,28 @@ harness. **Do not replicate the hand-staging pattern onto six new machines.**
 
 ---
 
-## 6. Open item
+## 6. Which Python — resolved, and it matters for the manual-step count
 
-**Which Python the Macs will use.** `farm-join.md` specifies 3.12; a fresh
-macOS ships only the CLT `python3` (3.9.x). I have not verified which the
-`banyan-farm-m1pro` venv here was built from. The check is one line —
-`ssh <mac> python3 -V` — and if it is 3.9, the zero-admin fix is `uv`
-(single binary, `curl` install, fetches its own CPython 3.12, no sudo,
-no GUI). Flagging rather than guessing.
+Measured on this Mac:
+
+- The **working** farm venv, `banyan-farm-m1pro/venv/pyvenv.cfg`, says
+  `version = 3.11.15`, `home = /opt/homebrew/opt/python@3.11/bin`.
+  **So the proven interpreter is Homebrew Python 3.11, not the 3.12 that
+  `farm-join.md` §Setup step 1 asks for.** Follow the reality, not the doc.
+- `/usr/bin/python3 -V` → **3.9.6**. That is all a fresh Mac has, and it is
+  too old for the pinned stack.
+
+So each new Mac needs a 3.11 put on it. Two routes:
+
+- **Homebrew** — matches what already works here, but the install script
+  wants an admin password on a fresh machine. **That would make it a third
+  manual step.**
+- **`uv`** (recommended) — `curl` a single binary into `~/.local/bin`, then
+  `uv python install 3.11` fetches a standalone CPython into
+  `~/.local/share/uv`. **No sudo, no GUI, fully SSH-able.** This is what
+  keeps the manual list at two steps.
+
+Use `uv`, and pin 3.11 to match the interpreter that has actually rendered.
 
 ## 7. External research
 
@@ -377,3 +391,4 @@ filesystem-queue atomic-claim patterns) was still running when this note was
 committed. The architecture recommendation above rests on our own code and
 our own incident history, which is the stronger evidence for our case; the
 external pass should be used to challenge it, not to found it.
+
