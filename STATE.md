@@ -7488,3 +7488,50 @@ shots.
    the script-reading gate on 2026-08-13; STEWARDSHIP.md §6 and §7, CLAUDE.md and
    DECISIONS.md D22 still enforce it. None of those three files has been edited.
 
+
+## 2026-08-16 — the card feeds itself now (`box_autofill.py`)
+
+The GPU went idle four separate times on 2026-08-15 and three sessions died on
+usage limits mid-work, each stranding whatever was not already queued. Oleg:
+"well ya got fix your scheduling dude." Queue depth had been a side effect of
+lanes finishing their own investigations, so whenever every lane was mid-thought
+the card stopped.
+
+**What now runs with nobody awake.** Scheduled task `banyan-box-autofill` on the
+box (SYSTEM, every 3 minutes, `C:\banyan-farm\box-autofill.cmd`) keeps
+`C:\banyan-queue\ready` above **45 MINUTES of work** — minutes, not jobs, off
+`box_job_minutes.py`'s measured medians, because four publish steps and four LTX
+takes are both "four jobs" and one of them is 23 minutes. It counts `*.json`
+only, so the six `.HOLD` files parked in `ready/` are not depth and are never
+un-held.
+
+**It cannot author work, and that is the design.** The only thing it can file is
+a job a lane staged with `box_enqueue.py --backlog`, through every existing
+guard; that door additionally refuses any spec carrying a `plate_ack:` waiver,
+because a waiver is a person vouching for a picture NOW and the autofill fires
+hours later with nobody looking. An empty backlog is a loud state — rc 2,
+`autofill.json` `status: backlog_empty`, "NOTHING WAS INVENTED" in the log — and
+never a licence for filler. `held/`'s 23 parked jobs are a graveyard, not a
+backlog, and are not read.
+
+**Proven end to end, not asserted** (all times UTC, 2026-08-15):
+`20:34:01` the timer filed a backlogged job when ready fell to 39.9 min;
+`20:37` and `20:40` it reported BACKLOG EMPTY rather than inventing anything;
+`20:43:01` it filed the re-cut job at 34.2 min, `20:43:12` the runner claimed it,
+`20:43:20` done rc=0, and `C:\banyan-queue\autofill-proof.txt` contains the line
+the job wrote. No session, no human, no hand in the loop.
+
+**Two things it found while looking:**
+
+- `banyan-runner-watchdog` on the box has been **Disabled since 2026-08-12** —
+  the task that restarts a wedged runner (the 2026-08-10 sixteen-minute wedge)
+  is off. Every autofill tick now also reads that wedge condition and records
+  `drainer.stalled` with rc 3; it observes and never restarts, because
+  escalation counting is the watchdog's job. **Re-enabling it is a live decision
+  nobody has taken.**
+- The daemon draining jobs is `C:\banyan-farm\box_runner.py`, a hand copy from
+  2026-08-10 with no deploy step. `python3 pipeline/box_autofill.py
+  --verify-deployed` now hashes repo against box for box_runner, box_preflight,
+  telemetry and box_autofill and prints the drift instead of leaving it
+  invisible. Re-copying the runner restarts the drainer and adopts any live job
+  as INTERRUPTED, so it is an idle-card job, not a mid-render one.
