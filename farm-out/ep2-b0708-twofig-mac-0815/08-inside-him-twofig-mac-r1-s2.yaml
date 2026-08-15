@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). ROUND 1 of the tags-only two-figure recipe. THIS FRAME
+# FAILED its pre-registered bar - it is committed as EVIDENCE, not as a plate.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262727
+round: r1
+prompt_tokens_measured: 69/77   # real CLIP tokenizer, before firing; style tail intact
+negative_tokens_measured: 76/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "full body, wide shot, 2boys, size difference, standing, adult man, bald, brown tunic, sash, holding clipboard, green skinned goblin boy, pointed ears, patched cloak, looking down, grass field, treeline, blue sky, outdoors, day, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, photorealism, solo, 1boy, blush, blushing, red cheeks, chibi, child, toddler, baby, pointed ears on man, elf man, blank background, simple background, white background, studio background"
+what_this_frame_shows: >-
+  THREE figures. A colossal green cloaked goblin fills the entire frame; two tiny humans stand at its feet. No clipboard anywhere.
+verdict_against_pre_registered_bar: "FAIL - bar 1 (three figures), bar 3 (scale), bar 4 (no board at all)"
+founder_verdict: null
+scored: false
