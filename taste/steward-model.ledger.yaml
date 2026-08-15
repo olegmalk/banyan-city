@@ -17864,3 +17864,47 @@
     defines done, and every instrument and every rule we have will happily answer a different question
     if the brief is not in front of you.
   outcome: null
+
+- id: LAW-the-brief-is-the-only-standard-at-both-ends-0815
+  date: 2026-08-15
+  kind: law
+  what: >-
+    Two errors tonight, at opposite ends of the pipeline, with one root. At SCORING time, a blind
+    reader's "no character in frame" was read as beat 12 failing, when beat 12's brief REQUIRES the
+    goblin's absence. At AUTHORING time, three beats were given a head-lift because a head-lift stages
+    well against a high-angle plate, when their briefs called for turning a board over, pointing at
+    the scavenger, and turning away to leave.
+  law: >-
+    THE BRIEF IS THE ONLY STANDARD, AT AUTHORING TIME AND AT SCORING TIME. Every instrument and every
+    rule we own will happily answer a different question if the brief is not in front of you - the
+    metric answers "how much changed", the reader answers "what is on screen", the staging law answers
+    "what will look good from this camera". None of them answers "is this the beat". Only the brief
+    does, and it has to be open at both ends.
+  the_third_instance_caught_by_the_audit: >-
+    Beat 17 GOODBYE is "the scavenger stands, brushes off, and turns to go" - the turn away from the
+    lens IS the action. I had already authored a b17 re-round that REMOVED the turn to satisfy the
+    staging law, and it was sitting on the card. Deleted before it rendered and re-authored with the
+    turn. So the law caught its own third violation within the hour of being written, which is the
+    only reason it is not four.
+  outcome: null
+
+- id: AUDIT-ten-of-twenty-one-beats-had-no-standard-0815
+  date: 2026-08-15
+  kind: audit
+  what: >-
+    Checked all 21 script beats against done-definitions. TEN had no done_when. Beats 08, 15, 17, 19
+    and 20 had no entry at all; beats 02, 03, 04, 13 and 14 had entries carrying rounds, picks and
+    faults but no statement of what would make them done. Written now from node.md, all marked
+    retroactive.
+  why_this_is_the_hole_rather_than_beat_07: >-
+    Beat 07's wrong action survived because there was nothing to check it against, and beat 07 was not
+    special - half the episode was in that state, including three beats with jobs on the card at the
+    time of the audit. A definition written after the takes exist gets bent to fit them without anyone
+    intending it, so all ten were written from the script and explicitly not from any clip.
+  two_conflicts_surfaced_and_deliberately_not_solved: >-
+    Beat 13's script says the scavenger "slides down the trunk" while the founder has ruled the
+    sapling is tiny, so there is no trunk; the brief now records the END STATE as the requirement and
+    marks the route an author call. Beat 19's script has the fruit fall from the stem onto his head
+    while every plate we own puts it already in the grass. Both are author decisions. Recording them
+    as conflicts is the work; picking one myself would be taste.
+  outcome: null

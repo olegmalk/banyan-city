@@ -283,6 +283,13 @@ beats:
     understandable: CONFUSING
     rounds_used: 2
     status: THIRD ROUND EARNED - confusing
+    title: THE SPRINT
+    script: A SCAVENGER sprints into frame, skids, and dives behind the sapling's thin trunk.
+    done_when: 'he ARRIVES and GOES DOWN: entry, skid, dive, in that order and legible as one continuous
+      move. Note the plate must already contain the sapling — every take that named a sapling not in frame
+      grew a tree instead.'
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
   '03':
     refire_result: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
       joke reads weakly but it reads.
@@ -291,6 +298,12 @@ beats:
     status: SHIP WITH FAULT NAMED
     shipping_fault: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
       joke reads weakly but it reads.
+    title: BAD COVER
+    script: The scavenger crouches behind a trunk that hides roughly one-sixth of him.
+    done_when: he crouches and the COVER IS COMICALLY INADEQUATE — the trunk hides a fraction of him and
+      the joke is visible without dialogue. A crouch that actually conceals him fails the beat.
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
   '04':
     refire_result: purple gone; a clean close-up on his face holding his breath. It reads young, but that
       is the s0 reference he chose, not a prompt fault.
@@ -299,6 +312,12 @@ beats:
     status: SHIP WITH FAULT NAMED
     shipping_fault: purple gone; a clean close-up on his face holding his breath. It reads young, but
       that is the s0 reference he chose, not a prompt fault.
+    title: THE FOOTNOTE
+    script: The scavenger holds his breath, eyes darting.
+    done_when: 'stillness with LIVE EYES: held breath readable in the body, eyes moving side to side.
+      This is the one beat where a near-motionless body is correct and only the eyes carry it.'
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
   '13':
     refire_result: purple gone; he settles at the base of the stem. The shade is thin but the fold-into-it
       happens.
@@ -307,12 +326,28 @@ beats:
     status: SHIP WITH FAULT NAMED
     shipping_fault: purple gone; he settles at the base of the stem. The shade is thin but the fold-into-it
       happens.
+    title: THE SHADE
+    script: The scavenger slides down the trunk and folds into the sapling's tiny shade, knees up around
+      his ears.
+    done_when: 'he ends FOLDED SMALL in the sapling''s shade, knees up. SCRIPT CONFLICT, flagged not solved:
+      the script says "slides down the trunk", and the founder has ruled the sapling is tiny — "thats
+      ridiculous, lmao. the sapling is tiny" — so there is no trunk to slide down. The END STATE is what
+      the beat needs; how he gets there is an author call, not a steward one.'
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
   '14':
     refire_result: purple gone, and the action does not happen - he stands and looks down instead of picking
       at the dirt. The beat IS the hands, and there are no hands in it.
     understandable: CONFUSING
     rounds_used: 2
     status: THIRD ROUND EARNED - confusing
+    title: THE DEFENSE
+    script: He picks at the dirt, embarrassed, glancing around.
+    done_when: fingers at the dirt AND the glancing — embarrassment readable. Requires a plate where his
+      hands and the ground are both in frame; a standing full-body plate cannot show this and should be
+      sent back.
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
   '16':
     title: WHY
     rounds_used: 1
@@ -337,6 +372,48 @@ beats:
       and the clipboard stays the same object in the same hands.
     written: 2026-08-15, retroactively — this beat had NO definition of done and its clips were rendered
       without one.
+    status: NO VERDICT YET
+  08:
+    title: INSIDE HIM
+    script: Guard 2 lowers the clipboard and points at the scavenger's belly.
+    done_when: the clipboard comes DOWN and the point goes to the BELLY, both legible; both guards and
+      the scavenger in frame, since a point needs its target visible.
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
+    status: NO VERDICT YET
+  '15':
+    title: GOOD LISTENER
+    script: He looks up at the sapling; both of them share the frame.
+    done_when: he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in shot is the whole point of the
+      beat — a close-up of him looking up at nothing fails it however well he acts.
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
+    status: NO VERDICT YET
+  '17':
+    title: GOODBYE
+    script: The scavenger stands, brushes off, and turns to go.
+    done_when: 'stand, brush, turn — a departure. NOTE the turn takes his face away from the lens by design,
+      so the staging law does not apply here: this is the one beat where turning away IS the action.'
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
+    status: NO VERDICT YET
+  '19':
+    title: THE DROP
+    script: the stem lets go, the fig falls, bounces off his head, and lands in the grass at his feet.
+    done_when: 'WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls,
+      strikes his head and lands. Blocked: every plate we have puts the fruit already on the ground, and
+      a fall cannot be shot from that. Awaiting the founder''s call — new plate with the fruit aloft,
+      or the beat becomes him finding it.'
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
+    status: NO VERDICT YET
+  '20':
+    title: EVIDENCE
+    script: The scavenger picks the fig up with both hands and looks up at the bare branch.
+    done_when: BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE — the empty
+      stem is the evidence and must be in frame.
+    definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
+      so it could not be bent to fit the clips that already exist.
     status: NO VERDICT YET
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
@@ -810,3 +887,19 @@ action_vs_script_audit_0815:
     staging law is a constraint on HOW to stage an action, not a licence to choose a different one.
   consequence: Beats 06 and 07 cannot be DONE on these takes however well they read, because a well-executed
     wrong action is still the wrong action. Beat 09 is judgeable on its merits.
+definition_audit_0815:
+  what: 'Audited all 21 script beats against done-definitions. TEN had no done_when: 08, 15, 17, 19 and
+    20 had no entry at all, and 02, 03, 04, 13 and 14 had entries with no standard in them. All ten written
+    from node.md and marked retroactive.'
+  why_it_matters: Half the episode had nothing to check a take against, and three of those beats — 14,
+    15 and 17 — have jobs on the card right now. Beat 07's wrong action survived precisely because its
+    beat had no definition; this audit is that hole closed rather than that beat patched.
+  two_conflicts_surfaced_not_solved: 'Beat 13: the script says the scavenger "slides down the trunk" and
+    the founder has ruled the sapling is tiny, so the trunk does not exist. The end state (folded small
+    in its shade) is what the beat needs; the route is an author call. Beat 19: the script has the fruit
+    fall from the stem and bounce off his head, and every plate we own puts it already on the ground.
+    Both are author decisions and neither is a prompt to fix.'
+  one_exemption_recorded: Beat 17 GOODBYE ends with him turning to go, which takes the face away from
+    the lens BY DESIGN. The staging law does not apply there — that beat's action IS the turn. My earlier
+    b17 re-round removed the turn to satisfy the staging law, which was the same error as beats 06 and
+    07 and is now recorded against the beat.
