@@ -328,6 +328,16 @@ beats:
       the 3-5 lobed fig leaf the cold reader said would identify the fruit by itself. It contradicts the
       canon ''two broad round cotyledons''. That collision is already a question with him and I am not
       resolving it by accident: recorded, not adopted.'
+  '07':
+    title: CONFISCATE
+    script: '"Guard 1 points at the scavenger, decisive." Line: "So we confiscate the apple." (node.md,
+      0:34-0:37)'
+    done_when: Guard 1 POINTS at the scavenger, decisively, and the point is legible as a point; his face
+      stays toward the lens; the second guard and the field are present; identity holds against the plate
+      and the clipboard stays the same object in the same hands.
+    written: 2026-08-15, retroactively — this beat had NO definition of done and its clips were rendered
+      without one.
+    status: NO VERDICT YET
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
@@ -782,3 +792,21 @@ spurious_chest_marking_0815:
   not_yet_checked: 'Beats 09 and 10 read for this specifically: beat 10''s blind read reports NO badge
     and NO chest tab, so the artifact is not universal. The other closed guard beats have not been checked
     for it.'
+action_vs_script_audit_0815:
+  what: Checked the actions I authored for the scene-plate wave against the beat lines in node.md, which
+    I should have done before authoring and did not.
+  beat_06: 'MISMATCH. Script: "Guard 2 lowers the clipboard and points at the scavenger''s belly" for
+    INSIDE HIM, and beat 06 THE CLIPBOARD requires the guard to turn the bark board over and read off
+    it. I authored "one of them lifts his head from the board and looks out across the field." A look-up
+    is not turning a board over and reading.'
+  beat_07: 'MISMATCH. Script: Guard 1 POINTS at the scavenger, decisive. I authored "his head lifts and
+    his eyes widen as he closes his hand around the sprout." There is no sprout-grab in this beat at all;
+    the sprout came from my own earlier action dict, not from the script.'
+  beat_09: 'MATCHES. Script: "Guard 1''s face works through it, slowly." I authored "his head lifts and
+    his eyes widen", which is that thought crossing a face and is consistent with the recorded done_when:
+    close on Guard 1''s face working through the thought.'
+  why_it_happened: I wrote these actions to satisfy the staging law — keep the face toward a high-angle
+    lens, so lift the head rather than fold — and never re-read what the beat was supposed to show. The
+    staging law is a constraint on HOW to stage an action, not a licence to choose a different one.
+  consequence: Beats 06 and 07 cannot be DONE on these takes however well they read, because a well-executed
+    wrong action is still the wrong action. Beat 09 is judgeable on its merits.

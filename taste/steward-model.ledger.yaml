@@ -17830,3 +17830,37 @@
     b07 and b09 move across the whole clip, bodies 11.9 / 7.9 and 9.3 / 6.1, cadence 5.34 / 3.12 and
     3.84 / 1.75.
   outcome: null
+
+- id: LAW-the-staging-law-constrains-HOW-not-WHICH-0815
+  date: 2026-08-15
+  kind: law
+  what: >-
+    Checked the actions I authored for the scene-plate wave against the beat lines in node.md, which I
+    should have done before authoring. Two of three do not animate their beat. Beat 07 CONFISCATE is
+    "Guard 1 points at the scavenger, decisive" - I wrote "his head lifts and his eyes widen as he
+    closes his hand around the sprout", and there is no sprout in that beat at all; it came from my own
+    earlier action dict. Beat 06 THE CLIPBOARD wants the guard to turn the bark board over and read off
+    it - I wrote "one of them lifts his head from the board and looks out across the field". Beat 09
+    matches: "Guard 1's face works through it, slowly" against "his head lifts and his eyes widen".
+  how_it_happened: >-
+    Every one of those actions was written to satisfy the staging law - these plates are high angles,
+    a forward fold carries the face out of the lens from frame 1, so lift the head instead. That
+    reasoning is correct and it silently replaced the question "what does this beat show" with "what
+    can this plate show well". Three beats in a row got a head-lift because a head-lift stages well.
+  law: >-
+    THE STAGING LAW CONSTRAINS HOW AN ACTION IS SHOT, NOT WHICH ACTION IS SHOT. If a beat's action
+    cannot be staged against its plate's camera, that is a PLATE problem to send back, not a licence to
+    animate an easier action. A well-executed wrong action is still the wrong action, and it is worse
+    than a failed right one because it looks like progress.
+  consequence: >-
+    Beats 06 and 07 cannot be DONE on these takes however the blind read comes back. Beat 09 is
+    judgeable on its merits. Beat 07 also had NO definition of done at all when its clips were
+    rendered, which is how the mismatch survived - there was nothing to check against, and I wrote the
+    definition tonight from the script rather than from the clips, so it could not be bent to fit them.
+  the_general_shape: >-
+    This is the beat 12 lesson from the other side. There, a blind reader was scored against a general
+    idea of a good clip instead of the beat's own brief. Here, an ACTION was authored against a general
+    idea of good staging instead of the beat's own brief. Same root: the brief is the only thing that
+    defines done, and every instrument and every rule we have will happily answer a different question
+    if the brief is not in front of you.
+  outcome: null
