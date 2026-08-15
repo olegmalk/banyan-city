@@ -1,0 +1,228 @@
+# 2026-08-15, motion-wording lane. Beat 10, NO FORM. ARM C, SECOND SEED -- REPLICATION, NOT A BATCH.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **NO FORM -- 0:45-0:50**
+#      "Guard 2 flips the clipboard around: the back is blank."
+#      > GUARD 2: "There's no form for that. There's *barely* a form for the apple."
+#
+#    THE ACTION THIS JOB ANIMATES is the scripted one and nothing else: the board
+#    in his hands comes around to face the camera and shows its blank back.
+#
+# 2. WHAT IS BEING TESTED, AND IT IS NOT THE RECIPE.
+#    The recipe is closed: 704x1280, 49 frames, 24fps, two-stage, distilled sigmas,
+#    image-crf 33, guidance 2.0, sequential offload. Every one of those flags, the
+#    plate, the plate's asserted sha, the seed and the negative prompt are copied
+#    byte-for-byte from the control job ep2-b10-noform-49f-0815. THE ONLY
+#    DIFFERENCE BETWEEN THE TWO CLIPS IS THE ACTION CLAUSE OF THE POSITIVE PROMPT:
+#
+#      control (rendered, seed 20260815, opened frame by frame today):
+#        "He turns the board in his hands around to face the camera, showing its
+#         blank back."
+#
+#      this arm:
+#        "He tilts the board up, then turns it around to face the camera, then
+#         pushes it forward, showing its blank back."
+#
+#    One compound clause naming one completed action, against three ordered
+#    sub-movements. That is the whole independent variable.
+#
+# 3. THE DEFECT THIS ATTACKS, MEASURED BY OPENING THE FRAMES RATHER THAN SCORED.
+#    The control clip at this exact plate and seed was read on a CONSECUTIVE frame
+#    strip today, not on an evenly-spread contact sheet. What it shows: the board
+#    starts angled and foreshortened, comes around across roughly frames 4-18, is
+#    square to camera by frame 22 -- and then NOTHING MOVES for frames 22-48. The
+#    scripted action is performed correctly and is over in the first third of a
+#    two-second clip; the remaining 1.3 seconds are a held still. coldread put the
+#    motion window at pairs 7-15, 0.29s -> 0.62s, 16.7% OF THE CLIP.
+#
+#    The same shape was confirmed independently on beat 07 the same hour: a sprout
+#    action completed by frame 5 and a figure frozen from frame 5 to frame 48,
+#    while the whole-frame motion number read 7.556 -- high, and carried almost
+#    entirely by windblown grass. THE METRIC IS A FILTER AND NEVER A VERDICT.
+#
+#    So the question is not "does the action happen" -- it does. It is "can the
+#    action be made to OCCUPY the clip", and the cheapest wording lever for that is
+#    to give the model three things to do in order instead of one.
+#
+# 4. WHY A SECOND SEED AND NOT A BATCH. Arm C at seed 20260815 has been opened:
+#    If sub-movement wording is a real lever, this clip's motion window covers
+#    materially more than the control's 16.7% and the last third of the strip still
+#    shows change. IF IT FREEZES IN THE SAME PLACE -- action done by frame ~20,
+#    nothing after -- then ordering sub-movements is NOT the lever, that is a real
+#    result, and it gets reported exactly as loudly as the confirming one. A third
+#    outcome is possible and would also be a finding: three clauses may produce
+#    three half-done actions and no readable board turn at all.
+#
+#    Neither result is a pass or a fail for this render. The clip is evidence
+#    either way, and it is ONE render -- nothing scales off it until it is seen.
+#
+# 5. SCORING. OPEN THE FRAMES. Judge THE BOARD, which is a large high-contrast
+#    rigid rectangle and therefore the most legible thing in the plate: where is it
+#    at frame 0, where is it at frame 24, where is it at frame 48, and is anything
+#    still changing between 32 and 48. A whole-frame difference number on these
+#    plates is driven by grass and cloud and has already called a frozen figure
+#    lively once today. Read pipeline/coldread_frames.py's CONSECUTIVE strip; the
+#    overview sheet answers proportions only.
+#
+# 6. THE INIT, HELD CONSTANT AND ASSERTED RATHER THAN TRUSTED BY NAME.
+#    10-no-form-ipa-r1-w015-s0.png from ep2-b10-scene-0815 -- a real location, two
+#    adult guards in a mown field, each holding a flat board, hedge line and
+#    distant hills behind. sha 8895955b038bfd02... is asserted in the crop step,
+#    which refuses before anything is written. It is the same file, and the same
+#    hash, that the control clip was built from.
+#
+#    the board keeps climbing through frames 34-48 where the control at the same
+#    plate and seed is dead still. Roughly one take in three fails to perform its
+#    action whatever the framing, so a single clip cannot tell a wording lever from
+#    seed luck. THIS RENDER CHANGES THE SEED AND NOTHING ELSE -- 20260815 ->
+#    20260816, which is the seed the control twin ep2-b10-noform-49fB-0815 also
+#    used, so the pair is matched on both arms.
+#
+#    PREDICTION: if the sub-movement wording is the lever, this clip is also still
+#    moving after frame 34. If it freezes like the control, arm C's tail was seed
+#    luck and that is reported as loudly as a win. Nothing scales off either clip.
+id: ep2-b10-noform-mv3s2-0815
+task: ep2-b10-noform-mv3s2-0815
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 8
+max_attempts: 1
+owner: motion-wording lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 10 is NO FORM -- "Guard 2 flips the clipboard around: the back is blank."
+  -- two guards, no goblin. This is a silent motion take on an approved node, not an episode assembly
+  and not a voice synthesis.'
+consumer: The motion-wording sweep. This arm is read against ep2-b10-noform-49f-0815, which shares its
+  plate, its asserted sha, its seed, its negative and every render flag -- the ACTION CLAUSE of the positive
+  prompt is the only difference between the two clips. Judged by opening consecutive frames via pipeline/coldread_frames.py,
+  never by a motion number.
+success: 'A 704x1280 mp4, 49 frames, in which the board turns around to face the camera AND the figures
+  are still moving in the last third of the clip. The control at this exact plate and seed completes its
+  turn inside the first 0.7s and is then frozen for the remaining 1.3s -- read with my own eyes on the
+  consecutive strip, not inferred from a score. The finding worth reporting is either outcome: if this
+  arm freezes in the same place, sub-movement wording is not the lever and it gets said rather than swept;
+  if it keeps moving, the arm earns a second seed before anything is scaled. A clip that pans, zooms,
+  cuts or relocates is a failure whichever way the action goes.'
+why: The card is idle and this is one render. ONE variable against a control clip that has already been
+  opened frame by frame. $0, local card, no provider.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-noform-mv3s2-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-motion-prompt.txt: He tilts the board up, then turns it
+    around to face the camera, then pushes it forward, showing its blank back. 2D anime, hand-drawn cel
+    animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest,
+    masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b10-noform-mv3s2-0815\\\\b10-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-noform-mv3s2-0815\\\\b10-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-noform-mv3s2-0815\\\\b10-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260816,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-noform-mv3s2-0815\\\\b10-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b10-noform-mv3s2-0815\\\\b10-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-noform-mv3s2-0815\\\\10-no-form-LTX-noform-mv3s2.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-noform-mv3s2-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b10-scene-0815\10-no-form-ipa-r1-w015-s0.png
+  - --sha256
+  - 8895955b038bfd02d334ced19633724aff764268f0aef12eec32b0a803863503
+  - --out
+  - C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-noform-mv3s2-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-noform-mv3s2-0815\bench-b10-noform-mv3s2.jsonl
+  - --bench-label
+  - ep2-b10-noform-mv3s2-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (10-no-form). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads like\n# a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b10-noform-mv3s2-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-noform-mv3s2-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/10-no-form-LTX-noform-mv3s2.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b10-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-b10-noform-mv3s2.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n   \
+    \ c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-noform-mv3s2-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-noform-mv3s2-0815\10-no-form-LTX-noform-mv3s2.mp4
+- C:\banyan-farm\ep2-b10-noform-mv3s2-0815\b10-init-704x1280.png
+sample: true
