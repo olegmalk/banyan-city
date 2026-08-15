@@ -3209,6 +3209,28 @@ beats:
     #     04's sprout. `no glowing flower` names it.
     # Slot r2 (`04-the-footnote-wave1-s2.png`) will degrade the cast to a bowl-cut child again --
     # it did in all four of its scene-r2 cells and across beats 06, 10 and 11. Score r0/r1/r3.
+    # -- `authored_b09_scene4` -- 2026-08-15, the guard lane. `authored_b09_scene3` WORKED on the
+    # two things it was fired for -- 16/16 real places, and the close finally came from the words
+    # (r0 and r3 are face closes where `ep2-b09-scene-r2-0815` gave fourteen mid shots out of
+    # sixteen) -- and the named negations killed the glowing flower outright, 5/16 down to 0/16.
+    # It broke ONE thing, and it broke it by omission: scene3 dropped `short brown hair`, which
+    # scene2 and every earlier b09 draft carried, and the head drifted. r0-s1, r1-s0 and r1-s1
+    # came back BALD, and r0-s0, r0-s3, r2-* and r3-s1 came back pale blond. That is 3/16 off-model
+    # at the head and the canon guard is short brown hair.
+    #
+    # So this is scene3 with the hair clause put back, and `bald` named in the negative. `sign` is
+    # dropped to pay for it: the negative sent 72 of 77 tokens and `clipboard` is the term that
+    # actually earns its place -- the white sash slab the founder read as "a clipboard floating
+    # behind him" fell from 4/16 to 2/16 under scene3 and is still there in r3-s0 and r3-s1.
+    # The positive had 14 tokens of headroom, so the hair clause costs nothing that matters.
+    authored_b09_scene4: >-
+      A grown guard man with short brown hair in a brown tunic and green sash, close on his
+      face, head and shoulders, working slowly through an idea, eyes drifting, mouth slightly
+      open, green summer grass and a dark treeline behind him, pale sky. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no bald, no armor, no
+      helmet, no knight, no white background, no plain background, no character sheet, no
+      dark, no night, no clipboard, no glowing flower. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b09_scene3: >-
       A grown guard man in a brown tunic and green sash, close on his face, head and
       shoulders, working slowly through an idea, eyes drifting, mouth slightly open, green
