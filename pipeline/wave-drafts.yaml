@@ -3967,6 +3967,99 @@ beats:
     # ALREADY holding a correct rectangle, which beat 10's does and which is why it was the
     # right first candidate. Whether 06 and 08 have one is now the question they turn on,
     # and it is a question about their PLATES, not about their prompts.
+    #
+    # -- THE BRACKET WAS BISECTED, AND IT CLOSES. NO STRENGTH SATISFIES THE WHOLE BAR.
+    # Four more single samples inside 0.45..0.99, each opened and judged before the next was
+    # authored, everything else held: same quad (mask sha 3aef49b2... byte-identical to s0's
+    # on every run, asserted by --dry-run before each render), same seed 20260815, same 40
+    # steps, cfg 7.5, pad-crop 64, blur 8, and the same two prompt files (positive
+    # 623ed767..., negative 8b3f6236..., verified equal on the repo copy and the box copy).
+    # All $0 on the rtx5090, 7-13s each, rc=0. The control held every time: the pixel diff
+    # against the init stayed inside the mask bbox +/- the pad-crop, and the second guard's
+    # navy board at the right edge of frame is untouched navy in all four.
+    #
+    #   s2  0.72  -- FAIL-MATERIAL. Rectangle intact: straight top, left and right edges,
+    #               corners square, flat, still a board. Face still a dark navy-black slate
+    #               with a few faint vertical streaks. No bark. Clip gone.
+    #   s4  0.79  -- FAIL-MATERIAL. Rectangle still intact and clean. The face has warmed a
+    #               shade toward brown-black and grown some soft vertical drips, but there
+    #               is no furrow, no crust, no flake. Nobody would call it bark.
+    #   s5  0.82  -- FAIL-SHAPE. The material finally arrives: mottled dark brown with
+    #               irregular gouges and blotches that do read as bark crust. It arrives
+    #               TOGETHER WITH the damage -- the left edge is notched and scalloped, the
+    #               top-left corner chewed off, the lower-left silhouette bulging. s0's
+    #               failure mode, milder. Right edge and bottom-right corner still straight.
+    #   s3  0.855 -- FAIL-SHAPE. Warm dark brown with long vertical striations that read as
+    #               grain. But the top edge now bows, the upper-left corner has become a
+    #               soft slanted flap and the left edge curves inward: a draped tapering
+    #               slab, not a rigid rectangle. No raggedness, unlike s0 and s5.
+    #
+    # AND THE BISECTION IS EXHAUSTIVE RATHER THAN ABANDONED, WHICH IS THE POINT. A fifth
+    # sample at 0.805 -- the midpoint of the last gap -- came back BYTE-IDENTICAL to the
+    # 0.82 one, sha 4b761192... both. The reason is mechanical: diffusers turns strength
+    # into an integer count of denoising steps, int(steps * strength), so at 40 steps the
+    # knob only has 40 positions and 0.805 and 0.82 are THE SAME SETTING (32). The samples
+    # sit at 18, 28, 31, 32, 34 and 39 discarded steps, and 31 -> 32 is adjacent: there is
+    # no value between "clean edges, no bark" and "bark, torn edge". The window is not
+    # narrow, it does not exist. Strength alone cannot satisfy the bar at this recipe.
+    #
+    # THE BAR IS THE ONE PRE-REGISTERED ABOVE AND IT IS NOT SOFTENED: a flat rectangular
+    # slab of rough bark that reads as a board someone could hold and read from -- large,
+    # flat, rectangular, rough bark texture rather than planed timber, no chrome clip, no
+    # white paper, no tree trunk. Beat 10's script line is "Guard 2 flips the clipboard
+    # around: the back is blank," so the board is the SUBJECT and a board-shaped hole in the
+    # middle of the shot is not a partial win. Every one of the four scores 5, 6 or 7 of the
+    # seven terms; every one of the four is a FAIL, because the terms are not independent
+    # and shape is the whole question. FAIL-SEAM never fired -- no sample blended into the
+    # coat at the mask edge, at any strength.
+    #
+    # WHAT IS RULED OUT AND WHAT IS NOT. Ruled out: strength as a single knob, on this mask,
+    # this seed, this prompt pair, at 40 steps. NOT ruled out and untested here, in the
+    # order they cost: more steps buys finer positions of the same knob (80 steps puts a
+    # real setting between 31/40 and 32/40) but the cliff may simply land between two of
+    # those too; a second inpaint PASS at low strength over an s5 output to straighten the
+    # edges the material cost us; a different seed at 0.82, since the torn edge is one
+    # sample's noise and not necessarily the setting's; and the bark words themselves, which
+    # were deliberately left byte-identical through all six renders and so have never been
+    # tuned for a low-strength pass. None of these is a fifth WORDING variant of the prop --
+    # the prop sentence is closed and stays closed.
+    #
+    # -- AND THE PLATE QUESTION FOR 06 AND 08 IS ANSWERED, BY OPENING THEM. Inspected, not
+    # rendered; no job was authored for either beat.
+    #
+    # BEAT 06 HOLDS A CORRECT RECTANGLE -- TWO OF THEM, ON BOTH OF ITS LIVE INITS. Beat 06's
+    # script line is "GUARD 2 turns over a clipboard made of bark and reads," and its plate
+    # is the two-shot that line needs. `ep2-b06-turnnos2-49f-0815\b06-init-704x1280.png`
+    # (924283 bytes) frames both guards from the chest down: the left one holds a dark
+    # charcoal board with four straight edges, square corners and a chrome clip bar across
+    # the top, tilted slightly, its face almost fully visible; the right one holds a pale
+    # blue board, also straight-edged and square-cornered, also clipped, in two hands. That
+    # is beat 10's situation exactly -- geometry already right, material wrong, a chrome clip
+    # to delete -- and it is arguably a BETTER candidate than beat 10, because the board face
+    # is larger in frame and less occluded. `ep2-b06-turn-0815\b06-init-704x1280.png`
+    # (945245 bytes) also holds two boards but is weaker: the left guard's dark board is
+    # nearly edge-on, a narrow acute parallelogram with no readable face, and the right
+    # guard's blue clipboard carries both defects at once, a white paper sheet under a chrome
+    # clip AND a large open hand spread across its face. So the route transfers to 06, and
+    # the nos2 init is the plate it transfers to.
+    #
+    # BEAT 08 HOLDS NO BOARD AT ALL, AND THE ROUTE CANNOT TRANSFER TO IT. Its line is "Guard
+    # 2 lowers the clipboard and points at the scavenger's belly," but the plate was staged
+    # as the REVERSE of that: `ep2-b08-plate-0814`, twelve frames, r1/r2/r3 x s0..s3, and all
+    # twelve are the scavenger. High angle looking down on the small green goblin in r1,
+    # waist-up portraits of him in r3, near-full-frame close-ups of his head in r2. A guard
+    # appears only as a stray hand, a forearm or a leg at the frame edge in a few of them.
+    # There is no clipboard, no board, no rectangle of any kind in any of the twelve. The
+    # dirs `ep2-b08-bureaucrat-0813` and `ep2-b08-twohander-0813` do carry an init, but it is
+    # `b19-init-704x1280.png` -- beat 19's, a green-robed bald figure alone against a pale
+    # background, no board either -- and `ep2-b08-lw-0815` from today holds only json,
+    # prompts and cover_crop.py with no plate rendered yet.
+    #
+    # So beat 08 is not blocked on strength and not blocked on wording: it has nothing to
+    # PRESERVE, and round 8 already established that img2img will not ADD an object the init
+    # lacks. If beat 08 is to carry the prop, the board has to enter at PLATE time -- a new
+    # beat-08 plate composed with the board in it -- and only then can it be inpainted. That
+    # is a staging question and it belongs to whoever owns beat 08's plate, not to this lane.
     authored_b10_scene: >-
       Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
       and dark treeline behind, pale blue morning sky above, one holding up the blank back

@@ -1,0 +1,40 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the ellipse below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 704x1280
+steps: 40
+guidance: 7.5
+strength: 0.72
+seed: 20260815
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/ep2-b10-barkboard-inpaint-0815/b10-init-704x1280.png
+init_sha256: 1249cb41024e30f17c219c62ceb35cb8d703327b6245854224691f7325298bfe
+mask_png: ep2-b10-barkboard-inpaint-0815-s2-str072-mask.png
+mask_shape: quad
+mask_corners_px: [[228, 518], [410, 531], [359, 715], [187, 693]]
+mask_bbox_px: [187, 518, 410, 715]
+mask_width_frac: 0.3168
+mask_height_frac: 0.1539
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position on the stem, no colour and no ripeness. The ellipse above is the steward's and is the first thing his correction should move; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-15T15:33:16Z
+render_seconds: 7.3
+wall_seconds: 17.4
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  beat 10 bracket bisection: identical mask, seed and prompt files to s0/s1, strength 0.72 (midpoint of 0.45 geometry-pass and 0.99 material-pass).
+prompt: |-
+  a slab of rough tree bark, dry grey-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  chrome clip, metal clip, spring clip, clipboard, white paper, lined paper, sheet of paper, writing, text, navy, dark blue, plastic, glossy, polished, planed timber, sanded plank, varnish, tree trunk, standing tree, branches, leaves, 1girl, 1boy, face, extra hands, photorealistic, 3d render
