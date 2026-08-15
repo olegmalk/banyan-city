@@ -44,6 +44,16 @@ adding a whole median for it would say the queue is deeper than it is, and
 overstating depth is precisely how the card reaches zero. Under-filling by one
 job costs a few minutes of queue that the next tick fixes anyway.
 
+`C:\banyan-queue\held\` IS NOT A BACKLOG AND IS NEVER READ HERE. It holds 23
+jobs from 2026-08-13 and -14 that lanes parked for cause -- adult plates, a
+twohander that was re-cut, six goblin design rounds filed twice. Firing those
+tonight is the exact failure mode of "enqueue anything that has not run": work
+that was true two days ago, aimed at plates that have since been replaced. A
+backlog is what someone filed FORWARD, on purpose, with a clock on it; a
+graveyard is what someone put down. If any of those jobs is still wanted, a lane
+re-files it through `box_enqueue.py --backlog` and it gets checked again on the
+way in.
+
 .HOLD IS NOT RUNNABLE. Lanes park a job by renaming it to `.HOLD`,
 `.HOLD-wrong-init`, `.HOLD-wrong-action` -- there were six such files in `ready/`
 the night this was written, and `dir /b ready` counts every one of them. Depth
