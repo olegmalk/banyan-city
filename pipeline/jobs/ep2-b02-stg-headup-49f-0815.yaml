@@ -77,6 +77,79 @@
 #
 # NOTHING HERE IS PROMOTED TO CANON. ONE CLIP. ONE SAMPLE BEFORE ANY BATCH.
 #
+#
+# ================== THE RESULT (rendered rc=0 in 184s, 2026-08-15) ==================
+# Init plate sha256 c5b10ea3...8712 -- IDENTICAL to the 97-frame run's, so the
+# one-variable claim is checked, not asserted.
+#
+# Scored with pipeline/coldread_frames.py, one rule applied to all three clips so
+# the columns are comparable. That rule reproduces the control's published ONSET
+# (pair 25 = 1.04s) and head (0.478) exactly; it declares the window to end one
+# pair later than the earlier scorer did, which is why the 97f numbers below are
+# not byte-identical to the ones already published. Published values in ( ).
+#
+#                    control 97f      staged 97f       THIS 49f
+#   flash (pair 0)     30.68            47.87           16.93    much better
+#   head                0.478            0.472           --      no frozen head found
+#   body                7.706 (7.83)     1.569 (2.13)     1.528
+#   tail                0.080            0.332           --      no frozen tail found
+#   window          1.04 -> 3.46s    0.71 -> 3.79s    0.04 -> 2.00s
+#   window fraction    60.4%            77.1%           97.9%
+#   cadence            2.14x (2.21)    16.12x (17.75)   11.21x
+#   final brightness  136.4            111.7           146.8   (plate = 167)
+#
+# 1. SPLIT, and the eye is the half that loses. The measured window is 97.9% of
+#    the runtime -- the tool found NO frozen head and NO frozen tail to trim, so
+#    falsifier (a) did not fire. But read the frames instead of the number and
+#    the POSE barely changes over frames 0-19; what keeps those pairs above
+#    threshold is a slow global drift, not the character. The action proper runs
+#    frames ~20-44, i.e. ~49% of a 2.04s clip, against ~32% (frames 28-59) for
+#    the 97-frame version. A real improvement, and nothing like the >=70% claimed.
+#    Where the number and the eye disagree the eye wins, so this is not a win.
+# 2. LOST outright. Body 1.528 against a predicted 2.5-6.0, and against the 97f
+#    staged clip's 1.569 measured the SAME way -- unchanged, not risen. Halving
+#    the runtime did not make the model move more per frame. The prediction said
+#    2.5-6.0 in advance precisely so this could not be renarrated afterwards.
+# 3. WON. 11.21x. Every other frame is still a near-duplicate, so the clip still
+#    runs at an effective 12fps. Cadence does not know how long the clip is;
+#    falsifier (d) did not fire and no cross-length cadence comparison is
+#    invalidated.
+# 4. UNRESOLVED. The blind reader queued for this clip never ran -- the agent pool
+#    was saturated -- so the one prediction that rides on a reader's words has no
+#    reader. A sighted look says the tail dead air is gone (the head is up and
+#    held for only ~4 frames, 44-48) and the head-end near-stillness survives at
+#    frames 0-19. That is one end, not both, but it is NOT a blind read and is not
+#    scored as one. It stays open until a blind reader answers it.
+# 5. WON, and it is the win that matters most. The action COMPLETES inside 49
+#    frames: the chin rises and the eyes open continuously from frame ~20 to ~40
+#    with no step between any adjacent pair, and frames 40-48 hold the face
+#    front-on with both eyes wide, grey irises and pupils visible. Frame 0 is
+#    head-down with downcast slits. The last frame is far more readable than the
+#    first. Falsifier (b) -- the truncation signature, body below 2.13 AND the
+#    head still rising at the last frame -- did NOT fire: body is below 2.13 but
+#    the head is not still rising, it has arrived and is holding.
+#
+# THREE THINGS NOBODY PREDICTED, all improvements, all worth more than the ones
+# that were predicted:
+#   - THE RESTYLE FLASH COLLAPSED. Pair 0 is 16.93 here against 47.87 at 97
+#     frames and 30.68 for the control. Same plate, same seed, same prompt, same
+#     sampler; only the frame count differs. The flash is not a fixed property of
+#     the init, and whatever we thought we knew about it needs re-deriving.
+#   - THE EXPOSURE DRIFT HALVED. This clip lands at 146.8 mean luma against the
+#     plate's 167.1 -- 20 levels down, where the 97-frame version fell 55 levels
+#     to 111.7. Shorter clips stay closer to the approved picture.
+#   - THE FOUR-FRAME BRIGHTNESS FLICKER IS GONE. The 97-frame clip spikes 22.1
+#     and 18.0 MAD at pairs 20 and 24 with no pose change. Nothing here exceeds
+#     5.56 and there is no flicker.
+#
+# VERDICT: 49 frames is CHEAPER (184s vs 235s), CLEANER (a third of the flash,
+# half the exposure drift, no flicker) and it completes the action. It did NOT do
+# the thing it was rendered to do -- the per-frame motion rate is unchanged and
+# the proportion of clip spent performing improved only from about a third to
+# about a half, not to the two-thirds-plus predicted. A diagnosis, not a keeper.
+# NOT PROMOTED. The next question is the one this clip raises and cannot answer:
+# the flash and the drift both scale with frame count, which no theory we hold
+# explains -- and that wants ONE more sample, not a batch.
 id: ep2-b02-stg-headup-49f-0815
 task: ep2-b02-stg-headup-49f-0815
 node: 002b-first-citizen
