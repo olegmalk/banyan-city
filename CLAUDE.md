@@ -95,6 +95,8 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
 | `<cb-venv>/bin/python3 pipeline/render_local.py sapling <id>` | shots.md → clips, AnimateDiff on Apple MPS ($0, fast loop; refuses unapproved nodes) |
 | `python3 pipeline/generate_shots.py sapling <id> --provider fal\|veo\|kling --yes` | shots.md → API clips (PAID — founder go only) |
 | `python3 pipeline/t3-trials/intake.py <file> <platform> <A\|B\|C>` | archive a manual trial clip w/ provenance |
+| `python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--backlog]` | queue a job on the rtx5090 box (all the plate/refs/payload guards). **`--backlog` is how you leave work for a card you will not be awake to feed** |
+| `python3 pipeline/box_autofill.py --status \| --verify-deployed` | the box tops `ready` up to 45 MINUTES of work from `backlog/` every 3 min (scheduled task `banyan-box-autofill`). It never authors work: an empty backlog is `status: backlog_empty`, not filler |
 
 Growing the tree (fully sanctioned, no permission needed — Guideline 1):
 node dir under `genomes/sapling/nodes/` (`node.md` with R1 state change + R5
