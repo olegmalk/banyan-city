@@ -1,0 +1,258 @@
+# 2026-08-15, beats-15-and-17 lane. Beat 17, GOODBYE. Arm TURN, seed 20260901.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **GOODBYE -- 1:22-1:27**
+#      "The scavenger stands, brushes off, and turns to go."
+#      > SCAVENGER: "If anyone asks -- you didn't see me. Which is true. You're a plant."
+#
+#    THE ACTION THIS JOB ANIMATES is the scripted one and nothing else. This arm
+#    asks for the SAME two movements as the full arm's first and last, in REVERSED order -- a small movement first, the large one second:
+#
+#      "He turns his head to look back over his shoulder, then pushes up off the grass onto his feet."
+#
+# 2. WHAT IS BEING TESTED, AND IT IS NOT THE RECIPE. The recipe is CLOSED:
+#    704x1280, 97 frames, 24fps, two-stage (8 steps @352x640 -> 2x latent
+#    upsample -> 3 steps @704x1280), distilled sigmas, image-crf 33, guidance
+#    2.0, sequential offload. Every one of those flags, the plate, the plate's
+#    asserted sha and the negative prompt are byte-identical across all twelve
+#    cells of this matrix. THE ONLY TWO VARIABLES ARE THE ACTION CLAUSE AND THE
+#    SEED, and they are crossed:
+#
+#              seed 20260901  20260902  20260903  20260904
+#      full        f1           f2        f3        f4
+#      rise        r1           r2        r3        r4
+#      turn        t1           t2        t3        t4
+#
+#    Read DOWN a column to compare arms at a fixed seed; read ACROSS a row to
+#    see how often an arm performs its action at all.
+#
+# 3. WHY FOUR SEEDS AND NOT THREE. Roughly one take in three fails to perform
+#    its action regardless of framing. At three seeds an arm scoring 2 of 3
+#    cannot be told apart from another arm scoring 2 of 3 -- which is exactly
+#    how the beat-09 crop matrix ended, tight 2 of 3 against waist-up 2 of 3,
+#    IDENTICAL, with the lever neither confirmed nor killed. Four seeds is the
+#    cheapest width at which a difference is readable rather than noise.
+#
+# 4. THE DEFECT THIS EXPECTS TO MEET. On beats 07 and 10 the scripted action
+#    completed inside the first third of the clip and the figure then held
+#    perfectly still to the end, while the whole-frame motion number read HIGH
+#    -- carried entirely by windblown grass. This plate is a wide field under a
+#    big sky; its grass and clouds will move whatever the goblin does. A motion
+#    number on these frames is a filter and NEVER a verdict.
+#
+# 5. THE PREDICTION, WRITTEN BEFORE ANY FRAME IS LOOKED AT.
+#    If ordering sub-movements matters, `full` and `turn` occupy more of the
+#    clip than `rise`, which has one thing to do and should finish early and
+#    freeze. If the rise is simply beyond i2v from a seated plate, ALL THREE
+#    arms fail the same way -- the cloak and grass ripple, the body never
+#    leaves the ground -- and that is a real, reportable result which kills the
+#    "animate beat 17 off a seated plate" approach rather than any one wording.
+#    A third outcome: `full` and `turn` may produce three half-done movements
+#    and no readable stand at all, which would say compound clauses buy motion
+#    at the cost of legibility. Every one of those gets reported as loudly as a
+#    success.
+#
+# 6. SCORING. OPEN THE FRAMES. Judge THE HIPS AND THE HORIZON LINE: at frame 0
+#    the goblin's hips are on the ground and his head sits below the midline;
+#    if he stands, his head crosses the midline and his hips leave the grass.
+#    That is a large, unambiguous, high-contrast change against a plain sky --
+#    the most legible thing this plate offers. Read a DENSE CONSECUTIVE strip
+#    from pipeline/coldread_frames.py through the parity-collapsed motion
+#    window; an evenly-spread contact sheet has already missed a freeze on this
+#    show twice, and a metric errs in both directions.
+#
+# 7. THE INIT, OPENED WITH MY OWN EYES AND ASSERTED RATHER THAN TRUSTED BY NAME.
+#    17-goodbye-mac-seated-r1.png from ep2-b17-mac-plate-0815, drawn on the Mac
+#    2026-08-15 and passing all five of its pre-registered axes on the first
+#    sample: seated low with knees drawn up, top ~40% empty sky, both hands
+#    visible and empty, adult proportions with no blush, patchwork cloak
+#    present, sitting in profile facing screen-left with open field on both
+#    sides so a rise-and-turn has somewhere to go. Its one caveat is midday
+#    blue light where the script says afternoon amber -- a GRADE note, not a
+#    staging failure, and not something motion can fix. Sha recomputed locally
+#    from the bytes viewed:
+#      9429a76fc36efc4981864ee131c45e2d56292ff90335587c28e449ba8b810a94
+#    and the crop step asserts it again on the box before anything is written.
+#
+# 8. TOKEN BUDGET, MEASURED ON THE BOX'S REAL TOKENIZER, NOT ESTIMATED.
+#    This matters here specifically: an over-long positive is truncated from
+#    the END, and the style block is the LAST sentence of every positive in
+#    this matrix -- so overflow would delete the style and render the beat in
+#    no dialect at all, silently. Counted 2026-08-15 with the same Gemma
+#    tokenizer the encode stage loads
+#    (Lightricks/gemma-3-12b-it-qat-q4_0-unquantized, snapshot d62fe4f1), and
+#    with the limit READ from LTX2ImageToVideoPipeline.encode_prompt's
+#    signature rather than written down:
+#
+#      limit 1024   full 63   turn 61   rise 46   negative 38
+#
+#    Worst case 63 of 1024 -- 6.2% of budget. Nothing is near the cliff.
+#
+#    NOTE FOR WHOEVER READS THIS NEXT: the box's banyan-city checkout was at
+#    9e0a0aeb when these were queued and does NOT contain pipeline/prompt_budget.py,
+#    so the encode stage running on the card has NO truncation guard in it.
+#    That is why this was measured by hand instead of trusted to the check.
+#    It is not a defect of this job -- 6.2% is not close -- but the next lane
+#    to write a long prompt should know the guard is not there yet.
+#
+# 9. NO GOBLIN CARD IS IN THIS LINEAGE. The init is a scene plate with a real
+#    location (open field, sky, distant hills), not a costume identity sheet on
+#    blank paper, and it was drawn by a Mac plate job with no refs set at all.
+id: ep2-b17-turn-s1-0815
+task: ep2-b17-turn-s1-0815
+node: 002b-first-citizen
+beat: 17
+runner: box
+needs_gpu: true
+priority: 28
+max_attempts: 1
+owner: beats-15-and-17 lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 17 is GOODBYE -- "The scavenger stands, brushes off, and turns to go."
+  -- the goblin alone, no guards and no second figure. This is a SILENT motion take on an approved node:
+  not a voice synthesis and not an episode assembly.'
+consumer: The ep2 cut, which has no beat-17 take at all, and the action-clause question behind it. This
+  cell is arm TURN at seed 20260901; it is read against the other two arms at the SAME seed, which share
+  its plate, its asserted sha, its negative and every render flag. Judged by opening consecutive frames
+  via pipeline/coldread_frames.py, never by a motion number -- the grass and cloud in this plate move
+  on their own.
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the plate, in which the goblin''s hips leave
+  the grass and his head crosses the frame midline while he stays in the same field -- no cut, no scene
+  change, no camera move, no second figure. The finding worth reporting is either outcome: if he never
+  leaves the ground in any of the twelve cells, animating beat 17 from a seated plate is the wrong approach
+  and that gets said plainly rather than reshot; if some arms stand and others do not, the action clause
+  is a real lever and the matrix says which wording. A clip that pans, zooms, cuts or relocates is a failure
+  whichever way the action goes.'
+why: The card was at zero runnable jobs with a passing beat-17 plate that nothing had used. $0, local
+  card, no provider, no paid engine.
+plate_ack:
+- 'unfetchable: drawn on the Mac (animagine-xl-3.1 on MPS), not by a box farm-out job, so no farm-results-rtx5090
+  copy exists to fetch. The check''s real question -- is this the right beat''s plate, and is it a scene
+  -- is answered by having OPENED the PNG in this session: one seated goblin in profile in an open field
+  under a big sky with distant hills, which is beat 17''s staging. Identity is nailed by sha256 9429a76fc36efc4981864ee131c45e2d56292ff90335587c28e449ba8b810a94,
+  recomputed from the local bytes, verified again on the box after transfer, and asserted a third time
+  by the crop step, which refuses before writing anything.'
+- 'unresolved: same single cause -- no producing job spec exists because no box job produced it. The refs
+  question is answered directly instead: this plate was drawn from a plain text prompt with NO reference
+  set and NO IP-Adapter of any kind (see farm-out/ep2-b17-mac-plate-0815/17-goodbye-mac-seated-r1.yaml),
+  so no costume-identity card set exists anywhere in its lineage -- which is the exact failure the refs
+  check was added for after the 2026-08-14 wave animated six costume sheets.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-turn-s1-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-turn-s1-0815\b17-motion-prompt.txt: He turns his head to look back over his shoulder,
+    then pushes up off the grass onto his feet. 2D anime, hand-drawn cel animation, flat cel shading,
+    clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.
+  C:\banyan-farm\ep2-b17-turn-s1-0815\b17-negative.txt: camera pan, camera tilt, zoom, dolly, push in,
+    pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame
+  C:\banyan-farm\ep2-b17-turn-s1-0815\b17-jobs-encode.json: "[\n {\n  \"beat\": 17,\n  \"embeds\": \"\
+    C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\b17-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\b17-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\b17-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b17-turn-s1-0815\b17-jobs-render.json: "[\n {\n  \"beat\": 17,\n  \"seed\": 20260901,\n\
+    \  \"embeds\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\b17-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\b17-init-704x1280.png\",\n  \"out\":\
+    \ \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-turn-s1-0815\\\\\\\\17-goodbye-LTX-gb-turn-s1.mp4\"\n }\n\
+    ]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-turn-s1-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\ep2-b17-plates-0815\17-goodbye-mac-seated-r1.png
+  - --sha256
+  - 9429a76fc36efc4981864ee131c45e2d56292ff90335587c28e449ba8b810a94
+  - --out
+  - C:\banyan-farm\ep2-b17-turn-s1-0815\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-turn-s1-0815\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-turn-s1-0815\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-turn-s1-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-turn-s1-0815\bench-gb-turn-s1.jsonl
+  - --bench-label
+  - ep2-b17-turn-s1-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-turn-s1-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-turn-s1-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-LTX-gb-turn-s1.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b17-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-gb-turn-s1.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-turn-s1-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-turn-s1-0815\17-goodbye-LTX-gb-turn-s1.mp4
+- C:\banyan-farm\ep2-b17-turn-s1-0815\b17-init-704x1280.png
