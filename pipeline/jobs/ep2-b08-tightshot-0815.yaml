@@ -338,7 +338,168 @@ guards:
     discharged by hand, item by item, in the outcome.
 
 # ============================================================================
-# OUTCOME -- appended after every frame is OPENED. Empty at commit time on
-# purpose: this file is the pre-registration.
+# OUTCOME -- appended after every frame was OPENED. Nothing above this line was
+# edited to agree with anything below it; 755036a6 is the pre-registration and
+# it is still in the history unchanged.
 # ============================================================================
-outcome: {}
+outcome:
+  headline: >-
+    SHOT SCALE IS NOT THE VARIABLE. The hypothesis d314e8f4 left for whoever
+    took this next is dead, and this lane reports that and stops rather than
+    reaching for another lever.
+
+  the_register_was_reached: >-
+    On the FIRST sample, on round 3 s0's own seed, with `cowboy shot` ->
+    `upper body` the only thing changed. Guard head y 150..340 = 190px = 15.6%
+    of frame height, against beat 06's PASSING plate at 16.0% and beat 08
+    r3-s0's FAILING plate at 10.3%. Crop at the thigh, both bellies in frame,
+    open frame below the board -- the action survives the crop (axis 9). Its
+    board is 208x282, flat to camera, four straight edges, rounded corners,
+    warm mid-brown with a chrome clip: LARGER than the board the five failing
+    samples worked on (170x160), and at 1.65x its pixels. So the plate handed
+    the sampler beat 06's register with a bigger board than beat 08 ever had.
+
+  the_plate_round: >-
+    22 frames, 6 batches, 2 machines, $0. 0 of 22 clear all nine axes.
+    Committed as evidence at 158e4f77 with one sidecar each and a per-seed
+    verdict written by opening every frame. The two failures repeat: SPECIES
+    COLLAPSE (the guard elf-eared, or both figures green and pointed-eared) in
+    15 of 22, against the prior round's 4 of 18 at the wider register with the
+    identical negative -- tightening the shot MULTIPLIED that defect from 22%
+    to 68%; and THE BOARD LEAVING THE FRAME, 6 of 22 with no board at all and 6
+    more with it cut by an edge or turned edge-on, because a prop held at chest
+    height sits on the bottom edge once the crop ends at the hip.
+
+  the_composite: >-
+    Built with plain image processing, $0, no sampler, and OPENED BEFORE ANY
+    GPU RAN. Segmentation re-derived from scratch, because nothing has
+    transferred on any board yet and this one needed a THIRD discriminant: this
+    face is warm mid-brown at B-G -11..-15, which is the sign beat 08 r3-s0
+    ACCEPTED with (+4..+6), so r3-s0's own fence would have rejected this whole
+    board. R-G is what separates it (+20..+31 against teal robe -39..-57, green
+    hand -26..-2). Quad traced by scanlines on unoccluded rows and columns and
+    the four lines fitted with residuals reported (left 2.4px, right 0.4px,
+    bottom 1.0px). The clip protrudes AND occludes the top edge, so the top
+    line was fitted on clip-free columns only (residual 9.7px -> ~1px) and the
+    quad raised 12px over the clip with a band along the board's own top NORMAL
+    filled unconditionally -- a horizontal `flat_top_y` would have taken a wedge
+    out of a board rotated 12 degrees. Occluder rule swapped from brightness to
+    hue, because the hand on THIS board is green and its shaded half is L 118,
+    below r3-s0's L>125 fence. maxdiff outside the board segment 0.
+  the_composite_i_rejected: >-
+    c1 was opened and read to me as grey weathered slate, and a measurement
+    inside the QUAD agreed (R-G +0.4 against beat 06's passing +17.0), so c2
+    rebuilt it with the value match applied to luminance only. THE MEASUREMENT
+    WAS CONTAMINATED AND I WAS WRONG: the quad contains the goblin's GREEN
+    hand, which the mask correctly excludes and which sits at R-G -26..-2,
+    while beat 06's quad contains a PALE HUMAN hand at R-G positive -- the same
+    statistic pulled down on one board and up on the other, and none of the
+    difference was bark. Measured again on the pixels the compositor actually
+    changed: beat 06 composite R-G +12.3 / sat 26.2, beat 08 r3-s0 composite
+    +12.1 / 25.9, c1 +11.0 / 23.5, my "fix" c2 +8.6 / 18.4. c1 already matched
+    both references and c2 moved away from them. The inherited value match was
+    restored exactly and c3 is BYTE-IDENTICAL to c1 (sha 52a5a6e6), which is
+    how the revert was checked. The bark is not grey; the plate around it is
+    TEAL. Cost of that detour: about four minutes and no GPU.
+
+  samples:
+    s0: >-
+      strength 0.30, the value that passed on beats 10 and 06 and that all five
+      r3-s0 samples used. 5.7s, rc=0. FAIL, on term 4 alone -- 7 of 8, which is
+      exactly the band all twenty-eight prior samples sat in.
+        large PASS (208x282, 23% of frame height) / flat PASS / rectangular PASS
+        (four straight edges, four corners, whole, nothing of the robe through
+        it) / ROUGH BARK FAIL -- soft smeared vertical shading, a handful of new
+        hairline strokes at the top and two knot marks, and the surface between
+        them unchanged from the composite / not planed PASS, but only because it
+        is not timber either / no chrome clip PASS, gone entirely, top edge one
+        straight line / no white paper PASS / no tree trunk PASS.
+      FAIL-SHAPE no. FAIL-SEAM no. FAIL-DECAL no on all five tells.
+    s1: >-
+      strength 0.45, sole variable against s0. Fired because 0.45 is the one
+      value that distinguishes "the register did nothing" from "the register
+      moved the threshold": it is where beat 10's composite first grew crust,
+      and where beat 08 r3-s0's composite BROKE on shape. 5.4s, rc=0. FAIL, on
+      term 4 alone again. Hard-edged vertical SPLITS now appear across the upper
+      half and down the left, and they are real drawn line work -- but the
+      surface between them is still a smooth gradient. It reads as checked or
+      split smooth plank, not as crust with pale ridges and broken flake. Term 5
+      (not planed timber) is now the borderline one rather than a comfortable
+      pass.
+      WHAT THE REGISTER DID BUY, and it is the one thing it bought: SHAPE
+      SURVIVED 0.45. On the wide-shot plate the same strength tore the top edge
+      and let the tunic read through (d314e8f4 s4, FAIL-SHAPE). Here the
+      silhouette is whole, all four edges straight, and the hand keeps its
+      outline and finger separations. So the shape/strength trade-off beat 06
+      was fighting is gone at this register -- and the material floor is still
+      exactly where it was, which means the floor was never a trade-off.
+
+  the_measurement_that_agrees_with_the_eye: >-
+    Fraction of the board area whose local gradient exceeds a cel-line
+    threshold, composite -> sample, inside the quad eroded 8px:
+        beat 06, PASSED   18.50% -> 19.52%   the sampler ADDED hard edges
+        TIGHT s0 0.30     17.60% -> 15.14%   it removed them
+        TIGHT s1 0.45     17.60% ->  7.58%   it removed 57% of them and drew a
+                                             handful of long splits instead
+    That is the same signature d314e8f4 measured on the wide plate with a
+    different ruler, and it is reported here as CORROBORATION, not as the
+    verdict. The verdict is the six-panel comparison at matched board width
+    (EVIDENCE-b08-shot-scale-030.png and -045.png), opened and judged.
+
+  controls_all_held: >-
+    Composite sha re-asserted by the renderer at every fire and identical after
+    transfer. Output hashes matched on the box and again on the Mac (b4f1093a,
+    04905002). maxdiff against the composite outside the mask bbox +/- pad-crop
+    64 is 0 on both samples. Against the founder's own plate, the whole right
+    third of the frame, BOTH FACES and everything above y=470 came back
+    BYTE-IDENTICAL. The dry run ran first and drew the mask. The prompt files
+    were never opened -- they are beat 10's verbatim, measured on the real CLIP
+    tokenizer on the box at 52/77 positive and 77/77 negative, neither
+    truncated.
+
+  waiver_stated_as_a_waiver: >-
+    THE BOX PLATE CHECK IS WAIVED AND THAT IS A WAIVER, NOT A PASS. The plate
+    half ran on local Apple MPS with no payload, no box out dir and no
+    reference set, so box_enqueue.py's dry-run, distinct-dir rule, publish glob
+    and CARD_REFS_DENYLIST never executed. Discharged by hand, item by item:
+    (a) both prompt sides measured on the real CLIPTokenizer before firing, and
+    the negative confirmed character-for-character identical to round 3's
+    sidecar rather than retyped; (b) the denylist is moot -- no reference set is
+    used at all; (c) every output filename carries the beat slug by
+    construction; (d) the dry run is replaced by the ONE-SAMPLE rule, judged on
+    pixels; (e) frames, composite, script and this spec are committed and
+    pushed so the next lane can open them rather than take this lane's word.
+    NO plate_ack waiver was taken. The inpaint half DID run the real dry-run.
+
+  machine_note: >-
+    macbook1 and macbook3 render SDXL as PURE NOISE on this recipe -- luma
+    spread 254, full colour static, hash-identical on the machine and after
+    transfer so it is not the copy, and macbook1's was the first still that
+    machine has ever produced. Same torch 2.13.0 and diffusers 0.29.2 as the two
+    machines that work. macbook4 ran a single seed for over thirty minutes and
+    was killed. Only the local M1 Pro and macbook2 drew usable frames. Both
+    noise frames are excluded from the 22 rather than counted as failures -- a
+    broken machine is not a verdict on a seed. Reported, not worked around.
+
+  what_this_leaves_for_the_next_lane:
+    - >-
+      DEAD: shot scale. Beat 06's exact register, a board 1.65x the pixels, the
+      same composite machinery, the same strength that passed twice, and the
+      same 7-of-8 failure on material alone. Do not re-run it larger, tighter or
+      at another strength; three separate size/scale tests have now returned the
+      same answer.
+    - >-
+      STILL CLOSED: wording on the prop, under any beat number. Nothing here
+      reopens it and nothing here needed to.
+    - >-
+      NARROWED, and this is the useful part: the material floor is NOT a
+      shape/strength trade-off. At this register 0.45 keeps a perfect silhouette
+      AND a perfect hand, so there is now strength headroom above 0.30 that beat
+      06 never had. Whatever the next lever is, it can be tried at 0.45 without
+      spending the shape.
+    - >-
+      UNTESTED AND NOT ATTACKED HERE, because either would have been a second
+      variable in a round whose whole design was that framing is the only thing
+      that moves: the elf-ear defect is positive-side or reference-side, never
+      negative-side, and at the tighter register it runs at 68%. Any lane that
+      wants a real beat 08 PLATE has to solve that first.
