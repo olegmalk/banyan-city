@@ -1,0 +1,217 @@
+# Blind read: does character identity drift further as a clip gets longer?
+# Recovered into the repo 2026-08-15 by the record-keeping lane. The read itself
+# ran earlier the same night and wrote nothing to the repo — its working files
+# lived only in a session scratchpad. Everything below was verified against git
+# and against the surviving working files before it was written down; the
+# verification steps are recorded in `recovery` at the bottom.
+
+id: identity-drift-vs-length-0815
+date: '2026-08-15'
+kind: blind_read
+question: >-
+  Holding everything constant except clip length, does the character at the END of
+  the clip drift further from the image the clip was CONDITIONED on as the clip
+  gets longer?
+
+design: >-
+  Three renders of ep2 beat 02 that are identical in every parameter except frame
+  count. For each, the FINAL frame was compared against the shared init plate — not
+  against the clip's own first frame — so the comparison is to a fixed reference
+  rather than to a moving one. Each final frame was colour-grade matched to the init
+  before the reader saw it, because the raw frames differ in exposure by an amount
+  that scales with length and would otherwise be read as facial change. The reader
+  saw three side-by-side REFERENCE/IMAGE pairs under shuffled codenames, judged each
+  on its own, and was told explicitly not to rank them against each other.
+
+# ---------------------------------------------------------------------------
+inputs:
+  branch: origin/farm-results-rtx5090
+  shared_init:
+    file: b02-init-704x1280.png
+    sha256: c5b10ea3a733de46ae462a05cb06f3bc7eca3f47ed9249cef89b7d338ce68712
+    git_blob: 218c71e52acae6b7c0335d1ecb8bd780ab2f348d
+    verified: >-
+      The SAME git blob id appears in all three job dirs, so the three renders were
+      conditioned on a byte-identical plate. This is checked, not asserted: `git
+      ls-tree` reports one object id for all three copies.
+  clips:
+    - frames: 49
+      seconds: 2.042
+      dir: farm-out/ep2-b02-stg-headup-49f-0815
+      file: 02-stage-headup-49f.mp4
+      sha256: 48e71dfca6550c9b572e7dd110843bb341b33fa34ed643c2b64dd84e0df29f1a
+    - frames: 97
+      seconds: 4.042
+      dir: farm-out/ep2-b02-stg-headup-0815
+      file: 02-stage-headup.mp4
+      sha256: 976d48bc5205ee76e618d9f4c9dcaffbd289f8ef90795d7e1d48b5089249d5e3
+    - frames: 193
+      seconds: 8.042
+      dir: farm-out/ep2-b02-stg-headup-193f-0815
+      file: 02-stage-headup-193f.mp4
+      sha256: f3822f5d4674c3fdd2e3b6e61f397f3d52b6d3039237d2e4edca45eeb7f18a41
+  one_variable_check: >-
+    Read from each output's render-time meta.yaml, independently of the job specs:
+    all three carry model LTX-2.3-Distilled-Diffusers, seed 20260815, size 704x1280,
+    guidance 2.0, step schedule 8@352x640+3@704x1280, offload sequential, batch 1.
+    The only field that differs is `seconds:` — 2.042 / 4.042 / 8.042. Frame count
+    is the single manipulated variable.
+
+# ---------------------------------------------------------------------------
+blinding:
+  codes: [THISTLE, HOLLOW, PEWTER]
+  chosen_because: >-
+    Colour/material words with no ordinal reading, so the label itself cannot leak
+    which arm is longer. This read is the correction to an earlier one that passed
+    the reader files named ID-SHORT.png and ID-LONG.png — see
+    METHOD-a-label-can-leak-the-hypothesis-to-a-blind-reader-0815 in the ledger.
+  drawn_with: random.SystemRandom().shuffle, in build_pairsheets_0815.py
+  reader_directory: >-
+    a mktemp -d under /var/folders, containing only the three pair sheets, so that
+    listing its parent leaked nothing. The mapping, the source clips and every
+    revealing filename stayed in a separate tree the reader never had.
+  files_written_in_shuffled_order: true   # so mtime ordering leaks nothing either
+  mapping:
+    THISTLE: 49
+    HOLLOW: 97
+    PEWTER: 193
+  mapping_recorded_at: review/blind-reads/identity-drift-vs-length-0815.mapping.json
+
+grade_correction:
+  method: >-
+    Global Reinhard mean/std transfer in CIE Lab (D65): each final frame's global
+    colour statistics are mapped onto the init's. The init is the reference and is
+    left untouched.
+  why: >-
+    Lab mean lightness of the final frame against the init, BEFORE correction:
+    -8.3 L* (49f), -22.3 L* (97f), -21.6 L* (193f). The two longer clips end roughly
+    a fifth of the L* range darker than the image they were conditioned on. Left in,
+    that is read as the character changing.
+  residual_after_correction_L: {49: -0.636, 97: -2.376, 193: -2.856}
+  residual_caveat: >-
+    ~90% of the shift is removed, but the residual still weakly tracks frame count.
+    The transfer is exact pre-clip — all three hit the target mean 68.82 — and the
+    residual is highlight gamut clipping: 12/14/26% of pixels want L*>100 once
+    brightened and get clamped. The correction is good, not perfect.
+
+# ---------------------------------------------------------------------------
+result:
+  ratings_same_individual_out_of_5:
+    49: 5
+    97: 4
+    193: 3
+  reading: >-
+    Monotonic — one full rating step per doubling of clip length. Only the 193f
+    reaches genuine ambiguity about being the same individual.
+  reader_reasons_in_brief:
+    49: >-
+      "Essentially nothing anatomical." Ears, crown break line, cuff roll, hand
+      clasp, shorts hem all coincide. Only the eyes open. Confidence: high.
+    97: >-
+      Ears are "larger, broader at the base, with a rounder, more scalloped outer
+      contour" — "That is morphology, not pose or lighting." Jaw slightly wider.
+      Confidence: moderate.
+    193: >-
+      "the eyes are the problem" — the socket footprint itself is larger and the eye
+      is round rather than almond; plus cheek blush, rounder face, bigger cranium
+      dome, ears splayed near-horizontal. Confidence: moderate-to-low, and the
+      reader said 3 is "a real 'could go either way', not a hedge."
+  reader_discounted_colour_unprompted: >-
+    "all three IMAGEs carry a different colour grade from the reference, so I
+    treated skin-tone differences as lighting unless the hue shift was accompanied
+    by a shape change."
+  verbatim_verdict: review/blind-reads/identity-drift-vs-length-0815.verdict.md
+  agrees_with_earlier_read: >-
+    An earlier first-frame-vs-last-frame read scored 49f=4 and 97f=3 — same ordering,
+    and this design adds a third point that extends the trend rather than breaking
+    it. Both absolute ratings moved up exactly one notch under the init-referenced,
+    grade-matched design, which is what you would expect if the earlier reader was
+    partly scoring the grade shift as facial change.
+
+# ---------------------------------------------------------------------------
+caveats_stated_by_the_lane_that_ran_it:
+  n_is_one: >-
+    n=1 per length, one beat, one seed. Seed variance in this pipeline is known to be
+    large enough to turn an identical setup into a working shot or a near-freeze
+    (see done-definitions.yaml:seed_variance_rule), so a monotonic three-point trend
+    is SUGGESTIVE, NOT ESTABLISHED. The larger design — >=3 beats x >=5 seeds of
+    matched pairs — was deliberately not run; it needs authorisation.
+  framing_confound_not_removed: >-
+    THE CAMERA DRIFTS TOO, AND IT DRIFTS WITH FRAME COUNT. The 193f went from a
+    full-body long shot to a chest-up close-up — the reader, answering the framing
+    question kept separate from the identity question: "the head alone is roughly
+    three times its reference size in frame" — despite `zoom, dolly, push in` all
+    being in the negative prompt. The 97f moved moderately closer and dropped toward
+    eye level; the 49f barely moved. So the close-up both exposes more facial detail
+    to criticism and is visibly softer ("edges are mushy"), which the reader named as
+    its main limiter. PART OF THE 193f's 3/5 IS PLAUSIBLY SHOT-SCALE, NOT IDENTITY.
+    Removing this needs face-region crop normalisation, which is a different design.
+  the_pixel_metric_does_not_corroborate: >-
+    Global MAD from the init on the graded frames is 30.1 / 25.7 / 51.5, which puts
+    the 97f LOWEST and does not reproduce the blind read's ordering — global MAD is
+    dominated by framing and motion. The blind read is the finding. The metric is not
+    corroboration and is recorded here so nobody cites it as such. (Ungraded MAD is
+    29.0 / 59.3 / 65.1; the reordering once grade is removed is itself evidence that
+    most of the apparent drift in the raw numbers was colour, not character.)
+
+# ---------------------------------------------------------------------------
+reproduce:
+  note: >-
+    Verified 2026-08-15 by the recovery lane: every artifact below regenerated
+    BYTE-IDENTICALLY from the git blobs. Hashes are in `artifacts`.
+  steps: |
+    W=$(mktemp -d); mkdir -p "$W/src" "$W/frames"; cd <repo>
+    for d in ep2-b02-stg-headup-49f-0815 ep2-b02-stg-headup-0815 ep2-b02-stg-headup-193f-0815; do
+      mkdir -p "$W/src/$d"
+      for f in $(git ls-tree -r --name-only origin/farm-results-rtx5090 | grep "^farm-out/$d/"); do
+        git show "origin/farm-results-rtx5090:$f" > "$W/src/$d/$(basename $f)"
+      done
+    done
+    for d in ep2-b02-stg-headup-49f-0815:02-stage-headup-49f.mp4:49 \
+             ep2-b02-stg-headup-0815:02-stage-headup.mp4:97 \
+             ep2-b02-stg-headup-193f-0815:02-stage-headup-193f.mp4:193; do
+      dir=${d%%:*}; rest=${d#*:}; f=${rest%%:*}; n=${rest##*:}; last=$((n-1))
+      ffmpeg -v error -y -i "$W/src/$dir/$f" -vf "select=eq(n\,$last)" -vsync 0 \
+             -frames:v 1 "$W/frames/final-$n.png"
+    done
+    cp review/blind-reads/build_pairsheets_0815.py "$W/build.py" && cd "$W" && python3 build.py
+  blinding_is_not_reproducible_on_purpose: >-
+    build.py reshuffles the codes on every run, so a fresh run produces a DIFFERENT
+    mapping. That is the point of it. The sheets as the reader saw them are rebuilt
+    by calling the script's own `sheet()` function with the recorded mapping from
+    identity-drift-vs-length-0815.mapping.json; the grading, the layout and the final
+    frames are all deterministic, so the rebuilt sheets hash identically to the
+    originals. The recovery lane did exactly this and confirmed all three hashes.
+
+artifacts:
+  final_frames_sha256:
+    final-49.png: 1dd348bfd6fbe0ab5317d81af0daad543f38c99cc6ff9feb0a6a7077f5aec581
+    final-97.png: dda12ca2468b7c0b899df43f4f78b7f683c325bc12f1c75047fb746830a9a5f7
+    final-193.png: 8b5b6e8cef9070fc88e38c419417e0ea33e3d3a2982bac8326776ab9e88aae23
+  graded_frames_sha256:
+    final-49-graded.png: 723afd461a3a556d7549b02ecad964425b963e0fc55ec1383d0bbe36f8ba4ffc
+    final-97-graded.png: 23e2dc3ea4a947346179a5f033cb7dd67c1cc9a741bbf83da421e947902cbbd1
+    final-193-graded.png: 6b76b01c8dad32871cafa86bbdc10c56c5b610454b421343cb095ab95d5b8531
+  reader_sheets_sha256:
+    pair-THISTLE.png: 216ba2ddc057fb4dffe3b07299f251a9cb81c9b616e99c0ff2f1f95a9c0ad332
+    pair-HOLLOW.png: 9852ca484d8df9d6f136d9769cf9857366ff6d740f641ea7cd55c469a674c3be
+    pair-PEWTER.png: 5ded6f9ba69d74cbf98c80d9707c571ad73d60006ab393f285258d17d3c91726
+  not_committed_as_files: >-
+    .gitignore:60 ignores review/**/*.png and the sheets regenerate byte-identically
+    from committed inputs, so the hashes above are the record. See README.md.
+
+recovery:
+  recovered_by: record-keeping lane, 2026-08-15
+  from: >-
+    Working files survived at
+    <session-scratchpad>/driftinit/ (readerdir/pair-*.png, frames/, mapping.json,
+    build.py). The verbatim verdict was recovered first-hand from the blind reader's
+    own transcript, not from a summary of it.
+  what_was_checked_rather_than_taken_on_trust:
+    - The shared init is one git blob across all three job dirs.
+    - The three meta.yaml files differ only in `seconds:`.
+    - The scratchpad copies of the three clips hash equal to the git blobs.
+    - The final frames re-extract byte-identically from the git blobs.
+    - The graded frames and all three reader sheets rebuild byte-identically.
+    - The Lab deltas printed by a fresh build.py run match mapping.json exactly.
+  nothing_was_marked_unverifiable: true

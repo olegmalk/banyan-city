@@ -1,0 +1,186 @@
+# Blind read: does HOW we sample frames change what a reader says the clip does?
+# Recovered into the repo 2026-08-15 by the record-keeping lane. The read ran
+# earlier the same night and wrote nothing to the repo.
+#
+# THIS IS THE MOST CONSEQUENTIAL OF THE NIGHT'S FINDINGS. It does not report on a
+# clip; it reports on our INSTRUMENT, and it invalidates a whole class of earlier
+# verdicts. Read `standing_consequence` before citing any older motion verdict.
+
+id: sparse-vs-dense-sampling-0815
+date: '2026-08-15'
+kind: blind_read
+question: >-
+  Shown the SAME clip twice — once as an evenly-spread 16-frame contact sheet, once
+  as consecutive frames — does a blind reader give the same answer to "is the
+  movement continuous, or does it step?"
+
+answer: >-
+  NO. The same clip read as STEPPING from the sparse sheet and as CONTINUOUS from
+  the consecutive frames. The reader, unprompted and in its own words: "If I had
+  only been given set one, I would have wrongly reported a broken or dropped-frame
+  clip." The stepping is an artifact of the sampling, not a property of the video.
+
+# ---------------------------------------------------------------------------
+design: >-
+  One cold reader, no project context, given two directories and told explicitly
+  that the sets "may be from the same video or from different videos — you are not
+  being told which, and you must not assume either way." It answered the same six
+  questions for each set independently, and only compared them at the end. It was
+  not told what the experiment was testing. It worked out on its own that the two
+  sets were the same video, and said how it knew: frame-by-frame landmark matches
+  between the sparse cells and the overview tiles ("frame 1 has the identical
+  top-of-frame white flare as tile 000, frames 5 and 6 match tiles 032 and 038,
+  frame 8 matches 045").
+why_this_design_is_sound: >-
+  The two arms differ ONLY in sampling — same clip, same source frames underneath,
+  same reader, same questions, same session. Set two is a strict superset of set
+  one's information: it contains that same sparse spread as its overview sheet PLUS
+  four strips of consecutive frames. So the reversal cannot be attributed to the
+  clip, the reader, or the question. There is only one variable left.
+
+# ---------------------------------------------------------------------------
+input_clip:
+  branch: origin/farm-results-rtx5090
+  path: farm-out/ep2-b02-nw-0815/02-the-sprint-LTX-nw.mp4
+  sha256: 44001de1f567b736453fc218c7b148c083e3fd71dcc97dee188f93daec9511b6
+  frames: 97
+  verified: >-
+    The scratchpad copy the sheets were built from hashes equal to the git blob, and
+    ffmpeg counts 97 extracted frames — so the clip that was read is the clip that is
+    in the repo, checked rather than assumed.
+
+arms:
+  set_one_sparse:
+    what: >-
+      One sheet, 16 frames evenly spread over the 97, in a 4x4 grid, each cell
+      labelled "frame 1".."frame 16".
+    source_frame_indices: [0, 6, 13, 19, 26, 32, 38, 45, 51, 58, 64, 70, 77, 83, 90, 96]
+    built_by: review/blind-reads/build_sparse_sheet_16.py
+    sha256: {sheet.png: 79f31d76b6308091c3c43d335aee54f4d3ce725efede9c6caef277a4a42f46a9}
+    note: >-
+      This is a faithful replication of the RETIRED method — the instrument that
+      produced the earlier verdicts, rebuilt so it could be put on trial.
+  set_two_dense:
+    what: >-
+      One whole-clip overview (16 tiles evenly spread, labelled with true source
+      frame indices 000-096) PLUS four strips of every consecutive frame across the
+      motion window and its padding — 022-041, 042-061, 062-081, 082-086.
+    built_by: pipeline/coldread_frames.py
+    sha256:
+      overview.png: 33e269567092ae4238f69aa877dab6d4e658dea6f0090994bae27cd16ec297e9
+      strip-01.png: e0075f28fb870b8c3af2548973bfc3a88d7cc90e3374c888f9c7f987c141babc
+      strip-02.png: cf0a6bf21b3c4f5c09da0a2389d9fcd3bc9e91e8105bfbe223b87b06e09c40e8
+      strip-03.png: c648f15675ba4ff59744cf6bd6530a5e0dc4ff62c5b925e18dce0fcefe49fa91
+      strip-04.png: e9359fc98e3ee036520c83528f3c40d47e7e6062d6a909cb8f90a503e1cc57c5
+    note: >-
+      Cells carry their TRUE source frame index, which is what lets a reader see that
+      strip cells are one frame apart and overview cells are not.
+
+# ---------------------------------------------------------------------------
+result:
+  set_one_verdict: STEPPING
+  set_two_verdict: CONTINUOUS
+  verbatim_verdict: review/blind-reads/sparse-vs-dense-sampling-0815.verdict.md
+  the_decisive_line: >-
+    "SET ONE reads as STEPPING; SET TWO reads as CONTINUOUS. ... The stepping I saw
+    in set one is an artifact of how thinly it was sampled, not something in the
+    movement. If I had only been given set one, I would have wrongly reported a
+    broken or dropped-frame clip."
+  set_one_named_a_specific_false_cut: >-
+    "Frames 7 -> 8 is the big one" — described as a figure standing upright becoming
+    a figure bent double "at a different scale and camera pitch", with "a large
+    amount of movement missing between them". Those are source frames 38 and 45. The
+    intervening frames 039-044 exist and, shown consecutively, are smooth: "the hands
+    open and lower in even increments, the head tips a few degrees per frame."
+  set_two_found_the_opposite_defect: >-
+    "The only thing that could be mistaken for a defect is the opposite problem —
+    long stretches where consecutive frames are indistinguishable." Sparse sampling
+    hid the real fault (dead air) while inventing a fake one (stepping).
+  what_survives_both_sets: >-
+    The composition complaint is NOT a sampling artifact and stands: the clip loses
+    the character's face partway through (legible to ~frame 051, gone from 057) and
+    then holds on an unreadable shape — "a large beige dome with two shoe soles above
+    it and two disembodied hands below it" — for its entire final quarter.
+
+# ---------------------------------------------------------------------------
+standing_consequence:
+  rule: >-
+    ANY VERDICT OF THE FORM "the motion steps / stutters / lurches / jumps / drops
+    frames" THAT WAS REACHED FROM AN EVENLY-SPREAD CONTACT SHEET IS NOT EVIDENCE.
+    It must be re-read on consecutive frames before it is acted on. A sheet sampling
+    every 6th frame cannot distinguish a genuine jump-cut from a fast move.
+  already_claimed_one_verdict: >-
+    The "three-frame lurch" verdict on this same clip fell the same night. The old
+    verdict was "the fold happens in about three frames while the camera swings
+    simultaneously, so it reads as a lurch or a stumble." Measured, the fold occupies
+    pairs 25->82 — 57 pairs, 2.4 seconds — with a smooth ease-in/ease-out envelope,
+    and no step between any adjacent pair anywhere. The old set's finest resolution
+    was 7 frames: it could not have SEEN a three-frame event, it INFERRED one. That
+    leg of the staging diagnosis is struck. NOTE the honest caveat the lane that
+    struck it recorded about itself: no blind reader was available at that moment, so
+    the consecutive-frame half of that particular re-read was its own SIGHTED read.
+    The measurement half stands on its own, and the blind A/B recorded here — which
+    did have a reader — reaches the same conclusion independently.
+  do_not_over_read: >-
+    This finding is about the INSTRUMENT, and it is n=1 on one clip. It does not say
+    every past stepping verdict was wrong; it says none of them was ever supported by
+    the evidence shown, so each needs re-reading rather than reversing. The safe
+    inference is "unsupported", not "false".
+
+# ---------------------------------------------------------------------------
+motion_timing_quantification:
+  measured_on: the same 97-frame control clip, from the consecutive strips
+  finding:
+    head_still_frames: ~38     # frames 000-037, standing, no body movement
+    movement_frames: 22-24     # frames 038-061, "roughly 22-24 frames: 038 through 061"
+    tail_hold_frames: ~35      # frames 062-096, held pose, "the figure itself does not move"
+  arithmetic_check: 38 + 24 + 35 = 97, which is the clip length. Consistent.
+  reader_words: >-
+    "about 38 frames of standing still at the head and about 35 frames of held pose
+    at the tail" — the action "fills roughly a quarter of the running time and the
+    rest is two static bookends."
+  THIS_DOES_NOT_GENERALISE: >-
+    RECORD THE NARROWING WITH THE FINDING, ALWAYS. `trim_pass_0815` (in
+    review/ep2-picks/done-definitions.yaml) established that this measurement is a
+    property of the 97-frame recipe and DOES NOT TRANSFER to the recorded picks: all
+    five picks are 121 frames at 24fps from the older 0813/0814 recipe, NONE has a
+    frozen head, the motion window opens at pair 1 in every one of the five, and head
+    trim available across all five picks is ZERO frames. Only tails had anything to
+    give. So "clips have ~38 dead frames at the head" is FALSE as a general statement
+    about our output; it is true of one clip on one recipe.
+  related_caveat: >-
+    See also coldread_period_caveat_0815 in done-definitions.yaml: the tool's
+    parity-collapse is width-2, calibrated to this 97-frame recipe, and the 121-frame
+    picks stutter with period 3, so its windows must not be trusted across recipes
+    without checking the cadence period first.
+
+# ---------------------------------------------------------------------------
+reproduce:
+  note: >-
+    Verified 2026-08-15 by the recovery lane: ALL SIX SHEETS REGENERATED
+    BYTE-IDENTICALLY from the git blob. The hashes above are the ones produced by
+    the commands below, run fresh.
+  steps: |
+    W=$(mktemp -d); cd "$W"
+    git -C <repo> show origin/farm-results-rtx5090:farm-out/ep2-b02-nw-0815/02-the-sprint-LTX-nw.mp4 > clip.mp4
+    # set two — dense, the honest instrument
+    python3 <repo>/pipeline/coldread_frames.py clip.mp4 --out read-control --json read-control.json
+    # set one — sparse, the retired instrument on trial
+    mkdir -p f_nw && ffmpeg -v error -i clip.mp4 -vsync 0 f_nw/%04d.png
+    python3 <repo>/review/blind-reads/build_sparse_sheet_16.py f_nw read-control-oldstyle
+  not_committed_as_files: >-
+    .gitignore:60 ignores review/**/*.png and every sheet regenerates byte-identically
+    from committed inputs, so the hashes are the record. See README.md.
+
+recovery:
+  recovered_by: record-keeping lane, 2026-08-15
+  from: >-
+    Sheets survived at <session-scratchpad>/read-control/ and
+    /read-control-oldstyle/. The verdict is FIRST-HAND: the agent that produced the
+    report WAS the cold reader — the prompt addresses it as one — so the text in the
+    verdict file is the reader's own words, not a lane's summary of a reader.
+  the_sparse_generator_was_nearly_lost: >-
+    It existed only as an inline heredoc inside a subagent transcript. It is now
+    committed as review/blind-reads/build_sparse_sheet_16.py and was re-run to
+    confirm it still reproduces the sheet the reader saw, hash for hash.
+  nothing_was_marked_unverifiable: true
