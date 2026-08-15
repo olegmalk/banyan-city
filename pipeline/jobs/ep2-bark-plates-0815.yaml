@@ -1,0 +1,102 @@
+# 2026-08-15, bark-board motion lane. PLATE PUBLISH. No GPU, no model, no network.
+#
+# WHY THIS JOB EXISTS. box_enqueue refused all four bark motion jobs, twice each,
+# and both refusals were right:
+#
+#   BLOCKED: could not fetch this job's --src, so its picture was NOT checked
+#   BLOCKED: could not work out which job produced this job's --src
+#
+# The plate check reads origin/farm-results-rtx5090, i.e. pictures published
+# through a farm-out job; the refs check reads farm-out/<job-id>/<file> and looks
+# up pipeline/jobs/<job-id>.yaml. A `plate_ack:` waiver would have cleared both in
+# one line. It is not used here. One of the 2026-08-14 wave that landed on this
+# exact refusal turned out to be cropping the WRONG BEAT'S PLATE, and a lane that
+# waives the check that catches that has bought itself nothing. So the plates are
+# published the way the guard names, and the guard then measures the real picture.
+#
+# WHAT IS BEING PUBLISHED. The two frames that ended a four-day prop block. A bark
+# clipboard gates beats 06, 08 and 10 -- all three name it in their action. Four
+# wording attempts and twenty-three inpaint samples failed. The method that passed:
+# composite procedural bark relief into the plate with plain image processing ($0,
+# no sampler), then inpaint at LOW strength.
+#
+#   b10-barkboard-pass-s13.png
+#     ep2-b10-barkboard-inpaint-0815 s13, 40 steps, strength 0.30, composite init
+#     sha 96e0a449. Commit 7029e0ff. Failed at 0.45 (s12) by splitting the slab in
+#     two where the model read the deepest composited fissure as an object edge.
+#     sha256 f5a5c152...
+#
+#   b06-barkboard-pass-s10.png
+#     ep2-b06-barkboard-inpaint-0815 s10, 40 steps, strength 0.30, composite init
+#     sha fca31f96. Commits ec33a46a (the bar, written before the GPU ran) and
+#     1de34880 (the verdict). Cleared all eight bar terms -- large / flat /
+#     rectangular / rough bark texture / not planed timber / no chrome clip / no
+#     white paper / no tree trunk -- plus a pre-registered FAIL-DECAL mode on all
+#     five of its committed tells.
+#     sha256 063ad561...
+#
+# PROVENANCE OF THE BYTES ON THE BOX. These two files are already in git on main,
+# under lab/inpaint-b10/out/ and lab/inpaint-b06/out/, in the two commits named
+# above. They were placed on the box by scp into C:\banyan-farm\ep2-bark-plates-0815
+# and their hashes were read back with Get-FileHash and compared to the local
+# shasum before this job was written -- both matched exactly. This job asserts the
+# same two hashes AGAIN at copy time and refuses to publish anything that does not
+# match, so a stale or half-written file cannot become the plate four renders are
+# conditioned on. No git pull runs on the box.
+#
+# BOTH FRAMES WERE OPENED AT FULL SCALE AND AT 3x BEFORE THIS WAS FILED, not
+# assumed from a sidecar. Both are already exactly 704x1280, so the cover-crop in
+# the consuming jobs is arithmetically a no-op (scale 1.0000, centre box 0,0) and
+# is kept purely as the sha gate. Both are scenes and not cards: a mown field, a
+# hedge line, sky and distant hills behind two standing guards.
+id: ep2-bark-plates-0815
+task: ep2-bark-plates-0815
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: false
+priority: 20
+max_attempts: 1
+owner: bark-board motion lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. This job runs no model and generates no picture -- it copies two already-rendered stills
+  into farm-out and writes a sha manifest. It is not an episode assembly and not a voice synthesis.'
+consumer: 'ep2-b06-barkmotion-a1/b1-0815 and ep2-b10-barkmotion-a1/b1-0815, whose crop steps read these
+  two files by their published path and assert these two hashes. Without this job those four specs cannot
+  be enqueued at all: box_enqueue refuses a motion job whose --src it cannot fetch from the results branch,
+  and refuses again when it cannot trace which job produced it.'
+success: Two PNGs and a sha256 manifest under farm-out/ep2-bark-plates-0815, hashes matching f5a5c152...
+  and 063ad561... exactly. Any mismatch is a refusal, not a warning -- the step exits nonzero before it
+  copies anything.
+why: Four motion renders are blocked on it and it costs seconds of a card that is not needed for it. $0,
+  no GPU, no provider, no network.
+est_minutes: 1
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload: {}
+steps:
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Assert BEFORE copying. A hash checked after the fact is a log line, not a gate.\nimport hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-bark-plates-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-bark-plates-0815\"\
+    \nWANT = {\n  \"b10-barkboard-pass-s13.png\": \"f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b\"\
+    ,\n  \"b06-barkboard-pass-s10.png\": \"063ad56112a718006b6eb2d883e3c01bcb579aef90ea0b201de27a29123565f9\"\
+    ,\n}\nhave = {}\nfor name, want in sorted(WANT.items()):\n    p = os.path.join(src_dir, name)\n   \
+    \ if not os.path.isfile(p):\n        raise SystemExit(\"!! missing %s\" % p)\n    h = hashlib.sha256()\n\
+    \    with open(p, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n   \
+    \         h.update(chunk)\n    got = h.hexdigest()\n    if got != want:\n        raise SystemExit(\"\
+    !! SHA MISMATCH, refusing to publish %s\\n   want %s\\n   have %s\" % (name, want, got))\n    have[name]\
+    \ = got\n    print(\"asserted %s %s\" % (got[:12], name), flush=True)\nos.makedirs(dst, exist_ok=True)\n\
+    for name in sorted(have):\n    shutil.copy2(os.path.join(src_dir, name), os.path.join(dst, name))\n\
+    with open(os.path.join(dst, \"ep2-bark-plates-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(\"%s  %s\" % (have[n], n) for n in sorted(have)) + \"\\n\")\nprint(\"published\", len(have),\
+    \ \"plate(s) + manifest ->\", dst)\nraise SystemExit(0)\n"
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\ep2-bark-plates-0815\b10-barkboard-pass-s13.png
+- C:\banyan-farm\courier-box\farm-out\ep2-bark-plates-0815\b06-barkboard-pass-s10.png
+sample: true
