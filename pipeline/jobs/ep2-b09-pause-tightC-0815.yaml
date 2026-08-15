@@ -1,0 +1,201 @@
+# 2026-08-15, refill lane. Beat 09, TIGHT INIT, THIRD SEED. THE MATCHED HALF.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE PAUSE -- 0:42-0:45**
+#      "Guard 1's face works through it, slowly."
+#      > GUARD 1: "...We confiscate the goblin?"
+#
+#    THE ACTION THIS JOB ANIMATES: his eyes drift slowly to one side and his mouth
+#    opens a little as the thought works through his face. The beat IS a face
+#    working through an idea; nothing else happens in it.
+#
+# 2. WHY THIS EXISTS -- IT IS THE OTHER HALF OF A NEW MATCHED PAIR, NOT A VICTORY LAP.
+#    A third tight cell fired on its own could only agree with us and would prove
+#    nothing. Fired at THE SAME SEED as ep2-b09-pause-49fC-0815 (20260817), it is
+#    something better: a third controlled tight-vs-waist-up PAIR at a seed neither
+#    arm has seen. The beat-09 matrix so far, every cell scored by opening frames:
+#
+#      seed 20260815:  waist-up NO action  |  tight ACTION
+#      seed 20260816:  waist-up ACTION     |  tight ACTION
+#      seed 20260817:  waist-up = 49fC     |  tight = THIS JOB
+#
+#    Read down the seed rows rather than across the arms: the claim is that within
+#    a row, the tight cell animates at least as often as the waist-up one. Row one
+#    supports it, row two is a tie, and this row is the tiebreaker that neither arm
+#    can be lucky in alone.
+#
+# 3. THE PREDICTION, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    If the crop is a real lever, this cell animates. THE INFORMATIVE OUTCOMES ARE
+#    THE OTHER TWO AND THEY ARE SAID PLAINLY HERE SO THEY CANNOT BE EXPLAINED AWAY
+#    LATER: if this tight cell comes back with a closed mouth, tight drops to 2 of 3
+#    and THE CROP CLAIM IS DEAD regardless of what 49fC does. If this one animates
+#    and 49fC also animates, the pair is a tie, waist-up reaches 2 of 3, and the
+#    claim is downgraded to seed luck. Only a live tight cell beside a dead
+#    waist-up one at seed 20260817 actually strengthens it.
+#
+# 4. SCORING. Judge THE MOUTH, not the frame, and do not trust either motion
+#    number. A whole-frame metric scored the one dead cell lively on hair churn and
+#    head drift while the mouth never opened. The region metric fails the other way:
+#    on ep2-b09-pause-tight-0815 the mouth band measured 3.48 mean interframe
+#    against a left-grass reference of 5.11 -- calling a clip dead whose frames show
+#    the mouth plainly opening wide and holding -- because the grass is windblown
+#    and the reference region decides the verdict. OPEN THE FRAMES.
+#
+# 5. THE INIT, OPENED RATHER THAN TRUSTED BY NAME. 09-the-pause-ipa-r0-w015-s0.png
+#    from ep2-b09-scene4-0815: one adult guard, short brown hair, brown tunic over a
+#    pale collar with a green sash, hand raised to his brow, in TALL GRASS with a
+#    treeline, distant peaks and cloud behind. A real location and a genuine medium
+#    close-up. Sha recomputed locally from the bytes viewed:
+#      3acc4122249fd3639ede823ef07ef6398cbf8d7f754fbe335d0695196b5b830c
+#    and the crop step asserts it again on the box before anything is written.
+#
+# 6. THE ONLY DIFFERENCE FROM ep2-b09-pause-tight-0815 AND -tightB IS THE SEED
+#    (20260817). Prompt and negative are byte-identical across every cell of this
+#    experiment -- md5 f7eef5563cb6 and e389312ea972, checked, not assumed.
+#
+# 7. THE s2 SLOT IS EXCLUDED; this init is slot s0, round r0. No `-guardpick-` and
+#    no refs-guards-chosen-0814 set anywhere in its lineage.
+#
+# 8. NO GOBLIN IS IN THIS FRAME. The guard cast is founder-approved, which is why
+#    beat 09 is queueable while 07, 08, 18 and 19 are not.
+#
+# 9. 49 FRAMES. Token budget unchanged from the cells already rendered because the
+#    strings are byte-identical to theirs: positive 61, negative 38, against 1024.
+id: ep2-b09-pause-tightC-0815
+task: ep2-b09-pause-tightC-0815
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 7
+max_attempts: 1
+owner: refill lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. Beat 09 is THE
+  PAUSE -- "Guard 1''s face works through it, slowly." -- one guard, no goblin. A silent motion take on
+  an approved node, not an episode assembly and not a voice synthesis.'
+consumer: The ep2 cut, and the framing question behind it. Read against ep2-b09-pause-49f-0815, which
+  is the same prompt and the same seed on a waist-up init. If the tight init reads better, beat 09 is
+  a close-up beat and the plate sets for the other face beats should be cut that way.
+success: 'A 704x1280 mp4, 49 frames, opening on the plate, in which his eyes drift and his mouth opens
+  slightly while he stays put in the same tall grass -- no cut, no scene change, no camera move. The finding
+  worth reporting either way is the COMPARISON with arm A: whether the same face action reads more clearly
+  at the tighter framing. A frozen clip is also a real finding and gets said rather than swept.'
+why: Beat 09's whole content is an expression, and the pair already running is cut waist-up. This isolates
+  framing as the single variable at $0 on the local card, with no provider.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-pause-tightC-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-motion-prompt.txt: His eyes drift slowly to one side and
+    his mouth opens a little as the thought works through his face. 2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.
+  C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-jobs-encode.json: "[\n {\n  \"beat\": 9,\n  \"embeds\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b09-pause-tightC-0815\\\\b09-embeds.pt\",\n  \"prompt_file\": \"C:\\\\\
+    banyan-farm\\\\ep2-b09-pause-tightC-0815\\\\b09-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\\
+    banyan-farm\\\\ep2-b09-pause-tightC-0815\\\\b09-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-jobs-render.json: "[\n {\n  \"beat\": 9,\n  \"seed\": 20260817,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b09-pause-tightC-0815\\\\b09-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b09-pause-tightC-0815\\\\b09-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b09-pause-tightC-0815\\\\09-the-pause-LTX-pause-tight-c.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-pause-tightC-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-scene4-0815\09-the-pause-ipa-r0-w015-s0.png
+  - --sha256
+  - 3acc4122249fd3639ede823ef07ef6398cbf8d7f754fbe335d0695196b5b830c
+  - --out
+  - C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '49'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-pause-tightC-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-pause-tightC-0815\bench-b09-pause-tight-c.jsonl
+  - --bench-label
+  - ep2-b09-pause-tightC-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (09-the-pause).\nimport glob, hashlib, os, shutil\nsrc_dir = \"\
+    C:/banyan-farm/ep2-b09-pause-tightC-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-pause-tightC-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/09-the-pause-LTX-pause-tight-c.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b09-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-b09-pause-tight-c.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c\
+    \ = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b09-pause-tightC-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b09-pause-tightC-0815\09-the-pause-LTX-pause-tight-c.mp4
+- C:\banyan-farm\ep2-b09-pause-tightC-0815\b09-init-704x1280.png
