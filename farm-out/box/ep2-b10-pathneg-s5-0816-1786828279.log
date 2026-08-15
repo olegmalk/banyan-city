@@ -1,0 +1,82 @@
+#### job ep2-b10-pathneg-s5-0816-1786828279 attempt 1 start 2026-08-15T21:43:51Z
+
+==== step crop START 2026-08-15T21:43:54Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b10-pathneg-s5-0816\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-bark-plates-0815\\b10-barkboard-pass-s13.png", "--sha256", "f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b", "--out", "C:\\banyan-farm\\ep2-b10-pathneg-s5-0816\\b10-init-704x1280.png", "--size", "704x1280"]
+src 704x1280 sha f5a5c1525f283e4c56ed3b9d46996e5cff1c333a3a9da09ecb244ac9e74d615b
+cover-crop scale=1.0000 -> 704x1280, centre box (0,0)
+WROTE C:\banyan-farm\ep2-b10-pathneg-s5-0816\b10-init-704x1280.png
+==== step crop END rc=0 2026-08-15T21:43:54Z ====
+
+==== step encode START 2026-08-15T21:43:54Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b10-pathneg-s5-0816\\b10-jobs-encode.json"]
+-- begin-encode: phys 9.8/68.1GB, commit 11.9/115.3GB (load 14%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  36%|███▌      | 384/1065 [00:00<00:00, 3474.60it/s]
+Loading weights:  72%|███████▏  | 772/1065 [00:00<00:00, 3497.89it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 3752.04it/s]
+-- encode-beat-10: phys 11.0/68.1GB, commit 38.8/115.3GB (load 16%)
+[1/1] encoded beat 10 to C:\banyan-farm\ep2-b10-pathneg-s5-0816\b10-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 40.9, "peak_phys_gb": 36.3, "last_stage": "encode-beat-10"}
+==== step encode END rc=0 2026-08-15T21:45:25Z ====
+
+==== step render START 2026-08-15T21:45:25Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-b10-pathneg-s5-0816\\b10-jobs-render.json", "--size", "704x1280", "--frames", "97", "--fps", "24", "--guidance", "2.0", "--distilled-sigmas", "--two-stage", "--image-crf", "33", "--offload", "sequential", "--mode", "production", "--task", "ep2-b10-pathneg-s5-0816", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-b10-pathneg-s5-0816\\bench-pathneg-s5.jsonl", "--bench-label", "ep2-b10-pathneg-s5-0816"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 9.8/68.1GB, commit 11.9/115.3GB (load 14%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 10.5/68.1GB, commit 13.8/115.3GB (load 15%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  8.75it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.03it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  8.56it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 16.62it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 13.85it/s]
+-- load-connectors-12.7GB-and-vae: phys 10.6/68.1GB, commit 52.1/115.3GB (load 15%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 63.46it/s]
+-- offload-setup-sequential: phys 10.6/68.1GB, commit 61.8/115.3GB (load 15%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=33 -> C:\banyan-farm\ep2-b10-pathneg-s5-0816\cond-crf-10.png
+-- stage1-denoise-352x640-8steps: phys 11.5/68.1GB, commit 62.1/115.3GB (load 16%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:11<08:19, 71.36s/it]
+ 25%|██▌       | 2/8 [01:25<03:46, 37.75s/it]
+ 38%|███▊      | 3/8 [01:34<02:02, 24.51s/it]
+ 50%|█████     | 4/8 [01:43<01:13, 18.46s/it]
+ 62%|██████▎   | 5/8 [01:52<00:44, 14.96s/it]
+ 75%|███████▌  | 6/8 [02:00<00:25, 12.79s/it]
+ 88%|████████▊ | 7/8 [02:09<00:11, 11.37s/it]
+100%|██████████| 8/8 [02:17<00:00, 10.41s/it]
+100%|██████████| 8/8 [02:17<00:00, 17.21s/it]
+stage1 latents (1, 128, 13, 20, 11)
+-- upsample-2x-latent: phys 56.5/68.1GB, commit 64.6/115.3GB (load 82%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 13, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 58.4/68.1GB, commit 67.7/115.3GB (load 85%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:24<00:48, 24.05s/it]
+ 67%|██████▋   | 2/3 [00:51<00:26, 26.26s/it]
+100%|██████████| 3/3 [01:19<00:00, 26.70s/it]
+100%|██████████| 3/3 [01:19<00:00, 26.36s/it]
+-- decode-and-export: phys 63.9/68.1GB, commit 70.9/115.3GB (load 93%)
+[1/1] wrote C:\banyan-farm\ep2-b10-pathneg-s5-0816\10-no-form-LTX-pathneg-s5.mp4 in 239s (97 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 9.9GB, device 2.6/26GB)
+THROUGHPUT 0.0169 s(video)/s(wall) (1 x 4.042s of video in 239s)
+bench row -> C:\banyan-farm\ep2-b10-pathneg-s5-0816\bench-pathneg-s5.jsonl
+{"sample_s": 239.1, "peak_gb": 9.9, "peak_commit_gb": 78.7, "frames": 97, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.0169, "two_stage": true, "image_crf": 33, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 78.7, "peak_phys_gb": 64.5, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-15T21:49:40Z ====
+
+==== step publish START 2026-08-15T21:49:40Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# THE GLOB CARRIES THE BEAT SLUG (10-no-form). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b10-pathneg-s5-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-pathneg-s5-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/10-no-form-LTX-pathneg-s5.mp4*\")\n             + glob.glob(src_dir + \"/b10-init-704x1280.png\")\n             + glob.glob(src_dir + \"/bench-pathneg-s5.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-pathneg-s5-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"]
+published 4 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b10-pathneg-s5-0816
+==== step publish END rc=0 2026-08-15T21:49:40Z ====
+#### job ep2-b10-pathneg-s5-0816-1786828279 finished rc=0 2026-08-15T21:49:40Z
