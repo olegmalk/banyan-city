@@ -2677,12 +2677,12 @@ beats:
     # and the compressed positive carries NO count tag, which is how an object sheet
     # should read. The hardware fences stay because they are what worked.
     #
-    # !! AUTHORED BUT NOT RENDERED -- THE HARNESS REFUSES IT, AND THE REFUSAL IS
-    # REPORTED RATHER THAN WORKED AROUND. `render_wave_sample.py --beat 6 --variant
-    # authored_barkboard_obj --dry` exits 1 with:
+    # THE HARNESS REFUSED THIS KEY UNTIL 2026-08-15, AND THE REFUSAL IS KEPT ON THE RECORD
+    # RATHER THAN ERASED. `render_wave_sample.py --beat 6 --variant authored_barkboard_obj
+    # --dry` exited 1 with:
     #     !! FAULTS - nothing drawn: COUNT TAG is '', draft declares '1boy'
     # Measured clean otherwise: positive 54/77, negative 64/77, nothing dropped, style
-    # anchor present. The ONLY fault is the count guard.
+    # anchor present. The ONLY fault was the count guard.
     #
     # THE GUARD IS RIGHT AND THE SITUATION IS GENUINELY AWKWARD, so it is written down
     # instead of dodged. Every beat slot in this harness declares a person, because every
@@ -2699,10 +2699,19 @@ beats:
     # the composition. Editing the guard out of the harness is a `pipeline/*.py` change,
     # which is both a guard waiver and a file a live Mac bring-up lane is holding.
     #
-    # SO THIS KEY IS PARKED, DELIBERATELY, and it needs a decision this lane does not own:
-    # either an object-sheet path in the harness that declares no count, or the inpaint
-    # lever instead, which needs no object sheet rendered ahead of it. The draft is left
-    # in place, measured and ready, so whoever takes that decision does not re-derive it.
+    # THE DECISION WAS TAKEN 2026-08-15: the object-sheet path, not the inpaint lever. The
+    # guard was asserting something structurally inapplicable to an object sheet, so a draft
+    # may now declare that it has NO count -- explicitly, by being NAMED in
+    # `object_sheet_variants` below. NOTHING ELSE ABOUT THE GUARD MOVED. A draft that
+    # declares a count and derives a different one still fails -- that is the path that
+    # caught ep2-b06-plate-0815's "Two adult guard men" under a 1boy slot, and it was not
+    # touched. An omitted key is not a declaration. A draft that declares no count and then
+    # derives a person fails too, so the exemption permits exactly one outcome. See
+    # render_wave_goblin.check and pipeline/test_wave_count_guard.py.
+    # The drafts on this beat that are OBJECT sheets: a prop drawn alone, `no people`
+    # fenced, deriving no count tag on purpose. Naming a key here IS the declaration, and
+    # it exempts THAT draft from this beat's `1boy` slot -- nothing else on the beat.
+    object_sheet_variants: [authored_barkboard_obj]
     authored_barkboard_obj: >-
       A flat rectangular writing board made of tree bark, object reference sheet, front
       view and back view, rough brown bark on the outer face, smooth pale wood on the

@@ -183,6 +183,11 @@ def main() -> int:
               "re-run. Refusing rather than falling back.", flush=True)
         return 4
     authored = d[a.variant]
+    # A draft may declare that it holds NO person — an object-reference sheet, a
+    # prop drawn alone. That declaration is per-VARIANT and lives in the drafts
+    # file as `object_sheet_variants`; every other variant on this beat keeps the
+    # beat slot's count guard untouched. See render_wave_goblin.check.
+    d = wg.apply_variant_declaration(d, a.variant)
     # THE GOBLIN-SLOT REFUSAL IS FOR BEATS THAT ARE SUPPOSED TO HAVE A GOBLIN.
     # It used to fire on ANY beat without the marker, which made the six guard
     # beats of this wave (05, 06, 07, 09, 10, 11) unrenderable by this file —

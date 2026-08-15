@@ -100,6 +100,23 @@ def load_drafts(path: Path) -> dict:
     return {int(k): v for k, v in data["beats"].items()}
 
 
+def apply_variant_declaration(d: dict, variant: str) -> dict:
+    """Return the beat dict as it applies TO ONE VARIANT.
+
+    Only one thing travels per-variant today: `object_sheet_variants`, the
+    explicit list of draft keys on this beat that are OBJECT sheets and so
+    declare no count tag at all (see the count guard in `check`). A variant named
+    there — and only a variant named there — gets `declares_no_count: True`.
+
+    Naming is a deliberate authoring act. An unlisted variant, a missing list and
+    an empty list all leave the dict untouched, so every draft written before this
+    existed is measured under exactly the rule it was measured under before.
+    """
+    if variant in (d.get("object_sheet_variants") or []):
+        return dict(d, declares_no_count=True)
+    return d
+
+
 def strip_term(neg: str, term: str) -> tuple:
     parts = [p.strip() for p in neg.split(",")]
     kept = [p for p in parts if p.lower() != term.lower()]
@@ -128,7 +145,33 @@ def check(beat: int, d: dict, authored: str, sd, verbose: bool = True) -> dict:
         faults.append(f"STYLE ANCHOR MISSING (`{ANCHOR_TAIL}` not in positive)")
     if dropped:
         faults.append(f"POSITIVE DROPPED: {' | '.join(dropped)}")
-    if tag != d["tag"]:
+    # THE COUNT GUARD, AND ITS ONE EXEMPTION.
+    # The rule is `derived == declared`, and it earns its keep: it is what caught
+    # ep2-b06-plate-0815 on 2026-08-14, whose draft opened "Two adult guard men"
+    # under a `1boy` beat slot. That path is NOT weakened below and must never be.
+    #
+    # THE EXEMPTION IS FOR OBJECT SHEETS AND NOTHING ELSE. Every beat slot in this
+    # file declares a person because every BEAT has one, so an object-reference
+    # sheet — a prop drawn alone, with `no people` fenced, precisely so nothing
+    # competes with it for the composition — can never satisfy the slot it borrows.
+    # That mismatch is structural, not a typo, so a draft may declare that it has
+    # NO count, and `declares_no_count: true` is that declaration.
+    #
+    # WHAT IT MUST NEVER COVER:
+    #   * it is set per-VARIANT, by naming the variant in `object_sheet_variants`
+    #     (see apply_variant_declaration) — never beat-wide, or one careless draft
+    #     would disarm the guard for every other draft on the same beat;
+    #   * an OMITTED key is not a declaration. Absent means "this beat's slot
+    #     applies", which is the old behaviour, byte for byte;
+    #   * it permits ONE outcome only — derived EMPTY. A draft that declares no
+    #     count and then derives `1boy` has a person in it and still fails, so the
+    #     exemption can never launder a miscounted figure.
+    if d.get("declares_no_count") is True:
+        if tag:
+            faults.append(f"draft declares NO count (object sheet) but derives "
+                          f"{tag!r} — a person reached a sheet meant to hold only "
+                          "the prop")
+    elif tag != d["tag"]:
         faults.append(f"COUNT TAG is {tag!r}, draft declares {d['tag']!r}")
     if "text" not in neg_parts:
         faults.append("'text' is NOT negated (suppressed_negatives regression)")
