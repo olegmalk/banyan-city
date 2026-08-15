@@ -1,0 +1,241 @@
+# WHAT THE ELEVEN-JOB BARK WAVE SAID, read 2026-08-15 23:40-00:10 with
+# pipeline/hold_period.py (d820bf3f) + the trough/peak depth() from
+# pipeline/vae_roundtrip.py (70e3c79a), frames opened with a contact strip at
+# f0..f96, camera ruled on by ALIGNMENT and not by eye. Nobody had read these.
+#
+#   BEAT 10, ARM A REPLICATES -- the pre-registered question was "does the board
+#   turn in more than one of four?" THE ANSWER IS NO: 1 of 4.
+#     a1s2  period 2  depth 0.063   lift to chest, held. Bark survives to f96.
+#           SAME FACE toward camera at f0 and f96. No turn. No camera move.
+#     a1s3  period 2  depth 0.643   lift. Bark survives. Framing tightens hard.
+#           No turn. Bit-identical f85->f96.
+#     a1s4  period 2  depth 0.050   lift then hugged to chest. Bark survives.
+#           No turn. No camera move.
+#     s2 (0.063) and s4 (0.050) sit at/below the ~0.06 hold floor -- after the
+#     lift they are ONE HELD PICTURE. s3's 0.643 is not the figure acting, it is
+#     the reframing; depth cannot tell those apart and the strip can.
+#     => 'turns the board around to face the camera' is NOT a lever. It sits at
+#     the engine's ~1-in-3 base rate for any action. ARM A IS RETIRED as a claim.
+#
+#   BEAT 10, THREE NEW WORDINGS, one sample each:
+#     camA (leading POSITIVE static-camera clause)  period 2  depth 0.414
+#           FAILED, and made framing WORSE than the negative alone: by f36 both
+#           heads are cut off, by f48 the board fills the frame. No turn.
+#           Bit-identical f81->f96. A positive 'static camera' clause is not a
+#           brake -- it is another thing the sampler stages.
+#     camB (EXPANDED NEGATIVE: the move's other names)  period 2  depth 0.411
+#           THE BOARD TURNS, and it is in-betweened, not snapped: f14 bark
+#           angled -> f18 edge-on narrow -> f22-34 far face frontal -> f38-42
+#           edge-on again -> f46-50 rough bark frontal, gripped two-handed at
+#           both side edges. Both guards kept. Framing far steadier than camA.
+#           DEFECT: the revealed face arrives PALE PLANED TIMBER at f22-f34, not
+#           bark. Bit-identical f57->f96 -- 40 dead frames.
+#     slow ('slowly ... rotating it edge over edge through every angle')
+#           period 2  depth 0.462  THE BOARD TURNS, same signature, same pale
+#           revealed face -- and NO WALL AT ALL, the only b10 clip without one.
+#     => 2 of 3 new wordings turn against 1 of 4 for arm A, and both winners name
+#     the PATH or widen the NEGATIVE. Naming only the destination does not.
+#
+#   BEAT 06, four camera-visible-destination wordings + one negative arm:
+#     c1 'toward the camera'      second guard DISSOLVES by f36, blue clipboard
+#                                 melts f24.  depth 0.490  FAIL-STAGING
+#     d1 'edge over edge, a half turn'  clipboard gone f24, guard gone f36.
+#                                 depth 0.430  FAIL-STAGING
+#     e1 'lifts and holds up'     guard gone f36, clipboard falls out of frame.
+#                                 depth 0.609  FAIL-STAGING
+#     f1 'the face that was toward the camera swings away and its other face
+#        swings toward the camera'   depth 0.553  THE ONLY BEAT-06 ARM THAT KEEPS
+#        THE STAGING: both guards alive at f96 and the second guard still holds a
+#        RIGID pale-blue clipboard. The bark board rotates through a landscape
+#        intermediate at f36 and returns portrait bark frontal f48-96.
+#     negmelt (negative gains the melt's names)  depth 0.485  FAILED AT ITS OWN
+#        STATED PURPOSE: clipboard still gone by f24, second guard still leaves,
+#        and the background drifted (bare trees and a distant red figure appear).
+#     => The negative fixes CAMERA vocabulary (camB) and does NOT fix prop
+#     deformation (negmelt). The two-clause 'swings away / swings toward' form is
+#     the only b06 wording with no reading in which the board merely rises, and it
+#     is the only one that kept both figures. That is the same lever as b10's
+#     winners: name the PATH, not the destination.
+#
+# CAMERA METROLOGY, stated so the next lane does not inherit a number I cannot
+# defend: chained per-frame NCC scale fits RAIL TO THE SEARCH BOUNDARY whenever
+# the fit fails (ncc 0.10-0.45), and gating on ncc>0.9 then samples mostly frozen
+# tails, which biases the answer to 1.000x. Background-column and horizon-row
+# estimators both failed too -- the figures fill the columns and the horizon
+# detector locks onto different edges. What IS exact: consecutive-frame ncc =
+# 1.0000 (bit-identical frames), which is how every wall above was found. The
+# 1.26x quoted for b10-a1 came from the railing method and should be re-derived
+# before it is relied on.
+#
+# THIS JOB (beat 06): f1's wording, plate, negative and every render flag
+# UNCHANGED -- the seed is the only difference. f1 was the ONLY beat-06 arm of
+# five that kept both guards and left the second guard's blue clipboard rigid, so
+# it is the only one that has earned seeds. Four takes decide whether the
+# two-clause 'swings away / swings toward' form holds the staging or whether one
+# clip was luck. Seed 20260816.
+#
+# THE BAR, pre-registered and unsoftenable: (1) the board TURNS -- the face at
+# frame 0 rotates away and a different face comes toward camera, readable on
+# consecutive frames, with in-between angles and not a one-frame snap; (2) at the
+# last frame the visible face is still irregular fissured bark -- not planed
+# timber, not navy, not paper, not chrome; (3) the board stays a rigid four-edged
+# rectangle -- no melt, no curl, no fusing into the tunic; (4) no camera move and
+# no cut; (5) still the same two guards AND the second guard's blue clipboard is still a rigid rectangle. FAIL modes: FAIL-REVERT, FAIL-MELT,
+# FAIL-FROZEN, FAIL-CAMERA. Judged by opening consecutive frames, never by a
+# motion number. Depth and period are filters; the strip decides.
+#
+id: ep2-b06-bark-f1s2-0815
+task: ep2-b06-bark-f1s2-0815
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 38
+max_attempts: 1
+owner: bark-board motion lane, 2026-08-15 (round 2, after the four 0815 motion clips were read)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Beat 06 is THE CLIPBOARD -- 0:27-0:34 -- "GUARD 2 turns over a clipboard made
+  of bark and reads." -- two guards, no goblin. This is a silent motion take on an approved node, not
+  an episode assembly and not a voice synthesis.'
+consumer: The bark-board prop lane. This clip is the first motion ever rendered from a plate whose board
+  is the composited-bark inpaint pass, and it is read against its twin ep2-b06-barkmotion-b1-0815, which
+  shares its plate, its asserted sha, its seed, its negative and every render flag -- whether the REVEALED
+  face's material is named in the action clause is the only difference. Judged by opening consecutive
+  frames via pipeline/coldread_frames.py, never by a motion number.
+success: 'A 704x1280 mp4, 97 frames, in which the board turns AND its far face arrives as rough bark.
+  The bar is pre-registered and unsoftenable: (1) the board turns -- the face visible at frame 0 rotates
+  away and a different face comes toward camera, readable on consecutive frames; (2) the bark survives
+  -- at the last frame the visible face is still irregular fissured bark, not planed timber, not navy,
+  not white paper, not chrome; (3) the board stays a rigid four-edged rectangle through the turn -- no
+  melt, no curl, no split, no dissolve into the tunic; (4) no camera move and no cut; (5) still the same
+  two guards. Pre-registered FAIL modes: FAIL-REVERT (the revealed face comes back as clipboard, paper
+  or planed timber -- the mode this lane exists to detect, because four days and twenty-three inpaint
+  samples bought that face and a video model can un-buy it in one denoise); FAIL-MELT; FAIL-FROZEN (the
+  board never leaves its frame-0 pose -- roughly one take in three fails its action here whatever the
+  wording, so one clip cannot separate a wording lever from seed luck); FAIL-CAMERA (the turn performed
+  by a moving camera rather than by the board -- caught on beat 13 in c870f08f, and it is ruled on by
+  ALIGNING frames, never by eyeballing a contact sheet). NOT part of the bar: that the action fills the
+  clip. No wording arm on beat 13 produced a figure still acting after frame 64 and the renderer logs
+  a 13-latent-timestep ceiling; these are short prop gestures, the best case for this engine, and the
+  honest expectation is a turn that completes early and then holds.'
+why: The card has a runnable job and this is one render. ONE variable against its twin. $0, local card,
+  no provider.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b06-bark-f1s2-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-motion-prompt.txt: holding a rough bark board angled across
+    his chest, two guards standing in a mown field. He flips the bark board over in both hands; the face
+    that was toward the camera swings away and its other face, the same rough bark, swings toward the
+    camera. He reads it. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime
+    key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-negative.txt: camera pan, camera tilt, zoom, dolly, push in,
+    pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame
+  C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-jobs-encode.json: "[{\"beat\": 6,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-bark-f1s2-0815\\\\b06-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b06-bark-f1s2-0815\\\
+    \\b06-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b06-bark-f1s2-0815\\\\b06-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-jobs-render.json: "[{\"beat\": 6,\n  \"seed\": 20260816,\n \
+    \ \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b06-bark-f1s2-0815\\\\b06-embeds.pt\",\n  \"init\": \"C:\\\\\
+    banyan-farm\\\\ep2-b06-bark-f1s2-0815\\\\b06-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\\
+    ep2-b06-bark-f1s2-0815\\\\06-the-clipboard-LTX-f1s2.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b06-bark-f1s2-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-bark-plates-0815\b06-barkboard-pass-s10.png
+  - --sha256
+  - 063ad56112a718006b6eb2d883e3c01bcb579aef90ea0b201de27a29123565f9
+  - --out
+  - C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b06-bark-f1s2-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b06-bark-f1s2-0815\bench-f1s2.jsonl
+  - --bench-label
+  - ep2-b06-bark-f1s2-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (06-the-clipboard). Without it the glob matches\n# nothing and the\
+    \ step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob,\
+    \ hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b06-bark-f1s2-0815\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-bark-f1s2-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/06-the-clipboard-LTX-f1s2.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b06-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-f1s2.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-bark-f1s2-0815.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b06-bark-f1s2-0815\06-the-clipboard-LTX-f1s2.mp4
+- C:\banyan-farm\ep2-b06-bark-f1s2-0815\b06-init-704x1280.png
+sample: true
