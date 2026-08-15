@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r3 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261727
+round: r3
+prompt_tokens_measured: 76/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, holding clipboard with both hands, green skinned goblin, pointed ears, patched cloak, looking down, grass field, treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, huge tree trunk"
+what_this_frame_shows: >-
+  NO CLIPBOARD ANYWHERE IN FRAME. The goblin fills the foreground large and close; the bald human guard stands well behind him at right, smaller and in a different depth plane. Both are adults, identities correct, no blush.
+verdict_against_pre_registered_bar: "FAIL - bar 4 and bar 7 (no board at all, so nothing to occlude or expose), bar 3 (the guard is in a background depth plane, not beside the goblin at pointing distance). This is the predicted one-in-three that fails its action regardless of framing."
+founder_verdict: null
+scored: false
