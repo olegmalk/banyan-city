@@ -1,0 +1,116 @@
+# refs-goblin-d1-margin-0815 — the same four tiles, half the size, more air.
+#
+# WHY THIS SET EXISTS. On 2026-08-15 refs-goblin-d1-0815 was rendered on beat 04
+# as a controlled A/B (job ep2-b04-d1refs-0815, byte-identical to
+# ep2-goblin-freeze-w015-0814 except --refs) and the sixteen frames split by
+# SLOT, not by seed:
+#
+#   slot s0  crouch tile   -> 3 to 3.5 heads tall, oversized bald cranium, pink
+#   slot s1  crouch tile      cheeks on three of eight. Babies. The founder's
+#                             exact complaint, unchanged by the swap.
+#   slot s2  standing tile -> 4.5 to 5 heads, longer robe, no blush, dour. The
+#                             best round of the four and the only one arguably
+#                             inside the brief.
+#   slot s3  bust tile     -> busts.
+#
+# NONE of the sixteen was crouching, though two of four references were. So the
+# reference is not carrying POSE. The reading the previous lane wrote down is
+# that it carries FRAMING, and that the model converts framing into PROPORTION:
+# in a crouch tile the head fills a third of the frame, and the model draws a
+# full-body figure whose head fills a third of the figure — a toddler.
+#
+# THAT READING IS A STORY UNTIL THE CROP IS THE ONLY THING THAT MOVES. This set
+# is the one-variable version of it.
+#
+# ------------------------------------------------------------ WHAT CHANGED
+# Nothing but scale. Each 832x832 tile of refs-goblin-d1-0815 is resampled to
+# 416x416 (LANCZOS) and pasted dead centre on an 832x832 white field. No new
+# crop is taken out of the source sheet, so no neighbouring figure, no new
+# content and no new colour enters the set; every figure pixel is the frozen
+# tile's own pixel, at half the linear size. The tiles' background is already
+# pure white on all four corners (verified at staging), so the added field is
+# continuous with what was there.
+#
+# The staging script is pipeline/refs/stage_margin_refs.py. It refuses to run if
+# any source tile's sha256 is not the frozen one — which it already did once,
+# on a mistyped hash in its own first draft.
+#
+# The consequence, and the whole point: the fraction of the tile the HEAD
+# occupies halves.
+#
+#   slot  source tile   head height / tile height   ->  margined
+#   s0    crouch        ~33%                            ~17%
+#   s1    crouch        ~34%                            ~17%
+#   s2    standing      ~19%                            ~9.5%
+#   s3    bust          ~65%                            ~33%
+#
+# Read that table against the verdict table above and the mechanism's claim is
+# arithmetic rather than adjectival: 33% drew 3-3.5 heads, 19% drew 4.5-5 heads,
+# 65% drew a portrait. If head-fraction is the driver, the margined set moves
+# every slot one rung DOWN that same ladder, and margined s3 (33%) should land
+# where the ORIGINAL crouch slots landed. That is a replication inside a single
+# sixteen-frame run, not an extrapolation.
+#
+# --------------------------------------------------------- STILL NOT A POSE FIX
+# This set does not and cannot make a plate start crouched. Pose does not
+# transfer through IP-Adapter at this window; it has to come from the prompt or
+# from a real pose conditioner (ControlNet, or img2img off a posed plate). Beat
+# 08's pending two-figure reference cannot deliver a crouched, belly-occluded
+# start this way, and commissioning it crouched would only make the scavenger
+# smaller and rounder. Nothing here revises that.
+
+set: refs-goblin-d1-margin-0815
+frozen_on: '2026-08-15'
+box_path: C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-margin-0815
+ref_prefix: goblin-d1s1m
+character: goblin
+derived_from: refs-goblin-d1-0815
+transform: resample the 832x832 tile to 416x416 (PIL LANCZOS), paste centred on an
+  832x832 pure-white field. Linear scale factor 0.5; figure area quarters.
+staged_by: pipeline/refs/stage_margin_refs.py
+source_file: farm-out/ep2-goblin-design-d1-0814/04-the-footnote-wave1-s1.png
+source_sha256: 389c763783efdb1057f56ac8116200519427b4da2aff28f44ce23838868f5910
+source_branch: origin/farm-results-rtx5090
+
+# Mapping is by CONTENT HASH in both directions — the source slot it came from
+# and the bytes it is now — because a slot POSITION is not evidence and this lane
+# is one hop further from the source sheet than the last one was.
+images:
+- slot: s0
+  file: goblin-d1s1m-s0.png
+  sha256: 154c99aa6d340e49f734a9a65c43623fc8ca661adde1ca37c698cad2b887d891
+  source_slot: s0
+  source_slot_sha256: dd4b30cd3ab74902c9bf80ae90aa214da2555a802bc6b17e3c655e062937a4e8
+  depicts: knees-up crouch, hands clasped low, mouth open, sandals
+  head_fraction_of_tile: ~0.17
+- slot: s1
+  file: goblin-d1s1m-s1.png
+  sha256: ce0fbe5b6cb4058bcd4837eb6b7456fd1bb0f7b387aab7ee1e9e7d6d09f4563c
+  source_slot: s1
+  source_slot_sha256: c51c6467829f29db79514ed5721c310d04b7afef2b97372779714306516a0b8c
+  depicts: knees-up crouch, hands clasped, eyes closed, sandals
+  head_fraction_of_tile: ~0.17
+- slot: s2
+  file: goblin-d1s1m-s2.png
+  sha256: 4dde5c00da90e799e83ca35486a686c6f50bdc5756a078484f6ecc687e587bb3
+  source_slot: s2
+  source_slot_sha256: 9526882ef5d6653b22a79d632e7aca6840fc8ea55b88bba207c350f932525b69
+  depicts: standing full body, three-quarter, hands on hips, cream robe, red collar
+  head_fraction_of_tile: ~0.095
+- slot: s3
+  file: goblin-d1s1m-s3.png
+  sha256: 71a0417f2c2086b06217d2fc9a17bd138d1c71953ecb783704cd70ff8709137f
+  source_slot: s3
+  source_slot_sha256: d84abe2f359034c7a99862791350374a011f4cb939a37324c3139a19dc9dba2e
+  depicts: head and shoulders, three-quarter, red eyes, no blush, red collar
+  head_fraction_of_tile: ~0.33
+
+# The four margined tiles are four DISTINCT sha256, checked at staging, so the
+# sampler's dedup drops no cell and the arm draws all sixteen frames.
+distinct_slots: 4
+
+sample:
+  job: ep2-b04-d1margin-0815
+  control: ep2-b04-d1refs-0815
+  beat: 4
+  arm: window4

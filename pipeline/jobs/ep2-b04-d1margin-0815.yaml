@@ -1,0 +1,192 @@
+# 2026-08-15, goblin-margin lane. ONE SAMPLE, ONE VARIABLE.
+#
+# The previous lane found that the reference carries FRAMING, not pose, and that
+# a tightly-cropped reference draws a baby. This job is the clean test of that
+# claim: the SAME four tiles from the SAME source seed, re-cropped with generous
+# margin so the head is small in every frame, and nothing else touched.
+#
+# THE PREDICTION IS WRITTEN BELOW, BEFORE THE RENDER, so it cannot be reshaped
+# after the frames are opened. It is in the `prediction:` block and it names what
+# would falsify the mechanism as well as what would confirm it.
+id: ep2-b04-d1margin-0815
+task: ep2-b04-d1margin-0815
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 1
+max_attempts: 1
+sample: true
+owner: goblin-margin lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml,
+  the leaf the render gate itself reads. Beat 04 is unconditioned in that leaf. This is a still
+  plate on an approved node, not an episode assembly.'
+consumer: this lane''s own eye, then a RECOMMENDATION to the founder about the twelve beats
+  pointing at refs-goblin-approved-0814 (02 03 04 07 08 13 14 15 16 17 19 20). No beat is
+  re-pointed by this lane whatever the result, and no wave fires off it.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+prediction: 'WRITTEN BEFORE THE RUN. The mechanism under test: the IP-Adapter reference transfers
+  the fraction of the tile the HEAD occupies, and the model spends that fraction as head-to-body
+  ratio in a full-body output — so a tight crop reads as "big head relative to body" and draws a
+  toddler.
+
+  THE LADDER IT ALREADY CLIMBED (ep2-b04-d1refs-0815, all sixteen frames opened): head-fraction
+  0.33 -> 3 to 3.5 heads tall; 0.34 -> 3 to 3.5; 0.19 -> 4.5 to 5; 0.65 -> a portrait. Monotone
+  across four points.
+
+  THE MARGINED SET HALVES EVERY RUNG: s0 0.33->0.17, s1 0.34->0.17, s2 0.19->0.095, s3 0.65->0.33.
+
+  SO I PREDICT, per round, in heads-tall, judged the same way the previous lane judged:
+
+    r0 (m-s0, 0.17)   4.5 to 5 heads. A full head TALLER than the control''s r0. This is a
+                      replication of the control''s r2, from a crouch tile.
+    r1 (m-s1, 0.17)   4.5 to 5 heads. Same, and the two crouch rounds should agree with each
+                      other as they did in the control.
+    r2 (m-s2, 0.095)  5 heads or more — the tallest round, off the end of the measured range.
+    r3 (m-s3, 0.33)   NOT A PORTRAIT ANY MORE. A full or three-quarter figure at 3 to 3.5 heads,
+                      landing exactly where the control''s CROUCH slots landed. This is the
+                      sharpest single frame in the run: the tile still contains nothing but a
+                      head, so if framing is the driver it moves from "bust" to "chibi full
+                      figure" on crop alone.
+
+  PASS = the two crouch rounds clear 4 heads and stop reading as babies, and the ranking of the
+  four rounds follows the head-fraction ladder.
+
+  WHAT WOULD FALSIFY THE MECHANISM — any one of these, and I report it as a kill, not a caveat:
+
+    F1  NO MOVEMENT. All four rounds come back at the control''s numbers (3-3.5, 3-3.5, 4.5-5,
+        busts). Then margin is inert, the slot-to-slot spread in the control came from what is IN
+        the tile — a crouched body genuinely is a squashed body, a bust genuinely is a head — and
+        the baby read has another cause, most likely the draft wording or the base model. This
+        would kill the framing theory outright.
+    F2  FRAMING MOVES, PROPORTION DOES NOT. The outputs become wider shots with smaller figures
+        that are STILL 3 to 3.5 heads tall. Then the reference carries framing only, re-cropping
+        is not a fix for the baby, and the two claims have to be separated.
+    F3  r3 STAYS A BUST. Then it is head CONTENT and not head CROP that makes a portrait, and
+        "the tighter the crop, the more infantile" is the wrong description of what was seen.
+    F4  IDENTITY COLLAPSE. All four rounds converge on one look regardless of slot, or the green
+        skin / cream robe / red eyes drain out. Then a 0.5 margin has simply turned the adapter
+        off and this run measures nothing about proportion. Distinguishable by eye: the control''s
+        four rounds were plainly four different pictures.
+
+  NOT A FALSIFIER, and stated so it cannot be smuggled in as one: POSE. I expect NONE of the
+  sixteen to be crouching, exactly as in the control. Pose does not transfer through this
+  mechanism and this job does not test whether it does. If nobody crouches, that is the known
+  result, not evidence against margin.
+
+  NOT A PREDICTION ABOUT TASTE. Heads-tall is a measurable; "a young dumb goblin, but not cute"
+  is the founder''s and is judged separately and reported separately.'
+
+success: Sixteen frames opened beside ep2-b04-d1refs-0815''s sixteen — SAME beat, SAME draft key,
+  SAME arm, SAME seeds, SAME source seed for every reference tile. The only difference in the whole
+  job is that each reference tile is half-size on a white field. Pass is the prediction above
+  holding. A clean failure against the prediction is worth the same four minutes and is reported
+  as plainly.
+why: 'ONE SAMPLE, ONE VARIABLE. Every argument here is byte-identical to ep2-b04-d1refs-0815
+  except --refs, --ref-prefix and --out, and ep2-b04-d1refs-0815 was itself byte-identical to
+  ep2-goblin-freeze-w015-0814 except the same three. So this frame set sits on a two-step chain
+  where each step moved one thing.
+
+  WHAT THE REFERENCES ARE. refs-goblin-d1-margin-0815, frozen at
+  pipeline/refs/refs-goblin-d1-margin-0815.yaml. Four tiles, each the corresponding tile of
+  refs-goblin-d1-0815 resampled to 416x416 and pasted centred on an 832x832 white field:
+
+    goblin-d1s1m-s0.png  154c99aa..  <- s0 dd4b30cd..  crouch A
+    goblin-d1s1m-s1.png  ce0fbe5b..  <- s1 c51c6467..  crouch B
+    goblin-d1s1m-s2.png  4dde5c00..  <- s2 9526882e..  standing full body
+    goblin-d1s1m-s3.png  71a0417f..  <- s3 d84abe2f..  bust
+
+  No new crop is taken out of the source sheet, so no neighbouring figure and no new content
+  enters the set — which is the failure mode "re-crop with more margin" invites, because the
+  figures on the source sheet touch. Every figure pixel is the frozen tile''s own pixel at half
+  the linear size. All four corners of all four source tiles were verified pure white before the
+  field was added, so the added margin is continuous with the margin already there.
+
+  All four margined tiles are four distinct sha256, so the sampler''s duplicate-cell guard drops
+  nothing and the arm draws all sixteen frames rather than silently fewer.
+
+  WHAT IS NOT TOUCHED. The prompt, the negative, the draft key, the seeds, the steps, the guidance,
+  the arm (window4: the 15% window at scale 0.6 across all four references, four seeds each), the
+  beat, the harness and the sampler. This arm adds no word to either prompt, so the negative is
+  unchanged from the control and stays where it already was inside the 77-token budget — the
+  colour-anchor arm is the only one that spends tokens and it is not this arm.
+
+  NOT A LICENCE TO SCALE. Twelve beats stay on refs-goblin-approved-0814 no matter what these
+  sixteen frames show. The budget is at the freeze boundary and this is the only render
+  authorised.'
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-margin-0815
+  - --ref-prefix
+  - goblin-d1s1m
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815
+  - --draft-key
+  - authored_goblin_approved_recipe
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-d1-margin-0815
+  - --ref-prefix
+  - goblin-d1s1m
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815
+  - --draft-key
+  - authored_goblin_approved_recipe
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-d1margin-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-d1margin-0815\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b04-d1margin-0815/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-d1margin-0815.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-d1margin-0815\04-the-footnote-ipa-r3-w015-s0.png
