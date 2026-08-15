@@ -2711,7 +2711,7 @@ beats:
     # The drafts on this beat that are OBJECT sheets: a prop drawn alone, `no people`
     # fenced, deriving no count tag on purpose. Naming a key here IS the declaration, and
     # it exempts THAT draft from this beat's `1boy` slot -- nothing else on the beat.
-    object_sheet_variants: [authored_barkboard_obj]
+    object_sheet_variants: [authored_barkboard_obj, authored_barkboard_still]
     authored_barkboard_obj: >-
       A flat rectangular writing board made of tree bark, object reference sheet, front
       view and back view, rough brown bark on the outer face, smooth pale wood on the
@@ -2719,6 +2719,72 @@ beats:
       best quality, very aesthetic No people, no hands, no clipboard, no metal clip, no
       spring clip, no white paper, no lined paper, no dark, no night. No photorealism,
       no 3D render look. 9:16 vertical, no text.
+    # -- `authored_barkboard_still` -- 2026-08-15, the prop lane. THE LAST OBJECT-SHEET
+    # ATTEMPT, and the hard stop is written down before the render exists: if this fails
+    # there is NO fifth wording draft and the answer is INPAINT.
+    #
+    # WHAT `authored_barkboard_obj` ACTUALLY TESTED, AND IT WAS NOT THE QUESTION. It came
+    # back 0/4 -- a girl in a robe, a headless costume turnaround, a cloaked girl, and one
+    # figure turnaround with a few PLANED-WOOD panels among its insets. That is NOT
+    # evidence that the model cannot draw a bark board, because the draft never asked for
+    # one alone. Its own scaffolding -- `object reference sheet, front view and back view,
+    # white background` -- is a CHARACTER-TURNAROUND tag cluster in this Danbooru-trained
+    # base, and it summoned the exact figure the draft's `no people` and `no hands` fences
+    # were forbidding. The prompt competed with itself and the scaffolding won.
+    #
+    # SO THIS KEY IS A DELETION, NOT AN ADDITION, which is the only reason one more render
+    # is justified. Gone: `object reference sheet`, `front view and back view`, `white
+    # background`, `simple background`, `standing upright`, and the inner-face `smooth pale
+    # wood` clause. What is left is a STILL LIFE -- a single prop lying on plain ground,
+    # filling the frame. NO FIGURE VOCABULARY ANYWHERE IN THE POSITIVE. `still life` and
+    # `object focus` are the two tags that name a composition with no character in it.
+    #
+    # THE BAR, written before the render: a flat rectangular slab of rough bark that reads
+    # as a board someone could hold and read from -- large, flat, rectangular, ROUGH BARK
+    # rather than planed timber, no chrome clip, no white paper, no tree trunk, and NO
+    # PERSON IN FRAME.
+    #
+    # THREE PRE-REGISTERED OUTCOMES, two-sided, and the third one retires the lever:
+    #   PASS -- a bark board, usable as a reference tile for beats 06 and 10.
+    #   FAIL-FIGURE -- a person appears again with the figure vocabulary GONE. Then
+    #     something other than the scaffolding is pulling the figure in, and that is a
+    #     DIFFERENT finding from the one this render was aimed at.
+    #   FAIL-SHAPE -- no person, but a scrap, a log or planed timber rather than a rough
+    #     bark board. THAT IS THE OUTCOME THAT ENDS THE OBJECT-SHEET LEVER: it would mean
+    #     the object is not reachable by wording even with a clean prompt, and INPAINT is
+    #     next. No seed-rolling and no fifth draft, whatever comes back.
+    #
+    # MEASURED. The Mac has no transformers, so its estimator is all this machine can read
+    # and it reads HIGH -- it once said 76 where the box's real CLIP said 66. Estimator:
+    # positive 69/77, negative 72/77, NOTHING dropped, style anchor `very aesthetic`
+    # present, count tag '' as an object sheet must derive. The job re-measures on the
+    # box's REAL CLIP in its own `--dry` step before a pixel is drawn, because that is the
+    # only number that governs what is sent. Both traps this lane paid for are live here:
+    # compress() drops trailing SENTENCES before it trims commas, so an over-long positive
+    # would silently delete the whole `Masterpiece, best quality, very aesthetic` block;
+    # and `no <noun>` fences are free in the POSITIVE but cost in the NEGATIVE, where eight
+    # of them once evicted `realistic skin texture`. With ten fences here both
+    # anti-photoreal guards -- `realistic skin texture` and `jpeg artifacts` -- survive
+    # into the sent negative.
+    #
+    # THE FENCES: the two proven material killers (`no clipboard`, `no white paper`), the
+    # two that name what the last render failed as (`no character sheet`, `no white
+    # background`), `no people` and `no hands`, `no tree trunk` and `no smooth wood` from
+    # the bar, and the standard `no dark, no night`. `no plank` and `no lumber` were
+    # considered and REJECTED: they are near-synonyms of the `board` geometry being asked
+    # for, and negating them risks suppressing the slab itself.
+    #
+    # NO IP-ADAPTER AND NO REFERENCE SET, same reason as the last one: beat 06's reference
+    # is a picture of guards in a field, and a character-sheet reference returns a
+    # character sheet however the prompt is worded. Plain t2i, four seeds, $0, local card.
+    authored_barkboard_still: >-
+      A single large flat rectangular bark board lying on bare packed earth and
+      filling the frame, still life, object focus, thick ridged brown bark crusting
+      the top face, chipped uneven edges, soft daylight from above, close top-down
+      view. Masterpiece, best quality, very aesthetic No people, no hands, no
+      clipboard, no white paper, no character sheet, no white background, no tree
+      trunk, no smooth wood, no dark, no night. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used

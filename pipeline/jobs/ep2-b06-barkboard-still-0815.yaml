@@ -1,0 +1,186 @@
+# 2026-08-15, prop lane. THE LAST OBJECT-SHEET ATTEMPT, and the hard stop is written here
+# BEFORE the render exists: if this fails, the object-sheet lever is finished and the answer
+# is INPAINT. There is no fifth wording draft, and no seed-rolling, whatever comes back.
+#
+# 1. WHY ONE MORE, WHEN THE PREVIOUS ONE ALREADY CAME BACK 0/4. `ep2-b06-barkboard-obj-0815`
+#    fired `authored_barkboard_obj` and returned a girl in a robe, a headless costume
+#    turnaround, a cloaked girl, and one figure turnaround with a few PLANED-WOOD panels
+#    among its insets. That is 0/4 bark boards -- and it is NOT evidence that the model
+#    cannot draw a bark board, because THE DRAFT DID NOT TEST THAT. Its own scaffolding --
+#    `object reference sheet, front view and back view, white background` -- is a
+#    CHARACTER-TURNAROUND tag cluster in this Danbooru-trained base, and it summoned the
+#    exact figure that the draft's `no people` and `no hands` fences were forbidding. The
+#    prompt competed with itself and the scaffolding won. Scoring that as "the object is
+#    unreachable" would have retired a lever on a test that never ran.
+#
+# 2. SO THE FIX IS A DELETION, NOT AN ADDITION, and that is the whole reason this is worth
+#    one render rather than being another guess. Gone from the positive: `object reference
+#    sheet`, `front view and back view`, `white background`, `simple background`, `standing
+#    upright`, and the inner-face `smooth pale wood` clause. What replaces them is a STILL
+#    LIFE -- a single prop lying on plain ground, filling the frame. NO FIGURE VOCABULARY
+#    ANYWHERE IN THE POSITIVE; `still life` and `object focus` are the two tags that name a
+#    composition with no character in it. Every added adjective in the last four rounds
+#    failed; this round removes rather than adds.
+#
+# 3. THE BAR, WRITTEN BEFORE THE RENDER. A flat rectangular slab of rough bark that reads
+#    as a BOARD SOMEONE COULD HOLD AND READ FROM: large, flat, rectangular, rough bark
+#    texture rather than planed timber, no chrome clip, no white paper, no tree trunk, and
+#    NO PERSON IN FRAME.
+#
+# 4. THREE PRE-REGISTERED OUTCOMES, TWO-SIDED, and the third one ends the lever. Judged by
+#    OPENING THE FRAMES, never by a metric.
+#
+#      PASS -- a bark board, usable as a reference tile. Then beats 06 and 10 have their
+#      artifact and the choice between IP-Adapter conditioning and an inpaint pass on the
+#      prop region becomes a real choice with a real picture behind it.
+#
+#      FAIL-FIGURE -- a person appears again DESPITE the figure vocabulary being gone.
+#      That would mean something other than the scaffolding is pulling the figure in --
+#      the beat slot, the checkpoint's own prior, something else -- and it is a DIFFERENT
+#      finding from the one this render was aimed at. It does not by itself say the object
+#      is undrawable, and it does not license a fifth wording draft either; it gets
+#      reported as the different thing it is.
+#
+#      FAIL-SHAPE -- no person, but the object is a scrap, a log, or planed timber rather
+#      than a rough bark board. THAT IS THE OUTCOME THAT ENDS THE LEVER. It would mean the
+#      object is not reachable by wording even with a clean, uncontested prompt, and
+#      INPAINT is next. It gets reported as loudly as a pass, in those words, unsoftened.
+#
+# 5. MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS ENQUEUED, not on the Mac's
+#    estimator, and the difference is not cosmetic: the estimator reads HIGH -- it once
+#    said 76 where the real tokenizer said 66 -- so the two machines can compress the same
+#    draft differently. `--dry` on the card, 2026-08-15:
+#      positive 58/77   (NOTHING dropped, style anchor `very aesthetic` present)
+#      negative recipe 67 -> sent 67   (NOTHING dropped)
+#      count tag ''  (declared: no count, object sheet)
+#    Both traps this lane has already paid for are live in this draft. compress() drops
+#    trailing SENTENCES before it trims commas, so an over-long positive would silently
+#    delete the entire `Masterpiece, best quality, very aesthetic` block rather than shave
+#    a clause -- 19 tokens of headroom says it will not. And `no <noun>` fences are free in
+#    the POSITIVE but cost in the NEGATIVE, where eight of them once pushed it to 76 and
+#    evicted `realistic skin texture`; the ten fences here leave `realistic skin texture`
+#    AND `jpeg artifacts` -- the two anti-photoreal guards, on a look the founder killed --
+#    both present in the sent string, with 10 tokens spare.
+#
+# 6. THE COUNT GUARD WAS NOT WEAKENED TO LET THIS THROUGH. Beat 06's slot declares `1boy`
+#    because every BEAT has a person; an object sheet never can. `wave-drafts.yaml` now
+#    names this draft in beat 06's `object_sheet_variants` alongside its predecessor, which
+#    is the explicit per-variant declaration of NO count and the only way the harness will
+#    accept it. That refusal is correct behaviour and stays: a draft that declares a count
+#    and derives a different one still fails -- the path that caught ep2-b06-plate-0815's
+#    "Two adult guard men" under a 1boy slot on 2026-08-14 -- and a declared object sheet
+#    that derives a person fails too, which is precisely what makes FAIL-FIGURE detectable
+#    by the guard rather than only by eye. Pinned by pipeline/test_wave_count_guard.py,
+#    12/12 green after the edit.
+#
+# 7. NO IP-ADAPTER, NO REFERENCE SET, DELIBERATELY -- same reason as the last one. Beat
+#    06's own reference is a picture of guards in a field, and a character-sheet reference
+#    returns a character sheet however the prompt is worded; conditioning an object sheet
+#    on either would put back the exact composition this render exists to remove. Plain
+#    t2i, four seeds.
+#
+# 8. NO GOBLIN, NO VOICE, NO ASSEMBLY. A still on an approved node. $0, local card.
+id: ep2-b06-barkboard-still-0815
+task: ep2-b06-barkboard-still-0815
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+sample: true
+owner: prop lane, 2026-08-15
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. Beat 06 is THE CLIPBOARD -- "GUARD 2 turns over a clipboard made
+  of bark and reads." The prop is what the beat is ABOUT and cannot be dropped from the
+  script. This job draws that prop ALONE as a still life -- no character, no goblin: an asset
+  for beats 06 and 10, not a plate for either.'
+consumer: 'The reference-tile lever, and its retirement. A tile containing a bark board needs
+  a picture of the object first, and the previous attempt at that picture tested its own
+  scaffolding instead of the object. This is the corrected test and the LAST one: a pass hands
+  beats 06 and 10 a real artifact, and either failure hands the next lane the inpaint lever
+  with the wording and object-sheet levers both closed behind it. Nothing downstream is
+  waiting on a fifth wording draft, because there will not be one.'
+success: 'Four frames, scored by OPENING THEM, against a bar fixed before the render: a flat
+  rectangular slab of rough bark that reads as a board someone could hold and read from --
+  large, flat, rectangular, rough bark rather than planed timber, NO chrome clip, NO white
+  paper, NO tree trunk, NO person in frame. PASS = that board. FAIL-FIGURE = a person returns
+  with the figure vocabulary gone, which is a different finding. FAIL-SHAPE = no person but a
+  scrap, a log or planed timber, which ENDS the object-sheet lever and makes inpaint next.
+  BOTH FAILURES ARE REAL RESULTS AND GET REPORTED AS LOUDLY AS A PASS, unsoftened.'
+why: 'ONE SAMPLE, one question, no batch, and a hard stop declared in advance. The previous
+  object sheet did not fail the question -- it failed to ask it, because its own scaffolding
+  was a character-turnaround tag cluster. This draft deletes that scaffolding rather than
+  adding to it. $0, local card, no provider, no human dependency, so it fires now.'
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --variant
+  - authored_barkboard_still
+  - --goblin-def
+  - green skin, tusks
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --variant
+  - authored_barkboard_still
+  - --goblin-def
+  - green skin, tusks
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815
+  - --task
+  - ep2-b06-barkboard-still-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (06-the-clipboard) that render_wave_sample actually
+  # writes. A glob without it matches nothing and publishes nothing while still returning
+  # a code that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/wave-goblin-prep/out-b06-barkboard-still-0815\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-barkboard-still-0815\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/06-the-clipboard-*\"))\npngs = [f for f\
+    \ in src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b06-barkboard-still-0815.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-barkboard-still-0815\06-the-clipboard-wave1-s3.png
