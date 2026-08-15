@@ -297,6 +297,49 @@ def test_a_job_id_in_ready_is_not_filed_twice(root):
 # the guards on the way IN
 # --------------------------------------------------------------------------
 
+def test_a_wedged_drainer_is_not_reported_as_a_healthy_queue(root):
+    """A full queue and a dead card look identical unless this is asked."""
+    now = time.time()
+    write(root, "ready", "waiting.json", job("waiting"))
+    write(root, "", "runner.log", "quiet")
+    log = os.path.join(root, "runner.log")
+    os.utime(log, (now - 20 * 60, now - 20 * 60))
+    st = af.drainer_state(root, now)
+    check("work waiting, nothing claimed, runner silent 20m reads as stalled",
+          st["stalled"] and "NOBODY IS DRAINING" in st["why"])
+    rc = af.main(["--root", root])
+    check("and the tick exits 3, not 0", rc == 3)
+
+
+def test_a_stall_is_not_declared_over_a_live_or_quiet_card(root):
+    now = time.time()
+    write(root, "", "runner.log", "x")
+    check("an empty queue is not a stall -- silence is correct there",
+          not af.drainer_state(root, now)["stalled"])
+    write(root, "ready", "waiting.json", job("waiting"))
+    write(root, "running", "live.json", job("live"))
+    check("a claimed job is never a stall",
+          not af.drainer_state(root, now)["stalled"])
+    os.remove(os.path.join(root, "running", "live.json"))
+    check("a runner that wrote a moment ago is not a stall",
+          not af.drainer_state(root, now)["stalled"])
+    os.remove(os.path.join(root, "runner.log"))
+    check("an unreadable log is a broken probe, not evidence of a wedge",
+          not af.drainer_state(root, now)["stalled"])
+
+
+def test_filing_work_does_not_look_like_a_stall(root):
+    """The runner polls every 10s; a job filed this second has not been offered."""
+    now = time.time()
+    write(root, "", "runner.log", "x")
+    os.utime(os.path.join(root, "runner.log"), (now - 60 * 60, now - 60 * 60))
+    write(root, "backlog", "one.json", job("one"))
+    st = af.tick(root, now=now)
+    check("the fill happened", st["filed"] == ["one.json"])
+    check("and the job it just filed is not called a wedge",
+          not st["drainer"]["stalled"])
+
+
 def test_a_gate_refusal_is_propagated_not_swallowed(tmp):
     spec = {"id": "gated-1786800000", "consumer": "a test",
             "gate": "founder must screen the b06 sample first",
@@ -353,7 +396,10 @@ def main():
              test_it_never_touches_a_running_job,
              test_a_job_id_in_ready_is_not_filed_twice,
              test_priority_order_is_the_runners_order,
-             test_an_entry_with_no_clock_at_all_is_refused]
+             test_an_entry_with_no_clock_at_all_is_refused,
+             test_a_wedged_drainer_is_not_reported_as_a_healthy_queue,
+             test_a_stall_is_not_declared_over_a_live_or_quiet_card,
+             test_filing_work_does_not_look_like_a_stall]
     for fn in cases:
         with tempfile.TemporaryDirectory() as td:
             fn(td)

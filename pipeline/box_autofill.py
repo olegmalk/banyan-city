@@ -380,6 +380,57 @@ def plan_fill(entries, known_ids, ready_minutes: float, ready_count: int,
 # doing it
 # --------------------------------------------------------------------------
 
+# Longest real job observed on this box is 5m20s (runner_watchdog's measured
+# note); 8 minutes of silence clears the slowest one with margin.
+STALL_SECONDS = 8 * 60
+
+
+def drainer_state(root: str, now: float = None) -> dict:
+    """Is anything actually DRAINING what we file? Observed, never acted on.
+
+    A FULL QUEUE AND A DEAD CARD LOOK IDENTICAL FROM HERE unless this is asked.
+    On 2026-08-10 the runner claimed a job, finished it, and then stopped
+    claiming for sixteen minutes with twelve jobs in ready/ while `schtasks`
+    reported it Running -- and the box's `banyan-runner-watchdog` task, the one
+    that restarts exactly that wedge, has been DISABLED since 2026-08-12. An
+    autofill that reports "full, 62 minutes queued" through a wedge would be one
+    more thing describing a dead card as healthy, which is the failure this file
+    exists to end, one level down.
+
+    The rule is runner_watchdog.diagnose's, minus the restart: work waiting,
+    nothing claimed, and the runner's own log silent longer than the longest
+    real job. It never restarts anything and never touches runner.lock --
+    restarting is the watchdog's judgement to make with its escalation count,
+    and two things restarting one daemon is worse than neither. This only tells
+    the truth in autofill.json, where the depth reading already lives.
+    """
+    now = time.time() if now is None else now
+    ready = len(json_names(os.path.join(root, READY)))
+    running = len(json_names(os.path.join(root, RUNNING)))
+    try:
+        age = now - os.path.getmtime(os.path.join(root, "runner.log"))
+    except OSError:
+        age = None
+    out = {"ready": ready, "running": running,
+           "runner_log_age_s": None if age is None else int(age), "stalled": False,
+           "why": ""}
+    if ready < 1:
+        out["why"] = "nothing waiting -- silence is correct"
+    elif running > 0:
+        out["why"] = "a job is claimed"
+    elif age is None:
+        out["why"] = "runner.log unreadable -- a broken probe is not evidence"
+    elif age <= STALL_SECONDS:
+        out["why"] = "runner wrote %ds ago" % int(age)
+    else:
+        out["stalled"] = True
+        out["why"] = ("%d jobs waiting, none claimed, runner silent %dm -- NOBODY IS "
+                      "DRAINING THE QUEUE. banyan-runner-watchdog restarts this; it "
+                      "has been Disabled on the box since 2026-08-12."
+                      % (ready, int(age / 60)))
+    return out
+
+
 def log_line(root: str, msg: str) -> None:
     line = "%s %s" % (utcnow(), msg)
     print(line)
@@ -446,6 +497,10 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
 
     ready_minutes, ready_count, kinds = queue_minutes(root, READY)
     running = len(json_names(os.path.join(root, RUNNING)))
+    # Read BEFORE anything is filed. A job this tick has just moved into ready/
+    # has not been offered to the runner yet -- it polls every ten seconds -- and
+    # calling that a stall would make every successful fill look like a wedge.
+    drainer = drainer_state(root, now)
     entries = backlog_entries(root)
     paths = {n: os.path.join(root, BACKLOG, n) for n, _ in entries}
     known = known_job_ids(root)
@@ -498,12 +553,15 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
         "superseded": plan["superseded"],
         "backlog_remaining": max(0, len(entries) - len(filed) - len(plan["expired"])
                                  - len(plan["superseded"])),
+        "drainer": drainer,
         "dry_run": bool(dry_run),
         "script_sha256": file_sha256(os.path.abspath(__file__)),
     }
     if not dry_run:
         write_state(root, state)
     prefix = "(dry-run) " if dry_run else ""
+    if drainer["stalled"]:
+        log_line(root, "%s!! DRAINER STALLED -- %s" % (prefix, drainer["why"]))
     if plan["status"] == "backlog_empty":
         log_line(root, "%s!! BACKLOG EMPTY -- %s" % (prefix, plan["why"]))
     elif plan["status"] == "filled":
@@ -630,6 +688,9 @@ def status() -> int:
         print("\n!! that reading is %.0f minutes old -- the tick itself has stopped."
               % age)
         return 1
+    if (st.get("drainer") or {}).get("stalled"):
+        print("\n!! DRAINER STALLED: %s" % st["drainer"]["why"])
+        return 3
     if st.get("status") == "backlog_empty":
         print("\n!! BACKLOG EMPTY: %s" % st.get("why"))
         return 2
@@ -662,8 +723,14 @@ def main(argv=None) -> int:
 
     state = tick(args.root, floor=args.floor_minutes, dry_run=args.dry_run,
                  max_files=args.max_files, max_ready=args.max_ready)
-    # rc 2 for a hungry card with nothing to draw: a scheduled task's history
-    # then carries the fact, not just the log.
+    # Distinct codes, because the two states want opposite responses and
+    # `Last Result` in schtasks is one number: 2 means the card wants work and
+    # nobody has filed any (a lane must author some), 3 means there is work and
+    # nothing is running it (the runner needs a restart, and this file will not
+    # do that itself). 3 wins when both are true -- a queue nobody drains is not
+    # improved by filing more into it.
+    if state["drainer"]["stalled"]:
+        return 3
     return 2 if state["status"] == "backlog_empty" else 0
 
 
