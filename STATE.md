@@ -7695,3 +7695,76 @@ and the lane stops rather than seeding a sixth thing.
 four backlogged jobs by itself, `status: filled`, "ready held 11.4 min of the 45
 min floor -- filed 4, now 34.2 min". Backlog went in at 10 and stood at 6 after the
 fill. Nobody was awake for it.
+
+## 2026-08-16 — the runner watchdog is back ON, running the tested rule
+
+**Why it was off, plainly.** `banyan-runner-watchdog` was Disabled on 2026-08-12
+because it MISFIRED. Its script asked Task Scheduler for the runner task's state;
+under the scheduled context that query returns an **empty string**, the script
+read empty as "runner dead", and it logged **sixty consecutive false "restarted"
+lines — one every five minutes for about five hours**, all reading `task state
+was '' - restarted`. They were inert (a bare `schtasks /run` is ignored while an
+instance is Running) so no job was killed. The script was then rewritten that
+night as "v4" to detect via the process table instead, fired correctly exactly
+once at `23:39:05` on a genuinely wedged instance, and the task was disabled
+minutes later and never re-enabled. Nothing recorded the disable — the previous
+STATE block found it by accident and called re-enabling "a live decision nobody
+has taken". This is that decision.
+
+**Not a re-enable — a repoint.** v4 fixed the probe but kept the shape that made
+the flap possible: ONE signal, no queue check, no log-age check, no cap on how
+many times it will restart, box-only and in no git. It also asserts in its own
+comments that it runs as SYSTEM while the registration ran it as **artvn /
+Limited** — a probe running in a context it was never tried in, which is the
+same class of mistake as reading a state string that comes back empty. Turning
+that back on is turning the flap back on. So the task's action now points at
+`pipeline/runner_watchdog.py` (commit eb9aaa17, 11 test cases in
+`pipeline/test_runner_watchdog.py`, eight of them about NOT firing), whose rule
+requires **four independent conditions** before it touches anything — work
+waiting, nothing claimed, no multi-GB render resident, `runner.log` silent past
+the longest real job (8 min vs a measured 5m20s worst case) — and which
+**refuses after three restarts in an hour** and says so loudly. Its detection
+half was already proven live: `box_autofill.py` has been evaluating the same
+rule every three minutes to record `drainer.stalled`.
+
+**What changed in the repo.** `runner_watchdog.py` gained `--local`, `--deploy`
+and `--verify-deployed`, mirroring `box_autofill.py`'s conventions exactly. The
+only thing `--local` changes is `box()`: the identical Windows command string
+goes to cmd.exe instead of over ssh, so the rule the scheduled task applies at
+3am is the rule a `--dry-run` from the Mac reports, not a re-implementation that
+drifted. Proof it is faithful: the Mac ssh probe and the box `--local` probe
+returned byte-identical readings minutes apart. New `box-runner-watchdog.cmd`
+(CRLF-rewritten at deploy time, SYSTEM python, stdout to its own
+`watchdog-run.log`) and `mktask-runner-watchdog.ps1` (schtasks, `/sc MINUTE /mo
+5`, SYSTEM / HIGHEST). The old script is **preserved, not deleted**, as
+`C:\banyan-farm\runner-watchdog.ps1.retired-v4` — reversible by hand from the box
+with no checkout and no network.
+
+**Verified by silence, not by proxy.** Tests first, each as its own step:
+`test_runner_watchdog.py` exit 0 (11/11), `test_pipeline.py` exit 0. Then the
+check that mattered — a dry run against the live box while the runner was
+healthy: `OK ready=4 running=1 done=728 failed=29 log_age=497s big_proc=True (a
+job is claimed)`. Note `log_age` was already **past the 8-minute bar**; the
+claimed-job and resident-render guards are the only reason it stayed quiet. A
+single-signal detector is exactly what would have fired there.
+
+Then 21m47s of real time, `01:01:16` → `01:23:03`, spanning **five ticks**
+(01:01 registration test, 01:06, 01:11, 01:16, 01:21) with jobs draining
+normally (`done` 728 → 732):
+
+- `C:\banyan-farm\watchdog.log` — before: 3098 bytes, mtime 2026-08-12 23:39:05.
+  After: **3098 bytes, mtime 2026-08-12 23:39:05**, last line still the v4 fire.
+  **Zero new lines. That is the pass.**
+- `C:\banyan-queue\runner.log` "runner up" lines: 13 before, **13 after** — the
+  runner was never restarted.
+- `Get-ScheduledTaskInfo`: `LastTaskResult 0`, `LastRunTime` advancing every five
+  minutes (01:01:06 → 01:11:01 → 01:21:01), so it is actually running, not
+  merely Ready.
+- Every tick printed its reasoning to `watchdog-run.log`, all five `OK ... (a job
+  is claimed)`.
+
+**Status: ON.** `State = Ready`, SYSTEM, `PT5M`, action
+`C:\banyan-farm\box-runner-watchdog.cmd`. `python3 pipeline/runner_watchdog.py
+--verify-deployed` hashes repo against box and currently says same. If it ever
+flaps again the signature is a growing `watchdog.log` — disable the task and read
+that file, and `--deploy` re-lands the whole thing in one idempotent command.
