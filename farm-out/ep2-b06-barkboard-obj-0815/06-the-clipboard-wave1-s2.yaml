@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave_sample.py
+# on the rtx5090. ONE SAMPLE against the founder's goblin definition —
+# not a wave. The other fourteen beats wait on his verdict on this one.
+# The negative below is what the model actually saw; the recipe's own
+# negative, before the one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, people, hands, clipboard, metal clip, spring clip, white paper, lined paper, dark, night, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 6
+beat_slug: the-clipboard
+beat_kind: guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262725
+seeds_in_batch: 4
+task: ep2-b06-barkboard-obj-0815
+render_round: wave-sample-1
+candidate_set: wave1
+count_tag: 
+negative_terms_removed: tall tree
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, tusks — the steward's translation of his sentence into slot tags, NOT his words as tags. `green skin` is his one named attribute; `tusks` is his own shots.md ('one broken tusk') and the measured lever that took not-female to 4/4 in r9. `plump` was dropped: it is the steward's word, it is in neither his sentence nor his script, and record 42 read it as overshoot on 2 of 4. He has not ratified this translation.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+draft_variant: authored_barkboard_obj
+harness_sha256: be18f941387ddd4d75c432505ff5a8801b5fc239803e5a394f31446b6967de45
+drafts_sha256: b852851af2f987bcd3cabe2f5c8d7d374819a1b6a18eb6a23ffa4c876a929f0c
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 54
+negative_tokens_sent: 64
+extra_negative_tier: guard
+prompt: >-
+  A flat rectangular writing board made of tree bark, object reference sheet, front view and back view, rough brown bark on the outer face, smooth pale wood on the inner face, standing upright, simple background, white background. Masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, people, hands, clipboard, metal clip, spring clip, white paper, lined paper, dark, night, photorealism, text
+render_seconds: 9.2
+founder_verdict: null
+scored: false
