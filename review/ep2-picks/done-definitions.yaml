@@ -295,11 +295,20 @@ beats:
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
-  done: 3
+  done: 2
   done_beats:
   - 06 THE CLIPBOARD
-  - 11 THEY LEAVE
   - 12 RELATED
+  broken_needs_new_take:
+  - 11 THEY LEAVE - BROKEN TAKE, needs a new one. See `beats.'11'.status_override_0815`.
+  revised_0815: >-
+    As first written this block read `done: 3` with `11 THEY LEAVE` in `done_beats`, matching beat 11's
+    round-3 verdict. On 2026-08-15 that verdict was superseded by `beats.'11'.status_override_0815`
+    (total identity collapse away from the plate across f16-f21). The count and the list above have been
+    corrected so a skimmer of the summary is not told beat 11 is finished; the round-3 verdict and the
+    override are BOTH left in place under `beats.'11'` because the disagreement between them is the
+    evidence. Original values recorded here and nowhere else: done: 3, done_beats included "11 THEY
+    LEAVE".
   candidates_on_one_question:
   - 05 THE PATROL
   - 10 NO FORM
@@ -321,8 +330,13 @@ shipping_rule:
     Park optimised for a clean record rather than for the episode existing.
 coverage:
   beats_with_a_take: 21
+  beats_with_a_USABLE_take: 20
   beats_with_zero_takes: []
-  milestone: ALL 21 BEATS OF EPISODE 2 NOW HAVE A TAKE, as of beat 16 publishing 2026-08-14.
+  beats_whose_take_is_BROKEN:
+  - 11 THEY LEAVE - see `beats.'11'.status_override_0815`. The take exists and is published, so it still
+    counts under `beats_with_a_take`, but it cannot ship and beat 11 needs a new one.
+  milestone: ALL 21 BEATS OF EPISODE 2 NOW HAVE A TAKE, as of beat 16 publishing 2026-08-14. Revised
+    2026-08-15 - having a take is not the same as having a shippable one, and beat 11's is broken.
   counted_from: published mp4s on origin/farm-results-rtx5090
 ship_ceiling:
   date: '2026-08-14'
@@ -611,6 +625,21 @@ coldread_period_caveat_0815:
     trim_pass_0815.results.12.why_stopped and .generalises. Restated here as a standing caveat because
     the next lane to pick the tool up will look for it beside the trim results, not inside one beat's
     entry.
+  period_correction_0815: >-
+    MEASURED, and the caveat above overgeneralises. "The 121-frame picks stutter with PERIOD 3" is true
+    of b12 and b06 but FALSE of b05 and b10. Method: drop pair 0 (restyle flash), then split the raw
+    per-pair MAD series into P phases for P in 2,3,4,5 and take loud/quiet phase-mean ratio, plus
+    autocorrelation of the mean-removed series. Results - b05: period 2 (phase means 2.83/10.87 =
+    3.84x, autocorr peak at lag 2; period-3 split is flat at 1.10x). b10: period 2 (1.65/5.80 = 3.52x,
+    autocorr peak at lag 2; period-3 split flat at 1.06x). b06: period 3 (phase means 0.82/5.04/0.58 =
+    8.75x, autocorr peak at lag 6, a multiple of 3). So the figures already in the record - "b12 9.59x,
+    b05 3.78x, b10 3.58x" - are coldread's own period-2 cadence statistic, and for b05 and b10 that is
+    the RIGHT statistic: they are exactly the period-2 case the width-2 collapse was built for, and
+    their reported windows (b05 pairs 1-119, b10 pairs 1-93) are sound. b06 IS period 3, so its
+    reported window 1-42 had to be checked - and it survives the check: the distance-from-window-end
+    curve drifts only 3.6 MAD across the 78 frames after f43, i.e. its tail is genuinely dead, unlike
+    b12 where the same check found 30 MAD and invalidated the window. Practical rule unchanged: measure
+    the period per clip, never per recipe generation, and always verify with the distance curve.
 record_gap_0815:
   date: '2026-08-15'
   finding: FIVE CLOSED BEATS HAVE NO RECORDED PICK.
