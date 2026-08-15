@@ -1,0 +1,60 @@
+# Still provenance (7.2), written AT RENDER TIME by goblin_ipa_sample.py
+# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat 04 —
+# not a wave, and not a candidate for the founder to pick from. The
+# prompt, seeds, steps, guidance and negative are byte-identical to the
+# wave-1 sample (commit 406909c); the ONLY change is the IP-Adapter
+# conditioning recorded below. The reference image is one of the four
+# wave-1 frames, used because all four are used in turn — it is NOT a
+# canonical goblin and nobody has picked one.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 6
+beat_slug: the-clipboard
+beat_kind: guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261725
+seeds_in_batch: 4
+task: ep2-b06-prop2-0815
+render_round: ipa-consistency-1
+candidate_set: none (mechanism test, not a pick sheet)
+count_tag: 1boy
+negative_terms_removed: tall tree
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: h94/IP-Adapter/models/image_encoder
+ip_adapter_licence: Apache-2.0 (h94/IP-Adapter); image encoder weights derive from laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+ip_adapter_scale: 0.6
+ip_adapter_step_window: >-
+  on for steps 0-5 of 40 (15% of the denoise), then set_ip_adapter_scale(0.0) from callback_on_step_end for the remaining 34. The reference conditions the early, structure-forming steps only; the late steps are text-conditioned alone.
+ip_adapter_reference: 04-the-footnote-wave1-s1.png
+ip_adapter_reference_sha256: 725a2c1163971f85e08f793eabfdb73ca7f735a0fdbbeb6f7f6bc4010f2ba206
+ip_adapter_reference_prep: centre-cropped to square, then the pipeline's CLIPImageProcessor
+ip_adapter_reference_note: >-
+  one of the four wave-1 frames. All four are used as the reference in turn across this run, so the agreement number is a property of the mechanism and not an endorsement of any one creature. Choosing the goblin is R4's call and this run does not make it.
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, bald head — unchanged from the wave-1 sample, on purpose. It is the steward's translation of his sentence into slot tags and he has NOT ratified it. Holding it fixed is what makes this an A/B of the mechanism rather than a second, confounded question about the words.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+harness_sha256: b1f48da9fac9def0743971ae5e82a3bbb12d8582355f9003caf45f9ca401841f
+drafts_sha256: e5c7068d73c37f1c98ca61d0be73355f419b163b837594140e6aa4ba7a82927d
+sampler_sha256: ec504b3c62a06dbb8890a16984e028716ac3683faf5a0342f9a145834e30df9a
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 65
+negative_tokens_sent: 77
+extra_negative_tier: guard
+prompt_tokens_added_by_mechanism: 0
+prompt: >-
+  1boy, a guard man in a brown tunic and sash stands in green summer grass, a hedge and dark treeline behind, pale sky, short brown hair, turning over a large flat rectangular board of rough brown bark in both hands and looking down at it. Cinematic lighting, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, knight, clipboard, metal clip, spring clip, white paper, lined paper, white background, plain background, character sheet, dark, night, photorealism
+colour_anchor_negative: none (negative byte-identical to arm 1)
+render_seconds: 9.4
+founder_verdict: null
+scored: false
