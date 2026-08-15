@@ -1045,3 +1045,23 @@
   since: '2026-08-15'
   kind: sheet
   verdict_hint: they're right / no, and here is what is wrong with them
+- what: 'THE GOBLIN - SIX DESIGNS, PICK A NUMBER. Your words, which are the brief: "i just want him to be a dumb
+    ol goblin", "not old..", "actually a young dumb goblin, but not cute" - and on the last attempt, "thats the
+    cute goblin again.. i''d rather him not be cute." Same goblin, same identity seed (s0 is the goblin, already
+    settled); this is the DESIGN BUILD only, not a re-open of who he is. My honest read so you can argue with
+    it: 1 has the dullest, most vacant face and is the closest thing here to "dumb"; 6 is the most consistent
+    across views; 3 and 4 came back old and mean, which is the opposite of what you asked for. None of the six
+    is fully young-and-dumb, so "all six are wrong because X" is a real answer and I would rather have it than
+    a shrug. THIS GATES SIX BEATS (07, 08, 15, 17, 19, 20) - no goblin gets animated until the design is fixed.'
+  url: /review/ep2-picks/sheets/goblin-design-0815.jpg
+  group: taste
+  since: '2026-08-15'
+  kind: pick
+  verdict_hint: one number / all six are wrong because X
+  note_for_lanes: 'The six tiles are seed s0 of jobs ep2-goblin-design-d1-0814 through d6-0814 (four seeds each,
+    box sidecars on farm-results-rtx5090 under farm-out/ep2-goblin-design-dN-0814/). s0 is used because the goblin''s
+    identity seed is settled as s0. The six differ ONLY in build tags: d1 squat/round-bellied, d2 lanky/stooped,
+    d3 wide jaw, d4 long jaw, d5 snub nose, d6 hook nose - everything else in the prompt is identical. All 24
+    renders were opened before this card was written; the other three seeds per design are on the results branch,
+    unpublished. A baked JPG carries no filename of its own, so this note is the only thread from the picture
+    back to what drew it. $0, local GPU, animagine-xl-3.1.'
