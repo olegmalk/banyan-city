@@ -542,6 +542,142 @@ tasks:
     HAD the singulars and still drew "many random girls", so this sample is also the
     test of whether the fix generalises at all.
 
+# ---- THE FIRST ENTRY IN THIS LIST A MACHINE CAN SELECT, 2026-08-15 -----------
+# Every other entry above reads `worker: hand`, which was the right call on
+# 2026-08-09 and has one consequence nobody needed until today: a NEW worker
+# matches nothing. `hand` is not a machine handle, so a farm_worker started on a
+# fresh box selects zero tasks, renders nothing, and never pushes a commit to its
+# own farm-results branch — and an idle worker and a dead worker publish exactly
+# the same thing, which is nothing. That is the gap this entry closes. A lane is
+# bringing up six Macs; a commit on `farm-results-macbook2` carrying four PNGs and
+# their sidecars is the only ground truth that box is alive, and today process
+# lists and heartbeats have each lied in both directions (see
+# lane-liveness-cannot-be-inferred in the lead's notes).
+#
+# SO IT IS A REAL PLATE, NOT A PING. A first-light task that renders a throwaway
+# proves the same liveness and buys nothing, and this queue has a standing rule
+# against work with no named consumer. Beat 15 is one of six beats (07, 08, 14,
+# 15, 17, 19) blocked on a missing or wrong plate, and it is the cheapest of the
+# six to express because its blocker is understood: all 28 of its candidates fail
+# the same way and the failure is IN THE WORDS.
+#
+# WHAT IS WRONG WITH BEAT 15'S CURRENT FENCE, quoted from shots.md so the change
+# is checkable: "A small goblin tips his head back and looks up at the tiny
+# sapling standing tall beside him ... the sapling's two oversized leaves hang
+# above him in frame." Two of those phrases are the whole defect. "its two
+# oversized leaves hanging above him" draws leaves floating in mid-air with NO
+# PLANT UNDER THEM — recorded verbatim in wave-drafts.yaml at beat 15's
+# `_idfix_r2` note ("every frame deletes the sapling's STEM and leaves giant
+# leaves floating free in the sky ... and four or more of them"). And "a tiny
+# sapling standing tall beside him" never lands as an object at all. One image in
+# 28 staged it, and the thing that image had was a plant with a BODY.
+#
+# THE SCRIPT LINE THIS PLATE HAS TO SERVE, from
+# genomes/sapling/nodes/002b-first-citizen/node.md — quoted here so a mismatch
+# between the prompt and the beat would be visible without opening another file:
+#
+#     GOOD LISTENER — 1:10–1:15
+#     He looks up at the sapling; both of them share the frame.
+#     SCAVENGER: You're a good listener. The last three people I talked to filed
+#     a report.
+#
+# He is ALREADY seated and ALREADY looking up; the shot is a two-shot and the
+# conversation is its subject. Hence the four rules the prompt below obeys, each
+# one paid for by a lost render this week:
+#   * THE PLANT GETS A BODY — "a thin stem with two oversized leaves rising
+#     beside him, its base in shot": stem, base and leaf count described as ONE
+#     object. Same construction as `authored_b04_crouch_plate`, the b04 lane's
+#     2026-08-15 sample, and for the same reason.
+#   * THE POSE IS A STATE, NEVER THE VERB — "seated in the grass, head tipped
+#     back, looking up at". A prompt naming an action renders that action's END
+#     state: every beat-17 plate written as "pushes himself up to standing" came
+#     back already standing. Beat 15's current fence says "tips his head back and
+#     looks up", which is the verb form.
+#   * ADULT WORDING — "a lean wiry adult goblin man", never "a small goblin boy",
+#     which is what beat 15's every existing draft says and is the wording that
+#     draws a baby. `green skin, plump` is the founder's own {{GOBLIN}} definition
+#     (render_wave_goblin.GOBLIN_DEFAULT), inlined because farm_worker's prompt
+#     path does no slot substitution — it is carried, not edited.
+#   * THE FRAMING IS ASSERTED — "Wide shot, his face and the leaves in frame",
+#     because "both of them share the frame" is the beat, and three of four
+#     wave-1 candidates showed the back of his head.
+#
+# MEASURED ON THE REAL CLIP TOKENIZER BEFORE IT WAS QUEUED, on the m1pro render
+# venv, through the exact path farm_worker uses (sd_prompt.compress +
+# sd_prompt.beat_negative off the same house NEG string at farm_worker.py:526):
+#     positive  76/77, NOTHING dropped, count tag `1boy`, style anchor
+#               `very aesthetic` survives
+#     negative  75/77, no warning, no term lost, and `photorealistic` and
+#               `3d render` are still the first two terms — the pair that falls
+#               off first when a negative overflows, taking the killed 3D-CG look
+#               with it.
+# The `no <noun>` fences cost the POSITIVE nothing: compress() strips them before
+# it counts (sd_prompt.py, `_NEGATION.sub` ahead of the fitting loop), so the
+# anti-baby block the founder asked for — blush, red cheeks, chibi, big head,
+# baby face, toddler, child — plus `houseplant, indoors` (four of four wave-1
+# frames were INDOORS with a monstera) and `leaf on head, plant girl, female
+# goblin` all reach the negative for free. `no floating leaves` was drafted and
+# CUT: it is not a tag in any vocabulary we have measured, and negating a word the
+# positive is asking for is how the leaves go missing.
+# NOT PRESENT AND DELIBERATELY SO: the plant-scale guard (`mature tree, large
+# tree, ...`) does not fire, because sd_prompt adds it only when the prompt says
+# `sapling`/`tiny`/`seedling` and this one says none of them. That is the point —
+# the noun that summons SD's tree prior is the same noun that never lands as an
+# object, so the plant is described instead of named.
+#
+# `worker: macbook2` IS PINNED AND MUST NOT BECOME `any`. farm_worker's only
+# dedup is a 60-second stale-heartbeat scan, so every machine matching `any`
+# inside that window is eligible for the same task and several would draw it at
+# once. macbook2 is the box that is furthest along (python 3.11, torch 2.13,
+# diffusers 0.29.2 — the pin the stills path needs — MPS verified doing real GPU
+# work), so it is named.
+#
+# §6 CHECKED, NOT ASSUMED: farm_worker takes the LAST `*-t0-*.yaml` by sort order,
+# which for this node is `002b-t0-c.yaml`, and it reads `approved_by: founder`. A
+# task on an unapproved node exits before it loads a model.
+#
+# WHAT LANDS IF IT WORKS: four PNGs and four sidecars on `farm-results-macbook2`,
+# named `002b-b15-plant-body-1786793161-00-15-good-listener-s0..s3.png` — the
+# `00` is not a typo, the prompt path numbers its one job 0 and takes the filename
+# from `slug:` (farm_worker.py:553-555), so the beat is named in the slug instead.
+# est_minutes is a GUESS and the first honest measurement of this class of machine
+# is part of what the run buys.
+- id: 002b-b15-plant-body-1786793161
+  runner: farm
+  worker: macbook2
+  needs: [mps]
+  node: 002b-first-citizen
+  slug: 15-good-listener
+  seeds: 4
+  seed_base: 20260719
+  window: any
+  est_minutes: 30
+  prompt: >-
+    A lean wiry adult goblin man, green skin, plump, seated in the grass, head
+    tipped back, looking up at a thin stem with two oversized leaves rising
+    beside him, its base in shot. Wide shot, his face and the leaves in frame,
+    warm midday light, cinematic lighting, detailed, newest, masterpiece, best
+    quality, very aesthetic No girl, no chibi, no big head, no baby face, no
+    toddler, no child, no blush, no red cheeks, no houseplant, no indoors, no
+    leaf on head, no plant girl, no female goblin. No photorealism, no 3D render
+    look. 9:16 vertical, no text.
+  why: >-
+    Beat 15 has no usable plate after 28 candidates, and it is not a seed problem:
+    every one of them fails because the sapling never renders as a plant — leaves
+    floating with no stem, a monstera in a room, or nothing at all — so episode 2
+    cannot cut this beat. The consumer is the founder's episode-2 picking page,
+    which needs one frame in which the conversation is legible: a goblin who reads
+    as an adult, a plant that reads as a plant, and both of them in the frame at
+    once. This is ONE SAMPLE of a prompt change, not a batch: if the plant lands
+    with a body here, the same construction is what unblocks beats 07, 08, 14, 17
+    and 19, and if it does not, that is a plate-mechanics answer (conditioning, not
+    words) obtained for four images. Its second consumer is the Mac fleet itself —
+    this is the first entry in `tasks:` any machine can select, so the commit it
+    pushes to `farm-results-macbook2` is the first ground-truth proof a Mac worker
+    is alive. Identity is NOT what this measures: farm_worker's stills path has no
+    IP-Adapter, so the goblin will not match the frozen reference and a
+    face-likeness verdict on these four frames would be reading the wrong axis.
+
 
 backlog:
 # ---- PLANNED, WITH THE BLOCKER WRITTEN DOWN ---------------------------------
