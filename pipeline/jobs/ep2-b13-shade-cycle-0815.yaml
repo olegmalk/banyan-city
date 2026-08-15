@@ -1,0 +1,241 @@
+# 2026-08-15, motion-wording lane. Beat 13, THE SHADE. ARM 4: A CYCLICAL ACTION
+# CLAUSE IN PLACE OF A TERMINAL ONE, ONE VARIABLE ON TOP OF THE STATE-TAG ARM.
+#
+# 1. THE SCRIPT LINE, quoted from genomes/sapling/nodes/002b-first-citizen/node.md:
+#
+#      **THE SHADE -- 1:00-1:04**
+#      "The scavenger slides down the trunk and folds into the sapling's tiny
+#       shade, knees up around his ears."
+#      > SCAVENGER: "...Thanks for the shade."
+#
+# 2. THE SWEEP SO FAR. SAME PLATE, SAME ASSERTED SHA, SAME SEED 20260806, SAME
+#    NEGATIVE, SAME STYLE TAIL, SAME 97 FRAMES, SAME FLAGS. EVERY CLIP OPENED ON
+#    CONSECUTIVE FRAMES, NOT ON AN EVEN SPREAD.
+#
+#    ARM 1 - control, ep2-b13-lw-0814:
+#      "He draws his knees up to his chest and wraps his arms around them, then
+#       lowers his head."
+#      He is ALREADY sitting folded with knees up and hands clasped at frame 0.
+#      Nothing through frame 26; arms cross and head tucks between 32 and 45;
+#      45-96 held.
+#      window 6.2% (pairs 15..21) | body 0.740 | tail 1.585 | cadence 1.00x
+#
+#    ARM 2 - ep2-b13-shade-state-0815, the leading state tag:
+#      "sitting on grass, knees up, arms around knees. He lowers his head until
+#       his face is hidden behind his knees."
+#      Onset moved to frame 0 and the move got bigger; the face is gone behind
+#      the knees by frame 26 and 26-96 are dead.
+#      window 5.2% (pairs 1..6) | body 2.931 | tail 1.616 | cadence 1.39x
+#
+#    ARM 3 - ep2-b13-shade-chain-0815, that state tag plus an ordered chain of
+#      three sub-movements ("... then his shoulders rise and settle as he
+#      breathes out, then he tilts his head to one side"). It rendered tonight
+#      and IT DID NOT BUY DURATION: the whole fold is blended into frames 0-26,
+#      and 32-96 is the identical tuck with only the slow inward creep moving.
+#      The chain lever transferred from beat 10 as amplitude, not as duration.
+#      window 5.2% (pairs 10..15) | head 2.898 | body 3.661 | tail 0.898 | cadence 1.53x
+#
+#    Read together, three wordings put the action in three different places and
+#    ALL THREE END THE SAME WAY: the head is buried by frame 26-45 and the last
+#    two thirds of the clip are one held pose. Note also that "tail" here is NOT
+#    a stillness figure -- arm 1 and arm 2 read tail 1.585/1.616 against bodies of
+#    0.740/2.931 because the frame creeps inward the whole way. The number cannot
+#    see the difference between a body moving and a camera drifting, which is why
+#    the frames decide.
+#
+# 3. WHAT IS BEING TESTED HERE, AND WHY IT IS ONE VARIABLE.
+#    THE HYPOTHESIS: the freeze is the model COMPLETING A TERMINAL ACTION and then
+#    holding its end state. "Lowers his head until his face is hidden" has an end
+#    state written into it, and so does every clause we have tried; the model
+#    reaches that state as fast as it can and stops, which is the same failure
+#    beat 17 hit when "pushes himself up to standing" rendered as a man already
+#    standing. An action with NO end state cannot complete.
+#
+#    The leading state tag is carried over WORD FOR WORD from arm 2. The only
+#    difference is that arm 2's terminal action clause becomes a cyclical one:
+#
+#      arm 2:  "sitting on grass, knees up, arms around knees. He lowers his head
+#               until his face is hidden behind his knees."
+#      arm 4:  "sitting on grass, knees up, arms around knees. He rocks slowly
+#               forward and back."
+#
+#    Recipe untouched and not under test: 704x1280, 97 frames, 24fps, two-stage
+#    8@352x640 + 3@704x1280, distilled sigmas, image-crf 33, guidance 2.0,
+#    sequential offload. No parameter change has ever improved motion here and no
+#    parameter is being changed.
+#
+# 4. THE PREDICTION, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#    If the terminal-action hypothesis is right, the figure is still moving after
+#    frame 64 and the last third is not one held pose. IF HE ROCKS ONCE AND STOPS,
+#    the cyclical clause is not a lever either -- three wording levers in a row
+#    will have failed to buy duration on this beat, and the honest conclusion is
+#    that beat 13's duration problem is NOT a wording problem. That gets reported
+#    as loudly as a win. A third outcome is live: "rocks" on a figure this small
+#    may read as a wobble or a lurch rather than as acting, which would be worse
+#    than a freeze.
+#
+#    The cost of this arm is that the script's own action -- the head going down
+#    into the shade -- is not asked for. That is deliberate: the plate is ALREADY
+#    the folded pose the line describes, so the head-down is the only terminal
+#    move left in the beat and it is exactly the move that keeps completing.
+#
+#    THIS IS ONE RENDER. Nothing scales off it until it has been looked at, and
+#    the second seed does not go in until this one has.
+#
+# 5. SCORING. OPEN THE FRAMES. Where is the head at 0, 32, 64, 96, and does
+#    ANYTHING in the body change between 64 and 96. Report the window percentage,
+#    body, tail and cadence beside arm 1's, arm 2's and arm 3's figures above, and
+#    beside a BLIND cold read of the frames alone. The comparison is the result; a
+#    bare figure is not, and the cold read outranks it.
+#
+# 6. THE INIT, HELD CONSTANT AND ASSERTED RATHER THAN TRUSTED BY NAME.
+#    13-the-shade-ipa-r0-w015-s0.png from ep2-b13-plate-0814, sha 1745a491db3c95c7...
+#    asserted in the crop step, which refuses before anything is written. Same
+#    file and same hash as arms 1, 2 and 3.
+#
+id: ep2-b13-shade-cycle-0815
+task: ep2-b13-shade-cycle-0815
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 18
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: motion-wording lane (beat 13), 2026-08-15
+consumer: The beat-13 motion-wording sweep, arm 4. Read against ep2-b13-shade-state-0815 (arm 2), which shares
+  its plate, its asserted sha, its seed 20260806, its negative, its style tail, its 97-frame length and every
+  render flag. The LEADING STATE TAG IS CARRIED OVER WORD FOR WORD; the only difference is that arm 2's TERMINAL
+  action clause ('He lowers his head until his face is hidden behind his knees.') becomes a CYCLICAL one with
+  no end state ('He rocks slowly forward and back.'). Judged by opening consecutive frames via pipeline/coldread_frames.py
+  and by a blind cold read, reported beside arms 1, 2 and 3. The cold read decides; the number is a filter and
+  never a verdict.
+success: 'A 704x1280 mp4, 97 frames, in which SOMETHING IS STILL CHANGING IN THE FIGURE AFTER FRAME 64. Arms 1,
+  2 and 3 were all opened frame by frame today at this exact plate and seed and all three did the same thing:
+  the arms cross and the head goes down into the knees, the move is finished by frame 26 (arm 2, arm 3) or frame
+  45 (arm 1), and every frame after that is the same tuck with only a slow inward creep. arm 1 window 6.2% body
+  0.740 tail 1.585 cadence 1.00x; arm 2 window 5.2% body 2.931 tail 1.616 cadence 1.39x; arm 3 window 5.2% head
+  2.898 body 3.661 tail 0.898 cadence 1.53x. The hypothesis under test is that the freeze is the model COMPLETING
+  A TERMINAL ACTION and holding its end state, so an action with no end state should not be able to complete.
+  IF THIS ROCKS ONCE AND STOPS, the cyclical clause is not a lever either, three wording levers in a row have
+  failed to buy duration on this beat, and that is a bigger finding than a win and gets said just as loudly. A
+  clip that cuts, relocates, loses the figure, or stands him up is a failure whichever way the action goes.'
+why: Tonight's top-priority experiment, ONE render, $0, local card, no provider. One variable against a control
+  clip that has already been opened frame by frame and whose figures are recorded above.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-shade-cycle-0815\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import\
+    \ Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\"\
+    , default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\n\
+    ap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n \
+    \   for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif\
+    \ a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\"\
+    \ % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\"\
+    )\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh\
+    \ * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left,\
+    \ top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\n\
+    im.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f ->\
+    \ %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-motion-prompt.txt: sitting on grass, knees up, arms around knees.
+    He rocks slowly forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework,
+    anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-jobs-encode.json: "[{\"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-cycle-0815\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-cycle-0815\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-cycle-0815\\\\b13-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-jobs-render.json: "[{\"beat\": 13,\n  \"seed\": 20260806,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-cycle-0815\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shade-cycle-0815\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b13-shade-cycle-0815\\\
+    \\13-the-shade-LTX-cycle.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shade-cycle-0815\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-shade-cycle-0815
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-shade-cycle-0815\bench-b13-shade-cycle.jsonl
+  - --bench-label
+  - ep2-b13-shade-cycle-0815
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-shade-cycle-0815\"\n\
+    os.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-shade-cycle-0815/13-the-shade-LTX-cycle.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b13-shade-cycle-0815/b13-init-704x1280.png\")\n         \
+    \    + glob.glob(\"C:/banyan-farm/ep2-b13-shade-cycle-0815/bench-b13-shade-cycle.jsonl\"))\nlines = []\nfor\
+    \ f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"\
+    rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b13-shade-cycle-0815.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0\
+    \ if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-shade-cycle-0815\13-the-shade-LTX-cycle.mp4
+- C:\banyan-farm\ep2-b13-shade-cycle-0815\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render gate itself reads.
+  Beat 13 is THE SHADE -- "The scavenger slides down the trunk and folds into the sapling''s tiny shade, knees
+  up around his ears." -- one scavenger, no guards. This is a silent motion take on an approved node, not an episode
+  assembly and not a voice synthesis.'
