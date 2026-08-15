@@ -1824,3 +1824,4 @@
 08:38:28Z DONE task=ep2-b17-turn-0815-1786781056 rc=0 artifacts=2
 08:38:35Z STARTED task=ep2-b17-turnB-0815-1786781061 attempt=1 on box-runner
 08:43:46Z DONE task=ep2-b17-turnB-0815-1786781061 rc=0 artifacts=2
+08:43:51Z box-runner idle ready=0 failed=27
