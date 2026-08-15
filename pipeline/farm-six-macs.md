@@ -137,9 +137,44 @@ rsync -a ~/.cache/banyan-tts <mac>:~/.cache/
 `-a` preserves symlinks, which matters: the HF cache is `blobs/` plus
 `snapshots/` symlinks, and a copy that dereferences them both doubles the
 size and breaks revision pinning. On gigabit this is a few minutes per Mac.
-It also guarantees **byte-identical weights across all seven machines**,
-which a re-download does not — a silently different revision is exactly the
-class of divergence §5 is about.
+
+### THEN VERIFY IT, because this rsync is what broke two Macs
+
+This section used to end "it also guarantees **byte-identical weights across
+all seven machines**." **It does not, and that sentence cost us macbook1 —
+the fastest machine in the fleet — and macbook3 for days** (2026-08-15/16).
+Both received the 5.1 GB animagine UNet at its exact right byte length and
+87.7% / 92.6% full of holes, and rendered SDXL as pure noise ever after.
+Nothing errored. Size matched, file count matched, the manifests compared
+equal, and the output was noise.
+
+Two reasons a clean `rsync` exit proves nothing about the bytes on disk:
+
+- rsync's automatic post-transfer whole-file check is an **MD4 accumulated
+  over the bytes as they stream past**, never a re-read of what was written
+  (`rsync(1)`, under `--checksum`). A write that is dropped after the digest
+  saw it is invisible to it.
+- macOS ships **openrsync** as `/usr/bin/rsync` (Apple's fork of openrsync
+  0.5.0; `rsync.samba` was removed in 15.4). Its receiver ends every file
+  with `ftruncate()` to the final offset — which is precisely how a file
+  comes to carry its full logical length over unallocated blocks.
+
+So the copy is not done until it has been **verified by content**:
+
+```
+python3 pipeline/mac_preflight.py            # on the Mac that received them
+```
+
+It re-reads every weight file and compares its sha256 to the blob's own
+filename — `huggingface_hub` names an LFS blob after the sha256 of its
+content, so the expected digest ships with the file and no network is
+needed. Exit 0 / `verdict: READY`, or nonzero naming the file and how much
+of it is nothing. It needs no torch and no venv, so it runs on a machine's
+system python before the rest of bring-up has happened.
+
+`farm_worker` calls the same check at startup and again before every model
+load, so a Mac in this state now refuses work instead of returning noise —
+but catch it here, at the copy, and no seeds are spent at all.
 
 ---
 
