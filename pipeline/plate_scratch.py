@@ -1555,6 +1555,128 @@ REVS = {
         # in the field. b17-bigbody r3 0.81. Well under the one-torso bar.
         # ------------------------------------------------------------------
     },
+    (11, 4): {
+        # ==================================================================
+        # 2026-08-16, FOURTH LANE. THE STRAP, AND ONLY THE STRAP.
+        # WRITTEN AND COMMITTED BEFORE THE PIXEL, as e4279ce5's bar was.
+        # ==================================================================
+        # WHAT IS NOT IN QUESTION: r3 PASSES 7/7 AND REMAINS THE BEAT-11
+        # DELIVERABLE UNLESS THIS REV BEATS IT. Beat 11 is not re-opened. This
+        # rev exists because r3 carries ONE named defect -- the narrow strap
+        # hanging from guard B's left hand -- and because that defect is about
+        # to be drawn three more times: beats 05, 10 and 09 all stage the same
+        # cast with the same clause structure. Solving it here costs one seed;
+        # not solving it here costs three plates.
+        #
+        # THE FACT THAT FORCED A POSITIVE-SIDE ANSWER. The strap survived r3,
+        # whose negative carries BOTH `holding object` AND `clipboard`, at the
+        # same seed, with the rest of the frame demonstrably reachable (the
+        # three head-turn terms moved both heads in the same revision). So the
+        # negative is not weak here, it is NOT REACHING THIS OBJECT. That is
+        # the third instance of the standing law -- beat 08 r4's colossus
+        # survived `giant, colossal, monster, kaiju, statue, face in the sky`,
+        # beat 17 r2 grew goblin heads with `2boys` in the negative, and now
+        # this. All three were beaten, or must be, on the POSITIVE side.
+        #
+        # THE HYPOTHESIS, AND IT IS SPECIFIC ENOUGH TO BE WRONG. The strap is
+        # THE SASH. Read the positive as the tokenizer reads it:
+        #
+        #   ... one man with light sandy hair in a dark brown tunic,
+        #       cloth sash of office,
+        #       dark trousers and boots, ...
+        #
+        # `cloth sash of office` is a HOMELESS CLAUSE. It is the only narrow
+        # cloth band named anywhere in the prompt; it belongs to no person
+        # clause; it sits IMMEDIATELY AFTER GUARD B's clause, which is exactly
+        # where CLIP adjacency would bind it; and A SASH OF OFFICE IS WORN
+        # ACROSS THE CHEST, WHICH THIS CAMERA CANNOT SEE. The prompt therefore
+        # asks for a visible thing and gives it nowhere visible to be. What
+        # came back is a narrow pale-tan cloth band with a squared tab end,
+        # hanging at the one place on B that the camera does see -- his near
+        # hand. Two details fit this and fit nothing else: it is on B and not
+        # on A (adjacency), and it is cloth-coloured and cloth-shaped rather
+        # than board-shaped (a clipboard vestige would be a rectangle).
+        #
+        # This is the vacancy law wearing different clothes. There, an empty
+        # REGION with no noun of its own gets filled with the largest noun in
+        # the prompt. Here, a NOUN with no region of its own gets placed on
+        # the nearest surface the camera can see. Same mechanism -- the model
+        # will not simply drop something the prompt asked for -- and therefore
+        # the same fix: GIVE IT A HOME THE CAMERA CAN SEE, rather than
+        # forbidding it.
+        #
+        # THE ONE VARIABLE, and it is four words. `cloth sash of office`
+        # becomes `a cloth sash of office across his back`. The sash is kept,
+        # because it is the founder's cast (`authored_guard_sheet_a`,
+        # `authored_guard_b_derived`, both carry it) and deleting a cast
+        # attribute to dodge a rendering bug is the wrong trade. Everything
+        # else -- every other byte of the positive, the WHOLE negative
+        # restated below byte for byte, the seed, the size, the steps, the
+        # guidance -- is r3's.
+        #
+        # WHAT IS DELIBERATELY NOT DONE, so the attribution stays clean.
+        # NOT touching the negative: adding a third naming of the object would
+        # confound the one thing this rev measures. `holding object, clipboard`
+        # STAY, unchanged, precisely so that a clearance here is attributable
+        # to the positive edit and not to a stronger prohibition.
+        # NOT adding `empty hands` or `arms at their sides` in the same rev:
+        # that is the OTHER positive-side instrument and it is r5's if this
+        # fails. Two levers in one sample is one sample wasted.
+        #
+        # THE BAR. ALL SEVEN OF e4279ce5's P1-P7 STILL APPLY, UNCHANGED AND
+        # UNSOFTENED, plus one:
+        #   P8 NOTHING HANGS FROM EITHER HAND. No strap, cord, lanyard, tab,
+        #      strip or pendant object at, from, or beside either man's hands,
+        #      and nothing detached anywhere in frame. Judged at 10x on both
+        #      hands of both men, not at 1x -- at 1x this strap is a two-pixel
+        #      line and r1 and r2 both "passed" it by not being looked at
+        #      closely enough. A SASH RENDERED AS A BAND ON B's BACK OR WAIST
+        #      IS NOT A FAIL OF P8 -- that is the sash doing what it was just
+        #      told to do, and it is cast-correct.
+        #
+        # OUTCOMES NAMED IN ADVANCE, so none can be reinterpreted afterwards:
+        #   A. STRAP GONE, P1-P7 STILL HOLD -> hypothesis supported, r4 becomes
+        #      the beat-11 plate, and the RULE CARRIES to 05, 10 and 09: in a
+        #      rear or three-quarter view, every garment element whose only
+        #      home is on the FRONT must be re-anchored to a surface the
+        #      camera can see, or left out. That rule is what the other three
+        #      plates get, not this prompt.
+        #   B. STRAP GONE BUT P1-P7 DEGRADE (a face turns, the count breaks,
+        #      the costumes swap) -> the edit reshuffled the image, r3 STANDS
+        #      as the beat-11 deliverable, and the strap finding is recorded
+        #      as "reachable, at a cost" rather than banked.
+        #   C. STRAP SURVIVES UNCHANGED -> THE HYPOTHESIS IS DEAD and it is
+        #      written down as dead. The sash is not the strap. r5 then runs
+        #      the discriminating test the honest way: DELETE the sash clause
+        #      outright. If the strap goes with it, the sash was the cause and
+        #      anchoring merely failed to bind; if the strap is still there
+        #      with no sash in the prompt at all, the object is coming from
+        #      somewhere else entirely -- the likeliest remaining source being
+        #      the checkpoint's own prior for a hand at a man's side -- and
+        #      the answer is to give the hands a positive state of their own.
+        #   D. THE STRAP MOVES to guard A, or a back sash appears AND the
+        #      strap stays -> the strap was never the sash; go straight to
+        #      r5's hand-state instrument and say so.
+        "slug": "they-leave",
+        "prompt": (
+            "2boys, from behind, full body, wide shot, two guard men "
+            "standing together in tall grass, tall grass background, one "
+            "man with dark cropped hair in a plain tan tunic, one man with "
+            "light sandy hair in a dark brown tunic, a cloth sash of office "
+            "across his back, dark trousers and boots, sunny day, "
+            "masterpiece, best quality"
+        ),
+        # Restated BYTE FOR BYTE from r3. Not one term added, and the two
+        # terms that name the strap are left in place on purpose (see above).
+        "negative": (
+            "text, looking at viewer, facing viewer, face, looking back, "
+            "profile, from side, close-up, "
+            "portrait, distant, small figure, bald, 1boy, 3boys, solo, "
+            "sky, horizon, white background, simple background, "
+            "holding object, clipboard, armor, helmet, knight, child, "
+            "photorealism, 3d render, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
