@@ -2921,6 +2921,87 @@ beats:
     # positions straddling the bar -- THE STEP COUNT GOES UP rather than the finding being
     # written as impossible: more steps are finer positions of the same knob.
     #
+    # -- VERDICT, 2026-08-15, after TEN single samples each opened at 3x before the next
+    # was authored. ANSWER: **NO. BEAT 06 HAS NO WINDOW, AND ITS BRACKET IS WORSE THAN
+    # BEAT 10'S, NOT BETTER.** Every sample held the mask sha b4c0594f... (re-asserted from
+    # the render's own output every time, byte-identical across all ten), seed 20260815,
+    # cfg 7.5, pad-crop 64, blur 8 and the two beat-10 prompt files unedited. Only strength
+    # moved, and then --steps. All $0 on the rtx5090, 6-17s each, rc=0. The pixel diff
+    # against the init stayed inside the mask bbox plus pad-crop on all ten (widest x was
+    # 302, and the control board's left edge is at 347), and the RIGHT GUARD'S PALE BLUE
+    # BOARD CAME BACK UNCHANGED in every frame -- clip, edges and both his hands.
+    #
+    # THE LADDER, at 40 steps:
+    #   0.45  (18) INTACT. Clean rectangle, square corners, the crossing hand fully
+    #              preserved, chrome clip gone and the top rim now a warm tan edge. Face
+    #              still navy-black with sheen streaks. FAIL-MATERIAL.
+    #   0.58  (23) INTACT. Same shape and hand, and VERTICAL GRAIN arrives on the face --
+    #              but dark planed/stained timber, not crust. FAIL-MATERIAL.
+    #   0.625 (25) INTACT and the best frame of the ten: rectangle, square corners, hand
+    #              holding, chrome gone, warm-brown wood-grain plank banding. Still planed
+    #              timber -- no ridges, no flaking crust. FAIL-MATERIAL.
+    #   0.65  (26) SHATTERED. Translucent: the tunic and sash show THROUGH the board.
+    #              Contents are grey and maroon zigzag chevron bands. Hand ERASED.
+    #   0.72  (28) SHATTERED, translucent, a lobed mauve-brown mass, hand erased.
+    #   0.79  (31) SHATTERED. Brown crack-lined mass, scalloped top edge, torn zigzag
+    #              bottom, tunic showing through beneath it, hand erased.
+    #   0.82  (32) WORST. A glassy pane with a maroon banded scallop in it, a torn hole
+    #              across the middle, hand erased, and a CHROME BAND SURVIVING at the left.
+    #
+    # THE STEP COUNT WAS RAISED, as pre-registered, because 25 and 26 of 40 are ADJACENT:
+    #   80 steps 0.625 (50) INTACT -- re-anchor; the same fraction behaves the same way at
+    #              double the steps, so the ladders are comparable. FAIL-MATERIAL.
+    #   80 steps 0.638 (51) INTACT. THE POSITION 40 STEPS COULD NOT EXPRESS -- strictly
+    #              between 25/40 and 26/40, and NOT a duplicate: it differs pixelwise from
+    #              50/80, where beat 10's 0.805 came back byte-identical to 0.82. Grain
+    #              plus a brown wedge upper-right, translucency starting at the right edge.
+    #              FAIL-MATERIAL.
+    #   80 steps 0.65  (52) SHATTERED, exactly as 26/40 did: a pair of rounded lozenge
+    #              frames with thick grey CHROME-coloured rims, dark upper lobe, tunic
+    #              through the lower one, hand erased.
+    # So the wall is adjacent again at 51 -> 52 with the step count DOUBLED, and it sits at
+    # the same fraction. This is the beat-10 lane's result reached independently on another
+    # region: more steps buy real new positions and the boundary does not move.
+    #
+    # AND THE DIFFERENCE FROM BEAT 10 IS THE POINT. Beat 10's boundary was a RESOLUTION
+    # problem -- shape survived all the way to 0.79 and bark arrived at 0.82, one rung
+    # later, so it was reasonable to ask whether a finer knob would find the seam. On beat
+    # 06 there is no seam to find: **BARK NEVER ARRIVES ANYWHERE ON THE LADDER.** At every
+    # position where the region survives, the material tops out at dark planed timber
+    # grain; at the first position where it breaks, it does not tear at the edge the way
+    # beat 10's did -- it goes TRANSLUCENT, the guard's tunic reads through the board, the
+    # hand is deleted and chrome comes BACK. Beat 06's shape ceiling (0.638) sits far below
+    # beat 10's material floor (0.82), and the gap is now measured rather than assumed.
+    #
+    # WHY, and it is structural rather than a knob. The pre-registration said the only mask
+    # on this plate that could satisfy the bar must contain the guard's crossing hand,
+    # because the unoccluded face is a 2.3:1 strip. That is what the ladder priced. The
+    # region dissolves at exactly the strength that starts restyling the hand, and the
+    # negative -- unchanged from beat 10 and correctly so -- carries `extra hands`, `1boy`
+    # and `face`, so the model is being asked to delete a hand from a region that is a
+    # third hand while holding a flat panel across it. It does neither. The hand is not an
+    # incidental occluder here; it is the reason this init cannot be tested the way beat
+    # 10's was. This sits beside the beat-10 lane's mechanism (crust relief and the
+    # straight silhouette occupy the same frequency band): both say the prop is not gated
+    # on finding a better number.
+    #
+    # WHAT IS NOT RULED OUT, and none of it is a fifth wording variant of the prop's shape:
+    # a mask that is the board MINUS the hand, which `--quad` cannot express and which
+    # would need a second polygon or a subtract flag in `inpaint_fruit.py`; a plate for
+    # beat 06 staged with the board held at its EDGE rather than with a palm across its
+    # face, which is a plate-time fix and the same conclusion beat 08 reached by a
+    # different road; and material-class wording tuned for a LOW-strength pass, since the
+    # 0.625 frames reach planed grain and the words have never been aimed at that regime.
+    # WHAT IS RULED OUT is the thing this lane was sent to find: there is no strength, at
+    # 40 or 80 steps, that satisfies the bar on this init.
+    #
+    # AND THE PLATE NOTE ABOVE SHOULD BE READ WITH ITS CORRECTION. "Arguably a BETTER
+    # candidate ... larger in frame and less occluded" is wrong on the half that matters:
+    # the outline is larger, the maskable face is smaller, and it was the occlusion and not
+    # the size that decided this. Ten frames and their sidecars are committed under
+    # `lab/inpaint-b06/out/` so the next lane can disagree with the pictures rather than
+    # with this paragraph.
+    #
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used

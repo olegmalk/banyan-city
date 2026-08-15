@@ -1,0 +1,40 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 704x1280
+steps: 40
+guidance: 7.5
+strength: 0.65
+seed: 20260815
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/ep2-b06-barkboard-inpaint-0815/b06-nos2-init-704x1280.png
+init_sha256: f72ec8df8519c87fcc105f82ea13342c66533eccf2c7308c34b77961287638d4
+mask_png: ep2-b06-barkboard-inpaint-0815-s5-str065-mask.png
+mask_shape: quad
+mask_corners_px: [[52, 502], [228, 487], [299, 697], [124, 703]]
+mask_bbox_px: [52, 487, 299, 703]
+mask_width_frac: 0.3509
+mask_height_frac: 0.1688
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-15T16:08:45Z
+render_seconds: 6.4
+wall_seconds: 14.2
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  beat 06 bisect 6: identical mask, seed and prompt files, strength 0.65 = 26 discarded steps, the midpoint of the FOUR untested positions (24,25,26,27) between 0.58 shape-intact and 0.72 shattered. Beat 10's boundary had no such gap.
+prompt: |-
+  a slab of rough tree bark, dry grey-brown bark, deep vertical furrows and ridges, coarse flaking crust, knotted woody surface, matte and dusty, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  chrome clip, metal clip, spring clip, clipboard, white paper, lined paper, sheet of paper, writing, text, navy, dark blue, plastic, glossy, polished, planed timber, sanded plank, varnish, tree trunk, standing tree, branches, leaves, 1girl, 1boy, face, extra hands, photorealistic, 3d render
