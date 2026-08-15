@@ -37,6 +37,16 @@ the three failures this script exists to prevent:
 
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--dry-run]
     python3 pipeline/box_enqueue.py --list        # what is queued right now
+
+  7. A card that runs dry the moment every lane is mid-thought. On 2026-08-15
+     the GPU idled four separate times and three sessions died on usage limits
+     with work un-queued. `--backlog` files a spec into `backlog/` instead of
+     `ready/`, through every guard above, where box_autofill.py picks it up when
+     the queue falls under its floor of MINUTES -- with no session alive. The
+     one thing that door refuses and this one does not is a `plate_ack:` waiver;
+     see backlog_problems.
+
+    python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml --backlog
 """
 
 from __future__ import annotations
@@ -792,9 +802,19 @@ def parse_queue_listing(stdout: str):
 
 
 def queued_job_ids():
-    """(ids, None) for what is in ready/ and running/, or (None, why-not)."""
+    """(ids, None) for what is in ready/, running/ and backlog/, or (None, why).
+
+    BACKLOG COUNTS AS LIVE, and leaving it out would have been a hole exactly
+    the width of the original bug. A backlogged job's payload files are written
+    at FILING time and sit on the box for hours before box_autofill.py fires it;
+    its reservation in the local index goes cold after RESERVE_GRACE_SEC, so
+    without this listing a later job naming the same payload paths would be
+    waved through and would overwrite the backlogged job's prompt before it ever
+    ran -- the 2026-08-13 twin overwrite, with a longer fuse.
+    """
     r = ssh('dir /b %s\\ready\\*.json 2>nul & dir /b %s\\running\\*.json 2>nul & '
-            'echo %s' % (QUEUE_ROOT, QUEUE_ROOT, QUEUE_MARKER))
+            'dir /b %s\\backlog\\*.json 2>nul & '
+            'echo %s' % (QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT, QUEUE_MARKER))
     ids = parse_queue_listing(r.stdout)
     if ids is None:
         return None, (r.stderr or r.stdout or "ssh returned nothing").strip()[:200]
@@ -835,7 +855,55 @@ def send_payload(payload: dict) -> None:
         print("  payload -> %s" % dest)
 
 
-def enqueue(job: dict) -> None:
+def backlog_problems(spec: dict) -> list:
+    """What may NOT be filed for an unattended autofill to fire later.
+
+    ONE REFUSAL, and it is the point of having a separate door. Everything the
+    gate_checks above refuse is refused here identically -- filing to the
+    backlog runs the whole guard path, because a job that reaches ready/ at 4am
+    with nobody watching has had exactly as much checking as this moment gave
+    it. What is refused ADDITIONALLY is a spec that only passes because someone
+    waived a guard:
+
+        plate_ack: "card: a deliberate macro close-up of the fruit"
+
+    A waiver is a person saying "I looked and it is fine". That is a fine thing
+    for a person to say about a job they are enqueueing while awake and about to
+    watch. It is not a thing that should still be true hours later when a timer
+    fires the job at a plate the lane has since replaced -- and on 2026-08-14 a
+    job that took that shortcut turned out to be cropping the WRONG BEAT'S
+    plate. So waived work goes in by hand, and box_autofill.py can honestly say
+    it has never waived anything.
+    """
+    if not plate_acks(spec):
+        return []
+    return ["BLOCKED for --backlog: this spec carries plate_ack: %r. A waiver is a "
+            "person vouching for a picture right now; the autofill fires hours later "
+            "with nobody looking, so waived work is enqueued by hand instead. Drop "
+            "the waiver by fixing what it waives (publish the plate through a "
+            "farm-out job and point --src at it), or enqueue this one without "
+            "--backlog while you are awake." % plate_acks(spec)]
+
+
+def with_backlog_meta(job: dict, spec_path: str, expires_h: float) -> dict:
+    """Stamp a job with when it was filed and how long it stays true.
+
+    box_autofill.py reads these and refuses to fire an entry older than
+    `expires_h` -- a backlog entry names an init and a bar that were true when
+    it was written, and the failure mode of a standing queue is firing
+    yesterday's recipe at today's plate. The runner ignores keys it does not
+    know, so this rides along as provenance into the job's own sidecar.
+    """
+    job = dict(job)
+    job["backlog"] = {"filed_at": int(time.time()),
+                      "filed_at_iso": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                      "expires_h": expires_h,
+                      "spec": spec_path,
+                      "filed_by": "box_enqueue --backlog"}
+    return job
+
+
+def enqueue(job: dict, dest: str = "ready") -> None:
     name = job["id"] + ".json"
     local = os.path.join("/tmp", name)
     with open(local, "w", encoding="utf-8") as fh:
@@ -848,18 +916,21 @@ def enqueue(job: dict) -> None:
     if cp.returncode:
         sys.exit("!! scp failed: %s" % (cp.stderr or cp.stdout))
     # move, not copy: the runner claims by renaming out of ready/, so a file
-    # must never be visible there while it is still being written.
-    mv = ssh('move /Y %s\\%s %s\\ready\\%s' % (STAGING, name, QUEUE_ROOT, name))
+    # must never be visible there while it is still being written. The same
+    # reasoning covers backlog/ -- box_autofill.py files by renaming out of it.
+    ssh('if not exist %s\\%s mkdir %s\\%s' % (QUEUE_ROOT, dest, QUEUE_ROOT, dest))
+    mv = ssh('move /Y %s\\%s %s\\%s\\%s' % (STAGING, name, QUEUE_ROOT, dest, name))
     if mv.returncode:
-        sys.exit("!! move into ready/ failed: %s" % (mv.stderr or mv.stdout))
-    print("  queued %s" % name)
+        sys.exit("!! move into %s/ failed: %s" % (dest, mv.stderr or mv.stdout))
+    print("  %s %s" % ("backlogged" if dest == "backlog" else "queued", name))
 
 
 def show_queue() -> int:
     r = ssh('echo [ready] & dir /b %s\\ready 2>nul & echo [running] & '
-            'dir /b %s\\running 2>nul & echo [done] & dir /b %s\\done\\*.json 2>nul & '
+            'dir /b %s\\running 2>nul & echo [backlog] & dir /b %s\\backlog 2>nul & '
+            'echo [done] & dir /b %s\\done\\*.json 2>nul & '
             'echo [failed] & dir /b %s\\failed\\*.json 2>nul'
-            % (QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT))
+            % (QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT, QUEUE_ROOT))
     sys.stdout.write(r.stdout)
     if r.stderr.strip():
         sys.stderr.write(r.stderr)
@@ -872,6 +943,12 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true",
                     help="validate and print the job json, touch nothing")
     ap.add_argument("--list", action="store_true", help="show the box queue and exit")
+    ap.add_argument("--backlog", action="store_true",
+                    help="file into backlog/ instead of ready/: same guards, but the "
+                         "job waits there until box_autofill.py finds the card hungry")
+    ap.add_argument("--expires-h", type=float, default=36.0,
+                    help="hours a backlog entry stays true; past it the autofill "
+                         "parks it .EXPIRED rather than firing a stale recipe")
     args = ap.parse_args(argv)
 
     if args.list:
@@ -904,7 +981,11 @@ def main(argv=None) -> int:
         print("%s" % path)
         spec = load_spec(path)
         job = to_job(spec)
+        if args.backlog:
+            job = with_backlog_meta(job, path, args.expires_h)
         problems = gate_checks(spec, job)
+        if args.backlog:
+            problems += backlog_problems(spec)
         # rid identifies THIS claim, so the re-read below can tell our own line
         # from a peer's. pid+ns is unique across lanes on one machine.
         mine = {"rid": "%d-%d" % (os.getpid(), time.time_ns()),
@@ -936,7 +1017,7 @@ def main(argv=None) -> int:
                 failures += 1
                 continue
         send_payload(spec.get("payload"))
-        enqueue(job)
+        enqueue(job, dest="backlog" if args.backlog else "ready")
     return 1 if failures else 0
 
 

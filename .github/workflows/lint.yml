@@ -48,6 +48,14 @@ jobs:
       # so the machine that would send the payloads is not the only thing that
       # ever checks it.
       - run: python pipeline/test_box_enqueue.py
+      # The GPU idled four separate times on 2026-08-15 and three sessions died
+      # on usage limits with work un-queued, so the queue is now topped up by a
+      # scheduled task on the box instead of by whoever notices. What that task
+      # must never do is the part worth testing: count a .HOLD file as depth,
+      # refile a spec that already ran, fire a stale entry, waive a guard, or
+      # quietly invent filler when the backlog is empty. Pure functions over a
+      # temp directory — no ssh, no box.
+      - run: python pipeline/test_box_autofill.py
       # The guards against a check that stays green while the thing it reads is
       # broken (2026-08-10's four silent failures). See the file's docstring.
       - run: python pipeline/test_silent_gates.py

@@ -1,0 +1,39 @@
+# The autofill's own end-to-end proof, and nothing else.
+#
+# WHY A JOB EXISTS FOR THIS. box_autofill.py claims that a job staged in
+# C:\banyan-queue\backlog reaches ready/ by itself, with no session alive and
+# nobody watching, when the queue falls under its floor of minutes. Tests prove
+# the rule; only a real file moving on the real box proves the mechanism. This
+# is that file. It goes in through box_enqueue.py --backlog like any other
+# entry, through every guard, and is then left alone to be picked up by the
+# scheduled task.
+#
+# It is NOT filler and it is NOT a render. It needs no GPU, takes under a
+# second, invents no prompt, and its consumer is named below: the proof itself.
+# Making work up to keep a card warm is the one thing the autofill must never
+# do, so its own proof job had better not be an exception -- hence a job that
+# appends one line to a text file and declares that file as its artifact.
+id: autofill-proof-0816
+task: box_autofill end-to-end proof
+consumer: >
+  box_autofill.py's proof that a backlogged job reaches ready/ and runs with no
+  Claude session and no human present -- recorded in ledger/, not a render.
+why: >
+  The GPU idled four separate times on 2026-08-15 and three sessions died on
+  usage limits with work un-queued. The fix is a scheduled top-up on the box;
+  this is the artifact that shows it fired.
+success: >
+  C:\banyan-queue\autofill-proof.txt gains a line, and the box's autofill.json
+  names this job under "filed".
+needs_gpu: false
+# Ahead of the render queue on purpose: it is a sub-second step, and a proof
+# that has to wait an hour behind eleven LTX takes is a proof nobody reads.
+priority: 10
+steps:
+  - name: write-proof
+    argv:
+      - 'C:\banyan-video\venv\Scripts\python.exe'
+      - '-c'
+      - "import time; open('C:/banyan-queue/autofill-proof.txt','a').write('autofill proof ran at '+time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())+'\n')"
+artifacts:
+  - 'C:\banyan-queue\autofill-proof.txt'

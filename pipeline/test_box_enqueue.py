@@ -210,7 +210,7 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
     orig = (be.send_payload, be.enqueue, be.queued_job_ids, be.PAYLOAD_INDEX,
             be.node_is_approved)
     be.send_payload = lambda payload: sent.append(payload)
-    be.enqueue = lambda job: queued.append(job["id"])
+    be.enqueue = lambda job, dest="ready": queued.append(job["id"])
     be.queued_job_ids = lambda: (set(), None)
     be.PAYLOAD_INDEX = os.path.join(tmp, "main-index.jsonl")
     be.node_is_approved = lambda node: (True, "test: approved_by founder")
