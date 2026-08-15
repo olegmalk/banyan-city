@@ -2785,6 +2785,50 @@ beats:
       clipboard, no white paper, no character sheet, no white background, no tree
       trunk, no smooth wood, no dark, no night. No photorealism, no 3D render look.
       9:16 vertical, no text.
+    # -- VERDICT on `authored_barkboard_still`, recorded 2026-08-15 after opening all four
+    # frames of `ep2-b06-barkboard-still-0815` (published to the box's farm-out). The
+    # sidecars confirm the render tested what it was built to test: positive 58/77 on the
+    # box's REAL CLIP, nothing dropped, `very aesthetic` anchor present, no turnaround
+    # scaffolding anywhere in the sent prompt.
+    #
+    # OUTCOME: **FAIL-SHAPE**. 0/4 bark boards, 0/4 people. Frame by frame:
+    #   s0 -- a rounded-cornered lozenge lying in dirt. Dark crusted rim, but the face
+    #     inside it is smooth pale vertical grain and every corner is rounded off. Reads
+    #     as a planed paddle or a shelled almond; there is no edge on it to hold.
+    #   s1 -- an amorphous rounded mass filling the frame, banded grain wrapping over a
+    #     domed top, sunk in a dark pit. Reads as a boulder or a loaf. Not flat.
+    #   s2 -- an elongated rounded oval slab on rumpled tan ground, smooth vertical wood
+    #     grain end to end, no bark crust anywhere. A surfboard blank, not a bark board.
+    #   s3 -- a rounded-square mass of stacked, woven-looking blocks filling the frame.
+    #     Reads as a basket lid or a course of masonry. Not a board at all.
+    #
+    # THE FIGURE FENCES HELD. No person, no partial figure, no character sheet in any of
+    # the four, with the figure vocabulary and the scaffolding both gone. FAIL-FIGURE did
+    # NOT occur, and that confirms the read on `authored_barkboard_obj`: the
+    # character-turnaround tag cluster was what summoned the girl, not something intrinsic
+    # to this beat. That much of the deletion worked.
+    #
+    # WHAT FAILED IS GEOMETRY, exactly where finding 3 predicted. `large flat rectangular`
+    # was in the positive and NOTHING in frame is flat or rectangular -- all four seeds
+    # rounded the object off independently. `no smooth wood` was in the sent negative and
+    # three of the four faces came back smooth pale wood regardless. Wording reaches the
+    # prop's MATERIAL (proven at step 2: chrome clip and white paper gone, 0/12) and does
+    # NOT reach its GEOMETRY -- with a clean prompt exactly as with a contaminated one.
+    # The clean prompt was the last thing that could have been blamed, and it is now ruled
+    # out. Four attempts, one answer.
+    #
+    # THE PRE-REGISTERED HARD STOP APPLIES AS WRITTEN, and the bar is not reinterpreted
+    # after the fact: FAIL-SHAPE RETIRES THE OBJECT-SHEET LEVER. There is NO fifth wording
+    # draft and no seed-rolling on this key. If you are reading this because you were about
+    # to author a bark-board prop variant, this block is the thing that exists to stop you.
+    #
+    # NEXT LEVER: **INPAINT**. Mask the scrap in an approved beat-06 plate and paint the
+    # board into the hands that are already there, where the geometry is fixed by the MASK
+    # -- a drawn rectangle -- instead of by a sentence the model binds to the scenery. The
+    # bar carries over UNCHANGED: a flat rectangular slab of rough bark that reads as a
+    # board someone could hold and read from, no chrome clip, no white paper, no person
+    # introduced. Beat 06's script line, for whoever builds it:
+    #   "GUARD 2 turns over a clipboard made of bark and reads."
     # -- `authored_b06_scene2` -- 2026-08-15, the plate lane. `authored_b06_scene` came back a
     # COSTUME CARD: one figure, pale blank ground, no field at all, and the same wording ran
     # for beat 09 with the same result. The prompt was not the variable. Beats 05 and 11 used
