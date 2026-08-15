@@ -1997,3 +1997,4 @@
 19:15:51Z DONE task=ep2-b10-bark-a1s3-0815-1786817386 rc=0 artifacts=2
 19:16:00Z STARTED task=ep2-b13-stg-0815-1786818125 attempt=1 on box-runner
 19:26:58Z DONE task=ep2-b13-stg-0815-1786818125 rc=0 artifacts=3
+19:27:08Z box-runner idle ready=0 failed=28
