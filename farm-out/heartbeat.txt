@@ -2054,3 +2054,4 @@
 22:19:05Z DONE task=ep2-b06-c1neg-0816-1786828304 rc=0 artifacts=2
 22:19:13Z STARTED task=ep2-b06-d1neg-0816-1786828309 attempt=1 on box-runner
 22:24:58Z DONE task=ep2-b06-d1neg-0816-1786828309 rc=0 artifacts=2
+22:25:05Z box-runner idle ready=0 failed=29
