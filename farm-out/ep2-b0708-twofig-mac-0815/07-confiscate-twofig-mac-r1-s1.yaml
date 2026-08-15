@@ -1,0 +1,26 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r1 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 7
+beat_slug: confiscate
+script_line: "So we confiscate the apple."  # camera on the pointing guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261726
+round: r1
+prompt_tokens_measured: 74/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, arm outstretched, pointing at another, green skinned goblin, pointed ears, patched cloak, grass field, treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, huge tree trunk"
+what_this_frame_shows: >-
+  KILL CONDITION FIRED AGAIN. The human on the left is drawn with LARGE POINTED ELF EARS despite `elf` sitting in the negative. The goblin on the right is the one with the raised pointing hand. Both otherwise adult, correct location, no blush.
+verdict_against_pre_registered_bar: "FAIL - kill condition 1 (pointed ears on the guard). Second time in this job that the guard came back elf-eared, both times with an anti-elf negative in place."
+founder_verdict: null
+scored: false
