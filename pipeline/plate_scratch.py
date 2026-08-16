@@ -398,6 +398,260 @@ REVS = {
             "photorealism, 3d render, night"
         ),
     },
+    (17, 2): {
+        # ==================================================================
+        # 2026-08-16, THE BIG-ACTION-IN-A-KNOWN-FRAME LANE. THE PLATE, AND
+        # THE BAR THE CLIP MADE FROM IT WILL BE JUDGED BY. BOTH WRITTEN
+        # BEFORE A SINGLE PIXEL EXISTS, AND NEITHER GETS REWRITTEN AFTER.
+        # ==================================================================
+        # WHAT r1 SETTLED AND WHAT IT LEFT OPEN. r1 (commit 6b5955cf) drew a
+        # TIGHT INSERT -- a hand at 57.5% of the frame's width, the only
+        # subject in shot, cloth edge to edge -- to test "make the small
+        # action the largest motion in frame". It FAILED, and not in the way
+        # the freeze failures fail. M1 contact passed and nothing else did:
+        # the hand moved 226 px down-frame while three cloth landmarks moved
+        # 214 px WITH it (hand-relative-to-cloth 0.01-0.06 hand-widths
+        # against a 1.0 bar), because the 226 px was the CAMERA pulling back
+        # and tilting; then the hand elongated, its claws detached, it
+        # dissolved into a sleeve, and from f050 there was no insert at all,
+        # only a medium portrait of a grinning spiky-haired man. The clip
+        # moved ENORMOUSLY (per-pair mean |delta| up to 54) and spent every
+        # bit of it RE-COMPOSING THE SHOT instead of performing the action.
+        #
+        # That leaves exactly two live readings, and r1 said honestly that
+        # one sample cannot separate them:
+        #   (a) the engine cannot do fine hand action AT ANY SCALE;
+        #   (b) a tight insert with NO WHOLE BODY is out of distribution for
+        #       this i2v checkpoint, so the shot escapes to a composition it
+        #       knows -- a character portrait -- and the FRAMING dragged the
+        #       clip away, rather than the action being impossible.
+        #
+        # ------------------------------------------------------------------
+        # THE ONE THING THIS REVISION TESTS, AND WHY IT DISCRIMINATES
+        # ------------------------------------------------------------------
+        # Three cells of one grid have now been filled, and only one is left:
+        #
+        #   composition                     hand size    brush result
+        #   ---------------------------------------------------------------
+        #   wide, small figure, ~55% sky    8.5% of W    FROZEN (0/6)
+        #     (17-goodbye-mac-seated-r1, the plate 12 of 12 stand-ups
+        #      were rendered from; amp-brush and amp-brushseat froze on it)
+        #   tight insert, NO body           57.5%        RE-COMPOSED (r1)
+        #   whole body, figure fills frame  >=18%        *** UNTESTED ***
+        #
+        # The untested cell is the ONLY one that is both IN DISTRIBUTION and
+        # has the action several times larger than the cell that froze. That
+        # is precisely the disagreement between (a) and (b):
+        #   * If the brush RENDERS here, (b) is right. The insert failed
+        #     because of its framing, not because a hand cannot brush, and
+        #     the lever for beats 06/08/10 is STAY IN DISTRIBUTION while
+        #     getting the action big -- not "make the action big".
+        #   * If it FAILS here, the action has now been asked for at 8.5%
+        #     in-distribution (froze), at 18%+ in-distribution (this), and
+        #     at 57.5% out-of-distribution (re-composed). Reading (a)
+        #     survives: fine hand action is out of reach for this engine,
+        #     and that changes what episode 2 can contain.
+        # A pass and a fail are both the finding, and neither is a reason
+        # for this lane to re-plan a beat. That is the author's call.
+        #
+        # WHY BEAT 17'S BRUSH AND NOT SOME OTHER ACTION. The surrounding beat
+        # already works -- 12 of 12 stand-ups, 4 of 4 stand-and-turn -- so
+        # the brush is the only unknown in it, and the brush is the same
+        # SHAPE of action (small, in-hand, no gravity) that beats 06, 08 and
+        # 10 have failed on with every wording, strength, seed and recipe.
+        # Any other action would introduce a second difference.
+        #
+        # ------------------------------------------------------------------
+        # THE A/B IS PURE ON THE PROMPT SIDE, WHICH r1's WAS NOT
+        # ------------------------------------------------------------------
+        # r1 had to change two words ("with both hands" -> "with his hand")
+        # because a one-hand plate forced it, and it named that honestly.
+        # This plate has BOTH HANDS on the cloak, so the motion prompt, the
+        # motion negative, the seed (20260901) and every render flag can be
+        # and WILL BE byte-identical to ep2-b17-amp-brush-0816, the clip that
+        # FROZE. THE INIT PICTURE IS THE ONLY DIFFERENCE.
+        #
+        # NAMED HONESTLY AND NOT GLOSSED, because a new plate is never one
+        # pixel of change: moving the camera in on the same seated pose
+        # necessarily does three things at once to the picture -- the hands
+        # get bigger, the sky vacancy goes away, and the figure is REDRAWN
+        # rather than cropped (a crop of the old plate would have been
+        # 380x520 px upscaled 1.85x, and a soft init is its own confound,
+        # worse than a redraw). The POSE, the SUBJECT, the ACTION CLAUSE and
+        # every render flag are held. Nobody should read this as a
+        # single-pixel A/B; it is a single-COMPOSITION A/B.
+        #
+        # WHY EACH CLAUSE (each learned by losing a render, not reasoned out):
+        #   `full body` FIRST and `solo` -- leading framing tags carry real
+        #       weight and trailing ones almost none. The whole body staying
+        #       in frame IS the variable under test, so it goes at the front.
+        #   `sitting` and `resting flat on` -- STATES, not verbs. The model
+        #       renders a verb's END state; a plate that said "brushing"
+        #       would come back mid-stroke or finished with nowhere left to
+        #       travel. The plate is the PRE state on purpose.
+        #   `figure fills the frame` replaces the control plate's `small
+        #       figure low in frame` + `vast blue sky and clouds fill the
+        #       space above him`. Those two clauses are what made the hand
+        #       8.5% of the width, and an empty upper half is a hole the
+        #       model fills with the largest noun (beat 08 lost five samples
+        #       to a colossus grown in exactly that hole). Grass and cloth
+        #       are textured ground, not vacancy.
+        #   `both clawed hands resting flat on the dusty cloak` -- on the
+        #       CONTROL plate the hands rest on his bare green KNEE and the
+        #       cloak is off to one side, so amp-brush asked for a brush that
+        #       had nowhere to start. M1 has to be true in the plate itself.
+        #   no character name anywhere -- verbs and props do not bind to a
+        #       named character on this checkpoint, so nothing is asked to.
+        #
+        # ------------------------------------------------------------------
+        # PLATE BAR, PRE-REGISTERED. The plate is usable only if ALL hold:
+        # ------------------------------------------------------------------
+        #   P1 THE WHOLE BODY IS IN FRAME -- head, torso, both arms, both
+        #      hands and the legs are all inside the frame after the
+        #      704x1280 cover crop. A cropped head or missing legs sends the
+        #      plate back: an in-distribution whole-body composition is half
+        #      the experiment.
+        #   P2 BOTH clawed hands are IN CONTACT with the cloak, and the
+        #      nearer hand spans AT LEAST 18% of the frame's width. The
+        #      control plate that froze measures 8.5%, so this is at least a
+        #      2.1x enlargement of the action. Measured on the cover-cropped
+        #      704x1280 init, not on the 832x1216 draw.
+        #   P3 OPEN, unobstructed cloth at least one hand-width across lies
+        #      next to the hands, so a stroke has somewhere to go. Without
+        #      it a fail is unreadable -- it could just be nowhere to travel.
+        #   P4 NO EMPTY REGION larger than the figure's head: no sky band, no
+        #      blank paper, no white background. The vacancy law.
+        #   P5 EXACTLY ONE figure, no second face, no prop in either hand.
+        #   Recorded and NOT scored: palette and cloak pattern continuity
+        #   with the show's plates. This is an engine probe, never a take.
+        #
+        # ------------------------------------------------------------------
+        # MOTION BAR, PRE-REGISTERED HERE SO IT CANNOT BE REWRITTEN AFTER THE
+        # CLIP. It is a BODY-MOTION test, not a picture-changed test. Same
+        # structure as r1's bar, which was good, plus one fail mode r1 did
+        # not need and this one does.
+        # ------------------------------------------------------------------
+        #   PASS requires ALL of:
+        #     M1 a hand is IN CONTACT with the cloak in at least one frame;
+        #     M2 that hand TRAVELS ACROSS THE FABRIC while in contact -- its
+        #        position RELATIVE TO THE CLOTH moves at least ONE HAND-WIDTH
+        #        between two frames of the clip, where one hand-width is the
+        #        hand's own width measured on the init plate. RELATIVE TO THE
+        #        CLOTH, never relative to the frame: r1's hand moved 226 px
+        #        in frame and 4-22 px relative to the cloth, and the frame
+        #        number is the one that means nothing.
+        #     M3 it is the HAND moving and NOT THE CAMERA: the frame edges,
+        #        the horizon and the cloth's own folds do not translate with
+        #        it.
+        #     M4 the path is CONTINUOUS -- read at consecutive frames, the
+        #        hand can be followed from where it starts to where it ends.
+        #   FAIL MODES, NAMED IN ADVANCE:
+        #     F1 FROZEN -- the hand holds one position f0->f96, linework
+        #        re-inked in place. amp-brush's exact signature.
+        #     F2 CLOTH-ONLY -- the fabric ripples or blows and the hand does
+        #        not move relative to it.
+        #     F3 CAMERA-ONLY -- the whole frame drifts, pushes in, tilts or
+        #        zooms and hand and cloth keep the same relative geometry.
+        #        This is what r1 did.
+        #     F4 MORPH -- the hand dissolves, gains or loses fingers, or
+        #        reappears elsewhere with no continuous path. A teleport is
+        #        not a stroke.
+        #     F5 SCENE BREAK -- the shot cuts, relocates, or a second figure
+        #        or a face that is not his arrives.
+        #     F6 CONTACT WITHOUT TRAVERSAL -- the hand touches and the cloth
+        #        drapes, rotates or settles under it and the hand does not
+        #        travel. EXPLICITLY A FAIL. One beat-17 `full` cell already
+        #        did exactly this and could have been talked into a pass;
+        #        calling it one is how a bar gets bent.
+        #     F7 BODY-INSTEAD-OF-HAND -- NEW, and it is the fail mode this
+        #        composition invites. Putting the whole body back in frame
+        #        puts back everything the engine is GOOD at: this plate can
+        #        stand him up, turn him, sway him, blink him, flutter the
+        #        cloak and blow the grass, and the clip will then be full of
+        #        motion with the hands still stuck to the cloth. Gross
+        #        whole-body motion IS NOT THE BRUSH. A stand-up is not a
+        #        pass, a head turn is not a pass, a cloak flutter is not a
+        #        pass, and "the picture changed a lot" is not a pass. Only
+        #        M1+M2+M3+M4 is a pass. Whether he stands up is RECORDED
+        #        SEPARATELY, as the amp-brush spec recorded it, and scored
+        #        as nothing.
+        #
+        #   TOOLING IS FALSIFIED BEFORE IT IS TRUSTED, because r1's would
+        #   have lied twice. Its colour tracker was thrown away BEFORE the
+        #   render: the hand LOOKS green and is not (R71 G69 B47 -- R above
+        #   G), so `(G > R + 10)` matched ZERO pixels in the whole frame and
+        #   would have reported "no hand" on all 97 frames, which reads
+        #   identically to "the hand never appears". Its NCC replacement then
+        #   failed its own self-check after f042 and r1 quoted no number past
+        #   that point. So: every tracker gets (i) its mask or marker
+        #   OVERLAID BACK onto real frames and looked at before a single
+        #   number is believed -- that overlay is what turned 9-of-12 into
+        #   12-of-12 -- and (ii) a self-check whose failure means NO NUMBER
+        #   IS QUOTED past the frame it failed at.
+        #
+        #   NOT EVIDENCE, AND NONE OF IT WILL BE QUOTED. `depth` is RETIRED
+        #   AND INVERTED, confirmed three ways: full stand-up 0.290,
+        #   zero-motion clip 0.516, a clip whose only movement was a BIRD
+        #   0.376. The old `cadence` metric is structurally blind -- odd hold
+        #   periods alias to exactly 1.00x. Camera-scale numbers are
+        #   unreliable without aligned frames. ALL 97 FRAMES GET OPENED
+        #   CONSECUTIVELY via pipeline/coldread_frames.py and THE READING IS
+        #   THE VERDICT.
+        #
+        # ONE SAMPLE. No sweep, no second seed, no wording variant.
+        # Guidance, CFG and checkpoint belong to another lane and are not
+        # touched. IF IT PASSES, THIS LANE SAYS SO AND STOPS -- re-cutting
+        # beat 17 into two shots or re-planning 06/08/10 is an authorship
+        # call and not this lane's. shots.md and wave-drafts.yaml UNTOUCHED.
+        "slug": "goodbye-bigbody",
+        "done_when": (
+            "MOTION BAR (pre-registered before the plate was drawn): a hand "
+            "makes contact with the cloak AND TRAVELS ACROSS IT -- at least "
+            "one hand-width of movement RELATIVE TO THE CLOTH, continuous "
+            "across consecutive frames, the hand moving and not the camera. "
+            "FAIL modes named in advance: F1 frozen, F2 cloth-only, F3 "
+            "camera-only, F4 morph/teleport, F5 scene break, F6 contact "
+            "without traversal, F7 body-instead-of-hand. A changed picture "
+            "is not a pass and a stand-up is not a pass."
+        ),
+        "why": (
+            "r1's tight insert put the hand at 57.5% of the frame and the "
+            "brush still did not happen -- but the clip did not freeze, it "
+            "RE-COMPOSED itself into a character portrait, which leaves two "
+            "readings one sample cannot separate: (a) fine hand action is "
+            "impossible on this engine, or (b) an insert with no body is out "
+            "of distribution and the framing dragged the clip away. This "
+            "plate fills the one untested cell of the grid: WHOLE BODY IN "
+            "FRAME -- the composition that renders 12 of 12 stand-ups -- "
+            "with the hand action as large as that frame allows (>=18% of "
+            "frame width against the frozen control's 8.5%). A pass says "
+            "(b) and the lever is 'stay in distribution'; a fail says (a) "
+            "and fine hand action is out of reach for episode 2."
+        ),
+        "prompt": (
+            "1boy, solo, full body, sitting on grass in a field, figure "
+            "fills the frame, lean wiry adult goblin man, green skin, bald "
+            "head, dusty patchwork cloak draped over his knees, both green "
+            "clawed hands resting flat on the cloak, large hands near the "
+            "camera, low angle, sunny day, masterpiece, best quality, "
+            "very aesthetic"
+        ),
+        # The first draft of this negative measured 88/77 and the tokenizer
+        # guard REFUSED to draw it -- its tail, where the anti-vacancy and
+        # anti-crop terms live, would have been dropped in silence. Trimmed
+        # to fit by deleting terms no beat-17 sample has ever needed:
+        # `mountains`, `out of frame`, `broom`, `staff`, `stick`, `basket`,
+        # `scars`, `forest`, `house`, `white background`, `baby`. Named here
+        # so the shorter list is not read as a second variable.
+        "negative": (
+            "text, standing, walking, running, wide shot, distant, "
+            "small figure, sky, clouds, horizon, "
+            "close-up, portrait, cropped, "
+            "holding object, spear, sword, "
+            "2boys, child, chibi, stitches, tree, indoors, "
+            "photorealism, 3d render, dark, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
