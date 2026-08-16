@@ -2151,3 +2151,4 @@
 10:04:46Z STARTED task=ep2-b17-insert-plate-0816-1786874681 attempt=1 on box-runner
 10:04:51Z DONE task=ep2-b17-insert-plate-0816-1786874681 rc=0 artifacts=2
 10:05:49Z STARTED task=ep2-b17-insert-motion-0816-1786874739 attempt=1 on box-runner
+10:11:41Z DONE task=ep2-b17-insert-motion-0816-1786874739 rc=0 artifacts=2
