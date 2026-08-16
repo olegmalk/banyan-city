@@ -1,0 +1,32 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 17
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260914
+task: ep2-b17-bigbody-s20260914-0817
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.017
+compute_s_per_video_s: 58.7
+# --- appended by ep2-b17-bigbody-s20260914-0817 after the render.
+approved: false
+provisional: true
+is_show_content: false
+note: |
+  ENGINE PROBE, NOT A TAKE FOR THE CUT. This clip exists to separate
+  two readings of the tight-insert failure: whether fine hand action
+  is impossible on this engine, or whether an insert with no whole
+  body is simply out of distribution. It animates a plate drawn for
+  the test, not beat 17's staged plate, and re-cutting beat 17 into
+  two shots is an authorship decision no lane has taken.
+  It must never be picked into an episode.
