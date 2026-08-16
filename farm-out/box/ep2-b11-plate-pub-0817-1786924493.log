@@ -1,0 +1,14 @@
+#### job ep2-b11-plate-pub-0817-1786924493 attempt 1 start 2026-08-16T23:54:58Z
+
+==== step fetch START 2026-08-16T23:55:01Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b11-plate-pub-0817\\fetch_plate.py"]
+fetched 11-they-leave-mac-plate-r3s1.png         1369553 bytes  sha 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca  OK
+fetched 11-they-leave-mac-plate-r3s1.yaml           2759 bytes  sha 3cd5fae3a1a286510d9e90284fde4d186cba3f835996b6d8f927d810e9029dd7  OK
+both files match their asserted sha256.
+==== step fetch END rc=0 2026-08-16T23:55:02Z ====
+
+==== step publish START 2026-08-16T23:55:02Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b11-plate-pub-0817-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b11-plate-pub-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/11-they-leave-mac-plate-r3s1.*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b11-plate-pub-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)"]
+published 2 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b11-plate-pub-0817
+==== step publish END rc=0 2026-08-16T23:55:02Z ====
+#### job ep2-b11-plate-pub-0817-1786924493 finished rc=0 2026-08-16T23:55:02Z
