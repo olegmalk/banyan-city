@@ -8102,3 +8102,70 @@ unreachable by seeds, by wording and by scale.
   cycle 018 caught by overlay, reappearing. `s5..s8` lost no frames (rises 0.436 /
   0.359 / 0.350 / 0.381) and their strips independently confirm the stand, so the
   verdicts hold; but the rise figures are corroboration here, never the evidence.
+
+## 2026-08-16 — the producing-job lookup was a string bug: 371 of 645 published directories resolved, now 623
+
+`box_enqueue.refs_problems` refuses a motion job whose `--src` it cannot trace
+back to the spec that drew the plate. It found that spec one way:
+`pipeline/jobs/<farm-out dirname>.yaml`. **Nothing ever made those two names
+agree.** Every job's publish step is a hand-written literal inside its own spec —
+`ep2-b11-idfix-0812.yaml` contains `dst = ".../farm-out/ep2-b11-idfix"` — so the
+directory name is DATA, authored per job, and the date suffix is usually dropped.
+There is no shared publish code that dropped it and none to repair: **the lookup
+was the wrong end and the only end.**
+
+**Measured, not inherited** (fresh fetch of `origin/farm-results-rtx5090`,
+2026-08-16): **645** published directories, **371** resolved, **274** did not.
+The lane that reported this counted 645/367/278 an hour earlier; the branch has
+moved twice since and the shape is identical.
+
+**THE OBVIOUS REPAIR WAS THE WRONG ONE.** `<dir>-<date>` matches 250 of the 274
+and would have been three lines. `telemetry.py:171` already records why not: on
+2026-08-13 `ep2-b15-seedC-0813` published into `farm-out/ep2-b15-seedB`, and
+`ep2-b04-balloon-pair-0813` into `ep2-b04-balloon-pair`. Under a name rule the
+seedB plates get their provenance read off `ep2-b15-seedB-0812` — a different
+job's reference sets, reported with confidence. This guard exists to answer
+"what was this drawn with"; **a confident wrong answer is worse than the refusal
+it replaces.**
+
+**WHAT IT DOES INSTEAD.** `resolve_producer` takes the spec NAMED for the
+directory, or failing that the one spec whose own publish argv writes into it —
+a fact the spec states about itself. Terminal path component only, so
+`farm-out/<dir>/<file>.png` (a `--src` being READ) never counts as a claim;
+without that, `ep2-b01-lw-0815` makes its own source directory look ambiguous.
+
+**AFTER: 623 of 645 resolve** (371 by name + 252 by declaration), **zero
+disagreements** with the name lookup on the 371 it already answered. The branch
+is live and grew to **648** while this was being written — re-run against the
+shipped resolver it reads **374 by name + 252 by declaration = 626 of 648**, the
+same 274 that never resolved and the same 22 residual, because the directories
+lanes published in the meantime are named for their specs. The remaining 22 are
+findings rather than residue:
+
+* **13 directories two or more specs publish into.** A real provenance hazard,
+  independent of this bug — the plate could be either job's and neither answer
+  is checkable, so it refuses and names every candidate:
+  `ep2-b03-idfix`, `ep2-b03-motion`, `ep2-b04-idfix-r2`, `ep2-b08-refresh`,
+  `ep2-b13-motion`, `ep2-b13-seedB`, `ep2-b14-idfix-r2`, `ep2-b14-motion`,
+  `ep2-b14-seedB`, `ep2-b15-action-probe`, `ep2-b15-seedB`,
+  `ep2-goblin-staged` (13 specs) and `ep2-goblin-wave1` (14 specs).
+* **9 directories no spec in the repo claims at all**: `b06-r6r7-recovered`,
+  `box` (the courier's own sidecars), `ep1-b05-v36-motion-r1a-g10`,
+  `ep1-longclip-samples`, `ep2-b01-final055-r2`, `ep2-b14-goblin-staged`,
+  `v34-plate-reseeds`, `v35-motion-r2`, `wave-goblin-prep-src`.
+
+**THE FLATNESS BLOCK IS UNTOUCHED AND WAS NEVER PART OF THIS.** All 525 motion
+specs in `pipeline/jobs` were run through both guards. **Exactly one** was
+refused by the resolution bug: `ep2-b01-lw-0815` (beat 01), and it is not
+flatness-blocked. **40** specs are refused on the plate border, **21** of them on
+beats 06/09/10; every one of those 40 resolved its producer fine both before and
+after and is refused a second time by the refs denylist. **None of the
+flatness-blocked specs was ever hitting this bug**, and no verdict of that guard
+was changed here.
+
+**BEAT 11 IS NOW UNBLOCKED ON THIS AXIS AND ON NO OTHER.**
+`farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png` resolves to
+`ep2-b11-idfix-0812.yaml`, which names no reference set, so the refs guard passes
+it. **Nothing was authored, filed or enqueued.** Beat 11 remains founder-reserved
+— `blocked_on_0815: DO NOT AUTHOR OR FIRE THE REPLACEMENT YET` and *"lets do the
+guards on my taste"* — and no `plate_ack` waiver was written for anything.
