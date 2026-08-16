@@ -1,0 +1,87 @@
+#### job ep2-b02-pose2-s20260828-0816-1786895551 attempt 1 start 2026-08-16T16:08:59Z
+
+==== step crop START 2026-08-16T16:09:02Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-plate-0814\\02-the-sprint-ipa-r0-w015-s0.png", "--sha256", "8519ed910d70da5c9c66cf38a9d27cd4b7a62ae9d537b5ca4c1adbcff7c4e942", "--out", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816-out\\b02-init-704x1280.png", "--size", "704x1280"]
+src 832x1216 sha 8519ed910d70da5c9c66cf38a9d27cd4b7a62ae9d537b5ca4c1adbcff7c4e942
+cover-crop scale=1.0526 -> 876x1280, centre box (86,0)
+WROTE C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\b02-init-704x1280.png
+==== step crop END rc=0 2026-08-16T16:09:02Z ====
+
+==== step encode START 2026-08-16T16:09:02Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816\\b02-jobs-encode.json"]
+-- begin-encode: phys 10.1/68.1GB, commit 12.1/115.3GB (load 14%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  32%|███▏      | 337/1065 [00:00<00:00, 3060.69it/s]
+Loading weights:  65%|██████▌   | 695/1065 [00:00<00:00, 3159.87it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 3374.44it/s]
+-- encode-beat-02: phys 11.3/68.1GB, commit 39.0/115.3GB (load 16%)
+[1/1] encoded beat 2 to C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\b02-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 41.5, "peak_phys_gb": 37.2, "last_stage": "encode-beat-02"}
+==== step encode END rc=0 2026-08-16T16:10:36Z ====
+
+==== step render START 2026-08-16T16:10:36Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816\\b02-jobs-render.json", "--size", "704x1280", "--frames", "97", "--fps", "24", "--guidance", "2.0", "--distilled-sigmas", "--two-stage", "--image-crf", "33", "--offload", "sequential", "--mode", "production", "--task", "ep2-b02-pose2-s20260828-0816", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816-out\\bench-pose2.jsonl", "--bench-label", "ep2-b02-pose2-s20260828-0816"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 10.2/68.1GB, commit 12.2/115.3GB (load 14%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 10.9/68.1GB, commit 14.1/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  9.11it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.38it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  8.48it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 16.41it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 13.79it/s]
+-- load-connectors-12.7GB-and-vae: phys 11.0/68.1GB, commit 52.4/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 205.10it/s]
+-- offload-setup-sequential: phys 11.0/68.1GB, commit 62.0/115.3GB (load 16%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=33 -> C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\cond-crf-02.png
+-- stage1-denoise-352x640-8steps: phys 11.9/68.1GB, commit 62.4/115.3GB (load 17%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:09<08:08, 69.80s/it]
+ 25%|██▌       | 2/8 [01:24<03:43, 37.33s/it]
+ 38%|███▊      | 3/8 [01:33<02:01, 24.39s/it]
+ 50%|█████     | 4/8 [01:42<01:12, 18.18s/it]
+ 62%|██████▎   | 5/8 [01:51<00:44, 14.99s/it]
+ 75%|███████▌  | 6/8 [02:00<00:26, 13.06s/it]
+ 88%|████████▊ | 7/8 [02:09<00:11, 11.58s/it]
+100%|██████████| 8/8 [02:17<00:00, 10.61s/it]
+100%|██████████| 8/8 [02:17<00:00, 17.22s/it]
+stage1 latents (1, 128, 13, 20, 11)
+-- upsample-2x-latent: phys 57.0/68.1GB, commit 64.9/115.3GB (load 83%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 13, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 59.3/68.1GB, commit 67.9/115.3GB (load 87%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:24<00:48, 24.17s/it]
+ 67%|██████▋   | 2/3 [00:50<00:25, 25.66s/it]
+100%|██████████| 3/3 [01:17<00:00, 26.18s/it]
+100%|██████████| 3/3 [01:17<00:00, 25.89s/it]
+-- decode-and-export: phys 64.3/68.1GB, commit 71.1/115.3GB (load 94%)
+[1/1] wrote C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\02-the-sprint-LTX-pose2-s20260828.mp4 in 237s (97 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 9.9GB, device 2.6/26GB)
+THROUGHPUT 0.0171 s(video)/s(wall) (1 x 4.042s of video in 237s)
+bench row -> C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\bench-pose2.jsonl
+{"sample_s": 236.6, "peak_gb": 9.9, "peak_commit_gb": 78.9, "frames": 97, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.0171, "two_stage": true, "image_crf": 33, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 78.9, "peak_phys_gb": 64.4, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-16T16:14:47Z ====
+
+==== step stamp START 2026-08-16T16:14:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816\\stamp_sidecar.py", "C:\\banyan-farm\\ep2-b02-pose2-s20260828-0816-out\\02-the-sprint-LTX-pose2-s20260828.mp4.meta.yaml"]
+stamped C:\banyan-farm\ep2-b02-pose2-s20260828-0816-out\02-the-sprint-LTX-pose2-s20260828.mp4.meta.yaml
+==== step stamp END rc=0 2026-08-16T16:14:47Z ====
+
+==== step publish START 2026-08-16T16:14:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# THE GLOB CARRIES THE BEAT SLUG (02-the-sprint). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b02-pose2-s20260828-0816-out\"\npay_dir = \"C:/banyan-farm/ep2-b02-pose2-s20260828-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-pose2-s20260828-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/02-the-sprint-LTX-pose2-s20260828.mp4*\")\n             + glob.glob(out_dir + \"/b02-init-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-pose2.jsonl\")\n             + glob.glob(pay_dir + \"/b02-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b02-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-pose2-s20260828-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b02-pose2-s20260828-0816
+==== step publish END rc=0 2026-08-16T16:14:47Z ====
+#### job ep2-b02-pose2-s20260828-0816-1786895551 finished rc=0 2026-08-16T16:14:47Z
