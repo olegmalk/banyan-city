@@ -29,6 +29,20 @@ beats:
       same error as scoring two rounds hours apart and calling the difference decisive.
     open_question: the same one as beat 10 - the two guards read younger and softer than the guards in
       06 and 11. ONE answer settles both beats.
+    open_question_ANSWERED_0816: 'THIS IS THAT ANSWER, AND IT SETTLES MORE THAN TWO BEATS. `open_question`
+      above is left standing unedited. The cross-beat inconsistency is not a taste call and never was
+      a taste call: it is that NO GUARD PLATE WE OWN NAMES THE CAST, so each plate independently improvised
+      a different man and the beats disagree with each other for the same reason each one disagrees with
+      the approved sheet. Evidence, from a sweep on 2026-08-16 of every farm-out/*/NN-*.yaml sidecar for
+      beats 05, 06, 09, 10 and 11 - 17 distinct prompts across 20 output dirs: 0 OF 17 name any approved-cast
+      attribute (tested for `dark cropped hair`, `dark hair`, `sandy`, `blond`, `tan tunic`, `cream`, `wrap
+      skirt`, `glasses`, `wire-rim`; zero hits), and 14 OF 17 ask for `bald` or `bare heads`. Beat 05''s
+      own six prompts are all of the "two round guard men in plain brown tunics ... silly harmless bureaucrats
+      with round soft bodies and bare heads" family. NEITHER APPROVED GUARD IS BALD - A has dark cropped
+      hair, B has light sandy hair - and pipeline/wave-drafts.yaml says so in its own words while authoring
+      the cast: "`no hair, no wig` -- that is what made the goblin bald and THE GUARDS NEED HAIR." So this
+      settles beats 05, 06, 07, 09, 10 and 11 at once, and the answer is a plate answer, not a taste answer.
+      See `guard_plates_are_miscast_0816` at the top level of this file.'
     shipping_fault: the two guards read younger and softer-drawn than the guards in beats 06 and 11
     understandable: UNFINISHED
     understandable_reason: the guards read young. A viewer still sees two guards arrive and scan a field
@@ -123,6 +137,16 @@ beats:
       raised with its blank face showing, field at frame one. Meets its own definition.'
     open_question: the two guards read YOUNGER and softer than the guards in beats 06 and 11 - cross-beat
       cast consistency, which is a taste call and his
+    open_question_ANSWERED_0816: 'THIS IS THAT ANSWER - the same one as beat 05, which is exactly what
+      both entries predicted. `open_question` above is left standing unedited, including its "which is
+      a taste call and his", WHICH IS THE PART THAT WAS WRONG. It is not a taste call. Beat 10''s two plate
+      prompts are "two round bald guard men in plain brown tunics ... silly bureaucrats with round soft
+      bodies" and "two bald guard men in plain brown tunics"; neither names guard A or guard B, and neither
+      approved guard is bald. Across beats 05, 06, 09, 10 and 11 the count is 0 of 17 prompts naming the
+      cast and 14 of 17 asking for `bald` or `bare heads`. The guards in different beats disagree with
+      each other because each plate invented its own man from the same anonymous description. Nothing here
+      needed the founder; it needed the cast written into a prompt. See `beats.05.open_question_ANSWERED_0816`
+      and `guard_plates_are_miscast_0816`.'
     shipping_fault: same guard-consistency fault as beat 05
     understandable: UNFINISHED
     understandable_reason: same guard-consistency fault as 05. The board still flips and the back is still
@@ -174,6 +198,48 @@ beats:
       name for the fault is TOTAL IDENTITY COLLAPSE AWAY FROM THE PLATE during the turn, not a cut. The
       blind reader''s "does not read as one continuous shot" is a fair audience-level report of what that
       feels like; recording it as an edit would send the next lane after the wrong lever.'
+    override_third_check_REREAD_0816: 'CORRECTION OF INTERPRETATION, 2026-08-16. `override_third_check_0815`
+      above is left standing verbatim and is NOT edited: every observation in it is accurate and was confirmed
+      frame by frame three separate times. WHAT IS WRONG IS WHAT IT WAS TAKEN TO MEAN, and anyone reading
+      it today would draw the wrong conclusion about what this engine does. It records, as the defect,
+      that "the near guard''s bald scalp fills in with dark hair CONTINUOUSLY across f16-f21". THE PLATE
+      ASKED FOR BALD. THE MODEL GREW DARK HAIR. DARK HAIR IS WHAT GUARD A ACTUALLY IS. We recorded the
+      render drifting TOWARD the approved cast as a failure. The conditioning plate is farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png,
+      whose own sidecar carries the prompt verbatim: "2boys, two round bald guard men in plain brown tunics
+      walk away from camera across an empty grassy field, gesturing at each other, growing smaller as they
+      go." The cast was never in that prompt - which is a fact about what was ASKED FOR, not a judgement
+      about what came back. THE FAULT IS STILL A FAULT and the broken-take ruling still stands: a man''s
+      head changing mid-shot is not shippable whichever direction it changes in, and the shot still ends
+      on two indistinguishable brown-haired backs, which is fail mode "costume merge" and independent of
+      any of this. WHAT CHANGES IS THE LEVER. `blocked_on_0815` says "the lever to try first is whatever
+      binds identity to the plate through a turn - the plate itself was right at f0". THE PLATE WAS NOT
+      RIGHT AT f0. It was two bald strangers, and no binding lever can hold an identity the plate does
+      not contain. Do not spend another round on identity-holding levers for this beat until it has a plate
+      of the approved men. See `guard_plates_are_miscast_0816`.'
+    plate_is_miscast_0816: 'Checked by opening the image, on the instruction to verify by eye and never
+      by a filename or a score. farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png DOES NOT SHOW THE APPROVED
+      PAIR and is not a shortcut for this beat. What it shows: a high-angle wide of a sunlit green field,
+      two figures small and low-right, both from behind, BOTH COMPLETELY BALD with bare pink scalps, both
+      in long brown overcoats to the calf, black trousers, dark shoes; the taller rear figure''s right
+      arm is extended in a gesture. No hair on either man, no tan tunic, no white sash, no shoulder sash,
+      no clipboard. Against review/ep2-picks/sheets/guard-cast-0816.jpg: guard A is dark-haired in a tan
+      wrap tunic with a wide white waist sash; guard B is blond in a cream short-sleeve shirt with a white
+      sash worn diagonally over the shoulder and a broad dark-brown wrap skirt. Two bald men in brown overcoats
+      are neither of them. THE STAGING IS RIGHT AND THE CASTING IS ABSENT - exactly the distinction `blocked_on_0815_CAST_HALF_DISCHARGED_0816`
+      said had to be checked, now checked. A NEW PLATE MUST BE DRAWN. SECOND, UNFLAGGED DEFECT IN THE SAME
+      FILE, recorded so the next lane does not treat it as a safe example: roughly the upper two-thirds
+      of it is flat empty grass with both men crammed into the bottom-right. That is a large empty region,
+      which on this checkpoint is a hole the model fills with the largest noun in the prompt and which
+      the negative does not reach. It happens not to have grown anything, so it got lucky; any beat-11
+      plate drawn as "two figures walking into open field" invites that hole by construction, and the pre-emption
+      that worked on the first sample elsewhere is to give the background a noun of its own (`tall grass`,
+      which cannot become a character).'
+    glasses_do_not_affect_this_beat_0816: 'Recorded so it is not re-asked. Guard A''s unnamed wire-rim
+      glasses are a genuine open question and they are the founder''s (card /review/ep2-picks/sheets/guard-cast-0816.jpg).
+      THEY CANNOT CHANGE BEAT 11''S PLATE: this beat is backs turned to camera, so wire-rims are not visible
+      from any angle in it, and the plate omits them entirely and uses the cast sheet''s own appearance
+      otherwise. His answer, whenever it comes, applies to BEAT 09 - his face, in close-up - and can be
+      applied there without redrawing beat 11. Beat 11 is therefore NOT waiting on the glasses.'
     rounds_used_note: NOT RESET. This beat has spent 3 rounds; the replacement is round 4.
     place_in_episode: UNCHANGED. Beat 11 keeps its slot in the episode. It needs a new take, not a deletion,
       and it is not a hole in the cut - it is a beat with a broken take standing in it.
@@ -611,6 +677,61 @@ guards_CORRECTION_0816:
     as unapproved, so lanes reading them kept beats 05, 09, 10 and 11 blocked for a day; the 2026-08-16
     survey that reported the block searched STATE.md, DECISIONS.md and this file and did not search review/inbox.yaml.
     A filing bug, not a taste question.
+guard_plates_are_miscast_0816:
+  date: '2026-08-16'
+  headline: EVERY GUARD PLATE WE OWN IS MIS-CAST, AND IT IS ONE CAUSE ACROSS SIX BEATS. Not one plate
+    prompt for beats 05, 06, 09, 10 or 11 names guard A or guard B, and most of them ask for the OPPOSITE
+    of the approved cast in its single most visible attribute. NO MOTION WORK ON BEATS 05, 06, 07, 09,
+    10 OR 11 CAN PAY OFF UNTIL THOSE PLATES ARE REDRAWN.
+  the_sweep: Every farm-out/*/NN-*.yaml sidecar for beats 05, 06, 09, 10 and 11 was read and deduplicated
+    by prompt text on 2026-08-16. 17 DISTINCT PROMPTS ACROSS 20 OUTPUT DIRS. This is a text sweep of
+    what was ASKED FOR, needing no GPU and no judgement about what came back.
+  count_naming_the_cast: 0 of 17. Tested for `dark cropped hair`, `dark hair`, `sandy`, `blond`, `tan
+    tunic`, `cream`, `wrap skirt`, `glasses`, `wire-rim`. ZERO HITS. Every prompt describes an anonymous
+    type - "two round guard men in plain brown tunics", "silly harmless bureaucrats with round soft bodies
+    and bare heads" - and the wardrobe variants (grey robes, padded vests, tunic) swap the garment only,
+    never the men.
+  count_asking_for_bald: 14 of 17 contain `bald` or `bare heads`. The three that do not are all from
+    2026-08-12 and all on beat 06 - ep2-b06-ipa-guardcast-0812 ("a round short-haired guard man"), ep2-b06-ipa-guardref-0812
+    ("a round guard man in mismatched armor") and ep2-charref-guards-r4-0812/-r5 ("short hair, visible
+    face").
+  why_that_is_decisive: 'NEITHER APPROVED GUARD IS BALD. Guard A has dark cropped hair; guard B has light
+    sandy hair. pipeline/wave-drafts.yaml says so in its own words while authoring the cast: "`no hair,
+    no wig` -- that is what made the goblin bald and THE GUARDS NEED HAIR." So `bald` was never drift.
+    IT WAS ASKED FOR, 14 times, and every staged guard picture in this repo differs from the approved
+    cast in the first thing a viewer reads off a human being - and the one thing still legible when a
+    man is facing away. This is a CONTRADICTION between our plates and our cast, not merely a gap in
+    them.'
+  what_it_re_explains:
+  - 'Beat 11''s recorded fault. `beats.11.override_third_check_0815` logs "TOTAL IDENTITY COLLAPSE AWAY
+    FROM THE PLATE - the near guard''s bald scalp fills in with dark hair CONTINUOUSLY across f16-f21".
+    The plate asked for bald, the model grew dark hair, and dark hair is what guard A actually is: WE
+    RECORDED THE RENDER DRIFTING TOWARD THE APPROVED CAST AS THE DEFECT. The take is still broken - a
+    head changing mid-shot is unshippable in either direction - but the lever named in `blocked_on_0815`
+    ("whatever binds identity to the plate through a turn - the plate itself was right at f0") is aimed
+    at the wrong thing, because the plate was NOT right at f0. See `beats.11.override_third_check_REREAD_0816`.'
+  - 'Beats 05 and 10''s shipping fault, "the two guards read younger and softer than the guards in 06
+    and 11". Both entries carried it as `open_question ... ONE answer settles both beats` and beat 10''s
+    called it "a taste call and his". It is neither a taste call nor confined to two beats: the guards
+    in different beats disagree with each other because each plate independently improvised its own man
+    from the same anonymous description. See `beats.05.open_question_ANSWERED_0816` and `beats.10.open_question_ANSWERED_0816`.'
+  - Why guard beats have resisted every lever thrown at them. Identity-drift levers were being tuned
+    on plates that never specified an identity to hold.
+  second_instance_of_one_failure_mode: 'The reference sheets DID move off bald on 2026-08-12 - ep2-charref-guards-r4/-r5
+    is where "short hair, visible face" first appears, and that is the lineage the approved guard A came
+    out of. It was never propagated to a single staged beat plate. That is the same shape of defect as
+    the one that opened this day: a decision made in one place and not carried to the records that act
+    on it (see `guards_CORRECTION_0816.why_this_entry_exists`). Two instances in two days, one failure
+    mode.'
+  scope_of_the_remaining_work: 'FIVE staged plates must be drawn of the approved pair - beats 05, 09,
+    10, 11 and 06 - plus beat 08, which is a different and harder problem: it needs a two-figure guard+goblin
+    REFERENCE first, and nothing on disk has both. Beat 11 goes first: it is pure whole-body motion, which
+    is the one thing this engine does reliably (12/12 whole-body stand-ups against 0/8 on the same plate''s
+    small in-hand action, and a tight insert at 57% of frame width failed too), and the take standing
+    in the demo cut is knowingly broken.'
+  what_is_NOT_claimed: This does not re-open the cast, which is approved and closed. It does not release
+    a render - see `guards_CORRECTION_0816.what_this_releases`. No plate_ack waiver was written and none
+    may be. Nothing was queued, and pipeline/wave-drafts.yaml was READ ONLY and not modified.
 eggplant_fix:
   date: '2026-08-14'
   result: the purple object is GONE from all five refires. Removing the blanket fig clause fixed it completely,

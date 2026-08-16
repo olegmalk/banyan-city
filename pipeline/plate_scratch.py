@@ -226,6 +226,261 @@ DRAFTS = {
         ),
         "seed": 20260816,
     },
+    11: {
+        # ==================================================================
+        # 2026-08-16, THE GUARD-PLATE LANE. BEAT 11, "THEY LEAVE".
+        # THE PLATE AND THE BAR IT WILL BE JUDGED BY, BOTH WRITTEN AND
+        # COMMITTED BEFORE A SINGLE PIXEL EXISTS. THE BAR DOES NOT GET
+        # SOFTENED AFTERWARDS.
+        # ==================================================================
+        # THE BEAT, QUOTED FROM ITS SCRIPT so the plate and the words cannot
+        # drift apart. genomes/sapling/nodes/002b-first-citizen/node.md:
+        #   "THEY LEAVE - 0:50-0:55.  The guards walk away arguing, backs to
+        #    camera, genuinely trying to do their jobs."
+        # And its done_when, done-definitions.yaml beats.'11':
+        #   "two guards walk away from camera, backs turned, still arguing;
+        #    both present the whole clip; field present at frame one."
+        #
+        # ------------------------------------------------------------------
+        # WHY THIS PLATE EXISTS, AND WHY IT IS THE HIGHEST-VALUE ONE TO DRAW
+        # ------------------------------------------------------------------
+        # 1. THE CAST IS APPROVED AND NO PICTURE OF IT DOING ANYTHING EXISTS.
+        #    The founder cast both men in his own words -- 2026-08-14
+        #    "1 for the guards", 2026-08-15 "ill take the guard b you chose"
+        #    (guards_CORRECTION_0816). That released the WORK of drawing
+        #    staged plates and released no render: both men exist only as
+        #    COSTUME CARDS ON A GREY VOID.
+        # 2. BEAT 11 IS PURE WHOLE-BODY MOTION, which is the one thing this
+        #    engine does reliably. Twelve beat-17 cells gave 12/12 whole-body
+        #    stand-ups; the same plate's small in-hand action is 0 of 8, and
+        #    a tight insert at 57% of frame width failed too. Two men walking
+        #    away has no in-hand action in it at all.
+        # 3. THE TAKE IN THE DEMO CUT IS KNOWINGLY BROKEN -- "TOTAL IDENTITY
+        #    COLLAPSE AWAY FROM THE PLATE", a bald adult growing dark hair
+        #    across f16-f21 and ending on two indistinguishable brown-haired
+        #    backs.
+        #
+        # ------------------------------------------------------------------
+        # THE FINDING THAT MADE THIS DRAFT, AND IT IS NOT ABOUT BEAT 11
+        # ------------------------------------------------------------------
+        # Every `farm-out/*/NN-*.yaml` sidecar for beats 05, 06, 09, 10 and 11
+        # was read on 2026-08-16 -- 15 distinct prompts across 20 output dirs.
+        # NOT ONE OF THE FIFTEEN NAMES GUARD A OR GUARD B. Every one asks for
+        # an anonymous type: "two round bald guard men in plain brown tunics",
+        # "silly harmless bureaucrats with round soft bodies and bare heads".
+        # `bald` or `bare heads` appears in THIRTEEN of the fifteen.
+        #
+        # NEITHER APPROVED GUARD IS BALD. A has dark cropped hair, B has light
+        # sandy hair, and wave-drafts.yaml says so while authoring the cast:
+        # "`no hair, no wig` -- that is what made the goblin bald and THE
+        # GUARDS NEED HAIR." So `bald` was never drift; it was ASKED FOR, and
+        # every staged guard picture we own differs from the approved cast in
+        # the first attribute a viewer reads off a human being -- and the one
+        # attribute still legible when a man is facing away.
+        #
+        # That reframes beat 11's own recorded fault: the plate asked for
+        # bald, the render grew dark hair, and dark hair is what guard A
+        # ACTUALLY IS. We logged the model drifting TOWARD the approved cast
+        # as the defect, and then spent rounds tuning identity-holding levers
+        # on a plate that never specified an identity to hold. Beats 05 and 10
+        # both carry `open_question: ... ONE answer settles both beats` about
+        # guards reading "younger and softer" than 06 and 11 -- that is the
+        # same cause, two plates each independently improvising a man.
+        #
+        # THE VOCABULARY BELOW IS NOT INVENTED. It is lifted from the drafts
+        # that actually drew the approved men, so the words are already proven
+        # on this checkpoint (pipeline/wave-drafts.yaml, read only, untouched):
+        #   authored_guard_sheet_a:   "tall and lean, long face, DARK CROPPED
+        #     HAIR, a plain brown tunic with a CLOTH SASH OF OFFICE across his
+        #     chest, DARK TROUSERS AND BOOTS"
+        #   authored_guard_b_derived: "a plain DARK BROWN TUNIC with a cloth
+        #     sash of office across his chest, LIGHT SANDY HAIR, carrying a
+        #     bark clipboard, dark trousers and boots"
+        #
+        # ------------------------------------------------------------------
+        # WHY EACH CLAUSE. Every one is a lesson someone already paid for.
+        # ------------------------------------------------------------------
+        #   `2boys, from behind, full body, wide shot` LEADING -- leading
+        #       framing tags carry real weight and trailing ones almost none
+        #       (a peer lost a whole render to a trailing `wide two-shot`).
+        #       Count and backs-turned are the two things that must bind, so
+        #       they go at the very front.
+        #   `standing in tall grass` -- a STATE, not a verb. The model renders
+        #       a verb's END state, so "walk away growing smaller" (which is
+        #       literally what the idfix plate asked for) returns them already
+        #       small and half-gone, with nowhere left to travel. The plate is
+        #       the PRE position on purpose: turned away, still near, with the
+        #       field ahead of them. i2v supplies the walk.
+        #   `tall grass background` -- THE VACANCY LAW, and beat 11 is the
+        #       composition that invites it hardest: two figures walking into
+        #       open field is by construction a large empty region. An empty
+        #       region is a hole the model fills with the largest noun in the
+        #       prompt AND THE NEGATIVE DOES NOT REACH IT -- beat 08 lost five
+        #       samples to a colossus grown in a reserved sky, and beat 08 r4
+        #       proved a negative naming `giant, colossal, monster, kaiju,
+        #       statue, face in the sky` removes it NOT AT ALL; beat 17 r1's
+        #       insert had no hole so the CLIP manufactured one by pulling the
+        #       camera back and put a face in it; beat 17 r2 grew three extra
+        #       goblin heads in a flat grass margin with `solo` LEADING and
+        #       `2boys` in the negative. The fix that worked on the first
+        #       sample is to give the background A NOUN OF ITS OWN, and `tall
+        #       grass` is the one this repo has already used for it. Tall
+        #       grass cannot become a character.
+        #   the two men written as TWO SEPARATE PERSON CLAUSES, each pairing
+        #       one hair colour with one garment -- a verb or prop does not
+        #       bind to a named character on this checkpoint (the bark board
+        #       attached to the goblin in 9 frames of 12; `pointing at
+        #       another` in 3 of 3), and with TWO SAME-SPECIES MEN that risk
+        #       is at its maximum. Binding by hair-plus-garment inside one
+        #       clause is the best instrument available, and WHICH FIGURE GOT
+        #       WHICH COSTUME IS CHECKED BY EYE afterwards, never assumed.
+        #   NO `size difference`, and no "one taller, one shorter" -- `size
+        #       difference` is a GIANTESS TAG on this checkpoint and made one
+        #       figure 8x the other. Guard B is heavier-built on the sheet;
+        #       that is given up deliberately rather than risked.
+        #   NO CLIPBOARD, and this is a decision, not an omission. It is not
+        #       in beat 11's done_when; props do not bind to a named figure
+        #       here; and guard B's clipboard is the founder's OWN NAMED
+        #       DEFECT ("there is a clipboard floating behind him") which must
+        #       not be carried into anything derived from the reference. Its
+        #       arrival is fail mode Q7 below.
+        #   NO GLASSES, and the founder's open question cannot change this
+        #       plate. Guard A's wire-rims are on his board unanswered. Beat
+        #       11 is BACKS TURNED: wire-rims are not visible from any angle
+        #       in this shot. The sheet's own appearance is used and glasses
+        #       are simply absent from the prompt. His answer can be applied
+        #       to beat 09 -- his face, in close-up -- without redrawing this.
+        #   `dark` IS NOT IN THE NEGATIVE, though it is in every other draft
+        #       in this file. Both approved guards are defined by dark things
+        #       (dark cropped hair, dark brown tunic, dark trousers), and a
+        #       negative `dark` put there for LIGHTING would fight the cast
+        #       itself. `night` alone carries the lighting intent. Named here
+        #       so the difference from the other drafts is not read as sloppy.
+        #
+        # ------------------------------------------------------------------
+        # PLATE BAR, PRE-REGISTERED. USABLE ONLY IF ALL SEVEN HOLD.
+        # A lane confessed today to a bar that certified a prop's MATERIAL
+        # while never mentioning its SHAPE, and scored 8/12 "passes" with 0/12
+        # usable. So every load-bearing axis is named here, in advance.
+        # ------------------------------------------------------------------
+        #   P1 IDENTITY -- THE APPROVED PAIR. This is the whole point of the
+        #      exercise and it is scored first. The two men must read as guard
+        #      A and guard B of review/ep2-picks/sheets/guard-cast-0816.jpg:
+        #      ONE WITH DARK HAIR in a light tan/beige tunic, ONE WITH LIGHT
+        #      SANDY/BLOND HAIR in a darker brown garment. NEITHER MAN IS
+        #      BALD -- a bald pair fails outright, no matter how good the
+        #      staging, because bald is precisely the defect being corrected.
+        #      Exact tailoring, sash geometry and boot detail are NOT scored;
+        #      hair colour, garment value and the two being TOLD APART are.
+        #   P2 TWO WHOLE FIGURES. Exactly 2 human figures -- not 1, not 3.
+        #      Both full-length: head, torso, both arms, both legs, feet
+        #      inside the frame. A third body ANYWHERE, including small in the
+        #      background, is a FAIL and is the vacancy law's signature.
+        #   P3 BACKS TURNED, WITH ROOM TO WALK INTO. Both men seen from
+        #      behind: no face, no eyes, no frontal torso on either man. Field
+        #      continues AHEAD of them, away from camera, unobstructed, for at
+        #      least the height of a man, so the walk has somewhere to go. A
+        #      plate with a wall of grass immediately behind them fails: it is
+        #      the same defect as beat 02's high angle carrying the face away
+        #      from the lens, caught before rendering instead of after.
+        #   P4 SIZE IN FRAME. The taller man spans AT LEAST 25% of the frame
+        #      height. The number exists to protect P1, not for its own sake:
+        #      below it, hair colour and garment value stop being legible and
+        #      the plate cannot carry identity into a render at all. `small
+        #      figures low in frame` is what shrank beat 08 r1 to specks.
+        #   P5 NO VACANCY. No flat untextured region larger than a man's
+        #      torso: no sky band, no blank paper, no white background, no
+        #      featureless colour wash. Grass texture to the top edge.
+        #   P6 NO PROPS. No clipboard, no board, no badge, no weapon, in or
+        #      near either man's hands, and nothing floating unattached.
+        #   P7 FIELD PRESENT IN THE PLATE ITSELF -- the beat's own done_when
+        #      says "field present at frame one", and a plate that opens on a
+        #      void is where beat 11's ~1s white opening came from.
+        #   RECORDED AND NOT SCORED: wire-rim glasses (invisible from behind),
+        #      build difference between the men, palette continuity, time of
+        #      day. This is a staging plate, never a take.
+        #
+        # ------------------------------------------------------------------
+        # FAIL MODES NAMED IN ADVANCE, so none of them can be talked into a
+        # pass after the fact.
+        # ------------------------------------------------------------------
+        #   Q1 BALD PAIR -- the beat-11 attractor, asked for by all 15 prior
+        #      prompts and therefore the most likely single outcome.
+        #   Q2 COUNT -- one man, three men, or a spectator in the field.
+        #   Q3 FRONTAL -- one or both turn to face the lens. This checkpoint
+        #      prefers faces and `from behind` is the load-bearing tag.
+        #   Q4 SPECKS -- figures too small for the two costumes to be told
+        #      apart. Staging correct, identity unreadable, still a fail.
+        #   Q5 VACANCY FILL -- a large flat region, WHETHER OR NOT something
+        #      has grown in it. The hole itself is the fail; what fills it is
+        #      the next render's problem.
+        #   Q6 COSTUME MERGE -- both men in the same outfit or the same hair
+        #      colour, i.e. two copies of one guard. The highest-probability
+        #      two-same-species-figures failure and an outright FAIL: the beat
+        #      is two distinguishable men arguing.
+        #   Q7 PROP ARRIVAL -- a clipboard or board appears, held or floating.
+        #   Q8 SWAPPED COSTUME -- the dark hair lands on the dark-brown tunic
+        #      and the sandy hair on the tan one. Recorded honestly if it
+        #      happens; it is a FAIL of P1 because the pair is then neither
+        #      guard, and it is the specific thing that must be CHECKED BY EYE
+        #      rather than assumed from the wording.
+        #
+        # HONEST PRIOR: the last two-figure plate round hit 1 IN 15. Three or
+        # four seeds are budgeted. ONE SAMPLE IS OPENED AND JUDGED FIRST, and
+        # a single failure is not a dead end.
+        #
+        # DO NOT FIRE MOTION OFF THIS. If the plate passes, SAY SO AND STOP --
+        # whether beat 11's replacement gets rendered is a separate decision,
+        # and beats.'11'.blocked_on_0815 still has only its cast half
+        # discharged. No `plate_ack` waiver, ever. shots.md, wave-drafts.yaml
+        # and farm-queue.yaml are UNTOUCHED by this lane.
+        "slug": "they-leave",
+        "done_when": (
+            "PLATE BAR, pre-registered before the plate was drawn. All seven "
+            "must hold: P1 the two men are the APPROVED guards -- one dark "
+            "haired in a light tan tunic, one light-sandy haired in a darker "
+            "brown garment, NEITHER BALD; P2 exactly two whole figures, "
+            "full-length, no third body; P3 both seen from behind, no face, "
+            "with unobstructed field ahead of them to walk into; P4 the "
+            "taller man spans at least 25% of frame height so the costumes "
+            "are legible; P5 no flat untextured region larger than a torso; "
+            "P6 no clipboard, board, badge or weapon; P7 field present in the "
+            "plate itself. Fail modes named in advance: Q1 bald pair, Q2 "
+            "wrong count, Q3 frontal, Q4 specks, Q5 vacancy, Q6 costume "
+            "merge, Q7 prop arrival, Q8 swapped costume. Good staging with "
+            "the wrong men is a FAIL -- identity is the point of this plate."
+        ),
+        "why": (
+            "The founder cast both guards on 14 and 15 August, and no staged "
+            "picture of them doing anything exists -- both men are costume "
+            "cards on a grey void, which is why beats 05, 06, 07, 09, 10 and "
+            "11 were animated off costume cards and cannot be cut. Worse, a "
+            "sweep of all 15 plate prompts for those beats found NONE naming "
+            "the cast: 13 of 15 ask for `bald` or `bare heads`, and neither "
+            "approved guard is bald. So every guard plate we own is mis-cast "
+            "at the most visible attribute there is, and beat 11's recorded "
+            "`identity collapse` is the render growing the dark hair guard A "
+            "actually has. Beat 11 goes first because it is PURE WHOLE-BODY "
+            "MOTION -- the one thing this engine does reliably, 12/12 "
+            "stand-ups against 0/8 in-hand -- and because the take standing "
+            "in the demo cut is knowingly broken."
+        ),
+        "prompt": (
+            "2boys, from behind, full body, wide shot, two guard men "
+            "standing in tall grass, tall grass background, one man with "
+            "dark cropped hair in a plain tan tunic, one man with light "
+            "sandy hair in a dark brown tunic, cloth sash of office, dark "
+            "trousers and boots, sunny day, masterpiece, best quality"
+        ),
+        "negative": (
+            "text, looking at viewer, facing viewer, face, close-up, "
+            "portrait, distant, small figure, bald, 1boy, 3boys, solo, "
+            "sky, horizon, white background, simple background, "
+            "holding object, clipboard, armor, helmet, knight, child, "
+            "photorealism, 3d render, night"
+        ),
+        "seed": 20260816,
+    },
     14: {
         "slug": "the-defense",
         "done_when": (
@@ -915,6 +1170,14 @@ def main() -> int:
             "done_when": d["done_when"],
             "why_this_plate": d["why"],
             "founder_verdict": None,
+            # A plate is a fixture, never a take. These two keys are written
+            # so the standing sidecar guard ("approved: false, provisional,
+            # cost_usd 0") is satisfied by the file itself rather than by a
+            # lane remembering to say so in a report. `approved` is about the
+            # PICTURE and is not the STEWARDSHIP.md §6 node approval, which is
+            # checked separately above and would have refused the run.
+            "approved": False,
+            "provisional": True,
             "revision": a.rev,
             "scored": False,
         }
