@@ -2239,3 +2239,4 @@
 17:38:57Z DONE task=ep2-b02-pose2-s20260826-0816-1786901239 rc=0 artifacts=2
 17:39:01Z STARTED task=ep2-b02-pose2-s20260827-0816-1786901245 attempt=1 on box-runner
 17:44:47Z DONE task=ep2-b02-pose2-s20260827-0816-1786901245 rc=0 artifacts=2
+17:44:52Z STARTED task=ep2-b18-scale-0816-1786901939 attempt=1 on box-runner
