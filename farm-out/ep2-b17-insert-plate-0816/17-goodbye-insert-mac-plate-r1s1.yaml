@@ -1,0 +1,32 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 17
+beat_slug: "goodbye-insert"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260816
+render_seconds: 152.6
+png_sha256: "0b8f4261a2a96af5db97fd547c74b815ebf50c2d3ad6f338f19c959d8a27342f"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "hand focus, close-up, a green clawed hand and forearm resting flat on a dusty patchwork cloak, brown and grey stitched cloth filling the whole frame, deep folds in the fabric, dust and grass seed on the cloth, warm daylight, cinematic lighting, detailed, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, face, head, portrait, looking at viewer, full body, wide shot, standing, walking, 1girl, 2boys, crowd, sky, clouds, horizon, grass field, tree, house, indoors, white background, simple background, holding object, spear, staff, sword, stick, photorealism, 3d render, dark, night"
+done_when: "MOTION BAR (pre-registered before the plate was drawn): a hand makes contact with the cloak AND TRAVELS ACROSS IT -- at least one hand-width of movement relative to the cloth, continuous across consecutive frames, the hand moving and not the camera. FAIL modes named in advance: F1 frozen, F2 cloth-only, F3 camera-only, F4 morph/teleport, F5 scene break, F6 contact without traversal. A changed picture is not a pass."
+why_this_plate: "Beat 17's script line is 'The scavenger stands, brushes off, and turns to go' and its definition wants stand, brush, turn. The stand and the turn render 12 of 12; the brush renders 0 of 4 in the compound and 0 of 2 when asked for alone at the same seed. The surrounding beat already works, so the insert is the only unknown -- which makes beat 17's brush the cleanest test of the general principle: frame the action so that it IS the largest movement in frame. This plate makes the hand and the cloak the entire picture so the stroke has nothing to compete with. A pass unlocks beats 06/08/10 as inserts; a fail retires size-in-frame as a lever and says the engine cannot do fine hand action."
+founder_verdict: null
+revision: 1
+scored: false
+# --- hand-added by the tight-insert lane, 2026-08-16, AFTER the tool wrote the
+# block above. Everything above this line is byte-exact as plate_scratch.py
+# wrote it at render time; nothing above has been edited. These three keys are
+# the standing sidecar requirement for anything this lane publishes to the
+# results branch, and plate_scratch.py does not write them.
+approved: false
+provisional: true
+is_show_content: false
+note: "ENGINE PROBE PLATE. Drawn to test one composition principle -- frame the
+  action so that it IS the largest movement in frame -- not to be cut into an
+  episode. No founder verdict, no taste score, and splitting beat 17 into two
+  shots is an authorship decision this lane does not take."

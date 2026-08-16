@@ -1,0 +1,354 @@
+# 2026-08-16, THE TIGHT-INSERT LANE. ONE SAMPLE. ONE VARIABLE: SIZE IN FRAME.
+# ENGINE PROBE, NOT A TAKE FOR THE CUT -- see script_authority below.
+#
+# ============================================================================
+# WHAT IS ALREADY SETTLED. NONE OF IT IS RE-DERIVED HERE.
+# ============================================================================
+# Three independent lines converged this week on one explanation for two days
+# of failed motion work:
+#
+#  1. WHOLE-BODY MOTION RENDERS RELIABLY. Twelve beat-17 cells, judged against
+#     a bar written BEFORE the renders: 12 of 12 perform a full seated-to-
+#     standing stand-up, head-top rise 29.2%-39.7% of frame height. The
+#     colour-segmentation tool was falsified by overlaying its own mask back
+#     onto the frames, which caught sky speckle silently scoring three complete
+#     stand-ups as "no movement". The horizon holds fixed while he rises, so it
+#     is the body and not the camera.
+#  2. SMALL IN-HAND ACTIONS NEVER RENDER, ON THAT SAME PLATE. amp-brush and
+#     amp-brushseat, same seed 20260901, byte-identical otherwise, FROZE
+#     COMPLETELY -- hands clasped on the knee unchanged f0->f96 -- while the
+#     clouds, the eyelids and a bird moved.
+#  3. BOTH AT ONCE, INSIDE SINGLE CLIPS. All four beat-17 `full` cells audited
+#     frame by frame, all 97 frames each: 4 of 4 perform the stand and the
+#     turn, 0 of 4 brush the cloak. The arms unfold and drop to the sides or
+#     the hands rest on knees. One cell has cloak CONTACT WITHOUT TRAVERSAL --
+#     drape and body rotation, not a stroke.
+#
+# THE EXPLANATION: this engine renders GROSS whole-body motion and DROPS SMALL
+# IN-HAND ACTIONS. It also fits beats 06, 08 and 10, which have failed every
+# wording, strength, seed, recipe and composition lever -- all three ask for a
+# small in-hand prop manipulation.
+#
+# ============================================================================
+# THE ONE THING THIS JOB TESTS
+# ============================================================================
+# FRAME THE ACTION SO THAT IT IS THE LARGEST MOVEMENT IN FRAME. The model
+# renders big motion, so make the brush big -- not a figure in a landscape
+# performing a small gesture, but a tight insert where the hand and the cloak
+# are the whole picture and the hand's travel across the cloth is the only
+# thing in frame large enough to be the shot's motion.
+#
+# THE COMPARISON IS DELIBERATELY NARROW. Against ep2-b17-amp-brush-0816, which
+# froze: same seed 20260901, same negative byte for byte, same style suffix
+# byte for byte, same 704x1280 / 97 frames / 24fps / two-stage 8@352x640 +
+# 3@704x1280 / distilled sigmas / image-crf 33 / guidance 2.0 / sequential
+# offload. THE PLATE IS THE VARIABLE. Stated honestly rather than glossed:
+# TWO WORDS also differ -- amp-brush said "with both hands", this says "with
+# his hand" -- and that delta is FORCED BY THE PICTURE, because the insert has
+# one hand in frame and asking a one-hand plate for both hands is asking for a
+# second arm to be invented. It is named here so nobody later reads this as a
+# perfectly single-variable A/B; the framing is the variable of interest and
+# the wording follows the plate it describes.
+#
+# NOT SWEPT, BY INSTRUCTION: guidance, CFG and checkpoint belong to another
+# lane and every render flag below is the fixed production recipe.
+#
+# ============================================================================
+# THE BAR, PRE-REGISTERED IN COMMIT 6625840b BEFORE THE PLATE WAS DRAWN
+# ============================================================================
+# Copied here verbatim from pipeline/plate_scratch.py DRAFTS[17], which was
+# committed and pushed before a single pixel existed. It is a BODY-MOTION
+# test, not a picture-changed test, and it does not get rewritten afterwards.
+#
+#   PASS requires ALL of:
+#     M1 a hand is in contact with the cloak in at least one frame;
+#     M2 that hand TRAVELS across the fabric while in contact -- its position
+#        relative to the cloth moves at least one hand-width (~15% of frame
+#        width) between two frames of the clip;
+#     M3 it is the HAND moving and not the camera: the frame edges and the
+#        cloth's own folds do not translate with it;
+#     M4 the path is continuous -- read at consecutive frames, the hand can be
+#        followed from where it starts to where it ends.
+#
+#   FAIL MODES, NAMED IN ADVANCE:
+#     F1 FROZEN -- identical hand position at f0 and f96, only the linework
+#        re-inked in place. Round 1's exact signature.
+#     F2 CLOTH-ONLY -- the fabric ripples or blows and the hand does not move
+#        relative to it.
+#     F3 CAMERA-ONLY -- the whole frame drifts, pushes in or zooms and hand
+#        and cloth keep the same relative geometry.
+#     F4 MORPH -- the hand dissolves, gains or loses fingers, or reappears
+#        somewhere else without a continuous path. A teleport is not a stroke.
+#     F5 SCENE BREAK -- the shot cuts, pulls back to a figure, changes
+#        location, or a second figure arrives.
+#     F6 CONTACT WITHOUT TRAVERSAL -- the hand touches and the cloth drapes or
+#        rotates under it but the hand does not travel. EXPLICITLY A FAIL: one
+#        of the four `full` cells already did exactly that, and calling it a
+#        pass is how a bar gets bent.
+#
+#   NOT EVIDENCE, AND NONE OF IT WILL BE QUOTED. `depth` is RETIRED AND
+#   INVERTED, confirmed three ways: full stand-up 0.290, zero-motion clip
+#   0.516, a clip whose only movement was a bird 0.376. The old `cadence`
+#   metric is structurally blind -- odd hold periods alias to exactly 1.00x.
+#   Camera-scale numbers are unreliable without aligned frames. All 97 frames
+#   get opened CONSECUTIVELY via pipeline/coldread_frames.py, cropped to the
+#   hand and the cloth, and any tool used gets its own output overlaid back
+#   onto the frames before it is believed -- that overlay is what turned
+#   9-of-12 into 12-of-12.
+#
+# BOTH OUTCOMES ARE THE FINDING. A pass says size-in-frame IS the lever, which
+# unlocks beat 17's brush and re-opens beats 06/08/10 as inserts -- and this
+# lane then SAYS SO AND STOPS, because splitting beat 17 into two shots and
+# re-planning three more is an authorship decision. A fail says size-in-frame
+# is NOT the lever and the engine simply cannot do fine hand action, which
+# changes what episode 2 can contain.
+#
+# ============================================================================
+# GUARDS
+# ============================================================================
+# --src is the PUBLISHED plate on origin/farm-results-rtx5090, produced by
+# ep2-b17-insert-plate-0816 whose spec is in pipeline/jobs and which names no
+# --refs, so the plate check and the refs check both RUN and both PASS.
+# NO plate_ack ANYWHERE IN THIS LANE. Measured before filing with
+# box_enqueue's own functions on the exact crop the box will make:
+# border_flatness 0.135 against the 0.62 refuse line, border_colour_flatness
+# 0.007. Payload dir and out dir are distinct. Publish glob carries the beat
+# slug 17-goodbye. Sidecar stamped `approved: false`, `provisional: true`,
+# `is_show_content: false`; cost_usd 0 is written by video_task.
+#
+# $0. Local card, no provider, no paid engine.
+id: ep2-b17-insert-motion-0816
+task: ep2-b17-insert-motion-0816
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 35
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: tight-insert lane (is size-in-frame the lever?), 2026-08-16
+consumer: 'The staging decision for beats 06, 08 and 10, and for beat 17''s own brush. Cycle 018 and the
+  amplitude probes between them established that this engine moves whole bodies and drops small in-hand
+  actions, on the same plate, at the same seed, with everything else byte-identical. The audit lane named
+  the fix implied by that and deliberately did not fire it: a tight insert where the hand-across-cloak
+  IS the gross motion of the frame. This is that one sample. If it renders, size-in-frame is a composition
+  rule the whole show can use and three stalled beats become inserts; if it does not, fine hand action
+  is out of reach for this engine and episode 2 has to be planned around that. Judged by opening all 97
+  frames consecutively via pipeline/coldread_frames.py, NEVER by depth -- the frozen brushseat arm scores
+  0.376 and almost all of that is a bird.'
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the published insert plate. PASS is M1+M2+M3+M4
+  as pre-registered in commit 6625840b before the plate was drawn: a hand in contact with the cloak, travelling
+  at least one hand-width (~15% of frame width) across the fabric relative to the cloth, with the frame
+  edges and cloth folds NOT translating with it, along a path that can be followed continuously across
+  consecutive frames. FAIL is any of F1 frozen, F2 cloth-only, F3 camera-only, F4 morph or teleport, F5
+  scene break, F6 contact without traversal. F6 is a FAIL and not a partial pass. A changed picture is
+  not a pass, and depth, cadence and unaligned camera-scale numbers are not evidence and will not be quoted.'
+why: 'The card is nearly idle -- ready/ holds only HOLD files and one job is running -- and this is the
+  single cheapest question left in the motion investigation. Eleven minutes on the local card, $0, no
+  new plate campaign, no new checkpoint, no recipe sweep. Its plate cost nothing and was drawn on the
+  Mac so the card stayed free while it was made.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-insert-motion-0816\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b17-insert-motion-0816\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar as an unapproved engine probe.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. This lane's
+    standing requirement is that anything it publishes says so on its face, so
+    the three keys are appended here rather than asserted in a commit message
+    nobody downstream reads. REFUSES if the sidecar is missing -- a clip whose
+    provenance file did not get written must not pass silently.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b17-insert-motion-0816 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: false\n"
+            "note: |\n"
+            "  ENGINE PROBE, NOT A TAKE FOR THE CUT. This clip exists to test one\n"
+            "  composition principle -- frame the action so that it IS the largest\n"
+            "  movement in frame -- on a tight insert plate drawn for the test. Its\n"
+            "  action clause is not beat 17's scripted line as staged, and splitting\n"
+            "  beat 17 into two shots is an authorship decision no lane has taken.\n"
+            "  It must never be picked into an episode.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b17-insert-motion-0816\b17-motion-prompt.txt: 'He brushes the dust from his cloak
+    with his hand. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b17-insert-motion-0816\b17-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b17-insert-motion-0816\b17-jobs-encode.json: |-
+    [
+     {
+      "beat": 17,
+      "embeds": "C:\\banyan-farm\\ep2-b17-insert-motion-0816-out\\b17-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b17-insert-motion-0816\\b17-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b17-insert-motion-0816\\b17-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b17-insert-motion-0816\b17-jobs-render.json: |-
+    [
+     {
+      "beat": 17,
+      "seed": 20260901,
+      "embeds": "C:\\banyan-farm\\ep2-b17-insert-motion-0816-out\\b17-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b17-insert-motion-0816-out\\b17-insert-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b17-insert-motion-0816-out\\17-goodbye-insert-LTX-handbrush.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-insert-motion-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-insert-plate-0816\17-goodbye-insert-mac-plate-r1s1.png
+  - --sha256
+  - 0b8f4261a2a96af5db97fd547c74b815ebf50c2d3ad6f338f19c959d8a27342f
+  - --out
+  - C:\banyan-farm\ep2-b17-insert-motion-0816-out\b17-insert-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-insert-motion-0816\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-insert-motion-0816\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-insert-motion-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-insert-motion-0816-out\bench-insert-handbrush.jsonl
+  - --bench-label
+  - ep2-b17-insert-motion-0816
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-insert-motion-0816\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b17-insert-motion-0816-out\17-goodbye-insert-LTX-handbrush.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches
+    # nothing and the step publishes nothing while returning a code that reads
+    # like a render failure.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b17-insert-motion-0816-out"
+    pay_dir = "C:/banyan-farm/ep2-b17-insert-motion-0816"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-insert-motion-0816"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(out_dir + "/17-goodbye-insert-LTX-handbrush.mp4*")
+                 + glob.glob(out_dir + "/b17-insert-init-704x1280.png")
+                 + glob.glob(out_dir + "/bench-insert-handbrush.jsonl")
+                 + glob.glob(pay_dir + "/b17-motion-prompt.txt")
+                 + glob.glob(pay_dir + "/b17-negative.txt"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-insert-motion-0816.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 3 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-insert-motion-0816-out\17-goodbye-insert-LTX-handbrush.mp4
+- C:\banyan-farm\ep2-b17-insert-motion-0816-out\b17-insert-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. STATED
+  PLAINLY: this is an ENGINE PROBE, NOT A TAKE FOR THE CUT. It animates a plate drawn for the test rather
+  than beat 17''s staged plate, and the clip it produces must never be picked into an episode -- it exists
+  to locate whether an action rendered at insert scale performs when the same action at figure scale freezes.
+  Same category as the ep2-b17-amp2-* probes and the motion-poscontrol jobs filed on 2026-08-16. shots.md
+  and pipeline/wave-drafts.yaml are UNTOUCHED; if the framing wins, the shot board gets updated deliberately
+  and separately, by whoever owns the beat. Silent, $0, and nothing here is a voice synthesis or an episode
+  assembly.'

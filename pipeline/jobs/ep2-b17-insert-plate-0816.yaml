@@ -1,0 +1,113 @@
+# 2026-08-16, THE TIGHT-INSERT LANE. THE PLATE, PUBLISHED RATHER THAN WAIVED.
+#
+# WHY THIS JOB EXISTS AT ALL, and it renders nothing. box_enqueue refuses a
+# motion job twice over when it cannot check the picture being animated: once
+# because the --src is not fetchable from the results branch, and again because
+# the job that produced it has no spec in pipeline/jobs. Both refusals are
+# waivable with `plate_ack:` and NEITHER IS WAIVED HERE. A 2026-08-14 job that
+# took that shortcut turned out to be cropping the WRONG BEAT'S PLATE, and the
+# unfetchable refusal is the one guard in that file that has never yet been
+# wrong. This spec is the producing job the second guard looks for, and
+# farm-out/ep2-b17-insert-plate-0816 is what the first one reads.
+#
+# WHAT THE PICTURE IS. One 832x1216 plate drawn $0 on the Mac (Apple Silicon,
+# MPS, animagine-xl-3.1, 40 steps, guidance 7.5, seed 20260816) by
+# `pipeline/plate_scratch.py --beat 17`, whose inline draft carries the whole
+# argument and the bar. It is a TIGHT INSERT: a green clawed hand and forearm
+# resting flat on a cloak that fills the frame edge to edge. It exists to test
+# ONE principle -- frame the action so that IT IS THE LARGEST MOVEMENT IN FRAME
+# -- against the converged finding that this engine renders gross whole-body
+# motion (12 of 12 stand-ups on beat 17's wide plate) and drops small in-hand
+# actions (0 of 4 brushes in the compound, 0 of 2 asked for alone at the same
+# seed, byte-identical otherwise).
+#
+# ENGINE PROBE, NOT SHOW CONTENT. The clip made from it must never be cut into
+# an episode; splitting beat 17 into two shots is an authorship decision and
+# this lane does not take it. The sidecar says `approved: false`,
+# `provisional: true`, `is_show_content: false`, `cost_usd: 0.0`.
+#
+# WHY IT IS FETCHED OVER HTTP RATHER THAN COPIED. It was drawn on a Mac, so it
+# is on origin/main, not on the box's courier worktree -- and the courier only
+# ever contains what the box itself produced. The bytes are asserted by sha256
+# BEFORE anything is written and the fetch step EXITS NONZERO on any mismatch,
+# exactly as motion-poscontrol-plates-0816 does for its Commons fixtures, so
+# "the file moved between machines" cannot become "the file changed".
+#
+# NO GPU, NO MODEL, NO SPEND, seconds. It does not compete for the card.
+id: ep2-b17-insert-plate-0816
+task: ep2-b17-insert-plate-0816
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: tight-insert lane (is size-in-frame the lever?), 2026-08-16
+consumer: 'The init plate for ep2-b17-insert-motion-0816, published as a farm-out artifact so the enqueue
+  guards can fetch and measure it like any other plate. box_enqueue refuses a motion job whose --src it
+  cannot fetch, and separately refuses one whose producing job has no spec in pipeline/jobs -- this IS
+  that spec, and NO plate_ack waiver is used anywhere in this lane.'
+success: 'One 832x1216 png and its provenance yaml on farm-out/ep2-b17-insert-plate-0816, each byte-identical
+  to the file on origin/main (the fetch step REFUSES on any sha256 mismatch rather than continuing), plus
+  a sha256 manifest. png sha256 0b8f4261a2a96af5db97fd547c74b815ebf50c2d3ad6f338f19c959d8a27342f, yaml
+  sha256 75b942674eac4acd949bf0a6fbb27b0797335d3ca09d48cf56c05a5af6727d73.'
+why: 'Measured on this machine before filing, with box_enqueue''s own functions on the exact 704x1280
+  cover-crop the box will make: border_flatness 0.135 against the 0.62 refuse line and border_colour_flatness
+  0.007, so it is nowhere near a blank-paper card and needs no `card:` ack. It also clears the four plate
+  criteria pre-registered in commit 6625840b BEFORE it was drawn: P1 cloth fills the frame, no sky, no
+  horizon, no empty region larger than a hand (one small defocused wedge of grass in the top-left corner,
+  under 6% of the frame, recorded and not scored); P2 the green clawed hand is in contact with the cloth
+  and spans ~57% of the cropped frame''s width against a >=15% bar; P3 open unobstructed cloth runs the
+  full width below the hand, several hand-widths across, so a stroke has somewhere to go; P4 no face,
+  no whole figure, no second arm, no prop. NAMED HONESTLY AND NOT SCORED: the cloth reads as a plain pale
+  drape rather than the patchwork asked for, and the palette came back pink-brown instead of dusty brown-grey
+  -- a continuity problem if this framing is ever cut into the show, and irrelevant to whether a hand can
+  travel across cloth.'
+est_minutes: 2
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b17-insert-plate-0816\fetch_plate.py: "#!/usr/bin/env python3\n\"\"\"Fetch the Mac-drawn\
+    \ insert plate and REFUSE on any sha mismatch.\n\nNo model, no GPU, no spend. The bytes are the ones\
+    \ committed to origin/main,\nso the sha256 asserted here is verifiable against the repo by anyone.\n\
+    \"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\ep2-b17-insert-plate-0816-out\"\
+    \nRAW = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b17-insert-plate-0816/\"\
+    \nUA = {\"User-Agent\": \"banyan-city-tight-insert/1.0 (albert.numbro@gmail.com)\"}\nWANT = [\n   \
+    \ (\"17-goodbye-insert-mac-plate-r1s1.png\",\n     \"0b8f4261a2a96af5db97fd547c74b815ebf50c2d3ad6f338f19c959d8a27342f\"\
+    ),\n    (\"17-goodbye-insert-mac-plate-r1s1.yaml\",\n     \"75b942674eac4acd949bf0a6fbb27b0797335d3ca09d48cf56c05a5af6727d73\"\
+    ),\n]\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT:\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
+    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
+    \ fh:\n        fh.write(raw)\n    print(\"fetched %-42s %7d bytes  sha %s  OK\" % (name, len(raw),\
+    \ have), flush=True)\nprint(\"both files match their asserted sha256.\", flush=True)\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-insert-plate-0816\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a fetch failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-insert-plate-0816-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-insert-plate-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-insert-mac-plate-r1s1.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-insert-plate-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-insert-plate-0816-out\17-goodbye-insert-mac-plate-r1s1.png
+- C:\banyan-farm\ep2-b17-insert-plate-0816-out\17-goodbye-insert-mac-plate-r1s1.yaml
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. This job
+  renders nothing and animates nothing: it moves one already-drawn still from origin/main onto the results
+  branch with its sha asserted. The still itself is an ENGINE PROBE PLATE, not a take for the cut -- it
+  proposes a framing and shots.md and wave-drafts.yaml are both UNTOUCHED. Silent, $0, no voice synthesis
+  and no episode assembly.'
