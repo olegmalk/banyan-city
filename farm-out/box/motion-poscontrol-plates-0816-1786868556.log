@@ -1,0 +1,14 @@
+#### job motion-poscontrol-plates-0816-1786868556 attempt 1 start 2026-08-16T08:22:46Z
+
+==== step fetch START 2026-08-16T08:22:49Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\motion-poscontrol-plates-0816\\fetch_plates.py"]
+fetched poscontrol-runner-src.jpg      626552 bytes  sha ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac  OK
+fetched poscontrol-waterfall-src.jpg   523283 bytes  sha 2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3  OK
+both fixtures match their asserted sha256.
+==== step fetch END rc=0 2026-08-16T08:22:52Z ====
+
+==== step publish START 2026-08-16T08:22:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/motion-poscontrol-plates-0816\"\nos.makedirs(dst, exist_ok=True)\nshutil.copy2(r\"C:\\banyan-farm\\motion-poscontrol-plates-0816\\\\SOURCES.md\", dst)\nsrc = sorted(glob.glob(\"C:/banyan-farm/motion-poscontrol-plates-0816-out/poscontrol-*-src.jpg\")) + [os.path.join(dst, \"SOURCES.md\")]\nlines = []\nfor f in src:\n    if os.path.dirname(os.path.abspath(f)) != os.path.abspath(dst):\n        shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"motion-poscontrol-plates-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"]
+published 3 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/motion-poscontrol-plates-0816
+==== step publish END rc=0 2026-08-16T08:22:52Z ====
+#### job motion-poscontrol-plates-0816-1786868556 finished rc=0 2026-08-16T08:22:52Z
