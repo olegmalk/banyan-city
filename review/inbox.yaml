@@ -1220,6 +1220,23 @@
     were already on the branch. A baked JPG carries no filename of its own, so this note is the only thread
     from the picture back to what drew it. The fault text is quoted from review/ep2-picks/done-definitions.yaml,
     which recorded it and had no way to ask him.
+  resolved:
+    date: '2026-08-16'
+    verdict: 'PURPLE. RED IS REJECTED. "the fruit should be purple. it should not be that hard to make
+      it purple." The canon is not broken for beat 20 and no beat gets an exception - the dark red-brown
+      apple/plum in all four seeds is out. WHAT THIS RELEASES: the colour question only. "it should not
+      be that hard" is taken as a challenge to the steward, not a complaint to answer - the lever exists
+      already (the purple fig wording and reference that hold at both seeds in pipeline/wave-drafts.yaml,
+      and SAMPLE-b18-purple-fruit-0815.png), so beat 20 arriving red is our miss, not a model limit, and
+      it is ours to fix at $0 on the local card. WHAT THIS DOES NOT RELEASE, exactly as the card was corrected
+      on 2026-08-16 to say: BEAT 20 IS STILL BLOCKED ON TWO FAULTS THAT ARE NOT COLOUR. (1) THE BRANCH
+      IS THE WRONG TREE - the bare branch in frame is a thick gnarled MATURE-TREE limb entering from the
+      top corner, where the beat needs the SAPLING''s own now-empty stem; the empty stem IS the evidence
+      and a dead oak limb overhead is not the branch the fruit fell from. (2) HE NEVER LOOKS UP - the
+      gaze is level into the lens in the pick and in all eight, and the look up is the second half of
+      done_when. So the plate is redrawn whichever way the colour went; a purple fruit on a mature oak
+      limb with a level gaze is still not this beat. Propagated the same day to review/ep2-picks/done-definitions.yaml
+      (beats.''20''.colour_ruled_0816) and STATE.md.'
 - what: BEAT 16 - A SECOND TAKE YOU HAVE NEVER SEEN. Beat 16 rendered as a pair and only leg A was ever
     shown to you; leg B is the same beat from a different seed with a proper daylight sky and clouds where
     leg A blows out to near-white (its leaf is also the round canon one rather than leg A's lobed fig
@@ -1235,6 +1252,26 @@
     on origin/farm-results-rtx5090. Frames 0, 40 and 90 pulled with ffmpeg, $0, no render. NOTE THE FILENAME:
     both legs of beat 16 are called 13-remake-LTX-0813.mp4 and their init is called b13-init-704x1280.png
     - beat 13''s names on beat 16''s files. That is the reuse defect named in the card below.'
+  resolved:
+    date: '2026-08-16'
+    verdict: 'NEITHER LEG. THIS IS NOT A PICK - IT IS A TASTE RULING THAT THE LEAF IS WRONG. "the difference
+      between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble
+      the sapling." Leg A does not ship and leg B does not ship; the card offered A-or-B and the answer
+      is that the question was the wrong one, because the two legs differ only in the thing that is broken
+      in both. Beat 16 goes back to needing a plate, not a pick. WHY THIS IS BIGGER THAN BEAT 16, and
+      recorded here so it is not lost in a beat file: "do not resemble the sapling" is a statement about
+      what the sapling IS, and beat 16 is only where he happened to see it. Beat 16''s own record already
+      caught the collision and parked it - review/ep2-picks/done-definitions.yaml, beats.''16''.unexpected_finding:
+      "THE LEAF CAME OUT LOBED - a five-to-seven lobed palmate leaf... It contradicts the canon ''two
+      broad round cotyledons''. That collision is already a question with him and I am not resolving it
+      by accident: recorded, not adopted." That is the same fault, seen a day earlier, and it is now his
+      ruling rather than our note. WHAT IT COSTS: beats 12 and 16 are both carried by a leaf close-up
+      (12 is "tight on two leaves", 16 is "leaf in focus, goblin as depth"), so a wrong leaf is not a
+      background blemish in either - it is the subject of the shot. A survey of every beat that shows
+      the plant, and of whether a canonical sapling description exists at all, is filed with this ruling;
+      if it does not exist, defining it is yours (R4) and gets its own card rather than a steward decision.
+      Propagated the same day to review/ep2-picks/done-definitions.yaml (beats.''16''.both_legs_rejected_0816)
+      and STATE.md.'
 - what: 'FILENAMES ARE BEING REUSED ACROSS ROUNDS AND IT HAS NOW COST YOU TWICE - a note, not a question.
     Two cards on this board pointed at the wrong picture today because a card''s text was rewritten in
     place and its link was left on the previous round''s sheet; separately, fifteen render jobs wrote
@@ -1304,3 +1341,25 @@
     WAS CHANGED OUTSIDE THIS FILE AND THE SHEET: no block was lifted, done-definitions.yaml still carries
     beat 11''s blocked_on_0815 verbatim, no beat-11 spec was authored or fired, no plate_ack waiver was
     written, and the render queue was not touched.'
+  resolved:
+    date: '2026-08-16'
+    verdict: 'THE CAST STANDS AS DRAWN. "the cast stands as drawn" - guard A and guard B exactly as they
+      appear on review/ep2-picks/sheets/guard-cast-0816.jpg. THE WIRE-RIM GLASSES STAY: he was asked about
+      them specifically and by name on this card, and "as drawn" is the answer to that question as much
+      as to the rest of the sheet, so guard A wears wire-rim glasses and every guard prompt that shows
+      his face must say so rather than leave the render to invent or drop them. Guard A: dark-haired,
+      tan wrap tunic, wide white waist sash, wire-rim glasses. Guard B: blond, cream short-sleeve shirt,
+      white sash worn diagonally over the shoulder, broad dark-brown wrap skirt - and the floating clipboard
+      he named comes off before the reference is frozen. WHAT THIS RELEASES: the last founder gate on
+      beats 05, 09, 10 and 11. "lets do the guards on my taste" is now fully satisfied and no record may
+      any longer describe this cast as unapproved or awaiting a veto. WHAT IT DOES NOT RELEASE, said on
+      the card before he answered and unchanged by the answer: both men still exist only as costume cards
+      on a grey void, so no staged plate of these two doing anything exists. His word releases the WORK,
+      not a render - the staged plates are drawn first, and no plate_ack waiver is written to get past
+      the plate guard. FILED UNDER THE PROPAGATION RULE now in force after this card exposed the failure
+      twice in two days: an approval is recorded here AND corrected in every record asserting the block,
+      in the same edit. Propagated the same day to STATE.md and review/ep2-picks/done-definitions.yaml
+      (cast_approved_0816 corrections). Still asserting the stale block and NOT in this task''s write
+      scope, named here so the next lane fixes them rather than believes them: review/ep2-picks/steward-picks-0815.yaml
+      (guards, note_on_09) and review/ep2-picks/gate-evidence.yaml (six rows reading "GATED - guard cast
+      unapproved (his call)").'

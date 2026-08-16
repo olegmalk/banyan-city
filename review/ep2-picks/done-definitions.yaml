@@ -117,6 +117,15 @@ beats:
     understandable: CONFUSING
     understandable_reason: THE FACE CHANGES between the first frame and the close-up. A cold viewer cannot
       tell whether this is the same man, and the beat IS a face working through a thought.
+    cast_gate_closed_0816: 'FOUNDER RULING, 2026-08-16 - "the cast stands as drawn". This beat is the
+      one the glasses question was actually about (see `beats.11.glasses_do_not_affect_this_beat_0816`:
+      beat 11 is backs-turned, beat 09 is his face in close-up). GUARD A WEARS WIRE-RIM GLASSES and beat
+      09''s new plate must NAME them, along with the rest of the frozen wardrobe - dark hair, tan wrap
+      tunic, wide white waist sash. The unnamed wire-rims are part of why "THE FACE CHANGES" above: a
+      prompt that does not say glasses lets each frame decide. This beat''s third round is no longer blocked
+      on the founder in any way. It is still not renderable: beat 09 has no staged plate of the approved
+      man, and the approval releases the WORK of drawing that plate, not a render off a costume card.
+      See `guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816` and `shipping_rule.note_on_09_CORRECTION_0816`.'
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -455,6 +464,22 @@ beats:
       the 3-5 lobed fig leaf the cold reader said would identify the fruit by itself. It contradicts the
       canon ''two broad round cotyledons''. That collision is already a question with him and I am not
       resolving it by accident: recorded, not adopted.'
+    both_legs_rejected_0816: 'FOUNDER RULING, 2026-08-16. `status: SHIP WITH FAULT NAMED` above stands
+      unedited - the disagreement between it and this entry is the record that we read this beat as shippable.
+      IT IS NOT SHIPPABLE AND NEITHER LEG SHIPS. He was shown leg A and leg B on the card /review/ep2-picks/sheets/b16-leg-b-0815.jpg
+      and answered: "the difference between leg b and a is just how this big leaf looks, both of them
+      are wrong though and do not resemble the sapling." That is not a pick between the two takes - it
+      is a taste ruling (R4) that the LEAF is wrong in both, and the two legs differ only in the thing
+      that is broken in both, so the A-or-B question was the wrong question. Beat 16 goes back to needing
+      a plate, not a pick. THIS CONFIRMS `unexpected_finding` ABOVE, which caught the same collision a
+      day earlier and correctly parked it as his to rule on: the lobed palmate leaf contradicts the canon
+      "two broad round cotyledons", and he has now ruled. WHAT MAKES IT EXPENSIVE: this beat''s own `done_when`
+      makes the leaf the subject ("close on one leaf... the leaf is the subject and he is depth"), and
+      beat 12''s does the same ("tight on the sapling''s TWO leaves against the sky"), so a wrong leaf
+      is not a background blemish in either beat - it is the shot. DO NOT RE-RENDER BEAT 16 OFF EITHER
+      LEG''S WORDING. The plant description itself is what failed, and whether a canonical sapling description
+      exists at all is the open question filed with this ruling; if it does not, defining the plant is
+      the founder''s (R4) and gets its own card. Recorded in review/inbox.yaml the same day.'
   '07':
     title: CONFISCATE
     script: '"Guard 1 points at the scavenger, decisive." Line: "So we confiscate the apple." (node.md,
@@ -556,6 +581,25 @@ beats:
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
       so it could not be bent to fit the clips that already exist.
     status: NO VERDICT YET
+    colour_ruled_0816: 'FOUNDER RULING, 2026-08-16 - THE FRUIT IS PURPLE, AND THAT IS THE ONLY THING THIS
+      RULING SETTLES. Asked on the card /review/ep2-picks/sheets/b20-fruit-colour-0815.jpg whether beat
+      20 was allowed to break canon with the dark red-brown apple/plum that came back at all four seeds,
+      he answered: "the fruit should be purple. it should not be that hard to make it purple." RED IS
+      REJECTED and no beat gets an exception; purple fruit stays canon (see STATE.md 2026-08-15, closed
+      under his own stopping rule). His second sentence is a challenge to us, not a question to answer:
+      the lever already exists and holds at both seeds (the purple-fig wording and reference in pipeline/wave-drafts.yaml,
+      and SAMPLE-b18-purple-fruit-0815.png), so beat 20 arriving red is our miss, not a model limit, and
+      it costs $0 on the local card. WHAT IS STILL BLOCKED, and it is not colour: the same pick carries
+      two faults this file''s own `done_when` names as disqualifying. (1) THE BRANCH IS THE WRONG TREE
+      - the bare branch in frame is a thick gnarled MATURE-TREE limb entering from the top corner, where
+      the beat needs the SAPLING''s own now-empty stem; `done_when` says "the empty stem is the evidence
+      and must be in frame", and a dead oak limb overhead is not the branch this fruit fell from. (2)
+      HE NEVER LOOKS UP - the gaze is level into the lens in the recorded pick and in all eight seeds,
+      and "then the look UP" is the second half of `done_when`. SO THE PLATE IS REDRAWN WHICHEVER WAY
+      THE COLOUR WENT. A purple fruit on a mature oak limb under a level gaze is still not this beat,
+      and `status: NO VERDICT YET` above is unchanged by the colour answer. NOTE FOR WHOEVER REDRAWS IT:
+      the wrong branch is the same failure as beat 16''s wrong leaf - both are the plant improvised per
+      beat rather than described once. See `beats.16.both_legs_rejected_0816`.'
 morning_deliverable: one line per beat, DONE with the clip or PARKED with reason and lever. If DONE is
   zero at 7am the loop failed, and it will be reported that way.
 morning_result:
@@ -672,6 +716,25 @@ guards_CORRECTION_0816:
   still_genuinely_the_founders: Guard A is drawn wearing WIRE-RIM GLASSES that no prompt anywhere names,
     so every render either invents them or drops them at random. Asked on the card /review/ep2-picks/sheets/guard-cast-0816.jpg.
     That is a question about wardrobe canon, not a re-opening of who the two men are.
+  still_genuinely_the_founders_ANSWERED_0816: 'ANSWERED, 2026-08-16. `still_genuinely_the_founders` above
+    stands unedited; it is no longer open. HIS WORDS: "the cast stands as drawn". THE GLASSES STAY. He
+    was asked about the wire-rims specifically and by name on that card, so "as drawn" is the answer to
+    the glasses question as much as to the rest of the sheet. WARDROBE CANON, FROZEN - guard A: dark-haired,
+    tan wrap tunic, wide white waist sash, WIRE-RIM GLASSES; guard B: blond, cream short-sleeve shirt,
+    white sash worn diagonally over the shoulder, broad dark-brown wrap skirt. Every prompt for a guard
+    beat that shows guard A''s face must now NAME the wire-rims rather than leave the render to invent
+    or drop them - that omission is the same defect as the anonymous "two round bald guard men" that miscast
+    every staged plate (see `guard_plates_are_miscast_0816`). `named_defect_carried_forward` is untouched:
+    the floating clipboard still comes off guard B before the set is frozen - he named it as a fault, and
+    "as drawn" ratifies the CAST, not a rendering artifact he had already complained about. THIS CLOSES
+    THE LAST FOUNDER GATE ON THE GUARD BEATS. No record may any longer describe this cast as unapproved,
+    awaiting a veto, or awaiting the glasses. `what_this_releases` above is unchanged and still governs:
+    it releases the WORK of drawing staged plates of the approved pair, NOT a render off a costume card,
+    and no `plate_ack` waiver is written to get past the plate guard. Recorded in review/inbox.yaml the
+    same day on the card /review/ep2-picks/sheets/guard-cast-0816.jpg. STILL ASSERTING THE STALE BLOCK
+    and not corrected by this edit, named so the next lane fixes them rather than believes them: review/ep2-picks/steward-picks-0815.yaml
+    (guards, note_on_09) and review/ep2-picks/gate-evidence.yaml (six rows reading "GATED - guard cast
+    unapproved (his call)").'
   why_this_entry_exists: The approval was recorded in review/inbox.yaml when it was given and nowhere
     else. This file, STATE.md and review/ep2-picks/steward-picks-0815.yaml all still described the cast
     as unapproved, so lanes reading them kept beats 05, 09, 10 and 11 blocked for a day; the 2026-08-16

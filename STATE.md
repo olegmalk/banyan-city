@@ -8169,3 +8169,75 @@ was changed here.
 it. **Nothing was authored, filed or enqueued.** Beat 11 remains founder-reserved
 — `blocked_on_0815: DO NOT AUTHOR OR FIRE THE REPLACEMENT YET` and *"lets do the
 guards on my taste"* — and no `plate_ack` waiver was written for anything.
+
+## 2026-08-16 — three rulings answered in one line each, and the third one is about the plant, not the beat
+
+He answered every open card on the board in a single message. Verbatim, in
+full: *"the fruit should be purple. it should not be that hard to make it
+purple. the difference between leg b and a is just how this big leaf looks,
+both of them are wrong though and do not resemble the sapling. the cast stands
+as drawn"*. The board is now **0 open, 75 resolved**.
+
+**1. BEAT 20 — THE FRUIT IS PURPLE, and that is all the answer buys.** Red is
+rejected; no beat gets an exception and purple fruit stays canon (already closed
+under his own stopping rule, 2026-08-15 above). *"it should not be that hard"*
+is a challenge to us, not a question to answer — the lever exists and holds at
+both seeds (`pipeline/wave-drafts.yaml`'s purple-fig wording and reference,
+`SAMPLE-b18-purple-fruit-0815.png`), so beat 20 arriving a dark red-brown
+apple/plum at all four seeds is our miss, not a model limit, and it is $0 on the
+local card. **BEAT 20 IS STILL BLOCKED, on two faults that are not colour** and
+that its own `done_when` names as disqualifying: the bare branch in frame is a
+thick gnarled **mature-tree limb** where the beat needs the **sapling's own
+now-empty stem** (the empty stem IS the evidence — a dead oak limb overhead is
+not the branch the fruit fell from), and **he never looks up** — the gaze is
+level into the lens in the pick and in all eight seeds, and the look up is the
+second half of the definition. The plate is redrawn whichever way the colour
+went. `beats.'20'.status: NO VERDICT YET` is unchanged.
+
+**2. BEAT 16 — BOTH LEGS REJECTED. This was not a pick.** The card offered leg A
+or leg B and the answer is that the question was the wrong one: the two legs
+differ only in the thing that is broken in both. It is a taste ruling (R4) that
+the **leaf** is wrong, so neither ships and beat 16 goes back to needing a
+plate. `beats.'16'.status: SHIP WITH FAULT NAMED` is superseded and left
+standing. **This confirms a collision our own record caught a day earlier and
+correctly parked as his** — `beats.'16'.unexpected_finding`: *"THE LEAF CAME OUT
+LOBED — a five-to-seven lobed palmate leaf... It contradicts the canon 'two
+broad round cotyledons'. That collision is already a question with him and I am
+not resolving it by accident: recorded, not adopted."* He has now ruled.
+
+**3. THE CAST STANDS AS DRAWN — the last founder gate on the guard beats is
+closed.** Guard A and guard B exactly as on
+`review/ep2-picks/sheets/guard-cast-0816.jpg`. **The wire-rim glasses STAY**: he
+was asked about them specifically and by name on that card, so *"as drawn"*
+answers the glasses question as much as the rest of the sheet. Frozen wardrobe —
+**guard A**: dark-haired, tan wrap tunic, wide white waist sash, **wire-rim
+glasses**; **guard B**: blond, cream short-sleeve shirt, white sash worn
+diagonally over the shoulder, broad dark-brown wrap skirt. Every guard prompt
+that shows guard A's face must now **name** the wire-rims rather than let the
+render invent or drop them — that omission is the same defect as the anonymous
+*"two round bald guard men"* that miscast every staged plate. The floating
+clipboard still comes off guard B before the set is frozen: he named it as a
+fault, and *"as drawn"* ratifies the **cast**, not an artifact he had already
+complained about. **No record may any longer describe this cast as unapproved,
+awaiting a veto, or awaiting the glasses.** What it releases is unchanged:
+the **work** of drawing staged plates of the approved pair on beats 05, 06, 07,
+09, 10 and 11 — **not a render**, because both men still exist only as costume
+cards on a grey void, and no `plate_ack` waiver is written to get past the plate
+guard.
+
+**PROPAGATED IN THE SAME EDIT, because twice in two days an approval was filed
+in `review/inbox.yaml` and nowhere else** — his guard cast sat there while three
+other records called the cast unapproved and four beats stayed blocked, and a
+move off `bald` in the reference sheets never reached seventeen plate prompts.
+The rule now in force: **an approval is filed in `review/inbox.yaml` AND
+corrected in every record asserting the block, in the same edit.** Written this
+pass, all additive with the superseded text left standing:
+`review/ep2-picks/done-definitions.yaml` —
+`beats.'16'.both_legs_rejected_0816`, `beats.'20'.colour_ruled_0816`,
+`beats.'09'.cast_gate_closed_0816`, and
+`guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816`; plus this
+section. **STILL ASSERTING THE STALE BLOCK AND NOT IN THIS TASK'S WRITE SCOPE**,
+named here so the next lane fixes them rather than believes them:
+`review/ep2-picks/steward-picks-0815.yaml` (`guards`, `note_on_09`) and
+`review/ep2-picks/gate-evidence.yaml` (six rows reading *"GATED - guard cast
+unapproved (his call)"*).
