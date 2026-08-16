@@ -352,3 +352,71 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   and pipeline/wave-drafts.yaml are UNTOUCHED; if the framing wins, the shot board gets updated deliberately
   and separately, by whoever owns the beat. Silent, $0, and nothing here is a voice synthesis or an episode
   assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-16 after the render. NOTHING ABOVE THIS LINE HAS
+# BEEN EDITED -- the bar it is judged against is the one committed in 6625840b
+# BEFORE the plate was drawn, and it has not been rewritten to fit the result.
+# ============================================================================
+outcome:
+  verdict: FAIL
+  reading: 'All 97 frames opened CONSECUTIVELY, twelve to a sheet, cropped to the frame the insert occupies.
+    Evidence sheet: pipeline/research/EVIDENCE-b17-insert-0816.png. Clip sha256 83bc6cb63271ecc5ae12a965be3dddc098d7edd23cbc6aaccb850884dd99a263,
+    matching the manifest the box wrote.
+
+    f000 is the plate (mean |init - f000| 6.1, the VAE and crf-33 round-trip).
+
+    f000-f040 THE HAND KEEPS CONTACT AND DOES NOT TRAVEL. It stays on the cloth the whole way, so M1
+    passes and nothing else does. Its wrist cuff sits at the same point on the same fold, and the pale
+    cloth ridge under the index claw is the same ridge at f000 and f036.
+
+    f041-f050 the hand elongates, the claws detach and redraw, and it dissolves into the sleeve of an
+    arm. F4 MORPH.
+
+    f050-f096 THERE IS NO INSERT. The shot is a medium portrait of a grinning spiky-haired man in a pale
+    robe with an arm across the frame and a warm orange background; the goblin hand survives only as a
+    small dark-green fragment at the bottom edge of some frames. F5 SCENE BREAK.'
+  m1_contact: PASS
+  m2_travel: 'FAIL. Measured as the bar defines it -- the hand RELATIVE TO THE CLOTH, not relative to
+    the frame. Over f000-f039 the hand patch moves 226 px down in frame; three cloth landmarks (the pale
+    sleeve fold above the wrist, the dark drape at the left edge, the cloth ridge right of the claws)
+    move 214 px down over the same interval. Hand minus cloth is 4-22 px = 0.6-3.2% of frame width =
+    0.01-0.06 hand-widths, against a 1.0 hand-width bar. The two larger readings in that window (34-42
+    px at f024 and f042) are the frames where the hand''s own NCC dips to 0.78 and 0.10, i.e. tracker
+    noise, not motion.'
+  m3_hand_not_camera: 'FAIL, F3. The 226 px of frame-relative drift is the camera pulling back and tilting:
+    the defocused grass wedge slides out of the top-left corner, and a grinning face with a fur collar
+    is progressively INVENTED above the hand -- content that is nowhere in the plate. The cloth folds
+    translate with the hand, which is exactly what M3 forbids.'
+  m4_continuous_path: FAIL, F4 then F5.
+  fail_modes_hit: F3 camera-only, F4 morph, F5 scene break, F6 contact without traversal.
+  metric_self_check: 'The NCC tracker FAILED ITS OWN CHECK after f042 (hand NCC 0.04-0.32, cloth landmarks
+    0.03-0.36), so it is guessing from f043 on and NO number past f042 is quoted anywhere above. An earlier
+    colour-segmentation tracker was BUILT AND THROWN AWAY before the clip existed, by the falsification
+    step: the hand LOOKS green and is not (R71 G69 B47 on the plate -- R above G), so `(G > R + 10)` matched
+    ZERO pixels in the whole frame and hue does not separate it from the cloth either. That tracker would
+    have reported "no hand" on all 97 frames, which reads identically to "the hand never appears". Depth
+    and cadence were not computed and are not quoted.'
+  what_this_settles: 'MAKING THE ACTION FILL THE FRAME DOES NOT MAKE IT RENDER. The hand was 57.5% of
+    the frame''s width and the only subject in shot, and the stroke still did not happen. Size-in-frame
+    is NOT sufficient, so it cannot be assumed as the fix for beats 06, 08 and 10, and no episode should
+    be re-cut into inserts on the strength of it.'
+  what_this_does_not_settle: 'STATED RATHER THAN GLOSSED, because it changes what the next lane should
+    do. This is NOT the same failure as the figure-scale attempts. amp-brush FROZE -- identical pose f0
+    to f96. This clip did the opposite: it moved enormously (per-pair mean |delta| up to 54, mean |f000
+    - f096| 69.9) and spent every bit of that motion RE-COMPOSING THE SHOT instead of performing the action.
+    Two readings survive the evidence and one sample cannot separate them: (a) the engine cannot do fine
+    hand action at any scale, or (b) a tight insert with no whole body in it is out of distribution for
+    this i2v checkpoint, so the shot ESCAPES to the composition it knows -- a character portrait -- and
+    the framing dragged the clip away rather than the action being impossible. Reading (b) is the same
+    shape as the plate-side law that an unusual frame invites the largest noun in the prompt: here there
+    was no empty region to fill, so it reframed to make one and put a face in it.'
+  not_done_on_purpose: 'ONE SAMPLE. No sweep, no second seed, no wording variant, no re-plate. Guidance,
+    CFG and checkpoint belong to another lane and were not touched, and bark-prop wording is permanently
+    closed. The clip is an engine probe and must never be cut into an episode.'
+  honest_caveats: 'Two, neither of which the verdict rests on. (1) The two-word prompt delta -- amp-brush
+    said "with both hands", this says "with his hand" -- is forced by a plate with one hand in it, so
+    this is not a pure single-variable A/B and should never be quoted as one. (2) The cloth landmarks
+    are low-texture and their NCC sits at 0.25-0.51 even inside the valid window; the M2 conclusion is
+    supported independently by the visible drift of the grass wedge and by the cuff and the fold under
+    the index claw being unmoved at f000 and f036, which is why it does not rest on the tracker alone.'
