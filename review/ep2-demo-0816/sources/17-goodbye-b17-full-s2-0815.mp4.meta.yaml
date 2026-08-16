@@ -1,0 +1,56 @@
+# Shot provenance (7.2).
+#
+# NOT written by video_task at render time. The twelve ep2-b17-*-0815 clips
+# reached this Mac as bare mp4s with no sidecar, so every field below is
+# RECONSTRUCTED from the job spec that produced this exact cell —
+# pipeline/jobs/ep2-b17-full-s2-0815.yaml, which pins the recipe, the seed, the
+# plate sha and both prompt files byte-for-byte across all twelve cells. That is
+# a weaker record than a render-time sidecar and is labelled as one rather than
+# dressed up as one. Nothing here is measured off the file except size, frames
+# and duration, which were read from the bytes with ffprobe.
+provenance_source: reconstructed from pipeline/jobs/ep2-b17-full-s2-0815.yaml (no render-time sidecar exists)
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 17
+size: 704x1280
+frames: 97
+fps: 24
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+distilled_sigmas: true
+image_crf: 33
+seed: 20260902
+task: ep2-b17-full-s2-0815
+cost_usd: 0
+mode: production
+offload: sequential
+init_plate: 17-goodbye-mac-seated-r1.png (farm-out/ep2-b17-mac-plate-0815), cover-cropped to 704x1280
+init_plate_sha256: 9429a76fc36efc4981864ee131c45e2d56292ff90335587c28e449ba8b810a94
+prompt: >-
+  He pushes up off the grass onto his feet, brushes the dust from his cloak, and
+  turns away to go. 2D anime, hand-drawn cel animation, flat cel shading, clean
+  ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+  best quality, very aesthetic.
+negative: >-
+  camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to
+  another shot, scene change, different location, split screen, still image,
+  freeze frame
+script_line: >-
+  Beat 17 GOODBYE, node 002b-first-citizen — "The scavenger stands, brushes off,
+  and turns to go." / SCAVENGER: "If anyone asks — you didn't see me. Which is
+  true. You're a plant."
+demo_note: >-
+  Steward pick of the twelve-cell ep2-b17 matrix (3 action clauses x 4 seeds),
+  2026-08-16. Picked on a cold read of consecutive frames, not on a metric.
+  Measured with pipeline/b17_figure_track.py: head-top rise 240 px = 37.5% of
+  frame height, second-largest in the set; lateral head travel 255 px at
+  half-scale, the largest in the set. Terminal-freeze index 0 hard / 0 soft —
+  the only defect-free tail among the four cells that keep the figure in frame.
+  Hold period 3 (lag-3 autocorrelation 0.91) = about 32 distinct pictures across
+  96 frames, effective 8 fps — the named fault: this clip judders, it is not
+  clean 24 fps. Second named fault: the final frame (96) is a heavy motion smear
+  as he strides out. Costume identity holds throughout, which four of the twelve
+  cells do not manage. Depth was NOT used to rank: it is inverted on this
+  evidence (cycle-018) and ranking by it selects against real motion.

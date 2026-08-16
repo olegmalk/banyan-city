@@ -1,0 +1,375 @@
+# Assembly provenance (§7.2) — written by pipeline/render_t3.py at
+# assembly time. `ingredients:` is the list build_site.publishable()
+# walks: one row per file muxed into this cut, its bytes as muxed, and
+# the verdict it carried then. A row that no longer resolves, no longer
+# hashes the same, or no longer passes is a REFUSAL for this whole cut —
+# a concatenation must not launder what went into it. `provisional:` on
+# a row is copied from that ingredient's OWN record and means only that
+# it marks itself provisional — read its `provisional_reason` for what
+# that means there, because the phrase is not used consistently across
+# this tree. It is a separate question from `publishable:`, which is the
+# licence gate's word and says nothing about taste either way.
+platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+cost_usd: 0.0
+node: 002b
+leaf: bench (--out) — no leaf, not canon
+beats: 21
+footage_beats:
+- 1
+- 3
+- 4
+- 5
+- 6
+- 8
+- 10
+- 11
+- 12
+- 13
+- 16
+- 17
+- 18
+- 20
+- 21
+slate_beats:
+- 2
+- 7
+- 9
+- 14
+- 15
+- 19
+duration_s: 115.07
+size: 720x1280
+source_platforms: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+ingredients:
+- beat: 1
+  kind: clip
+  path: review/ep2-demo-0816/sources/01-cold-open-b01-purple.mp4
+  sha256: 7e2e61c17c3e3d5b5498379e684aededaeb3bf45fb9b0fd9c3eedd0ec35c117a
+  publishable: true
+- beat: 1
+  kind: audio
+  path: review/ep2-demo-0816/sources/01-vo.mp3
+  sha256: a03a549e0ae69084ce27dfd7b852ff814a91bafd5f4b76d25f6e7491913f09e7
+  publishable: true
+- beat: 3
+  kind: clip
+  path: review/ep2-demo-0816/sources/03-bad-cover-b03-refire-0814.mp4
+  sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
+  publishable: true
+- beat: 3
+  kind: audio
+  path: review/ep2-demo-0816/sources/03-vo.mp3
+  sha256: 805220bd21968b721d710362b7e18e7549ff12f8d81b24ce8ca3ec70cedc3663
+  publishable: true
+- beat: 4
+  kind: clip
+  path: review/ep2-demo-0816/sources/04-the-footnote-b04-refire-0814.mp4
+  sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
+  publishable: true
+- beat: 4
+  kind: audio
+  path: review/ep2-demo-0816/sources/04-vo.mp3
+  sha256: 333cc20e6b7f6bfe10e6ac9a03ed3bf48b434471bf6b5591f4f4c655f20f9492
+  publishable: true
+- beat: 5
+  kind: clip
+  path: review/ep2-demo-0816/sources/05-the-patrol-b05-standB-trim.mp4
+  sha256: 909688bce9c48a872b102cd6a02f26e2e9a80e6e83734c8c6541c3cc040fa93a
+  publishable: true
+- beat: 5
+  kind: audio
+  path: review/ep2-demo-0816/sources/05-vo.mp3
+  sha256: 3db5749b7f8f6023cac68232ac3e172186f14a0f447350d356768064094d4078
+  publishable: true
+- beat: 6
+  kind: clip
+  path: review/ep2-demo-0816/sources/06-the-clipboard-b06-scene-0814r-trim.mp4
+  sha256: 6e1d49324cc7b74ad21cd2910827ac88b15135dc3c9168ddc161425ab3fd4f8d
+  publishable: true
+- beat: 6
+  kind: audio
+  path: review/ep2-demo-0816/sources/06-vo.mp3
+  sha256: 31c6591e9d0b0233de3a66f59eda9ea93f637175eb0af0c26fa0f090b07fc391
+  publishable: true
+- beat: 7
+  kind: audio
+  path: review/ep2-demo-0816/sources/07-vo.mp3
+  sha256: ade2493cfedec01993be11f4dd5136bdae2680c1c4e79a4e33fcf99ec8be1da3
+  publishable: true
+- beat: 8
+  kind: clip
+  path: review/ep2-demo-0816/sources/08-inside-him-b08-twohander.mp4
+  sha256: ac992bcb335cd9dd5825b3b08485ccb662d3002916b3e561349bd52abe2b1eba
+  publishable: true
+- beat: 8
+  kind: audio
+  path: review/ep2-demo-0816/sources/08-vo.mp3
+  sha256: ddbe20099ac2a199ce8f8fffea272e366690d3def8f125266a27071d85c9c28f
+  publishable: true
+- beat: 9
+  kind: audio
+  path: review/ep2-demo-0816/sources/09-vo.mp3
+  sha256: 524bbcf9388c63c15027412e7d4e70aa4bb7d4ff96267b58ef0c4867423a522c
+  publishable: true
+- beat: 10
+  kind: clip
+  path: review/ep2-demo-0816/sources/10-no-form-b10-pairB-trim.mp4
+  sha256: b35f42eb181f63f263277010e2fd1f47172ee18a00f567c20468860b7bdc3811
+  publishable: true
+- beat: 10
+  kind: audio
+  path: review/ep2-demo-0816/sources/10-vo.mp3
+  sha256: 882126209ac3395cc1b70475c493cbd14ce08dd65553c374ff0d81390774f38d
+  publishable: true
+- beat: 11
+  kind: clip
+  path: review/ep2-demo-0816/sources/11-they-leave-b11-finalB-BROKEN.mp4
+  sha256: d797596281d10cab92fdfb229a88251be7a5c45b1f23a80cccbad191d4f71f14
+  publishable: true
+- beat: 11
+  kind: audio
+  path: review/ep2-demo-0816/sources/11-vo.mp3
+  sha256: baf4cb27c8850e066262c0ae5ef5cee05f41489ee2b647515e3e852fad751052
+  publishable: true
+- beat: 12
+  kind: clip
+  path: review/ep2-demo-0816/sources/12-related-b12-tightB-untrimmed.mp4
+  sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
+  publishable: true
+- beat: 12
+  kind: audio
+  path: review/ep2-demo-0816/sources/12-vo.mp3
+  sha256: 9d58926d45ce1e84ebba6fcba541e7709797cc8a3ac7a40f96b06e2ea43849ac
+  publishable: true
+- beat: 13
+  kind: clip
+  path: review/ep2-demo-0816/sources/13-the-shade-b13-refire-0814.mp4
+  sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
+  publishable: true
+- beat: 13
+  kind: audio
+  path: review/ep2-demo-0816/sources/13-vo.mp3
+  sha256: 4c7b6981cccbd548042f85e3d516f5228dddc65f79ba58ab4d22f17f1493a5f9
+  publishable: true
+- beat: 14
+  kind: audio
+  path: review/ep2-demo-0816/sources/14-vo.mp3
+  sha256: 20c8f57359ae6ee09f34c7818fba3d959a68c0b095ccd2ef50d28422a7477a16
+  publishable: true
+- beat: 15
+  kind: audio
+  path: review/ep2-demo-0816/sources/15-vo.mp3
+  sha256: 072123193efa6248a0c70500a898541c0923940256415ed23aa53e3489889c2e
+  publishable: true
+- beat: 16
+  kind: clip
+  path: review/ep2-demo-0816/sources/16-why-b16-anim-0814.mp4
+  sha256: dcdfd26e483cb82c1f8ad92c3035da478a9bbe4a93cb907e24b6599f77192303
+  publishable: true
+- beat: 16
+  kind: audio
+  path: review/ep2-demo-0816/sources/16-vo.mp3
+  sha256: d07dc2c7c0e14335adf11a6c208742ca76802c28672ca55129c29564a1f510aa
+  publishable: true
+- beat: 17
+  kind: clip
+  path: review/ep2-demo-0816/sources/17-goodbye-b17-full-s2-0815.mp4
+  sha256: 9e9f822beb2b9a1231f4234adc6cf176ffa31a853a39efa63da06d829daef530
+  publishable: true
+- beat: 17
+  kind: audio
+  path: review/ep2-demo-0816/sources/17-vo.mp3
+  sha256: 5a2ef7f37c36c57d928c312dc7d16eac3c91e877a99d2cd360edf2b2a70ead71
+  publishable: true
+- beat: 18
+  kind: clip
+  path: review/ep2-demo-0816/sources/18-the-decision-b18-plainfig.mp4
+  sha256: 415f24d822cddcb9a12d7a86243c6b56eb5b0b450e0087fac684c2c61071d43b
+  publishable: true
+- beat: 18
+  kind: audio
+  path: review/ep2-demo-0816/sources/18-vo.mp3
+  sha256: 7ee21f8f91ae6092d3b054741231bcf0e248b7dce7cd060bf8f2c84b436c81a1
+  publishable: true
+- beat: 20
+  kind: clip
+  path: review/ep2-demo-0816/sources/20-evidence-b20-shape-headtrim.mp4
+  sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
+  publishable: true
+- beat: 20
+  kind: audio
+  path: review/ep2-demo-0816/sources/20-vo.mp3
+  sha256: 8528ef0392447db3d8bfe15a6ed30e5624da370836ac5095d99399613a8e3ec8
+  publishable: true
+- beat: 21
+  kind: clip
+  path: review/ep2-demo-0816/sources/21-the-answer-b21-daylight-0814.mp4
+  sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
+  publishable: true
+sources:
+- beat: 1
+  slug: COLD OPEN — 0:00–0:06
+  clip: 01-cold-open-b01-purple.mp4
+  audio: 01-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 2
+  slug: THE SPRINT — 0:06–0:11
+  clip: slate (no footage yet)
+  audio: none
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 3
+  slug: BAD COVER — 0:11–0:16
+  clip: 03-bad-cover-b03-refire-0814.mp4
+  audio: 03-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 4
+  slug: THE FOOTNOTE — 0:16–0:22
+  clip: 04-the-footnote-b04-refire-0814.mp4
+  audio: 04-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 5
+  slug: THE PATROL — 0:22–0:27
+  clip: 05-the-patrol-b05-standB-trim.mp4
+  audio: 05-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 6
+  slug: THE CLIPBOARD — 0:27–0:34
+  clip: 06-the-clipboard-b06-scene-0814r-trim.mp4
+  audio: 06-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 7
+  slug: CONFISCATE — 0:34–0:37
+  clip: slate (no footage yet)
+  audio: 07-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 8
+  slug: INSIDE HIM — 0:37–0:42
+  clip: 08-inside-him-b08-twohander.mp4
+  audio: 08-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 9
+  slug: THE PAUSE — 0:42–0:45
+  clip: slate (no footage yet)
+  audio: 09-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 10
+  slug: NO FORM — 0:45–0:50
+  clip: 10-no-form-b10-pairB-trim.mp4
+  audio: 10-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 11
+  slug: THEY LEAVE — 0:50–0:55
+  clip: 11-they-leave-b11-finalB-BROKEN.mp4
+  audio: 11-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 12
+  slug: RELATED — 0:55–1:00
+  clip: 12-related-b12-tightB-untrimmed.mp4
+  audio: 12-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 13
+  slug: THE SHADE — 1:00–1:04
+  clip: 13-the-shade-b13-refire-0814.mp4
+  audio: 13-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 14
+  slug: THE DEFENSE — 1:04–1:10
+  clip: slate (no footage yet)
+  audio: 14-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 15
+  slug: GOOD LISTENER — 1:10–1:15
+  clip: slate (no footage yet)
+  audio: 15-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 16
+  slug: WHY — 1:15–1:22
+  clip: 16-why-b16-anim-0814.mp4
+  audio: 16-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 17
+  slug: GOODBYE — 1:22–1:27
+  clip: 17-goodbye-b17-full-s2-0815.mp4
+  audio: 17-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 18
+  slug: THE DECISION — 1:27–1:34
+  clip: 18-the-decision-b18-plainfig.mp4
+  audio: 18-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 19
+  slug: THE DROP — 1:34–1:39
+  clip: slate (no footage yet)
+  audio: none
+  platform: none
+  model: none
+  cost_usd: 0.0
+- beat: 20
+  slug: EVIDENCE — 1:39–1:42
+  clip: 20-evidence-b20-shape-headtrim.mp4
+  audio: 20-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 21
+  slug: THE ANSWER — 1:42–1:47
+  clip: 21-the-answer-b21-daylight-0814.mp4
+  audio: none
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0

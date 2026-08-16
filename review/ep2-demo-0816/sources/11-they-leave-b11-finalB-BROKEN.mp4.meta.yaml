@@ -1,0 +1,21 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 11
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260901
+task: ep2-b11-finalB-0814
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0186
+compute_s_per_video_s: 53.8
+demo_note: 'BROKEN TAKE (beats.11.status_override_0815): total identity collapse away from the plate f16-f21. Included in the demo so the fault is visible, NOT as a passing take.'
