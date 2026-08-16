@@ -2142,3 +2142,4 @@
 09:36:36Z STARTED task=ep2-b17-amp2-point-0816-1786871305 attempt=1 on box-runner
 09:42:24Z DONE task=ep2-b17-amp2-point-0816-1786871305 rc=0 artifacts=2
 09:42:33Z STARTED task=ep2-b17-amp2-standbrush-0816-1786871727 attempt=1 on box-runner
+09:48:20Z DONE task=ep2-b17-amp2-standbrush-0816-1786871727 rc=0 artifacts=2
