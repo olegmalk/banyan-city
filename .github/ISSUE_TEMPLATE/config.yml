@@ -1,8 +1,0 @@
-blank_issues_enabled: true
-contact_links:
-  - name: 💧 React to a node
-    url: https://github.com/olegmlkvorg/banyan-city/issues?q=is%3Aissue+%F0%9F%92%A7
-    about: Each node has a reaction issue — react with emoji or comment. That's sap.
-  - name: 🌿 Branch a story / fork the city
-    url: https://github.com/olegmlkvorg/banyan-city#how-to-branch-a-story
-    about: No issue needed — branching and forking never require permission.
