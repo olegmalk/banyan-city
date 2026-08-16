@@ -1,0 +1,400 @@
+# 2026-08-17, THE b17 BIGBODY RESEED LANE. FOUR SEEDS, ONE VARIABLE.
+#
+# WHY THIS EXISTS. Commit b0911318 recorded a PASS on the whole-body brush and
+# said, in its own words, "ONE SAMPLE, one seed, one beat, one action". The
+# claim that came out of it -- that the lever for a small action is STAY IN
+# DISTRIBUTION WHILE MAKING THE ACTION AS LARGE AS THAT FRAME ALLOWS -- is now
+# the most load-bearing claim in the motion investigation, and it rests on n=1.
+# The founder is sceptical and is right to be. This lane reproduces it or kills
+# it. Nothing else is being asked.
+#
+# THE VARIABLE IS THE SEED AND NOTHING ELSE. Same plate (the same published
+# r3s1 png at the same asserted sha256), same cover crop, same positive prompt
+# string, same negative string, same guidance, same sigmas, same two-stage,
+# same crf, same offload, same 97 frames at 24fps at 704x1280. The generator
+# that wrote this file verified the prompt, the negative, the init path, the
+# init sha and every render flag equal to ep2-b17-bigbody-motion-0816's by
+# parsed-value comparison, not by assertion. Only the id, the payload and out
+# directories, the output filenames and the seed differ.
+#
+# HOW IT WILL BE JUDGED -- THE BAR IS efd7bafa's, VERBATIM AND UNSOFTENED.
+# It was pre-registered before any pixel of the original and it is not being
+# rewritten for the reproduction:
+#   M1 a hand in contact with the cloak.
+#   M2 that hand TRAVELS at least one hand-width across the fabric RELATIVE TO
+#      THE CLOTH -- travel in FRAME is the number that means nothing.
+#   M3 the hand moves, not the camera: frame edges, horizon and cloth folds
+#      must not translate with it.
+#   M4 a continuous path readable across consecutive frames.
+# FAIL is any of F1 frozen, F2 cloth-only, F3 camera-only, F4 morph or teleport,
+# F5 scene break, F6 contact without traversal (an explicit FAIL, never a
+# partial pass), F7 body-instead-of-hand (a stand-up is not a pass, a head turn
+# is not a pass). Whether he stands is recorded separately and scored as
+# nothing. Depth is retired AND INVERTED (stand-up 0.290, zero-motion 0.516,
+# bird-only 0.376) and the old cadence metric aliases odd hold periods to
+# exactly 1.00x -- NEITHER WILL BE COMPUTED OR QUOTED.
+#
+# THE READING IS DECIDED BEFORE THE CLIPS EXIST, so that no result can be
+# talked into the answer the lane would prefer:
+#   3 or 4 of 4 PASS -> the finding is real and characterised.
+#   1 of 4 PASS      -> that is the engine's BASE RATE, not a lever, and the
+#                       original was luck. That is a KILL and will be reported
+#                       in exactly those words.
+#   2 of 4 PASS      -> ambiguous; say so and say what would separate it.
+#
+# THE INTERNAL CONTROL IS THE INSTRUMENT THAT MADE THE ORIGINAL PERSUASIVE and
+# it is carried over: the OTHER hand, same mask, same frames. It moved 2 px
+# while the travelling hand moved 231. A camera move, a global drift or a
+# measurement artefact moves BOTH. Every tracker gets its mask overlaid back
+# onto the real frames and looked at before any number is believed -- six
+# measures have been retired for cause this week, including a colour rule that
+# matched ZERO hand pixels and one that could not separate the hand from his
+# bald head (R239 G243 B178 vs R241 G243 B180, within 2 counts on every
+# channel).
+#
+# WHAT A PASS HERE WOULD NOT BUY, recorded before the result so it cannot be
+# over-read afterwards: this is ONE figure and HIS OWN CLOAK. Beats 06, 08 and
+# 10 are TWO-CHARACTER shots WITH A PROP, and on this checkpoint a prop does
+# not bind to a named character -- a board attached to the wrong figure in 9 of
+# 12 frames. Four passes here would say the composition axis is real for a
+# one-figure self-directed action and would say NOTHING about those three.
+#
+# ENGINE PROBES, NEVER TO BE CUT INTO AN EPISODE. shots.md and
+# pipeline/wave-drafts.yaml are UNTOUCHED. No plate_ack, no gate:, no gate_ref:.
+# Sidecars stamped approved: false, provisional: true, is_show_content: false,
+# cost_usd 0. $0 -- local card, no provider. Filed at priority 70, behind the
+# original probe's 40, so any lane that files ahead of these wins.
+# ============================================================================
+id: ep2-b17-bigbody-s20260911-0817
+task: ep2-b17-bigbody-s20260911-0817
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 70
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: b17 bigbody reseed lane (does b0911318's PASS reproduce, or was it luck?), 2026-08-17
+consumer: 'The single most load-bearing claim in the motion investigation, which currently rests on ONE
+  sample. b0911318 recorded a PASS on the whole-body brush and drew from it the lever ''stay in a composition
+  the checkpoint knows while making the action as large as that frame allows'' -- and that reading has
+  already been reported to the founder as surviving. n=1 cannot tell a lever from a lucky draw: this engine
+  fails its named action in a meaningful fraction of takes for no reason anyone has isolated, so a single
+  pass is consistent BOTH with the composition axis being real AND with the base rate. Four fresh seeds
+  of the byte-identical configuration separate those. 3-4 passes and the finding is real and characterised;
+  1 pass and the finding is the base rate and the original was luck, which is a kill and will be reported
+  as one; 2 is ambiguous and will be reported as ambiguous. Judged by opening all 97 frames of each clip
+  consecutively against efd7bafa''s pre-registered bar, with the stationary other hand as the internal
+  control, and NEVER by depth -- cycle 018 measured it inverted and a clip whose only movement was a bird
+  scores 0.376.'
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the same published whole-body plate as ep2-b17-bigbody-s20260911-0817.
+  PASS is M1+M2+M3+M4 exactly as pre-registered in commit efd7bafa before the original plate was drawn,
+  not as re-stated afterwards: a hand in contact with the cloak, travelling at least one hand-width across
+  the fabric RELATIVE TO THE CLOTH, with the frame edges, horizon and cloth folds NOT translating with
+  it, along a path followable continuously across consecutive frames. FAIL is any of F1 frozen, F2 cloth-only,
+  F3 camera-only, F4 morph or teleport, F5 scene break, F6 contact without traversal, F7 body-instead-of-hand.
+  F6 is a FAIL and not a partial pass. F7 is a FAIL and not a partial pass: this plate can stand him up,
+  turn him and flutter the cloak, and none of that is the brush. A changed picture is not a pass. Depth,
+  cadence and unaligned camera-scale numbers are not evidence and will not be quoted. The job SUCCEEDS
+  mechanically if the clip renders at all -- a frozen clip is a successful job and a failed sample, and
+  the two are not confused.'
+known_weakness_of_this_fixture: 'WRITTEN BEFORE ANY OF THE FOUR CLIPS EXIST. It adds NO criterion and
+  changes none: M1-M4 and F1-F7 are exactly as committed in efd7bafa. (1) THE PLATE''S MARGINAL P4 IS
+  CARRIED OVER WHOLE. The plate bar forbids an empty region larger than the figure''s head; his head is
+  about 230x230 px and the largest flat patch in the r3 background is about 114x240 px. That is a pass
+  on the one axis this checkpoint has broken four separate times (beat 08''s colossus in a reserved sky;
+  beat 08 r4 showing a negative naming the invited noun removes it not at all; the tight insert PULLING
+  THE CAMERA BACK to manufacture a hole and putting a face in it; this lane''s own r2 plate growing three
+  goblin heads in a flat grass margin). If any of these four shows a face, a second figure or a scene
+  break, that ~114x240 patch is the FIRST place to look, and it is a named prior rather than an excuse
+  -- an F5 is still an F5. (2) THE ORIGINAL''S OWN LATE-CLIP DEGRADATION IS EXPECTED TO RECUR. From about
+  f055 the winner''s claws softened and the two forearms merged into a green slab. F4''s defining clause
+  is a hand REAPPEARING WITHOUT A CONTINUOUS PATH, and softening is not that, so ugly-but-continuous is
+  scored the same way here as it was there. Consistency of scoring across the original and the reproduction
+  matters more than the scoring being generous or strict, and it will not be quietly tightened to manufacture
+  a kill or quietly loosened to manufacture a reproduction. (3) THE ORIGINAL OSCILLATED -- 231 px at f030,
+  101 at f048, peak 250 at f064 -- repeated strokes rather than one pose change. PEAK EXCURSION RELATIVE
+  TO THE CLOTH is therefore the M2 statistic on all four, as it was on the winner, and any seed judged
+  on a different statistic than the winner was judged on is not a reproduction.'
+why: Reproduce the most load-bearing claim in the project or kill it. Eleven minutes each on the local
+  card, $0, no new checkpoint, no recipe sweep, no new plate, no wording variant -- the whole point is
+  that NOTHING moves except the seed. Filed at priority 70, well behind the original probe's 40, so any
+  lane that files work ahead of these takes the card first.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar as an unapproved engine probe.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. This lane's
+    standing requirement is that anything it publishes says so on its face, so
+    the three keys are appended here rather than asserted in a commit message
+    nobody downstream reads. REFUSES if the sidecar is missing -- a clip whose
+    provenance file did not get written must not pass silently.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b17-bigbody-s20260911-0817 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: false\n"
+            "note: |\n"
+            "  ENGINE PROBE, NOT A TAKE FOR THE CUT. This clip exists to separate\n"
+            "  two readings of the tight-insert failure: whether fine hand action\n"
+            "  is impossible on this engine, or whether an insert with no whole\n"
+            "  body is simply out of distribution. It animates a plate drawn for\n"
+            "  the test, not beat 17's staged plate, and re-cutting beat 17 into\n"
+            "  two shots is an authorship decision no lane has taken.\n"
+            "  It must never be picked into an episode.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-motion-prompt.txt: He brushes the dust from his cloak
+    with both hands. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-jobs-encode.json: |-
+    [
+     {
+      "beat": 17,
+      "embeds": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817-out\\b17-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817\\b17-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817\\b17-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-jobs-render.json: |-
+    [
+     {
+      "beat": 17,
+      "seed": 20260911,
+      "embeds": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817-out\\b17-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817-out\\b17-bigbody-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b17-bigbody-s20260911-0817-out\\17-goodbye-bigbody-s20260911-LTX-handbrush.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-bigbody-plate-0816\17-goodbye-bigbody-mac-plate-r3s1.png
+  - --sha256
+  - 412633e28a5003d5438d85a7d47bd6fcd6ea50d87e47cd4e027ea08e5c572cef
+  - --out
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817-out\b17-bigbody-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-bigbody-s20260911-0817
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817-out\bench-bigbody-s20260911.jsonl
+  - --bench-label
+  - ep2-b17-bigbody-s20260911-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b17-bigbody-s20260911-0817-out\17-goodbye-bigbody-s20260911-LTX-handbrush.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches
+    # nothing and the step publishes nothing while returning a code that reads
+    # like a render failure.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b17-bigbody-s20260911-0817-out"
+    pay_dir = "C:/banyan-farm/ep2-b17-bigbody-s20260911-0817"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-bigbody-s20260911-0817"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(out_dir + "/17-goodbye-bigbody-s20260911-LTX-handbrush.mp4*")
+                 + glob.glob(out_dir + "/b17-bigbody-init-704x1280.png")
+                 + glob.glob(out_dir + "/bench-bigbody-s20260911.jsonl")
+                 + glob.glob(pay_dir + "/b17-motion-prompt.txt")
+                 + glob.glob(pay_dir + "/b17-negative.txt"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-bigbody-s20260911-0817.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 3 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-bigbody-s20260911-0817-out\17-goodbye-bigbody-s20260911-LTX-handbrush.mp4
+- C:\banyan-farm\ep2-b17-bigbody-s20260911-0817-out\b17-bigbody-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. Beat 17 is GOODBYE -- "The scavenger stands, brushes off, and turns to go." This job animates
+  the BRUSHES-OFF clause of that same scripted sentence and nothing else. STATED PLAINLY: it is an ENGINE
+  PROBE, NOT A TAKE FOR THE CUT. It animates a plate drawn for the test rather than beat 17''s staged
+  plate, and the clip it produces must never be picked into an episode -- it exists to separate two readings
+  of the tight-insert failure. Same category as the ep2-b17-amp2-* probes and ep2-b17-insert-motion-0816.
+  shots.md and pipeline/wave-drafts.yaml are UNTOUCHED; if the framing wins, the shot board gets updated
+  deliberately and separately, by whoever owns the beat. Silent, $0, and nothing here is a voice synthesis
+  or an episode assembly. This job is one of FOUR RESEEDS of ep2-b17-bigbody-s20260911-0817, testing whether
+  that clip''s PASS reproduces or was a lucky draw. It changes the seed and nothing else.'
+outcome:
+  verdict: FAIL
+  lane_result: '0 OF 4 REPRODUCE. The decision rule was written into these four specs BEFORE any of them
+    rendered: 3-4 of 4 means the finding is real, 1 of 4 is the engine''s BASE RATE and the original was
+    LUCK, 2 of 4 is ambiguous. The result is below even the kill line. WHAT DIES IS THE INFERENCE, NOT
+    THE OBSERVATION: the winner''s clip is real and was re-measured here by the same tool, so one seed
+    in five did perform the brush. What does not survive is the causal claim built on it -- ''stay in
+    distribution while making the action as large as that frame allows'' is NOT A LEVER, because holding
+    that composition byte-identical and changing only the seed reproduces it zero times in four. A one-in-five
+    rate is indistinguishable from the base rate six earlier lanes were already fighting. It does NOT
+    establish that the engine can never brush, and it says nothing new about beats 06, 08 and 10, which
+    were always a different claim (two characters and a prop). Nothing should be re-planned on the composition
+    axis on the strength of b0911318, and beat 17''s brush is not solved. If a one-in-five hit rate is
+    acceptable, the honest framing is ''render five and pick'', which is a production-cost decision and
+    belongs to the author (R4), not to this lane.'
+  bar_applied: 'efd7bafa''s, pre-registered before any pixel of the ORIGINAL was drawn and applied here
+    UNSOFTENED and UNTIGHTENED: M1 contact, M2 >=1.0 hand-width RELATIVE TO THE CLOTH, M3 hand-not-camera,
+    M4 continuous path; F1-F7 as written, F6 and F7 explicit FAILs. HAND_W held at 180 px and the bar
+    at 1.0 for all five clips including the winner.'
+  reading: 'All 97 frames opened consecutively, plus f000-f010 opened ONE AT A TIME cropped to the torso.
+    THE ONLY ONE OF THE FOUR THAT MOVES, AND IT IS THE TRAP. Raw peak excursion is 270.2 px = 1.50 hand-widths,
+    ABOVE the 1.0 bar. It does not earn it. Both arms rise together from the lap; f000-f001 hold, f002
+    87 px, f004 204 px, f006 265 px, f008 270 px. But the hands DISSOLVE while doing it: at f002-f003
+    they are clearly formed hands with separate claws; by f004 the fingers are elongating into tendrils;
+    by f006 there are no discrete hands at all, only a broad fingerless green band across the chest, and
+    it stays that way for the remaining 88 frames. AT f003, THE LAST FRAME CONTAINING FORMED HANDS, TRAVEL
+    IS 86 px = 0.48 HAND-WIDTHS -- half the bar. The 1.0 threshold is crossed in the same one-to-two frames
+    in which the hands lose their anatomy, so the travel is accumulated by a morphing blob and not by
+    a hand. There is NO FRAME in this clip where the bar is met by an intact hand.'
+  fail_modes_hit: F4 MORPH.
+  why_f4_and_not_a_pass: '6b5955cf scored exactly this event as F4 on the tight insert -- ''the hand elongates,
+    its claws detach and redraw, and it dissolves into a sleeve (F4 morph)''. Scoring it F4 here is CONSISTENCY
+    WITH THE LANE''S OWN PRECEDENT, not a bar tightened after the fact. The converse consistency is also
+    honoured: the winner''s late claw-softening was scored NOT-F4 because its hands stayed followable
+    hands on a continuous path, and that ruling is not being revisited.'
+  m3_note: 'NOT A CAMERA MOVE, and this is stated because the naive control reading would say otherwise.
+    The other-hand control is USELESS on this clip -- both arms perform the action, so it reads 264 px
+    against the travelling arm''s 270 (ratio 0.977, which is the F3 signature). The landmarks settle it
+    instead: over f000-f012 SHOE_L, SHOE_R and GRASS_TL all hold within +/-2 px at NCC 0.98-1.00. A camera
+    move translates those. This is a genuine two-arm articulation that morphs, and calling it F3 on the
+    control alone would have been wrong.'
+  instrument: 'pipeline/b17_hand_track.py, committed with this lane because b0911318 committed its evidence
+    sheet but NOT its tracker, which cost this lane a rebuild. Torso-scoped skin mask + scipy connected
+    components, two arms tracked by identity. VALIDATED AGAINST b0911318''s PUBLISHED NUMBERS BEFORE IT
+    JUDGED ANYTHING: left/right f000 centroids, travel at f030, peak travel, PEAK FRAME f064 exactly,
+    and the other-hand control at 2.2 px against a published 2 px. FALSIFIED on two synthetic controls:
+    SYN-frozen (f000 held 97 frames) reads 0.0 px, and SYN-pan (whole frame translated 60,30 with nothing
+    articulating) recovers 66.7 px = sqrt(60^2+30^2) AND drags the control hand 57.8 px with it -- control/travel
+    0.87 under a camera move against 0.009 in the winner, a 100x separation that turns the internal control
+    into a discriminator with a measured threshold. TWO TRACKERS WERE RETIRED FOR CAUSE BEFORE ANY VERDICT:
+    a colour rule (the hand measures R225 G224 B152 against a bald head at R241 G243 B179 and grass at
+    R221 G207 B145 -- colour separates it from neither, and ''G > R + 10'' matches zero hand pixels),
+    and a fixed left/right split which, because the travelling arm crosses the midline, reported the STATIONARY
+    hand as moving 96.5 px and would have produced a confident F3 on a passing clip. DISCLOSED: the association
+    step was hardened AFTER seeing seed 20260912, whose dust enters the skin rule; the mask, window, thresholds,
+    MIN_AREA, HAND_W and the 1.0 bar were not touched, all three validation gates were re-run on the hardened
+    version, and all five clips INCLUDING THE WINNER were re-judged with the final tool. THE BLOB IS ARM+HAND,
+    NOT THE HAND ALONE, which makes every travel figure CONSERVATIVE -- and conservative for the winner
+    and the reseeds by the same construction, so no reseed''s failure can be blamed on the instrument
+    being harsher than it was on the winner. NOT COMPUTED AND NOT QUOTED: depth (retired AND inverted
+    -- stand-up 0.290, zero-motion 0.516, bird-only 0.376) and cadence (odd hold periods alias to 1.00x).'
+  provenance: 'Clip, init plate and prompt all verified by sha256 against the manifest the box itself
+    wrote. The init plate (7dccbf21...) and the positive prompt (05942938...) are byte-identical across
+    all five clips AS RENDERED ON THE BOX, not merely in the specs, so the A/B is verified at the artifact
+    and not asserted from intent. Sidecars carry the four distinct seeds, confirming the variable reached
+    the sampler, plus approved: false, provisional: true, is_show_content: false, cost_usd 0.'
+  evidence: pipeline/research/EVIDENCE-b17-bigbody-reseed-0817.png
+  not_done_on_purpose: No re-render, no re-plate, no wording variant, no recipe change, no second bar.
+    Guidance, CFG and checkpoint untouched. shots.md and wave-drafts.yaml UNTOUCHED. Engine probe, never
+    to be cut into an episode.
