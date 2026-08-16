@@ -2136,3 +2136,4 @@
 09:18:47Z STARTED task=ep2-b17-amp2-brushseat-s2-0816-1786871318 attempt=1 on box-runner
 09:24:38Z DONE task=ep2-b17-amp2-brushseat-s2-0816-1786871318 rc=0 artifacts=2
 09:24:45Z STARTED task=ep2-b17-amp2-brushseat-s3-0816-1786871324 attempt=1 on box-runner
+09:30:33Z DONE task=ep2-b17-amp2-brushseat-s3-0816-1786871324 rc=0 artifacts=2
