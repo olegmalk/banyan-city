@@ -29,6 +29,27 @@ healthy motion. Depth answers "how deep is the hold", never "is the RIGHT thing
 moving". THE METRIC IS A FILTER, NEVER A VERDICT -- it chooses which frames to
 open. `pipeline/coldread_frames.py` and your own eyes decide.
 
+THE CLEANEST COUNTEREXAMPLE ON RECORD, AND THE ONE TO REMEMBER BEFORE YOU TRUST
+DEPTH AS AN ACTION SIGNAL. `ep2-b06-d1neg-0816`, 2026-08-16: period 2, depth
+**0.516** -- higher than the `b02-FIXED` reference of 0.397, the best number in
+its wave -- and it contains **ZERO human motion**. Its beat is "GUARD 2 turns
+over a clipboard made of bark and reads". Read its frames 28-39 consecutively:
+the guard's head, gaze, shoulders and arms do not displace by a pixel, and the
+second guard behind him is equally frozen. What the collar contour, the jaw and
+the eye shapes DO is wobble and redraw from frame to frame -- the drawing is
+RE-INKED IN PLACE. That re-inking, plus a board sliding in front of a still
+figure and a drifting camera, is the entire 0.516.
+
+So the failure mode has two faces and depth is blind to both: a push-in on a
+static subject inflates it (f1s3, 0.606), and a re-inked still figure inflates it
+(d1neg, 0.516). By 2026-08-16 SIX independent lanes had reported the identical
+signature -- identical pose at f0 and f96, linework redrawn between frames.
+"THE PICTURE CHANGED" IS NOT "THE ACTION PERFORMED", and every number in this
+file measures the first. There is no threshold on any of these metrics that
+separates a figure acting from a figure being redrawn; only opening the frames
+does, and if the body's pose at f0 and f96 is the same then no depth, period or
+strength value redeems the clip.
+
 Camera scale is deliberately not computed here: the chained-NCC method rails to
 its search boundary when the fit fails and then reports 1.000x for the wrong
 reason (c870f08f).
