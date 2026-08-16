@@ -1,0 +1,215 @@
+# 2026-08-16, composition lane. Beat 17, GOODBYE. Arm AMP-BRUSHSEAT, seed 20260901.
+#
+# WHAT THIS IS FOR. Cycle 018 (pipeline/loop/cycle-018.md) found that the
+# engine moved the goblin's whole body in 12 of 12 beat-17 cells, which killed
+# the six-lane "the engine cannot move a figure" reading and left THREE
+# confounded differences between beat 17 and the beats that never move:
+#
+#     beat 17            beats 06 / 08 / 10
+#     one figure         two guards
+#     wide full body,    chest crop, no headroom
+#       ~40% sky
+#     stand up and go    rotate a board held at the chest
+#       (whole body,       (small, in-hand, no gravity)
+#        gravity)
+#
+# Re-plating 06/08/10 wide costs Mac time and card time and only tests the
+# MIDDLE row. This job tests the BOTTOM row first, for eleven minutes, and it
+# needs no new plate at all -- because the amplitude variable can be moved on
+# beat 17's own plate, holding the other two rows fixed by construction.
+#
+# THE ONLY VARIABLE IS THE ACTION CLAUSE. The init, its asserted sha, the
+# negative, the style suffix, the seed (20260901 -- the seed full-s1 passed at) and
+# every render flag are the same bytes as ep2-b17-full-s1-0815. The control is
+# not re-rendered because it already exists: ep2-b17-full-s1-0815, same seed,
+# same plate, whose goblin lifts his head 39.7% of the frame height.
+#
+#   control  full-s1     "He pushes up off the grass onto his feet, brushes the
+#                          dust from his cloak, and turns away to go."   PASSED
+#   this arm amp-brushseat   'Still seated in the grass, he brushes the dust from his cloak with both hands.'
+#
+# WHY THIS WORDING: the same small action with the stand-up explicitly held
+# down, so a stand-up cannot mask whether the HANDS moved. Read against the
+# bare arm: if the bare arm stands and this one does not, the plate is
+# driving the rise and the clause is not.
+#
+# WHY --src IS THE PUBLISHED COPY AND NOT THE BOX-LOCAL PLATE. The twelve
+# cells pointed at C:\banyan-farm\ep2-b17-plates-0815\..., a Mac-drawn file
+# that box_enqueue cannot fetch, so all twelve carried
+# plate_ack: "unfetchable: ...". A waiver is refused at the backlog door by
+# design and rightly so. Their publish step copied the CROPPED init out to
+# farm-out/ep2-b17-full-s1-0815/b17-init-704x1280.png, so the identical
+# picture is now on origin/farm-results-rtx5090 and fetchable, its producing
+# spec is in pipeline/jobs, and that producer named no --refs. Nothing is
+# waived here: the plate check and the refs check both run and both pass.
+# The file is already exactly 704x1280, so the cover crop is a no-op that
+# still asserts the sha before anything is written.
+#
+# JUDGING, pre-registered here rather than chosen after the fact. Coldread
+# consecutive frames (pipeline/coldread_frames.py); hold_period.py for period,
+# distinct pictures and effective fps; terminal-freeze index reported
+# separately, both the exact consecutive-frame ncc == 1.0000 form and a soft
+# MAD < 0.05 form because crf-18 leaves max|A-B| up to 8 on a provably frozen
+# tail. DEPTH DECIDES NOTHING -- cycle 018 measured it inverted. The retired
+# `cadence` metric is structurally blind (odd periods alias to exactly 1.00x)
+# and is not used. Camera-scale numbers are not quoted as fact. One sample per
+# wording; no seeds until this one has been read.
+#
+# $0. Local card, no provider, no paid engine.
+id: ep2-b17-amp-brushseat-0816
+task: ep2-b17-amp-brushseat-0816
+node: 002b-first-citizen
+beat: 17
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: composition lane, 2026-08-16
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. Beat 17 is GOODBYE
+  -- "The scavenger stands, brushes off, and turns to go." This arm animates the BRUSHES-OFF clause of
+  that same scripted sentence and nothing else; the rise and the turn already have four cells each. Silent
+  motion take on an approved node: not a voice synthesis and not an episode assembly.'
+consumer: 'The decision, still open, whether to spend Mac plate time and card time giving beats 06/08/10
+  a wide full-body plate. Cycle 018 left three confounded explanations for why beat 17 moves and 06/08/10
+  do not: one figure vs two, a wide plate with headroom vs a chest crop, and a whole-body gravity action
+  vs a small in-hand one. This job holds the plate, the figure count, the seed, the negative and every
+  render flag fixed at the values that produced 12 of 12, and varies ONLY the action''s amplitude. If
+  the hands move here, amplitude is not the blocker and the wide re-plate of beat 06 is worth its cost.
+  If they do not, re-plating 06/08/10 wide would not have fixed them and the lane must go at the staging
+  instead -- which is the more valuable outcome and the cheaper one to learn now. Judged by opening consecutive
+  frames via pipeline/coldread_frames.py, never by a motion number, and NEVER by depth, which cycle 018
+  measured as inverted (a full stand-up scores 0.290, a motionless guard 0.516).'
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the plate, in which BOTH of the goblin''s hands
+  change position relative to his torso in a brushing motion -- hands leaving the knee, travelling across
+  the cloak and returning -- while he stays in the same field, with no cut, no scene change, no camera
+  move and no second figure. PRE-REGISTERED, and both outcomes are the finding: if the hands move, a small
+  in-hand action is reachable on a wide plate and the beat 06/08/10 failure is a plate-and-composition
+  problem worth spending plates on; if the hands do not move on the one plate in this repository that
+  moves a whole body 12 times out of 12, then action amplitude is the blocker, re-plating those beats
+  wide would not have fixed them, and that gets said plainly rather than reshot. Whether he stands up
+  anyway is recorded SEPARATELY and is not scored as a pass: on the bare arm a stand-up would say the
+  plate drives the rise regardless of the clause, which is its own finding. A clip that pans, zooms, cuts
+  or relocates is a failure whichever way the hands go.'
+why: The card was at one running job, zero ready and an empty backlog. This needs no new plate -- it re-uses
+  the published init the twelve passing cells were cropped from -- so it fires while the Macs draw plates
+  for the wider experiment. $0, local card, no provider, no paid engine.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-amp-brushseat-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-motion-prompt.txt: Still seated in the grass, he brushes
+    the dust from his cloak with both hands. 2D anime, hand-drawn cel animation, flat cel shading, clean
+    ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very
+    aesthetic.
+  C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-jobs-encode.json: "[\n {\n  \"beat\": 17,\n  \"embeds\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\b17-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\b17-motion-prompt.txt\",\n  \"\
+    negative_file\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\b17-negative.txt\"\
+    \n }\n]"
+  C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-jobs-render.json: "[\n {\n  \"beat\": 17,\n  \"seed\"\
+    : 20260901,\n  \"embeds\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\b17-embeds.pt\"\
+    ,\n  \"init\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\b17-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp-brushseat-0816\\\\\\\\17-goodbye-LTX-amp-brushseat.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-amp-brushseat-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-full-s1-0815\b17-init-704x1280.png
+  - --sha256
+  - 74e8eccf9653edadd9cdd70b419b9a325932bede3238ace06a2308fb95452a6a
+  - --out
+  - C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-amp-brushseat-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-amp-brushseat-0816\bench-amp-brushseat.jsonl
+  - --bench-label
+  - ep2-b17-amp-brushseat-0816
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-amp-brushseat-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-amp-brushseat-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-LTX-amp-brushseat.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b17-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-amp-brushseat.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c =\
+    \ os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-amp-brushseat-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-amp-brushseat-0816\17-goodbye-LTX-amp-brushseat.mp4
+- C:\banyan-farm\ep2-b17-amp-brushseat-0816\b17-init-704x1280.png
+sample: true

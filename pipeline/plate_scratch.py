@@ -45,6 +45,42 @@ STEPS, GUIDANCE = 40, 7.5  # the beat-17 plate's settings, unchanged
 # review/ep2-picks/done-definitions.yaml, quoted here so the bar and the prompt
 # cannot drift apart.
 DRAFTS = {
+    8: {
+        "slug": "inside-him",
+        "done_when": (
+            "the clipboard comes DOWN and the point goes to the BELLY, both "
+            "legible; both guards and the scavenger in frame, since a point "
+            "needs its target visible."
+        ),
+        "why": (
+            "Beat 08 has NO VERDICT YET and the reason is visible in one "
+            "look: the picture its motion takes were animated from "
+            "(farm-out/ep2-b08-twohander/b19-init-704x1280.png, sha 6c403952) "
+            "is a COSTUME CARD -- one figure, waist-up, eyes closed, on flat "
+            "blank paper, no field, no second guard and no scavenger. Its "
+            "done_when needs three bodies and a belly in frame. No wording "
+            "reaches a target that is not in the picture, which is why every "
+            "lever failed. Cycle 018 measured the other half of this: on beat "
+            "17's WIDE full-body plate with ~40% headroom the engine moved a "
+            "whole body in 12 of 12 takes. This plate gives beat 08 beat 17's "
+            "composition -- wide, full-length, real field, room above the "
+            "heads -- and changes nothing else."
+        ),
+        "prompt": (
+            "3boys, full body, wide shot, scenery, standing in a green field, "
+            "two adult guard men in uniform facing a lean adult goblin man, "
+            "green skin, bald head, patchwork cloak, near guard holds a "
+            "wooden clipboard at chest height, small figures low in frame, "
+            "wide blue sky above, sunny day, masterpiece, best quality"
+        ),
+        "negative": (
+            "text, close-up, portrait, upper body, cropped, bust, "
+            "1boy, 2boys, 4boys, solo, white background, simple background, "
+            "baby, child, chibi, stitches, scars, spear, staff, sword, "
+            "tree, forest, house, indoors, photorealism, 3d render, dark, night"
+        ),
+        "seed": 20260816,
+    },
     14: {
         "slug": "the-defense",
         "done_when": (
