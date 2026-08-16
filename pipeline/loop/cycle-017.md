@@ -1,8 +1,10 @@
 # Loop cycle 017 — the wording was never the lever; the camera negative was
 
-**Opened:** 2026-08-16 · **Closed:** pending the seed wave filed at the foot of this
-file · **Source:** the bark-board motion wave of 2026-08-15/16 — ten clips across
-beats 06 and 10, of which eight had landed unread when this cycle opened.
+**Opened:** 2026-08-16 · **CLOSED:** 2026-08-16 — the seed wave came back 2 of 5 and
+1 of 5 against a bar of 4 of 5, so the camera negative is retired with the wordings
+and the lane stops. See "THE VERDICT" at the foot of this file · **Source:** the
+bark-board motion wave of 2026-08-15/16 — ten clips across beats 06 and 10, of which
+eight had landed unread when this cycle opened.
 
 ## The finding
 
@@ -125,3 +127,98 @@ died on staging (`c1`, `d1`) — same seed and same prompt as their originals, t
 negative the **only** variable — and two cross-beat samples move each beat's action
 clause onto the other beat, both carrying the negative. One sample each, no seeds,
 because nobody has watched them perform.
+
+*(The two cross-beat samples were never filed. The wave that went out at c9e9a613 is
+ten specs: four seeds per arm plus `c1neg` and `d1neg`. All twelve clips — ten new
+plus the two watched originals — had landed by 02:24 on 2026-08-16.)*
+
+## THE VERDICT — the bar was not met, on either arm. The lane stops.
+
+Judged 2026-08-16 against the bar exactly as written above, unsoftened. Metrics are
+`judge_clip.py`; every verdict is a cold read of the frames, and the metrics only
+chose which frames to open.
+
+### Beat 10 — `pathneg` arm: **2 of 5. FAIL.**
+
+Judged by the lane that ran out of session at ~02:50; its finding is honoured here
+rather than re-litigated. Its numbers corroborate it — the four seeds' depths fall
+away to nothing beside the watched sample:
+
+| clip | seed | period | depth | terminal freeze |
+|---|---|---|---|---|
+| `pathneg` (watched) | 20260815 | 2 | 0.425 | 1 |
+| `pathneg-s2` | 20260819 | 2 | 0.236 | none |
+| `pathneg-s3` | 20260820 | 2 | 0.074 | none |
+| `pathneg-s4` | 20260821 | 2 | 0.046 | none |
+| `pathneg-s5` | 20260822 | 3 | 0.039 | none |
+
+s3, s4 and s5 sit at 0.074 / 0.046 / 0.039 against a real-hold reference of 0.029.
+Those are frozen pictures with a ripple on them, which is precisely the case the
+depth metric exists to separate from motion.
+
+### Beat 06 — `f1neg` arm: **1 of 5. FAIL.**
+
+| clip | seed | period | depth | freeze (hard / soft) | verdict |
+|---|---|---|---|---|---|
+| `f1neg` (watched) | 20260815 | 2 | 0.511 | 3 / 0 | **PASS** (as recorded above) |
+| `f1neg-s2` | 20260819 | 3 | 0.485 | **14** / 7 | **FAIL** |
+| `f1neg-s3` | 20260820 | 2 | 0.303 | none / 0 | **FAIL** |
+| `f1neg-s4` | 20260821 | 2 | 0.097 | none / 0 | **FAIL** |
+| `f1neg-s5` | 20260822 | 1 | — | **40** / 13 | **CATASTROPHIC FAIL** |
+
+- **`s2`** — framing stable and both guards held, but at f12 the bark board renders
+  **a human face on its surface**, a portrait where the board should be. It then
+  lowers to the chest and flattens against the blue clipboard without ever passing
+  through profile. Dead for its last 14 frames. Fails 2 and 3.
+- **`s3`** — the dominant failure mode of this whole wave, undiminished by the
+  negative: a **relentless push-in**. Both guards' heads are cropped off the top of
+  frame by f72 and the clip ends as a chest crop. Its depth of 0.303 is manufactured
+  by the camera, exactly the `f1s3` trap named below. Fails 1 and 4.
+- **`s4`** — best-framed of the seeds; both guards held head-to-foot to f96. But the
+  board **melts into a shapeless mass at f36-48** and reforms face-on. A melt is not
+  a turn. Fails 2.
+- **`s5`** — not a render so much as an edit. At f12 the shot **cuts to a different
+  composition entirely**: the camera is far back, guard 2 is gone and replaced by a
+  scatter of tiny distant figures in dark red across an empty field. min ncc 0.093 is
+  that cut. The figure then stands motionless and the clip is **structurally dead
+  from f57 of 97**. Fails 1, 3 and 4.
+
+### The two rescues: both **FAIL**. The negative does not revive `c1` or `d1`.
+
+| clip | period | depth | freeze | verdict |
+|---|---|---|---|---|
+| `c1neg` | 2 | 0.506 | 4 | **FAIL** — push-in by f12 crops guard 2 to a sliver of head at the right edge and the blue clipboard vanishes; freeze exactly at the bar's limit, which the bar does not admit |
+| `d1neg` | 2 | 0.516 | 9 | **FAIL** — best framing in the wave, both guards held to f96, but the board never passes through profile and the clip is dead for 9 frames |
+
+### What this retires
+
+**The expanded camera negative joins the two wordings as base-rate noise.** It was
+promoted on two watched samples; seeded out it returns 2 of 5 and 1 of 5, against a
+bar of 4 of 5 set before the renders existed. Three of the eight fresh clips still
+push in and crop a guard, which is the exact defect the negative names in eight
+different ways — so it does not reliably do the one job it was added to do. Per the
+rule written above: **3 of 5 or fewer and the lane stops rather than seeding a sixth
+thing.** No further beat-06 or beat-10 motion job is filed on this hypothesis.
+
+### The finding that outranks the bar: the picture changes, the action does not
+
+Not one of the seven beat-06 clips performs the beat. Beat 06 is *"GUARD 2 turns over
+a clipboard made of bark and reads"*. In all seven, **the guard's body never moves** —
+same stance, same arm angles, same head position and gaze from f12 to f96 — while the
+linework is **re-inked in place** every frame. Read frames 28-39 of `d1neg`
+consecutively: the collar contour, the jaw and the eye shapes wobble and redraw from
+frame to frame without the neck, head or shoulders ever displacing, and guard 2 behind
+him is equally frozen and equally redrawn. What moves is the board, translating and
+reorienting in front of a still figure, plus a drifting camera.
+
+`d1neg` measures period 2, depth **0.516** — comfortably above `b02-FIXED` at 0.397 —
+and contains no human motion whatsoever. That is the same lesson as `f1s3`'s 0.606,
+arriving by a second route: **depth answers "how deep is the hold", never "did the
+right thing move", and a re-inked still figure is as invisible to it as a push-in.**
+
+This makes **six independent lanes** that have now reported the identical signature:
+identical pose at f0 and f96, the drawing re-inked between frames. "The picture
+changed" is not "the action performed", and every metric in this repo measures the
+first. Whether this engine can move a figure's body at all is a question no wording,
+negative, guidance value or plate has touched, and it is not answerable from inside a
+prompt lane.
