@@ -1,0 +1,149 @@
+# 2026-08-16, THE BIG-ACTION-IN-A-KNOWN-FRAME LANE. THE PLATE, PUBLISHED
+# RATHER THAN WAIVED.
+#
+# WHY THIS JOB EXISTS AT ALL, and it renders nothing. box_enqueue refuses a
+# motion job twice over when it cannot check the picture being animated: once
+# because the --src is not fetchable from the results branch, and again because
+# the job that produced it has no spec in pipeline/jobs. Both refusals are
+# waivable with `plate_ack:` and NEITHER IS WAIVED HERE. A 2026-08-14 job that
+# took that shortcut turned out to be cropping the WRONG BEAT'S PLATE. This
+# spec is the producing job the second guard looks for, and
+# farm-out/ep2-b17-bigbody-plate-0816 is what the first one reads. The same
+# two-job structure ep2-b17-insert-plate-0816 used yesterday, copied on purpose.
+#
+# WHAT THE PICTURE IS. One 832x1216 plate drawn $0 on the Mac (Apple Silicon,
+# MPS, animagine-xl-3.1, 40 steps, guidance 7.5, seed 20260816) by
+# `pipeline/plate_scratch.py --beat 17 --rev 3`, whose inline draft carries the
+# whole argument and both bars, committed in efd7bafa BEFORE a pixel existed.
+# It is a WHOLE-BODY SEATED FIGURE FILLING THE FRAME, both clawed hands resting
+# flat on the dusty cloak over his knees.
+#
+# WHY THIS FRAMING. Two readings survived 6b5955cf and one sample could not
+# separate them: (a) the engine cannot do fine hand action at any scale, or
+# (b) a tight insert with no whole body is out of distribution for this i2v
+# checkpoint, so the shot escapes to a composition it knows. Three cells of one
+# grid are filled -- wide/small figure/8.5% hand FROZE, tight insert/57.5% hand
+# RE-COMPOSED -- and this plate fills the fourth: IN DISTRIBUTION (whole body,
+# the composition that renders 12 of 12 stand-ups) with the action several
+# times larger than the cell that froze.
+#
+# ENGINE PROBE, NOT SHOW CONTENT. The clip made from it must never be cut into
+# an episode; re-cutting beat 17 into two shots or re-planning beats 06/08/10
+# is an authorship decision and this lane does not take it. The clip's sidecar
+# says `approved: false`, `provisional: true`, `is_show_content: false`,
+# `cost_usd: 0.0`.
+#
+# WHY IT IS FETCHED OVER HTTP RATHER THAN COPIED. It was drawn on a Mac, so it
+# is on origin/main, not on the box's courier worktree -- and the courier only
+# ever contains what the box itself produced. The bytes are asserted by sha256
+# BEFORE anything is written and the fetch step EXITS NONZERO on any mismatch,
+# so "the file moved between machines" cannot become "the file changed".
+#
+# NO GPU, NO MODEL, NO SPEND, seconds. It does not compete for the card.
+id: ep2-b17-bigbody-plate-0816
+task: ep2-b17-bigbody-plate-0816
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: big-action-in-a-known-frame lane (does the brush render when the body is in frame?), 2026-08-16
+consumer: 'The init plate for ep2-b17-bigbody-motion-0816, published as a farm-out artifact so the enqueue
+  guards can fetch and measure it like any other plate. box_enqueue refuses a motion job whose --src it
+  cannot fetch, and separately refuses one whose producing job has no spec in pipeline/jobs -- this IS
+  that spec, and NO plate_ack waiver is used anywhere in this lane.'
+success: 'One 832x1216 png and its provenance yaml on farm-out/ep2-b17-bigbody-plate-0816, each byte-identical
+  to the file on origin/main (the fetch step REFUSES on any sha256 mismatch rather than continuing), plus
+  a sha256 manifest. png sha256 412633e28a5003d5438d85a7d47bd6fcd6ea50d87e47cd4e027ea08e5c572cef, yaml sha256 41b2749b649599ca0136b28f0221281e5485fe672a2021fe9e5e6c4321a15d6c.'
+why: 'Measured on this machine before filing, with box_enqueue''s own functions on the exact 704x1280 cover-crop
+  the box will make. It also clears the five plate criteria pre-registered in commit efd7bafa BEFORE it
+  was drawn: P1 the whole body is in frame after the cover crop -- bald head near the top, torso, both
+  arms, both hands, bent legs and both feet, nothing cropped; P2 both clawed hands rest flat on the black
+  cloak over his knees and each spans about 180 px = 25.6% of the 704 px width, against a >=18% bar and
+  against the FROZEN control plate''s measured 8.5%, so the action is 3.0x larger in a frame that still
+  holds a whole body; P3 open unobstructed cloak runs about one hand-width to the left of the near hand
+  and the whole lap below both, so a stroke has somewhere to go and a fail cannot just mean nowhere to
+  travel; P4 no empty region larger than his head -- MARGINAL AND RECORDED AS SUCH, the largest flat patch
+  is roughly 114x240 px against a head of about 230x230; P5 exactly one figure, no second face, no prop.
+  THE r2 PLATE WAS REJECTED AGAINST THIS SAME BAR BEFORE THE CARD WAS TOUCHED and the rejection is written
+  up in pipeline/plate_scratch.py REVS[(17, 3)]: it failed P5 with THREE extra grinning goblin heads drawn
+  into a flat pale grass margin, and P4 with the margin that invited them. r3''s one variable, tall grass
+  giving the background a noun of its own, fixed both on the first sample. NAMED HONESTLY AND NOT SCORED:
+  the cloak reads as plain dark grey with a white lining rather than the patchwork asked for, and he has
+  pale shoes -- a continuity problem if this framing were ever cut into the show, and irrelevant to whether
+  a hand can travel across cloth.'
+est_minutes: 2
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b17-bigbody-plate-0816\fetch_plate.py: |-
+    #!/usr/bin/env python3
+    """Fetch the Mac-drawn whole-body plate and REFUSE on any sha mismatch.
+
+    No model, no GPU, no spend. The bytes are the ones committed to
+    origin/main, so the sha256 asserted here is verifiable against the repo
+    by anyone.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b17-bigbody-plate-0816-out"
+    RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b17-bigbody-plate-0816/"
+    UA = {"User-Agent": "banyan-city-bigbody/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("17-goodbye-bigbody-mac-plate-r3s1.png", "412633e28a5003d5438d85a7d47bd6fcd6ea50d87e47cd4e027ea08e5c572cef"),
+        ("17-goodbye-bigbody-mac-plate-r3s1.yaml", "41b2749b649599ca0136b28f0221281e5485fe672a2021fe9e5e6c4321a15d6c"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-42s %7d bytes  sha %s  OK" % (name, len(raw), have), flush=True)
+    print("both files match their asserted sha256.", flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-bigbody-plate-0816\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches
+    # nothing and the step publishes nothing while returning a code that reads
+    # like a fetch failure.
+    import glob, hashlib, os, shutil
+    src_dir = "C:/banyan-farm/ep2-b17-bigbody-plate-0816-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-bigbody-plate-0816"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(src_dir + "/17-goodbye-bigbody-mac-plate-r3s1.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-bigbody-plate-0816.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-bigbody-plate-0816-out\17-goodbye-bigbody-mac-plate-r3s1.png
+- C:\banyan-farm\ep2-b17-bigbody-plate-0816-out\17-goodbye-bigbody-mac-plate-r3s1.yaml
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. This job
+  renders nothing and animates nothing: it moves one already-drawn still from origin/main onto the results
+  branch with its sha asserted. The still itself is an ENGINE PROBE PLATE, not a take for the cut -- it
+  proposes a framing and shots.md and wave-drafts.yaml are both UNTOUCHED. Silent, $0, no voice synthesis
+  and no episode assembly.'

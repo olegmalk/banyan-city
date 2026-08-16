@@ -652,6 +652,90 @@ REVS = {
             "photorealism, 3d render, dark, night"
         ),
     },
+    (17, 3): {
+        # r2 FAILED ITS OWN PRE-REGISTERED PLATE BAR, and it failed at P5 and
+        # P4 -- the two criteria that exist because of the vacancy law. It is
+        # recorded rather than quietly re-rolled, because the way it failed is
+        # the law firing again on a lane that had already written the law down.
+        #
+        #   P1 whole body in frame ....... PASS. Bald head near the top, torso,
+        #      both arms, both hands, legs and both bare feet all inside the
+        #      704x1280 cover crop.
+        #   P2 hands >=18% of frame width  PASS on size -- the near hand spans
+        #      ~190 px = ~27% of the 704 px width, against the frozen control
+        #      plate's 8.5%. Contact with the cloak is arguable rather than
+        #      clean: the hands rest on a grey-black lap mass that reads as
+        #      cloak, and the claws are fused into one yellow spike cluster.
+        #   P3 open cloth beside the hands  PASS, the black cloak panel left of
+        #      the near hand is about one hand-width across.
+        #   P4 no empty region larger than his head ......... FAIL. The upper
+        #      corners are a flat pale cream-green wash, several head-areas
+        #      each, with no texture in them at all.
+        #   P5 exactly one figure, no second face ........... FAIL, and badly.
+        #      THREE extra grinning goblin heads are drawn into that flat
+        #      region -- top-left corner, left edge and right edge -- despite
+        #      `solo` leading the prompt and `2boys` sitting in the negative.
+        #
+        # P4 AND P5 ARE ONE DEFECT, NOT TWO, and it is the law this lane has
+        # already paid for twice: AN EMPTY REGION IN A FRAME IS A HOLE THE
+        # MODEL FILLS WITH THE LARGEST NOUN IN THE PROMPT. Beat 08 lost five
+        # samples to a colossus grown in a reserved sky; r1's insert had no
+        # empty region, so the CLIP made one by pulling the camera back and put
+        # a face in it. Here the flat grass margin was the hole and the goblin
+        # was the noun, three times over.
+        #
+        # WHY IT MATTERS MORE THAN USUAL AND WHY THIS PLATE CANNOT BE USED:
+        # this experiment's whole question is whether the shot RUNS AWAY TO
+        # ANOTHER COMPOSITION. Handing the i2v checkpoint an init that already
+        # contains three other faces to escape into would confound F5 and F7
+        # beyond rescue -- a second figure arriving would no longer be evidence
+        # of anything, because it was in the plate.
+        #
+        # THE ONE VARIABLE: the background gets a NOUN OF ITS OWN so there is
+        # no flat region left to fill. `sitting on grass in a field` becomes
+        # `sitting in tall grass` plus `tall grass background`. Tall grass is
+        # the fill this repo has already used for exactly this (ep1-b06's
+        # r6a/r7a/r8a2 tallgrass arms) and it is not a character, so it cannot
+        # become one. EVERYTHING ELSE IS BYTE-IDENTICAL to r2, negative
+        # included -- deliberately, because r2's negative already carries
+        # `2boys` and beat 08 r4 proved on this checkpoint that a negative
+        # naming the invited noun by name (`giant, colossal, monster, kaiju,
+        # statue, face in the sky`) removes it not at all. If the extra faces
+        # survive a background that has something in it, THAT is a separate
+        # finding and the negative is what r4 would try -- but it is not what
+        # this revision spends a sample on.
+        #
+        # THE MOTION BAR AND THE PLATE BAR ARE UNCHANGED, both as committed in
+        # efd7bafa before any pixel existed. A plate revision is a fixture
+        # being brought up to a gate that was written first; it is not the
+        # experiment, and nothing about M1-M4, F1-F7 or P1-P5 moves.
+        # NOTE ON THE MECHANICS, because it would have silently ruined this
+        # revision: `REVS` merges over `DRAFTS[beat]`, which for beat 17 is the
+        # r1 TIGHT INSERT draft -- not over rev 2. A rev that names only a
+        # prompt inherits the INSERT's negative (`face, head, portrait, full
+        # body, wide shot, standing...`), which forbids the very whole body
+        # this experiment is about. The negative below is therefore r2's,
+        # RESTATED BYTE FOR BYTE rather than inherited, and `low angle` is kept
+        # in the positive for the same reason -- so that the tall-grass clause
+        # is the only thing that differs from r2.
+        "slug": "goodbye-bigbody",
+        "prompt": (
+            "1boy, solo, full body, sitting in tall grass, tall grass "
+            "background, figure fills the frame, lean wiry adult goblin man, "
+            "green skin, bald head, dusty patchwork cloak draped over his "
+            "knees, both green clawed hands resting flat on the cloak, large "
+            "hands near the camera, low angle, sunny day, masterpiece, "
+            "best quality, very aesthetic"
+        ),
+        "negative": (
+            "text, standing, walking, running, wide shot, distant, "
+            "small figure, sky, clouds, horizon, "
+            "close-up, portrait, cropped, "
+            "holding object, spear, sword, "
+            "2boys, child, chibi, stitches, tree, indoors, "
+            "photorealism, 3d render, dark, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
@@ -709,7 +793,59 @@ def main() -> int:
     if a.rev != 1:
         if (a.beat, a.rev) not in REVS:
             print("!! no rev %d for beat %d" % (a.rev, a.beat)); return 4
-        d.update(REVS[(a.beat, a.rev)])
+        # ------------------------------------------------------------------
+        # THE MERGE SITE, AND THE LANDMINE THAT LIVES HERE. READ BEFORE
+        # WRITING A REV.
+        # ------------------------------------------------------------------
+        # A REV MERGES OVER `DRAFTS[beat]`, NOT OVER THE REV BEFORE IT. So a
+        # rev that names only a `prompt` INHERITS THE BASE DRAFT'S NEGATIVE,
+        # silently, with nothing in the output to say so.
+        #
+        # That is not a theoretical hazard. It nearly ruined an experiment on
+        # 2026-08-16: beat 17's BASE draft is the r1 TIGHT INSERT, whose
+        # negative reads `text, face, head, portrait, looking at viewer,
+        # FULL BODY, WIDE SHOT, standing, ...`. Rev 2 and rev 3 of that same
+        # beat exist to test A WHOLE BODY FILLING THE FRAME -- the exact
+        # composition that negative forbids. A rev that had named only its
+        # prompt would have drawn a plate fighting its own negative and the
+        # only symptom would have been a picture that came back subtly wrong,
+        # read as a finding about the checkpoint rather than a bug in a dict
+        # merge. IT FAILS SILENTLY IN THE DIRECTION OF "THE TEST QUIETLY DID
+        # NOT TEST WHAT YOU THOUGHT", which is the worst direction there is.
+        #
+        # Two guards below make that structural instead of a matter of the
+        # next lane being careful. Restating the negative byte for byte in the
+        # rev, as (17,2) and (17,3) do, satisfies both.
+        rev = REVS[(a.beat, a.rev)]
+        if "prompt" in rev and "negative" not in rev:
+            print("!! rev %d of beat %d overrides `prompt` but not `negative`, "
+                  "so it would INHERIT the base draft's negative silently.\n"
+                  "   A rev merges over DRAFTS[%d], never over the rev before "
+                  "it. Restate the negative in the rev -- byte for byte if it "
+                  "is meant to be unchanged -- so the pair that actually gets "
+                  "drawn is visible in one place."
+                  % (a.rev, a.beat, a.beat))
+            return 6
+        d.update(rev)
+
+    # SECOND GUARD, and it runs for base drafts too: NO TAG MAY APPEAR IN BOTH
+    # THE POSITIVE AND THE NEGATIVE. A prompt asking for `full body` against a
+    # negative forbidding `full body` is not a weak prompt, it is a
+    # contradiction, and the picture that comes back is unattributable. This is
+    # the check that catches the merge landmine above even if someone deletes
+    # the first one, because the inherited-negative failure always shows up as
+    # exactly this collision.
+    pos_tags = {t.strip().lower() for t in d["prompt"].replace(";", ",").split(",")}
+    neg_tags = {t.strip().lower() for t in d["negative"].replace(";", ",").split(",")}
+    clash = sorted(t for t in (pos_tags & neg_tags) if t)
+    if clash:
+        print("!! the positive and the negative BOTH name: %s\n"
+              "   That is a contradiction, not a weak prompt, and whatever "
+              "comes back cannot be attributed. If this is beat %d at a rev, "
+              "check whether the rev inherited DRAFTS[%d]'s negative by "
+              "accident -- that is how this collision usually happens."
+              % (", ".join(repr(c) for c in clash), a.beat, a.beat))
+        return 7
 
     if a.seeds > 1 and not a.i_have_seen_a_sample:
         print("!! %d seeds requested. ONE SAMPLE BEFORE ANY BATCH "
