@@ -487,6 +487,35 @@ results:
         board, and waits." Note what that permits: rendering a SHEET is explicitly
         allowed, casting and animating are not. Six guard jobs are already held out
         of the ready queue on it.
+      the_second_gate_CORRECTION_0816: >-
+        CORRECTION, 2026-08-16. The paragraph above is left standing unedited; its
+        cast premise is out of date and was already out of date when it was written.
+        THE GUARDS ARE CAST. The founder cast both men in his own words —
+        2026-08-14T16:45:25Z, "1 for the guards. although it only shows one guard..
+        front and back" (guard A, his #1, frozen); and 2026-08-15T08:39:13Z, "ill
+        take the guard b you chose. on a sidenote, there is a clipboard floating
+        behind him." (guard B = s2 of the derived round). Both were re-verified on
+        2026-08-16 directly against the session transcript at those timestamps, not
+        copied from a summary. The approval lives in review/inbox.yaml, in the
+        `resolved:` entries on the cards guard-picker-0814.jpg ("ANSWERED IN BOTH
+        HALVES") and guard-pair-0815.jpg ("ACCEPTED, WITH ONE FAULT NAMED... the
+        veto window is closed") — that file is an AUTHORITATIVE SOURCE for founder
+        decisions and must be searched before any lane reports something blocked on
+        him. So the guards gate under beat 08 is DISCHARGED. Note what this does and
+        does not change for beat 08: the FIRST gate above — the goblin pick — was
+        also closed on 2026-08-15 ("ill take 1 for the goblin"), so the two-figure
+        reference this beat actually needs may now be MADE. It still does not exist,
+        and `THE_ACTUAL_BLOCKER` above is unaffected and remains correct: nothing on
+        disk has a guard and a goblin together, and no staged plate of the approved
+        pair exists either — both men are costume cards on a grey void. The
+        approvals release the WORK of drawing those references and plates; they do
+        not release a render. Do not fire motion off a costume card, and do not
+        write a `plate_ack` waiver to get past the plate guard.
+      status_CORRECTION_0816: >-
+        `status:` below is superseded and left standing. Beat 08 is no longer BLOCKED
+        ON A FOUNDER TASTE CALL — both calls it names are made. It is blocked on a
+        MISSING ARTEFACT: the two-figure guard-plus-goblin reference, which is ours
+        to build and is the next piece of work on this beat.
       concrete_next_step: >-
         Do not queue a beat 08 plate job. Put the goblin pick in front of the
         founder, because it is the gate under both this beat and the two-figure

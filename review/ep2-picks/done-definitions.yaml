@@ -182,6 +182,32 @@ beats:
       2026-08-14) forbids animating guard beats off an unapproved cast. This beat joins 05, 09 and 10
       in waiting for that sheet. When it lands, the lever to try first is whatever binds identity to the
       plate through a turn - the plate itself was right at f0 and the render let go of it.
+    blocked_on_0815_CAST_HALF_DISCHARGED_0816: 'CORRECTION, 2026-08-16. `blocked_on_0815` above is left
+      standing verbatim and is NOT edited; this entry records that the ground it names has since been
+      met. That instruction rests entirely on the cast: "the guard sheet is on the founder''s board awaiting
+      his veto" and "This beat joins 05, 09 and 10 in waiting for that sheet". THE SHEET LANDED. The founder
+      cast both men in his own words: 2026-08-14T16:45:25Z, "1 for the guards. although it only shows
+      one guard.. front and back" (guard A = his #1, frozen); and 2026-08-15T08:39:13Z, "ill take the guard
+      b you chose. on a sidenote, there is a clipboard floating behind him." (guard B = s2 of the derived
+      round). Both quotes were re-verified on 2026-08-16 against the session transcript at those exact
+      timestamps, not taken from a summary. WHERE THE APPROVAL LIVES: review/inbox.yaml, the resolved
+      entries on the cards /review/ep2-picks/sheets/guard-picker-0814.jpg ("ANSWERED IN BOTH HALVES") and
+      /review/ep2-picks/sheets/guard-pair-0815.jpg ("ACCEPTED, WITH ONE FAULT NAMED... the veto window
+      is closed"). So the cast is approved and `lets do the guards on my taste` is SATISFIED - see the
+      top-level `guards` key of this file. WHAT IS THEREFORE DISCHARGED: the cast half, and only the cast
+      half. WHAT STILL FORBIDS FIRING, on grounds that are NOT the cast and were never the cast: no staged
+      plate of these two men doing this action exists. Both guards exist only as costume cards on a grey
+      void, which is exactly why beats 05, 06, 07, 09, 10 and 11 were animated off costume cards and cannot
+      be cut at any quality of motion. The founder''s word releases the WORK - the staged plates may now
+      be drawn - it does not release a render. Beat 11''s staging-correct plate farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png
+      stages the ACTION correctly and a peer lane cleared its box_enqueue refusal on 2026-08-16, but staging
+      is not casting: this beat''s round-3 conditioning plate showed "a balding older man at left, brown-haired
+      younger man at right", which is not guard A and guard B, and whether the idfix plate shows the APPROVED
+      pair was not checked here and must be checked before anything is fired. DO NOT AUTHOR OR FIRE A
+      BEAT 11 REPLACEMENT off a costume card, and do not write a `plate_ack` waiver
+      to get past the plate guard: that is the defect that produced beat 08''s unusable clips. Also still
+      open and genuinely the founder''s: guard A is drawn in wire-rim glasses that no prompt names, asked
+      on the card /review/ep2-picks/sheets/guard-cast-0816.jpg.'
     how_round_3_missed_it: see `miss_analysis_b11_0815` at the top level of this file.
     drift_check_0815: 'BROKEN, escalated to the lead rather than recorded as a fault. Blind reader scored
       the adult 1/10: "not drift, a break. A bald adult is replaced by a brown-haired teen-proportioned
@@ -528,6 +554,14 @@ ship_ceiling:
     and the close-up - but it is a GUARD beat, and 'lets do the guards on my taste' forbids animating
     guard beats off an unapproved cast. So its third round is owed and BLOCKED, and it must not be quietly
     shipped as merely unfinished to dodge that. It waits for the guard sheet.
+  note_on_09_CORRECTION_0816: 'CORRECTION, 2026-08-16. `note_on_09` above stands unedited; its cast premise
+    is out of date. The cast is APPROVED - guard A on 2026-08-14T16:45:25Z ("1 for the guards. although
+    it only shows one guard.. front and back") and guard B on 2026-08-15T08:39:13Z ("ill take the guard
+    b you chose. on a sidenote, there is a clipboard floating behind him."), both recorded in review/inbox.yaml''s
+    resolved entries and re-verified against the session transcript. Beat 09 is therefore no longer waiting
+    on the guard sheet. It is still not renderable: beat 09 has no staged plate of the approved men (the
+    founder''s own note on 2026-08-15, "beat 09 is another blank background"), and the approval releases
+    the WORK of drawing that plate, not a render off a costume card. See `guards_CORRECTION_0816`.'
   note_on_18: Beat 18's third round is the fig REFERENCE route plate-drafts already has in flight, not
     a seventh wording round. Round one transferred the teardrop and the purple faithfully onto a LEAF,
     because nothing bound which object was meant; the retry restores exactly one noun.
@@ -537,6 +571,46 @@ guards:
   rule: Do not cast them and do not animate guard beats off an unapproved cast. The sheet renders, goes
     on his board, and waits.
   held: six guard jobs remain out of the ready queue since 11:0xZ
+guards_CORRECTION_0816:
+  supersedes: The `guards` key above, which is left standing unedited because the disagreement between
+    it and this entry is the record of how four beats stayed blocked for a day after they were free.
+  status: SATISFIED. The cast is approved. The 2026-08-14 rule was never revoked - it was MET.
+  cast_a:
+    who: guard A, the founder's #1, frozen as the reference.
+    date: '2026-08-14'
+    timestamp_utc: '2026-08-14T16:45:25Z'
+    verbatim: 1 for the guards. although it only shows one guard.. front and back
+  cast_b:
+    who: guard B = seed s2 of the round derived from A (ep2-guard-b-derived-0814).
+    date: '2026-08-15'
+    timestamp_utc: '2026-08-15T08:39:13Z'
+    verbatim: ill take the guard b you chose. on a sidenote, there is a clipboard floating behind him.
+  where_the_approval_lives: review/inbox.yaml - the `resolved:` entries on the cards whose url is /review/ep2-picks/sheets/guard-picker-0814.jpg
+    ("ANSWERED IN BOTH HALVES") and /review/ep2-picks/sheets/guard-pair-0815.jpg ("ACCEPTED, WITH ONE
+    FAULT NAMED... the veto window is closed"). THAT FILE IS AN AUTHORITATIVE SOURCE FOR FOUNDER DECISIONS
+    AND MUST BE SEARCHED BEFORE ANY LANE REPORTS SOMETHING BLOCKED ON HIM.
+  verification: 'Both quotes were re-verified on 2026-08-16 directly against the session transcript at
+    the timestamps above, as founder user messages, rather than being copied from a summary. Guard B''s
+    line is one sentence of a longer message that also settles the goblin ("ill take 1 for the goblin").'
+  what_this_releases: The WORK on beats 05, 06, 07, 09, 10 and 11 - specifically, staged plates of the
+    approved pair may now be drawn. It does NOT release renders. Both men exist only as costume cards
+    on a grey void; no staged picture of these two doing anything exists yet, which is exactly why those
+    six beats were animated off costume cards and cannot be cut at any quality of motion. DO NOT FIRE
+    MOTION OFF A COSTUME CARD, and do not write a `plate_ack` waiver to get past the plate guard - that
+    is the defect that produced beat 08's unusable clips.
+  named_defect_carried_forward: 'A FLOATING CLIPBOARD MUST NOT BE CARRIED INTO THE FROZEN REFERENCE SET.
+    The founder''s words: "there is a clipboard floating behind him." Guard B''s bark clipboard hangs
+    at his right shoulder attached to nothing. Either it is held in a hand or it is not in frame; a reference
+    with an object floating in it teaches every beat derived from it to float one too, and six beats derive
+    from these two men. This is a machine fault and is ours to clear before the set is frozen.'
+  still_genuinely_the_founders: Guard A is drawn wearing WIRE-RIM GLASSES that no prompt anywhere names,
+    so every render either invents them or drops them at random. Asked on the card /review/ep2-picks/sheets/guard-cast-0816.jpg.
+    That is a question about wardrobe canon, not a re-opening of who the two men are.
+  why_this_entry_exists: The approval was recorded in review/inbox.yaml when it was given and nowhere
+    else. This file, STATE.md and review/ep2-picks/steward-picks-0815.yaml all still described the cast
+    as unapproved, so lanes reading them kept beats 05, 09, 10 and 11 blocked for a day; the 2026-08-16
+    survey that reported the block searched STATE.md, DECISIONS.md and this file and did not search review/inbox.yaml.
+    A filing bug, not a taste question.
 eggplant_fix:
   date: '2026-08-14'
   result: the purple object is GONE from all five refires. Removing the blanket fig clause fixed it completely,

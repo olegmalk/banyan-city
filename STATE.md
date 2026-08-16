@@ -7480,6 +7480,10 @@ shots.
 2. **The two guards — VETO ONLY.** The pick is made and stands unless you object;
    whether these are *your* guards is yours. The separate picker sheet gates six
    beats (05, 06, 07, 09, 10, 11), **beat 09 among them**.
+   > **CORRECTION, 2026-08-16 — item 2 is CLOSED and is left standing above only
+   > as the record of how long it stayed open after it was answered.** The veto
+   > was never exercised; both men were cast. See *"The guards were cast on 14 and
+   > 15 August"* below.
 3. **Beat 19's fruit staging** — the plate has the fruit already lying in the
    grass, so nothing can drop. Either a new plate (a day in the stills lane,
    beat unchanged) or the beat becomes him finding it (free, different moment).
@@ -7890,6 +7894,17 @@ so the block stands. This is R4 territory and was not crossed. A beat-11
 replacement spec was authored before the block was found and was **deleted
 unfiled** rather than left in `pipeline/jobs/` where another lane might fire it.
 
+> **CORRECTION, 2026-08-16 — the approval existed and this survey missed it.**
+> The paragraph above is left standing unedited because the search it describes
+> is the whole defect: it swept three files and **not `review/inbox.yaml`**,
+> which is where the founder's answers are written down when he gives them. The
+> guard sheet *had* landed. Both men were cast — see *"The guards were cast on 14
+> and 15 August"* below. Holding the beats was the right instinct on the record
+> this lane read; the record was wrong. **The deleted-unfiled beat-11 spec was
+> still the correct call**, for a reason the survey states two paragraphs down
+> and that the approval does not touch: there is no staged plate to fire it
+> against.
+
 **Beat 11 has a second, independent blocker worth writing down, because it is
 not about beat 11.** Its only staging-correct plate — two guards, backs turned,
 mid-argument, walking into open field, `border_flatness 0.238` — is
@@ -7926,6 +7941,116 @@ apiece, ten specs) while this survey was running, and all ten reached the queue.
 **Nothing was filed here rather than duplicate them** — the honest report is that
 the direction is right, a peer took the only unblocked ground, and the rest is
 waiting on the founder's guard sheet.
+
+> **CORRECTION, 2026-08-16:** the last clause is wrong. The rest is **not**
+> waiting on the founder's guard sheet — it is waiting on **staged plates that
+> nobody has drawn**. Read on.
+
+### The guards were cast on 14 and 15 August — four beats stayed blocked for a day on a record, not on the founder
+
+**The approval, verified at the source rather than quoted from a summary.** Both
+lines below were read back on 2026-08-16 out of the session transcript, as
+founder user messages, at these exact timestamps:
+
+- **`2026-08-14T16:45:25Z`** — *"1 for the guards. although it only shows one
+  guard.. front and back"* → **guard A**, his #1, frozen as the reference.
+- **`2026-08-15T08:39:13Z`** — *"ill take the guard b you chose. on a sidenote,
+  there is a clipboard floating behind him."* → **guard B**, seed `s2` of the
+  round derived from A. (Same message settles the goblin: *"ill take 1 for the
+  goblin"*.)
+
+**Where the approval lives: `review/inbox.yaml`.** Both are written into the
+`resolved:` entries of the cards `guard-picker-0814.jpg` (*"ANSWERED IN BOTH
+HALVES"*) and `guard-pair-0815.jpg` (*"ACCEPTED, WITH ONE FAULT NAMED… the veto
+window is closed"*). **So `"lets do the guards on my taste"` is not overruled —
+it is SATISFIED.**
+
+**`review/inbox.yaml` is an authoritative source for founder decisions and must
+be searched before any lane reports something blocked on him.** This is the
+whole lesson of the day and it cost four beats twenty-four hours. His answers
+were recorded correctly, in that one file, the moment he gave them — and nowhere
+else. `STATE.md`, `done-definitions.yaml` (`guards`, `ship_ceiling.note_on_09`,
+`beats.'11'.blocked_on_0815`) and `steward-picks-0815.yaml` all still described
+the cast as unapproved, so every lane that read them kept the beats held. The
+2026-08-16 survey above searched `STATE.md`, `DECISIONS.md` and
+`done-definitions.yaml`. **A decision filed in one place is a decision the next
+lane will not find.** Corrections are now written into all three of those
+records, each one leaving the superseded text standing beneath a dated
+correction.
+
+**Proposed structural fix, not implemented here** (it touches `pipeline/`, which
+several lanes were writing at the time, so it is filed as work rather than
+slipped in): a `$0`, no-GPU checker — `pipeline/check_founder_decisions.py` —
+run by `test_pipeline.py`. It parses `review/inbox.yaml`, collects every card
+carrying a `resolved:` block, and greps the tracked record files for text
+asserting that the *same* subject is still open — the phrases are stereotyped and
+few (`awaiting his veto`, `waits for the guard sheet`, `unapproved`, `blocked on
+a founder`, `gates six beats`). Any record still claiming a resolved subject is
+open, and lacking a dated `*_CORRECTION_*` sibling key, fails the check with the
+card and the resolved date printed. That is a pure-text function over two files:
+cheap, testable, and it fails loudly in CI rather than silently costing a day.
+The weaker, free half is already in force as a rule: **an approval is filed in
+`review/inbox.yaml` AND propagated to every record that asserts the block, in
+the same edit** — the sibling of the `a name is claimed once` rule adopted
+2026-08-15.
+
+**WHAT THE APPROVAL RELEASES, and what it does not — the distinction is the
+whole point.** His word releases the **work**. It does not release a **render**.
+
+- **Released now, no founder input needed:** *drawing staged plates of the
+  approved pair.* That is real, unblocked, $0-to-author work and it is the next
+  thing on this episode's critical path.
+- **Still blocked, and not on him:** *every guard-beat render.* Both men exist
+  only as **costume cards on a grey void** — no staged picture of these two doing
+  anything exists. That is precisely why beats **05, 06, 07, 09, 10 and 11** were
+  animated off costume cards and **cannot be cut at any quality of motion**.
+  **Do not fire motion off a costume card**, and **do not write a `plate_ack`
+  waiver** to get past the plate guard: that is the defect that produced beat
+  08's unusable clips.
+
+**Plates that need drawing, by beat** — reported as the next piece of work, not
+started in this lane:
+
+| beat | the staged plate it needs | note |
+|---|---|---|
+| **05** | two guards jogging in together, both in frame from f0, field present at f0 | its shipped take reads young/soft-drawn vs beats 06 and 11 — the approved cast is the fix |
+| **09** | a close-up plate of the approved guard's face | founder, 2026-08-15: *"beat 09 is another blank background"* |
+| **10** | two guards, the near one flipping the bark board, blank back toward camera | same young/soft fault as 05 |
+| **11** | two guards from behind, mid-argument, walking into open field | one exists — see below |
+| **08** | a guard **and** the goblin at a workable distance | needs a two-figure *reference* first; nothing on disk has both. Its goblin gate closed 2026-08-15 too |
+
+**Beat 11 specifically — is its block discharged?** `blocked_on_0815: DO NOT
+AUTHOR OR FIRE THE REPLACEMENT YET` rests **entirely on the cast**: its own words
+are *"the guard sheet is on the founder's board awaiting his veto"* and *"This
+beat joins 05, 09 and 10 in waiting for that sheet."* Nothing else is named. **So
+that instruction's stated ground is DISCHARGED** — the sheet landed, the veto
+window is closed. **Beat 11 still must not be fired**, on a different ground that
+was never the cast: **no staged plate of the two APPROVED men exists.** Its
+staging-correct plate `farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png` stages
+the *action* correctly, and a peer lane cleared its `box_enqueue` refusal the
+same day (see the producing-job resolver section) — but staging is not casting.
+Beat 11's round-3 conditioning plate depicted *"a balding older man at left, a
+brown-haired younger man at right"*, which is **not** guard A and guard B, and
+**whether the `idfix` plate shows the approved pair was not checked in this lane
+and must be checked before anything is fired.** The costume cards are not an
+alternative. **No `plate_ack` waiver was written and none may be.** Beat 11
+remains the best candidate in the episode the moment a plate exists — it is pure
+whole-body motion, the one thing this engine does reliably (12/12 stand-ups
+against 0/8 on the same plate's in-hand action), and the take standing in the
+demo cut is knowingly broken with a character replaced mid-shot.
+
+**Two things that remain genuinely the founder's**, and neither re-opens the
+cast: **guard A wears wire-rim glasses no prompt names**, so every render invents
+or drops them at random — asked on `/review/ep2-picks/sheets/guard-cast-0816.jpg`
+with the recommendation that they stay. And **guard B's floating clipboard**, his
+own catch — recorded as a named defect, *a floating clipboard must not be carried
+into the frozen reference set*; that one is a machine fault and ours to clear.
+
+**Nothing was rendered, queued, authored or waived in the course of this
+reconciliation.** No spec was written, `pipeline/farm-queue.yaml` and
+`review/inbox.yaml` were not touched, and the three edited records are
+`STATE.md`, `review/ep2-picks/done-definitions.yaml` and
+`review/ep2-picks/steward-picks-0815.yaml`.
 
 ### The four beat-17 `full` cells nobody had read: 4 of 4 stand, 0 of 4 brush — the arm is now 8 of 8 and 0 of 8
 
