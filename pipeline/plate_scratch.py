@@ -383,6 +383,23 @@ DRAFTS = {
         #       in this shot. The sheet's own appearance is used and glasses
         #       are simply absent from the prompt. His answer can be applied
         #       to beat 09 -- his face, in close-up -- without redrawing this.
+        #       -- ANSWERED 2026-08-16. The paragraph above is left standing
+        #       because its CONCLUSION for beat 11 is still right and the
+        #       reasoning is what has to be visibly discharged; only its
+        #       premise is dead. The question is not open: he ruled "the cast
+        #       stands as drawn", and he had been asked about the wire-rims
+        #       specifically and by name on that card, so "as drawn" answers
+        #       the glasses as much as the rest of the sheet. THE GLASSES ARE
+        #       CANON. Nothing in this plate changes -- beat 11 is backs
+        #       turned, wire-rims are invisible from behind, and a plate that
+        #       does not show them cannot contradict them. What DOES change is
+        #       everything downstream: every guard prompt that shows guard A's
+        #       FACE must now NAME the wire-rims, because leaving them unnamed
+        #       is the same defect as the anonymous "two round bald guard men"
+        #       that miscast every staged plate we have. Beat 09 is where it
+        #       bites first. The word `wire-rim` appears in ZERO prompts in
+        #       this repo (measured 2026-08-17), and no canon subject enforces
+        #       it, so today nothing would catch its absence.
         #   `dark` IS NOT IN THE NEGATIVE, though it is in every other draft
         #       in this file. Both approved guards are defined by dark things
         #       (dark cropped hair, dark brown tunic, dark trousers), and a

@@ -1335,7 +1335,13 @@
     only thread from the picture back to what drew it. WHY THIS CARD EXISTS AT ALL: his answers were recorded
     in this file when he gave them, but STATE.md, review/ep2-picks/done-definitions.yaml (beat 11, blocked_on_0815)
     and review/ep2-picks/steward-picks-0815.yaml (guards, note_on_09) all still say the cast is unapproved,
-    so lanes reading those three kept the beats blocked - the 2026-08-16 survey that reported the block
+    so lanes reading those three kept the beats blocked [CORRECTION 2026-08-17, left standing rather than
+    edited: steward-picks-0815.yaml has NO `guards` key and NO `note_on_09` key - grepped, zero hits.
+    Both keys live in review/ep2-picks/done-definitions.yaml, `guards` at line 707 and `note_on_09` under
+    `ship_ceiling` at line 692, and both already carry their 0816 corrections. The pointer sent a lane
+    to the wrong file; what steward-picks-0815.yaml actually still gets wrong is beat 16 - see its own
+    A_B_leg_CORRECTION_0817]
+    - the 2026-08-16 survey that reported the block
     searched STATE.md, DECISIONS.md and done-definitions.yaml and did not search review/inbox.yaml. His
     words are quoted from the session transcript, 2026-08-14T16:45:25Z and 2026-08-15T08:39:13Z. NOTHING
     WAS CHANGED OUTSIDE THIS FILE AND THE SHEET: no block was lifted, done-definitions.yaml still carries
@@ -1362,7 +1368,15 @@
       (cast_approved_0816 corrections). Still asserting the stale block and NOT in this task''s write
       scope, named here so the next lane fixes them rather than believes them: review/ep2-picks/steward-picks-0815.yaml
       (guards, note_on_09) and review/ep2-picks/gate-evidence.yaml (six rows reading "GATED - guard cast
-      unapproved (his call)").'
+      unapproved (his call)"). [CORRECTION 2026-08-17, appended rather than edited because the sentence
+      above is the record of what the last lane handed on: the two key names are right but the FILE is
+      wrong. `guards` and `ship_ceiling.note_on_09` are in review/ep2-picks/done-definitions.yaml, not
+      in steward-picks-0815.yaml, which contains neither name; both were already corrected in place on
+      2026-08-16 (guards_CORRECTION_0816, note_on_09_CORRECTION_0816). gate-evidence.yaml''s six "GATED
+      - guard cast unapproved" rows were likewise corrected in place on 2026-08-16 with gate_CORRECTION_0816
+      keys and are no longer stale. So this hand-off pointed the next lane at nothing; the one thing on
+      it that WAS still live is steward-picks-0815.yaml, for a different ruling entirely - its beat 16
+      A_B_leg, corrected today.]'
 - what: 'THE SAPLING - YOU ANSWERED THIS, and one line is all that is left. Your words, 2026-08-16: "alright,
     lets be a bit more strict with the sapling. make sure it has 2 leafs and has a set height, height
     might be a bit hard for the ai to make exact, so dont go crazy on it, just dont make it double in
@@ -1440,3 +1454,37 @@
     reading and is the steward''s, not his. NO REWRITE IS PROPOSED and none should be authored before
     he answers - the last time a lane chose for him here it chose silently. $0, no GPU, no render, nothing
     enqueued; no beat-13 job was touched and the r9 lane that owns the beat was not disturbed.'
+- what: 'EPISODE 3 STILL ASKS ABOUT THE HEAD-BOUNCE YOU REMOVED - and both lines are published. On 2026-08-15
+    you ruled beat 19 of episode 2: "ok then just make the fig fall on the ground and the goblin will
+    notice it", and you changed the script yourself the same day. Beat 19 now reads "the stem lets go,
+    the fig falls, and lands in the grass at his feet. He notices." Nothing touches him. BUT EPISODE 3
+    ASKS HIM ABOUT IT. Node 003b, beat THE FIG QUESTION (1:05-1:10), still reads: SCAVENGER: "Were you
+    the fruit? Did you MEAN to hit my head?" - and the beat after it, GUILTY, is the leaf tilting yes.
+    That is a joke whose setup no longer exists: nothing hit his head, so there is nothing for the tree
+    to confess to. Both episodes are live on banyan.city right now (/sapling/002b-first-citizen and /sapling/003b-one-leaf-for-yes),
+    so the tree currently publishes a payoff without its setup. I have NOT touched a word of 003b and
+    I am not proposing one - which side gives is your call, not mine. Episode 3 has no footage for this
+    beat yet, so nothing is wasted whichever way you go.'
+  url: https://github.com/olegmalk/banyan-city/blob/HEAD/genomes/sapling/nodes/003b-one-leaf-for-yes/node.md
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  episode: 3
+  verdict_hint: 'one line: "003b changes, I will write it" / "003b changes, you write it" / "the bounce
+    comes back in beat 19" / "leave both, it still plays"'
+  note_for_lanes: 'RAISED 2026-08-17. VERIFIED BY CONTENT, NOT BY A STATUS FIELD: genomes/sapling/nodes/002b-first-citizen/node.md:118
+    (his own edit, commit a483eb52, 2026-08-15) and genomes/sapling/nodes/003b-one-leaf-for-yes/node.md:83
+    read as quoted; both pages were FETCHED from banyan.city and both strings confirmed in the served
+    HTML. His ruling is recorded verbatim in review/ep2-picks/done-definitions.yaml beats.''19''.ruling_0815,
+    whose done_when now makes body contact disqualifying ("NO CONTACT WITH HIS BODY - a take where the
+    fruit touches him fails this beat now, however well it moves"). THE SAME LINE IS IN FOUR MORE PLACES
+    IN 003b, all of which move together and none of which is edited here: shots.md:146, clips/13-vo.json
+    (a synthesised VO take that already exists), leaves/003b-t0-a.md:47 and the built animatic leaf 003b-t1-a.html
+    frame 13. WHAT THE STEWARD DID FIX TODAY, so this card is not asking about that: genomes/sapling/nodes/002b-first-citizen/shots.md
+    beat 19 still asked for "bounces softly off the head" two days after the ruling and is published -
+    it now carries the corrected prompt with the superseded one kept standing beneath a dated correction,
+    and the 08-15 change was added to the revisions list of the approved script leaf 002b-t0-c.yaml, where
+    it was missing (last entries before today were both 2026-08-08). The eight 19-the-drop-* still sidecars
+    keep the bounce on purpose: they are receipts of bytes actually sent. NO REWRITE IS PROPOSED, deliberately
+    - 003b is an approved, published script and the choice between changing the child and restoring the
+    parent is a taste call. $0, no GPU, no render, nothing enqueued, no 003b file touched.'

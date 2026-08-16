@@ -218,6 +218,17 @@ beats:
   in_flight: 0
   authorable_by_me_now: false
   gate: ships under the two-round rule
+  gate_CORRECTION_0817: >-
+    CORRECTION, 2026-08-17. `gate` above is left standing unedited and is WRONG. BEAT 16 DOES NOT SHIP.
+    The founder ruled on 2026-08-16, verbatim: "the difference between leg b and a is just how this big
+    leaf looks, both of them are wrong though and do not resemble the sapling." Both legs are rejected —
+    this was a taste ruling (R4) that the LEAF is wrong, not a pick — so the two-round rule does not
+    reach it: a beat that is merely unfinished ships, and a beat whose SUBJECT is wrong does not. Beat
+    16 is "leaf in focus, goblin as depth", so the leaf is not a background blemish here, it is the shot.
+    The beat goes back to needing a PLATE. Approval and the verbatim words live in review/inbox.yaml
+    (card resolved 2026-08-16, "NEITHER LEG"); see also review/ep2-picks/steward-picks-0815.yaml
+    `beats.'16'.A_B_leg_CORRECTION_0817`, which retires its own "SETTLED — LEG A". NOTHING IS FIRING ON
+    THIS: no beat-16 job is queued, and no job was enqueued or cancelled to write this correction.
 - beat: '17'
   takes: 16
   in_flight: 0

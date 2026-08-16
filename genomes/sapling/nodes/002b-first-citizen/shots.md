@@ -1085,11 +1085,56 @@ One small round purple fruit trembles on the thinnest branch of a tiny sapling, 
 
 ## Beat 19 — THE DROP (1:34–1:39) ⬜ needs footage
 
-No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take.
+No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take. The fruit never touches him: the head-bounce this beat used to ask for was killed by the founder on 2026-08-15, and the superseded prompt is kept beside the correction in this board's source file, shots.md, not on this page.
+
+```
+One small round purple fruit drops from the branch of a tiny sapling standing tall and lands in the grass at the feet of a small round goblin walking below, who stops mid-step and looks down at it. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+```
+
+**CORRECTION 2026-08-17 — THE HEAD-BOUNCE IS DEAD, and this board was the last
+published place still asking for it.** The founder ruled on **2026-08-15**:
+*"ok then just make the fig fall on the ground and the goblin will notice it"* —
+superseding his own earlier *"lets make it drop on his head"*. He changed the
+script himself the same day (`node.md:118`, commit `a483eb52`, "the fig falls on
+the ground now, so the board entry that foreclosed that has to say so"), which
+now reads *"the stem lets go, the fig falls, and lands in the grass at his feet.
+He notices."* `review/ep2-picks/done-definitions.yaml` beat 19 makes the contact
+**disqualifying**: *"NO CONTACT WITH HIS BODY — a take where the fruit touches
+him fails this beat now, however well it moves."* The eight beat-19 drafts in
+`pipeline/wave-drafts.yaml` were corrected on 2026-08-16 (the four that can still
+fire; the four whose only consumer had already fired are left as receipts). This
+file was not, and it is the one a reader sees: it is published at
+`/sapling/002b-first-citizen-shots`.
+
+**What changed in the prompt above, and nothing else did.** `bounces softly off
+the head of` → `lands in the grass at the feet of`, and the beat's third
+requirement — *he NOTICES it* — is now stated (`looks down at it`) because
+`done_when` asks for the fall, the landing and the noticing, in that order. The
+fruit still **starts on the stem** (`drops from the branch`), which
+`plate_requirement_0815` keeps as disqualifying and which no existing beat-19
+plate satisfies. The corrected sentence is 38 words against the superseded 40, so
+it cannot newly overflow `compress()`; **it was NOT measured on the real CLIP
+tokenizer** — no tokenizer is installed on this machine and this change was $0
+with no GPU — so the word count is the only guarantee offered here.
+
+**Superseded 2026-08-15, kept verbatim so nobody restores it by finding it
+quoted somewhere else** (this is the same reason `done_when_superseded_0815`
+exists beside its replacement):
 
 ```
 One small round purple fruit drops from the branch of a tiny sapling standing tall, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**The eight `19-the-drop-r1-*` / `19-the-drop-r3-*` stills under `takes/stills/`
+keep the bounce in their sidecars and are NOT corrected.** Those record the bytes
+actually sent to the model; editing them would falsify a receipt rather than fix
+a render. They are stale as to the bounce and they lose to the ruling.
+
+**A published child episode depends on the line this removes, and that is the
+author's call, not ours.** `003b-one-leaf-for-yes/node.md:83` reads
+*"Were you the fruit? Did you MEAN to hit my head?"* and is live at
+`/sapling/003b-one-leaf-for-yes`. Nothing in 003b is touched here; the conflict is
+raised on the founder's board (`review/inbox.yaml`, card raised 2026-08-17).
 
 ## Beat 20 — EVIDENCE (1:39–1:42) ⬜ needs footage
 

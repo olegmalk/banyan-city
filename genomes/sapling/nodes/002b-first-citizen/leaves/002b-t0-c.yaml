@@ -83,6 +83,43 @@ revisions:
       printing "SPEAK ✓ 1 bit. slow." against 001's "SPEAK ✗ undefined". The
       distinction the episode runs on is therefore carried by the ending rather
       than by this line, which is the shape he has now chosen.
+  - date: 2026-08-15
+    beat: 19
+    quote: "ok then just make the fig fall on the ground and the goblin will notice it"
+    supersedes_his_own_earlier_words: "lets make it drop on his head"
+    recorded_on: '2026-08-17'
+    what: |-
+      THE HEAD-BOUNCE IS DEAD, and he made the edit himself. Beat 19 THE DROP
+      read "the stem lets go, the fig falls, bounces off his head, and lands in
+      the grass at his feet." It now reads "the stem lets go, the fig falls, and
+      lands in the grass at his feet. He notices." — his own change to node.md,
+      committed a483eb52 on 2026-08-15 with the message "the fig falls on the
+      ground now, so the board entry that foreclosed that has to say so".
+      `approved_by` stays `founder` because he wrote it, the same as the two
+      revisions above.
+      WHAT IT COST. `review/ep2-picks/done-definitions.yaml` beat 19 turned the
+      contact into a disqualifier — "NO CONTACT WITH HIS BODY — a take where the
+      fruit touches him fails this beat now, however well it moves" — and kept
+      the superseded `done_when` standing beside it. Four of the eight beat-19
+      drafts in `pipeline/wave-drafts.yaml` were corrected on 2026-08-16; the
+      other four are receipts of runs that had already fired and are left as
+      written. Beat 19 has no footage either way: no beat-19 plate we own puts
+      the fruit ON THE STEM, which `plate_requirement_0815` still makes
+      disqualifying, so the ruling changed where the fruit LANDS and did not
+      unblock the beat.
+      WHY THIS ENTRY EXISTS AT ALL, said plainly. The ruling reached the canon,
+      the definitions file and the drafts on 2026-08-15/16 and never reached this
+      list, whose last two entries were both 2026-08-08 — so the only record of
+      what has been changed in an APPROVED script showed the script frozen since
+      08-08 while its beat 19 had in fact moved. Recorded 2026-08-17 by a lane
+      auditing propagation, not by a new decision: nothing here is his that he
+      did not say, and his words are quoted rather than paraphrased.
+      IT BREAKS A PUBLISHED CHILD EPISODE AND THAT IS NOT SETTLED HERE. Node 003b
+      beat "THE FIG QUESTION" (`003b-one-leaf-for-yes/node.md:83`) reads "Were you
+      the fruit? Did you MEAN to hit my head?" — a joke whose setup this revision
+      removes — and it is live on banyan.city. No 003b text is edited on the
+      steward's authority; the conflict is raised as a card on `review/inbox.yaml`
+      (2026-08-17) for him to rule on.
 approval_scope: |-
   Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
   It is NOT approval of the shot prompts: all 21 were found written in the v2
