@@ -1,0 +1,106 @@
+{
+  "id": "ep2-b18-canon-0817-1786913890",
+  "task": "ep2-b18-canon-0817",
+  "node": "002b-first-citizen",
+  "beat": 18,
+  "worker": "box-runner",
+  "priority": 21,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "18",
+        "--character",
+        "fig",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-fig-leaf-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817",
+        "--draft-key",
+        "authored_b18_canon_0816",
+        "--arm",
+        "window4",
+        "--dry"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "18",
+        "--character",
+        "fig",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-fig-leaf-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817",
+        "--draft-key",
+        "authored_b18_canon_0816",
+        "--arm",
+        "window4",
+        "--task",
+        "ep2-b18-canon-0817"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b18-canon-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b18-canon-0817/18-the-decision-*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    if c.endswith(\".yaml\"):\n        with open(c, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n            fh.write(\"approved: false\\nprovisional: true\\ncost_usd: 0.00\\n\")\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b18-canon-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r3-w015-s0.png"
+  ],
+  "backlog": {
+    "filed_at": 1786913890,
+    "filed_at_iso": "2026-08-16T20:58:10Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b18-canon-0817.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-16T21:01:31Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-16T21:04:23Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b18-canon-0817\\18-the-decision-ipa-r3-w015-s0.png"
+  ]
+}

@@ -2267,3 +2267,4 @@
 21:00:10Z STARTED task=ep2-b21-scale-0817-1786913814 attempt=1 on box-runner
 21:01:07Z DONE task=ep2-b21-scale-0817-1786913814 rc=0 artifacts=4
 21:01:31Z STARTED task=ep2-b18-canon-0817-1786913890 attempt=1 on box-runner
+21:04:23Z DONE task=ep2-b18-canon-0817-1786913890 rc=0 artifacts=4
