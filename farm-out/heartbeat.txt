@@ -2126,3 +2126,4 @@
 08:54:58Z DONE task=ep2-b17-amp-brush-0816-1786870102 rc=0 artifacts=2
 08:55:05Z STARTED task=ep2-b17-amp-brushseat-0816-1786870108 attempt=1 on box-runner
 09:00:49Z DONE task=ep2-b17-amp-brushseat-0816-1786870108 rc=0 artifacts=2
+09:00:56Z box-runner idle ready=0 failed=30
