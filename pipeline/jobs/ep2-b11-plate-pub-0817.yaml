@@ -1,0 +1,140 @@
+# 2026-08-17, PUBLISH BEAT 11'S CAST-CORRECT PLATE TO THE RESULTS BRANCH.
+#
+# WHAT THIS IS AND IS NOT. It renders nothing, animates nothing and loads no
+# model. It fetches ONE already-drawn still (and its provenance yaml) from
+# origin/main by raw URL, REFUSES on any sha256 mismatch, and copies it into
+# courier-box/farm-out so the runner pushes it to origin/farm-results-rtx5090.
+# That is the only reason it exists: box_enqueue refuses a motion job whose
+# --src it cannot fetch from the results branch, and the plate was drawn on the
+# Mac, so it is not there yet. NO plate_ack waiver is written anywhere in this
+# lane and none may be -- the waiver is the defect that produced beat 08's
+# unusable clips.
+#
+# WHY THIS PLATE. Beat 11's guards were cast by the founder on 14 and 15 August
+# and the beat has been blocked since on the OTHER half: "no staged plate of
+# these two men doing this action exists" (done-definitions.yaml,
+# beats.'11'.blocked_on_0815_CAST_HALF_DISCHARGED_0816). Every guard plate we
+# owned was mis-cast at the most visible attribute there is -- 13 of 15 asked
+# for `bald`, and neither approved guard is bald, which is why beat 11's
+# recorded "identity collapse f16-f21" was the render growing the dark hair
+# guard A actually has. This still is the first staged picture of the APPROVED
+# pair doing this beat's action.
+#
+# IT WAS CHECKED BY EYE, NOT BY A FILENAME OR A SCORE, against the seven-point
+# bar its own sidecar pre-registered BEFORE it was drawn:
+#   P1 the approved pair -- LEFT dark cropped hair in a light tan tunic
+#      (guard A), RIGHT light sandy hair in a darker brown garment (guard B),
+#      NEITHER BALD. Both hold. Checked against
+#      review/ep2-picks/sheets/guard-cast-0816.jpg.
+#   P2 exactly two whole figures, full-length, no third body. Holds.
+#   P3 both from behind, no face visible, open field ahead of them. Holds.
+#   P4 the taller man spans roughly 35% of frame height, against a >=25% bar.
+#   P5 no flat untextured region larger than a torso -- the tall grass runs
+#      edge to edge and a hedgerow gives the upper third a noun of its own.
+#      This is the vacancy pre-emption applied in advance rather than a
+#      post-mortem on it.
+#   P6 no clipboard, board, badge or weapon anywhere. Holds.
+#   P7 field present in the plate itself. Holds.
+# NAMED HONESTLY AND NOT SCORED: neither man's sash is legible from behind, so
+# the sash of office is carried by the tunic colours alone in this framing.
+id: ep2-b11-plate-pub-0817
+task: ep2-b11-plate-pub-0817
+node: 002b-first-citizen
+beat: 11
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: beat 11 replacement lane (the only guard beat with a cast-correct plate), 2026-08-17
+consumer: >-
+  The init plate for ep2-b11-leave-s20260817-0817, published as a farm-out
+  artifact so the enqueue guards can fetch and measure it like any other plate.
+  Without this step that motion job is BLOCKED by box_enqueue's plate check --
+  correctly, because a picture it cannot fetch is a picture nobody checked.
+  This IS the producing spec the refs guard traces the plate back to, and its
+  id is deliberately identical to the directory it publishes into.
+success: >-
+  One 832x1216 png and its provenance yaml on
+  farm-out/ep2-b11-plate-pub-0817, each byte-identical to the file on
+  origin/main -- the fetch step REFUSES on any sha256 mismatch rather than
+  continuing -- plus a sha256 manifest.
+  png sha256 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca,
+  yaml sha256 3cd5fae3a1a286510d9e90284fde4d186cba3f835996b6d8f927d810e9029dd7.
+why: >-
+  Beat 11 is the only guard beat whose blocking condition is discharged in both
+  halves, and the take standing in the demo cut for it is knowingly broken --
+  the file is named `...finalB-BROKEN.mp4` and its record reads "total identity
+  collapse away from the plate f16-f21". Two minutes, no GPU, no network model,
+  $0.
+est_minutes: 2
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b11-plate-pub-0817\fetch_plate.py: |-
+    """Fetch beat 11's cast-correct plate and REFUSE on any sha mismatch.
+    No model, no GPU, no spend. The bytes are the ones committed to
+    origin/main, so the sha256 asserted here is verifiable against the repo
+    by anyone.
+    """
+    import hashlib, os, urllib.request
+    OUT = r"C:\banyan-farm\ep2-b11-plate-pub-0817-out"
+    RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b11-mac-plate-0816/"
+    UA = {"User-Agent": "banyan-city-b11-plate/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("11-they-leave-mac-plate-r3s1.png", "425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca"),
+        ("11-they-leave-mac-plate-r3s1.yaml", "3cd5fae3a1a286510d9e90284fde4d186cba3f835996b6d8f927d810e9029dd7"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            raise SystemExit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                             % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-40s %7d bytes  sha %s  OK" % (name, len(raw), have), flush=True)
+    print("both files match their asserted sha256.", flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b11-plate-pub-0817\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    import glob, hashlib, os, shutil
+    src_dir = "C:/banyan-farm/ep2-b11-plate-pub-0817-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b11-plate-pub-0817"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(src_dir + "/11-they-leave-mac-plate-r3s1.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b11-plate-pub-0817.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b11-plate-pub-0817-out\11-they-leave-mac-plate-r3s1.png
+- C:\banyan-farm\ep2-b11-plate-pub-0817-out\11-they-leave-mac-plate-r3s1.yaml
+script_authority: >-
+  Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. Beat 11 is THEY LEAVE -- "The guards walk away
+  arguing, backs to camera, genuinely trying to do their jobs." This job renders
+  nothing and animates nothing: it moves one already-drawn still from
+  origin/main onto the results branch with its sha asserted. shots.md and
+  pipeline/wave-drafts.yaml are UNTOUCHED. Silent, $0, no voice synthesis and
+  no episode assembly. The still is provisional and unapproved on its face
+  (`approved: false`, `provisional: true`, `cost_usd 0` in its own sidecar).
