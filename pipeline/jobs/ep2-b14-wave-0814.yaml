@@ -1,5 +1,18 @@
 # 2026-08-14. ALL-21 WAVE, authored and NOT enqueued. It fires the moment he approves the plates.
 #
+# CORRECTION, 2026-08-16 (provenance audit). THE LINE ABOVE IS STALE, NOT WRONG WHEN WRITTEN, AND IT IS LEFT
+# STANDING BECAUSE IT IS WHAT THE SPEC SAID. It was true at 09:25Z on 14 August, when the wave was authored.
+# The gate it names then OPENED: the founder answered the numbered goblin picker at 2026-08-14T11:09:07Z -
+# "seed s0 is the goblin. also update the review page" - and re-sent the same approval 12.5 seconds later
+# prefixed "anyways focus on continuing the queue!". THIS SPEC THEN FIRED, AND CORRECTLY: run
+# ep2-b14-wave-0814-1786707604, started 2026-08-14T12:29:08Z, finished 2026-08-14T12:34:56Z, rc=0 on the box
+# (MSI). NO BREACH OF THE NARRATIVE-APPROVAL RULE - the header simply never got updated when the gate opened.
+# THIRTY-TWO specs carry this identical line and all thirty-two ran rc=0, verified one by one against their
+# own box sidecars on origin/farm-results-rtx5090; this is a class of stale record, not a fact about this job.
+# The class was found on ep2-b20-wave-0814 (commit 6cb0e0d3) and the other thirty-one are corrected here for
+# the same reason. See also `success_CORRECTION_0816` below: this spec's purpose prose is beat 02's, and beat
+# 14's real bar is written there.
+#
 # Every settled thing is in here and nothing new is: the goblin as a small ADULT MAN with the narrow
 # angular skull and the new CROSSED-WRAP TUNIC, no hood and no cloak; any fig PURPLE, teardrop, smooth
 # and plain; the scene asserted as ALREADY PRESENT rather than instructed to be drawn, which is the
@@ -41,8 +54,29 @@ max_attempts: 1
 sample: true
 owner: ep2 motion lane, 2026-08-12
 consumer: 'The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.'
+consumer_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit): the line above is beat 02's, copied verbatim into all 32 ALL-21
+  WAVE specs. This job is beat 14, "THE DEFENSE". Left standing rather than erased; see
+  `success_CORRECTION_0816` in this file for this beat's real action and definition of done.
 success: 'A 704x1280 mp4, 121 frames, in which a LEAN ADULT goblin sprints in, skids and dives behind a sapling that has broad rounded leaves — both in frame, the dive reading, the character an adult in miniature rather than a round-headed child. Read beside its twin. The failure worth reporting is the kid-read surviving the new plate, which would mean the proportions are not in the plate after all and I have been wrong about where this lives.'
+success_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit). THE LINE ABOVE IS BEAT 02's, NOT THIS BEAT'S, AND IT IS LEFT
+  STANDING BECAUSE IT IS WHAT THE SPEC SAID WHEN THIS JOB RAN. The ALL-21 WAVE was authored by copying one spec:
+  all 32 wave specs carry byte-identical `consumer`, `why` and `success`, and 28 of them — every one that is not
+  beat 02 — therefore describe beat 02's action. queue_history.py copies these three keys into
+  pipeline/measured/queue-history.json's `purpose` block, so all 28 runs published beat 02's bar and anyone
+  judging this clip from the ledger was reading the wrong beat. THIS SPEC IS BEAT 14, "THE DEFENSE". Its action,
+  quoted verbatim from genomes/sapling/nodes/002b-first-citizen/node.md: "He picks at the dirt, embarrassed,
+  glancing around." Its definition of done, quoted verbatim from review/ep2-picks/done-definitions.yaml
+  beats.14.done_when: "fingers at the dirt AND the glancing — embarrassment readable. Requires a plate where his
+  hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+  JUDGE THE CLIP AGAINST THAT AND NOTHING ELSE. No verdict is being recorded or revised here; this only replaces
+  the bar. The payload below was always this beat's — only the purpose prose was copied wrong.
 why: The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.
+why_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit): the line above is beat 02's, copied verbatim into all 32 ALL-21
+  WAVE specs. This job is beat 14, "THE DEFENSE". Left standing rather than erased; see
+  `success_CORRECTION_0816` in this file for this beat's real action and definition of done.
 est_minutes: 6
 needs:
 - cuda

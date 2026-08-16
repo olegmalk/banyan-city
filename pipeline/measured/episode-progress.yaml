@@ -2,6 +2,36 @@ measured_at: 2026-08-14 09:40Z
 source: 'per-beat states written by the motion lane at scoring time, against the definitions of done in
   review/ep2-picks/done-definitions.yaml. NOTHING here is `done`: `done` means the author has passed it
   and he has not seen last night''s work yet, so the two beats the card has finished sit as candidate-awaiting-founder.'
+goblin_gate_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit). READ THIS BEFORE ANY `state: blocked-decision` CARRYING THE
+  WORDS "character gate" BELOW. The twelve episode-2 beats 2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19 and 20
+  are all recorded here as `blocked-decision -- goblin beat, character gate`. THAT GATE IS OPEN AND HAS
+  BEEN SINCE THE HOUR AFTER THIS FILE WAS MEASURED. `measured_at` is 2026-08-14 09:40Z; the founder
+  answered the numbered goblin picker at 2026-08-14T11:09:07Z with "seed s0 is the goblin. also update
+  the review page", and re-sent the same approval 12.5 seconds later at 11:09:19Z prefixed "anyways focus
+  on continuing the queue!". The canonical repo record of that answer is the picker card in
+  review/inbox.yaml ("Gate open. ... Twelve beats unblocked."), and commit 78007cc7 fired the wave off it.
+  A SECOND, LATER ROUND ON THE SAME QUESTION IS ALSO RESOLVED: the 08-14 reference was judged infantile
+  and re-picked on 2026-08-15 -- "ill take 1 for the goblin, although some of the heads in the reference
+  are dismorphed or something, so just, beware" -- and that card names beats 07, 08, 15, 17, 19 and 20 as
+  "unblocked on the design". So no beat in this file is held by the CHARACTER question today.
+  THE STATE STRINGS AND NOTES BELOW ARE LEFT STANDING, NOT ERASED: they were true when the motion lane
+  wrote them, and house style is that a superseded line stays and a dated sibling is written beside it.
+  Each of the twelve carries a `state_CORRECTION_0816` naming its own evidence -- a successful (rc=0)
+  ltx_i2v motion run, read from the box sidecars on origin/farm-results-rtx5090, which is the only
+  complete corpus (pipeline/measured/queue-history.json is itself behind and is missing beat 07's
+  post-gate motion entirely). All twelve have shipped motion; eleven of the twelve have motion rendered
+  AFTER the gate opened, and beat 08 is the single exception and says so in its own correction.
+  WHY THIS MATTERED ENOUGH TO CORRECT: pipeline/queue_history.py READS THIS FILE and copies `state` and
+  `note` into every job row's `verdict` in pipeline/measured/queue-history.json, which /queue publishes.
+  248 ledger rows across these twelve beats carried `beat_state: blocked-decision`, and beat 20's rows
+  printed it directly beside `gate: "rendering now (2 jobs)"` -- a record contradicting itself on one
+  line. WHAT IS NOT BEING CLAIMED HERE: this correction retires the CHARACTER GATE as a reason and
+  nothing else. It does NOT re-score any beat, does NOT move any beat to `candidate-awaiting-founder`,
+  and does NOT invent a founder verdict -- that is the motion and taste lanes' call, on their evidence.
+  Some of these beats are still blocked on other, real grounds (beat 08 needs a two-figure guard+goblin
+  reference that nothing on disk has; beat 19 is not renderable until a plate exists with the fruit ON
+  THE STEM). Those grounds are simply not this one.
 episodes:
 - number: 2
   node: 002b-first-citizen
@@ -18,13 +48,39 @@ episodes:
   - n: 2
     state: blocked-decision
     note: goblin beat — held by the character-first ruling; no animation until the design is approved
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 20 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b02-exitneg-0816-1786875343 at 2026-08-16T10:45:37Z. This retires the cast as a
+      reason for this beat and re-scores nothing: no verdict is implied and the state is deliberately not
+      moved.
   - n: 3
     state: blocked-decision
     note: goblin beat — character gate
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 14 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b03-st-s20260822-0816-1786895453 at 2026-08-16T15:56:59Z. This retires the cast
+      as a reason for this beat and re-scores nothing: no verdict is implied and the state is deliberately
+      not moved.
   - n: 4
     state: blocked-decision
     note: goblin beat — character gate; also the only face close-up, where the age read has nowhere to
       hide
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 5 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b04-lw-0814-1786736833 at 2026-08-14T20:07:40Z. This retires the cast as a reason
+      for this beat and re-scores nothing: no verdict is implied and the state is deliberately not moved.
   - n: 5
     state: candidate-awaiting-founder
     note: seedB holds two guards the whole clip in a field present at frame one and the scan reads; waiting
@@ -36,9 +92,31 @@ episodes:
   - n: 7
     state: blocked-decision
     note: guard beat but the guard points AT the scavenger, so the goblin is in frame — character gate
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 7 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b07-s49B-0815-1786780323 at 2026-08-15T08:02:18Z. Its own note is right that the
+      guard points AT the scavenger, so the goblin is in frame; that is no longer a hold, it is just
+      staging. This retires the cast as a reason for this beat and re-scores nothing: no verdict is implied
+      and the state is deliberately not moved.
   - n: 8
     state: blocked-decision
     note: goblin beat — character gate; the guard half is solved, the goblin half is not
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. THE ONE EXCEPTION IN THE TWELVE, AND IT IS NAMED RATHER THAN SMOOTHED
+      OVER: beat 08 has five rc=0 motion runs but ALL FIVE PREDATE THE GATE OPENING -- the last is
+      2026-08-13T17:28:01Z, nineteen hours before 11:09:07Z, and its only post-gate run is a still
+      (goblin_ipa_beat.py, 2026-08-14T11:47:12Z). So beat 08 HAS been animated and is NOT held by the
+      character question -- the 08-15 re-pick card lists 08 among the six it unblocks -- but it has not been
+      re-animated since, and STATE.md records a real remaining block that is not the cast: it needs a
+      two-figure guard-and-goblin reference and nothing on disk has both. This retires the cast as a reason
+      for this beat and re-scores nothing: no verdict is implied and the state is deliberately not moved.
   - n: 9
     state: fix-known
     note: framing and expression solved; the face changes between the plate and the close-up at BOTH seeds.
@@ -57,18 +135,63 @@ episodes:
   - n: 13
     state: blocked-decision
     note: goblin beat — character gate; plate exists on the frozen reference
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 19 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b13-negcfg-0816-1786825194 at 2026-08-15T21:02:29Z. This retires the cast as a
+      reason for this beat and re-scores nothing: no verdict is implied and the state is deliberately not
+      moved.
   - n: 14
     state: blocked-decision
     note: goblin beat — character gate
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 8 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b14-nw-0815-1786744321 at 2026-08-15T00:41:33Z. This retires the cast as a reason
+      for this beat and re-scores nothing: no verdict is implied and the state is deliberately not moved.
   - n: 15
     state: blocked-decision
     note: goblin beat — character gate
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 11 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b15-lookupB-0815-1786781212 at 2026-08-15T08:33:24Z. This retires the cast as a
+      reason for this beat and re-scores nothing: no verdict is implied and the state is deliberately not
+      moved.
   - n: 16
     state: blocked-decision
     note: goblin beat — character gate; outside the motion lane's scope
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 5 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b16-nwB-0815-1786744327 at 2026-08-15T01:05:11Z. Its note also says "outside the
+      motion lane's scope"; that part is a scope statement, not a gate, and is untouched. This retires the
+      cast as a reason for this beat and re-scores nothing: no verdict is implied and the state is
+      deliberately not moved.
   - n: 17
     state: blocked-decision
     note: goblin beat — character gate; plate exists on the frozen reference
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 33 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b17-bigbody-motion-0816-1786877813 at 2026-08-16T11:03:36Z. This retires the cast
+      as a reason for this beat and re-scores nothing: no verdict is implied and the state is deliberately
+      not moved.
   - n: 18
     state: fix-known
     note: purple settled the recognition; the silhouette is still round and seed-divergent after three
@@ -76,9 +199,30 @@ episodes:
   - n: 19
     state: blocked-decision
     note: goblin beat — character gate; its plate already carries the purple fig
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 3 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b19-lw-0814-1786736887 at 2026-08-14T21:41:09Z. A DIFFERENT AND STILL-LIVE BLOCK
+      REMAINS, and it is not the cast: done-definitions.yaml has beat 19 "not renderable until the plate
+      exists" because every plate we own shows the fruit already lying in the grass and the fruit must START
+      ON THE STEM. This retires the cast as a reason for this beat and re-scores nothing: no verdict is
+      implied and the state is deliberately not moved.
   - n: 20
     state: blocked-decision
     note: goblin beat — character gate
+    state_CORRECTION_0816: >-
+      CORRECTION, 2026-08-16: the "character gate" this state names is OPEN -- see
+      `goblin_gate_CORRECTION_0816` at the top of this file for the founder's words and the date. The line
+      above is left standing because it is what the motion lane measured at 09:40Z on 2026-08-14, ninety
+      minutes before he answered. Motion evidence, counted from the box sidecars on
+      origin/farm-results-rtx5090: 3 rc=0 ltx_i2v runs for this beat finished AFTER 2026-08-14T11:09:07Z,
+      the latest being ep2-b20-lw-0814-1786736890 at 2026-08-14T21:47:14Z. This is the beat whose ledger
+      rows printed `beat_state: blocked-decision` next to `gate: "rendering now (2 jobs)"`. This retires the
+      cast as a reason for this beat and re-scores nothing: no verdict is implied and the state is
+      deliberately not moved.
   - n: 21
     state: fix-known
     note: two-held-positions fixed the movement; the dusk plate was fighting a daylight beat, so it is

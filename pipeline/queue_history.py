@@ -80,6 +80,11 @@ HELD_RE = re.compile(r"PRE-AUTHORED|DO NOT ENQUEUE", re.I)
 # How much planning prose rides along per job. The full text stays in the spec
 # on main (linked from the page); the JSON carries enough to read the card.
 PROSE_CAP = 500
+# A line that has been superseded carries its replacement inline (see
+# carry_correction), so it needs more room than an ordinary one — otherwise the
+# correction is what gets clipped off the end and the stale half is all that
+# ships. Only corrected lines ever use this.
+CORRECTED_CAP = 2200
 
 MEDIA_EXT = {".png": "image", ".jpg": "image", ".jpeg": "image",
              ".webp": "image", ".gif": "image", ".mp4": "video",
@@ -334,6 +339,70 @@ def load_specs():
 _GATE_CORRECTION = re.compile(r"^gate_[A-Z][A-Z_0-9]*_\d{4}$")
 
 
+def correction_keys(entry, field):
+    """Dated `<field>[_SUBJECT]_MMDD` correction siblings of `field`, sorted.
+
+    House style across gate-evidence.yaml, done-definitions.yaml,
+    episode-progress.yaml and the job specs is one shape: a superseded line is
+    NEVER erased, it is left standing and a dated sibling key is written beside
+    it. The sibling is always `<field>_` + SHOUTING + `_MMDD`, so one matcher
+    finds them for any field — `gate_CORRECTION_0816`, `state_CORRECTION_0816`,
+    `success_CORRECTION_0816`, `guards_CORRECTION_0816`. Returns [] when the
+    line has not been superseded, which is the common case.
+    """
+    if not isinstance(entry, dict):
+        return []
+    pat = re.compile(r"^%s_[A-Z][A-Z_0-9]*_\d{4}$" % re.escape(field))
+    return sorted(k for k in entry if isinstance(k, str) and pat.match(k))
+
+
+def carry_correction(entry, field, where, include_text=False):
+    """`entry[field]`, marked SUPERSEDED and pointed at its dated sibling.
+
+    `include_text=True` inlines the sibling's own words instead of only naming
+    it. Use it where the reader needs the REPLACEMENT and not merely a warning
+    — a success criterion is the bar someone judges against, so a pointer to
+    another file is not enough; a gate is a yes/no and a pointer suffices.
+
+    THE FAILURE THIS CLOSES, AND IT HAS NOW HAPPENED THREE TIMES IN ONE FILE.
+    This reader copies authored yaml into queue-history.json, which /queue
+    publishes. When the yaml is corrected in house style — old line left
+    standing, dated sibling beside it — a reader that reads only the old key
+    republishes the retracted text forever. Hand-editing the JSON is NOT the
+    fix: `_meta.writer` says do not, and the next run puts the stale text
+    straight back. The reader carries the correction instead.
+
+    1. `gate` (2026-08-16): six rows saying "GATED - guard cast unapproved (his
+       call)" outlived the founder lifting it ("the cast stands as drawn").
+    2. `state` (2026-08-16, this audit): episode-progress.yaml was measured at
+       2026-08-14 09:40Z and holds twelve goblin beats at `blocked-decision --
+       goblin beat, character gate`. He opened that gate ninety minutes later,
+       at 2026-08-14T11:09:07Z — "seed s0 is the goblin" — and all twelve have
+       animated since. 248 job rows carried the dead block into the ledger, and
+       beat 20's printed it beside `gate: "rendering now (2 jobs)"`, one record
+       contradicting itself on one line.
+    3. `consumer`/`why`/`success` (2026-08-16, same audit): the ALL-21 WAVE was
+       authored by copying one spec, so 28 of its 32 specs carried BEAT 02's
+       purpose prose verbatim — the recorded success bar for the beat-20 clip
+       read "a goblin sprints in, skids and dives behind a sapling", which is
+       beat 02's action, not beat 20's fig-and-look-up. Anyone judging those 28
+       clips from the ledger was reading the wrong beat's bar.
+
+    Nothing in the yaml is rewritten; the marker points at the key to read.
+    """
+    val = entry.get(field) if isinstance(entry, dict) else None
+    if not val:
+        return val
+    corr = correction_keys(entry, field)
+    if not corr:
+        return val
+    out = ("%s -- SUPERSEDED, do not act on it: see `%s` in %s"
+           % (val, "`, `".join(corr), where))
+    if include_text:
+        out += " -- " + " ".join(str(entry[k]).strip() for k in corr)
+    return out
+
+
 def gate_text(beat_entry):
     """A beat's `gate:` string, carrying its dated correction if one exists.
 
@@ -374,7 +443,10 @@ def load_verdicts():
         for e in d.get("episodes") or []:
             for b in e.get("beats") or []:
                 beat_state[(e.get("node"), int(b["n"]))] = {
-                    "state": b.get("state"), "note": clip(b.get("note"), 300)}
+                    "state": carry_correction(
+                        b, "state",
+                        "pipeline/measured/episode-progress.yaml"),
+                    "note": clip(b.get("note"), 300)}
     except (OSError, yaml.YAMLError, KeyError, TypeError, ValueError) as e:
         notes.append(f"episode-progress unreadable: {e.__class__.__name__}")
     ge = REPO / "review" / "ep2-picks" / "gate-evidence.yaml"
@@ -414,9 +486,19 @@ def build_job_row(sidecar_path, sc, specs, pubdirs, files_by_dir, blobs, shamap,
         "sidecar": sidecar_path, "spec_file": spec_rel,
     }
     if spec:
-        row["purpose"] = {k: clip(spec.get(k)) for k in
-                          ("consumer", "why", "success", "owner")
-                          if spec.get(k)}
+        # `include_text=True`: a success line is the bar a clip gets judged
+        # against, so the replacement has to travel WITH the row. See
+        # carry_correction() failure 3 — 28 wave rows published beat 02's bar.
+        # PROSE_CAP still governs an uncorrected line; a corrected one gets the
+        # room its replacement needs, because a bar clipped mid-sentence is the
+        # same defect in a politer form.
+        row["purpose"] = {}
+        for k in ("consumer", "why", "success", "owner"):
+            if not spec.get(k):
+                continue
+            corrected = carry_correction(spec, k, spec_rel, include_text=True)
+            cap = PROSE_CAP if corrected == spec.get(k) else CORRECTED_CAP
+            row["purpose"][k] = clip(corrected, cap)
         for k in ("est_minutes", "priority"):
             if spec.get(k) is not None:
                 row["purpose"][k] = spec[k]

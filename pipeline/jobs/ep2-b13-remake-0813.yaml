@@ -15,6 +15,21 @@ sample: true
 owner: ep2 motion lane, 2026-08-12
 consumer: 'The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.'
 success: 'A 704x1280 mp4, 121 frames, in which a LEAN ADULT goblin sprints in, skids and dives behind a sapling that has broad rounded leaves — both in frame, the dive reading, the character an adult in miniature rather than a round-headed child. Read beside its twin. The failure worth reporting is the kid-read surviving the new plate, which would mean the proportions are not in the plate after all and I have been wrong about where this lives.'
+success_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit). THE `success` LINE ABOVE IS BEAT 02's, NOT THIS BEAT'S, AND IT IS
+  LEFT STANDING BECAUSE IT IS WHAT THE SPEC SAID WHEN THIS JOB RAN. It was copied out of the beat-02 spec and
+  pasted across the episode-2 goblin work: 80 specs in pipeline/jobs/ carry this same sprint prose and only 13
+  of them are beat 02. queue_history.py copies `success` into pipeline/measured/queue-history.json's `purpose`
+  block, so the ledger published beat 02's bar for this clip and anyone judging it from the ledger was reading
+  the wrong beat. THIS SPEC IS BEAT 13, "THE SHADE". Its action, quoted verbatim from
+  genomes/sapling/nodes/002b-first-citizen/node.md: "The scavenger slides down the trunk and folds into the
+  sapling's tiny shade, knees up around his ears." Its definition of done, quoted verbatim from
+  review/ep2-picks/done-definitions.yaml beats.13.done_when: "he ends FOLDED SMALL in the sapling's shade, knees
+  up. SCRIPT CONFLICT, flagged not solved: the script says "slides down the trunk", and the founder has ruled
+  the sapling is tiny — "thats ridiculous, lmao. the sapling is tiny" — so there is no trunk to slide down. The
+  END STATE is what the beat needs; how he gets there is an author call, not a steward one." JUDGE THE CLIP
+  AGAINST THAT AND NOTHING ELSE. No verdict is being recorded or revised here; this only replaces the bar. The
+  payload below was always this beat's - only the purpose prose was copied wrong.
 why: The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.
 est_minutes: 6
 needs:

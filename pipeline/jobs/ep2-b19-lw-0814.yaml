@@ -23,6 +23,23 @@ sample: true
 owner: ep2 motion lane, 2026-08-12
 consumer: 'The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.'
 success: 'A 704x1280 mp4, 121 frames, in which a LEAN ADULT goblin sprints in, skids and dives behind a sapling that has broad rounded leaves — both in frame, the dive reading, the character an adult in miniature rather than a round-headed child. Read beside its twin. The failure worth reporting is the kid-read surviving the new plate, which would mean the proportions are not in the plate after all and I have been wrong about where this lives.'
+success_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 (provenance audit). THE `success` LINE ABOVE IS BEAT 02's, NOT THIS BEAT'S, AND IT IS
+  LEFT STANDING BECAUSE IT IS WHAT THE SPEC SAID WHEN THIS JOB RAN. It was copied out of the beat-02 spec and
+  pasted across the episode-2 goblin work: 80 specs in pipeline/jobs/ carry this same sprint prose and only 13
+  of them are beat 02. queue_history.py copies `success` into pipeline/measured/queue-history.json's `purpose`
+  block, so the ledger published beat 02's bar for this clip and anyone judging it from the ledger was reading
+  the wrong beat. THIS SPEC IS BEAT 19, "THE DROP". Its action, quoted verbatim from
+  genomes/sapling/nodes/002b-first-citizen/node.md: "Wider — the whole sapling and the scavenger below it in one
+  frame: the stem lets go, the fig falls, and lands in the grass at his feet. He notices." Its definition of
+  done, quoted verbatim from review/ep2-picks/done-definitions.yaml beats.19.done_when: "WIDE enough to hold the
+  whole sapling and him at once; the fruit STARTS ON THE STEM, falls, and LANDS ON THE GROUND; and he NOTICES
+  it. Three things, in that order: the fall, the landing, the noticing. NO CONTACT WITH HIS BODY — a take where
+  the fruit touches him fails this beat now, however well it moves." JUDGE THE CLIP AGAINST THAT AND NOTHING
+  ELSE. NOTE, and it is not this lane's to fix: done-definitions.yaml's own `script` key for beat 19 still reads
+  "bounces off his head", which its `ruling_0815` killed the same day. Beat 19 is also NOT RENDERABLE until a
+  plate exists with the fruit ON THE STEM. No verdict is being recorded or revised here; this only replaces the
+  bar. The payload below was always this beat's - only the purpose prose was copied wrong.
 why: The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.
 est_minutes: 6
 needs:

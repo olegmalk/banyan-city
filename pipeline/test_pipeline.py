@@ -9491,6 +9491,123 @@ def test_a_corrected_gate_never_reaches_the_queue_page_uncorrected():
     check("no guard-cast row is left without its dated correction", not stale)
 
 
+def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
+    # THE SAME FAILURE AS ABOVE, TWICE MORE, FOUND 2026-08-16. A decision moves
+    # and the records that act on it do not. gate_text() fixed one field; this
+    # covers the general reader and the two other fields it now protects.
+    #
+    #   (a) episode-progress.yaml was measured 2026-08-14 09:40Z and holds
+    #       twelve goblin beats at `blocked-decision -- goblin beat, character
+    #       gate`. He opened that gate at 2026-08-14T11:09:07Z ("seed s0 is the
+    #       goblin") and all twelve have animated since. queue_history copies
+    #       `state` into every job row, so 248 rows carried the dead block --
+    #       beat 20's printed it beside `gate: "rendering now (2 jobs)"`.
+    #   (b) the ALL-21 WAVE was authored by copying one spec, so 28 of its 32
+    #       specs carried BEAT 02's `consumer`/`why`/`success`. The recorded
+    #       bar for the beat-20 clip read "a goblin sprints in, skids and dives
+    #       behind a sapling" -- beat 02's action, not beat 20's. That prose
+    #       reached the ledger's `purpose` block for all 28 runs.
+    import queue_history as qh
+    check("an uncorrected field is passed through untouched",
+          qh.carry_correction({"state": "fix-known"}, "state", "f.yaml")
+          == "fix-known")
+    check("a missing field stays missing rather than becoming a string",
+          qh.carry_correction({}, "state", "f.yaml") is None)
+    st = qh.carry_correction(
+        {"state": "blocked-decision",
+         "state_CORRECTION_0816": "the gate is open"}, "state", "ep.yaml")
+    check("the superseded state is still there, not erased",
+          st.startswith("blocked-decision"))
+    check("and the state is marked superseded", "SUPERSEDED" in st)
+    check("naming the key and the file that hold the correction",
+          "state_CORRECTION_0816" in st and "ep.yaml" in st)
+    check("an undated sibling does not mute a state",
+          qh.carry_correction({"state": "blocked-decision",
+                               "state_note": "x"}, "state", "f") ==
+          "blocked-decision")
+    # A gate is a yes/no, so a pointer suffices. A SUCCESS LINE IS THE BAR
+    # SOMEONE JUDGES A CLIP AGAINST, so the replacement has to travel with the
+    # row -- a pointer to another file is what let 28 clips be read against the
+    # wrong beat in the first place.
+    sc = qh.carry_correction(
+        {"success": "a goblin sprints in, skids and dives",
+         "success_CORRECTION_0816": "BOTH HANDS to the fruit, then the look UP"},
+        "success", "spec.yaml", include_text=True)
+    check("a corrected success line carries its replacement inline, not a pointer",
+          "BOTH HANDS to the fruit" in sc)
+    check("and still shows the superseded bar it replaces",
+          sc.startswith("a goblin sprints in, skids and dives"))
+    # gate_text keeps its own behaviour: pointer only, no inlined text.
+    check("a gate still points rather than inlining",
+          "the cast stands as drawn" not in
+          qh.gate_text({"gate": "GATED", "gate_CORRECTION_0816":
+                        "the cast stands as drawn"}))
+    # The live files must actually carry the corrections, or this reader is
+    # right and the record is still wrong.
+    import yaml
+    ep = yaml.safe_load((REPO / "pipeline" / "measured" /
+                         "episode-progress.yaml").read_text(encoding="utf-8"))
+    ep2 = [e for e in ep["episodes"] if e.get("number") == 2][0]
+    stale = [b["n"] for b in ep2["beats"]
+             if "character gate" in str(b.get("note") or "")
+             and not qh.correction_keys(b, "state")]
+    check("no goblin beat is left asserting the character gate uncorrected",
+          not stale)
+    check("all twelve of them carry a dated state correction",
+          len([b for b in ep2["beats"] if qh.correction_keys(b, "state")]) == 12)
+    # And the 28 wave specs: every one that is not beat 02 must carry its own
+    # bar, and the four that ARE beat 02 must be left alone.
+    # Select on the byte-identical header LINE, not on the phrase anywhere in
+    # the file. Grepping for "ALL-21 WAVE" picked up 34 files the moment this
+    # audit's own correction prose mentioned the wave by name in two beat-16
+    # specs — a selector contaminated by the thing it selects for. The first
+    # line is the actual identity: all 32 carry it byte for byte.
+    jobs = REPO / "pipeline" / "jobs"
+    header = ("# 2026-08-14. ALL-21 WAVE, authored and NOT enqueued. "
+              "It fires the moment he approves the plates.\n")
+    wave = [p for p in sorted(jobs.glob("*.yaml"))
+            if p.read_text(encoding="utf-8").startswith(header)]
+    check("the wave is still the thirty-two specs this audit counted",
+          len(wave) == 32)
+    wrong = []
+    for p in wave:
+        spec = yaml.safe_load(p.read_text(encoding="utf-8"))
+        beat02 = int(spec["beat"]) == 2
+        corrected = bool(qh.correction_keys(spec, "success"))
+        if beat02 == corrected:      # b02 corrected, or non-b02 left stale
+            wrong.append(p.name)
+    check("every non-beat-02 wave spec carries its own success bar, and the "
+          "four real beat-02 specs are untouched", not wrong)
+    # THE WAVE WAS NOT THE BLAST RADIUS. The handover reported 28 of 32; the
+    # ledger rebuild proved beat 02's prose had been pasted well past the wave
+    # — 80 specs carry it and only 13 are beat 02, including beats (16) that
+    # were never in the wave at all. Guard the real population, so the next
+    # paste of this line is caught wherever it lands.
+    SPRINT = "sprints in, skids and dives behind a sapling"
+    # Four specs are staged for deletion by another lane and are deliberately
+    # left alone; drop them from the population rather than from the rule.
+    staged_deleted = {"ep2-b14-s49-0815.yaml", "ep2-b14-s49B-0815.yaml",
+                      "ep2-b15-s49-0815.yaml", "ep2-b15-s49B-0815.yaml"}
+    stale_bar = []
+    for p in sorted(jobs.rglob("*.yaml")):
+        if p.name in staged_deleted:
+            continue
+        raw = p.read_text(encoding="utf-8")
+        if SPRINT not in raw:
+            continue
+        try:
+            spec = yaml.safe_load(raw)
+        except Exception:
+            continue
+        if not isinstance(spec, dict) or int(spec.get("beat") or -1) == 2:
+            continue
+        if SPRINT in str(spec.get("success") or "") \
+                and not qh.correction_keys(spec, "success"):
+            stale_bar.append(p.name)
+    check("no non-beat-02 spec anywhere in pipeline/jobs still records beat "
+          "02's sprint as its own success bar", not stale_bar)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -9831,6 +9948,7 @@ def main():
         test_an_acknowledgement_for_a_fired_receipt_is_surplus_not_stale(td)
     test_the_real_ledger_is_read_and_is_not_empty()
     test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
+    test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
