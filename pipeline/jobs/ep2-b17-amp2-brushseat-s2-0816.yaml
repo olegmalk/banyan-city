@@ -1,0 +1,208 @@
+# 2026-08-16, composition lane. AMPLITUDE PROBE ROUND 2, arm BRUSHSEAT-S2, seed 20260902.
+# ENGINE PROBE, NOT A TAKE FOR THE CUT -- see script_authority below.
+#
+# ROUND 1, and it is why this exists. Two jobs finished this hour on beat 17's
+# own published plate, at seed 20260901, the seed its `full` arm passed at,
+# with the negative, the style suffix and every render flag byte-identical to
+# the twelve cells of 2026-08-15:
+#
+#   amp-brush      "He brushes the dust from his cloak with both hands."
+#   amp-brushseat  "Still seated in the grass, he brushes the dust from his
+#                   cloak with both hands."
+#
+# BOTH hold the seated pose UNCHANGED from f0 to f96. Hands clasped on the
+# knee the whole way. What moves is the clouds, the eyelids, and in brushseat
+# a bird crossing the sky. No stand-up either, so the plate is not forcing the
+# rise -- the clause is genuinely in charge, and what it asked for did not
+# happen. (brushseat's depth is 0.376, second only to the b02-FIXED reference
+# of 0.397, and it is a bird. Cycle 018 said depth is inverted; this is that
+# again, from a third direction.)
+#
+# WHAT ROUND 1 SETTLES. Good composition is NOT SUFFICIENT. The best plate we
+# own -- one figure, full body, wide, ~40% headroom, the plate that stands a
+# body up in 12 of 12 -- freezes a small in-hand action. So giving beats
+# 06/08/10 a wide plate cannot be EXPECTED to fix them, and the plate campaign
+# that was about to be filed against beat 08 is not obviously worth its cost.
+# That is what two eleven-minute jobs bought.
+#
+# WHAT IT DOES NOT SETTLE, and this matrix is the difference:
+#
+#                    | no locomotion      | locomotion
+#   -----------------+--------------------+---------------------------
+#   small action     | amp-brush   FROZEN | (not asked)
+#   large action     | *** THIS ***       | b17 rise/full  12 of 12
+#
+# The empty cell is the whole question. If a big arm moves without the body
+# going anywhere, the engine wants DISPLACEMENT and beats 06/08/10 need bigger
+# staged actions -- a cheap staging note. If it freezes, the engine wants
+# LOCOMOTION and those beats need re-staging, which is an author's call.
+#
+# THIS ARM: BASE-RATE CONTROL on round 1's result
+# Round 1 froze at ONE seed per wording, and one take in three fails its
+# action at this recipe regardless of framing. Two failures at one seed each
+# is not yet a result -- it is roughly what two unlucky rolls look like.
+# This is round 1's wording, BYTE-IDENTICAL, at a second seed, and it is the
+# cheapest thing that can falsify the finding I am about to act on.
+#
+# GUARDS: --src is the PUBLISHED init on origin/farm-results-rtx5090, whose
+# producing spec is in pipeline/jobs and named no --refs, so the plate check
+# and the refs check both RUN and both PASS and nothing is waived -- which is
+# what lets this go through the backlog door at all. Prompt measured on the
+# real Gemma tokenizer before filing. One sample per wording.
+#
+# $0. Local card, no provider, no paid engine.
+id: ep2-b17-amp2-brushseat-s2-0816
+task: ep2-b17-amp2-brushseat-s2-0816
+node: 002b-first-citizen
+beat: 17
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: composition lane, 2026-08-16
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. STATED
+  PLAINLY: this is an ENGINE PROBE, NOT A TAKE FOR THE CUT. Its action clause is not beat 17''s scripted
+  line and the clip it produces must never be picked into an episode -- it exists to locate where the
+  engine stops performing an action, on the one plate whose behaviour is known. Same category as the motion-poscontrol
+  jobs filed by another lane on 2026-08-16, which animate stock photographs for the same reason. Silent,
+  $0, and nothing here is a voice synthesis or an episode assembly.'
+consumer: 'The staging decision for beats 06, 08 and 10, which is currently blocked on a question round
+  1 half-answered. Cycle 018 offered three explanations for why beat 17 moves and those beats do not;
+  round 1 of this probe (ep2-b17-amp-brush-0816 and -brushseat-0816, both done, clips on the results branch)
+  killed the plate explanation as a SUFFICIENT one: on beat 17''s own wide plate, at the seed its `full`
+  arm passed at, a small in-hand action holds the seated pose unchanged from f0 to f96 -- twice. Good
+  composition does not buy a small action. THIS cell asks the question that decides what to do about it:
+  is the engine''s requirement DISPLACEMENT (in which case beats 06/08/10 get bigger staged actions and
+  nothing else changes) or LOCOMOTION (in which case they need re-staging and no wording or plate will
+  do it)? Cell: BASE-RATE CONTROL on round 1''s result. Judged by opening consecutive frames via pipeline/coldread_frames.py,
+  NEVER by depth -- round 1''s frozen brushseat scores 0.376, and almost all of that is a bird.'
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the plate. PASS is the named action performed
+  with the limbs visibly displacing relative to the torso, in the same field, no cut, no scene change,
+  no second figure. FAIL is round 1''s signature: the same pose at f0 and f96 with the linework re-inked
+  in place. PRE-REGISTERED, and both outcomes are the finding -- a pass says beats 06/08/10 need BIGGER
+  actions, a fail says they need whole-body ones. Whether the camera drifts or pushes in is recorded separately
+  and is not scored: round 1''s brush arm drifted while the figure sat still, and camera scale numbers
+  from the chained-NCC estimate are not reliable enough to quote. A clip that cuts or relocates fails
+  whichever way the action goes.'
+why: Round 1 came back inside the hour and inverted the lane's priority, so the follow-up is filed while
+  the finding is fresh and before anyone spends Mac plate time on a re-plate it argues against. No new
+  plate needed -- it re-uses the published init. $0, local card.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-motion-prompt.txt: Still seated in the grass, he brushes
+    the dust from his cloak with both hands. 2D anime, hand-drawn cel animation, flat cel shading, clean
+    ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very
+    aesthetic.
+  C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-jobs-encode.json: "[\n {\n  \"beat\": 17,\n  \"embeds\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\b17-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\b17-motion-prompt.txt\",\n\
+    \  \"negative_file\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\b17-negative.txt\"\
+    \n }\n]"
+  C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-jobs-render.json: "[\n {\n  \"beat\": 17,\n  \"seed\"\
+    : 20260902,\n  \"embeds\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\b17-embeds.pt\"\
+    ,\n  \"init\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\b17-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-amp2-brushseat-s2-0816\\\\\\\\17-goodbye-LTX-amp2-brushseat-s2.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-full-s1-0815\b17-init-704x1280.png
+  - --sha256
+  - 74e8eccf9653edadd9cdd70b419b9a325932bede3238ace06a2308fb95452a6a
+  - --out
+  - C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-amp2-brushseat-s2-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\bench-amp2-brushseat-s2.jsonl
+  - --bench-label
+  - ep2-b17-amp2-brushseat-s2-0816
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-amp2-brushseat-s2-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-amp2-brushseat-s2-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-LTX-amp2-brushseat-s2.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b17-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-amp2-brushseat-s2.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n  \
+    \  c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-amp2-brushseat-s2-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\17-goodbye-LTX-amp2-brushseat-s2.mp4
+- C:\banyan-farm\ep2-b17-amp2-brushseat-s2-0816\b17-init-704x1280.png
+sample: true

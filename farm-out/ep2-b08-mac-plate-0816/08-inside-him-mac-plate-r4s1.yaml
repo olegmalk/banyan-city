@@ -1,0 +1,20 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 8
+beat_slug: "inside-him"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260816
+render_seconds: 165.6
+png_sha256: "0d7cb6446316e88516833b0368bd30c9f9e4442ff54452b504529ba1f03b06dd"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "3boys, full body, wide shot, standing in a green field, two adult guard men in uniform facing a lean adult goblin man, green skin, bald head, patchwork cloak, near guard holds a wooden clipboard at chest height, three men standing together, wide blue sky above, sunny day, masterpiece, best quality"
+negative_prompt: "giant, colossal, monster, kaiju, statue, face in the sky, text, close-up, portrait, upper body, cropped, 1boy, 2boys, 4boys, solo, white background, simple background, child, spear, sword, tree, forest, house, indoors, photorealism, 3d render, night"
+done_when: "the clipboard comes DOWN and the point goes to the BELLY, both legible; both guards and the scavenger in frame, since a point needs its target visible."
+why_this_plate: "Beat 08 has NO VERDICT YET and the reason is visible in one look: the picture its motion takes were animated from (farm-out/ep2-b08-twohander/b19-init-704x1280.png, sha 6c403952) is a COSTUME CARD -- one figure, waist-up, eyes closed, on flat blank paper, no field, no second guard and no scavenger. Its done_when needs three bodies and a belly in frame. No wording reaches a target that is not in the picture, which is why every lever failed. Cycle 018 measured the other half of this: on beat 17's WIDE full-body plate with ~40% headroom the engine moved a whole body in 12 of 12 takes. This plate gives beat 08 beat 17's composition -- wide, full-length, real field, room above the heads -- and changes nothing else."
+founder_verdict: null
+revision: 4
+scored: false

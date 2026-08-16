@@ -117,6 +117,142 @@ DRAFTS = {
 # Revisions. ONE VARIABLE PER REVISION, and the reason is written down before it
 # renders. `--rev N` merges over the base draft above.
 REVS = {
+    (8, 2): {
+        # r1 came back UNUSABLE and in an instructive way: a colossal
+        # two-headed goblin filling the upper half as a piece of SCENERY, and
+        # three tiny identically-uniformed guards at the bottom edge seen from
+        # BEHIND -- no scavenger among them, no clipboard, no faces. The
+        # composition lever half-worked: the field, the sky, the headroom and
+        # the full-length staging are all there. What broke is SCALE.
+        #
+        # THE ONE VARIABLE: `small figures low in frame`. It was lifted from
+        # the beat-17 plate, where it is correct because that plate is `solo`
+        # and the one figure keeps the frame. Here it shrank the real people
+        # to specks, and a canvas with nothing of subject size left in it got
+        # the remaining space filled with the only other noun available -- the
+        # goblin, drawn at scenery scale. One phrase produced both defects, so
+        # one phrase is what changes. Everything else, including `scenery`,
+        # `wide shot`, the sky clause and the whole negative, is BYTE-IDENTICAL
+        # to r1: if the goblin still comes back as landscape once the figures
+        # are people-sized, that is a separate finding about the `scenery` tag
+        # and it must not be confounded with this one.
+        "prompt": (
+            "3boys, full body, wide shot, scenery, standing in a green field, "
+            "two adult guard men in uniform facing a lean adult goblin man, "
+            "green skin, bald head, patchwork cloak, near guard holds a "
+            "wooden clipboard at chest height, three men standing together, "
+            "wide blue sky above, sunny day, masterpiece, best quality"
+        ),
+    },
+    (8, 3): {
+        # r2's variable WORKED and the prediction written into r2 above came
+        # true, in the same render. Dropping `small figures low in frame` for
+        # `three men standing together` made the three people person-sized,
+        # full length, standing on a path FACING THE LENS, one of them holding
+        # a board -- r1's specks-seen-from-behind are gone. And the colossal
+        # goblin came back anyway, barely changed. r2 said in advance: "if the
+        # goblin still comes back as landscape once the figures are
+        # people-sized, that is a separate finding about the `scenery` tag."
+        # It is, so `scenery` is r3's one variable and it is DELETED.
+        #
+        # Why that tag and not the goblin words: `scenery` is an animagine
+        # composition tag that promotes the LANDSCAPE to subject. Beat 17's
+        # plate carries it safely because that prompt is `solo` -- one figure
+        # owns the frame and the tag only opens the sky behind him. Here it is
+        # competing with three small people for what the picture is OF, and a
+        # green cloaked hill is what it built out of the only large noun in
+        # the prompt. Everything else, including the whole negative and the
+        # `three men standing together` clause r2 proved, is BYTE-IDENTICAL.
+        "prompt": (
+            "3boys, full body, wide shot, standing in a green field, "
+            "two adult guard men in uniform facing a lean adult goblin man, "
+            "green skin, bald head, patchwork cloak, near guard holds a "
+            "wooden clipboard at chest height, three men standing together, "
+            "wide blue sky above, sunny day, masterpiece, best quality"
+        ),
+    },
+    (8, 4): {
+        # r3's hypothesis is FALSIFIED and that is worth as much as a pass.
+        # Deleting `scenery` changed the giant not at all -- it is still there,
+        # same pose, same scale. So the colossus is not that tag, and nobody
+        # should spend another sample on it. r3 did move the figures closer and
+        # larger (a side effect of the deletion, noted, not claimed as a lever)
+        # and they now read as three uniformed men holding boards, facing the
+        # lens, full length, in a field with sky above -- the COMPOSITION beat
+        # 08 has never had. Two defects remain: the colossus, and all three men
+        # being goblins where the beat needs two human guards and one goblin.
+        #
+        # THE ONE VARIABLE: the NEGATIVE, which has been byte-identical through
+        # r1-r3 and has never once named the thing that keeps happening. Three
+        # samples have now shown the failure is not scale (r2) and not the
+        # `scenery` tag (r3), which leaves the positive's own nouns building a
+        # goblin at landscape size in the empty upper half. A negative is the
+        # cheapest instrument that addresses it directly and it is one edit.
+        # The positive stays BYTE-IDENTICAL to r3, so if the colossus survives
+        # a negative that forbids it by name, the cause is structural -- the
+        # `wide blue sky above` clause reserving a subject-sized hole -- and
+        # that, not more words, is what r5 would test.
+        "prompt": (
+            "3boys, full body, wide shot, standing in a green field, "
+            "two adult guard men in uniform facing a lean adult goblin man, "
+            "green skin, bald head, patchwork cloak, near guard holds a "
+            "wooden clipboard at chest height, three men standing together, "
+            "wide blue sky above, sunny day, masterpiece, best quality"
+        ),
+        # The first draft of this negative measured 90/77 and the tokenizer
+        # guard refused to draw it -- its tail, which is where the anti-card
+        # terms live, would have been dropped in silence. Trimmed to fit by
+        # deleting terms no sample has ever needed: `titan`, `looming figure`,
+        # `mountain shaped like a face`, `bust`, `baby`, `staff`, `chibi`,
+        # `scars`, `stitches`. Named here so the trim is visible and nobody
+        # reads the shorter list as a second variable.
+        "negative": (
+            "giant, colossal, monster, kaiju, statue, face in the sky, "
+            "text, close-up, portrait, upper body, cropped, "
+            "1boy, 2boys, 4boys, solo, white background, simple background, "
+            "child, spear, sword, tree, forest, house, indoors, "
+            "photorealism, 3d render, night"
+        ),
+    },
+    (8, 5): {
+        # r4 FALSIFIED TOO, and r4 said in advance what that would mean. A
+        # negative naming `giant, colossal, monster, kaiju, statue, face in the
+        # sky` left the colossus exactly where it was. So it is not the
+        # `scenery` tag (r3) and it is not un-named-ness (r4); the words are
+        # not what is putting it there. The foreground meanwhile is now RIGHT:
+        # three full-length figures facing the lens, distinct costumes, one
+        # holding a board, standing in a field with sky above -- beat 17's
+        # composition, which beat 08 has never had.
+        #
+        # THE ONE VARIABLE, and it is the structural suspect r4 named: the
+        # clause `wide blue sky above`. Every sample so far has reserved the
+        # top half of a 832x1216 canvas for sky and then put the three people
+        # in the bottom third, and every sample has filled the reserved half
+        # with a subject. That is not a word problem, it is a composition
+        # problem: an empty upper half in a portrait frame is a hole the model
+        # will fill, and `wide shot` plus a large-noun goblin tells it what
+        # with. Beat 17's plate gets away with the same clause because its one
+        # figure is drawn LARGE and low, so the sky is negative space around a
+        # subject rather than a vacancy. DELETING the clause is the smallest
+        # change that tests it; the field, the figures and the whole negative
+        # stay byte-identical to r4. If the colossus survives the deletion,
+        # stop -- it is the `3boys`-plus-goblin nouns themselves and this beat
+        # needs a different drafting approach, not a fifth adjective.
+        "prompt": (
+            "3boys, full body, wide shot, standing in a green field, "
+            "two adult guard men in uniform facing a lean adult goblin man, "
+            "green skin, bald head, patchwork cloak, near guard holds a "
+            "wooden clipboard at chest height, three men standing together, "
+            "sunny day, masterpiece, best quality"
+        ),
+        "negative": (
+            "giant, colossal, monster, kaiju, statue, face in the sky, "
+            "text, close-up, portrait, upper body, cropped, "
+            "1boy, 2boys, 4boys, solo, white background, simple background, "
+            "child, spear, sword, tree, forest, house, indoors, "
+            "photorealism, 3d render, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
