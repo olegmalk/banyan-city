@@ -330,7 +330,75 @@ suppressed false positive is how a check stops being read.
 
 ---
 
-## 7. NOTHING WAS RENDERED, DRAWN OR SPENT FOR THIS FILE
+## 7. THE CONTINUITY CHECK — `pipeline/check_sapling_scale.py`
+
+*"Don't make it double in size suddenly"* is the one part of his ruling that is
+measurable, so it got a check. **It reads words, not pixels**, and the reason is
+the second half of this section.
+
+**What it does.** Every prompt that can still run — all reusable
+`wave-drafts.yaml` drafts, plus the payloads of job specs with **no completed
+run in `queue-history.json`** — is classified:
+
+- **FAIL** if it states the size *wrongly* (`taller than he is`).
+- **OK** if it carries an explicit scale anchor: `40cm`, `knee high`,
+  `shorter than he`, `no taller than the grass`.
+- **EXEMPT** if the framing is macro/close-up — the whole plant is not in shot,
+  so its size is not depicted.
+- **WARN** if the plant is in frame and **nothing says how big it is**.
+
+**Why coverage and not contradiction.** `check_canon_drift.py` already catches
+prompts that state the wrong size. Nothing caught prompts that state *no* size —
+and that is the actual mechanism of the doubling. **A stated height cannot double
+between two beats; an unstated one re-rolls every seed.**
+
+**The measurement, 2026-08-16:** of 87 live plant prompts, **6 are anchored, 13
+are exempt macros, and 68 say nothing at all.** That number *is* the finding. It
+is reported as WARN and the check **exits 0** on it — it is a coverage map, not
+an alarm, and it blocks nothing.
+
+### 7.1 What it cannot do — including one hole nobody should try to fill
+
+1. **It cannot measure a pixel.** A prompt saying `40cm` that renders a tree
+   passes here. Only an eye catches that.
+
+2. **APPARENT HEIGHT IS NOT PLANT SIZE, and no cross-beat pixel measure can be
+   honest about it.** Tested rather than assumed, by pulling frames and looking:
+   `cuts/checklist/002b-b01-5b.mp4` frame 0 shows the whole plant as a hairline
+   stem across half the frame; `review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4`
+   frame 0 shows the *same plant in the same node* as an extreme macro — seven
+   broad leaves edge to edge, no stem base, no grass, no horizon. They differ in
+   apparent scale by more than 10x and **neither is a continuity error**: beat
+   12's shots.md asks for *"tight on the sapling's TWO leaves against the sky"*.
+   A rule of the form "apparent height must not jump between beats" would fire on
+   every correctly framed macro in the episode. It is not unreliable — it is
+   **measuring the wrong quantity**, because it conflates shot scale with plant
+   size. Hence macro beats are exempt, and no cross-beat pixel metric exists.
+
+3. **Within one clip a size change WOULD be meaningful** — every prompt says
+   *"static locked framing, the frame never moves"* — **and it is still not
+   attempted.** Segmenting a small green plant against green grass is the exact
+   class in which four trackers were retired for cause in two days: a colour rule
+   matching **zero** hand pixels; one that could not tell a hand from a bald
+   head; a freeze index calling clips frozen while the figure rose 35–44% of
+   frame height; a head tracker whose box sat on the **sky band**. Every one was
+   confident. The b01 frame above is the *favourable* case — dark plant, bright
+   sky — and even there the apex is against sky while the base is buried in
+   grass, so the base, and therefore the height, has no defined edge.
+
+### 7.2 The manual check, which is the honest one
+
+Build a contact sheet of the plant across beats in story order — the tooling
+already exists (`pipeline/compare_sheet.py`, `pipeline/build_comparison.py`, and
+the `CONTACT-*.png` convention) — and look once. The eye settles *"did this
+double"* in seconds and needs no threshold. **A guard that cries wolf gets
+disabled** — the runner watchdog was switched off for four days after 60 false
+restarts in five hours — so an untrustworthy measure is worse here than no
+measure plus the habit of looking.
+
+Tests: `python3 pipeline/test_sapling_scale.py` (22, all from real repo strings).
+
+## 8. NOTHING WAS RENDERED, DRAWN OR SPENT FOR THIS FILE
 
 $0, no GPU, no render, no voice. Every claim above was verified by reading:
 `review/inbox.yaml`, `pipeline/wave-drafts.yaml` (as text, never a YAML
