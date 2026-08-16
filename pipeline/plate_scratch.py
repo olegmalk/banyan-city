@@ -1479,6 +1479,81 @@ REVS = {
             "holding object, clipboard, armor, helmet, knight, child, "
             "photorealism, 3d render, night"
         ),
+        # ------------------------------------------------------------------
+        # R3 VERDICT, appended 2026-08-16 by the third lane on this thread.
+        # r3 was DRAWN at 19:28, three minutes after the commit that
+        # pre-registered it, and then went unjudged: the lane that fired it
+        # died holding the verdict, as the lane before it had. The pixels were
+        # on disk the whole time. Judged here by opening the PNG and 7x crops
+        # of both heads and both hands, against the SAME bar from e4279ce5 --
+        # no re-scoping, and beat 11's own action quoted from its own node.
+        #
+        #   P1 the APPROVED PAIR ......... PASS, and unchanged from r2. LEFT
+        #      dark cropped hair over a pale tan tunic-coat, RIGHT light sandy
+        #      hair over mid-brown. Neither bald, not swapped.
+        #   P2 two whole figures ......... PASS. Exactly two, full-length to
+        #      the boots, no third body in either band.
+        #   P3 backs turned, no face ..... PASS. THIS IS THE FIX. At 7x the
+        #      left head is a pure rear view -- back of the skull, one ear,
+        #      NO brow, NO nose, NO eye, none of the profile edge r2 showed.
+        #      The right head is also pure rear. The three added negative
+        #      terms reached both heads, and only the heads: nothing else in
+        #      the frame moved.
+        #   P4 >=25% of frame height ..... PASS, ~35% (crown y255 to boot
+        #      y690 of 1216).
+        #   P5 no vacancy ................ PASS, 0.47 torsos, measured (below).
+        #   P6 no props .................. PASS AS WRITTEN, SAME NAMED DEFECT.
+        #      The narrow dark strap still hangs from guard B's left hand and
+        #      still ends in a small dark tab at mid-thigh. It SURVIVED a
+        #      revision whose negative carries `holding object, clipboard`,
+        #      at the same seed. Two samples is not one, and a negative that
+        #      names the thing twice has now failed to remove it twice --
+        #      the same shape as beat 08 r4's finding that naming the invited
+        #      noun in the negative removes it not at all. Clearing this is a
+        #      POSITIVE-side job (give the hand something to be, or crop it),
+        #      and it is the one open defect on this plate.
+        #   P7 field in the plate ........ PASS.
+        # SEVEN OF SEVEN PASS. THE PLATE MEETS THE BAR. The ladder's third
+        # rung landed on the first sample, and the count and the identity
+        # BOTH survived it untouched -- so per the standing instruction the
+        # last seed is NOT spent here. Beat 11 stops at r3.
+        #
+        # A MEASURE WAS RETIRED TO GET P5'S NUMBER, and the retirement is
+        # worth more than the number. P5 was first measured as the largest
+        # CONNECTED region of low local variance. Overlaid back onto the
+        # frames it was obviously wrong: the "largest flat blob" in r2 had a
+        # bounding box spanning the entire frame width (x0-830) while holding
+        # only 45k px^2 -- a stringy filament threading the gaps BETWEEN
+        # grass strokes, not a hole. Connected low-variance pixels measure
+        # brush spacing. The vacancy law is about a CONTIGUOUS AREA BIG
+        # ENOUGH TO GROW A NOUN IN, so the replacement measures the largest
+        # INSCRIBED axis-aligned flat rectangle.
+        #
+        # TWO THINGS THE REPLACEMENT'S OWN CHECKS CAUGHT, both of which would
+        # have shipped a confident wrong number:
+        #  1. THE OBVIOUS CONTROL WAS INVALID. b17-bigbody r2 is this repo's
+        #     canonical vacancy failure -- a flat margin that grew six goblin
+        #     heads -- and it measured LOW. Correctly: by the time the frame
+        #     exists the hole has been FILLED, so it is no longer there to
+        #     measure. A VACANCY MEASURE CANNOT RETRO-DIAGNOSE A FILL; the
+        #     defect consumes its own evidence. It can only answer the
+        #     forward question, which is the one that matters for a plate:
+        #     is there room left for the ANIMATOR to grow something.
+        #  2. float32 WAS DESTROYING THE VARIANCE. The g^2 integral image
+        #     reaches ~2.6e10 over a 1MP frame and sqrt(E[g^2]-E[g]^2) then
+        #     loses the answer to catastrophic cancellation. A DEAD CONSTANT
+        #     injected rectangle measured as 52% flat. float64 fixed it, and
+        #     it means the original filaments were partly precision noise.
+        # Validated the only way that is not circular: inject flat rectangles
+        # of KNOWN size into a real frame and require recovery. 400x250,
+        # 200x300 and 105x240 all recovered within the ~10px inward erosion
+        # the 11px window predicts; a 60x60 correctly loses to the larger real
+        # sky band; heavy noise yields no false hole. ONLY THEN was it used.
+        # Numbers, largest inscribed flat box in torsos (torso = 105x240 px,
+        # measured off r3's left figure): b11 r1 0.41, r2 0.49, R3 0.47, all
+        # of them a thin strip at the very top of the frame and none of them
+        # in the field. b17-bigbody r3 0.81. Well under the one-torso bar.
+        # ------------------------------------------------------------------
     },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
