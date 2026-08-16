@@ -16,8 +16,8 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0172
-compute_s_per_video_s: 58.2
+throughput_s_video_per_s_wall: 0.0168
+compute_s_per_video_s: 59.6
 # --- appended after the render by the staging-structure ladder.
 approved: false
 provisional: true
