@@ -2243,3 +2243,4 @@
 17:47:48Z DONE task=ep2-b18-scale-0816-1786901939 rc=0 artifacts=4
 17:49:34Z STARTED task=ep2-b20-canonword-0816-1786902329 attempt=1 on box-runner
 17:49:39Z FAIL task=ep2-b20-canonword-0816-1786902329 rc=1 step=measure
+17:49:42Z box-runner idle ready=0 failed=32
