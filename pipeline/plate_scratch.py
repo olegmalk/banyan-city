@@ -45,6 +45,151 @@ STEPS, GUIDANCE = 40, 7.5  # the beat-17 plate's settings, unchanged
 # review/ep2-picks/done-definitions.yaml, quoted here so the bar and the prompt
 # cannot drift apart.
 DRAFTS = {
+    17: {
+        # ------------------------------------------------------------------
+        # 2026-08-16, THE TIGHT-INSERT LANE. THE PLATE, AND THE BAR THE CLIP
+        # MADE FROM IT WILL BE JUDGED BY. BOTH WRITTEN BEFORE ANY PIXEL.
+        # ------------------------------------------------------------------
+        # WHAT IS ALREADY SETTLED AND IS NOT RE-DERIVED HERE. Three independent
+        # lines converged this week:
+        #   1. Whole-body motion renders. Twelve beat-17 cells, judged against
+        #      a bar written before the renders: 12 of 12 stand up, head-top
+        #      rise 29.2%-39.7% of frame height, horizon fixed, and the
+        #      colour-segmentation tool was falsified by overlaying its own
+        #      mask back onto the frames (which caught sky speckle scoring
+        #      three real stand-ups as "no movement").
+        #   2. Small in-hand actions do not, ON THAT SAME PLATE. amp-brush and
+        #      amp-brushseat, same seed, byte-identical otherwise, hold the
+        #      seated pose f0->f96 with the hands clasped on the knee, while
+        #      clouds, eyelids and a bird move.
+        #   3. Both at once inside one clip. All four beat-17 `full` cells,
+        #      audited at all 97 frames: 4 of 4 stand and turn, 0 of 4 brush.
+        #      One cell has cloak CONTACT WITHOUT TRAVERSAL -- drape and body
+        #      rotation, not a stroke.
+        # => the engine renders GROSS motion and drops SMALL in-hand actions.
+        #    That also fits beats 06, 08 and 10, which have failed every
+        #    wording, strength, seed, recipe and composition lever and which
+        #    all three ask for a small in-hand prop manipulation.
+        #
+        # THE ONE THING THIS PLATE TESTS: frame the action so that IT IS THE
+        # LARGEST MOVEMENT IN FRAME. Not a figure in a landscape performing a
+        # small gesture -- a tight insert where the hand and the cloak are the
+        # whole picture and the hand's travel across the cloth is the only
+        # thing large enough to be the shot's motion. If size-in-frame is the
+        # lever, this renders. If it does not, size-in-frame is NOT the lever
+        # and the engine simply cannot do fine hand action, which is a
+        # different and bigger fact about what episode 2 can contain.
+        #
+        # WHY EACH CLAUSE, and every one of these was learned by losing a
+        # render, not reasoned out here:
+        #   `hand focus, close-up` FIRST -- leading framing tags carry real
+        #       weight and trailing ones have almost none (a peer lost a whole
+        #       render to a trailing `wide two-shot` and got a close-up with
+        #       the subject missing). The two tightest tags on the ladder go
+        #       at the very front where they bind.
+        #   `resting flat on` -- a STATE, not a verb. Twenty-four candidates
+        #       failed on "pushes himself up to standing" because the model
+        #       renders the verb's END state; a plate that says "brushing"
+        #       would come back mid-stroke or finished, with nowhere left to
+        #       travel. The plate is the PRE state on purpose.
+        #   `hand and forearm` -- a hand alone renders as a severed prop and
+        #       gives i2v nothing to hang an arm's motion on.
+        #   `stitched cloth filling the whole frame` -- an empty upper half in
+        #       a portrait frame is a hole the model fills with the largest
+        #       noun in the prompt (deleting `wide blue sky above` removed a
+        #       colossus completely). A tight insert is unusual framing and
+        #       WILL invite content into empty space, so there is no empty
+        #       space: cloth goes edge to edge and the negative forbids sky.
+        #   no character name anywhere -- a verb or a prop does not bind to a
+        #       named character in this checkpoint, so nothing is asked to.
+        #
+        # PLATE BAR, pre-registered. Usable only if ALL FOUR hold:
+        #   P1 cloth (or hand) fills essentially the whole frame -- no sky, no
+        #      horizon, no empty region larger than a hand.
+        #   P2 a green clawed hand is IN CONTACT with the cloth and spans at
+        #      least ~15% of the frame's width.
+        #   P3 there is open, unobstructed cloth on at least one side of the
+        #      hand, at least one hand-width across, for a stroke to cross.
+        #   P4 no face, no whole figure, no second hand-and-arm pair, no prop.
+        #
+        # MOTION BAR, pre-registered HERE so it cannot be rewritten after the
+        # clip. It is a BODY-MOTION test, not a picture-changed test.
+        #   PASS requires all of:
+        #     M1 a hand is in contact with the cloak in at least one frame;
+        #     M2 that hand TRAVELS across the fabric while in contact -- its
+        #        position relative to the cloth moves at least one hand-width
+        #        (~15% of frame width) between two frames of the clip;
+        #     M3 it is the HAND moving and not the camera: the frame edges and
+        #        the cloth's own folds do not translate with it;
+        #     M4 the path is continuous -- read at consecutive frames, the
+        #        hand can be followed from where it starts to where it ends.
+        #   FAIL MODES, NAMED IN ADVANCE:
+        #     F1 FROZEN -- identical hand position at f0 and f96, only the
+        #        linework re-inked in place. Round 1's exact signature.
+        #     F2 CLOTH-ONLY -- the fabric ripples or blows and the hand does
+        #        not move relative to it.
+        #     F3 CAMERA-ONLY -- the whole frame drifts, pushes in or zooms and
+        #        hand and cloth keep the same relative geometry.
+        #     F4 MORPH -- the hand dissolves, gains or loses fingers, or
+        #        reappears somewhere else without a continuous path. A
+        #        teleport is not a stroke.
+        #     F5 SCENE BREAK -- the shot cuts, pulls back to a figure, changes
+        #        location, or a second figure arrives.
+        #     F6 CONTACT WITHOUT TRAVERSAL -- the hand touches and the cloth
+        #        drapes or rotates under it but the hand does not travel.
+        #        Explicitly a FAIL: it is what one of the four `full` cells
+        #        already did and calling it a pass is how a bar gets bent.
+        #   NOT EVIDENCE, and none of it will be quoted: `depth` is retired
+        #   and inverted (full stand-up 0.290, zero-motion clip 0.516, a clip
+        #   whose only movement was a bird 0.376); the old `cadence` metric is
+        #   structurally blind (odd hold periods alias to exactly 1.00x);
+        #   camera-scale numbers are unreliable without aligned frames. All 97
+        #   frames get opened consecutively via pipeline/coldread_frames.py,
+        #   cropped to the hand and the cloth, and any tool used gets its own
+        #   output overlaid back onto the frames before it is believed.
+        #
+        # ONE SAMPLE. If it works, SAY SO AND STOP -- splitting beat 17 into
+        # two shots and re-planning 06/08/10 as inserts is an authorship
+        # decision, not this lane's.
+        "slug": "goodbye-insert",
+        "done_when": (
+            "MOTION BAR (pre-registered before the plate was drawn): a hand "
+            "makes contact with the cloak AND TRAVELS ACROSS IT -- at least "
+            "one hand-width of movement relative to the cloth, continuous "
+            "across consecutive frames, the hand moving and not the camera. "
+            "FAIL modes named in advance: F1 frozen, F2 cloth-only, F3 "
+            "camera-only, F4 morph/teleport, F5 scene break, F6 contact "
+            "without traversal. A changed picture is not a pass."
+        ),
+        "why": (
+            "Beat 17's script line is 'The scavenger stands, brushes off, and "
+            "turns to go' and its definition wants stand, brush, turn. The "
+            "stand and the turn render 12 of 12; the brush renders 0 of 4 in "
+            "the compound and 0 of 2 when asked for alone at the same seed. "
+            "The surrounding beat already works, so the insert is the only "
+            "unknown -- which makes beat 17's brush the cleanest test of the "
+            "general principle: frame the action so that it IS the largest "
+            "movement in frame. This plate makes the hand and the cloak the "
+            "entire picture so the stroke has nothing to compete with. A pass "
+            "unlocks beats 06/08/10 as inserts; a fail retires size-in-frame "
+            "as a lever and says the engine cannot do fine hand action."
+        ),
+        "prompt": (
+            "hand focus, close-up, a green clawed hand and forearm resting "
+            "flat on a dusty patchwork cloak, brown and grey stitched cloth "
+            "filling the whole frame, deep folds in the fabric, dust and "
+            "grass seed on the cloth, warm daylight, cinematic lighting, "
+            "detailed, masterpiece, best quality, very aesthetic"
+        ),
+        "negative": (
+            "text, face, head, portrait, looking at viewer, full body, "
+            "wide shot, standing, walking, 1girl, 2boys, crowd, "
+            "sky, clouds, horizon, grass field, tree, house, indoors, "
+            "white background, simple background, holding object, spear, "
+            "staff, sword, stick, photorealism, 3d render, dark, night"
+        ),
+        "seed": 20260816,
+    },
     8: {
         "slug": "inside-him",
         "done_when": (
