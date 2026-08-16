@@ -7861,3 +7861,68 @@ patch of bare dirt WITHIN a green field. That is the same class of problem beat 
 was already diagnosed with (composition needs a tool, not adjectives). Fingers
 still do not bind to the soil, and costume identity drifts on both samples, which
 wants a reference rather than words. Artifacts in `farm-out/ep2-b14-mac-plate-0816/`.
+
+## 2026-08-16 — the gross-body direction is right and almost all of it is behind a block
+
+Opened on a **completely idle card**: `box_autofill.py --status` read
+`ready_jobs 0` (six `.HOLD` files, zero `.json`), `backlog_remaining 0`,
+`running_jobs 0`. Not "about to go idle" — idle.
+
+**Nothing in `done/` was unread on the beat-06/beat-10 arms.** `cycle-017.md`
+already records `pathneg` at **2 of 5** and `f1neg` at **1 of 5** against a bar
+of 4 of 5, with a per-clip verdict for every one of `s2..s5` on both arms. Those
+eight clips are covered; re-judging them would have been waste.
+
+**The beat map, against `review/ep2-picks/done-definitions.yaml`.** Beats whose
+action is gross whole-body motion — the class the 2026-08-16 law says this
+engine renders — are **02** (sprint, skid, dive), **03** (crouch), **05** (two
+guards jog in), **11** (two guards walk away), **13** (folds small), **17**
+(stand, turn). Every other beat is a macro/plant shot, a face close-up, an
+explicit stillness beat, or a small in-hand prop action.
+
+**Four of the six are blocked by a founder-reserved call.** Beats **05, 09, 10
+and 11** wait on the guard sheet — *"lets do the guards on my taste"* (guards
+block, 2026-08-14): *"Do not cast them and do not animate guard beats off an
+unapproved cast."* Beat 11 carries its own `blocked_on_0815: DO NOT AUTHOR OR
+FIRE THE REPLACEMENT YET`. **Searched `STATE.md`, `DECISIONS.md` and
+`done-definitions.yaml` for any later approval of that sheet and found none**,
+so the block stands. This is R4 territory and was not crossed. A beat-11
+replacement spec was authored before the block was found and was **deleted
+unfiled** rather than left in `pipeline/jobs/` where another lane might fire it.
+
+**Beat 11 has a second, independent blocker worth writing down, because it is
+not about beat 11.** Its only staging-correct plate — two guards, backs turned,
+mid-argument, walking into open field, `border_flatness 0.238` — is
+`farm-out/ep2-b11-idfix/11-they-leave-wave1-s1.png`. `box_enqueue` refuses it:
+
+    BLOCKED: could not work out which job produced this job's --src
+             no spec in pipeline/jobs for producing job 'ep2-b11-idfix'
+
+The producing spec **does** exist — `pipeline/jobs/ep2-b11-idfix-0812.yaml` —
+and it names refs, so the refs check could genuinely run. The publish step wrote
+the directory as `ep2-b11-idfix`, without the spec's `-0812` suffix, and the
+guard looks up `pipeline/jobs/<dirname>.yaml`.
+
+**This is systemic, not a one-off.** Of the **645** `farm-out/` directories on
+`origin/farm-results-rtx5090`, **367 resolve** and **278 do not** — and of those
+278, **250 have their producing spec in the repo under `<dir>-DATE`** (246 match
+exactly one spec; 4 are ambiguous between a `-0813`/`-0813B` pair). So roughly
+**39% of everything ever published is unusable as a motion `--src` because of a
+directory-naming mismatch, not because of any real provenance gap.** Reported,
+not fixed: this is guard code and no verdict of it was changed here. Every
+guard-blocked plate above stayed blocked and **no `plate_ack` waiver was
+written.**
+
+**Beat 03's crouch is unreachable** (`ep2-b11-plate-nos2-0815`'s own header:
+pose "unreachable through reference or prompt — confirmed across 48 frames").
+**Beat 13** has a live lane (`ep2-b13-negcfg-0816`). **Beat 17** was saturated
+the same day — `full` s1-s8, `rise` s1-s4, `turn` s1-s4, plus eight `amp`/`amp2`
+cells — and its `full` arm is 0-for-8 on the brush, so more seeds of it would be
+filler.
+
+That leaves **beats 02 and 03** as the only unblocked gross-body beats. A peer
+lane filed exactly those at **c1cb0ebd** (five request shapes each, one sample
+apiece, ten specs) while this survey was running, and all ten reached the queue.
+**Nothing was filed here rather than duplicate them** — the honest report is that
+the direction is right, a peer took the only unblocked ground, and the rest is
+waiting on the founder's guard sheet.
