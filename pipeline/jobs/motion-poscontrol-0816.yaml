@@ -1,0 +1,507 @@
+# 2026-08-16, THE MOTION LANE. THE POSITIVE CONTROL FOR THE WHOLE QUESTION.
+#
+# 1. THE QUESTION THIS JOB EXISTS TO ANSWER, and it is not a cadence question.
+#    Six lanes have now moved how OFTEN a new picture arrives. In every arm of
+#    every one of them THE FIGURE DOES NOT MOVE ITS BODY. Verbatim from three
+#    independent lanes: "neither figure rocks"; "at f0 and f96 he is in the
+#    identical folded pose"; "what changes between loud pairs is the drawing
+#    being re-inked in place -- the shadow on the skull slides, the ear edge
+#    redraws, grass reshuffles". Beat 13's prompt asks for a cyclical rocking
+#    motion and NO ARM HAS EVER PRODUCED IT.
+#
+#    So before anything else is optimised, or any new checkpoint is downloaded:
+#    CAN THIS STACK MOVE ANYTHING AT ALL FROM A STILL, under conditions chosen
+#    deliberately to make it succeed? Not our beat, not our style, not our
+#    characters. If the answer is no, the problem is not our prompts, our plates
+#    or our recipe, and no beat-level work will ever fix it. If the answer is
+#    yes, the constraint is something about OUR BEATS and that is a completely
+#    different investigation. Either result is worth more than another cadence
+#    sample.
+#
+# 2. THE LADDER. Four renders, one job, ONE encoder process, ONE seed, and --
+#    asserted by the generator, quoted in section 6 -- FOUR ARGVS THAT DIFFER BY
+#    NO RECIPE FLAG AT ALL. Every arm runs the exact production recipe: 704x1280,
+#    97 frames, 24fps, two-stage 8@352x640 + 3@704x1280, distilled sigmas,
+#    guidance 2.0, the full negative, image-crf 33, sequential offload, seed
+#    20260815. The recipe is NOT under test here. The subject is.
+#
+#      A0  CONTROL. Beat 13's asserted plate, beat 13's prompt, byte-for-byte
+#          out of ep2-b13-negcfg-0816. THE TRIPWIRE: this clip has come back
+#          sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a
+#          five times across four nights, from an asserted plate through a fresh
+#          crop, encode and denoise. A SIXTH NON-MATCHING CONTROL INVALIDATES
+#          THIS JOB and is reported as such rather than explained away.
+#
+#      A1  WORLD -- the floor of the ladder. A photograph of a waterfall, and a
+#          prompt asking the water to fall. No body, no articulation, no
+#          character: the easiest motion any i2v model is ever asked for. If
+#          THIS holds still, the engine is not moving anything and the figure
+#          question does not arise.
+#
+#      A2  HUMAN -- the arm that matters. A photograph of one woman running
+#          barefoot on wet sand, whole body head to toes, BOTH FEET OFF THE
+#          GROUND mid-stride, clean surf-and-sand background, and a prompt
+#          asking her to keep running. Every dial is set to make this succeed:
+#          photoreal (in-distribution for a video model, unlike anime line art),
+#          one subject, uncluttered ground, room on all sides, and a cyclic gait
+#          -- the single most common motion in any video corpus. IF LTX-2.3
+#          DISTILLED CANNOT MAKE A RUNNER RUN, THAT IS THE FINDING.
+#
+#      A3  OURS, ASKED FOR SOMETHING EASY. Beat 13's plate again, same seed,
+#          same negative, same recipe, and a prompt whose subject clause and
+#          whose entire style tail are BYTE-IDENTICAL to A0's -- only the action
+#          clause differs. A0 asks him to rock in place (small, cyclic, hard).
+#          A3 asks him to put his hands down, push up onto his feet, stand and
+#          step forward (large, one-way, easy). A0 vs A3 is therefore a genuine
+#          one-variable diff on the same plate: is beat 13 frozen because the
+#          ACTION REQUESTED IS TOO SMALL, or because the plate cannot move?
+#
+# 3. WHAT IS ALREADY ELIMINATED AND IS NOT RE-DERIVED HERE.
+#      * PROMPT WORDING -- 5 wordings x 3 seeds, no arm sustained action.
+#      * THE INIT PLATE AS AN ONSET LEVER -- onset measured over ten clips,
+#        9/10 inside 0.25s.
+#      * THE 13-LATENT COUNT -- (97-1)//8+1 = 13 is correct, and the latent grid
+#        is period-8 while we measure period-3 (dfa87c27).
+#      * THE VAE / DECODE SIDE -- tiling ON vs OFF differed by 0.4 dB and
+#        nothing else, with a positive control proving the test could see a hold
+#        (70e3c79a).
+#      * STG at upstream's recommended 1.0 / blocks [28] -- 3 -> 3, 32.0 -> 32.0
+#        (369e4101).
+#      * THE 200-WORD CEILING -- the premise was wrong; beat 13's prompt is 37
+#        words / 58 Gemma tokens (68dbe136).
+#      * THE NEGATIVE'S CONTENT -- emptied at guidance 2.0, the hold was the
+#        control's reading to the decimal (01c0638c).
+#      * GUIDANCE AS A RAMP -- 1.5 behaves exactly like 2.0. The relation is a
+#        STEP at the CFG on/off boundary in (1.0, 1.5], not a gradient
+#        (01c0638c). Guidance 1.0 reaches 48 pictures but swings 81 of 255 in
+#        frame-mean luma and by the last twelfth moves LESS than the control.
+#    None of that is a motion measurement. All of it measured CADENCE.
+#
+# 4. THE BAR, WRITTEN BEFORE THE FRAMES ARE LOOKED AT.
+#      A0 must read period 3 | strength 0.923 | depth 0.038 | 32.0 distinct
+#         pictures | 8.0 effective fps | no terminal freeze | clip sha 42043851...
+#      A1 water that does not fall  => the engine moves nothing; stop.
+#         water that falls          => the engine moves pixels; the figure
+#                                      question is real and survives.
+#      A2 a runner who does not run => THE ENGINE CANNOT ACT A BODY. Every
+#         beat-level lever is moot and the checkpoint/engine question becomes
+#         the only live one.
+#         a runner who runs         => the engine CAN act a body, and the
+#         constraint is our domain, our plates or our beats -- a different
+#         investigation, and a much better place to be.
+#      A3 a boy who stands up       => beat 13 is frozen because the ACTION
+#         ASKED FOR IS TOO SMALL, which is a wording-scale finding after all.
+#         a boy who stays folded    => the plate/domain is the constraint, not
+#         the size of the request.
+#
+# 5. HOW "THE BODY MOVED" IS MEASURED, AND WHAT THE METHOD CANNOT SEE.
+#    Cadence tools answer WHEN THE PICTURE CHANGED, not WHETHER THE BODY MOVED,
+#    and that distinction is this lane's entire point. Reported per arm:
+#      * hold period / distinct pictures / effective fps (pipeline/hold_period.py)
+#        with trough-peak DEPTH (vae_roundtrip.depth), because autocorrelation is
+#        scale-free and reads a 3{'ASSERT': '#    a0 vs a1 : recipe flags differing = NONE\n#    a0 vs a2 : recipe flags differing = NONE\n#    a0 vs a3 : recipe flags differing = NONE\n#    a0 vs ep2-b13-negcfg-0816 render-control : recipe flags differing = NONE\n#    cover_crop.py             sha 4eec009805abf6a9 (read from the source job, byte-equal)\n#    prompt a0 (control)       sha 638b5c22  37 words\n#    prompt a1 (waterfall)     sha eeb9b334  50 words\n#    prompt a2 (runner)        sha 4fa792ca  48 words\n#    prompt a3 (b13 stand up)  sha c2f9cb11  50 words\n#    negative (one, all arms)  sha 50fb304c  25 words\n#    a0 vs a3: same plate, same seed, same negative, same recipe; the\n#              subject clause and the style tail are byte-identical and\n#              ONLY the action clause differs.\n#    payload dir C:\\banyan-farm\\motion-poscontrol-0816\n#    out dir     C:\\banyan-farm\\motion-poscontrol-0816-out   (distinct)\n'}ipple like a freeze;
+#      * the terminal-freeze index SEPARATELY -- exact consecutive-frame
+#        ncc = 1.0000, and a soft MAD < 0.05 index beside it, because crf-18
+#        re-encoding leaves max|A-B| up to 8 on a provably frozen tail;
+#      * BODY DISPLACEMENT f0 -> f96 by block matching (pipeline/body_motion.py),
+#        which reports how far the picture's own content actually travelled.
+#    Its limits are stated with every number: it cannot separate a camera move
+#    from a body move when the whole frame shifts, it is blind on flat regions,
+#    a block that is REDRAWN rather than moved can find a spurious match, and
+#    the search radius saturates. CAMERA-SCALE ESTIMATES BY CHAINED NCC ARE NOT
+#    QUOTED AT ALL: a lane showed that method rails to its search boundary when
+#    the fits fail, and gating it harder just samples frozen tails and reports
+#    1.000x for the wrong reason. A metric is a filter, never a verdict -- a
+#    consecutive-frame evidence sheet is committed and the cold read decides.
+#
+# 6. THE GENERATOR'S OWN PROOF, printed by the script that wrote this file and
+#    pasted here unedited. cover_crop.py, the beat-13 plate path and sha, the
+#    control prompt, the negative and every recipe flag were READ OUT OF
+#    pipeline/jobs/ep2-b13-negcfg-0816.yaml. Nothing was retyped.
+#
+#    a0 vs a1 : recipe flags differing = NONE
+#    a0 vs a2 : recipe flags differing = NONE
+#    a0 vs a3 : recipe flags differing = NONE
+#    a0 vs ep2-b13-negcfg-0816 render-control : recipe flags differing = NONE
+#    cover_crop.py             sha 4eec009805abf6a9 (read from the source job, byte-equal)
+#    prompt a0 (control)       sha 638b5c22  37 words
+#    prompt a1 (waterfall)     sha eeb9b334  50 words
+#    prompt a2 (runner)        sha 4fa792ca  48 words
+#    prompt a3 (b13 stand up)  sha c2f9cb11  50 words
+#    negative (one, all arms)  sha 50fb304c  25 words
+#    a0 vs a3: same plate, same seed, same negative, same recipe; the
+#              subject clause and the style tail are byte-identical and
+#              ONLY the action clause differs.
+#    payload dir C:\banyan-farm\motion-poscontrol-0816
+#    out dir     C:\banyan-farm\motion-poscontrol-0816-out   (distinct)
+#
+# 7. THE TWO NEW PLATES ARE PUBLISHED, NOT WAIVED. box_enqueue's plate guard
+#    refuses a motion job whose --src it cannot fetch, and no plate_ack is used
+#    here. Both photographs were therefore published through
+#    farm-out/motion-poscontrol-plates-0816 first, with a SOURCES.md carrying
+#    their file pages, authors, licences and sha256s, and this job's FIRST --src
+#    is deliberately the NOVEL runner plate rather than the plate five previous
+#    jobs already published -- the guard reads the first --src, so it should read
+#    the one nobody has checked.
+#      poscontrol-runner-src.jpg     1728x2304  CC BY-SA 4.0, Raquel Baranow
+#        https://commons.wikimedia.org/wiki/File:Woman_running_barefoot_on_beach.jpg
+#        sha256 ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac
+#      poscontrol-waterfall-src.jpg  1200x1600  CC0, MuthuLakshmi Vijaya
+#        https://commons.wikimedia.org/wiki/File:Waterfall_in_Kerala.jpg
+#        sha256 2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3
+#    The bytes are the unmodified Commons originals, so those sha256s are the
+#    sha256s of the public files and anyone can verify them. THESE ARE TEST
+#    FIXTURES AND NOT SHOW CONTENT: they are never published as Sapling footage,
+#    never imitated, and A1/A2 produce no episode material of any kind. The
+#    cover-crop to 704x1280 was previewed before publishing and keeps the whole
+#    runner, both feet included.
+#
+# 8. NO RENDERER CODE IS TOUCHED. Every flag is long-standing; the variable in
+#    every arm lives entirely in a payload text file and a payload png. Prompts
+#    were measured on the REAL Gemma tokenizer on the box before this was filed:
+#    a0 58 tokens (matching the 58 recorded for the five-times-identical
+#    control), a1 60, a2 60, a3 73, negative 38, encoder limit 1024, and the
+#    documented ceiling is 200 WORDS -- the longest arm here is 50.
+#
+# 9. NOTHING SCALES OFF THIS. It is a capability probe, not a recipe change, and
+#    the arms are deliberately NOT one-variable against each other (you cannot
+#    ask a waterfall to jump) -- only A0 vs A3 is. On 2026-08-03 a recipe was
+#    picked on a steward's own metric, rendered across all fifteen beats, and
+#    came back "literally just frozen frames".
+id: motion-poscontrol-0816
+task: motion-poscontrol-0816
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 45
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: motion lane (can the engine act a body at all), 2026-08-16
+consumer: 'This lane''s report to the founder, answering the question underneath every motion experiment we have run
+  and that none of them has tested: can LTX-2.3 distilled make a figure ACT at all. Six lanes have moved CADENCE --
+  how often a new picture arrives -- and in every arm of every one of them the figure holds the same pose from f0
+  to f96. This job asks the capability question directly under conditions rigged for the engine to succeed, and it
+  is the gate on whether spending disk and hours on non-distilled weights is worth anything. Consumed as: hold period,
+  depth, distinct pictures, effective fps and a SEPARATE terminal-freeze index for all four arms; a block-matching
+  body-displacement number for f0->f96 with its limits stated; and a consecutive-frame evidence sheet so the next
+  reader cold-reads the frames rather than the numbers.'
+success: 'Four 704x1280 97-frame mp4s from three crops of three asserted plate shas and ONE encoder process, with
+  four render argvs the generator proves differ by NO recipe flag. THE BAR IS WRITTEN ABOVE THE FRAMES. A0 is the
+  tripwire: beat 13''s control has returned clip sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a
+  five times across four nights and must do so a sixth; a non-matching control INVALIDATES this job rather than being
+  explained away. A1 (waterfall) establishes whether the engine moves anything at all. A2 (a photoreal runner mid-stride,
+  whole body, clean ground, asked only to keep running) is the decisive one: if she does not run, THE ENGINE CANNOT
+  ACT A BODY, every beat-level lever six lanes have pulled is moot, and the only live question left is the checkpoint.
+  If she does run, the constraint is our domain or our beats and that is a different and much better investigation.
+  A3 asks beat 13''s own plate for a large one-way action instead of a small cyclic one, changing nothing but the
+  action clause, and separates ''the request is too small'' from ''the plate cannot move''. NOTHING SCALES OFF ANY
+  OF IT -- it is a capability probe, and 48 pictures of the wrong thing was never a better beat than 32.'
+why: 'Every intervention this investigation has made was measured against cadence. Prompt wording (5 wordings x 3
+  seeds), the init plate as an onset lever, the 13-latent count, the whole VAE/decode side, STG at upstream''s recommended
+  setting, the 200-word ceiling and the negative''s content are all eliminated by measurement, and guidance turned
+  out to be a STEP at the CFG on/off boundary rather than a ramp. Two levers reached period 2 / 48 pictures and BOTH
+  were rejected on the cold read: guidance 1.0 swings 81 of 255 in frame-mean luma and dies by the last twelfth, and
+  the 9px blurred plate leaves all 97 frames soft against the taste call that killed v2 low-detail. Through all of
+  it the figure never once moved its body. That makes ''more distinct pictures of a motionless figure'' the wrong
+  variable, and it means we may have spent a week optimising it. Before any non-distilled checkpoint is downloaded
+  -- ~38 GB of transformer weights, hours of box time -- the cheap question has to be answered first: can this stack
+  move ANYTHING from a still under ideal conditions. Four renders on an idle card answer it, they cost $0, they touch
+  no renderer code, and a negative result retires more work than any positive one would create.'
+est_minutes: 35
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\motion-poscontrol-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not\
+    \ found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1\
+    \ << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"\
+    !! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"\
+    x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\n\
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top =\
+    \ (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\motion-poscontrol-0816\negative-FULL.txt: camera pan, camera tilt, zoom, dolly, push in, pull back,
+    tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\motion-poscontrol-0816\prompt-a0.txt: sitting on grass, knees up, arms around knees. He rocks slowly
+    forward and back. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic
+    lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\motion-poscontrol-0816\prompt-a1.txt: A waterfall pours down a dark rock chute into the pool below.
+    The white water rushes downward without stopping, spray leaps up where it strikes the rocks, foam churns and swirls
+    across the pool, and the leaves above sway in the wind. Live action video, natural daylight, handheld documentary
+    footage.
+  C:\banyan-farm\motion-poscontrol-0816\prompt-a2.txt: A woman runs barefoot along the wet sand at the edge of the
+    sea. She keeps running, her legs striding one after the other, her arms swinging back and forth, her ponytail
+    bouncing, and the surf rolling in behind her. Live action video, bright overcast daylight, telephoto shot.
+  C:\banyan-farm\motion-poscontrol-0816\prompt-a3.txt: sitting on grass, knees up, arms around knees. He puts his
+    hands on the grass, pushes himself up onto his feet, stands up straight and steps forward. 2D anime, hand-drawn
+    cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.
+  C:\banyan-farm\motion-poscontrol-0816\jobs-encode.json: "[\n {\n  \"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\motion-poscontrol-0816-out\\\\embeds-a0.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\
+    \\prompt-a0.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\\negative-FULL.txt\"\n\
+    \ },\n {\n  \"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a1.pt\",\n\
+    \  \"prompt_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\\prompt-a1.txt\",\n  \"negative_file\": \"\
+    C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\\negative-FULL.txt\"\n },\n {\n  \"beat\": 13,\n  \"embeds\": \"\
+    C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a2.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\\
+    motion-poscontrol-0816\\\\prompt-a2.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\
+    \\negative-FULL.txt\"\n },\n {\n  \"beat\": 13,\n  \"embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\
+    \\embeds-a3.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\\prompt-a3.txt\",\n  \"\
+    negative_file\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816\\\\negative-FULL.txt\"\n }\n]"
+  C:\banyan-farm\motion-poscontrol-0816\jobs-render-a0.json: "[\n {\n  \"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a0.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\motion-poscontrol-0816-out\\\\poscontrol-init-b13-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\
+    \\poscontrol-a0-b13-control.mp4\"\n }\n]"
+  C:\banyan-farm\motion-poscontrol-0816\jobs-render-a1.json: "[\n {\n  \"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a1.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\motion-poscontrol-0816-out\\\\poscontrol-init-waterfall-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\\
+    motion-poscontrol-0816-out\\\\poscontrol-a1-world-waterfall.mp4\"\n }\n]"
+  C:\banyan-farm\motion-poscontrol-0816\jobs-render-a2.json: "[\n {\n  \"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a2.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\motion-poscontrol-0816-out\\\\poscontrol-init-runner-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\
+    \\poscontrol-a2-human-runner.mp4\"\n }\n]"
+  C:\banyan-farm\motion-poscontrol-0816\jobs-render-a3.json: "[\n {\n  \"beat\": 13,\n  \"seed\": 20260815,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\\embeds-a3.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\motion-poscontrol-0816-out\\\\poscontrol-init-b13-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\motion-poscontrol-0816-out\\\
+    \\poscontrol-a3-b13-standup.mp4\"\n }\n]"
+  C:\banyan-farm\motion-poscontrol-0816\verify_embeds.py: "\n\"\"\"All four arms share ONE negative and ONE encoder\
+    \ process. Prove it.\"\"\"\nimport hashlib, sys, torch\nOUT = r\"C:\\banyan-farm\\motion-poscontrol-0816-out\"\
+    \nkeys = [\"a0\", \"a1\", \"a2\", \"a3\"]\nd = {k: torch.load(OUT + \"\\\\embeds-%s.pt\" % k, map_location=\"\
+    cpu\") for k in keys}\ndef tb(t):\n    t = t.contiguous().cpu()\n    if t.dtype == torch.bfloat16:\n        t\
+    \ = t.view(torch.int16)          # a VIEW, same bytes, not a conversion\n    return hashlib.sha256(t.numpy().tobytes()).hexdigest()\n\
+    lines, ok = [], True\nfor f in (\"prompt_embeds\", \"prompt_attention_mask\",\n          \"negative_prompt_embeds\"\
+    , \"negative_prompt_attention_mask\"):\n    h = {k: tb(d[k][f]) for k in keys}\n    lines.append(\"%-32s %s\"\
+    \ % (f, \"  \".join(\"%s=%s\" % (k, h[k][:12]) for k in keys)))\n    if f.startswith(\"negative\"):\n        same\
+    \ = len(set(h.values())) == 1\n        ok = ok and same\n        lines.append(\"    -> %s\" % (\"IDENTICAL across\
+    \ all four (expected: one negative)\"\n                                     if same else \"!! THE NEGATIVES DIFFER\"\
+    ))\n    else:\n        distinct = len(set(h.values())) == len(keys)\n        ok = ok and distinct\n        lines.append(\"\
+    \    -> %s\" % (\"all four DISTINCT (expected: four prompts)\"\n                                     if distinct\
+    \ else \"!! two arms share a positive\"))\nlines.append(\"shapes pos %s neg %s\" % (tuple(d[\"a0\"][\"prompt_embeds\"\
+    ].shape),\n                                        tuple(d[\"a0\"][\"negative_prompt_embeds\"].shape)))\ntxt =\
+    \ \"\\n\".join(lines) + \"\\n\"\nopen(OUT + \"\\\\embeds-verify.txt\", \"w\", newline=\"\\n\").write(txt)\nprint(txt,\
+    \ flush=True)\nif not ok:\n    sys.exit(\"!! the four embeds files are not four positives against one negative\"\
+    )\nprint(\"VERIFIED: one negative, four distinct positives, one encoder process.\", flush=True)\n"
+steps:
+- name: crop-runner
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\motion-poscontrol-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\motion-poscontrol-plates-0816\poscontrol-runner-src.jpg
+  - --sha256
+  - ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac
+  - --out
+  - C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-runner-704x1280.png
+  - --size
+  - 704x1280
+- name: crop-waterfall
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\motion-poscontrol-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\motion-poscontrol-plates-0816\poscontrol-waterfall-src.jpg
+  - --sha256
+  - 2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3
+  - --out
+  - C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-waterfall-704x1280.png
+  - --size
+  - 704x1280
+- name: crop-b13
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\motion-poscontrol-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-the-shade-ipa-r0-w015-s0.png
+  - --sha256
+  - 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+  - --out
+  - C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-b13-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\motion-poscontrol-0816\jobs-encode.json
+- name: verify-embeds
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\motion-poscontrol-0816\verify_embeds.py
+- name: render-a0
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\motion-poscontrol-0816\jobs-render-a0.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - motion-poscontrol-0816-a0
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\motion-poscontrol-0816-out\bench-a0.jsonl
+  - --bench-label
+  - motion-poscontrol-0816-a0
+- name: render-a1
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\motion-poscontrol-0816\jobs-render-a1.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - motion-poscontrol-0816-a1
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\motion-poscontrol-0816-out\bench-a1.jsonl
+  - --bench-label
+  - motion-poscontrol-0816-a1
+- name: render-a2
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\motion-poscontrol-0816\jobs-render-a2.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - motion-poscontrol-0816-a2
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\motion-poscontrol-0816-out\bench-a2.jsonl
+  - --bench-label
+  - motion-poscontrol-0816-a2
+- name: render-a3
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\motion-poscontrol-0816\jobs-render-a3.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - motion-poscontrol-0816-a3
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\motion-poscontrol-0816-out\bench-a3.jsonl
+  - --bench-label
+  - motion-poscontrol-0816-a3
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/motion-poscontrol-0816\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/poscontrol-*.mp4*\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/poscontrol-init-*.png\")\n             + glob.glob(\"\
+    C:/banyan-farm/motion-poscontrol-0816-out/embeds-verify.txt\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/bench-*.jsonl\"\
+    )\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816/prompt-*.txt\")\n             + glob.glob(\"\
+    C:/banyan-farm/motion-poscontrol-0816/negative-FULL.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"motion-poscontrol-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 12 else 1)\n"
+artifacts:
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-a0-b13-control.mp4
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-a1-world-waterfall.mp4
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-a2-human-runner.mp4
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-a3-b13-standup.mp4
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-runner-704x1280.png
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-waterfall-704x1280.png
+- C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-b13-704x1280.png
+script_authority: 'A0 and A3 render node 002b-first-citizen beat 13 from the live script `002b-t0-c`, `approved_by:
+  founder`, `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml --
+  the leaf the render gate itself reads. Beat 13 is THE SHADE: "The scavenger slides down the trunk and folds into
+  the sapling''s tiny shade, knees up around his ears." A0''s wording is byte-identical to ep2-b13-negcfg-0816''s
+  control and is not under test; A3 changes only its action clause. A1 and A2 are NOT beats and NOT canon: they are
+  engine capability probes on two third-party photographs published as test fixtures in farm-out/motion-poscontrol-plates-0816
+  with their licences and sources recorded, and they produce no Sapling footage, no character, no location and nothing
+  that may ever be cut into an episode. Four silent motion takes; no voice synthesis, no episode assembly, no publication.'

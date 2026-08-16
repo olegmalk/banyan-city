@@ -1,0 +1,105 @@
+# 2026-08-16, THE MOTION LANE. THE TEST FIXTURES, PUBLISHED RATHER THAN WAIVED.
+#
+# box_enqueue.py refuses a motion job twice over when it cannot check the picture
+# being animated: once because the --src is not fetchable from the results
+# branch, and again because the job that produced it has no spec in
+# pipeline/jobs. Both refusals are waivable with plate_ack: and NEITHER IS
+# WAIVED HERE. This spec is the producing job the second guard looks for, and
+# farm-out/motion-poscontrol-plates-0816 is what the first one reads.
+#
+# The two photographs are engine test fixtures for motion-poscontrol-0816, which
+# asks whether LTX-2.3 distilled can move a body at all from a still under
+# conditions rigged for it to succeed. Their bytes are the unmodified Commons
+# originals, so the sha256s asserted in fetch_plates.py are the sha256s of the
+# public files and are independently verifiable; the fetch step EXITS NONZERO on
+# any mismatch instead of continuing with whatever it got.
+#
+# THEY ARE NOT SHOW CONTENT. Not canon, not style reference, never published as
+# Sapling footage, never imitated. 001's photoreal Veo clips are archived v1
+# evidence for the same reason and the same rule applies here.
+id: motion-poscontrol-plates-0816
+task: motion-poscontrol-plates-0816
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: motion lane (can the engine act a body at all), 2026-08-16
+consumer: The two init plates for motion-poscontrol-0816, published as farm-out artifacts so the enqueue guards can
+  fetch and measure them like any other plate. box_enqueue refuses a motion job whose --src it cannot fetch, and separately
+  refuses one whose producing job has no spec in pipeline/jobs -- this IS that spec, and no plate_ack waiver is used
+  anywhere in this lane.
+success: 'Two third-party still photographs on farm-out/motion-poscontrol-plates-0816, each byte-identical to the
+  public Wikimedia Commons original (the fetch step REFUSES on any sha256 mismatch rather than continuing), with a
+  SOURCES.md carrying file page, direct URL, author, licence, dimensions and sha256 for each, and a sha256 manifest.
+  TEST FIXTURES, NOT SHOW CONTENT: never published as Sapling footage, never imitated as style, and the clips made
+  from them are engine probes that can never be cut into an episode.'
+why: 'motion-poscontrol-0816 asks whether LTX-2.3 distilled can move a body AT ALL from a still, under conditions
+  chosen to make it succeed. That needs plates our own pipeline cannot make: photoreal (in-distribution for a video
+  model, unlike anime line art), one clear subject, uncluttered ground, and an action that is the commonest motion
+  in any video corpus. A runner already mid-stride with both feet off the ground is the easiest possible ask of an
+  i2v model; a waterfall is the easiest ask that involves no body at all. $0, no GPU, seconds.'
+est_minutes: 2
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\motion-poscontrol-plates-0816\fetch_plates.py: "#!/usr/bin/env python3\n\"\"\"Fetch two Commons photographs\
+    \ as test fixtures and REFUSE on any sha mismatch.\n\nNo model, no GPU, no spend. The bytes are the unmodified\
+    \ originals, so the\nsha256 asserted here is the sha256 of the public file and anyone can verify it\nagainst Wikimedia\
+    \ directly.\n\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\motion-poscontrol-plates-0816-out\"\
+    \nUA = {\"User-Agent\": \"banyan-city-motion-test/1.0 (albert.numbro@gmail.com)\"}\nWANT = [\n    (\"poscontrol-runner-src.jpg\"\
+    ,\n     \"https://upload.wikimedia.org/wikipedia/commons/9/9a/Woman_running_barefoot_on_beach.jpg\",\n     \"\
+    ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac\"),\n    (\"poscontrol-waterfall-src.jpg\",\n\
+    \     \"https://upload.wikimedia.org/wikipedia/commons/0/0c/Waterfall_in_Kerala.jpg\",\n     \"2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3\"\
+    ),\n]\nos.makedirs(OUT, exist_ok=True)\nfor name, url, want in WANT:\n    raw = urllib.request.urlopen(urllib.request.Request(url,\
+    \ headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n    if have != want:\n       \
+    \ sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have %s\"\n                 % (name, want,\
+    \ have))\n    with open(os.path.join(OUT, name), \"wb\") as fh:\n        fh.write(raw)\n    print(\"fetched %-30s\
+    \ %d bytes  sha %s  OK\" % (name, len(raw), have), flush=True)\nprint(\"both fixtures match their asserted sha256.\"\
+    , flush=True)\n"
+  C:\banyan-farm\motion-poscontrol-plates-0816\SOURCES.md: "# motion-poscontrol-plates-0816 -- test fixtures, NOT\
+    \ show content\n\nTwo third-party still photographs, published here so the box's plate guard can\nfetch and measure\
+    \ them like any other farm-out plate. They exist ONLY to answer\n\"can LTX-2.3 distilled move anything at all\
+    \ from a still?\" under conditions\nchosen to make the engine succeed: photoreal (in-distribution for a video\n\
+    model), one clear subject, uncluttered background, and an action that is the\nsingle most common motion in any\
+    \ video corpus.\n\nThey are NOT canon, NOT a style reference, and must never be imitated or\npublished as Sapling\
+    \ footage. Bytes are the unmodified originals from Wikimedia\nCommons; the sha256 below is therefore the sha256\
+    \ of the public file and is\nindependently verifiable by anyone.\n\n## poscontrol-runner-src.jpg  -- the HUMAN\
+    \ arm\n- file page: https://commons.wikimedia.org/wiki/File:Woman_running_barefoot_on_beach.jpg\n- direct:   \
+    \ https://upload.wikimedia.org/wikipedia/commons/9/9a/Woman_running_barefoot_on_beach.jpg\n- author:    Raquel\
+    \ Baranow\n- licence:   CC BY-SA 4.0\n- 1728x2304, 626552 bytes\n- sha256 ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac\n\
+    - why: one figure, whole body head to toes, BOTH FEET OFF THE GROUND mid-stride,\n  clean surf-and-sand background,\
+    \ and the continuation the model is asked for\n  (keep running) is a cyclic gait. Cover-cropped to 704x1280 the\
+    \ figure survives\n  intact -- verified before publishing.\n\n## poscontrol-waterfall-src.jpg  -- the WORLD arm\n\
+    - file page: https://commons.wikimedia.org/wiki/File:Waterfall_in_Kerala.jpg\n- direct:    https://upload.wikimedia.org/wikipedia/commons/0/0c/Waterfall_in_Kerala.jpg\n\
+    - author:    MuthuLakshmi Vijaya\n- licence:   CC0\n- 1200x1600, 523283 bytes\n- sha256 2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3\n\
+    - why: the floor of the ladder. Falling water is the easiest motion any i2v model\n  is ever asked for and it\
+    \ needs no articulated body. If this arm holds still,\n  the engine is not moving anything and no figure question\
+    \ arises.\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\motion-poscontrol-plates-0816\fetch_plates.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/motion-poscontrol-plates-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nshutil.copy2(r\"C:\\banyan-farm\\motion-poscontrol-plates-0816\\\\SOURCES.md\"\
+    , dst)\nsrc = sorted(glob.glob(\"C:/banyan-farm/motion-poscontrol-plates-0816-out/poscontrol-*-src.jpg\")) + [os.path.join(dst,\
+    \ \"SOURCES.md\")]\nlines = []\nfor f in src:\n    if os.path.dirname(os.path.abspath(f)) != os.path.abspath(dst):\n\
+    \        shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n\
+    \        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst,\
+    \ \"motion-poscontrol-plates-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines))\
+    \ + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >=\
+    \ 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\motion-poscontrol-plates-0816-out\poscontrol-runner-src.jpg
+- C:\banyan-farm\motion-poscontrol-plates-0816-out\poscontrol-waterfall-src.jpg
+script_authority: 'No node, no beat, no script. This job renders nothing and animates nothing: it fetches two third-party
+  photographs and publishes them as engine test fixtures with their licences recorded (CC BY-SA 4.0 / Raquel Baranow,
+  and CC0 / MuthuLakshmi Vijaya). They are not canon, not a style reference, and produce no Sapling footage.'
