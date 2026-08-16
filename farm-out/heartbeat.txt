@@ -2234,3 +2234,4 @@
 17:27:05Z STARTED task=ep2-b02-anchor-s20260817-0816-1786901176 attempt=1 on box-runner
 17:32:59Z DONE task=ep2-b02-anchor-s20260817-0816-1786901176 rc=0 artifacts=2
 17:33:03Z STARTED task=ep2-b20-canonword-0816-1786901331 attempt=1 on box-runner
+17:33:09Z FAIL task=ep2-b20-canonword-0816-1786901331 rc=1 step=measure
