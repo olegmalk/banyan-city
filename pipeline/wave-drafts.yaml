@@ -318,14 +318,12 @@ beats:
     authored_b01_canon_0816: >-
       A tiny fig seedling in an open grassy field, exactly two wide oval cotyledon
       leaves with soft round tips, and one small deep purple-violet fig, green at its
-      neck, matte, growing on its thin stem, whole plant in frame. Static camera,
-      medium shot, bright morning light, cinematic lighting, detailed, newest,
-      masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child,
-      no person, no chibi, no mascot, no creature, no face, no green fig, no green
-      fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no
-      five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush
-      foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical,
-      no text.
+      neck, matte, growing on its thin stem, whole plant in frame. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child, no
+      person, no chibi, no mascot, no creature, no face, no green fig, no green fruit,
+      no red fruit, no white fruit, no pale fruit, no lobed leaves, no five-fingered
+      leaves, no three leaves, no four leaves, no many leaves, no lush foliage, no dark,
+      no night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b01_figlit: >-
       A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
@@ -517,15 +515,14 @@ beats:
     # untouched, as is every fig and lighting clause.
     authored_b01_scale_0816: >-
       A tiny fig seedling in an open grassy field, exactly two wide oval cotyledon
-      leaves with soft round tips, and one small deep purple-violet fig, green at its
-      neck, matte, growing on its thin stem, whole plant in frame, no taller than the
-      grass around it. Static camera, medium shot, bright morning light, cinematic
-      lighting, detailed, newest, masterpiece, best quality, very aesthetic No woman, no
-      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no
-      green fig, no green fruit, no red fruit, no white fruit, no pale fruit, no lobed
-      leaves, no five-fingered leaves, no three leaves, no four leaves, no many leaves,
-      no lush foliage, no dark, no night. No photorealism, no 3D render look. 9:16
-      vertical, no text.
+      leaves, and one small deep purple-violet fig, green at its neck, matte, growing on
+      its thin stem, whole plant in frame, no taller than the grass around it. Cinematic
+      lighting, masterpiece, best quality, very aesthetic No woman, no girl, no boy, no
+      child, no person, no chibi, no mascot, no creature, no face, no green fig, no
+      green fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no
+      five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush
+      foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
   2:
     slug: the-sprint
     kind: goblin
@@ -829,10 +826,9 @@ beats:
     authored_b02_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, from front, sprints in panic and dives
       behind a tiny sapling, knee high, with two big leaves, rooted in the grass, his
-      face visible past its thin stem, dust kicking up. Static camera, wide shot,
-      morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
-      very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
-      vertical, no text.
+      face visible past its thin stem, dust kicking up. Cinematic lighting, masterpiece,
+      best quality, very aesthetic No girl, no child. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     # 2026-08-16, THE SCALE ANCHOR, PASS 2 -- THE PLATE FAMILY. Additive.
     #
     # Pass 1 anchored the `authored_staged` line. This anchors the `*_plate` line,
@@ -856,11 +852,10 @@ beats:
     authored_b02_plate_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
       sky behind, cowers with both hands to his chest behind a tiny sapling's thin stem,
-      knee high with two big leaves, face peeking around it. Medium full shot, bright
-      morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
-      very aesthetic No girl, no child, no hair, no wig, no armor, no jewelry, no
-      ornament, no long eyelashes, no lipstick, no dark, no night. No photorealism, no
-      3D render look. 9:16 vertical, no text.
+      knee high with two big leaves, face peeking around it. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no hair, no wig, no
+      armor, no jewelry, no ornament, no long eyelashes, no lipstick, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
   3:
     slug: bad-cover
     kind: goblin
@@ -1255,10 +1250,9 @@ beats:
     authored_b03_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, from front, crouches behind the pencil-thin
       stem of a tiny sapling, knee high, with two big leaves, rooted in the grass that
-      hides almost none of him, his face visible beside it. Deadpan comedic staging,
-      static camera, medium shot, cinematic lighting, detailed, newest, masterpiece,
-      best quality, very aesthetic No girl, no child. No photorealism, no 3D render
-      look. 9:16 vertical, no text.
+      hides almost none of him, his face visible beside it. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     # -- `authored_b03_plate_scale_0816` -- THIS BEAT: derived from `authored_b03_plate`, which is left standing.
     # `broad round cotyledon leaves` was already here and is kept byte-for-byte --
     # only the COUNT is added to it, which is his word. Shape is the steward's
@@ -1266,11 +1260,10 @@ beats:
     authored_b03_plate_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
       sky behind, crouches behind a tiny sapling's thin stem, knee high, two broad round
-      cotyledon leaves above, face visible. Medium full shot, bright morning light,
-      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
-      girl, no child, no hair, no wig, no armor, no jewelry, no ornament, no long
-      eyelashes, no lipstick, no dark, no night. No photorealism, no 3D render look.
-      9:16 vertical, no text.
+      cotyledon leaves above, face visible. Cinematic lighting, masterpiece, best
+      quality, very aesthetic No girl, no child, no hair, no wig, no armor, no jewelry,
+      no ornament, no long eyelashes, no lipstick, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
   4:
     slug: the-footnote
     kind: goblin
@@ -5420,10 +5413,9 @@ beats:
     authored_b17_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, stands up, brushes dust off his patched
       tunic, and turns from a tiny sapling, knee high, with two big leaves, rooted in
-      the grass to face camera, the open field behind him. Static camera, medium shot,
-      amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best
-      quality, very aesthetic No girl, no child. No photorealism, no 3D render look.
-      9:16 vertical, no text.
+      the grass to face camera, the open field behind him. Cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     # -- `authored_b17_plate_scale_0816` -- THIS BEAT: derived from `authored_b17_plate`, which is left standing.
     # He stands up and turns away, so the whole body is in frame from the first
     # frame -- the cleanest knee reference of the four. Count added to the leaf
@@ -5431,11 +5423,10 @@ beats:
     authored_b17_plate_scale_0816: >-
       A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
       sky behind, stands up and turns away from a tiny sapling, knee high, with two
-      broad round cotyledon leaves. Medium full shot, bright morning light, cinematic
-      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
-      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
-      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
-      text.
+      broad round cotyledon leaves. Cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no hair, no wig, no armor, no jewelry, no ornament,
+      no long eyelashes, no lipstick, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
   18:
     slug: the-decision
     kind: guard
@@ -5636,14 +5627,13 @@ beats:
     authored_b18_figleaf_canon_0816: >-
       A tiny fig sapling's thinnest branch against a soft sky, exactly two wide oval
       cotyledon leaves with soft round tips, and hanging below them one small purple
-      fig, a plain purple teardrop of fruit with matte dusty skin. Held macro, even
-      front light, the sun behind the camera, cinematic lighting, detailed, newest,
+      fig, a plain purple teardrop of fruit with matte dusty skin. Cinematic lighting,
       masterpiece, best quality, very aesthetic No backlight, no silhouette, no
       contre-jour, no face, no eyes, no creature, no mascot, no chibi, no person, no
       girl, no boy, no child, no eggplant, no aubergine, no gloss, no shine, no black
-      fruit, no green fig, no green fruit, no lobed leaves, no five-fingered leaves,
-      no three leaves, no four leaves, no stem crossing the fruit, no dark, no night.
-      No photorealism, no 3D render look. 9:16 vertical, no text.
+      fruit, no green fig, no green fruit, no lobed leaves, no five-fingered leaves, no
+      three leaves, no four leaves, no stem crossing the fruit, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b18_figleaf3: >-
       A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
