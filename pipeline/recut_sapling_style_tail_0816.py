@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-"""Give nine sapling-canon drafts back their style anchor, by shortening the
+"""Give ten sapling-canon drafts back their style anchor, by shortening the
 one part of them that was never reaching the model anyway.
+
+NINE were the drafts render_wave_goblin.check() was already refusing. The TENTH,
+authored_b07_scale_0816, came out of a sweep of all 207 drafts on the box's real
+CLIP run AFTER the nine were fixed -- same defect, no spec naming it, so it had
+never refused anything because nobody had asked it to draw yet.
 
 THE DEFECT, measured rather than reasoned about. `sd_prompt.compress()` drops
 TRAILING SENTENCES until the prompt fits CLIP's 77 tokens:
@@ -99,6 +104,20 @@ TARGETS = [
     (17, "authored_b17_scale_0816"),
     (17, "authored_b17_plate_scale_0816"),
     (18, "authored_b18_figleaf_canon_0816"),
+    # Found by sweeping all 207 drafts on the box's real CLIP AFTER the nine
+    # were fixed: six more lose a trailing sentence, and all six lose the anchor
+    # with it. FIVE of those six are RECEIPTS -- authored_b03_field_solo,
+    # authored_ep3_charref_assessor, authored_b08_refresh, authored_b15_refresh
+    # and authored_b19_refresh each have specs that have already fired, and for a
+    # run whose sidecar is untracked the key is the only committed record of the
+    # bytes that were sent. Correcting one would not fix a render, it would
+    # falsify a receipt. They stay exactly as written.
+    #
+    # authored_b07_scale_0816 is the exception and the only one added here: same
+    # defect, same authoring pass, and NO spec in pipeline/jobs names it, so
+    # there is no receipt to falsify and nothing has ever drawn it. It would have
+    # refused the moment anyone filed against it.
+    (7,  "authored_b07_scale_0816"),
 ]
 
 # The one draft that needed a second cut, and exactly what comes off it.
@@ -159,13 +178,21 @@ def main(path: str = "pipeline/wave-drafts.yaml") -> int:
     flat_before = parsed(text)
     lines = text.splitlines(keepends=True)
 
-    edits = []   # (label, old_block, new_block)
+    edits = []      # (label, old_block, new_block)
+    touched = []    # only the keys this run actually rewrites
     for beat, key in TARGETS:
         i, j = block_bounds(lines, key)
         old_block = "".join(lines[i:j])
         value = joined(lines, i, j)
 
-        if PROVEN_TAIL + " No" not in value and not STYLE_SENTENCE.search(value):
+        # IDEMPOTENT ON PURPOSE. This pass ran once for nine keys and again for a
+        # tenth found by the corpus sweep; a script that cannot be re-run without
+        # clobbering its own earlier work is a script nobody dares re-run.
+        if PROVEN_TAIL + " No" in value:
+            print("   already re-cut, skipping: %s" % key)
+            continue
+
+        if not STYLE_SENTENCE.search(value):
             print("!! %s: no long style sentence found -- refusing to guess." % key)
             return 4
         new_value, n = STYLE_SENTENCE.subn(PROVEN_TAIL, value)
@@ -192,7 +219,11 @@ def main(path: str = "pipeline/wave-drafts.yaml") -> int:
             return 5
 
         edits.append((key, old_block, rewrapped(key, new_value)))
+        touched.append("%d.%s" % (beat, key))
 
+    if not edits:
+        print("nothing to do -- every target already carries the proven tail.")
+        return 0
     for key, old_block, _ in edits:
         if text.count(old_block) != 1:
             print("!! %s: block is not unique in the file." % key)
@@ -215,11 +246,11 @@ def main(path: str = "pipeline/wave-drafts.yaml") -> int:
     flat_after = parsed(out)
     changed = sorted(k for k in set(flat_before) | set(flat_after)
                      if flat_before.get(k) != flat_after.get(k))
-    expected = sorted("%d.%s" % (b, k) for b, k in TARGETS)
+    expected = sorted(touched)
     print("parsed keys before/after: %d / %d" % (len(flat_before), len(flat_after)))
     print("changed keys (%d): %s" % (len(changed), ", ".join(changed) or "NONE"))
     if changed != expected:
-        print("!! expected exactly the nine targets -- refusing to write.")
+        print("!! changed keys are not exactly the ones edited -- refusing to write.")
         return 7
 
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
