@@ -8241,3 +8241,97 @@ named here so the next lane fixes them rather than believes them:
 `review/ep2-picks/steward-picks-0815.yaml` (`guards`, `note_on_09`) and
 `review/ep2-picks/gate-evidence.yaml` (six rows reading *"GATED - guard cast
 unapproved (his call)"*).
+
+## 2026-08-16 — "do not resemble the sapling": 12 beats show the plant and nothing in the repo says what it is
+
+His beat-16 ruling above is not about beat 16. *"do not resemble the sapling"*
+is a statement about what the plant **IS**, so the beat was surveyed outward
+before anything was redrawn. **Nothing was drawn, nothing was rendered, no job
+was queued — $0, no GPU.**
+
+**HOW WIDE IT GOES.** Read off
+`genomes/sapling/nodes/002b-first-citizen/node.md`, **12 of 21 beats put the
+sapling, its leaf or its fruit on screen**: 01 (two-leaf sapling, the fig
+swelling on the thinnest branch), 02 (dives behind the thin trunk), 03
+(crouches behind the trunk), 12 (tight on the two leaves), 13 (slides down the
+trunk into its shade), 15 (looks up at the sapling), 16 (close on the leaf), 18
+(the fig on the thinnest branch), 19 (the whole sapling; the stem lets go), 20
+(picks the fig up, looks up at the bare branch), 21 (the leaf tilts) — plus 17
+in dialogue (*"You're a plant."*). Beats 06 and 10 use a **bark** clipboard,
+tree-derived but not the plant. **In two of the twelve the leaf is not scenery
+but the subject**: beat 12 is *"tight on the sapling's TWO leaves against the
+sky"* and beat 16 is *"the leaf is the subject and he is depth"*. A wrong leaf
+is a wrong shot in both, which is what makes this expensive.
+
+**IS THERE A CANONICAL SAPLING DESCRIPTION? NO.** What exists:
+
+* **`genomes/sapling/style.md:39-41`** — the only prose description in the repo:
+  *"a tiny, almost mascot-simple tree — thin curved trunk, one or two oversized
+  expressive leaves; its acting is entirely leaf angle and timing."* **That file's
+  own line 3 reads `⚠ STALE (2026-07-27) … Do not render from this.`** It names
+  no leaf shape and no fruit colour, and *"mascot-simple"* is the exact word our
+  records blame for the plant coming back as a creature with a face.
+* **`genomes/sapling/style.md:143-159`, the growth ladder** — real canon and the
+  only thing cited by name across the jobs. Row `002a/b/c` = ~40 cm, two leaves
+  + one thin side-branch. Height, count and branch; **nothing about leaf shape,
+  leaf colour, stem substance or fruit.**
+* **`taste/sapling.founder.v0.3.md` describes the plant nowhere** — its only
+  "leaf" is a rule-citation example.
+* **No reference image and no sampler key.** `genomes/sapling/refs/` holds the
+  goblin and the engineer; `review/SHEETS/` has `CHAR-`/`CHARREF-` sheets for the
+  goblin and the guards and **none for the plant**;
+  `genomes/sapling/refs/sapling-reference-candidate.yaml` is `blocked_on:` "the
+  conditioning path cannot take it"; `pipeline/goblin_ipa_beat.py` has
+  `BEAT_LISTS` keys for `goblin`, `guard` and `fig` and **no `sapling` key**.
+  **The FIG is frozen canon — deep purple-violet, green at the neck, matte, with
+  its own licence-clean reference — and the tree that carries it has none.**
+
+**SO EVERY BEAT IMPROVISED IT, and the live wordings contradict each other.**
+This is the guard-cast failure mode a second time (*0 of 17 guard prompts named
+the cast; 14 of 17 asked for `bald`, which neither approved guard is*):
+
+* **LEAF SHAPE — two different plants, both shipping.** *"wide oval cotyledon
+  leaves with soft round tips, not narrow, not pointed, not lance-shaped"*
+  (beats 12/15/19/20 jobs) against *"deeply lobed fig leaves with five fingers"*
+  with the negative *"no simple oval leaves"* (beat 01 lane, `wave-drafts.yaml`
+  L313/321/329). Beat 16 came back a five-to-seven lobed palmate leaf — the
+  second wording obeying itself. Beat 12's own shipped pick is noted as
+  *"long lanceolate leaves"*, a third shape.
+* **SCALE.** *"no taller than the grass around it"* (01, 12) vs *"standing tall"*
+  (02, 03, 15, 17, 19) vs **`TALLER THAN HE IS`** (`ep2-b15-leafB-0813.yaml:46`),
+  which breaks beat 03's cover joke and the VO *"I am forty centimeters tall"*.
+* **STEM.** `sturdy curved stem` / `pencil-thin trunk` / `thin trunk` /
+  `slender upright stem` for one object; beat 12 says **`no trunk`** while 02 and
+  03 have him hiding behind the trunk.
+* **FRUIT COLOUR.** Purple on 01/18/19/20, but **`ONE SINGLE ROUND GREEN FIG`**
+  is still live in `ep2-b18-stable-0812.yaml:48`, `a small dark fig` on the 19
+  and 20 jobs, and `no green fig, no green fruit` is a *negative* two beats away.
+  **His ruling today kills the red; it does not by itself kill the green.**
+* **FRUIT SHAPE.** `one small round purple fruit` (18/19/20 shots.md) vs
+  `a small teardrop … NOT a sphere, NOT a round ball` (19/20 jobs).
+* **BRANCH COUNT.** `one thin bare side-branch` (ladder, b12) vs `no branches` in
+  beat 01's own negative vs 18/19/20 needing a branch to hang and drop from.
+
+**WHAT WOULD SETTLE IT, AND WHY IT IS NOT MINE.** **On 2026-08-08 he DECLINED a
+sapling character sheet** — *"im talking about the sapling, and its very simple,
+just make it tall in each clip of it, and thats pretty much it. dont overthink
+the leafs on it"* (`taste/steward-model.v1.md` A1/A7), recorded as a standing
+rule that leaf count and leaf shape are **not to be scored**. **That ruling and
+today's cannot both hold**: either the leaf is out of scope or it is wrong. Only
+he can say which, so it is filed as a card and not decided here —
+**`review/inbox.yaml`, the one open entry, "THERE IS NO SAPLING"**, asking for
+one sentence and naming the one thing that cannot be inferred: **ROUND or
+LOBED**, because the two candidates in our own prompts are opposites.
+**No picture was baked for that card on purpose** — a candidate sheet would be
+the steward proposing what the plant looks like, which is the R4 call the card
+exists to ask for.
+
+**THE TEMPLATE ALREADY EXISTS AND THE PLANT HAS NONE OF IT.** The guard cast was
+canonicalised in eight steps: a costume wave on plain ground → a numbered picker
+sheet on his board as a *pick* → his verbatim words with a UTC timestamp → the
+picked look **written down in prose so a prompt can be diffed against it** → a
+frozen reference set wired into the sampler with a beat-list gate → residual
+defects named before freezing → **a $0 text sweep of every existing prompt
+against the frozen spec** → a note recording where the approval lives. **Steps
+2-8 are all $0 and all ours; step 1 is the only one that needs him.** Step 7 for
+the plant is the survey above.

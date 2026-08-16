@@ -1363,3 +1363,70 @@
       scope, named here so the next lane fixes them rather than believes them: review/ep2-picks/steward-picks-0815.yaml
       (guards, note_on_09) and review/ep2-picks/gate-evidence.yaml (six rows reading "GATED - guard cast
       unapproved (his call)").'
+- what: 'THERE IS NO SAPLING. Your words closed three cards today and the third one opened something
+    much bigger than the beat it was about: "both of them are wrong though and do not resemble the sapling."
+    That is a statement about what the plant IS, and beat 16 is only where you happened to see it. I surveyed
+    every beat and every prompt before writing this card, and the answer is that WE HAVE NEVER DESCRIBED
+    THE PLANT. Every beat improvised it, exactly the way every guard plate improvised a man - that failure
+    cost six beats and a day, and this one is bigger. HOW WIDE IT GOES: 12 of the 21 beats of episode
+    2 put the sapling, its leaf or its fruit on screen (01, 02, 03, 12, 13, 15, 16, 18, 19, 20, 21, plus
+    17 in dialogue), and in TWO of them the leaf is not scenery but the subject of the shot - beat 12
+    is "tight on the sapling''s TWO leaves against the sky" and beat 16 is "the leaf is the subject and
+    he is depth". A wrong leaf is a wrong shot in both. WHAT WE FOUND WHEN WE LOOKED FOR A DEFINITION:
+    the only prose description of the plant in the repo is one sentence in genomes/sapling/style.md -
+    "a tiny, almost mascot-simple tree - thin curved trunk, one or two oversized expressive leaves" -
+    in a file whose own third line reads "STALE (2026-07-27): the founder killed this flat/low-detail
+    look... Do not render from this." It names no leaf shape and no fruit colour, and "mascot-simple"
+    is the exact word our records blame for the plant coming back as a creature with a face. The growth
+    ladder in the same file gives 002b a height (40cm), a leaf count (two) and one bare side-branch, and
+    nothing else. taste/sapling.founder.v0.3.md describes the plant NOWHERE. There is no reference image:
+    genomes/sapling/refs holds the goblin and the engineer, review/SHEETS has CHAR sheets for the goblin
+    and the guards and none for the plant, and the sampler that freezes a character has keys for goblin,
+    guard and fig but no key for sapling. THE FIG IS FROZEN CANON AND THE TREE THAT CARRIES IT IS NOT.
+    SO THE PROMPTS DISAGREE WITH EACH OTHER, and here are the collisions in the live wording, not in old
+    drafts: LEAF SHAPE - "wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not
+    lance-shaped" on beats 12/15/19/20, against "deeply lobed fig leaves with five fingers" with the negative
+    "no simple oval leaves" on the beat 01 lane. Those are two different plants and both are shipping.
+    Beat 16 came back a five-to-seven lobed palmate leaf, which is the second wording obeying itself.
+    SCALE - "no taller than the grass around it" on beats 01 and 12, against "standing tall" on 02, 03,
+    15, 17 and 19, against "TALLER THAN HE IS" on one beat-15 job, which breaks the beat-03 joke and your
+    own VO line "I am forty centimeters tall". STEM - "sturdy curved stem", "pencil-thin trunk", "thin
+    trunk", "slender upright stem" for one object; beat 12 says "no trunk" while 02 and 03 have him hiding
+    behind the trunk. FRUIT COLOUR - purple on 01/18/19/20, "ONE SINGLE ROUND GREEN FIG" still live in
+    a beat-18 job, "a small dark fig" on 19 and 20, and one file''s positive is another file''s banned
+    term. Your ruling today kills the red; it does not by itself kill the green. FRUIT SHAPE - "one small
+    round purple fruit" on 18/19/20 against "a small teardrop... NOT a sphere, NOT a round ball" on the
+    19 and 20 jobs. WHY THIS IS YOURS AND NOT MINE, said plainly rather than worked around: ON 2026-08-08
+    YOU DECLINED A SAPLING CHARACTER SHEET. Your words were "im talking about the sapling, and its very
+    simple, just make it tall in each clip of it, and thats pretty much it. dont overthink the leafs on
+    it", and our taste model records that as a standing rule that leaf count and leaf shape are NOT to
+    be scored. I am not quietly reversing that on the strength of one sentence. But "do not resemble the
+    sapling" is a judgement about the leaf, and the two rulings cannot both hold: either the leaf is out
+    of scope or it is wrong, and only you can say which. THIS IS THE WHOLE ASK - one description of the
+    plant, in your words, at whatever length you like. Leaf shape is the one thing I cannot infer, because
+    the two candidates in our own prompts are opposites. Everything else I can derive from the ladder
+    and the script.'
+  url: https://github.com/olegmalk/banyan-city/blob/HEAD/genomes/sapling/style.md
+  group: taste
+  since: '2026-08-16'
+  kind: decision
+  episode: 2
+  verdict_hint: 'the fastest useful answer is one sentence: ROUND or LOBED. "round cotyledons like a bean
+    sprout" / "lobed fig leaves with fingers" / describe it yourself in as many words as you want / or
+    "leave it, dont overthink it" - in which case say so and I will stop treating the leaf as a fault
+    and ship beat 16 as it is'
+  note_for_lanes: 'NO PICTURE ON PURPOSE AND NOTHING WAS DRAWN FOR THIS CARD. A candidate sheet would
+    be me proposing what the plant looks like, which is the R4 call this card exists to ask for; the url
+    points at the only prose description that exists so he can see how thin it is. Survey done 2026-08-16
+    at $0, no GPU, no render, no voice - a read of genomes/sapling/nodes/002b-first-citizen/node.md and
+    shots.md, pipeline/wave-drafts.yaml, pipeline/jobs/*.yaml, genomes/sapling/style.md, taste/sapling.founder.v0.3.md,
+    taste/steward-model.v1.md, genomes/sapling/refs/ and review/SHEETS/. His 2026-08-08 words are quoted
+    from taste/steward-model.v1.md A1 and A7; his 2026-08-16 words from the session. WHAT SETTLES IT,
+    if he wants the machinery rather than the sentence: the guard cast is the template that worked and
+    the plant has none of its eight steps - a costume/variant wave on plain ground, a numbered picker
+    sheet on this board, his verbatim pick with a timestamp, the picked look written down in PROSE so
+    a prompt can be diffed against it, a frozen reference image set wired into the sampler (which today
+    has goblin, guard and fig keys and no sapling key), residual defects named before freezing, a $0 text
+    sweep of every existing prompt against the frozen spec, and a note recording where the approval lives.
+    Steps 2-8 are all $0 and all mine once step 1 has his description; step 1 is the one that cannot be
+    done without him, which is why this card asks for words and not for a verdict on pictures.'
