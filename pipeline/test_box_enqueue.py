@@ -263,6 +263,149 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
          be.node_is_approved) = orig
 
 
+# --------------------------------------------------------------------------
+# THE PLATE GUARD. Added 2026-08-16, after box_enqueue was found holding twelve
+# i2v specs (eight on beat 06, two on 09, two on 10) off the card because one
+# real scene reads as a card.
+#
+# These build the pictures rather than fetching them, and that is on purpose in
+# both directions. Fetching would make the test a network test and it would pass
+# vacuously wherever origin/farm-results-rtx5090 is not present -- a lane's first
+# attempt at a different guard here tested "the file exists" and passed happily
+# against a tree with the file deleted. Building them means the bytes go through
+# cover_crop, border_flatness and plate_problems exactly as a real --src does, so
+# what is exercised is the mechanism and not a proxy for it.
+#
+# The three grounds are the three cases the statistic has to tell apart, and the
+# numbers they produce are the numbers measured on the real plates:
+#
+#   blank paper   flat in lightness AND in colour        -> refuse (and it does)
+#   tinted ramp   flat in lightness, NOT flat in colour  -> refuse (and it does)
+#   two materials flat in lightness, NOT flat in colour  -> refuse (AND IT IS
+#                                                           WRONG, see below)
+#
+# The last two are why colour flatness was not swapped in as the decider: it
+# cannot tell a card on a tinted ramp from a horizon, and swapping it released
+# fourteen real costume sheets across the 2510-plate sweep.
+PLATE_W, PLATE_H = 704, 1280
+
+
+def _png(rows):
+    """PNG bytes of a 704x1280 picture, `rows` giving the RGB of each row."""
+    import io
+
+    from PIL import Image
+    im = Image.new("RGB", (PLATE_W, PLATE_H))
+    px = im.load()
+    for y in range(PLATE_H):
+        c = rows(y)
+        for x in range(PLATE_W):
+            px[x, y] = c
+    # a dark figure in the middle, clear of the 8% border band: every one of
+    # these grounds has a character standing on it, and the guard must be
+    # measuring the BORDER, not the subject.
+    for y in range(300, 1100):
+        for x in range(240, 470):
+            px[x, y] = (60, 55, 70)
+    buf = io.BytesIO()
+    im.save(buf, format="PNG")
+    return buf.getvalue()
+
+
+BLANK_PAPER = _png(lambda y: (238, 235, 230))
+# A costume card on a ground that cools from cream to pale blue down the frame,
+# which is what most of the plates the colour rule released actually looked
+# like. Only the blue channel moves, and blue carries 11% of luma, so 40 levels
+# of tint is under 5 levels of lightness: flat to border_flatness, not flat to
+# border_colour_flatness. The card is still a card.
+TINTED_RAMP = _png(lambda y: (238, 235, 240 - (y * 40) // PLATE_H))
+# sky over grass at the SAME lightness (both ~218 luma) and 43 levels apart in
+# blue: the real plate's border, reduced to its two materials.
+TWO_MATERIALS = _png(lambda y: (205, 222, 231) if y < PLATE_H * 0.55
+                     else (216, 226, 188))
+
+
+def _spec(src=r"c:\banyan-farm\courier-box\farm-out\ep2-x\plate.png", **kw):
+    spec = {"id": "t", "steps": [{"name": "crop", "argv": ["p", "--src", src]},
+                                 {"name": "render", "argv": ["ltx_i2v.py"]}]}
+    spec.update(kw)
+    return spec
+
+
+def test_blank_paper_is_refused_and_says_so():
+    problems = be.plate_problems(_spec(), fetch=lambda p: BLANK_PAPER)
+    check("a figure on blank paper is refused", len(problems) == 1)
+    check("and the refusal names it a CHARACTER CARD",
+          "CHARACTER CARD" in problems[0])
+    check("blank paper is flat in lightness",
+          be.measure_plate(BLANK_PAPER) >= be.PLATE_FLAT_MAX)
+    check("blank paper is flat in colour too",
+          be.measure_plate_colour(BLANK_PAPER) >= be.PLATE_FLAT_MAX)
+
+
+def test_a_card_on_a_tinted_ramp_stays_refused():
+    # THE POSITIVE CONTROL FOR THE FIX THAT WAS NOT MADE. Colour flatness sees a
+    # ramp as textured, so a rule that decided on colour would wave this card
+    # straight through. It must keep failing.
+    check("a tinted ramp is NOT flat in colour",
+          be.measure_plate_colour(TINTED_RAMP) < be.PLATE_FLAT_MAX)
+    check("and is refused anyway, because the decision is still on lightness",
+          len(be.plate_problems(_spec(), fetch=lambda p: TINTED_RAMP)) == 1)
+
+
+def test_the_two_material_border_is_the_KNOWN_FALSE_POSITIVE():
+    # This pins a WRONG verdict on purpose. The real plate this reproduces --
+    # farm-out/ep2-b10-patrol-scene-r2-0813/10-no-form-ipa-r0-w010-s1.png, a
+    # field with a hedge, flowers and two guards -- was opened on 2026-08-16 and
+    # is a scene, and the guard refuses it at 0.740. Nobody has found an
+    # image-only rule that passes it and still refuses a costume turnaround.
+    # WHOEVER FIXES THAT WILL BREAK THIS TEST. That is the intent: change it
+    # deliberately, with a sweep behind you, not by nudging a threshold.
+    flat = be.measure_plate(TWO_MATERIALS)
+    colour = be.measure_plate_colour(TWO_MATERIALS)
+    check("two materials at one lightness read as flat", flat >= be.PLATE_FLAT_MAX)
+    check("but they are NOT one colour", colour < be.PLATE_FLAT_MAX)
+    problems = be.plate_problems(_spec(), fetch=lambda p: TWO_MATERIALS)
+    check("so a real scene is refused today", len(problems) == 1)
+    check("and the refusal warns that this is what a horizon looks like",
+          "LOOK BEFORE YOU BELIEVE THIS ONE" in problems[0])
+    check("and prints the colour number it did not decide on",
+          ("%.3f" % colour) in problems[0])
+
+
+def test_the_two_card_refusals_are_reported_as_one_signal():
+    plate = ["BLOCKED: ... looks like a CHARACTER CARD, ..."]
+    refs = ["BLOCKED: ... from the COSTUME CARD reference set refs-x ..."]
+    note = be.correlation_note(plate, refs)
+    check("both card refusals -> the note fires", len(note) == 1)
+    check("and it says one signal, not two", "ONE SIGNAL, NOT TWO" in note[0])
+    check("flatness alone -> no note", be.correlation_note(plate, []) == [])
+    check("refs alone -> no note", be.correlation_note([], refs) == [])
+    # The unfetchable and unresolved refusals really are independent of the
+    # border statistic -- "the bytes are not here" and "the spec is not here" --
+    # and must not be labelled as sharing it.
+    check("unfetchable + unresolved are NOT called one signal",
+          be.correlation_note(["BLOCKED: could not fetch this job's --src"],
+                              ["BLOCKED: could not work out which job produced"]) == [])
+
+
+def test_a_stills_job_is_never_plate_checked():
+    # A figure on blank paper is the CORRECT output of the identity lane. Only
+    # i2v jobs are checked, or the shared queue closes on everybody else.
+    stills = {"id": "t", "steps": [{"name": "crop", "argv": ["p", "--src", "x.png"]}]}
+    check("no ltx_i2v in argv -> not checked",
+          be.plate_problems(stills, fetch=lambda p: BLANK_PAPER) == [])
+
+
+def test_a_picture_that_could_not_be_fetched_is_refused_not_waved_through():
+    problems = be.plate_problems(_spec(), fetch=lambda p: None)
+    check("unfetchable is a refusal", len(problems) == 1)
+    check("and it says 'could not check' is not 'fine'",
+          "could not fetch" in problems[0])
+    check("a box-only --src has no results-branch path",
+          be.results_branch_path(r"c:\banyan-farm\plates-local\x.png") is None)
+
+
 def main():
     print("box_enqueue payload-collision guard")
     test_the_overwrite_that_happened_is_refused()
@@ -282,10 +425,18 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_the_guard_refuses_before_anything_is_written(td)
     print()
+    print("box_enqueue plate guard")
+    test_blank_paper_is_refused_and_says_so()
+    test_a_card_on_a_tinted_ramp_stays_refused()
+    test_the_two_material_border_is_the_KNOWN_FALSE_POSITIVE()
+    test_the_two_card_refusals_are_reported_as_one_signal()
+    test_a_stills_job_is_never_plate_checked()
+    test_a_picture_that_could_not_be_fetched_is_refused_not_waved_through()
+    print()
     if FAILURES:
         print("✗ %d failure(s): %s" % (len(FAILURES), ", ".join(FAILURES)))
         return 1
-    print("✓ all box_enqueue collision cases passed")
+    print("✓ all box_enqueue collision and plate-guard cases passed")
     return 0
 
 

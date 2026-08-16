@@ -35,6 +35,17 @@ the three failures this script exists to prevent:
      refs_problems. Neither guard replaces the other: refs is exact but is a
      denylist, flatness is fuzzy but sees blank paper from any source.
 
+     THEY ARE NOT INDEPENDENT CONFIRMATIONS OF EACH OTHER, and until 2026-08-16
+     this file said they were ("two independent readings of the same failure").
+     CARD_REFS_DENYLIST was CHOSEN by scoring every plate on the results branch
+     with border_flatness and keeping the sets whose plates scored >=0.62 -- the
+     table under refs_problems is that thresholding, written down. So when both
+     fire on one job you are reading ONE measurement twice, not two witnesses
+     agreeing, and the second refusal adds no evidence the first did not have.
+     Both still run: a refs refusal names a fact a lane can act on (re-cut from
+     another set) and reaches plates the picture check misses. But the output
+     now says plainly when the two are the same signal.
+
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml [--dry-run]
     python3 pipeline/box_enqueue.py --list        # what is queued right now
 
@@ -226,6 +237,39 @@ def to_job(spec: dict) -> dict:
 # that reads "a scene" and skips opening the init is doing exactly what cost
 # nineteen renders.
 #
+# A KNOWN FALSE POSITIVE, opened and confirmed by eye on 2026-08-16:
+# farm-out/ep2-b10-patrol-scene-r2-0813/10-no-form-ipa-r0-w010-s1.png reads
+# 0.740 and IS A SCENE -- a guard in a long coat holding a bark board in a mown
+# field, a clipped hedge behind him, yellow flowers in the foreground grass, and
+# a SECOND guard in the mid-ground. It refuses because its outer band is flat
+# sky above and flat grass below, two materials at nearly the same lightness.
+# It is the --src of twelve i2v specs (eight on beat 06, two on 09, two on 10),
+# all of which this guard is holding.
+#
+# COLOUR FLATNESS WAS TRIED AS THE FIX AND REJECTED ON THE POPULATION, which is
+# the part worth keeping. On the labelled wave it looked decisive: the six cards
+# barely move (min 0.745) while every scene drops and this plate drops to 0.461,
+# so 0.62 still sits in the gap and the threshold would not have had to move.
+# Then it was swept across all 2510 pngs on the results branch. Swapping the
+# statistic flips 36 plates, all of them from BLOCK to PASS and none the other
+# way -- 22 distinct pictures, and a contact sheet of those 22 shows at least
+# fourteen are real cards and costume turnarounds, including a two-view
+# front-and-back character sheet (ep2-guard-sheet-b-r2-0814, 0.685 -> 0.608).
+# The reason is plain once seen: a card on a pale COLOUR GRADIENT is flat in
+# lightness and not flat in colour, so colour flatness releases exactly the
+# cards whose paper is tinted. Top-vs-bottom hue split and border colour spread
+# were measured too and interleave worse (cards span 0..206 on strip-median
+# distance, scenes 21..186).
+#
+# So the statistic stays as it was and the number is REPORTED, not obeyed:
+# border_colour_flatness runs on every refusal and a low value is the signature
+# of a two-material border -- the case above. Nobody has found an image-only
+# rule that passes that plate and still refuses a costume sheet. Do not go
+# looking for one by moving PLATE_FLAT_MAX; the sweep is in
+# review/ep2-picks/plate-colour-sweep-0816.tsv -- both numbers for all 2510
+# plates, with the 22 flipped pictures listed and labelled by eye in its header
+# -- and any candidate has to be run against it before it is believed.
+#
 # THE UNFETCHABLE REFUSAL IS THE PART THAT HAS NOT FAILED, and it earned its
 # keep on its first outing: it caught a silently-swapped plate whose path was
 # built from the new beat's directory and the old beat's filename. "I could not
@@ -235,6 +279,8 @@ BOX_OUT_PREFIX = "c:\\banyan-farm\\courier-box\\farm-out\\"
 PLATE_FLAT_MAX = 0.62      # midpoint of the 0.489 -> 0.750 gap; see above
 PLATE_BAND = 0.08          # outer fraction of the short side sampled as "border"
 PLATE_TOL = 8              # luminance levels either side of the border median
+PLATE_COLOUR_TOL = 6       # RGB levels either side of the border median COLOUR;
+                           # diagnostic only, decides nothing -- border_colour_flatness
 PLATE_SIZE = (704, 1280)   # what the box crops to, so we measure what LTX sees
 
 
@@ -326,6 +372,36 @@ def border_flatness(im) -> float:
     return sum(1 for v in vals if abs(v - med) <= PLATE_TOL) / len(vals)
 
 
+def border_colour_flatness(im) -> float:
+    """The same band, asked whether it is one COLOUR rather than one BRIGHTNESS.
+
+    Fraction of border pixels within PLATE_COLOUR_TOL of the band's median
+    colour in ALL THREE channels, no autocontrast (autocontrast per channel
+    would move hues, which is the one thing this must not do).
+
+    IT DECIDES NOTHING, and that is a measured decision rather than caution --
+    see the sweep note above plate_problems. It is here because it is the one
+    cheap statistic that is LOW exactly where border_flatness's known false
+    positive lives: a border split between two materials of the same lightness,
+    flat sky over flat grass, reads 0.740 flat and 0.461 colour-flat. A blank
+    paper card reads high on both (the six cards of the 2026-08-14 wave: 0.750 ->
+    0.745, 0.828 -> 0.825, 0.836 -> 0.834, 0.909 -> 0.904, 0.913 -> 0.904,
+    0.968 -> 0.966). So a refusal with a LOW colour number is the shape a
+    two-material border makes, and the refusal text says to go and look.
+    """
+    import statistics
+
+    px = im.convert("RGB").load()
+    w, h = im.size
+    band = max(2, int(min(w, h) * PLATE_BAND))
+    vals = [px[x, y] for y in range(0, h, 2) for x in range(0, w, 2)
+            if x < band or x >= w - band or y < band or y >= h - band]
+    med = [statistics.median([c[i] for c in vals]) for i in range(3)]
+    return sum(1 for c in vals
+               if all(abs(c[i] - med[i]) <= PLATE_COLOUR_TOL
+                      for i in range(3))) / len(vals)
+
+
 def measure_plate(blob: bytes) -> float:
     """Flatness of an image's bytes, cropped as the box crops it."""
     import io
@@ -333,6 +409,15 @@ def measure_plate(blob: bytes) -> float:
     from PIL import Image
 
     return border_flatness(cover_crop(Image.open(io.BytesIO(blob))))
+
+
+def measure_plate_colour(blob: bytes) -> float:
+    """Colour flatness of an image's bytes, cropped as the box crops it."""
+    import io
+
+    from PIL import Image
+
+    return border_colour_flatness(cover_crop(Image.open(io.BytesIO(blob))))
 
 
 def plate_acks(spec: dict) -> list:
@@ -436,16 +521,41 @@ def plate_problems(spec: dict, fetch=None) -> list:
         print("  plate    flatness %.3f of %.2f reads as a CARD, waived by the spec "
               "-- %s" % (flat, PLATE_FLAT_MAX, ack))
         return []
-    return ["BLOCKED: the picture this job would animate looks like a CHARACTER CARD, "
-            "not a scene -- a figure on flat blank paper with no location.\n"
-            "      border flatness %.3f, and %.2f or above is blank paper\n"
-            "      --src %s\n"
-            "      Point the job at a real scene plate and enqueue it again. Do not "
-            "just re-run it: an animated reference sheet is worthless footage that "
-            "still scores near the TOP on frame-difference, which is how six of these "
-            "got past everything on 2026-08-14. If it really is a deliberate macro or "
-            "close-up, say so in the spec: plate_ack: \"card: <why>\"."
-            % (flat, PLATE_FLAT_MAX, src)]
+    try:
+        colour = measure_plate_colour(blob)
+    except Exception:
+        colour = None
+    hint = ""
+    if colour is not None and colour < PLATE_FLAT_MAX:
+        hint = ("      LOOK BEFORE YOU BELIEVE THIS ONE. The same band is only %.3f "
+                "flat in COLOUR\n"
+                "      (fraction within +/-%d RGB levels of its median colour), and "
+                "blank paper is\n"
+                "      flat in both -- the six cards this threshold was cut from read "
+                "0.745 to 0.966\n"
+                "      on the colour statistic too. Flat in lightness and NOT flat in "
+                "colour is what a\n"
+                "      border made of two materials looks like: sky above, grass below, "
+                "same lightness,\n"
+                "      different hue. That is a real scene, and this guard refuses one "
+                "of them today\n"
+                "      (see the KNOWN FALSE POSITIVE note in this file). The colour "
+                "number decides\n"
+                "      nothing -- swapping to it releases costume sheets -- it only "
+                "tells you to open the\n"
+                "      picture, which is the only thing that settles it.\n"
+                % (colour, PLATE_COLOUR_TOL))
+    return [("BLOCKED: the picture this job would animate looks like a CHARACTER CARD, "
+             "not a scene -- a figure on flat blank paper with no location.\n"
+             "      border flatness %.3f, and %.2f or above is blank paper\n"
+             % (flat, PLATE_FLAT_MAX))
+            + hint
+            + ("      --src %s\n"
+               "      Point the job at a real scene plate and enqueue it again. Do not "
+               "just re-run it: an animated reference sheet is worthless footage that "
+               "still scores near the TOP on frame-difference, which is how six of these "
+               "got past everything on 2026-08-14. If it really is a deliberate macro or "
+               "close-up, say so in the spec: plate_ack: \"card: <why>\"." % src)]
 
 
 # --------------------------------------------------------------------------
@@ -505,6 +615,23 @@ def plate_problems(spec: dict, fetch=None) -> list:
 # deterministic but blind to an unlisted set, flatness is a heuristic but sees
 # blank paper whoever drew it. Neither is a substitute for the other and neither
 # is a substitute for opening the init.
+#
+# BUT THEY ARE NOT INDEPENDENT WITNESSES, and this file used to imply they were.
+# Read the table above again: the denylist IS border_flatness, thresholded at
+# 0.62 and grouped by producing job. The three sets are on it BECAUSE their
+# plates score high on the very statistic the plate check reports. So when both
+# refusals fire on one job, nothing has been confirmed twice -- one measurement
+# has been printed twice, once per pixel and once per producing job. Re-derived
+# 2026-08-16 over all 2510 pngs on the branch and the table reproduces:
+# charref-guards-r5 63 of 72 flagged, guards-chosen 44 of 96, goblin-frozen 250
+# of 312, against twoinfield 0 of 144 and goblin-approved 0 of 192.
+#
+# THE COST OF THAT IS ON THE BRANCH RIGHT NOW. refs-charref-guards-r5-0812 drew
+# farm-out/ep2-b10-patrol-scene-r2-0813/10-no-form-ipa-r0-w010-s1.png, which was
+# opened on 2026-08-16 and is a field, a hedge, flowers and two guards -- a
+# scene. Both guards refuse it, and the refusals agreeing is not evidence,
+# because the set was listed for scoring what that plate also scores.
+# correlation_note prints that under any job where both fire.
 JOBS_DIR = os.path.join(REPO, "pipeline", "jobs")
 
 # The reference sets that produce costume identity cards. EXPLICIT, because no
@@ -641,7 +768,14 @@ def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
             "%d sets and no name pattern would do (refs-guards-chosen-0814 carries no "
             "'charref' tell). A card set nobody has added here yet will slip straight "
             "past this check, as will a producer that named no refs. A pass is not a "
-            "clearance -- open the init."
+            "clearance -- open the init.\n"
+            "      AND THE SET IS NOT ALL CARDS. It was listed for a HIT RATE on "
+            "border flatness, not because every plate it drew is a costume sheet: "
+            "refs-charref-guards-r5-0812 also drew "
+            "ep2-b10-patrol-scene-r2-0813/10-no-form-ipa-r0-w010-s1.png, opened "
+            "2026-08-16, which is a field with a hedge, flowers and two guards. If "
+            "this is that plate, this refusal is wrong and so is the flatness one -- "
+            "for the same reason, because they are the same measurement."
             % (job_id, ", ".join(bad), src, len(CARD_REFS_DENYLIST))]
 
 
@@ -666,14 +800,38 @@ def gate_checks(spec: dict, job: dict) -> list:
                             "SystemExit the daemon, not just fail the job" % node)
     elif job["needs_gpu"]:
         problems.append("gpu job names no node, so approval cannot be checked")
-    # Two independent readings of the same failure, and both stay. The plate
-    # check runs first because its unfetchable refusal is the one that has never
-    # been wrong; the refs check then asks what the picture was drawn FROM. A
-    # job can honestly trip both -- a plates-local --src is unfetchable AND
-    # untraceable -- and hearing both reasons is the point of having two.
-    problems += plate_problems(spec)
-    problems += refs_problems(spec)
+    # Two readings, and both stay -- but they are NOT independent, and saying so
+    # is the whole of this block. The plate check runs first because its
+    # unfetchable refusal is the one that has never been wrong; the refs check
+    # then asks what the picture was drawn FROM. A job can honestly trip both.
+    # What it must never do is read that as corroboration: the denylist the refs
+    # check consults was built by scoring plates with the plate check's own
+    # border_flatness, so "card" twice is one statistic twice. correlation_note
+    # appends that sentence whenever both card refusals fire together.
+    plate = plate_problems(spec)
+    refs = refs_problems(spec)
+    problems += plate + refs + correlation_note(plate, refs)
     return problems
+
+
+def correlation_note(plate: list, refs: list) -> list:
+    """Say it out loud when the two card refusals are one signal, not two.
+
+    Only when BOTH fired on the card question. The unfetchable and unresolved
+    refusals are genuinely independent of the border statistic -- one is "the
+    bytes are not here", the other "the producing spec is not here" -- and must
+    not be tarred with this.
+    """
+    if not (any("CHARACTER CARD" in p for p in plate)
+            and any("COSTUME CARD reference set" in p for p in refs)):
+        return []
+    return ["NOTE: the two refusals above are ONE SIGNAL, NOT TWO. The reference "
+            "sets in CARD_REFS_DENYLIST were selected by scoring plates with the "
+            "same border_flatness the first refusal reports, at the same 0.62. "
+            "So the refs check agreeing with the flatness check is not "
+            "corroboration -- it is the same measurement, rolled up by producing "
+            "job. Two agreeing guards would be a reason to skip opening the "
+            "picture; these are not. Open it."]
 
 
 def norm_dest(dest: str) -> str:
