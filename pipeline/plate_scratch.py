@@ -512,11 +512,172 @@ DRAFTS = {
         ),
         "seed": 20260814,
     },
+    20: {
+        "slug": "evidence",
+        # THIS BAR CERTIFIES COLOUR AND NOTHING ELSE, and saying so in advance
+        # is the point. A lane on 2026-08-16 confessed to a bar that certified
+        # a prop's MATERIAL while never mentioning its SHAPE and scored 8/12
+        # passes with 0/12 usable. So: this bar does not look at the goblin's
+        # age or proportions, the species of the branch, the direction of his
+        # gaze, the count, or the composition. A pass here SHIPS NOTHING.
+        "done_when": (
+            "COLOUR ONLY. A blind cold reader -- a fresh agent given the frame "
+            "and nothing else, no context and no prompt text, asked `what "
+            "colour is the fruit?` -- must answer with a word in the PURPLE "
+            "family (purple, violet, aubergine, eggplant-purple, plum-purple, "
+            "indigo, magenta-purple). PASS requires all of: C1 the reader "
+            "finds exactly one fruit in frame at all -- no fruit is a FAIL, "
+            "not a pass, because there is then nothing whose colour was "
+            "tested; C2 the reader's colour word is in the purple family; C3 "
+            "the answer is NOT hedged toward red or brown -- `purplish-red`, "
+            "`reddish purple`, `brownish purple` and `maroon-purple` are all "
+            "FAIL, because the founder's test is whether it reads purple to a "
+            "naive eye, not whether purple is arguable; C4 the reader is "
+            "asked BEFORE being told anything about figs, canon or this lane. "
+            "Named in advance, the failure modes: Q1 RED SURVIVES (reader "
+            "says red, dark red, maroon, burgundy, crimson, wine, brown, "
+            "russet) -- the founder's exact rejection, and the next lever "
+            "would be a NEGATIVE naming the failure colour, not more positive "
+            "adjectives; Q2 BLACK COLLAPSE (reader says black) -- overshoot, "
+            "`deep` is the suspect token; Q3 EGGPLANT (reads as a vegetable) "
+            "-- already spent on beat 18, do not re-buy it; Q4 GLOWING ORB "
+            "(the fault that came back 4 of 4 on the 08-12 round) -- colour "
+            "of a light source is not colour of a fruit; Q5 NO FRUIT or more "
+            "than one; Q6 THE COLOUR LANDS AND THE BEAT STILL DOES NOT -- "
+            "expected, and explicitly NOT a pass for beat 20."
+        ),
+        "why": (
+            "THE FOUNDER RULED THE FRUIT PURPLE, 2026-08-16: `the fruit "
+            "should be purple. it should not be that hard to make it "
+            "purple.` He is right, and the reason is mechanical rather than "
+            "linguistic. The four seeds he rejected "
+            "(farm-out/ep2-b20-idfix/20-evidence-wave1-s*.png, task "
+            "ep2-b20-idfix-0812, 2026-08-12) were drawn from draft variant "
+            "`authored_b20_refresh`, whose prompt -- read out of the frame's "
+            "own sidecar, not guessed -- says `raises a RIPE FIG`. There is "
+            "no colour word in it anywhere, and its negative bans glowing "
+            "eyes, glowing orb, dark and night but nothing red or brown. "
+            "BEAT 20 WAS NEVER ASKED FOR PURPLE. Measured on the real CLIP "
+            "tokenizer, that prompt was 73/77 and its negative 75/77 -- "
+            "nothing was truncated, so the missing colour was missing from "
+            "the text, not lost in transit. The purple canon landed 08-13/14 "
+            "into three beat-20 drafts (authored_b20_plate 74/77, _scene "
+            "73/77, _adult 76/77, all three carrying `deep purple-violet "
+            "fig, green at its neck, matte` INTACT in the positive) and not "
+            "one of them has ever been rendered -- farm-out/ holds "
+            "ep2-b20-idfix, -idfix-r2 and -ipa-frozen-0812 and no "
+            "ep2-b20-plate-0814. That purple is reachable at all on this "
+            "exact recipe is already evidenced: SAMPLE-b18-purple-fruit-0815"
+            ".png, same checkpoint, same 832x1216x40 on MPS, `One small "
+            "round purple fruit`, came back unmistakably purple. So r1 here "
+            "is the CONTROL -- the failing prompt, byte for byte -- and r2 "
+            "changes exactly one noun phrase in it."
+        ),
+        # r1 = THE CONTROL. Byte-identical to the `prompt:` field of
+        # farm-out/ep2-b20-idfix/20-evidence-wave1-s3.yaml, the cell the
+        # colour card labels THE PICK. It is here so r2 has something to be
+        # one variable away from: the four rejected frames were drawn on CUDA
+        # with an IP-Adapter reference this Mac does not have, so they cannot
+        # serve as the control for an MPS render and pretending otherwise
+        # would make the comparison unattributable.
+        "prompt": (
+            "1boy, a small goblin boy, green skin, bald head, patchwork "
+            "cloak, solo, in a sunny grassy field, raises a ripe fig in both "
+            "hands in front of him like evidence, huge eyes widening as he "
+            "looks up at a bare branch above. Warm amber afternoon light, "
+            "cinematic lighting, detailed, newest, masterpiece, best "
+            "quality, very aesthetic"
+        ),
+        "negative": (
+            "photorealistic, text, girl, child, glowing eyes, glowing orb, "
+            "dark, night, dusk, sunset, dim lighting, moody lighting, low "
+            "key, shadows dominant, photorealism, leaf on head, plant girl, "
+            "alraune, monster girl, flower on head, head wreath, hair "
+            "ornament, leaf hair ornament, plant hair, female goblin, elf"
+        ),
+        # The seed of the rejected pick (s3 of ep2-b20-idfix-0812). It will
+        # NOT reproduce that image here -- a CPU generator on MPS without the
+        # IP-Adapter is a different draw -- and it is used only so the three
+        # arms below share one seed and differ by their text alone.
+        "seed": 20263739,
+    },
 }
 
 # Revisions. ONE VARIABLE PER REVISION, and the reason is written down before it
 # renders. `--rev N` merges over the base draft above.
 REVS = {
+    (20, 2): {
+        # THE ONE VARIABLE, and it is one noun phrase: `a ripe fig` becomes
+        # `a deep purple-violet fig`. Every other byte of the positive, the
+        # whole negative and the seed are identical to r1. If r1 comes back
+        # red-brown (as its CUDA siblings did, 4 of 4) and r2 comes back
+        # purple, then colour is reachable by wording on this beat, the nine
+        # rounds of fig work were never the problem here, and beat 20's fix
+        # is to render a draft that already exists rather than to invent
+        # vocabulary. If BOTH come back red, the wording lever is dead on
+        # this composition and the next instrument is a negative that names
+        # the failure colour -- which no beat-20 negative has ever done.
+        #
+        # WHY NOT THE FULL CANON PHRASE HERE. `deep purple-violet fig, green
+        # at its neck, matte` is the canon and it is what r3 sends, but
+        # dropped into r1's sentence it measures over 77 and the tail would
+        # go silently. Two tokens of colour is the smallest edit that asks
+        # the question, and a smaller edit is a cleaner attribution.
+        "prompt": (
+            "1boy, a small goblin boy, green skin, bald head, patchwork "
+            "cloak, solo, in a sunny grassy field, raises a deep "
+            "purple-violet fig in both hands in front of him like evidence, "
+            "huge eyes widening as he looks up at a bare branch above. Warm "
+            "amber afternoon light, cinematic lighting, detailed, newest, "
+            "masterpiece, best quality, very aesthetic"
+        ),
+        # Restated BYTE FOR BYTE, not inherited. See the merge-site comment
+        # in main(): a rev merges over DRAFTS[beat], never over the rev
+        # before it, and a rev naming only a prompt would silently pick up a
+        # negative nobody re-read.
+        "negative": (
+            "photorealistic, text, girl, child, glowing eyes, glowing orb, "
+            "dark, night, dusk, sunset, dim lighting, moody lighting, low "
+            "key, shadows dominant, photorealism, leaf on head, plant girl, "
+            "alraune, monster girl, flower on head, head wreath, hair "
+            "ornament, leaf hair ornament, plant hair, female goblin, elf"
+        ),
+    },
+    (20, 3): {
+        # NOT a variable on r2 -- this is the SHIP CANDIDATE, and it is here
+        # so that a colour pass points at a string production can actually
+        # send. It is `authored_b20_plate` from pipeline/wave-drafts.yaml AS
+        # THE PIPELINE WOULD SEND IT: the exact output of
+        # render_wave_goblin.check() -> sd_prompt.compress()/beat_negative()
+        # with the goblin slot filled by goblin_ipa_sample's GOBLIN_DEF
+        # (`green skin, bald head`), measured on the real CLIP tokenizer at
+        # positive 74/77 and negative 77/77. Nothing here is authored by this
+        # lane; wave-drafts.yaml is UNTOUCHED.
+        #
+        # Its negative sits at EXACTLY 77/77 with zero headroom, which is
+        # recorded because it is the trap the next lane will walk into: one
+        # more word in that draft and its tail leaves in silence.
+        #
+        # It differs from r2 in several ways at once (scene clause, framing,
+        # the full canon fruit phrase, a different negative), so it is NOT
+        # evidence about any single lever. r2 is the mechanism test; this is
+        # the candidate.
+        "prompt": (
+            "1boy, a small goblin boy, green skin, bald head, solo, in green "
+            "summer grass, a treeline and pale sky behind, raises a deep "
+            "purple-violet fig, green at its neck, matte, in both hands like "
+            "evidence. Medium full shot, bright morning light, cinematic "
+            "lighting, detailed, newest, masterpiece, best quality, very "
+            "aesthetic"
+        ),
+        "negative": (
+            "photorealistic, 3d render, abstract, text, watermark, girl, "
+            "child, hair, wig, armor, jewelry, ornament, long eyelashes, "
+            "lipstick, dark, night, photorealism, leaf on head, plant girl, "
+            "alraune, monster girl, flower on head, head wreath, hair "
+            "ornament, leaf hair ornament, plant hair, female goblin, elf"
+        ),
+    },
     (8, 2): {
         # r1 came back UNUSABLE and in an instructive way: a colossal
         # two-headed goblin filling the upper half as a piece of SCENERY, and
