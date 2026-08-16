@@ -331,6 +331,37 @@ def load_specs():
     return index, skipped
 
 
+_GATE_CORRECTION = re.compile(r"^gate_[A-Z][A-Z_0-9]*_\d{4}$")
+
+
+def gate_text(beat_entry):
+    """A beat's `gate:` string, carrying its dated correction if one exists.
+
+    THE FAILURE THIS CLOSES, 2026-08-16. gate-evidence.yaml's house style — the
+    same one done-definitions.yaml and steward-picks-0815.yaml use — is that a
+    superseded line is NEVER erased: it is left standing and a dated
+    `<key>_CORRECTION_MMDD` sibling is written beside it. This function used to
+    read `gate` alone, so six rows saying "GATED - guard cast unapproved (his
+    call)" were copied verbatim into queue-history.json and rendered on /queue
+    (build_queue.py reads `det.verdict.gate`) — a block the founder lifted on
+    2026-08-16 ("the cast stands as drawn"), still being published by the site.
+    Hand-editing the JSON is not the fix: its own `_meta.writer` says do not,
+    and the next run would put the stale text straight back. So the reader
+    carries the correction forward instead, for any subject, not just guards.
+    Nothing in the yaml is rewritten; the marker points at the key to read.
+    """
+    gate = beat_entry.get("gate")
+    if not gate:
+        return gate
+    corr = sorted(k for k in beat_entry
+                  if isinstance(k, str) and _GATE_CORRECTION.match(k))
+    if not corr:
+        return gate
+    return ("%s -- SUPERSEDED, do not act on it: see `%s` in "
+            "review/ep2-picks/gate-evidence.yaml"
+            % (gate, "`, `".join(corr)))
+
+
 def load_verdicts():
     """(node,beat) -> beat state/note; beat -> gate; beat -> pick. Missing
     files are stated, not guessed."""
@@ -350,7 +381,7 @@ def load_verdicts():
     try:
         d = yaml.safe_load(ge.read_text(encoding="utf-8"))
         for b in d.get("beats") or []:
-            gates[int(b["beat"])] = b.get("gate")
+            gates[int(b["beat"])] = gate_text(b)
     except (OSError, yaml.YAMLError, KeyError, TypeError, ValueError) as e:
         notes.append(f"gate-evidence unreadable: {e.__class__.__name__}")
     dd = REPO / "review" / "ep2-picks" / "done-definitions.yaml"

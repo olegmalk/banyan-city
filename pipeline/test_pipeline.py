@@ -9449,6 +9449,47 @@ def test_the_worker_refuses_before_it_loads_a_model():
           "raise SystemExit(msg)" in src)
 
 
+def test_a_corrected_gate_never_reaches_the_queue_page_uncorrected():
+    # THE FAILURE, 2026-08-16. gate-evidence.yaml never erases a superseded
+    # line: it leaves it standing and writes a dated `gate_CORRECTION_MMDD`
+    # sibling beside it. queue_history.py read `gate` alone, so six rows saying
+    # "GATED - guard cast unapproved (his call)" were copied into
+    # queue-history.json and rendered on /queue (build_queue.py reads
+    # det.verdict.gate) — a block the founder lifted the same day. The reader
+    # must carry the correction, because the JSON is machine-written and a
+    # hand-edit would be overwritten by the next run.
+    import queue_history as qh
+    plain = {"beat": "02", "gate": "ships under the two-round rule"}
+    check("an uncorrected gate is passed through untouched",
+          qh.gate_text(plain) == "ships under the two-round rule")
+    corrected = {"beat": "05",
+                 "gate": "GATED - guard cast unapproved (his call)",
+                 "gate_CORRECTION_0816": "the cast stands as drawn"}
+    out = qh.gate_text(corrected)
+    check("the superseded text is still there, not erased",
+          out.startswith("GATED - guard cast unapproved (his call)"))
+    check("and it is marked superseded", "SUPERSEDED" in out)
+    check("pointing at the key that holds the correction",
+          "gate_CORRECTION_0816" in out)
+    check("a missing gate stays missing rather than becoming a string",
+          qh.gate_text({"beat": "03"}) is None)
+    # A lowercase or undated sibling is NOT a correction: the convention is a
+    # dated, shouted key, and a loose match would silently mute real gates.
+    check("an undated sibling does not mute the gate",
+          qh.gate_text({"beat": "06", "gate": "GATED - x",
+                        "gate_note": "y"}) == "GATED - x")
+    # The live file must actually carry the six corrections, or this reader is
+    # correct and the record is still wrong.
+    import yaml
+    ge = yaml.safe_load(
+        (REPO / "review" / "ep2-picks" / "gate-evidence.yaml").read_text(encoding="utf-8"))
+    stale = [str(b["beat"]) for b in ge["beats"]
+             if "guard cast unapproved" in str(b.get("gate") or "")
+             and not any(str(k).startswith("gate_") and str(k) != "gate"
+                         for k in b)]
+    check("no guard-cast row is left without its dated correction", not stale)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -9722,6 +9763,7 @@ def main():
         test_only_content_addressed_blobs_are_compared_to_their_names(td)
     test_a_latent_that_never_contracted_is_reported_as_noise()
     test_the_worker_refuses_before_it_loads_a_model()
+    test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

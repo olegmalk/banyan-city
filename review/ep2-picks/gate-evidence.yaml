@@ -3,6 +3,63 @@ counted_from: published mp4s on origin/farm-results-rtx5090 and the live box que
 question: is anything left that is not gated on his approvals?
 answer: No. Every one of the 21 beats is either rendering, gated on his guard approval, gated on the fig
   reference route, or shipping under the two-round rule.
+answer_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16. The `answer` above is left standing unedited and is WRONG in its "gated on his
+  guard approval" clause, as are the six `gate:` rows below that read "GATED - guard cast unapproved (his
+  call)" (beats 05, 06, 07, 09, 10, 11). Nothing in this file is gated on a guard approval any more. See
+  `guard_cast_CORRECTION_0816` immediately below, and the dated `gate_CORRECTION_0816` on each of the six
+  rows. The six rows and this answer are NOT deleted: the disagreement between them and the correction is
+  the record of how six beats stayed blocked for two days on a decision that already existed.
+guard_cast_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16 — THE GUARD CAST GATE IS CLOSED AND THIS FILE WAS THE LAST RECORD STILL
+  ASSERTING IT.
+
+  THE APPROVAL, in the founder's own words, all three re-verified against the session transcript at the
+  timestamps given rather than copied from a summary: 2026-08-14T16:45:25Z, "1 for the guards. although
+  it only shows one guard.. front and back" — guard A, his #1, frozen as the reference; 2026-08-15T08:39:13Z,
+  "ill take the guard b you chose. on a sidenote, there is a clipboard floating behind him." — guard B =
+  seed s2 of the round derived from A (ep2-guard-b-derived-0814); and 2026-08-16, "the cast stands as
+  drawn" — guard A and guard B exactly as they appear on review/ep2-picks/sheets/guard-cast-0816.jpg. He
+  was asked on that card, specifically and by name, about guard A's unnamed WIRE-RIM GLASSES, so "as
+  drawn" answers that too: THE GLASSES STAY, and every guard prompt that shows guard A's face must say so
+  rather than leave the render to invent or drop them. Guard A: dark-haired, tan wrap tunic, wide white
+  waist sash, wire-rim glasses. Guard B: blond, cream short-sleeve shirt, white sash worn diagonally over
+  the shoulder, broad dark-brown wrap skirt — and the floating clipboard he named comes off before the
+  reference set is frozen. "lets do the guards on my taste" (2026-08-14) was never revoked; it was MET.
+
+  WHERE THE APPROVAL LIVES, and it is not this file: review/inbox.yaml, the `resolved:` entries on the
+  cards whose url is /review/ep2-picks/sheets/guard-picker-0814.jpg ("ANSWERED IN BOTH HALVES"),
+  /review/ep2-picks/sheets/guard-pair-0815.jpg ("ACCEPTED, WITH ONE FAULT NAMED... the veto window is
+  closed") and /review/ep2-picks/sheets/guard-cast-0816.jpg ("THE CAST STANDS AS DRAWN"). Corroborating
+  corrections already written elsewhere: review/ep2-picks/done-definitions.yaml `guards_CORRECTION_0816`
+  (and `beats.11.blocked_on_0815_CAST_HALF_DISCHARGED_0816`, `shipping_rule.note_on_09_CORRECTION_0816`),
+  review/ep2-picks/steward-picks-0815.yaml `the_second_gate_CORRECTION_0816`, and the 2026-08-16 STATE.md
+  entry. NO RECORD MAY ANY LONGER DESCRIBE THIS CAST AS UNAPPROVED OR AWAITING A VETO.
+
+  WHAT THIS DOES NOT DO, AND NO ROW BELOW BECOMES FIREABLE BECAUSE OF IT. His word releases the WORK of
+  drawing staged plates of the approved pair; it does not release a render. BOTH MEN EXIST ONLY AS COSTUME
+  CARDS ON A GREY VOID — no staged plate of these two doing anything exists yet, which is exactly why
+  05, 06, 07, 09, 10 and 11 were animated off costume cards and cannot be cut at any quality of motion.
+  AND EVERY GUARD PLATE ON DISK IS MIS-CAST: across those beats, 0 of 17 plate prompts name any approved-cast
+  attribute and 14 of 17 ask for `bald` or `bare heads`, which neither approved guard is. A lane is
+  redrawing those plates now. The honest per-beat state is therefore "cast gate CLOSED, staged plate still
+  MISSING", never "unblocked". DO NOT FIRE MOTION OFF A COSTUME CARD, and DO NOT write a `plate_ack`
+  waiver to get past box_enqueue's plate guard — that is the defect that produced beat 08's unusable clips.
+
+  SEPARATE BLOCKS THAT ARE STILL LIVE, named here so this correction is not misread as a green light.
+  (a) BEATS 06, 09 AND 10 have specs refused by box_enqueue's BORDER-FLATNESS plate guard. That refusal is
+  CORRECT AND STAYS. A proposed swap to a colour-flatness measure was rejected after a sweep of all 2510
+  plates on the results branch flipped 36 rows all one way, 14 of them real character cards — the swap
+  would have released costume sheets, not scenes. (b) BEAT 08 needs a two-figure guard-plus-goblin
+  reference and nothing on disk has a guard and a goblin together; its row below reads "ships under the
+  two-round rule", which is a separate staleness this correction does not repair — see
+  review/ep2-picks/steward-picks-0815.yaml `status_CORRECTION_0816`. (c) BEAT 11's standing take is a
+  BROKEN TAKE (done-definitions.yaml `beats.11.status_override_0815`); it needs a new one, and that new
+  one still waits on a staged plate.
+
+  FILED UNDER THE PROPAGATION RULE: an approval is recorded in review/inbox.yaml AND corrected in every
+  record asserting the block. Nothing was resolved on the founder's behalf here, no spec was authored or
+  fired, the render queue was not touched, and no `plate_ack` waiver was written.
 checks_i_ran_rather_than_asserted:
 - 'confirmation seeds: every beat''s newest round has TWO seeds except 14, 19 and 20 - and those three
   twins are IN FLIGHT right now, so there is nothing to author'
@@ -37,16 +94,45 @@ beats:
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED:
+    the founder cast guard A on 2026-08-14 ("1 for the guards"), guard B on 2026-08-15 ("ill take the
+    guard b you chose") and ratified both on 2026-08-16 ("the cast stands as drawn", glasses included).
+    The approval lives in review/inbox.yaml on the cards guard-picker-0814.jpg, guard-pair-0815.jpg and
+    guard-cast-0816.jpg; see `guard_cast_CORRECTION_0816` at the top of this file. THIS BEAT IS NOT
+    FIREABLE. Its true state is CAST GATE CLOSED / STAGED PLATE MISSING: both guards exist only as costume
+    cards on a grey void, and beat 05's own plate prompts are mis-cast — none names an approved-cast
+    attribute and they ask for `bare heads`, which neither approved guard is. A lane is redrawing the
+    plates. No `plate_ack` waiver.
 - beat: '06'
   takes: 11
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED —
+    guard A cast 2026-08-14, guard B 2026-08-15, both ratified 2026-08-16 as "the cast stands as drawn".
+    Approval lives in review/inbox.yaml (cards guard-picker-0814.jpg, guard-pair-0815.jpg,
+    guard-cast-0816.jpg); see `guard_cast_CORRECTION_0816` at the top of this file. THIS BEAT IS NOT
+    FIREABLE, AND FOR TWO REASONS THAT ARE NOT THE CAST. (1) STAGED PLATE MISSING: both guards exist only
+    as costume cards on a grey void, and beat 06's plate prompts are mis-cast — they ask for `bald`, which
+    neither approved guard is. A lane is redrawing them. (2) A SEPARATE BLOCK IS STILL LIVE: beat 06 specs
+    are refused by box_enqueue's BORDER-FLATNESS plate guard, and that refusal is CORRECT AND STAYS — the
+    proposed colour-flatness replacement was rejected after a 2510-plate sweep flipped 36 rows all one way,
+    14 of them real character cards. No `plate_ack` waiver is written to get past it.
 - beat: '07'
   takes: 2
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED —
+    guard A cast 2026-08-14, guard B 2026-08-15, both ratified 2026-08-16 as "the cast stands as drawn".
+    Approval lives in review/inbox.yaml (cards guard-picker-0814.jpg, guard-pair-0815.jpg,
+    guard-cast-0816.jpg); see `guard_cast_CORRECTION_0816` at the top of this file. THIS BEAT IS NOT
+    FIREABLE. Its true state is CAST GATE CLOSED / STAGED PLATE MISSING: both guards exist only as costume
+    cards on a grey void, and beat 07's plate prompts are mis-cast — they ask for `bald`, which neither
+    approved guard is. A lane is redrawing the plates. No `plate_ack` waiver.
 - beat: 08
   takes: 5
   in_flight: 0
@@ -57,16 +143,56 @@ beats:
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED —
+    guard A cast 2026-08-14, guard B 2026-08-15, both ratified 2026-08-16 as "the cast stands as drawn".
+    Approval lives in review/inbox.yaml (cards guard-picker-0814.jpg, guard-pair-0815.jpg,
+    guard-cast-0816.jpg); see `guard_cast_CORRECTION_0816` at the top of this file. BEAT 09 IS THE BEAT
+    THE GLASSES RULING BITES ON — it is guard A's face in close-up, so "as drawn" means wire-rim glasses,
+    named in the prompt rather than left for the render to invent or drop. THIS BEAT IS NOT FIREABLE, AND
+    FOR TWO REASONS THAT ARE NOT THE CAST. (1) STAGED PLATE MISSING: both guards exist only as costume
+    cards on a grey void, and beat 09's plate prompts are mis-cast — they ask for `bald`/`bare heads`,
+    which neither approved guard is. A lane is redrawing them. (2) A SEPARATE BLOCK IS STILL LIVE: beat 09
+    specs are refused by box_enqueue's BORDER-FLATNESS plate guard, and that refusal is CORRECT AND STAYS —
+    the proposed colour-flatness replacement was rejected after a 2510-plate sweep flipped 36 rows all one
+    way, 14 of them real character cards. No `plate_ack` waiver is written to get past it.
 - beat: '10'
   takes: 10
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED —
+    guard A cast 2026-08-14, guard B 2026-08-15, both ratified 2026-08-16 as "the cast stands as drawn".
+    Approval lives in review/inbox.yaml (cards guard-picker-0814.jpg, guard-pair-0815.jpg,
+    guard-cast-0816.jpg); see `guard_cast_CORRECTION_0816` at the top of this file. The cross-beat
+    cast-consistency question logged on this beat was never a taste call and never needed the founder — see
+    done-definitions.yaml `beats.10.open_question_ANSWERED_0816`. THIS BEAT IS NOT FIREABLE, AND FOR TWO
+    REASONS THAT ARE NOT THE CAST. (1) STAGED PLATE MISSING: both guards exist only as costume cards on a
+    grey void, and beat 10's two plate prompts are mis-cast — "two round bald guard men in plain brown
+    tunics..." and "two bald guard men in plain brown tunics" name neither approved guard and ask for
+    `bald`, which neither is. A lane is redrawing them. (2) A SEPARATE BLOCK IS STILL LIVE: beat 10 specs
+    are refused by box_enqueue's BORDER-FLATNESS plate guard, and that refusal is CORRECT AND STAYS — the
+    proposed colour-flatness replacement was rejected after a 2510-plate sweep flipped 36 rows all one way,
+    14 of them real character cards. No `plate_ack` waiver is written to get past it.
 - beat: '11'
   takes: 5
   in_flight: 0
   authorable_by_me_now: false
   gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: >-
+    CORRECTION, 2026-08-16. `gate` above is left standing unedited and is WRONG. THE CAST GATE IS CLOSED —
+    guard A cast 2026-08-14, guard B 2026-08-15, both ratified 2026-08-16 as "the cast stands as drawn".
+    Approval lives in review/inbox.yaml (cards guard-picker-0814.jpg, guard-pair-0815.jpg,
+    guard-cast-0816.jpg); see `guard_cast_CORRECTION_0816` at the top of this file, and
+    done-definitions.yaml `beats.11.blocked_on_0815_CAST_HALF_DISCHARGED_0816` for the matching correction
+    to this beat's own `blocked_on_0815`. Beat 11 is backs-turned, so the glasses ruling does not change
+    its plate. THIS BEAT IS NOT FIREABLE, AND FOR TWO REASONS THAT ARE NOT THE CAST. (1) STAGED PLATE
+    MISSING: both guards exist only as costume cards on a grey void, and beat 11's plate prompt is
+    mis-cast — it asks for `bald`, which neither approved guard is. A lane is redrawing the plates.
+    (2) THE STANDING TAKE IS A BROKEN TAKE, not a named fault — done-definitions.yaml
+    `beats.11.status_override_0815`; the beat needs a new round, and that round still waits on the staged
+    plate. No `plate_ack` waiver.
 - beat: '12'
   takes: 12
   in_flight: 0

@@ -17908,3 +17908,56 @@
     while every plate we own puts it already in the grass. Both are author decisions. Recording them
     as conflicts is the work; picking one myself would be taste.
   outcome: null
+
+- id: CORRECTION-the-guard-cast-gate-closed-and-two-0814-records-still-say-otherwise-0816
+  date: 2026-08-16
+  kind: correction
+  not_a_prediction: >-
+    NON-COUNTING, and named rather than hidden, exactly like the OBSERVATION records above. This record
+    carries no `predicted_verdict:` and must not enter the rolling hit rate. It exists because this file
+    is APPEND ONLY - its own header says never rewrite a record - so the two 2026-08-14 entries it
+    corrects are left standing verbatim and are corrected here instead of being edited.
+  what: >-
+    Two records in this file still assert that the episode-2 guard cast is unapproved. Both were TRUE
+    WHEN WRITTEN on 2026-08-14 and both are now stale:
+    `ep2-guard-beats-gated-by-his-own-cast-verdict-0814` ("Anything rendered now inherits an unapproved
+    cast" / "That is the entire renderable surface until either the guard sheet or the goblin plates come
+    back approved"), and `RULE-understandable-and-an-upgrade-outrank-the-ship-floor-0814` ("lets do the
+    guards on my taste forbids animating guard beats off an unapproved cast. So its third round is OWED
+    AND BLOCKED" / "Not mine to cast. The sheet renders, goes on his board, and waits.").
+  the_cast_is_approved: >-
+    THE GATE IS CLOSED. Three founder statements, all re-verified on 2026-08-16 against the session
+    transcript at the timestamps given rather than copied from a summary. 2026-08-14T16:45:25Z: "1 for the
+    guards. although it only shows one guard.. front and back" - guard A, his #1, frozen as the reference.
+    2026-08-15T08:39:13Z: "ill take the guard b you chose. on a sidenote, there is a clipboard floating
+    behind him." - guard B = seed s2 of ep2-guard-b-derived-0814. 2026-08-16: "the cast stands as drawn" -
+    guard A and guard B exactly as they appear on review/ep2-picks/sheets/guard-cast-0816.jpg. He was
+    asked on that card, specifically and by name, about guard A's unnamed WIRE-RIM GLASSES, so "as drawn"
+    answers that too: the glasses STAY and every guard prompt showing his face must say so. "lets do the
+    guards on my taste" was never revoked - it was MET.
+  where_the_approval_lives: >-
+    review/inbox.yaml, the `resolved:` entries on the cards guard-picker-0814.jpg ("ANSWERED IN BOTH
+    HALVES"), guard-pair-0815.jpg ("ACCEPTED, WITH ONE FAULT NAMED... the veto window is closed") and
+    guard-cast-0816.jpg ("THE CAST STANDS AS DRAWN"). Matching corrections:
+    review/ep2-picks/done-definitions.yaml `guards_CORRECTION_0816`,
+    review/ep2-picks/steward-picks-0815.yaml `the_second_gate_CORRECTION_0816`,
+    review/ep2-picks/gate-evidence.yaml `guard_cast_CORRECTION_0816`, and the 2026-08-16 STATE.md entry.
+  what_it_does_not_release_and_this_is_the_part_that_gets_misread: >-
+    NOT A SINGLE BEAT BECOMES FIREABLE. His word releases the WORK of drawing staged plates of the
+    approved pair, not a render. Both men exist only as costume cards on a grey void, so no staged plate
+    of these two doing anything exists yet, and every guard plate on disk is MIS-CAST: across beats 05,
+    06, 07, 09, 10 and 11, 0 of 17 plate prompts name any approved-cast attribute and 14 of 17 ask for
+    `bald` or `bare heads`, which neither approved guard is. A lane is redrawing those plates. Still-live
+    blocks that are not the cast: beats 06, 09 and 10 are refused by box_enqueue's BORDER-FLATNESS plate
+    guard, which is CORRECT AND STAYS (the colour-flatness replacement was rejected after a 2510-plate
+    sweep flipped 36 rows all one way, 14 of them real character cards); beat 08 needs a two-figure
+    guard-plus-goblin reference that does not exist; beat 11's standing take is a broken take. No
+    `plate_ack` waiver is written to get past the plate guard.
+  the_lesson_this_file_should_keep: >-
+    This is the fourth record found asserting a block the founder had already lifted, and the failure is
+    always the same one: the decision was recorded in ONE place and the records that act on it were not.
+    An approval is now propagated in the same edit that records it, and a check exists -
+    pipeline/check_canon_drift.py, rule R1 - that fails on a structured record asserting a subject
+    review/inbox.yaml has resolved. This ledger is append-only prose and that check reports it at REVIEW
+    rather than failing on it, which is precisely why it had to be swept by hand.
+  outcome: null
