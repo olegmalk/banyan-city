@@ -1,5 +1,22 @@
 # 2026-08-14. ALL-21 WAVE, authored and NOT enqueued. It fires the moment he approves the plates.
 #
+# CORRECTION 2026-08-16 (provenance audit). THE LINE ABOVE IS STALE, NOT WRONG WHEN WRITTEN, AND IT
+# IS LEFT STANDING BECAUSE IT IS WHAT THE SPEC SAID. It was true at 09:25Z on 14 August, when this
+# file was authored (79c55e01). The gate it names then OPENED: the founder answered the numbered
+# goblin picker at 2026-08-14T11:09:07Z - "seed s0 is the goblin" - and repeated it twelve seconds
+# later with "anyways focus on continuing the queue!". THIS SPEC THEN FIRED, AND CORRECTLY: run
+# ep2-b20-wave-0814-1786707221, started 2026-08-14T15:21:19Z, finished 15:27:22Z, rc=0 on the box
+# (MSI), four hours and twelve minutes AFTER the approval, in the same wave as the other beats.
+# The render was conditioned on the approved seed and can be proved so: the crop step asserts
+# sha256 6837455b...7ab05 for 20-evidence-ipa-r0-w015-s0.png and refuses on mismatch, and the
+# published blob on origin/farm-results-rtx5090 hashes to exactly that. Output published and
+# content-verified: farm-out/ep2-b20-wave/13-remake-LTX-0813.mp4, 97 frames, 704x1280, h264,
+# 4.042s, all four files matching their own ep2-b20-wave-0814.sha256 manifest.
+# NO BREACH OF THE NARRATIVE-APPROVAL RULE. The header simply never got updated when the gate
+# opened - the same commit that fired the wave (78007cc7) edited this file's costume clause and
+# left line 1 alone. THIRTY-TWO specs carry this identical line and all thirty-two ran rc=0; this
+# is a class of stale record, not a fact about this job.
+#
 # Every settled thing is in here and nothing new is: the goblin as a small ADULT MAN with the narrow
 # angular skull and the new CROSSED-WRAP TUNIC, no hood and no cloak; any fig PURPLE, teardrop, smooth
 # and plain; the scene asserted as ALREADY PRESENT rather than instructed to be drawn, which is the
