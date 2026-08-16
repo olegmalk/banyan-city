@@ -17,6 +17,14 @@
 # left line 1 alone. THIRTY-TWO specs carry this identical line and all thirty-two ran rc=0; this
 # is a class of stale record, not a fact about this job.
 #
+# SECOND CORRECTION, SAME AUDIT, SAME DATE: `consumer`, `why` and `success` BELOW ARE BEAT 02's,
+# NOT BEAT 20's. They are left standing for the same reason line 1 is, but do not judge this clip
+# against them: they describe a goblin sprinting in and diving behind a sapling, which is beat 02.
+# Beat 20 is what the payload actually renders - he picks the purple fig up in both hands and looks
+# up at the bare branch. The wave was authored by copying one spec twenty-eight times and the
+# purpose prose never got re-written; 28 of the 32 wave specs carry beat 02's text, and it was
+# copied verbatim into queue-history.json's `purpose` block for all 28 runs.
+#
 # Every settled thing is in here and nothing new is: the goblin as a small ADULT MAN with the narrow
 # angular skull and the new CROSSED-WRAP TUNIC, no hood and no cloak; any fig PURPLE, teardrop, smooth
 # and plain; the scene asserted as ALREADY PRESENT rather than instructed to be drawn, which is the
