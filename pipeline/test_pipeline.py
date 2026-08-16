@@ -9584,10 +9584,18 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
     # were never in the wave at all. Guard the real population, so the next
     # paste of this line is caught wherever it lands.
     SPRINT = "sprints in, skids and dives behind a sapling"
-    # Four specs are staged for deletion by another lane and are deliberately
+    # SIX specs are staged for deletion by another lane and are deliberately
     # left alone; drop them from the population rather than from the rule.
+    # THE LIST MUST BE ALL SIX, NOT THE FOUR A LOCAL `ls` SHOWS. Four of them
+    # (b14/b15) were also recreated untracked, so they exist on disk; the two
+    # b17 ones are staged-deleted AND gone from the working tree while still
+    # tracked in HEAD. A local run therefore never sees them and passes, and CI
+    # checks out HEAD, sees them, and fails — which is exactly what happened on
+    # commit 4f68cdfd. Existence on disk is a proxy; the committed tree is the
+    # fact.
     staged_deleted = {"ep2-b14-s49-0815.yaml", "ep2-b14-s49B-0815.yaml",
-                      "ep2-b15-s49-0815.yaml", "ep2-b15-s49B-0815.yaml"}
+                      "ep2-b15-s49-0815.yaml", "ep2-b15-s49B-0815.yaml",
+                      "ep2-b17-s49-0815.yaml", "ep2-b17-s49B-0815.yaml"}
     stale_bar = []
     for p in sorted(jobs.rglob("*.yaml")):
         if p.name in staged_deleted:
