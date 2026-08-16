@@ -2280,3 +2280,4 @@
 21:34:27Z DONE task=ep2-b02-anchor-s20260834-0817-1786913587 rc=0 artifacts=2
 21:34:36Z STARTED task=ep2-b02-anchor-s20260835-0817-1786913593 attempt=1 on box-runner
 21:40:30Z DONE task=ep2-b02-anchor-s20260835-0817-1786913593 rc=0 artifacts=2
+21:40:36Z STARTED task=ep2-b03-st-s20260840-0817-1786913607 attempt=1 on box-runner
