@@ -2120,3 +2120,4 @@
 08:26:53Z FAIL task=motion-poscontrol-0816-1786868575 rc=1 step=verify-embeds
 08:28:57Z box-runner idle ready=0 failed=30
 08:30:21Z STARTED task=motion-poscontrol-r2-0816-1786869003 attempt=1 on box-runner
+08:47:42Z DONE task=motion-poscontrol-r2-0816-1786869003 rc=0 artifacts=7

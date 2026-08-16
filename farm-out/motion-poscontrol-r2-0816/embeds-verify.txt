@@ -1,0 +1,9 @@
+prompt_embeds                    a0=87b76c09cc5d  a1=70eb2b246a2a  a2=7dbb499788d9  a3=3793fca1786e
+    -> all four DISTINCT (REQUIRED: four prompts)
+negative_prompt_embeds           a0=d9315dc3a259  a1=d9315dc3a259  a2=d9315dc3a259  a3=d9315dc3a259
+    -> IDENTICAL across all four (REQUIRED: one negative)
+negative_prompt_attention_mask   a0=f9717b8d3ce8  a1=f9717b8d3ce8  a2=f9717b8d3ce8  a3=f9717b8d3ce8
+    -> IDENTICAL across all four (REQUIRED: one negative)
+prompt_attention_mask            a0=aa37b27eb329  a1=88f9a073cb7e  a2=88f9a073cb7e  a3=a96fefeb0528
+    -> reported only; equal-length prompts share a mask by construction and this gates nothing
+shapes pos (1, 1024, 188160) neg (1, 1024, 188160)
