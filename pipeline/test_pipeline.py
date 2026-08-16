@@ -7,6 +7,7 @@ beat-timing regex or clip-naming rule would mis-time or drop episode footage
 without any error. Run: python3 pipeline/test_pipeline.py
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -9763,6 +9764,72 @@ def main():
         test_only_content_addressed_blobs_are_compared_to_their_names(td)
     test_a_latent_that_never_contracted_is_reported_as_noise()
     test_the_worker_refuses_before_it_loads_a_model()
+
+    # AND A DECISION THAT MOVED MUST REACH THE THING THAT ACTUALLY RUNS.
+    with tempfile.TemporaryDirectory() as td:
+        test_an_approval_filed_only_in_the_inbox_is_the_failure_it_names(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_dated_correction_beside_the_superseded_text_is_accepted(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_unresolved_decision_is_not_a_finding(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_stale_block_inside_a_list_row_is_found_too(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_correction_written_into_the_row_clears_it(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_plate_prompt_that_contradicts_the_cast_is_caught(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_the_same_word_is_canon_for_the_goblin_and_stays_silent(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_known_contradiction_named_in_a_record_does_not_fail_the_build(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_acknowledgement_no_record_backs_is_itself_a_failure(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_acknowledgement_that_matches_nothing_must_be_pruned(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_canon_no_render_has_ever_used_is_reported(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_one_render_carrying_the_canon_clears_it(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_no_render_evidence_at_all_is_an_abstention_not_a_pass(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_canon_no_draft_carries_cannot_be_called_unrendered(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_prompts_that_contradict_each_other_are_caught_with_no_canon_at_all(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_one_reading_only_is_not_a_contradiction(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_writing_the_canon_down_is_what_silences_the_axis(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_banned_term_in_a_negative_block_is_not_an_assertion_of_it(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_prompt_that_lives_only_in_a_job_payload_is_read(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_negative_payload_file_is_never_read_as_a_request(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_posture_words_are_not_read_as_height_claims(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_empty_corpus_is_not_a_clean_repo(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_register_whose_evidence_vanished_fails_on_itself(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_the_register_is_verified_by_content_and_not_by_the_file_existing(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_no_register_at_all_is_an_abstention(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_resolved_decision_no_subject_covers_is_named_not_ignored(td)
+    test_it_reads_the_real_repo_corpora_and_not_an_empty_set()
+    with tempfile.TemporaryDirectory() as td:
+        test_a_spec_the_ledger_records_as_run_is_history_not_pending(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_the_same_spec_unfired_is_reported(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_a_pruned_farm_out_no_longer_manufactures_unrun(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_without_a_ledger_it_abstains_instead_of_guessing(td)
+    with tempfile.TemporaryDirectory() as td:
+        test_an_acknowledgement_for_a_fired_receipt_is_surplus_not_stale(td)
+    test_the_real_ledger_is_read_and_is_not_empty()
     test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
     print()
     if FAILURES:
@@ -9771,6 +9838,637 @@ def main():
     print("✓ all pipeline tests passed")
     return 0
 
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# AND A DECISION THAT MOVED MUST REACH THE THING THAT ACTUALLY RUNS.
+#
+# Five separate multi-day losses in two days, all the same shape: the canon moved
+# and the artifact that runs did not. Every test below is a SYNTHETIC
+# RECONSTRUCTION of one of them — the check has to fire on the repo as it was on
+# the day, and go quiet on the repo as it was after the fix. A check that has only
+# ever been run against already-corrected files has proved nothing.
+# ══════════════════════════════════════════════════════════════════════════════
+
+import check_canon_drift as ccd
+
+
+def _fixture(td, *, inbox=None, register=None, drafts=None, records=None,
+             sidecars=None, jobs=None, ran=None, ledger=True):
+    """Write the smallest tree check_canon_drift can read. Returns the root.
+
+    `ran` lists task names the run ledger records as fired; `ledger=False` writes
+    no ledger at all, which must make the checker abstain rather than treat every
+    spec as pending.
+    """
+    root = Path(td)
+    if ledger:
+        (root / "pipeline" / "measured").mkdir(parents=True, exist_ok=True)
+        (root / "pipeline" / "measured" / "queue-history.json").write_text(
+            json.dumps({"jobs": [{"task": t, "spec_file": f"pipeline/jobs/{t}.yaml", "rc": "0"}
+                                 for t in (ran or [])]}), encoding="utf-8")
+    (root / "review").mkdir(parents=True, exist_ok=True)
+    (root / "pipeline").mkdir(parents=True, exist_ok=True)
+    (root / "review" / "inbox.yaml").write_text(inbox or "[]\n", encoding="utf-8")
+    (root / "pipeline" / "canon.yaml").write_text(register or "subjects: []\n", encoding="utf-8")
+    if drafts is not None:
+        (root / "pipeline" / "wave-drafts.yaml").write_text(drafts, encoding="utf-8")
+    for name, body in (records or {}).items():
+        p = root / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(body, encoding="utf-8")
+    for name, body in (sidecars or {}).items():
+        p = root / "farm-out" / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(body, encoding="utf-8")
+    for name, body in (jobs or {}).items():
+        p = root / "pipeline" / "jobs" / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(body, encoding="utf-8")
+    return root
+
+
+def _fails(findings, rule=None):
+    return [f for f in findings
+            if f.level == ccd.FAIL and (rule is None or f.rule == rule)]
+
+
+# --- INSTANCE 1: the guard cast --------------------------------------------
+# 2026-08-14/15 the founder cast both guards. The approval reached
+# review/inbox.yaml and nowhere else, and four beats stayed blocked for a day.
+
+_INBOX_GUARDS_RESOLVED = """
+- what: THE TWO GUARDS ARE ALREADY YOURS
+  url: /review/ep2-picks/sheets/guard-cast-0816.jpg
+  resolved:
+    date: '2026-08-16'
+    verdict: THE CAST STANDS AS DRAWN. guard A and guard B exactly as drawn.
+"""
+
+_REG_GUARD_CAST = """
+records:
+  structured: [records/done-definitions.yaml]
+  prose: []
+subjects:
+- id: ep2-guard-cast
+  kind: founder_decision
+  resolved_by:
+    card_url_contains: sheets/guard-cast-0816.jpg
+    verdict_matches: THE CAST STANDS AS DRAWN
+  evidence:
+    file: review/inbox.yaml
+    contains: THE CAST STANDS AS DRAWN
+  open_phrases:
+  - animat\\w* guard beats off an unapproved cast
+  - guard cast unapproved
+  negation_cues:
+  - CORRECTION
+  - no longer
+"""
+
+_RECORD_STILL_BLOCKED = """
+guards:
+  rule: Do not cast them and do not animate guard beats off an unapproved cast.
+"""
+
+_RECORD_CORRECTED = _RECORD_STILL_BLOCKED + """
+guards_CORRECTION_0816: >-
+  CORRECTION, 2026-08-16. The rule above is left standing; the cast is approved.
+"""
+
+
+def test_an_approval_filed_only_in_the_inbox_is_the_failure_it_names(td):
+    root = _fixture(td, inbox=_INBOX_GUARDS_RESOLVED, register=_REG_GUARD_CAST,
+                    records={"records/done-definitions.yaml": _RECORD_STILL_BLOCKED})
+    f = _fails(ccd.run(root), "resolved_but_open")
+    check("a record still calling a resolved decision open FAILS", len(f) == 1)
+    check("the finding names the record and the key path",
+          bool(f) and f[0].where.endswith("done-definitions.yaml:guards.rule"))
+    check("the finding prints the date the founder actually answered",
+          bool(f) and "2026-08-16" in f[0].detail)
+
+
+def test_a_dated_correction_beside_the_superseded_text_is_accepted(td):
+    root = _fixture(td, inbox=_INBOX_GUARDS_RESOLVED, register=_REG_GUARD_CAST,
+                    records={"records/done-definitions.yaml": _RECORD_CORRECTED})
+    check("superseded text under a dated *_CORRECTION_MMDD sibling is quiet",
+          _fails(ccd.run(root), "resolved_but_open") == [])
+
+
+def test_an_unresolved_decision_is_not_a_finding(td):
+    root = _fixture(td, inbox="- what: THE TWO GUARDS\n  url: /review/ep2-picks/sheets/guard-cast-0816.jpg\n",
+                    register=_REG_GUARD_CAST,
+                    records={"records/done-definitions.yaml": _RECORD_STILL_BLOCKED})
+    out = ccd.run(root)
+    check("a record blocking on a still-OPEN question is correct, not a fault",
+          _fails(out, "resolved_but_open") == [])
+    check("and the checker says why it abstained rather than passing silently",
+          any(f.level == ccd.UNKNOWN and "still open" in f.detail for f in out))
+
+
+# --- INSTANCE 4: the six gate-evidence rows --------------------------------
+# Found 2026-08-16 in review/ep2-picks/gate-evidence.yaml: six list rows reading
+# `gate: GATED - guard cast unapproved (his call)` for beats 05/06/07/09/10/11,
+# with no correction in the file. The FOURTH record asserting the same stale
+# block, found by the fourth separate lane — which is the argument for a check
+# and not a habit. This one lives in a LIST, not under a mapping key.
+
+_GATE_EVIDENCE_STALE = """
+beats:
+- beat: '05'
+  gate: GATED - guard cast unapproved (his call)
+- beat: '06'
+  gate: GATED - guard cast unapproved (his call)
+- beat: '08'
+  gate: ships under the two-round rule
+"""
+
+_GATE_EVIDENCE_FIXED = """
+beats:
+- beat: '05'
+  gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: 'CORRECTION, 2026-08-16: cast approved, gate discharged.'
+- beat: '06'
+  gate: GATED - guard cast unapproved (his call)
+  gate_CORRECTION_0816: 'CORRECTION, 2026-08-16: cast approved, gate discharged.'
+"""
+
+
+def test_a_stale_block_inside_a_list_row_is_found_too(td):
+    root = _fixture(td, inbox=_INBOX_GUARDS_RESOLVED, register=_REG_GUARD_CAST,
+                    records={"records/done-definitions.yaml": _GATE_EVIDENCE_STALE})
+    f = _fails(ccd.run(root), "resolved_but_open")
+    check("both stale list rows are reported, the passing row is not", len(f) == 2)
+    check("the finding locates the row by index, not just the file",
+          bool(f) and "beats.[0].gate" in f[0].where)
+
+
+def test_a_correction_written_into_the_row_clears_it(td):
+    root = _fixture(td, inbox=_INBOX_GUARDS_RESOLVED, register=_REG_GUARD_CAST,
+                    records={"records/done-definitions.yaml": _GATE_EVIDENCE_FIXED})
+    check("a dated correction inside the row silences it",
+          _fails(ccd.run(root), "resolved_but_open") == [])
+
+
+# --- INSTANCE 2: `bald` ----------------------------------------------------
+# The sheets moved off bald on 08-12; 22 guard-beat prompts still ask for it, and
+# beat 11's "identity collapse — the bald scalp fills in with dark hair" was the
+# render drifting TOWARD the approved cast, filed as a defect.
+#
+# THE DISCRIMINATOR THIS FIXTURE EXISTS FOR: `bald` is CANON for the goblin (272
+# rendered prompts) and the DEFECT for the guards (84). No word-level rule can
+# tell those apart. The goblin draft below must stay silent.
+
+_DRAFTS_BALD = """
+beats:
+  11:
+    kind: guard
+    authored_b11_idfix: >-
+      2boys, two round bald guard men in plain brown tunics walk away from camera
+  20:
+    kind: goblin
+    authored_b20_idfix_r2: >-
+      A small goblin boy, green skin, bald head, patchwork cloak, raises a ripe fig
+"""
+
+_REG_GUARD_HAIR = """
+records: {structured: [], prose: []}
+subjects:
+- id: ep2-guard-hair
+  kind: prompt_canon
+  since: '2026-08-12'
+  evidence: {file: pipeline/wave-drafts.yaml, contains: 'two round bald guard men'}
+  scope:
+    beats: [11]
+    prompt_mentions: \\bguards?\\b
+  forbids: ['\\bbald\\b']
+"""
+
+_REG_GUARD_HAIR_ACK = _REG_GUARD_HAIR + """
+  acknowledged:
+    recorded_in: records/known.yaml
+    recorded_contains: guards_CORRECTION_0816
+    variants: [authored_b11_idfix]
+"""
+
+
+def test_a_plate_prompt_that_contradicts_the_cast_is_caught(td):
+    root = _fixture(td, register=_REG_GUARD_HAIR, drafts=_DRAFTS_BALD)
+    f = _fails(ccd.run(root), "prompt_contradicts_canon")
+    check("a guard plate still asking for bald FAILS", len(f) == 1)
+    check("it names the beat and the variant that would be sent",
+          bool(f) and "b11:authored_b11_idfix" in f[0].where)
+
+
+def test_the_same_word_is_canon_for_the_goblin_and_stays_silent(td):
+    root = _fixture(td, register=_REG_GUARD_HAIR, drafts=_DRAFTS_BALD)
+    hits = [f for f in ccd.run(root) if "b20" in f.where]
+    check("`bald` on the goblin beat is canon and is NOT reported", hits == [])
+
+
+def test_a_known_contradiction_named_in_a_record_does_not_fail_the_build(td):
+    root = _fixture(td, register=_REG_GUARD_HAIR_ACK, drafts=_DRAFTS_BALD,
+                    records={"records/known.yaml": "guards_CORRECTION_0816: recorded 2026-08-16\n"})
+    out = ccd.run(root)
+    check("an acknowledged historical draft is ACK, not FAIL",
+          _fails(out, "prompt_contradicts_canon") == []
+          and any(f.level == ccd.ACK for f in out))
+
+
+def test_an_acknowledgement_no_record_backs_is_itself_a_failure(td):
+    root = _fixture(td, register=_REG_GUARD_HAIR_ACK, drafts=_DRAFTS_BALD,
+                    records={"records/known.yaml": "something_else: nothing to do with it\n"})
+    check("a suppression list no record backs FAILS instead of silencing",
+          len(_fails(ccd.run(root), "acknowledgement_unrecorded")) == 1)
+
+
+def test_an_acknowledgement_that_matches_nothing_must_be_pruned(td):
+    reg = _REG_GUARD_HAIR + """
+  acknowledged:
+    recorded_in: records/known.yaml
+    recorded_contains: guards_CORRECTION_0816
+    variants: [authored_b11_idfix, authored_a_variant_that_no_longer_exists]
+"""
+    root = _fixture(td, register=reg, drafts=_DRAFTS_BALD,
+                    records={"records/known.yaml": "guards_CORRECTION_0816: recorded\n"})
+    check("a stale acknowledgement FAILS so the list prunes itself",
+          len(_fails(ccd.run(root), "stale_acknowledgement")) == 1)
+
+
+# --- INSTANCE 3: purple ----------------------------------------------------
+# The purple canon landed 08-13/14 into three beat-20 drafts. NO render ever
+# produced a frame from any of them, so the 08-15 colour sheet asked the founder
+# to rule on 08-12 frames whose prompt contains no colour word at all. He rejected
+# a colour the beat was never asked for.
+
+_DRAFTS_PURPLE = """
+beats:
+  20:
+    kind: goblin
+    authored_b20_plate: >-
+      A small goblin boy, green skin, raises a deep purple-violet fig in both hands
+    authored_b20_idfix_r2: >-
+      A small goblin boy, green skin, raises a ripe fig in both hands like evidence
+"""
+
+_SIDECAR_OLD = """platform: local-gpu (rtx5090)
+shot_beat: 20
+draft_variant: authored_b20_idfix_r2
+prompt: >-
+  A small goblin boy, green skin, raises a ripe fig in both hands like evidence
+"""
+
+_SIDECAR_PURPLE = """platform: local-gpu (rtx5090)
+shot_beat: 20
+draft_variant: authored_b20_plate
+prompt: >-
+  A small goblin boy, green skin, raises a deep purple-violet fig in both hands
+"""
+
+_REG_PURPLE = """
+records: {structured: [], prose: []}
+subjects:
+- id: ep2-fig-purple
+  kind: prompt_canon
+  since: '2026-08-13'
+  evidence: {file: pipeline/wave-drafts.yaml, contains: 'deep purple-violet fig'}
+  scope: {beats: [20], prompt_mentions: '\\bfigs?\\b'}
+  requires_any: [purple]
+  must_have_run: true
+"""
+
+
+def test_a_canon_no_render_has_ever_used_is_reported(td):
+    root = _fixture(td, register=_REG_PURPLE, drafts=_DRAFTS_PURPLE,
+                    sidecars={"ep2-b20-idfix-r2/20-evidence-s0.yaml": _SIDECAR_OLD})
+    f = _fails(ccd.run(root), "canon_never_ran")
+    check("a canon in the drafts and in zero rendered prompts FAILS", len(f) == 1)
+    check("it says how many frames were drawn without it",
+          bool(f) and "ZERO of the 1 rendered prompts" in f[0].detail)
+
+
+def test_one_render_carrying_the_canon_clears_it(td):
+    root = _fixture(td, register=_REG_PURPLE, drafts=_DRAFTS_PURPLE,
+                    sidecars={"ep2-b20-idfix-r2/20-evidence-s0.yaml": _SIDECAR_OLD,
+                              "ep2-b20-plate-0814/20-evidence-s0.yaml": _SIDECAR_PURPLE})
+    check("one frame actually rendered from the canon silences it",
+          _fails(ccd.run(root), "canon_never_ran") == [])
+
+
+def test_no_render_evidence_at_all_is_an_abstention_not_a_pass(td):
+    root = _fixture(td, register=_REG_PURPLE, drafts=_DRAFTS_PURPLE)
+    out = ccd.run(root)
+    check("with no sidecars to read it says CANNOT TELL, never 'clean'",
+          _fails(out, "canon_never_ran") == []
+          and any(f.level == ccd.UNKNOWN and f.rule == "canon_never_ran" for f in out))
+
+
+def test_a_canon_no_draft_carries_cannot_be_called_unrendered(td):
+    drafts = _DRAFTS_PURPLE.replace("deep purple-violet fig", "ripe fig")
+    root = _fixture(td, register=_REG_PURPLE, drafts=drafts,
+                    sidecars={"a/20-s0.yaml": _SIDECAR_OLD})
+    out = ccd.run(root)
+    check("'never written' is distinguished from 'never rendered'",
+          any(f.level == ccd.UNKNOWN and "never written" in f.detail for f in out))
+
+
+# --- THE FIFTH SHAPE: an attribute nothing ever defined --------------------
+# The sapling is in twelve of twenty-one beats and never had a canonical
+# description, so twelve beats improvised one in opposite directions. This is
+# instance 2's shape with no canon to contradict.
+
+_DRAFTS_SAPLING = """
+beats:
+  1:
+    kind: guard
+    authored_b01_figref: >-
+      A tiny sapling, two oversized wide oval cotyledon leaves, in a grassy field
+    authored_b01_figleaf: >-
+      A tiny sapling in a sunlit grassy field, deeply lobed fig leaves with five fingers
+"""
+
+_REG_AXIS = """
+records: {structured: [], prose: []}
+subjects: []
+axes:
+- id: sapling-leaf-shape
+  must_be_pinned: true
+  scope: {prompt_mentions: '\\bsapling\\b'}
+  values:
+    wide-oval-cotyledon: ['\\boval\\b', '\\bcotyledon']
+    deeply-lobed-fig: ['\\blobed\\b', 'five fingers']
+"""
+
+
+def test_prompts_that_contradict_each_other_are_caught_with_no_canon_at_all(td):
+    root = _fixture(td, register=_REG_AXIS, drafts=_DRAFTS_SAPLING)
+    f = _fails(ccd.run(root), "attribute_unpinned")
+    check("an attribute two prompts describe oppositely FAILS", len(f) == 1)
+    check("and it names the beat carrying BOTH readings",
+          bool(f) and "b01 carry BOTH" in f[0].detail)
+
+
+def test_one_reading_only_is_not_a_contradiction(td):
+    drafts = _DRAFTS_SAPLING.replace(
+        "deeply lobed fig leaves with five fingers", "wide oval cotyledon leaves")
+    root = _fixture(td, register=_REG_AXIS, drafts=drafts)
+    out = ccd.run(root)
+    check("agreement is not reported as disagreement",
+          _fails(out, "attribute_unpinned") == [])
+    check("and a single asserted value is an abstention, not proof of a canon",
+          any(f.level == ccd.UNKNOWN and f.rule == "attribute_unpinned" for f in out))
+
+
+def test_writing_the_canon_down_is_what_silences_the_axis(td):
+    reg = _REG_AXIS.replace("subjects: []", """subjects:
+- id: sapling-leaves
+  kind: prompt_canon
+  since: '2026-08-16'
+  pins_axis: sapling-leaf-shape
+  evidence: {file: pipeline/wave-drafts.yaml, contains: 'wide oval cotyledon leaves'}
+""")
+    root = _fixture(td, register=reg, drafts=_DRAFTS_SAPLING)
+    check("pinning the attribute in the register clears the axis",
+          _fails(ccd.run(root), "attribute_unpinned") == [])
+
+
+def test_a_banned_term_in_a_negative_block_is_not_an_assertion_of_it(td):
+    drafts = """
+beats:
+  1:
+    kind: goblin
+    authored_b01_x: >-
+      A tiny sapling with deeply lobed fig leaves. No oval leaves, no cotyledon leaves.
+"""
+    root = _fixture(td, register=_REG_AXIS, drafts=drafts)
+    check("`no oval leaves` asserts the opposite and is not counted as a clash",
+          _fails(ccd.run(root), "attribute_unpinned") == [])
+
+
+# --- THE BLIND SPOT: prompts that live in job payloads ---------------------
+# The first cut read wave-drafts.yaml and `--variant` argv only. Both of
+# 2026-08-16's headline violations live in job-spec `payload:` prompt text and
+# were invisible: `TALLER THAN HE IS` in six beat-15 specs, `ONE SINGLE ROUND
+# GREEN FIG` in three — neither phrase is in wave-drafts.yaml at all.
+
+_JOB_WITH_PAYLOAD = """id: ep2-b15-leafB-0813
+beat: 15
+payload:
+  C:\\banyan-farm\\x\\b15-motion-prompt.txt: 'A SINGLE SMALL SAPLING STANDS BESIDE HIM, one slender stem with two big leaves, taller than he is.'
+  C:\\banyan-farm\\x\\b15-negative.txt: 'pointed leaves, lance-shaped leaves, taller than he is'
+"""
+
+_REG_HEIGHT = """
+records: {structured: [], prose: []}
+subjects: []
+axes:
+- id: sapling-height
+  must_be_pinned: true
+  scope: {prompt_mentions: '\\bsapling\\b'}
+  values:
+    above-the-goblin: ['taller than he is']
+    below-the-goblin: ['no taller than', 'knee[- ]high']
+"""
+
+
+def test_a_prompt_that_lives_only_in_a_job_payload_is_read(td):
+    # `ran=[]` — the ledger exists and does not list this spec, so it is pending.
+    drafts = """
+beats:
+  12:
+    kind: guard
+    authored_b12_scene: >-
+      A tiny sapling no taller than the grass in an open field
+"""
+    root = _fixture(td, register=_REG_HEIGHT, drafts=drafts, jobs={"j.yaml": _JOB_WITH_PAYLOAD})
+    f = _fails(ccd.run(root), "attribute_unpinned")
+    check("a payload-only prompt is compared against the canon", len(f) == 1)
+    check("and the finding names the spec and the payload file it came from",
+          bool(f) and "jobs/j:b15-motion-prompt.txt" in f[0].detail)
+
+
+def test_a_negative_payload_file_is_never_read_as_a_request(td):
+    job = _JOB_WITH_PAYLOAD.replace(
+        "one slender stem with two big leaves, taller than he is.", "one slender stem.")
+    root = _fixture(td, register=_REG_HEIGHT, drafts="beats:\n", jobs={"j.yaml": job})
+    prompts = ccd.read_job_payload_prompts(str(Path(td)))
+    check("only the prompt file is taken from the payload", len(prompts) == 1)
+    check("the negative file's banned terms are not read as assertions",
+          all("lance-shaped" not in p for _, _, p in prompts))
+
+
+def test_posture_words_are_not_read_as_height_claims(td):
+    # `standing tall` is in 17 prompts and is POSTURE. The sapling lane's own
+    # judgement: forbidding it would fire seventeen times for no defect.
+    drafts = """
+beats:
+  15:
+    kind: goblin
+    authored_b15_idfix: >-
+      a tiny sapling standing tall beside him, its two oversized leaves above him
+"""
+    root = _fixture(td, register=_REG_HEIGHT, drafts=drafts)
+    check("`standing tall` is not counted as a height assertion",
+          _fails(ccd.run(root), "attribute_unpinned") == [])
+
+
+# --- AND THE FAILURE MODE THAT PASSED A WEIGHTS MANIFEST FULL OF HOLES -----
+
+def test_an_empty_corpus_is_not_a_clean_repo(td):
+    # A register that still asserts a canon, and a prompt corpus that has gone
+    # empty underneath it. The one answer that must never come back is "clean":
+    # the weights manifest that passed blobs full of holes did exactly that.
+    root = _fixture(td, register=_REG_PURPLE, drafts="beats:\n")
+    out = ccd.run(root)
+    check("an empty corpus never reports all-clear", out != [])
+    check("it fails on the register's own evidence rather than on nothing",
+          len(_fails(out, "register_evidence_missing")) == 1)
+    check("and it abstains on the rule it can no longer evaluate",
+          any(f.level == ccd.UNKNOWN and f.rule == "canon_never_ran" for f in out))
+
+
+def test_a_register_whose_evidence_vanished_fails_on_itself(td):
+    root = _fixture(td, register=_REG_PURPLE,
+                    drafts="beats:\n  20:\n    kind: goblin\n    authored: >-\n      a ripe fig\n")
+    f = _fails(ccd.run(root), "register_evidence_missing")
+    check("a register asserting a canon its own source no longer carries FAILS",
+          len(f) == 1)
+
+
+def test_the_register_is_verified_by_content_and_not_by_the_file_existing(td):
+    root = _fixture(td, register=_REG_PURPLE, drafts=_DRAFTS_PURPLE,
+                    sidecars={"a/20-s0.yaml": _SIDECAR_PURPLE})
+    check("evidence present in the named file passes",
+          _fails(ccd.run(root), "register_evidence_missing") == [])
+
+
+def test_no_register_at_all_is_an_abstention(td):
+    root = Path(td)
+    (root / "review").mkdir(parents=True, exist_ok=True)
+    (root / "review" / "inbox.yaml").write_text("[]\n", encoding="utf-8")
+    out = ccd.run(root)
+    check("a missing register says so rather than passing",
+          _fails(out) == [] and any(f.rule == "register" for f in out))
+
+
+def test_a_resolved_decision_no_subject_covers_is_named_not_ignored(td):
+    root = _fixture(td, inbox=_INBOX_GUARDS_RESOLVED, register="subjects: []\n")
+    out = ccd.run(root)
+    check("the register's own blind spots are reported as CANNOT TELL",
+          any(f.rule == "unregistered_decision" and f.level == ccd.UNKNOWN for f in out))
+
+
+def test_it_reads_the_real_repo_corpora_and_not_an_empty_set():
+    # The lesson of the weights manifest that passed files full of holes, and of
+    # the status payload that reported `ready: 0` against a real 3: a check that
+    # silently reads nothing reports a clean repo. These are content floors.
+    drafts = ccd.read_draft_variants((REPO / "pipeline" / "wave-drafts.yaml").read_text())
+    payloads = ccd.read_job_payload_prompts(str(REPO))
+    runs = ccd.read_run_evidence(str(REPO))
+    check("wave-drafts yields the authored prompt corpus", len(drafts) > 150)
+    check("job payloads yield a prompt corpus of their own", len(payloads) > 300)
+    check("render-time sidecars are found in BOTH farm-out and review", len(runs) > 400)
+    check("sidecars outside farm-out are counted too",
+          any(not p.startswith("farm-out") for p, _, _, _ in runs))
+    check("every prompt read is non-empty text",
+          all(p.strip() for _, _, p in drafts + payloads))
+
+
+# --- AND THE CHECK MUST KNOW WHAT HAS ACTUALLY RUN -------------------------
+# Both false-positive rounds this check has had came from guessing run status off
+# the filesystem: farm-out/ alone missed sidecars under review/, and farm-out IS
+# PRUNED, so age alone manufactured "unrun" for two specs sitting in the ledger at
+# rc=0. pipeline/measured/queue-history.json is the authority.
+
+_JOB_FIRED = """id: ep2-b18-old-0812
+beat: 18
+payload:
+  C:\\x\\b18-motion-prompt.txt: 'A tiny sapling with ONE SINGLE ROUND GREEN FIG hanging from it.'
+steps:
+- name: sample
+  argv:
+  - python
+  - --variant
+  - authored_b18_old
+"""
+
+_REG_GREEN = """
+records: {structured: [], prose: []}
+subjects:
+- id: fig-not-green
+  kind: prompt_canon
+  since: '2026-08-13'
+  evidence: {file: pipeline/jobs/ep2-b18-old-0812.yaml, contains: 'ONE SINGLE ROUND GREEN FIG'}
+  scope: {beats: [18], prompt_mentions: '\\bfigs?\\b'}
+  forbids: ['green fig']
+"""
+
+
+def test_a_spec_the_ledger_records_as_run_is_history_not_pending(td):
+    root = _fixture(td, register=_REG_GREEN, drafts="beats:\n",
+                    jobs={"ep2-b18-old-0812.yaml": _JOB_FIRED},
+                    ran=["ep2-b18-old-0812"])
+    out = ccd.run(root)
+    check("a fired receipt is not re-reported as a canon violation",
+          _fails(out, "prompt_contradicts_canon") == [])
+    check("and it is not reported as an unrun job either",
+          _fails(out, "unrun_job_against_canon") == [])
+
+
+def test_the_same_spec_unfired_is_reported(td):
+    root = _fixture(td, register=_REG_GREEN, drafts="beats:\n",
+                    jobs={"ep2-b18-old-0812.yaml": _JOB_FIRED}, ran=[])
+    f = _fails(ccd.run(root))
+    check("a spec the ledger has never seen IS compared against canon", len(f) >= 1)
+    check("and the violation names the payload prompt",
+          any("b18-motion-prompt.txt" in x.detail or "b18-motion-prompt.txt" in x.where
+              for x in f))
+
+
+def test_a_pruned_farm_out_no_longer_manufactures_unrun(td):
+    # The exact 2026-08-16 defect: ep2-b18-plantneg-0812 and ep2-b18-refresh-0811
+    # were FAILed as un-fired because farm-out had been pruned, while both sit in
+    # the ledger at rc=0.
+    root = _fixture(td, register=_REG_GREEN, drafts="beats:\n",
+                    jobs={"ep2-b18-old-0812.yaml": _JOB_FIRED},
+                    ran=["ep2-b18-old-0812"])
+    check("no farm-out directory at all, and the ledger still settles it",
+          not (Path(td) / "farm-out").exists()
+          and _fails(ccd.run(root), "unrun_job_against_canon") == [])
+
+
+def test_without_a_ledger_it_abstains_instead_of_guessing(td):
+    root = _fixture(td, register=_REG_GREEN, drafts="beats:\n",
+                    jobs={"ep2-b18-old-0812.yaml": _JOB_FIRED}, ledger=False)
+    out = ccd.run(root)
+    check("with no run ledger it judges no payload at all",
+          _fails(out, "prompt_contradicts_canon") == [])
+    check("and it says so, naming how many prompts it declined to judge",
+          any(f.rule == "run_status" and f.level == ccd.UNKNOWN for f in out))
+
+
+def test_an_acknowledgement_for_a_fired_receipt_is_surplus_not_stale(td):
+    reg = _REG_GREEN + """
+  acknowledged:
+    recorded_in: records/known.yaml
+    recorded_contains: noted_0816
+    variants: ['jobs/ep2-b18-old-0812:b18-motion-prompt.txt']
+"""
+    root = _fixture(td, register=reg, drafts="beats:\n",
+                    jobs={"ep2-b18-old-0812.yaml": _JOB_FIRED}, ran=["ep2-b18-old-0812"],
+                    records={"records/known.yaml": "noted_0816: recorded\n"})
+    out = ccd.run(root)
+    check("a suppression whose prompt has fired is ACK surplus, not a FAIL",
+          _fails(out, "stale_acknowledgement") == []
+          and any(f.rule == "acknowledgement_no_longer_needed" for f in out))
+
+
+def test_the_real_ledger_is_read_and_is_not_empty():
+    tasks, specs, ok = ccd.read_run_ledger(str(REPO))
+    check("the run ledger parses", ok)
+    check("it carries the real completed-run population", len(tasks) > 200)
+    check("the two specs that were wrongly called un-fired are in it",
+          {"ep2-b18-plantneg-0812", "ep2-b18-refresh-0811"} <= (tasks | specs))
 
 if __name__ == "__main__":
     sys.exit(main())
