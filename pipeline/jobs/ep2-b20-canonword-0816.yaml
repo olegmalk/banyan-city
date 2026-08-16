@@ -1,0 +1,179 @@
+# EPISODE 2, BEAT 20 — DOES THE PURPLE CANON WORK ON THE MACHINE THAT WILL RUN IT?
+# 2026-08-16. $0, ~1 GPU-minute, four stills. Not a plate, not a pick, not canon.
+#
+# ── THE GAP THIS CLOSES, AND IT IS A GAP IN OUR EVIDENCE, NOT IN THE MODEL.
+# The founder ruled the fig purple on 2026-08-16. The proof offered that the
+# purple WORDING is reachable is `SAMPLE-b18-purple-fruit-0815.png`, and that
+# sample's own text says it was drawn "same 832x1216x40 **on MPS**" — i.e. on the
+# Mac. Today this lane measured that THE MAC AND THIS BOX ARE DIFFERENT
+# RENDERERS (`pipeline/backend_divergence_probe.py`): same prompt, same negative,
+# same checkpoint, same size/steps/guidance, same seed, bit-identical starting
+# latent because both seed a torch.Generator("cpu") — and the pictures differ by
+# mean absolute pixel difference 61 of 255. Precision was ruled out by rendering
+# THIS BOX's own bfloat16 on the Mac: bf16/MPS vs bf16/CUDA is MAE 60.65 while
+# fp16-vs-fp32 on MPS is MAE 3.22.
+#
+# So "the purple wording works" has NEVER BEEN DEMONSTRATED ON THIS CARD. It is
+# an inference carried across a boundary we now know does not carry. Enforcing
+# the colour word on the box path is NECESSARY — this box returned red, crimson,
+# maroon and wine at 8 of 8 seeds with no colour word — but it is NOT PROVEN
+# SUFFICIENT, and one render settles it.
+#
+# ── THE COMPARISON. `authored_b20_plate` is the canon as it would actually ship:
+# it is the only rendered-from beat-20 variant carrying `deep purple-violet fig,
+# green at its neck, matte` intact, and it has never been drawn anywhere. It runs
+# at beat 20, so `render_wave_sample.py`'s seed formula (wg.SEED + beat + i*1000)
+# produces 20260739 / 20261739 / 20262739 / **20263739** — the same four seeds as
+# the rejected 2026-08-12 batch, and s3 is the exact seed of this lane's
+# four-cell dtype table. So s3 lands as a FIFTH CELL beside it, on the same
+# renderer as the red one.
+#
+#   bf16 / CUDA  `authored_b20_refresh`  seed 20263739  ->  RED   (already have it,
+#                farm-out/ep2-b20-idfix/20-evidence-wave1-s3.png)
+#   bf16 / CUDA  `authored_b20_plate`    seed 20263739  ->  THIS JOB
+#
+# ── WHAT THIS JOB DOES **NOT** ISOLATE, said before the frames and not after.
+# `authored_b20_plate` is NOT one variable away from `authored_b20_refresh`. It
+# also changes the setting (`in green summer grass, a treeline and pale sky
+# behind` for `in a sunny grassy field`), the shot (`Medium full shot`), the light
+# (`bright morning` for `warm amber afternoon`), and it drops the gaze clause. A
+# single-variable arm would need a new key in `pipeline/wave-drafts.yaml`, which
+# another lane owns today, so it is deliberately not taken.
+#
+# THAT COSTS NOTHING FOR THE DECISION, and here is why the one arm is enough:
+# the question is whether THE CANON AS WRITTEN survives this renderer. If s3
+# comes back purple, the canon is sufficient as it stands and we ship it. If s3
+# comes back red, the canon as written FAILS on the box and needs a different
+# lever there — a big result either way. Attribution between the colour phrase
+# and the scenery clauses only becomes interesting in the second case, and it can
+# be bought then, for another GPU-minute, by whoever owns wave-drafts.
+#
+# ── THE BAR, WRITTEN BEFORE THE PIXELS. A BLIND COLD READER — a fresh agent
+# given only the file path and the question `what colour is the fruit?`, with no
+# context, no prompt text and no mention of purple or figs — must answer with a
+# word in the PURPLE family. `dark red`, `maroon`, `burgundy`, `crimson`, `wine`,
+# `brown` and `russet` are FAIL. A hedge toward red or brown ("purplish-red",
+# "reddish purple", "maroon-purple") is FAIL, because the founder's test is
+# whether it reads purple to a naive eye, not whether purple is arguable. NO
+# FRUIT IN FRAME is a FAIL and not a pass, because then nothing was tested.
+#
+# ── A PASS HERE SHIPS NOTHING. This certifies COLOUR ON THIS RENDERER and
+# nothing else. Beat 20's `done_when` — "BOTH HANDS to the fruit, then the look
+# UP to a branch that is visibly BARE — the empty stem is the evidence and must
+# be in frame" — is untouched by this job, and `authored_b20_plate` does not even
+# ask for the gaze. The recorded beat-20 faults (level gaze, a mature-tree limb
+# where the sapling's own empty stem belongs, off-frame adult hands) are EXPECTED
+# in these frames and are NOT scored here.
+#
+# ── GUARDS. $0. No `plate_ack`, no `gate:`, no `gate_ref:` — this clears nobody's
+# gate. Payload dir and out dir are distinct. The publish glob carries the beat
+# slug (`20-evidence-`). A `--dry` step measures the prompt on the real CLIP
+# tokenizer first and draws nothing, so a prompt that would silently lose its tail
+# past 77 tokens costs $0 instead of a render. The publish step stamps every
+# sidecar `approved: false` / `provisional: true` / `cost_usd: 0.00`, because
+# `render_wave_sample.py` writes `founder_verdict: null` and `scored: false` but
+# not those two, and the standing sidecar guard should be satisfied by the file
+# rather than by a lane remembering to say so.
+#
+# ── `--goblin-def` MATCHES THE RED CONTROL, DELIBERATELY. `green skin, bald head,
+# patchwork cloak` is what the 2026-08-12 batch sent (its sidecar's
+# `goblin_definition_as_sent`). The Mac's r3 sent `green skin, bald head` with no
+# cloak; matching the RED frame instead keeps the one comparison that matters
+# constant. The cloak does not touch the colour of the fruit.
+id: ep2-b20-canonword-0816
+task: ep2-b20-canonword-0816
+node: 002b-first-citizen
+beat: 20
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: the beat-20 colour lane, 2026-08-16
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. This is a colour mechanism test on an approved node, not an episode assembly
+  and not a plate.'
+consumer: the `ep2-fig-purple` canon-drift subject in pipeline/canon.yaml, which is being handed to the
+  canon lane and must record WHICH MACHINE the purple wording has actually been demonstrated on. Today it
+  has only ever been demonstrated on the Mac, and the Mac does not predict this box.
+success: Four PNGs with sidecars. Success is a READABLE ANSWER, not a purple one. A blind cold reader
+  calling s3 red would be a full result and arguably the more valuable one — it would mean the canon as
+  written does not survive this renderer, which is a thing we would otherwise have shipped without knowing.
+why: '"The purple wording works" rests entirely on an MPS sample, and MPS was measured today to disagree
+  with this card by MAE 61 on byte-identical inputs at an identical seed. The canon must not land as solved
+  on evidence from the wrong machine.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+# Measures the prompt on the real CLIP tokenizer and draws nothing. If the box's
+# repo copy is stale and lacks `authored_b20_plate`, render_wave_sample.py
+# refuses here rather than silently falling back to another variant — a stale
+# checkout costs $0 instead of four frames of the wrong lighting.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '20'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b20_plate
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '20'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b20_plate
+  - --out
+  - C:\banyan-farm\out-b20-canonword-0816
+  - --task
+  - ep2-b20-canonword-0816
+# Durability: the courier commits farm-out and force-pushes on every job_done,
+# and farm-out is NOT gitignored, so publishing is a COPY and needs no runner
+# change. allow_fail so a failed copy never marks a good render failed. The glob
+# carries the beat slug so a wrong-directory match cannot publish under this id.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b20-canonword-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/out-b20-canonword-0816/20-evidence-*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    if c.endswith(\".yaml\"):\n        with open(c, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n\
+    \            fh.write(\"approved: false\\nprovisional: true\\ncost_usd: 0.00\\n\")\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b20-canonword-0816.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\out-b20-canonword-0816\20-evidence-wave1-s0.png
+- C:\banyan-farm\out-b20-canonword-0816\20-evidence-wave1-s1.png
+- C:\banyan-farm\out-b20-canonword-0816\20-evidence-wave1-s2.png
+- C:\banyan-farm\out-b20-canonword-0816\20-evidence-wave1-s3.png
