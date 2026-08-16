@@ -1199,12 +1199,22 @@
     fruit - an apple or a plum - not purple, and beat 18's whole shipping fault is already a cold reader
     calling its fruit a plum, so shipping red two beats later repeats it and makes it look deliberate.
     Purple stays canon either way; this asks only whether beat 20 is allowed to break it. Re-rendering
-    is $0 on the local card.
+    is $0 on the local card. CORRECTED 2026-08-16 - THE COLOUR ANSWER ALONE WILL NOT SHIP THIS BEAT AND
+    THIS CARD SHOULD HAVE SAID SO. The same pick carries two further faults our own record already names
+    as disqualifying, and neither is colour. THE BRANCH IS THE WRONG TREE - the bare branch in frame is
+    a thick gnarled MATURE-TREE limb entering from the top corner, where the beat needs the SAPLING's
+    own now-empty stem; the empty stem IS the evidence, and a dead oak limb overhead is not the branch
+    the fruit fell from. AND HE NEVER LOOKS UP - the gaze is level into the lens in this candidate and
+    in all eight, and the look up is the second half of the beat's definition. So the colour question
+    is real and still yours, but beat 20 needs a redrawn plate whichever way you answer it, and answering
+    purple does not release the beat. Nothing here is resolved on your behalf - the card is only saying
+    what your answer does and does not buy.
   url: /review/ep2-picks/sheets/b20-fruit-colour-0815.jpg
   group: taste
   since: '2026-08-15'
   kind: pick
-  verdict_hint: red is fine, ship it / no, re-render beat 20 purple
+  verdict_hint: red is fine / no, re-render beat 20 purple - and either way the plate is redrawn for the
+    sapling's own bare stem and the look up, so answer on colour alone
   note_for_lanes: Tiles are seeds s0-s3 of ep2-b20-idfix (farm-out/ep2-b20-idfix/20-evidence-wave1-sN.png
     on origin/farm-results-rtx5090); s3 is the recorded pick. Baked 2026-08-15, $0, no render - the PNGs
     were already on the branch. A baked JPG carries no filename of its own, so this note is the only thread
@@ -1247,3 +1257,50 @@
       so i can focus on other projects." The rule is in force from today: a name is claimed once, a new
       round gets a new dated filename, and any card whose text is rewritten has its url: re-checked in
       the same edit. Say the word and it becomes a check in code instead of a rule in writing.'
+- what: 'THE TWO GUARDS ARE ALREADY YOURS - and four beats have spent a day waiting on a decision you
+    already made. You cast both men in your own words: "1 for the guards" (14 Aug) for A, and "ill take
+    the guard b you chose" (15 Aug) for B. Your ruling "lets do the guards on my taste" has been holding
+    beats 05, 09, 10 and 11 ever since, and three of our own records still describe the sheet as awaiting
+    your veto. It is not awaiting anything. That is our filing error, not a question, and this card is
+    not asking you to pick again. WHY IT IS STILL WORTH TWO MINUTES: today the engine showed one clear
+    strength and one clear weakness - it renders gross WHOLE-BODY motion reliably and drops small in-hand
+    actions. Beat 17''s plate stood a body up 12 times out of 12; the same plate''s small hand action
+    is 0 of 8, and a tight insert at 57% of frame width still failed. The beats whose action IS whole-body
+    motion are 02, 03, 05, 11, 13 and 17 - and four of those six are these guard beats. BEAT 11 is the
+    one to want: two guards walking away, backs turned, nothing in it but whole-body motion, which is
+    exactly what this engine does well - and the take standing in the demo cut right now is knowingly
+    broken, with a character replaced mid-shot. THE ONE THING ON THIS SHEET THAT IS GENUINELY YOURS: Guard
+    A is drawn wearing WIRE-RIM GLASSES and no prompt anywhere says so, so every render either invents
+    them or drops them at random. That is a fact about what your character IS, and one word settles it
+    for every guard beat. MY RECOMMENDATION, and veto it if it is wrong: the glasses STAY, because they
+    are on the man you actually picked; and the floating clipboard you named comes off Guard B before
+    the reference is frozen. WHAT YOUR ANSWER DOES NOT BUY, said plainly rather than discovered later:
+    both men exist only as costume cards on a grey void, so no staged picture of these two doing anything
+    exists yet - which is why 05, 06, 07, 09, 10 and 11 were animated off costume cards and cannot be
+    cut at any quality of motion. Your word releases the work; the staged plates still have to be drawn
+    after it. Nothing has been unblocked, authored or fired ahead of you.'
+  url: /review/ep2-picks/sheets/guard-cast-0816.jpg
+  group: taste
+  since: '2026-08-16'
+  kind: sheet
+  episode: 2
+  verdict_hint: go - the cast stands as drawn / go, but drop the glasses / no - here is what to change
+    about them. Any of the three is one line, and any of the three releases beats 05, 09, 10 and 11
+  note_for_lanes: 'THE PICTURE: review/ep2-picks/sheets/guard-cast-0816.jpg, baked 2026-08-16, $0, no
+    GPU and no render. Its two large panels are the UNALTERED panels of review/ep2-picks/sheets/guard-pair-0815.jpg
+    - the exact artifact he answered "ill take the guard b you chose" on - with only the header band replaced
+    and the two faults ringed. NEW FILENAME ON PURPOSE, under the a-name-is-claimed-once rule adopted
+    2026-08-15: the 0815 sheet is still correct for its own card, but its headline reads "THE TWO GUARDS
+    - VETO IF WRONG", which is the question he has already closed, so pointing this card at it would have
+    served a settled question under new text - the exact defect that rule exists to prevent. Underlying
+    tiles: guard A from refs-guards-chosen-0814 (his #1), guard B from ep2-guard-b-derived-0814 seed s2,
+    both on origin/farm-results-rtx5090. A baked JPG carries no filename of its own, so this note is the
+    only thread from the picture back to what drew it. WHY THIS CARD EXISTS AT ALL: his answers were recorded
+    in this file when he gave them, but STATE.md, review/ep2-picks/done-definitions.yaml (beat 11, blocked_on_0815)
+    and review/ep2-picks/steward-picks-0815.yaml (guards, note_on_09) all still say the cast is unapproved,
+    so lanes reading those three kept the beats blocked - the 2026-08-16 survey that reported the block
+    searched STATE.md, DECISIONS.md and done-definitions.yaml and did not search review/inbox.yaml. His
+    words are quoted from the session transcript, 2026-08-14T16:45:25Z and 2026-08-15T08:39:13Z. NOTHING
+    WAS CHANGED OUTSIDE THIS FILE AND THE SHEET: no block was lifted, done-definitions.yaml still carries
+    beat 11''s blocked_on_0815 verbatim, no beat-11 spec was authored or fired, no plate_ack waiver was
+    written, and the render queue was not touched.'
