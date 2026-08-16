@@ -1125,6 +1125,126 @@ REVS = {
             "photorealism, 3d render, night"
         ),
     },
+    (11, 3): {
+        # r2 SOLVED THE COUNT AND THE IDENTITY ON ONE SAMPLE, and FALSIFIED
+        # the law r2's own comment committed before the image was opened.
+        # Judged by opening the PNG and then three crops of it at 2x-4x -- the
+        # figures, the top band, the bottom band, the two heads, and guard B's
+        # hand -- against the bar committed in e4279ce5.
+        #
+        #   P1 the APPROVED PAIR ......... PASS. LEFT: black cropped hair, a
+        #      pale cream-tan long tunic-coat, dark grey cropped trousers,
+        #      brown boots. RIGHT: light sandy-blond tousled hair, a mid-brown
+        #      long tunic-coat, blue-grey cropped trousers, brown boots.
+        #      Neither is bald. THE PAIRING IS CORRECT AND NOT SWAPPED: dark
+        #      hair took the tan, sandy hair took the dark brown, exactly as
+        #      the two person clauses wrote them.
+        #   P2 two whole figures ......... PASS. Exactly two, both full-length
+        #      to the boots. Top band and bottom band were cropped and swept
+        #      separately for a third body: none.
+        #   P3 backs turned, room ahead .. FAIL, and it is not softened. Both
+        #      heads are turned into a REAR-THREE-QUARTER. The left man shows
+        #      a clean profile edge -- brow, nose, cheek, jaw and the corner
+        #      of an eye; the right man shows jaw and ear. The bar says "no
+        #      face, no eyes" and there is a face and an eye. Room ahead is a
+        #      MARGINAL pass: open clearing and a path lead away up-right, but
+        #      directly ahead the tall-grass band stands about half a figure
+        #      height off.
+        #   P4 >=25% of frame height ..... PASS, ~35%.
+        #   P5 no vacancy ................ PASS. Textured grass and foliage
+        #      across the full width; the only soft region is a ~10% haze band
+        #      at the very top which still carries grass silhouettes, and
+        #      nothing grew in it.
+        #   P6 no props .................. PASS AS WRITTEN -- no board, no
+        #      clipboard, no badge, no weapon, nothing detached. NAMED DEFECT
+        #      ANYWAY: a narrow dark strap or cord about a hand and a half
+        #      long hangs from guard B's left hand. It originates at the hand
+        #      rather than floating, so it does not trip P6, but an
+        #      unexplained hanging object ON THIS MAN is precisely the class
+        #      the founder named ("there is a clipboard floating behind him"),
+        #      and guard B's own derived prompt canonically carries a bark
+        #      clipboard, so this may be a vestige of one. It must be cleared
+        #      before anything is frozen; it is recorded, not glossed.
+        #   P7 field in the plate ........ PASS.
+        # SIX OF SEVEN PASS. THE PLATE FAILS THE BAR, on P3.
+        #
+        # THE PREDICTION IS FALSIFIED, AND SAYING SO IS THE POINT OF HAVING
+        # WRITTEN IT DOWN. (11,2)'s comment and done-definitions'
+        # `attribute_merge_law_0816` both predicted, before this image was
+        # opened, that fixing the count would yield TWO MEN EACH CARRYING A
+        # BLEND rather than one right and one wrong -- and named the outcome
+        # that would falsify the law: "if instead the two sets come back
+        # CLEANLY SEPARATED, the law is FALSIFIED as stated, and body count
+        # alone was doing the binding. That would be the best available
+        # outcome and it must not be quietly reinterpreted as 'the law held'."
+        # THE SETS CAME BACK CLEANLY SEPARATED. So: on this checkpoint, two
+        # same-species figures DO bind hair-colour-to-garment when each pair
+        # is written inside ONE person clause and the body count is right. The
+        # merge seen at n=1 was a symptom of having one body for two described
+        # sets, not of attributes being unbindable. That is a better world
+        # than the one the law described, and the honest prior for two-figure
+        # plates ("1 in 15") is too pessimistic for THIS construction.
+        #
+        # THE ONE VARIABLE: THE HEAD TURN. Positive stays BYTE-IDENTICAL to
+        # r2, seed unchanged, so the negative's three added terms are the only
+        # difference. `looking at viewer, facing viewer, face` did not reach
+        # it, and the reason is legible: THE MEN TURNED TOWARD EACH OTHER, NOT
+        # TOWARD THE LENS, and none of those three forbid that. `looking back,
+        # profile, from side` name the thing that actually happened. Three
+        # terms, ONE variable -- the same shape as (8,4)'s giant-terms cluster.
+        #
+        # CORRECTION, 2026-08-16, second lane, re-checked on a 7x crop of each
+        # head before this rev was fired: "THE MEN TURNED TOWARD EACH OTHER" is
+        # HALF WRONG and is left standing above with this note beneath it. Only
+        # the LEFT man turns inward -- a full profile, brow, nose, lip, chin and
+        # the corner of an eye. The RIGHT man turns OUTWARD, away from his
+        # companion, to frame right; his crop shows a jaw and cheek edge and no
+        # eye. So the two heads rotate in OPPOSITE directions, which is not
+        # "two men angled into a conversation" and weakens the reading that
+        # r2's P3 failure is the argument the script asks for. It does NOT
+        # change this rev: neither rotation is toward the lens, so the three
+        # terms already in r2's negative still cannot reach either of them, and
+        # `looking back, profile, from side` name both an inward profile and an
+        # outward one. Right fix, imprecise reason; the reason is now accurate.
+        #
+        # WHY THIS IS NOT A COSMETIC QUIBBLE, and it is the reason a whole
+        # sample is spent on it: beat 11's recorded fault is IDENTITY COLLAPSE
+        # DURING A TURN -- "the near guard's bald scalp fills in with dark
+        # hair CONTINUOUSLY across f16-f21 AS HE TURNS HIS BACK". A plate that
+        # already starts mid-rotation hands the render the exact motion in
+        # which the previous take lost the man. A square-backed plate does not.
+        #
+        # AND THE AUTHORSHIP TENSION IS FLAGGED, NOT RESOLVED HERE. The script
+        # line is "The guards walk away ARGUING, BACKS TO CAMERA" and the
+        # done_when is "backs turned, STILL ARGUING". Heads angled toward each
+        # other is one legitimate way to read an argument with backs turned,
+        # so r2's P3 failure may be what the beat actually wants. THAT IS NOT
+        # THIS LANE'S CALL. r3 exists so the choice is made between TWO
+        # PICTURES rather than guessed at: r2 keeps its head turn, r3 tries a
+        # square back, and both stay on disk.
+        #
+        # THE PLATE BAR AND THE FAIL MODES ARE UNCHANGED, as committed in
+        # e4279ce5 before any pixel existed.
+        "slug": "they-leave",
+        "prompt": (
+            "2boys, from behind, full body, wide shot, two guard men "
+            "standing together in tall grass, tall grass background, one "
+            "man with dark cropped hair in a plain tan tunic, one man with "
+            "light sandy hair in a dark brown tunic, cloth sash of office, "
+            "dark trousers and boots, sunny day, masterpiece, best quality"
+        ),
+        # Restated byte for byte from r2 apart from the three head-turn terms,
+        # which are the single variable. Exit 6 requires the restatement and
+        # is right to.
+        "negative": (
+            "text, looking at viewer, facing viewer, face, looking back, "
+            "profile, from side, close-up, "
+            "portrait, distant, small figure, bald, 1boy, 3boys, solo, "
+            "sky, horizon, white background, simple background, "
+            "holding object, clipboard, armor, helmet, knight, child, "
+            "photorealism, 3d render, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
