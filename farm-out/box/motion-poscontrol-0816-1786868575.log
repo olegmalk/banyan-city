@@ -1,0 +1,59 @@
+#### job motion-poscontrol-0816-1786868575 attempt 1 start 2026-08-16T08:23:07Z
+
+==== step crop-runner START 2026-08-16T08:23:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\motion-poscontrol-plates-0816\\poscontrol-runner-src.jpg", "--sha256", "ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac", "--out", "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-runner-704x1280.png", "--size", "704x1280"]
+src 1728x2304 sha ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac
+cover-crop scale=0.5556 -> 960x1280, centre box (128,0)
+WROTE C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-runner-704x1280.png
+==== step crop-runner END rc=0 2026-08-16T08:23:10Z ====
+
+==== step crop-waterfall START 2026-08-16T08:23:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\motion-poscontrol-plates-0816\\poscontrol-waterfall-src.jpg", "--sha256", "2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3", "--out", "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-waterfall-704x1280.png", "--size", "704x1280"]
+src 1200x1600 sha 2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3
+cover-crop scale=0.8000 -> 960x1280, centre box (128,0)
+WROTE C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-waterfall-704x1280.png
+==== step crop-waterfall END rc=0 2026-08-16T08:23:10Z ====
+
+==== step crop-b13 START 2026-08-16T08:23:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-plate-0814\\13-the-shade-ipa-r0-w015-s0.png", "--sha256", "1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921", "--out", "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-b13-704x1280.png", "--size", "704x1280"]
+src 832x1216 sha 1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921
+cover-crop scale=1.0526 -> 876x1280, centre box (86,0)
+WROTE C:\banyan-farm\motion-poscontrol-0816-out\poscontrol-init-b13-704x1280.png
+==== step crop-b13 END rc=0 2026-08-16T08:23:10Z ====
+
+==== step encode START 2026-08-16T08:23:10Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-encode.json"]
+-- begin-encode: phys 10.1/68.1GB, commit 12.0/115.3GB (load 14%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  30%|██▉       | 315/1065 [00:00<00:00, 2849.42it/s]
+Loading weights:  56%|█████▋    | 600/1065 [00:00<00:00, 2693.68it/s]
+Loading weights:  89%|████████▉ | 951/1065 [00:00<00:00, 2917.25it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 2938.64it/s]
+-- encode-beat-13: phys 11.2/68.1GB, commit 38.8/115.3GB (load 16%)
+[1/4] encoded beat 13 to C:\banyan-farm\motion-poscontrol-0816-out\embeds-a0.pt (1, 1024, 188160)
+-- encode-beat-13: phys 36.5/68.1GB, commit 40.6/115.3GB (load 53%)
+[2/4] encoded beat 13 to C:\banyan-farm\motion-poscontrol-0816-out\embeds-a1.pt (1, 1024, 188160)
+-- encode-beat-13: phys 37.3/68.1GB, commit 41.6/115.3GB (load 54%)
+[3/4] encoded beat 13 to C:\banyan-farm\motion-poscontrol-0816-out\embeds-a2.pt (1, 1024, 188160)
+-- encode-beat-13: phys 37.3/68.1GB, commit 42.0/115.3GB (load 54%)
+[4/4] encoded beat 13 to C:\banyan-farm\motion-poscontrol-0816-out\embeds-a3.pt (1, 1024, 188160)
+{"peak_commit_gb": 43.6, "peak_phys_gb": 38.9, "last_stage": "encode-beat-13"}
+==== step encode END rc=0 2026-08-16T08:26:49Z ====
+
+==== step verify-embeds START 2026-08-16T08:26:49Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\motion-poscontrol-0816\\verify_embeds.py"]
+prompt_embeds                    a0=87b76c09cc5d  a1=70eb2b246a2a  a2=7dbb499788d9  a3=3793fca1786e
+    -> all four DISTINCT (expected: four prompts)
+prompt_attention_mask            a0=aa37b27eb329  a1=88f9a073cb7e  a2=88f9a073cb7e  a3=a96fefeb0528
+    -> !! two arms share a positive
+negative_prompt_embeds           a0=d9315dc3a259  a1=d9315dc3a259  a2=d9315dc3a259  a3=d9315dc3a259
+    -> IDENTICAL across all four (expected: one negative)
+negative_prompt_attention_mask   a0=f9717b8d3ce8  a1=f9717b8d3ce8  a2=f9717b8d3ce8  a3=f9717b8d3ce8
+    -> IDENTICAL across all four (expected: one negative)
+shapes pos (1, 1024, 188160) neg (1, 1024, 188160)
+
+!! the four embeds files are not four positives against one negative
+==== step verify-embeds END rc=1 2026-08-16T08:26:53Z ====
+#### job motion-poscontrol-0816-1786868575 finished rc=1 2026-08-16T08:26:53Z

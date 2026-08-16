@@ -1,0 +1,255 @@
+{
+  "id": "motion-poscontrol-0816-1786868575",
+  "task": "motion-poscontrol-0816",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 45,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop-runner",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\motion-poscontrol-plates-0816\\poscontrol-runner-src.jpg",
+        "--sha256",
+        "ddcce4226969735fc273389b95fb698cb5341f6856f94ddb524363f03c6e06ac",
+        "--out",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-runner-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "crop-waterfall",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\motion-poscontrol-plates-0816\\poscontrol-waterfall-src.jpg",
+        "--sha256",
+        "2461151104444cf1f8c48f0bb2e7a27b00f483ef051ad62a708b6a1ec0e614f3",
+        "--out",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-waterfall-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "crop-b13",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-plate-0814\\13-the-shade-ipa-r0-w015-s0.png",
+        "--sha256",
+        "1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921",
+        "--out",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-b13-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-encode.json"
+      ]
+    },
+    {
+      "name": "verify-embeds",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\verify_embeds.py"
+      ]
+    },
+    {
+      "name": "render-a0",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-render-a0.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "motion-poscontrol-0816-a0",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\bench-a0.jsonl",
+        "--bench-label",
+        "motion-poscontrol-0816-a0"
+      ]
+    },
+    {
+      "name": "render-a1",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-render-a1.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "motion-poscontrol-0816-a1",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\bench-a1.jsonl",
+        "--bench-label",
+        "motion-poscontrol-0816-a1"
+      ]
+    },
+    {
+      "name": "render-a2",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-render-a2.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "motion-poscontrol-0816-a2",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\bench-a2.jsonl",
+        "--bench-label",
+        "motion-poscontrol-0816-a2"
+      ]
+    },
+    {
+      "name": "render-a3",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\motion-poscontrol-0816\\jobs-render-a3.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "motion-poscontrol-0816-a3",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\motion-poscontrol-0816-out\\bench-a3.jsonl",
+        "--bench-label",
+        "motion-poscontrol-0816-a3"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/motion-poscontrol-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/poscontrol-*.mp4*\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/poscontrol-init-*.png\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/embeds-verify.txt\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816-out/bench-*.jsonl\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816/prompt-*.txt\")\n             + glob.glob(\"C:/banyan-farm/motion-poscontrol-0816/negative-FULL.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"motion-poscontrol-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 12 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-a0-b13-control.mp4",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-a1-world-waterfall.mp4",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-a2-human-runner.mp4",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-a3-b13-standup.mp4",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-runner-704x1280.png",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-waterfall-704x1280.png",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-b13-704x1280.png"
+  ],
+  "started_at": "2026-08-16T08:23:07Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-16T08:26:53Z",
+  "rc": 1,
+  "failed_step": "verify-embeds",
+  "artifacts_present": [
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-runner-704x1280.png",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-waterfall-704x1280.png",
+    "C:\\banyan-farm\\motion-poscontrol-0816-out\\poscontrol-init-b13-704x1280.png"
+  ]
+}
