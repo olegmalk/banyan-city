@@ -1,0 +1,120 @@
+# 2026-08-16, queue lane. ONE SAMPLE for one unrendered canon-anchored wording. No seeds:
+# nobody has watched this draft perform, so a seed set would be filing replicates of an unknown.
+id: ep2-b18-scale-0816
+task: ep2-b18-scale-0816
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+owner: queue lane, 2026-08-16
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. This is a still plate on an approved node, not an episode assembly.'
+consumer: >-
+  The 2026-08-16 sapling-canon pass. `authored_b18_scale_0816` was inserted into
+  pipeline/wave-drafts.yaml today and has never been drawn, so nothing in the repo knows whether the
+  anchored wording binds. Downstream: the motion wave conditions on plates, so an anchored plate is
+  where the plant's size is actually decided.
+why: >-
+  The founder ruled the plant on 2026-08-16: "make sure it has 2 leafs and has a set height... dont make it double in size suddenly." Canon: genomes/sapling/THE-SAPLING.md. What this draft changes vs the line
+  it derives from: the one beat-18 draft that is NOT a macro - it carries grass, a treeline and a horizon, so the plant's size is actually on screen. Leaf count added; the purple-fig wording is byte-identical to its source (fruit colour belongs to the fig lane).
+script_line: >-
+  THE DECISION, beat 18, node.md verbatim: "Extreme close-up: the one fig on the thinnest branch, stem trembling."
+success: >-
+  THIS BAR IS BEAT 18's AND NOTHING ELSE. Beat 18 is THE DECISION and its action, quoted verbatim from
+  genomes/sapling/nodes/002b-first-citizen/node.md, is "Extreme close-up: the one fig on the thinnest
+  branch, stem trembling." There is no goblin in this beat and no sprint; a spec judged against beat 02's
+  sprint prose is being judged against the wrong beat. Sixteen frames at 704x1280. PASS is ONE deep
+  purple-violet fig, the only fruit in frame, hanging from the thin branch of a sapling that has EXACTLY
+  TWO leaves and stands no taller than the surrounding grass, with the treeline and pale sky behind so
+  the plant's size is actually readable on screen. The failure worth reporting is the plant coming back
+  waist-high or with three or more leaves, which would mean the `no taller than the grass around it`
+  anchor does not bind in wording and the size has to move into the reference set instead. Fruit colour
+  is byte-identical to the source draft and belongs to the fig lane, not this test. Read against beat
+  18's unanchored `authored_b18_scene`.
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-scale-0816
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816
+  - --draft-key
+  - authored_b18_scale_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-scale-0816
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816
+  - --draft-key
+  - authored_b18_scale_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b18-scale-0816
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b18-scale-0816"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b18-scale-0816/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b18-scale-0816.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 4 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816\18-the-decision-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816\18-the-decision-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816\18-the-decision-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-scale-0816\18-the-decision-ipa-r3-w015-s0.png
