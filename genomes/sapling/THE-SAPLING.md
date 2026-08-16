@@ -328,6 +328,21 @@ entry from the acknowledgement lists as a side effect. Recorded here so the
 count is not mistaken for five real violations, and not suppressed, because a
 suppressed false positive is how a check stops being read.
 
+> **CORRECTION_0816 — the five are gone, and so is the pre-existing sixth.**
+> The paragraphs above stand as written; they were true for about an hour. The
+> checker's own lane shipped the fix in `4a8580de` — *"the render evidence is 90%
+> untracked, so the check answered CI differently from the laptop and said purple
+> had never run when six ledger rows carry it"* — which is the same root cause
+> reported from here, found independently and fixed properly rather than by the
+> one line suggested. `check_canon_drift.py` now reports **`fail=0 ack=68`**: the
+> five false `unrun_job_against_canon` findings are gone, and so is
+> `canon_never_ran ep2-fig-purple`, the one failure that predated this canon.
+>
+> **The `jobs/...` acknowledgement entries in `pipeline/canon.yaml` are still
+> live and still needed** — the fix corrected run *detection*, not the decision
+> to read fired payloads, so those prompts are still swept and still correctly
+> acknowledged. Verified: zero `stale_acknowledgement` findings.
+
 ---
 
 ## 7. THE CONTINUITY CHECK — `pipeline/check_sapling_scale.py`
