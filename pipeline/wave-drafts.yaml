@@ -476,6 +476,56 @@ beats:
       girl, no child, no people, no mature tree, no forest. No photorealism, no
       3D render look. 9:16 vertical, no text.
 
+    # 2026-08-16, THE SCALE ANCHOR. Additive: nothing above is edited.
+    #
+    # HIS RULING: "make sure it has 2 leafs and has a set height ... just dont make it
+    # double in size suddenly". THE MEASURED MECHANISM: of 87 live plant prompts, 6
+    # state a size and 68 say NOTHING about size at all. A stated height cannot double
+    # between two beats; an unstated one re-rolls every seed. That is the doubling.
+    #
+    # WHY A RELATION AND NOT A NUMBER. Beat 02's own staging note already records the
+    # verdict on the number -- it dropped `40cm` with the reason "(does not bind)" --
+    # and it is right: an image model has no ruler in the frame, so an absolute
+    # centimetre figure has nothing to attach to. A RELATION does, because its
+    # referent is in shot. So the anchor here is whichever relation this beat's frame
+    # actually contains, and every phrase used is one already live in this repo rather
+    # than a new invention:
+    #   * `knee high`                   -- beats 02/03/07/17, a person is in frame.
+    #                                      Verbatim from `authored_ep3_sapling_reference`,
+    #                                      one of the six drafts already scoring anchored.
+    #   * `no taller than the grass around it` -- beats 01/18/21, no person in frame but
+    #                                      grass is. Verbatim from `authored_b12_scene`.
+    #                                      THE-SAPLING.md 3.3 rules this compatible with
+    #                                      40 cm and NOT a violation.
+    #   * `that hides almost none of him`  -- beat 03, restored from its own base
+    #                                      `authored`. The staged rewrite weakened it to
+    #                                      "hides none of him"; the canon quotes the
+    #                                      original and the whole beat-03 joke is that it
+    #                                      almost-but-not-quite covers him.
+    #   * `40cm`                        -- beat 13 ONLY, and it is the weakest of the
+    #                                      eight. See that beat's note.
+    # Leaf count is the other half of his ruling and is added the same way, in wording
+    # already live: `two big leaves`.
+    #
+    # Canon: genomes/sapling/THE-SAPLING.md. Sweep: pipeline/check_sapling_scale.py.
+    # NOTE the leaf SHAPE inference (round/oval cotyledons) is the steward's, not his,
+    # and is vetoable in one line -- see THE-SAPLING.md 2.2. Nothing here depends on it.
+    # -- `authored_b01_scale_0816` -- THIS BEAT: derived from `authored_b01_canon_0816`, which is left standing.
+    # Plant only, no body in frame, so `knee high` would have no referent. The
+    # grass does: `no taller than the grass around it` is added beside the
+    # existing `whole plant in frame`. Leaf count was already exact and is
+    # untouched, as is every fig and lighting clause.
+    authored_b01_scale_0816: >-
+      A tiny fig seedling in an open grassy field, exactly two wide oval cotyledon
+      leaves with soft round tips, and one small deep purple-violet fig, green at its
+      neck, matte, growing on its thin stem, whole plant in frame, no taller than the
+      grass around it. Static camera, medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No woman, no
+      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no
+      green fig, no green fruit, no red fruit, no white fruit, no pale fruit, no lobed
+      leaves, no five-fingered leaves, no three leaves, no four leaves, no many leaves,
+      no lush foliage, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
   2:
     slug: the-sprint
     kind: goblin
@@ -769,6 +819,48 @@ beats:
       text.
 
 
+    # -- `authored_b02_scale_0816` -- THIS BEAT: derived from `authored_staged`, which is left standing.
+    # `authored_staged` is the live head -- 27 job specs pick it by name, 12 of
+    # them already run -- and it is where the anchor was lost: the base
+    # `authored` above says "a tiny 40cm mascot-simple sapling" and the staging
+    # rewrite dropped it. `mascot-simple` stays dropped (it is the word our own
+    # records blame for the plant coming back with a face) and the number stays
+    # dropped for the reason that note gave; the RELATION replaces both.
+    authored_b02_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, sprints in panic and dives
+      behind a tiny sapling, knee high, with two big leaves, rooted in the grass, his
+      face visible past its thin stem, dust kicking up. Static camera, wide shot,
+      morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # 2026-08-16, THE SCALE ANCHOR, PASS 2 -- THE PLATE FAMILY. Additive.
+    #
+    # Pass 1 anchored the `authored_staged` line. This anchors the `*_plate` line,
+    # and the plate matters MORE, not less: it is the t2i still every i2v motion job
+    # is conditioned on, so THE PLATE IS WHERE THE PLANT'S SIZE IS ACTUALLY DECIDED.
+    # A motion prompt inherits the size from the plate and cannot argue with it --
+    # which is why the five unrun i2v job specs found in this sweep were deliberately
+    # left unanchored, and why this pass exists instead.
+    #
+    # The plate drafts are one house recipe across beats 02/03/04/13/15/17/19/20
+    # ("in green summer grass, a treeline and pale sky behind, <action>. Medium full
+    # shot, bright morning light, ..."), and every one of them is silent on scale.
+    # The anchor added is `knee high` -- verbatim from `authored_ep3_sapling_reference`
+    # -- which these frames can carry better than any other in the episode, because
+    # `Medium full shot` puts the whole standing body, knees included, in shot.
+    # Leaf count is added in wording each draft already uses.
+    # -- `authored_b02_plate_scale_0816` -- THIS BEAT: derived from `authored_b02_plate`, which is left standing.
+    # The only b02 draft with no leaf wording at all, so it gets both halves of
+    # his ruling. Reference-conditioned recipe, costume words deliberately absent
+    # (the reference supplies the tunic) -- unchanged.
+    authored_b02_plate_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
+      sky behind, cowers with both hands to his chest behind a tiny sapling's thin stem,
+      knee high with two big leaves, face peeking around it. Medium full shot, bright
+      morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No girl, no child, no hair, no wig, no armor, no jewelry, no
+      ornament, no long eyelashes, no lipstick, no dark, no night. No photorealism, no
+      3D render look. 9:16 vertical, no text.
   3:
     slug: bad-cover
     kind: goblin
@@ -1154,6 +1246,31 @@ beats:
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
+    # -- `authored_b03_scale_0816` -- THIS BEAT: derived from `authored_staged`, which is left standing.
+    # Same loss as beat 02 and worse: the staged rewrite dropped BOTH of the base
+    # draft's anchors -- `40cm` and `hides almost none of him`. The relation is
+    # restored verbatim from the base `authored`; it is the phrase the canon
+    # quotes and the one beat 03's voiced VO ("I am forty centimeters tall")
+    # depends on.
+    authored_b03_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, crouches behind the pencil-thin
+      stem of a tiny sapling, knee high, with two big leaves, rooted in the grass that
+      hides almost none of him, his face visible beside it. Deadpan comedic staging,
+      static camera, medium shot, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
+    # -- `authored_b03_plate_scale_0816` -- THIS BEAT: derived from `authored_b03_plate`, which is left standing.
+    # `broad round cotyledon leaves` was already here and is kept byte-for-byte --
+    # only the COUNT is added to it, which is his word. Shape is the steward's
+    # inference (THE-SAPLING.md 2.2) and is not being strengthened here.
+    authored_b03_plate_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
+      sky behind, crouches behind a tiny sapling's thin stem, knee high, two broad round
+      cotyledon leaves above, face visible. Medium full shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no hair, no wig, no armor, no jewelry, no ornament, no long
+      eyelashes, no lipstick, no dark, no night. No photorealism, no 3D render look.
+      9:16 vertical, no text.
   4:
     slug: the-footnote
     kind: goblin
@@ -3347,6 +3464,18 @@ beats:
       aesthetic No girl, no child, no armor. No photorealism, no 3D render look.
       9:16 vertical, no text.
 
+    # -- `authored_b07_scale_0816` -- THIS BEAT: derived from `authored_b07_plate`, which is left standing.
+    # The only plant draft on this beat. Two people in frame, so `knee high` has
+    # its referent. Guard wardrobe and negatives untouched -- the guard cast is
+    # another lane's and nothing here reaches it.
+    authored_b07_scale_0816: >-
+      A guard man in a brown tunic and sash stands in green summer grass, a treeline and
+      pale sky behind, thrusting one arm out to point at a small goblin boy crouching
+      low beside a tiny sapling, knee high, with two big leaves. Medium full shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+      jewelry, no ornament, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
   8:
     slug: inside-him
     kind: two-subject
@@ -4732,6 +4861,34 @@ beats:
       white hair, no night, no dusk. No photorealism, no 3D render look. 9:16
       vertical, no text.
 
+    # -- `authored_b13_scale_0816` -- THIS BEAT: derived from `authored`, which is left standing.
+    # THE WEAKEST OF THE EIGHT, and said so rather than hidden. `knee high` is
+    # unusable here because the sentence already says "hugging his KNEES" -- one
+    # word, two senses, in one clause. The grass relation is unusable too: he
+    # sits in the plant's patch of shade, and a plant no taller than the grass
+    # casts none. That leaves `40cm`, the anchor beat 02 recorded as not
+    # binding. It is still better than silence -- a stated size cannot double --
+    # but beat 13 is the one to re-word first if the number proves inert. Leaf
+    # count was already there as `two-leaf` and is untouched.
+    authored_b13_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small patch of
+      shade beside a tiny 40cm two-leaf seedling rooted in the grass. Static camera,
+      medium shot, bright midday sunlight, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no white hair, no
+      night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b13_plate_scale_0816` -- THIS BEAT: derived from `authored_b13_plate`, which is left standing.
+    # `knee high` IS usable on the plate where it was not usable on beat 13's
+    # `authored`: the plate says "sits hugging his knees" too, so the clause is
+    # attached to the sapling rather than left to float, and the seedling already
+    # carries its own count as `two-leaf`. If the double sense of `knee` proves to
+    # cost anything, this is the draft to re-word.
+    authored_b13_plate_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
+      sky behind, sits hugging his knees in the shade beside a tiny two-leaf seedling,
+      knee high. Medium full shot, bright morning light, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no hair, no
+      wig, no armor, no jewelry, no ornament, no long eyelashes, no lipstick, no dark,
+      no night. No photorealism, no 3D render look. 9:16 vertical, no text.
   14:
     slug: the-defense
     kind: goblin
@@ -5256,6 +5413,29 @@ beats:
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
 
+    # -- `authored_b17_scale_0816` -- THIS BEAT: derived from `authored_staged`, which is left standing.
+    # Live head, same wave-wide loss as beats 02 and 03. He is standing and full
+    # length in a medium shot, which is the cleanest frame in the episode for a
+    # knee-high reading.
+    authored_b17_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, stands up, brushes dust off his patched
+      tunic, and turns from a tiny sapling, knee high, with two big leaves, rooted in
+      the grass to face camera, the open field behind him. Static camera, medium shot,
+      amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+    # -- `authored_b17_plate_scale_0816` -- THIS BEAT: derived from `authored_b17_plate`, which is left standing.
+    # He stands up and turns away, so the whole body is in frame from the first
+    # frame -- the cleanest knee reference of the four. Count added to the leaf
+    # wording already present.
+    authored_b17_plate_scale_0816: >-
+      A small goblin boy, {{GOBLIN}}, solo, in green summer grass, a treeline and pale
+      sky behind, stands up and turns away from a tiny sapling, knee high, with two
+      broad round cotyledon leaves. Medium full shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no
+      lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
   18:
     slug: the-decision
     kind: guard
@@ -5496,6 +5676,21 @@ beats:
       fruit, no face, no girl, no child, no sketch lines, no dashed outline, no
       thick branch. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+    # -- `authored_b18_scale_0816` -- THIS BEAT: derived from `authored_b18_scene`, which is left standing.
+    # The one beat-18 draft that is NOT a macro: the other eight frame the fig
+    # close and are exempt by design, and correcting a macro for scale would be
+    # the cry-wolf error the checker exists to avoid. This one carries grass, a
+    # treeline and a horizon, so the plant's size IS on screen. It also had no
+    # leaf count at all, which is added. The purple fig wording is byte-identical
+    # to the source -- fruit colour belongs to the fig lane, not this one.
+    authored_b18_scale_0816: >-
+      A deep purple-violet fig, green at its neck, matte, hangs from the thin branch of
+      a tiny sapling with two big leaves in green summer grass, the whole plant no
+      taller than the grass around it, a treeline and pale sky behind, the only fruit in
+      frame. Cinematic lighting, masterpiece, best quality, very aesthetic No woman, no
+      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no
+      green fig, no green fruit, no white background, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
   19:
     slug: the-drop
     kind: goblin
@@ -6001,3 +6196,16 @@ beats:
       newest, masterpiece, best quality, very aesthetic No hands, no fingers, no
       face, no girl, no child, no glowing orb, no night, no dark. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b21_scale_0816` -- THIS BEAT: derived from `authored_b21_scene`, which is left standing.
+    # Same shape as beat 18: three of this beat's four drafts are close-ups and
+    # stay exempt; only `_scene` shows the whole plant against a horizon. Leaf
+    # count and side-branch were already exact -- this is the wording beat 12
+    # and this beat already share -- so only the grass relation is added.
+    authored_b21_scale_0816: >-
+      A tiny sapling in green summer grass, the whole plant no taller than the grass
+      around it, a treeline and pale sky behind, exactly two oversized cotyledon leaves
+      and one thin bare side-branch, one leaf tilting slowly to one side, the grass dead
+      still. Low amber light, cinematic lighting, masterpiece, best quality, very
+      aesthetic No woman, no girl, no boy, no child, no person, no chibi, no mascot, no
+      creature, no face, no white background, no plain background, no character sheet,
+      no wind. No photorealism, no 3D render look. 9:16 vertical, no text.

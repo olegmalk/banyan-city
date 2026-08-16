@@ -8335,3 +8335,61 @@ defects named before freezing → **a $0 text sweep of every existing prompt
 against the frozen spec** → a note recording where the approval lives. **Steps
 2-8 are all $0 and all ours; step 1 is the only one that needs him.** Step 7 for
 the plant is the survey above.
+
+## 2026-08-16 — the anchor was dropped by the staging rewrite, and twelve drafts get it back
+
+**WHAT THE COVERAGE SWEEP WAS ACTUALLY MEASURING.** `check_sapling_scale.py`
+reported *6 anchored / 13 exempt-macro / 68 silent* of 87 live plant prompts.
+Reading the 68 rather than counting them names the mechanism, and it is not
+drift: **beat 02's own staging comment records the deletion in its own words** —
+``-`40cm` (does not bind)``. The r8 staging rewrite of 2026-08-11 stripped the
+size clause from the drafts 27 job specs pick by name. **Beat 03 lost both of
+its anchors** in the same pass: the base `authored` says *"the pencil-thin trunk
+of a tiny 40cm sapling that hides almost none of him"* and `authored_staged`
+says *"a tiny sapling rooted in the grass that hides none of him"*. That is the
+whole of the founder's complaint: an unstated height re-rolls every seed.
+
+**THE 68 ARE ALL FORWARD-POINTING — the check had already gated them.** 63 are
+reusable `wave-drafts.yaml` drafts and 5 are job specs with **zero rows** in the
+573-row `pipeline/measured/queue-history.json`. A further **91 unanchored
+payloads belong to specs that fired** (`--all` shows 159) and are **receipts, not
+instructions**: left standing, unedited.
+
+**TWELVE ANCHORED DRAFTS ADDED, none edited** (`*_scale_0816`, beats
+01/02/03/07/13/17/18/21, plus the `*_plate_scale_0816` line on 02/03/13/17).
+Anchored to the canon's RELATION, in wording already live in this repo rather
+than new vocabulary: **`knee high`** where a body is in frame (verbatim from
+`authored_ep3_sapling_reference`), **`no taller than the grass around it`** where
+one is not (verbatim from `authored_b12_scene`), **`that hides almost none of
+him`** restored to beat 03 from its own base draft. **`40cm` is deliberately not
+re-added** except on beat 13's `authored`, because beat 02 already recorded that
+it does not bind — an image model has no ruler in the frame and a relation has
+its referent in shot. Leaf count added the same way (`two big leaves`).
+Anchored coverage 6 → 18; leaf-count coverage **36 of 99** live plant prompts.
+
+**THREE BEATS ARE DELIBERATELY LEFT UNANCHORED, and this is the finding worth
+his attention.** Beats **15, 19 and 20 stage the plant as taller than the
+goblin** — *"tips his head back talking up at"*, *"drops from the sapling and
+bounces off his head"*, *"looks up at the bare branch of a tiny sapling above
+him"* — in **both** the staged and the plate families. A knee-high plant cannot
+do any of it. **That is why six beat-15 payloads say `taller than he is`: the
+staging asked for it**, and correcting the wording without correcting the
+staging would have produced a prompt that contradicts itself, which re-rolls
+exactly as silence does. **Resolving it is a staging/taste call, not a text fix.**
+
+**THE FIVE UNRUN JOB SPECS ARE ALSO LEFT ALONE, with cause.** All five
+(`ep2-b02-lw-0814`, `ep2-b03-negconf-base/mot-0815`,
+`ep2-b13-unfreeze/unfreezeB-0814`) are **i2v specs conditioned on an approved
+init plate** — the plant's size is in the plate, not the text — and every one is
+a **single-variable controlled experiment** whose positive prompt is either the
+held constant (*"HELD CONSTANT across both: … positive prompt"*) or the measured
+variable (*"43 words, 0 stillness phrases"*). Anchoring them would be inert and
+would destroy the control. **This is why pass 2 anchored the plate family
+instead: the plate is where the plant's size is actually decided.**
+
+$0, no GPU, no render, nothing enqueued. `wave-drafts.yaml` edited as text with
+sha256 before/after, byte delta asserted equal to the inserted length, and a
+parsed-variant diff proving **12 added, 0 changed, 0 removed** (`git diff
+--numstat`: 208 insertions, 0 deletions). `check_canon_drift.py` unchanged at
+`fail=0 ack=68`. **The round/oval cotyledon shape remains STEWARD INFERENCE,
+vetoable in one line** (THE-SAPLING.md §2.2) — nothing added here strengthens it.
