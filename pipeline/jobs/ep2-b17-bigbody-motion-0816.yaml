@@ -448,3 +448,104 @@ script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_b
   shots.md and pipeline/wave-drafts.yaml are UNTOUCHED; if the framing wins, the shot board gets updated
   deliberately and separately, by whoever owns the beat. Silent, $0, and nothing here is a voice synthesis
   or an episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-16 after the render. NOTHING ABOVE THIS LINE HAS
+# BEEN EDITED -- the bar it is judged against is the one committed in efd7bafa
+# BEFORE the plate was drawn, and it has not been rewritten to fit the result.
+# ============================================================================
+outcome:
+  verdict: PASS
+  reading: 'All 97 frames opened CONSECUTIVELY, twelve to a sheet full-frame and again cropped to the hands,
+    with the transition window re-opened six to a sheet at full width. Evidence sheet: pipeline/research/EVIDENCE-b17-bigbody-0816.png.
+    Clip sha256 3aaa6ad34b54f495c7a7e679dac460abc683a49adc0c61d21d35ed2ff053b7f4, matching the manifest
+    the box wrote.
+
+    f000 is the plate (mean |init - f000| 8.4, the VAE and crf-33 round trip).
+
+    f000-f019 THE HANDS HOLD. Both clawed hands rest flat on the black cloak over his knees, claws down,
+    the linework re-inking slightly in place. The left hand''s centroid moves 2 px in nineteen frames.
+
+    f020-f030 THE LEFT HAND LIFTS OFF THE LAP AND SWEEPS UP ACROSS THE CLOAK. At f020 it rotates and rises;
+    by f024 the forearm lies diagonally across the chest; by f025-f030 the hand is up on the chest with
+    the palm down on the fabric. The path is followable frame by frame -- there is no frame where the hand
+    is absent and no frame where it reappears somewhere unrelated.
+
+    f031-f096 IT KEEPS GOING, AND IT OSCILLATES. The excursion falls back to 101 px at f048, returns to
+    its maximum 250 px at f064, falls to 149 px at f080 and rises again to 185 px at f088. The right hand
+    joins from about f056 and by f060 both forearms are working across the chest. Repeated strokes, not
+    a one-way pose change that then holds.
+
+    THE COMPOSITION NEVER BREAKS. No cut, no relocation, no second figure, no invented face, no camera
+    move, and he never stands up. Head, shoulders, shoes, background grass and all four frame edges hold
+    from f000 to f096.'
+  m1_contact: PASS. Both clawed hands rest flat on the black cloak at f000, and the travelling hand stays
+    on the fabric across the chest through the sweep.
+  m2_travel: 'PASS, measured as the bar defines it -- the hand RELATIVE TO THE CLOTH. The left hand''s
+    centroid sits at (247, 737) at f000 and moves 2 px through f016; it reaches 231 px displacement by
+    f030 and peaks at 249.6 px at f064. Against one hand-width of ~180 px measured on the init plate that
+    is 1.28-1.39 hand-widths, against a 1.0 bar. The most conservative single measure -- the topmost skin
+    pixel of the hand, which rises 184 px -- is 1.02 hand-widths, so it clears the bar on every measure
+    tried and clears it comfortably on most. Relative to the cloth rather than the frame: the cloth landmarks
+    move <=6 px over the same window, so hand-minus-cloth is ~225-244 px. FOR SCALE, the tight insert''s
+    equivalent number was 0.01-0.06 hand-widths.'
+  m3_hand_not_camera: 'PASS, and not narrowly. THE BEST CONTROL IS INTERNAL: the OTHER hand, found by the
+    same mask in the same frames, moves 2 px (x 524-525, y 748-750) from f000 to f040 while the travelling
+    hand moves 231 px. A camera move, a global drift or a measurement artefact would have moved both. The
+    NCC landmarks agree while their self-check holds: CLOTH_R dy 0 dx +4 (n1.00), CLOTH_S dy -4 dx -2 (n0.90),
+    FACE dy -3 dx -1 (n0.87), SHOE_L dy +6 dx -2 (n0.99). Frame edges, shoes and horizon do not translate.'
+  m4_continuous_path: PASS. The hand can be followed from the lap to the chest across consecutive frames.
+    The largest single-frame change is f019->f020, where it lifts and rotates, and even there it is adjacent
+    and identifiable rather than teleported.
+  fail_modes_hit: 'NONE of F1 frozen, F2 cloth-only, F3 camera-only, F5 scene break, F6 contact without
+    traversal, F7 body-instead-of-hand. F7 is worth saying out loud because it is the mode this composition
+    invited and it did not fire: the body does NOT stand, turn or translate -- face and shoe stay within
+    ~23 px, under 2% of frame height, for the whole clip -- so the motion is in the arms and hands and nowhere
+    else. F5 did not fire either, and the pre-registered prime suspect is therefore cleared: the marginal-P4
+    flat patch named in `known_weakness_of_this_fixture` BEFORE the render did NOT get filled with anything.'
+  named_honestly_not_scored: 'F4-FLAVOURED DEGRADATION IS REAL AND IS NOT SWEPT. From about f055 the claws
+    soften and lose definition and the two forearms merge into a broad green slab; f070 onward the hands
+    are anatomically poor. F4''s defining clause is a hand that "reappears somewhere else without a continuous
+    path", and that never happens -- the path is continuous throughout -- so F4 is not scored as hit. But
+    the late half of this clip is ugly and nobody should quote this as a usable take. It is an engine probe
+    and the question it answers is whether the motion RENDERS, not whether it is beautiful.'
+  metric_self_check: 'THE NCC TRACKER FAILED ITS OWN CHECK AT f024 and NO NUMBER FROM IT IS QUOTED PAST
+    f020 -- it lost the hand precisely because the hand ROTATED, which template matching cannot follow, and
+    that is the tracker being honest rather than the hand vanishing. The travel numbers therefore come from
+    a different instrument: a skin mask scoped to the torso interior, whose OVERLAY WAS DRAWN BACK ONTO
+    THE FRAMES AND LOOKED AT before any number was believed -- it lands on the two hands and nothing else
+    inside the window, and it misses the shaded underside of both hands EQUALLY, which is exactly why the
+    stationary right hand is the control that matters. A colour tracker was retired BEFORE the render, for
+    the mirror image of the tight-insert lane''s reason: this hand also looks green and measures R239 G243
+    B178, G-R of +2 to +4, so `(G > R + 10)` matches zero pixels, and the looser bright-yellowish rule that
+    does match it also matches HIS BALD HEAD at R241 G243 B180 -- a tool that cannot tell the hand from
+    the head cannot tell M2 from F7. Depth and cadence were not computed and are not quoted.'
+  what_this_settles: 'READING (b) SURVIVES AND READING (a) DOES NOT. This engine CAN perform a fine in-hand
+    action. The tight insert failed on its FRAMING, not because a hand cannot brush: given a composition
+    the checkpoint knows -- a whole body in frame -- the same action, at the same seed, with a byte-identical
+    prompt, renders. The lever for a small action is therefore STAY IN DISTRIBUTION WHILE MAKING THE ACTION
+    AS LARGE AS THAT FRAME ALLOWS, and NOT "make the action the largest thing in frame", which is what
+    the insert tested and what 6b5955cf correctly retired. The grid is now complete: wide plate with a small
+    figure and 8.5% hands FROZE; a tight insert with no body and a 57.5% hand RE-COMPOSED itself into a
+    portrait; a whole body filling the frame with ~26% hands BRUSHES.'
+  what_this_does_not_settle: 'Stated rather than glossed. ONE SAMPLE, one seed, one beat, one action. It
+    does not show that beats 06, 08 and 10 will work -- those are two-guard compositions with a prop, and
+    all this establishes is that the composition axis is live and worth a plate, which is a different claim
+    from a fix. It does not establish that the motion is GOOD: the late half degrades badly and whether
+    the sweep reads as "brushing dust off a cloak" to an audience is a taste call and belongs to the author
+    (R4), not to this lane. And the clip is not a take -- re-cutting beat 17 or re-planning 06/08/10 is
+    an authorship decision this lane does not make.'
+  honest_caveats: 'ONE, and it is the same shape the tight-insert lane flagged. THIS IS A SINGLE-COMPOSITION
+    A/B, NOT A SINGLE-PIXEL ONE. The prompt, the negative, the seed 20260901 and every render flag are
+    BYTE-IDENTICAL to ep2-b17-amp-brush-0816, which froze -- verified by comparing the payload strings,
+    not asserted -- so the init picture is the only difference. But a new plate is never one pixel of change:
+    moving the camera in does three things at once, in that the hands get bigger (8.5% -> ~26% of frame
+    width), the sky vacancy goes away, and the figure is REDRAWN rather than cropped. The redraw was chosen
+    deliberately because a crop of the old plate would have been ~380x520 px upscaled 1.85x and a soft init
+    is a worse confound. Which of those three did the work is NOT separated by this sample. Also recorded:
+    the plate is r3 -- r2 was REJECTED against the same pre-registered plate bar before the card was touched,
+    for growing three extra goblin heads in a flat background, so the fixture was gated independently of
+    the result.'
+  not_done_on_purpose: ONE SAMPLE. No sweep, no second seed, no wording variant, no re-plate after the
+    pass. Guidance, CFG and checkpoint belong to another lane and were not touched. The clip is an engine
+    probe and must never be cut into an episode.
