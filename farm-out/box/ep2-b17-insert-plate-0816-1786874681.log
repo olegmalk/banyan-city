@@ -1,0 +1,14 @@
+#### job ep2-b17-insert-plate-0816-1786874681 attempt 1 start 2026-08-16T10:04:46Z
+
+==== step fetch START 2026-08-16T10:04:49Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b17-insert-plate-0816\\fetch_plate.py"]
+fetched 17-goodbye-insert-mac-plate-r1s1.png       1391884 bytes  sha 0b8f4261a2a96af5db97fd547c74b815ebf50c2d3ad6f338f19c959d8a27342f  OK
+fetched 17-goodbye-insert-mac-plate-r1s1.yaml         2959 bytes  sha 75b942674eac4acd949bf0a6fbb27b0797335d3ca09d48cf56c05a5af6727d73  OK
+both files match their asserted sha256.
+==== step fetch END rc=0 2026-08-16T10:04:51Z ====
+
+==== step publish START 2026-08-16T10:04:51Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a fetch failure.\nimport glob, hashlib, os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-insert-plate-0816-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-insert-plate-0816\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-insert-mac-plate-r1s1.*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-insert-plate-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"]
+published 2 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b17-insert-plate-0816
+==== step publish END rc=0 2026-08-16T10:04:51Z ====
+#### job ep2-b17-insert-plate-0816-1786874681 finished rc=0 2026-08-16T10:04:51Z
