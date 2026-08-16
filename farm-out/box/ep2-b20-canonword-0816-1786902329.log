@@ -1,0 +1,26 @@
+#### job ep2-b20-canonword-0816-1786902329 attempt 1 start 2026-08-16T17:49:34Z
+
+==== step measure START 2026-08-16T17:49:37Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "20", "--goblin-def", "green skin, bald head, patchwork cloak", "--variant", "authored_b20_plate", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (78 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 20 evidence [goblin] — evidence
+   AUTHORED: A small goblin boy, green skin, bald head, patchwork cloak, solo, in green summer grass, a treeline and pale sky behind, raises a deep purple-violet fig, green at its neck, matte, in both hands like evidence. Medium full shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no hair, no wig, no armor, no jewelry, no ornament, no long eyelashes, no lipstick, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 1boy, a small goblin boy, green skin, bald head, patchwork cloak, solo, in green summer grass, a treeline and pale sky behind, raises a deep purple-violet fig, green at its neck, matte, in both hands like evidence
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, girl, child, hair, wig, armor, jewelry, ornament, long eyelashes, lipstick, dark, night, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf
+   positive tokens (real CLIP): 54/77   headroom for the goblin definition: 23
+   negative tokens: recipe 77 -> sent 77 (budget 77)
+   count tag: '1boy' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: False
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature
+   !! STYLE ANCHOR MISSING (`very aesthetic` not in positive)
+   !! POSITIVE DROPPED: Medium full shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+!! FAULTS — nothing drawn: STYLE ANCHOR MISSING (`very aesthetic` not in positive); POSITIVE DROPPED: Medium full shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+==== step measure END rc=1 2026-08-16T17:49:39Z ====
+#### job ep2-b20-canonword-0816-1786902329 finished rc=1 2026-08-16T17:49:39Z
