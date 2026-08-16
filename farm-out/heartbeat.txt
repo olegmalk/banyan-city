@@ -2161,3 +2161,4 @@
 10:33:47Z DONE task=ep2-b02-pose2-0816-1786875332 rc=0 artifacts=2
 10:33:55Z STARTED task=ep2-b02-anchor-0816-1786875338 attempt=1 on box-runner
 10:39:39Z DONE task=ep2-b02-anchor-0816-1786875338 rc=0 artifacts=2
+10:39:47Z STARTED task=ep2-b02-exitneg-0816-1786875343 attempt=1 on box-runner
