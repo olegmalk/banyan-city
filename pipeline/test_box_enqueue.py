@@ -406,6 +406,190 @@ def test_a_picture_that_could_not_be_fetched_is_refused_not_waved_through():
           be.results_branch_path(r"c:\banyan-farm\plates-local\x.png") is None)
 
 
+# ---------------------------------------------------------------------------
+# WHICH JOB DREW THIS PLATE. The refs guard has to name the producing spec
+# before it can read its --refs, and until 2026-08-16 it looked for exactly one
+# thing: pipeline/jobs/<farm-out dirname>.yaml. Nothing ever made those two
+# names agree -- each spec's publish step is a hand-written literal, and the
+# date suffix is usually dropped -- so 274 of the 645 directories on
+# origin/farm-results-rtx5090 were refused with "no spec in pipeline/jobs for
+# producing job X" while pipeline/jobs/X-0812.yaml sat right there. Beat 11's
+# only staging-correct plate was one of them.
+#
+# THESE CASES RUN THE GUARD, NOT A PROXY FOR IT. Every one goes through
+# be.refs_problems against spec files really written to a real directory, and
+# the passing cases assert the producer's OWN reference set comes back in the
+# refusal -- a thing that can only happen if the lookup actually opened it.
+# Checking "the resolver returned a path" would have passed on a stub.
+# ---------------------------------------------------------------------------
+
+CARD_SET = "refs-guards-chosen-0814"      # a real member of CARD_REFS_DENYLIST
+
+
+def _plate_json(out_dir, refs=CARD_SET):
+    """A plate-generation spec: draws with `refs`, publishes into `out_dir`."""
+    draw = ["python.exe", "goblin_ipa_beat.py", "--beat", "9",
+            "--refs", "C:\\banyan-farm\\wave-goblin-prep\\" + refs]
+    return {"steps": [
+        {"name": "sample", "argv": draw},
+        {"name": "publish", "argv": [
+            "python.exe", "-c",
+            'dst = "C:/banyan-farm/courier-box/farm-out/%s"\n'
+            'os.makedirs(dst, exist_ok=True)\n' % out_dir]}]}
+
+
+def _motion_on(dirname, plate="09-the-pause-s0.png", **kw):
+    """A motion job conditioned on a picture published in farm-out/<dirname>."""
+    src = "C:\\banyan-farm\\courier-box\\farm-out\\%s\\%s" % (dirname, plate)
+    spec = {"id": "ep2-b09-motion-0816", "steps": [
+        {"name": "crop", "argv": ["python.exe", "cover_crop.py", "--src", src]},
+        {"name": "render", "argv": ["python.exe", "ltx_i2v.py", "--out", "clip.mp4"]}]}
+    spec.update(kw)
+    return spec
+
+
+def _write_jobs(tmp, specs):
+    for name, spec in specs.items():
+        with open(os.path.join(tmp, name), "w", encoding="utf-8") as fh:
+            json.dump(spec, fh)
+    return tmp
+
+
+def test_a_directory_named_for_its_spec_still_resolves(tmp):
+    """The control. Whatever else changes, the old link must keep working."""
+    _write_jobs(tmp, {"ep2-b09-guardpick-0814.json":
+                      _plate_json("ep2-b09-guardpick-0814")})
+    problems = be.refs_problems(_motion_on("ep2-b09-guardpick-0814"), jobs_dir=tmp)
+    check("a directory named for its spec file resolves, as it always did",
+          len(problems) == 1 and CARD_SET in problems[0])
+
+
+def test_a_published_directory_that_dropped_the_date_suffix_resolves(tmp):
+    """THE BUG, in the shape beat 11 has it.
+
+    farm-out/ep2-b11-idfix was published by pipeline/jobs/ep2-b11-idfix-0812,
+    which says so in its own publish step. Before the fix this refused with "no
+    spec in pipeline/jobs for producing job 'ep2-b11-idfix'".
+    """
+    _write_jobs(tmp, {"ep2-b11-idfix-0812.json": _plate_json("ep2-b11-idfix")})
+    problems = be.refs_problems(_motion_on("ep2-b11-idfix"), jobs_dir=tmp)
+    check("a directory whose spec carries a date suffix resolves to that spec",
+          len(problems) == 1 and "could not work out" not in problems[0])
+    check("and the producer was really READ -- its own ref set comes back",
+          len(problems) == 1 and CARD_SET in problems[0])
+
+
+def test_two_specs_publishing_into_one_directory_REFUSE(tmp):
+    """Ambiguity is a refusal, and it is not the same refusal as absence.
+
+    Real, and the reason a `<dir>-DATE` name rule was not the fix:
+    ep2-b15-seedC-0813 published into farm-out/ep2-b15-seedB. A name rule reads
+    that plate's provenance off ep2-b15-seedB-0812 and is confidently wrong.
+    """
+    _write_jobs(tmp, {"ep2-b15-seedB-0812.json": _plate_json("ep2-b15-seedB",
+                                                             refs="refs-clean"),
+                      "ep2-b15-seedC-0813.json": _plate_json("ep2-b15-seedB")})
+    problems = be.refs_problems(_motion_on("ep2-b15-seedB"), jobs_dir=tmp)
+    check("a directory two specs publish into is REFUSED, not guessed at",
+          len(problems) == 1 and "could not work out" in problems[0])
+    check("and the refusal names both candidates, so a human can settle it",
+          len(problems) == 1 and "ep2-b15-seedB-0812.json" in problems[0]
+          and "ep2-b15-seedC-0813.json" in problems[0])
+    check("it says two specs publish there rather than that none does",
+          len(problems) == 1 and "2 specs publish into" in problems[0])
+
+
+def test_a_directory_no_spec_claims_is_still_REFUSED(tmp):
+    """The direction that must NOT loosen. A wider net is not the point."""
+    _write_jobs(tmp, {"ep2-b09-guardpick-0814.json":
+                      _plate_json("ep2-b09-guardpick-0814")})
+    problems = be.refs_problems(_motion_on("b06-r6r7-recovered"), jobs_dir=tmp)
+    check("a directory no spec in the repo claims is refused",
+          len(problems) == 1 and "could not work out" in problems[0])
+    check("and named, so the reader knows which directory is orphaned",
+          len(problems) == 1 and "b06-r6r7-recovered" in problems[0])
+    check("an empty jobs directory refuses too rather than crashing",
+          len(be.refs_problems(_motion_on("anything"),
+                               jobs_dir=os.path.join(tmp, "not-here"))) == 1)
+
+
+def test_reading_a_directory_does_not_make_a_job_its_producer(tmp):
+    """ep2-b01-lw-0815 reads farm-out/ep2-b01-final055-r3/... and publishes to
+    its own directory. If a --src counted as a declaration, the plate's real
+    producer would look ambiguous with the job asking about it."""
+    reader = _motion_on("ep2-b01-final055-r3", plate="b01-final055-i55-s0.png")
+    reader["steps"].append({"name": "publish", "argv": [
+        "python.exe", "-c",
+        'dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-lw-0815"']})
+    _write_jobs(tmp, {"ep2-b01-final055-r3-0812.json":
+                      _plate_json("ep2-b01-final055-r3"),
+                      "ep2-b01-lw-0815.json": reader})
+    problems = be.refs_problems(reader, jobs_dir=tmp)
+    check("a --src is a picture being read, not a directory being claimed",
+          len(problems) == 1 and CARD_SET in problems[0])
+
+
+def test_the_real_beat_11_plate_resolves_in_the_real_pipeline_jobs():
+    """Against the tree, not a fixture -- the house lesson from 2026-08-15.
+
+    A guard test that builds its own world can pass while the real one is
+    broken. farm-out/ep2-b11-idfix is a real published directory and
+    pipeline/jobs/ep2-b11-idfix-0812.yaml is the real spec that wrote it.
+    Nothing here files, unblocks or renders anything: it reads two files.
+    """
+    jobs = os.path.join(os.path.dirname(os.path.abspath(be.__file__)), "jobs")
+    if not os.path.isdir(jobs):
+        check("pipeline/jobs is present to check against", False)
+        return
+    problems = be.refs_problems(
+        _motion_on("ep2-b11-idfix", plate="11-they-leave-wave1-s1.png"),
+        jobs_dir=jobs)
+    check("the real ep2-b11-idfix directory resolves to its real spec",
+          not any("could not work out" in p for p in problems))
+    check("the real ep2-b01-final055-r3 directory resolves too",
+          not any("could not work out" in p for p in be.refs_problems(
+              _motion_on("ep2-b01-final055-r3", plate="b01-final055-i55-s0.png"),
+              jobs_dir=jobs)))
+    check("and a directory nobody ever published still refuses",
+          len(be.refs_problems(_motion_on("ep2-b11-idfix-that-never-ran"),
+                               jobs_dir=jobs)) == 1)
+
+
+def test_the_new_link_never_contradicts_the_old_one():
+    """The property that makes this safe to trust: it only ADDS coverage.
+
+    Over every spec in pipeline/jobs, no directory that has a spec file named
+    for it is published into by a DIFFERENT spec -- so the resolver's first
+    answer is never one the second would dispute. Measured 0 disagreements over
+    all 645 published directories on 2026-08-16; this holds the repo half of it,
+    which is the half that can change under us.
+    """
+    jobs = os.path.join(os.path.dirname(os.path.abspath(be.__file__)), "jobs")
+    if not os.path.isdir(jobs):
+        check("pipeline/jobs is present to check against", False)
+        return
+    claimed, disagree = {}, []
+    for name in sorted(os.listdir(jobs)):
+        if os.path.splitext(name)[1] not in (".yaml", ".yml", ".json"):
+            continue
+        try:
+            spec = be.load_spec(os.path.join(jobs, name))
+        except Exception:
+            continue
+        if not isinstance(spec, dict):
+            continue
+        for d in be.declared_out_dirs(spec):
+            claimed.setdefault(d, []).append(name)
+    for d, owners in claimed.items():
+        named = be.producer_spec_path(d, jobs)
+        if named and os.path.basename(named) not in owners:
+            disagree.append((d, owners))
+    check("no directory named for one spec is published into by another",
+          not disagree)
+    check("and the index is not empty, or the check above proves nothing",
+          len(claimed) > 100)
+
+
 def main():
     print("box_enqueue payload-collision guard")
     test_the_overwrite_that_happened_is_refused()
@@ -432,6 +616,17 @@ def main():
     test_the_two_card_refusals_are_reported_as_one_signal()
     test_a_stills_job_is_never_plate_checked()
     test_a_picture_that_could_not_be_fetched_is_refused_not_waved_through()
+    print()
+    print("box_enqueue producer resolution")
+    for case in (test_a_directory_named_for_its_spec_still_resolves,
+                 test_a_published_directory_that_dropped_the_date_suffix_resolves,
+                 test_two_specs_publishing_into_one_directory_REFUSE,
+                 test_a_directory_no_spec_claims_is_still_REFUSED,
+                 test_reading_a_directory_does_not_make_a_job_its_producer):
+        with tempfile.TemporaryDirectory() as td:
+            case(td)
+    test_the_real_beat_11_plate_resolves_in_the_real_pipeline_jobs()
+    test_the_new_link_never_contradicts_the_old_one()
     print()
     if FAILURES:
         print("✗ %d failure(s): %s" % (len(FAILURES), ", ".join(FAILURES)))

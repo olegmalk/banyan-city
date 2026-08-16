@@ -8927,16 +8927,31 @@ def test_a_motion_jobs_plate_is_traced_back_to_the_job_that_drew_it():
           real is not None and real.endswith("ep2-b09-guardpick-0814.yaml"))
     check("and it is one of the sets the evidence condemns",
           any(r in be.CARD_REFS_DENYLIST for r in be.spec_refs(be.load_spec(real))))
-    check("a job id with no spec on this machine resolves to nothing",
+    check("a directory nobody ever published resolves to nothing",
+          be.producer_spec_path("ep2-b11-idfix-that-never-ran") is None)
+
+    # AND THE HALF THAT WAS WRONG UNTIL 2026-08-16. This test used to assert
+    # that ep2-b01-final055-r3 "has no spec on this machine". It has one --
+    # ep2-b01-final055-r3-0812.yaml, which says in its own publish step that it
+    # writes farm-out/ep2-b01-final055-r3. The directory simply does not carry
+    # the date. 274 of the 645 published directories were refused this way.
+    check("the name lookup alone still cannot see a dropped date suffix",
           be.producer_spec_path("ep2-b01-final055-r3") is None)
+    found, why = be.resolve_producer("ep2-b01-final055-r3")
+    check("but the spec that declares the directory is found, and it is real",
+          why is None and found is not None
+          and found.endswith("ep2-b01-final055-r3-0812.yaml"))
+    check("a directory no spec declares is still unresolved, with a reason",
+          be.resolve_producer("ep2-b11-idfix-that-never-ran")[0] is None)
 
 
 def test_a_plate_drawn_from_a_card_reference_set_is_refused():
     """Denylisted refs → refuse; a clean set → pass; unresolvable → REFUSE.
 
     The third is the same law the plate check learned: "I could not check" must
-    never exit zero. It is also not hypothetical — ep2-b01-final055-r3 is a real
-    --src on disk whose producing spec is simply absent.
+    never exit zero. It is also not hypothetical — farm-out/b06-r6r7-recovered
+    is a real published directory that no spec in the repo claims, and
+    farm-out/ep2-b15-seedB is a real one that TWO specs write into.
     """
     import box_enqueue as be
 
@@ -8985,10 +9000,24 @@ def test_a_plate_drawn_from_a_card_reference_set_is_refused():
     check("a --src with no traceable producer is REFUSED, not waved through",
           len(unresolved) == 1 and "NOT checked" in unresolved[0])
     absent = be.refs_problems(
-        _motion_spec("C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-final055-r3\\"
-                     "b01-final055-i55-s0.png"))
-    check("and so is a farm-out job whose spec is absent — the real b01 case",
-          len(absent) == 1 and "ep2-b01-final055-r3" in absent[0])
+        _motion_spec("C:\\banyan-farm\\courier-box\\farm-out\\b06-r6r7-recovered\\"
+                     "06-r6-s0.png"))
+    check("and so is a farm-out directory no spec in the repo claims — a real one",
+          len(absent) == 1 and "b06-r6r7-recovered" in absent[0])
+
+    # THE THIRD SHAPE, and the one a `<dir>-DATE` name rule would have got
+    # confidently wrong: two specs publishing into ONE directory. Real —
+    # ep2-b15-seedC-0813 published into farm-out/ep2-b15-seedB. Which job drew
+    # a given plate there is not knowable from the path, so it is refused
+    # rather than attributed to whichever name sorts first.
+    tied = be.refs_problems(
+        _motion_spec("C:\\banyan-farm\\courier-box\\farm-out\\ep2-b15-seedB\\"
+                     "15-s0.png"))
+    check("a directory two specs publish into is refused, not attributed",
+          len(tied) == 1 and "2 specs publish into" in tied[0])
+    check("and both candidates are named so a person can settle it",
+          len(tied) == 1 and "ep2-b15-seedB-0812.yaml" in tied[0]
+          and "ep2-b15-seedC-0813.yaml" in tied[0])
 
     def unreadable(_path):
         raise ValueError("mapping values are not allowed here")

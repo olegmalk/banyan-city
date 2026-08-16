@@ -65,6 +65,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -594,9 +595,11 @@ def plate_problems(spec: dict, fetch=None) -> list:
 #
 # HOW THE PRODUCER IS FOUND. A motion job carries no --refs of its own; refs
 # live on the plate-GENERATION job. But the --src path names its producer --
-# farm-out/<job-id>/<file> is written by that job's publish step under its own
-# id -- so <job-id> maps back to pipeline/jobs/<job-id>.yaml and its --refs. On
-# the 27 motion jobs on disk that name a --src, that resolves for 24.
+# farm-out/<dir>/<file> is written by some job's publish step -- so <dir> maps
+# back to that spec and its --refs. It maps back by NAME when the directory
+# happens to be named for the spec file, and otherwise by the destination the
+# spec itself declares; see resolve_producer, which is where the assumption that
+# only the first of those exists cost 274 of 645 published directories.
 #
 # A NAME PATTERN IS NOT ENOUGH, and this is the load-bearing part of the design:
 # refs-guards-chosen-0814 contains no `charref` tell, no `card`, nothing a
@@ -658,12 +661,135 @@ def producing_job_id(src: str):
 
 
 def producer_spec_path(job_id: str, jobs_dir: str = None):
-    """The repo spec for a job id, or None if this machine has no copy of it."""
+    """The repo spec NAMED for a job id, or None if this machine has no copy.
+
+    The strongest link there is and the first one tried, but it only fires when
+    the directory happens to be named for the spec file -- which, measured over
+    the whole results branch on 2026-08-16, is true of 371 of 645 published
+    directories. See resolve_producer for the other 274.
+    """
     for ext in (".yaml", ".yml", ".json"):
         p = os.path.join(jobs_dir or JOBS_DIR, job_id + ext)
         if os.path.isfile(p):
             return p
     return None
+
+
+# THE DIRECTORY NAME IS DATA, NOT A CONVENTION -- which is the whole reason the
+# lookup above is not enough. Every job's publish step is an inline python
+# literal written by hand in its own spec:
+#
+#     dst = "C:/banyan-farm/courier-box/farm-out/ep2-b11-idfix"    # in
+#     pipeline/jobs/ep2-b11-idfix-0812.yaml
+#
+# Nothing derives that string from the spec's `id`, so nothing ever enforced
+# that they match, and mostly they do not: the date suffix is usually dropped.
+# Measured 2026-08-16 over origin/farm-results-rtx5090: of 645 published
+# directories only 371 are named for their spec file. The other 274 were refused
+# by refs_problems with "no spec in pipeline/jobs for producing job ..." -- a
+# refusal that reads like a provenance gap and was a string mismatch. Beat 11's
+# only staging-correct plate sat behind exactly that.
+#
+# AND THE OBVIOUS REPAIR IS THE WRONG ONE. Looking up `<dir>-<date>` matches 250
+# of the 274 and would have been three lines. telemetry.py:171 already records
+# why it must not be done: on 2026-08-13 task `ep2-b15-seedC-0813` published into
+# `ep2-b15-seedB` and `ep2-b04-balloon-pair-0813` into `ep2-b04-balloon-pair`, so
+# "deriving the path from the task name would have produced confident 404s".
+# Under a name rule farm-out/ep2-b15-seedB resolves to ep2-b15-seedB-0812 and the
+# refs of a DIFFERENT job get read as this plate's provenance. This guard exists
+# to answer "what was this picture drawn with"; a confident wrong answer is worse
+# than the refusal it replaces.
+#
+# SO THE INDEX IS BUILT FROM WHAT THE SPEC SAYS ABOUT ITSELF. A spec that writes
+# into farm-out/<dir> names <dir> in its own argv, and that is a fact rather than
+# a pattern. Measured over the same 645: it resolves 252 of the 274, disagrees
+# with the filename lookup on ZERO of the 371 the filename lookup already
+# answers, leaves 13 directories that two or more specs genuinely publish into
+# (ep2-b13/b14/b15-seedB, the -r2/-r3 pairs, the 13-spec ep2-goblin-staged wave)
+# and 9 that no spec in the repo claims at all. The last two groups still refuse.
+# An ambiguous directory is a real provenance hazard, not a lookup failure: the
+# plate in it could have come from either job and neither answer is checkable.
+#
+# TERMINAL COMPONENT ONLY, and that is load-bearing. `farm-out/<dir>` at the end
+# of a path is a destination directory; `farm-out/<dir>/<file>.png` is a --src
+# being READ. Without the distinction ep2-b01-lw-0815 -- which reads
+# farm-out/ep2-b01-final055-r3/b01-final055-i55-s0.png and publishes to its own
+# directory -- claims to be its own source's producer, and that one directory
+# turns ambiguous on a consumer rather than a second producer.
+OUT_DIR = re.compile(
+    r"courier-box[\\/]+farm-out[\\/]+([A-Za-z0-9._-]+)(?![\\/A-Za-z0-9._-])")
+
+
+def declared_out_dirs(spec: dict) -> list:
+    """The farm-out directories this spec's steps publish INTO.
+
+    Read off argv, like every other claim in this file: the id is written by
+    whoever filed the job, the argv is what runs.
+    """
+    found = []
+    for step in spec.get("steps") or []:
+        for a in step.get("argv") or []:
+            for m in OUT_DIR.finditer(str(a)):
+                if m.group(1) not in found:
+                    found.append(m.group(1))
+    return found
+
+
+def specs_publishing_to(job_id: str, jobs_dir: str = None, load=None) -> list:
+    """Every spec in the repo whose publish step writes farm-out/<job_id>.
+
+    Sorted, so a refusal names its candidates in the same order twice running.
+    A spec that cannot be read is skipped rather than fatal -- an unreadable
+    neighbour must not decide this job's fate, and the caller refuses anyway
+    when nothing resolves.
+    """
+    d = jobs_dir or JOBS_DIR
+    hit = []
+    try:
+        names = sorted(os.listdir(d))
+    except OSError:
+        return []
+    needle = job_id.encode("utf-8", "replace")
+    for name in names:
+        if os.path.splitext(name)[1] not in (".yaml", ".yml", ".json"):
+            continue
+        p = os.path.join(d, name)
+        try:
+            # Cheap prefilter: a spec whose argv names this directory must
+            # contain the string. 810 specs, one substring test each, before
+            # any yaml parser is asked to do work.
+            with open(p, "rb") as fh:
+                if needle not in fh.read():
+                    continue
+            spec = (load or load_spec)(p)
+        except Exception:
+            continue
+        if isinstance(spec, dict) and job_id in declared_out_dirs(spec):
+            hit.append(p)
+    return hit
+
+
+def resolve_producer(job_id: str, jobs_dir: str = None, load=None):
+    """(spec path, why not) for a published directory. Exactly one of them is set.
+
+    Two ways to be sure and no third: the spec is NAMED for the directory, or
+    exactly one spec in the repo says it publishes there. Anything else refuses,
+    and says which -- "two specs publish there" is a different fact from "no spec
+    does" and the reader needs to be able to tell them apart.
+    """
+    named = producer_spec_path(job_id, jobs_dir)
+    if named:
+        return named, None
+    cands = specs_publishing_to(job_id, jobs_dir, load)
+    if len(cands) == 1:
+        return cands[0], None
+    if cands:
+        return None, ("%d specs publish into farm-out/%s (%s) -- which of them "
+                      "drew this plate is not knowable from the path, so it is "
+                      "not guessed at"
+                      % (len(cands), job_id,
+                         ", ".join(os.path.basename(c) for c in cands)))
+    return None, "no spec in pipeline/jobs for producing job %r" % job_id
 
 
 def spec_refs(spec: dict) -> list:
@@ -688,9 +814,17 @@ def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
 
     TWO REFUSALS again, and the second for the same reason as the plate check's:
     a producer that cannot be identified was not checked, and "could not check"
-    must not exit zero. The three unresolvable jobs on disk are the two
-    plates-local srcs the unfetchable branch already blocks and
-    ep2-b01-final055-r3, whose spec is simply absent from pipeline/jobs.
+    must not exit zero.
+
+    WHAT "CANNOT BE IDENTIFIED" MEANS WAS WRONG UNTIL 2026-08-16, and this
+    docstring said so in its own words: "ep2-b01-final055-r3, whose spec is
+    simply absent from pipeline/jobs". It is not absent. It is
+    pipeline/jobs/ep2-b01-final055-r3-0812.yaml, and the directory it published
+    into simply does not carry the date. That mistake was not one spec's: it
+    refused 274 of the 645 directories on the results branch. resolve_producer
+    now reads the destination each spec declares for itself, and the refusal
+    below fires only when no spec claims the directory or when more than one
+    does -- the second being a real hazard rather than a lookup failure.
 
     Each is waivable per job, and separately, because they are different claims:
 
@@ -706,11 +840,9 @@ def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
         print("  refs     no --src in any step -- no producing job to trace")
         return []
     job_id = producing_job_id(src)
-    path = producer_spec_path(job_id, jobs_dir) if job_id else None
-    why = None
+    path, why = ((None, "no farm-out job id in that path") if not job_id
+                 else resolve_producer(job_id, jobs_dir, load))
     if path is None:
-        why = ("no farm-out job id in that path" if not job_id
-               else "no spec in pipeline/jobs for producing job %r" % job_id)
         producer = {}
     else:
         try:
@@ -731,10 +863,13 @@ def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
                 "not check' is not 'fine'.\n"
                 "      --src %s\n"
                 "      %s\n"
-                "      The check reads farm-out/<job-id>/<file> and looks up "
-                "pipeline/jobs/<job-id>.yaml. Publish the plate through a farm-out "
-                "job whose spec is in the repo and point --src at it, or waive this "
-                "one job with plate_ack: \"unresolved: <why>\"." % (src, why)]
+                "      The check reads farm-out/<dir>/<file>, then takes the spec "
+                "NAMED <dir> or, failing that, the one spec whose own publish step "
+                "writes into <dir>. Two specs writing there is not a tie to break: "
+                "the plate could be either job's and the answer would not be "
+                "checkable. Publish the plate through a farm-out directory one spec "
+                "owns and point --src at it, or waive this one job with plate_ack: "
+                "\"unresolved: <why>\"." % (src, why)]
     refs = spec_refs(producer)
     bad = sorted({r for r in refs if r in CARD_REFS_DENYLIST})
     if not bad:
