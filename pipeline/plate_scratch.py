@@ -23,6 +23,39 @@ recipe change gets one picture looked at before it gets four.
 TOKENS ARE MEASURED ON THE REAL TOKENIZER BEFORE ANYTHING IS DRAWN. SDXL's text
 encoders truncate at 77 tokens silently; a prompt that overflows loses its tail,
 which is where the style anchor lives. `--dry` measures and draws nothing.
+
+WHAT A PLATE FROM THIS FILE IS EVIDENCE OF, AND WHAT IT IS NOT (2026-08-16).
+**THIS MACHINE AND THE BOX ARE DIFFERENT RENDERERS.** Measured, not argued:
+the same prompt, the same negative, the same checkpoint, the same 832x1216, the
+same 40 steps, the same 7.5 guidance and the SAME SEED, with the starting latent
+bit-identical because both paths seed a `torch.Generator("cpu")`, produce a
+DIFFERENT PICTURE here than on the rtx5090 -- mean absolute pixel difference 61
+of 255. Dtype is not the cause and was ruled out by rendering the box's own
+bfloat16 on this machine: bf16/MPS vs bf16/CUDA is MAE 60.65 (same dtype, other
+machine) while fp16 vs fp32 ON THIS MACHINE is MAE 3.2. The evidence and the
+numbers are in `pipeline/backend_divergence_probe.py`; the mechanism is NOT
+known and is deliberately not guessed at there.
+
+So, for anyone about to draw here:
+
+  * A PLATE IS EVIDENCE ABOUT A PICTURE. If the PNG itself travels forward --
+    as the init image the box animates, or as the artefact -- the verdict on it
+    stands, because the pixels are the thing that was judged and the thing that
+    ships.
+  * A PLATE IS NEVER A PREDICTION ABOUT A PROMPT. "This wording worked on the
+    Mac, so the box will do it" IS VOID. It has never been true and on
+    2026-08-16 it produced a purple fruit here from a prompt whose only other
+    outing, on the box, returned red at 8 of 8 seeds.
+  * COLOUR ESPECIALLY DOES NOT TRAVEL. This machine returns a purple fig with
+    NO COLOUR WORD IN THE PROMPT AT ALL. The box does not. Canon colours must
+    be written into the words for the box path regardless of what lands here.
+
+THE IRONY IS DELIBERATE AND IS THE REASON THIS PARAGRAPH IS HERE RATHER THAN IN
+A LANE REPORT. `pipeline/canon.yaml` exists because five times a decision moved
+and the thing that actually runs did not. A constraint on HOW WE MEASURE, left
+in one lane's write-up, becomes the sixth instance by the same mechanism -- and
+this one would be worse, because the file that hid it for four days hid it with
+a comment that sounded like the question had already been settled.
 """
 from __future__ import annotations
 
@@ -580,6 +613,39 @@ DRAFTS = {
         # with an IP-Adapter reference this Mac does not have, so they cannot
         # serve as the control for an MPS render and pretending otherwise
         # would make the comparison unattributable.
+        #
+        # !! CORRECTION 2026-08-16 -- THE SENTENCE ABOVE IS FALSE, AND IT COST
+        # FOUR DAYS. The four rejected frames in farm-out/ep2-b20-idfix/ were
+        # drawn by `render_wave_sample.py`, WHICH CONTAINS NO IP-ADAPTER CODE
+        # OF ANY KIND -- grep it. The IP-Adapter frames are a DIFFERENT
+        # directory, farm-out/ep2-b20-ipa-frozen-0812/, written by a DIFFERENT
+        # script, `goblin_ipa_sample.py`, at scale 0.6 against reference
+        # 04-the-footnote-wave1-s0.png. Two render sets were conflated.
+        #
+        # WHY THE ERROR MATTERS MORE THAN THE FACT. This comment did not merely
+        # record something untrue; IT FORBADE AN INVESTIGATION. Believing the
+        # 08-12 frames could not serve as a control, no lane ever compared them
+        # to an MPS render -- and that one comparison was the whole answer. The
+        # prompts are BYTE-IDENTICAL in positive and in negative, and r1's seed
+        # 20263739 IS one of the four 08-12 seeds (s3). So the colour word was
+        # never the variable and never could have been, and three purple frames
+        # were about to be read as proof that it was.
+        #
+        # This is a distinct failure from the five "a decision moved and the
+        # records did not" instances in pipeline/canon.yaml. Those were records
+        # that went STALE. This is a record that was WRONG AND LOAD-BEARING --
+        # it closed a door and the door stayed closed because the note on it
+        # sounded like it had already been tried.
+        #
+        # WHAT THE COMPARISON ACTUALLY SHOWED, measured in
+        # `pipeline/backend_divergence_probe.py` (read its docstring): same
+        # prompt, same seed, same everything, the Mac returns PURPLE and the
+        # box returns RED. Precision is exonerated (bf16/MPS vs bf16/CUDA =
+        # MAE 60.65, same dtype, different machine), so THE VARIABLE IS THE
+        # BACKEND. Two standing consequences: the purple canon must be
+        # enforced IN WORDS on the box path, because the Mac's free purple
+        # does not travel there; and A MAC PLATE IS NEVER A PREDICTION ABOUT
+        # WHAT THE BOX WILL DRAW FROM THE SAME WORDING.
         "prompt": (
             "1boy, a small goblin boy, green skin, bald head, patchwork "
             "cloak, solo, in a sunny grassy field, raises a ripe fig in both "
@@ -599,6 +665,14 @@ DRAFTS = {
         # NOT reproduce that image here -- a CPU generator on MPS without the
         # IP-Adapter is a different draw -- and it is used only so the three
         # arms below share one seed and differ by their text alone.
+        #
+        # !! CORRECTION 2026-08-16. The conclusion is right and the reason is
+        # wrong. There was no IP-Adapter on those frames (see the correction
+        # above). It does not reproduce because MPS and CUDA are different
+        # renderers: measured at this seed, CUDA-vs-MPS is MAE 61 while
+        # fp16-vs-fp32 ON MPS is MAE 3. The draw differs by MACHINE, not by a
+        # missing reference -- which is a far bigger fact, because it applies
+        # to every prompt this file has ever drawn, not just this one.
         "seed": 20263739,
     },
 }

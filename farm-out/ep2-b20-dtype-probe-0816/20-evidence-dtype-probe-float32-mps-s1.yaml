@@ -1,0 +1,24 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 20
+beat_slug: "evidence"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20263739
+torch_dtype: "float32"
+device: "mps"
+render_seconds: 170.5
+png_sha256: "5b9d5ba84963b9aaa2c6f4286ea1071c66df9f2c37909e32e0fd542eb44792d9"
+prompts_from: "BYTE-IDENTICAL to farm-out/ep2-b20-idfix/20-evidence-wave1-s3.yaml (bf16/cuda, RED) and to farm-out/ep2-b20-mac-plate-0816/20-evidence-mac-plate-r1s1.yaml (fp16/mps, PURPLE). Same seed as both. shots.md UNTOUCHED."
+prompt: "1boy, a small goblin boy, green skin, bald head, patchwork cloak, solo, in a sunny grassy field, raises a ripe fig in both hands in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative_prompt: "photorealistic, text, girl, child, glowing eyes, glowing orb, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf"
+done_when: "DIAGNOSTIC, NOT A PLATE. Nothing about beat 20 passes or fails on this frame -- it carries the failing 08-12 composition on purpose, and its gaze, branch and disembodied-hand faults are EXPECTED and are not being scored. The only question asked of it: a blind cold reader, given the frame and nothing else and asked `what colour is the fruit?`, answers RED-family or PURPLE-family. For fp32 -- RED-family attributes the 08-12 red to PRECISION and condemns the Mac plate path as a colour instrument; PURPLE-family exonerates fp16 and makes it CUDA-vs-MPS backend divergence. Any third answer, or a split between the two dtypes that fits neither story, means hue is not stable under numerics at this recipe -- which is itself the finding, and it means colour must be PINNED BY THE PROMPT on every path."
+why_this_plate: "ONE sample per dtype. Isolates PRECISION from BACKEND on the b20 fruit colour.\n\n    dtype_probe.py float32\n    dtype_probe.py bfloat16\n\nTHE HOLE THIS CLOSES. The 08-12 frames the founder rejected as red and today's\nno-colour-word Mac \"control\" that came back purple are THE SAME PROMPT AT THE\nSAME SEED -- verified by string compare of the two sidecars, not by memory:\n\n  farm-out/ep2-b20-idfix/20-evidence-wave1-s3.yaml   seed 20263739  bf16 / cuda\n  farm-out/ep2-b20-mac-plate-0816/...-r1s1.yaml      seed 20263739  fp16 / mps\n\npositive identical, negative identical, model/size/steps/guidance identical,\nand BOTH paths seed a torch.Generator(\"cpu\"), so the initial latent noise is\nbit-identical too. Exactly two things differ:\n\n    render_wave_sample.py:237   torch_dtype=torch.bfloat16  ->  .to(\"cuda\")\n    plate_scratch.py:1542       torch_dtype=torch.float16   ->  .to(\"mps\")\n\nSo the colour word is NOT the variable. Precision and backend are, and in that\npair they are confounded. These runs unconfound them by holding the backend at\nMPS and moving only the dtype:\n\n    bf16 / cuda  = RED     (have it, free, 4 of 4 seeds, + 4 more in idfix-r2)\n    fp16 / mps   = PURPLE  (have it, free, 1 seed)\n    fp32 / mps   = THIS RUN -- numerically the reference. If the correct math\n                   is RED, fp16 is a hue artifact and Mac plates are drawn on a\n                   lying instrument. If the correct math is PURPLE, fp16 is\n                   exonerated and the divergence is CUDA-vs-MPS itself.\n    bf16 / mps   = THIS RUN -- the box's OWN dtype on the Mac's backend. Splits\n                   \"bf16 is what makes it red\" from \"cuda is what makes it red\".\n\nRead the two together as a column and only one story survives.\n\nNO OUTCOME rescues \"the Mac came back purple so we are fine\": the box is red at\n8 of 8 with no colour word, so the canon needs enforcing there regardless. These\nruns say WHY, and -- the bigger question -- whether the Mac plate path can be\ntrusted to report colour at all, and if not, what else it cannot report.\n\n$0. Apple MPS. Leaves the rtx5090 free."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

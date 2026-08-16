@@ -8393,3 +8393,82 @@ parsed-variant diff proving **12 added, 0 changed, 0 removed** (`git diff
 --numstat`: 208 insertions, 0 deletions). `check_canon_drift.py` unchanged at
 `fail=0 ack=68`. **The round/oval cotyledon shape remains STEWARD INFERENCE,
 vetoable in one line** (THE-SAPLING.md §2.2) — nothing added here strengthens it.
+
+## 2026-08-16 — THE MAC AND THE BOX ARE DIFFERENT RENDERERS (measured)
+
+**The hole:** three beat-20 frames came back purple from blind cold readers,
+**including the control, whose prompt contains no colour word.** That made
+"adding the colour word fixes the colour" unsupported — the thing without the
+word passed too.
+
+**What actually differed.** The 08-12 frames the founder rejected as red and
+today's purple control are **byte-identical in positive and in negative**, same
+checkpoint, same 832x1216, same 40 steps, same 7.5 guidance — and today's
+control seed `20263739` **is literally one of the four 08-12 seeds** (s3). Both
+paths seed a `torch.Generator("cpu")`, so the starting latent is bit-identical.
+Exactly two things differed: `render_wave_sample.py:237` **bfloat16 → cuda**
+versus `plate_scratch.py:1542` **float16 → mps**.
+
+**Precision is exonerated.** Rendering the box's own dtype on this machine
+splits them (`pipeline/backend_divergence_probe.py`, $0, Mac, card free):
+
+| condition | fruit | MAE vs box |
+|---|---|---|
+| bf16 / CUDA (box, 08-12) | **red** | — |
+| fp16 / MPS (mac) | purple | 61.14 |
+| fp32 / MPS | purple | 61.01 |
+| bf16 / MPS | purple | **60.65** |
+
+fp16-vs-fp32 **on MPS** is MAE **3.22**; bf16-vs-fp32 on MPS is 11.10. **The
+backend dominates dtype by 6x to 20x**, and bf16/MPS vs bf16/CUDA — same dtype,
+other machine, MAE 60.65 — is the single-variable proof. Blind cold readers on
+both new frames, given only a path and no mention of purple or figs, said
+"purple". **There is no dtype fix and no Mac plate needs redrawing on precision
+grounds.**
+
+**Two standing consequences, neither expiring:**
+
+1. **The purple canon must be enforced IN WORDS on the box path.** The Mac
+   returns purple with no colour word at all; the box returned red, crimson,
+   maroon and wine at **8 of 8** seeds on that same wording. The Mac's free
+   purple does not travel. (Handed to the canon lane for the `ep2-fig-purple`
+   drift subject; not edited here.)
+2. **A Mac plate is evidence about a PICTURE, never a prediction about a
+   PROMPT.** If the PNG travels forward as pixels its verdict stands. "It worked
+   on the Mac so the box will do it" is void.
+
+**The mechanism is NOT known and is deliberately not guessed at.** Both machines
+pin diffusers 0.29.2 and resolve to `EulerAncestralDiscreteScheduler` with
+identical config. The tempting story — chaotic amplification of rounding — is
+**killed by this lane's own numbers**: fp16→fp32 is a far larger numerical change
+than CUDA→MPS rounding and moves the image by MAE 3. Unverified candidates (both
+need the box): MPS internally upcasting so the requested dtype barely binds, and
+a checkpoint-revision difference between the caches. **Cannot determine.**
+
+**A SIXTH PROPAGATION FAILURE SHAPE — a record that FORBADE an investigation.**
+`plate_scratch.py` DRAFTS[20] asserted the rejected 08-12 frames "were drawn on
+CUDA with an IP-Adapter reference this Mac does not have, so they cannot serve
+as the control". **False:** `render_wave_sample.py` contains no IP-Adapter code
+at all; the IP-Adapter frames are a different directory
+(`farm-out/ep2-b20-ipa-frozen-0812/`) from a different script
+(`goblin_ipa_sample.py`, scale 0.6). Two render sets were conflated, and the
+note sounded like the question had already been tried, so for four days nobody
+made the one comparison that was the whole answer. **The five instances in
+`canon.yaml` are records that went STALE; this is a record that was WRONG AND
+LOAD-BEARING.** Corrected in place, house style, false sentence left standing.
+
+**Retracted by this lane, against itself:** an earlier claim that the Mac frames
+showed blown highlights and haze. **False** — said off a 380px contact sheet. An
+exposure statistic, falsified first on synthetic variants (5/5 checks pass),
+measures the Mac frame as clipping *less* (0.185% vs 0.810%), riding the
+shoulder less (0.558% vs 4.227%), washed less (2.85% vs 8.01%) and *more*
+saturated (84.7 vs 68.2) than the box frame. No haze, no clipping problem, on 13
+Mac plates across beats 08, 11, 14, 17 and 20.
+
+**Beat 20 remains unsolved and the colour pass ships nothing.** Its `done_when`
+— *"BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE —
+the empty stem is the evidence and must be in frame"* — fails on all three
+frames: gaze level/up-at-hands/down, no sapling stem, oversized off-frame adult
+hands in two, and a detached pale grimacing face lying in the grass (confirmed
+by crop, and reproduced identically at fp32 and bf16, so it is **the vacancy
+law, not precision**).
