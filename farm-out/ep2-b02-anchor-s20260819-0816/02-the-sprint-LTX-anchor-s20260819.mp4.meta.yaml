@@ -1,0 +1,28 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 2
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260819
+task: ep2-b02-anchor-s20260819-0816
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.017
+compute_s_per_video_s: 58.8
+# --- appended after the render by the staging-structure ladder.
+approved: false
+provisional: true
+note: |
+  ONE SAMPLE of one prompt STRUCTURE. Not a pick, not a seed
+  confirmation, and not approved for any cut. A lane reads it on
+  consecutive frames against the beat's done_when before anything
+  built on it is filed.
