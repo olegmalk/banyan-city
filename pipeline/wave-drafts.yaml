@@ -309,6 +309,23 @@ beats:
     # wording and the reference are byte-identical to the previous round.
     # If the fruit is visible and still does not read as a fig, that is the honest end of
     # the mechanical route and the board entry already offers him the third answer.
+    # -- `authored_b01_canon_0816` -- 2026-08-16, THE SAPLING CANON.
+    # Supersedes `authored` and `authored_b01_t2i_fig` on this beat, which ask for
+    # `one small round green fig` and `only three or four leaves`. Both clauses are
+    # now defects: he ruled TWO leaves on 2026-08-16 and the fig has been purple
+    # since 08-13/14. Whole-plant framing and morning light are unchanged from the
+    # drafts this replaces. See genomes/sapling/THE-SAPLING.md.
+    authored_b01_canon_0816: >-
+      A tiny fig seedling in an open grassy field, exactly two wide oval cotyledon
+      leaves with soft round tips, and one small deep purple-violet fig, green at its
+      neck, matte, growing on its thin stem, whole plant in frame. Static camera,
+      medium shot, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child,
+      no person, no chibi, no mascot, no creature, no face, no green fig, no green
+      fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no
+      five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush
+      foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical,
+      no text.
     authored_b01_figlit: >-
       A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
@@ -317,6 +334,26 @@ beats:
       contre-jour, no lens flare, no face, no eyes, no creature, no mascot, no person, no
       hand, no eggplant, no gloss, no black fruit, no dark, no night. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # -- `authored_b01_figleaf_canon_0816` -- 2026-08-16, THE SAPLING CANON.
+    # Supersedes `authored_b01_figleaf`, `_figleaf2`, `_figleaf3` and `_figlit`, all
+    # four of which ask for `deeply lobed fig leaves with five fingers` and ban
+    # `no simple oval leaves`. That is the exact inverse of the canon: a two-leaf
+    # plant is a cotyledon-stage seedling and lobed five-fingered leaves are
+    # mature-tree foliage. The FRUIT wording and the front-lit fix that `_figlit`
+    # bought (backlight and silhouette banned by name, nine rounds were judged on
+    # silhouettes) are carried across byte-for-byte -- only the leaf clauses move.
+    authored_b01_figleaf_canon_0816: >-
+      A tiny fig seedling in a sunlit grassy field, exactly two wide oval cotyledon
+      leaves with soft round tips, and hanging below them one small purple fig, a
+      plain purple teardrop of fruit with matte dusty skin. Medium shot, even front
+      light, the sun behind the camera, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No backlight, no silhouette, no
+      contre-jour, no lens flare, no face, no eyes, no creature, no mascot, no chibi,
+      no person, no girl, no boy, no child, no eggplant, no aubergine, no gloss, no
+      shine, no black fruit, no green fig, no green fruit, no lobed leaves, no
+      five-fingered leaves, no three leaves, no four leaves, no stem crossing the
+      fruit, no dark, no night. No photorealism, no 3D render look. 9:16 vertical,
+      no text.
     authored_b01_figleaf3: >-
       A tiny fig seedling in a sunlit grassy field, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
@@ -5388,6 +5425,21 @@ beats:
     # wording and the reference are byte-identical to the previous round.
     # If the fruit is visible and still does not read as a fig, that is the honest end of
     # the mechanical route and the board entry already offers him the third answer.
+    # -- `authored_b18_canon_0816` -- 2026-08-16, THE SAPLING CANON.
+    # Supersedes `authored`, `authored_b18_plantneg` and `authored_b18_refresh`, all
+    # three of which ask for a GREEN fig positively. His purple ruling (08-13/14) and
+    # his red ruling (08-16) both leave green standing by not naming it; it is named
+    # here. The macro framing, the flexing stem and the amber light are unchanged.
+    authored_b18_canon_0816: >-
+      A single small deep purple-violet fig, green at its neck, matte, on the
+      thinnest branch of a tiny sapling, the only fruit in frame, its stem flexing
+      under the weight, warm amber afternoon light against a soft wash sky. Held
+      macro, extreme close-up, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No second fruit, no two fruit, no apple, no green
+      fig, no green fruit, no red fruit, no white fruit, no pale fruit, no woman, no
+      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face,
+      no sketch lines, no dashed outline, no thick branch. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b18_figlit: >-
       A tiny fig sapling's thinnest branch, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty
@@ -5396,6 +5448,22 @@ beats:
       contre-jour, no lens flare, no face, no eyes, no creature, no mascot, no person, no
       hand, no eggplant, no gloss, no black fruit, no dark, no night. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # -- `authored_b18_figleaf_canon_0816` -- 2026-08-16, THE SAPLING CANON.
+    # Supersedes `authored_b18_figleaf2`, `_figleaf3` and `_figlit` on this beat,
+    # which carry the same `deeply lobed fig leaves with five fingers` positive and
+    # `no simple oval leaves` negative as their beat-01 twins. Same correction, same
+    # reason; the held-macro framing and the front light are carried across.
+    authored_b18_figleaf_canon_0816: >-
+      A tiny fig sapling's thinnest branch against a soft sky, exactly two wide oval
+      cotyledon leaves with soft round tips, and hanging below them one small purple
+      fig, a plain purple teardrop of fruit with matte dusty skin. Held macro, even
+      front light, the sun behind the camera, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No backlight, no silhouette, no
+      contre-jour, no face, no eyes, no creature, no mascot, no chibi, no person, no
+      girl, no boy, no child, no eggplant, no aubergine, no gloss, no shine, no black
+      fruit, no green fig, no green fruit, no lobed leaves, no five-fingered leaves,
+      no three leaves, no four leaves, no stem crossing the fruit, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b18_figleaf3: >-
       A tiny fig sapling's thinnest branch against a soft sky, deeply lobed fig leaves with five fingers, and hanging
       below them one small purple fig, a plain purple teardrop of fruit with matte dusty

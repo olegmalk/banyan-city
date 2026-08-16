@@ -1,0 +1,446 @@
+# THE CANON REGISTER — the input to `pipeline/check_canon_drift.py`.
+#
+# WHAT THIS FILE IS FOR. Three times in two days a decision moved and the thing
+# that actually RUNS did not:
+#
+#   1. 2026-08-14/15 the founder cast both guards. The approval was written into
+#      review/inbox.yaml and NOWHERE ELSE. STATE.md, done-definitions.yaml,
+#      steward-picks-0815.yaml and gate-evidence.yaml all still said "unapproved",
+#      and four beats (05, 09, 10, 11) stayed blocked for a day on a decision that
+#      already existed. Fixed in 740e6212 / 2cff145d.
+#   2. 2026-08-12 the guard reference sheets moved off `bald` (charref r4/r5:
+#      "`bald` comes out, `short hair` and `visible face` go in"). The change never
+#      reached one staged beat plate: 22 of the 57 guard-beat prompts in
+#      wave-drafts.yaml still ask for `bald`. Beat 11's logged "identity collapse -
+#      the bald scalp fills in with dark hair" was the render drifting TOWARD the
+#      correct cast, recorded as a defect. Found in e4279ce5.
+#   3. 2026-08-13/14 the fig became PURPLE and was written into three beat-20
+#      drafts. No render has ever produced a purple frame: 56 rendered fig prompts
+#      across beats 19 and 20, zero containing the word. The colour sheet built on
+#      08-15 therefore asked the founder to rule on 08-12 frames whose prompt
+#      contains no colour word at all, and he rejected a colour the beat was never
+#      asked for.
+#
+# WHY A REGISTER AND NOT A HEURISTIC. Both were measured against this repo before
+# this file existed:
+#
+#   * FOR DECISIONS. Matching resolved inbox cards to records by shared content
+#     words (the originally sketched design) produces 47 hits on today's repo and
+#     the great majority pair the wrong card with the wrong line — "guard cast
+#     unapproved" in gate-evidence.yaml gets matched to a card about publishing
+#     episode 1. A check at that precision gets switched off in a week, the way the
+#     runner watchdog was after 60 false restarts in five hours.
+#   * FOR PROMPTS. `bald` appears in 272 rendered goblin prompts and 84 guard ones.
+#     For the goblin it is CANON; for the guards it is the defect. No word-level
+#     heuristic can tell those apart, because the difference is not in the word, it
+#     is in who the sentence is about. A rule with no notion of subject either
+#     misses instance 2 or fires on every goblin prompt in the repo.
+#
+# So the subject is declared once, here, and the checker does the cross-product.
+#
+# HOW YOU ARE MEANT TO USE IT. Register a subject WHEN YOU WRITE THE BLOCK, not
+# when it clears. The moment the founder answers in review/inbox.yaml, the checker
+# starts failing on every record that still says the subject is open — which is
+# exactly the day of silence that instance 1 cost.
+#
+# THIS FILE CANNOT GO STALE QUIETLY. Every entry names `evidence:` — a file and a
+# literal string that must still be in it. If the canon moves and this register is
+# not updated, the evidence stops matching and the checker FAILS on the register
+# itself rather than on the repo. Same for `acknowledged:` entries: one that no
+# longer matches anything fails as `stale_acknowledgement`, so the suppression list
+# prunes itself instead of accumulating into a blindfold.
+#
+# $0, no GPU, no network, pure text. Run: python3 pipeline/check_canon_drift.py
+
+# ---------------------------------------------------------------------------
+# Record files a founder-decision subject is checked against. YAML files are
+# adjudicated structurally (key path + dated `*_CORRECTION_*` sibling) and can
+# FAIL. Markdown logs are append-only prose and are reported at REVIEW only —
+# see check_canon_drift.py's module docstring for the measurement behind that.
+records:
+  structured:
+  - review/ep2-picks/done-definitions.yaml
+  - review/ep2-picks/steward-picks-0815.yaml
+  - review/ep2-picks/gate-evidence.yaml
+  - review/ep2-picks/wave2-faults-fixer.yaml
+  - cuts/cuts.yaml
+  prose:
+  - STATE.md
+  - DECISIONS.md
+  - STEWARDSHIP.md
+
+subjects:
+
+# --- INSTANCE 1 ------------------------------------------------------------
+- id: ep2-guard-cast
+  what: >-
+    Who the two episode-2 guards are. Held beats 05, 06, 07, 09, 10 and 11 from
+    2026-08-12; cast by the founder on 08-14 (guard A) and 08-15 (guard B), and
+    ratified as drawn on 08-16.
+  kind: founder_decision
+  registered: '2026-08-12'
+  resolved_by:
+    card_url_contains: sheets/guard-cast-0816.jpg
+    verdict_matches: THE CAST STANDS AS DRAWN
+  evidence:
+    file: review/inbox.yaml
+    contains: 'guard A and guard B exactly as they appear on review/ep2-picks/sheets/guard-cast-0816.jpg'
+  # Stereotyped ways a record says this subject is still open. Deliberately
+  # narrow: each names the SUBJECT, not just an open-sounding word.
+  open_phrases:
+  - guard cast unapproved
+  - animat\w* guard beats off an unapproved cast
+  - do not cast them
+  - waits for the guard sheet
+  - guard sheet is on the founder'?s board awaiting his veto
+  - guards? (?:are |remain )?(?:still )?unapproved
+  - gated on the guard (?:reference )?sheet
+  # A hit is NOT a finding when the line is talking about the failure rather than
+  # asserting it. Content-checked, not guessed: these are the exact shapes the
+  # 2026-08-16 corrections were written in.
+  negation_cues:
+  - no record may
+  - no longer
+  - is no longer
+  - CORRECTION
+  - superseded
+  - still (?:said|say|says|described|describe|describes)
+  - stale
+  - was already out of date
+  - discharged
+  - the rule this card exposed
+
+# --- INSTANCE 2 ------------------------------------------------------------
+- id: ep2-guard-hair
+  what: >-
+    The approved guards have HAIR. Guard A dark cropped hair, guard B light sandy
+    hair. `bald`/`bare heads` was the steward's own translation of an anti-helmet
+    intent and was never the founder's word for the guards; it carried his separate
+    BALD ruling for the GOBLIN onto two men it was never about.
+  kind: prompt_canon
+  since: '2026-08-12'
+  evidence:
+    file: pipeline/jobs/ep2-charref-guards-r4-0812.yaml
+    contains: '`bald` comes out, `short hair` and `visible face` go in'
+  scope:
+    beats: [5, 6, 7, 9, 10, 11]
+    prompt_mentions: \bguards?\b
+  forbids:
+  - \bbald\b
+  - \bbare heads?\b
+  # Every one of these was rendered before 2026-08-12 or is a superseded round, and
+  # every one is named in the record below. They are HISTORY, not work. A guard
+  # variant that is NOT on this list is a new mis-cast plate and fails.
+  acknowledged:
+    recorded_in: review/ep2-picks/done-definitions.yaml
+    recorded_contains: guards_CORRECTION_0816
+    variants:
+    - authored_guards_silly
+    - authored_b05_warmfield
+    - authored_b05_sheet_tunic
+    - authored_b05_sheet_robe
+    - authored_b05_sheet_vest
+    - authored_b05_idfix
+    - authored_b05_idfix_r2
+    - authored_charref_guards
+    - authored_charref_guards_r2
+    - authored_b06_idfix
+    - authored_b06_idfix_r2
+    - authored_charref_guards_r3
+    - authored_b07_idfix
+    - authored_b07_idfix_r2
+    - authored_b09_idfix
+    - authored_b09_scene4
+    - authored_b09_idfix_r2
+    - authored_b09_refresh
+    - authored_b10_idfix
+    - authored_b10_idfix_r2
+    - authored_b10_refresh
+    - authored_b11_idfix
+
+# --- INSTANCE 3 ------------------------------------------------------------
+- id: ep2-fig-purple
+  what: >-
+    The fig is PURPLE. Ruled 2026-08-13/14 and written into authored_b20_plate,
+    authored_b20_scene and authored_b20_adult. `must_have_run` asks the only
+    question that mattered: has any frame the founder could be shown ever been
+    rendered from a prompt carrying it?
+  kind: prompt_canon
+  since: '2026-08-13'
+  evidence:
+    file: pipeline/wave-drafts.yaml
+    contains: 'raises a deep purple-violet fig'
+  scope:
+    beats: [19, 20]
+    prompt_mentions: \bfigs?\b|\bfruit\b
+  requires_any:
+  - purple
+  must_have_run: true
+
+# --- INSTANCE 4 ------------------------------------------------------------
+# THE SAPLING, ruled 2026-08-16. Three subjects, because he ruled on three
+# things and they fail in different places:
+#
+#   sapling-two-leaves       the count. His word, no inference in it.
+#   sapling-cotyledon-shape  the shape. STEWARD INFERENCE from the count.
+#   sapling-height           the size. His word; today the checker cannot see
+#                            where it is broken, and the entry says so.
+#
+# All three are backed by genomes/sapling/THE-SAPLING.md, which is the prose
+# canon. It is a NEW file rather than a section of genomes/sapling/style.md
+# because style.md disclaims itself on its own third line ("STALE (2026-07-27)
+# ... Do not render from this") and a canon kept in a file that says not to use
+# it is not a canon.
+#
+# A NOTE ON THE FORBID PATTERNS, because this is a real sharp edge. The checker
+# reads each draft as ONE string: the positive clause and the `No ...` negative
+# tail are concatenated, and nothing in it distinguishes them. So a forbid on a
+# bare term fires on the drafts that BAN that term -- the corrected drafts say
+# `no green fig` and `no lobed leaves`, and a naive /green fig/ or /lobed/ would
+# report every one of them as a violation. That is the cry-wolf failure that got
+# the runner watchdog disabled, arriving by a different door. Every pattern below
+# is therefore written so the negatives cannot match it: `(?<!no )` where the term
+# is one we also ban, and the exact positive phrasing (`deeply lobed`, `five
+# fingers` with a space) where the ban uses a different form (`no lobed leaves`,
+# `five-fingered`). Verified by running the sweep against the corrected file, not
+# assumed. If you add a term here, run it and read the ACK/FAIL lines.
+
+- id: sapling-two-leaves
+  what: >-
+    The sapling has TWO leaves. Ruled by the founder 2026-08-16: "make sure it has
+    2 leafs and has a set height". Supersedes his 2026-08-08 "dont overthink the
+    leafs on it", which taste/steward-model.v1.md A1 had recorded as a standing
+    rule that leaf count is NOT to be scored. Both dates are in THE-SAPLING.md §5
+    so nobody applies the older rule and skips scoring the leaves.
+  kind: prompt_canon
+  since: '2026-08-16'
+  evidence:
+    file: genomes/sapling/THE-SAPLING.md
+    contains: 'Every prompt that puts the plant in frame asks for **exactly two leaves**'
+  scope:
+    beats: [1, 2, 3, 4, 12, 13, 15, 16, 18, 19, 20, 21]
+    prompt_mentions: \bsapling\b|\bseedling\b|\bleaf\b|\bleaves\b
+  forbids:
+  - three or four leaves
+  # WHY THE BARE KEY `authored` IS SAFE TO ACKNOWLEDGE HERE AND ALMOST NOWHERE ELSE.
+  # The ack list matches on variant NAME with no beat filter, so acknowledging
+  # `authored` would normally be a blindfold: every beat has an `authored` key. It
+  # is safe for THIS subject only because the forbidden phrase `three or four
+  # leaves` occurs on exactly one beat's drafts in the whole corpus (beat 01), so
+  # the suppression cannot reach a second beat even in principle. DO NOT COPY THIS
+  # LINE to a subject whose forbid appears widely -- there it would switch the
+  # check off for twenty-one beats at once.
+  acknowledged:
+    recorded_in: genomes/sapling/THE-SAPLING.md
+    recorded_contains: sapling_drafts_ACK_0816
+    variants:
+    - authored
+    - authored_b01_t2i_fig
+
+- id: sapling-cotyledon-shape
+  what: >-
+    ROUND/OVAL COTYLEDONS, not deeply lobed five-fingered fig leaves. THIS IS
+    STEWARD INFERENCE FROM HIS TWO-LEAF RULING AND NOT HIS WORDS -- a two-leaf
+    plant at ~40 cm is a cotyledon-stage seedling and cotyledons are round, while
+    deeply lobed palmate leaves are mature-tree foliage that cannot co-exist with
+    a two-leaf seedling. The survey named round-vs-lobed as the one thing that
+    could not be inferred; this entry records that the steward inferred it anyway,
+    on that reasoning, and it is VETOABLE IN ONE LINE ("lobed, not round"), in
+    which case invert `forbids` and delete this note. Evidence already leaned the
+    same way before the ruling: `wide oval cotyledon leaves` on four beats
+    (12/15/19/20) against `deeply lobed fig leaves with five fingers` on one (01).
+  kind: prompt_canon
+  since: '2026-08-16'
+  evidence:
+    file: genomes/sapling/THE-SAPLING.md
+    contains: 'The working canon is ROUND/OVAL COTYLEDONS'
+  scope:
+    beats: [1, 2, 3, 4, 12, 13, 15, 16, 18, 19, 20, 21]
+    prompt_mentions: \bsapling\b|\bseedling\b|\bleaf\b|\bleaves\b
+  forbids:
+  - deeply lobed
+  - \bfive fingers\b
+  - \bpalmate\b
+  - no simple oval leaves
+  # All seven already fired; every one is a superseded LIGHTING or FRAMING round,
+  # and each is replaced by a dated `*_canon_0816` draft beside it. They are
+  # history. A NEW lobed draft is not on this list and fails.
+  acknowledged:
+    recorded_in: genomes/sapling/THE-SAPLING.md
+    recorded_contains: sapling_drafts_ACK_0816
+    variants:
+    - authored_b01_figleaf
+    - authored_b01_figleaf2
+    - authored_b01_figleaf3
+    - authored_b01_figlit
+    - authored_b18_figleaf2
+    - authored_b18_figleaf3
+    - authored_b18_figlit
+
+- id: sapling-fig-not-green
+  what: >-
+    The fig is PURPLE on the sapling beats too, and GREEN is a defect. His
+    2026-08-13/14 purple ruling was written into beats 19 and 20 only (subject
+    ep2-fig-purple); his 2026-08-16 ruling kills RED. Neither names green, so
+    green survived both by omission -- which is why `ONE SINGLE ROUND GREEN FIG`
+    was still live on beat 18 on the day of the survey. This entry names it.
+    Beats 1 and 18 only: 19 and 20 belong to ep2-fig-purple and are not
+    double-covered.
+  kind: prompt_canon
+  since: '2026-08-16'
+  evidence:
+    file: genomes/sapling/THE-SAPLING.md
+    contains: 'the fig is PURPLE, and green is a defect, not a default'
+  scope:
+    beats: [1, 18]
+    prompt_mentions: \bfigs?\b|\bfruit\b
+  # `(?<!no )` because the corrected drafts BAN `no green fig` in their negative
+  # tail and the checker sees positive and negative as one string.
+  forbids:
+  - (?<!no )green fig
+  # THE JOB-PAYLOAD ENTRIES BELOW ARE FIRED RECEIPTS, NOT WORK. Every one was
+  # verified run by `task` name against pipeline/measured/queue-history.json, a
+  # 573-row completed-run ledger carrying spec_file, rc and the exact prompt bytes.
+  # A fired spec is a receipt: editing its payload would falsify the record of what
+  # was actually sent, so they are acknowledged rather than rewritten, and the canon
+  # supersedes them in prose (genomes/sapling/THE-SAPLING.md §6.2).
+  # NOTE FOR THE CHECKER'S OWNING LANE: this list should not need to exist. R2's
+  # payload reader does not gate on run status the way `unrun_jobs` gates variants,
+  # so it re-reports history forever -- which this file's own header calls the
+  # pattern that got the runner watchdog switched off. Gate payload prompts on
+  # queue-history and every `jobs/...` line below can be deleted.
+  acknowledged:
+    recorded_in: genomes/sapling/THE-SAPLING.md
+    recorded_contains: sapling_drafts_ACK_0816
+    variants:
+    - authored
+    - authored_b01_t2i_fig
+    - authored_b18_plantneg
+    - authored_b18_refresh
+    - jobs/ep2-b01-cold-r2-0813:b01-fig-prompt.txt
+    - jobs/ep2-b01-cold-r2B-0813:b01-fig-prompt.txt
+    - jobs/ep2-b01-figgrow-055-0812:b01-fig-prompt.txt
+    - jobs/ep2-b01-figgrow-055-r2-0812:b01-fig-prompt.txt
+    - jobs/ep2-b01-figgrow-055-r3-0812:b01-fig-prompt.txt
+    - jobs/ep2-b01-figgrow-fig-0811:b01-fig-prompt.txt
+    - jobs/ep2-b01-nocrf-0813:b01-fig-prompt.txt
+    - jobs/ep2-b01-shape-0813:b01-fig-prompt.txt
+    - jobs/ep2-b01-shape-a2-0813:b01-fig-prompt.txt
+    - jobs/ep2-b01-shapeB-0813:b01-fig-prompt.txt
+    - jobs/ep2-b18-count-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-countB-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figfeat-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figfeatB-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figshape-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figshape-r2-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figshape-r2B-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-figshapeB-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-firstera-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-motion-0812:b13-motion-prompt.txt
+    - jobs/ep2-b18-nocrf-0813:b13-motion-prompt.txt
+    - jobs/ep2-b18-seedB-0812:b13-motion-prompt.txt
+    - jobs/ep2-b18-stable-0812:b13-motion-prompt.txt
+    - jobs/ep2-b18-stableB-0812:b13-motion-prompt.txt
+    - jobs/ep2-b18-tight-0812:b13-motion-prompt.txt
+    - jobs/ep2-b18-tightB-0812:b13-motion-prompt.txt
+
+- id: sapling-height
+  what: >-
+    The sapling is knee-high on the goblin -- about 40 cm, ALWAYS SHORTER THAN HE
+    IS -- in every beat of 002b. Ruled 2026-08-16 ("has a set height ... just dont
+    make it double in size suddenly"); the figure is the 002a/b/c row of the
+    canonical growth ladder and is corroborated by the show's own voiced VO on
+    beat 03, "I am forty centimeters tall".
+    TWO THINGS THIS ENTRY DELIBERATELY DOES NOT FORBID, both verified against the
+    corpus first: `standing tall` (nine drafts) is POSTURE, not height -- ledgered
+    in taste/steward-model.v1.md A7, "'Reads tall' is about how the subject sits in
+    the FRAME, not about the character's stated size", and beat 02 writes both at
+    once ("a tiny 40cm mascot-simple sapling standing tall"). `no taller than the
+    grass around it` (beats 01, 12) is compatible with 40 cm in summer grass.
+    Forbidding either would fire on ten drafts for no defect.
+    WHAT THIS ENTRY CANNOT SEE TODAY, said plainly rather than left to be
+    discovered: `taller than he is` is NOT in wave-drafts.yaml. It lives in the
+    `payload:` prompt text of six beat-15 job specs, and check_canon_drift.py does
+    not read job-spec payloads -- it reads wave-drafts drafts and `--variant` argv
+    pairs. So this subject matches nothing today and is not currently protecting
+    anything. It is written correctly ANYWAY, so it starts working the moment the
+    reader is widened to payloads. Until then the payload sweep is
+    pipeline/check_sapling_scale.py.
+  kind: prompt_canon
+  since: '2026-08-16'
+  # Retires the `sapling-height` axis in `axes:` below: writing the canon down is
+  # the action an unpinned-attribute finding exists to provoke.
+  pins_axis: sapling-height
+  evidence:
+    file: genomes/sapling/THE-SAPLING.md
+    contains: 'about 40 cm, always shorter than he'
+  scope:
+    beats: [1, 2, 3, 4, 12, 13, 15, 16, 17, 18, 19, 20, 21]
+    prompt_mentions: \bsapling\b|\bseedling\b|\bplant\b
+  forbids:
+  - taller than (?:he|him)\b
+  # All six fired; verified by `task` name against queue-history.json. Same receipt
+  # reasoning and the same note to the checker's lane as sapling-fig-not-green.
+  acknowledged:
+    recorded_in: genomes/sapling/THE-SAPLING.md
+    recorded_contains: sapling_drafts_ACK_0816
+    variants:
+    - jobs/ep2-b15-leaf-0813:b15-motion-prompt.txt
+    - jobs/ep2-b15-leafB-0813:b15-motion-prompt.txt
+    - jobs/ep2-b15-sapling-probe-0812:b15-motion-prompt.txt
+    - jobs/ep2-b15-sapling-r2-0812:b15-motion-prompt.txt
+    - jobs/ep2-b15-seedB-0812:b15-motion-prompt.txt
+    - jobs/ep2-b15-seedC-0813:b15-motion-prompt.txt
+
+# ---------------------------------------------------------------------------
+# AXES — attributes the prompts describe INCONSISTENTLY WITH EACH OTHER.
+#
+# Instance 2's shape with the twist that there was no canon to contradict: the
+# sapling is in twelve of twenty-one beats and has never had a canonical
+# description, so twelve beats improvised one and improvised it in opposite
+# directions. An axis names the attribute and its mutually exclusive values. It
+# does NOT say which value is right — that is taste and it is the founder's, and
+# nothing here may decide it. It says only that our own files disagree.
+#
+# Silence it by writing the canon: add a subject with `pins_axis: <id>` and the
+# axis stops being checked because the prompt rules take over.
+axes:
+
+
+- id: sapling-height
+  what: >-
+    How tall the sapling is relative to the goblin. Verified 2026-08-16 over the
+    731-prompt corpus: six beat-15 job payloads say `taller than he is`, nine
+    beat-12/ep3 prompts say `no taller than the grass` or `knee-high`.
+  # WHAT THIS AXIS DELIBERATELY DOES NOT CONTAIN, on the sapling lane's judgement:
+  #  * `standing tall` — 17 prompts, and it is POSTURE, not a height claim.
+  #    Banning it would fire seventeen times for no defect.
+  #  * `no taller than the grass` is NOT counted as a violation of a knee-high
+  #    canon; 40 cm in summer grass satisfies both. It is recorded as the
+  #    below-the-goblin reading, which is what it is.
+  # AND WHAT IT CANNOT DO. The canon that lane is actually writing is a RELATION —
+  # knee-high on the goblin, ~40 cm, always shorter than he is. This checker
+  # compares strings. It can catch the one phrase that states the opposite
+  # relation in words; it cannot evaluate a relation against a scene, and it will
+  # never notice a prompt that violates the relation without saying so. See the
+  # module docstring's "WHAT IT CANNOT DETECT".
+  must_be_pinned: true
+  scope:
+    prompt_mentions: \bsapling\b|\bseedling\b
+  values:
+    above-the-goblin:
+    - taller than he is
+    below-the-goblin:
+    - no taller than
+    - knee[- ]high
+    - shorter than he
+
+# RETIRED 2026-08-16, and the retirement is the point. `sapling-leaf-shape` and
+# `fig-colour` were declared here when NOTHING pinned either attribute — twelve
+# beats improvising a plant nobody had described. The sapling lane has since
+# written both down as subjects above (`sapling-cotyledon-shape`,
+# `sapling-fig-not-green`, plus `ep2-fig-purple`), which is exactly the action an
+# axis exists to provoke, so they are removed rather than left to report the same
+# violation a second time under a second name. An axis whose id a subject also
+# carries is skipped automatically; these two were removed because their ids
+# differ from the subjects that superseded them.
