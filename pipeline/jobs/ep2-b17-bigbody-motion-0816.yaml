@@ -222,6 +222,20 @@ success: 'A 704x1280 mp4, 97 frames at 24fps, opening on the published whole-bod
   a partial pass: this plate can stand him up, turn him and flutter the cloak, and none of that is the
   brush -- whether he stands is recorded separately and scored as nothing. A changed picture is not a pass,
   and depth, cadence and unaligned camera-scale numbers are not evidence and will not be quoted.'
+known_weakness_of_this_fixture: 'WRITTEN BEFORE THE CLIP EXISTS, so that if it fails nobody has to reconstruct
+  which caveats were known in advance. This adds NO criterion and changes none: M1-M4, F1-F7 and P1-P5
+  are exactly as committed in efd7bafa. THE PRIME SUSPECT IS P4, WHICH PASSED MARGINAL. The plate bar
+  forbids an empty region larger than the figure''s head; his head is about 230x230 px and the largest
+  flat patch left in the r3 background is about 114x240 px. That is a pass, and it is a pass on the ONE
+  axis this checkpoint has broken four separate times: beat 08''s colossus grown in a reserved sky, beat
+  08 r4 proving a negative naming the invited noun by name removes it not at all, r1''s insert PULLING
+  THE CAMERA BACK to manufacture a hole and putting a face in it, and the r2 plate of this very lane
+  growing three grinning goblin heads in a flat grass margin. SO: if this clip shows a face, a second
+  figure or a scene break, that ~114x240 flat patch is the FIRST place to look, and F5 should be read
+  with the fixture''s marginal P4 in hand rather than as a clean fact about the action. It does not
+  excuse a failure and it is not a reason to re-run: it is a named prior, recorded before the evidence.
+  The r2 rejection is recorded in ep2-b17-bigbody-plate-0816''s `why` and in plate_scratch.py REVS[(17,
+  3)], so the fixture is on the record as having been gated independently of the result.'
 why: 'The single cheapest question left in the motion investigation, and the only one whose answer changes
   what episode 2 can contain. Eleven minutes on the local card, $0, no new checkpoint, no recipe sweep,
   no second seed. Its plate cost nothing and was drawn on the Mac so the card stayed free while it was
