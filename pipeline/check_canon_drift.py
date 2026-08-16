@@ -283,6 +283,46 @@ def read_run_ledger(root):
     return tasks, specs, True
 
 
+def read_ledger_prompts(root):
+    """The run ledger's own `prompt` field → the same shape as a sidecar.
+
+    THIS IS THE HALF THAT MAKES R3 GIVE THE SAME ANSWER IN CI AND ON A LAPTOP.
+    farm-out/ is largely UNTRACKED — 456 of the 509 render sidecars on this
+    machine are not in the repo — so a CI checkout sees 53 of them and none from
+    farm-out at all. R3 asks "has any render ever carried this canon", and
+    answering it from a corpus that is 90% absent is how a check invents a
+    finding. queue-history.json is tracked, carries 573 completed runs, and each
+    row records the exact prompt that was sent.
+
+    Measured the day this was added: the sidecars alone said PURPLE had reached
+    zero of 56 rendered prompts on beats 19/20; the ledger has six rows on those
+    beats carrying it. The sidecars were not lying, they were missing.
+    """
+    p = Path(root) / RUN_LEDGER
+    if not p.exists():
+        return []
+    try:
+        doc = json.loads(p.read_text(errors="replace"))
+    except Exception:
+        return []
+    jobs = doc.get("jobs") if isinstance(doc, dict) else doc
+    if not isinstance(jobs, list):
+        return []
+    out = []
+    for r in jobs:
+        if not isinstance(r, dict):
+            continue
+        prompt = str(r.get("prompt") or "").strip()
+        if not prompt:
+            continue
+        beat = str(r.get("beat", "")).strip()
+        out.append((f"{RUN_LEDGER}:{r.get('id') or r.get('task')}",
+                    int(beat) if beat.isdigit() else None,
+                    r.get("task"),
+                    " ".join(prompt.split())))
+    return out
+
+
 def read_job_payload_prompts(root, only_jobs=None):
     """pipeline/jobs/*.yaml `payload:` → [(beat, label, prompt_text)].
 
@@ -809,7 +849,9 @@ def run(root, register_path=None, coverage_since=None):
 
     wd = Path(root) / "pipeline" / "wave-drafts.yaml"
     variants = read_draft_variants(wd.read_text(errors="replace")) if wd.exists() else []
-    runs = read_run_evidence(root)
+    # Render evidence is the union of what the box wrote beside each frame and
+    # what the tracked ledger recorded. Neither alone is complete.
+    runs = read_run_evidence(root) + read_ledger_prompts(root)
     jobs = read_job_variants(root)
 
     # THE TWO HALVES OF THE PROMPT CORPUS ARE NOT THE SAME KIND OF THING, and

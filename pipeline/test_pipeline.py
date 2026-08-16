@@ -10362,16 +10362,27 @@ def test_it_reads_the_real_repo_corpora_and_not_an_empty_set():
     # The lesson of the weights manifest that passed files full of holes, and of
     # the status payload that reported `ready: 0` against a real 3: a check that
     # silently reads nothing reports a clean repo. These are content floors.
+    # FLOORS ARE SET AGAINST WHAT IS TRACKED, not against this laptop. The first
+    # cut asserted 400+ render sidecars and went red in CI, because 456 of the 509
+    # sidecars here live in an UNTRACKED farm-out/ and a checkout sees 53. That is
+    # the same defect the floors exist to catch, one level up.
     drafts = ccd.read_draft_variants((REPO / "pipeline" / "wave-drafts.yaml").read_text())
     payloads = ccd.read_job_payload_prompts(str(REPO))
-    runs = ccd.read_run_evidence(str(REPO))
+    sidecars = ccd.read_run_evidence(str(REPO))
+    ledger = ccd.read_ledger_prompts(str(REPO))
     check("wave-drafts yields the authored prompt corpus", len(drafts) > 150)
     check("job payloads yield a prompt corpus of their own", len(payloads) > 300)
-    check("render-time sidecars are found in BOTH farm-out and review", len(runs) > 400)
-    check("sidecars outside farm-out are counted too",
-          any(not p.startswith("farm-out") for p, _, _, _ in runs))
+    check("tracked render sidecars under review/ are found", len(sidecars) > 40)
+    # 331 of the ledger's 573 rows carry a prompt; the rest are runs whose prompt
+    # was never recorded, and the floor is set under the real number, not the
+    # row count, so it measures what the reader actually returns.
+    check("the tracked ledger supplies the render evidence CI can actually see",
+          len(ledger) > 250)
+    check("render evidence is the union of both, so neither alone decides",
+          len(sidecars + ledger) > len(ledger))
     check("every prompt read is non-empty text",
-          all(p.strip() for _, _, p in drafts + payloads))
+          all(p.strip() for _, _, p in drafts + payloads)
+          and all(p.strip() for _, _, _, p in ledger))
 
 
 # --- AND THE CHECK MUST KNOW WHAT HAS ACTUALLY RUN -------------------------
