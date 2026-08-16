@@ -95,6 +95,30 @@ TWO REFUSALS OF ITS OWN, both about staleness, both loud:
 Neither is deleted. A refused entry keeps its bytes under `backlog/` with the
 reason in its name, so tomorrow morning shows what did not fire and why.
 
+EVERY NUMBER IS STAMPED `_before` OR `_after`, and none of them is a forecast.
+On 2026-08-16 this file's own `--status` reported `drainer {"ready": 0,
+"running": 0}` and `backlog_remaining 1` while the box's directories held 3
+ready, 1 running and 6 backlog -- and in the same payload the top-level `why`
+read "ready held 0.0 min of the 45 min floor -- filed 4, now 22.8 min", which
+was exactly right. Nothing was mis-globbed, nothing was cached, no path was
+remote-vs-local confused. The counts were read BEFORE the tick filed four jobs
+and then published under an `at` stamped AFTER it, so the payload described two
+different instants under one clock. `why` survived only because it happens to
+name both instants in its own sentence.
+
+A HALF-TRUE INSTRUMENT IS WORSE THAN A BROKEN ONE. The steward reads `--status`
+to answer the founder "is the card fed", and a payload where some fields are
+right teaches you to trust all of them. That is the file's own founding bug --
+"a full queue and a dead card read identically from the depth check" -- rebuilt
+one level up, in the reporting instead of the sensing. So: `measure()` is the
+only thing that counts anything; every field it produces is published as
+`ready_jobs_before`/`ready_jobs_after` and never bare; `minutes_after` is read
+off the directories rather than added up from medians (it is a queue, not a
+sum, and a move that silently failed made the old arithmetic a story about a
+directory nobody had looked at); and `--status` prints the snapshot's AGE every
+time plus its own live listing of the box, because a tick's photograph is up to
+three minutes old and the question is always about now.
+
 DEPLOYMENT, stated because a fix that never deploys is not a fix. The runner
 draining jobs tonight is `C:\banyan-farm\box_runner.py`, a hand copy taken from
 a commit on 2026-08-10; the repo's `pipeline/box_runner.py` has moved on and the
@@ -258,6 +282,38 @@ def queue_minutes(root: str, sub: str = READY):
     return round(minutes, 1), len(names), kinds
 
 
+def measure(root: str, now: float = None) -> dict:
+    """Every count in one dict, off one pass of the directories, at one instant.
+
+    EVERY NUMBER THIS FILE PUBLISHES COMES FROM HERE, and a reading is only ever
+    published under a name that says WHICH instant it is (`_before` / `_after`).
+    That convention is not decoration; it is the whole of the 2026-08-16 bug.
+    `--status` printed drainer `{"ready": 0, "running": 0}` and
+    `backlog_remaining 1` while the box's directories held 3 ready, 1 running
+    and 6 backlog. Nothing was mis-globbed and nothing was cached: those counts
+    were read BEFORE the tick filed four jobs and then written out under an `at`
+    stamped AFTER it. The `why` string next to them was correct only because it
+    happens to spell out both instants itself -- "ready held 0.0 min ... filed
+    4, now 22.8 min" -- which is how a payload came to be half true, and half
+    true is worse than broken, because the wrong half gets quoted to the
+    founder. Every field is now suffixed, so there is no unlabelled count left
+    in the payload for a reader to take as "now".
+
+    The old code read `ready/` twice per tick -- once in `queue_minutes`, again
+    inside `drainer_state` -- so the depth reading and the stall reading could
+    already disagree with each other if the runner claimed a job in the
+    microseconds between them. One pass, one instant, both readings.
+    """
+    now = time.time() if now is None else now
+    minutes, count, kinds = queue_minutes(root, READY)
+    return {"at": now,
+            "ready_jobs": count,
+            "ready_minutes": minutes,
+            "ready_kinds": kinds,
+            "running_jobs": len(json_names(os.path.join(root, RUNNING))),
+            "backlog_jobs": len(json_names(os.path.join(root, BACKLOG)))}
+
+
 def known_job_ids(root: str) -> set:
     """Every job id this queue has seen: ready, running, done, failed.
 
@@ -395,7 +451,7 @@ def plan_fill(entries, known_ids, ready_minutes: float, ready_count: int,
 STALL_SECONDS = 8 * 60
 
 
-def drainer_state(root: str, now: float = None) -> dict:
+def drainer_state(root: str, now: float = None, snap: dict = None) -> dict:
     """Is anything actually DRAINING what we file? Observed, never acted on.
 
     A FULL QUEUE AND A DEAD CARD LOOK IDENTICAL FROM HERE unless this is asked.
@@ -413,15 +469,30 @@ def drainer_state(root: str, now: float = None) -> dict:
     restarting is the watchdog's judgement to make with its escalation count,
     and two things restarting one daemon is worse than neither. This only tells
     the truth in autofill.json, where the depth reading already lives.
+
+    ITS COUNTS ARE PRE-FILL AND ARE NAMED THAT WAY. They have to be pre-fill:
+    the judgement below is "work is waiting and nobody has claimed it", and a
+    job this tick filed one second ago has not been offered to the runner yet
+    (it polls every ten seconds), so counting it would make every successful
+    fill look like a wedge. But pre-fill counts published as `ready` and
+    `running` are what a reader quotes as the state of the card right now, and
+    on 2026-08-16 that is exactly what happened. They are `ready_jobs_before`
+    and `running_jobs_before`; the post-fill truth is at the top of the payload.
+
+    `snap` is `measure()`'s reading for this same instant, passed in so the
+    stall verdict and the depth reading cannot come from two different listings.
     """
     now = time.time() if now is None else now
-    ready = len(json_names(os.path.join(root, READY)))
-    running = len(json_names(os.path.join(root, RUNNING)))
+    if snap is None:
+        snap = measure(root, now)
+    ready = snap["ready_jobs"]
+    running = snap["running_jobs"]
     try:
         age = now - os.path.getmtime(os.path.join(root, "runner.log"))
     except OSError:
         age = None
-    out = {"ready": ready, "running": running,
+    out = {"at": utcnow(), "phase": "before_fill",
+           "ready_jobs_before": ready, "running_jobs_before": running,
            "runner_log_age_s": None if age is None else int(age), "stalled": False,
            "why": ""}
     if ready < 1:
@@ -505,12 +576,16 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
         except OSError:
             pass
 
-    ready_minutes, ready_count, kinds = queue_minutes(root, READY)
-    running = len(json_names(os.path.join(root, RUNNING)))
-    # Read BEFORE anything is filed. A job this tick has just moved into ready/
-    # has not been offered to the runner yet -- it polls every ten seconds -- and
-    # calling that a stall would make every successful fill look like a wedge.
-    drainer = drainer_state(root, now)
+    # ONE pass of the directories, BEFORE anything is filed. This is what the
+    # fill decision is made on and it must be pre-fill -- you cannot decide
+    # whether to top up a queue from a reading taken after topping it up. The
+    # drainer verdict shares this same reading for the same reason and so that
+    # the two can never disagree with each other.
+    before = measure(root, now)
+    ready_minutes = before["ready_minutes"]
+    ready_count = before["ready_jobs"]
+    kinds = before["ready_kinds"]
+    drainer = drainer_state(root, now, snap=before)
     entries = backlog_entries(root)
     paths = {n: os.path.join(root, BACKLOG, n) for n, _ in entries}
     known = known_job_ids(root)
@@ -560,21 +635,59 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
                % (len(plan["file"]), ready_minutes, floor))
         log_line(root, "!! BLOCKED -- %s" % why)
 
+    # MEASURED, not predicted. `minutes_after` used to be the plan's arithmetic
+    # -- before-minutes plus the medians of what it meant to move -- which is a
+    # proxy for the queue, not the queue. A move that silently failed, or a job
+    # the runner claimed mid-tick, made that number a story about a directory
+    # nobody had looked at. Read the directories again instead. A dry run moves
+    # nothing, so its "after" is honestly the same listing as its "before".
+    after = measure(root, time.time())
+    after_at = utcnow()
+
+    if status == "filled" and not dry_run:
+        # Restate the fill against the listing rather than against the plan's
+        # sum. Same two-instant sentence, both halves now read off disk.
+        why = ("ready held %.1f min of the %.0f min floor -- filed %d, ready now "
+               "holds %.1f min in %d job(s), measured"
+               % (ready_minutes, floor, len(filed), after["ready_minutes"],
+                  after["ready_jobs"]))
+
     state = {
-        "at": utcnow(),
+        # `at` is the after-reading's own stamp: the payload's freshness clock
+        # and its post-fill instant are deliberately the same moment.
+        "at": after_at,
         "status": status,
         "why": why,
         "floor_minutes": floor,
-        "ready_minutes": ready_minutes,
-        "ready_jobs": ready_count,
-        "ready_kinds": kinds,
-        "running_jobs": running,
-        "minutes_after": plan["minutes_after"],
+
+        # --- AFTER the fill: what the box holds as of `at`. This is the row to
+        # quote when somebody asks whether the card is fed.
+        "ready_jobs_after": after["ready_jobs"],
+        "ready_minutes_after": after["ready_minutes"],
+        "ready_kinds_after": after["ready_kinds"],
+        "running_jobs_after": after["running_jobs"],
+        "backlog_jobs_after": after["backlog_jobs"],
+        "backlog_remaining": after["backlog_jobs"],
+        "measured_after_at": after_at,
+
+        # --- BEFORE the fill: what the decision below was made on. Kept
+        # because a fill you cannot explain is a fill you cannot audit.
+        "ready_jobs_before": ready_count,
+        "ready_minutes_before": ready_minutes,
+        "ready_kinds_before": kinds,
+        "running_jobs_before": before["running_jobs"],
+        "backlog_jobs_before": before["backlog_jobs"],
+        "measured_before_at": datetime.datetime.fromtimestamp(
+            before["at"], datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+
+        # What the plan expected the fill to leave behind. Kept next to the
+        # measured figure precisely so the two can be compared: a gap means a
+        # move failed, or the runner claimed something while we were filing.
+        "minutes_after_predicted": plan["minutes_after"],
+
         "filed": filed,
         "expired": plan["expired"],
         "superseded": plan["superseded"],
-        "backlog_remaining": max(0, len(entries) - len(filed) - len(plan["expired"])
-                                 - len(plan["superseded"])),
         "drainer": drainer,
         "dry_run": bool(dry_run),
         "script_sha256": file_sha256(os.path.abspath(__file__)),
@@ -588,10 +701,10 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
         log_line(root, "%s!! BACKLOG EMPTY -- %s" % (prefix, plan["why"]))
     elif status == "filled":
         log_line(root, "%sfilled %s | %s" % (prefix, ", ".join(filed) or "nothing",
-                                             plan["why"]))
+                                             why))
     elif status == "full":
         log_line(root, "%sok %s | backlog %d waiting, running %d"
-                 % (prefix, plan["why"], state["backlog_remaining"], running))
+                 % (prefix, why, after["backlog_jobs"], after["running_jobs"]))
     return state
 
 
@@ -686,8 +799,66 @@ def deploy() -> int:
     return verify_deployed()
 
 
+def live_counts():
+    """Count the box's queue directories RIGHT NOW, by listing them. Read-only.
+
+    `autofill.json` is written by a tick that happened up to three minutes ago.
+    Even a perfectly self-consistent payload is therefore a photograph, and the
+    question actually being asked of this tool -- "is the card fed?" -- is about
+    this second. So --status takes its own listing. None means the probe failed,
+    and a failed probe is reported as a failed probe, never as zero: "could not
+    check" is a refusal, not a reading (same stance as `is_expired`).
+
+    One `dir /b /s` over the three directories -- a single command, because a
+    compound `cmd && cmd` over this ssh returns nothing silently -- filtered by
+    THIS file's own `.json` rule, so "runnable" means the same thing here as it
+    does in the tick and the six `.HOLD` files in ready/ are counted by neither.
+    `dir /b` exits 1 on an empty directory; that is an empty directory.
+    """
+    subs = (READY, RUNNING, BACKLOG)
+    r = ssh("dir /b /s " + " ".join('"%s\\%s"' % (DEFAULT_ROOT, s) for s in subs))
+    if r.returncode not in (0, 1):
+        return None
+    out = {s: 0 for s in subs}
+    for line in (r.stdout or "").splitlines():
+        low = line.strip().lower()
+        if not low.endswith(".json"):
+            continue
+        for sub in subs:
+            if ("\\%s\\" % sub) in low:
+                out[sub] += 1
+                break
+    return out
+
+
+def reconcile(state: dict, live: dict):
+    """Snapshot vs listing, as rows. Returns (lines, disagrees).
+
+    Pure, so the comparison is testable with no ssh and no box. THE LISTING
+    WINS: nothing here ever adjusts a count to match the payload. Disagreement
+    is not itself a fault -- the runner drains continuously, and lanes file to
+    the backlog while we read -- it is the difference between "as of the last
+    tick" and "now", which is the thing that must never again be collapsed.
+    """
+    rows = (("ready", state.get("ready_jobs_after"), live.get(READY)),
+            ("running", state.get("running_jobs_after"), live.get(RUNNING)),
+            ("backlog", state.get("backlog_remaining"), live.get(BACKLOG)))
+    lines, disagrees = [], False
+    for name, snap, now in rows:
+        flag = ""
+        if snap is None:
+            flag = "   <- this payload predates the fix; snapshot has no such field"
+            disagrees = True
+        elif snap != now:
+            flag = "   <- moved since the tick"
+            disagrees = True
+        lines.append("  %-8s snapshot %-4s live %-4s%s"
+                     % (name, "-" if snap is None else snap, now, flag))
+    return lines, disagrees
+
+
 def status() -> int:
-    """The box's last tick, read over ssh. Read-only."""
+    """The box's last tick AND the box's directories right now. Read-only."""
     r = ssh('type %s\\%s' % (DEFAULT_ROOT, STATE_NAME))
     text = (r.stdout or "").strip()
     if not text:
@@ -706,6 +877,33 @@ def status() -> int:
         age = (datetime.datetime.now(datetime.timezone.utc) - at).total_seconds() / 60.0
     except (KeyError, ValueError):
         pass
+
+    # Always, not only when it is alarming. A reader who is not told the age of
+    # a reading assumes it is now, and on 2026-08-16 that assumption was quoted
+    # to the founder twice.
+    print("\nthat snapshot is %s old (the tick runs every 3 min); its counts are\n"
+          "labelled _before / _after the fill it describes."
+          % ("unknown age" if age is None else "%.1f min" % age))
+
+    live = live_counts()
+    if live is None:
+        print("\n!! could not list the box's queue directories -- LIVE STATE UNKNOWN.\n"
+              "   Do not quote the snapshot above as the state of the card now.")
+    else:
+        print("\nthe box's directories, listed just now (.json only -- .HOLD is not\n"
+              "runnable and is counted by neither column):")
+        lines, disagrees = reconcile(st, live)
+        for line in lines:
+            print(line)
+        if disagrees:
+            print("   the `live` column is the answer to \"is the card fed\"; the\n"
+                  "   snapshot is what the last fill decision saw.")
+        if live[READY] == 0 and live[RUNNING] == 0:
+            print("\n!! THE CARD IS IDLE RIGHT NOW: nothing claimed and nothing "
+                  "waiting.\n   %d job(s) in the backlog for the next tick to file."
+                  % live[BACKLOG])
+            return 2
+
     if age is not None and age > 15:
         print("\n!! that reading is %.0f minutes old -- the tick itself has stopped."
               % age)

@@ -354,6 +354,113 @@ def test_filing_work_does_not_look_like_a_stall(root):
           not st["drainer"]["stalled"])
 
 
+def test_every_number_in_the_payload_describes_one_instant(root):
+    """The payload's counts must agree with the DIRECTORIES, at a stated instant.
+
+    Observed 2026-08-16 10:16Z: `--status` printed drainer {"ready": 0,
+    "running": 0} and backlog_remaining 1 while the box's own directories held
+    3 ready, 1 running, 6 backlog. Nothing was mis-globbed, nothing was cached,
+    no path was remote-vs-local confused: `ready_jobs`, `ready_minutes`,
+    `ready_kinds`, `running_jobs` and every field of `drainer` were read BEFORE
+    the fill and then published under an `at` stamped AFTER it, so a tick that
+    filed four jobs published the count from before those four existed. The
+    `why` string escaped only because it spells out both instants itself.
+
+    This case is that tick exactly: an empty queue, one claimed job, four LTX
+    entries in the backlog -- "filed 4, now 22.8 min".
+    """
+    write(root, "running", "live.json", job("live"))
+    write(root, "", "runner.log", "x")
+    for i in range(4):
+        write(root, "backlog", "b%d.json" % i, job("b%d" % i))
+    st = af.tick(root)
+    check("the fill happened, four jobs", len(st["filed"]) == 4)
+
+    # The directory listing is ground truth. The tool agrees with it, never the
+    # other way round -- so these are read fresh, not taken from the payload.
+    truth_ready = len(af.json_names(os.path.join(root, "ready")))
+    truth_running = len(af.json_names(os.path.join(root, "running")))
+    truth_backlog = len(af.json_names(os.path.join(root, "backlog")))
+    check("the tree really holds 4 ready, 1 running, 0 backlog",
+          (truth_ready, truth_running, truth_backlog) == (4, 1, 0))
+
+    check("ready_jobs_after equals the ready/ listing",
+          st.get("ready_jobs_after") == truth_ready)
+    check("running_jobs_after equals the running/ listing",
+          st.get("running_jobs_after") == truth_running)
+    check("backlog_remaining equals the backlog/ listing",
+          st["backlog_remaining"] == truth_backlog)
+    check("backlog_jobs_after equals it too", st.get("backlog_jobs_after") == truth_backlog)
+    check("ready_minutes_after is MEASURED off ready/, not predicted forward",
+          st.get("ready_minutes_after") == af.queue_minutes(root, "ready")[0])
+    check("ready_kinds_after describes the queue that now exists",
+          st.get("ready_kinds_after") == {"ltx": 4})
+
+    # The pre-fill reading is what the DECISION was made on and is still wanted
+    # -- but it may only be published under a name that says so.
+    check("the pre-fill depth is kept, under a _before name",
+          st.get("ready_jobs_before") == 0 and st.get("ready_minutes_before") == 0.0)
+    check("no bare 'ready_jobs' survives to be misread as now",
+          "ready_jobs" not in st and "running_jobs" not in st
+          and "ready_minutes" not in st and "ready_kinds" not in st)
+    check("the drainer's evidence is labelled pre-fill too",
+          st["drainer"].get("ready_jobs_before") == 0
+          and st["drainer"].get("running_jobs_before") == 1
+          and "ready" not in st["drainer"] and "running" not in st["drainer"])
+    b, a = st.get("measured_before_at"), st.get("measured_after_at")
+    check("each phase carries its own stamp",
+          isinstance(b, str) and isinstance(a, str) and b <= a == st["at"])
+
+
+def test_a_no_op_tick_still_agrees_with_the_directories(root):
+    """When nothing is filed, before and after must be the same numbers."""
+    write(root, "", "runner.log", "x")
+    for i in range(9):
+        write(root, "ready", "r%d.json" % i, job("r%d" % i))
+    st = af.tick(root)
+    check("a full queue files nothing", st["status"] == "full" and st["filed"] == [])
+    check("before and after agree when nothing moved",
+          st.get("ready_jobs_before") == st.get("ready_jobs_after") == 9
+          and st.get("ready_minutes_before") == st.get("ready_minutes_after"))
+
+
+def test_a_blocked_fill_reports_the_queue_that_actually_exists(root):
+    """The green-tick bug, one level down: 'wanted 4' must not become 'has 4'."""
+    write(root, "", "runner.log", "x")
+    for i in range(4):
+        write(root, "backlog", "b%d.json" % i, job("b%d" % i))
+    real_rename = os.rename
+    try:
+        os.rename = lambda *a, **k: (_ for _ in ()).throw(OSError("locked"))
+        st = af.tick(root)
+    finally:
+        os.rename = real_rename
+    check("a fill where every move failed is not 'filled'", st["status"] == "blocked")
+    check("and the after-count is the empty queue that really exists",
+          st.get("ready_jobs_after") == 0 and st.get("ready_minutes_after") == 0.0)
+    check("and the backlog it failed to drain is still four",
+          st["backlog_remaining"] == 4)
+
+
+def test_status_reconciles_the_snapshot_against_the_live_listing():
+    """--status must never hand a stale count over as the truth of now.
+
+    The payload is written by a tick up to three minutes ago; the founder's
+    question is about this second. `reconcile` is the pure half of --status:
+    given the snapshot and a live listing, does it say they disagree?
+    """
+    st = {"at": "2026-08-16T10:16:01Z", "ready_jobs_after": 4,
+          "running_jobs_after": 0, "backlog_remaining": 1}
+    live = {"ready": 3, "running": 1, "backlog": 6}
+    lines, disagrees = af.reconcile(st, live)
+    body = "\n".join(lines)
+    check("it prints the live listing as its own row", "3" in body and "6" in body)
+    check("a backlog that grew since the tick is called out", disagrees)
+    check("and the disagreement names the field", "backlog" in body)
+    same, ok = af.reconcile(st, {"ready": 4, "running": 0, "backlog": 1})
+    check("an agreeing pair is not flagged", not ok)
+
+
 def test_a_gate_refusal_is_propagated_not_swallowed(tmp):
     spec = {"id": "gated-1786800000", "consumer": "a test",
             "gate": "founder must screen the b06 sample first",
@@ -414,7 +521,10 @@ def main():
              test_a_wedged_drainer_is_not_reported_as_a_healthy_queue,
              test_a_stall_is_not_declared_over_a_live_or_quiet_card,
              test_filing_work_does_not_look_like_a_stall,
-             test_a_fill_that_moved_nothing_does_not_report_filled]
+             test_a_fill_that_moved_nothing_does_not_report_filled,
+             test_every_number_in_the_payload_describes_one_instant,
+             test_a_no_op_tick_still_agrees_with_the_directories,
+             test_a_blocked_fill_reports_the_queue_that_actually_exists]
     for fn in cases:
         with tempfile.TemporaryDirectory() as td:
             fn(td)
@@ -425,7 +535,8 @@ def main():
                test_a_superseded_entry_is_never_refiled,
                test_an_expired_entry_is_not_fired,
                test_a_clean_spec_is_stamped_with_its_filing_time,
-               test_a_backlogged_job_still_owns_its_payload_paths):
+               test_a_backlogged_job_still_owns_its_payload_paths,
+               test_status_reconciles_the_snapshot_against_the_live_listing):
         fn()
     for fn in (test_a_gate_refusal_is_propagated_not_swallowed,
                test_a_plate_ack_waiver_cannot_be_backlogged):
