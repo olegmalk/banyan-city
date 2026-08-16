@@ -2130,3 +2130,4 @@
 09:01:10Z STARTED task=ep2-b17-full-s5-0816-1786870693 attempt=1 on box-runner
 09:06:53Z DONE task=ep2-b17-full-s5-0816-1786870693 rc=0 artifacts=2
 09:07:02Z STARTED task=ep2-b17-full-s6-0816-1786870698 attempt=1 on box-runner
+09:12:46Z DONE task=ep2-b17-full-s6-0816-1786870698 rc=0 artifacts=2
