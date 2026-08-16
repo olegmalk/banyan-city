@@ -1,0 +1,168 @@
+# ---------------------------------------------------------------------------
+# EPISODE 2, BEAT 21 -- ONE SAMPLE of the sapling-scale anchor on the beat where
+# the plant is ALONE in frame. 2026-08-17, overnight queue lane. $0, four stills.
+#
+# THE RULING THIS SERVES. The founder, 2026-08-16: "make sure it has 2 leafs and
+# has a set height... dont make it double in size suddenly." `authored_b21_scale_0816`
+# was written into pipeline/wave-drafts.yaml on 2026-08-16 to carry that ruling and
+# HAS NEVER BEEN DRAWN ANYWHERE. Nothing in the repo knows whether the anchored
+# wording binds on this beat.
+#
+# WHY BEAT 21 IS THE RIGHT PLACE TO ASK IT. Beat 21 is the only beat in the
+# episode whose draft is the plant on its own -- no goblin, no guards, no hands --
+# with the grass, a treeline and a horizon behind it. Scale is a RELATION, and a
+# relation needs both terms in shot: `the whole plant no taller than the grass
+# around it` can only be read on a frame that contains the grass line. On a macro
+# insert the same words have no referent and the test would be vacuous.
+#
+# MEASURED BEFORE FILING, ON THE REAL CLIP TOKENIZER, ON THIS BOX. The
+# style-anchor trap is the reason this job exists in this shape and not another:
+# compress() drops whole TRAILING SENTENCES to fit 77 tokens, and the trailing
+# sentence is where `very aesthetic` lives -- so a draft can sit at 54/77 with
+# 23 tokens of headroom and still have had its entire style tail deleted, which
+# is what happened to ep2-b20-canonword-0816 twice. This lane ran the dry
+# measurement on the box before writing this file:
+#
+#     positive tokens (real CLIP): 74/77   headroom: 3
+#     STYLE ANCHOR PRESENT: True
+#     drafts sha256: dd644905c2eb...  (byte-identical to the repo's HEAD copy)
+#     DRY OK -- 1 beat x 4 seeds = 4 frames, nothing drawn
+#
+# NINE SIBLING DRAFTS FAILED THAT SAME MEASUREMENT AND ARE NOT FILED. Of the
+# sixteen 2026-08-16 sapling drafts, `authored_b01_scale_0816`,
+# `authored_b01_canon_0816`, `authored_b02_scale_0816`,
+# `authored_b02_plate_scale_0816`, `authored_b03_scale_0816`,
+# `authored_b03_plate_scale_0816`, `authored_b17_scale_0816`,
+# `authored_b17_plate_scale_0816` and `authored_b18_figleaf_canon_0816` all lose
+# their entire style sentence to compress() and the guard REFUSES to draw them.
+# That refusal is correct and is reported rather than worked around. This beat,
+# beat 18's canon draft and beat 01's figleaf canon draft are the three that
+# survive, and they are the three being filed.
+#
+# `--goblin-def` IS INERT HERE AND IS PASSED BECAUSE THE HARNESS DEMANDS IT.
+# Beat 21's draft carries no {{GOBLIN}} marker -- the beat has no creature in it.
+# render_wave_sample.py refuses to run without the flag on purpose (an unlabelled
+# default would put the STEWARD's goblin pair under the founder's name), so the
+# approved pair `green skin, bald head` is passed and lands nowhere. It cannot
+# touch these frames.
+#
+# GUARDS. $0, local card, no provider, no spend. No `gate:`, no `gate_ref:`, no
+# `plate_ack:` waiver -- this clears nobody's gate. There is no payload dir at
+# all, so payload and out cannot collide. The publish glob carries the beat slug
+# (`21-the-answer-`) so a wrong-directory match cannot publish under this id, and
+# the publish step stamps every sidecar `approved: false` / `provisional: true` /
+# `cost_usd: 0.00`. A `--dry` step measures on the real tokenizer and draws
+# nothing, so a stale box checkout or a lost style tail costs $0 instead of four
+# frames.
+# ---------------------------------------------------------------------------
+id: ep2-b21-scale-0817
+task: ep2-b21-scale-0817
+node: 002b-first-citizen
+beat: 21
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: overnight queue lane, 2026-08-17 -- filed to backlog on a dead card (ready 0, running 0, backlog
+  0) so the GPU is never idle while a runnable job exists
+est_minutes: 7
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. This is a still-plate wording sample on an approved node: no voice synthesis,
+  no episode assembly, no publication.'
+script_line: 'THE ANSWER, beat 21, node.md verbatim: "The sapling''s leaf, in absolutely still air, tilts
+  -- slowly, deliberately, the first thing he has ever moved on purpose -- and holds."'
+consumer: 'The 2026-08-16 sapling-canon pass (genomes/sapling/THE-SAPLING.md), which records the founder''s
+  two-leaf/set-height ruling and currently has NO evidence that the anchored wording binds anywhere except
+  beat 18. Downstream consumer: every beat-21 plate and the i2v motion job that would condition on it --
+  a motion prompt inherits the plant''s size from its plate and cannot argue with it, so the plate is where
+  the size is actually decided. If the anchor binds here it can be carried to the beats whose drafts have
+  to be re-cut to fit the token budget; if it does not bind, size moves out of wording and into the reference
+  set, which is a different and larger piece of work that nobody should start on a guess.'
+success: 'THIS BAR IS BEAT 21''s AND NOTHING ELSE. Beat 21 is THE ANSWER: the sapling alone, one leaf
+  tilting in still air. There is no goblin in this beat, no sprint and no fig being picked up -- a spec
+  judged against beat 02''s sprint prose is being judged against the wrong beat. Four PNGs at 832x1216
+  with sidecars. PASS: a sapling with EXACTLY TWO leaves standing NO TALLER THAN THE SURROUNDING GRASS,
+  with the grass line, the treeline and the pale sky all in frame so the size relation is actually readable,
+  and one thin bare side-branch. The failure worth reporting -- and it is the whole question -- is the
+  plant coming back waist-high, tree-sized, or with three or more leaves, which would mean `no taller than
+  the grass around it` does not bind in wording. NOT scored here: the leaf TILT (a still cannot show motion,
+  and the tilt is the motion job''s bar, not this one''s), fruit colour (the fig lane owns that and this
+  draft asks for no fig), and the leaf SHAPE inference (round/oval cotyledons), which THE-SAPLING.md 2.2
+  records as the steward''s and vetoable in one line.'
+why: 'The founder ruled the plant''s size and leaf count on 2026-08-16 and the wording written to carry
+  that ruling has never been drawn on the beat where the plant is alone in frame. Measured at 74/77 on
+  the box''s real CLIP tokenizer with the style anchor intact. One sample, one wording, no seeds -- nobody
+  has watched this draft perform, so a seed set would be replicating an unknown.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+# Measures on the real CLIP tokenizer and draws nothing. If the box's harness copy
+# of wave-drafts.yaml were stale and lacked `authored_b21_scale_0816`, this step
+# refuses here rather than silently falling back to another variant.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '21'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_b21_scale_0816
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '21'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_b21_scale_0816
+  - --out
+  - C:\banyan-farm\out-b21-scale-0817
+  - --task
+  - ep2-b21-scale-0817
+# allow_fail so a failed copy never marks a good render failed. The glob carries
+# the beat slug so a wrong-directory match cannot publish under this id.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b21-scale-0817\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/out-b21-scale-0817/21-the-answer-*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    if c.endswith(\".yaml\"):\n        with open(c, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n\
+    \            fh.write(\"approved: false\\nprovisional: true\\ncost_usd: 0.00\\n\")\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b21-scale-0817.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s0.png
+- C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s1.png
+- C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s2.png
+- C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s3.png

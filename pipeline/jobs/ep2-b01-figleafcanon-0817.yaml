@@ -1,0 +1,196 @@
+# ---------------------------------------------------------------------------
+# EPISODE 2, BEAT 01 -- ONE SAMPLE of `authored_b01_figleaf_canon_0816`, the leaf
+# half of the sapling canon, on the beat where the plant IS the shot.
+# 2026-08-17, overnight queue lane. $0, sixteen stills, ~14 GPU-minutes.
+#
+# THE RULING THIS SERVES. The founder, 2026-08-16: "make sure it has 2 leafs and
+# has a set height... dont make it double in size suddenly." Canon:
+# genomes/sapling/THE-SAPLING.md.
+#
+# WHAT THIS DRAFT CORRECTS, and it is a straight inversion of four live drafts.
+# `authored_b01_figleaf`, `_figleaf2`, `_figleaf3` and `_figlit` all ask
+# POSITIVELY for `deeply lobed fig leaves with five fingers` and ban `no simple
+# oval leaves`. That is the exact opposite of what he ruled: a two-leaf plant is a
+# cotyledon-stage seedling, and lobed five-fingered leaves are mature-tree
+# foliage. `authored_b01_figleaf_canon_0816` swaps the leaf clauses to `exactly
+# two wide oval cotyledon leaves with soft round tips` and moves the old positive
+# into the negative, and NOTHING ELSE MOVES: the fruit wording and the front-lit
+# fix that `_figlit` bought (backlight, silhouette and contre-jour banned by name,
+# after nine rounds were judged on silhouettes) are carried across byte-for-byte.
+# So this job is close to a single-variable arm against `authored_b01_figlit`,
+# which has been drawn -- the leaf clauses are the difference.
+#
+# IT HAS NEVER BEEN DRAWN. This lane listed the box's published output
+# directories under C:\banyan-farm\courier-box\farm-out before filing; there is no
+# beat-01 canon directory there. The box's queue-history file was deliberately NOT
+# used to establish that -- it was caught on 2026-08-16 listing finished jobs as
+# unrun and it caused twelve duplicate filings. Absence from farm-out proves
+# nothing on its own (farm-out is pruned), so the second check was the repo: no
+# spec in pipeline/jobs names this draft key.
+#
+# THE LEAF SHAPE INFERENCE IS THE STEWARD'S, NOT HIS, and this file says so
+# because the frames will be read against it. He ruled the COUNT (two) and that
+# the height must not double. `wide oval cotyledon leaves with soft round tips` is
+# the steward's reading of what a two-leaf seedling looks like, recorded as
+# vetoable in one line at THE-SAPLING.md 2.2. Nothing in this job depends on that
+# inference being right; if he vetoes the shape, the count clause survives it.
+#
+# MEASURED BEFORE FILING, ON THE REAL CLIP TOKENIZER, ON THIS BOX:
+#
+#     positive tokens (real CLIP): 76/77   headroom: 1
+#     STYLE ANCHOR PRESENT: True
+#     drafts sha256: dd644905c2eb...  (byte-identical to the repo's HEAD copy)
+#
+# 76/77 IS ONE TOKEN OF HEADROOM AND THAT IS RECORDED AS A RISK, NOT HIDDEN. The
+# draft fits, the style anchor survives compression, and the `--dry` step re-runs
+# that measurement on the box before anything is drawn -- but this wording has no
+# room for another clause, and whoever edits it next must re-measure or it will
+# lose its style tail silently. That is the trap that refused
+# ep2-b20-canonword-0816 twice: compress() drops whole TRAILING SENTENCES to fit
+# 77 tokens and `very aesthetic` lives in the trailing sentence, so a draft can
+# sit at 54/77 with 23 tokens of headroom and still have had its entire style tail
+# deleted.
+#
+# NINE SIBLING DRAFTS FAIL THAT MEASUREMENT AND ARE NOT FILED: b01_scale,
+# b01_canon, b02_scale, b02_plate_scale, b03_scale, b03_plate_scale, b17_scale,
+# b17_plate_scale and b18_figleaf_canon all lose their style sentence to
+# compress() and the guard refuses to draw them. The refusal is correct, is not
+# waived, and is reported rather than worked around.
+#
+# HARNESS CHOICE IS DELIBERATE. `--harness C:\banyan-farm\wave-goblin-prep`, not
+# `wave-scale-0816`. goblin_ipa_sample reads `wave-drafts.yaml` OUT OF THE HARNESS
+# DIRECTORY, and both copies were hashed on the box before filing:
+# wave-goblin-prep is dd644905c2eb (byte-identical to the repo's HEAD) while
+# wave-scale-0816 is 0017402c4aa0, a stale copy predating the 2026-08-16 canon
+# corrections. Filing against the stale harness would have drawn superseded words
+# and reported them as the canon.
+#
+# GUARDS. $0, local card, no provider, no spend. No `gate:`, no `gate_ref:`, no
+# `plate_ack:` waiver. There is no payload dir at all, so payload and out cannot
+# collide. The publish glob carries the beat slug (`01-cold-open-`) and the publish
+# step stamps every sidecar `approved: false` / `provisional: true` /
+# `cost_usd: 0.00`.
+# ---------------------------------------------------------------------------
+id: ep2-b01-figleafcanon-0817
+task: ep2-b01-figleafcanon-0817
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+sample: true
+owner: overnight queue lane, 2026-08-17 -- filed to backlog on a dead card (ready 0, running 0, backlog
+  0) so the GPU is never idle while a runnable job exists
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. This is a still-plate wording sample on an approved node: no voice synthesis,
+  no episode assembly, no publication.'
+script_line: 'COLD OPEN, beat 01, node.md verbatim: "A tiny two-leaf banyan sapling in a green field.
+  On the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing in
+  frame that moves."'
+consumer: 'The 2026-08-16 sapling canon (genomes/sapling/THE-SAPLING.md) and the beat-01 plate that opens
+  the episode. Beat 01 is the audience''s FIRST sight of the plant, so it is where the canon either lands
+  or does not: every later beat is read against what this frame established. It is also the beat whose
+  own script line says "two-leaf" out loud, which is why the leaf-count clause has a referent here that
+  a macro insert cannot give it. Downstream: an i2v motion job for the cold open would condition on this
+  plate, and a motion prompt inherits the plant''s leaf count and size from its plate and cannot argue
+  with it.'
+success: 'THIS BAR IS BEAT 01''s AND NOTHING ELSE. Beat 01 is the COLD OPEN -- the sapling alone in a
+  green field, a fig swelling on the thinnest branch. There is no goblin in this beat, no sprint and no
+  crouch; a spec judged against beat 02''s sprint prose is being judged against the wrong beat. Sixteen
+  PNGs at 832x1216 with sidecars (four references x four seeds). PASS: a seedling with EXACTLY TWO leaves,
+  whole plant in frame, one fruit, front-lit -- not a silhouette against the sky. The failure this job
+  exists to catch, and the whole question: leaves coming back LOBED and FIVE-FINGERED, or three/four/many
+  of them, which would mean the corrected leaf clause does not bind and the four superseded drafts were
+  not the cause of the mature-tree foliage. A second informative failure is the plant returning as a small
+  TREE rather than a seedling. NOT scored here: the fig swelling (a still cannot show motion), the exact
+  leaf SHAPE -- round/oval cotyledons is the steward''s inference and vetoable per THE-SAPLING.md 2.2,
+  so a two-leaf plant with differently shaped leaves is a PASS on this bar and a note for him -- and the
+  final colour verdict on the fruit, which belongs to the founder and the fig lane, never to this lane.'
+why: 'Four live beat-01 drafts ask positively for exactly the mature-tree foliage the founder''s 2026-08-16
+  ruling forbids. The corrected wording has never been drawn. Measured at 76/77 on the box''s real CLIP
+  tokenizer with the style anchor intact. One sample, one wording, no seeds -- nobody has watched this
+  draft perform, so a seed set would be replicating an unknown.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+# Measures on the real CLIP tokenizer and draws nothing. At 76/77 this draft has
+# one token of headroom, so this step is the thing standing between a silently
+# truncated style tail and sixteen frames of the wrong look.
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817
+  - --draft-key
+  - authored_b01_figleaf_canon_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817
+  - --draft-key
+  - authored_b01_figleaf_canon_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-figleafcanon-0817
+# allow_fail so a failed copy never marks a good render failed. The glob carries
+# the beat slug so a wrong-directory match cannot publish under this id.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figleafcanon-0817\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b01-figleafcanon-0817/01-cold-open-*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    if c.endswith(\".yaml\"):\n        with open(c, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n\
+    \            fh.write(\"approved: false\\nprovisional: true\\ncost_usd: 0.00\\n\")\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-figleafcanon-0817.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r3-w015-s0.png

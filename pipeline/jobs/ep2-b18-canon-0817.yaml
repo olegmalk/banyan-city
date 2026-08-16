@@ -1,0 +1,188 @@
+# ---------------------------------------------------------------------------
+# EPISODE 2, BEAT 18 -- ONE SAMPLE of `authored_b18_canon_0816`, the fig-canon
+# wording, on the card that will actually draw it. 2026-08-17, overnight queue
+# lane. $0, sixteen stills, ~14 GPU-minutes.
+#
+# WHAT THIS DRAFT IS AND WHY IT HAS NEVER RUN. `authored_b18_canon_0816` was
+# written into pipeline/wave-drafts.yaml on 2026-08-16. It supersedes `authored`,
+# `authored_b18_plantneg` and `authored_b18_refresh` on this beat, all three of
+# which ask for a GREEN fig POSITIVELY; the canon draft asks for `deep
+# purple-violet, green at its neck, matte` and names green in the negative, which
+# none of its predecessors did. The macro framing, the flexing stem and the amber
+# light are carried across unchanged. IT HAS NEVER BEEN DRAWN ANYWHERE -- this
+# lane listed the box's published output directories under
+# C:\banyan-farm\courier-box\farm-out before filing and there is no canon
+# directory on this beat; the only beat-18 output there is ep2-b18-scale-0816,
+# which is a DIFFERENT draft (the scene-scale one, not the macro canon one).
+# The box's queue-history file was deliberately NOT used to establish that: it was
+# caught on 2026-08-16 listing jobs that had finished as unrun, and it caused
+# twelve duplicate filings.
+#
+# WHY THE ANSWER CANNOT BE INFERRED FROM WHAT WE HAVE. The evidence that the
+# purple wording is reachable at all is `SAMPLE-b18-purple-fruit-0815.png`, whose
+# own text records that it was drawn ON MPS -- the Mac. The backend-divergence
+# probe measured the Mac and this box as different renderers: same prompt, same
+# negative, same checkpoint, same size/steps/guidance, same seed, bit-identical
+# starting latent, and pictures differing by mean absolute pixel difference 61 of
+# 255, with precision ruled out (bf16/MPS vs bf16/CUDA is MAE 60.65 while
+# fp16-vs-fp32 on MPS is MAE 3.22). The attempt to settle this on beat 20
+# (ep2-b20-canonword-0816) failed twice WITHOUT DRAWING, because compress()
+# deleted its trailing style sentence. So on this box the canon wording has never
+# produced a frame, and this is the first draft of the family that measures clean.
+#
+# MEASURED BEFORE FILING, ON THE REAL CLIP TOKENIZER, ON THIS BOX:
+#
+#     positive tokens (real CLIP): 74/77   headroom: 3
+#     STYLE ANCHOR PRESENT: True
+#     drafts sha256: dd644905c2eb...  (byte-identical to the repo's HEAD copy)
+#
+# THE STYLE-ANCHOR TRAP IS WHY THAT LINE IS IN THIS FILE. compress() drops whole
+# TRAILING SENTENCES to fit 77 tokens and the trailing sentence is where `very
+# aesthetic` lives, so a draft can sit at 54/77 with 23 tokens of headroom and
+# still have lost its entire style tail -- which is exactly what refused
+# ep2-b20-canonword-0816. Nine of the sixteen 2026-08-16 sapling drafts fail that
+# same measurement and are NOT filed: b01_scale, b01_canon, b02_scale,
+# b02_plate_scale, b03_scale, b03_plate_scale, b17_scale, b17_plate_scale and
+# b18_figleaf_canon all lose their style sentence and the guard refuses to draw
+# them. That refusal is correct, is not waived, and is reported rather than
+# worked around.
+#
+# HARNESS CHOICE IS DELIBERATE. `--harness C:\banyan-farm\wave-goblin-prep`, not
+# `wave-scale-0816`. goblin_ipa_sample reads `wave-drafts.yaml` OUT OF THE HARNESS
+# DIRECTORY, and this lane hashed both copies on the box before filing:
+# wave-goblin-prep is dd644905c2eb (byte-identical to the repo's HEAD) while
+# wave-scale-0816 is 0017402c4aa0 -- a stale copy predating the 2026-08-16 canon
+# corrections. Filing against the stale harness would have drawn superseded words
+# and reported them as the canon.
+#
+# GUARDS. $0, local card, no provider, no spend. No `gate:`, no `gate_ref:`, no
+# `plate_ack:` waiver. There is no payload dir at all, so payload and out cannot
+# collide. The publish glob carries the beat slug (`18-the-decision-`) and the
+# publish step stamps every sidecar `approved: false` / `provisional: true` /
+# `cost_usd: 0.00`. The `--dry` step measures on the real tokenizer and draws
+# nothing, so a stale checkout or a lost style tail costs $0 instead of sixteen
+# frames.
+# ---------------------------------------------------------------------------
+id: ep2-b18-canon-0817
+task: ep2-b18-canon-0817
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 21
+max_attempts: 1
+sample: true
+owner: overnight queue lane, 2026-08-17 -- filed to backlog on a dead card (ready 0, running 0, backlog
+  0) so the GPU is never idle while a runnable job exists
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. This is a still-plate wording sample on an approved node: no voice synthesis,
+  no episode assembly, no publication.'
+script_line: 'THE DECISION, beat 18, node.md verbatim: "Extreme close-up: the one fig on the thinnest
+  branch, stem trembling."'
+consumer: the `ep2-fig-purple` canon-drift subject in pipeline/canon.yaml, which must record WHICH MACHINE
+  the canon fig wording has been demonstrated on. Today the answer is "the Mac only", and the Mac was measured
+  not to predict this box. Downstream, beat 18 is the fig's own close-up and its plate is what an i2v motion
+  job would condition on, so whatever colour this draft produces here is the colour the beat ships with.
+success: 'THIS BAR IS BEAT 18''s AND NOTHING ELSE. Beat 18 is THE DECISION -- an extreme close-up of the
+  single fig on the thinnest branch, stem trembling. There is no goblin in this beat and no sprint; a spec
+  judged against beat 02''s sprint prose is being judged against the wrong beat. Sixteen PNGs at 832x1216
+  with sidecars (four references x four seeds). SUCCESS IS A READABLE ANSWER, NOT A PURPLE ONE: what this
+  job certifies is whether the canon wording DRAWS on this renderer and what colour it returns. PASS-DRAWN:
+  ONE fruit in frame, hanging from a thin branch, in a held macro. The question the frames answer, ruled
+  on by a blind cold reader given only the file path and "what colour is the fruit?": a word in the purple
+  family means the canon as written survives this card; `red`, `maroon`, `crimson`, `wine`, `brown`, `russet`
+  or a hedge toward them means it does NOT and the colour needs a different lever here -- a large result
+  either way. GREEN would be the most informative failure of all, because naming green in the negative is
+  the one thing this draft does that its three predecessors did not. NO FRUIT IN FRAME is a FAIL, because
+  then nothing was tested. NOT scored here: the trembling stem (a still cannot show motion), leaf count
+  and plant height (this is a macro and scale has no referent in it -- that question belongs to beat 21
+  and to ep2-b18-scale-0816), and the final colour VERDICT, which is the founder''s and the fig lane''s,
+  never this lane''s.'
+why: 'The fig canon was ruled by the founder and the wording written to carry it has never produced a frame
+  on the card that will render the episode; the only proof offered is from a machine measured to disagree
+  with this one by MAE 61 on byte-identical inputs. Measured at 74/77 on the box''s real CLIP tokenizer
+  with the style anchor intact. One sample, one wording, no seeds -- nobody has watched this draft perform,
+  so a seed set would be replicating an unknown.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+# Measures on the real CLIP tokenizer and draws nothing. If the harness copy of
+# wave-drafts.yaml lacked `authored_b18_canon_0816`, or if compress() ate the
+# style tail, this step refuses here and the sixteen frames are never started.
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817
+  - --draft-key
+  - authored_b18_canon_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817
+  - --draft-key
+  - authored_b18_canon_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b18-canon-0817
+# allow_fail so a failed copy never marks a good render failed. The glob carries
+# the beat slug so a wrong-directory match cannot publish under this id.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b18-canon-0817\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b18-canon-0817/18-the-decision-*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    if c.endswith(\".yaml\"):\n        with open(c, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n\
+    \            fh.write(\"approved: false\\nprovisional: true\\ncost_usd: 0.00\\n\")\n    with open(c,\
+    \ \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" +\
+    \ os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b18-canon-0817.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r3-w015-s0.png
