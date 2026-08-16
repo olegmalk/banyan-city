@@ -9618,6 +9618,7 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
 
 def main():
     import tempfile
+    test_a_stale_harness_cannot_render_a_killed_wording()
     test_beat_duration_from_timecode()
     test_beat_duration_fallback()
     with tempfile.TemporaryDirectory() as td:
@@ -10606,6 +10607,105 @@ def test_the_real_ledger_is_read_and_is_not_empty():
     check("it carries the real completed-run population", len(tasks) > 200)
     check("the two specs that were wrongly called un-fired are in it",
           {"ep2-b18-plantneg-0812", "ep2-b18-refresh-0811"} <= (tasks | specs))
+
+
+
+# ---------------------------------------------------------------------------
+# THE HARNESS DRAFTS GUARD. 2026-08-16.
+#
+# Reconstructs the exact failure that was found and not caught: a job whose
+# --harness names a directory whose wave-drafts.yaml is NOT ours, rendering a
+# beat-19 key whose wording the founder killed on 2026-08-15 and which
+# done-definitions.yaml now makes disqualifying ("a take where the fruit
+# touches him fails this beat now"). Six copies of that file existed on the
+# card; the hashes below are the real ones, measured 2026-08-16.
+#
+# The renderer had been WRITING drafts_sha256 into every sidecar since the file
+# was authored (goblin_ipa_sample.py:636). Nothing read it. So this is not a
+# test of new plumbing; it is a test that a number we already record is finally
+# compared to something.
+# ---------------------------------------------------------------------------
+
+_OURS = "dd644905c2ebee4648b6bf7ba675dbfe622d826d0ca9f09a294217254d125246"
+_STALE = "0017402c4aa09427410ca0f633a2cbef12409f2d460a85bc3c6d2cbac99af4e2"
+
+
+def _b19_spec(harness, **extra):
+    """A beat-19 job in the shape ep2-b18-scale-0816 actually had.
+
+    Both steps name the harness, because both steps of a real goblin spec do
+    and because the dry step is where the refusal is cheapest.
+    """
+    spec = {"id": "ep2-b19-guardtest", "node": "002b-first-citizen",
+            "consumer": "the harness drafts guard's own regression test",
+            "steps": [{"name": "dry",
+                       "argv": ["python.exe", "goblin_ipa_beat.py", "--beat", "19",
+                                "--harness", harness,
+                                "--draft-key", "authored_b19_adult", "--dry"]},
+                      {"name": "sample",
+                       "argv": ["python.exe", "goblin_ipa_beat.py", "--beat", "19",
+                                "--harness", harness,
+                                "--draft-key", "authored_b19_adult"]}]}
+    spec.update(extra)
+    return spec
+
+
+def test_a_stale_harness_cannot_render_a_killed_wording():
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import box_enqueue as bq
+
+    stale = _b19_spec(r"C:\banyan-farm\wave-scale-0816")
+    probs = bq.harness_drafts_problems(stale, repo_sha=_OURS,
+                                       box_sha=lambda p: _STALE)
+    check("a beat-19 job on a stale harness is REFUSED",
+          len(probs) == 1 and "STALE DRAFTS" in probs[0])
+    check("the refusal prints both hashes, so it can be acted on without a box",
+          _STALE in probs[0] and _OURS in probs[0])
+    check("the refusal NAMES THE FIX -- a guard with no remedy gets disabled",
+          "--sync-drafts" in probs[0] and "drafts_ack" in probs[0])
+
+    ours = _b19_spec(r"C:\banyan-farm\wave-goblin-prep")
+    check("the same job on the matching harness passes",
+          bq.harness_drafts_problems(ours, repo_sha=_OURS,
+                                     box_sha=lambda p: _OURS) == [])
+
+    # Two steps, one harness: the refusal must be one line, not one per step.
+    check("a harness named twice is refused once, not twice",
+          len(bq.harness_drafts_problems(stale, repo_sha=_OURS,
+                                         box_sha=lambda p: _STALE)) == 1)
+
+    # "Could not look" is not "fine" -- the same rule plate_problems keeps.
+    check("an unreadable drafts file is a refusal, not a pass",
+          any("cannot be identified" in p for p in
+              bq.harness_drafts_problems(stale, repo_sha=_OURS,
+                                         box_sha=lambda p: "")))
+
+    # Deliberate forks have to stay possible, or the guard blocks real work and
+    # gets removed. The waiver names what it waives, like every other in the file.
+    waived = _b19_spec(r"C:\banyan-farm\wave-scale-0816",
+                       drafts_ack="a forked scale wording under test on purpose")
+    check("an explicit drafts_ack waives the drift",
+          bq.harness_drafts_problems(waived, repo_sha=_OURS,
+                                     box_sha=lambda p: _STALE) == [])
+    check("but the ack does NOT excuse an unreadable file",
+          bq.harness_drafts_problems(waived, repo_sha=_OURS,
+                                     box_sha=lambda p: "") != [])
+
+    # The path is read off argv, not off the id -- the house rule everywhere in
+    # box_enqueue. A spec whose two steps disagree renders its preflight against
+    # one wording and its picture against another.
+    split = _b19_spec(r"C:\banyan-farm\wave-goblin-prep")
+    split["steps"][1]["argv"][5] = r"C:\banyan-farm\wave-scale-0816"
+    check("a spec that changes harness between its steps is caught",
+          len(bq.harness_drafts_problems(
+              split, repo_sha=_OURS,
+              box_sha=lambda p: _OURS if "goblin-prep" in p else _STALE)) == 1)
+
+    check("the guard runs inside gate_checks, not only when called by hand",
+          "harness_drafts_problems" in
+          (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
+          .split("def gate_checks")[1].split("\ndef ")[0])
+
 
 if __name__ == "__main__":
     sys.exit(main())

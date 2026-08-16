@@ -792,6 +792,127 @@ def resolve_producer(job_id: str, jobs_dir: str = None, load=None):
     return None, "no spec in pipeline/jobs for producing job %r" % job_id
 
 
+REPO_DRAFTS = os.path.join(REPO, "pipeline", "wave-drafts.yaml")
+
+
+def spec_harnesses(spec: dict) -> list:
+    """Every distinct --harness directory named anywhere in a spec's steps.
+
+    Every step, for spec_refs' reason and one of its own: a goblin spec names
+    the harness on BOTH its dry and its sample step, and on 2026-08-16
+    ep2-b18-scale-0816 named `C:\\banyan-farm\\wave-scale-0816` on both while
+    every other spec in the tree named `wave-goblin-prep`. A spec that changed
+    harness half way through would render its preflight against one wording and
+    its picture against another, and nothing downstream would say so.
+    """
+    seen, out = set(), []
+    for step in spec.get("steps") or []:
+        argv = step.get("argv") or []
+        for i, a in enumerate(argv):
+            if str(a) == "--harness" and i + 1 < len(argv):
+                raw = str(argv[i + 1]).replace("/", "\\").rstrip("\\")
+                if raw.lower() not in seen:
+                    seen.add(raw.lower())
+                    out.append(raw)
+    return out
+
+
+def box_file_sha256(path: str) -> str:
+    """sha256 of a file ON THE BOX, or "" when it cannot be read.
+
+    "" is not "matches" -- every caller treats it as a refusal, for the reason
+    the plate check gives: a thing that could not be checked was not checked,
+    and "could not check" must not exit zero.
+    """
+    r = ssh('powershell -NoProfile -Command "(Get-FileHash \'%s\' '
+            '-Algorithm SHA256).Hash"' % path)
+    if r.returncode != 0:
+        return ""
+    return (r.stdout or "").strip().lower()
+
+
+def harness_drafts_problems(spec: dict, repo_sha: str = None,
+                            box_sha=box_file_sha256) -> list:
+    """Refuse a job whose harness holds a wave-drafts.yaml that is not ours.
+
+    THE FAILURE THIS EXISTS FOR, 2026-08-16. `render_wave_sample.py` and
+    `goblin_ipa_sample.py` both resolve the prompts as `harness /
+    "wave-drafts.yaml"` -- a COPY on the box, never the repo checkout handed to
+    them as `--root`. So which wording a job renders is decided entirely by
+    which directory its `--harness` names, and there were SIX copies of that
+    file on the card, five of them stale:
+
+      dd644905c2eb  C:\\banyan-farm\\wave-goblin-prep\\wave-drafts.yaml   <- ours
+      0017402c4aa0  C:\\banyan-farm\\wave-scale-0816\\wave-drafts.yaml
+      2c7b1e2a68b6  C:\\banyan-farm\\banyan-city\\pipeline\\wave-drafts.yaml
+      67a5083e7fbc  C:\\banyan-farm\\wave-design-probe\\wave-drafts.yaml
+      714d77bc3c30  C:\\banyan-farm\\wave-goblin-prep\\repo\\pipeline\\...
+      635fac3a476c  C:\\banyan-farm\\courier-box\\farm-out\\...-src\\...
+
+    FOUR of those five still carried `bounces off his head` on beat 19 -- the
+    wording the founder killed on 2026-08-15, and which `done_when` in
+    review/ep2-picks/done-definitions.yaml now makes DISQUALIFYING ("a take
+    where the fruit touches him fails this beat now, however well it moves").
+    A spec pointed at any of them would have rendered a take that is defined as
+    a failure and published it as canon, and the only thing distinguishing it
+    from a good render would have been a path in its argv.
+
+    WHY THE CHECK IS HERE AND NOT ONLY IN THE RENDERER. The renderer already
+    computes this exact number -- `drafts_sha = sha256(drafts_path.read_bytes())`,
+    goblin_ipa_sample.py:636 -- and writes it into every sidecar as
+    `drafts_sha256`. It has been recording the evidence of this failure on every
+    render since the file was written and nothing has ever read it back. So the
+    fix is not new plumbing, it is a comparison; and the comparison belongs
+    where the repo is, because THE BOX HAS NO FRESH CHECKOUT. Its two repo
+    copies are dated 08-13 and 08-15. Only the Mac knows what the current
+    wording is, so only the Mac can say whether a copy is stale.
+
+    The renderer keeps a second, later check of its own (see
+    --expect-drafts-sha256) because enqueue time and run time are not the same
+    moment: `--backlog` work sits for hours, and the queue was 3h40m deep the
+    day this was written.
+    """
+    if repo_sha is None:
+        repo_sha = file_sha256(REPO_DRAFTS)
+    ack = str(spec.get("drafts_ack") or "").strip()
+    problems = []
+    for harness in spec_harnesses(spec):
+        path = harness + "\\wave-drafts.yaml"
+        theirs = box_sha(path)
+        if not theirs:
+            problems.append(
+                "harness %s holds no readable wave-drafts.yaml -- the prompts "
+                "this job would render cannot be identified, and an unchecked "
+                "wording is not a passing one" % harness)
+        elif theirs != repo_sha and not ack:
+            problems.append(
+                "STALE DRAFTS: %s\n"
+                "      box  %s\n"
+                "      repo %s  (pipeline/wave-drafts.yaml)\n"
+                "    This job would render wording the repo has superseded and "
+                "publish it as canon.\n"
+                "    FIX, one of:\n"
+                "      python3 pipeline/box_enqueue.py --sync-drafts   "
+                "(copies the repo file to every harness; refuses while the "
+                "queue is busy)\n"
+                "      repoint --harness at C:\\banyan-farm\\wave-goblin-prep, "
+                "the copy that matches\n"
+                "    Or, if the drift is DELIBERATE -- a forked wording being "
+                "tested on purpose --\n"
+                "    say so in the spec and it is recorded in provenance:\n"
+                "      drafts_ack: \"<why this harness must not be synced>\""
+                % (path, theirs, repo_sha))
+        elif theirs != repo_sha:
+            print("  drafts  %-46s WAIVED: %s" % (harness, ack))
+    return problems
+
+
+def file_sha256(path: str) -> str:
+    import hashlib
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
 def spec_refs(spec: dict) -> list:
     """Every --refs basename named anywhere in a spec's steps.
 
@@ -946,6 +1067,11 @@ def gate_checks(spec: dict, job: dict) -> list:
     plate = plate_problems(spec)
     refs = refs_problems(spec)
     problems += plate + refs + correlation_note(plate, refs)
+    # Independent of both, and of the node gate above: those ask what the
+    # picture is drawn FROM, this asks what WORDS get sent. A job can pass every
+    # other check in this file and still render a superseded line, because the
+    # wording lives in a file on the box that nothing compares to ours.
+    problems += harness_drafts_problems(spec)
     return problems
 
 
@@ -1218,6 +1344,95 @@ def enqueue(job: dict, dest: str = "ready") -> None:
     print("  %s %s" % ("backlogged" if dest == "backlog" else "queued", name))
 
 
+def known_harnesses() -> list:
+    """Every --harness any spec in pipeline/jobs names, deduped, sorted.
+
+    Read off the specs rather than off a list in this file, and off the specs
+    rather than off the box's directory listing. A list here would be one more
+    copy to keep fresh -- which is the bug. And the box's listing is the wrong
+    set in both directions: it holds harnesses no spec uses (scratch) and it
+    would happily accept a new harness that no spec has ever named.
+    """
+    out = set()
+    for name in sorted(os.listdir(JOBS_DIR)):
+        if not name.endswith((".yaml", ".json")):
+            continue
+        try:
+            spec = load_spec(os.path.join(JOBS_DIR, name))
+        except Exception:
+            continue
+        if isinstance(spec, dict):
+            out.update(spec_harnesses(spec))
+    return sorted(out)
+
+
+def sync_drafts(dry_run: bool = False) -> int:
+    """Copy pipeline/wave-drafts.yaml over every harness copy on the box.
+
+    THE REMEDY THE REFUSAL NAMES. A guard whose message ends at "this is wrong"
+    gets switched off -- the runner watchdog was off for four days after exactly
+    that -- so harness_drafts_problems names this command and this command has
+    to work without further thought.
+
+    IT REFUSES WHILE THE QUEUE IS BUSY, and that is not politeness. The renderer
+    opens the drafts file at run time, and its `--dry` preflight and its sample
+    step open it SEPARATELY, minutes apart. Overwriting between the two would
+    hand one job two different wordings and record the second one's hash for
+    both. So: nothing in ready/ or running/, or nothing happens.
+    """
+    repo_sha = file_sha256(REPO_DRAFTS)
+    print("repo pipeline/wave-drafts.yaml  %s" % repo_sha)
+
+    ids, why = queued_job_ids()
+    if ids is None:
+        print("!! could not read the box queue (%s) -- refusing to swap a file "
+              "the renderer may have open" % why)
+        return 3
+    busy = ssh('dir /b %s\\ready\\*.json 2>nul & dir /b %s\\running\\*.json 2>nul'
+               % (QUEUE_ROOT, QUEUE_ROOT))
+    live = [l for l in (busy.stdout or "").splitlines() if l.strip()]
+    if live and not dry_run:
+        print("!! %d job(s) in ready/ or running/ -- NOT swapping the drafts "
+              "file under a job that may be mid-read.\n"
+              "   Re-run when the queue is drained, or sync the one harness "
+              "the running job is not using, by hand." % len(live))
+        return 4
+
+    targets = known_harnesses()
+    if not targets:
+        print("no spec names a --harness; nothing to sync")
+        return 0
+    rc = 0
+    for harness in targets:
+        path = harness + "\\wave-drafts.yaml"
+        theirs = box_file_sha256(path)
+        if theirs == repo_sha:
+            print("  ok      %s" % path)
+            continue
+        print("  STALE   %s  %s" % (path, theirs or "(unreadable)"))
+        if dry_run:
+            rc = 1
+            continue
+        # encoding named for ssh()'s reason: scp's errors come back through the
+        # same cp1252 shell, and a locale decode failure silently blanks stderr.
+        cp = subprocess.run(["scp", "-q", REPO_DRAFTS,
+                             "%s:%s" % (SSH_HOST, path.replace("\\", "/"))],
+                            capture_output=True, text=True, encoding="utf-8",
+                            errors="replace", timeout=300)
+        if cp.returncode != 0:
+            print("  !! scp failed: %s" % (cp.stderr or "").strip())
+            rc = 5
+            continue
+        after = box_file_sha256(path)
+        if after != repo_sha:
+            print("  !! copied and it STILL does not match (%s) -- say so "
+                  "rather than assume" % after)
+            rc = 6
+        else:
+            print("  synced  %s  -> %s" % (path, repo_sha))
+    return rc
+
+
 def show_queue() -> int:
     r = ssh('echo [ready] & dir /b %s\\ready 2>nul & echo [running] & '
             'dir /b %s\\running 2>nul & echo [backlog] & dir /b %s\\backlog 2>nul & '
@@ -1236,6 +1451,13 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true",
                     help="validate and print the job json, touch nothing")
     ap.add_argument("--list", action="store_true", help="show the box queue and exit")
+    ap.add_argument("--sync-drafts", action="store_true",
+                    help="copy pipeline/wave-drafts.yaml over every harness copy on "
+                         "the box, then exit. The remedy named by the STALE DRAFTS "
+                         "refusal. Refuses while ready/ or running/ is non-empty")
+    ap.add_argument("--check-drafts", action="store_true",
+                    help="report every harness copy's sha256 against ours and exit "
+                         "without writing anything; nonzero when any has drifted")
     ap.add_argument("--backlog", action="store_true",
                     help="file into backlog/ instead of ready/: same guards, but the "
                          "job waits there until box_autofill.py finds the card hungry")
@@ -1246,6 +1468,10 @@ def main(argv=None) -> int:
 
     if args.list:
         return show_queue()
+    if args.check_drafts:
+        return sync_drafts(dry_run=True)
+    if args.sync_drafts:
+        return sync_drafts()
     if not args.spec:
         ap.error("give at least one spec, or --list")
 
