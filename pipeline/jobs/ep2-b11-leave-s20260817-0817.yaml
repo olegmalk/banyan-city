@@ -1,0 +1,328 @@
+# 2026-08-17, BEAT 11's REPLACEMENT TAKE. ONE SAMPLE, ONE WORDING, ONE SEED.
+#
+# WHY THIS FIRES AT ALL, AND WHY TODAY. Beat 11's block had exactly two halves
+# and both are now discharged, checked here in the record rather than taken on
+# anyone's word:
+#   CAST HALF -- discharged 2026-08-16.
+#     `beats.'11'.blocked_on_0815_CAST_HALF_DISCHARGED_0816`: "THE SHEET
+#     LANDED. The founder cast both men in his own words: 2026-08-14T16:45:25Z
+#     ... (guard A = his #1, frozen); and 2026-08-15T08:39:13Z ... (guard B =
+#     s2 of the derived round)... So the cast is approved and `lets do the
+#     guards on my taste` is SATISFIED."
+#   PLATE HALF -- discharged by this lane, 2026-08-17.
+#     The same entry names what still forbade firing, and it is not the cast:
+#     "WHAT STILL FORBIDS FIRING, on grounds that are NOT the cast and were
+#     never the cast: no staged plate of these two men doing this action
+#     exists." That plate now exists and was opened and read here rather than
+#     trusted by filename -- see ep2-b11-plate-pub-0817, which put it on the
+#     results branch so this job's --src can be fetched and measured by the
+#     enqueue guard like any other plate.
+#   NOTHING ELSE IS NAMED THERE. The one remaining founder question on the
+#   guard card is guard A's wire-rim glasses, and
+#   `glasses_do_not_affect_this_beat_0816` rules in advance that it CANNOT
+#   reach this beat: "this beat is backs turned to camera, so wire-rims are not
+#   visible from any angle in it... Beat 11 is therefore NOT waiting on the
+#   glasses."
+#
+# THE TAKE IT REPLACES IS KNOWINGLY BROKEN. It is in the demo cut today under
+# the filename `...finalB-BROKEN.mp4`, recorded as "TOTAL IDENTITY COLLAPSE
+# AWAY FROM THE PLATE during the turn", f16-f21.
+#
+# THE ONE QUESTION THIS SAMPLE ASKS, and the reason the wording carries no cast
+# words at all. `override_third_check_REREAD_0816` established that the old
+# fault was the render growing the dark hair GUARD A ACTUALLY HAS, off a plate
+# that asked for two bald strangers: "no binding lever can hold an identity the
+# plate does not contain." So the honest single-variable test is to change the
+# PLATE and nothing else -- to describe only the action here and let the plate
+# carry the cast. If the collapse disappears, the plate was the whole lever and
+# that is a real result. Naming the men in this prompt as well would make a
+# pass unattributable between the two, and would additionally invite the
+# attribute merge `attribute_merge_law_0816` measured on the r1 plate.
+#
+# WHAT IS NOT CLAIMED, so no one builds on a dead lever. This is NOT the
+# composition claim killed on 2026-08-17 ("stay in distribution while making
+# the action as large as the frame allows" reproduced 0 of 4). That claim
+# concerned a small in-hand action. This beat is gross whole-body locomotion,
+# the class this engine renders reliably (12 of 12 stand-ups on beat 17). That
+# is a reason to expect a better base rate, not a reason to expect a pass: ONE
+# TAKE IN THREE FAILS ITS ACTION regardless of framing, so a single failure
+# here kills nothing and a single pass proves the wording performed ONCE. Seeds
+# come after a wording has been watched perform, never before.
+#
+# THE WORDING, and why it is shaped this way.
+#   LEADING STATE TAG, NOT A VERB. Twenty-four candidates failed on "pushes
+#   himself up to standing" because the model rendered the verb's END STATE;
+#   the state tag `sitting on grass` fixed it on the first sample. So this
+#   prompt leads with "Two guards seen from behind walking away from the
+#   camera" -- the state they are already in at f0, folded into the subject's
+#   own noun phrase, with the subject noun at token 2. It never says "walk
+#   away" as a bare verb whose end state is an empty field.
+#   LEADING FRAMING CARRIES WEIGHT, TRAILING ALMOST NONE, and on some drafts
+#   the trailing sentence was never sent at all because compress() deletes it.
+#   This job does not go through compress(): the prompt is a payload file read
+#   verbatim by ltx_i2v.py --stage encode. The style tail is the one proven in
+#   this recipe on beat 17, unchanged.
+#   MEASURED ON THE REAL TOKENIZER BEFORE FIRING, not estimated: run on the box
+#   against the actual Gemma tokenizer and the limit read from the installed
+#   LTX2ImageToVideoPipeline.encode_prompt signature -- positive 69 tokens of
+#   1024, negative 55 of 1024. Nothing is silently truncated, which on this
+#   pipeline is a real failure mode (a 2,601-token prompt returned 1024 tokens
+#   with zero warnings on every channel).
+#   THE NEGATIVE is beat 17's proven camera-move string plus four terms this
+#   beat specifically needs: `facing viewer` and `looking back` because
+#   done_when requires backs turned for the WHOLE clip, `bald` because that is
+#   the exact wrong attribute 13 of 15 guard plates asked for and the one this
+#   plate finally does not, and `3boys, extra person, crowd` for count. Named
+#   as a deviation rather than buried: a negative has never been shown to close
+#   a vacancy hole (beat 08 r4), and this one is not relied on to.
+#
+# THE RECIPE IS FIXED AND THE QUESTION IS CLOSED. 704x1280, 97 frames, 24fps,
+# two-stage 8@352x640 + 3@704x1280, distilled sigmas, image-crf 33, guidance
+# 2.0, sequential offload. Nothing here sweeps it.
+id: ep2-b11-leave-s20260817-0817
+task: ep2-b11-leave-s20260817-0817
+node: 002b-first-citizen
+beat: 11
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 11 replacement lane (first cast-correct guard plate in the project), 2026-08-17
+consumer: >-
+  Beat 11 of the ep2 cut, which today holds a take whose own file name says
+  BROKEN and whose record reads "total identity collapse away from the plate
+  f16-f21 ... included so the fault is visible, NOT as a passing take". This is
+  ONE SAMPLE of ONE WORDING off the first cast-correct staged plate the project
+  has ever had for a guard beat. It is not a seed batch and no seed batch may
+  be filed off it until a human has watched this clip perform. Judged by
+  opening all 97 frames consecutively with pipeline/coldread_frames.py -- the
+  reading is the verdict and a metric is only a filter. Depth and cadence are
+  NOT evidence here and will not be quoted: depth is retired and inverted (a
+  full stand-up scores 0.290, a zero-motion clip 0.516, a bird-only clip
+  0.376), and the old cadence statistic aliases odd hold periods to exactly
+  1.00x.
+success: >-
+  A 704x1280 mp4, 97 frames at 24fps, opening on the published cast-correct
+  plate. The BAR IS BEAT 11's OWN done_when, quoted verbatim from
+  review/ep2-picks/done-definitions.yaml and NOT rewritten for this attempt:
+  "two guards walk away from camera, backs turned, still arguing; both present
+  the whole clip; field present at frame one." Read as five conditions --
+  D1 two guards, D2 walking AWAY from camera (they end further away than they
+  began, by their own height in frame and not by the camera moving), D3 backs
+  turned with no face and no look back at any frame, D4 BOTH men present in
+  every frame, D5 field present at frame one. PLUS the fault that broke the
+  last take, named in advance as a FAIL and not as a fault to be listed:
+  D6 neither man's head changes -- the left man stays dark-cropped-haired in
+  the tan tunic and the right stays light-sandy-haired in the darker brown, and
+  the shot does not end on two indistinguishable backs (fail mode "costume
+  merge"). The terminal-freeze index is reported SEPARATELY from the hold, as
+  the count of consecutive frames at exact ncc = 1.0000 at the tail. The job
+  SUCCEEDS mechanically if the clip renders at all -- a frozen clip is a
+  successful job and a failed sample, and the two are never confused.
+why: >-
+  Eleven minutes on an idle card, $0, no new checkpoint, no recipe sweep, no
+  wording variant, no seed batch. It is the only piece of guard work in the
+  project that is unblocked in both halves today.
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\cover_crop.py: |-
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\stamp_sidecar.py: |-
+    """Stamp the clip's provenance sidecar as unapproved and provisional.
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. Nothing this
+    lane publishes may read as picked, so the keys are written on the artifact
+    itself rather than asserted in a commit message nobody downstream reads.
+    REFUSES if the sidecar is missing -- a clip whose provenance file did not
+    get written must not pass silently.
+    """
+    import os, sys
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b11-leave-s20260817-0817 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: false\n"
+            "note: |\n"
+            "  ONE SAMPLE OF ONE WORDING, NOT A PICKED TAKE. Beat 11 currently\n"
+            "  holds a knowingly broken take in the cut; this is the first\n"
+            "  attempt at a replacement off the first staged plate of the two\n"
+            "  APPROVED guards. It has not been read by anyone at the moment it\n"
+            "  is written, no seed batch may be filed off it before it is, and\n"
+            "  picking it into an episode is the author's call and not this\n"
+            "  lane's.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-motion-prompt.txt: Two guards seen from behind walking
+    away from the camera through tall grass, gesturing at each other as they argue, both getting smaller
+    as they go. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art,
+    cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame, facing viewer, looking back, bald, 3boys, extra person, crowd
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-jobs-encode.json: |-
+    [
+     {
+      "beat": 11,
+      "embeds": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817-out\\b11-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817\\b11-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817\\b11-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-jobs-render.json: |-
+    [
+     {
+      "beat": 11,
+      "seed": 20260817,
+      "embeds": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817-out\\b11-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817-out\\b11-leave-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b11-leave-s20260817-0817-out\\11-they-leave-s20260817-LTX-castplate.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b11-plate-pub-0817\11-they-leave-mac-plate-r3s1.png
+  - --sha256
+  - 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca
+  - --out
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817-out\b11-leave-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817\b11-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b11-leave-s20260817-0817
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817-out\bench-b11-leave-s20260817.jsonl
+  - --bench-label
+  - ep2-b11-leave-s20260817-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b11-leave-s20260817-0817-out\11-they-leave-s20260817-LTX-castplate.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b11-leave-s20260817-0817-out"
+    pay_dir = "C:/banyan-farm/ep2-b11-leave-s20260817-0817"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b11-leave-s20260817-0817"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(out_dir + "/11-they-leave-s20260817-LTX-castplate.mp4*")
+                 + glob.glob(out_dir + "/b11-leave-init-704x1280.png")
+                 + glob.glob(out_dir + "/bench-b11-leave-s20260817.jsonl")
+                 + glob.glob(pay_dir + "/b11-motion-prompt.txt")
+                 + glob.glob(pay_dir + "/b11-negative.txt"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b11-leave-s20260817-0817.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 3 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b11-leave-s20260817-0817-out\11-they-leave-s20260817-LTX-castplate.mp4
+- C:\banyan-farm\ep2-b11-leave-s20260817-0817-out\b11-leave-init-704x1280.png
+script_authority: >-
+  Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. Beat 11 is THEY LEAVE, 0:50-0:55, and the scripted
+  line this job animates is quoted here whole: "The guards walk away arguing,
+  backs to camera, genuinely trying to do their jobs." Nothing is invented
+  beside it -- the prompt says walking away from camera, seen from behind,
+  gesturing at each other as they argue, and stops there. The cast is the
+  founder's own: guard A approved 2026-08-14, guard B 2026-08-15, and "the cast
+  stands as drawn" 2026-08-16. Silent, $0, no voice synthesis and no episode
+  assembly. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED: this is a
+  sample of a wording, and if it performs, updating the shot board is a
+  separate deliberate act by whoever owns the beat. Picking a take into the cut
+  is the author's call (R4), never this lane's.
