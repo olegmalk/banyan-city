@@ -62,6 +62,73 @@ WHAT IT CANNOT SEE -- READ THIS BEFORE QUOTING A NUMBER
    A number here that disagrees with the cold read means the number is wrong.
 
 ================================================================================
+VALIDATED AGAINST TWO GROUND TRUTHS -- AND HALF OF WHAT IT PRINTS FAILED
+================================================================================
+Synthetic self-tests are not enough for a metric that will be quoted, so this was
+run on two real clips whose answer is known independently of any number, by
+opening the frames:
+
+  MOVES: ep2-b17-full-s1-0815/17-goodbye-LTX-gb-full-s1.mp4. A goblin seated at
+    f0, rising at f32, fully standing at f64, WALKED OUT OF FRAME by f80, empty
+    field at f96. A parallel lane established the same thing over twelve cells
+    with a colour-masked head-top tracker overlaid back onto the frames.
+  HOLDS: ep2-b13-negcfg-0816's control, the clip that has come back
+    byte-identical five times. Three independent lanes cold-read it as the same
+    folded pose at f0 and f96, the drawing re-inked in place.
+
+Measured on a ladder of pairs against f0, MEDIAN displacement in original pixels:
+
+    pair      b17 (MOVES)   b13 control (HOLDS)   b13 cfg1.0   b13 blur9px
+    f0->f4        0.00            16.00              4.00          4.00
+    f0->f24      51.06            16.49             55.57          4.00
+    f0->f48      87.36            12.00              8.00          0.00
+    f0->f72     106.92             5.66              4.00          0.00
+    f0->f96     108.07            18.94              8.94          4.00
+
+**THE MEDIAN OVER A LADDER IS THE DISCRIMINATOR, AND IT IS THE ONLY ONE.** On the
+clip that moves it climbs MONOTONICALLY to 108px as the figure stands and leaves;
+on the three that hold it never passes 19px and wanders without direction.
+
+**p90, max, moved_frac_* AND articulation_* FAILED AND MUST NOT BE QUOTED ON
+LINE ART.** On the b13 control -- a clip whose figure provably does not move --
+they read p90 110px and 85% of blocks displaced by 8px or more. `max` reads
+181.02px on almost everything, which is exactly the diagonal of the +-128px
+search box: those blocks RAILED TO THE CORNER. Anime cel art is full of
+near-identical strokes, grass hatching and flat cel fields, so an ambiguous block
+finds a confident-looking match anywhere. That is failure mode 3 below, observed
+rather than theorised, and it is the same pathology that made chained-NCC camera
+scale unusable on this bench. The median survives because most blocks are
+background and the railing ones are the minority in the tail.
+
+A LADDER IS ALSO REQUIRED, NOT OPTIONAL, and not only for noise: gait is CYCLIC.
+A runner four seconds in can be back in nearly the pose she started in, so a lone
+f0->f96 reading can report a small number for a clip that ran the whole way.
+
+================================================================================
+WHAT THIS SAYS ABOUT CADENCE, WHICH IS THE UNCOMFORTABLE PART
+================================================================================
+The b17 clip is the only clip in this comparison whose figure genuinely acts. Its
+cadence numbers are the WORST of the four: period 4, 24.0 distinct pictures, 6.0
+effective fps, against the frozen b13 control's 32.0 and the two "improved" b13
+arms' 48.0. Six lanes spent a week driving distinct-pictures UP; the one clip
+that performs its action scores LOWEST on it.
+
+DEPTH IS WORSE THAN BLIND -- IT IS ACTIVELY MISLEADING, and `judge_clip.py`'s
+docstring (181e5e9c) is the record to read before trusting it. Its two
+counterexamples are `ep2-b06-d1neg-0816` at depth **0.516** with ZERO human
+motion (a re-inked still figure, a board sliding in front of it, a drifting
+camera) and `f1s3` at **0.606** from a push-in on a static subject. This lane
+adds the third point from the other end: `ep2-b17-full-s1-0815`, which is the
+only clip on record whose figure demonstrably stands up and walks out of frame,
+measures depth **0.293** -- and the b13 control, which three lanes cold-read as
+the same folded pose at f0 and f96, measures **0.038**. So the observed range is
+0.038 (holds) < 0.293 (FULL STAND-UP) < 0.516 (no human motion at all): the
+genuinely-acting clip sits in the MIDDLE and is outranked by a clip with nothing
+moving in it. There is no threshold, in either direction, that separates a figure
+acting from a figure being redrawn. "THE PICTURE CHANGED" IS NOT "THE ACTION
+PERFORMED".
+
+================================================================================
 CALIBRATION
 ================================================================================
 `--selftest` runs the metric against three synthetic pairs whose true answer is
@@ -354,19 +421,23 @@ def main() -> int:
         if not r.get("kept_blocks"):
             print("  %s" % r.get("note"))
             continue
-        print("  DISPLACEMENT  median %.2fpx  p90 %.2fpx  max %.2fpx"
-              % (r["median_disp_px"], r["p90_disp_px"], r["max_disp_px"]))
-        print("  moved >=4px %.1f%%   >=8px %.1f%%   >=16px %.1f%%  of %d textured blocks"
-              % (100 * r["moved_frac_4px"], 100 * r["moved_frac_8px"],
-                 100 * r["moved_frac_16px"], r["kept_blocks"]))
-        print("  global shift %s px  ARTICULATION p90 %.2fpx  max %.2fpx"
-              % (r["global_shift_px"], r["articulation_p90_px"],
-                 r["articulation_max_px"]))
-        print("  saturated %.1f%%   median confidence %.3f"
-              % (100 * r["saturated_frac"], r["median_confidence"]))
-        print("  (a camera move and a body move look identical here -- only the")
-        print("   ARTICULATION line says parts moved differently from each other,")
-        print("   and even that is not proof. Open the frames.)")
+        print("  MEDIAN DISPLACEMENT %.2fpx   <- the only number validated against a"
+              % r["median_disp_px"])
+        print("                                  clip known to move and one known to hold")
+        print("  UNRELIABLE ON LINE ART, printed only so nobody re-derives them:")
+        print("    p90 %.2fpx  max %.2fpx  >=8px %.1f%%  articulation p90 %.2fpx"
+              % (r["p90_disp_px"], r["max_disp_px"], 100 * r["moved_frac_8px"],
+                 r["articulation_p90_px"]))
+        print("    (these read p90 110px and 85%% moved on a clip whose figure provably")
+        print("     does not move; max %.2f near 181 means blocks RAILED to the corner"
+              % r["max_disp_px"])
+        print("     of the search box. See the docstring. Do not quote them.)")
+        print("  global shift %s px   saturated %.1f%%   median confidence %.3f"
+              % (r["global_shift_px"], 100 * r["saturated_frac"],
+                 r["median_confidence"]))
+        print("  A camera move and a body move look identical here, one pair proves")
+        print("  nothing because gait is cyclic, and a metric is a filter and never a")
+        print("  verdict. Read the median across a LADDER of pairs, then open the frames.")
         if a.freeze:
             t = r["terminal_freeze"]
             print("  FREEZE  last pair with any new pixel %d of %d, with MAD>=0.05 %d"
