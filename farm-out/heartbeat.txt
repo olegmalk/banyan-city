@@ -2264,3 +2264,4 @@
 20:50:42Z box-runner idle ready=0 failed=32
 20:54:06Z STARTED task=ep2-b02-anchor-s20260830-0817-1786913548 attempt=1 on box-runner
 21:00:02Z DONE task=ep2-b02-anchor-s20260830-0817-1786913548 rc=0 artifacts=2
+21:00:10Z STARTED task=ep2-b21-scale-0817-1786913814 attempt=1 on box-runner
