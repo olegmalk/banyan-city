@@ -991,6 +991,140 @@ REVS = {
             "photorealism, 3d render, dark, night"
         ),
     },
+    (11, 2): {
+        # r1 FAILED ITS OWN PRE-REGISTERED BAR, at P2 and therefore P1, and it
+        # failed in the single most informative way available. Judged by
+        # opening the PNG, against the bar committed in e4279ce5 before it was
+        # drawn, criterion by criterion:
+        #
+        #   P1 the APPROVED PAIR ......... FAIL, necessarily -- there is only
+        #      one man, so a pair cannot be assessed. The one man present is
+        #      also a HYBRID: guard B's light sandy hair above guard A's tan
+        #      tunic and dark cropped trousers. Fail mode Q8.
+        #   P2 exactly two whole figures . FAIL. ONE figure. `2boys` LEADING
+        #      the prompt, with `1boy` AND `solo` in the negative, and it still
+        #      came back solo. Fail mode Q2, and it is the historically
+        #      hardest thing in this beat family -- beat 05's record reads
+        #      "words have now produced 1, 3 and 3+ on this beat".
+        #   P3 backs turned, room ahead .. PASS on backs turned, unambiguous:
+        #      back of the head, back of the tunic, no face, no eyes. MARGINAL
+        #      on room -- the tall-grass band stands about one figure-height
+        #      in front of him, though open mown grass runs off to his left.
+        #   P4 >=25% of frame height ..... PASS, ~32.5% (roughly y440-y835 of
+        #      1216). Hair colour and garment value are plainly legible, which
+        #      is the only reason the number is in the bar.
+        #   P5 no vacancy ................ PASS. Textured grass to the top
+        #      edge, a hedgerow giving the upper third a noun of its own, and
+        #      only a ~5% pale sky sliver at top-left, well under a torso.
+        #   P6 no props .................. PASS. No board, no clipboard, no
+        #      weapon, nothing floating.
+        #   P7 field in the plate ........ PASS.
+        #
+        # SIX OF THE EIGHT NAMED FAIL MODES DID NOT FIRE, and two of those are
+        # worth more than the count failure costs.
+        #   * Q1 BALD PAIR IS DEFEATED. He has hair, and it is legibly sandy
+        #     blond. Fourteen of the seventeen prior guard prompts asked for
+        #     `bald`; this one forbade it and named the cast's hair, and the
+        #     hair arrived on the first sample. The attribute this whole lane
+        #     exists to fix is fixable by wording.
+        #   * Q5 VACANCY DID NOT FIRE ON THE COMPOSITION THAT INVITES IT MOST.
+        #     "Two figures walking into open field" is by construction a large
+        #     empty region, and `tall grass background` filled it on the first
+        #     sample with something that cannot become a character. That is a
+        #     fourth confirmation of the vacancy law and the first PRE-EMPTION
+        #     of it, rather than another post-mortem.
+        # Q3 frontal, Q4 specks, Q6 costume merge between two men (untestable
+        # at n=1) and Q7 prop all did not fire.
+        #
+        # THE ONE VARIABLE: THE COUNT, stated as a frame-one FACT.
+        # The diagnosis is in the prompt's own words. The two men are written
+        # as "ONE MAN with dark cropped hair..., ONE MAN with light sandy
+        # hair...", so the literal string "one man" appears twice, naming a
+        # singular subject each time, while the only plural assertions are the
+        # leading `2boys` tag and "two guard men". A negative carrying `1boy`
+        # and `solo` did not overcome it -- which is consistent with beat 08
+        # r4, where a negative naming the unwanted thing by name removed it
+        # not at all.
+        #
+        # The fix is the one this repo has already PROVEN for exactly this, on
+        # beat 08 r2: replacing a clause that shrank and singularised the
+        # group with `three men standing together` made three people
+        # person-sized and plural in one sample, and r2's prediction about
+        # what would survive came true in the same render. The same phrase,
+        # adapted in number, is inserted here and NOTHING ELSE MOVES -- the
+        # framing tags, the two person clauses, `tall grass background`, the
+        # whole negative and THE SEED are byte-identical to r1, so if the
+        # count binds, the phrase is what bound it.
+        #
+        # Deliberately NOT changed, so as not to confound: the "one man ...
+        # one man" phrasing stays. If the count still fails with a stated pair
+        # fact present, THAT phrasing is r3's single variable, and left/right
+        # binding ("the man on the left has...") is r4's. Naming the ladder in
+        # advance so no revision quietly does two things at once.
+        #
+        # ------------------------------------------------------------------
+        # THE ATTRIBUTE-MERGE LAW, and a FALSIFIABLE PREDICTION FOR r2.
+        # WRITTEN AND COMMITTED BEFORE r2's IMAGE WAS OPENED, so that r2 tests
+        # it instead of being explained by it afterwards.
+        # ------------------------------------------------------------------
+        # r1's single figure did not carry guard A's attributes OR guard B's.
+        # He carried BOTH, blended: B's light sandy hair above A's tan tunic
+        # and A's dark cropped trousers. Neither man's set won; the two sets
+        # MERGED onto the one body the prompt actually produced.
+        #
+        # THE LAW: WHEN THE COUNT FAILS, THE ATTRIBUTE SETS MERGE RATHER THAN
+        # ONE NAMED MAN'S SET WINNING. This checkpoint does not bind an
+        # attribute to a named character (the bark board went to the goblin in
+        # 9 frames of 12; `pointing at another` in 3 of 3), so with fewer
+        # bodies than described sets, every loose attribute lands on whatever
+        # bodies exist. A COUNT FAILURE AND AN IDENTITY FAILURE ARE THEREFORE
+        # THE SAME FAILURE ON THIS BEAT, not two to be fixed separately, and
+        # fixing the count is a PREREQUISITE for testing identity at all --
+        # P1 is literally unassessable at n=1.
+        #
+        # THE PREDICTION, which r2 can falsify:
+        #   * IF r2 fixes the count to two men, the expected identity outcome
+        #     is NOT "one right man and one wrong man". It is TWO MEN EACH
+        #     CARRYING A BLEND -- e.g. both sandy-haired in tan, or one in tan
+        #     with sandy hair and one in dark brown with sandy hair -- because
+        #     the merge is about attributes being loose, not about a shortage
+        #     of bodies. That outcome would be fail mode Q6 (costume merge)
+        #     and would CONFIRM the law.
+        #   * IF instead r2 returns two men with the two attribute sets
+        #     CLEANLY SEPARATED, one dark-haired in tan and one sandy-haired
+        #     in dark brown, the law is FALSIFIED as stated: body count alone
+        #     was doing the binding, and the ladder's later rungs (the "one
+        #     man ... one man" phrasing, then left/right binding) are not
+        #     needed. That would be the best available outcome and it must not
+        #     be quietly reinterpreted as "the law held".
+        #   * IF r2 returns one man again, the law is untested, not confirmed.
+        #
+        # This is written down BEFORE the image is opened, on the same
+        # principle as the plate bar itself.
+        #
+        # THE PLATE BAR AND THE FAIL MODES ARE UNCHANGED, as committed in
+        # e4279ce5 before any pixel existed. A revision brings a fixture up to
+        # a gate that was written first; it never edits the gate.
+        "slug": "they-leave",
+        "prompt": (
+            "2boys, from behind, full body, wide shot, two guard men "
+            "standing together in tall grass, tall grass background, one "
+            "man with dark cropped hair in a plain tan tunic, one man with "
+            "light sandy hair in a dark brown tunic, cloth sash of office, "
+            "dark trousers and boots, sunny day, masterpiece, best quality"
+        ),
+        # Restated BYTE FOR BYTE rather than inherited. A rev merges over
+        # DRAFTS[11], not over the rev before it, and a rev naming only a
+        # prompt would inherit silently -- the guard at the merge site refuses
+        # that with exit 6, and it is right to.
+        "negative": (
+            "text, looking at viewer, facing viewer, face, close-up, "
+            "portrait, distant, small figure, bald, 1boy, 3boys, solo, "
+            "sky, horizon, white background, simple background, "
+            "holding object, clipboard, armor, helmet, knight, child, "
+            "photorealism, 3d render, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate

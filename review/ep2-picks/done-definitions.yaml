@@ -729,6 +729,30 @@ guard_plates_are_miscast_0816:
     is the one thing this engine does reliably (12/12 whole-body stand-ups against 0/8 on the same plate''s
     small in-hand action, and a tight insert at 57% of frame width failed too), and the take standing
     in the demo cut is knowingly broken.'
+  attribute_merge_law_0816: 'WHEN THE COUNT FAILS, THE ATTRIBUTE SETS MERGE RATHER THAN ONE NAMED MAN''S
+    SET WINNING - so on this beat a COUNT failure and an IDENTITY failure are the SAME failure, and fixing
+    the count is a prerequisite for testing identity at all. Observed on the first beat-11 plate sample
+    (farm-out/ep2-b11-mac-plate-0816/11-they-leave-mac-plate-r1s1.png, 2026-08-16): the prompt described
+    two men and the render produced ONE, and that one man carried NEITHER guard''s set but a BLEND of
+    both - guard B''s light sandy hair above guard A''s tan tunic and dark cropped trousers. Mechanism:
+    this checkpoint does not bind an attribute to a named character (the bark board went to the goblin
+    in 9 frames of 12; `pointing at another` in 3 of 3), so with fewer bodies than described sets, every
+    loose attribute lands on whatever bodies exist. FALSIFIABLE PREDICTION, written and committed before
+    the next sample was opened: if a revision fixes the count to two men, the expected identity outcome
+    is NOT one right man and one wrong man but TWO MEN EACH CARRYING A BLEND; if instead the two sets
+    come back cleanly separated, the law is FALSIFIED as stated and body count alone was doing the binding.
+    One man again leaves it untested, not confirmed.'
+  vacancy_pre_emption_is_now_a_default_0816: 'FIRST PRE-EMPTION OF THE VACANCY LAW RATHER THAN A POST-MORTEM
+    ON IT, and it is to be applied to the remaining guard plates as a DEFAULT rather than rediscovered
+    per plate. Beat 11 is the composition that invites the hole hardest - two figures walking into open
+    field is by construction a large empty region - and `tall grass background` in the positive, plus
+    a hedgerow giving the upper third a noun of its own, produced no flat region at all on the FIRST
+    sample. Prior confirmations were all failures found afterwards: beat 08''s colossus grown in a reserved
+    sky across five samples, beat 17 r1''s insert where the CLIP manufactured a hole by pulling the camera
+    back and put a face in it, and beat 17 r2''s three goblin heads drawn into a flat grass margin with
+    `solo` LEADING and `2boys` in the negative. Note especially that the negative does NOT reach the hole
+    - beat 08 r4 proved a negative naming `giant, colossal, monster, kaiju, statue, face in the sky` removes
+    it not at all. The instrument is a POSITIVE background noun that cannot become a character.'
   what_is_NOT_claimed: This does not re-open the cast, which is approved and closed. It does not release
     a render - see `guards_CORRECTION_0816.what_this_releases`. No plate_ack waiver was written and none
     may be. Nothing was queued, and pipeline/wave-drafts.yaml was READ ONLY and not modified.
