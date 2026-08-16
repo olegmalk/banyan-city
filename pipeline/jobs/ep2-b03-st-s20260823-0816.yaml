@@ -1,0 +1,206 @@
+# BEAT 03 -- SEED CONFIRMATION OF THE `st` SHAPE, 2026-08-16.
+#
+# WHY THIS EXISTS, and it is not a new variable: the staging-structure ladder
+# (commit c1cb0ebd) put five prompt SHAPES on beat 03 at one sample each. A
+# judging lane opened all 97 frames of all ten clips of that wave. On beat 03,
+# FOUR of the five arms performed a genuine downward whole-body motion --
+# `st`, `mid`, `pose2` and `exitneg` all fold the figure from standing into a
+# low hunched crouch with the hands down at grass level. `ep2-b03-st-0816` is
+# the cleanest of them: standing through frame ~023, a continuous fold from
+# ~025 to ~045, then the low crouch held to 097. Nothing in the beat-03 set
+# froze -- every arm had a terminal soft-freeze run of ZERO.
+#
+# `st` AND `exitneg` ARE NEAR-DUPLICATES ON BOTH BEATS, which is the wave's one
+# cross-beat replication and it is a NEGATIVE result: the five exit-frame terms
+# added to the negative on the `exitneg` arm changed nothing against a
+# byte-identical prompt. That arm is retired; `st` is the surviving member of
+# the pair and it is the one seeded here.
+#
+# THAT CLIP HAS BEEN WATCHED PERFORM. This file exists because it is n=1 and
+# one take in three fails its action on this engine regardless of wording.
+# THE ONLY QUESTION: does the fold repeat on seeds it has never seen?
+#
+# NOTHING ELSE MOVES. Prompt, negative, plate, size, frames, fps, guidance,
+# sigmas, two-stage schedule, image-crf and offload are byte-identical to
+# ep2-b03-st-0816. The seed is the single variable. No guidance sweep, no
+# checkpoint change, no plate change, no plate_ack waiver.
+#
+# A KNOWN PLATE FAULT RIDES ALONG AND IS NOT BEING FIXED HERE. All five beat-03
+# arms end with the figure enlarged and cropped at the waist, feet gone. It is
+# common to every wording at one seed, so it is the plate's, not the words'.
+# These seeds will say whether it is also common to every seed. Re-plating
+# beat 03 is a separate lane's call and is deliberately NOT bundled into a
+# seed-replication job, where it would un-test the thing being tested.
+#
+id: ep2-b03-st-s20260823-0816
+task: ep2-b03-st-s20260823-0816
+node: 002b-first-citizen
+beat: 3
+runner: box
+needs_gpu: true
+priority: 56
+max_attempts: 1
+sample: false
+owner: beat-03 st seed confirmation, 2026-08-16 -- filed to backlog straight off the judging pass so the
+  card is never idle while the answer is unknown
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE: "The scavenger crouches behind a trunk that hides roughly one-sixth
+  of him." (node 002b-first-citizen, beat 03 BAD COVER). This is a SILENT motion take on an approved node:
+  no voice synthesis, no episode assembly, no publication.'
+consumer: 'Beat 03''s production clip for the episode-2 demo cut. Its recorded fault is that the beat
+  ''ends small at the frame edge''. The 2026-08-16 ladder did not reproduce that fault on any arm -- it
+  inverted it, ending large and cropped instead -- and four arms performed the drop into a crouch that
+  the beat asks for. Beat 03 is THE CONFIRMATION BEAT for the whole ladder: five shapes on two beats is
+  what separates a lever from seed luck, and the shape ranking INVERTED between the beats (the arm that
+  ran the full action on beat 02 was the weakest on beat 03). That inversion means no shape is established
+  as a lever at n=1, and the only way past it is replication. If two or more of these four seeds repeat
+  the fold into a held crouch, beat 03 has a recipe and a pick can be made from the set; if none do, the
+  beat''s failure is re-attributed to its plate, where the cropping evidence already points.'
+success: 'A 704x1280 mp4, 97 frames, 24fps. PASS: the figure''s torso and head descend and the knees fold,
+  reaching a crouch materially lower than the frame-0 standing pose, and the figure is still inside the
+  frame at frame 96. Pre-registered FAIL modes, written before the clip exists: FAIL-FROZEN (the figure
+  never leaves its frame-0 pose); FAIL-EXIT (the figure leaves frame or ends against its edge -- beat
+  03''s recorded failure); FAIL-CAMERA (the apparent descent is performed by a moving or pushing-in camera
+  rather than by the body -- ruled on by ALIGNING frames, never by eyeballing a contact sheet, and never
+  off the retired depth or cadence metrics; note that beat 03''s plate is low-texture haze on which background
+  template matching was measured UNRELIABLE on 2026-08-16, so this call needs a figure-relative measure,
+  not a background one); FAIL-IDENTITY (face or costume is not the plate''s by the last frame). NOT a
+  fail here: that the figure ends cropped at the waist -- that is the plate''s known fault, it is being
+  recorded, and it is not what this job asks.'
+why: 'Seed replication of the cleanest beat-03 arm from the 2026-08-16 ladder, watched performing its
+  fold end to end. One variable: the seed. $0, local card, no spend.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the\
+    \ clip's provenance sidecar as an unapproved provisional take.\n\nvideo_task.write_sidecar records\
+    \ model, prompt, negative, init sha and\ncost_usd 0, and it does not record whether the clip may ship.\
+    \ REFUSES if the\nsidecar is missing -- a clip whose provenance file did not get written must\nnot\
+    \ pass silently.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n   \
+    \ sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended after the\
+    \ render by the staging-structure ladder.\\n\"\n        \"approved: false\\n\"\n        \"provisional:\
+    \ true\\n\"\n        \"note: |\\n\"\n        \"  ONE SAMPLE of one prompt STRUCTURE. Not a pick, not\
+    \ a seed\\n\"\n        \"  confirmation, and not approved for any cut. A lane reads it on\\n\"\n \
+    \       \"  consecutive frames against the beat's done_when before anything\\n\"\n        \"  built\
+    \ on it is filed.\\n\")\nprint(\"stamped %s\" % META, flush=True)\n"
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-motion-prompt.txt: Crouched right down low, knees folded
+    up, head down. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-jobs-encode.json: "[{\"beat\": 3,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b03-st-s20260823-0816-out\\\\b03-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b03-st-s20260823-0816\\\\b03-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b03-st-s20260823-0816\\\\b03-negative.txt\"}]"
+  C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-jobs-render.json: "[{\"beat\": 3,\n  \"seed\": 20260823,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-st-s20260823-0816-out\\\\b03-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b03-st-s20260823-0816-out\\\\b03-init-704x1280.png\",\n  \"out\": \"\
+    C:\\\\banyan-farm\\\\ep2-b03-st-s20260823-0816-out\\\\03-bad-cover-LTX-st-s20260823.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b03-plate-0814\03-bad-cover-ipa-r0-w015-s0.png
+  - --sha256
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
+  - --out
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816-out\b03-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816\b03-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b03-st-s20260823-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816-out\bench-st.jsonl
+  - --bench-label
+  - ep2-b03-st-s20260823-0816
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b03-st-s20260823-0816-out\03-bad-cover-LTX-st-s20260823.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (03-bad-cover). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nout_dir = \"C:/banyan-farm/ep2-b03-st-s20260823-0816-out\"\npay_dir = \"C:/banyan-farm/ep2-b03-st-s20260823-0816\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-st-s20260823-0816\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/03-bad-cover-LTX-st-s20260823.mp4*\")\n             + glob.glob(out_dir\
+    \ + \"/b03-init-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-st.jsonl\")\n       \
+    \      + glob.glob(pay_dir + \"/b03-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b03-negative.txt\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-st-s20260823-0816.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b03-st-s20260823-0816-out\03-bad-cover-LTX-st-s20260823.mp4
+- C:\banyan-farm\ep2-b03-st-s20260823-0816-out\b03-init-704x1280.png

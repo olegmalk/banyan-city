@@ -1,0 +1,203 @@
+# BEAT 02 -- SEED CONFIRMATION OF THE `pose2` SHAPE, 2026-08-16.
+#
+# THE SECOND CANDIDATE FOR BEAT 02, filed so the beat is not betting its third
+# round on a single arm. In the 2026-08-16 staging-structure ladder (commit
+# c1cb0ebd), read frame by frame on all 97 frames, `pose2` is the ONLY arm
+# other than `anchor` that rendered the SPRINT at all: frames 003-021 are an
+# unambiguous run toward camera with an alternating gait, and the clip does
+# reach and hold the prone terminal pose across 075-097. It is filed second
+# because of a real, named defect, not a numeric one.
+#
+# ITS DEFECT, WRITTEN DOWN BEFORE THE SEEDS RUN SO IT CANNOT BE EXCUSED LATER:
+# `ep2-b02-pose2-0816` OSCILLATES. It goes down at ~021-027, comes back up to
+# standing at 029-051, goes down again at 053-061, comes up again at 063-073,
+# and only settles prone from 075. The wording asked for two held positions and
+# got a loop between them. The open question these seeds answer is whether the
+# oscillation is a property of the SHAPE -- in which case `pose2` is retired
+# for beat 02 and `anchor` is the beat's only candidate -- or of this one seed.
+#
+# NOTHING ELSE MOVES. Prompt, negative, plate, size, frames, fps, guidance,
+# sigmas, two-stage schedule, image-crf and offload are byte-identical to
+# ep2-b02-pose2-0816. The seed is the single variable. No guidance sweep, no
+# checkpoint change, no plate change, no plate_ack waiver.
+#
+# THREE SEEDS, NOT FIVE. `anchor` got five because it is the arm that performed
+# the beat end to end; `pose2` gets three because it performed the beat with a
+# known defect, and three is enough to tell a per-seed accident from a property
+# of the wording. Card time is not free and neither of these arms is approved
+# for anything.
+#
+id: ep2-b02-pose2-s20260827-0816
+task: ep2-b02-pose2-s20260827-0816
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 54
+max_attempts: 1
+sample: false
+owner: beat-02 pose2 seed confirmation, 2026-08-16 -- the second candidate arm, filed to backlog off the
+  same judging pass so the card is never idle
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE: "A SCAVENGER sprints into frame, skids, and dives behind the
+  sapling''s thin trunk." (node 002b-first-citizen, beat 02 THE SPRINT). This is a SILENT motion take
+  on an approved node: no voice synthesis, no episode assembly, no publication.'
+consumer: Beat 02's production clip for the episode-2 demo cut -- the same consumer as the `anchor` seeds,
+  deliberately. Beat 02's standing verdict is CONFUSING after two rounds ('he sprints out of shot instead
+  of skidding and diving') and under ship_ceiling (R4, 2026-08-14) it earns a third round. Two arms of
+  the 2026-08-16 ladder rendered the arrival; both are n=1; the beat needs a pick and a pick needs more
+  than one candidate to be a pick rather than the only survivor. If the oscillation disappears on these
+  seeds, `pose2` is a live alternative to `anchor` and the two sets are compared on the same done_when.
+  If it reappears on all three, `pose2` is retired for this beat with a reason on the record, which is
+  worth the card time on its own -- a retired arm is a narrowed search.
+success: 'A 704x1280 mp4, 97 frames, 24fps. PASS: the figure performs locomotion across at least 20 consecutive
+  frames, then reaches a prone or low pose and STAYS there -- at most ONE descent, no return to standing
+  after it -- and is still inside the frame at frame 96. Pre-registered FAIL modes: FAIL-OSCILLATE (two
+  or more separate descents with a return to standing between them -- this is the defect on the parent
+  clip and it is the specific thing being measured, so it is a FAIL here and not a curiosity); FAIL-FROZEN
+  (the figure never leaves its frame-0 pose); FAIL-EXIT (the figure leaves frame or ends against its edge);
+  FAIL-CAMERA (the apparent movement performed by a moving camera, ruled on by ALIGNING frames, never
+  by eyeballing a contact sheet, never off the retired depth or cadence metrics); FAIL-IDENTITY (face
+  or costume is not the plate''s by the last frame, and on this beat that includes the ladder''s worst
+  outcome -- the `mid` arm invented a second character and cut to a different shot on this same plate
+  and seed).'
+why: 'Seed replication of the only other beat-02 arm watched rendering the sprint, to decide whether its
+  oscillation is the shape or the seed. One variable: the seed. $0, local card, no provider, no spend.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the\
+    \ clip's provenance sidecar as an unapproved provisional take.\n\nvideo_task.write_sidecar records\
+    \ model, prompt, negative, init sha and\ncost_usd 0, and it does not record whether the clip may ship.\
+    \ REFUSES if the\nsidecar is missing -- a clip whose provenance file did not get written must\nnot\
+    \ pass silently.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n   \
+    \ sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended after the\
+    \ render by the staging-structure ladder.\\n\"\n        \"approved: false\\n\"\n        \"provisional:\
+    \ true\\n\"\n        \"note: |\\n\"\n        \"  ONE SAMPLE of one prompt STRUCTURE. Not a pick, not\
+    \ a seed\\n\"\n        \"  confirmation, and not approved for any cut. A lane reads it on\\n\"\n \
+    \       \"  consecutive frames against the beat's done_when before anything\\n\"\n        \"  built\
+    \ on it is filed.\\n\")\nprint(\"stamped %s\" % META, flush=True)\n"
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-motion-prompt.txt: 'He holds two positions: first upright
+    and running, then face down flat on the ground. He holds the second position. 2D anime, hand-drawn
+    cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed,
+    newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-jobs-encode.json: "[{\"beat\": 2,\n  \"embeds\": \"\
+    C:\\\\banyan-farm\\\\ep2-b02-pose2-s20260827-0816-out\\\\b02-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b02-pose2-s20260827-0816\\\\b02-motion-prompt.txt\",\n  \"negative_file\": \"\
+    C:\\\\banyan-farm\\\\ep2-b02-pose2-s20260827-0816\\\\b02-negative.txt\"}]"
+  C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-jobs-render.json: "[{\"beat\": 2,\n  \"seed\": 20260827,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b02-pose2-s20260827-0816-out\\\\b02-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b02-pose2-s20260827-0816-out\\\\b02-init-704x1280.png\",\n  \"out\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b02-pose2-s20260827-0816-out\\\\02-the-sprint-LTX-pose2-s20260827.mp4\"\
+    }]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b02-plate-0814\02-the-sprint-ipa-r0-w015-s0.png
+  - --sha256
+  - 8519ed910d70da5c9c66cf38a9d27cd4b7a62ae9d537b5ca4c1adbcff7c4e942
+  - --out
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816-out\b02-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816\b02-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b02-pose2-s20260827-0816
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816-out\bench-pose2.jsonl
+  - --bench-label
+  - ep2-b02-pose2-s20260827-0816
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b02-pose2-s20260827-0816-out\02-the-sprint-LTX-pose2-s20260827.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (02-the-sprint). Without it the glob matches\n# nothing and the\
+    \ step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob,\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b02-pose2-s20260827-0816-out\"\npay_dir = \"\
+    C:/banyan-farm/ep2-b02-pose2-s20260827-0816\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-pose2-s20260827-0816\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/02-the-sprint-LTX-pose2-s20260827.mp4*\"\
+    )\n             + glob.glob(out_dir + \"/b02-init-704x1280.png\")\n             + glob.glob(out_dir\
+    \ + \"/bench-pose2.jsonl\")\n             + glob.glob(pay_dir + \"/b02-motion-prompt.txt\")\n    \
+    \         + glob.glob(pay_dir + \"/b02-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f,\
+    \ dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith\
+    \ open(os.path.join(dst, \"ep2-b02-pose2-s20260827-0816.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest\
+    \ ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b02-pose2-s20260827-0816-out\02-the-sprint-LTX-pose2-s20260827.mp4
+- C:\banyan-farm\ep2-b02-pose2-s20260827-0816-out\b02-init-704x1280.png
