@@ -7926,3 +7926,54 @@ apiece, ten specs) while this survey was running, and all ten reached the queue.
 **Nothing was filed here rather than duplicate them** — the honest report is that
 the direction is right, a peer took the only unblocked ground, and the rest is
 waiting on the founder's guard sheet.
+
+### The four beat-17 `full` cells nobody had read: 4 of 4 stand, 0 of 4 brush — the arm is now 8 of 8 and 0 of 8
+
+`ep2-b17-full-s5..s8-0816` finished on the card early on 2026-08-16 and **no
+verdict for them existed anywhere** — `git grep` over every tracked `.md` and
+`.yaml` found their job specs and nothing else. Cycle 018 judged only `s1..s4`.
+They are judged here. Clips read off `origin/farm-results-rtx5090`; every verdict
+below is a cold read of **consecutive** frames, and no number chose a verdict.
+
+| cell | stands | turns | **brushes** | terminal freeze (strict) |
+|---|---|---|---|---|
+| `full-s5` | yes | yes | **no** | 0 |
+| `full-s6` | yes | yes | **no** | 0 |
+| `full-s7` | yes | yes | **no** | 0 |
+| `full-s8` | yes | yes | **no** | 0 |
+
+All four open at head-top row **254**, the same row as all twelve 2026-08-15
+cells, so all four genuinely start on the plate. All four are frozen for **zero**
+frames by the exact consecutive-frame `ncc == 1.0000` test.
+
+**The two claims, kept apart.** *The picture changed* — yes in all four, and it
+is real body displacement, not re-inking: the figure goes from hunched with both
+hands at the knees, through an upright profile, to a back-to-camera departure.
+*The action performed* — **two of the three scripted verbs.** In every one of the
+four the hands leave the knees and simply **hang at the sides** for the rest of
+the clip; on `s7` and `s8` the green hands are plainly visible hanging in front
+of the cloak from f60 to f96 and never travel across it. There is no sweep, no
+contact, no brush. This is the same result cycle 018's frame audit got on
+`s1..s4`, on four fresh seeds.
+
+**So the `full` arm stands at 8 of 8 on the stand-and-turn and 0 of 8 on the
+brush.** At the measured base rate of one failed action in three, 0 of 8 is not
+bad luck. Read with `6b5955cf` — the tight insert put the hand at **57% of the
+frame** and still did not brush — the small in-hand component of beat 17 looks
+unreachable by seeds, by wording and by scale.
+
+**Two instruments were falsified in the course of this and must not be quoted.**
+
+- **A whole-frame soft-freeze index (mean |A−B| < 0.05) is useless on this
+  content.** It returned a "frozen" run of **96 of 96** frame-pairs on `s3`,
+  `s4`, `s5`, `s6` and `s8` — clips in which the figure rises 35–44% of the frame
+  height. The goblin occupies a small fraction of a large static sky-and-field
+  frame, so the whole-frame mean is dominated by background that genuinely does
+  not change. Only the **strict** `ncc == 1.0000` index was used above. A soft
+  index for this repo has to be measured on a figure mask, not the frame.
+- **The green-mask head-top detector still speckles.** On `full-s1` it reported
+  `head_top_min = 0` with 9 lost frames and a rise of **0.469**, against cycle
+  018's audited **0.397** for the same clip — the sky-speckle false positive that
+  cycle 018 caught by overlay, reappearing. `s5..s8` lost no frames (rises 0.436 /
+  0.359 / 0.350 / 0.381) and their strips independently confirm the stand, so the
+  verdicts hold; but the rise figures are corroboration here, never the evidence.
