@@ -7792,3 +7792,72 @@ Macs over SSH should assume the connection can vanish and use detached runs
 with a result file to poll — the pattern the repair itself used — rather than
 holding a live session across a long job. Wired Ethernet for the fleet is a
 founder-touch decision; nothing here was reconfigured.
+
+## 2026-08-16 — cycle 017 closed FAIL, and beat 17 says the engine can move a body
+
+**Cycle 017 is CLOSED: both arms failed their pre-registered bar and the lane
+stopped.** The expanded camera negative was carried in as the one lever that
+separated every pass from every fail; seeded out it returns **2 of 5 on beat 10
+and 1 of 5 on beat 06** against a bar of 4 of 5 written before the renders. It
+joins the two wordings as base-rate noise. Beat-06's four seeds failed four
+different ways — a 14-frame terminal freeze with a human face rendered onto the
+board; a relentless push-in that cropped both guards' heads off by f72; a board
+that melted to a shapeless mass at f36-48; and one clip that CUT to a different
+composition at f12 (min ncc 0.093) and was structurally dead from f57 of 97. Both
+one-sample rescues (`c1neg`, `d1neg`) failed too. **Nothing was filed on the
+retired hypothesis** — the stop rule says the lane stops rather than seeding a
+sixth thing, and it was honoured.
+
+**Cycle 018 — the finding that matters, from clips we had already paid for.** The
+twelve beat-17 clips of 2026-08-15 had never been judged. Beat 17's bar was
+written into all twelve specs BEFORE the renders: *"the goblin's hips leave the
+grass and his head crosses the frame midline."* Hips leaving the ground is a
+whole-body displacement that cannot be faked by re-inking or by a push-in — which
+is exactly the control six lanes had been lacking.
+
+**Result: 12 of 12. Every cell stands up.** Head-top rise of **29.2%-39.7% of
+frame height**, every clip, measured by colour-segmenting the goblin above the
+horizon and then *overlaying the mask back onto the frames to falsify it*. The
+horizon and mountains stay at a fixed height while he rises, so it is the BODY,
+not a camera tilt. Frames 38-49 of `full-s1` read consecutively are a smooth eased
+rise, not a cut. **So the six-lane "the engine cannot move a figure" hypothesis is
+WRONG and must stop being repeated.** What beat 17 has that 06/10/13 lack: one
+figure not two, a full-body wide plate with headroom for the action to happen in,
+and a large gravity-driven whole-body movement rather than a small in-hand
+manipulation. That is a composition-and-plate difference, and it is testable.
+Beat 17's own fallback resolves the other way — the seated plate is the RIGHT
+approach, and **the ep2 cut went from no beat-17 take at all to twelve passing
+ones.** See `pipeline/loop/cycle-018.md`.
+
+**Depth is not merely blind to action, it is inverted.** `ep2-b17-full-s1` — a
+full stand-up — scores depth **0.290**. `ep2-b06-d1neg` — a guard who does not
+shift a shoulder for 97 frames — scores **0.516**, above the `b02-FIXED`
+reference. The clip with the most real human motion in the repo scores below the
+clip with none. Never rank takes by depth. Written into `judge_clip.py`'s
+docstring where the next lane will actually meet it.
+
+**Beat-14 plate, two samples on the Mac ($0, one variable each).** New
+`pipeline/plate_scratch.py` draws ONE plate from an inline prompt with the §6
+gate, a real-CLIP token measurement before it draws, and a refusal past one seed
+— deliberately NOT via `render_wave_sample.py`, so neither `wave-drafts.yaml` nor
+`shots.md` is touched (the beat-17 plate that solved its beat on the first sample
+used exactly this route). The token guard immediately earned itself: the first
+draft measured **96/77** and would have silently dropped the style anchor.
+
+- **r1 solved the thing that blocked the beat.** Beat 14's definition says a
+  standing full-body plate "should be sent back" because the beat IS the hands;
+  r1 came back a low crouch with the ground in frame on the FIRST sample. It
+  failed on the dirt — one hand resting on a knee, no bare earth anywhere.
+- **r2, one deletion:** `green grass` was in r1's own POSITIVE competing with
+  `bare earth` for the same ground, and grass won. Deleted it, named grass in the
+  negative, left the hand wording byte-identical. Dirt arrived — bare soil, and
+  BOTH hands now down in frame — but it took the field with it: the background
+  became desert dust, **re-creating the "beat 14 sat on DESERT DIRT" fault this
+  project already found and fixed once.**
+
+**Stopping at two, not opening a wording round.** The two samples show grass and
+dirt are bistable by wording — one wins or the other does — while the beat needs a
+patch of bare dirt WITHIN a green field. That is the same class of problem beat 15
+was already diagnosed with (composition needs a tool, not adjectives). Fingers
+still do not bind to the soil, and costume identity drifts on both samples, which
+wants a reference rather than words. Artifacts in `farm-out/ep2-b14-mac-plate-0816/`.

@@ -1,0 +1,20 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260814
+render_seconds: 155.3
+png_sha256: "d4215045c21ab4822cbc7f9ebd393836e39a9d08d771c84ffcadd8f642917b72"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, lean wiry adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, embarrassed, low close-up, hands and dirt large in frame, patch of bare brown soil, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, grass, lawn, meadow, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+revision: 2
+scored: false
