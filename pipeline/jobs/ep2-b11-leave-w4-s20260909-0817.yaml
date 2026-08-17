@@ -314,3 +314,20 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    FAIL D2, and it fails in the OPPOSITE direction to s20260904/06/08, which is
+    the reason the control is a fitted transform and not a landmark. The coats DO
+    shrink on screen -- tan 281->246 (0.875), brown 313->282 (0.901) -- and a
+    measure quoting only that would have called this a pass. But the fitted
+    background scale ends at 0.90: the CAMERA pulled back 10%, which by itself
+    shrinks everything in frame by 10%. Net recession 0.972 and 1.001, i.e. the
+    men did not walk anywhere relative to the field. Fit correlation 0.667,
+    disclosed as the moderate fit it is. D1, D3, D4, D5, D6 all pass -- backs
+    turned at 4-frame head-crop density, both men in every frame, field at frame
+    one, tan/brown costume gap 48.9 -> 47.9.
+  clip: farm-out/ep2-b11-leave-w4-s20260909-0817/11-they-leave-w4-s20260909-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py, past its five gates. Same final version
+    as every other clip in this batch.
+  terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere. Depth and
+    cadence NOT quoted.
