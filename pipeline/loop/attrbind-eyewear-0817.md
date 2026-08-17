@@ -95,6 +95,36 @@ sunglasses. The tag is not weak and the phrasing is not wrong. It fails only
 when there is a second face for it to also land on. **The number of eligible
 faces in the frame is the variable, not the wording.**
 
+### The three-cell experiment that settles it, all cells now observed
+
+The guard-cast lane's 2026-08-17 plates completed the table, and it took no
+render of mine to read it:
+
+| Faces in frame | Eyewear named? | Result | Evidence |
+|---|---|---|---|
+| **1** | yes, in the man's clause | lands correctly on him | 7 of 7 on beat 09; confirmed again on `ep2-b09-cast-0817` (round wire-rims, correctly bound) |
+| **2** | yes, in ONE man's clause | lands on **BOTH** | 5 of 5 across beats 05/09/10 |
+| **2** | omitted entirely | **both bare** | `ep2-b05-cast-0817` — verified by eye on `05-the-patrol-ipa-r0-w015-s0.png` |
+
+**This rules the proximity hypothesis OUT.** It was proposed that eyewear might
+bind by adjacency the way a prop does — the bark board goes to whichever figure
+is drawn nearest, which is why beat 10's cast draft solved the clipboard by
+*using* the prop law and drawing guard B nearest. If eyewear obeyed that law it
+would land on **one** man, the nearest, and be fixable by staging. It lands on
+**two**. Proximity cannot produce two, so eyewear is not prop-class; and a clause
+binding cannot produce two either, so it is not garment-class. It is broadcast,
+and the middle row is the whole defect: the attribute is present in conditioning
+that has no address.
+
+The third row is also the load-bearing practical fact — **omitting the token
+gives two bare faces reliably**, which is what makes the ADD direction possible
+at all and is precisely the founder's "draw the second man without glasses".
+
+Noted for the cast lane and not ruled on here: the `ep2-b09-cast-0817` figure has
+**light sandy hair**, which is guard B's canon colour, not guard A's dark cropped
+hair. Cast is R4 and another lane's call; it does not affect the binding finding,
+which is about how many faces exist, not whose they are.
+
 ## Arm 1 is RETIRED WITHOUT SPENDING A GPU-SECOND — it is self-defeating in both dialects
 
 Pre-registered as "expected to fail". It is worse than that: it cannot be run as
