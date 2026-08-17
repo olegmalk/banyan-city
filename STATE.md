@@ -8812,3 +8812,62 @@ comparison into a second file uninvited. `test_pipeline.py` remains at its one k
 pre-existing failure (`ledger_freshness.py:369`, another lane's, untouched); its
 encoding guard caught two `subprocess.run(text=True)` calls in the new test file, which
 were fixed. $0, nothing enqueued, no render.
+### 2026-08-17 — the box sampler is synced, and it will FAIL the seven guard-cast specs at copy-out until somebody changes a 16
+
+**SYNC DONE AND HASH-VERIFIED.** `C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py`
+`EC504B3C62A0…` → **`6F7333BD91AA…`**, byte-identical to the repo's. Authorized by the
+coordinator on the arithmetic that 2-in-5 wasted IP-Adapter renders beats a timing risk.
+Copied to `.py.new`, hash-verified **before** the rename, then `Move-Item -Force`;
+rollback copy left on the box as `goblin_ipa_sample.py.bak-0812-ec504b3c` (hash checked).
+Stale `__pycache__\goblin_ipa_sample.cpython-312.pyc` deleted. **Timed at a fully idle
+card** — the swap step re-counted `C:\banyan-queue\running` itself and would have
+refused with rc 9 if a job had claimed in the gap (`running=0 ready=0` at the moment of
+the rename, ~12:47Z). `dedup_cells` 0 → 3 occurrences; the flag is present.
+
+Guard proven live ON THE BOX, through the exact argv a live spec uses
+(`goblin_ipa_beat.py --beat 8 --character guard --dry`): a wrong hash returns
+**`BOX_RC=12`** with `DRAFTS CHANGED UNDER THIS JOB — nothing drawn`, and
+`--expect-drafts-sha256 cbb3658e` prints `drafts checked at RUN time` and completes
+`DRY OK — 12 frames, nothing drawn`, `BOX_RC=0`. No GPU, no render, $0.
+
+**MECHANICS REFINEMENT, because the coordinator's understanding was right but not
+complete.** Replacing the file cannot change a running job's *code* — `goblin_ipa_beat`
+imports the sampler once at startup. But the sampler reads **its own bytes at run time**
+(`self_sha = sha256(Path(__file__).read_bytes())`, now line 732) to stamp
+`sampler_sha256` into every sidecar, and that read happens *after* the refs check and
+*before* the torch import. So a swap inside a job's first seconds would have stamped the
+NEW hash onto frames the OLD code drew — a provenance lie, not a crash. Zero exposure
+here because the card was idle, but that is the reason the timing mattered.
+
+**BITE 1 — SEVEN SPECS WILL NOW FAIL AT COPY-OUT. URGENT, warn the lanes.**
+`ep2-b05-cast-0817` … `ep2-b11-cast-0817` (all seven of b05/b06/b07/b08/b09/b10/b11)
+each end with a courier step containing `raise SystemExit(0 if len(pngs) >= 16 else 1)`.
+Their reference dir `refs-guards-twoinfield-nos2-0815` is **3 distinct images poured into
+4 slots** (measured: `--dry` reports `3 cells x 4 seeds = 12 frames`, *"REFERENCE SET IS
+NOT 4 DISTINCT IMAGES — 3 distinct of 4 slots"*). Post-sync they render **12**, so that
+step exits 1 and **the job is marked FAIL after the GPU has already done all the work.**
+This is not cosmetic and it is not the dedup fix misbehaving — 4 of those 16 were always
+byte-duplicates of the other 12; only now does anything say so. One-line fix per spec,
+and it is the authoring lane's call, not the steward's: `>= 16` → `>= 12`, or better,
+derive it as seeds x distinct-reference-sha256.
+
+**BITE 2 — A PRE-REGISTERED BAR NOW COUNTS THE WRONG DENOMINATOR.** All seven carry
+*"scored by eye per frame across all 16, reported as N of 16 with a per-condition rate
+across the four seeds"*, pre-registered before the pixels. After the sync there are 12
+frames, so **a lane scoring N-of-16 would report 12/16 as though four frames had failed,
+or hunt for files that were never drawn.** A silently changed cell count reading as a
+result is exactly the trap. The honest denominators are 12 of 12, or 16 with a fourth
+genuinely distinct guard reference added to the dir (the `nos2` in its name is the
+admission: slot s2 was dropped and the hole filled with a copy).
+
+**Nothing is contaminated retroactively:** none of the seven has rendered — no
+`farm-out/*cast-0817*` exists — so no published score counted duplicates. Both bites are
+prospective, and both are now cheap. The other two live reference dirs are clean:
+`refs-goblin-approved-0814` and `refs-fig-leaf-0814` are **4 distinct of 4** (hashed on
+the box), so the ten specs using them (b01/b02/b03/b17/b18 scale, platescale, canon,
+figleafcanon) are byte-identical before and after the sync — dedup is invisible to a
+healthy reference set, which is what `test_goblin_ipa.py` asserts.
+
+Not done, deliberately: **no spec was edited.** Seven peer specs whose bars belong to
+their authoring lanes, and the coordinator asked to be told so the lanes can be warned.
+Auto-injection in `box_enqueue` is next, now that the sync is verified.
