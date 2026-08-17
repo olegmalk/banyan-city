@@ -64,6 +64,12 @@ records:
   - review/ep2-picks/gate-evidence.yaml
   - review/ep2-picks/wave2-faults-fixer.yaml
   - cuts/cuts.yaml
+  # ADDED 2026-08-16, and it is the record instance 5 was hiding in. This file is
+  # measured 2026-08-14 09:40Z and pipeline/queue_history.py copies every beat's
+  # `state` and `note` into the run ledger's per-row verdict, which /queue
+  # publishes — so a state that a decision moved past does not sit quietly in one
+  # measured file, it reprints on the board once per job row. 352 rows did.
+  - pipeline/measured/episode-progress.yaml
   prose:
   - STATE.md
   - DECISIONS.md
@@ -410,6 +416,64 @@ subjects:
     - jobs/ep2-b15-seedB-0812:b15-motion-prompt.txt
     - jobs/ep2-b15-seedC-0813:b15-motion-prompt.txt
 
+# --- INSTANCE 5 ------------------------------------------------------------
+# THE GOBLIN CHARACTER GATE. The check found this one itself and could not rule
+# on it: on 2026-08-16 it printed `resolved 2026-08-14: THE GOBLIN PLATES -- this
+# is the gate on TWELVE of the twenty-one beats ... no subject registered, so no
+# record was checked against it`. R1 was the right rule and the decision was in
+# the corpus it reads; the register simply had no subject, so a real instance
+# landed in cannot-tell instead of on the failure list. That is a COVERAGE hole,
+# not a logic hole, and the fix is one entry -- not similarity matching, which was
+# measured at 47 hits with the majority pairing the wrong card to the wrong line.
+
+- id: ep2-goblin-character-gate
+  what: >-
+    WHICH DESIGN IS THE GOBLIN. The gate on TWELVE of episode 2's twenty-one beats
+    (2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20). Opened by the founder on
+    2026-08-14 at 11:09:07Z -- "seed s0 is the goblin. also update the review
+    page" -- and re-sent 12.5 seconds later. pipeline/measured/episode-progress.yaml
+    is measured 09:40Z the same morning, ninety minutes BEFORE the answer, and
+    holds all twelve at `blocked-decision -- goblin beat, character gate`.
+    queue_history.py copies `state` and `note` into every job row's verdict, so
+    352 ledger rows kept publishing a block the founder had already lifted.
+    A LATER ROUND ON THE SAME QUESTION IS ALSO RESOLVED (2026-08-15, "ill take 1
+    for the goblin"), which is why no beat is held by the character question today.
+  kind: founder_decision
+  registered: '2026-08-16'
+  resolved_by:
+    # The numbered picker card. Its url is unique in the inbox, which is what
+    # _card_resolution needs: a locator matching two cards identifies no decision
+    # and the checker abstains rather than picking one.
+    card_url_contains: sheets/goblin-picker-0814.jpg
+    verdict_matches: seed s0 is the goblin
+  # THE SAME RULING, RECORDED ON A SECOND CARD. The plates card asked the same
+  # question in older words and carries the same verbatim verdict on the same day.
+  # It cannot be the locator (one decision, one card) and it is not a separate
+  # decision either, so it is named here: coverage bookkeeping only, never
+  # adjudication.
+  also_records:
+  - card_what_contains: 'THE GOBLIN PLATES - this is the gate on TWELVE'
+  evidence:
+    file: review/inbox.yaml
+    contains: 'seed s0 is the goblin'
+  # Narrow on purpose, and each names the SUBJECT. `character gate` on its own is
+  # not here: it is the phrase the 2026-08-16 corrections use to quote the thing
+  # they retire, and a rule that matches the corrections written to discharge it
+  # never goes quiet. The two phrases below are the ones the RECORDS assert in.
+  open_phrases:
+  - character[- ]first ruling
+  - goblin beat\s*[—–-]+\s*character gate
+  - no animation until the design is approved
+  negation_cues:
+  - CORRECTION
+  - no longer
+  - superseded
+  - stale
+  - discharged
+  - gate is open
+  - unblocked
+  - retires the
+
 # ---------------------------------------------------------------------------
 # AXES — attributes the prompts describe INCONSISTENTLY WITH EACH OTHER.
 #
@@ -468,3 +532,69 @@ axes:
 # violation a second time under a second name. An axis whose id a subject also
 # carries is skipped automatically; these two were removed because their ids
 # differ from the subjects that superseded them.
+
+# ---------------------------------------------------------------------------
+# BARS — which beat a `success:` line belongs to (R5, bar_serves_two_beats).
+#
+# THE LOSS. The ALL-21 wave was authored by copying one spec and the paste went
+# far past the wave: 80 job specs carried BEAT 02's `success` line and only 13 of
+# them are beat 02, including beat 16, which was never in the wave.
+# pipeline/queue_history.py copies `success` into the run ledger's `purpose`
+# block, so 352 rows published "a LEAN ADULT goblin sprints in, skids and dives
+# behind a sapling" as the standard for clips of beats that do no such thing.
+# Beat 20 is the fig and the look up.
+#
+# WHY THIS NEEDS A REGISTER TOO, MEASURED BEFORE IT WAS WRITTEN. The bare rule
+# "no two specs with different beats may share byte-identical purpose prose" was
+# run over this repo first and it is NOT the zero-false-positive rule it was
+# handed over as:
+#   * over `consumer:` and `why:` it produces 45 more cross-beat groups and
+#     nearly all are correct. A wave has one consumer and one rationale across
+#     twenty beats. So `bar_fields` is `success` alone.
+#   * over `success:` alone, 13 lines span more than one beat on this repo and
+#     exactly ONE is the defect. "Plate frames with this beat's own location
+#     ALREADY IN THEM" is beat-agnostic on purpose; the board bar is repeated
+#     from beat 06 onto beat 10 on purpose, because the board is the subject of
+#     both. Failing on all thirteen is 8% precision, which is the cry-wolf shape
+#     that got the runner watchdog switched off.
+# So a cross-beat bar is REVIEW, and an entry here turns it into a verdict:
+# `owned_by_beat:` fails every spec on another beat, `shared: true` is silent.
+# Either way `contains:` is content-checked and an entry matching nothing fails
+# as `stale_bar_entry`, so this list prunes itself.
+bar_fields:
+- success
+
+bars:
+- id: b02-sprint
+  field: success
+  # Beat 02 is THE SPRINT. done-definitions.yaml beats.02.done_when: "he ARRIVES
+  # and GOES DOWN: entry, skid, dive, in that order and legible as one continuous
+  # move." No other beat's action is that.
+  contains: 'sprints in, skids and dives behind a sapling'
+  owned_by_beat: 2
+  since: '2026-08-14'
+  what: >-
+    Verified 2026-08-16 against pipeline/jobs/ as committed, not as it sits on one
+    laptop: 82 specs in HEAD carry this line, 13 of them are beat 02, 63 of the
+    rest carry a dated `success_CORRECTION_0816` sibling naming their own beat's
+    action and done_when. Thirteen is the count this entry stands on and it was
+    re-counted here rather than inherited.
+  # THE SIX SPECS BELOW ARE STAGED FOR DELETION BY ANOTHER LANE and are the exact
+  # trap that turned CI red on 2026-08-16 (run 31961345357). Four of them were
+  # also recreated untracked, so they exist on this disk; the two b17 ones are
+  # staged-deleted AND gone from the working tree while HEAD still tracks them.
+  # A local `ls` sees four and CI checks out HEAD and sees six. The list is all
+  # six. Correcting a spec another lane is deleting would write into a file that
+  # is about to disappear, so they are excused rather than rewritten -- and when
+  # the deletion lands the entry reports itself as no longer needed rather than
+  # failing, because a spec that is gone is an exception that is discharged.
+  acknowledged:
+    recorded_in: pipeline/test_pipeline.py
+    recorded_contains: 'staged for deletion by another lane and are deliberately'
+    specs:
+    - ep2-b14-s49-0815
+    - ep2-b14-s49B-0815
+    - ep2-b15-s49-0815
+    - ep2-b15-s49B-0815
+    - ep2-b17-s49-0815
+    - ep2-b17-s49B-0815

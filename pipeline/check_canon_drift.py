@@ -9,7 +9,7 @@ CANON MOVED AND THE ARTIFACT THAT RUNS DID NOT.
 $0, no GPU, no network, no model, no yaml round-trip of anything. Exit 0 when
 there is no unacknowledged finding, 1 when there is.
 
-THE FOUR RULES, each written against a real loss:
+THE FIVE RULES, each written against a real loss:
 
   R1 resolved_but_open — a founder decision recorded as `resolved:` in
      review/inbox.yaml while a record still asserts it is open. On 2026-08-14/15
@@ -35,6 +35,15 @@ THE FOUR RULES, each written against a real loss:
      twelve beats improvised one in opposite directions — beat 01 alone carries
      both `wide oval cotyledon leaves` and `deeply lobed fig leaves with five
      fingers` across its own variants.
+
+  R5 bar_serves_two_beats — one beat's judging bar recorded on another beat's
+     spec. The ALL-21 wave was authored by copying a spec: 80 job specs carried
+     BEAT 02's `success` line and only 13 are beat 02. queue_history.py copies
+     `success` into the ledger's `purpose`, so 352 rows published "a LEAN ADULT
+     goblin sprints in, skids and dives behind a sapling" as the bar for clips of
+     beats that do no such thing. R1-R4 cannot express it: that prose contradicts
+     NO canon, it is canonical prose about the wrong beat, and no
+     attribute-versus-record rule can see a wrong ATTACHMENT.
 
 LIVE EXAMPLE, unprompted, on the repo as it stands: R3 reports that PURPLE is in
 ten drafts across beats 19 and 20 and in ZERO of the 56 rendered prompts in
@@ -85,6 +94,13 @@ widening the check until it is noisy:
   * WHETHER A RENDERED FRAME ACTUALLY SHOWS THE CANON. R3 proves a prompt
     carrying the canon reached a render. It cannot look at the picture — only the
     founder's eye closes that gap.
+  * WHETHER A SHARED BAR IS A PASTE OR A POLICY. R5 sees that one `success:` line
+    is the recorded bar for several beats. It cannot tell a wave-wide bar written
+    that way on purpose ("Plate frames with this beat's own location ALREADY IN
+    THEM", six beats, correct on all six) from beat 02's action pasted onto beat
+    20. Measured before the rule was written: 13 `success` lines span more than one
+    beat on this repo and exactly ONE is the defect. So the collision is REVIEW and
+    a `bars:` entry is what makes it a verdict.
 
 FINDING LEVELS: FAIL (exit 1) · ACK (known, named in a record, not fatal) ·
 REVIEW (prose log, human eyes) · UNKNOWN (the check abstains and says so).
@@ -323,6 +339,34 @@ def read_ledger_prompts(root):
     return out
 
 
+_SPEC_CACHE = {}
+
+
+def read_job_specs(root):
+    """pipeline/jobs/*.yaml → [(path, job_id, doc)] for every spec that parses.
+
+    Cached per root because two rules now want the parsed specs and there are 824
+    of them; parsing the directory twice doubled the run for no new information.
+    A spec that will not parse is skipped, not guessed at — the same abstention
+    the payload reader has always made.
+    """
+    key = os.path.abspath(root)
+    hit = _SPEC_CACHE.get(key)
+    if hit is not None:
+        return hit
+    out = []
+    for f in sorted(glob.glob(os.path.join(root, "pipeline", "jobs", "*.yaml"))):
+        try:
+            doc = yaml.safe_load(open(f, errors="replace").read())
+        except Exception:
+            continue  # a spec we cannot parse is not a spec we may judge
+        if not isinstance(doc, dict):
+            continue
+        out.append((f, os.path.splitext(os.path.basename(f))[0], doc))
+    _SPEC_CACHE[key] = out
+    return out
+
+
 def read_job_payload_prompts(root, only_jobs=None):
     """pipeline/jobs/*.yaml `payload:` → [(beat, label, prompt_text)].
 
@@ -338,13 +382,7 @@ def read_job_payload_prompts(root, only_jobs=None):
     it; counting it as an assertion would invert every anti-term in the repo.
     """
     out = []
-    for f in sorted(glob.glob(os.path.join(root, "pipeline", "jobs", "*.yaml"))):
-        try:
-            doc = yaml.safe_load(open(f, errors="replace").read())
-        except Exception:
-            continue  # a spec we cannot parse is not a spec we may judge
-        if not isinstance(doc, dict):
-            continue
+    for f, job, doc in read_job_specs(root):
         payload = doc.get("payload")
         if not isinstance(payload, dict):
             continue
@@ -363,20 +401,24 @@ def read_job_payload_prompts(root, only_jobs=None):
     return out
 
 
-def walk_yaml_strings(node, path=(), parents=()):
-    """Yield (path, parent_mapping, key, string) for every leaf string.
+def walk_yaml_strings(node, path=(), parents=(), in_list=False):
+    """Yield (path, parents, string) for every leaf string.
 
-    `parents` carries the chain of enclosing mappings so a correction written on
-    an ANCESTOR key suppresses hits inside the block it corrects — which is how
-    done-definitions.yaml actually does it (`guards_CORRECTION_0816` sits beside
-    `guards`, not beside the line inside it that says "do not cast them").
+    `parents` carries the chain of enclosing mappings as (mapping, key, is_row)
+    so a correction written on an ANCESTOR key suppresses hits inside the block
+    it corrects — which is how done-definitions.yaml actually does it
+    (`guards_CORRECTION_0816` sits beside `guards`, not beside the line inside it
+    that says "do not cast them").
+
+    `is_row` says the mapping was reached as an element of a LIST, so it has no
+    key of its own for a correction to name. See correction_sibling.
     """
     if isinstance(node, dict):
         for k, v in node.items():
-            yield from walk_yaml_strings(v, path + (str(k),), parents + ((node, str(k)),))
+            yield from walk_yaml_strings(v, path + (str(k),), parents + ((node, str(k), in_list),), False)
     elif isinstance(node, list):
         for i, v in enumerate(node):
-            yield from walk_yaml_strings(v, path + (f"[{i}]",), parents)
+            yield from walk_yaml_strings(v, path + (f"[{i}]",), parents, True)
     elif isinstance(node, str):
         yield path, parents, node
 
@@ -396,8 +438,25 @@ def correction_sibling(parents):
     actually written do both: `guards_CORRECTION_0816` corrects `guards` exactly,
     while `the_second_gate_CORRECTION_0816` corrects the longer key
     `the_second_gate_underneath_it` sitting beside it.
+
+    SECOND FORM, ADDED 2026-08-16 FOR A RECORD THE FIRST FORM COULD NOT REACH. In
+    pipeline/measured/episode-progress.yaml the twelve goblin beats are LIST ROWS:
+
+        - n: 2
+          state: blocked-decision
+          note: goblin beat — held by the character-first ruling; no animation …
+          state_CORRECTION_0816: 'CORRECTION, 2026-08-16: the "character gate" …'
+
+    The stale assertion is in `note` and the correction names `state`, so the
+    prefix rule misses it and the row reports as uncorrected. A list row has NO
+    KEY OF ITS OWN for a correction to name — that is why the lane keyed it to the
+    row's load-bearing field — so inside a row a dated correction is a correction
+    OF THE ROW. Deliberately narrow in two ways: it applies only to mappings
+    reached through a list, and the corrected base must be a real key of that same
+    row, so a stray dated key cannot silence anything. It is strictly narrower than
+    the ancestor form above, which already lets one correction cover a whole block.
     """
-    for mapping, key in parents:
+    for mapping, key, is_row in parents:
         for other in mapping:
             other = str(other)
             if other == key:
@@ -407,6 +466,8 @@ def correction_sibling(parents):
                 continue
             base = m.group("base")
             if base == key or key.startswith(base + "_") or base.startswith(key + "_"):
+                return other
+            if is_row and base in mapping:
                 return other
     return None
 
@@ -808,17 +869,178 @@ def rule_attribute_unpinned(reg, variants):
 
 
 # ---------------------------------------------------------------------------
+# R5 — one beat's bar attached to another beat's spec
+# ---------------------------------------------------------------------------
+
+DEFAULT_BAR_FIELDS = ("success",)
+
+
+def _bar_groups(root, fields):
+    """{(field, normalised text): [(job, beat)]} over specs that carry the field.
+
+    A spec whose field has a dated `<field>_*_MMDD` correction sibling DROPS OUT.
+    That is the house convention for a superseded line, and it is also what keeps
+    this rule off its own tail: the corrections written to discharge it quote the
+    prose they replace, and a rule that reads its own corrections as fresh
+    instances never goes quiet. (The lane that found this paste hit the same wall
+    from the other side — its first selector grepped "ALL-21 WAVE" and matched 34
+    files because the correction prose names the wave.) The correction TEXT is
+    never grouped either: only the `<field>` key itself is read.
+    """
+    groups = {}
+    for _f, job, doc in read_job_specs(root):
+        beat = doc.get("beat")
+        if not (isinstance(beat, (int, str)) and str(beat).isdigit()):
+            continue  # a spec with no beat cannot be attached to the wrong one
+        beat = int(beat)
+        for field in fields:
+            text = doc.get(field)
+            if not isinstance(text, str) or not text.strip():
+                continue
+            if correction_sibling(((doc, field, False),)):
+                continue
+            groups.setdefault((field, " ".join(text.split())), []).append((job, beat))
+    return groups
+
+
+def rule_bar_serves_two_beats(root, reg):
+    """A judging bar that belongs to one beat, recorded on the specs of others.
+
+    THE LOSS, 2026-08-14/16. The ALL-21 wave was authored by copying one spec, and
+    the paste went far past the wave: 80 specs in pipeline/jobs/ carried beat 02's
+    `success` line and only 13 of them are beat 02 — including beat 16, which was
+    never in the wave. queue_history.py copies `success` into the run ledger's
+    `purpose` block, so 352 ledger rows published a bar reading "a LEAN ADULT
+    goblin sprints in, skids and dives behind a sapling" for clips of beats that
+    do no such thing, and /queue showed it. Beat 20 is the fig and the look up.
+
+    WHY NONE OF R1-R4 CAN EXPRESS THIS, and the diagnosis handed over is right:
+    the prose contradicts NO canon. It is canonical prose about the wrong beat.
+    Every earlier rule compares an attribute to a record; here both halves are
+    correct and only the attachment is wrong.
+
+    WHY THIS FIRES AT REVIEW BY DEFAULT AND NOT AT FAIL. The rule as first handed
+    over — "no two specs with different `beat:` values may share byte-identical
+    purpose prose" — was measured on this repo before it was written, and it does
+    NOT have the zero false positives it was credited with:
+
+      * over `consumer` and `why` it produces 45 more cross-beat groups, nearly
+        all legitimate. A wave has ONE consumer and ONE rationale across twenty
+        beats: "motion-wave, which re-animates this beat off the plate" is shared
+        by 24 specs on 13 beats and is correct on every one of them. So the field
+        list is `success` only — the bar is the per-beat thing.
+      * even over `success` alone, 13 groups span more than one beat on this repo
+        and only ONE is the defect. "Plate frames with this beat's own location
+        ALREADY IN THEM" is written beat-agnostically ON PURPOSE, and the board
+        bar is repeated from beat 06 onto beat 10 deliberately, because the board
+        is the subject of both. Failing on all thirteen would be 8% precision —
+        the cry-wolf shape that got the runner watchdog switched off.
+
+    So the checker reports what it can see (these specs share a bar across beats)
+    and abstains on what it cannot (whether that is a wave-wide bar or a paste),
+    and a `bars:` entry in the register turns the abstention into a verdict:
+
+      owned_by_beat: N  → every spec in the group on another beat FAILS.
+      shared: true      → deliberate; silent.
+
+    Both are content-checked: an entry whose `contains:` matches no spec fails as
+    `stale_bar_entry`, so the register prunes itself rather than aging into a lie.
+    """
+    entries = reg.get("bars") or []
+    fields = tuple(reg.get("bar_fields") or DEFAULT_BAR_FIELDS)
+    groups = _bar_groups(root, fields)
+    out = []
+    matched_entries = set()
+
+    for (field, text), rows in sorted(groups.items()):
+        beats = sorted({b for _, b in rows})
+        entry = next((e for e in entries
+                      if (e.get("field") or "success") == field
+                      and _flat(e.get("contains", "\0")) in _flat(text)), None)
+        if entry is not None:
+            matched_entries.add(entry.get("id"))
+        if len(beats) < 2:
+            continue
+        if entry is None:
+            out.append(Finding(
+                REVIEW, "bar_serves_two_beats", "-", f"pipeline/jobs/ ({len(rows)} specs)",
+                f"one `{field}:` line is the recorded bar for beats "
+                f"{', '.join('b%02d' % b for b in beats)} — a wave-wide bar and a paste look "
+                f"identical from here, and no `bars:` entry rules on it: {text[:110]}…"))
+            continue
+        if entry.get("shared"):
+            continue
+        owner = entry.get("owned_by_beat")
+        if owner is None:
+            out.append(Finding(
+                UNKNOWN, "bar_serves_two_beats", entry.get("id", "?"), "pipeline/canon.yaml",
+                "entry says neither `owned_by_beat:` nor `shared: true`, so the collision it "
+                "matches is not adjudicated"))
+            continue
+        ack = entry.get("acknowledged") or {}
+        ack_specs = set(ack.get("specs") or [])
+        ack_live = True
+        if ack_specs:
+            rp = Path(root) / str(ack.get("recorded_in", ""))
+            needle = str(ack.get("recorded_contains", ""))
+            if not rp.exists() or (needle and _flat(needle) not in _flat(rp.read_text(errors="replace"))):
+                ack_live = False
+                out.append(Finding(FAIL, "acknowledgement_unrecorded", entry.get("id", "?"),
+                                   str(ack.get("recorded_in")),
+                                   "the record that is supposed to excuse these specs no longer "
+                                   f"contains {needle!r}; the suppression list is not backed by anything"))
+        seen_specs = {j for j, _ in rows}
+        for job, beat in sorted(rows):
+            if beat == int(owner):
+                continue
+            if job in ack_specs and ack_live:
+                continue
+            out.append(Finding(
+                FAIL, "bar_serves_two_beats", entry.get("id", "?"), f"pipeline/jobs/{job}.yaml",
+                f"this spec is beat {beat} and records beat {owner}'s bar as its own `{field}:`; "
+                "queue_history.py copies it into the ledger's purpose block, so the clip is "
+                "published to be judged against another beat's action — write this beat's own bar "
+                f"or a dated {field}_CORRECTION_MMDD sibling: {text[:90]}…"))
+        for job in sorted(ack_specs - seen_specs):
+            out.append(Finding(
+                ACK, "acknowledgement_no_longer_needed", entry.get("id", "?"),
+                f"pipeline/canon.yaml:{job}",
+                "the spec this excuses no longer carries the bar (deleted, or corrected in place), "
+                "so the entry can be dropped"))
+
+    for e in entries:
+        if e.get("id") in matched_entries:
+            continue
+        out.append(Finding(
+            FAIL, "stale_bar_entry", e.get("id", "?"), "pipeline/canon.yaml",
+            f"no job spec carries {str(e.get('contains'))[:70]!r} any more; this entry is asserting "
+            "a collision that no longer exists, and a register that cannot go stale is the point"))
+    return out
+
+
+# ---------------------------------------------------------------------------
 # COVERAGE — the register's own gaps, reported as abstentions, never as failures
 # ---------------------------------------------------------------------------
 
 def rule_unregistered_decisions(reg, inbox_cards, since=None):
+    """Which resolved decisions no subject adjudicates — the register's real reach.
+
+    `also_records:` exists because ONE decision can be recorded on more than one
+    card. The founder's "seed s0 is the goblin" answers both the numbered picker
+    card and the plates card that asked the same question in older words; only one
+    of them can be the subject's `resolved_by` locator, because _card_resolution
+    must identify exactly ONE card or it abstains. Listing the other here says so
+    explicitly instead of leaving the same ruling on the uncovered list forever.
+    It is COVERAGE BOOKKEEPING ONLY — it never adjudicates anything, so it cannot
+    become the similarity matching this checker refuses to do.
+    """
     out = []
     registered = set()
     for s in reg.get("subjects", []):
-        rb = s.get("resolved_by") or {}
-        for k in ("card_url_contains", "card_what_contains"):
-            if rb.get(k):
-                registered.add(rb[k])
+        for rb in [s.get("resolved_by") or {}] + list(s.get("also_records") or []):
+            for k in ("card_url_contains", "card_what_contains"):
+                if isinstance(rb, dict) and rb.get(k):
+                    registered.add(rb[k])
     for c in inbox_cards:
         if not isinstance(c, dict) or not c.get("resolved"):
             continue
@@ -838,6 +1060,7 @@ def rule_unregistered_decisions(reg, inbox_cards, since=None):
 
 def run(root, register_path=None, coverage_since=None):
     root = str(root)
+    _SPEC_CACHE.clear()  # one run = one read of disk; the cache never outlives it
     reg, findings = load_register(root, register_path)
     if reg is None:
         return findings
@@ -893,6 +1116,7 @@ def run(root, register_path=None, coverage_since=None):
                                               all_prompts=all_prompts)
     findings += rule_canon_never_ran(root, reg, all_prompts, runs)
     findings += rule_attribute_unpinned(reg, live_prompts)
+    findings += rule_bar_serves_two_beats(root, reg)
     findings += rule_unregistered_decisions(reg, cards, coverage_since)
     return findings
 
@@ -918,6 +1142,10 @@ def main(argv=None):
     counts = {lv: sum(1 for f in findings if f.level == lv) for lv in (FAIL, ACK, REVIEW, UNKNOWN)}
 
     uncovered = sum(1 for f in findings if f.rule == "unregistered_decision")
+    if a.coverage and not a.quiet:
+        print("REGISTER REACH — the resolved decisions below have NO subject, so no record was "
+              "compared against them. They are not passes; they are the part of the inbox this "
+              "check does not see.\n")
     for f in findings:
         if a.quiet and f.level != FAIL:
             continue
@@ -927,9 +1155,36 @@ def main(argv=None):
     if not a.quiet:
         print()
         print(f"CANON-DRIFT: fail={counts[FAIL]} ack={counts[ACK]} "
-              f"review={counts[REVIEW]} cannot-tell={counts[UNKNOWN]} "
-              f"(of which {uncovered} resolved decisions no subject covers — --coverage to list)")
+              f"review={counts[REVIEW]} cannot-tell={counts[UNKNOWN]}")
+        # THE REACH IS NOT A FOOTNOTE. `fail=0` on a register covering 1 of 75
+        # resolved decisions is a statement about the register, not about the
+        # repo, and printing the pass without the reach beside it is how a green
+        # line starts meaning "nobody looked".
+        if a.coverage_since:
+            print(f"             REGISTER REACH: not computed — --coverage-since "
+                  f"{a.coverage_since} hides every older decision, so the uncovered count "
+                  "is a slice and a percentage of it would be a lie")
+        else:
+            resolved = len(_resolved_cards(a.root))
+            covered = max(resolved - uncovered, 0)
+            pct = (100.0 * covered / resolved) if resolved else 0.0
+            print(f"             REGISTER REACH: {covered} of {resolved} resolved founder decisions "
+                  f"are covered by a subject ({pct:.0f}%); {uncovered} are not"
+                  + ("" if a.coverage else " — --coverage to list them"))
     return 1 if counts[FAIL] else 0
+
+
+def _resolved_cards(root):
+    p = Path(root) / "review" / "inbox.yaml"
+    if not p.exists() or yaml is None:
+        return []
+    try:
+        cards = yaml.safe_load(p.read_text(errors="replace"))
+    except Exception:
+        return []
+    if not isinstance(cards, list):
+        return []
+    return [c for c in cards if isinstance(c, dict) and c.get("resolved")]
 
 
 if __name__ == "__main__":
