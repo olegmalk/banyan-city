@@ -11,6 +11,17 @@ jsons, so **two failures are invisible to the heartbeat**, and both belong to
 the crash class below (see group 2). Any count derived from the heartbeat
 undercounts by exactly those two.
 
+> **CORRECTED 2026-08-17 by the recovery pass. The two orphan logs are not lost
+> evidence — they are proof of a retry that worked, and the heartbeat was right
+> not to count them.** See the recovery addendum at the end of this file. The
+> json is missing from `failed/` because it went to `done/` under the same
+> `<id>-<stamp>` name when attempt 2 succeeded; the killed attempt's log was
+> simply never cleaned up. So the heartbeat's `failed:` count is not a floor,
+> and `failed/`'s log count is not a total: **an orphan log with no json beside
+> it means "retried and finished", and is the one entry in the pile that needs
+> nothing done to it.** Read the addendum before acting on anything below —
+> three of the six groups' recommendations changed.
+
 ## Cause groups
 
 Return codes sort the pile first; two rc values then split across causes, so the
@@ -302,3 +313,135 @@ Group 1: 60 rendered images for beats 5, 9, 11, 12, 18 and 21 that the board
 files as failures, that nobody has ever looked at, and that exist **only** on
 the box. The release picture is better than the failure count says — and it is
 one disk away from being worse than either.
+
+---
+
+# Recovery addendum (2026-08-17, same day)
+
+Everything the triage recommended doing was attempted. Two of its findings were
+wrong in the same direction — **it under-counted how much of this pile is
+already finished work** — and the corrections matter more than the original
+diagnosis, because both of them were arguments for spending GPU time.
+
+## 1. Nothing was "in exactly one place". It was on a branch main never merged.
+
+`C:\banyan-farm\courier-box` is not a staging directory. **It is a git clone, on
+branch `farm-results-rtx5090`,** and the runner commits and pushes into it. All
+six group-1 sets were committed there on 2026-08-14 and pushed to origin; the
+triage's `git ls-files` returned 0 because it was asking `main`.
+
+So the durable path worked exactly as MEMORY describes it. The step that does
+not exist is the **merge back to main**, and nothing in the pipeline performs
+it. Eleven sets were stranded on that branch, not one:
+
+| set | contents | in main before | after |
+|---|---|---|---|
+| `ep2-b05-scene-0814` | 16 png + 16 yaml | 0 | 33 |
+| `ep2-b09-scene-0814` | 16 png + 16 yaml | 0 | 33 |
+| `ep2-b11-scene-0814` | 16 png + 16 yaml | 0 | 33 |
+| `ep2-b12-scene-0814` | 4 png + 4 yaml | 0 | 9 |
+| `ep2-b18-scene-0814` | 4 png + 4 yaml | 0 | 9 |
+| `ep2-b21-scene-0814` | 4 png + 4 yaml | 0 | 9 |
+| `ep2-b01-styleprobe` | 6 png (i25/i40/i55) | 0 | 13 |
+| `ep2-b01-shape` | 1 png | 0 | 2 |
+| `ep2-b01-shapeB` | 1 mp4 + 1 png | 0 | 4 |
+| `ep2-b04-balloon-pair` | 1 mp4 + init | 0 | 5 |
+| `ep2-b19-overhead` | 1 mp4 + init | 0 | 5 |
+
+Recovered by `git checkout origin/farm-results-rtx5090 -- <path>`, so the bytes
+come from git's own checksummed objects rather than a second copy over ssh, and
+verified by sha256 against each set's own `.sha256` manifest **twice** — once on
+the box before, once in the worktree after. 11 sets, 155 declared entries, 0
+missing, 0 mismatched, 0 undeclared, both sides. Originals left in place.
+
+**The lesson is narrower than "they were nearly lost" and worse: a set can be
+committed, pushed, manifest-attested and still invisible to every question
+anyone asks, because every question is asked of `main`.** A `failed/` entry and
+an unmerged branch is not one disk failure away from gone — it is already gone
+as far as the board, the site and the release picture are concerned.
+
+## 2. Group 2 did not lose GPU work. Both jobs were retried and finished.
+
+The triage called group 2 "the only group where a re-run buys frames that do not
+exist", and said b19 "produced no clip" and b04's "encode never ran". The
+`done/` jsons say otherwise:
+
+```
+done/ep2-b19-overhead-0812-1786475381.json     rc=0  attempts=2  19:56:48Z
+done/ep2-b04-balloon-pair-0813-1786611603.json rc=0  attempts=2
+```
+
+`attempts=2`. The `window-CLOSE` kill was attempt 1; the runner retried and
+finished — 15 minutes later for b19, 40 for b04 — and both clips have been in
+farm-out since 12/08 23:56 and 13/08 13:53. That is why the json is missing from
+`failed/`: it was written to `done/`, and only the killed attempt's log stayed
+behind. **The `attempts` counter has already absorbed this failure mode both
+times it occurred.** The signature is still worth watching (0 of 1742 `done/`
+logs carry it) but it has never yet cost a frame.
+
+Cost of getting this wrong: b04 was filed to the backlog on the triage's
+recommendation before the `done/` json was read, autofill claimed it inside
+three minutes, and it re-rendered a clip that already existed. **Reading
+`done/` for the same job id takes one command and had to come first.** The two
+clips were committed to main before the re-run could overwrite the box copies.
+
+## 3. Group 5 needs no re-fires either — every entry already has a successor.
+
+The triage recommended re-firing all five "after pulling the clone and the
+drafts". The clone and drafts were pulled (below), and then each entry was
+checked against `done/` first. All five are already resolved:
+
+| failed entry | successor | rc | finished |
+|---|---|---|---|
+| `ep2-guard-sheet-a-0814` | `ep2-guard-sheet-a-r2-0814` | 0 | 08-14 11:40Z |
+| `ep2-guard-sheet-b-0814` | `ep2-guard-sheet-b-r2-0814` | 0 | 08-14 11:41Z |
+| `ep3-charref-magistrate-0812` | `ep3-charref-magistrate-r2-0812` | 0 | 08-12 23:08Z |
+| `ep2-b10-attrbind-eyewear-0817` | `ep2-b10-attrbind-eyewear-0817b` | 0 | **08-17 12:27Z** |
+| `ep2-b04-goblin-ipa-content` | itself, re-filed 10 min later | 0 | 08-10 09:48Z |
+
+The `-r2-` and `-0817b` specs were already in `pipeline/jobs/`. Today's
+`b10-attrbind-eyewear-0817` failure — the triage's live proof that the stale
+clone was still breaking jobs — had a fixed successor running **13 minutes
+later**. The stale clone was real and the pull was still right, because the next
+job to init from it would have failed the same way; but it did not leave work
+undone.
+
+**Re-fire count for the whole 35-entry pile, after checking: zero.** Group 1's
+pixels exist, group 2's clips exist, groups 3, 4 and 6 need an authoring fix
+first, and group 5's successors have all run. The pile is a record of work that
+is finished and mislabelled, not work that is owed.
+
+## 4. The stale clone and the drafts (the one thing that did need doing)
+
+```
+C:\banyan-farm\banyan-city   755036a6 (08-15T22:35)  ->  145a02d5 (08-17T14:14)
+```
+
+Verified by hash, not by the pull's output:
+
+- `pipeline/wave-drafts.yaml` on the box = `542879b1…` = `origin/main`'s blob.
+- `farm-out/ep2-b10-mac-plate-0817/10-no-form-mac-plate-r1s1.png` = `453a1f83…`
+  = the repo's. The init today's job called missing is now present.
+- `wave-goblin-prep\goblin_ipa_sample.py` = `6f7333bd…`, **unchanged** before and
+  after, and unchanged again after `--sync-drafts`. It lives outside the clone,
+  so no pull can reach it; the other lane's sync stands.
+- `--check-drafts` found `wave-scale-0816`'s copy stale at the `origin/main`
+  version; `--sync-drafts` brought both harness copies to `cbb3658e…`.
+
+**Still open:** the box tracks `origin/main`, and local `main` is 122 commits
+ahead of it. Anything committed and not pushed is still invisible to the box,
+which is the same shape as the farm-branch problem one level up — a commit is
+not delivered until the thing that reads it can see it.
+
+## 5. The publish defect is fixed in code, not in the specs
+
+`pipeline/publish_farm_out.py`. The inline publish step every spec hand-rolls
+wrote its manifest **before** counting what it copied, so a zero-match glob left
+an empty manifest and printed `published 0 file(s) + manifest`; with `allow_fail`
+on the step, the exit code was discarded too. A zero-match source pattern is now
+rc=95 and a short set rc=92, **neither writes a manifest**, and a zero match
+names the slug-wildcarded pattern that would have worked while still refusing —
+the runner may resolve a slug-dropped declaration because the pixels are already
+on disk, but a publish step's spec is right there and the fix is one line.
+Eleven checks in `test_silent_gates.py` (in CI); restoring the old behaviour
+verbatim fails 8 of them.
