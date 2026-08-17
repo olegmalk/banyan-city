@@ -314,3 +314,31 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    PASSES ALL SIX, and it has the LARGEST ON-SCREEN DEPARTURE of any passing take
+    on this beat: tan coat 0.615, brown 0.651, against s20260903's 0.701 / 0.793.
+    Two guards, backs turned in every sampled frame with no facial feature anywhere,
+    both fully in frame at f096, field at frame one, identities holding and in fact
+    separating further (tan/brown gap 48.9 -> 55.7). Fit correlation 0.803, the best
+    in the batch. Terminal-freeze index 0.
+    THE ONE TRADE-OFF, and it is why this is offered as the alternative rather than
+    taken as the pick: the fitted background scale ends at 0.87, so THE CAMERA
+    PULLED BACK 13% and part of that big on-screen shrink is the lens, not their
+    legs. Netting the framing out leaves 0.707 and 0.748 -- their own recession is
+    the same as s20260903's, not better. And a pull-back is a camera move this
+    shot's own negative forbids by name. s20260903 delivers the identical own-legs
+    departure with the background scale pinned at exactly 1.000 in every sampled
+    frame, so it needs no caveat; this clip reads bigger and costs an unrequested
+    camera move.
+    A LOOK THAT CORRECTED A METRIC-FREE SUSPICION, recorded because it nearly went
+    the other way: in the head crops guard B's hair appears to change from spiky
+    sandy to a rounder brown mop around f040, which would be a D6 failure of exactly
+    the class that broke the take in the cut. It is not. The crop is sized from his
+    coat height, so as he recedes the crop shrinks and is upscaled harder; at full
+    frame his hair stays light throughout and guard A's stays dark. The reading is
+    the verdict in both directions.
+  clip: farm-out/ep2-b11-leave-w4-s20260912-0817/11-they-leave-w4-s20260912-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py, past its five gates, same final version
+    as every other clip in this batch.
+  terminal_freeze_index: 0. Depth and cadence NOT quoted.
