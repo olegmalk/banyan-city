@@ -1,0 +1,64 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260821
+render_seconds: 70.6
+png_sha256: "cc58cbe01996d6e69327b1c178eb00f17c6f9d651dc6a1c82db81c34cfec25b6"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, from above, close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 7
+scored: true
+# Byte-identical prompt to r6 and to s1 (structural: dict(REVS[(14,6)], seed=...)).
+# Only the seed differs. Bar byte-identical to b1dabc0c, seeds pre-registered at
+# 4b111d70 before these pixels. Reported because the pre-registration said all
+# three draws are reported whatever they show.
+replication_of: "r6 (66e1b824), seed 20260814 -> 20260821. Draw 3 of 4 of one prompt."
+what_this_frame_shows: >-
+  THE WORST DRAW OF THE FOUR, and it fails in a new way. High angle onto ONE
+  goblin with an enormous smooth bald skull, dark brown cloak, CURLED ON HIS SIDE
+  IN A BOWL-SHAPED HOLLOW rather than crouched over the ground. The hollow's floor
+  is a FLAT LIME-GREEN WASH and it is ringed by PALE LUMPY BOULDER-LIKE FORMS that
+  nothing in the prompt asks for. BOTH HANDS ARE UP AT HIS CHEST, mitten-like
+  slabs with two big pale talons curled inward and a dark void between them, well
+  ABOVE waist height and nowhere near the ground. No bare soil under or around
+  them. No sky and no horizon. Face in profile, blank white eye, fanged jaw.
+verdict_against_pre_registered_bar: >-
+  NOT A PASS, AND IT FAILS FOUR AXES. P2 FAIL -- both hands are visible and
+  distinct but they are UP at chest height, not "both below waist height", so the
+  axis fails on position. THE FUSION DID NOT RECUR: two hands, two wrists. Those
+  pale pointed forms are his own talons, not a prop, so Q4 HAND-VACANCY OBJECT is
+  recorded as NOT FIRED after looking at the 3x crop rather than at the thumbnail.
+  P3 CONTACT FAIL -- nothing touches soil. P4' FAIL and inverted: the green is
+  under him and the bare pale substance is a RING around him, which is neither
+  "bare soil under or around his hands" nor a field he is in. P5 FAIL BY EYE, and
+  MARGINAL: the lime-green floor is a featureless colour wash of roughly his own
+  torso's area, and the pale boulder ring is a noun nobody asked for standing
+  where its boundary is -- the vacancy signature, "nothing grown in one". Said
+  plainly: a careful reader could score this axis a marginal PASS instead, because
+  the wash is not clearly LARGER than this figure's very large torso, and the
+  supporting measure is unhelpful here (largest inscribed flat rectangle 186x123 =
+  22878 px^2, small only because gradient and grass strokes break the rectangle up
+  -- and the bar forbids scoring P5 from the rectangle alone). It is recorded as a
+  marginal fail and it is NOT load-bearing: the draw is already NOT A PASS on P2,
+  P3 and P4'.
+  P1 MARGINAL PASS (low, not standing, ground in frame -- but a curl on his side,
+  not a crouch over the earth). P6 PASS. P7 PASS (one adult figure; the skull is
+  grossly oversized, recorded not scored, and Q7 child/chibi did not fire).
+  WHAT THIS DRAW CONTRIBUTES TO THE QUESTION THAT WAS ASKED: the r6 hand fusion
+  did NOT recur here either. Two of two fresh seeds so far draw two separate
+  hands.
+  RECORDED AND NOT SCORED: costume drift again; blank white eye; `face turned
+  away` not binding; oversized skull; the whole composition reading as a nest or
+  crater, which is a LOOK matter for the founder if he ever wants this seed.
