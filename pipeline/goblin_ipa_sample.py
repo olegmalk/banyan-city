@@ -508,6 +508,71 @@ def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
                                         encoding="utf-8")
 
 
+HEX = set("0123456789abcdef")
+
+
+def drafts_mismatch(expect: str, actual: str):
+    """RUN-TIME half of the drafts check. Returns None to proceed, else the
+    refusal text.
+
+    THE HOLE THIS FILLS, 2026-08-17. `box_enqueue.py` compares the harness's
+    wave-drafts.yaml against the repo's AT ENQUEUE TIME, and its docstring
+    promised that "the renderer keeps a second, later check of its own (see
+    --expect-drafts-sha256)" on the stated grounds that "`--backlog` work sits
+    for hours". That flag existed in exactly one place in the repo: that
+    sentence. Enqueue time and run time are not the same moment — a backlog job
+    that sits while a peer hand-syncs the harness copy (and lanes DO hand-sync
+    it, because `--sync-drafts` refuses while the queue is busy) renders
+    different wording than it was cleared for and publishes it as canon with
+    nothing firing. The renderer has been writing the evidence into every
+    sidecar as `drafts_sha256` since the field was added and nothing read it
+    back; this is the read-back, moved to before the first denoise step.
+
+    A FALSE load-bearing docstring is worse than a stale one: it closes the
+    investigation. So this is a real comparison, not a warning.
+
+    Rules, all deliberate:
+      * empty/absent `expect` returns None -- the flag is OPT-IN and INERT so
+        that adding it cannot break a job already in flight on the box.
+      * a prefix of >=8 hex digits is accepted, because the specs and the
+        prose quote short hashes (`cbb3658e`); 64 digits compare whole.
+      * an `expect` that is not usable hex REFUSES rather than being ignored.
+        Same law as box_file_sha256: a thing that could not be checked was not
+        checked, and "could not check" must not render.
+    """
+    want = (expect or "").strip().lower()
+    if not want:
+        return None
+    have = (actual or "").strip().lower()
+    if len(want) < 8 or len(want) > 64 or any(c not in HEX for c in want):
+        return ("!! --expect-drafts-sha256 %r is not a usable sha256 (want 8..64 "
+                "hex digits). The check you asked for cannot run, and a wording "
+                "that was not checked is not a checked one. Refusing rather than "
+                "ignoring the flag." % expect)
+    if len(have) != 64 or any(c not in HEX for c in have):
+        return ("!! the harness wave-drafts.yaml hashed to %r, which is not a "
+                "sha256 -- the wording this job would render cannot be "
+                "identified. Refusing." % actual)
+    if have == want or (len(want) < 64 and have.startswith(want)):
+        return None
+    return (
+        "!! DRAFTS CHANGED UNDER THIS JOB — nothing drawn.\n"
+        "     enqueued against  %s\n"
+        "     harness holds now %s\n"
+        "   This job was cleared against wording that is no longer what the\n"
+        "   harness would render, so every frame it drew would be published as\n"
+        "   canon under a prompt nobody approved. Enqueue time and run time are\n"
+        "   not the same moment and this job sat between them.\n"
+        "   FIX, one of:\n"
+        "     re-enqueue against the wording now on the harness (check the repo\n"
+        "     file first: shasum -a 256 pipeline/wave-drafts.yaml)\n"
+        "     put the intended wave-drafts.yaml back on the harness\n"
+        "       (python3 pipeline/box_enqueue.py --sync-drafts, which refuses\n"
+        "        while the queue is busy — that refusal is why jobs get\n"
+        "        hand-synced and why this check exists)\n"
+        "   Do NOT widen --expect-drafts-sha256 to make this pass." % (want, have))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--harness", required=True,
@@ -553,6 +618,17 @@ def main() -> int:
                          "wscale = the 15%% window on s0 at scale 0.8 and 1.0, "
                          "the strength knob the window arms never varied")
     ap.add_argument("--dry", action="store_true", help="measure, draw nothing")
+    # OPT-IN and INERT WHEN ABSENT — see drafts_mismatch() for the failure it
+    # exists for. box_enqueue.py compares the harness drafts against the repo's
+    # when the job is FILED; this is the same comparison when it RUNS, which for
+    # --backlog work is hours later and after any hand-sync a peer did in
+    # between. Pass the hash the job was cleared against; a >=8-digit prefix is
+    # accepted so a spec can quote the short form.
+    ap.add_argument("--expect-drafts-sha256", default=None, metavar="HEX",
+                    help="sha256 (or >=8-digit prefix) the harness "
+                         "wave-drafts.yaml MUST still have at render time. "
+                         "Mismatch = rc 12, nothing drawn. Omitted = no "
+                         "run-time check, exactly as before this flag existed.")
     a = ap.parse_args()
     cells = {"whole": CELLS_WHOLE, "content": CELLS_CONTENT,
              "window": CELLS_WINDOW, "negcolor": CELLS_NEGCOLOR,
@@ -563,6 +639,29 @@ def main() -> int:
         return 7
 
     harness = Path(a.harness).resolve()
+
+    # FIRST, before a module is imported or a weight is touched: is the wording
+    # on this harness still the wording this job was cleared against? The
+    # sampler resolves its prompts as `harness / "wave-drafts.yaml"` (below) and
+    # NEVER from --root, so the harness copy is the only file whose hash means
+    # anything here. Cheap (one 350 KB read), and it fails before the GPU is
+    # asked for anything.
+    _expect = getattr(a, "expect_drafts_sha256", None)
+    if _expect:
+        _drafts = harness / "wave-drafts.yaml"
+        if not _drafts.is_file():
+            print("!! no wave-drafts.yaml under %s — --expect-drafts-sha256 was "
+                  "given and there is nothing to check it against. Refusing."
+                  % harness, flush=True)
+            return 12
+        problem = drafts_mismatch(
+            _expect, hashlib.sha256(_drafts.read_bytes()).hexdigest())
+        if problem:
+            print("\n" + problem, flush=True)
+            return 12
+        print("   drafts checked at RUN time: %s matches --expect-drafts-sha256"
+              % _expect, flush=True)
+
     sys.path.insert(0, str(harness))
     import render_wave_goblin as wg                                  # noqa: E402
 
