@@ -2536,3 +2536,4 @@
 17:27:04Z STARTED task=ep2-b01-shape-a2-0813-1786987607 attempt=1 on box-runner
 17:36:18Z DONE task=ep2-b01-shape-a2-0813-1786987607 rc=0 artifacts=2
 17:36:22Z box-runner idle ready=0 failed=33
+17:39:07Z STARTED task=ep2-b01-geom-0817-1786988225 attempt=1 on box-runner
