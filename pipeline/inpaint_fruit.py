@@ -64,8 +64,22 @@ defect under test. Hence `--quad`, four corners and four straight edges. A
 rectangle is a quad; a rectangular board held at an angle is a quad in
 perspective, which an axis-aligned rectangle would not fit either.
 
+THIRD CALLER, 2026-08-17: EYEWEAR ON ONE MAN OF TWO, AND WHY THE MASK BECAME
+ARBITRARY. `glasses` named in ONE man's clause lands on BOTH men, 5 of 5 -- a
+different failure from the prop above, which goes to ONE WRONG figure. The
+founder ruled "draw the second man without glasses. we need to have control."
+The published cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its
+EOS carries global prompt semantics, so the token steers the whole frame and no
+wording says WHICH face; a negative cannot unbind it. The mask is therefore the
+only lever, and the region that matters here is a THIN BAND along a spectacle
+frame -- neither a blob nor a convex polygon, so neither `--ellipse` nor `--quad`
+can express it. Hence `--mask-png`, which also retires the board-MINUS-the-hand
+limitation recorded against this script in wave-drafts.yaml. The band is authored
+by pipeline/attribute_mask.py, a $0 step with no GPU and no sampler in it, which
+is what makes "control" checkable instead of asserted.
+
     python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \
-        (--ellipse cx,cy,rx,ry | --quad x0,y0,x1,y1,x2,y2,x3,y3) \
+        (--ellipse cx,cy,rx,ry | --quad x0,…,y3 | --mask-png m.png) \
         --prompt-file p.txt --negative-file n.txt \
         --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \
         [--seed N] [--pad-crop 64] [--blur 8] [--dry-run]
@@ -120,7 +134,22 @@ def main() -> int:
                     help="x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in order, a "
                          "STRAIGHT-EDGED mask. A rectangle is a quad, and a "
                          "rectangular board seen at an angle is a quad and is NOT "
-                         "an ellipse. Exactly one of --ellipse/--quad is required.")
+                         "an ellipse. Exactly one of --ellipse/--quad/--mask-png "
+                         "is required.")
+    ap.add_argument("--mask-png", default="",
+                    help="an 8-bit mask PNG the same size as --init: white is "
+                         "redrawn, black is preserved. This is the general case "
+                         "the two shape flags are special cases of. It exists "
+                         "because a region worth masking is often neither a blob "
+                         "nor a convex polygon -- a THIN BAND along a spectacle "
+                         "frame, or a board MINUS the hand holding it (a "
+                         "limitation recorded against this script in "
+                         "wave-drafts.yaml and not expressible as one ellipse or "
+                         "one quad). Authoring the geometry is a separate $0 step "
+                         "with no GPU and no sampler in it, which is the point: "
+                         "WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND "
+                         "CAN DIFF, not something the model gets a vote on. See "
+                         "pipeline/attribute_mask.py.")
     ap.add_argument("--dry-run", action="store_true",
                     help="assert the sha, draw the mask PNG beside --out and stop "
                          "BEFORE loading any model. Costs nothing and is the step "
@@ -147,13 +176,21 @@ def main() -> int:
               % (a.init_sha256, have), flush=True)
         return 3
 
-    if bool(a.ellipse) == bool(a.quad):
-        print("!! pass exactly one of --ellipse or --quad", flush=True)
+    if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if v) != 1:
+        print("!! pass exactly one of --ellipse, --quad or --mask-png", flush=True)
         return 2
 
     cx = cy = rx = ry = 0
     corners: list = []
-    if a.ellipse:
+    mask_sha = ""
+    if a.mask_png:
+        if not os.path.isfile(a.mask_png):
+            print("!! --mask-png not found: %s" % a.mask_png, flush=True)
+            return 2
+        mask_sha = sha256_of(a.mask_png)
+        shape = "png"
+        bbox = []
+    elif a.ellipse:
         try:
             cx, cy, rx, ry = (int(v) for v in a.ellipse.split(","))
         except Exception:
@@ -180,7 +217,20 @@ def main() -> int:
     plate = Image.open(a.init).convert("RGB")
     W, H = plate.size
     mask = Image.new("L", (W, H), 0)
-    if shape == "ellipse":
+    if shape == "png":
+        supplied = Image.open(a.mask_png).convert("L")
+        if supplied.size != (W, H):
+            print("!! MASK SIZE MISMATCH -- refusing.\n   init %dx%d\n   mask %dx%d"
+                  % (W, H, supplied.size[0], supplied.size[1]), flush=True)
+            return 6
+        mask = supplied
+        box = mask.point(lambda v: 255 if v > 0 else 0).getbbox()
+        if box is None:
+            print("!! mask is entirely black -- nothing would be redrawn.", flush=True)
+            return 7
+        # getbbox()'s right/bottom are exclusive; the sidecar reports inclusive px.
+        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]
+    elif shape == "ellipse":
         ImageDraw.Draw(mask).ellipse(bbox, fill=255)
     else:
         ImageDraw.Draw(mask).polygon(corners, fill=255)
@@ -242,7 +292,13 @@ def main() -> int:
                 "diffusers": module_version("diffusers")}
     stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     mask_lines = ["mask_shape: %s" % shape]
-    if shape == "ellipse":
+    if shape == "png":
+        mask_lines += ["mask_png_source: %s" % a.mask_png.replace("\\", "/"),
+                       "mask_png_sha256: %s" % mask_sha,
+                       "mask_white_px: %d"
+                       % (W * H - mask.point(lambda v: 255 if v > 0 else 0)
+                          .histogram()[0])]
+    elif shape == "ellipse":
         mask_lines += ["mask_centre_px: [%d, %d]" % (cx, cy),
                        "mask_radii_px: [%d, %d]" % (rx, ry)]
     else:
