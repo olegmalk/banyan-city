@@ -995,3 +995,39 @@ filed_0817: >-
   founder's screening gates PUBLICATION, not measuring. One fire, four frames, N fixed before
   firing. Verdict lands here as verdict_0817 and as one line in
   pipeline/leaf-count-bar-0817.md section 7.
+verdict_0817: >-
+  RAN 2026-08-17 12:42Z on the rtx5090 box, bf16/CUDA, animagine-xl-3.1, 3.8s a frame, $0.
+  4 of 4 frames returned; published to
+  farm-out/ep2-b01-leafcomp-inpaint-0817/ (SHA256SUMS.txt beside them). Scored against
+  pipeline/leaf-count-bar-0817.md as committed at b3e9a252, at 1x, 2x and 4x, on every frame.
+   * AXIS A COUNT -- 4 of 4 frames carry EXACTLY TWO leaf blades on the sapling. N=4 as fixed
+     before firing; rate 100%, which is >= 7/8, so the bar's own word for it is BOUND. No third
+     blade, no merge, no split, no illegible plant. The dark residual lamina the composite
+     carried below the junction is gone in all four -- the 0.30 pass resolved it into stem and
+     shadow rather than into a leaf.
+   * AXIS B HEIGHT -- no regression. The plant apex sits at y=625 in the init and at
+     625/632/626/627 in the four frames: |delta| <= 7px against the +/-12px the pattern doc
+     pre-registered, height ratio ~1.00, nothing waist-high, nothing tree-sized, nothing
+     doubled. Grass in frame stands taller than the plant in 4 of 4. Baseline to hold was 3 of
+     4; it holds at 4 of 4, with the honest caveat that the framing is the init's and this rung
+     only had to avoid breaking it.
+   * AXIS C SHAPE -- reported, not a fail axis on a count rung. The left blade reads as a broad
+     ovate lamina and the right as a narrower curved one: closer to "average leaves" than the
+     init's four narrow lance blades, but the right blade still tapers lance-ward. Whether that
+     is his "average leaves" is his call.
+   * LOOK -- no decal tell at 4x: no visible mask seam along the ellipse (maxdiff outside it is
+     24-31 on 7-26 pixels, i.e. the blur ramp and nothing else), no tiling, no repeat, cel
+     outlines in the plate's own dialect, light direction consistent, no stem discontinuity
+     where the mask edge crosses. It reads DRAWN, not pasted or traced.
+   * BACKEND -- plate and patch are both bf16/CUDA on the same box, so the MPS-vs-CUDA
+     purple/red split (MAE 60-61) is not in play. No fig was asked for and none appeared.
+  MECHANISM VERDICT: composite-then-inpaint at 0.30 keeps a composited count. Beats 01 and 21
+  were blocked on count alone; the count instrument is settled and no further wording rung is
+  owed. The lane's second fire is NOT spent -- one fire answered it.
+  FOUNDER CARDS, named and not settled here: (1) whether these two blades are his "average
+  leaves"; (2) shippability of this plate at all -- it is an off-canon mechanism frame (amber
+  close-up, no fig, framing not chosen) and must never take a canon filename. R4.
+  FINDING FOR THE PIXELS LANE, not fixed here: composites comp-s0 and comp-s2 keep a dark
+  residual lamina below the junction that the bar's counting rules would count as a third
+  blade. comp-s1 (used here) and comp-s3 do not. That is FAIL-VACANCY/C6 territory in
+  pipeline/composite-init-pattern.md, and it is the compositor's axis, not this rung's.
