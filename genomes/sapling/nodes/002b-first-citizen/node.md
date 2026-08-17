@@ -95,7 +95,7 @@ He picks at the dirt, embarrassed, glancing around.
 > **SCAVENGER:** It was *one* apple. It fell off the cart. On the ground, that's — that's foraging.
 
 **GOOD LISTENER — 1:10–1:15**
-He looks up at the sapling; both of them share the frame.
+He tips his head down and sideways until his eyes are level with the two leaves, and talks to them from a hand's width away; both of them share the frame.
 
 > **SCAVENGER:** You're a good listener. The last three people I talked to filed a report.
 

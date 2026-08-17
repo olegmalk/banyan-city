@@ -1109,8 +1109,36 @@ A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles
 
 Line: "You're a good listener." Camera holds BOTH of them — the conversation is the subject.
 
+**KNEE-HEIGHT REWRITE 2026-08-17 — the look is now DOWNWARD, and that is a better
+beat.** His ruling: *"rewrite the beats to work at knee height. change the story."*
+~~"He looks up at the sapling; both of them share the frame."~~ → *"He tips his head
+down and sideways until his eyes are level with the two leaves, and talks to them
+from a hand's width away; both of them share the frame."* Looking UP at a ~40 cm
+plant requires him lying under it; sitting from beat 13 his eyes are already above
+it. **The beat's job is that the conversation is the subject and he treats the plant
+as a person, and a man lowering himself to be eye-level with a seedling says that
+harder than a man gazing up at one.** It is also what the child episode already
+does — 003b stages *"He crouches until he is eye to eye with the little tree"* — so
+this fixes a continuity break rather than making one.
+
+Prompt above, superseded sentence kept: ~~"A small goblin tips his head back and
+looks up at the tiny sapling standing tall beside him, talking, gesturing with one
+hand; the sapling's two oversized leaves hang above him in frame."~~ The replacement
+is **33 words against 33** — this beat is on `308c74e`'s tail-dropper list, so the
+budget was the constraint and the count was held exactly rather than eyeballed. It
+was **NOT measured on the real CLIP tokenizer** (none installed here, and this pass
+was $0 with no GPU), so the word count is the only guarantee offered. Two side
+effects, both wanted: the shot gains the scale anchor `40cm`, which
+`check_sapling_scale.py` recognises and this prompt previously had none of, and it
+drops `oversized`, which §4 of `THE-SAPLING.md` records as unruled.
+
+**WHAT IT COSTS: nothing.** All twelve existing candidates were already scored ALL
+CANDIDATES FAIL (eight have no rooted plant at all, four are indoors), and beat 15
+holds no pick. `done_when`'s *"he LOOKS UP"* is now stale and needs re-transcribing
+to the level look — flagged for the pick lane that owns that file, not edited here.
+
 ```
-A small goblin tips his head back and looks up at the tiny sapling standing tall beside him, talking, gesturing with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, lonely tone, slow push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin sits in the grass, head tipped down so his eyes are level with the two leaves of a tiny 40cm sapling beside him, talking to it, gesturing; both in frame. Warm midday light, lonely tone, slow push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 16 — WHY (1:15–1:22) ⬜ needs footage
