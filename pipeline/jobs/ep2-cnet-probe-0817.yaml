@@ -1,39 +1,51 @@
 # CAPABILITY PROBE — does a scribble ControlNet actually CONSTRAIN animagine-xl-3.1?
 #
 # ############################################################################
-# STATUS: WRITTEN, VALIDATED, DELIBERATELY *NOT* ENQUEUED. Do not fire it
-# without reading this block. It passes every box_enqueue.py guard
-# (`--dry-run` clean), and it is held back for two independent reasons.
+# STATUS: FILED TO BACKLOG. The team lead reaffirmed the sample after being
+# told the count question had already been answered elsewhere, so it runs.
 #
-# 1. ITS CONSUMER IS GONE. This job was filed to tell the leaf-count lane
-#    whether structural conditioning was on the table. That lane has since
-#    ANSWERED THE QUESTION A BETTER WAY: commit cccbc85f reports COUNT 4 of 4
-#    exactly two leaves, HEIGHT 4 of 4, SHAPE 4 of 4, scored against a bar
-#    pre-registered at b3e9a252 before the pixels existed, clearing its own
-#    7-of-8 floor — by a composite layout patch, with "not one of them
-#    sampled from the model". Commit abeb7c92 independently ranked the
-#    options and reached the same verdict this lane did from the other
-#    direction: nobody has published exact count control on SDXL
-#    (CountDiffusion 34%->59% and needs Grounded SAM; CountGen ships a
-#    trained checkpoint and names identical overlapping instances as its
-#    worst case), so composite-then-inpaint at 0.30 wins on the only axis
-#    that matters — two leaves drawn into the init are two leaves, never a
-#    sample. Firing six GPU-minutes to answer a question nobody is waiting on,
-#    on a thin card, is the "no work without a consumer" rule exactly.
+# ITS ORIGINAL CONSUMER IS GONE, AND THE JOB IS NARROWER THAN IT WAS. This was
+# filed to tell the leaf-count lane whether structural conditioning was on the
+# table. That lane then answered the count question a better way: cccbc85f
+# reports COUNT 4 of 4 exactly two leaves, HEIGHT 4 of 4, SHAPE 4 of 4, against
+# a bar pre-registered at b3e9a252 before the pixels existed, by a composite
+# layout patch, with "not one of them sampled from the model". abeb7c92 ranked
+# the mechanisms and landed in the same place from the other direction: nobody
+# has published exact count control on SDXL (CountDiffusion 34%->59% and needs
+# Grounded SAM; CountGen ships a trained checkpoint and names identical
+# overlapping instances as its worst case). So a scribble hint is TIER-2 BIAS on
+# a composited init and never the count guarantee.
 #
-# 2. THE CODE IS NOT ON THE BOX AND PUTTING IT THERE IS NOT THIS LANE'S CALL.
-#    The box checkout (C:\banyan-farm\banyan-city) is at 755036a6 and has no
-#    pipeline\controlnet_probe.py. This repo is 55 commits ahead of
-#    origin/main, so the box cannot pull this job's driver without a push
-#    that would also publish eight other lanes' unpushed work. That is a
-#    sequencing decision for whoever owns the push, not for the lane that
-#    happens to need one file.
+# What is left, and it is still worth six minutes: whether the condition BINDS
+# AT ALL on animagine-xl-3.1. That is unproven, it is the difference between
+# compatibility and capability, and it decides whether structural conditioning
+# is available the next time a beat needs a POSE, a FRAMING or a COMPOSITION
+# pinned. A ControlNet that loads and then ignores its hint is worse than no
+# path, because it looks like one.
 #
-# WHAT IS STILL WORTH SOMETHING HERE. The pre-registered bar below was written
-# before any pixels and is unspent, so this stays a valid one-shot answer to a
-# question that WILL recur the moment a beat needs a pose, a framing or a
-# composition pinned rather than a count — the weights are local, Apache-2.0
-# and load offline at $0. Fire it then. Nothing about it expires.
+# BACKLOG RATHER THAN READY, ON PURPOSE. At filing the card was at 98%
+# utilisation with 13.5 of 24.4 GiB VRAM in use — a lane was mid-render, so the
+# "3 ready / 0 running" reading was stale. Loading SDXL plus a 1.25B ControlNet
+# beside a live render invites the WDDM thrash that has bugchecked this box
+# before. `--backlog` is the documented way to leave work for a card you are
+# not awake to feed; box_autofill fires it when the card is actually hungry.
+#
+# THE DRIVER RUNS AS A LOOSE COPY, AND THAT IS RECORDED RATHER THAN GLOSSED.
+# The box checkout (C:\banyan-farm\banyan-city) is at 755036a6 and has no
+# pipeline\controlnet_probe.py; this repo is 55+ commits ahead of origin/main,
+# so pulling one file would publish eight other lanes' unpushed work. That is
+# not this lane's call, so the driver and its two hints were staged at
+# C:\banyan-farm\cnet-probe-0817\src instead, and every byte was hash-verified
+# on both ends before this spec was written:
+#
+#   pipeline\controlnet_probe.py            d105b3ba67323af8...  (repo 072498e1)
+#   pipeline\control\seedling-2leaf-0817.png       ccc1a7aaa4fb21f0...
+#   pipeline\control\seedling-2leaf-right-0817.png f4c16d4112bf4a67...
+#
+# `--repo-commit 072498e1` is passed explicitly for exactly this reason: a loose
+# tree is not a git checkout, `git rev-parse` finds nothing in it, and
+# B01-R9-PLAN.md's stage 1 already shipped a sidecar degraded to an unresolvable
+# path by this same route. The sidecars here will name the real commit.
 # ############################################################################
 #
 # WHY THIS IS NOT A RENDER OF ANYTHING. Beats 01 and 21 are plate-blocked on leaf
@@ -166,9 +178,11 @@ steps:
   - name: nocontrol
     argv:
       - C:\banyan-farm\venv\Scripts\python.exe
-      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - C:\banyan-farm\cnet-probe-0817\src\pipeline\controlnet_probe.py
       - --root
-      - C:\banyan-farm\banyan-city
+      - C:\banyan-farm\cnet-probe-0817\src
+      - --repo-commit
+      - 072498e14dd20870701f034b579e70ef270a0c48
       - --arm
       - nocontrol
       - --out
@@ -176,9 +190,11 @@ steps:
   - name: left
     argv:
       - C:\banyan-farm\venv\Scripts\python.exe
-      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - C:\banyan-farm\cnet-probe-0817\src\pipeline\controlnet_probe.py
       - --root
-      - C:\banyan-farm\banyan-city
+      - C:\banyan-farm\cnet-probe-0817\src
+      - --repo-commit
+      - 072498e14dd20870701f034b579e70ef270a0c48
       - --arm
       - left
       - --out
@@ -186,9 +202,11 @@ steps:
   - name: right
     argv:
       - C:\banyan-farm\venv\Scripts\python.exe
-      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - C:\banyan-farm\cnet-probe-0817\src\pipeline\controlnet_probe.py
       - --root
-      - C:\banyan-farm\banyan-city
+      - C:\banyan-farm\cnet-probe-0817\src
+      - --repo-commit
+      - 072498e14dd20870701f034b579e70ef270a0c48
       - --arm
       - right
       - --out
@@ -196,9 +214,11 @@ steps:
   - name: polarity
     argv:
       - C:\banyan-farm\venv\Scripts\python.exe
-      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - C:\banyan-farm\cnet-probe-0817\src\pipeline\controlnet_probe.py
       - --root
-      - C:\banyan-farm\banyan-city
+      - C:\banyan-farm\cnet-probe-0817\src
+      - --repo-commit
+      - 072498e14dd20870701f034b579e70ef270a0c48
       - --arm
       - polarity
       - --out
