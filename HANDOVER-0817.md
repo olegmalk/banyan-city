@@ -43,10 +43,20 @@ conversation. Read `STATE.md` for the running log, this for what today means.
   init the thing you want is **not a sample from the model**. 8 of 8 exact
   two-leaf count across two independent inits, zero GPU for the count itself.
   At 0.2–0.35 only `steps × strength` steps run, so structure survives.
-- **Geometry-vs-number: NOT established.** Tested 2 of 16 against a 0-of-16
-  control — under the pre-registered 6/16 no-effect line. The arm was
-  ref-saturated, so this falsifies "geometry binds *on this arm*", not the
-  idea. Untested elsewhere.
+- **Geometry binds — but bind it to the right object.** `opposed one either
+  side of the stem` scored 2 of 16 on count, a real null by its
+  pre-registered rule. But re-reading the clean cells at full resolution
+  inverted the mechanism: **the clause bound, and bound well.** Stems show
+  swollen node joints, and at *every* node there are exactly two leaves,
+  opposed. What it never constrained is **how many nodes the plant has**, so
+  the model honoured the arrangement and stacked it two or three times up the
+  stem — eight cells each obeying "opposed, one either side" and returning
+  four to six leaves. The clause **describes a node, not a plant**, so it was
+  never a count constraint and could not have been.
+  **Next lever, designed and deliberately unfired:** constrain the node —
+  `one node`, `the stem bare beneath them` — with its own bar pre-registered
+  before its own pixels, folding in "average leaves" so `cotyledon` is not
+  carried a third time. This is a new variable and wants its own lane.
 - **Tools lie about success — four instances today.** A canon gate green on
   struck-through prose; a frame-count assertion neutered by `allow_fail`; a
   publish step writing a manifest for files it never copied; a runner
