@@ -266,3 +266,91 @@ one-line-per-rung index lands here.
   left blade, narrow curved right blade), so the founder's open "average leaves" card gains
   nothing new. **AXIS A binding is a property of the recipe, not of one lucky composite.** The
   2-fire ceiling is spent, both fires landed, and no third instrument is owed.
+
+---
+
+## 8. CANON APPLICATION — beats 01 and 21, pre-registered 2026-08-17 before any pixel
+
+**This section is committed before either rung exists, and it carries §3 forward rather
+than replacing it, so the numbers stay comparable with the two fires already in §7.**
+
+### 8.1 What these two jobs are, and what they are not
+
+The count QUESTION is closed: `AXIS A` bound **8 of 8** frames across two independent
+composites (§7), and the 2-fire ceiling of §5 governed that question. These two jobs
+do **not** re-ask it and are not rungs 3 and 4 of the same ladder. They are the
+mechanism's **first CANON applications**: the two beats that the 2026-08-17 verdicts
+left blocked on count alone now get plates of their **own scenes** instead of the
+off-canon amber mechanism plate, which the lane that made it correctly refused to let
+take a canon filename.
+
+**ONE SAMPLE EACH.** A new init is a recipe change, so each beat gets one fire of four
+seeds off one composited init — the same shape of sample as both fires in §7, so the
+rates are comparable. Neither job is allowed a second fire on a "nearly" result.
+
+### 8.2 The two inits, pinned, and their composites — hashes verified on BOTH machines
+
+| beat | plate (the beat's own scene) | plate sha256 | composite sha256 |
+|---|---|---|---|
+| 01 | round-1 `purple+plain` plate, `b01-fig-704x1280.png` — the plate `review/ep2-picks/done-definitions.yaml` calls *"a real scene"*, scene present from frame one | `77db45c35967f12c…` | `88e4a8abedcf30d5…` |
+| 21 | `21-the-answer-wave1-s0.png` from `ep2-b21-scale-0817` — the first plate ever tested against the founder's height ruling, whose height half **held** and whose count half failed with a drooping third blade | `ab8fb736571b6f41…` | `83f4581dad4ae125…` |
+
+Both composites were built on the Mac and rebuilt on the rtx5090 box from the same
+arguments and hash **the same bytes**. Reproducibility across machines is the standard,
+not reproducibility on one.
+
+### 8.3 Axes — CARRIED FORWARD UNCHANGED from §3
+
+- **AXIS A COUNT**, and its counting rules, verbatim as §3 has them. `N = 4` per beat,
+  fixed here before firing. The **rate floor is unchanged at 87.5%**, which at N=4 means
+  **4 of 4 to say BOUND**; 2–3 of 4 is PARTIAL; below that NOT BOUND. Stated so nobody
+  has to interpret 7/8 against a denominator of 4 after seeing frames.
+- **AXIS B HEIGHT**, unchanged, plus the same regression form as §7: apex must not move
+  more than **±12 px** against the beat's own composite, and none of the three modes the
+  founder named (waist-high, tree-sized, suddenly doubled) may appear. Beat 21 keeps its
+  grass-line clause because its plate has a grass line and a sky; beat 01's plate is a
+  field close-up whose framing this rung does not move — stated, not scored as a win.
+- **AXIS C SHAPE**, reported, not a fail axis, exactly as §3 tightened it.
+
+### 8.4 Forward-only additions, declared here before the pixels
+
+1. **Frame size.** §3's `832x1216` was written for fresh renders. These are **still
+   edits** of existing plates, so each output inherits its plate's size: beat 21
+   `832x1216`, beat 01 `704x1280`. Not a scored axis; recorded so it is not read later
+   as a drift.
+2. **COMPOSITOR PRECONDITION — no rung fires off an ungated composite.** Each composite
+   must pass `leaf_count_composite.py --assert-clear` at a declared `--residual-min-area`
+   (300 px on both plates), with the declared object rule (beat 01 `lum<178`, beat 21
+   `lum<165`) and the declared check region. Both pass with **0 residual px**. The gate's
+   check region is deliberately clear of the stem corridor, because a diffuse fill next
+   to a legitimately dark stem does not converge; the corridor is judged **by eye** and
+   that is stated before firing, not after.
+3. **MASK REACHABILITY is a bar term, not a nicety.** The blend mask must contain both
+   keeper blades, the junction AND the vacated region. A mask over the vacancy alone
+   would guarantee the count by construction and measure nothing. Both specs satisfy it
+   with `--mask-add`; the ellipses are in each spec.
+4. **Beat 01's fruit is OUTSIDE the mask by construction**, so this rung cannot alter it
+   and **fruit colour is NOT scored on it**. New card named and NOT resolved here: that
+   plate's fig reads **pale yellow-green, not canon purple**, and canon is purple
+   retroactively. Whether the beat-01 plate ships with that fruit, or gets a purple pass
+   of its own, is R4 and the founder's.
+5. **New hard FAIL mode, named in advance: `FAIL-VACANCY`.** A blade appearing inside the
+   filled region counts as a third blade and fails AXIS A. This is the vacancy law's
+   prediction and the reason both prompts must name what belongs there.
+6. **`FAIL-BLUR` is a LOOK fault, not a count fault.** If the filled region comes back
+   reading as a soft blur patch rather than field or sky, that is reported and is a
+   founder card; it does not change the count score. Beat 21's fill leaves a visible soft
+   haze in the init, which the 0.30 pass is being asked to resolve — that is the honest
+   open risk of that rung and it is written down before the frames exist.
+
+### 8.5 Backend and stop rule
+
+Both plates were rendered on the rtx5090 box in bf16/CUDA and both patches run there, so
+the MPS-vs-CUDA purple/red split (MAE 60–61) is not in play and no colour claim crosses
+machines. $0 throughout.
+
+**Stop rule for these two jobs:** one fire each, scored as written. A miss is reported
+with its rate and **nothing is filed off a failing plate**. The next instrument after a
+miss is NOT a higher strength, NOT a new wording and NOT another seed sweep — it is the
+founder's call on the plate, or the ControlNet/T2I-Adapter hint §5 already named and
+deliberately left unfired.
