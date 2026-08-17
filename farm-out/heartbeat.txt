@@ -2425,3 +2425,4 @@
 10:20:12Z DONE task=ep2-b02-scale-0817-1786958073 rc=0 artifacts=4
 10:21:00Z STARTED task=ep2-b17-scale-0817-1786958076 attempt=1 on box-runner
 10:23:49Z DONE task=ep2-b17-scale-0817-1786958076 rc=0 artifacts=4
+10:24:48Z STARTED task=ep2-b18-figleafcanon-0817-1786958082 attempt=1 on box-runner
