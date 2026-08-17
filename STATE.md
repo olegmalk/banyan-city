@@ -8656,3 +8656,39 @@ CAST problem on a two-figure composition that already renders — not a
 three-figure composition that has never existed.** That reframing is the value.
 Both `done_when` strings are left byte-identical with dated corrections beneath.
 The three queued engine probes are untouched and remain `is_show_content: false`.
+## 2026-08-17 — beat 14 r6: the camera angle deletes the band, and fuses the hands
+
+The founder ruled *"for beat 14, fix it properly"*, which fired the instrument r5's
+stop rule had named and deliberately left on the bench: **a camera angle, not a
+framing tag.** One variable, `low close-up` → `from above, close-up`, seed 20260814
+for the sixth time. Bar and stop rule pre-registered at **b1dabc0c before the pixel
+existed** — r5's seven axes carried forward byte-identical, nothing softened.
+Verdict, plate and full frame description at **66e1b824**
+(`farm-out/ep2-b14-mac-plate-0817/…r6s1.yaml`).
+
+**P5 PASSES FOR THE FIRST TIME IN FOUR RUNGS.** There is no above-horizon band
+because there is no horizon: the top edge is tall grass in individual blades across
+its full width. `from above` **deleted** the region rather than filling it, which is
+exactly what the diagnosis predicted — the hole was *above the horizon* and no ground
+noun could ever reach it. **P4' is also the strongest any rung has managed** (green on
+four sides, continuing past every edge); `Q10 the field leaves with the sky`, the risk
+registered as most likely, inverted.
+
+**And it is NOT A PASS, because P2 regressed:** two forearms terminate in **one fused
+hand** where r5 had two hands and ten fingertips buried. The committed rule fails the
+rung on any regression even if the band is gone, and a band removed at the cost of the
+hands is the trade that bar exists to catch. **`low` was NOT carrying r1's framing
+win** — crouch and tightness both survived losing it, which retires that worry — and
+**one seed cannot attribute the fusion** (recorded as unattributed, not explained).
+
+Also settled: **`from above` gives the beat a FACE** (crown *and* brow, eyes, nose,
+mouth), so the pre-registered P6 tightening is withdrawn as unnecessary. Confessed
+looseness, tightened **forward only**: P5 is a per-region size test and is blind to
+total flat area (r6 40.7% vs r5 39.9%), so r5 is not retroactively upgraded.
+
+**Lane stopped per its own rule.** Not run, named: three fresh seeds of the identical
+prompt (the only thing that can attribute the fusion, minutes on the fleet); an
+img2img init or inpaint mask now aimed at the **hand**; or r5's two-hand plate cropped
+below its horizon — a framing call, R4. **Shippability is R4 and the founder's alone.**
+$0, one sample, nothing enqueued, no motion, no `plate_ack`. macbook1 `mac_preflight`
+= `READY, problems: []` (sha256 re-read per blob) before the rung was authored.
