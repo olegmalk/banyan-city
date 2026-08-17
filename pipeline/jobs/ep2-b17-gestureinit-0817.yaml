@@ -1,0 +1,507 @@
+# 2026-08-17, THE b17 GESTURE-UNDERWAY INIT. ONE SAMPLE, ONE SEED, ONE VARIABLE.
+#
+# THE BAR AND THE STOP RULE WERE COMMITTED BEFORE THIS FILE AND BEFORE THE INIT
+# EXISTED: pipeline/research/b17-gesture-init-bar-0817.md, commit 640724b8. This
+# spec adds no criterion and relaxes none.
+#
+# WHY THIS EXISTS. Beat 17's brush has never landed, and four separate causes have
+# been eliminated by measurement already in the repo, none of it by this lane:
+#   * THE PLATE IS NOT IT. 503e40be verified in bytes (sha 74e8eccf, pulled from
+#     origin/farm-results-rtx5090 and hashed) and then in pixels that the init
+#     behind the eight failing `full` takes is ALREADY a goblin seated on grass,
+#     knees up, BOTH HANDS RESTING EMPTY ON THE NEAR KNEE, no prop in frame, open
+#     field, crown at y=510 of 1280 -- 40% headroom. Seated, hands-empty, outdoors
+#     and high-headroom has therefore already been rendered: 8/8 stand-and-turn,
+#     0/8 brush.
+#   * SIZE IS NOT A LEVER. ep2-b17-bigbody-s20260911..14-0817 ran four fresh seeds
+#     on a byte-identical composition and returned 0 OF 4, below the kill line
+#     those specs pre-registered before they rendered.
+#   * ISOLATING THE ACTION DOES NOT HELP. The brush asked for ALONE, same seed,
+#     byte-identical otherwise: 0 of 2.
+#   * MORE SEEDS CANNOT MOVE IT. Twelve seeds, zero brushes, against one historical
+#     pass -- about a 1-in-5 rate, indistinguishable from the base rate six earlier
+#     lanes were already fighting.
+#
+# EVERY ONE OF THOSE ASKED THE ENGINE TO **INITIATE** THE GESTURE. NOT ONE ASKED IT
+# TO **CONTINUE** ONE. That is the only untested distinction left on this beat, and
+# it is the one the composite finding actually speaks to: structure put INTO the
+# pixels survives, because the sampler FINISHES rather than INVENTS. This job asks
+# whether an init in which the hand is already on the cloak mid-stroke buys a stroke
+# the engine will not start on its own.
+#
+# THE INIT IS THE ENGINE'S OWN FRAME, NOT A DRAWN OR COMPOSITED HAND. Drawing or
+# compositing a hand onto a cloak is the WORST CASE FOR FAIL-DECAL on the one beat
+# that is about hands, so the structure is taken from frame 026 of the single clip
+# that ever performed this brush (17-goodbye-bigbody-LTX-handbrush.mp4, sha
+# 3aaa6ad3..., confirmed against the box's OWN published .sha256 manifest). It is
+# already 704x1280, already in dialect, already in distribution, and needs no seam,
+# no mask and no inpaint. Same mechanism, none of the drawing risk -- a substitution
+# of TOOL, not of PRINCIPLE, and stated as such rather than glossed.
+#
+# FRAME 026 WAS CHOSEN BY RULE, NOT BY EYE-APPEAL: the peak of that clip's FIRST
+# stroke, i.e. the earliest local maximum of the committed tracker's travel curve.
+# pipeline/b17_hand_track.py, re-validated on this machine against the reseed lane's
+# published numbers BEFORE it selected anything (peak frame 64 exactly, other-hand
+# control 2.2 px to f040), reads: 2.0 px at f016, 117 at f022, 200 at f024, 221 px
+# (1.23 hand-widths) at f026, ~220 held to f034, 79 by f050, 237 at f064. f026 and
+# f028 tie at 221; the earlier is taken. THE OTHER-HAND CONTROL READS 1 px AT f026,
+# so that pose is genuine articulation and not a camera move.
+#
+# THE ONLY THING THAT DIFFERS FROM THE FIVE CLIPS ALREADY RENDERED IS THE INIT.
+# Same positive prompt (sha 05942938, asserted at run time, not retyped from
+# memory), same negative (sha 50fb304c), same 704x1280, same 97 frames at 24fps,
+# same guidance 2.0, same distilled sigmas, same two-stage, same image-crf 33, same
+# sequential offload, same checkpoint. SO THE CONTROL ARM ALREADY EXISTS AT n=5 and
+# costs this lane nothing: the winner (seed 20260901, PASS) and the four reseeds
+# (20260911-14, 0/4) are the lap-start arm of this A/B. The seed here is FRESH --
+# 20260917, none of the five -- deliberately, because reusing the winner's seed
+# would make a pass uninterpretable, and the informative signal is whether the init
+# rescues an ARBITRARY seed after four arbitrary seeds failed from the lap.
+#
+# MEASURED ON THE INIT ITSELF, and the second number is a caution not a selling
+# point:
+#   * HAND AND HEAD ARE BIGGER HERE THAN ANYWHERE THIS BEAT HAS BEEN TESTED. Crown
+#     at y~90 of 1280, chin ~y440, so the head is ~350 px = 27% of frame height,
+#     against the `full` init's 11.4% and the bark scale calibration's 10.3% FAIL /
+#     15.6% FAIL / 16.0% PASS. HAND_W is 180 px on a 704-wide frame -- the hand
+#     spans a quarter of the frame's width.
+#   * THERE IS ONLY ~7% HEADROOM (crown y~90). HE CANNOT RISE TO FULL HEIGHT INSIDE
+#     THIS FRAME. That is fine for an engine probe and DISQUALIFYING for beat 17's
+#     actual plate, whose done_when requires headroom for the stand. Recorded here
+#     so that a pass cannot later be mistaken for a plate: a pass would isolate the
+#     BRUSH and would still leave stand+brush+turn-in-one-shot unsolved.
+#   * VACANCY RISK IS LOWER HERE THAN THE NAMED PRIOR. The background is dense grass
+#     blades with no sky band; the largest near-flat square is ~100x100 px against a
+#     ~350 px head, comfortably inside "no empty region larger than the figure's
+#     head". No sky noun is named anywhere in the positive -- the phrase class
+#     recorded as summoning a colossus on this very beat. An F5 would still be an F5.
+#
+# THE PLATE GUARD IS WAIVED, AND THIS IS THE HONEST ACCOUNT OF WHY. box_enqueue
+# measures every --src as an image and BLOCKED this job: "could not be measured
+# (UnidentifiedImageError) ... which is a refusal and not a pass." The guard is
+# right and its assumption simply does not cover this job -- the --src here is an
+# MP4, because the init is EXTRACTED AT RUN TIME from an asserted clip rather than
+# existing as a file at filing time. The flag was NOT renamed to slip past the
+# check; the check is waived in the open, with plate_ack below, and the thing the
+# guard exists to guarantee -- that a human actually looked at the picture being
+# animated -- was done by other means and the evidence is committed:
+#   * pipeline/research/EVIDENCE-b17-gesture-init-f026.png is THE EXACT INIT,
+#     byte-identical to what the box will extract, opened full-frame.
+#   * pipeline/research/EVIDENCE-b17-gesture-init-candidates-0817.png is f016-f050
+#     at 2x, the sheet the frame was chosen from.
+#   * pipeline/research/EVIDENCE-b17-gesture-init-headroom.png is the ruler overlay
+#     the ~7% headroom and ~350 px head were read off.
+# The init is additionally guarded harder than the plate check would have guarded
+# it: the extractor REFUSES on a source sha256 mismatch and REFUSES rather than
+# resampling if the frame is not exactly 704x1280. Both refusal paths were exercised
+# locally before filing, not assumed.
+#
+# ENGINE PROBE, NEVER TO BE CUT INTO AN EPISODE. Opening a shot mid-gesture changes
+# how the action reads, which is AUTHORSHIP. This lane measures whether the engine
+# CAN; it does not propose that it SHOULD. genomes/, shots.md,
+# pipeline/wave-drafts.yaml and pipeline/canon.yaml are UNTOUCHED. No gate:, no
+# gate_ref:. Sidecar stamped approved: false, provisional: true,
+# is_show_content: false, cost_usd 0. $0 -- local card, no provider.
+#
+# NOTHING HERE CONCEDES THE BRUSH. `brushes off` is in the approved script line
+# 002b-t0-c; dropping it is an R4 rewrite and the founder's alone.
+# ============================================================================
+id: ep2-b17-gestureinit-0817
+task: ep2-b17-gestureinit-0817
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 60
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: b17 gesture-underway init lane (does the engine CONTINUE a brush it will not
+  START?), 2026-08-17
+consumer: 'The R4 decision on beat 17''s `brushes off`, which cannot be taken responsibly
+  until the last lane-reachable instrument has been tried. Four causes are already
+  eliminated by measurement: the plate is seated/hands-empty/outdoors/40%-headroom
+  and produced 0/8 (503e40be, verified in bytes and pixels); size is not a lever
+  (bigbody reseeds 0/4, below their own pre-registered kill line); isolating the
+  action gives 0/2; and twelve seeds at zero mean more seeds cannot move the number.
+  Every one of those asked the engine to INITIATE the gesture. This job is the only
+  remaining question a lane can ask without touching the author''s text: does the
+  engine CONTINUE a hand-on-cloak stroke that is already underway at frame one? A
+  PASS says the defect is INITIATION and that a staging remedy exists for the founder
+  to accept or refuse. A FAIL says the engine cannot sustain hand-on-cloth traversal
+  from any plate, at any size, initiated or continued -- which closes the last
+  instrument and makes the disposition of `brushes off` unambiguously his call. Both
+  answers are decision-relevant, which is why one sample is worth the idle card.
+  Judged by opening all 97 frames consecutively against the bar committed in 640724b8
+  BEFORE this init existed, with pipeline/b17_hand_track.py and the stationary
+  other-hand control, and NEVER by depth -- cycle 018 measured depth inverted and a
+  clip whose only movement was a bird scores 0.376.'
+success: 'A 704x1280 mp4, 97 frames at 24fps, opening on frame 026 of the winner clip.
+  PASS is M1+M2+M3+M4 exactly as pre-registered in 640724b8, which is efd7bafa''s bar
+  verbatim plus ONE tightening declared there in advance: M1 a hand in contact with
+  the cloak AT THE FRAME WHERE M2 IS MET (not merely at frame 0); M2 that hand travels
+  at least one hand-width (180 px) across the fabric RELATIVE TO THE CLOTH; M3 the
+  hand moves, not the camera (SHOE_L, SHOE_R, GRASS_TL landmark NCC); M4 a continuous
+  path readable across consecutive frames. FAIL is any of F1 frozen, F2 cloth-only,
+  F3 camera-only, F4 morph or teleport, F5 scene break, F6 contact without traversal,
+  F7 body-instead-of-hand. F6 and F7 are explicit FAILs and never partial passes: this
+  init can stand him up, turn him, drop his hand to the lap and flutter the cloak, and
+  none of that is the brush. Travel is read at the LAST FRAME CONTAINING A FORMED HAND
+  WITH DISCRETE CLAWS; if the 1.0 bar is crossed only after the hand loses its anatomy
+  that is F4 MORPH and a FAIL, exactly as ep2-b17-bigbody-s20260912-0817 was scored
+  (270.2 px raw = 1.50 hw, but 86 px = 0.48 hw at the last formed frame). Depth,
+  cadence and unaligned camera-scale numbers are not evidence and will not be quoted.
+  THE JOB SUCCEEDS MECHANICALLY IF THE CLIP RENDERS AT ALL -- a frozen clip is a
+  successful job and a failed sample, and the two are not confused.'
+known_weakness_of_this_fixture: 'WRITTEN BEFORE THE CLIP EXISTS. It adds no criterion.
+  (1) THE INIT IS A FRAME THE MODEL ITSELF PRODUCED, so it carries codec and
+  motion-blur artefacts a drawn plate would not, and it is by construction maximally
+  in-distribution for this checkpoint''s idea of a brush. That cuts both ways and is
+  the honest reading of a pass: it would show the engine can CONTINUE a stroke from a
+  pose IT chose, which is the easiest possible version of the question and still worth
+  answering, since the engine currently cannot do it at all. It would NOT show that
+  the same works from a hand a human drew. (2) FRAME 026 IS THE PEAK OF THE STROKE, so
+  the most likely successful continuation is the RETURN stroke. The bar was written
+  knowing this and admits it deliberately -- a return sweep across the cloth is a
+  brush -- while the M1 tightening excludes the near-miss it invites, a hand merely
+  RELEASING to the lap, which would clear 180 px while leaving the fabric. (3) FAILURE
+  IS FULLY REACHABLE AND IS THE LIKELIER OUTCOME. Under this bar frame one satisfies
+  M1 ONLY; excursion is measured FROM the init pose, so M2 is zero at frame 0 and a
+  frozen clip -- this engine''s signature failure on this beat -- scores F1. A bar that
+  frame one already satisfied would be the same error as a mask drawn over only the
+  empty region: it would guarantee its result and measure nothing. (4) ~7% HEADROOM
+  MEANS THIS IS NOT A CANDIDATE PLATE and a pass does not hand beat 17 one.'
+why: The only untested distinction left on the most stuck beat in the episode --
+  continue versus initiate -- on an idle card, at $0, with the control arm already
+  rendered at n=5 and no new checkpoint, no recipe sweep, no new plate, no wording
+  variant. ONE SEED. Filed at priority 60; any lane that files ahead of this takes
+  the card first.
+plate_ack: 'unfetchable: the --src is an MP4, not a plate. This job''s init does not
+  exist as a file at filing time -- it is frame 026 of 17-goodbye-bigbody-LTX-handbrush.mp4
+  (sha 3aaa6ad3..., matching the box''s own published manifest), extracted on the box
+  at run time so that provenance is decided by the clip''s hash rather than by a
+  picture someone copied into place. box_enqueue therefore cannot open it as an image
+  and correctly refused rather than passing it unchecked. THE FLAG WAS NOT RENAMED TO
+  EVADE THE GUARD. What the guard exists to guarantee was done by other means and the
+  evidence is committed alongside this spec: EVIDENCE-b17-gesture-init-f026.png is the
+  exact init, byte-identical to what the box will extract, opened full-frame;
+  EVIDENCE-b17-gesture-init-candidates-0817.png is f016-f050 at 2x, the sheet the
+  frame was selected from by rule; EVIDENCE-b17-gesture-init-headroom.png is the ruler
+  overlay the ~7% headroom and ~350 px head height were read off. WHAT IS IN THE
+  PICTURE, described from having looked at it: the goblin seated low among tall grass
+  blades, filling the frame, head bald and downcast with both pointed ears clear of
+  the hood; his cloak grey-lavender over a dark inner robe; his NEAR arm raised across
+  his chest with a formed hand and discrete claws IN CONTACT with the dark cloak at
+  the collar; his OTHER hand low over the knee, also formed; both boots visible at the
+  bottom edge; no sky band, no second figure, no prop, no text. The init is also
+  guarded harder than the plate check would have guarded it -- the extractor refuses
+  on a source sha mismatch and refuses rather than resampling if the frame is not
+  exactly 704x1280, and both refusal paths were exercised locally before filing.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-gestureinit-0817\assert_sha.py: |-
+    #!/usr/bin/env python3
+    """Refuse to render unless named inputs hash to named values. No model, no network.
+
+    The whole claim of this job is that ONLY THE INIT differs from the five clips
+    already rendered. That claim is worthless if the prompt drifted by a character,
+    so the prompt and negative are checked against the sha256s in the box's OWN
+    published manifest for ep2-b17-bigbody-motion-0816 rather than trusted because
+    they were pasted in carefully.
+
+    Usage: assert_sha.py PATH SHA256 [PATH SHA256 ...]
+    """
+    import hashlib, os, sys
+
+    args = sys.argv[1:]
+    if not args or len(args) % 2:
+        sys.exit("!! usage: assert_sha.py PATH SHA256 [PATH SHA256 ...]")
+    bad = []
+    for path, want in zip(args[0::2], args[1::2]):
+        if not os.path.isfile(path):
+            bad.append("%s -- ABSENT" % path); continue
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        got = h.hexdigest()
+        if got == want:
+            print("OK   %s  %s" % (got, os.path.basename(path)), flush=True)
+        else:
+            bad.append("%s\n     want %s\n     have %s" % (path, want, got))
+    if bad:
+        sys.exit("!! INPUT SHA MISMATCH -- refusing to render.\n   " + "\n   ".join(bad))
+    print("all inputs verified byte-identical to the asserted manifest", flush=True)
+  C:\banyan-farm\ep2-b17-gestureinit-0817\extract_gesture_frame.py: |-
+    #!/usr/bin/env python3
+    """Extract ONE named frame from an asserted source clip. No model, no network.
+
+    The init for this probe is not drawn and not composited -- it is frame 026 of the
+    only clip that ever performed beat 17's brush. Drawing or compositing a hand on a
+    cloak is the worst case for FAIL-DECAL on the one beat that is about hands, so the
+    structure comes from the engine's own output, already in dialect and already
+    704x1280.
+
+    REFUSES on a source sha256 mismatch, so this cannot silently animate a clip that
+    merely resembles the winner. Decoding mirrors pipeline/b17_hand_track.py exactly --
+    ffmpeg -vsync 0, zero-based frame index -- so "frame 026" means the same frame here
+    as it does in the committed travel curve that selected it. ffmpeg comes from
+    imageio-ffmpeg's bundled binary because nothing is on PATH on this box.
+    """
+    import argparse, glob, hashlib, os, shutil, subprocess, sys, tempfile
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True, action="append",
+                    help="repeatable; the FIRST candidate whose sha256 matches is used")
+    ap.add_argument("--sha256", required=True, help="asserted before anything is written")
+    ap.add_argument("--frame", type=int, required=True, help="zero-based, as the tracker counts")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--expect-size", default="704x1280")
+    a = ap.parse_args()
+
+    def sha_of(path):
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+    # SEVERAL CANDIDATE PATHS, ONE ACCEPTED HASH. The clip lives in the courier dir
+    # that an earlier job published it to, and also in that job's own out dir. Trying
+    # both removes a single-path dependency without weakening anything: identity is
+    # decided by the sha256, never by which path answered.
+    src = None
+    tried = []
+    for cand in a.src:
+        if not os.path.isfile(cand):
+            tried.append("%s -- absent" % cand); continue
+        got = sha_of(cand)
+        if got == a.sha256:
+            src = cand; print("src sha OK %s (%s)" % (got, cand), flush=True); break
+        tried.append("%s -- sha %s" % (cand, got))
+    if src is None:
+        sys.exit("!! NO CANDIDATE MATCHED sha %s -- refusing.\n   %s"
+                 % (a.sha256, "\n   ".join(tried)))
+
+    try:
+        import imageio_ffmpeg
+        ff = imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        ff = shutil.which("ffmpeg") or sys.exit("!! no ffmpeg (imageio-ffmpeg absent, none on PATH)")
+    print("ffmpeg: %s" % ff, flush=True)
+
+    tmp = tempfile.mkdtemp(prefix="gframes-")
+    try:
+        # -vsync 0 and -start_number 0 make the on-disk index the tracker's index.
+        p = subprocess.run([ff, "-v", "error", "-i", src, "-vsync", "0",
+                            "-start_number", "0", os.path.join(tmp, "f%05d.png")],
+                           capture_output=True)
+        if p.returncode != 0:
+            sys.exit("!! ffmpeg decode failed: %s" % p.stderr.decode()[:400])
+        got = sorted(glob.glob(os.path.join(tmp, "f*.png")))
+        print("decoded %d frames" % len(got), flush=True)
+        want = os.path.join(tmp, "f%05d.png" % a.frame)
+        if not os.path.isfile(want):
+            sys.exit("!! frame %d not in a clip of %d frames -- refusing." % (a.frame, len(got)))
+
+        from PIL import Image
+        im = Image.open(want).convert("RGB")
+        W, H = (int(v) for v in a.expect_size.split("x"))
+        if im.size != (W, H):
+            sys.exit("!! frame is %dx%d, expected %dx%d -- refusing rather than resampling. "
+                     "The bar's travel numbers are in this clip's pixel scale." % (im.size + (W, H)))
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        im.save(a.out)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    with open(a.out, "rb") as fh:
+        oh = hashlib.sha256(fh.read()).hexdigest()
+    print("frame %d -> %dx%d" % (a.frame, W, H), flush=True)
+    print("WROTE %s sha %s" % (a.out, oh), flush=True)
+  C:\banyan-farm\ep2-b17-gestureinit-0817\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar as an unapproved engine probe.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and cost_usd 0,
+    and it does not record whether the clip may ship. Anything this lane publishes has
+    to say so on its face, so the three keys are appended here rather than asserted in
+    a commit message nobody downstream reads. REFUSES if the sidecar is missing -- a
+    clip whose provenance file did not get written must not pass silently.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b17-gestureinit-0817 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: false\n"
+            "note: |\n"
+            "  ENGINE PROBE, NOT A TAKE FOR THE CUT. This clip exists to separate two\n"
+            "  readings of beat 17's missing brush: whether this engine cannot perform\n"
+            "  hand-on-cloth traversal at all, or whether it cannot INITIATE one and\n"
+            "  can continue one already underway. Its init is FRAME 026 OF ANOTHER\n"
+            "  CLIP, so it opens mid-gesture and only ~7% of the frame is headroom --\n"
+            "  he cannot rise to full height inside it. It is therefore NOT a\n"
+            "  candidate plate for beat 17 under any reading, and opening the shot\n"
+            "  mid-gesture would change how the action reads, which is an authorship\n"
+            "  decision no lane has taken. It must never be picked into an episode.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b17-gestureinit-0817\b17-motion-prompt.txt: |-
+    He brushes the dust from his cloak with both hands. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b17-gestureinit-0817\b17-negative.txt: |-
+    camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b17-gestureinit-0817\b17-jobs-encode.json: |-
+    [
+     {
+      "beat": 17,
+      "embeds": "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b17-gestureinit-0817\b17-jobs-render.json: |-
+    [
+     {
+      "beat": 17,
+      "seed": 20260917,
+      "embeds": "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-gesture-init-f026-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4"
+     }
+    ]
+steps:
+- name: assert-inputs
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\assert_sha.py
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\b17-motion-prompt.txt
+  - 05942938bef5447c73db898de3fcf2bc2b72cdde67af89a07c19b4805cf62d9e
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\b17-negative.txt
+  - 50fb304c6ed4666064b19d4e12cfd993938ee2fee406f55d08b505601beb92cb
+- name: extract-init
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\extract_gesture_frame.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-bigbody-motion-0816\17-goodbye-bigbody-LTX-handbrush.mp4
+  - --src
+  - C:\banyan-farm\ep2-b17-bigbody-motion-0816-out\17-goodbye-bigbody-LTX-handbrush.mp4
+  - --sha256
+  - 3aaa6ad34b54f495c7a7e679dac460abc683a49adc0c61d21d35ed2ff053b7f4
+  - --frame
+  - '26'
+  - --expect-size
+  - 704x1280
+  - --out
+  - C:\banyan-farm\ep2-b17-gestureinit-0817-out\b17-gesture-init-f026-704x1280.png
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-gestureinit-0817
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-gestureinit-0817-out\bench-gestureinit-s20260917.jsonl
+  - --bench-label
+  - ep2-b17-gestureinit-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-gestureinit-0817\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b17-gestureinit-0817-out\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches
+    # nothing and the step publishes nothing while returning a code that reads
+    # like a render failure.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b17-gestureinit-0817-out"
+    pay_dir = "C:/banyan-farm/ep2-b17-gestureinit-0817"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-gestureinit-0817"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(out_dir + "/17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4*")
+                 + glob.glob(out_dir + "/b17-gesture-init-f026-704x1280.png")
+                 + glob.glob(out_dir + "/bench-gestureinit-s20260917.jsonl")
+                 + glob.glob(pay_dir + "/b17-motion-prompt.txt")
+                 + glob.glob(pay_dir + "/b17-negative.txt"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-gestureinit-0817.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 3 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-gestureinit-0817-out\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4
+- C:\banyan-farm\ep2-b17-gestureinit-0817-out\b17-gesture-init-f026-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. Beat 17 is GOODBYE -- "The scavenger stands, brushes off,
+  and turns to go." This job animates the BRUSHES-OFF clause of that same scripted
+  sentence and nothing else. STATED PLAINLY: it is an ENGINE PROBE, NOT A TAKE FOR THE
+  CUT, in the same category as the ep2-b17-amp2-*, ep2-b17-insert-motion-0816 and
+  ep2-b17-bigbody-* probes. Its init is frame 026 of another clip, so it opens
+  mid-gesture and holds only ~7% headroom -- he cannot rise to full height inside it,
+  which disqualifies it as a plate under beat 17''s own done_when and is recorded
+  rather than glossed. Opening a shot mid-gesture changes how the action reads, and
+  re-cutting beat 17 so the brush is already running is an AUTHORSHIP decision no lane
+  has taken; if this probe passes, that decision is the founder''s to make or refuse,
+  and this lane will have shown only that the engine makes it available. shots.md,
+  pipeline/wave-drafts.yaml, pipeline/canon.yaml and genomes/ are UNTOUCHED. Silent,
+  $0, no voice synthesis, no episode assembly. NOTHING HERE CONCEDES `brushes off`:
+  dropping the verb would be an R4 rewrite of an approved line and is the founder''s
+  alone.'
