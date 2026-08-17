@@ -67,6 +67,33 @@ at time of writing.)
   box. Two leaves are not distinct subjects in the prompt — we would be asking it to
   bind one repeated token to two boxes, which is off-label for the method.
 
+## 3b. SDXL ControlNet weights that actually exist (and the SD1.5 trap)
+
+**SD1.5 controlnets do not load on SDXL — architectural, not a bug.** SDXL's UNet is
+2.6B vs 860M with two text encoders (OpenCLIP ViT-G + CLIP ViT-L) instead of one, and
+a controlnet's branches are trained against one backbone's feature distribution, so
+it must be trained per base model. ComfyUI FAQ answer to "can I use an SD1.5
+ControlNet with SDXL": *"no, you cannot"* … *"there is almost no compatibility
+between different models"*, failing with `y is None, did you try using a controlnet
+for SDXL on SD1?` — <https://comfyui.nomadoor.net/en/faq/sd15-sdxl-asset-compatibility/>
+Also note the inverse trap seen in the wild: A1111's extension printing *"ControlNet
+does not support SDXL -- disabling"* on a genuinely-SDXL checkpoint —
+<https://github.com/Mikubill/sd-webui-controlnet/issues/1910>
+
+| repo | for | licence | size | note |
+|---|---|---|---|---|
+| `xinsir/controlnet-scribble-sdxl-1.0` | SDXL | Apache-2.0 | ~1B, F16 | takes crude/simple sketches by design; card claims better aesthetics than its own canny |
+| `xinsir/controlnet-union-sdxl-1.0` (+ ProMax) | SDXL | — | one file, 10+ control types | now upstreamed into diffusers as `ControlNetUnionModel` — <https://huggingface.co/docs/diffusers/v0.35.1/en/api/pipelines/controlnet_union>; card warns it was **not** trained with hand/face annotation — <https://huggingface.co/xinsir/controlnet-union-sdxl-1.0> |
+| `diffusers/controlnet-canny-sdxl-1.0` | SDXL | openrail++ | 1B, ~1 GB F32 | <https://huggingface.co/diffusers/controlnet-canny-sdxl-1.0> |
+| `diffusers/controlnet-canny-sdxl-1.0-small` | SDXL | openrail++ | **0.2B, 7x smaller** | self-described *"experimental"*; "works pretty good on most conditioning images" but "for more complex conditionings, the bigger checkpoints might be better" — <https://huggingface.co/diffusers/controlnet-canny-sdxl-1.0-small>. No `-mid` on that card. |
+| `TheMistoAI/MistoLine` | SDXL | OpenRAIL++ | `rank256` / `fp16` | explicitly accepts *"hand-drawn sketches, different ControlNet line preprocessors, and model-generated outlines"*, claims to "adapt to any type of line art input" — <https://huggingface.co/TheMistoAI/MistoLine> |
+| `lllyasviel/*` | **SD1.5/2.0 only** | — | — | ControlNet v1.1 is SD1.5/2.0 — <https://huggingface.co/lllyasviel/ControlNet>, <https://comfyui-wiki.com/en/resource/controlnet-models/controlnet-v1-1-sd15-sd2>. His `sd_control_collection` is an **aggregation of other people's** SDXL controlnets (kohya controllllite, t2i-adapters, thibaud), not lllyasviel-trained SDXL weights — <https://huggingface.co/lllyasviel/sd_control_collection>. Do not reach for "the lllyasviel one" here. |
+
+Community consensus (secondary source, Medium/GitHub discussion, not a benchmark):
+xinsir's are *"currently the most reliable for SDXL"* —
+<https://medium.com/intelligent-art/controlnet-union-promax-for-sdxl-5c1bb137b94c>,
+<https://github.com/Mikubill/sd-webui-controlnet/discussions/2989>
+
 ## 4. A crude PIL-drawn scribble IS a legitimate ControlNet input
 
 This was the cheapest thing to be wrong about, and it is not wrong. The
