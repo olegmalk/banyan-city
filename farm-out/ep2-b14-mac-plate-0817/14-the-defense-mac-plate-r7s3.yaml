@@ -1,0 +1,63 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260822
+render_seconds: 70.6
+png_sha256: "5d469bb05eeaf757fc4e80f90984dd407a5ed4ba4068386a58c5be8a996c321e"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, from above, close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 7
+scored: true
+# Byte-identical prompt to r6, s1 and s2 (structural: dict(REVS[(14,6)], seed=...)).
+# Only the seed differs. Bar byte-identical to b1dabc0c; seeds pre-registered at
+# 4b111d70 before these pixels existed.
+replication_of: "r6 (66e1b824), seed 20260814 -> 20260822. Draw 4 of 4 of one prompt."
+what_this_frame_shows: >-
+  High angle looking down. ONE adult goblin, bald with a large domed skull, both
+  ears pointed, dark purple-brown cloak, crouched low and folded forward, face
+  toward the camera and angled down, brow heavy, both eyes blank white slits, a
+  faint grin. NO SKY AND NO HORIZON. TWO SEPARATE HANDS, two distinct wrists,
+  fingers and pale claws pushed into a patch of dark brown crumbly soil directly
+  under them, clods thrown around it. The rest of the ground is PALE SAND-TAN
+  bare earth with specks, clods and hatch strokes, and GREEN GRASS APPEARS ONLY
+  AS SEPARATED CLUMPS AT THE FRAME EDGES -- top-left, left, top-right, right,
+  bottom-left, bottom-right -- with bare sand everywhere between them.
+verdict_against_pre_registered_bar: >-
+  SIX OF SEVEN, FAILING P4', WHICH IS s1's RESULT REPRODUCED EXACTLY.
+  P1 PASS (crouched low and folded over the ground, not standing). P2 PASS -- two
+  separate hands, two wrists, both below the waist, nothing held. THE FUSION DID
+  NOT RECUR: THREE OF THREE FRESH SEEDS DRAW TWO HANDS. P3 PASS, fingers and
+  claws in dark crumbly soil, contact unmistakable. P5 PASS -- no band, no
+  horizon, no wash; the largest inscribed flat rectangle in the frame (147x201 =
+  29547 px^2) sits ON HIS BALD SKULL, exactly as in r6, so the flattest thing in
+  frame is the subject rather than a hole. 46.8% flat pixels overall, reported
+  under P5's confessed looseness and NOT used to score. P6 PASS (head in frame,
+  whole face readable). P7 PASS (one adult figure; oversized skull recorded, not
+  scored; Q7 did not fire).
+  P4' FAILS on the same clause s1 failed: the green is "a fringe at the frame's
+  edges", isolated clumps over a sand plane, not a field he is in. Scored as
+  written, not softened, not tightened.
+  WHAT FOUR DRAWS OF ONE PROMPT NOW SAY, AND IT REFRAMES r6. The hand fusion was
+  SEED VARIANCE, settled: 3 of 3 fresh seeds draw two hands. But P4' PASSED ONLY
+  ON r6 AND FAILS 3 OF 4, so r6's continuous grass ring -- which r6's own verdict
+  called the strongest field of any rung -- WAS ALSO A LUCKY DRAW, not a property
+  of the wording. The seed-fragile axis is no longer the hands, it is the field.
+  NO DRAW OF THE FOUR CLEARS ALL SEVEN: r6 6/7 (P2), s1 6/7 (P4'), s2 3/7 (P2,
+  P3, P4', P5), s3 6/7 (P4'). MEASURED RATE ON THIS RECIPE: 0 USABLE IN 4
+  RENDERS, against the show's 2-3 renders per usable take.
+  RECORDED AND NOT SCORED: costume drift for the eighth time; blank white eyes;
+  `face turned away` still not binding; oversized skull; soil reads pale sand
+  rather than the "brown" P4' names; the grin reads sly rather than embarrassed
+  (a LOOK judgement, the founder's).
