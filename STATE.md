@@ -8770,3 +8770,45 @@ the show's 2–3 renders per usable take. Bar byte-identical throughout; P2 was 
 softened when we expected it to fail, nothing was tightened on r6's strength, r5 was not
 re-scored. `mac_preflight` = `READY, problems: []` **before and after** the batch. $0,
 nothing enqueued, no motion.
+### 2026-08-17 — the promised run-time drafts check now exists, and the sampler the box actually runs is five days old
+
+Supersedes the entry above: **`--expect-drafts-sha256` is implemented.**
+`goblin_ipa_sample.py` re-hashes `<harness>/wave-drafts.yaml` before a module is
+imported or a weight touched and **exits 12 having drawn nothing** when the wording
+moved between filing and running; `goblin_ipa_beat.py` passes it down unchanged
+(`parse_known_args` already did). **Opt-in and inert when absent** — shared plumbing,
+live jobs — so nothing acquires it by accident and `box_enqueue.py` still injects
+nothing. Proven red four ways (wrong hash, one hex digit off, one byte appended to
+the harness copy, no drafts file) and green as *"the check passed and execution moved
+on"*, not rc 0. **Two mutations were injected into throwaway copies to prove the tests
+would catch a guard that stopped guarding: neutering the comparison kills 18 of 47
+checks, and leaving it perfect while UNWIRING the call site leaves 42 of 47 green and
+is caught only by the six that run the sampler as a subprocess** — that is
+`check_canon_drift.py`'s failure mode, so it has its own tests.
+
+For everything that already rendered without it, **`pipeline/check_drafts_provenance.py`
+reads `drafts_sha256` back out of sidecars** (rc 1 divergence, rc 2 nothing
+identifiable, never a silent pass) — the hand check `ep2-b08-cast-0817` asks its scorer
+for, as code. Verified red on real data with no fixture: 002b's eight wave1 stills
+record `635fac3a`, the repo holds `cbb3658e`, and it names them.
+
+**NOT LIVE ON THE BOX, and the reason is a second finding.** Every 0817 wave spec runs
+`C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py`, whose sampler is that directory's
+own copy — and that copy is **`ec504b3c`, the repo's sampler as of 6ebfa776, 2026-08-12.
+It therefore has neither this flag nor the 08-15 dedup fix (`dedup_cells` appears 0
+times in it), so the "2 of every 5 renders redrew a picture the card already drew"
+defect is still live on every wave job the box has run since.** Syncing that one file
+closes both at once and is a real behaviour change on live plumbing (fewer cells when
+references duplicate), so it is **handed back, not done**: `pipeline/goblin_ipa_sample.py`
+→ `C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py`. Harness `render_wave_goblin.py`
+(`be18f941`) and `wave-drafts.yaml` (`cbb3658e`) are both byte-identical to the repo's
+right now; the box's *repo* checkout sampler is `a645037e`. No spec was edited — naming
+the flag in a spec before that file is synced would kill the job on an unknown argument.
+
+Still uncovered: `render_wave_sample.py`, the whole-wave sampler, has the same
+`harness / "wave-drafts.yaml"` resolution and no run-time check. No 0817 spec invokes it
+(its last callers are 0812 ep3 charref work), so it was left rather than duplicating the
+comparison into a second file uninvited. `test_pipeline.py` remains at its one known
+pre-existing failure (`ledger_freshness.py:369`, another lane's, untouched); its
+encoding guard caught two `subprocess.run(text=True)` calls in the new test file, which
+were fixed. $0, nothing enqueued, no render.
