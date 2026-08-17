@@ -2325,3 +2325,4 @@
 23:58:12Z STARTED task=ep2-b11-leave-s20260817-0817-1786924679 attempt=1 on box-runner
 00:04:05Z DONE task=ep2-b11-leave-s20260817-0817-1786924679 rc=0 artifacts=2
 00:06:12Z box-runner idle ready=0 failed=32
+00:13:26Z STARTED task=ep2-b11-leave-w2dist-0817-1786925590 attempt=1 on box-runner
