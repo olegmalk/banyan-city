@@ -3,6 +3,24 @@ corrections_to_the_brief:
     and is the thing being pointed at. It is GATED by the character-first ruling, not available tonight.
     The goblin-free set is EIGHT beats, not nine, and I would rather say so now than deliver a surprise
     at 7am.
+  beat_07_is_not_goblin_free_CORRECTION_0817: >-
+    CORRECTION, 2026-08-17. ONE HALF OF THE LINE ABOVE IS STALE AND THE OTHER HALF STANDS.
+    STILL TRUE, and corroborated at length further down this same file: beat 07 has TWO
+    figures in it, a guard and the goblin, and the goblin is the thing being pointed at.
+    Nothing here reopens that.
+    NO LONGER TRUE: "It is GATED by the character-first ruling, not available tonight."
+    That gate is CLOSED. The founder opened it on 2026-08-14 at 11:09:07Z -- "seed s0 is
+    the goblin" -- and ruled the same way again on 2026-08-15 ("ill take 1 for the
+    goblin"); see canon subject `ep2-goblin-character-gate` in pipeline/canon.yaml, whose
+    `resolved_by` locator is the goblin-picker-0814 card. The gate covered twelve beats
+    (2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20) and holds none of them today. Beat 07's
+    live blockers are its own and are recorded elsewhere: its action does not render (the
+    `points` grammar rung) and its residual baldness. Neither is a character gate.
+    WHY THIS IS A SIBLING RATHER THAN AN EDIT: the original line is left standing verbatim
+    because it is what the record said at the time, and because check_canon_drift.py reads
+    a dated `*_CORRECTION_MMDD` sibling as the correction. It was that checker's only FAIL
+    (`resolved_but_open`) before this entry existed -- the append-only log was still
+    asserting a founder decision was open three days after he made it.
 beats:
   '05':
     title: THE PATROL
