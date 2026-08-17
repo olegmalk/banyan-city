@@ -120,6 +120,76 @@ revisions:
       removes — and it is live on banyan.city. No 003b text is edited on the
       steward's authority; the conflict is raised as a card on `review/inbox.yaml`
       (2026-08-17) for him to rule on.
+  - date: 2026-08-17
+    beats: [12, 13, 15, 19, 20]
+    quote: "rewrite the beats to work at knee height. change the story."
+    recorded_on: '2026-08-17'
+    author: steward (Claude Opus 5), narrative lane — model-written stage directions
+    what: |-
+      FIVE BEATS MOVED TO KNEE HEIGHT ON HIS INSTRUCTION. `THE-SAPLING.md` §3.2 fixes
+      the plant at about 40 cm, always shorter than he is, in every beat of 002b, and
+      these five staged action ABOVE a plant that size. He chose to move the story
+      rather than the plant. Only stage directions changed — NO SPOKEN LINE MOVED in
+      any of the five, so all 18 existing 002b VO takes stay valid.
+      12 RELATED — "crouched behind the trunk, below frame" → "crouched in the grass
+      behind them, out of frame". Off-screen prose only.
+      13 THE SHADE — the trunk-slide is replaced, not softened: "slides down the trunk
+      and folds into the sapling's tiny shade" → his legs give out, he drops to sit at
+      the base of the stem, and tips his head into a hand-sized patch of shade that
+      will cover only his eyes. This discharges the SCRIPT CONFLICT that
+      done-definitions.yaml has carried since 2026-08-15, which said in terms that the
+      end state is the beat's requirement and the approach is an author call.
+      15 GOOD LISTENER — "He looks up at the sapling" → he tips his head DOWN until his
+      eyes are level with the two leaves. Matches 003b's own "He crouches until he is
+      eye to eye with the little tree".
+      19 THE DROP — "the scavenger below it" → beside it, standing mid-stride away; the
+      fig drops about 30 cm into the grass by his heel. This also answers
+      plate_requirement_0815.body_position, which was flagged as an author call.
+      20 EVIDENCE — "looks up at the bare branch" → stays crouched, the bare stem at
+      his own face height, and the look goes across.
+    approval_status: |-
+      NOT YET READ BY HIM. He authorised the rewrite; he has not read the result.
+      STEWARDSHIP.md §6 therefore forbids voice synthesis, footage render and episode
+      assembly FROM THESE FIVE BEATS until he does. `approved_by: founder` above is
+      deliberately NOT changed: it gates the whole node, and flipping it would stop the
+      beats other lanes are working tonight, none of which were rewritten. This entry
+      is the per-beat gate. Nothing was rendered, voiced or enqueued for this pass —
+      $0, no GPU.
+    what_it_costs: |-
+      TAKES AND PICKS INVALIDATED — the full list, so it is not a surprise later.
+      NOTHING IS NEWLY STRANDED. Not one of the five rewrites invalidates a take or
+      pick that was shippable before it.
+      12 — `ep2-b12-tightB` SURVIVES INTACT and is still the pick. Its `done_when`
+      makes the leaves the subject and the goblin's ABSENCE a requirement, and its
+      prompt already says "no trunk, no ground, no other character", so the corrected
+      clause describes a body that was never depicted. Prompt untouched byte for byte;
+      the trim_0815 that removed its shipping fault still applies.
+      13 — `ep2-b13-refire-0814` + twin `ep2-b13-refireB-0814` SURVIVE. They never
+      showed a trunk-slide, and their own verdict ("he settles at the base of the stem
+      … the fold-into-it happens") describes the NEW line more nearly than the old one.
+      The end state is preserved in done_when's own words, so no pick has to move. The
+      prompt is untouched on purpose: it stages the end state only, is knee-height
+      correct as written, and sits at exactly 77 CLIP tokens measured on the box's real
+      tokenizer — one added word deletes the style anchor.
+      15 — nothing to lose. All twelve candidates were already ALL CANDIDATES FAIL
+      (eight have no rooted plant, four are indoors) and the beat holds no pick.
+      19 — nothing to lose. No pick, and no plate we own puts the fruit ON THE STEM,
+      which plate_requirement_0815 still makes disqualifying. The beat was blocked on a
+      plate that does not exist; this changes what that plate must contain.
+      20 — `farm-out/ep2-b20-idfix/20-evidence-wave1-s3.png` was ALREADY a plate redraw
+      at `NO VERDICT YET` on three faults: wrong tree, red fruit, no look up. The
+      rewrite RETIRES fault 3 (there is no look up to fail) and SHARPENS fault 1 from
+      "wrong tree" to "wrong tree and wrong height". Not shippable before, not
+      shippable now, for the same reason.
+      BEAT 16 IS UNTOUCHED AND NEEDS NO RE-RENDER. His verbatim no-re-render ruling on
+      16 is not disturbed: nothing here changes beat 16's script, its prompt or its
+      leaf.
+      DEFINITIONS THAT ARE NOW STALE, flagged rather than edited — they live in
+      `review/ep2-picks/done-definitions.yaml`, which is the pick lane's file and had a
+      peer writing to it this shift. beats.13.done_when's SCRIPT CONFLICT paragraph is
+      discharged; beats.15.done_when's "he LOOKS UP" and beats.20.done_when's "then the
+      look UP" both need re-transcribing to the level/downward look. Two lanes in one
+      file is the mistake THE-SAPLING.md §6.6 already declined once.
 approval_scope: |-
   Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
   It is NOT approval of the shot prompts: all 21 were found written in the v2

@@ -167,6 +167,36 @@ that produced the stress he refused. Broken after "tree", each half is 10 and
 0.50s the direction layer gives between lines. Rejoining them is one edit if his
 ear wants it tighter.
 
+**FIVE BEATS REWRITTEN 2026-08-17 TO PLAY AT KNEE HEIGHT — his instruction, and it
+changed the story rather than the plant.** Written by the steward (Claude Opus 5),
+narrative lane, from his words: *"rewrite the beats to work at knee height. change the
+story."* `THE-SAPLING.md` §3.2 fixes the plant at **about 40 cm, always shorter than he
+is, in every beat of 002b**, and beats 12, 13, 15, 19 and 20 all staged action *above*
+a plant that size — possible only if the plant were several times bigger. He chose to
+move the story. What each beat now stages, in one line:
+
+- **12 RELATED** — he is crouched in the grass *behind* the leaves and out of frame,
+  not *below* them. Off-screen only; the picture did not change.
+- **13 THE SHADE** — the trunk-slide is gone. His legs give out, he drops to sit at the
+  base of the stem, and tips his head into a hand-sized patch of shade that will cover
+  only his eyes.
+- **15 GOOD LISTENER** — he tips his head *down* until his eyes are level with the two
+  leaves, instead of looking up at them.
+- **19 THE DROP** — he stands mid-stride beside the plant, not below it, and the fig
+  falls about 30 cm into the grass by his heel.
+- **20 EVIDENCE** — he stays crouched; the now-bare stem is at his own face height and
+  the look goes *across*, not up.
+
+**No spoken line changed in any of the five.** Every edit is a stage direction, so all
+18 existing 002b VO takes remain valid and nothing needs re-synthesising here.
+
+**NO MEDIA MAY BE MADE FROM THESE FIVE BEATS UNTIL HE READS THEM** (STEWARDSHIP.md §6).
+`approved_by: founder` in `leaves/002b-t0-c.yaml` is deliberately **left as it is** —
+changing it would block the beats his other lanes are working tonight, which were not
+rewritten — so the gate for these five is recorded per beat in that leaf's `revisions`
+list instead, together with the takes and picks this pass invalidates. Nothing was
+rendered, voiced or enqueued: $0, no GPU.
+
 **Beat 16 is unchanged, and that too is his word** — *"for beat 16's line, lets
 keep 'I can't even wave.'"* It declines the replacement that was proposed to him
 and releases the second of his own 2026-08-03 approval conditions, which had
