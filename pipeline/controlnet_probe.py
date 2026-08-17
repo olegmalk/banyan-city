@@ -295,7 +295,13 @@ def render(a):
     t2 = datetime.datetime.now(datetime.timezone.utc)
     img.save(out_png)
 
-    rev = git_rev(root)
+    # A LOOSE COPY IS NOT A GIT CHECKOUT, and this is the exact defect
+    # B01-R9-PLAN.md's stage 1 shipped: it ran a loose copy of its driver and
+    # its sidecar recorded a path that could not be resolved. When the driver is
+    # staged outside a checkout, `git rev-parse` finds nothing and the sidecar
+    # would say `unknown` — so the caller passes the commit its copy was cut
+    # from and the record stays honest either way.
+    rev = a.repo_commit or git_rev(root)
     side = [
         "# Capability-probe provenance (7.2), written AT RENDER TIME by",
         "# controlnet_probe.py on the rtx5090. NOT a take, NOT a candidate.",
@@ -428,6 +434,10 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--root", default=None)
     ap.add_argument("--scale", type=float, default=SCALE)
+    ap.add_argument("--repo-commit", default=None,
+                    help="commit this driver was cut from; required when the "
+                         "driver runs as a loose copy outside a checkout, or "
+                         "the sidecar records repo_commit: unknown")
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--measure", default=None, metavar="DIR",
                     help="score a directory of arm PNGs; no GPU needed")
