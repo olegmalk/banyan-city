@@ -20,7 +20,25 @@ So the two things this file exists to prove are not "the code is present":
      plumbing with jobs in flight. A job that does not pass it must behave
      exactly as it did before the flag existed, and that is asserted too.
 
-Pure functions plus two subprocess runs; no torch, no GPU, no box, no network.
+DO NOT DELETE THE SUBPROCESS TESTS TO MAKE THIS FILE FASTER. They look like the
+obvious thing to simplify -- three python processes to check an exit code a unit
+test already covers -- and they are the only checks in here that work. MEASURED,
+by injecting each failure into a throwaway copy and re-running this exact file:
+
+    neuter drafts_mismatch (always return None)      18 of 47 checks fail
+    leave it perfect, UNWIRE the call site           42 of 47 STILL PASS
+
+The second row is the whole point. A perfect function nobody calls passes every
+pure-function test ever written for it, and it is not a hypothetical: it is how
+`check_canon_drift.py` came to pass green on struck-through text, and how
+`--expect-drafts-sha256` came to be documented for a day as a check that existed.
+Only `test_the_sampler_really_exits_12_on_a_mismatch`,
+`test_the_sampler_gets_past_a_matching_hash` and
+`test_a_missing_harness_drafts_file_refuses_when_the_check_was_asked_for` can
+tell a wired guard from an unwired one, because only they run the real argv. If
+they get slow, make them faster; do not make them fewer.
+
+Pure functions plus three subprocess runs; no torch, no GPU, no box, no network.
 Run: python3 pipeline/test_drafts_guard.py
 """
 
@@ -32,11 +50,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
+import box_enqueue as bq                                             # noqa: E402
 import check_drafts_provenance as cdp                                # noqa: E402
 import goblin_ipa_sample as gis                                      # noqa: E402
 
 FAILURES = []
 
+HARNESS = r"C:\banyan-farm\wave-goblin-prep"
 GOOD = "cbb3658ed516e087bbe3725d6c5a83103ed3ab0f9480f0803cf6c713c8e732a5"
 STALE = "714d77bc3c3011112222333344445555666677778888999900001111222233ff"
 
@@ -220,6 +240,81 @@ def test_the_two_implementations_agree():
         det_ok = cdp.matches(expect, actual)
         check("guard and detector agree on (%s..., %s...)"
               % (expect[:8], actual[:8]), guard_ok == det_ok)
+
+
+# ------------------------------------------- the enqueue-time stamp (box_enqueue)
+
+def _step(name, script, harness=True, extra=()):
+    argv = [r"C:\py\python.exe", "C:\\x\\" + script]
+    if harness:
+        argv += ["--harness", HARNESS]
+    return {"name": name, "argv": argv + list(extra)}
+
+
+def _inject(spec, repo_sha=GOOD, box=lambda p: "b" * 64):
+    job = {"id": "t", "steps": spec["steps"]}
+    return bq.inject_drafts_expectation(job, spec, repo_sha=repo_sha, box_sha=box)
+
+
+def test_a_goblin_spec_is_stamped_on_every_step():
+    spec = {"steps": [_step("dry", "goblin_ipa_beat.py", extra=["--dry"]),
+                      _step("sample", "goblin_ipa_beat.py")]}
+    job, notes = _inject(spec)
+    check("stamp: both steps end with the flag and the repo hash",
+          all(s["argv"][-2:] == ["--expect-drafts-sha256", GOOD]
+              for s in job["steps"]))
+    check("stamp: says so once per step", len(notes) == 2)
+    check("stamp: the caller's spec is NOT mutated",
+          "--expect-drafts-sha256" not in spec["steps"][0]["argv"])
+
+
+def test_a_script_that_does_not_know_the_flag_is_never_stamped():
+    # THE WHOLE REASON THE LIST IS A WHITELIST. An older or different script dies
+    # on an unknown argument, so a wrong stamp breaks the job it meant to guard.
+    spec = {"steps": [_step("s", "render_wave_sample.py"),
+                      _step("i", "inpaint_fruit.py", harness=False)]}
+    job, notes = _inject(spec)
+    check("no stamp on render_wave_sample.py or inpaint_fruit.py",
+          [s["argv"] for s in job["steps"]] == [s["argv"] for s in spec["steps"]])
+    check("and it stays silent about them", notes == [])
+
+
+def test_a_deliberate_fork_is_stamped_with_its_own_wording():
+    # drafts_ack means the harness differs ON PURPOSE. Stamping the repo hash
+    # would make the guard kill the very job the ack cleared.
+    job, _ = _inject({"drafts_ack": "forked wording under test",
+                      "steps": [_step("s", "goblin_ipa_sample.py")]})
+    check("ack: stamped with the harness's own hash, not the repo's",
+          job["steps"][0]["argv"][-1] == "b" * 64)
+
+
+def test_an_authors_own_pin_is_left_alone():
+    # Two copies of the flag is an argparse error, not belt and braces.
+    job, notes = _inject({"steps": [_step(
+        "s", "goblin_ipa_sample.py",
+        extra=["--expect-drafts-sha256", "cafebabe"])]})
+    check("author's pin not doubled",
+          job["steps"][0]["argv"].count("--expect-drafts-sha256") == 1)
+    check("author's pin survives unchanged",
+          job["steps"][0]["argv"][-1] == "cafebabe")
+    check("and the note says it was left alone",
+          bool(notes) and "left alone" in notes[0])
+
+
+def test_no_harness_means_no_stamp():
+    job, _ = _inject({"steps": [_step("s", "goblin_ipa_sample.py", harness=False)]})
+    check("a step with no --harness is not stamped",
+          "--expect-drafts-sha256" not in job["steps"][0]["argv"])
+
+
+def test_an_unreadable_ack_harness_says_so_instead_of_stamping_junk():
+    job, notes = _inject({"drafts_ack": "x",
+                          "steps": [_step("s", "goblin_ipa_sample.py")]},
+                         box=lambda p: "")
+    check("unreadable ack harness: no stamp",
+          "--expect-drafts-sha256" not in job["steps"][0]["argv"])
+    check("unreadable ack harness: does not go quiet about it",
+          bool(notes) and "NO run-time check" in notes[0])
 
 
 def main() -> int:

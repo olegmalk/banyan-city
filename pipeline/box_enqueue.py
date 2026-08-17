@@ -944,6 +944,100 @@ def file_sha256(path: str) -> str:
         return hashlib.sha256(fh.read()).hexdigest()
 
 
+# Only these honour --expect-drafts-sha256. The list is a WHITELIST and not a
+# blacklist on purpose: a script that does not know the flag dies on an unknown
+# argument, so injecting into anything not named here would break the job it was
+# meant to protect. render_wave_sample.py is deliberately absent -- it resolves
+# `harness / "wave-drafts.yaml"` exactly the same way and has the same hole, but
+# it does not accept the flag yet.
+DRAFTS_FLAG = "--expect-drafts-sha256"
+DRAFTS_AWARE = ("goblin_ipa_sample.py", "goblin_ipa_beat.py")
+
+
+def argv_value(argv: list, flag: str):
+    """The value following `flag` in an argv, or None."""
+    for i, a in enumerate(argv):
+        if str(a) == flag and i + 1 < len(argv):
+            return str(argv[i + 1])
+    return None
+
+
+def inject_drafts_expectation(job: dict, spec: dict, repo_sha: str = None,
+                              box_sha=box_file_sha256):
+    """Stamp the wording this job was CLEARED against into its own argv.
+
+    WHY THIS IS AUTOMATIC AND NOT LEFT TO SPEC AUTHORS (Oleg, 2026-08-17,
+    deciding the question this function used to only ask). harness_drafts_problems
+    above compares the harness wording to ours at FILING time. That comparison
+    goes stale the moment it is made: `--backlog` work is promoted hours later,
+    and the drafts on the harness get hand-synced in between because
+    `--sync-drafts` refuses while the queue is busy. So the filing-time hash is
+    written into the job's own command line, and the renderer re-checks it at
+    render time and REFUSES TO DRAW on a mismatch -- rc 12, nothing drawn, rather
+    than a warning nobody reads.
+
+    "Refuse, don't report" is his ruling and it is the cheap direction: a refused
+    job is re-filed in minutes, while a job that renders superseded wording
+    publishes it as canon and poisons the provenance record (§7.2). It is the
+    same lesson as the runner reporting `State: Running` with the GPU at 0%.
+
+    WHICH HASH GETS STAMPED, and it is not always the repo's. Normally the two
+    are equal -- the job would have been refused otherwise -- so the repo's hash
+    is used and no ssh round trip is spent. But a spec carrying `drafts_ack` is a
+    DELIBERATE fork being tested on purpose, and stamping the repo's hash there
+    would make the guard kill the very job the ack cleared. So an ack'd spec is
+    stamped with the harness's OWN measured hash: the promise is "the wording
+    this was cleared against", not "the wording in the repo".
+
+    THE OPERATIONAL CONSEQUENCE, said out loud: after any `--sync-drafts`, every
+    backlog job filed against the older wording will refuse at render time and
+    has to be re-filed. That is the intended behaviour and not a bug -- those
+    jobs were cleared against words that no longer exist.
+
+    Returns (job, notes). Never mutates the spec or the caller's step dicts.
+    """
+    steps_in = job.get("steps") or []
+    ack = str(spec.get("drafts_ack") or "").strip()
+    notes, steps, changed = [], [], False
+    for step in steps_in:
+        argv = [str(a) for a in (step.get("argv") or [])]
+        names = {a.replace("\\", "/").rstrip("/").rsplit("/", 1)[-1] for a in argv}
+        harness = argv_value(argv, "--harness")
+        if not names & set(DRAFTS_AWARE) or harness is None:
+            steps.append(step)
+            continue
+        if DRAFTS_FLAG in argv:
+            # An author who wrote it themselves outranks us: they may be pinning
+            # a wording on purpose, and two copies of the flag is an argparse
+            # error rather than a belt and braces.
+            notes.append("step %s already pins %s %s -- left alone"
+                         % (step.get("name"), DRAFTS_FLAG,
+                            argv_value(argv, DRAFTS_FLAG)))
+            steps.append(step)
+            continue
+        want = repo_sha if repo_sha is not None else file_sha256(REPO_DRAFTS)
+        if ack:
+            want = box_sha(harness + "\\wave-drafts.yaml")
+            if len(want or "") != 64:
+                # Unreachable in practice -- harness_drafts_problems refuses an
+                # unreadable harness before this runs -- and if it ever is
+                # reached, a job with no expectation is the state we already
+                # had, not a new failure. Said out loud rather than silently.
+                notes.append("step %s: harness drafts unreadable, NO run-time "
+                             "check stamped (enqueue-time comparison only)"
+                             % step.get("name"))
+                steps.append(step)
+                continue
+        steps.append(dict(step, argv=argv + [DRAFTS_FLAG, want]))
+        changed = True
+        notes.append("step %s: run-time drafts check stamped, %s%s"
+                     % (step.get("name"), want[:12],
+                        " (harness's own, drafts_ack)" if ack else ""))
+    if not changed and not notes:
+        return job, notes
+    return dict(job, steps=steps), notes
+
+
 def spec_refs(spec: dict) -> list:
     """Every --refs basename named anywhere in a spec's steps.
 
@@ -1548,6 +1642,15 @@ def main(argv=None) -> int:
                 print("  !! %s" % p)
             failures += 1
             continue
+        # LAST, after every check has run against the argv the author wrote: the
+        # filing-time drafts hash goes into the job's own command line so the
+        # renderer can re-check it hours later. Deliberately after validation
+        # (nothing downstream re-reads the spec's argv, so the two cannot drift
+        # into disagreeing) and deliberately before the dry-run print, so
+        # --dry-run shows exactly what would be queued.
+        job, drafts_notes = inject_drafts_expectation(job, spec)
+        for note in drafts_notes:
+            print("  drafts  %s" % note)
         if args.dry_run:
             pending.append(mine)
             for dest in (spec.get("payload") or {}):
