@@ -2396,3 +2396,4 @@
 09:14:52Z STARTED task=ep2-b11-leave-w4-s20260907-0817-1786956980 attempt=1 on box-runner
 09:20:34Z DONE task=ep2-b11-leave-w4-s20260907-0817-1786956980 rc=0 artifacts=2
 09:20:43Z STARTED task=ep2-b01-scale-0817-1786958064 attempt=1 on box-runner
+09:23:40Z DONE task=ep2-b01-scale-0817-1786958064 rc=0 artifacts=4
