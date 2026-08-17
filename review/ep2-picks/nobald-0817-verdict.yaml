@@ -1,0 +1,159 @@
+# Verdict on the `bald`-removal rungs, ep2-b07/b08. Written 2026-08-17 by the
+# nobald lane, which is the lane that authored the fix -- so read the "this lane
+# authored what it is scoring" caveat below before trusting any term but the first.
+#
+# SINGLE WRITER. This file is NOT `cast-0817-scores.yaml` and does not touch it:
+# that file belongs to the scoring lane and ~30 peers are live this shift. Nothing
+# here overwrites, amends or reinterprets a scoring-lane verdict.
+#
+# NO PICK IS MADE HERE. Per the taste/picks boundary: the steward picks takes with
+# reasons and the founder rules taste. This file records a MECHANISM VERDICT -- did
+# removing one token change what the engine draws -- and explicitly declines to
+# promote, approve or pick a frame. No `plate_ack`. No `approved:`. No
+# `provisional:`.
+
+denominator:
+  report_as: N of 12
+  reason: >-
+    Carried forward from the scoring lane unchanged. Confirmed independently here
+    by the render itself rather than by argument: the box wrote exactly 12 png for
+    this beat -- r0/r1/r2 x s0..s3 -- and NO r3 file exists in farm-out at all.
+    The deduplicated cell is not merely a duplicate to be skipped now; it is never
+    written. Nothing is scored out of 16.
+
+# ---------------------------------------------------------------------------
+ep2-b08-nobald-0817:
+  filed: 2026-08-17
+  job: ep2-b08-nobald-0817-1786975502
+  rc: 0
+  frames: 12 png published to courier-box/farm-out/ep2-b08-nobald-0817
+  the_one_variable: >-
+    `authored_b08_nobald_0817` is `authored_b08_cast_0817` with the `{{GOBLIN}}`
+    slot replaced by the literal `green skin`. The insert script refuses to write
+    unless the new draft equals the predecessor's SENT string minus exactly the
+    eleven characters `, bald head`. Recipe, refs, arm, seeds and seed-start are
+    byte-identical because the spec IS the predecessor's file with three
+    identifiers substituted. The result is attributable to that token and nothing
+    else.
+
+  provenance_verified_from_the_frames_not_the_spec:
+    drafts_sha256_in_sidecar: 3fc1a3a843727208b0e4ca5b96af8e817af2e9be8156e6dbfd4ed6911f5acd70
+    matches_the_repo_and_both_harnesses: true
+    positive_tokens_reported_by_the_box: 71
+    positive_tokens_measured_locally_before_filing: 71
+    note: >-
+      The box's own count agrees with the pre-filing measurement exactly. That is
+      the check that makes the local real-CLIP number trustworthy for the rest of
+      this batch -- it was verified against the renderer, not just asserted.
+    prompt_actually_sent: >-
+      2boys, two men, the near one light sandy hair, cream shirt, white sash,
+      brown skirt, holds a bark clipboard in both hands, the far one a goblin,
+      green skin, patched cloak, looks at his belly, arms down, tall grass, pale
+      sky above, cinematic lighting, masterpiece, best quality, very aesthetic
+    bald_in_the_prompt_sent: false
+
+  # ---- THE TERM THIS RUNG EXISTED FOR -------------------------------------
+  term_4_he_is_not_bald:
+    bar_as_written: 'HE IS NOT BALD -- a bald guard fails outright, because bald is precisely the defect being corrected'
+    score: 12 of 12 PASS
+    reading: >-
+      Every visible head in all 12 frames carries hair. Not one bald figure, on
+      either character, at any of the three reference cells or four seeds.
+    the_contrast_that_makes_it_evidence: >-
+      The predecessor `ep2-b08-cast-0817` -- same refs, same sampler, same model,
+      same day, same seeds -- went 12 OF 12 BALD. This rung goes 12 OF 12 HAIRED
+      on one deleted token. 0/12 to 12/12 on one variable.
+    what_it_settles: >-
+      `bald` was the WHOLE mechanism of the baldness, not a contributing factor.
+      No negation was needed and none was used. It also settles the direction of
+      the broadcast-class law in the affirmative: the token was scoped inside the
+      goblin's own clause and it reached the guard, and removing it from that
+      clause released the guard. Same clause, both directions, one variable.
+
+  # ---- WHAT THIS RUNG DOES NOT CLOSE --------------------------------------
+  this_lane_authored_what_it_is_scoring: >-
+    Term 4 is a binary anybody can re-read off the contact sheet in one look, so
+    it is reported here. THE REMAINING TERMS ARE NOT SCORED IN THIS FILE and no
+    pick is offered, because this lane wrote the prompt and should not be the lane
+    that rules on how well its own prompt did. They are flagged for the scoring
+    lane instead, with what was observed and nothing concluded.
+  flagged_for_the_scoring_lane_unscored:
+    - 'term 1 (EXACTLY TWO FIGURES, a second guard is a fail): additional small figures appear in the background of several frames. NOT SCORED -- the count needs full-resolution reads, which is the scoring lane`s method, not a contact-sheet glance.'
+    - 'term 6 (the goblin reads ADULT and not a human child): in most frames the green-skinned figure has a human boy`s face and hair with no pointed ears. The recorded beat-08 fault appears to persist and is NOT fixed by this rung -- which is expected, since this rung changed one token and nothing about species.'
+    - 'term 2/9 (the board in the guard`s hands and ONLY his, no second board): more than one board appears in several frames.'
+    - 'term 7 (BELLY VISIBLE AND UNOCCLUDED): appears unmet in most frames.'
+  the_beat_is_not_closed: >-
+    Saying so plainly rather than letting a 12-of-12 headline imply otherwise. The
+    BALD defect is fixed. The beat`s `done_when` is not met, the goblin still does
+    not read as a goblin, and this rung was never scoped to fix that. One defect,
+    one rung, one verdict.
+
+  tokens:
+    positive: 71 of 77
+    negative: 66 of 77
+    baseline_positive: 74 of 77
+    faults: 0
+    style_anchor_present: true
+    count_tag: '2boys derived, 2boys declared'
+    trade: >-
+      NONE. 3 tokens freed by the removal and none spent. No word cut, nothing
+      added to fill the headroom, style tail intact. There are therefore no traded
+      words to name as first suspects for any fault above.
+
+# ---------------------------------------------------------------------------
+ep2-b07-nobald-0817:
+  status: FILED to backlog 2026-08-17, not yet rendered
+  job: ep2-b07-nobald-0817-1786975876
+  rung: 'A -- `bald` removed and NOTHING else. The sash still governs `points` and the goblin still has no noun on this rung, deliberately left broken so a haired guard can only be attributed to the token.'
+  tokens: '59 of 77 positive, 58 of 77 negative, 0 faults, anchor present, 1boy derived == 1boy declared'
+  trade: 'NONE. 3 freed, none spent.'
+  bar: 'ep2-b07-cast-0817`s `success:` carried forward BYTE-IDENTICAL, frame_count_correction_0817 likewise. Score N of 12.'
+
+ep2-b07-twofig-0817:
+  status: FILED to backlog 2026-08-17, not yet rendered
+  job: ep2-b07-twofig-0817-1786975879
+  rung: 'B -- rung A plus the grammar fix. TWO variables against the original, ONE against rung A. Read it against ep2-b07-nobald-0817 or not at all.'
+  what_it_tests: >-
+    NOT polish. Beat 07 scored 0 OF 12 on containing a point at all -- CONFISCATE
+    is the beat and the gesture was absent -- because `compress()` splits on commas
+    and `points` arrived as a list item whose nearest preceding noun was `white
+    sash`. THE SASH WAS THE SUBJECT OF THE VERB. And there was no goblin NOUN
+    anywhere in the prompt, so the species attributes had only the guard to bind to
+    and green skin arrived as a green mitt. This rung is testing whether the beat`s
+    own action is POSSIBLE. The verdict must answer that in those terms.
+  what_it_does_not_do: >-
+    IT DOES NOT CHANGE THE DANBOORU COUNT TAG. It still derives and declares `1boy`
+    on a two-figure beat; the goblin gets a GRAMMATICAL subject slot, not a count
+    slot. `_tag_from_clause` reads only the first sentence up to its first comma,
+    check()`s count guard compares against the BEAT-WIDE `tag:`, and
+    goblin_ipa_sample.py calls wg.check(BEAT, d, ...) directly and never calls
+    apply_variant_declaration -- so there is no per-variant count override on the
+    box path. `2boys` would require editing beat 7`s `tag:`, faulting every sibling
+    draft. Do not read this rung as a corrected figure count.
+  if_it_still_fails: >-
+    If the point is still absent or the goblin is still a mitt, the residual
+    suspect IS the count tag, and the fix then requires a per-variant count
+    declaration in the sampler -- a shared-file change and another lane`s call.
+  tokens: '65 of 77 positive, 58 of 77 negative, 0 faults, anchor present, 1boy derived == 1boy declared'
+  trade: 'NONE. Spends 6 of rung A`s 15 tokens of headroom and still sits 12 under budget. Nothing cut, style tail intact.'
+
+# ---------------------------------------------------------------------------
+a_provenance_defect_found_while_verifying_and_NOT_fixed_here:
+  what: >-
+    Every sidecar these two beats write still records
+    `goblin_definition_as_sent: "green skin, bald head — unchanged from the wave-1
+    sample, on purpose..."` -- because goblin_ipa_sample.py writes its GOBLIN_DEF
+    constant into that field unconditionally, whether or not the draft contained
+    the `{{GOBLIN}}` slot it fills.
+  why_it_matters: >-
+    For these two beats the field is FALSE. `bald head` was not sent; the
+    `prompt:` field in the same sidecar proves it. A future scorer trusting the
+    provenance field over the prompt field would conclude the token was still
+    being sent and would re-diagnose a fixed defect. §7.2 says provenance always,
+    and this is provenance that lies.
+  why_it_is_not_fixed_here: >-
+    goblin_ipa_sample.py is a shared sampler on the do-not-touch list, and the
+    field is correct for the eleven goblin beats that DO carry the slot. The fix
+    is to write the field only when the slot was actually substituted -- a
+    one-condition change that belongs to whoever owns the sampler.
+  authoritative_field_meanwhile: 'the `prompt:` field, which is the string the model received.'
