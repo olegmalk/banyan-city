@@ -8751,3 +8751,22 @@ repo copy — which matters, because that repo copy sits at a third divergent ha
 (`--sync-drafts` refuses while the queue is busy) and hash-verified twice, and the
 harness `render_wave_goblin.py` is byte-identical to the repo's, so the
 measurement used the checker the box will run.
+### 2026-08-17 — beat 14, three fresh seeds of r6: the fusion was luck, and so was the field
+
+Seeds **20260820/21/22** pre-registered at `4b111d70` **before the pixels**, prompt
+byte-identical to r6 by construction (`dict(REVS[(14,6)], seed=…)`, so it cannot
+drift). All three reported: `…r7s1/s2/s3.yaml`.
+
+**The hand fusion was seed variance — 3 of 3 fresh seeds draw two separate hands**, so
+`from above` is not charged for it and the camera-angle finding stands: it is the only
+instrument that ever moved P5. **And the same three draws reframe r6's other win: P4′
+passed only on r6 and fails 3 of 4.** r6's continuous grass ring was a lucky draw, not
+a property of the wording — **the seed-fragile axis is no longer the hands, it is the
+field.**
+
+**No draw of the four clears all seven:** r6 6/7 (P2), s1 6/7 (P4′), s2 3/7 (P2, P3,
+P4′, P5), s3 6/7 (P4′). **Measured rate on this recipe: 0 usable in 4 renders**, against
+the show's 2–3 renders per usable take. Bar byte-identical throughout; P2 was not
+softened when we expected it to fail, nothing was tightened on r6's strength, r5 was not
+re-scored. `mac_preflight` = `READY, problems: []` **before and after** the batch. $0,
+nothing enqueued, no motion.
