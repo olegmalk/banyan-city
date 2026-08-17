@@ -1,0 +1,898 @@
+# ep2 beat 10 -- ONE SAMPLE: can we choose WHICH of two men carries an attribute?
+#
+# HIS WORD, 2026-08-15, on the glasses spread: "draw the second man without
+# glasses. we need to have control." He was offered two wordings -- drop the
+# wire-rims from two beats, or draw guard B in glasses too -- and REJECTED BOTH.
+# He asked for control over which figure carries an attribute. This job is the
+# cheapest honest test of whether we have it.
+#
+# THE DEFECT, AND WHY NO WORDING CAN FIX IT. `glasses` named inside ONE man's
+# clause lands on BOTH men, 5 of 5 (05 s1/s2, 10 s1/s2/s3). That is a THIRD
+# behaviour, not the two we had names for: hair and garments BIND to their clause,
+# a prop goes to ONE WRONG figure (bark board, 3 of 3), and eyewear goes to EVERY
+# figure. pipeline/loop/attrbind-eyewear-0817.md names it BROADCAST-class, and the
+# published cause is CLIP's causal encoder plus an EOS token that carries global
+# prompt semantics (ALE-Edit, arXiv 2412.04715): the token steers the whole frame
+# and nothing in it says WHICH face. A negative cannot unbind a broadcast, and the
+# arm that would have tested one was retired WITHOUT SPENDING A GPU-SECOND because
+# it is self-defeating in both prompt dialects -- plate_scratch does no negation
+# lifting, so `no glasses` there puts the token `glasses` in the POSITIVE.
+# Corroboration that wording is not the lever: `wire-rim glasses` BINDS 7 of 7 on
+# beat 09's ONE-figure close-up. The number of eligible faces is the variable.
+#
+# SO THE CONTROL LIVES IN THE MASK. Masked denoising is structural rather than
+# persuasive: an attribute cannot leak onto a figure whose pixels are never
+# denoised. This is the pattern this tree already proved on the bark clipboard
+# (beats 06/08/10) and the route pipeline/research/two-subject-composition.md
+# ranked as the deterministic floor -- "the plant is outside the mask, so no
+# amount of prior can turn it into a hat." There is no drop-in alternative: the
+# diffusers `regional_prompting` pipeline is SD1.5 only, MaskAttn-SDXL
+# (arXiv 2509.15357) needs training, training-free regional prompting
+# (arXiv 2411.02395) is DiT not SDXL, and every mature Attention-Couple
+# implementation is GPL-3.0/AGPL-3.0 and unvendorable here.
+#
+# WHY REMOVAL AND NOT ADDITION. Two directions prove control. ADDING wire-rims to
+# guard A needs a plate where both men are bare, which is a peer lane's in-flight
+# job -- a real physical dependency. REMOVING them from guard B needs only a plate
+# that exists today, and it is the founder's instruction read literally. Removal
+# is also the SAFER direction here: the eyes are already drawn behind the lenses,
+# so masking the FRAME PATH ONLY means the sampler is never asked to invent an eye.
+# Identity is the veto axis and this route does not gamble it.
+#
+# THE MASK IS A THIN BAND AND THAT IS WHY THE TOOLING GREW. A spectacle frame is
+# neither a blob nor a convex polygon, so neither --ellipse nor --quad could
+# express it; inpaint_fruit.py gained --mask-png and pipeline/attribute_mask.py
+# authors the geometry at $0 with no GPU and no sampler in it. Measured on this
+# exact plate, not eyeballed: 1098 white px, 0.109% of frame, bbox [281,357,361,393],
+# and the irises fall OUTSIDE the mask.
+#
+# --protect IS THE TEETH. The tall man's face is declared [430,160,590,280] and the
+# mask step REFUSES (exit 5) if one white pixel reaches it. Spend guards in this
+# tree are code rather than intentions, and so is this one: a mask that CANNOT
+# touch the other man is checkable, where a wording is not.
+#
+# THE GEOMETRY IS THE STEWARD'S. He named no pixel. Every number here is mine and
+# is the first thing a correction should move.
+#
+# ONE SAMPLE, ONE SEED. The 4-of-5 adoption threshold in the pre-registered bar
+# comes AFTER this frame, not instead of it. This sample is the go/no-go on
+# whether the other four seeds are worth spending.
+
+id: ep2-b10-attrbind-eyewear-0817
+task: ep2-b10-attrbind-eyewear-0817
+node: 002b-first-citizen              # founder-approved 2026-08-03, leaf 002b-t0-c.yaml
+beat: 10
+runner: box
+needs_gpu: true
+priority: 12
+max_attempts: 1
+sample: true
+owner: attrbind-eyewear lane, 2026-08-17 -- filed to backlog as soon as it dry-ran, because
+  the backlog does not author its own work and the card is thin
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. A STILL EDIT on an approved node: no voice, no motion, no episode
+  assembly, no publication.'
+script_line: 'Beat 10 NO FORM: the guard flips the bark board around; the back is blank.'
+
+consumer: >-
+  The next lane that has to put any attribute on one figure among several -- which is
+  beats 05, 09 and 10 today and every multi-figure frame after them. If this frame
+  comes back with guard B bare and guard A untouched, the mechanism is
+  mask-authored-then-harmonised and it generalises to any attribute expressible as
+  geometry. If it does not, the mask route is retired on the same evidence standard
+  that closed the wording route, and the question goes back to the founder as a cast
+  call. Either way one frame answers it.
+
+success: >-
+  THE BAR, PRE-REGISTERED IN pipeline/loop/attrbind-eyewear-0817.md AND COMMITTED
+  BEFORE THESE PIXELS EXIST (commit f0e65e07). Scored as written, not as hoped, and
+  tightened only FORWARD. Three booleans, and the sample passes only on all three:
+  (1) B_bare -- the front man, the bark-board carrier and therefore guard B under the
+      frozen wardrobe canon, has NO visible eyewear: no rims, no bridge, no temple arm,
+      and no ghost of a frame left behind as a smear or a floating arc.
+  (2) A_untouched -- the tall man BEHIND still wears his round wire frames, and his face
+      is byte-identical to the init. This is not a matter of judgement: his face is a
+      declared --protect region, so any change at all is a bug in the mechanism.
+  (3) cast_holds -- guard B still reads as the SAME MAN as in the init. His eyes, brows,
+      hair, skin tone and expression survive. Identity held 14 of 14 on a correctly-cast
+      plate and that baseline is what must not be spent to buy the fix.
+  NAMED FAIL MODES, so they are recognised rather than argued past:
+   * a colour blotch. The plate was rendered fp16 on Apple MPS; this patch is bf16 on
+     CUDA, and that pairing measured MAE 60-61 red-vs-purple off an identical seed. A
+     masked pass continues surrounding pixels so the risk is lower than a fresh render,
+     but if the patch reads as a skin-tone blotch then the MECHANISM is fine and the
+     BACKEND is the fault, and the harmonise step moves to a Mac behind mac_preflight.
+   * an altered eye. The ring band crosses the lens rim near the eye corner. The irises
+     are outside the mask by construction; if they move anyway, strength is too high and
+     the next sample drops it rather than widening the mask.
+   * a visible seam where the band met unmasked skin -- blur_factor is 3 because a thin
+     band cannot take the 8 the barkboard runs used.
+  WHAT THIS BAR DOES NOT COVER, named and moved past: whether the resulting frame is
+  SHIPPABLE. The init is an off-canon plate -- both men came back dark-haired at this
+  seed, the wardrobe is not as drawn, and it was never a candidate frame. Look, framing
+  and cast are R4 and the founder's alone. This is a MECHANISM sample and must never
+  take a canon filename.
+
+why: >-
+  He asked for control and control cannot be demonstrated by argument. Minutes of local
+  GPU, $0, no provider, on a plate already in the tree.
+
+est_minutes: 4
+needs:
+- cuda
+- vram20
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  C:\banyan-farm\attrbind-0817\prompt.txt: |-
+    a guard man face in sunlight, bare eyes, smooth brow and cheek skin, dark cropped hair, detailed cinematic anime, masterpiece, best quality
+  C:\banyan-farm\attrbind-0817\negative.txt: |-
+    glasses, eyeglasses, spectacles, wire-rim glasses, sunglasses, goggles, eyewear, frames, lens, monocle, eyepatch, mask, text, watermark, photorealism, 3d render, blurry, low quality, deformed
+  C:\banyan-farm\attrbind-0817\attribute_mask.py: |-
+    #!/usr/bin/env python3
+    r"""Author the mask that decides WHICH FIGURE carries an attribute. $0, no GPU.
+
+    WHY THIS EXISTS -- THE FOUNDER ASKED FOR A MECHANISM, NOT A WORDING.
+    2026-08-15, on the glasses spread: "draw the second man without glasses. we need
+    to have control." He was offered two wordings -- drop the wire-rims from two
+    beats, or draw guard B in glasses too -- and rejected both. What he asked for is
+    control over which figure carries an attribute, and no wording can give it.
+
+    THE REASON NO WORDING CAN, AND IT IS PUBLISHED. `glasses` named inside ONE man's
+    clause lands on BOTH men, 5 of 5. That is not the prop failure (the bark board
+    goes to ONE WRONG figure, 3 of 3) and not the garment behaviour (hair and
+    garments bind to their clause cleanly at the same seed). It is a third class,
+    which pipeline/loop/attrbind-eyewear-0817.md names BROADCAST: CLIP's text encoder
+    is causal and its EOS token carries global prompt semantics, so an attribute
+    token named anywhere is present in the pooled embedding that steers the whole
+    frame. Nothing in the prompt says WHICH face, and every face qualifies.
+      ALE-Edit, arXiv 2412.04715  -- causal encoder + EOS as the leakage mechanism
+      MaskAttn-SDXL, arXiv 2509.15357 -- same defect, fixed by a LEARNED mask (training)
+      Regional prompting for DiT, arXiv 2411.02395 -- training-free but DiT, not SDXL
+    And it is why a negative cannot help: leakage is a BINDING failure, not a
+    presence failure. `wire-rim glasses` BINDS 7 of 7 on beat 09's one-figure
+    close-up -- the tag is strong and the phrasing is right. It fails only when a
+    second face exists for it to also land on. THE NUMBER OF ELIGIBLE FACES IS THE
+    VARIABLE, NOT THE WORDING.
+
+    WHAT IS AVAILABLE TO US, RESEARCHED OUTSIDE THIS REPO. There is no drop-in
+    regional prompting for SDXL in our stack: the diffusers community
+    `regional_prompting` pipeline is SD1.5 only, MaskAttn-SDXL needs training, and
+    every mature Attention-Couple implementation is a GPL-3.0/AGPL-3.0 ComfyUI or
+    Forge extension that licence_gate.py forbids us to vendor. What IS available is
+    the pattern this tree already proved on the bark clipboard (beats 06 and 10):
+    put the structure in the init with plain image processing, then let a LOW-strength
+    masked pass harmonise it. Masked denoising is structural rather than persuasive --
+    an attribute cannot leak onto guard B if guard B's pixels are never denoised.
+
+    SO THE CONTROL LIVES IN THE MASK, AND THIS STEP AUTHORS IT WITH NO SAMPLER IN IT.
+    Geometry is deterministic, inspectable and diffable; a prompt is none of those.
+    Splitting mask authoring out from rendering means the question "which pixels may
+    change?" is answered before a GPU is involved and can be reviewed as a picture.
+
+        python3 attribute_mask.py --init PLATE.png --init-sha256 <hex> --out m.png \
+            --add ring:294,369,13,13,3 --add ring:329,377,13,13,3 \
+            --add band:307,371,316,374,3 \
+            --protect 440,175,580,265 \
+            [--dilate 1] [--preview p.png] [--note "..."]
+
+    Shapes, add or subtract, in pixels of the init:
+        ellipse:cx,cy,rx,ry          a filled blob
+        ring:cx,cy,rx,ry,w           an ANNULUS of width w -- a spectacle lens rim,
+                                     a band, any outline. The thin-band case is why
+                                     --ellipse and --quad were not enough.
+        quad:x0,y0,x1,y1,x2,y2,x3,y3 a filled straight-edged polygon
+        band:x0,y0,x1,y1,w           a thick line segment -- a bridge, a temple arm
+        box:x0,y0,x1,y1              a filled rectangle
+
+    --protect IS THE TEETH AND IT IS THE POINT. Every --protect box is a region that
+    must not change -- guard B's head, the other man's whole figure. If ONE white
+    pixel of the mask falls inside a protect box the tool REFUSES (exit 5) and names
+    the overlap. Spend guards in this tree are code rather than intentions, and so is
+    this one: "we need to have control" is worth something only if the control is
+    enforced somewhere a mistake cannot get past. A mask that cannot touch guard B is
+    a stronger promise than any wording, and unlike a wording it is checkable.
+
+    WHAT THIS TOOL DOES NOT DECIDE. Whether the resulting plate is SHIPPABLE -- the
+    look, the framing, whether the wire-rims are the right wire-rims -- is R4 and the
+    founder's alone. This writes geometry and refuses bad geometry. It scores nothing.
+    """
+
+    from __future__ import annotations
+
+    import argparse
+    import datetime as _dt
+    import hashlib
+    import os
+    import sys
+
+
+    def sha256_of(path: str) -> str:
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+    def _ints(spec: str, kind: str, n: int) -> list:
+        vals = [int(round(float(v))) for v in spec.split(",")]
+        if len(vals) != n:
+            raise ValueError("%s wants %d numbers, got %d" % (kind, n, len(vals)))
+        return vals
+
+
+    def draw_shape(draw, spec: str, fill: int) -> str:
+        """Render one shape spec onto `draw`. Returns a human description."""
+        kind, _, rest = spec.partition(":")
+        kind = kind.strip().lower()
+        if kind == "ellipse":
+            cx, cy, rx, ry = _ints(rest, "ellipse", 4)
+            draw.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=fill)
+            return "ellipse centre (%d,%d) radii (%d,%d)" % (cx, cy, rx, ry)
+        if kind == "ring":
+            cx, cy, rx, ry, w = _ints(rest, "ring", 5)
+            # An annulus, drawn as an outlined ellipse of width w. PIL centres the
+            # stroke on the path, so the band straddles the radius.
+            draw.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], outline=fill, width=w)
+            return "ring centre (%d,%d) radii (%d,%d) width %d" % (cx, cy, rx, ry, w)
+        if kind == "quad":
+            v = _ints(rest, "quad", 8)
+            draw.polygon(list(zip(v[0::2], v[1::2])), fill=fill)
+            return "quad %s" % str(list(zip(v[0::2], v[1::2])))
+        if kind == "band":
+            x0, y0, x1, y1, w = _ints(rest, "band", 5)
+            draw.line([x0, y0, x1, y1], fill=fill, width=w)
+            return "band (%d,%d)-(%d,%d) width %d" % (x0, y0, x1, y1, w)
+        if kind == "box":
+            x0, y0, x1, y1 = _ints(rest, "box", 4)
+            draw.rectangle([x0, y0, x1, y1], fill=fill)
+            return "box [%d,%d,%d,%d]" % (x0, y0, x1, y1)
+        raise ValueError("unknown shape %r (want ellipse/ring/quad/band/box)" % kind)
+
+
+    def main() -> int:
+        ap = argparse.ArgumentParser(
+            description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+        ap.add_argument("--init", required=True, help="the plate the mask is for")
+        ap.add_argument("--init-sha256", required=True,
+                        help="asserted before anything is written; a mismatch is a "
+                             "hard stop. A mask is geometry measured against SPECIFIC "
+                             "pixels and is meaningless against any other frame.")
+        ap.add_argument("--out", required=True, help="mask PNG to write")
+        ap.add_argument("--add", action="append", default=[],
+                        help="shape to include; repeatable")
+        ap.add_argument("--sub", action="append", default=[],
+                        help="shape to cut back out, applied after every --add; "
+                             "repeatable. This is the board-MINUS-the-hand case.")
+        ap.add_argument("--protect", action="append", default=[],
+                        help="x0,y0,x1,y1 that MUST NOT change; repeatable. One "
+                             "white pixel inside it and this tool refuses.")
+        ap.add_argument("--dilate", type=int, default=0,
+                        help="grow the mask by N px (MaxFilter). Applied before the "
+                             "protect check, so growth cannot sneak past it.")
+        ap.add_argument("--preview", default="",
+                        help="write a look-at-it PNG: the plate with the mask "
+                             "tinted and every protect box outlined")
+        ap.add_argument("--note", default="")
+        a = ap.parse_args()
+
+        if not os.path.isfile(a.init):
+            print("!! init not found: %s" % a.init, flush=True)
+            return 2
+        have = sha256_of(a.init)
+        if have != a.init_sha256:
+            print("!! INIT SHA MISMATCH -- refusing.\n   want %s\n   have %s"
+                  % (a.init_sha256, have), flush=True)
+            return 3
+        if not a.add:
+            print("!! no --add shapes; an all-black mask redraws nothing.", flush=True)
+            return 2
+
+        from PIL import Image, ImageDraw, ImageFilter
+
+        plate = Image.open(a.init).convert("RGB")
+        W, H = plate.size
+        mask = Image.new("L", (W, H), 0)
+        d = ImageDraw.Draw(mask)
+
+        described = []
+        try:
+            for spec in a.add:
+                described.append("add " + draw_shape(d, spec, 255))
+            for spec in a.sub:
+                described.append("sub " + draw_shape(d, spec, 0))
+        except ValueError as exc:
+            print("!! %s" % exc, flush=True)
+            return 2
+
+        if a.dilate > 0:
+            mask = mask.filter(ImageFilter.MaxFilter(2 * a.dilate + 1))
+            described.append("dilate %d px" % a.dilate)
+
+        binary = mask.point(lambda v: 255 if v > 0 else 0)
+        box = binary.getbbox()
+        if box is None:
+            print("!! the --sub shapes cancelled every --add; mask is empty.", flush=True)
+            return 4
+        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]   # getbbox is exclusive
+        # histogram() rather than getdata(): exact, and not deprecated in Pillow 12.
+        white = W * H - binary.histogram()[0]
+
+        # --- the control check, and it is arithmetic rather than an opinion --------
+        protect = []
+        for spec in a.protect:
+            try:
+                protect.append(_ints(spec, "protect", 4))
+            except ValueError as exc:
+                print("!! %s" % exc, flush=True)
+                return 2
+        violations = []
+        for (x0, y0, x1, y1) in protect:
+            region = binary.crop((max(0, x0), max(0, y0),
+                                  min(W, x1 + 1), min(H, y1 + 1)))
+            hit = (region.size[0] * region.size[1]) - region.histogram()[0]
+            if hit:
+                violations.append(((x0, y0, x1, y1), hit))
+        for (bx, hit) in violations:
+            print("!! MASK ENTERS A PROTECTED REGION [%d,%d,%d,%d]: %d px."
+                  % (bx[0], bx[1], bx[2], bx[3], hit), flush=True)
+        if violations:
+            print("!! refusing. The point of this step is that the protected figure "
+                  "CANNOT be changed; a mask that reaches him is the defect, not the "
+                  "fix. Move the geometry, do not widen the promise.", flush=True)
+            return 5
+
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        mask.save(a.out)
+
+        preview_path = a.preview
+        if preview_path:
+            prev = plate.copy()
+            tint = Image.new("RGB", (W, H), (255, 0, 128))
+            prev.paste(tint, (0, 0), binary.point(lambda v: 140 if v > 0 else 0))
+            pd = ImageDraw.Draw(prev)
+            for (x0, y0, x1, y1) in protect:
+                pd.rectangle([x0, y0, x1, y1], outline=(0, 255, 255), width=2)
+            os.makedirs(os.path.dirname(os.path.abspath(preview_path)) or ".",
+                        exist_ok=True)
+            prev.save(preview_path)
+
+        stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        sidecar = a.out + ".meta.yaml"
+        with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "# Mask provenance, written by pipeline/attribute_mask.py. NO SAMPLER",
+                "# AND NO GPU WAS INVOLVED -- this file is pure geometry, which is why",
+                "# it can be diffed and argued with before any pixel is spent.",
+                "tool: pipeline/attribute_mask.py",
+                "init_image: %s" % a.init.replace("\\", "/"),
+                "init_sha256: %s" % have,
+                "init_size: %dx%d" % (W, H),
+                "mask_png: %s" % os.path.basename(a.out),
+                "mask_sha256: %s" % sha256_of(a.out),
+                "mask_white_px: %d" % white,
+                "mask_frame_frac: %.5f" % (white / float(W * H)),
+                "mask_bbox_px: [%d, %d, %d, %d]" % tuple(bbox),
+                "shapes:",
+                "\n".join("  - %s" % s for s in described),
+                "protect_boxes_px: %s" % (str([list(p) for p in protect]) or "[]"),
+                "protect_violations: 0",
+                "preview_png: %s" % (os.path.basename(preview_path) or "null"),
+                "authored_utc: %s" % stamp,
+                "cost_usd: 0",
+                "geometry_is_the_stewards: >-",
+                "  THE GEOMETRY IS THE STEWARD'S, NOT THE FOUNDER'S. He asked for",
+                "  control over which figure carries an attribute; he did not specify",
+                "  a pixel. Every number above is the steward's and is the first",
+                "  thing a correction should move.",
+                "note: >-",
+                "  %s" % (a.note or "attribute region mask"),
+                "",
+            ]))
+
+        print("MASK %s  white=%d px (%.3f%% of frame)  bbox=[%d,%d,%d,%d]"
+              % (a.out, white, 100.0 * white / (W * H), *bbox), flush=True)
+        for s in described:
+            print("   %s" % s, flush=True)
+        print("PROTECTED %d region(s), 0 violations" % len(protect), flush=True)
+        if preview_path:
+            print("WROTE %s" % preview_path, flush=True)
+        print("WROTE %s" % sidecar, flush=True)
+        print("rc=0 cost_usd=0", flush=True)
+        return 0
+
+
+    if __name__ == "__main__":
+        raise SystemExit(main())
+  C:\banyan-farm\attrbind-0817\inpaint_fruit.py: |-
+    #!/usr/bin/env python3
+    r"""Paint ONE object into ONE masked region of an approved plate. SDXL, $0, local.
+
+    WHY THIS EXISTS. Beat 01 asks for "one small round green fruit hanging from the
+    stem" and the prompt cannot deliver it: 0 of 24 across the wording rounds, and
+    0 of 12 in round 8's img2img -- which is the decisive one, because r8's init
+    carried no fruit at all and so was a clean test of whether img2img will ADD an
+    object the init lacks. It will not, at strength 0.35 or 0.55. The founder chose
+    `inpaint` over `drop` on 2026-08-10 (ledger `ep2-b01-fig-route-0810`), so the
+    fruit becomes its own step and this is that step.
+
+    THE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.
+
+      * animagine-xl-3.1 has NO inpainting variant, so this loads the BASE weights
+        into StableDiffusionXLInpaintPipeline. diffusers 0.29.2 supports that
+        explicitly -- its own check is "The unet should have either 4 or 9 input
+        channels", and at 4 (a normal SDXL checkpoint) it takes the latent-blend
+        branch instead of concatenating mask channels:
+            latents = (1 - init_mask) * init_latents_proper + init_mask * latents
+        HF's docs name the trade-off in their own words: "the overall image quality
+        may be lower, but it generally tends to preserve the mask area (that is why
+        you can see the mask outline)". Preserving the unmasked area is exactly what
+        we want here -- the plate is the founder's and must come back unchanged
+        outside the mask.
+      * `padding_mask_crop` is the countermeasure for the failure mode this beat has:
+        a SMALL object in a LARGE frame. It crops the masked region with padding,
+        upscales that crop to the pipeline resolution, inpaints there, and pastes it
+        back -- so the fruit is drawn at full model resolution instead of at the ~5%
+        of the frame it will occupy. Verified present in 0.29.2's __call__ on the box.
+      * `strength` must be high to ADD something. It is not the img2img case; the
+        unmasked region is restored every step by the blend above, so a high strength
+        costs nothing outside the mask.
+
+        diffusers 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py
+        inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint
+        model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1
+        padding_mask_crop issue: https://github.com/huggingface/diffusers/issues/6345
+
+    WHAT THIS SCRIPT REFUSES TO DO. It will not run on an init whose sha256 does not
+    match the one named on the command line. G1 says a conditioned render starts from
+    a frame the founder has passed, and the only way that gate means anything is if
+    the bytes are asserted rather than the filename. It also never writes a canon
+    filename and always writes `approved: false` in the sidecar.
+
+    THE MASK IS GEOMETRY AND IT IS THE STEWARD'S, NOT HIS. He approved a method, not
+    a size or a position. The ellipse is passed in on the command line, drawn to a
+    PNG beside the output so it can be looked at, and reported in the sidecar in both
+    pixels and as a fraction of the frame, so the first correction he makes can be
+    "lower", "smaller", "other side" and it is one number.
+
+    SECOND CALLER, 2026-08-15: THE BARK BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.
+    A prop -- a clipboard made of bark -- gates three beats of 002b (06 "turns over a
+    clipboard made of bark and reads", 08 "lowers the clipboard and points", 10
+    "flips the clipboard around: the back is blank"). Four wording attempts closed
+    the wording lever for good (see `a5e61487`, `c7a11ff0`): they established that
+    wording reaches the prop's MATERIAL -- deleting the noun killed the chrome clip
+    and white paper in 12 frames of 12 -- and that wording does NOT reach its
+    GEOMETRY. `large flat rectangular` was in the positive of a clean, uncontested
+    prompt and all four seeds still rounded the object into a lozenge, a dome, a
+    surfboard blank and a basket lid. So the geometry has to come from the mask, and
+    an ELLIPSE MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four
+    prompts already failed against, and masking a board with one would re-draw the
+    defect under test. Hence `--quad`, four corners and four straight edges. A
+    rectangle is a quad; a rectangular board held at an angle is a quad in
+    perspective, which an axis-aligned rectangle would not fit either.
+
+    THIRD CALLER, 2026-08-17: EYEWEAR ON ONE MAN OF TWO, AND WHY THE MASK BECAME
+    ARBITRARY. `glasses` named in ONE man's clause lands on BOTH men, 5 of 5 -- a
+    different failure from the prop above, which goes to ONE WRONG figure. The
+    founder ruled "draw the second man without glasses. we need to have control."
+    The published cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its
+    EOS carries global prompt semantics, so the token steers the whole frame and no
+    wording says WHICH face; a negative cannot unbind it. The mask is therefore the
+    only lever, and the region that matters here is a THIN BAND along a spectacle
+    frame -- neither a blob nor a convex polygon, so neither `--ellipse` nor `--quad`
+    can express it. Hence `--mask-png`, which also retires the board-MINUS-the-hand
+    limitation recorded against this script in wave-drafts.yaml. The band is authored
+    by pipeline/attribute_mask.py, a $0 step with no GPU and no sampler in it, which
+    is what makes "control" checkable instead of asserted.
+
+        python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \
+            (--ellipse cx,cy,rx,ry | --quad x0,…,y3 | --mask-png m.png) \
+            --prompt-file p.txt --negative-file n.txt \
+            --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \
+            [--seed N] [--pad-crop 64] [--blur 8] [--dry-run]
+    """
+
+    from __future__ import annotations
+
+    import argparse
+    import datetime as _dt
+    import hashlib
+    import os
+    import sys
+    import time
+
+    BASE = "cagliostrolab/animagine-xl-3.1"
+    BASE_LICENCE = "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+
+
+    def sha256_of(path: str) -> str:
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+    def read_text(path: str) -> str:
+        with open(path, "r", encoding="utf-8") as fh:
+            return fh.read().strip()
+
+
+    def yaml_block(text: str, indent: str = "  ") -> str:
+        return "\n".join(indent + line for line in text.splitlines())
+
+
+    def module_version(name: str) -> str:
+        try:
+            return __import__(name).__version__
+        except Exception:
+            return "unresolved"
+
+
+    def main() -> int:
+        ap = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+        ap.add_argument("--init", required=True)
+        ap.add_argument("--init-sha256", required=True,
+                        help="asserted before anything loads; a mismatch is a hard stop")
+        ap.add_argument("--ellipse", default="",
+                        help="cx,cy,rx,ry in pixels of the init image")
+        ap.add_argument("--quad", default="",
+                        help="x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in order, a "
+                             "STRAIGHT-EDGED mask. A rectangle is a quad, and a "
+                             "rectangular board seen at an angle is a quad and is NOT "
+                             "an ellipse. Exactly one of --ellipse/--quad/--mask-png "
+                             "is required.")
+        ap.add_argument("--mask-png", default="",
+                        help="an 8-bit mask PNG the same size as --init: white is "
+                             "redrawn, black is preserved. This is the general case "
+                             "the two shape flags are special cases of. It exists "
+                             "because a region worth masking is often neither a blob "
+                             "nor a convex polygon -- a THIN BAND along a spectacle "
+                             "frame, or a board MINUS the hand holding it (a "
+                             "limitation recorded against this script in "
+                             "wave-drafts.yaml and not expressible as one ellipse or "
+                             "one quad). Authoring the geometry is a separate $0 step "
+                             "with no GPU and no sampler in it, which is the point: "
+                             "WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND "
+                             "CAN DIFF, not something the model gets a vote on. See "
+                             "pipeline/attribute_mask.py.")
+        ap.add_argument("--dry-run", action="store_true",
+                        help="assert the sha, draw the mask PNG beside --out and stop "
+                             "BEFORE loading any model. Costs nothing and is the step "
+                             "where a misplaced mask gets caught by eye.")
+        ap.add_argument("--prompt-file", required=True)
+        ap.add_argument("--negative-file", required=True)
+        ap.add_argument("--out", required=True)
+        ap.add_argument("--steps", type=int, default=40)
+        ap.add_argument("--cfg", type=float, default=7.5)
+        ap.add_argument("--strength", type=float, default=0.99)
+        ap.add_argument("--seed", type=int, default=20260810)
+        ap.add_argument("--pad-crop", type=int, default=64,
+                        help="padding_mask_crop; 0 disables it")
+        ap.add_argument("--blur", type=int, default=8, help="mask blur_factor")
+        ap.add_argument("--note", default="")
+        a = ap.parse_args()
+
+        if not os.path.isfile(a.init):
+            print("!! init not found: %s" % a.init, flush=True)
+            return 2
+        have = sha256_of(a.init)
+        if have != a.init_sha256:
+            print("!! INIT SHA MISMATCH -- refusing.\n   want %s\n   have %s"
+                  % (a.init_sha256, have), flush=True)
+            return 3
+
+        if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if v) != 1:
+            print("!! pass exactly one of --ellipse, --quad or --mask-png", flush=True)
+            return 2
+
+        cx = cy = rx = ry = 0
+        corners: list = []
+        mask_sha = ""
+        if a.mask_png:
+            if not os.path.isfile(a.mask_png):
+                print("!! --mask-png not found: %s" % a.mask_png, flush=True)
+                return 2
+            mask_sha = sha256_of(a.mask_png)
+            shape = "png"
+            bbox = []
+        elif a.ellipse:
+            try:
+                cx, cy, rx, ry = (int(v) for v in a.ellipse.split(","))
+            except Exception:
+                print("!! --ellipse wants cx,cy,rx,ry", flush=True)
+                return 2
+            shape = "ellipse"
+            bbox = [cx - rx, cy - ry, cx + rx, cy + ry]
+        else:
+            try:
+                vals = [int(v) for v in a.quad.split(",")]
+            except Exception:
+                vals = []
+            if len(vals) != 8:
+                print("!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3 (8 integers)", flush=True)
+                return 2
+            corners = list(zip(vals[0::2], vals[1::2]))
+            xs = [p[0] for p in corners]
+            ys = [p[1] for p in corners]
+            shape = "quad"
+            bbox = [min(xs), min(ys), max(xs), max(ys)]
+
+        from PIL import Image, ImageDraw
+
+        plate = Image.open(a.init).convert("RGB")
+        W, H = plate.size
+        mask = Image.new("L", (W, H), 0)
+        if shape == "png":
+            supplied = Image.open(a.mask_png).convert("L")
+            if supplied.size != (W, H):
+                print("!! MASK SIZE MISMATCH -- refusing.\n   init %dx%d\n   mask %dx%d"
+                      % (W, H, supplied.size[0], supplied.size[1]), flush=True)
+                return 6
+            mask = supplied
+            box = mask.point(lambda v: 255 if v > 0 else 0).getbbox()
+            if box is None:
+                print("!! mask is entirely black -- nothing would be redrawn.", flush=True)
+                return 7
+            # getbbox()'s right/bottom are exclusive; the sidecar reports inclusive px.
+            bbox = [box[0], box[1], box[2] - 1, box[3] - 1]
+        elif shape == "ellipse":
+            ImageDraw.Draw(mask).ellipse(bbox, fill=255)
+        else:
+            ImageDraw.Draw(mask).polygon(corners, fill=255)
+
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        mask_png = os.path.splitext(a.out)[0] + "-mask.png"
+        mask.save(mask_png)
+
+        prompt = read_text(a.prompt_file)
+        negative = read_text(a.negative_file)
+
+        if a.dry_run:
+            print("DRY RUN -- no model loaded, nothing rendered.", flush=True)
+            print("init_sha256 OK %s" % have, flush=True)
+            print("mask %s corners=%s bbox=%s  %.4f x %.4f of %dx%d"
+                  % (shape, corners or "-", bbox,
+                     (bbox[2] - bbox[0]) / float(W),
+                     (bbox[3] - bbox[1]) / float(H), W, H), flush=True)
+            print("WROTE %s" % mask_png, flush=True)
+            print("rc=0 dry_run=1", flush=True)
+            return 0
+
+        import torch
+        from diffusers import StableDiffusionXLInpaintPipeline
+
+        if not torch.cuda.is_available():
+            print("!! no CUDA. This is the box's job; stopping.", flush=True)
+            return 4
+
+        t0 = time.time()
+        pipe = StableDiffusionXLInpaintPipeline.from_pretrained(
+            BASE, torch_dtype=torch.bfloat16, use_safetensors=True)
+        pipe = pipe.to("cuda")
+        pipe.set_progress_bar_config(disable=True)
+        in_ch = int(pipe.unet.config.in_channels)
+        print("MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d in %.0fs"
+              % (BASE, in_ch, time.time() - t0), flush=True)
+        if in_ch not in (4, 9):
+            print("!! unexpected unet.in_channels=%d" % in_ch, flush=True)
+            return 5
+
+        blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask
+
+        kwargs = dict(prompt=prompt, negative_prompt=negative, image=plate,
+                      mask_image=blurred, width=W, height=H,
+                      num_inference_steps=a.steps, guidance_scale=a.cfg,
+                      strength=a.strength,
+                      generator=torch.Generator("cuda").manual_seed(a.seed))
+        if a.pad_crop:
+            kwargs["padding_mask_crop"] = a.pad_crop
+
+        t1 = time.time()
+        out = pipe(**kwargs).images[0]
+        render_s = time.time() - t1
+
+        out.save(a.out)
+
+        versions = {"python": sys.version.split()[0], "torch": module_version("torch"),
+                    "diffusers": module_version("diffusers")}
+        stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        mask_lines = ["mask_shape: %s" % shape]
+        if shape == "png":
+            mask_lines += ["mask_png_source: %s" % a.mask_png.replace("\\", "/"),
+                           "mask_png_sha256: %s" % mask_sha,
+                           "mask_white_px: %d"
+                           % (W * H - mask.point(lambda v: 255 if v > 0 else 0)
+                              .histogram()[0])]
+        elif shape == "ellipse":
+            mask_lines += ["mask_centre_px: [%d, %d]" % (cx, cy),
+                           "mask_radii_px: [%d, %d]" % (rx, ry)]
+        else:
+            mask_lines += ["mask_corners_px: %s"
+                           % str([[int(x), int(y)] for x, y in corners])]
+        mask_lines += [
+            "mask_bbox_px: [%d, %d, %d, %d]" % tuple(bbox),
+            "mask_width_frac: %.4f" % ((bbox[2] - bbox[0]) / float(W)),
+            "mask_height_frac: %.4f" % ((bbox[3] - bbox[1]) / float(H)),
+        ]
+        sidecar = a.out + ".meta.yaml"
+        with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py",
+                "# on the rtx5090. The plate outside the mask is the founder's own",
+                "# pixels; only the region described below was redrawn.",
+                "platform: local-gpu (rtx5090)",
+                "model: %s" % BASE,
+                "model_licence: %s" % BASE_LICENCE,
+                "pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=%d)" % in_ch,
+                "size: %dx%d" % (W, H),
+                "steps: %d" % a.steps,
+                "guidance: %s" % a.cfg,
+                "strength: %s" % a.strength,
+                "seed: %d" % a.seed,
+                "padding_mask_crop: %s" % (a.pad_crop or "null"),
+                "mask_blur_factor: %d" % a.blur,
+                "init_image: %s" % a.init.replace("\\", "/"),
+                "init_sha256: %s" % have,
+                "mask_png: %s" % os.path.basename(mask_png),
+            ] + mask_lines + [
+                "mask_is_the_stewards: >-",
+                yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
+                           "`inpaint` and named no size, no position, no colour and no "
+                           "shape. The mask above is the steward's and is the first "
+                           "thing his correction should move -- 'lower', 'smaller', "
+                           "'other side' is one number here; the words in the prompt "
+                           "are his own approved shots.md wording."),
+                "rendered_utc: %s" % stamp,
+                "render_seconds: %.1f" % render_s,
+                "wall_seconds: %.1f" % (time.time() - t0),
+                "cost_usd: 0",
+                "python_version: %s" % versions["python"],
+                "torch_version: %s" % versions["torch"],
+                "diffusers_version: %s" % versions["diffusers"],
+                "approved: false",
+                "provisional: >-",
+                yaml_block("PROVISIONAL. A steward-rendered SAMPLE, not a pick and not "
+                           "canon. Never takes a canon filename, is not published, not "
+                           "posted, and not assembled into an episode. Ground truth is "
+                           "the founder (R4)."),
+                "note: >-",
+                yaml_block(a.note or "one inpainted sample; the fruit question."),
+                "prompt: |-",
+                yaml_block(prompt),
+                "negative: |-",
+                yaml_block(negative),
+                "",
+            ]))
+
+        print("WROTE %s" % a.out, flush=True)
+        print("WROTE %s" % mask_png, flush=True)
+        print("WROTE %s" % sidecar, flush=True)
+        print("rc=0 render_s=%.1f" % render_s, flush=True)
+        return 0
+
+
+    if __name__ == "__main__":
+        raise SystemExit(main())
+
+steps:
+- name: mask
+  argv:
+  - 'C:\banyan-farm\venv\Scripts\python.exe'
+  - 'C:\banyan-farm\attrbind-0817\attribute_mask.py'
+  - '--init'
+  - 'C:\banyan-farm\banyan-city\farm-out\ep2-b10-mac-plate-0817\10-no-form-mac-plate-r1s1.png'
+  - '--init-sha256'
+  - '453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f'
+  - '--out'
+  - 'C:\banyan-farm\attrbind-0817\maskB.png'
+  - '--preview'
+  - 'C:\banyan-farm\attrbind-0817\previewB.png'
+  - '--add'
+  - 'ring:295,371,13,13,4'
+  - '--add'
+  - 'ring:330,378,14,14,4'
+  - '--add'
+  - 'band:307,371,317,376,4'
+  - '--add'
+  - 'band:344,375,360,371,4'
+  - '--protect'
+  - '430,160,590,280'
+  - '--dilate'
+  - '1'
+  - '--note'
+  - 'guard B (the bark-board carrier) frame path only. The tall man''s face is a declared protect region and this step refuses to reach it. Geometry is the steward''s; the founder named no pixel.'
+- name: dry
+  argv:
+  - 'C:\banyan-farm\venv\Scripts\python.exe'
+  - 'C:\banyan-farm\attrbind-0817\inpaint_fruit.py'
+  - '--init'
+  - 'C:\banyan-farm\banyan-city\farm-out\ep2-b10-mac-plate-0817\10-no-form-mac-plate-r1s1.png'
+  - '--init-sha256'
+  - '453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f'
+  - '--mask-png'
+  - 'C:\banyan-farm\attrbind-0817\maskB.png'
+  - '--prompt-file'
+  - 'C:\banyan-farm\attrbind-0817\prompt.txt'
+  - '--negative-file'
+  - 'C:\banyan-farm\attrbind-0817\negative.txt'
+  - '--out'
+  - 'C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png'
+  - '--strength'
+  - '0.99'
+  - '--pad-crop'
+  - '64'
+  - '--blur'
+  - '3'
+  - '--seed'
+  - '20260817'
+  - '--dry-run'
+- name: sample
+  argv:
+  - 'C:\banyan-farm\venv\Scripts\python.exe'
+  - 'C:\banyan-farm\attrbind-0817\inpaint_fruit.py'
+  - '--init'
+  - 'C:\banyan-farm\banyan-city\farm-out\ep2-b10-mac-plate-0817\10-no-form-mac-plate-r1s1.png'
+  - '--init-sha256'
+  - '453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f'
+  - '--mask-png'
+  - 'C:\banyan-farm\attrbind-0817\maskB.png'
+  - '--prompt-file'
+  - 'C:\banyan-farm\attrbind-0817\prompt.txt'
+  - '--negative-file'
+  - 'C:\banyan-farm\attrbind-0817\negative.txt'
+  - '--out'
+  - 'C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png'
+  - '--strength'
+  - '0.99'
+  - '--pad-crop'
+  - '64'
+  - '--blur'
+  - '3'
+  - '--seed'
+  - '20260817'
+  - '--note'
+  - 'ONE SAMPLE on his 2026-08-15 word ''draw the second man without glasses. we need to have control.'' Eyewear removed from guard B by masking the FRAME PATH ONLY, so the sampler never invents an eye. Guard A''s face is a declared protect region. Mechanism sample, not a candidate frame: the init is off-canon.'
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+      import glob, hashlib, os, shutil
+      src = "C:/banyan-farm/attrbind-0817"
+      dst = "C:/banyan-farm/courier-box/farm-out/ep2-b10-attrbind-eyewear-0817"
+      os.makedirs(dst, exist_ok=True)
+      names = ["b10-guardB-bare-s1.png", "b10-guardB-bare-s1-mask.png",
+               "b10-guardB-bare-s1.png.meta.yaml", "maskB.png",
+               "maskB.png.meta.yaml", "previewB.png"]
+      got = []
+      for n in names:
+          p = os.path.join(src, n)
+          if os.path.isfile(p):
+              shutil.copy2(p, os.path.join(dst, n)); got.append(n)
+      with open(os.path.join(dst, "SHA256SUMS.txt"), "w", newline="\n") as fh:
+          for n in got:
+              h = hashlib.sha256(open(os.path.join(dst, n), "rb").read()).hexdigest()
+              fh.write("%s  %s\n" % (h, n))
+      print("published", len(got), "of", len(names), got)
+      raise SystemExit(0 if "b10-guardB-bare-s1.png" in got else 1)
+
+artifacts:
+- C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png
+- C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png.meta.yaml
+- C:\banyan-farm\attrbind-0817\maskB.png
+- C:\banyan-farm\attrbind-0817\maskB.png.meta.yaml
+- C:\banyan-farm\attrbind-0817\previewB.png
