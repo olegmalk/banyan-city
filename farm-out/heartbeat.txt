@@ -2575,3 +2575,4 @@
 22:31:09Z box-runner idle ready=0 failed=33
 22:41:12Z box-runner idle ready=0 failed=33
 22:47:07Z STARTED task=ep2-b01-compseed-s1-g1-0818-1787006711 attempt=1 on box-runner
+22:48:01Z FAIL task=ep2-b01-compseed-s1-g1-0818-1787006711 rc=92 step=artifact-check
