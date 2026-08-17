@@ -58,6 +58,7 @@ Read-only. `git show` against a remote-tracking ref: no checkout, no fetch, and
 nothing on this machine is written except by the person pasting the yaml.
 """
 import argparse
+import re
 import statistics
 import subprocess
 import sys
@@ -79,6 +80,16 @@ INBOX_FILE = "review/inbox.yaml"
 # arithmetic by being unlabelled.
 STATES = ("done", "candidate-awaiting-founder", "fix-known",
           "blocked-decision", "never-rendered")
+# A SIXTH STATE THIS FILE ASSIGNS ITSELF, and never reads off disk. See
+# _apply_gate_correction below: it is what a `blocked-decision` becomes when the
+# decision it names has demonstrably already been made. It is deliberately NOT
+# in STATES, so a lane cannot write it into the measurement by hand — it is a
+# reading of a stale row, not a measurement of a beat.
+STALE_GATE = "stale-gate-closed"
+# What `read_progress()` may EMIT, as against what it may READ. The distinction
+# is the point: STATES gates the file, this gates the output, and a typo in
+# either still fails the suite rather than sliding through as a new category.
+EMITTED_STATES = STATES + (STALE_GATE,)
 # Machine work we can commit to: something is wrong and we know the fix, or
 # nothing has ever been rendered. Both need the card, neither needs a decision.
 NEEDS_RENDER = ("fix-known", "never-rendered")
@@ -122,6 +133,42 @@ def _load(rel):
     return doc
 
 
+# TWO WORDINGS FOR ONE GATE, and the second was found by counting. Eleven beats
+# say "character gate"; beat 2 says "held by the character-first ruling", which
+# is the same ruling under a different phrase — canon subject
+# `ep2-goblin-character-gate` enumerates all twelve (2, 3, 4, 7, 8, 13, 14, 15,
+# 16, 17, 19, 20) as one decision. Matching only the first phrase left beat 2
+# publishing a block, which is how a partial fix reads as a complete one.
+_GATE_NOTE = re.compile(r"character[ -](?:gate|first)", re.I)
+
+
+def _apply_gate_correction(state: str, note: str) -> str:
+    """`blocked-decision -- ... character gate` -> STALE_GATE. Everything else through.
+
+    WHY THIS EXISTS. `pipeline/measured/episode-progress.yaml` was measured
+    2026-08-14 09:40Z. The founder answered the goblin character gate at
+    11:09:07Z the SAME MORNING -- ninety minutes later -- and twelve episode-2
+    beats (2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20) still carry
+    `state: blocked-decision` with a note naming that gate. The file says so
+    itself, at length, in its own `goblin_gate_CORRECTION_0816` key; what it
+    does NOT do is change the rows, so every reader downstream kept publishing
+    the block. status.html was rendering "waiting on a decision" eighteen times,
+    twelve of them for a decision that was made four days ago. A status page
+    that tells the author he is holding up work he already unblocked is worse
+    than no status page.
+
+    WHAT THIS DELIBERATELY DOES NOT DO: promote those beats to `done`, or to
+    anything else that claims progress. Their true state is UNKNOWN -- nobody
+    has re-scored them since the gate opened -- and the honest rendering of an
+    unknown is a hollow leaf, not a green one. This function downgrades a false
+    certainty to an admitted absence. Re-measuring them is the real fix and this
+    is not a substitute for it.
+    """
+    if state == "blocked-decision" and _GATE_NOTE.search(note):
+        return STALE_GATE
+    return state
+
+
 def read_progress(path=PROGRESS_FILE) -> list:
     """The per-episode beat states, or [] — never a guess at one.
 
@@ -151,7 +198,9 @@ def read_progress(path=PROGRESS_FILE) -> list:
                 continue
             if state not in STATES:
                 continue
-            rows.append({"n": n, "state": state, "note": str(b.get("note") or "")})
+            note = str(b.get("note") or "")
+            rows.append({"n": n, "state": _apply_gate_correction(state, note),
+                         "note": note})
         if not rows:
             continue
         out.append({"number": ep.get("number"), "node": str(ep.get("node") or ""),

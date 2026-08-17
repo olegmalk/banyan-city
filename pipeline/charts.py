@@ -64,6 +64,13 @@ STATE_STYLE = (
     ("never-rendered",              "mach",   "the card’s to do",       "machine"),
     ("candidate-awaiting-founder",  "look",   "waiting for your look",  "author"),
     ("blocked-decision",            "gate",   "waiting on a decision",  "author"),
+    # Assigned by episode_eta._apply_gate_correction, never read off disk: a
+    # `blocked-decision` whose named gate has demonstrably already been opened.
+    # It maps to `unk` ON PURPOSE. The beat's real state is unknown — nobody has
+    # re-scored it since the gate opened — and a hollow leaf is the honest mark
+    # for that. Colouring it as progress would replace a false block with a
+    # false pass, which is the worse of the two lies.
+    ("stale-gate-closed",           "unk",    "no current state on file", "author"),
 )
 # css class -> the words for it, in bar/legend order. Two states share "mach"
 # because the ETA bar has always merged them: "no candidate yet" and "we know
@@ -72,7 +79,12 @@ STATE_STYLE = (
 STATE_ORDER = ("done", "mach", "look", "gate")
 STATE_LABEL = {"done": "passed", "mach": "the card’s to do",
                "look": "waiting for your look", "gate": "waiting on a decision",
-               "unk": "no state on file"}
+               # "no CURRENT state": this bucket holds two populations and the
+               # older wording was wrong about one of them. A beat nobody has
+               # scored has no state on file at all; a `stale-gate-closed` beat
+               # HAS one on file and it is out of date. Both lack a state you
+               # can act on today, which is what the column means.
+               "unk": "no current state on file"}
 STATE_CLASS = {k: css for k, css, _l, _w in STATE_STYLE}
 
 
@@ -149,7 +161,13 @@ def _counts(beats: list, total: int) -> dict:
     out = {k: 0 for k in STATE_ORDER}
     for b in beats:
         out[_leaf_state(b.get("state"))] = out.get(_leaf_state(b.get("state")), 0) + 1
-    out["unk"] = max(0, total - len(beats))
+    # `unk` is TWO populations and the sum of both, not the later one. Beats with
+    # no line in the file at all (total minus listed), PLUS listed beats whose
+    # state this module cannot place — which now really happens, because
+    # `stale-gate-closed` maps here deliberately. This line used to ASSIGN
+    # rather than add, so every listed-but-unplaceable beat counted in the loop
+    # above was silently thrown away one line later and the column under-read.
+    out["unk"] = out.get("unk", 0) + max(0, total - len(beats))
     return out
 
 
@@ -391,6 +409,18 @@ def sapling_html(eps: list, boards: dict) -> str:
                f'take{"s" if looking != 1 else ""} sitting in front of him), '
                'green is the card’s to render. Hover any leaf for that beat’s '
                'state and the reason on file; click it to open the beat.')
+    # A HOLLOW LEAF IS NOT A SETBACK AND THE PAGE HAS TO SAY WHY. Twelve of
+    # these went hollow the day the character gate was found already open: their
+    # rows still read `blocked-decision` from a measurement taken ninety minutes
+    # before the founder answered, so the page was crediting him with holding up
+    # work he had released. Downgrading a false block to an admitted unknown is
+    # honest, but without this sentence it reads as twelve beats going backwards.
+    hollow = sum(s["counts"].get("unk", 0) for s in summary)
+    if hollow:
+        caption += (f' <b>{hollow} leaves are hollow</b> — nobody has scored '
+                    'them since the last measurement, so the page says so '
+                    'rather than guessing. Hollow is missing data, not a '
+                    'setback: re-scoring them is what fills them in.')
     return (f'<figure class="sap">{svg}'
             f'{_sapling_key(summary)}'
             f'<figcaption class="ccap">{caption}</figcaption>'

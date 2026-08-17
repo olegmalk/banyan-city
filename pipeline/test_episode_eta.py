@@ -256,8 +256,11 @@ def test_the_checked_in_states_are_well_formed():
         check(f"{tag}: no duplicate beat numbers", len(ns) == len(set(ns)))
         check(f"{tag}: beats are numbered 1..total_beats",
               sorted(ns) == list(range(1, int(ep["total_beats"]) + 1)))
+        # EMITTED_STATES, not STATES: read_progress may DERIVE `stale-gate-closed`
+        # from a blocked-decision whose gate has already opened. Widened here on
+        # purpose and no wider — a typo'd state still fails this line.
         check(f"{tag}: every beat carries a defined state",
-              all(b["state"] in eta.STATES for b in ep["beats"]))
+              all(b["state"] in eta.EMITTED_STATES for b in ep["beats"]))
         check(f"{tag}: it names where the states were read from",
               bool(ep["states_read_from"]))
 
