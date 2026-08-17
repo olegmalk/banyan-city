@@ -91,32 +91,40 @@ and `empty hands` embeds as something very close to `hands`. If a hand does not
 matter to the shot, frame it out or give it the cheapest state you can afford;
 what you may not do is leave it unmentioned and expect nothing to appear in it.
 
-TWO MORE OF THE SAME SHAPE, learned the same afternoon and put here beside the
-hand rule because all three are one idea: THE MODEL NEEDS THE THING NAMED, AND A
-NEGATIVE CANNOT SUPPLY IT.
+TWO CANDIDATE RULES WERE WRITTEN HERE AND BOTH ARE RETRACTED. THEY ARE LEFT ON
+THE PAGE, RETRACTED, BECAUSE THE RETRACTION IS THE MORE USEFUL ARTEFACT AND
+BECAUSE THIS FILE'S OWN NEXT PARAGRAPH IS WHAT KILLED THEM. Read this before
+adding a rule of your own.
 
-DO NOT FORBID `horizon` IN A SHOT THAT NEEDS ONE. Beat 05's plate came back as a
-downward plan view over an open field at 3 of 3 seeds -- no horizon band, no
-hedgerow, the figures shrinking, and at the highest of them the count breaking to
-THREE MEN with `distant, small figure` sitting in the negative. `horizon` was in
-that negative. A front-facing wide shot has to put a horizon SOMEWHERE; forbid it
-and the only place left is above the frame, so the camera tilts down until it is
-gone. Deleting that one word -- nothing else, same seed -- dropped the camera to
-near eye level and produced a horizon band, a hedgerow of dark bushes and distant
-hills. AND THE EXPLANATORY PART: `hedgerow behind` had been in the POSITIVE the
-whole time, rendering nothing three times running. A clause that names something
-"behind" is dead in a plan view, because a plan view has no behind. The trade is
-real and is not hidden: `sky` stayed forbidden and a pale sky band arrived
-anyway. You cannot have a horizon and no sky.
+RETRACTED: "do not forbid `horizon` in a shot that needs one". THE OBSERVATION
+STANDS AND THE RULE DOES NOT. Beat 05 rendered a downward plan view at 3 of 3
+seeds with `horizon` in its negative -- no horizon band, no hedgerow, figures
+shrinking, and at the worst of them the count breaking. Deleting that one word at
+seed 20260817, nothing else changed, produced near eye level, a horizon band, a
+hedgerow of dark bushes and distant hills, and this docstring said "mechanism
+confirmed" on the strength of it. THREE FRESH SEEDS OF THAT BYTE-IDENTICAL
+DELETION CAME BACK HIGH-ANGLE, 3 OF 3, one of them with four figures including
+two children. So the deletion is NOT a lever; the one good frame was that seed's
+luck. What survives is narrower and still worth having: a clause naming something
+"BEHIND" is dead in a plan view, because a plan view has no behind -- which is why
+`hedgerow behind` sat in the positive rendering nothing -- and the ONE frame where
+a horizon existed is the ONE frame where the hedgerow rendered. That is a
+correlation on n=1 and it is labelled as one.
 
-A FACE PLATE MUST NAME THE EYE STATE. `thoughtful` plus `mouth closed` gave beat
-09 three shut-eyed faces at three seeds -- a man resting in a field, not a man
-working through a thought, which is what that beat is. `eyes open` in the
-positive with `closed eyes` in the negative opened them on the first sample. Note
-which configuration that is: the negative worked here because the POSITIVE asked
-for the opposite state, so it reinforced an instruction instead of trying to
-subtract a noun the prompt had invited. That is the only configuration in which a
-negative term has reliably worked on this repo's plates.
+RETRACTED AS A RULE, KEPT AS A RATE: "a face plate must name the eye state".
+`thoughtful` plus `mouth closed` gave beat 09 three shut faces at three seeds, and
+adding `eyes open` with `closed eyes` in the negative opened them on the first
+sample. At four seeds of that same wording the eyes are: correctly open once, a
+WINK once, OPEN BUT BLANK WHITE WITH NO IRISES once, and shut once. So the tag
+does reach the eyelids -- it moved them at 3 of 4 against 0 of 3 without it -- and
+it delivers a usable pair of eyes at 1 IN 4. That is not a lever you can build a
+plate on; it is a lottery ticket with better odds than nothing, and a beat that
+needs open eyes needs render-N-and-pick, not this tag and a hope.
+
+WHAT THAT LEAVES. The hand rule above is the only one of the three with a matched
+control at three seeds a side, and it is the only one stated as a rule. The other
+two were each written off ONE picture, by a lane that had already written the
+warning below and put it two paragraphs away from its own violation of it.
 
 A SINGLE-SEED OBSERVATION IS NOT A FINDING, AND SEED 20260817 HAS A RECORD.
 That one seed has now manufactured TWO plausible false laws in two days, both of
@@ -132,6 +140,12 @@ which dissolved on fresh draws:
 And bf79e534 broke a third on the motion side the day before: four wordings had
 "established" that guard B turns his head, and all four ran 20260817; at three
 fresh seeds the back stayed turned in 2 of 3.
+  * 2026-08-17, LATER THE SAME DAY, THIS LANE ITSELF -- "deleting `horizon` from
+    the negative fixes the camera", written into this very docstring as a rule off
+    ONE picture at 20260817 and retracted above at 3 of 3 fresh seeds. The lane
+    that wrote the warning is the lane that broke it, within the hour, in the same
+    file. That is how cheap this mistake is to make and it is why the paragraph is
+    phrased as an instruction rather than an observation.
 So: BEFORE BUILDING A WORDING LADDER ON ANY FAULT, SPEND THREE FRESH SEEDS ON THE
 BYTE-IDENTICAL PROMPT, and write the decision rule down first. Three renders is
 minutes on the Mac fleet and it is the cheapest insurance this file has. If the
@@ -2856,6 +2870,44 @@ REVS = {
         #      count fault open at eye level too; two at all three closes it.
         # Nothing is picked here either: a candidate is proposed, never
         # promoted, and P1 is judged against the founder's own sheet.
+        #
+        # ------------------------------------------------------------------
+        # SEED-BATCH RESULT. E1 FAILS AND THE r2 VERDICT ABOVE IS RETRACTED.
+        # ------------------------------------------------------------------
+        # The re-rendered s1 is byte-identical to the committed r2s1, so the base
+        # is sound and the three fresh draws are the only difference.
+        #   E1 EYE LEVEL ... FAILS, 0 OF 3. s2 (20260818) is a downward plan view
+        #      with a pale haze where the horizon was. s3 (20260819) is higher
+        #      still, no horizon, no hedgerow, vast empty grass. s4 (20260820) is
+        #      a full plan view and a collapse. THE RULE SAID: "at 0 or 1 of 3 it
+        #      was this seed's luck and the deletion is not a lever." IT WAS THIS
+        #      SEED'S LUCK. THE `horizon` DELETION IS NOT A LEVER, the r2 verdict
+        #      above claiming "OUTCOME A ON THE CAMERA, THE MECHANISM IS
+        #      CONFIRMED" IS WRONG, and it is left standing with this beneath it
+        #      because the disagreement is the record. It was an n=1 claim made by
+        #      a lane that had spent the previous hour proving n=1 claims wrong.
+        #      WHAT SURVIVES, LABELLED AS n=1: the one frame with a horizon is the
+        #      one frame where `hedgerow behind` rendered, across seven renders in
+        #      which it otherwise rendered nothing. A clause naming something
+        #      "behind" needs a behind. That is a correlation, not a mechanism.
+        #   E2 SANDY HAIR ... BINDS, 3 OF 3 fresh seeds, so D1 holds and the
+        #      camera edit did not break it -- there is no interaction. BUT NO
+        #      FRAME QUALIFIES AS A CANDIDATE, because E2 required sandy hair
+        #      WITH the camera at eye level and no frame has both.
+        #   E3 THE COUNT ... STAYS OPEN, and worse than before. s2 two men. s3 two
+        #      figures of which ONE IS A GIRL -- bobbed hair, a dress, no glasses
+        #      -- with `girl, child` in the negative. s4 FOUR FIGURES: a
+        #      SHIRTLESS adult, a second man, and TWO SMALL BLOND CHILDREN at the
+        #      bottom edge, again with `child` in the negative. Beat 05's
+        #      historical count fault is not fixed by a plate at eye level or
+        #      otherwise, and the negative does not reach children either.
+        #   Also across all three: MODERN WHITE SNEAKERS every time, no sash on
+        #      either man at s2 or s4, and no hedgerow anywhere.
+        # BEAT 05 IS NOT SOLVED. Its best picture remains r2s1, which is one
+        # lucky draw and is honestly describable only as "1 in 4 at this wording".
+        # The next instrument is POSITIVE-SIDE and this lane does not fire it:
+        # `eye level` or `low angle` as a leading framing tag, where framing tags
+        # are known to bind, rather than a deletion from the negative.
         # ------------------------------------------------------------------
     },
     (9, 2): {
@@ -2976,6 +3028,45 @@ REVS = {
         #      48-53% at four renders -> the framing tag cannot reach it and
         #      `face filling the frame` is not enough.
         # No candidate is promoted from this batch either.
+        #
+        # ------------------------------------------------------------------
+        # SEED-BATCH RESULT. F1 IS THE WORDING, F2 RETRACTS THE RULE, F3 IS A
+        # SEED. The re-rendered s1 is byte-identical to the committed r2s1.
+        # ------------------------------------------------------------------
+        #   F1 THE HAIR IS THE WORDING, 7 OF 7. Brown at every single render this
+        #      beat has had -- three r1 seeds and four r2 seeds -- with `dark
+        #      cropped hair` in the positive every time. Never near-black, never
+        #      cropped; mid-to-dark brown and shaggy at all seven. So per the
+        #      rule as written, the next thing beat 09 tries is `black hair`,
+        #      which is this checkpoint's own tag, instead of `dark`. THAT IS THE
+        #      ONE CHANGE THIS BEAT NEEDS AND THIS LANE DOES NOT SPEND A FIFTH
+        #      SEED ON IT -- it is named, measured and left for the next lane
+        #      rather than guessed at now.
+        #   F2 THE EYE RULE IS RETRACTED, exactly as pre-registered. Across the
+        #      four r2 seeds the eyes are: s1 CORRECTLY OPEN, amber irises; s2 a
+        #      WINK, one green eye open and one shut; s3 OPEN BUT BLANK WHITE,
+        #      no irises and no pupils at all, which reads as a corpse and is a
+        #      new defect worth naming; s4 SHUT. So a usable pair of eyes at
+        #      1 OF 4. The rule said "open at 1 of 3 -> r2s1 was luck and the
+        #      rule is retracted", and it is retracted in this file's docstring
+        #      too. THE HONEST RESIDUE, which is not nothing: the tag DOES reach
+        #      the eyelids, 3 of 4 moved against 0 of 3 without it. It is a rate,
+        #      not a lever, and a beat that needs open eyes needs
+        #      render-N-and-pick.
+        #   F3 THE HEAD SIZE IS A SEED VARIABLE, NOT A WORDING LIMIT. s4's head
+        #      spans from above the top edge (the crown is cropped) to a chin at
+        #      y680, so at least 56% of frame height against the 55% bar -- P3
+        #      PASSES at that seed, having failed at 48-53% across the four
+        #      before it. Read off a 50px ruler overlaid on the frame, not
+        #      estimated. So `face filling the frame` CAN reach the bar and the
+        #      framing needs seeds, not new words.
+        # BEAT 09 REMAINS THE CLOSEST OF THE THREE AND IS STILL NOT A PASS. Its
+        # two settled wins hold across all seven renders: wire-rim glasses at
+        # 7 of 7, and a real foliage background at 7 of 7 on the beat whose
+        # recorded fault was "another blank background". Its three open faults are
+        # now each classified: the HAIR is wording and has a named next word, the
+        # HEAD SIZE is a seed, and the EYES are a 1-in-4 rate. No plate is
+        # proposed for a render.
         # ------------------------------------------------------------------
     },
     (10, 2): {

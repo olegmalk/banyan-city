@@ -56,6 +56,18 @@ beats:
       had. Cast is a seed question, not a wording one - `light sandy hair` binds at 4 of 4 seeds other
       than 20260817. See `guard_plates_redrawn_0817` at the top level of this file for the pictures, the
       per-condition scoring and what is still open.'
+    plate_lane_0817_CORRECTION: 'RETRACTION OF THE ENTRY ABOVE, same day, by the same lane. `plate_lane_0817`
+      says "Framing was SOLVED" by deleting `horizon` from the negative. IT WAS NOT. That was one picture at
+      seed 20260817, and three fresh seeds of the byte-identical wording came back HIGH-ANGLE at 3 of 3 - one
+      of them with FOUR figures including two small children, and one with a GIRL as the second guard, both
+      with `child` and `girl` in the negative. The `horizon` deletion is not a lever and the earlier entry is
+      left standing unedited because the disagreement is the record. What survives, labelled as n=1: the one
+      frame that had a horizon is the one frame in seven where `hedgerow behind` rendered at all, so a clause
+      naming something "behind" needs a behind. `light sandy hair` does bind at 3 of 3 fresh seeds here, so the
+      cast half is a seed question as stated - but no frame has BOTH the cast and the camera, so there is no
+      candidate. BEAT 05 IS NOT SOLVED. Its best picture is 1 in 4 at this wording, and the next instrument is
+      positive-side (`eye level` as a leading framing tag, where framing tags are known to bind) rather than
+      another deletion from the negative. Not fired here.'
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -141,6 +153,21 @@ beats:
       still open and both are precise: the hair comes back mid-to-dark BROWN AND SHAGGY where guard A''s
       is near-black and CROPPED and the face reads young, and the head is 48-53% of frame height against
       a 55% bar. Not a pass, and no plate is proposed for a render. See `guard_plates_redrawn_0817`.'
+    plate_lane_0817_CORRECTION: 'REFINEMENT OF THE ENTRY ABOVE after a four-seed batch, by the same lane.
+      The two wins hold and are now measured at 7 of 7 renders each: WIRE-RIM GLASSES render as round wire
+      frames every time, and a real foliage background appears every time. The three open faults are now each
+      classified, which is the useful part. (1) THE HAIR IS THE WORDING, NOT THE SEED - brown and shaggy at
+      7 of 7 with `dark cropped hair` in the positive every time, never near-black and never cropped. The one
+      named next change is `black hair`, which is this checkpoint''s own tag, instead of `dark`; it was NOT
+      fired here and is left for the next lane. (2) THE HEAD SIZE IS A SEED, NOT A LIMIT - it reached 56% of
+      frame height at seed 20260820 against a 55% bar, having failed at 48-53% across the four before it, so
+      `face filling the frame` can reach the bar and the framing needs seeds rather than new words. (3) THE
+      EYES ARE A 1-IN-4 RATE, NOT A FIX. `eyes open` plus `closed eyes` in the negative opened them on the
+      first sample after three shut faces, and that was written up as a rule; across four seeds of the same
+      wording the eyes are correctly open once, a WINK once, OPEN BUT BLANK WHITE WITH NO IRISES once, and
+      shut once. The tag reaches the eyelids (3 of 4 moved against 0 of 3 without it) and delivers a usable
+      pair once. A beat that needs open eyes needs render-N-and-pick. Still not a pass, still no plate
+      proposed.'
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -493,6 +520,25 @@ beats:
         Five further anchor seeds (s20260850-854) have output dirs on the box with no -out counterpart
         yet and were NOT judged. queue-history.json was NOT consulted for run status, per standing rule.
       judged_by: steward reading lane, 2026-08-17. Depth and cadence NOT quoted (both retired; depth is inverted). No camera-scale claim is made anywhere above -- framing statements describe what is in frame, because this lane built no scale instrument with an internal control.
+      SLATE_CAN_BE_FILLED_TODAY: yes, with s20260834, no new rendering
+      slate_reasoning: >-
+        review/ep2-demo-0816 carries beat 02 as a SLATE, and its stated reason is: "The only take has
+        him sprint straight out of frame and the frame goes empty. The record: a viewer cannot see the
+        beat happen at all." THAT REASON IS NOW OBSOLETE -- it describes s20260835/0819/0820, and
+        s20260834 is the opposite of it: he stays centred for all 97 frames, runs, and goes down where
+        the camera can see it.
+        The precedent for shipping it is the project's own and it is on the same page: beat 17 was a
+        slate, got footage that delivers two of its bar's three verbs, and was KEPT with the fault named
+        -- "It is kept in the cut because a real stand-and-turn beats the slate it replaced, not because
+        it passes." Beat 02 is that case exactly, and a weaker miss: a real run-and-drop beats a slate.
+        Ship it with the fault named (no sapling, no trunk, no skid, no entry -- all plate-blocked, see
+        done_when_failure_is_structural above). NOT DONE BY THIS LANE: assembling the cut is another
+        lane's file, and this lane was scoped to judge and pick.
+      beat_03_cut_upgrade_available: >-
+        Same page carries beat 03 as ep2-b03-refire-0814 with the fault "He ends small at the frame
+        edge". s20260846 is a candidate upgrade -- an eased fold into a held low crouch, face intact,
+        feet in frame, no frozen tail. That other lane's verdict on refire-0814 is NOT overturned here
+        and is left standing; this is an available swap for whoever owns the cut, with a reason.
   '03':
     refire_result: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
       joke reads weakly but it reads.

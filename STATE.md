@@ -8507,3 +8507,27 @@ ladder on any fault, spend three fresh seeds on the byte-identical prompt with t
 decision rule written down first. Three plates is minutes on the Mac fleet. Both
 rules are also in `pipeline/plate_scratch.py`'s docstring, where a plate author
 meets them before writing a prompt.
+
+### Addendum, same day — the guard-plate lane broke its own rule within the hour
+
+The paragraph above says a single-seed observation is not a finding. **The lane
+that wrote it then wrote two rules off single seeds, in the same file, and both
+died at four seeds.** Recorded here because the near-miss is the lesson:
+
+- *"Deleting `horizon` from the negative fixes the camera"* — beat 05 rendered a
+  downward plan view at 3 of 3 with `horizon` forbidden; deleting that one word at
+  seed 20260817 produced near eye level, a horizon band and the hedgerow that had
+  been sitting in the positive rendering nothing. **Three fresh seeds of the
+  byte-identical deletion came back high-angle, 3 of 3**, one with four figures
+  including two children. Not a lever. What survives, labelled n=1: a clause
+  naming something *"behind"* needs a behind — the one frame with a horizon is the
+  one frame where `hedgerow behind` rendered, out of seven.
+- *"A face plate must name the eye state"* — `eyes open` + `closed eyes` in the
+  negative opened beat 09's eyes on the first sample after three shut ones. At
+  four seeds: **correctly open once, a wink once, open-but-blank-white-with-no-
+  irises once, shut once.** The tag reaches the eyelids (3 of 4 moved vs 0 of 3
+  without) and delivers usable eyes **1 in 4**. A rate, not a lever.
+
+**The one rule that survived is the one that had a matched control at three seeds
+a side** — name what every hand in frame is doing. That is the difference, and it
+is the whole content of this addendum: a rule needs a control, not a good picture.

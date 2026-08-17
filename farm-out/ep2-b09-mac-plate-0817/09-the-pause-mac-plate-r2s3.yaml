@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 9
+beat_slug: "the-pause"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260819
+render_seconds: 137.5
+png_sha256: "9fd3a89db7f636c52f8c16f15af215db28f3e3cd8e8dbdfaff7e18cce725cd3a"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, close-up, face filling the frame, a guard man with dark cropped hair and wire-rim glasses, eyes open, thoughtful, mouth closed, a tan wrap tunic collar and a white sash on his shoulder, tall grass and a green hedgerow behind him, sunny day, masterpiece, best quality"
+negative_prompt: "text, 2boys, 3boys, crowd, bald, closed eyes, hands, holding object, clipboard, armor, helmet, knight, child, girl, white background, simple background, grey background, blank background, plain background, sky, indoors, full body, wide shot, distant, photorealism, 3d render, dark, night"
+done_when: "close on Guard 1's face working through the thought, in daylight; face holds, no morphing; a real background behind him. THE PLATE'S JOB: supply GUARD A'S FACE AT THE FRAMING THE BEAT USES, since a full-body plate cannot supply a face and round 3 resolved a black-haired plate into a brown-haired stranger. P1 guard A with WIRE-RIM GLASSES (no glasses is a FAIL), P2 exactly one face, P3 head >=55% of frame height, P4 a real foliage background with no flat region larger than a torso and no panel border, P5 daylight, P6 nothing hanging and no hand in frame, P7 mouth closed with eyes open."
+why_this_plate: "Beat 09 is recorded CONFUSING, not merely unfinished: 'THE FACE CHANGES between the first frame and the close-up' at both seeds, so the drift is the recipe and not one unlucky roll. Two causes are named in the file and this plate is the first thing to address either. The framing cause is that no plate this beat has ever had is a close-up, and identity cannot be carried into a close-up by a full-body reference. The wardrobe cause is that guard A's wire-rim glasses are drawn on the approved sheet and written in no prompt anywhere, so every frame decides them afresh. `wire-rim` appears in zero prompts repo-wide before this one. The plate's own recorded fault is a third thing -- 'another blank background' -- so the background is a named noun in the positive here and five terms in the negative."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 2
+scored: false
