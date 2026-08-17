@@ -221,3 +221,96 @@ sets:
       survive today's canon because neither depends on fruit colour, leaf count or the
       knee-height rewrite.
     founder_card: none — this set produces a pipeline decision, not a taste call.
+
+  ep2-b11-scene-0814:
+    what_it_is: >-
+      Scene-carrying plate sheet for beat 11 "they-leave". Same harness, mechanism,
+      reference and settings as b05 and b09: 4 IPA rounds x 4 seeds, Animagine-XL-3.1,
+      832x1216, 40 steps, IPA Plus 0.6 on the first 15%. One prompt across all 16
+      sidecars (verified: 1 distinct prompt string).
+    spec: pipeline/jobs/ep2-b11-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    prompt_as_sent: >-
+      "2boys, two adult guard men in brown tunics and sashes walk away from camera
+      across green summer grass, a hedge and dark treeline behind, pale morning sky
+      above, gesturing at each other, growing smaller."
+    bar_scored_against: >-
+      THE SET'S OWN SPEC: "the world present, the cast/plant on-canon", pass being "a
+      usable frame-one for motion". The spec's `why` names the shot: "2 guards walking
+      away, growing smaller." I read "usable frame-one for motion" as including that
+      staged action, because a frame-one that faces the camera cannot be the first frame
+      of a walk-away. That reading is FLAGGED as the loose joint in this bar: the
+      success clause names only world and cast, so both scores are given below.
+    files: 16
+    distinct: 16
+    duplicate_cells: none — 16 distinct sha256.
+    score: 0 of 16 on the full bar including the staged action
+    score_on_world_and_cast_only: 4 of 16 [r0s1, r0s3, r1s1, r3s0]
+    findings:
+      the_action_is_absent_from_every_cell: >-
+        NOT ONE of the 16 cells shows the guards walking away from camera. Every cell is
+        a facing-camera or profile two-shot with both faces toward the lens. "Walk away
+        from camera" and "growing smaller" are in the prompt and landed in zero frames.
+        The world clause, by contrast, largely SUCCEEDED here — grass is present in all
+        16, hedge or treeline in most. So beat 11 is the inverse of beat 09: b09 got the
+        cast and lost the world, b11 got the world and lost the shot.
+      HAIR_MUST_BE_ASKED_FOR_POSITIVELY: >-
+        THE MOST DECISION-RELEVANT FINDING IN ALL ELEVEN SETS, and it is a controlled
+        result, not an impression. Three sibling jobs, same lane, same day, same harness,
+        same IPA mechanism and scale, same reference frame, same `guard` negative tier,
+        none with `bald` in the positive or the negative:
+          beat 05  positive contains "short brown hair"  ->  1 of 16 cells bald
+          beat 09  positive contains "short brown hair"  ->  0 of 16 cells bald
+          beat 11  NO hair token in the positive at all  ->  at least 9 of 16 bald
+        Deleting `bald` is NECESSARY BUT NOT SUFFICIENT. The slot it vacates is filled by
+        the model prior and by the IP-Adapter reference (itself a bald wave-1 goblin
+        frame) unless a positive hair token occupies it. This SHARPENS the proven
+        broadcast-class law rather than contradicting it: the law says the token lands on
+        every eligible figure and cannot be scoped inside one character's clause; this
+        adds that its ABSENCE is not neutral, and the fix is a positive occupant, not a
+        deletion and not a negative term. `bald` is in neither the positive nor the
+        negative of any of the three, so no negative-term strength is being measured.
+      bald_cells: >-
+        Confirmed bald or hairless figures in r0s0, r0s2, r1s0 (BOTH figures), r1s2,
+        r2s0, r2s1, r2s2, r3s1, r3s2 — 9 cells confirmed, with r2s3 and r3s3 borderline
+        (pale, near-shaven). Counted per the standing instruction, not re-diagnosed.
+      r2_is_a_faceless_sphere_artifact: >-
+        All four r2 cells are a severe artifact class not seen in b05 or b09: the heads
+        render as large featureless flesh-coloured SPHERES with no face, no features and
+        no hair — in r2s0 a single white dot where an eye would be. These are not "bald
+        guards", they are a structural collapse of the head, and they are worth
+        separating from the bald count when reasoning about the cast fix. r2 was also
+        the failed round in b05 (crop blowout, 0 of 4). r2 has now produced 0 of 8 across
+        two beats and is the round to retire.
+      one_green_haired_figure: r1s3's right-hand figure renders with GREEN hair — an
+        off-canon colour that appears in no prompt term. Single instance.
+      cast_otherwise_holds: >-
+        Where hair renders at all, the tunic, sash and covered belly are consistently
+        on-canon, and the `adult` token in this prompt does read adult, unlike b09 which
+        omits it. That is a second confirmation of the same lesson: the tokens that are
+        present land, and the tokens that were merely deleted leave a hole.
+    canon_now:
+      purple_fruit: NOT APPLICABLE — no fruit and no plant in prompt or frames.
+      two_leaves_average: NOT APPLICABLE — no sapling in frame.
+      knee_height_rewrite: NOT APPLICABLE — beat 11 is not among 12/13/15/19/20.
+    cross_check_do_not_conflate:
+      vs_today_s_batch: >-
+        These 16 are OLDER, DIFFERENT renders from the same beat as today's
+        `ep2-b11-...-cast-0817` rung in review/ep2-picks/cast-0817-scores.yaml, which is
+        scored `N of 12`. Different job, different day, different sampler. This set is
+        16 files / 16 distinct; today's batch is 16 files / 12 distinct. Do not merge the
+        records or the counts.
+      motion_already_done: >-
+        Beat 11's motion is already done at s20260903, and a 9-of-10 plate candidate
+        (r1s1 of today's batch) is an OPEN FOUNDER CARD. NOTHING in this recovered set
+        is promoted, offered as a plate, or compared to that candidate on taste. The four
+        cells that clear world-and-cast here are diagnostic rungs only.
+    status: SUPERSEDED as a plate source; LIVE EVIDENCE as a mechanism result.
+    why_split: >-
+      Superseded because the beat's motion is finished and a better plate candidate from
+      today already sits with the founder — none of these 16 has any path to screen.
+      Live because the hair-token experiment above only exists in these bytes, is
+      independent of every ruling that has landed since, and changes how prompts are
+      written going forward.
+    founder_card: none from this set. It must not be attached to the open beat-11 card.
