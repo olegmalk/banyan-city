@@ -3676,6 +3676,42 @@ beats:
       no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
+    # ── `authored_b08_cast_0817` — 2026-08-17. THE FIRST CAST-CORRECT BEAT-08
+    # DRAFT. Beat 08 was the last guard beat with no filed plate. It is guard +
+    # goblin — TWO figures — per the script ruling of the same day
+    # (`figure_count_ruled_from_the_script_0817` in done-definitions.yaml), and
+    # `tag: 2boys` above is CORRECT and DELIBERATELY UNTOUCHED: count_tag() reads
+    # the LEADING tag, not a figure count, so this draft opens "Two men," and
+    # derives the `2boys` the beat already declares. Beat 07 shows the same two
+    # figures written the other way and declaring `1boy`, also clean — the two
+    # conventions are both legal and neither is a claim about how many bodies the
+    # beat needs. Forcing `tag: 1boy` here would fault all six existing beat-08
+    # drafts, which are currently clean; measured, not assumed.
+    # Cast is Guard 2 = Guard B off the approved sheet ("the cast stands as
+    # drawn"): light sandy hair, cream shirt, white sash, brown skirt — NOT bald,
+    # which 14 of 17 older prompts for these beats asked for. NO GLASSES, per
+    # "draw the second man without glasses. we need to have control."; no general
+    # eyewear instrument is attempted here because another lane owns it.
+    # Clause shapes are copied from `authored_b10_cast_0817`, the only
+    # cast-correct guard draft measured clean, including its prop-ownership law —
+    # the board is in the NEAR man's hands because a prop binds to whoever is
+    # drawn nearest. The board is AT REST: a state, not a verb, so the beat's
+    # "lowers the clipboard and points" has somewhere to travel. Whether the
+    # point binds to the guard is the three queued probes' question, not this
+    # draft's. Every hand in frame is named (vacancy law). `hedgerow` is given up
+    # on purpose: with it the draft measures 75/77 and compress() sheds `very
+    # aesthetic`; without it, 74/77 with the anchor intact and both the ground
+    # band and the above-horizon band still holding a noun of their own.
+    # Real CLIP via render_wave_goblin.check(): 74/77 pos, 66/77 neg, anchor
+    # present, count `2boys` == declared `2boys`, ZERO FAULTS.
+    authored_b08_cast_0817: >-
+      Two men, the near one light sandy hair, cream shirt, white sash, brown
+      skirt, holds a bark clipboard in both hands, the far one a goblin,
+      {{GOBLIN}}, patched cloak, looks at his belly, arms down, tall grass,
+      pale sky above, cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no knight, no white
+      background, no plain background, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
   9:
     slug: the-pause
     kind: guard
