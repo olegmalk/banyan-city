@@ -406,3 +406,31 @@ outcome:
     f000, f008, f016, f024, f032 and f048.
   terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere in the clip.
     Depth and cadence not quoted.
+repick_0817_seed_volume_lane: >-
+  RE-JUDGED AND PICKED, 2026-08-17, by the seed-volume lane. This clip PASSES ALL
+  SIX of beat 11's conditions and is THE TAKE this lane hands over. Two guards,
+  backs turned in every one of 97 frames (guard-B head crops at TWO-frame density
+  across f000-f096 and guard-A crops at four show the back of each head and no
+  facial feature anywhere), both men fully in frame at f096, field at frame one,
+  identities and costumes holding end to end with no merge -- the tan/brown mean
+  gap sits at 49.1 and 49.3. The departure is theirs: tan coat 261 px -> 183
+  (0.701), brown 314 -> 249 (0.793), against a similarity transform fitted to the
+  background that ends at scale 1.000, so the camera did not do it. Terminal-freeze
+  index 0, reported separately from the hold (holds every 3 frames, ~32 distinct
+  pictures). Depth and cadence NOT quoted. Runner-up offered for veto: s20260907,
+  also six of six, weaker departure (0.805 / 0.864).
+  WHY THIS SUPERSEDES THE NUMBERS IN `outcome:` ABOVE, named rather than smoothed
+  over: the earlier three-seed pass reported this clip GROWING, 232 px -> 258. It
+  shrinks. The instrument that says so -- pipeline/b11_coat_track.py -- separates
+  the two men by their own costumes instead of by connected components (their coats
+  TOUCH as they walk, so one warm mask reads the pair as one blob) and controls for
+  framing with a fitted transform instead of an NCC landmark (the grass is
+  WINDBLOWN, so no grass patch is a stationary object; the landmarks lost their
+  patches at correlation 0.39-0.43). It passes five gates: band separation, frozen
+  (ratios exactly 1.000), synthetic pull-back to 0.70 (recovered 0.700, net 1.001),
+  synthetic pan (ratios 1.000, shift read back exactly [-40, +28]) and synthetic
+  exit (first missing man at exactly the painted-out frame). All eleven W4 clips
+  were re-judged with this one final version. See commit c1aa2f70.
+  PICKING A TAKE INTO THE EPISODE IS STILL THE AUTHOR'S CALL (R4). This lane picks
+  among takes with reasons and does not rule on taste, and it has not touched
+  shots.md, wave-drafts.yaml or the cut.
