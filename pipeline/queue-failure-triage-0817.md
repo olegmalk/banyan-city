@@ -83,3 +83,55 @@ Not in farm-out but present on the box:
 **Do not re-fire any of group 1.** The pixels exist; re-rendering would repay
 GPU cost for frames already on disk. What these need is a look and a
 declaration fix, not a re-run.
+
+---
+
+## Group 2 — rc=3221225786: 2 entries. THE RUNNER HAS DIED SILENTLY BEFORE.
+
+`ep2-b19-overhead-0812` (killed 2026-08-12T19:41:50Z, mid `render`) and
+`ep2-b04-balloon-pair-0813` (killed 2026-08-13T09:13:40Z, mid `encode`).
+
+`3221225786` is `0xC000013A` = `STATUS_CONTROL_C_EXIT`, and both logs carry the
+Intel Fortran runtime's console-teardown handler firing:
+
+```
+forrtl: error (200): program aborting due to window-CLOSE event
+```
+
+That is a `CTRL_CLOSE_EVENT` delivered to the process's console — something
+tore the runner's console down while the box itself kept running. b19 was
+**4/8 diffusion steps in (`50%|█████ | 4/8 [01:43<01:15, 18.80s/it]`)** when it
+died.
+
+**Not a WDDM bugcheck, and not a reboot.** The System event log's last
+unexpected-shutdown/bugcheck triple (EventID 41 / 6008 / 1001) is
+**2026-08-06** — before both kills. The only boots since are 6005 events at
+2026-08-12T06:46–06:48Z, unaccompanied by 41/6008, i.e. a clean restart, and
+b19 died ~13h after it with no shutdown event of any kind. So the
+WDDM-thrash-bugcheck hypothesis is **rejected for this pile**: the machine
+stayed up and the *process* was killed.
+
+**These are the two entries with no json, and that is not a coincidence.** The
+runner never got to write the job json back, which is exactly why the heartbeat
+says 33 while the directory holds 35 logs. A silent runner death is therefore
+*self-concealing*: it removes its own evidence from the failure count. This is
+the third instance of today's silent-wrongness pattern — the first two being
+the green canon guard that checked nothing and the runner reporting `Running`
+at 0% GPU.
+
+Scope, measured rather than assumed: the `window-CLOSE` signature appears in
+**0 of the 1742 logs in `done\`**. So this is rare, not endemic — but it has
+happened on two separate days and was noticed neither time.
+
+Nothing was filmed that we think was filmed, and nothing filmed is missing:
+
+- `ep2-b04-balloon-pair-0813` got as far as its init crop
+  (`ep2-b04-balloon-pair-0813\b04-init-704x1280.png`); the LTX i2v encode never
+  ran and there is **no `*balloon*` directory in farm-out**.
+- `ep2-b19-overhead-0812` produced no clip. A farm-out dir `ep2-b19-overhead`
+  (5 entries) exists but is undated and is not this job's output.
+
+**Worth re-firing: both.** This is genuinely unrun GPU work destroyed by an
+external kill, the only group where a re-run buys frames that do not exist.
+Re-fire them attached to something that cannot be closed out from under them,
+and treat a missing json in `failed/` as an alarm rather than an absence.
