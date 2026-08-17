@@ -250,3 +250,134 @@ beats:
       - >-
         R4/taste: both guards render dark-skinned and adolescent. Not a bar term
         anywhere; flagged as taste, not scored.
+
+  '07':
+    role: >-
+      Guard A + goblin. Wire-rims NAMED because this beat shows guard A's face;
+      `clipboard` NEGATED because its actor is Guard 1 and the board is Guard 2's
+      prop. TWO figures per the figure-count correction.
+    done_when_quoted_from_done_definitions: >-
+      Guard 1 POINTS at the scavenger, decisively, and the point is legible as a
+      point; his face stays toward the lens; the second guard and the field are
+      present; identity holds against the plate and the clipboard stays the same
+      object in the same hands.
+    done_when_clauses_superseded_and_read_as_such: >-
+      Read from done-definitions.yaml, not from the dispatch summary. Two clauses
+      there are SUPERSEDED by `figure_count_ruled_from_the_script_0817` and were
+      NOT scored: "the second guard ... present" (the script asks for guard +
+      goblin, not a second guard) and "the clipboard stays the same object in the
+      same hands" (the clipboard is Guard 2's prop and has no subject in this shot).
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: NO. 0 of 12. THE WORST RESULT IN THE BATCH, AND THE CAUSE IS IDENTIFIED.
+
+    ROOT_CAUSE_FOUND_IN_THE_PROMPT_ITSELF:
+      severity: >-
+        This beat did not fail at the model, the sampler or the references. It
+        failed because the plate still contains the exact defect the whole batch
+        was cut to remove.
+      prompt_as_actually_sent_verbatim: >-
+        1boy, a guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+        white sash points one arm at green skin, bald head crouching low, other
+        hand open, tall grass, treeline behind, pale sky above, cinematic lighting,
+        masterpiece, best quality, very aesthetic
+      defect_1_bald_head_still_present: >-
+        `bald head` IS STILL IN THE PROMPT. The batch exists because 14 of 17 guard
+        plate prompts asked for `bald` when neither approved guard is bald. The
+        phrase is MEANT for the goblin, who is legitimately bare-scalped -- but the
+        goblin has no subject slot to own it (see defect 2), so `bald` lands on the
+        only subject the sentence declares: the guard. Result, 12 of 12 bald.
+      defect_2_count_token_contradicts_the_figure_correction: >-
+        The prompt declares `1boy`. This beat is TWO figures under the very
+        correction that reopened it. The goblin was never given a subject token --
+        he is a dangling attribute phrase, "at green skin, bald head crouching
+        low", hanging off the guard's clause. So the goblin's ATTRIBUTES bound to
+        the guard while the goblin himself got no body: green skin arrives as a
+        green mitt on the guard's hand (r0s0) and as green-skinned BALD HUMANS
+        (r1s3, r2s1, r2s2), and in 8 of 12 frames there is no goblin at all.
+      defect_3_the_prop_ownership_GRAMMAR_was_not_applied_to_a_FIGURE: >-
+        b06 established that a thing must sit INSIDE its owner's clause. b07 breaks
+        it: the grammatical subject of "points one arm" is `white sash`. Compare
+        b08, which obeys it -- `2boys ... the far one a goblin, green skin, bald
+        head, patched cloak` -- where `bald` is scoped inside the goblin's own
+        clause and cannot reach the guard.
+      proof_it_is_the_wording_and_not_the_refs_or_the_model: >-
+        b06 renders 12 of 12 haired and 0 of 12 bald off THE SAME reference set,
+        the same sampler and the same model in the same batch. The refs are not
+        pulling bald. The prompt is asking for it.
+      cross_check_of_all_seven_prompts: >-
+        `bald head` survives in exactly TWO of the seven: b07 and b08. In b08 it is
+        correctly scoped inside the goblin's clause behind a `2boys` token. In b07
+        it is unscoped behind a `1boy` token. That difference is the whole result.
+
+    per_condition_rate:
+      c1_exactly_two_whole_figures_one_guard_one_goblin_same_depth_plane: >-
+        0 of 12 strictly. r0s0 and r0s1 hold ONE figure. r0s2, r0s3, r1s0, r1s1,
+        r2s0, r2s3 hold TWO figures but BOTH ARE BALD HUMANS -- no goblin present.
+        r1s3, r2s1, r2s2 hold two figures of which the second is green-skinned but
+        bald, earless and cloakless, reading as a green human rather than a goblin.
+        r1s2 renders a THIRD bald dome rising at bottom centre.
+      c2_guard_has_DARK_CROPPED_hair_and_is_NOT_BALD: >-
+        0 of 12. Every human figure in every frame is completely, glossily bald.
+        Total failure of the single term this rung was reopened for.
+      c3_WIRE_RIM_GLASSES_legible_as_round_wire_frames: >-
+        12 of 12 PRESENT and correctly drawn as round wire frames -- the phrase
+        binds reliably. But OWNERSHIP is wrong: they sit on the wrong figure at
+        r1s0, r1s1, r1s2, r1s3 and r2s1, and on BOTH faces at r0s3 and r2s2.
+      c4_tan_wrap_tunic_and_white_sash_on_him: >-
+        2 of 12 (r0s0, r2s3). The white sash renders nearly everywhere; the TAN
+        tunic does not. The garment comes out RED at r0s1, r0s2, r0s3, r2s0 and
+        white/grey at the whole r1 row. COLOUR CAVEAT APPLIES: this is a bf16/CUDA
+        render, which renders RED where MPS renders PURPLE off the identical seed
+        (MAE 60-61), so the red readings are path-dependent and not a stable
+        wardrobe finding.
+      c5_one_arm_extended_and_legible_as_a_POINT_other_hand_visible_and_empty: >-
+        0 of 12. Not one frame contains a point. Every hand is loose, open-palmed,
+        clawed or fisted -- no extended index finger anywhere. Traceable to the
+        prompt, where the verb "points" takes `white sash` as its subject.
+      c6_NO_board_clipboard_slab_or_paper_anywhere: >-
+        12 of 12, CLEAN -- the negation worked and this is the one term this beat
+        wins outright. Noted honestly: a white sash tail at r2s0, r2s1 and r2s3
+        reads paper-LIKE, but it is attached drapery, not a board or a sheet.
+      c7_all_three_bands_real_no_white_or_plain_field_no_plan_view: >-
+        7 of 12. No white or plain field anywhere. Losses split two ways: the r0 row
+        carries the bands but from a HIGH DOWNWARD angle, and r2s1 has no sky at all.
+      c8_neither_figure_infantile_and_no_blush: 12 of 12, CLEAN. Grim adult faces, no blush anywhere.
+
+    pre_registered_fail_modes:
+      eyewear_reaching_the_GOBLIN: >-
+        FIRED, and it CONFIRMS THE BROADCAST-CLASS LAW rather than contradicting
+        it. Wire-rims land on the green figure at r1s3, r2s1 and r2s2 and on BOTH
+        faces at r0s3 and r2s2. Naming eyewear with two faces in frame puts it on
+        both -- exactly why it was omitted from the two-guard rungs. This is a
+        property of the term, not a defect of this plate.
+      the_goblin_drawn_as_a_human_child: >-
+        DID NOT FIRE as a child. It fired WORSE: the goblin is drawn as a bald adult
+        HUMAN in 6 of 12 and is simply ABSENT in 8 of 12.
+      a_third_figure_appearing: FIRED, 1 of 12 (r1s2, a third bald head at bottom centre).
+      framing_and_light_regression: FIRED on the r0 row -- higher and flatter than this beat's older plates.
+
+    pick: >-
+      NONE, and no pick is warranted. A pick means choosing among takes that could
+      serve; nothing here can. The guard is bald in every frame, which is the one
+      defect the beat was reopened to remove, and there is no legible point in any
+      frame, which is the beat's action. Picking a least-bad frame would launder a
+      0 of 12 into an apparent result, which is precisely how 8/12 "passes" became
+      0/12 usable here.
+    verdict: >-
+      FAILS ITS BAR OUTRIGHT, 0 of 12, AND IS THE MOST USEFUL FAILURE IN THE BATCH
+      because the cause is a one-line wording defect that is now located and proved
+      rather than suspected. Do not spend another rung on refs, sampler, weights or
+      IP-Adapter for this beat.
+    blocked_on: >-
+      A plate rewrite, and only that: (a) drop `bald head` or move it inside a
+      goblin clause that owns it; (b) change `1boy` to `2boys` to match the
+      figure-count correction; (c) give the goblin a real subject token with
+      pointed ears and a patched cloak; (d) restore the guard as the subject of
+      "points" so the action has an actor. This lane did NOT make those edits: the
+      seven specs are off limits for writes and re-rendering is not this lane's card.
+    founder_cards_hit:
+      - >-
+        None that gate the fix. The wording defect is a mechanical correction, not
+        a taste call, and the cast it must match is already frozen ("the cast stands
+        as drawn", founder 2026-08-16).
