@@ -2501,3 +2501,4 @@
 13:37:11Z DONE task=ep2-b01-leafcanon-inpaint-0817-1786973593 rc=0 artifacts=9
 13:37:42Z STARTED task=ep2-b21-leafcanon-inpaint-0817-1786973615 attempt=1 on box-runner
 13:38:39Z DONE task=ep2-b21-leafcanon-inpaint-0817-1786973615 rc=0 artifacts=9
+13:42:10Z STARTED task=ep2-b04-balloon-pair-0813-1786974040 attempt=1 on box-runner
