@@ -314,3 +314,20 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    FAIL D3, and it is the near miss of the batch. The departure is real and among
+    the strongest here -- tan coat 282->197 (0.699), brown 311->249 (0.801) with
+    the fitted background scale at only 1.05, so net recession 0.666 and 0.763,
+    which is s20260903's figure or better. D1, D2, D4 and D5 all pass. But guard B
+    turns: at f048, f052 and f060 his face is fully drawn in profile -- brow, eye,
+    nose, mouth and chin -- and done_when requires backs turned for the WHOLE clip.
+    A late turn, not the f008-f022 turn the W4 base produced, which is further
+    evidence that the turn is a draw and not a property of the wording. D6 holds
+    but narrows more than any other clip in the batch (tan/brown gap 49.5 -> 40.5,
+    where the others sit at 45-52); still a plain separation, no merge.
+  clip: farm-out/ep2-b11-leave-w4-s20260910-0817/11-they-leave-w4-s20260910-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py, past its five gates, same final version
+    as every other clip in this batch.
+  terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere. Depth and
+    cadence NOT quoted.
