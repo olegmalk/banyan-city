@@ -1,0 +1,250 @@
+# ep2-b07-twofig-turn-0817 -- 2026-08-17, TWO-FIGURE MOTION LANE (beats 07 + 08).
+# ONE SAMPLE of ONE wording. Arm `turn` of a six-arm ladder.
+#
+# WHY THIS BEAT IS BEING RE-FIRED AT ALL. Beats 07 and 08 are both two-character
+# beats and until 2026-08-15 NOTHING ON DISK HELD TWO CHARACTERS. That day the
+# plate lane drew one and passed it: 08-inside-him-twofig-mac-r3-s0.png, "the
+# only frame of eighteen that clears every axis at once" -- two whole distinct
+# figures, an adult human guard with ROUND ears beside an adult goblin with
+# pointed ears, adjacent in the same depth plane on a sunlit field, no blush,
+# neither infantile, and a clipboard gripped at its two side edges with no hand
+# across its face. AND NO MOTION HAS EVER BEEN FIRED OFF IT. Verified by hand on
+# 2026-08-17: beat 08's only motion job, ep2-b08-lw-0815, crops the OLD
+# ep2-b08-plate-0814 frame, which its own spec calls "a single figure with the
+# goblin a few dozen pixels away in the far background, so the beat's scripted
+# two-shot is NOT in frame"; every beat-07 re-round is older than the plate.
+# This ladder is the first motion on either beat with its own two-shot in frame.
+#
+# THE ONE VARIABLE IN THIS ARM:
+#   ONE variable against `point`: a whole-body TURN is added ahead of the 
+#   arm. Gross whole-body motion is the class this engine renders reliably 
+#   (12 of 12 stand-ups), so this asks whether a body movement can carry a 
+#   limb gesture that does not land on its own.
+#
+# WHAT IS HELD FIXED ACROSS ALL SIX ARMS, so wording is the only difference:
+# plate (the same r3-s0 frame, sha asserted before the crop writes anything),
+# negative, 704x1280, 97 frames, 24fps, guidance 2.0, distilled sigmas,
+# two-stage, image-crf 33, sequential offload, and seed 20260817. The negative is
+# deliberately NOT a variable and is byte-identical to the one carried by the
+# only beat-02 arm ever watched performing its whole action end to end.
+#
+# NO SEEDS AND NO BATCH. Nobody has watched any of these wordings perform, so a
+# seed set would be replicates of an unknown; four wording levers were killed on
+# 2026-08-16 by reseeding wordings nobody had watched. An arm that performs earns
+# a seed set. CLAUDE.md, founder 2026-08-03: a recipe change gets one sample.
+#
+# THE PROMPT IS A LITERAL PAYLOAD FILE, NOT A DRAFT KEY. compress() deletes
+# whole trailing sentences and prints its headroom figure AFTER the deletion, so
+# a token count is not evidence that a style tail survived. Nothing compresses
+# these bytes: the full prompt is in the payload above and reads, verbatim ---
+#   Both figures stay in the middle of the frame the whole time. The tall man turns his body toward the small green figure beside him and lifts his arm to point his finger at him. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+#
+# NO plate_ack ANYWHERE IN THIS LANE, no `gate:` and no `gate_ref:`. The plate is
+# fetchable from origin/farm-results-rtx5090 because ep2-b0708-twofig-pub-0817
+# published it there rather than because a waiver said not to look. Payload dir
+# and out dir are DISTINCT (ep2-b07-twofig-turn-0817 vs ep2-b07-twofig-turn-0817-out) and the publish glob
+# carries the beat slug 07-confiscate. $0, local card, no provider, no spend.
+id: ep2-b07-twofig-turn-0817
+task: ep2-b07-twofig-turn-0817
+node: 002b-first-citizen
+beat: 7
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+sample: true
+owner: two-figure motion lane (beats 07 + 08), 2026-08-17 -- filed to backlog the moment it dry-ran clean, because
+  these two beats have had a passing plate since 2026-08-15 and not one frame of motion off it
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  SCRIPT LINE: Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive." This
+  is a SILENT motion take on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'Beat 07''s production clip for the episode-2 demo cut. Its standing verdict is NO VERDICT YET and its
+  own definition of done was written retroactively on 2026-08-15 because the beat had none -- "its clips were rendered
+  without one". EVERY motion attempt on this beat predates or ignores the two-figure plate: beat 08''s only motion
+  job, ep2-b08-lw-0815, crops ep2-b08-plate-0814\\08-inside-him-ipa-r0-w015-s0.png, which that spec itself describes
+  as "a single figure with the goblin a few dozen pixels away in the far background, so the beat''s scripted two-shot
+  is NOT in frame", and every beat-07 re-round is older than the plate. This is the FIRST motion ever fired off
+  a plate that actually holds this beat''s two-shot. done_when, verbatim from review/ep2-picks/done-definitions.yaml:
+  Guard 1 POINTS at the scavenger, decisively, and the point is legible as a point; his face stays toward the lens;
+  the second guard and the field are present; identity holds against the plate and the clipboard stays the same
+  object in the same hands. -- AND PRE-REGISTERED LIMITATION, written before the clip exists and NOT to be quietly
+  dropped afterwards: THIS CLIP CANNOT SATISFY ITS BEAT''S CAST CLAUSE AND THAT CLAUSE IS NOT SCORED HERE. Beat
+  07''s done_when requires "the second guard and the field are present" and beat 08''s requires "both guards and
+  the scavenger in frame" -- three figures -- while the plate holds two (one guard + the scavenger) and the plate''s
+  own bar axis 1 says "Three or more figures fails". So this is an ENGINE PROBE, NOT SHOW CONTENT: `is_show_content:
+  false`, it must never be cut into an episode, and a PASS here is a pass on the BINDING question only, never a
+  pick and never a beat signed off. The cast clause is escalated to whoever owns these beats, not reinterpreted
+  by this lane.'
+success: 'A 704x1280 mp4, 97 frames, 24fps. PRE-REGISTERED LIMITATION, written before the clip exists and NOT to
+  be quietly dropped afterwards: THIS CLIP CANNOT SATISFY ITS BEAT''S CAST CLAUSE AND THAT CLAUSE IS NOT SCORED
+  HERE. Beat 07''s done_when requires "the second guard and the field are present" and beat 08''s requires "both
+  guards and the scavenger in frame" -- three figures -- while the plate holds two (one guard + the scavenger) and
+  the plate''s own bar axis 1 says "Three or more figures fails". So this is an ENGINE PROBE, NOT SHOW CONTENT:
+  `is_show_content: false`, it must never be cut into an episode, and a PASS here is a pass on the BINDING question
+  only, never a pick and never a beat signed off. The cast clause is escalated to whoever owns these beats, not
+  reinterpreted by this lane. THIS BAR IS BEAT 07''s AND NOTHING ELSE -- the beat is Beat 07 CONFISCATE (0:34-0:37),
+  node.md verbatim: "Guard 1 points at the scavenger, decisive." The clauses that ARE scored: Guard 1 POINTS at
+  the scavenger, decisively, and the point is legible as a point; his face stays toward the lens; the second guard
+  and the field are present; identity holds against the plate and the clipboard stays the same object in the same
+  hands. AND the action is performed BY THE TALL HUMAN GUARD, changing limb configuration across a span of at least
+  25 consecutive frames, with both figures still inside the frame at frame 96. Pre-registered FAIL modes, written
+  before the clip exists so the read cannot be softened afterwards: FAIL-FROZEN (neither figure leaves its frame-0
+  pose); FAIL-WRONGMAN (the GOBLIN performs the action instead of the guard -- this is the headline risk and the
+  reason this ladder exists, because in t2i on this checkpoint the pointing arm attached to the goblin in 3 of 3
+  frames and the board attached to the goblin in 9 of 12); FAIL-EARLY (the action completes inside the first 20
+  frames and the remainder is held); FAIL-ONEFIG (either figure leaves frame, merges with the other, or ends against
+  an edge); FAIL-CAMERA (the apparent movement is performed by a moving camera, not the body -- ruled on by ALIGNING
+  frames, never by eyeballing a contact sheet and never off the retired depth or cadence metrics); FAIL-IDENTITY
+  (the human guard gains pointed or goblin ears, which is the named beat-07 defect that turned up in 4 of 18 plate
+  frames with `elf` already in the negative, or either figure''s species or costume is not the plate''s by the last
+  frame). Judged BY OPENING CONSECUTIVE FRAMES, never by a motion number: the highest-scoring clip in an earlier
+  wave contained no human motion at all, and three trackers were retired for cause on 2026-08-16.'
+why: 'ONE SAMPLE of ONE wording, off the first plate this beat has ever had that holds its two-shot. THE ONE VARIABLE
+  IN THIS ARM: ONE variable against `point`: a whole-body TURN is added ahead of the arm. Gross whole-body motion
+  is the class this engine renders reliably (12 of 12 stand-ups), so this asks whether a body movement can carry
+  a limb gesture that does not land on its own. Nothing else moves: plate, negative, size, frames, fps, guidance,
+  sigmas, two-stage schedule, image-crf, offload and seed (20260817) are identical across all six arms of this ladder,
+  so wording is the only difference between them. NO SEEDS HERE: nobody has watched any of these wordings perform,
+  so a seed set would be replicates of an unknown -- an arm that performs earns a seed set, and an arm that fails
+  is NOT retired on n=1 unless it fails the same way as its neighbours, because one take in three fails its action
+  on this engine regardless of wording. The prompt is a literal payload file, not a draft key, so compress() never
+  touches it and the style tail is present by construction rather than by a token count -- the exact bytes are in
+  b07-motion-prompt.txt above and committed beside this spec. NEVER ALREADY RUN: no `ep2-b07-twofig-turn-0817` entry
+  in C:\\banyan-queue\\done and no `ep2-b07-twofig-turn-0817` directory under C:\\banyan-farm\\courier-box\\farm-out,
+  both listed by hand off the box on 2026-08-17. $0, local card, no provider, no spend.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's provenance\
+    \ sidecar as an unapproved provisional take.\n\nvideo_task.write_sidecar records model, prompt, negative, init\
+    \ sha and\ncost_usd 0, and it does NOT record whether the clip may ship. REFUSES if the\nsidecar is missing\
+    \ -- a clip whose provenance file did not get written must not\npass silently.\n\"\"\"\nimport os, sys\n\nMETA\
+    \ = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"!! no sidecar at %s -- refusing to call the job\
+    \ clean.\" % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n    \
+    \    \"# --- appended after the render by the two-figure motion lane, 2026-08-17.\\n\"\n        \"approved:\
+    \ false\\n\"\n        \"provisional: true\\n\"\n        \"cost_usd_confirmed: 0\\n\"\n        \"note: |\\n\"\
+    \n        \"  ONE SAMPLE of ONE motion wording (arm `turn`) off the\\n\"\n        \"  two-figure plate 08-inside-him-twofig-mac-r3-s0.png,\
+    \ the first\\n\"\n        \"  plate on this project that holds beats 07 and 08's two-shot.\\n\"\n        \"\
+    \  Not a pick, not a seed confirmation, not approved for any cut. A\\n\"\n        \"  lane reads it on CONSECUTIVE\
+    \ FRAMES against this beat\\'s done_when\\n\"\n        \"  before anything built on it is filed. Taste and trunk/graft\
+    \ calls\\n\"\n        \"  are R4\\'s and this run makes none.\\n\")\nprint(\"stamped %s\" % META, flush=True)\n"
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-motion-prompt.txt: Both figures stay in the middle of the frame the
+    whole time. The tall man turns his body toward the small green figure beside him and lifts his arm to point
+    his finger at him. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art,
+    cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-jobs-encode.json: "[\n {\n  \"beat\": 7,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b07-twofig-turn-0817-out\\\\b07-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b07-twofig-turn-0817\\\
+    \\b07-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b07-twofig-turn-0817\\\\b07-negative.txt\"\
+    \n }\n]"
+  C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-jobs-render.json: "[\n {\n  \"beat\": 7,\n  \"seed\": 20260817,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b07-twofig-turn-0817-out\\\\b07-embeds.pt\",\n  \"init\": \"C:\\\\\
+    banyan-farm\\\\ep2-b07-twofig-turn-0817-out\\\\b07-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\\
+    ep2-b07-twofig-turn-0817-out\\\\07-confiscate-LTX-twofig-turn.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b0708-twofig-pub-0817\08-inside-him-twofig-mac-r3-s0.png
+  - --sha256
+  - d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238
+  - --out
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817-out\b07-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817\b07-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b07-twofig-turn-0817
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817-out\bench-twofig-turn.jsonl
+  - --bench-label
+  - ep2-b07-twofig-turn-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b07-twofig-turn-0817-out\07-confiscate-LTX-twofig-turn.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (07-confiscate). Without it the glob matches\n# nothing and the step publishes\
+    \ nothing while returning a code that reads\n# like a render failure. farm-out is NOT gitignored, so the runner\
+    \ pushes\n# these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b07-twofig-turn-0817-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b07-twofig-turn-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-twofig-turn-0817\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/07-confiscate-LTX-twofig-turn.mp4*\"\
+    )\n             + glob.glob(out_dir + \"/b07-init-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-twofig-turn.jsonl\"\
+    )\n             + glob.glob(pay_dir + \"/b07-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b07-negative.txt\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n  \
+    \  with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \" \
+    \ \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-twofig-turn-0817.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b07-twofig-turn-0817-out\07-confiscate-LTX-twofig-turn.mp4
+- C:\banyan-farm\ep2-b07-twofig-turn-0817-out\b07-init-704x1280.png
