@@ -2429,3 +2429,4 @@
 10:27:38Z DONE task=ep2-b18-figleafcanon-0817-1786958082 rc=0 artifacts=4
 10:28:29Z STARTED task=ep2-b07-twofig-turn-0817-1786961665 attempt=1 on box-runner
 10:34:16Z DONE task=ep2-b07-twofig-turn-0817-1786961665 rc=0 artifacts=2
+10:34:25Z STARTED task=ep2-b08-twofig-armonly-0817-1786961654 attempt=1 on box-runner
