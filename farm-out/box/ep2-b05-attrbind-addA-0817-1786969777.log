@@ -1,0 +1,34 @@
+#### job ep2-b05-attrbind-addA-0817-1786969777 attempt 1 start 2026-08-17T12:39:04Z
+
+==== step dry START 2026-08-17T12:39:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s1.png", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--seed", "20260817", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986
+mask png corners=- bbox=[245, 117, 405, 181]  0.1923 x 0.0526 of 832x1216
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s1-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T12:39:08Z ====
+
+==== step sample START 2026-08-17T12:39:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s1.png", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--seed", "20260817", "--note", "ONE SAMPLE on his 2026-08-15 word 'draw the second man without glasses. we need to have control.' Wire-rim frames INKED into the cast plate over guard A alone, then harmonised at strength 0.30 so the shape is ours and only the dialect is the model's. Guard B's head is a declared protect region and his pixels are never denoised. The word 'glasses' is in the positive prompt on purpose: it broadcast to both men 5 of 5 when nothing confined it. Mechanism sample on a diagnostic init, never a candidate frame."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00, 17.75it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  5.93it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  5.80it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  1.82it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s1.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s1-mask.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s1.png.meta.yaml
+rc=0 render_s=3.8
+==== step sample END rc=0 2026-08-17T12:39:21Z ====
+
+==== step publish START 2026-08-17T12:39:21Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/attrbind-add-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-attrbind-addA-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = [\"b05-guardA-glassed-s1.png\", \"b05-guardA-glassed-s1-mask.png\",\n         \"b05-guardA-glassed-s1.png.meta.yaml\", \"b05-compA.png\", \"b05-maskA.png\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b05-guardA-glassed-s1.png\" in got else 1)"]
+published 5 of 5 ['b05-guardA-glassed-s1.png', 'b05-guardA-glassed-s1-mask.png', 'b05-guardA-glassed-s1.png.meta.yaml', 'b05-compA.png', 'b05-maskA.png']
+==== step publish END rc=0 2026-08-17T12:39:21Z ====
+#### job ep2-b05-attrbind-addA-0817-1786969777 finished rc=0 2026-08-17T12:39:21Z
