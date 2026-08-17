@@ -492,3 +492,85 @@ sets:
       NONE on taste. But this set produces the one question only he can answer, recorded
       at the foot of this file as card 1: the purple-fig wording is not the problem, the
       attachment is, so the choice of remedy is a craft call.
+
+  ep2-b21-scene-0814:
+    what_it_is: >-
+      WAVE sheet, 4 seeds of one round, `consistency_mechanism: none`. Plant-only beat,
+      no figure. Animagine-XL-3.1, 832x1216.
+    spec: pipeline/jobs/ep2-b21-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    draft_key_rendered: authored_b21_scene — head-matched against wave-drafts.yaml.
+    prompt_as_sent: >-
+      "A tiny sapling in green summer grass, a treeline and pale sky behind, exactly two
+      oversized cotyledon leaves and one thin bare side-branch, one leaf tilting slowly to
+      one side, the grass dead still. Low amber light, cinematic lighting, masterpiece,
+      best quality, very aesthetic"
+    bar_scored_against: >-
+      THE SET'S OWN SPEC plus the prompt's countable clauses: exactly two leaves, one thin
+      bare side-branch, treeline and pale sky behind, low amber light. The prompt's
+      remaining clauses — "one leaf tilting SLOWLY to one side" and "the grass DEAD STILL"
+      — are MOTION clauses and are NOT scorable in a still; see findings.
+    files: 4
+    distinct: 4
+    score: 1 of 4
+    passes: [s3]
+    per_cell:
+      s0: FAIL — leaf count overshoots (roughly four small leaves, and the plant is
+        largely blown out by a bloom of glow). Night sky with visible STARS, which is the
+        furthest any cell gets from "pale sky" and "low amber light". No treeline.
+      s1: FAIL — THREE leaves on a reddish stem. Amber sunset light is present and is the
+        best amber in the set. No treeline (a grass horizon stands in for it).
+      s2: NEAR MISS — arguably TWO leaves (one large upright, one small side leaf), grass
+        present, but the light is cold blue twilight with no amber at all, and no treeline.
+      s3: PASS — cleanly TWO leaves, plant low in the grass, and genuine low amber/pink
+        sunset light. The only cell that satisfies leaf count and lighting together. Still
+        no treeline.
+    findings:
+      the_prompt_asks_a_still_to_prove_motion: >-
+        SPEC/CONSUMER MISMATCH worth fixing forward. Two of this draft's clauses — "one
+        leaf tilting slowly to one side" and "the grass dead still" — describe MOTION, and
+        this job renders STILLS. They cannot pass or fail here, and they consume prompt
+        tokens on a job whose consumer is a frame-one plate. Beat 21's whole dramatic point
+        is the contrast between a moving leaf and still grass, so the clauses belong in the
+        motion step's wording, not the plate's. This is not scored against the set; it is
+        an observation about the draft.
+      leaf_count_again: >-
+        2 of 4 cells (s2, s3) reach the canon count of two; s0 and s1 overshoot. Combined
+        with beat 12's 1 of 4, `exactly two` is running at 3 of 8 across the two
+        plant-only wave sheets in this recovery. That is the single most repeatable defect
+        in the plant beats and it is a wording problem, not a seed problem, because the
+        word `exactly` is already present and already losing.
+      no_treeline_in_any_cell: 0 of 4, matching beat 12's 0 of 4. Across both plant-only
+        wave sheets the treeline clause has landed in 0 of 8 cells while grass landed in
+        8 of 8. The mid-ground is the part of the world clause that does not survive a
+        tight plant shot.
+      no_bare_side_branch: >-
+        Not legible in any cell; s1's reddish stem is the closest thing to it. Same 0-of-4
+        as beat 12, so the canonical "one thin side-branch" has now failed in 0 of 8
+        plant-only cells.
+      amber_light_is_seed_dependent: >-
+        "Low amber light" landed in s1 and s3 and was replaced by cold blue or night in s0
+        and s2. Lighting is behaving like the leaf count — asked for plainly, delivered
+        half the time.
+    canon_now:
+      two_leaves: The count is canon and correctly asked for; 2 of 4 delivered.
+      leaf_shape_wording_is_superseded: >-
+        Same as beat 12: "oversized COTYLEDON leaves" is the retired steward inference,
+        superseded by his 2026-08-17 "average leaves" ruling. Not charged against the set,
+        which predates it by three days; must change on any re-render.
+      knee_height: >-
+        NOT a rewrite target, same reasoning as beats 12 and 18: plant-only beat, and
+        wave-drafts.yaml assigns beats 01/18/21 "no taller than the grass around it"
+        rather than `knee high`. The rendered draft does NOT carry that scale phrase at
+        all — the newer `authored_b21_scale_0816` adds it. That is the one respect in
+        which this set's staging is genuinely behind current wording.
+      purple_fruit: NOT APPLICABLE — no fruit in beat 21's prompt.
+    status: SUPERSEDED as a wording source; LIVE EVIDENCE on leaf count and lighting.
+    why_split: >-
+      Superseded because `authored_b21_scale_0816` adds the scale anchor this draft lacks,
+      so the rendered draft is no longer the one to re-run. Live because s3 is a proof of
+      existence — the beat CAN come out with two canon leaves in low amber light — and
+      because the 3-of-8 leaf-count rate across beats 12 and 21 is the sharpest number in
+      the recovery for deciding whether `exactly two` needs replacing.
+    founder_card: none.
