@@ -146,6 +146,42 @@ Whoever fixes this properly should consider whether `contains:` needs to assert
 against prose OUTSIDE `~~`-struck and `>`-quoted blocks, which is a
 `check_canon_drift.py` change and belongs to that lane, not to this patch.
 
+### CORRECTION_0817 — half of that proposal is a defect, measured
+
+The paragraph above is left standing per house style §6, and it is **half
+wrong**. `~~`-struck is the right signal; **`>`-quoted is not, and stripping it
+would break a live gate.** Measured against all 8 subjects in the register, not
+reasoned:
+
+| stripping | `sapling-height` evidence | verdict |
+|---|---|---|
+| `~~`-struck only | still found | all 8 subjects pass, 0 false reds |
+| `~~`-struck **and** `>`-quoted | **GONE** | **false `FAIL register_evidence_missing`** |
+
+`sapling-height` asserts `about 40 cm, always shorter than he`, and that prose
+lives **inside a `>` blockquote**. In this repo `>` marks a QUOTATION — most
+often the founder's own words — which is the most ALIVE text in the document,
+not dead text. Only `~~` means superseded. Conflating the two would make the
+honesty checker fail an entry whose canon is perfectly current, which is the
+cry-wolf shape that gets instruments switched off.
+
+The `~~`-only half is confirmed sufficient for the hole this note found:
+
+```
+"The working canon is ROUND/OVAL COTYLEDONS" in raw text  : True
+                                             in live text : False   <== the fix
+```
+
+So the mechanism to build is **strike-stripping only**: `contains:` asserts
+against the document with `~~...~~` spans removed (multi-line, `re.S`, replaced
+with a space so nothing false-joins across the gap). Corpus facts behind that:
+`THE-SAPLING.md` carries 10 `~~` markers in 5 balanced spans, 0 unbalanced; the
+three yaml evidence files carry zero, so strike-stripping is a no-op on them.
+
+Struck text is NEVER deleted to make a gate pass — the provenance is the point
+and `THE-SAPLING.md` is read-only to the lane landing this. The assertion gets
+smarter; the document does not get edited.
+
 ## Dry-run proof (2026-08-17, third lane) — the rule DOES go red
 
 `check_canon_drift.py --register <path>` reads an alternate register while
