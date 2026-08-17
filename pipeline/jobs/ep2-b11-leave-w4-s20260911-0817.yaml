@@ -314,3 +314,16 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    FAIL D2 (on screen), the fourth clip in this batch to fail this exact way. Tan
+    coat 0.85 but brown only 0.958 -- guard B essentially holds his size -- while
+    the fitted background scale ends at 1.09, i.e. the camera pushed IN 9%. Net
+    0.780 and 0.879 would read as a pass on the quotient alone and does not
+    survive the picture: D2 requires they end further away BY THEIR OWN HEIGHT IN
+    FRAME. Fit correlation 0.648, disclosed. D1, D3, D4, D5, D6 pass -- backs
+    turned at 4-frame head-crop density, both men every frame, gap 49.3 -> 48.2.
+  clip: farm-out/ep2-b11-leave-w4-s20260911-0817/11-they-leave-w4-s20260911-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py, past its five gates, same final version
+    as every other clip in this batch.
+  terminal_freeze_index: 0. Depth and cadence NOT quoted.
