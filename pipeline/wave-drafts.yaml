@@ -3491,6 +3491,90 @@ beats:
       masterpiece, best quality, very aesthetic No girl, no child, no armor,
       no helmet, no knight, no clipboard, no dark, no night. No photorealism,
       no 3D render look. 9:16 vertical, no text.
+    # ── `authored_b07_nobald_0817` — 2026-08-17. RUNG A: `bald` REMOVED, ONE
+    # VARIABLE, NOTHING ELSE MOVED.
+    # `authored_b07_cast_0817` above existed to take `bald` off the guards and it
+    # still SENT `bald head`, because the token is not a literal in it: the
+    # `{{GOBLIN}}` slot is filled by goblin_ipa_sample.py's own
+    # `GOBLIN_DEF = "green skin, bald head"`. b08 carries the slot too; b06 does
+    # NOT, and b06 came back 12 of 12 HAIRED off the same refs, sampler, model and
+    # day while b07 and b08 went 12 of 12 BALD. One mechanical difference, and it
+    # is this slot — so the b06 contrast now has a mechanism, not a correlation.
+    # `bald` is BROADCAST-CLASS: scoping it inside the goblin's clause does not
+    # contain it (b08 is the proof). It is REMOVED, not re-scoped, and NO negation
+    # is attempted — the vacancy law says a negative does not reach an empty region
+    # and a broadcast attribute is a BINDING failure, not a presence failure.
+    # `GOBLIN_DEF` IS NOT TOUCHED: bald FOR THE GOBLIN is the founder's own
+    # 2026-08-12 ruling and eleven goblin beats share that constant. Only the two
+    # beats that put a guard and a goblin in one frame drop the slot.
+    # THE ONE VARIABLE, checked by the insert script and not merely claimed: this
+    # draft equals the predecessor's SENT string minus exactly the eleven characters
+    # `, bald head`. No other word moved, no comma moved. The sash still governs
+    # `points` and the goblin still has no noun — those are RUNG B's variable and
+    # are deliberately left broken here, so that if the guard comes back haired it
+    # is `bald` that did it and nothing else.
+    # REAL CLIP via render_wave_goblin.check() (transformers, clip-vit-large-patch14,
+    # offline): 59/77 pos, 58/77 neg, anchor `very aesthetic` PRESENT, count `1boy`
+    # == declared `1boy`, ZERO FAULTS. Baseline was 62/77 / 58/77 / 0 faults.
+    # TOKEN TRADE: NONE. 3 tokens freed and none spent — nothing cut, nothing added,
+    # style tail intact. No traded words to suspect.
+    authored_b07_nobald_0817: >-
+      A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+      white sash points one arm at green skin crouching low, other hand
+      open, tall grass, treeline behind, pale sky above, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no clipboard, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_b07_twofig_0817` — 2026-08-17. RUNG B: RUNG A PLUS THE GRAMMAR
+    # FIX. One variable against rung A; two against the original, and that is stated
+    # rather than glossed — read this rung against `authored_b07_nobald_0817`, not
+    # against `authored_b07_cast_0817`.
+    # WHAT WAS BROKEN, read straight off the compressed string the model received:
+    # `1boy, a guard man ..., white sash points one arm at green skin, bald head
+    # crouching low, other hand open, ...`
+    #   * compress() splits on commas, so `points` arrived as a list item whose
+    #     nearest preceding noun was `white sash`. THE SASH WAS THE SUBJECT OF THE
+    #     VERB, and 0 of 12 frames contained a point.
+    #   * THERE WAS NO GOBLIN NOUN ANYWHERE. `{{GOBLIN}}` expands to bare attributes
+    #     with nothing to hang them on, so the guard was the only subject in the
+    #     sentence and they bound to him — green skin arrived as a green mitt.
+    # THE FIX IS GRAMMAR AND ONLY GRAMMAR:
+    #   * `, the guard points his other arm at ...` — a noun immediately before the
+    #     verb, so `points` has the guard as its subject.
+    #   * `a crouching goblin with green skin` — the goblin gets a NOUN, with his one
+    #     attribute bound inside his own noun phrase by `with`.
+    #   * `one hand open` moves UP into the guard's attribute run. It used to trail
+    #     AFTER the goblin's attributes, where the nearest subject is now the goblin
+    #     — the same binding law that caused the mitt would have handed him the open
+    #     hand. Nothing now trails the goblin but world and style.
+    #   * The guard's cast run is BYTE-IDENTICAL to the original and still LEADS the
+    #     prompt. Naming the cast early is what works on b06 and b10; this rung must
+    #     not disturb it while testing something else.
+    # IT DOES NOT CHANGE THE DANBOORU COUNT, and that is a hard mechanical limit, not
+    # an oversight. `_tag_from_clause` reads only the first sentence up to its first
+    # comma, and check()'s count guard compares against the BEAT-WIDE `tag:` —
+    # goblin_ipa_sample.py calls wg.check(BEAT, d, ...) directly and never calls
+    # apply_variant_declaration, so there is no per-variant count override on the box
+    # path and a fault returns rc 1 with nothing drawn. Deriving `2boys` here would
+    # require editing beat 7's `tag:`, which faults every sibling draft in this block
+    # — the exact trap measured and refused on beat 08. So the goblin gets a
+    # GRAMMATICAL subject slot, not a count slot, and `tag: 1boy` stays.
+    # If this rung still loses the point or still mitts the goblin, the residual
+    # suspect IS the count tag, and the fix then needs a per-variant count
+    # declaration in the sampler — a shared-file change and another lane's call.
+    # REAL CLIP via render_wave_goblin.check(): 65/77 pos, 58/77 neg, anchor PRESENT,
+    # count `1boy` == declared `1boy`, ZERO FAULTS.
+    # TOKEN TRADE: NONE. This spends 6 of the 15 tokens of headroom rung A leaves and
+    # still sits 12 under budget. Nothing was cut to pay for it, no word dropped,
+    # style tail intact. No traded words to name as first suspects.
+    authored_b07_twofig_0817: >-
+      A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+      white sash, one hand open, the guard points his other arm at a
+      crouching goblin with green skin, tall grass, treeline behind, pale
+      sky above, cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no knight, no
+      clipboard, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
   8:
     slug: inside-him
     kind: two-subject
