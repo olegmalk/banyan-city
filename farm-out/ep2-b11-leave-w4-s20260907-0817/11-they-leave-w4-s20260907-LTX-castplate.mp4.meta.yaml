@@ -1,0 +1,32 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 11
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260907
+task: ep2-b11-leave-w4-s20260907-0817
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0175
+compute_s_per_video_s: 57.2
+# --- appended by ep2-b11-leave-w4-s20260907-0817 after the render.
+approved: false
+provisional: true
+is_show_content: false
+note: |
+  ONE SAMPLE OF ONE WORDING, NOT A PICKED TAKE. Beat 11 currently
+  holds a knowingly broken take in the cut; this is the first
+  attempt at a replacement off the first staged plate of the two
+  APPROVED guards. It has not been read by anyone at the moment it
+  is written, no seed batch may be filed off it before it is, and
+  picking it into an episode is the author's call and not this
+  lane's.
