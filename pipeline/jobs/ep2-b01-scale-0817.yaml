@@ -1,0 +1,155 @@
+# ep2-b01-scale-0817 -- 2026-08-17, sapling-canon anchor lane.
+# ONE SAMPLE of ONE re-cut draft key that has never been drawn. NO SEEDS: nobody has
+# watched this wording perform, so a seed set would be replicates of an unknown, and
+# four wording levers were killed yesterday by reseeding wordings nobody had watched.
+# Draft key: authored_b01_scale_0816.  Measured on the box's own CLIP before this file was filed:
+# positive 68/77, STYLE ANCHOR PRESENT: True, anchor phrase present in the POS string.
+# compress() deletes whole trailing sentences and prints its headroom figure AFTER the
+# deletion, so a token count alone is not evidence -- the anchor line above is.
+# NEVER already run: no C:\banyan-queue\done entry for this task id and no
+# out-b01-scale-0817 dir on the box, both listed by hand on 2026-08-17.
+id: ep2-b01-scale-0817
+task: ep2-b01-scale-0817
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: sapling-canon anchor lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, so the card
+  is never idle while nine measured wordings sit undrawn
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 1 COLD OPEN, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "A tiny two-leaf banyan sapling in a green
+  field. On the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing
+  in frame that moves." This is a STILL PLATE on an approved node: no voice synthesis, no footage render,
+  no episode assembly, no publication.'
+script_line: 'Beat 1 COLD OPEN, node.md verbatim: "A tiny two-leaf banyan sapling in a green field. On
+  the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing in frame
+  that moves."'
+consumer: 'The 2026-08-16 sapling-canon re-cut. `authored_b01_scale_0816` was refused on 2026-08-16 for
+  losing its style tail to compress(), was re-cut, and now measures 68/77 on the box''s own CLIP with
+  STYLE ANCHOR PRESENT: True -- and has never been drawn. Beat 01 is the COLD OPEN and the first thing
+  any viewer sees of the plant, so this is where the plant''s size is established for the whole episode.
+  Downstream: every i2v motion job on beat 01 is conditioned on a still, and a motion prompt inherits
+  the size from its plate and cannot argue with it. Nothing in the repo knows whether `no taller than
+  the grass around it` binds in wording; this asks.'
+why: 'The scale anchor `no taller than the grass around it` has never been rendered on this beat. the
+  founder, 2026-08-16, verbatim: "make sure it has 2 leafs and has a set height... dont make it double
+  in size suddenly". Canon: genomes/sapling/THE-SAPLING.md. What this draft changes vs `authored_b01_canon_0816`,
+  which is left standing: the scale relation is added beside the existing `whole plant in frame`, and
+  `with soft round tips` is dropped to pay for it. Plant only, no body in frame, so `knee high` would
+  have no referent -- the grass is the only available yardstick. Leaf count and every fig and lighting
+  clause are byte-identical to the source. MEASURED ON THE BOX BEFORE FILING: positive 68/77, headroom
+  9, STYLE ANCHOR PRESENT: True, and the anchor phrase is present in the POS string the sampler will send.
+  $0, local card, no provider.'
+success: 'THIS BAR IS BEAT 01''s AND NOTHING ELSE. Beat 01 is the COLD OPEN; its content, quoted from
+  genomes/sapling/nodes/002b-first-citizen/node.md, is "A tiny two-leaf banyan sapling in a green field.
+  On the thinnest branch a green nub swells, darkens and rounds into a single fig." There is no goblin
+  in this beat and no sprint; a spec judged against beat 02''s sprint prose is being judged against the
+  wrong beat. Sixteen stills at 832x1216 (4 reference cells x 4 seeds). PASS is a seedling with EXACTLY
+  TWO leaves bearing ONE small deep purple-violet fig, the whole plant in frame and NO TALLER THAN THE
+  GRASS AROUND IT. Pre-registered FAIL modes, written before the frames exist so the read cannot be softened
+  afterwards: FAIL-SCALE (the plant comes back at bush or waist height, or overtops the grass) -- which
+  would mean the grass-relation anchor does not bind in wording and the size has to move into the reference
+  set instead; FAIL-COUNT (three or more leaves, or one); FAIL-COLOUR (a green, red, pale or white fruit,
+  or more than one fruit); FAIL-PERSON (any face, figure, chibi or mascot appears -- the beat has no character
+  in it). Read against the unanchored `authored_b01_canon_0816` on the same beat and the same reference
+  set. NOT a pick: which of the sixteen ships is R4''s call and this job does not make it.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817
+  - --draft-key
+  - authored_b01_scale_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817
+  - --draft-key
+  - authored_b01_scale_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-scale-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-scale-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the sapling-canon anchor lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b01_scale_0816). Not a\
+    \ pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads the\\\
+    n\"\n            \"  sixteen frames against THIS BEAT's bar before anything built on it is\\n\"\n\
+    \            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"\
+    stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads like\n# a render failure. farm-out is not gitignored,\
+    \ so the runner pushes these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-scale-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-scale-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/01-cold-open-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/01-cold-open-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-scale-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r3-w015-s0.png

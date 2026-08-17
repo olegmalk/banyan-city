@@ -1,0 +1,160 @@
+# ep2-b18-figleafcanon-0817 -- 2026-08-17, sapling-canon anchor lane.
+# ONE SAMPLE of ONE re-cut draft key that has never been drawn. NO SEEDS: nobody has
+# watched this wording perform, so a seed set would be replicates of an unknown, and
+# four wording levers were killed yesterday by reseeding wordings nobody had watched.
+# Draft key: authored_b18_figleaf_canon_0816.  Measured on the box's own CLIP before this file was filed:
+# positive 61/77, STYLE ANCHOR PRESENT: True, anchor phrase present in the POS string.
+# compress() deletes whole trailing sentences and prints its headroom figure AFTER the
+# deletion, so a token count alone is not evidence -- the anchor line above is.
+# NEVER already run: no C:\banyan-queue\done entry for this task id and no
+# out-b18-figleafcanon-0817 dir on the box, both listed by hand on 2026-08-17.
+id: ep2-b18-figleafcanon-0817
+task: ep2-b18-figleafcanon-0817
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 32
+max_attempts: 1
+owner: sapling-canon anchor lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, so the card
+  is never idle while nine measured wordings sit undrawn
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 18 THE DECISION, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "Extreme close-up: the one fig on the thinnest
+  branch, stem trembling." This is a STILL PLATE on an approved node: no voice synthesis, no footage render,
+  no episode assembly, no publication.'
+script_line: 'Beat 18 THE DECISION, node.md verbatim: "Extreme close-up: the one fig on the thinnest branch,
+  stem trembling."'
+consumer: 'The 2026-08-16 sapling-canon re-cut. `authored_b18_figleaf_canon_0816` was refused on 2026-08-16
+  for losing its style tail to compress(), was re-cut, and now measures 61/77 with STYLE ANCHOR PRESENT:
+  True -- and has never been drawn. It supersedes `authored_b18_figleaf2`, `_figleaf3` and `_figlit` on
+  this beat, all three of which ask for `deeply lobed fig leaves with five fingers` and ban `no simple
+  oval leaves` -- the exact inverse of the canon, since a two-leaf plant is a cotyledon-stage seedling
+  and lobed five-fingered leaves are mature-tree foliage. Three superseded drafts on a beat with no correct
+  one rendered is why this is filed.'
+why: 'The leaf correction has never been rendered on this beat. the founder, 2026-08-16, verbatim: "make
+  sure it has 2 leafs and has a set height... dont make it double in size suddenly". Canon: genomes/sapling/THE-SAPLING.md.
+  What this draft changes vs the three it supersedes: the leaf clauses only. `exactly two wide oval cotyledon
+  leaves with soft round tips` replaces `deeply lobed fig leaves with five fingers`, and the `no simple
+  oval leaves` negative -- which actively fought the canon -- is replaced by `no lobed leaves, no five-fingered
+  leaves, no three leaves, no four leaves`. The FRUIT wording and the front-lit fix `_figlit` bought (backlight,
+  silhouette and contre-jour banned by name, after nine rounds were judged on silhouettes) are carried
+  across byte-for-byte. It carries NO scale anchor and that is correct: the beat is a held macro of one
+  branch, so there is no body and no grass in frame to be a yardstick and `knee high` would have no referent.
+  KNOWN AND ACCEPTED LIMITATION, seen in the dry run and recorded here rather than discovered later: this
+  draft''s negative overruns CLIP''s 77-token budget and the guard drops `thick trunk, tall tree, large
+  tree, mature tree` from it, so this render cannot lean on negatives for scale even if someone wanted
+  it to. MEASURED ON THE BOX BEFORE FILING: positive 61/77, headroom 16, STYLE ANCHOR PRESENT: True. $0,
+  local card, no provider.'
+success: 'THIS BAR IS BEAT 18''s AND NOTHING ELSE. Beat 18 is THE DECISION and its action, quoted verbatim
+  from genomes/sapling/nodes/002b-first-citizen/node.md, is "Extreme close-up: the one fig on the thinnest
+  branch, stem trembling." There is no goblin in this beat and no sprint; a spec judged against beat 02''s
+  sprint prose is being judged against the wrong beat. Sixteen stills at 832x1216. PASS is a held macro
+  of a tiny fig sapling''s THINNEST BRANCH against a soft sky, carrying EXACTLY TWO wide oval cotyledon
+  leaves with soft round tips, and hanging below them ONE small purple fig -- a plain purple teardrop
+  with matte dusty skin. Pre-registered FAIL modes: FAIL-LEAFSHAPE (the leaves come back deeply lobed
+  or five-fingered) -- the failure worth reporting, because it would mean three rounds of mature-tree
+  foliage wording has bound harder than the canon correction and the leaf form has to move into the reference
+  set; FAIL-COUNT (three or more leaves); FAIL-COLOUR (green, red, pale or white fruit, an eggplant/aubergine
+  read, or gloss/shine on the skin); FAIL-COUNTFRUIT (more than one fig); FAIL-STEM (the stem crosses
+  the fruit, which the negative bans by name); FAIL-PERSON (any face, figure, chibi or mascot -- the beat
+  has no character in it). SCALE IS NOT JUDGED HERE and its absence is not a defect: a macro has no yardstick,
+  and the scale negatives were dropped by the token budget as recorded in `why`. NOT a pick: which of
+  the sixteen ships is R4''s call.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817
+  - --draft-key
+  - authored_b18_figleaf_canon_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '18'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817
+  - --draft-key
+  - authored_b18_figleaf_canon_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b18-figleafcanon-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b18-figleafcanon-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the sapling-canon anchor lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b18_figleaf_canon_0816).\
+    \ Not a pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads\
+    \ the\\n\"\n            \"  sixteen frames against THIS BEAT's bar before anything built on it is\\\
+    n\"\n            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\n\
+    print(\"stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (18-the-decision). Without it the glob matches\n# nothing and the\
+    \ step publishes nothing while returning a code that reads like\n# a render failure. farm-out is not\
+    \ gitignored, so the runner pushes these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b18-figleafcanon-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b18-figleafcanon-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/18-the-decision-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/18-the-decision-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b18-figleafcanon-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r3-w015-s0.png

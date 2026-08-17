@@ -1,0 +1,146 @@
+# ep2-b03-platescale-0817 -- 2026-08-17, sapling-canon anchor lane.
+# ONE SAMPLE of ONE re-cut draft key that has never been drawn. NO SEEDS: nobody has
+# watched this wording perform, so a seed set would be replicates of an unknown, and
+# four wording levers were killed yesterday by reseeding wordings nobody had watched.
+# Draft key: authored_b03_plate_scale_0816.  Measured on the box's own CLIP before this file was filed:
+# positive 68/77, STYLE ANCHOR PRESENT: True, anchor phrase present in the POS string.
+# compress() deletes whole trailing sentences and prints its headroom figure AFTER the
+# deletion, so a token count alone is not evidence -- the anchor line above is.
+# NEVER already run: no C:\banyan-queue\done entry for this task id and no
+# out-b03-platescale-0817 dir on the box, both listed by hand on 2026-08-17.
+id: ep2-b03-platescale-0817
+task: ep2-b03-platescale-0817
+node: 002b-first-citizen
+beat: 3
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: sapling-canon anchor lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, so the card
+  is never idle while nine measured wordings sit undrawn
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 3 BAD COVER, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "The scavenger crouches behind a trunk
+  that hides roughly one-sixth of him." This is a STILL PLATE on an approved node: no voice synthesis,
+  no footage render, no episode assembly, no publication.'
+script_line: 'Beat 3 BAD COVER, node.md verbatim: "The scavenger crouches behind a trunk that hides roughly
+  one-sixth of him."'
+consumer: 'The 2026-08-16 sapling-canon re-cut, PLATE FAMILY. `authored_b03_plate_scale_0816` was refused
+  on 2026-08-16 for losing its style tail to compress(), was re-cut, and now measures 68/77 with STYLE
+  ANCHOR PRESENT: True -- and has never been drawn. The *_plate line is the t2i still beat 03''s i2v motion
+  jobs are conditioned on, and a motion prompt inherits the plant''s size from its plate and cannot argue
+  with it -- so this is where beat 03''s size is actually decided, over a VO that already says "I am forty
+  centimeters tall".'
+why: 'The scale anchor has never been rendered on this beat''s plate line. the founder, 2026-08-16, verbatim:
+  "make sure it has 2 leafs and has a set height... dont make it double in size suddenly". Canon: genomes/sapling/THE-SAPLING.md.
+  What this draft changes vs `authored_b03_plate`, which is left standing: `broad round cotyledon leaves`
+  was ALREADY there and is kept byte-for-byte -- only the COUNT (`two`) is added to it, which is his word,
+  plus `knee high`. The leaf SHAPE is the steward''s inference (THE-SAPLING.md 2.2) and is deliberately
+  NOT strengthened here, so a veto of the shape costs nothing filed. `Medium full shot` in the house plate
+  recipe is what puts the knees in frame and makes the anchor judgeable. MEASURED ON THE BOX BEFORE FILING:
+  positive 68/77, headroom 9, STYLE ANCHOR PRESENT: True, scale negatives present. $0, local card, no
+  provider.'
+success: 'THIS BAR IS BEAT 03''s AND NOTHING ELSE -- BAD COVER, the held crouch, "The scavenger crouches
+  behind a trunk that hides roughly one-sixth of him" (node.md). No sprint, no dive. Sixteen stills at
+  832x1216. PASS is one small green goblin boy, solo, in green summer grass with a treeline and pale sky
+  behind, CROUCHED behind a sapling''s thin stem, the sapling KNEE HIGH ON HIM with TWO broad round cotyledon
+  leaves above, and his face visible. Pre-registered FAIL modes: FAIL-SCALE (sapling at waist height or
+  above, or a mature tree) -- the failure worth reporting, because it would mean `knee high` does not
+  bind even in the frame built to show it, and the size has to move into the reference set instead; FAIL-COUNT
+  (three or more leaves -- judged on COUNT only; if the leaves come back lobed rather than round that
+  is the steward''s shape inference failing, which is reportable but is NOT this job''s FAIL); FAIL-CROP
+  (knees out of frame, leaving the anchor unjudgeable); FAIL-POSE (standing, or face hidden); FAIL-CAST
+  (girl, child, second figure, or hair/armor/jewelry/lipstick the reference does not supply). NOT a pick.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817
+  - --draft-key
+  - authored_b03_plate_scale_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817
+  - --draft-key
+  - authored_b03_plate_scale_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b03-platescale-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b03-platescale-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the sapling-canon anchor lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b03_plate_scale_0816).\
+    \ Not a pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads\
+    \ the\\n\"\n            \"  sixteen frames against THIS BEAT's bar before anything built on it is\\\
+    n\"\n            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\n\
+    print(\"stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (03-bad-cover). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads like\n# a render failure. farm-out is not gitignored,\
+    \ so the runner pushes these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b03-platescale-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-platescale-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/03-bad-cover-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/03-bad-cover-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-platescale-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817\03-bad-cover-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817\03-bad-cover-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817\03-bad-cover-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-platescale-0817\03-bad-cover-ipa-r3-w015-s0.png

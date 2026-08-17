@@ -1,0 +1,149 @@
+# ep2-b02-scale-0817 -- 2026-08-17, sapling-canon anchor lane.
+# ONE SAMPLE of ONE re-cut draft key that has never been drawn. NO SEEDS: nobody has
+# watched this wording perform, so a seed set would be replicates of an unknown, and
+# four wording levers were killed yesterday by reseeding wordings nobody had watched.
+# Draft key: authored_b02_scale_0816.  Measured on the box's own CLIP before this file was filed:
+# positive 67/77, STYLE ANCHOR PRESENT: True, anchor phrase present in the POS string.
+# compress() deletes whole trailing sentences and prints its headroom figure AFTER the
+# deletion, so a token count alone is not evidence -- the anchor line above is.
+# NEVER already run: no C:\banyan-queue\done entry for this task id and no
+# out-b02-scale-0817 dir on the box, both listed by hand on 2026-08-17.
+id: ep2-b02-scale-0817
+task: ep2-b02-scale-0817
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 31
+max_attempts: 1
+owner: sapling-canon anchor lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, so the card
+  is never idle while nine measured wordings sit undrawn
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 2 THE SPRINT, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "A SCAVENGER -- goblin-ish, enormous ears,
+  one broken tusk, patchwork cloak -- sprints into frame, skids, and dives behind the sapling''s thin
+  trunk." This is a STILL PLATE on an approved node: no voice synthesis, no footage render, no episode
+  assembly, no publication.'
+script_line: 'Beat 2 THE SPRINT, node.md verbatim: "A SCAVENGER -- goblin-ish, enormous ears, one broken
+  tusk, patchwork cloak -- sprints into frame, skids, and dives behind the sapling''s thin trunk."'
+consumer: 'The 2026-08-16 sapling-canon re-cut. `authored_b02_scale_0816` was refused on 2026-08-16 for
+  losing its style tail to compress(), was re-cut, and now measures 67/77 with STYLE ANCHOR PRESENT: True
+  -- and has never been drawn. It anchors `authored_staged`, which is the LIVE HEAD on this beat: 27 job
+  specs pick it by name and 12 of those have already run, all of them silent on the plant''s size. Downstream:
+  beat 02''s i2v motion jobs are conditioned on a still from this family, and a motion prompt inherits
+  size from its plate and cannot argue with it.'
+why: 'The scale anchor has never been rendered on this beat. the founder, 2026-08-16, verbatim: "make
+  sure it has 2 leafs and has a set height... dont make it double in size suddenly". Canon: genomes/sapling/THE-SAPLING.md.
+  What this draft changes vs `authored_staged`, which is left standing: `authored_staged` is where the
+  anchor was lost -- the base `authored` says `a tiny 40cm mascot-simple sapling` and the staging rewrite
+  dropped the whole phrase. `mascot-simple` stays dropped (our own records blame that word for the plant
+  coming back with a face) and the bare number stays dropped for the same reason; the RELATION `knee high`
+  replaces both, and `two big leaves` adds the count in wording already live on this beat. MEASURED ON
+  THE BOX BEFORE FILING: positive 67/77, headroom 10, STYLE ANCHOR PRESENT: True, scale negatives present,
+  `tall tree` removed 1. $0, local card, no provider.'
+success: 'THIS BAR IS BEAT 02''s AND NOTHING ELSE, and it is a STILL, not the sprint clip. Beat 02 is
+  THE SPRINT: "A SCAVENGER -- goblin-ish, enormous ears, one broken tusk, patchwork cloak -- sprints into
+  frame, skids, and dives behind the sapling''s thin trunk" (node.md). This job draws the PLATE for that
+  beat, so it is judged on staging and scale, NOT on motion -- there is no locomotion to score in a still
+  and no frozen-frame verdict applies. Sixteen stills at 832x1216. PASS is one small green goblin boy,
+  solo, seen from front in a diving/lunging attitude behind a sapling that is KNEE HIGH ON HIM and carries
+  TWO big leaves, rooted in the grass, with his face visible past its thin stem. Pre-registered FAIL modes:
+  FAIL-SCALE (the sapling reaches his waist or higher, or reads as a mature tree) -- the failure worth
+  reporting, because it would mean `knee high` does not bind in wording and the size has to move into
+  the reference set; FAIL-COUNT (three or more leaves); FAIL-OCCLUDED (his face is hidden behind the stem,
+  which kills the joke the beat is built on); FAIL-CAST (a girl, a child, a second figure, or hair/armor/jewelry
+  the approved reference does not have); FAIL-IDENTITY (the creature is not the approved goblin the reference
+  set supplies). NOT a pick.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817
+  - --draft-key
+  - authored_b02_scale_0816
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-approved-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817
+  - --draft-key
+  - authored_b02_scale_0816
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-scale-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b02-scale-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the sapling-canon anchor lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b02_scale_0816). Not a\
+    \ pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads the\\\
+    n\"\n            \"  sixteen frames against THIS BEAT's bar before anything built on it is\\n\"\n\
+    \            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"\
+    stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (02-the-sprint). Without it the glob matches\n# nothing and the\
+    \ step publishes nothing while returning a code that reads like\n# a render failure. farm-out is not\
+    \ gitignored, so the runner pushes these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b02-scale-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-scale-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/02-the-sprint-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/02-the-sprint-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-scale-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-scale-0817\02-the-sprint-ipa-r3-w015-s0.png
