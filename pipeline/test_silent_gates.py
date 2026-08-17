@@ -262,6 +262,105 @@ def test_a_heartbeat_that_never_committed_does_not_pass_for_delivered():
         fw.REPO = real_repo
 
 
+# ------------------------------------------------------- publish_farm_out
+
+def test_a_publish_glob_that_matches_nothing_cannot_write_a_manifest():
+    """"published 0 file(s) + manifest" was the sound of three lost beats.
+
+    Every job spec's publish step was six lines of inline python: glob, copy
+    loop, write manifest, assert the count. With a glob that matches nothing the
+    copy loop does not run, and the manifest is STILL written -- zero lines, zero
+    pixels, one directory in farm-out that looks published. The count assertion
+    fires after the file is on disk, so the empty manifest outlives the failure,
+    and the publish step usually carries allow_fail so the exit code is discarded
+    too. On 2026-08-14 beats 12, 18 and 21 globbed `12-wave1-s*` at files named
+    `12-related-wave1-s*` -- the beat slug -- and all three published nothing,
+    silently, permanently.
+
+    WHAT WOULD THIS PRINT IF THE THING IT READS WERE COMPLETELY BROKEN? The old
+    answer was "published 0 file(s) + manifest", exit 0 under allow_fail. The new
+    answer must be rc=95 and an untouched destination.
+    """
+    import publish_farm_out as pfo
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        src = root / "out-b12-scene"
+        src.mkdir()
+        for s in range(4):
+            (src / ("12-related-wave1-s%d.png" % s)).write_text("px", encoding="utf-8")
+            (src / ("12-related-wave1-s%d.yaml" % s)).write_text("m", encoding="utf-8")
+        dst = root / "ep2-b12-scene-0814"
+
+        # the real 2026-08-14 glob: correct beat, correct tail, no slug
+        buf = io.StringIO()
+        rc = pfo.publish(str(dst), [str(src / "12-wave1-s*.*")], expect=8, out=buf)
+        out = buf.getvalue()
+        check("publish: a zero-match pattern is rc=95, not a success",
+              rc == pfo.RC_PUBLISHED_NOTHING)
+        check("publish: and it writes no manifest at all",
+              not dst.exists() or list(dst.iterdir()) == [])
+        check("publish: the failure says PUBLISHED NOTHING out loud",
+              "PUBLISHED NOTHING" in out)
+        check("publish: it lists what the sampler actually wrote",
+              "12-related-wave1-s0.png" in out)
+        check("publish: and it names the missing beat slug as the cause",
+              "SLUG" in out and "FIX THE SPEC" in out)
+
+        # the same call with the slug present must still work
+        buf = io.StringIO()
+        rc = pfo.publish(str(dst), [str(src / "12-related-wave1-s*.*")],
+                         expect=8, manifest_name="ep2-b12-scene-0814.sha256",
+                         out=buf)
+        man = dst / "ep2-b12-scene-0814.sha256"
+        check("publish: the correct pattern still publishes", rc == 0)
+        check("publish: 8 files land beside an 8-line manifest",
+              man.is_file()
+              and len(man.read_text(encoding="utf-8").strip().splitlines()) == 8
+              and len(list(dst.glob("12-related-wave1-s*.png"))) == 4)
+
+
+def test_a_partial_publish_is_never_attested_by_a_manifest():
+    """A manifest is a claim about a complete set, so a short set writes none.
+
+    The old step wrote the manifest and then compared the count, which meant a
+    6-of-8 publish left a 6-line manifest on disk claiming to describe the job.
+    The comparison has to happen first or it is decoration.
+    """
+    import publish_farm_out as pfo
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        src = root / "out"
+        src.mkdir()
+        for s in range(3):
+            (src / ("12-related-wave1-s%d.png" % s)).write_text("px", encoding="utf-8")
+        dst = root / "ep2-b12-scene-0814"
+
+        buf = io.StringIO()
+        rc = pfo.publish(str(dst), [str(src / "12-related-wave1-s*.png")],
+                         expect=4, out=buf)
+        check("publish: 3-of-4 is rc=92, a partial render, not a pass",
+              rc == pfo.RC_ARTIFACTS_MISSING)
+        check("publish: a partial set leaves no manifest behind",
+              not dst.exists() or list(dst.iterdir()) == [])
+        check("publish: and the shortfall is stated as a count",
+              "--expect 4" in buf.getvalue() and "matched 3" in buf.getvalue())
+
+
+def test_the_publish_rcs_are_the_runners_rcs_and_not_new_numbers():
+    """One RC TABLE. A second definition of 95 is how 93 collided in the first place."""
+    import box_runner
+    import publish_farm_out as pfo
+
+    check("publish: RC_PUBLISHED_NOTHING is box_runner's 95",
+          pfo.RC_PUBLISHED_NOTHING is box_runner.RC_PUBLISHED_NOTHING
+          and pfo.RC_PUBLISHED_NOTHING == 95)
+    check("publish: RC_ARTIFACTS_MISSING is box_runner's 92",
+          pfo.RC_ARTIFACTS_MISSING is box_runner.RC_ARTIFACTS_MISSING
+          and pfo.RC_ARTIFACTS_MISSING == 92)
+
+
 def main() -> int:
     tests = [v for k, v in sorted(globals().items())
              if k.startswith("test_") and callable(v)]
