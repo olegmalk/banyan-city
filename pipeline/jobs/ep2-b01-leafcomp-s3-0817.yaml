@@ -968,3 +968,10 @@ artifacts:
 - C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260820.png
 - C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260820.png.meta.yaml
 - C:\banyan-farm\leafcount-0817\comp-b01-s3.png
+filed_0817: >-
+  Dry-ran clean and filed to backlog/ as ep2-b01-leafcomp-s3-0817-1786971579.json at 2026-08-17,
+  payload delivered (prompt, negative, leaf_count_composite.py, inpaint_fruit.py). The card was
+  idle at filing time; autofill feeds it from backlog, so nothing here waits on a human. Scored in
+  a separate pass against the pre-registration in the header, which is already committed and is
+  not to be re-read once the frames exist. Verdict lands here as verdict_0817 and as one line in
+  pipeline/leaf-count-bar-0817.md section 7.
