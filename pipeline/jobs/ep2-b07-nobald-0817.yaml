@@ -1,0 +1,285 @@
+# ep2-b07-nobald-0817 -- 2026-08-17. RUNG A: `bald` REMOVED. ONE VARIABLE.
+#
+# THE LADDER. Beat 07 had TWO measured defects and they are on SEPARATE rungs so the
+# result of each can be attributed:
+#     RUNG A (this spec)  `bald` removed. NOTHING ELSE MOVES.
+#     RUNG B  ep2-b07-twofig-0817  rung A plus the grammar fix.
+# `insert_b07_nobald_0817.py` REFUSES TO WRITE rung A unless the draft equals the
+# predecessor's SENT string minus exactly the eleven characters `, bald head`. So the
+# sash still governs `points` here and the goblin still has no noun -- those are RUNG
+# B's variable and are deliberately LEFT BROKEN on this rung. If the guard comes back
+# haired, `bald` is what did it and nothing else did.
+#
+# WHY THIS EXISTS. `ep2-b07-cast-0817` -- the spec whose text begins below and whose
+# bar this job carries forward unaltered -- was filed to take `bald` off the guards
+# and it STILL SENT `bald head`. It rendered 12 of 12 BALD.
+#
+# THE TOKEN WAS NEVER IN THE DRAFT, which is why grepping the draft never found it.
+# `authored_b07_cast_0817` carries the `{{GOBLIN}}` marker, and the sampler fills it
+# from its own constant: `goblin_ipa_sample.py` line 65,
+# `GOBLIN_DEF = "green skin, bald head"`. The string the model received was
+#
+#     1boy, a guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+#     white sash points one arm at green skin, bald head crouching low, other hand
+#     open, tall grass, ...
+#
+# AND THAT IS WHY b06 IS CLEAN. b06 renders 12 of 12 HAIRED off the same refs,
+# sampler, model and day -- the contrast the scoring lane used to rule out model,
+# refs, sampler and seed. The mechanical difference is one thing:
+# `authored_b06_cast_0817` carries NO `{{GOBLIN}}` marker. b07 and b08 are the ONLY
+# two cast drafts that carry the slot and the only two that went 12 of 12 bald. The
+# contrast now has a cause, not just a correlation -- and the other five cast specs
+# need nothing.
+#
+# IT CONFIRMS THE BROADCAST-CLASS LAW INDEPENDENTLY. On b08 the token sat inside the
+# goblin's own clause -- `green skin, bald head, patched cloak` -- as tightly scoped
+# to one character as prose gets, and the GUARD still went bald 12 of 12. So the
+# token is REMOVED, not re-scoped, and NO negation is attempted: the vacancy law says
+# a negative does not reach an empty region, and a broadcast attribute is a BINDING
+# failure rather than a presence failure. The guard's hair is NAMED instead.
+#
+# `GOBLIN_DEF` IS NOT TOUCHED, and `insert_b07_nobald_0817.py` ASSERTS that rather
+# than trusting it. Two founder rulings collide: bald FOR THE GOBLIN is his own
+# 2026-08-12 ruling, bald for the GUARDS is the defect he ordered fixed on
+# 2026-08-16 ("the cast stands as drawn"). Editing the shared constant would overturn
+# the first to serve the second across all eleven goblin beats. The slot comes out of
+# these two drafts alone; goblin-only beats keep his bald skull.
+#
+# THE BAR IS CARRIED FORWARD, NOT REWRITTEN. `success:` below is the predecessor's
+# byte for byte, and so is `frame_count_correction_0817` with its `N of 12`
+# denominator and the `r3` sentinel already dropped -- a sibling lane's correction
+# this rung inherits and does not relitigate. Score N of 12, never N of 16; every
+# `r3` frame is a byte-copy of `r0` and is skipped. Recipe, references, arm, seed
+# count and seed start are byte-identical to the predecessor's by construction: this
+# file IS its file with the draft key, the --out directory and the task name
+# substituted and nothing else.
+#
+# $0. Local card, no provider, no spend. No `plate_ack`, no `drafts_ack`, no gate;
+# the frames are UNAPPROVED and PROVISIONAL by this spec's own declaration.
+#
+# ====================== the predecessor's spec text follows =====================
+# ep2-b07-nobald-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 07, CONFISCATE.
+#
+# THE ONE VARIABLE. The draft key, and nothing else. Recipe, references, arm,
+# seed count and seed start are byte-identical to ep2-b09-plate-nos2-0815, the
+# job that drew this beat family's last box plates: same
+# refs-guards-twoinfield-nos2-0815, same --arm window4, same 4 seeds per cell,
+# no --ref-prefix and no --seed-start. What changes is the WORDING, from a
+# prompt that asked for an anonymous bald type to one that names the approved
+# cast. That is the whole experiment.
+#
+# WHY. `guard_plates_are_miscast_0816` in review/ep2-picks/done-definitions.yaml:
+# 0 of 17 guard plate prompts name the approved cast and 14 of 17 ask for `bald`,
+# and NEITHER APPROVED GUARD IS BALD. Guard A has dark cropped hair, guard B has
+# light sandy hair. 18 guard plates were drawn on 2026-08-16/17 against those
+# prompts and none passed. The founder froze the wardrobe on 2026-08-16 -- "the
+# cast stands as drawn", glasses included -- so this is a WORDING correction to
+# match a settled look, not a proposal about how the guards should look.
+#
+# WHY THIS BEAT NEEDS ITS OWN PLATE AND MUST NEVER INHERIT BEAT 08'S. Beats 07
+# and 08 want TWO figures, not three (`pipeline/insert_b0708_figure_count_0817.py`
+# corrected the three-figure done_when clauses, which were drafted from an
+# imagined master). One guard as actor plus the scavenger as target. BEAT 07'S
+# GUARD IS GUARD 1 -- guard A, dark cropped hair, wire-rims -- AND HE HAS NO
+# CLIPBOARD. The bark board is GUARD 2's prop; beats 06, 08 and 10 are the beats
+# that name it. So this prompt negates `clipboard` outright, and beat 08's
+# passing two-figure plate cannot stand in for this one no matter how good it is.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.7.authored_b07_nobald_0817
+# (repo sha 8466f0b28530e15599787e06c0c150feec39d344b4ea6fc95c10063702113938; both harness copies were synced by
+# `box_enqueue.py --sync-drafts` with the queue drained and hash-verified to that
+# sha by the tool itself AFTER the copy, and the sampler records `drafts_sha256` in
+# every sidecar so the frames prove it themselves):
+#
+#   A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic, white
+#   sash points one arm at green skin crouching low, other hand open, tall grass,
+#   treeline behind, pale sky above, cinematic lighting, masterpiece, best
+#   quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+#   clipboard, no dark, no night. No photorealism, no 3D render look. 9:16
+#   vertical, no text.
+#
+# THE SLOT IS GONE AND THAT IS THE WHOLE VARIABLE: the predecessor wrote
+# `{{GOBLIN}}` where this writes `green skin`, and the sampler filled that marker
+# with `green skin, bald head`.
+#
+# TOKENS, AND THE TRADE IS NONE. 59 of 77 positive and 58 of 77 negative, measured
+# through render_wave_goblin.check() on the REAL CLIP (transformers
+# openai/clip-vit-large-patch14, offline) and read back out of the written
+# wave-drafts.yaml rather than off a draft in a scratch file. ZERO FAULTS, style
+# anchor `very aesthetic` PRESENT, count tag `1boy` derived against a declared
+# `1boy`.
+#   NOTHING WAS TRADED. Removing `bald head` FREES tokens; this rung spends none of
+#   them on filler, cuts no word, drops no clause and does not touch the style tail.
+#   So there are no traded words to name as first suspects -- the paragraph that
+#   would normally list them is empty on purpose, not omitted.
+#   A CORRECTION TO THE PREDECESSOR'S FIGURE, recorded rather than quietly dropped:
+#   `ep2-b07-cast-0817`'s header claims 76 of 77 positive and 60 of 77 negative. The
+#   draft as it actually stands in wave-drafts.yaml measures 62 of 77 and 58 of 77
+#   through check() on the real CLIP. I measure as I find and do not inherit the
+#   older number; whichever way that gap arose, it is not the figure for this rung.
+#   THE ESTIMATOR IS THE LIKELY SOURCE OF SUCH GAPS AND IS WORTH THE WARNING: with
+#   `transformers` NOT importable, sd_prompt falls back to a word-count estimate and
+#   compress() uses that same estimate for its own fitting loop, so it sheds the tail
+#   the real tokenizer keeps and invents faults. It reads beat 08's clean draft as
+#   85/77 with two faults against a true 74/77 with none. A token figure quoted from
+#   a plain `python3` on the Mac is not evidence.
+# THE PREDECESSOR'S OWN TRADE PARAGRAPH FOLLOWS, carried forward unedited because it
+# still describes the tail this draft inherited -- but its 76/77 figure is superseded
+# by the measurement above. It says: measured with sd_prompt.negative_tokens rather
+# than with compress()'s
+# prose estimator -- which under-counts a comma-separated tag list by up to 10
+# tokens and let six earlier drafts pass at 78-82 real tokens with the style
+# anchor already truncated away. To fit a named cast beside a goblin, this beat's
+# longer tail was traded for the 14-token one beats 05, 06 and 09 carry. THE
+# TRADED WORDS ARE `Medium full shot`, `bright morning light`, `detailed` and
+# `newest`, and they are the first thing to blame if framing or light regresses
+# against this beat's older plates.
+#
+# THE LAWS APPLIED. Every hand in frame is specified -- the pointing arm AND
+# `other hand open` -- because an unspecified hand is a vacancy the model fills
+# with the largest noun and the negative does not reach it (beat 10 got a bamboo
+# pole and a duplicate board in unspecified hands with `weapon` negated). The
+# upper third gets its own positive noun, `pale sky above`: a ground noun cannot
+# fill a sky region, which is what three failed rungs on beat 14 cost to learn.
+# `horizon` is negated nowhere.
+#
+# THE PRE-REGISTERED RISK, and it is not negated on purpose. The 2026-08-16
+# ruling says every prompt showing guard A's face must name the wire-rims, and
+# this is guard A facing the lens. On a TWO-GUARD plate, `glasses` inside one
+# man's clause landed on BOTH men at 5 of 5 legible renders; there is no second
+# guard here to spread to, there is a goblin, and whether the eyewear reaches HIM
+# is unmeasured. It is scored as a read below rather than negated, because
+# negating `glasses` against a positive asking for `wire-rim glasses` is the
+# contradiction plate_scratch.py exits 7 on.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend,
+# nothing published as footage.
+id: ep2-b07-nobald-0817
+task: ep2-b07-nobald-0817
+node: 002b-first-citizen
+beat: 7
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, because the backlog was
+  empty and the autofill never authors work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. This is a STILL PLATE on an approved
+  node: no voice synthesis, no motion, no episode assembly, no publication.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'The beat-07 motion lane, which has never had a plate of its own. Every beat-07 re-round predates the
+  2026-08-15 two-figure plate, and that plate is beat 08''s -- it holds a guard with a CLIPBOARD, which is guard
+  2''s prop, while this beat''s actor is Guard 1 and its done_when names no board. It also holds a BALD guard, the
+  attribute `guard_plates_are_miscast_0816` says contradicts the cast in the first thing a viewer reads off a person.
+  A cast-correct two-figure plate here is what beat 07 needs before one more second of GPU goes into moving a wrong
+  man.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported as
+  N of 16 plus a per-condition rate across the four seeds so no claim rests on a single draw. A frame PASSES only
+  by clearing every term: (1) EXACTLY TWO whole figures, one adult human guard and one goblin, adjacent in the same
+  depth plane -- not three, not one, neither cropped to a fragment; (2) the guard has DARK CROPPED hair -- not blond,
+  not sandy, not shaggy, and NOT BALD; (3) WIRE-RIM GLASSES legible as round wire frames on his face, not sunglasses
+  and not absent; (4) tan wrap tunic and a white sash on him; (5) one arm extended toward the goblin and legible
+  as a POINT, with his other hand visible and empty; (6) NO board, clipboard, slab or paper anywhere in frame, in
+  any hand or on the ground; (7) the background carries all three bands with real content -- tall grass at ground
+  level, a treeline, and sky ABOVE the treeline -- with no white or plain field and no downward plan view; (8) neither
+  figure infantile and no blush. PRE-REGISTERED FAIL MODES, each recorded by name whether or not it fires: eyewear
+  reaching the GOBLIN; the goblin drawn as a human child; a third figure appearing; the traded words'' framing and
+  light regression (a tighter or flatter frame than this beat''s older plates). If a term turns out loose it is said
+  so and TIGHTENED FORWARD for the next round, never rewritten after seeing the picture.'
+why: 'Beat 07 is one of six beats `guard_plates_are_miscast_0816` shut on a single cause, and the only one of them
+  that has never had a plate holding its own two-shot with the right actor. The correction is pure wording: the cast
+  is frozen (founder, 2026-08-16, "the cast stands as drawn"), and once casting was right on the one correct plate
+  identity held 14 of 14. Four minutes of local GPU against six blocked beats, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-nobald-0817
+  - --draft-key
+  - authored_b07_nobald_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-nobald-0817
+  - --draft-key
+  - authored_b07_nobald_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b07-nobald-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (confiscate) the sampler actually writes. A glob
+  # without it matches nothing, publishes nothing, and still returns a code that
+  # reads like a render failure -- that is what made six rendered plates read as
+  # six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b07-nobald-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-nobald-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/07-confiscate-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b07-nobald-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\n# frame count is 12, not 16: 4 seeds x 3 DISTINCT reference sha256s. refs-guards-twoinfield-nos2-0815 holds 3 distinct images in 4 slots (s0 and s3 are the same bytes; hashed on the box 2026-08-17), and dedup_cells drops the cell that would redraw s0, so the grid is 3 cells x 4 seeds. Hardcoded rather than derived from seeds x distinct-ref-sha256 because deriving it means mirroring the sampler slot enumeration while another lane is editing the sampler; derive it when that settles.\nraise SystemExit(0 if len(pngs) >= 12 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b07-nobald-0817\07-confiscate-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-nobald-0817\07-confiscate-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-nobald-0817\07-confiscate-ipa-r2-w015-s0.png
+
+# --- correction filed 2026-08-17, additive: `success:` above is
+# --- UNCHANGED and its superseded denominator stays visible. -------
+frame_count_correction_0817:
+  true_frame_count: 12
+  grid: '3 cells x 4 seeds -- 3 DISTINCT reference sha256s in 4 slots'
+  denominator_to_report: 'N of 12'
+  denominator_superseded: 'N of 16 (see the success: key above, left standing verbatim)'
+  reason: 'refs-guards-twoinfield-nos2-0815 is 3 distinct images in 4 slots -- s0 and s3 are byte-identical (26062B66DFCF9B22..., hashed on the box 2026-08-17). dedup_cells drops the cell that would redraw s0, so 12 frames are drawn, never 16. 12 WAS ALWAYS THE TRUE COUNT: the pre-sync renders of this beat wrote 16 files of which 4 were byte-copies of the other 12, so a scorer reporting N of 16 was counting duplicates as independent evidence.'
+  what_is_scored: 'UNCHANGED. Not one term of the bar is altered, loosened or removed -- only the denominator it is divided by, which was miscounted. Every condition in success: still applies per frame.'
+  also_corrected_in_this_spec: 'copy-out threshold >= 16 -> >= 12, and the declared artifact NN-*-ipa-r3-w015-s0.png removed: r3 is the deduplicated cell and is never written, which made box_runner retire the job rc 92 artifact-check after a full render. The threshold alone could not fail it -- that step is allow_fail: True.'
