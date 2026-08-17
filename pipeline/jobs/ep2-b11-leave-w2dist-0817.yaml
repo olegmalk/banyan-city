@@ -343,3 +343,38 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: FAIL overall, but THE ONE VARIABLE WORKED.
+  clip: farm-out/ep2-b11-leave-w2dist-0817/11-they-leave-w2dist-LTX-castplate.mp4
+  read: >-
+    All 97 frames opened consecutively, plus 3x head crops of guard B at f000,
+    f010, f020, f030, f040 and f048.
+  the_variable: >-
+    D2 IS FIXED AND IT IS THE FIRST THING ON THIS BEAT THAT A WORDING CHANGE HAS
+    MOVED. Against the base's INVERTED result (+37% on-screen height, the men
+    walking toward the lens), this wording recedes them for real: guard B's coat
+    height goes 264 px at f000 to 249 px at f040 and then below the measuring
+    floor entirely -- by f048-f051 both men are specks in the grass. Same plate,
+    same seed, same negative, same recipe; the only difference is the clause.
+    CAVEAT NAMED HONESTLY: the treeline control is NOT stationary in this clip
+    (row 75 at f000 to 123 at f080), so some framing drift rides along with the
+    recession. It cannot account for the size change -- a 48 px horizon shift
+    does not turn a 264 px man into a speck -- but the recession here is not
+    purely the men's own legs.
+  new_fault_it_creates: >-
+    D4 BREAKS THE OTHER WAY. They recede so fast they are GONE by about f055,
+    and frames f055-f096 are an empty field: 42 frames, nearly half the clip,
+    with no actor in them. The beat is five seconds of two men leaving, not two
+    seconds of leaving and three of grass. The lever is real and now needs a
+    BRAKE, not more of itself.
+  unchanged_faults:
+    D3_backs_turned_no_face: FAIL, AND WORSE THAN THE BASE. Guard B's face is in
+      full profile with an open mouth from f010 -- ten frames earlier than the
+      base. This clause was not the variable and it did not move.
+    D1_D6: two men, correct identities, no merge, for every frame they are
+      visible in.
+  terminal_freeze_index: >-
+    0. No exact ncc = 1.0000 pair anywhere; the last pair reads 0.999244, which
+    is an almost-still EMPTY FIELD and not a frozen actor. Reported separately
+    from any hold, and depth and cadence are not quoted.
+  evidence: pipeline/research/EVIDENCE-b11-wordings-0817.png

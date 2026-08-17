@@ -341,3 +341,38 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: FAIL, and the variable did NOT work.
+  clip: farm-out/ep2-b11-leave-w3faces-0817/11-they-leave-w3faces-LTX-castplate.mp4
+  read: >-
+    All 97 frames opened consecutively, plus 3x head crops of guard B at f000,
+    f010, f020, f035, f060 and f090.
+  the_variable: >-
+    D3 IS NOT FIXED. `both faces hidden and heads never turning` as a LEADING
+    POSITIVE STATE TAG did not prevent the turn: guard B is in full profile with
+    an open mouth by f010 and still turned at f020, indistinguishable from the
+    base. THIS IS THE THIRD INDEPENDENT WORDING TO TURN HIS HEAD -- the base
+    (turn named twice in the negative), W2 (same negative), and now W3 (named in
+    the negative AND forbidden by a positive state tag). Three for three.
+    THE CONCLUSION IS THEREFORE ABOUT THE LEVER, NOT THE SENTENCE: a state tag
+    fixed the beat-17 stand-up on the first sample, so state tags are not
+    generally powerless here -- what they cannot do on this checkpoint is
+    suppress a head turn that the surrounding semantics invite. Two men who
+    argue look at each other. The next thing to try is NOT another phrasing of
+    "do not turn": it is removing the second person from the exchange (one man
+    talking forward, the other listening) or accepting the turn and re-reading
+    whether beat 11's own done_when should forbid a profile at all -- which is
+    an author question (R4) and not this lane's to answer.
+  unchanged_faults:
+    D2_walking_away: FAIL, exactly as the base -- coat height 264 px at f000 to
+      274 px at f080, the men approaching, treeline control stationary at row
+      105 in every frame sampled. Not the variable here; W2 is the one that
+      moves it.
+    D4_both_present: FAIL, exactly as the base -- guard A tracks left out of
+      frame and only one man is in the last frames.
+    D1_D5_D6: two men, field at frame one, identities and costumes hold with no
+      merge for every frame each man is visible in.
+  terminal_freeze_index: >-
+    0. No exact ncc = 1.0000 pair anywhere; last pair 0.881801. Depth and
+    cadence not quoted.
+  evidence: pipeline/research/EVIDENCE-b11-wordings-0817.png
