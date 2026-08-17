@@ -1256,8 +1256,43 @@ raised on the founder's board (`review/inbox.yaml`, card raised 2026-08-17).
 
 Line: "…Did you just answer me?" Camera on the goblin holding the fig like evidence.
 
+**KNEE-HEIGHT REWRITE 2026-08-17 — the look goes ACROSS, and he stays down.** His
+ruling: *"rewrite the beats to work at knee height. change the story."*
+~~"The scavenger picks the fig up with both hands and looks up at the bare branch."~~
+→ *"The scavenger crouches back down, picks the fig up with both hands, and looks from
+it to the sapling's thinnest branch beside him — level with his face now, and bare."*
+A ~40 cm plant's thinnest branch is somewhere near his shin when he stands, so the old
+line could only be shot with a second, larger tree overhead — **which is exactly the
+fault the founder's colour ruling already recorded on the existing pick** (*"THE BRANCH
+IS THE WRONG TREE … a thick gnarled MATURE-TREE limb entering from the top corner"*).
+Staying crouched puts the empty stem at his own face height, and `done_when`'s central
+requirement is preserved word for word: BOTH HANDS to the fruit, and *"the empty stem
+is the evidence and must be in frame"*. The R5 hook is untouched — the whisper *"…Did
+you just answer me?"* lands off the same discovery, the bare stem beside the fruit in
+his hands.
+
+Superseded prompt sentence, kept: ~~"…picks one small round purple fruit up out of the
+grass with both hands, **straightens**, and raises it in front of him like evidence,
+huge eyes widening as he looks up at a bare branch above."~~ `straightens` is the word
+that broke it — standing up is what puts the sapling's branch below him and invites the
+mature limb overhead. **41 words against 41**, held exactly because this beat is on the
+tail-dropper list; **NOT measured on the real CLIP tokenizer** ($0, no GPU, none
+installed), so the count is the only guarantee. It gains the `40cm` anchor and names
+the branch as *the sapling's*, which is what the redraw note asked for.
+
+**WHAT IT COSTS — and it costs less than it looks.** The recorded pick
+`farm-out/ep2-b20-idfix/20-evidence-wave1-s3.png` was **already** a plate-redraw
+(status `NO VERDICT YET`; *"SO THE PLATE IS REDRAWN WHICHEVER WAY THE COLOUR WENT"*)
+on three named faults: wrong tree, red fruit, and no look up. This rewrite **retires
+fault (3)** — there is no look up to fail any more — and **sharpens fault (1)** from
+"wrong tree" to "wrong tree and wrong height". No new take is stranded: the pick was
+not shippable before this and is not shippable now, for the same reason. `done_when`'s
+*"then the look UP"* is stale and belongs to the pick lane to re-transcribe. **Beat 16
+is untouched and needs no re-render** — this beat's branch is a different shot from
+beat 16's leaf, and his no-re-render ruling on 16 is not disturbed by anything here.
+
 ```
-A small round goblin crouches, picks one small round purple fruit up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin crouches, picks one small round purple fruit from the grass with both hands, holds it like evidence, huge eyes widening as he looks across at the bare branch of the tiny 40cm sapling, level with his face. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 21 — THE ANSWER (1:42–1:47) ⬜ needs footage

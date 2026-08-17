@@ -118,7 +118,7 @@ Extreme close-up: the one fig on the thinnest branch, stem trembling.
 Wider — the sapling low in frame and the scavenger standing beside it, mid-stride away: the stem lets go and the fig drops the short distance into the grass by his heel. He stops mid-step and looks back down at it.
 
 **EVIDENCE — 1:39–1:42**
-The scavenger picks the fig up with both hands and looks up at the bare branch.
+The scavenger crouches back down, picks the fig up with both hands, and looks from it to the sapling's thinnest branch beside him — level with his face now, and bare.
 
 > **SCAVENGER (whisper):** …Did you just *answer* me?
 
