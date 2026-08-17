@@ -1,0 +1,84 @@
+{
+  "cost_usd": 0.0,
+  "feather": 6,
+  "fill": "diffuse",
+  "fill_iters": 70,
+  "fill_radius": 6.0,
+  "init": "C:\\banyan-farm\\out-b21-scale-0817\\21-the-answer-wave1-s0.png",
+  "init_sha256": "ab8fb736571b6f419fb057a4120007831e8fe73a8dcb43a2341af8856d268a9a",
+  "mask_add": [
+    "250,660,110,70",
+    "390,650,90,50"
+  ],
+  "mask_grow": 14,
+  "mask_out": "C:\\banyan-farm\\leafcanon-b21-0817\\mask-b21-canon.png",
+  "model": "none -- plain PIL, no sampler, no network",
+  "note": "beat 21 canon plate: the drooping third blade removed so the count is 2 by construction",
+  "out": "C:\\banyan-farm\\leafcanon-b21-0817\\comp-b21-canon.png",
+  "out_sha256": "83f4581dad4ae12589ab679d8292001c4d777bea68d8e753670ede9e12f6c203",
+  "purpose": "leaf COUNT fixed by construction before any sampler runs",
+  "remove": [],
+  "remove_auto": [
+    "356,742,486,856"
+  ],
+  "remove_auto_detail": [
+    {
+      "box": "356,742,486,856",
+      "mask_bbox": [
+        329,
+        719,
+        490,
+        883
+      ],
+      "segments": [
+        {
+          "area": 5534,
+          "bbox": [
+            356,
+            746,
+            463,
+            856
+          ]
+        }
+      ],
+      "source_offset": "0,0"
+    }
+  ],
+  "residual_check": {
+    "final": {
+      "components": [],
+      "total_px": 0
+    },
+    "passes": [
+      {
+        "components": [],
+        "pass": 0,
+        "total_px": 0
+      }
+    ],
+    "protect": [],
+    "regions": [
+      "426,740,492,860"
+    ],
+    "rule": {
+      "auto_min_area": 150,
+      "object_bright": null,
+      "object_dark": 165.0,
+      "object_gmr_max": null,
+      "object_gmr_min": null,
+      "residual_min_area": 300
+    }
+  },
+  "source_offset": [],
+  "sources": [
+    "arXiv:2503.06884 -- prompt refinement does not improve counting",
+    "arXiv:2406.10210 (Make It Count, CVPR 2025) -- plain SDXL numerals score 26-28%; count is a layout problem"
+  ],
+  "sweep": {
+    "assert_clear": true,
+    "enabled": true,
+    "grow": 12,
+    "passes_allowed": 2
+  },
+  "tool": "pipeline/leaf_count_composite.py"
+}
