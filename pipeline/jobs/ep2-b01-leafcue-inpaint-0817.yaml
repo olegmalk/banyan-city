@@ -1510,3 +1510,74 @@ artifacts:
 - C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260820.png
 - C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260820.png.meta.yaml
 - C:\banyan-farm\leafcue-b01-0817\comp-b01-cue.png
+verdict_0817: >-
+  FIRED AND JUDGED 2026-08-17 on the rtx5090 box (bf16/CUDA, 4 seeds, rc=0 on every step,
+  render_s 3.5 each, $0). Published by the job's own publish step to
+  C:\banyan-farm\courier-box\farm-out\ep2-b01-leafcue-inpaint-0817 -- "published 13 of 13",
+  all 13 names verified against the box-written SHA256SUMS.txt after pull (13/13 OK). There
+  was no publish refusal on this job and no missing directory: the dir is present on the box
+  and so are ep2-b01-leafcomp-inpaint-0817 and ep2-b01-leafcomp-s3-0817. Scored EXACTLY as
+  `pipeline/leaf-count-bar-0817.md` section 8 is written, on all 4 frames at full resolution,
+  704x1280, N = 4, floor 4 of 4.
+   * AXIS A COUNT -- MISS. 1 of 4 frames carries exactly two blades. NOT BOUND (1/4 is below
+     the 1/2 PARTIAL boundary as section 3 states it). Per frame: s20260817 THREE, s20260818
+     THREE, s20260819 TWO, s20260820 THREE.
+   * AXIS A' FAIL-VACANCY -- FIRED on 3 of 4. The attachment patch reduced the rate from
+     4 of 4 to 3 of 4 and did not stop it. What re-grew, at the patched leaf-base node
+     (384,920) in each case: s20260817 an oval lamina right of the stem with a rim highlight
+     and a drawn dark tip at about (387,1000) -- unambiguous; s20260820 a rim-lit lamina/sheath
+     descending from the junction to a point at about (397,1000), the same silhouette drawn in
+     gold; s20260818 the marginal call and named as such -- a pale low-contrast lamina from the
+     junction down the right side of the stem to a rounded end at about (386,990), counted as a
+     blade because section 3 counts any blade whose OUTLINE is identifiable, and this one's is.
+     s20260819 alone did not grow tissue there.
+   * AXIS B HEIGHT -- HELD. Apex row 286 in the init and 286 in all four frames: 0 px against
+     the +/-12 px window. Nothing waist-high, tree-sized or doubled. Field close-up, no grass
+     line above the plant; that clause is inherited, not scored as a win.
+   * FRUIT-REGION BYTE-IDENTITY -- the bar term as written ("max |delta| must stay 0") is NOT
+     MET, and it is reported as a miss rather than reinterpreted. Over the region the prior
+     rung declared (x 355-485, y 445-525) max |delta| = 1 with 151 of 10611 px differing, in
+     all four frames identically. Cause is measured, not guessed: the two cue patches raised
+     the blend mask's top edge to y 480, so padding_mask_crop's padded window now spans
+     y 460-1070 (x 116-567) and the bottom two thirds of the declared fruit box sits inside
+     it, taking a 1-LSB VAE round-trip. Nothing structural moved: the apex row comes out
+     identical in the init and all four frames at four independent thresholds (286, 286, 287,
+     288 as the threshold tightens, five images agreeing at each), and 0 px of the declared
+     fruit box is inside the blend mask, measured. So the property the term exists to prove --
+     the mask excludes the fruit -- still holds. FORWARD ONLY, for any later rung and never applied backwards to
+     this one: the term should read "max |delta| = 0 outside the padded crop window and <= 1
+     inside it, with the window's bbox reported", because 0 was only ever achievable while the
+     mask sat clear of the crop.
+   * AXIS C SHAPE -- reported. The two keeper blades read as ordinary lamina, one broad upper
+     and one long lower. The added blades read as ordinary leaves too, which is exactly why
+     they are countable.
+   * STEM CONTINUITY at the patched node -- reported, no fault. No kink and no break on any
+     frame; s20260818 shows the slight widening the compositor's boundary fill was expected to
+     leave. LOOK generally: no mask seam, outside-mask max |delta| 13-37 which is the blur ramp
+     of the padded crop and nothing else; inside-mask mean |delta| 7.4-9.0.
+   * FAIL-BLUR -- fired on s20260819 only, and it is the flip side of that frame's pass: the
+     vacated region there resolved into a soft, unattached out-of-focus dark mass beside the
+     stem rather than into field, the same LOOK class beat 21 produced. A founder card, not a
+     count fault.
+   * NOT SCORED: fruit colour, framing, look, shippability. R4.
+  VERDICT: FAIL-COUNT / FAIL-VACANCY, 1 of 4. Nothing is filed off this plate. THE
+  PRE-REGISTERED STOP RULE IS HONOURED AND THIS LANE STOPS ON BEAT 01: a blade re-grew with
+  the attachment patched out, so THE CUE IS NOT REACHABLE BY MASKING. No third rung, no higher
+  strength, no new wording, no further seeds -- the spec committed that sentence before the
+  fire and it is not being softened now. The finding is a mechanism, not a defeat: the mask
+  can delete a blade but it cannot delete the plant's ANATOMY, because the unmasked stem
+  either side of the patch still describes a leaf-bearing node, and the 0.30 pass completes
+  it. Beat 21 is the control that proves this reading -- same recipe, 4 of 4 bound, because
+  its vacancy sat against open sky with no attachment either side. NEXT INSTRUMENT, named as
+  the bar's section 5 already named it and still unfired: a ControlNet / T2I-Adapter structural
+  hint (scribble or lineart) that specifies the plant's skeleton with two nodes, i.e. move the
+  count out of the blend mask and into the CONDITIONING, which is the layout channel the
+  external evidence (arXiv:2406.10210) says count actually lives in. The alternative is a
+  founder call on the plate. Either way it is a new instrument and a new sample, not another
+  fire of this one.
+  FOUNDER CARDS, named and not resolved here: (1) whether these blades are his "average
+  leaves" -- unchanged and open; (2) this plate's fig reads pale yellow-green while canon is
+  purple retroactively -- unchanged and open; (3) NEW, from this rung: on the one frame whose
+  count passed, the vacated region reads as a soft out-of-focus mass rather than field, so the
+  only 2-blade frame beat 01 has is also the frame carrying the LOOK fault. Whether that frame
+  is usable at all is R4.

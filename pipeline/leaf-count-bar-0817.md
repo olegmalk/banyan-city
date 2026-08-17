@@ -377,3 +377,24 @@ deliberately left unfired.
   **The contrast between these two rungs is the finding: the CUE decides it, not the blade.** A
   masked vacancy beside a surviving attachment node gets re-grown as anatomy; a masked vacancy
   against open sky gets filled with background.
+- **Cure rung — `ep2-b01-leafcue-inpaint-0817` (fired and judged 2026-08-17, box, bf16/CUDA, $0):
+  AXIS A MISS — 1 of 4 exactly two blades, NOT BOUND against the 4-of-4 floor.** One variable
+  against the rung above: the leaf-base fork at (384,920) and the bright blade tip at (412,845) —
+  the two CUES — entered the patched region. `FAIL-VACANCY` went from 4 of 4 to **3 of 4** and did
+  not stop: s20260817 and s20260820 grew a rim-lit lamina at the patched node, s20260818 a pale
+  low-contrast one whose outline is identifiable (counted, and flagged as the marginal call),
+  s20260819 alone did not. AXIS B held: apex row 286 in the init and 286 in all four frames, 0 px
+  against ±12 px, confirmed at four thresholds. `FAIL-BLUR` fired on s20260819 — the one frame
+  whose count passed is also the frame whose vacancy read as a soft out-of-focus mass, which is a
+  founder card, not a count fault. The fruit-region byte-identity term is scored as **NOT MET**
+  rather than reinterpreted: max |Δ| = 1 on 151 of 10611 px, because the enlarged mask lifted
+  `padding_mask_crop`'s window to y 460 and the fruit box now lies partly inside it. **Tightened
+  FORWARD ONLY**, never applied to any rung already scored: that term reads "max |Δ| = 0 outside
+  the padded crop window, ≤ 1 inside it, window bbox reported".
+  **STOP RULE HONOURED — this lane stops on beat 01.** A blade re-grew with the attachment patched
+  out, so **the cue is not reachable by masking**: the mask can delete a blade, but the unmasked
+  stem either side still describes a leaf-bearing node and the 0.30 pass completes it. Beat 21 is
+  the control (4 of 4, vacancy against open sky, nothing to complete). No third rung, no higher
+  strength, no new wording, no further seeds. **Next instrument, still unfired: the §5
+  ControlNet / T2I-Adapter structural hint** — put the two-node skeleton in the CONDITIONING,
+  which is where arXiv:2406.10210 says count lives — or a founder call on the plate.
