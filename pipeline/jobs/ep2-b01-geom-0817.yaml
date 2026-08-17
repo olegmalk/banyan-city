@@ -234,3 +234,47 @@ verdict_0817:
   not_my_call: 'Which frame, if any, is shippable -- R4, the founder''s. No pick is made and none of
     these is promoted. Measurement is the lane''s; taste is his.'
   filed_off_this: 'NOTHING. No motion seeds, no promotion, no follow-up job filed by this lane.'
+
+# ---------------------------------------------------------------------------
+# CORRECTION to the mechanism half of verdict_0817, appended 2026-08-17 by the
+# same lane, after re-reading the eight r0/r1 cells at full resolution. THE SCORE
+# ABOVE IS UNCHANGED AND STANDS: 2 of 16 on leaf count, 0 of 16 on height, and the
+# pre-registered rule still calls that NO EFFECT on the count. What is wrong above
+# is the EXPLANATION, and the superseded text is left standing deliberately.
+verdict_0817_mechanism_CORRECTION:
+  what_i_got_wrong: 'verdict_0817 says the frames are ref-saturated and concludes "this falsifies
+    geometry binds ON THIS ARM". That reading was formed off the contact sheet, where rows r2 and r3
+    -- the bush-sized purple fig masses -- dominate the eye. IT IS WRONG ABOUT HALF THE GRID. Rows r0
+    and r1, eight cells, are NOT saturated: they are cleanly composed seedlings at a workable scale,
+    several with a grass line, and they are exactly the "arm where a sprout is actually drawn" that a
+    follow-up would have gone looking for.'
+  what_the_frames_actually_show: 'THE GEOMETRY CLAUSE BOUND. In r0s1 the stem carries visible swollen
+    NODE JOINTS, and at every node there are exactly two leaves, opposed, one either side. r1s1 and
+    r1s3 are textbook: a lower node with two opposed leaves and an upper node with two opposed leaves
+    and the fig. r0s2 is the same arrangement. The model drew the arrangement that was asked for, and
+    drew it well. WHAT IT DID NOT DO IS CONSTRAIN HOW MANY NODES EXIST. It stacked the requested
+    per-node geometry two or three times up the stem, which is how eight cells that each honour
+    "opposed, one either side of the stem" still come back with four to six leaves.'
+  why_this_matters_more_than_the_score: 'The result is not "geometry is another lever that failed".
+    `opposed one either side of the stem` is a description of A NODE, not of a plant, and it is
+    therefore not a count constraint at all -- it is satisfied by any number of nodes. The 2-of-16 is
+    a real null on COUNT and it is also the wrong thing to have been measuring the wording against,
+    because the wording never addressed the free variable. Shape language still binds; this one just
+    binds to the wrong object.'
+  the_follow_up_that_is_NOT_worth_firing: 'Re-running THIS wording on a less ref-saturated arm. Rows
+    r0/r1 already are that arm and already answered it: 0 of 8, with the failure mode plainly visible
+    as node multiplication rather than reference domination. Firing that job would spend the card to
+    re-answer a question this grid has answered. NOT FILED, on purpose.'
+  the_lever_this_actually_points_at_and_why_it_is_NOT_filed_either: 'Constrain the NODE, not the count
+    and not the arrangement: a single node, with the stem bare below it -- `one node` / `the stem bare
+    beneath them` / `no leaves lower down`. That addresses the free variable this run exposed, it is
+    prompt-side, and it has a natural control in this very job. It is NOT filed because it is a NEW
+    variable and not the one-variable follow-up that was authorised, it needs its own pre-registered
+    bar written before its own pixels, and the founder''s 2026-08-17 "average leaves" ruling should be
+    folded in at the same time so `cotyledon` is not carried forward again. Designing that properly is
+    the next lane''s first job, not a thing to bolt onto this one.'
+  colour_result_restated_plainly_because_it_is_actionable: 'PURPLE HELD 16 OF 16. Not one green fruit
+    in the set. This beat''s 2026-08-13 sweep says `green` throughout and 25+ live prompts still do, so
+    this arm is direct evidence that purple is reachable by wording alone, at no cost to anything else
+    measured here, and that the colour pass across those prompts is a safe forward fix rather than an
+    open question.'
