@@ -1,0 +1,104 @@
+#### job ep2-b01-leafcomp-s3-0817-1786971579 attempt 1 start 2026-08-17T13:00:09Z
+
+==== step comp START 2026-08-17T13:00:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\leaf_count_composite.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-brightbase-figmatte\\01-cold-open-bright-i35b-s3.png", "--out", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--mask-out", "C:\\banyan-farm\\leafcount-0817\\mask-b01-s3.png", "--remove", "330,724,108,34,10.3", "--remove", "240,760,52,27,0", "--source-offset=-300,0", "--feather", "9", "--mask-grow", "12", "--note", "rung 2 REPLICATION init: comp-s3 geometry unchanged from the peer composite (cccbc85f) and from the first fire. Count is structural, not prompted."]
+init        C:\banyan-farm\courier-box\farm-out\ep2-b01-brightbase-figmatte\01-cold-open-bright-i35b-s3.png
+init size   832x1216
+init sha256 4dcc1bcb10a77c0c61078781a1bf8e4b2750cd10b3f707fc0dfc4a7f18372833
+remove[0]   ellipse cx=330 cy=724 rx=108 ry=34 ang=10.3  <- background from offset -300,+0  (mask bbox (202, 663, 459, 785))
+remove[1]   ellipse cx=240 cy=760 rx=52 ry=27 ang=0.0  <- background from offset -300,+0  (mask bbox (166, 710, 314, 810))
+
+wrote       C:\banyan-farm\leafcount-0817\comp-b01-s3.png
+out sha256  5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9
+wrote mask  C:\banyan-farm\leafcount-0817\mask-b01-s3.png (bbox (172, 665, 452, 807))
+wrote        C:\banyan-farm\leafcount-0817\comp-b01-s3.composite.json
+
+COUNT IS NOW STRUCTURAL, NOT PROMPTED. Verify by eye before any GPU step -- this is the sample.
+==== step comp END rc=0 2026-08-17T13:00:14Z ====
+
+==== step dry START 2026-08-17T13:00:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcount-0817\\b01-leafcomp-s3-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "leaf-count rung 2 replication on comp-s3: same recipe as the first fire, only the composite differs.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9
+mask ellipse corners=- bbox=[130, 590, 550, 840]  0.5048 x 0.2056 of 832x1216
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260817-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T13:00:14Z ====
+
+==== step s20260817 START 2026-08-17T13:00:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcount-0817\\b01-leafcomp-s3-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "leaf-count rung 2 replication on comp-s3: same recipe as the first fire, only the composite differs."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.16it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.74it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:01<00:00,  3.46it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.63it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.79it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260817.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260817-mask.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260817.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260817 END rc=0 2026-08-17T13:00:27Z ====
+
+==== step s20260818 START 2026-08-17T13:00:27Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcount-0817\\b01-leafcomp-s3-s20260818.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260818", "--note", "leaf-count rung 2 replication on comp-s3: same recipe as the first fire, only the composite differs."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 14.99it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.61it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.65it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.07it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.83it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260818.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260818-mask.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260818.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260818 END rc=0 2026-08-17T13:00:40Z ====
+
+==== step s20260819 START 2026-08-17T13:00:40Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcount-0817\\b01-leafcomp-s3-s20260819.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260819", "--note", "leaf-count rung 2 replication on comp-s3: same recipe as the first fire, only the composite differs."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.73s/it]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.23it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.78it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  4.17it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.73it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260819.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260819-mask.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260819.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260819 END rc=0 2026-08-17T13:00:53Z ====
+
+==== step s20260820 START 2026-08-17T13:00:53Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0817\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcount-0817\\b01-leafcomp-s3-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "leaf-count rung 2 replication on comp-s3: same recipe as the first fire, only the composite differs."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 14.05it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 11.07it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  5.96it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  1.93it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.84it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260820.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260820-mask.png
+WROTE C:\banyan-farm\leafcount-0817\b01-leafcomp-s3-s20260820.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260820 END rc=0 2026-08-17T13:01:07Z ====
+
+==== step publish START 2026-08-17T13:01:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/leafcount-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-leafcomp-s3-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = [\"b01-leafcomp-s3-s20260817.png\", \"b01-leafcomp-s3-s20260817.png.meta.yaml\", \"b01-leafcomp-s3-s20260818.png\", \"b01-leafcomp-s3-s20260818.png.meta.yaml\", \"b01-leafcomp-s3-s20260819.png\", \"b01-leafcomp-s3-s20260819.png.meta.yaml\", \"b01-leafcomp-s3-s20260820.png\", \"b01-leafcomp-s3-s20260820.png.meta.yaml\",\n         \"comp-b01-s3.png\", \"comp-b01-s3.composite.json\", \"mask-b01-s3.png\",\n         \"b01-leafcomp-s3-s20260817-mask.png\", \"prompt.txt\", \"negative.txt\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b01-leafcomp-s3-s20260817.png\" in got else 1)"]
+published 14 of 14 ['b01-leafcomp-s3-s20260817.png', 'b01-leafcomp-s3-s20260817.png.meta.yaml', 'b01-leafcomp-s3-s20260818.png', 'b01-leafcomp-s3-s20260818.png.meta.yaml', 'b01-leafcomp-s3-s20260819.png', 'b01-leafcomp-s3-s20260819.png.meta.yaml', 'b01-leafcomp-s3-s20260820.png', 'b01-leafcomp-s3-s20260820.png.meta.yaml', 'comp-b01-s3.png', 'comp-b01-s3.composite.json', 'mask-b01-s3.png', 'b01-leafcomp-s3-s20260817-mask.png', 'prompt.txt', 'negative.txt']
+==== step publish END rc=0 2026-08-17T13:01:07Z ====
+#### job ep2-b01-leafcomp-s3-0817-1786971579 finished rc=0 2026-08-17T13:01:07Z
