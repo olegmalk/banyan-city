@@ -47,7 +47,7 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b01-shape-a2-0813\cover_crop.py
   - --src
-  - C:\banyan-farm\out-b01-final055r3\b01-final055-i55-s0.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-final055-r3\b01-final055-i55-s0.png
   - --sha256
   - 61f311b8b971002b39043d73e4a9d319655b00db7e866a636a9e09c4c0fe9a90
   - --out
