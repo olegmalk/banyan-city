@@ -1,0 +1,122 @@
+{
+  "id": "ep2-b02-anchor-s20260851-0817-1786958304",
+  "task": "ep2-b02-anchor-s20260851-0817",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 70,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-plate-0814\\02-the-sprint-ipa-r0-w015-s0.png",
+        "--sha256",
+        "8519ed910d70da5c9c66cf38a9d27cd4b7a62ae9d537b5ca4c1adbcff7c4e942",
+        "--out",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\b02-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817\\b02-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817\\b02-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b02-anchor-s20260851-0817",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\bench-anchor.jsonl",
+        "--bench-label",
+        "ep2-b02-anchor-s20260851-0817"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817\\stamp_sidecar.py",
+        "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\02-the-sprint-LTX-anchor-s20260851.mp4.meta.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# THE GLOB CARRIES THE BEAT SLUG (02-the-sprint). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b02-anchor-s20260851-0817-out\"\npay_dir = \"C:/banyan-farm/ep2-b02-anchor-s20260851-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-anchor-s20260851-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/02-the-sprint-LTX-anchor-s20260851.mp4*\")\n             + glob.glob(out_dir + \"/b02-init-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-anchor.jsonl\")\n             + glob.glob(pay_dir + \"/b02-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b02-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-anchor-s20260851-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\02-the-sprint-LTX-anchor-s20260851.mp4",
+    "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\b02-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1786958304,
+    "filed_at_iso": "2026-08-17T09:18:24Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b02-anchor-s20260851-0817.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-17T10:52:08Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T10:57:49Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\02-the-sprint-LTX-anchor-s20260851.mp4",
+    "C:\\banyan-farm\\ep2-b02-anchor-s20260851-0817-out\\b02-init-704x1280.png"
+  ]
+}
