@@ -2788,6 +2788,27 @@ REVS = {
         # AGGRAVATING the pose and is not the whole of it, and `arms swinging`
         # is a live second question for beat 05 -- with the hand answer intact
         # either way, since it is `arms swinging` that keeps the hands empty.
+        #
+        # THE SEED BATCH OFF THIS RUNG, RULE WRITTEN BEFORE IT RENDERS. This is
+        # NOT a new recipe and needs no new sample gate: the wording has been
+        # drawn and judged, and D1 already showed sandy hair binds at 4 of 4
+        # seeds other than 20260817. The only open question about beat 05's
+        # WORDING is whether the camera fix survives a seed change, and whether
+        # P1 comes right when it does. `--seeds 4` off base 20260817 gives
+        # three fresh draws plus a determinism re-check.
+        #   E1 EYE LEVEL AT 2 OR 3 OF THE 3 FRESH SEEDS -> the camera fix is a
+        #      property of the wording and beat 05's framing is SOLVED. At 0 or
+        #      1 of 3 it was this seed's luck and the deletion is not a lever.
+        #   E2 SANDY HAIR AT ANY FRESH SEED WITH THE CAMERA STILL AT EYE LEVEL
+        #      -> that picture is beat 05's plate candidate, and the first
+        #      cast-correct staged picture the beat has ever had. Sandy hair at
+        #      NO fresh seed here, having bound at 4 of 4 before the camera
+        #      changed, would mean the two interact -- a new and worse problem,
+        #      to be written down rather than worked around.
+        #   E3 THE COUNT. Three figures at any seed keeps beat 05's historical
+        #      count fault open at eye level too; two at all three closes it.
+        # Nothing is picked here either: a candidate is proposed, never
+        # promoted, and P1 is judged against the founder's own sheet.
         # ------------------------------------------------------------------
     },
     (9, 2): {
@@ -2886,6 +2907,28 @@ REVS = {
         # tight enough, and the hair and age are not guard A's. Neither is
         # touched here, because this rung tested the eyes and the eyes are the
         # only thing it may claim.
+        #
+        # THE SEED BATCH OFF THIS RUNG, RULE WRITTEN BEFORE IT RENDERS. Same
+        # standing: a judged wording, not a new recipe. The question this one
+        # answers has never been asked for a SINGLE-figure plate -- D1 settled
+        # it only for two-figure ones -- and it is the question beat 09 is
+        # actually blocked on:
+        #   F1 IS THE BROWN SHAGGY HAIR A SEED EFFECT? Near-black cropped hair
+        #      at 1 or more of the 3 fresh seeds -> yes, and beat 09's plate is
+        #      a draw away rather than a rewrite away. Brown at all three, with
+        #      `dark cropped hair` in the positive every time -> the hair is the
+        #      WORDING and the beat needs a different colour word (`black
+        #      hair`, which is this checkpoint's own tag, rather than `dark`)
+        #      before anything else is tried.
+        #   F2 DOES THE EYE FIX HOLD? Eyes open at 2 or 3 of 3 -> the tag is a
+        #      lever and the rule stands. Open at 1 of 3 -> r2s1 was luck and
+        #      the rule is retracted; three shut faces at r1 and one open one
+        #      is not a lever.
+        #   F3 DOES THE HEAD GET BIGGER? Head >=55% at any seed -> P3 is a draw
+        #      variable, not a wording one. Under 55% at all three, having been
+        #      48-53% at four renders -> the framing tag cannot reach it and
+        #      `face filling the frame` is not enough.
+        # No candidate is promoted from this batch either.
         # ------------------------------------------------------------------
     },
     (10, 2): {
