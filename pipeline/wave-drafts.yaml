@@ -3712,6 +3712,48 @@ beats:
       aesthetic No girl, no child, no armor, no helmet, no knight, no white
       background, no plain background, no dark, no night. No photorealism,
       no 3D render look. 9:16 vertical, no text.
+    # ── `authored_b08_nobald_0817` — 2026-08-17. `bald` REMOVED, ONE VARIABLE.
+    # `authored_b08_cast_0817` above existed to take `bald` off the guards and it
+    # still SENT `bald head`, because the token is not a literal in it: the
+    # `{{GOBLIN}}` slot is filled by goblin_ipa_sample.py's own
+    # `GOBLIN_DEF = "green skin, bald head"`. b07 carries the slot too; b06 does
+    # NOT, and b06 is the beat that came back 12 of 12 HAIRED off the same refs,
+    # sampler, model and day while b07 and b08 went 12 of 12 BALD. One mechanical
+    # difference, and it is this slot.
+    # So `bald` is BROADCAST-CLASS, exactly like eyewear: scoping it inside the
+    # goblin's own clause does not contain it. `green skin, bald head, patched
+    # cloak` is as tightly bound to the goblin as prose gets and the GUARD still
+    # went bald 12 of 12. This draft therefore REMOVES the token rather than
+    # re-scoping it, and attempts NO negation — the vacancy law says a negative
+    # does not reach an empty region, and a broadcast attribute is a BINDING
+    # failure, not a presence failure. The hair is named instead, unchanged.
+    # `GOBLIN_DEF` IS NOT TOUCHED and must not be: bald FOR THE GOBLIN is the
+    # founder's own 2026-08-12 ruling, and the sampler is shared by eleven goblin
+    # beats. Only the two beats that put a guard and a goblin in one frame drop
+    # the slot; goblin-only beats keep his bald skull.
+    # ONE VARIABLE, exactly: `{{GOBLIN}}` -> `green skin`. The sent positive
+    # differs from its predecessor's by the eleven characters `, bald head` and
+    # nothing else — no word moved, no comma moved.
+    # `tag: 2boys` DELIBERATELY UNTOUCHED. It opens "Two men," as its predecessor
+    # does and derives `2boys`; count_tag() reads the leading tag, so `tag:` is the
+    # authoring convention, and forcing another value faults all seven beat-08
+    # drafts.
+    # REAL CLIP via render_wave_goblin.check() (transformers, clip-vit-large-patch14,
+    # offline): 71/77 pos, 66/77 neg, anchor `very aesthetic` PRESENT, count `2boys`
+    # == declared `2boys`, ZERO FAULTS. Baseline was 74/77 / 66/77 / 0 faults.
+    # TOKEN TRADE: NONE. 3 tokens freed and none spent — nothing cut, nothing added
+    # to fill the headroom, style tail intact. No traded words to suspect.
+    # The plain-python3 ESTIMATOR reads this draft as 85/77 with two faults. That is
+    # fiction: without transformers, compress() sheds the tail the real tokenizer
+    # keeps. Measure through the venv or do not quote a number.
+    authored_b08_nobald_0817: >-
+      Two men, the near one light sandy hair, cream shirt, white sash, brown
+      skirt, holds a bark clipboard in both hands, the far one a goblin,
+      green skin, patched cloak, looks at his belly, arms down, tall grass,
+      pale sky above, cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no knight, no white
+      background, no plain background, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
   9:
     slug: the-pause
     kind: guard
