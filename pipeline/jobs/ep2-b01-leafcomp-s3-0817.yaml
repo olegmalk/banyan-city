@@ -975,3 +975,48 @@ filed_0817: >-
   a separate pass against the pre-registration in the header, which is already committed and is
   not to be re-read once the frames exist. Verdict lands here as verdict_0817 and as one line in
   pipeline/leaf-count-bar-0817.md section 7.
+verdict_0817: >-
+  RAN 2026-08-17 13:00Z on the rtx5090 box, bf16/CUDA, animagine-xl-3.1, 3.8s a frame, rc=0 on
+  every step, $0. Four frames published to farm-out/ep2-b01-leafcomp-s3-0817/ with SHA256SUMS.txt
+  and per-frame .meta.yaml. Scored against the pre-registration committed at 1091024f, opened at
+  1x, 2x and 4x, all four frames, N=4 as fixed before firing.
+   * AXIS A COUNT -- 4 of 4 frames carry EXACTLY TWO leaf blades on the sapling. Per the outcome
+     table written before the fire, that is REPLICATED: AXIS A binding is a property of the
+     RECIPE, not of one composite. Combined with the first fire, 8 of 8 across two independent
+     inits off two different plate seeds. No blade ADDED and none MERGED, so neither typed
+     failure occurred; nothing needed the kinder-denominator clause.
+     AND THE MASK DID NOT HAND IT THIS RESULT, which is what makes the number mean anything: on
+     comp-s3 all 642 bright blade pixels and all 26688 patched pixels fall inside the same
+     ellipse (worst normalised radius 0.897 < 1), so both blades and the junction were inside
+     the denoised region and merge and split were both reachable on every frame.
+     ONE AMBIGUITY, RULED BY THE BAR RATHER THAN BY PREFERENCE: seeds 20260819 and 20260820 show
+     a slender bare stalk beside the sapling, and 20260819 puts a small closed dark tip on it. It
+     is not counted, because the bar counts "any distinct expanded green lamina attached to the
+     plant" and excludes "a bare stem or side-branch carrying no blade" and background grass.
+     A closed tip on an unattached stalk is neither a lamina nor attached. Recorded here so the
+     next reader can disagree with the ruling rather than discover it.
+   * AXIS B HEIGHT -- no regression, tighter than the first fire. Apex y=620 in comp-b01-s3 and
+     621/619/620/620 out: |delta| <= 1px against the pre-registered 12px, ratio ~1.00, nothing
+     waist-high, nothing tree-sized, nothing doubled. Grass in frame stands taller than the plant
+     in 4 of 4.
+   * AXIS C SHAPE -- observation only, not a fail axis; the founder settled shape as "average
+     leaves" in his own words. The left blade reads broad and ovate on seeds 20260819/20260820
+     and narrower lance-ward on 20260817/20260818; the right blade is a narrow curved blade in
+     all four. Same mix as the first fire, so this rung adds nothing new to that open card and
+     does not restate it.
+   * LOOK -- no seam and no decal tell at 4x. Maxdiff outside the ellipse is 26-37 on 21-55
+     pixels, i.e. the mask blur ramp and nothing else; cel outlines in the plate's dialect,
+     consistent backlight, no tiling, no stem discontinuity at the mask edge. Reads DRAWN.
+   * RENDER PATH, stated because colour claims depend on it -- plate and patch are both bf16/CUDA
+     on this box, so the MPS-vs-CUDA split (red vs purple off an identical seed, MAE 60-61) is
+     not in play. The frames are warm amber throughout; no fig was asked for and none appeared,
+     so this rung makes NO claim about the purple fruit either way.
+   * SAMPLER -- none. leaf_count_composite.py and inpaint_fruit.py were payloaded inline from
+     this spec, so the five-days-stale wave sampler and its in-flight sync are not in the path,
+     there are no IP-Adapter refs, no contact sheet and no cell count to change.
+  OBSERVATION FOR THE MOTION LANE, not a founder card and not a count fault: the secondary bare
+  stalk beside the sapling in 2 of 4 frames is background grass at rest, but anything that
+  animates this plate should know it is there before it starts moving leaves.
+  MECHANISM: composite-then-inpaint at 0.30 binds an attribute CLIP cannot encode, on the recipe
+  rather than on a lucky init. The lane's 2-fire ceiling is now spent, both fires landed, and
+  no third instrument is owed.
