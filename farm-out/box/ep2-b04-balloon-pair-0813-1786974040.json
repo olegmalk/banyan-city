@@ -1,0 +1,114 @@
+{
+  "id": "ep2-b04-balloon-pair-0813-1786974040",
+  "task": "ep2-b04-balloon-pair-0813",
+  "node": "002b-first-citizen",
+  "beat": 4,
+  "worker": "box-runner",
+  "priority": 19,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b04-train-r1-0812\\04-the-footnote-ipa-r0-w015-s0.png",
+        "--sha256",
+        "0047bef67d4815b960b4a7eaa1ae41c66345d33f9dcc54ad014dbd6c45bfcd5a",
+        "--out",
+        "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\b04-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\b04-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\b04-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "73",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b04-balloon-pair-0813",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\bench-b04-balloonpair.jsonl",
+        "--bench-label",
+        "ep2-b04-balloon-pair-0813"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-balloon-pair\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-balloon-pair-0813/04-the-footnote-LTX-balloonpair-0813.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b04-balloon-pair-0813/b04-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b04-balloon-pair-0813/bench-b04-balloonpair.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-balloon-pair-0813.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\04-the-footnote-LTX-balloonpair-0813.mp4",
+    "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\b04-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1786974040,
+    "filed_at_iso": "2026-08-17T13:40:40Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b04-balloon-pair-0813.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-17T13:42:10Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T13:47:42Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\04-the-footnote-LTX-balloonpair-0813.mp4",
+    "C:\\banyan-farm\\ep2-b04-balloon-pair-0813\\b04-init-704x1280.png"
+  ]
+}

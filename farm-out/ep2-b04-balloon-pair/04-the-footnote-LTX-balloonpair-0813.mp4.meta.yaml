@@ -16,5 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0143
-compute_s_per_video_s: 70.1
+throughput_s_video_per_s_wall: 0.0138
+compute_s_per_video_s: 72.7
