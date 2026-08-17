@@ -1488,3 +1488,94 @@
     keep the bounce on purpose: they are receipts of bytes actually sent. NO REWRITE IS PROPOSED, deliberately
     - 003b is an approved, published script and the choice between changing the child and restoring the
     parent is a taste call. $0, no GPU, no render, nothing enqueued, no 003b file touched.'
+- what: 'BEAT 01 KEEPS MAKING A PICTURE YOUR OWN BAR CALLS WRONG - and it may be the picture you want.
+    Three prompt rungs ran tonight, 48 frames. The seedling rows fail the way they always have (three
+    to eight leaves, never two). But rows r2/r3 keep drawing a BUSH-SIZED PURPLE FIG with two little
+    leaves on top, and several are handsome. They fail beat 01''s own bar, which asks for a sprout "no
+    taller than the grass around it" - your cold open is a tiny sapling in a field, and these are a
+    fruit the size of a shrub. I am not asking which frame is best; picking takes is mine. I am asking
+    whether the BAR is still what you want, because I keep failing frames against it that you might like.'
+  url: /review/ep2-count-levers-0817
+  group: taste
+  since: '2026-08-17'
+  kind: sheet
+  episode: 2
+  verdict_hint: '"hold the bar" (seedling stays small, I build beat 01 by compositing) / "change the beat"
+    (the giant fig becomes the cold open - that is a script change and it is yours) / name a frame'
+  note_for_lanes: 'The measurement half is CLOSED and needs nothing from him: five wordings now score
+    0-3 of 16 on this grid and the passing cells are the same ref-driven cells in every rung, so the
+    reference set is drawing them, not the words. Full scoring in review/ep2-picks/count-levers-0817-verdict.yaml.
+    Do NOT file another count wording. Composite-then-inpaint already gives 8 of 8. SEPARATE AND UNASKED:
+    height is 0 of 16 on every rung including the control - every frame is macro-tight with the grass
+    out of shot - and no count wording touches it. That is a framing rung nobody has run.'
+- what: 'MAY I PUSH? 185 commits are on this machine and not on GitHub, the oldest from 2026-08-15. The
+    site is serving what was pushed at 10:16 on 08-17 and nothing since - including tonight''s fixes to
+    the status page, which is currently telling you that you owe twelve decisions you already made. The
+    deploy is healthy; we are simply sitting on the work. It was held on purpose because the rewritten
+    beats you have not read are in the stack.'
+  url: 'local: git log origin/main..main'
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  verdict_hint: '"push it" / "push but not X" / "hold until I have read the beats"'
+  note_for_lanes: 'Nothing technical is blocking. Verified 2026-08-17: banyan.city built 10:16:32Z from
+    origin/main tip 145a02d5 committed 10:14:57Z - a 95-second deploy, i.e. working. The 8.5h "lag" that
+    qa_local reports is unpushed commits, not a stuck deploy, and its advice to publish via REPO-MOVE.md
+    A0 is wrong for this situation. The Pages mirror looking newer is its own */30 cron, not evidence.'
+- what: 'THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four. Five casting
+    rounds have not moved it. Second half of the same question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?
+    Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.'
+  url: 'local: review/ep2-picks/cast-0817-scores.yaml'
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  episode: 2
+  verdict_hint: 'adults, recast until they read grown / accept them as they are / stage around it (crop,
+    angle, coverage). And separately: green man yes / no'
+  note_for_lanes: 'Seven guard beats were cast-corrected and scored on 08-17, N of 12 per beat, in review/ep2-picks/cast-0817-scores.yaml.
+    The adjective route is already closed by his 2026-08-12 ruling - body-type and tone words stay out
+    of the prompt and the register is staged - so "just say adult" is not available and this needs him.'
+- what: 'BEAT 14 CLEARS EVERY AXIS AND THE LANE THAT BUILT IT STILL WOULD NOT HAND IT TO MOTION. It passes
+    all seven scored axes, and it carries an unresolved pale limb-like mass that no axis catches. Coordinates
+    are committed. Ship it or fix it - both are defensible and neither is mine.'
+  url: 'local: pipeline/farm-branch-merge-gap-0817.md'
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  episode: 2
+  verdict_hint: 'ship it as-is / fix the mass first / show me the frame and I will say'
+- what: 'BEAT 17''S BRUSH IS EXHAUSTED BY EVIDENCE, and the cheapest way out edits an approved line. Twelve
+    seeds produced zero brushes; handed the gesture mid-stroke from its own best frame it still would not
+    complete a stroke. Three routes and all three are yours: accept roughly 1-in-5 and render five to pick
+    one, restage the beat so no brush is required, or change the checkpoint. NOTE THE COST OF ROUTE TWO:
+    "brushes off" is in the approved script line 002b-t0-c, so conceding it is a rewrite, not a staging tweak.'
+  url: 'local: pipeline/plate-verdicts-0817.md'
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  episode: 2
+  verdict_hint: 'render five and pick / restage without the brush (accepting the script edit) / change
+    the checkpoint'
+- what: 'BEAT 21 - ARE ITS TWO BLADES YOUR "AVERAGE LEAVES"? You ruled on 2026-08-17 that the sapling''s
+    two leaves are average leaves, and canon reads that as a ruling about SHAPE, not about vocabulary or
+    size. Beat 21 is the one plate where the question is live. Second, smaller: its soft background object
+    - dress it, or reshoot the plate?'
+  url: 'local: review/ep2-picks/farm-recovered-0814-b01shape-scores.yaml'
+  group: taste
+  since: '2026-08-17'
+  kind: decision
+  episode: 2
+  verdict_hint: 'yes those are average leaves / no, they are X. And: dress the background / reshoot it'
+- what: 'BEAT 11 r1s1 - I AM PROMOTING IT AND YOU CAN VETO. It scores 9 of 10 on a beat whose take was
+    recorded BROKEN, so nobody promoted it and it sat unused. Picking takes is mine under your own
+    boundary, so I am picking this one rather than asking you to. Say nothing and it stands.'
+  url: 'local: review/ep2-picks/farm-recovered-0814-scores.yaml'
+  group: pick
+  since: '2026-08-17'
+  kind: clip
+  episode: 2
+  verdict_hint: 'silence accepts. Say "no, it is broken because X" to veto.'
+  note_for_lanes: 'The BROKEN TAKE record is on the BEAT, not on this plate, and the two were never
+    reconciled. Reconciling them is the steward''s job and this card is that reconciliation, not a
+    request. Same file also claims a2 never ran - it ran 2026-08-13 - and the disagreement is left
+    standing on purpose as the record.'

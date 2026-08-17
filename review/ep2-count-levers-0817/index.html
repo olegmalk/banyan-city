@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beat 01 — three ways to ask for two leaves, and none of them worked</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 620; color: var(--accent); }
+  p { max-width: 78ch; }
+  .muted { color: var(--muted); font-size: 14.5px; }
+  .ask { background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
+         padding: 18px 20px; margin: 26px 0; }
+  .ask h2 { margin-top: 0; color: var(--accent); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+          padding: 16px 18px; margin: 18px 0; }
+  figure { margin: 14px 0 6px; }
+  img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 600; }
+  .fail { color: var(--fail); }
+  .warn { color: var(--warn); }
+  code { background: #101113; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  ul { max-width: 78ch; }
+  li { margin: 5px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Beat 01 — three ways to ask for two leaves, and none of them worked</h1>
+  <p class="sub">2026-08-17, overnight. 48 frames, three prompt rungs, each scored against a bar
+  written before its frames existed. Nothing here is promoted and nothing is cut. One question at the
+  bottom is yours; the rest is measurement and it is already decided.</p>
+</header>
+
+<div class="ask">
+  <h2>The one thing I need from you</h2>
+  <p>Rows r2 and r3 keep producing <strong>a bush-sized purple fig with two little leaves perched on
+  top</strong>. Several are genuinely handsome pictures. They also <strong>fail this beat's own
+  bar</strong>, which asks for a seedling <em>no taller than the grass around it</em> — the script's
+  cold open is a tiny sapling in a field, and these are a fruit the size of a shrub.</p>
+  <p><strong>Do you want that look?</strong> Three ways to answer:</p>
+  <ul>
+    <li><strong>Hold the bar</strong> — the seedling stays small, and I stop showing you the big-fig
+    frames. Beat 01 gets built by compositing (see below).</li>
+    <li><strong>Change the beat</strong> — you like the giant fig, and the cold open becomes that
+    instead. This is a script change and it is yours, not mine.</li>
+    <li><strong>Name a frame</strong> — if one of these is the shot, say which and I will build from it.</li>
+  </ul>
+  <p class="muted">I am not asking which of the 48 is best — picking takes is mine and I will do it.
+  I am asking whether the bar itself is still what you want, because I keep failing frames against it
+  that you might actually like.</p>
+</div>
+
+<h2>What was tested, and what happened</h2>
+<p>The cold open asks for a two-leaf sapling. The model will not draw two leaves — it draws four to
+eight, on two or three stacked nodes. Three different ways of asking, one variable each, all against
+the same control and the same 16-cell grid:</p>
+
+<table>
+  <tr><th>rung</th><th>the wording</th><th>exactly two leaves</th><th>height</th><th>verdict</th></tr>
+  <tr><td><code>nodecount</code></td><td>“…either side of the stem <strong>at one node</strong>”</td>
+      <td class="fail">3 of 16</td><td class="fail">0 of 16</td><td class="fail">NO EFFECT</td></tr>
+  <tr><td><code>stage</code></td><td>“a tiny <strong>newly sprouted</strong> fig seedling”</td>
+      <td class="fail">3 of 16</td><td class="fail">0 of 16</td><td class="fail">NO EFFECT</td></tr>
+  <tr><td><code>twoleaf</code></td><td>“a tiny <strong>two-leaf</strong> fig seedling”</td>
+      <td class="fail">3 of 16</td><td class="fail">0 of 16</td><td class="fail">NO EFFECT</td></tr>
+</table>
+<p class="muted">Each bar required 9 of 16 to count as working, and declared 6 or under to be
+no effect — both written down and committed before any frame was rendered, so the read could not be
+softened afterwards.</p>
+
+<h2>The frames</h2>
+
+<h3>The clean rows — this is the failure, plainly</h3>
+<figure>
+  <img src="/review/ep2-count-levers-0817/stage-A.jpg" alt="Eight anime-style seedling stills in a row. Every plant has three to eight leaves arranged in pairs up a tall stem, several with small purple figs.">
+  <figcaption><code>stage</code>, rows r0/r1. Count the leaves on any of them: three to eight, in pairs up
+  the stem. That is the defect — the model draws a healthy plant, not a two-leaf sprout. The other two
+  rungs look the same.</figcaption>
+</figure>
+
+<h3>The finding that closes the question</h3>
+<p>These two sheets are <strong>different wordings</strong>. Look at cell <code>r2-s3</code> in each —
+the fig with two leaves on top — and <code>r3-s1</code>:</p>
+<figure>
+  <img src="/review/ep2-count-levers-0817/twoleaf-B.jpg" alt="Eight stills dominated by large purple fig shapes; one cell shows a big teardrop fig with exactly two green leaves on top, another shows a small sprout with two leaves against a purple background.">
+  <figcaption><code>twoleaf</code>, rows r2/r3.</figcaption>
+</figure>
+<figure>
+  <img src="/review/ep2-count-levers-0817/nodecount-B.jpg" alt="Eight stills with the same large purple fig motif, including a near-identical teardrop fig with two green leaves on top in the same grid position.">
+  <figcaption><code>nodecount</code>, rows r2/r3 — the same picture in the same cells, from a different prompt.</figcaption>
+</figure>
+<p>Three different prompts did not each independently invent that composition.
+<strong>The reference images are drawing it, not the words.</strong> Which means the ~3-of-16 is the
+floor of this setup, and every wording we have measured has been measuring the reference set.</p>
+
+<h2>So the wording route is closed, and I am not spending the card on it again</h2>
+<p>Five wordings have now been measured on this grid: <code>exactly two</code> 0 of 16, the canon draft
+0 of 16, <code>opposed one either side of the stem</code> 2 of 16, then tonight's three at 3 of 16.
+That is not five near misses, it is one null measured five times.</p>
+<p><strong>The route that already works is compositing:</strong> build the two leaves into the starting
+image and let the model paint over it at low strength. That gives an exact two-leaf count
+<strong>8 times out of 8</strong>, and it spends no GPU on the count at all. The next beat-01 job
+should <em>produce</em> a plate that way rather than <em>test</em> another sentence.</p>
+
+<h2>What is still broken and nobody has worked on</h2>
+<p><strong>Height, 0 of 16 on every rung including the control.</strong> Every frame is shot too close:
+the grass is out of shot or reduced to a strip, so “no taller than the grass around it” has nothing to
+measure against. This is a framing problem, no count wording touches it, and it is the more shippable
+of the two defects. It has never had a rung of its own.</p>
+
+<p class="muted">Full scoring, cell by cell, with what each verdict does and does not license:
+<code>review/ep2-picks/count-levers-0817-verdict.yaml</code>. The 48 frames are on the box under
+<code>farm-out/ep2-b01-{nodecount,stage,twoleaf}-0817</code>, each with its prompt, seed and cost.</p>
+
+</div>
+</body>
+</html>
