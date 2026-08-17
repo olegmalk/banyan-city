@@ -574,3 +574,90 @@ sets:
       because the 3-of-8 leaf-count rate across beats 12 and 21 is the sharpest number in
       the recovery for deciding whether `exactly two` needs replacing.
     founder_card: none.
+
+  ep2-b01-styleprobe:
+    what_it_is: >-
+      A THREE-ARM img2img STRENGTH PROBE on beat 01, not a wave and not a pick sheet.
+      One axis only — init strength 0.25 / 0.40 / 0.55 — over two seeds (20260720,
+      20261720), so six frames. StableDiffusionXLImg2ImgPipeline, Animagine-XL-3.1,
+      bfloat16, 832x1216, 40 steps, guidance 7.5. Everything except strength is pinned:
+      same init, same seeds, same positive, same negative, same harness.
+    spec: pipeline/jobs/ep2-b01-styleprobe-0812.yaml
+    dated: 2026-08-12, ~03:2x — the last reject-with-direction of that night
+    render_path: CUDA/bfloat16, rtx5090, $0.00
+    the_question_in_his_words: >-
+      Roman, ~23:45 on 2026-08-11, on beat 01: "for beat 1, s2 is really good but.. how
+      come you changed the style so much?" The probe asks the only question that follows:
+      does a LOW-STRENGTH img2img starting from s2 — not from the old plate — move the
+      style back toward the plate family while s2's composition and its fig survive?
+    init: >-
+      farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png, the frame he called "really
+      good". VERIFIED: I re-hashed it in this worktree and it is
+      874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454, matching the
+      `init_sha256` in all six sidecars exactly. The probe's declared init is provably the
+      frame in the repo.
+    bar_scored_against: >-
+      THE SET'S OWN SPEC, and this spec's bar is deliberately NOT about finding a middle:
+      "Success is that the three arms are comparable and readable — NOT that a middle was
+      found. 'No middle exists' is a successful run of this job." The spec also wrote its
+      honest prior in advance: "The plate's style was never in the words. It was in the
+      plate's PIXELS... The plate is nowhere in this job, so the only style channel here
+      is text — the same channel measured to lose that fight."
+    files: 6
+    distinct: 6
+    score: 6 of 6 — the job SUCCEEDED on its own bar. All three arms rendered, both seeds,
+      all comparable and readable, one axis cleanly isolated.
+    the_answer: NO MIDDLE EXISTS.
+    findings:
+      the_palette_does_not_move_across_the_whole_range: >-
+        Compared side by side against both anchors — the init and
+        farm-out/ep2-b01-brightbase-figmatte (the plate-family look) — all six frames stay
+        in the INIT's pale, high-key, washed-pastel family at every strength. The plate
+        anchor is a different world: deep orange-amber backlight, near-black silhouetted
+        grass, high contrast. Nothing at 0.25, 0.40 or 0.55 travels any distance toward it.
+        Raising strength from 0.25 to 0.55 buys more background STRUCTURE (a hill ridge
+        resolves, grass blades sharpen, i55 adds a warm rim and a reddish stem tint and
+        some pink flecks) but does not shift the palette family at all. The probe's own
+        honest prior is CONFIRMED: text cannot reach a style that lived in the plate's
+        pixels.
+      the_probe_s_premise_about_the_fig_IS_FALSE: >-
+        MOST IMPORTANT THING IN THIS SET, and it invalidates part of the framing rather
+        than the run. The question asks whether "s2's composition and its FIG survive",
+        and the consumer note calls these six "the only candidates for a middle" that
+        "could keep the drawn fig and the two leaves". At full zoom there is NO FRUIT in
+        any of the six arms — and no fruit in the INIT s2 either. s2 never had a fig. So
+        the fig half of the question is not answered "no", it is UNANSWERABLE from this
+        probe: nothing was there to survive. Any later reasoning that treats s2 as the
+        frame which "finally obeyed those words — the fig and the two leaves are drawn,
+        not masked in" is half wrong: the two leaves are drawn, the fig is not.
+      composition_and_leaf_count_do_survive: >-
+        Composition survives cleanly at all three strengths — same seedling, same placement,
+        same framing as the init. Leaf count is TWO at every strength (one large upright
+        teardrop leaf plus one smaller lateral leaf), which is the canon count. So the
+        probe DOES establish that low-strength img2img over s2 preserves composition and
+        the two-leaf count; it just cannot deliver the style.
+    canon_now:
+      green_fruit_wording_predates_the_purple_ruling: >-
+        The positive asks for "one small round GREEN fruit hanging from the stem" and the
+        negative does NOT block green fruit. This is 2026-08-12, TWO DAYS before the
+        founder ruled the fruit purple, so the green wording is NOTED, NOT scored as a
+        failure of this set's bar — per the standing instruction. It is moot in practice
+        because no fruit rendered at all.
+      leaf_shape_wording_superseded: >-
+        "two oversized cotyledon leaves" is the retired steward inference, superseded by
+        "average leaves" (2026-08-17). What actually rendered — one big leaf and one
+        smaller lateral leaf, not a symmetric oval pair — is arguably closer to his
+        "average leaves" ruling than the cotyledon wording that was asked for. Not scored.
+      height_wording_is_canon: >-
+        "A tiny 40cm seedling ... no taller than the grass around it" matches
+        THE-SAPLING.md (~40 cm at 002b) and 3.3's ruling that the grass relation is
+        compatible with 40 cm and not a violation.
+    status: LIVE EVIDENCE — and it CLOSES a hypothesis.
+    why_live: >-
+      It retires the middle-ground hypothesis for about eight GPU-minutes, exactly as the
+      spec intended, and nothing since has retested it. Its consumer — a three-way morning
+      pick on beat 01 against the t2i frame and the plate frame — was never delivered
+      because the set never reached main. That pick is still available and is now a founder
+      card (card 2 below), with the caveat that the choice is a genuine two-way, not a
+      three-way, because no middle was found.
+    founder_card: card 2 below.
