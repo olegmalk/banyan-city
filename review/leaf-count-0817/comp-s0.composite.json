@@ -1,0 +1,25 @@
+{
+  "cost_usd": 0.0,
+  "feather": 9,
+  "init": "farm-out/ep2-b01-brightbase-figmatte/01-cold-open-bright-i35b-s0.png",
+  "init_sha256": "d6050e5b8ccd1e274285bdc42a25cbe151153876cd4b9b404c50c5946115adc9",
+  "mask_grow": 12,
+  "mask_out": "review/leaf-count-0817/mask-s0.png",
+  "model": "none -- plain PIL, no sampler, no network",
+  "note": "beat01 brightbase-figmatte s0: extra lower-left leaf + its drooping tip patched out with same-row background (no tone step); leaf count fixed by construction, not prompted",
+  "out": "review/leaf-count-0817/comp-s0.png",
+  "out_sha256": "532b85426efdc5de381846844090fc1ebda4094390fb8e933a5dc39c1bb74640",
+  "purpose": "leaf COUNT fixed by construction before any sampler runs",
+  "remove": [
+    "330,724,108,34,10.3",
+    "240,760,52,27,0"
+  ],
+  "source_offset": [
+    "-300,0"
+  ],
+  "sources": [
+    "arXiv:2503.06884 -- prompt refinement does not improve counting",
+    "arXiv:2406.10210 (Make It Count, CVPR 2025) -- plain SDXL numerals score 26-28%; count is a layout problem"
+  ],
+  "tool": "pipeline/leaf_count_composite.py"
+}
