@@ -1,0 +1,98 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260814
+render_seconds: 70.9
+png_sha256: "ff582b867f4dce0f4d8a25c641a400068039ed855fe06ee700723cd864e43ee9"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, low close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 5
+scored: true
+# Written by OPENING THE IMAGE. No tool used, none cited. Judged against the bar
+# committed at e70c36f6 and restated unchanged at 3c20c13a, before this pixel.
+what_this_frame_shows: >-
+  ONE adult green goblin, bald, long pointed ears, brown-oxblood hooded cloak,
+  crouched right down with his torso folded and his head low, face angled down
+  toward his own hands, cropped at the knees so no feet are in frame. BOTH
+  forearms come down the centre of the frame and ALL TEN CLAW-TIPS ARE BURIED IN
+  A DUG PATCH OF DARK SOIL with loose crumbs thrown around it - the clearest
+  contact of the three revisions. The hands are the largest element in the frame
+  after the head. Bare brown-tan soil fills the lower 45% with clods and specks.
+  Green grass tufts stand at the left and right frame edges at his own depth and
+  tall green blades cross the bottom foreground on both sides; THERE IS NO GRASS
+  BAND CLOSING THE FAR EDGE of the dirt, which r4 had. THE UPPER BAND IS STILL A
+  WASH: a soft green-to-white gradient with faint speed-line strokes, no object
+  in it, both top corners flat, still larger than his torso. Eyes blank white
+  slits. Cloak plain, no patchwork.
+verdict_against_pre_registered_bar: >-
+  NOT A PASS, AND P5 FAILS FOR THE THIRD RUNG. P1 PASS. P2 BOTH HANDS DOWN AND
+  LARGE - PASS, and the best of the five: this is the tightest hands-and-dirt
+  framing the beat has had. P3 CONTACT - PASS, strongest of the three. P4' -
+  MARGINAL PASS AND WEAKER THAN r4: green on three sides continuing past the
+  left, right and bottom edges rather than isolated tufts, but the far edge of
+  the dirt is now open to the wash where r4 closed it with a continuous grass
+  band. Recorded as a regression against r4 on this axis even though it clears
+  the text. P5 NO VACANCY - FAIL. P6 PASS. P7 PASS.
+  THE ONE VARIABLE BOUND, AND ITS NAMED RISK DID NOT FIRE. Moving `low close-up,
+  hands and dirt large in frame` to the front pulled the camera back IN - Q8,
+  which fired weakly on r4, is UNDONE - and Q6 PORTRAIT RE-COMPOSE, the
+  pre-registered risk of a leading `low close-up`, did NOT fire: this is not a
+  portrait and the ground is still half the frame. So leading framing tags carry
+  real weight on this beat too, at no token cost, and that is a clean
+  confirmation of the one measured law beat 14 had never applied.
+  Q1, Q2, Q3, Q4, Q5, Q6, Q7 all did not fire. Nothing in either specified hand
+  for the fourth revision running.
+  RECORDED AND NOT SCORED: costume drift (four revisions now - it wants a
+  REFERENCE, not words), blank white eyes, `face turned away` still not binding.
+the_stop_rule_is_honoured: >-
+  3c20c13a pre-registered this as THE LAST WORDING RUNG THIS LANE WILL FIRE, and:
+  "if a third does, P5 is not reachable by words on this composition and that
+  gets reported as the answer rather than laddered around." A THIRD RUNG HAS
+  FAILED P5. THAT IS THE ANSWER AND THE LANE STOPS. Cycle 017's stop rule was
+  honoured under the same pressure ("the lane stops rather than seeding a sixth
+  thing") and this one is too.
+  WHY TIGHTENING DID NOT REMOVE THE BAND, which is the mechanical residue worth
+  handing on. r5 enlarged the SUBJECT; it did not move the CAMERA. The camera is
+  still near this crouching figure's eye level, so there is still a horizon in
+  frame and therefore still a sky above his hunched back. Framing tightness
+  changes how much of the frame he occupies; it does not change where the horizon
+  sits.
+  THE NEXT INSTRUMENT, NAMED AND DELIBERATELY NOT FIRED: a CAMERA ANGLE, not a
+  framing tag - `from above` / a high angle, which would put GROUND behind him
+  instead of sky and would delete the band rather than try to fill it. It is a
+  leading-tag-class change, so on r5's evidence it would bind. It is NOT fired
+  here for two reasons. (1) This lane pre-committed to stop at three, and turning
+  "not reachable by words on this composition" into "well, a camera tag is a
+  different composition" is how a stop rule becomes a rubber band. (2) Camera
+  angle on a beat about a man's hands and his embarrassment is a LOOK decision,
+  and beat 05's history shows angle tags are volatile here (high angle held at 3
+  of 3 against a wording meant to remove it). It belongs to the next lane with
+  the reasoning already done, or to the founder.
+  ONE OBSERVATION OFFERED AND EXPLICITLY NOT A PASS: P5's failure here is a
+  soft gradient band, not the WHITE BURST that broke the plates for beats 06, 09
+  and 11. A first frame that opens on a pale sky is a milder fault than one that
+  opens on a void. That is a judgement for the founder to make, not a bar this
+  lane may bend, and r5 is recorded as NOT A PASS.
+  WHAT THE BEAT NOW HAS THAT IT DID NOT THIS MORNING: five draws of one seed
+  (20260814), three of them scored, and a plate that clears SIX of seven axes -
+  crouch, both hands down and large, all ten fingertips in dug soil, a dirt patch
+  in green grass, his head in frame to animate the glancing with, one adult
+  goblin - against a definition whose only existing plate was the standing
+  full-body shot it says to send back.
+  No seed batch at any rung: the committed rule spends three fresh seeds only
+  once every axis holds. $0, single samples throughout, nothing enqueued, no
+  motion, no `plate_ack`, shots.md / wave-drafts.yaml / farm-queue.yaml untouched.
+  A MAC PLATE IS EVIDENCE ABOUT A PICTURE, NEVER ABOUT A WORDING (MAE 61 of 255
+  against the box). Nothing here is cited as a wording that works.
