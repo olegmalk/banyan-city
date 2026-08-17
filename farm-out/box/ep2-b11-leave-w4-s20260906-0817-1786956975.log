@@ -1,0 +1,88 @@
+#### job ep2-b11-leave-w4-s20260906-0817-1786956975 attempt 1 start 2026-08-17T09:08:55Z
+
+==== step crop START 2026-08-17T09:08:58Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b11-plate-pub-0817\\11-they-leave-mac-plate-r3s1.png", "--sha256", "425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca", "--out", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817-out\\b11-leave-init-704x1280.png", "--size", "704x1280"]
+src 832x1216 sha 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca
+cover-crop scale=1.0526 -> 876x1280, centre box (86,0)
+WROTE C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\b11-leave-init-704x1280.png
+==== step crop END rc=0 2026-08-17T09:08:58Z ====
+
+==== step encode START 2026-08-17T09:08:58Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817\\b11-jobs-encode.json"]
+-- begin-encode: phys 10.3/68.1GB, commit 12.3/115.3GB (load 15%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  29%|██▊       | 306/1065 [00:00<00:00, 2790.79it/s]
+Loading weights:  58%|█████▊    | 618/1065 [00:00<00:00, 2811.82it/s]
+Loading weights:  96%|█████████▋| 1027/1065 [00:00<00:00, 3226.55it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 3227.71it/s]
+-- encode-beat-11: phys 11.5/68.1GB, commit 39.1/115.3GB (load 16%)
+[1/1] encoded beat 11 to C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\b11-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 41.2, "peak_phys_gb": 37.0, "last_stage": "encode-beat-11"}
+==== step encode END rc=0 2026-08-17T09:10:29Z ====
+
+==== step render START 2026-08-17T09:10:29Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817\\b11-jobs-render.json", "--size", "704x1280", "--frames", "97", "--fps", "24", "--guidance", "2.0", "--distilled-sigmas", "--two-stage", "--image-crf", "33", "--offload", "sequential", "--mode", "production", "--task", "ep2-b11-leave-w4-s20260906-0817", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817-out\\bench-b11-leave-w4-s20260906.jsonl", "--bench-label", "ep2-b11-leave-w4-s20260906-0817"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 10.4/68.1GB, commit 12.3/115.3GB (load 15%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 11.1/68.1GB, commit 14.2/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  9.44it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.33it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  8.67it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 16.94it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 14.17it/s]
+-- load-connectors-12.7GB-and-vae: phys 11.2/68.1GB, commit 52.5/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 67.77it/s]
+-- offload-setup-sequential: phys 11.2/68.1GB, commit 62.1/115.3GB (load 16%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=33 -> C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\cond-crf-11.png
+-- stage1-denoise-352x640-8steps: phys 12.1/68.1GB, commit 62.5/115.3GB (load 17%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:09<08:07, 69.58s/it]
+ 25%|██▌       | 2/8 [01:22<03:38, 36.34s/it]
+ 38%|███▊      | 3/8 [01:31<01:59, 23.89s/it]
+ 50%|█████     | 4/8 [01:41<01:12, 18.12s/it]
+ 62%|██████▎   | 5/8 [01:50<00:44, 14.90s/it]
+ 75%|███████▌  | 6/8 [01:59<00:25, 12.89s/it]
+ 88%|████████▊ | 7/8 [02:08<00:11, 11.66s/it]
+100%|██████████| 8/8 [02:17<00:00, 10.80s/it]
+100%|██████████| 8/8 [02:17<00:00, 17.16s/it]
+stage1 latents (1, 128, 13, 20, 11)
+-- upsample-2x-latent: phys 58.5/68.1GB, commit 65.0/115.3GB (load 85%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 13, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 60.1/68.1GB, commit 68.0/115.3GB (load 88%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:24<00:48, 24.03s/it]
+ 67%|██████▋   | 2/3 [00:51<00:26, 26.17s/it]
+100%|██████████| 3/3 [01:18<00:00, 26.44s/it]
+100%|██████████| 3/3 [01:18<00:00, 26.15s/it]
+-- decode-and-export: phys 63.8/68.1GB, commit 71.2/115.3GB (load 93%)
+[1/1] wrote C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\11-they-leave-w4-s20260906-LTX-castplate.mp4 in 239s (97 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 9.9GB, device 2.6/26GB)
+THROUGHPUT 0.0169 s(video)/s(wall) (1 x 4.042s of video in 239s)
+bench row -> C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\bench-b11-leave-w4-s20260906.jsonl
+{"sample_s": 239.3, "peak_gb": 9.9, "peak_commit_gb": 79.1, "frames": 97, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.0169, "two_stage": true, "image_crf": 33, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 79.1, "peak_phys_gb": 64.0, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-17T09:14:44Z ====
+
+==== step stamp START 2026-08-17T09:14:44Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817\\stamp_sidecar.py", "C:\\banyan-farm\\ep2-b11-leave-w4-s20260906-0817-out\\11-they-leave-w4-s20260906-LTX-castplate.mp4.meta.yaml"]
+stamped C:\banyan-farm\ep2-b11-leave-w4-s20260906-0817-out\11-they-leave-w4-s20260906-LTX-castplate.mp4.meta.yaml
+==== step stamp END rc=0 2026-08-17T09:14:44Z ====
+
+==== step publish START 2026-08-17T09:14:44Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b11-leave-w4-s20260906-0817-out\"\npay_dir = \"C:/banyan-farm/ep2-b11-leave-w4-s20260906-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b11-leave-w4-s20260906-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/11-they-leave-w4-s20260906-LTX-castplate.mp4*\")\n             + glob.glob(out_dir + \"/b11-leave-init-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-b11-leave-w4-s20260906.jsonl\")\n             + glob.glob(pay_dir + \"/b11-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b11-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b11-leave-w4-s20260906-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b11-leave-w4-s20260906-0817
+==== step publish END rc=0 2026-08-17T09:14:44Z ====
+#### job ep2-b11-leave-w4-s20260906-0817-1786956975 finished rc=0 2026-08-17T09:14:44Z
