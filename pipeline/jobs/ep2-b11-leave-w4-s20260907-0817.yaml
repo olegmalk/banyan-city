@@ -314,3 +314,22 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    PASS ALL SIX -- RUNNER-UP TO s20260903. Two guards, backs turned in every
+    frame (guard-B head crops at 4-frame density across f000-f096 show the
+    back of his head and no facial feature anywhere), both fully in frame at
+    f096, field at frame one, identities and costumes holding (gap 49.2 ->
+    46.8). Coat height tan 282->227 (0.805), brown 317->274 (0.864) against a
+    background scale of 1.000, so the departure is theirs. Weaker than
+    s20260903's 0.701/0.793, which is the only reason it is the runner-up.
+    Terminal-freeze index 0. Offered for the founder's veto, not picked here.
+  clip: farm-out/ep2-b11-leave-w4-s20260907-0817/11-they-leave-w4-s20260907-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py -- two disjoint costume masks (TAN
+    guard A, BROWN guard B) plus a similarity transform fitted to the
+    background, past five gates (band separation, frozen, synthetic scale,
+    synthetic pan, synthetic exit). All nine judged clips were read with this
+    same final version; the instrument changed mid-lane and that is disclosed
+    in commit c1aa2f70 rather than buried.
+  terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere in the clip,
+    reported separately from the hold. Depth and cadence NOT quoted.

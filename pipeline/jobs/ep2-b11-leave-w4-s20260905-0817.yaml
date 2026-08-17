@@ -314,3 +314,17 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    FAIL D2. Tan coat 283->270 (0.954) and the TAN MAN GETS BIGGER once the
+    framing is accounted for (net 1.06); the fitted background scale wanders
+    0.90-1.43, so the framing itself is unstable. D1, D3, D4, D5, D6 pass.
+  clip: farm-out/ep2-b11-leave-w4-s20260905-0817/11-they-leave-w4-s20260905-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py -- two disjoint costume masks (TAN
+    guard A, BROWN guard B) plus a similarity transform fitted to the
+    background, past five gates (band separation, frozen, synthetic scale,
+    synthetic pan, synthetic exit). All nine judged clips were read with this
+    same final version; the instrument changed mid-lane and that is disclosed
+    in commit c1aa2f70 rather than buried.
+  terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere in the clip,
+    reported separately from the hold. Depth and cadence NOT quoted.
