@@ -422,6 +422,77 @@ beats:
       grew a tree instead.'
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
       so it could not be bent to fit the clips that already exist.
+    judged_0817_anchor_wave:
+      what: >-
+        SIXTEEN rendered seeds of the `anchor` wording existed on the box and NONE had been read by a
+        judging lane. All sixteen read here on CONSECUTIVE frames via pipeline/coldread_frames.py (never
+        an evenly-spread sheet), against THIS beat's own done_when. Terminal freeze dated separately by
+        review/ep2-picks/exact_freeze_index.py (consecutive-frame ncc == 1.0000, 5 gates passing).
+      wording_rendered: >-
+        "He stays in the middle of the frame the whole time. He runs a few steps and drops flat to the
+        ground." + style tail. IDENTICAL across all 16; MD5 says all 16 share ONE init plate. So the
+        spread below is seed variance and nothing else.
+      PERFORMING_RATE: 7 of 16 (44%)
+      performing_rule: >-
+        Counted as performing only when BOTH halves are legible as a body: he RUNS (alternating gait,
+        not a lean) AND he GOES DOWN. Framing faults do not subtract; illegibility does.
+      performers:
+        - s20260834: run f000-082, pitch forward f083-086, prone f087-096. No terminal freeze.
+        - s20260831: run f000-088, drop f089-096. No terminal freeze. Sky bands to a flat strip.
+        - anchor (original seed): run f001-072, pitch f073-079, hands plant f080-084, prone f085-088. Terminal freeze index 86, 11 frames.
+        - s20260817: run f001-072, pitch f073-079, prone f085-092. Face washes to a blank oval DURING the pitch. Terminal freeze index 95, 2 frames.
+        - s20260837: run f001-079, prone f080-096. Left arm elongates into a noodle f041-052. Sky is a flat white band.
+        - s20260836: run f001-082, down f083-096. Arms go out sideways into a T-pose f041-046.
+        - s20260839: run f003-083, down f090-096 but he drifts to the LOWER LEFT and is partly out of frame at the end.
+      failures:
+        no_run_at_all: >-
+          s20260818, s20260821, s20260830, s20260832, s20260833 -- all five hold the plate's standing
+          pose with hands clasped for roughly f000-077 and only then go down. The prompt's "runs a few
+          steps" never happens. s20260833's f040-059 is a slow forward LEAN, not a gait.
+        exits_frame_recorded_fault_reproduced: >-
+          s20260835 (standing f000-073, lurches out, f089-096 is EMPTY GRASS, terminal freeze index 93),
+          s20260819 (standing, exits left, f092-096 near-empty), s20260820 (no run, staggers left, HEAD
+          leaves frame leaving a headless torso).
+        figure_dissolves: >-
+          s20260838 runs clearly f001-059 and then the figure DISSOLVES into an unreadable pale lump by
+          f080. The run is real; the landing is not a body, so the dive is not legible.
+        adjacent_frame_cut: >-
+          s20260830 f082 is a standing figure and f083 is a prone body. Those are ADJACENT indices, so
+          this is a genuine cut and no sampling interval can be blamed for it.
+      PICK: s20260834
+      pick_reason: >-
+        The only take with the whole arc and no dead air: the longest legible run (f000-082), a real
+        forward pitch (f083-086), a real prone landing (f087-096), no terminal freeze, no frame exit,
+        and the face survives the entire run -- it only goes blank once he is face-down at f090+, which
+        is when his face is pressed away from camera anyway, making its one fault invisible in the cut.
+      runners_up_for_veto_only:
+        - anchor (original seed): identical arc and a slightly clearer landing, but 11 frames of the tail are one frozen picture.
+        - s20260831: the longest run of all, but the drop is compressed into 8 frames at the very end and the sky bands to a flat strip.
+      done_when_verdict: FAIL for all 16, and NOT on the action
+      done_when_failure_is_structural: >-
+        done_when requires "entry, skid, dive" and says "the plate must already contain the sapling".
+        THE PLATE CONTAINS NO SAPLING AND NO TRUNK -- it is the goblin standing centred in an empty
+        sunlit field, full body, bare feet on grass. So "dives behind the sapling's thin trunk" is
+        unrenderable off this plate no matter which seed wins, and there is no ENTRY either: he is
+        already centre-frame and standing at f000, so he cannot sprint INTO frame. No take skids. The
+        seven performers deliver "runs and goes down", which is what the WORDING asked for; the beat's
+        remaining distance is a PLATE job (a sapling in frame, and room for him to enter from), not a
+        wording or seed job. Do not spend more seeds on this wording expecting done_when to close.
+      contradicts_the_record: >-
+        The recorded fault "the frame goes nearly EMPTY by mid-clip - he sprints out of shot ... A viewer
+        cannot see the beat happen at all" is REAL but is NOT what this wording usually does. It
+        reproduces in exactly 3 of 16 (s20260835, s20260819, s20260820). In 7 of 16 he never leaves frame
+        at all and the beat is plainly visible. The "stays in the middle of the frame" clause is doing
+        work; the recorded fault should be read as a minority outcome, not the wording's behaviour.
+      unbidden_tree_finding: >-
+        s20260839 GROWS A LARGE TREE into frame from about f026 onward, canopy and trunk. done_when
+        warns that "every take that named a sapling not in frame grew a tree instead" -- but this
+        prompt names no sapling and no tree, and one grew anyway. Whatever causes the tree, naming is
+        not a precondition for it.
+      not_read_here: >-
+        Five further anchor seeds (s20260850-854) have output dirs on the box with no -out counterpart
+        yet and were NOT judged. queue-history.json was NOT consulted for run status, per standing rule.
+      judged_by: steward reading lane, 2026-08-17. Depth and cadence NOT quoted (both retired; depth is inverted). No camera-scale claim is made anywhere above -- framing statements describe what is in frame, because this lane built no scale instrument with an internal control.
   '03':
     refire_result: purple gone; he ends small at the frame edge beside the sapling. The size-mismatch
       joke reads weakly but it reads.
@@ -436,6 +507,82 @@ beats:
       the joke is visible without dialogue. A crouch that actually conceals him fails the beat.
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
       so it could not be bent to fit the clips that already exist.
+    judged_0817_st_wave:
+      what: >-
+        FIFTEEN rendered seeds of the `st` wording existed on the box and NONE had been read by a judging
+        lane. All fifteen read here on CONSECUTIVE frames against THIS beat's own done_when (not beat
+        02's sprint prose). Terminal freeze dated separately by review/ep2-picks/exact_freeze_index.py.
+      wording_rendered: >-
+        "Crouched right down low, knees folded up, head down." + style tail. IDENTICAL across all 15;
+        MD5 says all 15 share ONE init plate.
+      PERFORMING_RATE: 9 of 15 (60%)
+      performing_rule: >-
+        Counted as performing only when he FOLDS from the plate's standing pose into a low crouch and the
+        crouch reads. A terminal freeze does not subtract from this count -- it is reported separately.
+      performers:
+        - s20260846: fold f025-044, eased and continuous, held crouch f045-096. No terminal freeze. Face intact throughout. Laced shoes visible at the bottom edge.
+        - s20260825: fold f006-019, very low tight crouch, knees to chest, hands together in front. Held f020-096, no terminal freeze. Face best-preserved of the wave.
+        - s20260823: fold f019-032 into a deep crouch, held f032-096, no terminal freeze, face survives.
+        - s20260840: fold f019-032, low crouch held f032-096, no terminal freeze, face survives.
+        - s20260847: fold f013-032, crouch held f032-096, no terminal freeze, boots in frame, but the HEAD BALLOONS to about a third of frame height.
+        - st (original seed): fold f025-039 into a low hunched crouch, held to f096, no terminal freeze.
+        - s20260842: fold f038-064, crouch held f077-096, no terminal freeze, but the head balloons and the face flattens to a blank dome.
+        - s20260844: fold snaps f006-013, crouch held, but TERMINAL FREEZE INDEX 61, 36 frames (37% of the clip is one picture).
+        - s20260848: fold f026-032, crouch held, but TERMINAL FREEZE INDEX 50, 47 frames (48% of the clip is one picture).
+      failures:
+        wrong_terminal_pose_all_fours: >-
+          s20260822 (fold is a 3-frame lurch f042-045; terminal freeze index 69, 28 frames), s20260841
+          (terminal freeze index 65, 32 frames), s20260845 (terminal freeze index 86, 11 frames). All
+          three end on HANDS AND KNEES -- a crawl or push-up position, not a crouch with knees folded up
+          -- and all three lose the face to a blank dome.
+        never_crouches: >-
+          s20260824 only bends its knees slightly and leans, head up and torso upright, for the whole
+          clip. s20260843 and s20260849 STAND for all 97 frames with nothing but a weight shift and
+          cloth wobble; the picture barely changes.
+      PICK: s20260846
+      pick_reason: >-
+        The only fold in the wave that is genuinely eased rather than snapped: read consecutively,
+        f025-029 the knees start to bend and the hands lower, f030-034 the knees rise toward the chest,
+        f035-039 he sinks with the hands reaching the grass, f040-044 fully folded -- no step, no lurch,
+        no adjacent-frame cut -- into a held crouch f045-096 with no frozen tail, and it is the pose the
+        prompt actually asked for (knees folded up, head down) with the face still intact.
+      runners_up_for_veto_only:
+        - s20260825: the tightest, lowest crouch and the best-preserved face, but the fold is over by f019 so four-fifths of the clip is a hold.
+        - s20260823: a clean fold f019-032 and a deep crouch, a shade less legible than 0846's at the knees.
+      done_when_verdict: FAIL for all 15, and NOT on the crouch
+      done_when_failure_is_structural: >-
+        done_when requires "the COVER IS COMICALLY INADEQUATE -- the trunk hides a fraction of him and
+        the joke is visible without dialogue". THE PLATE CONTAINS NO TRUNK. It is the goblin standing
+        centred in an open field with two two-leaf sprouts a few inches tall at the lower left and lower
+        right frame edges, nothing he could be behind. Nine takes crouch, and in none of them is he
+        behind anything, so the joke cannot read and no seed can make it read. Like beat 02 this is now
+        a PLATE job -- a trunk in frame, thin enough to hide about one-sixth of him -- not a wording or
+        seed job.
+      contradicts_the_record: >-
+        The two recorded faults on this beat contradict each other and THE OLDER ONE IS WRONG for this
+        wording. The older `refire_result`/`shipping_fault` says "he ends small at the frame edge beside
+        the sapling". Not one of the 15 does that: every take that moves ends LARGER than frame 0 and
+        low in frame, which is the NEWER fault charged to the plate ("enlarged and cropped at the
+        waist, feet gone"). Both entries are left standing unedited above, per the no-overturn rule --
+        this is the reading that disagrees, not a replacement.
+        AND THE NEWER FAULT IS NOT UNIVERSAL EITHER: s20260846 and s20260847 end with FEET IN FRAME
+        (0846's laced shoes are drawn in detail at the bottom edge), so "feet gone" is not a property of
+        this plate. It was charged to the plate off five arms at ONE seed; sixteen more seeds say it is
+        seed-dependent, and a lane picking off this beat should not assume the crop.
+      hold_is_not_freeze: >-
+        Worth keeping straight because the two get conflated: SIX of the nine performers hold their
+        crouch for 50-75 frames with NO exact-duplicate pair anywhere (terminal freeze index None). A
+        long held crouch is what this beat is; a frozen tail is dead air. Only s20260844 and s20260848
+        have the second problem, and they are the two performers a cut should avoid.
+      instrument_note: >-
+        pipeline/coldread_frames.py's motion-window rule latched onto an early micro-move on s20260822
+        and s20260844 and its dense strip therefore did NOT cover the actual fold. Re-run with --pad 60
+        to force consecutive coverage of the whole clip; a lower --threshold did not fix it. Recorded so
+        the next lane does not read a strip that omits the action and call the clip frozen.
+      not_read_here: >-
+        Five further st seeds (s20260860-864) have output dirs on the box with no -out counterpart yet
+        and were NOT judged. queue-history.json was NOT consulted for run status, per standing rule.
+      judged_by: steward reading lane, 2026-08-17. Depth and cadence NOT quoted (both retired; depth is inverted). No camera-scale claim is made anywhere above -- "enlarged", "cropped" and "feet in frame" describe frame CONTENT, because this lane built no scale instrument with an internal control and will not railroad a global fit.
   '04':
     refire_result: purple gone; a clean close-up on his face holding his breath. It reads young, but that
       is the s0 reference he chose, not a prompt fault.
