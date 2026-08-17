@@ -2466,3 +2466,4 @@
 12:08:01Z STARTED task=ep2-b03-st-s20260863-0817-1786958383 attempt=1 on box-runner
 12:13:54Z DONE task=ep2-b03-st-s20260863-0817-1786958383 rc=0 artifacts=2
 12:14:00Z STARTED task=ep2-b10-attrbind-eyewear-0817-1786968505 attempt=1 on box-runner
+12:14:04Z FAIL task=ep2-b10-attrbind-eyewear-0817-1786968505 rc=2 step=mask

@@ -1,0 +1,139 @@
+{
+  "id": "ep2-b10-attrbind-eyewear-0817-1786968505",
+  "task": "ep2-b10-attrbind-eyewear-0817",
+  "node": "002b-first-citizen",
+  "beat": 10,
+  "worker": "box-runner",
+  "priority": 12,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "mask",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\attrbind-0817\\attribute_mask.py",
+        "--init",
+        "C:\\banyan-farm\\banyan-city\\farm-out\\ep2-b10-mac-plate-0817\\10-no-form-mac-plate-r1s1.png",
+        "--init-sha256",
+        "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f",
+        "--out",
+        "C:\\banyan-farm\\attrbind-0817\\maskB.png",
+        "--preview",
+        "C:\\banyan-farm\\attrbind-0817\\previewB.png",
+        "--add",
+        "ring:295,371,13,13,4",
+        "--add",
+        "ring:330,378,14,14,4",
+        "--add",
+        "band:307,371,317,376,4",
+        "--add",
+        "band:344,375,360,371,4",
+        "--protect",
+        "430,160,590,280",
+        "--dilate",
+        "1",
+        "--note",
+        "guard B (the bark-board carrier) frame path only. The tall man's face is a declared protect region and this step refuses to reach it. Geometry is the steward's; the founder named no pixel."
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\attrbind-0817\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\banyan-city\\farm-out\\ep2-b10-mac-plate-0817\\10-no-form-mac-plate-r1s1.png",
+        "--init-sha256",
+        "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f",
+        "--mask-png",
+        "C:\\banyan-farm\\attrbind-0817\\maskB.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\attrbind-0817\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\attrbind-0817\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "3",
+        "--seed",
+        "20260817",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\attrbind-0817\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\banyan-city\\farm-out\\ep2-b10-mac-plate-0817\\10-no-form-mac-plate-r1s1.png",
+        "--init-sha256",
+        "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f",
+        "--mask-png",
+        "C:\\banyan-farm\\attrbind-0817\\maskB.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\attrbind-0817\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\attrbind-0817\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "3",
+        "--seed",
+        "20260817",
+        "--note",
+        "ONE SAMPLE on his 2026-08-15 word 'draw the second man without glasses. we need to have control.' Eyewear removed from guard B by masking the FRAME PATH ONLY, so the sampler never invents an eye. Guard A's face is a declared protect region. Mechanism sample, not a candidate frame: the init is off-canon."
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\nsrc = \"C:/banyan-farm/attrbind-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-attrbind-eyewear-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = [\"b10-guardB-bare-s1.png\", \"b10-guardB-bare-s1-mask.png\",\n         \"b10-guardB-bare-s1.png.meta.yaml\", \"maskB.png\",\n         \"maskB.png.meta.yaml\", \"previewB.png\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b10-guardB-bare-s1.png\" in got else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png",
+    "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png.meta.yaml",
+    "C:\\banyan-farm\\attrbind-0817\\maskB.png",
+    "C:\\banyan-farm\\attrbind-0817\\maskB.png.meta.yaml",
+    "C:\\banyan-farm\\attrbind-0817\\previewB.png"
+  ],
+  "backlog": {
+    "filed_at": 1786968505,
+    "filed_at_iso": "2026-08-17T12:08:25Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b10-attrbind-eyewear-0817.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-17T12:14:00Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T12:14:04Z",
+  "rc": 2,
+  "failed_step": "mask",
+  "artifacts_present": []
+}

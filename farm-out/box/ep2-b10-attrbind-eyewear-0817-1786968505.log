@@ -1,0 +1,7 @@
+#### job ep2-b10-attrbind-eyewear-0817-1786968505 attempt 1 start 2026-08-17T12:14:00Z
+
+==== step mask START 2026-08-17T12:14:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-0817\\attribute_mask.py", "--init", "C:\\banyan-farm\\banyan-city\\farm-out\\ep2-b10-mac-plate-0817\\10-no-form-mac-plate-r1s1.png", "--init-sha256", "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f", "--out", "C:\\banyan-farm\\attrbind-0817\\maskB.png", "--preview", "C:\\banyan-farm\\attrbind-0817\\previewB.png", "--add", "ring:295,371,13,13,4", "--add", "ring:330,378,14,14,4", "--add", "band:307,371,317,376,4", "--add", "band:344,375,360,371,4", "--protect", "430,160,590,280", "--dilate", "1", "--note", "guard B (the bark-board carrier) frame path only. The tall man's face is a declared protect region and this step refuses to reach it. Geometry is the steward's; the founder named no pixel."]
+!! init not found: C:\banyan-farm\banyan-city\farm-out\ep2-b10-mac-plate-0817\10-no-form-mac-plate-r1s1.png
+==== step mask END rc=2 2026-08-17T12:14:04Z ====
+#### job ep2-b10-attrbind-eyewear-0817-1786968505 finished rc=2 2026-08-17T12:14:04Z
