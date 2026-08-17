@@ -1500,3 +1500,61 @@ artifacts:
 - C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260820.png
 - C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260820.png.meta.yaml
 - C:\banyan-farm\leafcanon-b01-0817\comp-b01-canon.png
+filed_0817: >-
+  Dry-ran clean and filed to backlog/ as ep2-b01-leafcanon-inpaint-0817-1786973593.json at
+  2026-08-17, payload delivered (prompt, negative, leaf_count_composite.py, inpaint_fruit.py).
+  Not held for a human: the card feeds itself from backlog via banyan-box-autofill, and founder
+  screening gates PUBLICATION, not measuring.
+verdict_0817: >-
+  RAN 2026-08-17 on the rtx5090 box, bf16/CUDA, animagine-xl-3.1, $0. 4 of 4 frames returned and
+  published to farm-out/ep2-b01-leafcanon-inpaint-0817/ (SHA256SUMS.txt beside them). The comp
+  step's --assert-clear passed at 0 residual px and the composite hashed 88e4a8ab..., the value
+  pinned here, so the init chain reproduced on the box exactly as on the Mac. Scored against
+  pipeline/leaf-count-bar-0817.md section 8 as committed at f057e019, at 1x, 2x and 4x, on every
+  frame.
+   * AXIS A COUNT -- **MISS. 0 of 4 frames carry exactly two blades; the rate is 0%, which the bar
+     calls NOT BOUND.** Every frame grew a NEW blade in the vacated region, at the stem node where
+     the removed blade had been attached: s20260817 a broad drawn lamina sweeping right (x 390-500,
+     y 940-1010) plus a thin pale sliver at x 390-410 (3-4 blades); s20260818 a soft blurred lamina
+     at the node pointing down-right, outline identifiable (3); s20260819 a bright sharply drawn
+     pointed blade rising up-right PLUS a blurred lamina at the node (4); s20260820 a pale lamina at
+     the node (3). Counted by the bar's own rules, which include partly occluded blades whose
+     outline is identifiable.
+   * AXIS A' FAIL-VACANCY -- **FIRED, 4 of 4, and it was named in this spec and in the bar BEFORE
+     the frames existed.** This is the vacancy law in its exact predicted form. The mechanism reading
+     is specific and worth more than the miss: the composite removed the blade but NOT the cue --
+     the stem node the blade grew from stayed in the plate and stayed inside the blend mask, so the
+     sampler "finished" a node into a leaf. It is the same law the eyewear lane measured from the
+     other side (masked addition 5 of 5, masked removal 0 of 1: "the unmasked pixels either side
+     still describe it"). Removal does not stick while the attachment survives inside the mask.
+   * AXIS B HEIGHT -- HELD, no regression. The plant apex is the fruit and the fruit region is
+     BYTE-IDENTICAL to the init in all four frames (max |delta| = 0 over x 355-485, y 445-525), so
+     the apex cannot have moved: 0 px against the +/-12 px window. Nothing waist-high, tree-sized or
+     doubled. The plate is a field close-up with no grass line above the plant; that clause is
+     inherited and was not scored as a win.
+   * AXIS C SHAPE -- reported. The two keeper blades read as an ordinary broad upper lamina and a
+     long lower one; the blades the sampler ADDED read as ordinary leaves too, which is precisely
+     why they are countable and fatal here.
+   * LOOK -- no mask seam: outside the mask max |delta| is 22-28 on 900-1500 px, which is the blur
+     ramp of padding_mask_crop and nothing else; inside the mask mean |delta| 10.4-11.7. No decal
+     tell, no tiling, no stem discontinuity. The fill itself did not read as a blur patch, so
+     FAIL-BLUR did not fire on this beat.
+   * FRUIT -- untouched by construction and NOT scored, as the bar fixed in advance. Measured for
+     the record: fruit mean RGB 209.7 / 196.8 / 108.7, identical in all four frames and in the init,
+     i.e. PALE YELLOW-GREEN, on a bf16/CUDA render path (recorded because bf16/CUDA renders red
+     where MPS renders purple off the identical seed, MAE 60-61 -- this is not that artefact, the
+     plate itself is pale).
+  VERDICT: FAIL-COUNT / FAIL-VACANCY. Nothing is filed off this plate -- a beat whose plant is wrong
+  cannot be rescued by motion. Per the bar's stop rule this lane does NOT fire a second time on a
+  higher strength, a new wording or another seed sweep. The cure the evidence points at is NAMED AND
+  NOT FIRED: remove the ATTACHMENT as well as the blade (patch the node and stub so no cue survives
+  inside the mask), which is a compositor change and therefore a new init and a new sample, or
+  exclude the vacated region from the blend mask and accept that the count then becomes unfalsifiable
+  in that region. Whether beat 01 spends another fire on either is the founder's call with this rate
+  in hand.
+  FOUNDER CARDS, named and not settled: (1) this plate's fruit is pale yellow-green while canon is
+  purple RETROACTIVELY -- and this is exactly the class of drift `ep2-fig-purple` exists to catch and
+  currently cannot, because that entry's evidence assertion is satisfiable by superseded prose that
+  house style keeps permanently visible, so the gate reads green forever. A non-canon fruit colour
+  reached a canon-named plate with nothing firing. (2) whether this plate's two keeper blades are his
+  "average leaves". (3) shippability at all. R4.
