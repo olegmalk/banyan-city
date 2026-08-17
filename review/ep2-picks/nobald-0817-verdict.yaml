@@ -102,16 +102,129 @@ ep2-b08-nobald-0817:
 
 # ---------------------------------------------------------------------------
 ep2-b07-nobald-0817:
-  status: FILED to backlog 2026-08-17, not yet rendered
+  status: RENDERED 2026-08-17, rc 0, 12 png. SCORED BELOW.
   job: ep2-b07-nobald-0817-1786975876
   rung: 'A -- `bald` removed and NOTHING else. The sash still governs `points` and the goblin still has no noun on this rung, deliberately left broken so a haired guard can only be attributed to the token.'
+
+  # ---- THE HEADLINE, AND IT IS A NEGATIVE RESULT --------------------------
+  term_4_he_is_not_bald:
+    bar_as_written: 'HE IS NOT BALD -- a bald guard fails outright'
+    score: 4 of 12 PASS / 8 of 12 FAIL
+    verdict: >-
+      REMOVING THE TOKEN DID NOT FIX BALDNESS ON BEAT 07. Said plainly rather than
+      hunted for a second explanation: on this beat `bald head` was NOT the whole
+      cause. b08 went 12 of 12 haired on the identical edit; b07 went 4 of 12. The
+      two beats disagree, and the disagreement is the finding.
+    per_frame_so_it_can_be_recounted:
+      bald: [r0-s0, r0-s1, r0-s2, r0-s3, r1-s0, r1-s1, r2-s0, r2-s1]
+      haired: [r1-s2, r1-s3, r2-s2, r2-s3]
+      caveat: 'r2-s0 crops the acting figure`s head out of frame; the visible head is bald and it is counted bald. Method: contact-sheet read at 340 px width, sheet committed as CONTACT-b07-nobald-0817.png so anyone can recount. Baldness is high-contrast at that size, but the count is a read and not an instrument.'
+    what_this_does_and_does_not_overturn: >-
+      It does NOT overturn the broadcast-class law. `bald` present still forces 12
+      of 12 bald -- that direction is unchanged and b08 confirms the reverse on the
+      same edit. What it overturns is the stronger claim that the token was
+      SUFFICIENT to explain beat 07: removing it is NECESSARY BUT NOT SUFFICIENT
+      here.
+    a_prior_measurement_that_already_predicted_this: >-
+      Not a new hypothesis invented to cover a miss -- it is recorded in
+      wave-drafts.yaml against this same beat family and was measured by an earlier
+      lane on a draft with NO bald token AND NO {{GOBLIN}} slot: "r3 contains NO
+      bald or hairless token -- not in the positive, not in the negative ... This
+      draft has no {{GOBLIN}} slot, so that replace is a no-op and the string never
+      reaches the prompt. Nothing we wrote asked for a bald man; THE CHECKPOINT
+      DEFAULTS HIM BALD." That finding predicts exactly this outcome, and it means
+      beat 07 has a SECOND, independent bald source in animagine-xl-3.1's own prior.
+    what_is_NOT_concluded_here: >-
+      Why b08 escapes that prior and b07 does not. Both drafts NAME the hair
+      (`light sandy hair`, `dark cropped hair`), so the obvious explanation is
+      already excluded and I am not going to invent the next one in the same turn
+      as the measurement. It is a real open question and it is left open.
   tokens: '59 of 77 positive, 58 of 77 negative, 0 faults, anchor present, 1boy derived == 1boy declared'
   trade: 'NONE. 3 freed, none spent.'
   bar: 'ep2-b07-cast-0817`s `success:` carried forward BYTE-IDENTICAL, frame_count_correction_0817 likewise. Score N of 12.'
 
 ep2-b07-twofig-0817:
-  status: FILED to backlog 2026-08-17, not yet rendered
+  status: RENDERED 2026-08-17, rc 0, 12 png. SCORED BELOW.
   job: ep2-b07-twofig-0817-1786975879
+
+  # ---- SCORED. RUNG A AND RUNG B DISAGREE, AND THAT IS THE RESULT ---------
+  scored_against_rung_A_not_the_original: >-
+    Rung B carries rung A's token removal plus the grammar fix, so every number
+    below is read against `ep2-b07-nobald-0817` and NOT against
+    `ep2-b07-cast-0817`. Read against the original it is unattributable.
+
+  term_4_he_is_not_bald:
+    score: 5 of 12 PASS / 7 of 12 FAIL
+    per_frame:
+      bald: [r0-s1, r0-s2, r0-s3, r1-s1, r1-s2, r2-s0, r2-s2]
+      haired: [r0-s0, r1-s0, r1-s3, r2-s1, r2-s3]
+    verdict: >-
+      5 of 12 against rung A's 4 of 12. THE GRAMMAR FIX DID NOT MOVE BALDNESS, and
+      it was never supposed to -- it is one frame's difference on a 12-frame
+      sample, which is noise, not an effect. Reported so the null is on the record
+      rather than left to be inferred. Beat 07's bald problem is untouched by both
+      rungs and its cause is the checkpoint prior, not the wording.
+
+  the_goblin_stopped_being_a_mitt_and_this_is_the_real_win:
+    what_was_broken: >-
+      `{{GOBLIN}}` expanded to bare attributes with no noun, so `green skin` had
+      only the guard to bind to and arrived as green paint on a bald human head.
+    rung_A: 'the goblin reads as a distinct goblin in roughly 2 of 12. Mostly the green is skin on a human/guard body -- the merge, unfixed, exactly as rung A was designed to leave it.'
+    rung_B: 'the goblin reads as a DISTINCT GOBLIN WITH POINTED EARS in roughly 9 of 12. Unambiguous and visible at contact-sheet size.'
+    verdict: >-
+      GIVING THE GOBLIN A NOUN WORKED. This is a result about grammar and not about
+      the token: one noun, `a crouching goblin with green skin`, converted green
+      paint on the guard into a separate character with his own morphology. It is
+      the clean half of rung B and it is attributable, because rung A is the same
+      prompt without it.
+
+  term_the_beat_exists_for_does_the_point_appear:
+    bar: "the beat's own action -- CONFISCATE. Baseline was 0 of 12 containing a point at all."
+    rung_A: 0 of 12
+    rung_B: 0 of 12 pointing AT the goblin
+    the_one_frame_that_changed: >-
+      r1-s0 contains an unmistakable extended index finger -- the first pointing
+      HAND the beat has produced -- but it is aimed UP and away, not at the goblin.
+      So the gesture became drawable and did not become aimed.
+    verdict: >-
+      THE ACTION DID NOT ARRIVE. Fixing the verb's subject was not sufficient. The
+      pre-registered bar said 0 of 12 and the answer is still 0 of 12; scored as
+      written, not softened because the grammar improved elsewhere.
+
+  a_new_fault_rung_B_introduced:
+    what: 'GOBLIN MULTIPLICATION. Three or more goblins appear in several frames (r0-s0, r0-s1, r0-s2, r0-s3, r1-s0, r1-s2), so term 1 -- EXACTLY TWO FIGURES -- fails widely on rung B where rung A did not have the problem in the same form.'
+    why_it_is_not_a_surprise: >-
+      It is the residual this rung's own spec PRE-REGISTERED before the pixels: the
+      goblin was given a grammatical subject slot but NOT a count slot, because the
+      Danbooru count stays `1boy` and nothing in the prompt constrains him to one.
+      Give a character a noun and no number and the model is free to draw several.
+    what_it_promotes: >-
+      The count tag from "residual suspect" to "the named next lever". The
+      prediction written into the spec before rendering was: if the point is still
+      absent, the residual suspect IS the count tag. The point is still absent AND
+      the goblin multiplied. Both point the same way.
+
+  the_danbooru_count_is_still_1boy: >-
+    Restated because it is the thing a later reader would most easily believe was
+    fixed: NEITHER RUNG CHANGED THE COUNT TAG. Both derive and declare `1boy` on a
+    two-figure beat, with 0 faults. The goblin got a GRAMMATICAL subject slot, never
+    a count slot.
+
+  what_the_next_lane_should_do_and_it_is_not_a_draft_edit: >-
+    Both remaining faults -- no aimed point, and a multiplied goblin -- now sit
+    behind the count tag, and the count tag cannot be fixed from wave-drafts.yaml.
+    It needs a PER-VARIANT COUNT DECLARATION so a single draft on beat 07 can
+    declare `2boys` without faulting the beat's one-figure siblings: that means
+    `goblin_ipa_sample.py` calling `wg.apply_variant_declaration` (which already
+    exists, and which the sampler simply does not call) and that mechanism being
+    extended from `declares_no_count` to a declared count. It is a shared-sampler
+    change, it is on the do-not-touch list for this lane, and it should be filed
+    deliberately by whoever owns that file rather than smuggled through a draft.
+
+  no_pick_is_offered: >-
+    No frame here meets its bar, so there is nothing to pick and none is named.
+    No `plate_ack`, no `approved:`, no `provisional:`. Taste is the founder's and
+    this is not a taste question -- it is three counts.
   rung: 'B -- rung A plus the grammar fix. TWO variables against the original, ONE against rung A. Read it against ep2-b07-nobald-0817 or not at all.'
   what_it_tests: >-
     NOT polish. Beat 07 scored 0 OF 12 on containing a point at all -- CONFISCATE
