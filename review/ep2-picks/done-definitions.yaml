@@ -50,6 +50,12 @@ beats:
     drift_check_0815: 'Drift present, ADDED to named faults, verdict unchanged. Reader 7/10 and 8/10:
       minor and one-sided, hair texture and a hardening jaw on one boy.'
     trim_0815: 'trimmed 3 degraded head frames, no dead tail: 5.04s -> 4.92s.'
+    plate_lane_0817: 'A cast-correct plate was DRAWN for this beat on 2026-08-17 and is not yet a pass.
+      Framing was SOLVED: deleting `horizon` from the negative dropped the render from a downward plan
+      view to near eye level and finally produced the hedgerow and horizon band this beat''s plates never
+      had. Cast is a seed question, not a wording one - `light sandy hair` binds at 4 of 4 seeds other
+      than 20260817. See `guard_plates_redrawn_0817` at the top level of this file for the pictures, the
+      per-condition scoring and what is still open.'
   '06':
     title: THE CLIPBOARD
     done_when: the guard turns the bark board over and reads off it; board hand-sized and readable; field
@@ -126,6 +132,15 @@ beats:
       on the founder in any way. It is still not renderable: beat 09 has no staged plate of the approved
       man, and the approval releases the WORK of drawing that plate, not a render off a costume card.
       See `guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816` and `shipping_rule.note_on_09_CORRECTION_0816`.'
+    plate_lane_0817: 'FOUR CLOSE-UP PLATES OF THE APPROVED MAN NOW EXIST - the first close plates this
+      beat has ever had, since a full-body plate cannot supply a face. `cast_gate_closed_0816` asked for
+      the wire-rims to be NAMED and they are, in `wire-rim glasses`, which had appeared in ZERO prompts
+      repo-wide: they render as unmistakable round wire frames at 4 of 4 renders, never sunglasses. The
+      beat''s other recorded plate fault, "another blank background" on a scene plate that "came back WHITE",
+      is CLEARED at 4 of 4 - tall grass, seed heads and leaves across the whole frame. Two conditions are
+      still open and both are precise: the hair comes back mid-to-dark BROWN AND SHAGGY where guard A''s
+      is near-black and CROPPED and the face reads young, and the head is 48-53% of frame height against
+      a 55% bar. Not a pass, and no plate is proposed for a render. See `guard_plates_redrawn_0817`.'
   '10':
     title: NO FORM
     done_when: TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD
@@ -164,6 +179,22 @@ beats:
       and 7/10: the left boy loses a hard angular older face for a rounder paler one, and the carried
       board changes colour, shape and which hands hold it.'
     trim_0815: 'trimmed 3 degraded head frames and 21 dead tail frames: 5.04s -> 4.04s.'
+    plate_lane_0817: 'NOT SOLVED, AND THE BLOCKER IS NOW ISOLATED TO ONE HARD CONDITION: PROP OWNERSHIP.
+      Four plates drawn 2026-08-17 across two wordings and four seeds. Count, world and cast all came right
+      - r1s3 (seed 20260819) is the most cast-correct picture this beat has ever had, a blond man in a cream
+      shirt and brown wrap skirt beside a black-haired man in glasses and a tan tunic, two whole figures,
+      real grass edge to edge. But THE BOARD WENT TO GUARD A, OR TO BOTH MEN, AT 4 OF 4 - with the board
+      clause written INSIDE guard B''s own person clause and B named first. Hair and garments bind to their
+      person clause on this checkpoint; A PROP DOES NOT, it attaches to whichever figure is drawn nearest.
+      This beat''s done_when names WHICH man flips the board, so that is fatal to the plate as drawn. The
+      r2 attempt to occupy guard A''s hands (`hands behind his back`) DID NOT RENDER AT ALL - his arms came
+      back folded in front - so that instrument was never actually tested, and r2 also reproduced the founder''s
+      own named defect: a SECOND board hanging in the air beside guard B with no hand on it. Remaining
+      options are all bigger than a seed and are production decisions: retry the hand-occupying instrument
+      with a pose tag that binds, dress both men identically so ownership stops mattering, or accept a
+      composited plate. SEPARATELY AND INDEPENDENTLY OF THE PLATE: this beat''s action is a small in-hand
+      manipulation, which measures 0 of 8 in-hand against 12 of 12 whole-body, and the composition fix for
+      it reproduced 0 of 4. A passing plate here would NOT imply a passing beat. See `guard_plates_redrawn_0817`.'
   '11':
     title: THEY LEAVE
     done_when: two guards walk away from camera, backs turned, still arguing; both present the whole clip;
@@ -1263,3 +1294,46 @@ definition_audit_0815:
     the lens BY DESIGN. The staging law does not apply there — that beat's action IS the turn. My earlier
     b17 re-round removed the turn to satisfy the staging law, which was the same error as beats 06 and
     07 and is now recorded against the beat.
+guard_plates_redrawn_0817: 'THE THREE REMAINING GUARD PLATES WERE DRAWN, 2026-08-17, on the idle Mac fleet
+  at $0 - beats 05, 09 and 10, following the beat-11 plate that passed 7/7 and then settled its beat''s
+  identity question in motion at 4 of 4 clips. Beat 08 was DELIBERATELY NOT DRAWN: it needs a two-figure
+  guard+goblin reference that does not exist, and inventing the goblin''s half of it in a guard lane is
+  exactly the improvisation `guard_plates_are_miscast_0816` is about. Sixteen renders, four machines, every
+  prompt and every bar committed BEFORE its pixels, every picture opened and judged at 3x-8x rather than
+  scored by a filename. NOTHING IS PROPOSED FOR A RENDER AND NO plate_ack WAS WRITTEN. Prompts and full
+  per-condition scoring live in pipeline/plate_scratch.py DRAFTS[5], DRAFTS[9], DRAFTS[10] and REVS (5,2),
+  (9,2), (10,2); pictures in farm-out/ep2-b05-mac-plate-0817/, ep2-b09-mac-plate-0817/, ep2-b10-mac-plate-0817/.
+
+  WHAT LANDED. `wire-rim glasses` BINDS at 4 of 4 - the founder''s 2026-08-16 ruling that "the cast stands
+  as drawn", glasses included, is in a picture for the first time, and `wire-rim` had appeared in zero prompts
+  repo-wide. Beat 09''s recorded "another blank background" is cleared at 4 of 4. Beat 11''s hanging-strap
+  defect DID NOT RECUR anywhere. Beat 05''s framing was solved by DELETING one word.
+
+  THREE GENERAL RULES, EACH WITH ITS EVIDENCE, and each now in plate_scratch.py where a plate author meets
+  it. (1) NAME WHAT EVERY HAND IN FRAME IS DOING, INCLUDING HANDS YOU DO NOT CARE ABOUT. An unspecified hand
+  is an empty region and this checkpoint fills empty regions with nouns - the vacancy law applied to a body
+  part - and the negative does not reach it. Evidence is a control nobody planned: beat 05 specified both
+  men''s arms and all four hands came back EMPTY at 3 of 3 seeds; beat 10 specified only the near man''s and
+  the far man''s unspecified pair came back holding a BAMBOO POLE at one seed and a DUPLICATE OF THE BOARD at
+  another, with `weapon` in the negative. 2 of 3 against 0 of 3. It also explains beat 11''s strap
+  retroactively: never a stubborn prop and never the sash, just an unspecified hand. (2) DO NOT FORBID
+  `horizon` IN A SHOT THAT NEEDS ONE. Beat 05 rendered a downward plan view at 3 of 3 with no hedgerow and,
+  at the highest, broke to THREE figures; deleting `horizon` from the negative alone dropped it to near eye
+  level and produced the hedgerow that had been in the positive all along. A clause naming something
+  "behind" is dead in a plan view, because a plan view has no behind. The trade is real and is not hidden:
+  `sky` stayed forbidden and a pale sky band arrived anyway. (3) A FACE PLATE MUST NAME THE EYE STATE.
+  `thoughtful` plus `mouth closed` gave three shut-eyed faces at three seeds; `eyes open` with `closed eyes`
+  in the negative opened them on the first sample.
+
+  ONE QUESTION THAT IS THE FOUNDER''S AND IS NOT ANSWERED HERE. In a TWO-GUARD plate, `glasses` attached to
+  exactly one man''s clause lands on BOTH men at 5 of 5 legible renders - even at seeds where hair and
+  garments separate cleanly, so it is not a general binding failure, it is eyewear specifically spreading.
+  Guard A''s wire-rims therefore cannot be named in beats 05 or 10 without putting them on guard B too.
+  Either they are left out of those two and carried by beat 09''s close-up, or guard B is drawn wearing them.
+  THAT IS A CAST CALL (R4) AND WAS LEFT UNTOUCHED so it is decided against pictures that moved one variable.
+
+  AND A METHOD WARNING WORTH MORE THAN ANY PLATE. Every fault first observed here was observed at seed
+  20260817, and the two-figure identity failure that looked like a law about the checkpoint - "both men come
+  back dark-haired, sandy hair binds on neither" - EVAPORATED at 4 of 4 fresh seeds. That is the SECOND time
+  in two days this one seed manufactured a law (bf79e534 broke the first: four wordings, four turned heads,
+  one seed). Fresh seeds before a wording ladder, always.'
