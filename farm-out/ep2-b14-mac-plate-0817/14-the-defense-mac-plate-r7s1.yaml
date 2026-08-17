@@ -1,0 +1,78 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260820
+render_seconds: 70.8
+png_sha256: "ef2c0c22a77bec8647897f7e17302425c3d504c88a0d78f82a238d93c8111f43"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, from above, close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 7
+scored: true
+# "r7" IS NOT A WORDING RUNG. Prompt and negative are byte-identical to r6's --
+# structurally, since the rev is `dict(REVS[(14,6)], seed=...)` -- and the ONLY
+# variable is the seed. Bar byte-identical to b1dabc0c; seeds pre-registered at
+# 4b111d70 BEFORE these pixels existed. Scored by opening the image and two crops.
+replication_of: "r6 (66e1b824), seed 20260814 -> 20260820. Draw 2 of 4 of one prompt."
+what_this_frame_shows: >-
+  High angle looking down. ONE adult goblin, bald with a large domed skull, one
+  pointed ear, purple-mauve cloak with a white collar, stooped right down over
+  the ground with his back arched, head low and his knees bent under him. NO SKY
+  AND NO HORIZON. TWO SEPARATE HANDS, unmistakably two: a shadowed left hand and
+  a lit right hand, two distinct wrists, fingers of both pushed into a dark
+  crumbly dug patch with clods thrown around it. The ground is PALE SAND-TAN
+  BARE EARTH filling essentially the whole frame, speckled with pebbles, clods
+  and hatch strokes. Green grass appears ONLY as separated blade clumps at the
+  frame edges -- top-left, left, top-right, right, bottom-left, bottom-right --
+  with bare sand everywhere between them and none near him. Face visible under
+  the brow: heavy scowl, one eye reading RED, a fang.
+verdict_against_pre_registered_bar: >-
+  P2 PASSES, WHICH IS THE ANSWER THIS DRAW WAS FIRED TO GET. Two separate hands
+  with two wrists and both sets of fingers in the soil, nothing held, neither on
+  a knee. r6's single fused hand was NOT the camera angle. Under the meaning
+  pre-committed at 4b111d70 -- "P2 passes on any one of the three -> the fusion
+  is seed variance" -- THE FUSION IS SEED VARIANCE and `from above` is not
+  charged for it.
+  P1 PASS (stooped low over the ground with knees bent, not standing -- recorded
+  as a deeper stoop than r6's tight squat, and the legs are largely hidden so the
+  read is partly inferential). P3 PASS, the strongest contact of any draw:
+  fingers of both hands buried in dark crumbs. P5 PASS -- no sky, no horizon, no
+  band; largest inscribed flat rectangle 255x94 = 23970 px^2 in the top-edge
+  sand, far smaller than this figure's torso, and too small to grow a noun in.
+  P6 PASS (head low in frame, face readable). P7 PASS (one adult figure, adult
+  limbs and adult face; the domed skull is oversized and that is recorded, not
+  scored -- Q7 child/chibi did not fire).
+  P4' FAILS, AND IT FAILS ON THE CLAUSE THAT NAMES THIS EXACT PICTURE. P4'
+  requires the green to read as "A FIELD HE IS IN rather than a fringe at the
+  frame's edges ... not isolated tufts". This is a sand plane with isolated blade
+  clumps at the edges and bare ground everywhere between: green on more than one
+  side and cut by the frame edge, yes, but tufts, which the axis rules out. r6's
+  continuous grass ring is NOT reproduced at this seed. Scored as written and NOT
+  softened.
+  SO: SIX OF SEVEN AGAIN, AND A THIRD DIFFERENT SIX. r5 failed P5; r6 failed P2;
+  this draw fails P4'. Three of the seven axes have now failed once each on the
+  same prompt family, which is a statement about SEED SENSITIVITY, not about
+  wording: at this seed the field is what did not hold.
+  P5's confessed looseness is reported and NOT patched mid-experiment: overall
+  flat-pixel fraction is 51.2% here against r6's 40.7%, and P5 tests per-region
+  size only. r6 and r5 are not re-scored.
+  Q1 DESERT did not fire on its own text (it requires "no green anywhere" and
+  green is present on six edges), but this is the closest any draw has come to
+  it, and the soil is again PALE SAND rather than the "brown" P4' names -- exact
+  soil colour is on the not-scored list, reported for the founder.
+  RECORDED AND NOT SCORED: costume drift for the seventh time (purple-mauve cloak
+  with a white collar, no patchwork -- it wants a REFERENCE, not words); the eye
+  reads RED, which is the `ep2-b14-redeye-0812` fault; `face turned away` still
+  not binding; oversized skull; expression scowling rather than embarrassed
+  (a LOOK judgement, the founder's).
