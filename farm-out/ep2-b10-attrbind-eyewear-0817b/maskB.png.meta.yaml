@@ -1,0 +1,30 @@
+# Mask provenance, written by pipeline/attribute_mask.py. NO SAMPLER
+# AND NO GPU WAS INVOLVED -- this file is pure geometry, which is why
+# it can be diffed and argued with before any pixel is spent.
+tool: pipeline/attribute_mask.py
+init_image: C:/banyan-farm/attrbind-0817/plate-b10-r1s1.png
+init_sha256: 453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f
+init_size: 832x1216
+mask_png: maskB.png
+mask_sha256: 3a69941653b0649a1a89f32d89db203d3e5194f2a3b74062d2b4acba10a6831b
+mask_white_px: 1098
+mask_frame_frac: 0.00109
+mask_bbox_px: [281, 357, 361, 393]
+shapes:
+  - add ring centre (295,371) radii (13,13) width 4
+  - add ring centre (330,378) radii (14,14) width 4
+  - add band (307,371)-(317,376) width 4
+  - add band (344,375)-(360,371) width 4
+  - dilate 1 px
+protect_boxes_px: [[430, 160, 590, 280]]
+protect_violations: 0
+preview_png: previewB.png
+authored_utc: 2026-08-17T12:27:07Z
+cost_usd: 0
+geometry_is_the_stewards: >-
+  THE GEOMETRY IS THE STEWARD'S, NOT THE FOUNDER'S. He asked for
+  control over which figure carries an attribute; he did not specify
+  a pixel. Every number above is the steward's and is the first
+  thing a correction should move.
+note: >-
+  guard B (the bark-board carrier) frame path only. The tall man's face is a declared protect region and this step refuses to reach it. Geometry is the steward's; the founder named no pixel.

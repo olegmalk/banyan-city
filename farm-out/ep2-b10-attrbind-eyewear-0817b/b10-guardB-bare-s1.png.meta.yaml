@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.99
+seed: 20260817
+padding_mask_crop: 64
+mask_blur_factor: 3
+init_image: C:/banyan-farm/attrbind-0817/plate-b10-r1s1.png
+init_sha256: 453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f
+mask_png: b10-guardB-bare-s1-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/attrbind-0817/maskB.png
+mask_png_sha256: 3a69941653b0649a1a89f32d89db203d3e5194f2a3b74062d2b4acba10a6831b
+mask_white_px: 1098
+mask_bbox_px: [281, 357, 361, 393]
+mask_width_frac: 0.0962
+mask_height_frac: 0.0296
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-17T12:27:25Z
+render_seconds: 9.9
+wall_seconds: 15.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE on his 2026-08-15 word 'draw the second man without glasses. we need to have control.' Eyewear removed from guard B by masking the FRAME PATH ONLY, so the sampler never invents an eye. Guard A's face is a declared protect region. Mechanism sample, not a candidate frame: the init is off-canon.
+prompt: |-
+  a guard man face in sunlight, bare eyes, smooth brow and cheek skin, dark cropped hair, detailed cinematic anime, masterpiece, best quality
+negative: |-
+  glasses, eyeglasses, spectacles, wire-rim glasses, sunglasses, goggles, eyewear, frames, lens, monocle, eyepatch, mask, text, watermark, photorealism, 3d render, blurry, low quality, deformed

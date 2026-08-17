@@ -1,0 +1,47 @@
+#### job ep2-b10-attrbind-eyewear-0817b-1786969439 attempt 1 start 2026-08-17T12:27:03Z
+
+==== step mask START 2026-08-17T12:27:06Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-0817\\attribute_mask.py", "--init", "C:\\banyan-farm\\attrbind-0817\\plate-b10-r1s1.png", "--init-sha256", "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f", "--out", "C:\\banyan-farm\\attrbind-0817\\maskB.png", "--preview", "C:\\banyan-farm\\attrbind-0817\\previewB.png", "--add", "ring:295,371,13,13,4", "--add", "ring:330,378,14,14,4", "--add", "band:307,371,317,376,4", "--add", "band:344,375,360,371,4", "--protect", "430,160,590,280", "--dilate", "1", "--note", "guard B (the bark-board carrier) frame path only. The tall man's face is a declared protect region and this step refuses to reach it. Geometry is the steward's; the founder named no pixel."]
+MASK C:\banyan-farm\attrbind-0817\maskB.png  white=1098 px (0.109% of frame)  bbox=[281,357,361,393]
+   add ring centre (295,371) radii (13,13) width 4
+   add ring centre (330,378) radii (14,14) width 4
+   add band (307,371)-(317,376) width 4
+   add band (344,375)-(360,371) width 4
+   dilate 1 px
+PROTECTED 1 region(s), 0 violations
+WROTE C:\banyan-farm\attrbind-0817\previewB.png
+WROTE C:\banyan-farm\attrbind-0817\maskB.png.meta.yaml
+rc=0 cost_usd=0
+==== step mask END rc=0 2026-08-17T12:27:07Z ====
+
+==== step dry START 2026-08-17T12:27:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-0817\\plate-b10-r1s1.png", "--init-sha256", "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f", "--mask-png", "C:\\banyan-farm\\attrbind-0817\\maskB.png", "--prompt-file", "C:\\banyan-farm\\attrbind-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-0817\\negative.txt", "--out", "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png", "--strength", "0.99", "--pad-crop", "64", "--blur", "3", "--seed", "20260817", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f
+mask png corners=- bbox=[281, 357, 361, 393]  0.0962 x 0.0296 of 832x1216
+WROTE C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T12:27:07Z ====
+
+==== step sample START 2026-08-17T12:27:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-0817\\plate-b10-r1s1.png", "--init-sha256", "453a1f8367100c86a8988e1684c0a96e589793ff6569622f52c0449d8283e37f", "--mask-png", "C:\\banyan-farm\\attrbind-0817\\maskB.png", "--prompt-file", "C:\\banyan-farm\\attrbind-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-0817\\negative.txt", "--out", "C:\\banyan-farm\\attrbind-0817\\b10-guardB-bare-s1.png", "--strength", "0.99", "--pad-crop", "64", "--blur", "3", "--seed", "20260817", "--note", "ONE SAMPLE on his 2026-08-15 word 'draw the second man without glasses. we need to have control.' Eyewear removed from guard B by masking the FRAME PATH ONLY, so the sampler never invents an eye. Guard A's face is a declared protect region. Mechanism sample, not a candidate frame: the init is off-canon."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.52it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.20it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.63it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.80it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png
+WROTE C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1-mask.png
+WROTE C:\banyan-farm\attrbind-0817\b10-guardB-bare-s1.png.meta.yaml
+rc=0 render_s=9.9
+==== step sample END rc=0 2026-08-17T12:27:26Z ====
+
+==== step publish START 2026-08-17T12:27:26Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\nsrc = \"C:/banyan-farm/attrbind-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-attrbind-eyewear-0817b\"\nos.makedirs(dst, exist_ok=True)\nnames = [\"b10-guardB-bare-s1.png\", \"b10-guardB-bare-s1-mask.png\",\n         \"b10-guardB-bare-s1.png.meta.yaml\", \"maskB.png\",\n         \"maskB.png.meta.yaml\", \"previewB.png\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b10-guardB-bare-s1.png\" in got else 1)"]
+published 6 of 6 ['b10-guardB-bare-s1.png', 'b10-guardB-bare-s1-mask.png', 'b10-guardB-bare-s1.png.meta.yaml', 'maskB.png', 'maskB.png.meta.yaml', 'previewB.png']
+==== step publish END rc=0 2026-08-17T12:27:26Z ====
+#### job ep2-b10-attrbind-eyewear-0817b-1786969439 finished rc=0 2026-08-17T12:27:26Z
