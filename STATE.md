@@ -8692,3 +8692,62 @@ img2img init or inpaint mask now aimed at the **hand**; or r5's two-hand plate c
 below its horizon — a framing call, R4. **Shippability is R4 and the founder's alone.**
 $0, one sample, nothing enqueued, no motion, no `plate_ack`. macbook1 `mac_preflight`
 = `READY, problems: []` (sha256 re-read per blob) before the rung was authored.
+## 2026-08-17 — beat 08 filed, and `tag:` never meant what a lane thought it meant
+
+**Beat 08 was the last guard beat with no filed plate, and the thing blocking it
+did not exist.** It was escalated as *"the figure-count correction left `tag:
+2boys` behind as a residue of the retired three-figure master, so any correct
+draft now fails `check()`"* — with the honest and correct note that fixing it
+meant editing a peer's key and retroactively faulting their drafts.
+
+**`sd_prompt.count_tag()` DOES NOT COUNT FIGURES.** It regex-matches the *leading*
+Danbooru tag of `compress()`'s output and returns it. So **`tag:` records the
+authoring convention a beat's drafts open in**, not a claim about how many bodies
+the beat needs, and the count guard in `check()` is an *internal consistency* test
+between a draft and its beat — which is exactly what its own docstring says, and
+why it caught `ep2-b06-plate-0815` for opening "Two adult guard men" in a `1boy`
+slot. Measured on the real CLIP:
+
+- **beat 07 declares `1boy`** and `authored_b07_cast_0817` puts a guard **and**
+  `{{GOBLIN}}` in frame — two figures — deriving `1boy` at 62/77, **zero faults**.
+- **beat 08 declares `2boys`** and all six of its drafts open "Two …", deriving
+  `2boys`. Five of the six are clean.
+- **forcing `tag: 1boy` faults the existing draft** — *"COUNT TAG is '2boys',
+  draft declares '1boy'"* — and would have hit all six.
+
+**Two figures, written two ways, both legal.** The script ruling created no
+mismatch, the guard lane's refusal to edit the key was right, and the fix was
+**one added draft key and no edit at all**: `authored_b08_cast_0817`, opening
+"Two men,", 74/77 positive, 66/77 negative, style anchor present, zero faults.
+`hedgerow` was traded for it — at 75/77 `compress()` sheds `very aesthetic`, so
+the third background noun goes and the style tail stays.
+
+**A first anchor attempt would have written 26 lines of comment INSIDE a peer
+draft's folded scalar, and only the parsed-variant diff saw it.** The byte delta
+was a perfect 2706 and the sha moved exactly as predicted; the parse-back caught
+it (*"beat 8 key 'authored_b08_refresh' was MODIFIED. Refusing"*). **A byte count
+cannot tell an insertion BETWEEN two scalars from an insertion INTO one** — that
+is the argument for the parsed diff, in one concrete instance.
+
+**`--expect-drafts-sha256` IS IMPLEMENTED NOWHERE.** `box_enqueue.py`'s
+`drafts_problems` docstring says the renderer keeps a second, later drafts check
+"because enqueue time and run time are not the same moment: `--backlog` work sits
+for hours". The string appears in **exactly one place in the repo — that
+docstring** — and in none of `goblin_ipa_beat.py`, `goblin_ipa_sample.py` or
+`render_wave_goblin.py`. So the enqueue-time comparison is the only one there is,
+and a backlog job that sits while a peer re-syncs the harness renders different
+wording and publishes it as canon with nothing stopping it. It stays *detectable*
+— every sidecar carries `drafts_sha256` — so `ep2-b08-cast-0817` tells its scorer
+to check that against `cbb3658e` and re-render on a mismatch rather than score.
+**This is a load-bearing docstring that is false, which is the failure canon.yaml
+exists for**, and it belongs to whoever owns `box_enqueue`. Not patched here:
+adding a run-time check to a shared renderer with live peers mid-shift is new
+plumbing in someone else's file.
+
+Also verified rather than assumed while filing: the sampler reads
+`harness / "wave-drafts.yaml"` (`goblin_ipa_sample.py` line 579), **not** the box's
+repo copy — which matters, because that repo copy sits at a third divergent hash
+(`714d77bc`) and is not what renders. The harness copy was hand-synced
+(`--sync-drafts` refuses while the queue is busy) and hash-verified twice, and the
+harness `render_wave_goblin.py` is byte-identical to the repo's, so the
+measurement used the checker the box will run.
