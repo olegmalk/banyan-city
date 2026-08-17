@@ -245,21 +245,29 @@ subjects:
 
 - id: sapling-cotyledon-shape
   what: >-
-    ROUND/OVAL COTYLEDONS, not deeply lobed five-fingered fig leaves. THIS IS
-    STEWARD INFERENCE FROM HIS TWO-LEAF RULING AND NOT HIS WORDS -- a two-leaf
-    plant at ~40 cm is a cotyledon-stage seedling and cotyledons are round, while
-    deeply lobed palmate leaves are mature-tree foliage that cannot co-exist with
-    a two-leaf seedling. The survey named round-vs-lobed as the one thing that
-    could not be inferred; this entry records that the steward inferred it anyway,
-    on that reasoning, and it is VETOABLE IN ONE LINE ("lobed, not round"), in
-    which case invert `forbids` and delete this note. Evidence already leaned the
-    same way before the ruling: `wide oval cotyledon leaves` on four beats
-    (12/15/19/20) against `deeply lobed fig leaves with five fingers` on one (01).
+    ORDINARY, AVERAGE LEAVES -- a plain unremarkable leaf, the shape anyone draws
+    when you say "leaf", and nothing exotic on either side of it. HIS WORDS,
+    2026-08-17: "the sapling 2 leaves are average leaves". This rules out the
+    SPECIAL leaf in both directions: out are deeply lobed five-fingered palmate
+    fig leaves (mature-tree foliage, a botanical specimen that reads as one), and
+    out is any leaf drawn as a feature -- no lance shapes, no exaggerated
+    silhouette, no leaf whose shape is the subject of the shot. SUPERSEDES the
+    steward inference of 2026-08-16 (round/oval cotyledons, reasoned from the
+    two-leaf ruling), which is kept struck-through beside it in THE-SAPLING.md
+    section 2.2 with both dates so nobody applies the older rule. This entry no
+    longer rests on an inference and is no longer vetoable in one line. NOT
+    SETTLED by his words and not asserted here: leaf SIZE in frame (section 4
+    still has `oversized` and `big` live and unruled) and whether the leaves are
+    called cotyledons -- "average" is a ruling about shape, not about vocabulary
+    or scale. The pre-ruling evidence survives intact: `wide oval cotyledon
+    leaves with soft round tips, not narrow, not pointed, not lance-shaped` on
+    beats 12/15/19/20 describes an average leaf and is compliant; `deeply lobed
+    fig leaves with five fingers` on beat 01 does not and is not.
   kind: prompt_canon
-  since: '2026-08-16'
+  since: '2026-08-17'
   evidence:
     file: genomes/sapling/THE-SAPLING.md
-    contains: 'The working canon is ROUND/OVAL COTYLEDONS'
+    contains: 'The canon is ORDINARY LEAVES'
   scope:
     beats: [1, 2, 3, 4, 12, 13, 15, 16, 18, 19, 20, 21]
     prompt_mentions: \bsapling\b|\bseedling\b|\bleaf\b|\bleaves\b
@@ -267,7 +275,12 @@ subjects:
   - deeply lobed
   - \bfive fingers\b
   - \bpalmate\b
-  - no simple oval leaves
+  # `no simple oval leaves` was DELETED here 2026-08-17, and it was a defect and
+  # not a tidy: against his "average leaves" an ordinary leaf is closer to a
+  # simple oval than to anything else, so that negative forbade the very canon
+  # this entry exists to protect. It is still live in the b01/b18 draft text,
+  # which is drafting work outside this patch. The other three survive his
+  # ruling -- a palmate five-fingered fig leaf is the opposite of average.
   # All seven already fired; every one is a superseded LIGHTING or FRAMING round,
   # and each is replaced by a dated `*_canon_0816` draft beside it. They are
   # history. A NEW lobed draft is not on this list and fails.
