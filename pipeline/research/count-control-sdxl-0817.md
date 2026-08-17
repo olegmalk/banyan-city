@@ -43,3 +43,36 @@ Related counting papers to check for runnability (do NOT assume available):
 
 (status of these two: pending — runnability on animagine + local weights unknown
 at time of writing.)
+
+## 3. Test-time attention methods: real, SDXL-proven, and still not exact
+
+**Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation**
+(ECCV 2024) — <https://arxiv.org/html/2403.16990v1>,
+<https://link.springer.com/chapter/10.1007/978-3-031-72630-9_25>
+
+- **Training-free**, no extra weights — the only class of method so far that could
+  run on animagine at $0 without a download.
+- Demonstrated on **SD *and* SDXL** (SDXL results are their Fig. 9-10). This is the
+  rare case of a paper method that is actually architecture-compatible with us.
+- States the diagnosis we are living: vanilla SDXL, given several semantically
+  similar subjects, leaks semantics between them and **"inaccurat[ely] generat[es]
+  the number of objects."** Two leaves on one seedling is the maximally hard case
+  of that — same token, same appearance, adjacent.
+- **Input the user must author: one bounding box per subject.** Boxes we can draw
+  for two leaves; that part is not a blocker.
+- **But it is not exact.** Their own counting metric is **0.83 vs 0.74** baseline.
+  A method that raises count accuracy from ~3-in-4 to ~5-in-6 does not deliver
+  "exactly two, every plate." It reduces the reroll cost; it does not end it.
+- Second caveat: the formulation is *n distinct textual subjects*, each with its own
+  box. Two leaves are not distinct subjects in the prompt — we would be asking it to
+  bind one repeated token to two boxes, which is off-label for the method.
+
+**Attend-and-Excite** (SIGGRAPH 2023) — <https://arxiv.org/pdf/2301.13826>,
+code <https://github.com/yuval-alaluf/Attend-and-Excite>, project page
+<https://yuval-alaluf.github.io/Attend-and-Excite/>
+
+- Also training-free, but it targets **catastrophic neglect** — the model dropping a
+  subject entirely — by strengthening cross-attention on each subject token. It
+  makes a missing thing appear. It has **no mechanism for capping a count at two**,
+  and cannot suppress a third leaf. Wrong tool for our failure; it addresses "the
+  seedling has no leaves," not "the seedling has four."
