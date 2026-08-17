@@ -137,3 +137,116 @@ beats:
     not_shippable_reason: >-
       Its own shipping blocker (bark board) is untouched, so this does not
       replace the shipping pick ep2-b06-scene-0814r.
+
+  '05':
+    role: >-
+      The only TWO-GUARD rung in the batch and the one beat that can show whether
+      two DIFFERENT men can be specified at once at all. Eyewear deliberately
+      omitted on both guards. Marked in its own spec as a DIAGNOSTIC RUNG no lane
+      may promote to a shipping plate.
+    done_when_quoted_from_done_definitions: >-
+      two guards jog in together FROM FRAME ONE, stop, and scan; both adult men in
+      tunic and sash; field present at frame one; neither redrawn mid-clip.
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: >-
+      ON THE TERM THAT MATTERED, YES -- and this is the most valuable single
+      result in the batch. See c2.
+
+    per_condition_rate:
+      c1_exactly_two_whole_bodied_adults_neither_a_child: >-
+        6 of 12. The entire r2 row fails outright -- those four are framed so tight
+        that both figures are cropped to fragments (chest-up or less), so
+        "whole-bodied" is lost 4 of 4. r1s1 additionally renders TWO EXTRA FIGURES
+        standing in the midground, so that frame holds FOUR bodies, not two.
+      c2_distinguishable_one_DARK_CROPPED_one_LIGHT_SANDY: >-
+        7 of 12, AND THE MERGE DID NOT FIRE. This is the question the rung exists
+        for and the answer is yes: r0s0, r0s1, r0s2, r0s3, r1s0, r1s3 and r2s2 all
+        draw one genuinely dark-cropped man beside one genuinely light-sandy man.
+        Two different men CAN be specified at once. Where the term fails it fails
+        as BOTH LIGHT, at r2s0 and r2s1 only.
+      c3_neither_man_is_bald: >-
+        10 of 12. BALD CAME BACK at r1s1 and r1s2 -- both fully bare scalps on the
+        dark-haired man's slot. On a rewritten plate that no longer asks for it,
+        which makes it a residue of the reference set or the model's prior, not of
+        the wording. Named, because `bald` is precisely the defect being corrected.
+      c4_garments_correct_and_not_swapped_or_merged: >-
+        0 of 12, the weakest term. Two distinct failures. MERGED, 9 of 12: both men
+        come out in the same tan/cream tunic, so the "cream shirt + brown wrap
+        skirt" half of the cast never appears at all. SWAPPED, at r1s0: both
+        garments are present and correctly cut, but the WHITE WAIST SASH is on the
+        SANDY man when it belongs to the DARK one, and the brown sash on the dark
+        man when it belongs to the sandy one -- exactly inverted.
+      c5_both_halted_facing_lens_four_hands_visible_and_EMPTY: >-
+        3 of 12 (r1s0, r1s1, r1s3). The whole r0 row is MID-RUN -- legs off the
+        ground, fists pumping -- so "standing/halted" is lost 4 of 4 there. Worth
+        noting against the done_when, which asks the guards to "jog in together
+        FROM FRAME ONE, stop, and scan": the r0 row is the jog, not the stop.
+      c6_no_board_clipboard_slab_or_paper_anywhere: >-
+        12 of 12, CLEAN. Nothing prop-like in any hand or on the ground in any
+        frame. The negation held perfectly.
+      c7_grass_plus_hedgerow_plus_sky_all_real_and_NOT_a_plan_view: >-
+        4 of 12. Two separate causes. The r0 row carries all three bands but is
+        shot from a markedly HIGH DOWNWARD angle against a bar that demands "eye
+        level or near it", so the plan-view tendency is still there, 4 of 4. The r2
+        row is at eye level but framed so tight and so shallow-focus that the
+        hedgerow and sky bands are gone, 4 of 4. Only r1s0, r1s1, r1s2 and r1s3
+        hold three real bands at eye level.
+      c8_no_white_or_plain_background: 12 of 12, CLEAN. No white field or plain ground anywhere.
+
+    pre_registered_fail_modes:
+      two_men_rendering_as_ONE_man_twice: >-
+        DID NOT FIRE where it could be tested. This is the headline. The merge this
+        beat's prompts had never been able to test -- because they never asked for
+        two different men -- was tested and did not happen: 7 of 12 draw two
+        visibly different men. It fires only as "both light" at r2s0 and r2s1,
+        2 of 12, in the row that is too tight to score anyway.
+      an_object_appearing_in_an_unspecified_hand: DID NOT FIRE, 0 of 12. Every hand is empty.
+      the_plan_view_returning: >-
+        FIRED, 4 of 12, the whole r0 row -- high downward angle. `horizon` is
+        negated nowhere and this is what that costs.
+      eyewear_appearing_on_either_man_unprompted: >-
+        DID NOT FIRE, 0 of 12. A clean negative and a real result to hand the
+        binding lane: with eyewear named nowhere it appeared nowhere, on two faces,
+        twelve frames. Eyewear does not arrive unbidden.
+      unpre_registered_defect_found: >-
+        FEMALE-READING SECOND FIGURE at r1s0, r1s2 and r2s1 -- feminine face, bob,
+        and at r1s2 an off-shoulder garment. The bar says "two adult human figures"
+        and "the two men", so this is inside the bar's terms and against them, but
+        it was NOT pre-registered. Recorded here and TIGHTENED FORWARD ONLY: the
+        next two-guard rung should carry an explicit male term. It is not scored
+        retroactively against these frames.
+
+    pick: >-
+      r1s0, on reasons and with its cost stated. It is the only frame in the batch
+      that simultaneously holds two whole-bodied figures, one dark-cropped beside
+      one light-sandy, neither bald, both halted and facing the lens, four hands
+      visible and empty, no board, and all three world bands at eye level with no
+      plan view. What it costs: the white waist sash is on the wrong man (the exact
+      inversion described in c4) and the sandy figure reads feminine. Runner-up
+      r1s3 has cleaner figures and a correct eye level but merges both garments
+      into the same tunic and has no white sash at all.
+    verdict: >-
+      DOES NOT CLEAR ITS BAR -- 0 of 12 clear every term -- BUT IT ANSWERS ITS
+      QUESTION, WHICH IS WHAT IT WAS FOR. The blocking uncertainty is discharged:
+      two different men can be specified at once (7 of 12), and eyewear does not
+      appear unprompted (0 of 12). The eyewear-binding lane can now tell a leak
+      from a general failure to separate two figures, which is what it was waiting
+      on. What is still not solved is garment assignment, which failed 12 of 12 by
+      merging and once by inverting.
+    blocked_on: >-
+      Garment assignment -- getting the cream-shirt/brown-skirt man to appear at
+      all rather than a second tan tunic, and getting the white sash onto the right
+      man. Secondarily the plan-view angle on r0 and the halted-not-running pose.
+    diagnostic_only_NOT_PROMOTED: >-
+      CAST HOLDS ON THE SEPARATION TERM, DIAGNOSTIC ONLY, EYEWEAR ABSENT BY
+      DESIGN. Its own spec marks it unpromotable and this lane does not promote it.
+      Eyewear absence here is not a defect: it was omitted deliberately because
+      eyewear is broadcast-class and lands on BOTH faces when two are in frame.
+    founder_cards_hit:
+      - >-
+        R4/taste: the second figure reading FEMALE on 3 of 12 touches who the
+        approved cast IS, not whether a term was met. Founder's call, named only.
+      - >-
+        R4/taste: both guards render dark-skinned and adolescent. Not a bar term
+        anywhere; flagged as taste, not scored.
