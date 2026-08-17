@@ -1,0 +1,239 @@
+# ep2-b01-nodecount-0817 -- 2026-08-17, NODE-COUNT rung. $0, local card, no provider.
+# ONE RUNG, ONE VARIABLE, against a control that has already been rendered AND SCORED.
+# Draft key: authored_b01_nodecount_0817. Measured on the REAL CLIP before this file was
+# filed (openai/clip-vit-large-patch14 via sd_prompt.compress + negative_tokens, the two
+# functions render_wave_goblin.check() itself calls, on ~/banyan-farm-m1pro/venv, offline):
+# positive 76/77, headroom 1, POSITIVE DROPPED: none, STYLE ANCHOR PRESENT: True. The
+# control `authored_b01_geom_0817` measures 73/77 headroom 4 on that same harness and is
+# BYTE-IDENTICAL on disk after the insert (pipeline/insert_b01_nodecount_0817.py re-parses
+# the file and refuses to leave a mutated control behind). The fallback estimator was NOT
+# used: it changes verdicts and not merely numbers, because compress() sheds different
+# SENTENCES under it. THREE OF THE BRIEF'S OWN WORDINGS WERE DISCARDED ON MEASUREMENT --
+# `, one node only` 66/77, `a single node, bare stem below` 67/77, and the brief's literal
+# `a single node, the stem bare beneath them` 69/77 -- because each makes compress() shed
+# the trailing style sentence and `very aesthetic` goes MISSING. Discarded, not trimmed.
+# HEADROOM 1 IS RECORDED, NOT HIDDEN: beat 01 carries no goblin definition so nothing else
+# needs that room here, but this draft must not be extended without re-measuring.
+# NEVER RUN: verified on the box, not inferred from a local file --
+# C:\banyan-queue\done and \failed contain no ep2-b01-nodecount-0817-*.json and
+# C:\banyan-farm\courier-box\farm-out has no ep2-b01-nodecount-0817 directory.
+# pipeline/measured/queue-history.json was NOT consulted; it is days stale and has caused
+# twelve duplicate filings.
+id: ep2-b01-nodecount-0817
+task: ep2-b01-nodecount-0817
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: count-control lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 1 COLD OPEN, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "A tiny two-leaf banyan sapling in a green
+  field. On the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing
+  in frame that moves." This is a STILL PLATE on an approved node: no voice synthesis, no footage render,
+  no episode assembly, no publication. The script''s `green nub` is the PRE-RIPE state and is founder-approved
+  text; it is not the purple-canon debt and nothing here rewrites it.'
+script_line: 'Beat 1 COLD OPEN, node.md verbatim: "A tiny two-leaf banyan sapling in a green field. On
+  the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing in frame
+  that moves."'
+consumer: 'The count-control question on the plant beats, which is the most repeatable defect in them.
+  This rung exists because its control''s own verdict was RE-READ and the mechanism inverted. The geometry
+  rung scored 2 of 16 on exact count -- a real null by its pre-registered rule -- but at full resolution
+  its clean cells show the clause BOUND AND BOUND WELL: stems carry swollen node joints and at EVERY node
+  there are exactly two leaves, opposed, one either side. What `opposed one either side of the stem` never
+  constrained is HOW MANY NODES THE PLANT HAS, so the model honoured the arrangement and stacked it two or
+  three times up the stem. Eight cells each obeying "opposed, one either side" returned four to six leaves.
+  The clause describes A NODE, not a plant, so it was never a count constraint and could not have been.
+  NODE COUNT is the free variable that exposed and this is the only job that names it. Named before any
+  pixel is drawn, per the no-work-without-a-consumer rule. NOTE HONESTLY WHAT THIS IS NOT THE ONLY ROUTE
+  TO: composite-then-inpaint at 0.30 already delivers exact two-leaf count 8 of 8 with zero GPU spent on
+  the count, so count is SOLVED for any beat where a composited init can be built. This rung matters for
+  the case that route does not cover -- a plate generated fresh, where a prompt that yields a correct-count
+  init is what removes the compositing step. That is a smaller consumer than the control had and it is
+  stated as smaller rather than inflated.'
+why: 'THE ONE VARIABLE IS A PURE ADDITION, which is what makes it provable rather than asserted.
+  ` at one node` is appended to the control''s leaf clause: `wide oval cotyledon leaves opposed one either
+  side of the stem` becomes `wide oval cotyledon leaves opposed one either side of the stem at one node`.
+  The control clause survives CHARACTER FOR CHARACTER. Everything else is byte-identical -- the purple fig
+  clauses, `green at its neck`, the scale relation `no taller than the grass around it`, the style tail,
+  the reference set, the arm, the seeds, and the ENTIRE negative including `no three leaves, no four leaves,
+  no many leaves`. Those negatives STAY: removing them would be a second variable and the comparison would
+  stop being real. pipeline/insert_b01_nodecount_0817.py proves the single variable MECHANICALLY -- it
+  builds the draft as `control.replace(OLD, OLD + " at one node")`, refuses unless the length delta is
+  exactly the addition, then RE-PARSES the file and refuses unless the new value matches and the control is
+  still byte-identical. A matching byte delta is not proof of a correct edit; the parsed comparison is.
+  `a single node` MEASURED FINE (74/77, anchor True) AND WAS REJECTED ANYWAY: it REPLACES `the stem` rather
+  than adding to it, so a win with it could not be told apart from a change of referent.
+  THE PREDICTION IS PRE-REGISTERED AND IT IS NOT OPTIMISTIC. `one` is a numeral, and the settled outside
+  finding is that numerals barely reach the conditioning -- CLIP''s text embeddings are near-identical
+  across numerals (T2ICountBench, arXiv 2503.06884; full read in
+  pipeline/research/count-control-sdxl-0817.md) -- which is exactly why `exactly two` runs 0 of 16 on this
+  arm. So this rung tests a NARROWER claim than "numbers work": whether a numeral binds when applied to a
+  STRUCTURAL feature the model draws explicitly (a node, which it renders as a visible swollen joint)
+  rather than to the counted objects themselves. A null here is an informative null and is expected more
+  than a win is.
+  DEPARTS FROM ITS BRIEF ON ONE POINT AND SAYS SO. The brief (ep2-b01-geom-0817.yaml, key
+  `the_lever_this_actually_points_at_and_why_it_is_NOT_filed_either`) says to fold in the founder''s
+  2026-08-17 "average leaves" ruling at the same time so `cotyledon` is not carried a third time. READING
+  THE RULING REFUSES THAT: canon subject `sapling-cotyledon-shape` records his words -- "the sapling 2
+  leaves are average leaves" -- and then states that NOT settled by them is "whether the leaves are called
+  cotyledons -- ''average'' is a ruling about shape, not about vocabulary or scale", and names `wide oval
+  cotyledon leaves with soft round tips` COMPLIANT. So `cotyledon` is not debt, the ruling does not reach
+  it, and removing it would be an unauthorised SECOND variable. It stays. If the word is to go, that is a
+  separate wording pass with its own control.
+  COLOUR: nothing green is propagated. This lineage is already purple and PURPLE HELD 16 OF 16 on the
+  control -- `one small deep purple-violet fig` in the positive and `no green fig, no green fruit` in the
+  negative, both inherited byte-identical.
+  IS NOT: a mask rung, a composite rung, or a pick. Beat 01''s mask route is closed by its own stop rule.
+  $0, local card, no provider.'
+success: 'PRE-REGISTERED IN THIS COMMIT, BEFORE ANY FRAME OF THIS RUNG EXISTS, and carried forward from
+  the control''s own bar rather than rewritten. Sixteen stills at 832x1216 (4 reference cells x 4 seeds) --
+  the control''s grid exactly, because a count result needs a denominator and the comparison is only real
+  on the same grid.
+  PRIMARY, leaf count out of 16: PASS is EXACTLY TWO leaves on the plant. FAIL-COUNT = three or more, or
+  one. Control on this grid: 2 of 16.
+  MECHANISM, node count out of 16, SCORED SEPARATELY because this rung''s claim is about nodes and not
+  about leaves: PASS-NODE is exactly ONE leaf-bearing node on the stem. This is recorded whatever the
+  primary does, because the two can come apart in both directions -- two nodes each carrying two opposed
+  leaves fails PRIMARY while showing the arrangement held, and one node carrying three leaves fails
+  PRIMARY while showing the node constraint held. Reporting only the leaf count is how the control''s
+  mechanism was misread the first time.
+  SECONDARY, height relation out of 16, SCORED SEPARATELY so that a count fix cannot silently break the
+  half that is supposed to hold: the whole plant in frame and NO TALLER THAN THE GRASS AROUND IT.
+  FAIL-SCALE = bush or waist height, overtopping the grass, or the founder''s 2026-08-16 "dont make it
+  double in size suddenly". Control on this grid: 0 of 16.
+  ALSO FAIL, inherited unchanged: FAIL-COLOUR (a green, red, pale or white fruit, or more than one) and
+  FAIL-PERSON (any face, figure, chibi or mascot -- the beat has no character in it).
+  THE SUB-GRID IS DECLARED NOW AND NOT CHOSEN AFTERWARDS. The control''s correction established that rows
+  r2 and r3 of this reference set come back as bush-sized purple fig masses while rows r0 and r1 are
+  cleanly composed seedlings at a workable scale. Both readings are therefore reported: the full 16, AND
+  the r0/r1 eight-cell sub-grid. The DECISION RULE below is settled on the FULL SIXTEEN; the sub-grid is
+  published alongside it as context and may NOT be substituted for it if the sixteen read badly.
+  THE DECISION RULE, written before the frames exist so the read cannot be softened afterwards: the node
+  constraint BINDS only if leaf count reaches 9 of 16 AND the height count does not fall below the
+  control''s 0 of 16 on the same grid. 6 of 16 is the rate `exactly two` runs across the wave sheets, so
+  anything at or under it is NO EFFECT. Between 7 and 8 of 16 is INDETERMINATE and licenses one repeat at
+  fresh seeds on this same grid and nothing else. A height regression is a REGRESSION however the count
+  reads. Scored AS WRITTEN and tightened FORWARD ONLY, never retroactively -- bending a bar after the
+  picture is how 8/12 "passes" became 0/12 usable.
+  FAILURE IS REACHABLE AND IS CURRENTLY THE STATUS QUO: the control scored 2 of 16 on this exact grid, and
+  `whole plant in frame` keeps the whole stem in shot, so a second node further up the stem can appear and
+  be counted against this. This is not a framing that cannot fail, and the pre-registered prediction above
+  says a null is the more likely outcome.
+  A THREAT TO VALIDITY, RECORDED NOW SO A NULL IS NOT OVER-READ: `one` is a numeral on an arm where two
+  count-asserting wordings have already scored 0 of 16, so a null here is ambiguous between "node count is
+  the wrong lever" and "numerals do not reach the conditioning, including this one". It cannot distinguish
+  them, and it must not be written up as though it had. The clean discriminator is a DEVELOPMENTAL-STAGE
+  adjective -- a newly sprouted seedling has one node by botany without asserting any number, and
+  stage/size adjectives are the class of wording that HAS bound on this beat where numerals have not. That
+  is a different job with its own bar and is NOT smuggled into this one.
+  NOT A PICK and NOT A TASTE CALL: which of the sixteen, if any, ships is R4''s and this job makes no such
+  claim. Measurement is the lane''s; taste is the founder''s.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817
+  - --draft-key
+  - authored_b01_nodecount_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817
+  - --draft-key
+  - authored_b01_nodecount_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-nodecount-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-nodecount-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the count-control lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b01_nodecount_0817). Not\
+    \ a pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads the\\\
+    n\"\n            \"  sixteen frames against THIS BEAT's pre-registered bar -- leaf count, node\\n\"\n\
+    \            \"  count and height scored SEPARATELY -- before anything built on it is\\n\"\n\
+    \            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"\
+    stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+# NO `allow_fail` ON PUBLISH, DELIBERATELY, AND THIS IS A DEPARTURE FROM THE CONTROL.
+# The control carried `allow_fail: true` on this step while its last line asserts
+# `SystemExit(0 if len(src) >= 16 else 1)` -- so the frame-count assertion was
+# NEUTERED and a publish that copied nothing could still read as a clean job. That
+# is one of the four ways tooling lied on 2026-08-17. The assertion keeps its teeth
+# here: if fewer than 16 frames land, this job is FAILED and says so.
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads like\n# a render failure. farm-out is not gitignored,\
+    \ so the runner pushes these itself.\n# The manifest is written from the files ACTUALLY COPIED, and the\
+    \ sha is read back\n# off the COPY at the destination -- a publish step has written a manifest for\n\
+    # files it never copied before.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-nodecount-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-nodecount-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/01-cold-open-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/01-cold-open-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-nodecount-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\npngs = [f for\
+    \ f in src if f.endswith(\".png\")]\nprint(\"published\", len(src), \"file(s),\", len(pngs), \"png ->\"\
+    , dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-nodecount-0817\01-cold-open-ipa-r3-w015-s0.png
