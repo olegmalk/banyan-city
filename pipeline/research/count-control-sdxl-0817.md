@@ -94,6 +94,29 @@ xinsir's are *"currently the most reliable for SDXL"* —
 <https://medium.com/intelligent-art/controlnet-union-promax-for-sdxl-5c1bb137b94c>,
 <https://github.com/Mikubill/sd-webui-controlnet/discussions/2989>
 
+## 3c. Do SDXL controlnets run on an anime finetune like animagine-3.1?
+
+Evidence is weaker here — no benchmark found, only existence proofs and one honest
+negative:
+
+- **Yes in practice**: published Animagine-XL-3.0 ComfyUI workflows include ControlNet
+  alongside LoRA/IPAdapter — <https://comfyworkflows.com/workflows/3e83739d-cb2d-43c3-b137-24ca7146b628>
+  Base-SDXL controlnets are used with SDXL finetunes generally; the incompatibility
+  boundary is between *model families*, not between a base and its finetune
+  (<https://comfyui.nomadoor.net/en/faq/sd15-sdxl-asset-compatibility/> draws the line
+  at SD1.5 / SDXL / Flux and says nothing against same-family finetunes).
+- **Someone trained one directly on our exact family**: `SubMaroon/ControlNet-anime-colorize`
+  is an SDXL ControlNet trained on **cagliostrolab/animagine-xl-3.0** —
+  <https://huggingface.co/SubMaroon/ControlNet-anime-colorize/blob/main/README.md>.
+  That confirms architecture compatibility with animagine. But read its own verdict:
+  *"Experimental model. Low quality. Not intended for production use"*, "not stable",
+  "inconsistent color behavior." Useless to us as a checkpoint (it is a colorize
+  experiment), useful only as proof the pairing loads and trains.
+- One hard incompatibility to note if anyone tries the Mac shortcut: the **CoreML**
+  conversions of animagine-xl 2.0/3.1 **cannot be used with ControlNet** —
+  <https://huggingface.co/coreml-community/coreml-animagine-xl-3.1>. Diffusers on MPS
+  is fine; CoreML is not.
+
 ## 4. A crude PIL-drawn scribble IS a legitimate ControlNet input
 
 This was the cheapest thing to be wrong about, and it is not wrong. The
