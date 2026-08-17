@@ -2432,3 +2432,4 @@
 10:34:25Z STARTED task=ep2-b08-twofig-armonly-0817-1786961654 attempt=1 on box-runner
 10:40:09Z DONE task=ep2-b08-twofig-armonly-0817-1786961654 rc=0 artifacts=2
 10:40:17Z STARTED task=ep2-b08-twofig-both-0817-1786961637 attempt=1 on box-runner
+10:46:06Z DONE task=ep2-b08-twofig-both-0817-1786961637 rc=0 artifacts=2
