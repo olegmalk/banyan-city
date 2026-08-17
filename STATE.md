@@ -8590,6 +8590,37 @@ data point for the hand rule, still not a proof.
 spends three fresh seeds only once every axis holds, and P5 has not yet held.
 $0, single samples, nothing enqueued, no motion, no `plate_ack`.
 
+**r5 closed the lane, and the result is a stop with a mechanism rather than a
+shrug.** Moving `low close-up, hands and dirt large in frame` from mid-prompt to
+the front — **not one token added, removed or altered**, verified as an identical
+tag multiset at the same 75/77 — **bound**. The camera came back in, the weak Q8
+pull-back r4 had cost was undone, and **Q6 portrait re-compose, the named risk of
+a leading `low close-up`, did not fire.** r5 is the tightest hands-and-dirt
+framing this beat has had: all ten claw-tips buried in dug soil, the hands the
+largest element after the head. **Six of seven axes hold and P5 fails for the
+third rung**, so the stop rule pre-registered at `3c20c13a` applies as written:
+**P5 is not reachable by words on this composition.**
+
+**Why tightening could not remove the band, which is the part worth handing on:
+r5 enlarged the SUBJECT, it did not move the CAMERA.** The camera is still near a
+crouching figure's eye level, so there is still a horizon in frame and therefore
+still a sky above his hunched back. Framing tightness changes how much of the
+frame he fills; it does not change where the horizon sits. **The next instrument
+is a camera ANGLE, not a framing tag** — `from above`, which would put ground
+behind him and *delete* the band instead of trying to fill it, and which on r5's
+evidence would bind because it is the same leading-tag class. **Named, reasoned
+and deliberately not fired:** a stop rule that survives only until "a camera tag
+is a different composition" is not a stop rule, and camera angle on a beat about a
+man's hands and his embarrassment is a look decision. It goes to the next lane
+with the reasoning done, or to the founder.
+
+**Where beat 14 stands:** no pass, and a plate clearing **six of seven axes**
+against a definition whose only prior plate was the standing full-body shot it
+says to send back. Its remaining fault is a soft gradient sky band — **not** the
+white burst that broke the plates for beats 06, 09 and 11. Whether that is
+shippable is the founder's call and was not treated as this lane's to make.
+Artifacts and per-axis scoring in `farm-out/ep2-b14-mac-plate-0817/`.
+
 ## 2026-08-17 — beats 07 and 08 need TWO figures, ruled from the script
 
 A filing lane escalated rather than decided a contradiction in our own files:
