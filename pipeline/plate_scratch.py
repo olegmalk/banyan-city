@@ -3522,6 +3522,118 @@ REVS = {
             "indoors, photorealism, 3d render, dark, night"
         ),
     },
+    # ======================================================================
+    # 2026-08-17. BEAT 14 REVISION 4, WRITTEN AND COMMITTED AFTER r3 WAS
+    # OPENED AND SCORED AND BEFORE r4 EXISTS. THE RUNG r3's VERDICT DICTATED.
+    # ======================================================================
+    # r3's SCORED RESULT, which this rev is a consequence of rather than a
+    # guess: SIX AXES HELD, P5 FAILED, and NONE of the seven named fail modes
+    # fired. Full frame description and verdict in
+    # farm-out/ep2-b14-mac-plate-0817/14-the-defense-mac-plate-r3s1.yaml
+    # (committed at d06bee24, sha f47f6d0a). In one line: bare soil under both
+    # sets of fingertips AND green grass in the same frame -- so grass and dirt
+    # are NOT bistable and that reading is retired -- but the band above and
+    # behind his hunched back came back a featureless pale wash larger than his
+    # torso.
+    #
+    # THE ONE VARIABLE, AND r3 IS WHAT NARROWED IT TO ONE. `tall green grass
+    # behind him` BECOMES `tall green grass background`. Nothing else in the
+    # positive changes, the negative is byte-identical again, and the seed is
+    # still 20260814 -- so r1, r2, r3 and r4 are now four draws of ONE seed
+    # differing by text alone.
+    # WHY THAT EXACT SWAP. r3 proved the clause RENDERS; it rendered in the
+    # wrong PLACE. `tall green grass` came back as tufts at the left and right
+    # frame edges AT HIS OWN DEPTH -- an object beside him -- because `behind
+    # him` is a prepositional phrase anchored to the FIGURE. `background` is a
+    # booru-native framing suffix anchored to the FRAME, and it is the exact
+    # construction (11,3) used when it fixed this on its first sample and
+    # measured 0.47 torsos of largest flat rectangle. So the spatial operator
+    # changes class -- figure-relative to frame-relative -- and the noun does
+    # not change at all. That is the smallest edit that asks the question, and
+    # it happens to BUY a token rather than cost one: `behind him` is two,
+    # `background` is one.
+    #
+    # THE ALTERNATIVE MECHANISM, NAMED NOW SO IT CANNOT BE INVENTED LATER. The
+    # pale wash may not be an unnamed region at all -- IT MAY BE AN UNNAMED
+    # SKY. Nothing in beat 14's positive or negative has ever mentioned sky,
+    # and (11,3)'s negative forbids `sky, horizon` while beat 14's does not.
+    # If `background` does not reach the band, THE r5 CANDIDATE IS TO NAME THE
+    # SKY POSITIVELY rather than to negate it -- deleting `wide blue sky above`
+    # is what "removed a colossus completely" on beat 08, i.e. a sky with a
+    # noun in it is a solved region and a sky with none is a hole. Negating it
+    # is NOT the candidate, and the reason is this file's own retracted
+    # `horizon` rule: a deletion from the negative looked like a lever at one
+    # seed and died at 3 of 3 fresh ones.
+    #
+    # WHAT IS NOT CHANGED, AND ONE OF THESE IS A RUNG I HAD QUEUED AND AM
+    # STANDING DOWN. The hand wording stays byte-identical for the FOURTH time.
+    # r3's P3 CONTACT was pre-registered as THE EXPECTED FAILURE (Q3) and it
+    # PASSED -- both sets of fingertips in a dug divot -- so the state-tag
+    # revision I had named as r4's variable IS NOT EARNED and firing it now
+    # would change a wording that is currently delivering the thing it was
+    # going to be changed to deliver. Nothing in r3 can have FIXED contact
+    # either, since the wording did not move; one frame cannot separate
+    # "reachable at this seed all along" from "one draw". So contact is carried
+    # as UNRESOLVED-BUT-WORKING and is watched at P3, not legislated about.
+    #
+    # THE BAR IS THE SAME SEVEN AXES AS r3 WITH ONE HONEST TIGHTENING, AND THE
+    # DIRECTION OF THE EDIT MATTERS. P4 as written for r3 named both substances
+    # and never named their RATIO, so r3's dirt plane with grass at the fringes
+    # satisfied its text. THAT IS SCORED AS r3 WROTE IT AND IS NOT BEING
+    # RETROACTIVELY FAILED -- bending a bar after the picture is the exact
+    # failure that turned 8/12 "passes" into 0/12 usable this week. The
+    # tightening applies FORWARD, from r4 on:
+    #   P4' DIRT WITHIN A GREEN FIELD, WITH THE RATIO NAMED. Bare brown soil
+    #       under or around his hands, AND green living vegetation, AND the
+    #       green must read as A FIELD HE IS IN rather than a fringe at the
+    #       frame's edges: green present on more than one side of him and
+    #       continuing past the frame edge, not isolated tufts. A dirt plane
+    #       bordered by grass is r3's outcome and is no longer a pass.
+    #   P5 IS THE AXIS UNDER TEST and is unchanged: no flat untextured region
+    #       larger than his torso, and nothing grown in one.
+    #   P1, P2, P3, P6, P7 unchanged and all five must continue to hold --
+    #       r3 passed all five and a regression in any of them fails r4 even if
+    #       the band is fixed. THIS IS THE REAL RISK OF THIS REV: a background
+    #       tag can pull the camera back, and pulling back is how P1's low
+    #       framing and P2's hands-large-in-frame get lost. Q6 PORTRAIT
+    #       RE-COMPOSE and a new Q8 CAMERA PULLED BACK (the ground stops being
+    #       half the frame, the hands stop being large) are both live.
+    #   FAIL MODES: Q1-Q7 as committed at c81323c6, plus Q8 above. Q1 desert is
+    #       now LESS likely, not more, because the green noun is still present
+    #       and is being moved rather than removed.
+    #
+    # DECISION RULE, UNCHANGED AND RESTATED SO IT IS NOT DRIFTED: ONE SAMPLE,
+    # opened and judged. All seven (with P4') holding makes it a CANDIDATE ON
+    # ITS PIXELS, and NOT a finding about the wording until THREE FRESH SEEDS
+    # of the byte-identical prompt have run -- one seed has manufactured two
+    # false laws in this repo in two days. P5 failing again sends the next rung
+    # to the sky clause named above, not to another region word. Any regression
+    # in P1/P2/P6 means the background tag costs the framing r1 won, and then
+    # the honest answer is that this beat needs a composition tool after all --
+    # which is where STATE.md's original stop pointed, and it would deserve to
+    # be said plainly rather than laddered around.
+    # Seeds parallelise, rungs do not. Nothing is enqueued off this, no motion
+    # is fired, and no `plate_ack` is written.
+    (14, 4): {
+        "prompt": (
+            "1boy, solo, lean adult goblin man, green skin, bald head, "
+            "patchwork cloak, crouching low, both clawed hands down at the "
+            "bare earth, fingers picking at loose dirt, face turned away, "
+            "low close-up, hands and dirt large in frame, "
+            "patch of bare brown soil, tall green grass background, "
+            "masterpiece, best quality, very aesthetic"
+        ),
+        # Byte-identical to DRAFTS[14]'s negative and to r3's, restated rather
+        # than inherited because exit 6 refuses a rev that names a prompt and
+        # not a negative, and because the pair that actually gets drawn should
+        # be readable in one place.
+        "negative": (
+            "text, standing, walking, running, full body, wide shot, distant, "
+            "holding object, spear, staff, sword, stick, basket, broom, "
+            "2boys, baby, child, chibi, stitches, scars, tree, forest, house, "
+            "indoors, photorealism, 3d render, dark, night"
+        ),
+    },
 }
 
 
