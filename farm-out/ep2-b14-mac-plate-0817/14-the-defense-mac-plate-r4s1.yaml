@@ -1,0 +1,113 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260814
+render_seconds: 70.5
+png_sha256: "9131861634490dd50f2867a5b06346ff984d01d73e8aac891396669e488c4448"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, low close-up, hands and dirt large in frame, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 4
+scored: true
+# Written by OPENING THE IMAGE. No tool was used on this frame and none is cited.
+# Judged against the bar committed at e70c36f6 BEFORE this pixel existed, which
+# is r3's seven axes with P4 tightened to name the ratio and a new Q8 added.
+what_this_frame_shows: >-
+  ONE adult green goblin, bald, long pointed ears, in a dark oxblood hooded
+  cloak with white cuffs, in a FULL SQUAT - knees out to either side, black
+  boots flat on the ground and VISIBLE, torso folded forward, head down and
+  face angled toward his hands. BOTH green clawed hands are down at the soil,
+  fingers converging, fingertips in contact, with a dug divot of loose crumbs
+  beneath them and a tiny pale yellow-green SPROUT rising at the point of
+  contact. Nothing is held in either hand. A band of bare brown soil runs
+  across the middle-lower frame. GREEN GRASS IS NOW ON FOUR SIDES OF THE SOIL:
+  a continuous grass band behind his boots at the far edge of the dirt, tufts
+  at the left and right frame edges, and tall blades across the bottom
+  foreground, all reading green rather than straw. THE UPPER BAND IS STILL A
+  WASH but it has CHANGED CHARACTER: where r3's was pale greenish-white, this
+  is a soft GREEN gradient with a few faint hatch strokes and two small
+  floating specks. There is still no object in it and both top corners are
+  flat. It remains larger than his torso. Eyes are blank white slits. Cloak is
+  plain oxblood, no patchwork.
+verdict_against_pre_registered_bar: >-
+  NOT A PASS. THE SAME AXIS FAILS. P1 LOW AND OVER THE GROUND - PASS. P2 BOTH
+  HANDS DOWN - PASS, both low, nothing held. P3 CONTACT - PASS, fingertips in a
+  divot, second revision running. P4' DIRT WITHIN A GREEN FIELD, RATIO NAMED -
+  PASS, and this is the axis that improved: green is on more than one side of
+  him, it continues past the left, right and bottom frame edges, and the tufts
+  are no longer isolated because a continuous grass band closes the far edge of
+  the soil. This now reads as a patch of bare dirt inside a green field, which
+  is what the beat has wanted since 2026-08-16 and what neither r1 nor r2 nor
+  r3 delivered. P5 NO VACANCY - FAIL, for the second revision running. The band
+  above his head to both top corners is still a flat gradient with no object in
+  it and it is plainly larger than his torso. P6 HEAD IN FRAME - PASS. P7 ONE
+  ADULT GOBLIN - PASS.
+  Q8 CAMERA PULLED BACK - FIRED, WEAKLY, AND IT WAS THE PRE-REGISTERED RISK OF
+  THIS EXACT REV. r3 cropped at the cloak with no feet; r4 shows the whole
+  squatting body including both boots, so the hands are smaller in frame and
+  `hands and dirt large in frame` is less true than it was. The ground is still
+  about half the frame so Q8 has not fully fired, but the direction of travel is
+  toward the standing full-body plate the definition says to send back, and it
+  is recorded as a COST of this rev rather than waved through.
+  Q1, Q2, Q3, Q4, Q5, Q6, Q7 all did NOT fire. Nothing grew in either specified
+  hand for the second revision running, which is a second data point for the
+  hand-vacancy rule and still not a proof.
+  RECORDED AND NOT SCORED: costume identity (plain oxblood, no patchwork - drift
+  now at three revisions and it wants a REFERENCE, not words), blank white eyes
+  (no eye state named, deliberately), `face turned away` still not binding.
+what_this_advances: >-
+  THE OPERATOR-CLASS SWAP WORKED DIRECTIONALLY AND THE REGION STILL HAS NO
+  OBJECT, AND THE DIFFERENCE BETWEEN THOSE TWO IS THE FINDING. r3's `tall green
+  grass behind him` did not touch the upper band at all - it put tufts beside
+  him at his own depth. r4's `tall green grass background` REACHED THE BAND: it
+  turned it from pale greenish-white to green and added faint texture. So a
+  frame-anchored `background` tag does address the upper region where a
+  figure-anchored `behind him` does not, which was r4's hypothesis and it is
+  supported. WHAT THE TAG DELIVERED WAS THE COLOUR OF GRASS AND NOT GRASS.
+  AND THERE IS A GEOMETRIC REASON IT CANNOT DELIVER MORE, WHICH IS THE MOST
+  USEFUL THING IN THIS PAIR OF RENDERS. THE HOLE IS ABOVE THE HORIZON. Grass
+  grows on the ground; the band that keeps coming back empty is the band above
+  his hunched back, and NO QUANTITY OR PHRASING OF A GRASS NOUN CAN PUT GRASS
+  THERE. Every rung so far has been aiming a ground noun at a sky region. The
+  only nouns that can legitimately occupy that band are sky, clouds, distant
+  hills, or something standing at the horizon line - AND `tree, forest` ARE IN
+  THIS BEAT'S NEGATIVE, which forbids the most natural horizon object outright.
+  That also explains why (11,3) got grass to its top edge and this beat cannot:
+  (11,3) looks ALONG the field at two men walking away, so the ground plane
+  fills the frame geometrically. A low close-up on a crouching figure has a
+  horizon in it, and therefore has a sky.
+  ONE PRE-REGISTERED GUESS IS WEAKENED BY ITS OWN TEST. r4's commit named the
+  r5 candidate as naming the sky positively, on the hypothesis that the wash
+  was an unnamed sky. The band went GREEN, not blue, when given a grass-coloured
+  background tag - so the model is not treating that region as sky by default,
+  it is treating it as "background, colour unspecified" and taking the nearest
+  hue. The r5 direction survives (that band needs an above-horizon noun) but the
+  specific reasoning behind it did not, and the correction is recorded here
+  rather than allowed to pass as a confirmed prediction.
+  NEITHER REVISION IS A FINDING ABOUT A WORDING. Both are single seeds of one
+  seed number (20260814, four draws now: r1, r2, r3, r4) on a renderer that
+  differs from the box at MAE 61 of 255. No seed batch was fired, because the
+  committed decision rule spends three fresh seeds only once ALL axes hold.
+where_this_leaves_the_beat: >-
+  P4 IS SOLVED AND P5 IS NOT, and after two rungs the honest read is that P5 is
+  no longer a wording problem on this composition. The wording ladder has one
+  well-motivated rung left (an above-horizon noun) and a real alternative that
+  is not a wording at all: drop the camera far enough that the ground fills the
+  frame and THERE IS NO ABOVE-HORIZON BAND TO FILL - which would also undo the
+  Q8 pull-back this rev cost. Choosing between those is a composition decision.
+  STATE.md's original stop on 2026-08-16 pointed at a composition tool, and two
+  rungs later that stop looks better than the diagnosis attached to it: the
+  diagnosis ("grass and dirt are bistable") is dead, the instinct was right.
+  NOTHING IS ENQUEUED, no motion is fired, no `plate_ack` exists, and shots.md,
+  wave-drafts.yaml and farm-queue.yaml are untouched by this lane.
