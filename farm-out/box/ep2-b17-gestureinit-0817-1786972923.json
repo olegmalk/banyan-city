@@ -1,0 +1,130 @@
+{
+  "id": "ep2-b17-gestureinit-0817-1786972923",
+  "task": "ep2-b17-gestureinit-0817",
+  "node": "002b-first-citizen",
+  "beat": 17,
+  "worker": "box-runner",
+  "priority": 60,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "assert-inputs",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\assert_sha.py",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-motion-prompt.txt",
+        "05942938bef5447c73db898de3fcf2bc2b72cdde67af89a07c19b4805cf62d9e",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-negative.txt",
+        "50fb304c6ed4666064b19d4e12cfd993938ee2fee406f55d08b505601beb92cb"
+      ]
+    },
+    {
+      "name": "extract-init",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\extract_gesture_frame.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b17-bigbody-motion-0816\\17-goodbye-bigbody-LTX-handbrush.mp4",
+        "--src",
+        "C:\\banyan-farm\\ep2-b17-bigbody-motion-0816-out\\17-goodbye-bigbody-LTX-handbrush.mp4",
+        "--sha256",
+        "3aaa6ad34b54f495c7a7e679dac460abc683a49adc0c61d21d35ed2ff053b7f4",
+        "--frame",
+        "26",
+        "--expect-size",
+        "704x1280",
+        "--out",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-gesture-init-f026-704x1280.png"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\b17-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "97",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b17-gestureinit-0817",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\bench-gestureinit-s20260917.jsonl",
+        "--bench-label",
+        "ep2-b17-gestureinit-0817"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817\\stamp_sidecar.py",
+        "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4.meta.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b17-gestureinit-0817-out\"\npay_dir = \"C:/banyan-farm/ep2-b17-gestureinit-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-gestureinit-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4*\")\n             + glob.glob(out_dir + \"/b17-gesture-init-f026-704x1280.png\")\n             + glob.glob(out_dir + \"/bench-gestureinit-s20260917.jsonl\")\n             + glob.glob(pay_dir + \"/b17-motion-prompt.txt\")\n             + glob.glob(pay_dir + \"/b17-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-gestureinit-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 3 else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4",
+    "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-gesture-init-f026-704x1280.png"
+  ],
+  "started_at": "2026-08-17T13:22:15Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T13:27:58Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\17-goodbye-gestureinit-s20260917-LTX-handbrush.mp4",
+    "C:\\banyan-farm\\ep2-b17-gestureinit-0817-out\\b17-gesture-init-f026-704x1280.png"
+  ]
+}

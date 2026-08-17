@@ -1,0 +1,34 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 17
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260917
+task: ep2-b17-gestureinit-0817
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0174
+compute_s_per_video_s: 57.4
+# --- appended by ep2-b17-gestureinit-0817 after the render.
+approved: false
+provisional: true
+is_show_content: false
+note: |
+  ENGINE PROBE, NOT A TAKE FOR THE CUT. This clip exists to separate two
+  readings of beat 17's missing brush: whether this engine cannot perform
+  hand-on-cloth traversal at all, or whether it cannot INITIATE one and
+  can continue one already underway. Its init is FRAME 026 OF ANOTHER
+  CLIP, so it opens mid-gesture and only ~7% of the frame is headroom --
+  he cannot rise to full height inside it. It is therefore NOT a
+  candidate plate for beat 17 under any reading, and opening the shot
+  mid-gesture would change how the action reads, which is an authorship
+  decision no lane has taken. It must never be picked into an episode.
