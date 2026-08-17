@@ -2577,3 +2577,4 @@
 22:47:07Z STARTED task=ep2-b01-compseed-s1-g1-0818-1787006711 attempt=1 on box-runner
 22:48:01Z FAIL task=ep2-b01-compseed-s1-g1-0818-1787006711 rc=92 step=artifact-check
 22:48:06Z STARTED task=ep2-b01-compseed-s1-g2-0818-1787006716 attempt=1 on box-runner
+22:49:03Z FAIL task=ep2-b01-compseed-s1-g2-0818-1787006716 rc=92 step=artifact-check
