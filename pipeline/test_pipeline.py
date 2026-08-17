@@ -9966,9 +9966,18 @@ def main():
                test_an_excuse_the_record_no_longer_carries_stops_excusing,
                test_the_bar_rule_reaches_the_real_exit_code_and_not_just_the_function,
                test_a_second_card_carrying_one_ruling_counts_as_covered,
-               test_without_also_records_the_second_card_is_reported_uncovered):
+               test_without_also_records_the_second_card_is_reported_uncovered,
+               test_an_evidence_string_alive_only_inside_a_strike_fails,
+               test_the_live_prose_that_replaced_it_still_passes,
+               test_a_blockquote_is_not_a_corpse,
+               test_a_strike_spanning_several_quoted_lines_is_removed_whole,
+               test_removing_a_strike_cannot_join_words_across_the_gap,
+               test_unbalanced_strike_markers_abstain_rather_than_guess,
+               test_a_string_that_is_simply_gone_keeps_the_older_message,
+               test_the_struck_evidence_gate_reaches_the_real_exit_code):
         with tempfile.TemporaryDirectory() as td:
             _t(td)
+    test_the_real_register_has_no_assertion_living_on_dead_text()
     test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
     test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger()
     print()
@@ -10807,6 +10816,169 @@ subjects:
     file: review/inbox.yaml
     contains: seed s0 is the goblin
 """
+
+
+# --- AND AN ASSERTION MUST NOT BE SATISFIED BY PROSE MARKED DEAD -----------
+# THE HOLE, measured 2026-08-17. House style §6 keeps superseded prose VISIBLE
+# FOREVER, struck with `~~`, because the provenance is the point. So a
+# `contains:` assertion pointed at prose that is later superseded keeps passing
+# on the struck-through corpse of its own claim — indefinitely.
+# `sapling-cotyledon-shape` asserted 'The working canon is ROUND/OVAL
+# COTYLEDONS', superseded 2026-08-17 and STILL PHYSICALLY PRESENT at
+# THE-SAPLING.md:81 inside the struck block. Measured on the real repo with the
+# real string: pre-fix `fail=1`, post-fix `fail=2`. It matters because the same
+# pattern guards ep2-fig-purple — the founder's canon-wide retroactive purple
+# ruling — so the instrument meant to catch a drift back to red could not.
+#
+# AND ONLY `~~` MEANS DEAD. Stripping `>`-quoted blocks as well (the written
+# proposal) turns `sapling-height` red FALSELY: its evidence lives inside a
+# blockquote, and in this repo `>` is a QUOTATION, usually the founder's own
+# words — the most alive text there is. test_a_blockquote_is_not_a_corpse pins
+# that so nobody "fixes" it back.
+
+
+def _ev_reg(needle, file="doc.md"):
+    return ("records:\n  structured: []\n  prose: []\n"
+            "subjects:\n- id: sapling-struck-probe\n  kind: prompt_canon\n"
+            "  since: '2026-08-17'\n  evidence:\n"
+            f"    file: {file}\n    contains: '{needle}'\n")
+
+
+_DOC_SUPERSEDED = """
+## 2.2 The leaves
+
+**The canon is ORDINARY LEAVES.** A plain, unremarkable leaf, 2026-08-17.
+
+> ~~**The working canon is ROUND/OVAL COTYLEDONS.** He did not say this. He
+> said two leaves, and the steward inferred the shape from the count on
+> 2026-08-16. Kept visible per house style; do not apply it.~~
+"""
+
+
+def test_an_evidence_string_alive_only_inside_a_strike_fails(td):
+    # RED when: live_prose() stops being applied. THE case that was passing.
+    root = _fixture(td, register=_ev_reg("The working canon is ROUND/OVAL COTYLEDONS"),
+                    records={"doc.md": _DOC_SUPERSEDED})
+    f = _fails(ccd.run(root), "register_evidence_missing")
+    check("an assertion satisfied ONLY by struck-through text FAILS", len(f) == 1)
+    check("and the file still physically contains it — that is the whole point",
+          "The working canon is ROUND/OVAL COTYLEDONS" in _DOC_SUPERSEDED)
+    check("the finding says the text is struck, not merely absent",
+          bool(f) and "struck" in f[0].detail.lower())
+
+
+def test_the_live_prose_that_replaced_it_still_passes(td):
+    # RED when: live_prose() strips too much and eats live text.
+    root = _fixture(td, register=_ev_reg("The canon is ORDINARY LEAVES"),
+                    records={"doc.md": _DOC_SUPERSEDED})
+    check("the live claim in the same file satisfies the gate",
+          _fails(ccd.run(root), "register_evidence_missing") == [])
+
+
+def test_a_blockquote_is_not_a_corpse(td):
+    """`>` marks a QUOTATION — usually the founder — not superseded text.
+
+    The written proposal was to skip `~~`-struck AND `>`-quoted prose. Measured
+    over all 8 real subjects, the quoted half turns `sapling-height` red falsely:
+    it asserts `about 40 cm, always shorter than he`, which lives in a blockquote.
+    Failing an entry whose canon is current is the cry-wolf shape that gets
+    instruments switched off — installed inside the honesty checker itself.
+    """
+    doc = "## Height\n\n> He said: about 40 cm, always shorter than he is.\n"
+    root = _fixture(td, register=_ev_reg("about 40 cm, always shorter than he"),
+                    records={"doc.md": doc})
+    check("a founder quote in a blockquote is LIVE canon and passes",
+          _fails(ccd.run(root), "register_evidence_missing") == [])
+
+
+def test_a_strike_spanning_several_quoted_lines_is_removed_whole(td):
+    # RED when: the span regex loses re.S. The real strike in THE-SAPLING.md
+    # wraps over four `>` continuation lines, so a line-at-a-time strip misses it.
+    doc = "start\n\n> ~~**DEAD CLAIM HEADER.** and the reason it died,\n> which runs on\n> for three more lines.~~\n\nend\n"
+    root = _fixture(td, register=_ev_reg("which runs on for three more lines"),
+                    records={"doc.md": doc})
+    f = _fails(ccd.run(root), "register_evidence_missing")
+    check("a multi-line struck span is dead all the way through", len(f) == 1)
+
+
+def test_removing_a_strike_cannot_join_words_across_the_gap(td):
+    # RED when: struck spans are replaced with "" instead of a space, so
+    # `al~~junk~~pha` would start satisfying an assertion for `alpha`.
+    root = _fixture(td, register=_ev_reg("alpha"),
+                    records={"doc.md": "the word is al~~junk~~pha here\n"})
+    check("stripping a strike must not manufacture a word that was never written",
+          len(_fails(ccd.run(root), "register_evidence_missing")) == 1)
+
+
+def test_unbalanced_strike_markers_abstain_rather_than_guess(td):
+    # RED when: an odd `~~` count is silently treated as clean prose.
+    root = _fixture(td, register=_ev_reg("The canon is ORDINARY LEAVES"),
+                    records={"doc.md": "**The canon is ORDINARY LEAVES.** and a stray ~~ marker\n"})
+    out = ccd.run(root)
+    check("an odd number of `~~` is reported, not guessed at",
+          any(f.rule == "register_evidence_unstruckable" and f.level == ccd.UNKNOWN
+              for f in out))
+    check("and it is an abstention — a malformed file is not a FAIL",
+          _fails(out, "register_evidence_unstruckable") == [])
+
+
+def test_a_string_that_is_simply_gone_keeps_the_older_message(td):
+    # RED when: every miss is reported as struck, which would misdiagnose the
+    # ordinary stale-string case the gate was built for.
+    root = _fixture(td, register=_ev_reg("a claim nobody ever wrote down"),
+                    records={"doc.md": _DOC_SUPERSEDED})
+    f = _fails(ccd.run(root), "register_evidence_missing")
+    check("a string that was never there is 'no longer in the file'", len(f) == 1)
+    check("and is NOT blamed on a strike it has nothing to do with",
+          bool(f) and "struck" not in f[0].detail.lower())
+
+
+def test_the_struck_evidence_gate_reaches_the_real_exit_code(td):
+    """Same unwired-call-site trap, same answer: run the real thing.
+
+    check_register_freshness could be perfect and unreferenced at run()'s call
+    site and every assertion above would still pass. This one runs the file by
+    argv and demands the exit code, so deleting `findings +=
+    check_register_freshness(root, reg)` turns it red with the function untouched.
+    """
+    import subprocess
+    root = _fixture(td, register=_ev_reg("The working canon is ROUND/OVAL COTYLEDONS"),
+                    records={"doc.md": _DOC_SUPERSEDED})
+    r = subprocess.run([sys.executable, str(REPO / "pipeline" / "check_canon_drift.py"),
+                        "--root", str(root)], capture_output=True, text=True,
+                       encoding="utf-8")
+    check("the real entry point EXITS 1 on an assertion backed only by dead text",
+          r.returncode == 1)
+    check("the counted banner reports it as a failure",
+          "CANON-DRIFT: fail=1 " in r.stdout)
+    check("stdout names the rule and the struck diagnosis",
+          "register_evidence_missing" in r.stdout and "struck" in r.stdout.lower())
+
+
+def test_the_real_register_has_no_assertion_living_on_dead_text():
+    """The floor on the real repo: no subject may be green on a corpse.
+
+    Run against pipeline/canon.yaml itself, because the synthetic fixtures above
+    prove the mechanism and this proves the REPO. When this goes red, a canon
+    moved and its register entry is still pointing at the struck-through text of
+    the claim it replaced — repoint `contains:`, never un-strike the prose.
+    """
+    # `or {}` so a missing register fails this check LOUDLY on the count below
+    # rather than crashing with AttributeError and reading as an error, not a red.
+    reg = ccd.load_register(str(REPO))[0] or {}
+    subjects = [s for s in reg.get("subjects", []) if (s.get("evidence") or {}).get("contains")]
+    check("every subject in the register carries an evidence string", len(subjects) >= 8)
+    corpses = []
+    for s in subjects:
+        p = REPO / s["evidence"]["file"]
+        if not p.exists():
+            continue
+        raw = p.read_text(errors="replace")
+        n = ccd._flat(s["evidence"]["contains"])
+        if n in ccd._flat(raw) and n not in ccd._flat(ccd.live_prose(raw)):
+            corpses.append(s["id"])
+    check(f"no live subject is satisfied only by struck text (found: {corpses})",
+          corpses == [])
 
 
 def test_a_second_card_carrying_one_ruling_counts_as_covered(td):

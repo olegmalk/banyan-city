@@ -479,6 +479,42 @@ def _flat(s):
     return " ".join(re.sub(r"\n\s*#\s?", "\n", str(s)).split())
 
 
+_STRUCK_SPAN = re.compile(r"~~.*?~~", re.S)
+
+
+def live_prose(text):
+    """Text with SUPERSEDED spans removed, for evidence assertions only.
+
+    THE HOLE THIS CLOSES, measured 2026-08-17 and not argued. House style §6
+    keeps superseded prose VISIBLE FOREVER, struck with `~~`, because the
+    provenance is the point. So a `contains:` assertion pointed at prose that is
+    later superseded keeps passing on the struck-through corpse of its own claim,
+    and passes indefinitely. `sapling-cotyledon-shape` asserted
+    'The working canon is ROUND/OVAL COTYLEDONS', which was superseded on
+    2026-08-17 and is STILL PHYSICALLY PRESENT at THE-SAPLING.md:81 inside the
+    struck block — so the gate was green on dead text and was never going to
+    fail. A canon-honesty instrument that has quietly stopped checking is worse
+    than none, because it reports a safety it is not measuring.
+
+    ONLY `~~` MEANS DEAD, AND THIS IS THE HALF OF THE WRITTEN FIX THAT WAS WRONG.
+    The proposal in canon-patch-cotyledon-0817.md was to skip `~~`-struck AND
+    `>`-quoted blocks. Measured over all 8 subjects, stripping quoted blocks too
+    turns `sapling-height` red FALSELY: it asserts `about 40 cm, always shorter
+    than he`, which lives inside a `>` blockquote. In this repo `>` marks a
+    QUOTATION — most often the founder's own words — the most ALIVE text in the
+    document. Conflating the two would make this checker fail an entry whose
+    canon is current, which is the cry-wolf shape that gets instruments switched
+    off. So blockquotes are left alone; see CORRECTION_0817 in that file.
+
+    Deliberately narrow: spans are matched across newlines (a strike in this repo
+    wraps over several `>` continuation lines) and replaced with a SPACE, so no
+    needle can false-match by joining text across the removed gap. An UNBALANCED
+    `~~` cannot be resolved into spans, so it is reported rather than guessed at
+    — see the abstention in check_register_freshness.
+    """
+    return _STRUCK_SPAN.sub(" ", text)
+
+
 # ---------------------------------------------------------------------------
 # REGISTER
 # ---------------------------------------------------------------------------
@@ -509,10 +545,25 @@ def check_register_freshness(root, reg):
         if not p.exists():
             out.append(Finding(FAIL, "register_evidence_missing", s["id"], f,
                                "evidence file is gone; the register is asserting a canon nothing backs"))
-        elif _flat(needle) not in _flat(p.read_text(errors="replace")):
-            out.append(Finding(FAIL, "register_evidence_missing", s["id"], f,
-                               f"evidence string is no longer in the file: {needle!r} — "
-                               "the canon moved and this register did not"))
+            continue
+        raw = p.read_text(errors="replace")
+        # Superseded prose stays visible forever (house style §6), so the
+        # assertion must read only the LIVE text or it passes on a corpse.
+        if raw.count("~~") % 2:
+            out.append(Finding(UNKNOWN, "register_evidence_unstruckable", s["id"], f,
+                               "the file has an odd number of `~~` markers, so superseded spans "
+                               "cannot be told from live prose; not guessing which half is canon"))
+        if _flat(needle) not in _flat(live_prose(raw)):
+            struck = _flat(needle) in _flat(raw)
+            out.append(Finding(
+                FAIL, "register_evidence_missing", s["id"], f,
+                (f"evidence string survives ONLY inside a ~~struck-through~~ block: {needle!r} — "
+                 "the file marks that text SUPERSEDED, so this entry is asserting a canon the "
+                 "document has already retired. Repoint `contains:` at the live prose that "
+                 "replaced it; do not un-strike the old text")
+                if struck else
+                (f"evidence string is no longer in the file: {needle!r} — "
+                 "the canon moved and this register did not")))
     return out
 
 
