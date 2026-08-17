@@ -67,6 +67,26 @@ at time of writing.)
   box. Two leaves are not distinct subjects in the prompt — we would be asking it to
   bind one repeated token to two boxes, which is off-label for the method.
 
+## 4. A crude PIL-drawn scribble IS a legitimate ControlNet input
+
+This was the cheapest thing to be wrong about, and it is not wrong. The
+**xinsir/controlnet-scribble-sdxl-1.0** card —
+<https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0> — says outright:
+
+- *"the sketch can be very simple and so does the prompt"*, and the model supports
+  *"any type of lines and any width of lines."* No photo-derived edge map needed;
+  two ellipses drawn with PIL are in-distribution for this checkpoint.
+- Line **width is a control-strength dial** in the card's own words (the sentence is
+  garbled in the card — it says "thick" twice — but the contrast it draws is thin
+  line = coarse control, obeys the prompt more / thick line = strong control, obeys
+  the condition image more). So we would have both `conditioning_scale` and stroke
+  weight as knobs, which matters for the low/high strength trap.
+- Apache-2.0, ~1B params, F16. Card claims *"higher aesthetic performance than our
+  Controlnet-Canny-Sdxl-1.0"* and midjourney-comparable output; its table reports
+  LAION-aesthetic 6.03 / perceptual similarity 0.5701 but does **not** benchmark
+  against the official diffusers controlnets, so the widely repeated "xinsir beats
+  the official ones" is community consensus, not a measured claim on that card.
+
 **Attend-and-Excite** (SIGGRAPH 2023) — <https://arxiv.org/pdf/2301.13826>,
 code <https://github.com/yuval-alaluf/Attend-and-Excite>, project page
 <https://yuval-alaluf.github.io/Attend-and-Excite/>
