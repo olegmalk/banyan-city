@@ -1,0 +1,180 @@
+# ep2-b05-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 05, THE PATROL.
+#
+# READ THIS FIRST: THIS IS A DIAGNOSTIC RUNG FOR THE CAST FIX, NOT A SHIPPING
+# PLATE, and it is one PRECISELY BECAUSE IT OMITS EYEWEAR THE APPROVED CAST
+# CARRIES. The founder ruled on 2026-08-17: "draw the second man without glasses.
+# we need to have control." Guard A carries the wire-rims as drawn, guard B
+# carries none, and the engine is expected to be CONTROLLED into putting them on
+# one face rather than allowed to spread them. Today it spreads at 5 of 5 legible
+# two-guard renders: `glasses` written inside exactly one man's clause landed on
+# BOTH men, at seeds where hair and garments separated cleanly. A SEPARATE LANE
+# NOW OWNS THAT BINDING PROBLEM. This job does not attempt it and must not be
+# read as having answered it. Both men are drawn WITHOUT eyewear here so that the
+# only thing this rung varies is the cast correction that removes `bald`; adding
+# an attribute known to leak 5 of 5 would confound the rung with a defect another
+# lane is mid-investigation on, and a pass would not say which change moved it.
+# A LATER LANE MUST NOT PROMOTE A PASSING FRAME FROM THIS JOB TO A SHIPPING
+# PLATE: guard A is missing his glasses in every one of them by design.
+#
+# THE ONE VARIABLE. The draft key. Recipe, references, arm and seed count are
+# byte-identical to ep2-b09-plate-nos2-0815 and to the b06 and b07 specs filed
+# minutes ago: refs-guards-twoinfield-nos2-0815, --arm window4, 4 seeds, no
+# --ref-prefix, no --seed-start.
+#
+# WHY. `guard_plates_are_miscast_0816`: 0 of 17 guard plate prompts name the
+# approved cast, 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD.
+# This beat's own recorded shipping fault -- "the two guards read younger and
+# softer than the guards in 06 and 11", carried for days as a taste question --
+# was re-explained by that finding as a casting contradiction rather than a taste
+# call. The wardrobe is frozen (founder, 2026-08-16, "the cast stands as drawn"),
+# so this is a wording correction to a settled look.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.5.authored_b05_cast_0817
+# (repo sha b75415098678b47cfbc3a8670de2c9982fcef01cbb180d2253da160004a4b94d; the
+# harness copy was hashed on the box with certutil after the sync and matches):
+#
+#   Two guard men halt in tall grass, hedgerow behind, pale sky above, one with
+#   dark cropped hair, tan wrap tunic, white waist sash, the other with light
+#   sandy hair, cream shirt, brown wrap skirt, arms swinging, cinematic lighting,
+#   masterpiece, best quality, very aesthetic No girl, no child, no armor, no
+#   helmet, no knight, no clipboard, no white background, no plain background, no
+#   dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+#
+# TOKENS. 75 of 77 positive, 68 of 77 negative, on the string that actually gets
+# sent, measured with sd_prompt.negative_tokens rather than compress()'s prose
+# estimator, which under-counts a tag list by up to 10 tokens and reports headroom
+# while CLIP has already dropped the tail. NO TRADE: the 14-token style tail is
+# byte-identical to beats 06 and 09's, so the tail is not a variable here.
+#
+# THE LAWS APPLIED. THE HAND LAW: `arms swinging` specifies both men's arms,
+# because an unspecified hand is a vacancy filled with the largest noun and the
+# negative does not reach it -- on beat 10, only the near man's hands were
+# specified and the far pair came back holding a bamboo pole at one seed and a
+# duplicate board at another WITH `weapon` in the negative. THE VACANCY LAW ABOVE
+# THE HORIZON: `pale sky above` gives the upper third its own positive noun. AND
+# `horizon` IS NEGATED NOWHERE -- deleting that word from a beat-05 negative is
+# the single edit that ever dropped this beat off a downward plan view and
+# produced the hedgerow and horizon band its plates never had. PROP OWNERSHIP:
+# there is no board in this beat at all, so `clipboard` is negated outright rather
+# than assigned.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b05-cast-0817
+task: ep2-b05-cast-0817
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+priority: 7
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog immediately after its dry run, because the backlog
+  was empty and the autofill never authors work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication.'
+script_line: 'Beat 05 THE PATROL (0:22-0:27): two guards jog in together, stop, and scan the field.'
+consumer: 'The beat-05 cast question, and the eyewear-binding lane downstream of it. This job answers ONE thing: whether
+  naming the approved pair positively -- dark cropped hair on one man, light sandy hair on the other -- draws two
+  DIFFERENT correctly-cast men in one frame at all, which no beat-05 plate has ever been asked for. It deliberately
+  answers nothing about eyewear. Its frames are diagnostic evidence for that lane and for the cast fix; they are NOT
+  a plate any motion job may be conditioned on, because guard A has no glasses in them.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16, reported as N of
+  16 with a per-condition rate across the four seeds -- per-condition because the point of this rung is which ATTRIBUTES
+  bind, not how pretty a frame is. SEPARATION TERMS, the ones that matter most: (1) exactly TWO adult human figures,
+  both whole-bodied, neither a child; (2) the two men are DISTINGUISHABLE FROM EACH OTHER, and specifically one has
+  DARK CROPPED hair and the other LIGHT SANDY hair -- both dark or both sandy is a FAIL of this term even if each
+  man individually looks right; (3) NEITHER MAN IS BALD; (4) one wears a tan wrap tunic with a WHITE WAIST sash, the
+  other a cream shirt with a brown wrap skirt, and the garments do not swap or merge. ACTION AND WORLD: (5) both
+  men standing/halted and facing roughly toward the lens, all four hands visible and EMPTY; (6) no board, clipboard,
+  slab or paper anywhere in frame; (7) tall grass at ground level, a hedgerow band, and sky ABOVE it, all three with
+  real content, and NOT a downward plan view -- eye level or near it; (8) no white or plain background. PRE-REGISTERED
+  FAIL MODES, recorded by name whether or not they fire: the two men rendering as ONE man twice (the merge this beat''s
+  prompts have never been able to test, because they never asked for two different men); an object appearing in an
+  unspecified hand; the plan view returning despite `horizon` being negated nowhere; EYEWEAR APPEARING ON EITHER MAN
+  unprompted -- which would be a finding for the binding lane, since nothing in this prompt asks for it. A term found
+  loose is said so and tightened FORWARD, never rewritten after seeing the picture.'
+why: 'Beat 05 is one of six beats shut on the single cause in `guard_plates_are_miscast_0816`, and it is the beat
+  where the cast contradiction is most measurable: it is a TWO-GUARD frame, so it is the only one that can show whether
+  two different men can be specified at once at all. That question has to be settled before the eyewear-binding lane
+  can tell an eyewear leak from a general failure to separate two figures. Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817
+  - --draft-key
+  - authored_b05_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817
+  - --draft-key
+  - authored_b05_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b05-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (the-patrol) the sampler actually writes. A glob
+  # without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b05-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/05-the-patrol-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b05-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r3-w015-s0.png
