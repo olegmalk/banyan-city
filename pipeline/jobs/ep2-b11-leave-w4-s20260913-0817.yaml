@@ -314,3 +314,24 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: >-
+    PASSES ALL SIX, and it is the WEAKEST of the five passing takes -- filed as a
+    pass on the letter of D2 rather than talked up. Two guards, backs turned in
+    every sampled frame with no facial feature anywhere, both fully in frame at
+    f096, field at frame one, identities holding. Coat height tan 0.827, brown
+    0.834, so their height in frame did decrease; and the departure is certainly
+    not the camera's, because the fitted background scale ends at 1.18 -- the
+    camera pushed IN, which works AGAINST the shrink. Net 0.701 and 0.707.
+    TWO THINGS WRITTEN DOWN RATHER THAN LEFT OUT. The fit's own correlation is only
+    0.542, the worst in the batch, so the 18% push-in figure is uncertain; the
+    0.827/0.834 on-screen shrink does not depend on it, being measured directly on
+    the coats, and no camera move can fake a shrink except a pull-back, which this
+    is the opposite of. And on the strip the departure reads MODEST -- the men look
+    much the same size at f096 as at f024. It clears the condition; it does not
+    sell the beat the way s20260903 or s20260912 do. D6 narrows more than most
+    (gap 49.4 -> 41.9) but stays a plain separation with no merge.
+  clip: farm-out/ep2-b11-leave-w4-s20260913-0817/11-they-leave-w4-s20260913-LTX-castplate.mp4
+  instrument: pipeline/b11_coat_track.py, past its five gates, same final version
+    as every other clip in this batch.
+  terminal_freeze_index: 0. Depth and cadence NOT quoted.
