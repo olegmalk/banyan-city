@@ -819,3 +819,160 @@ beats:
         needs a COMPOSITE, that is a route decision on how this show makes props,
         and the bark board already shipped once by compositing rather than
         prompting. Flagged for the founder, not chosen here.
+
+  '11':
+    role: >-
+      Back view, both men walking away. Hair is the ONLY cast signal a back view
+      carries. Eyewear deliberately omitted on both guards. PLATE ONLY -- its motion
+      is already done at s20260903 -- and marked in its own spec as a DIAGNOSTIC
+      RUNG no lane may promote to a shipping plate.
+    done_when_quoted_from_done_definitions: >-
+      two guards walk away from camera, backs turned, still arguing; both present
+      the whole clip; field present at frame one.
+    done_when_status_read_in_full: >-
+      Read from done-definitions.yaml including `status_override_0815`, which
+      SUPERSEDES the older `status: DONE`: "BROKEN TAKE - THIS BEAT NEEDS A NEW ONE
+      ... A NEW PLATE MUST BE DRAWN." Both entries are deliberately left
+      contradicting each other in that file and I did not edit either.
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12, but r1s1 clears NINE OF TEN -- the closest any frame in the batch comes
+    cast_holds: YES, MORE CLEANLY HERE THAN ON ANY OTHER BEAT. See below.
+
+    the_headline_on_the_beat_where_this_all_started:
+      zero_bald: >-
+        0 of 12 BALD. 12 of 12 have hair. This is the beat where the miscasting was
+        first written down AND MISDIAGNOSED -- a render growing guard A's real dark
+        hair over a prompted bald scalp was logged as identity collapse AWAY from
+        the plate, when it was the plate that was wrong. With `bald` gone from the
+        wording, the scalp never returns. The original diagnosis is now positively
+        refuted rather than merely doubted.
+      the_old_plates_second_unflagged_defect_did_NOT_recur: >-
+        done-definitions records an unflagged composition defect in the old plate:
+        "roughly the upper two-thirds of it is flat empty grass with both men crammed
+        into the bottom-right." That does NOT recur here. The r0 and r1 rows place
+        both men centred and filling the frame. Worth recording because that defect
+        was logged specifically so the next lane would not treat the old file as a
+        safe example.
+
+    per_condition_rate:
+      c1_NEITHER_MAN_IS_BALD_no_bare_scalp: 12 of 12, CLEAN. The best cast result in the batch.
+      c2_one_DARK_and_CROPPED_the_other_LIGHT_SANDY_both_alike_is_a_FAIL: >-
+        7 of 12. Fails as BOTH LIGHT at r0s3, r1s2, r2s0, r2s1, r2s2 -- 5 of 12.
+        THE BAR'S PREDICTION IS CONFIRMED BY MEASUREMENT: it said a back view makes
+        the one-man-twice merge likelier than any other framing, and it does -- 5 of
+        12 here against 2 of 12 on b05, the other two-guard rung, same refs and same
+        day. The back view costs about three frames in twelve of figure separation.
+      c3_exactly_TWO_adult_whole_bodied_figures_neither_a_child: >-
+        8 of 12. The r2 row crops both men at the thigh or higher, 0 of 4. Both men
+        read adolescent throughout, flagged as taste below.
+      c4_BOTH_backs_to_camera_walking_AWAY_not_across_not_turned: >-
+        8 of 12. All four failures are one man TURNING, never the walk going across
+        frame.
+      c5_all_four_hands_visible_and_EMPTY_no_board_pole_or_prop: >-
+        8 of 12. NO BOARD, POLE OR SLAB ANYWHERE, 12 of 12 -- the prop negation is
+        clean. The two real failures are a small WHITE CLOTH OR SHEET in a hand at
+        r0s1 and r2s2; the rest of the losses are hands cropped out of the tight r2
+        framing rather than hands holding anything.
+      c6_tan_tunic_with_a_white_sash_on_the_DARK_haired_man: >-
+        5 of 12. Correct where the dark man appears at all, and the sash correctly
+        renders at the WAIST, which is guard A's cut. Fails at r2s3, where the dark
+        man is in a white shirt rather than a tan tunic.
+      c7_cream_shirt_and_brown_skirt_on_the_SANDY_haired_one: >-
+        4 of 12. The weaker garment half. In most frames the sandy man is put in the
+        SAME tan tunic and white sash as the dark man rather than his own cream
+        shirt and brown skirt. Best at r0s2, where he has a brown skirt and
+        suspenders over a cream top.
+      c8_the_garments_do_not_swap_or_merge_between_the_two: >-
+        3 of 12, and MERGE is the beat's real blocker. At r0s0, r1s0, r1s1 and r1s3
+        both men wear the same tan tunic AND the same white waist sash. Nothing
+        swaps -- it duplicates.
+      c9_tall_grass_hedgerow_band_AHEAD_of_them_and_sky_ABOVE_it_all_three_real: >-
+        7 of 12. The r2 row is too tight for a sky band, 0 of 4, and r0s0 has grass
+        where its sky should be.
+      c10_no_white_or_plain_background_and_not_a_downward_plan_view: >-
+        6 of 12. No white or plain background anywhere, 12 of 12 on that half. The
+        r0 row is a HIGH DOWNWARD angle and the r2 row tilts down as well.
+
+    THE_WHITE_SASH_LOOKS_BROADCAST_CLASS_TOO:
+      observation: >-
+        On every two-guard frame where the sash renders well it renders on BOTH men
+        -- r0s0, r1s0, r1s1, r1s3. It does not move to the wrong man; it copies onto
+        the second one, which is the same signature `bald` and eyewear show.
+      the_batch_wide_pattern_this_explains: >-
+        It accounts for a failure that looked unrelated on three different beats:
+        b11's garment merge (both men sashed), b05's 0 of 12 garment term (the same
+        duplication), and it is consistent with b06 and b09 -- single-figure beats,
+        where a broadcast attribute has only one body to land on and instead fails on
+        colour or position. Three beats' worth of "the sash never binds" may be one
+        mechanism.
+      status_HYPOTHESIS_not_law_and_tightened_FORWARD_only: >-
+        Stated as a hypothesis, NOT scored as one. Unlike `bald`, this has no
+        token-present-versus-token-absent contrast within the batch to prove it --
+        every one of these prompts names a white sash. The clean test is a rung that
+        names the sash for ONE man only and counts how many men wear it. Offered
+        forward; nothing here is rescored on it.
+
+    pre_registered_fail_modes:
+      the_two_men_rendering_as_ONE_man_twice: >-
+        FIRED, 5 of 12, as both-light. The bar predicted this framing would be the
+        worst for it and the measurement agrees (5 of 12 here versus 2 of 12 on b05).
+      the_walk_reading_as_ACROSS_frame_rather_than_away: >-
+        DID NOT FIRE, 0 of 12. The traded `from the camera` is exonerated -- the bar
+        said to blame it first, and it holds. Every frame that has a walk has it
+        going away from the lens.
+      the_garments_reading_as_the_wrong_CUT_the_traded_wrap: >-
+        DID NOT FIRE as wrong cut. The cuts are right; they are on the wrong NUMBER
+        of men. `wrap` is exonerated too, and the blame moves to duplication.
+      a_face_appearing_i_e_one_or_both_men_turning: >-
+        FIRED, 4 of 12 (r0s0, r0s2, r0s3, r1s0). Always exactly one man turning,
+        never both.
+      eyewear_appearing_unprompted: >-
+        DID NOT FIRE, 0 of 12. FOURTH clean confirmation in this batch. Across b05,
+        b08, b10 and b11 -- 48 frames and eight faces per row of staging -- eyewear
+        named nowhere appeared nowhere. That is now a well-evidenced negative to hand
+        the binding lane.
+
+    pick: >-
+      r1s1, and it is the strongest frame in the entire batch of seven. Reasons: it
+      clears NINE of its ten terms -- neither man bald, one genuinely dark-cropped
+      beside one genuinely light-sandy, two whole-bodied figures, BOTH backs
+      squarely to camera walking away with no face turned, all four hands visible
+      and empty, no prop of any kind, the dark man in a tan tunic with a white waist
+      sash, all three world bands real with the hedgerow ahead and sky above, at eye
+      level with no plan view and no white ground. The ONE term it fails is c8: the
+      white waist sash is duplicated onto the sandy man as well, which is the
+      broadcast pattern described above. Runner-up r1s3 is the same staging a shade
+      less clean; r0s2 has the best GARMENT differentiation of the twelve -- the only
+      frame where the sandy man really wears his own brown skirt -- but it throws the
+      pose away by turning his face to the lens.
+    verdict: >-
+      DOES NOT CLEAR ITS BAR at 0 of 12, but it is the BEST-CAST beat of the seven
+      and it comes within a single term of a clean frame at r1s1. Two pre-registered
+      suspects were positively EXONERATED here (`from the camera` and `wrap`), the
+      bald misdiagnosis this beat was founded on is refuted 12 of 12, and the old
+      plate's unflagged composition defect did not recur.
+    blocked_on: >-
+      One thing only, and it is now specific: garment DUPLICATION, not swapping and
+      not the wrong cut. The white sash copies onto both men. The clean next test is
+      a rung that names the sash for one man only.
+    plate_only_NOT_a_motion_candidate: >-
+      Per its own spec this rung is PLATE ONLY -- beat 11's motion is already done at
+      s20260903. NO MOTION IS INFERRED OR PROPOSED from these stills and this is not
+      offered as a motion candidate.
+    diagnostic_only_NOT_PROMOTED: >-
+      CAST HOLDS, DIAGNOSTIC ONLY, EYEWEAR ABSENT BY DESIGN. Its spec forbids
+      promotion and this lane does not promote it, r1s1 included and however good it
+      looks. Recorded plainly because done-definitions says this beat NEEDS A NEW
+      PLATE, which makes r1s1 exactly the frame someone will be tempted to promote:
+      it may not be, and the beat still wants a plate drawn on a promotable rung.
+    founder_cards_hit:
+      - >-
+        R4/taste: both men read adolescent rather than adult across all twelve. The
+        same flag as b05, b06 and b10 -- consistent batch-wide, so it is one taste
+        question about the approved cast rather than four. Named, not decided.
+      - >-
+        R4/taste and the only genuine promotion question in the batch: r1s1 is a
+        9-of-10 back-view plate on a beat whose recorded status is BROKEN TAKE,
+        NEEDS A NEW ONE. Whether that is worth re-cutting as a promotable
+        (non-diagnostic) rung is a call on where the plate budget goes. Handed up
+        as a card; this lane did not act on it and did not enqueue anything.
