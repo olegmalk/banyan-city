@@ -630,6 +630,111 @@ DRAFTS = {
     # stands. A verdict on the WORDING DOES NOT: same prompt, same negative,
     # same seed, same checkpoint gives MAE 61 of 255 between this renderer and
     # the box's. Nothing below may be cited as "this wording works".
+    #
+    # ======================================================================
+    # AN EIGHTH MEASURE IS RETIRED, 2026-08-17, AND ITS RETIREMENT IS WORTH
+    # MORE THAN THE THREE NUMBERS IT PRODUCED. READ THIS BEFORE CITING P5.
+    # ======================================================================
+    # The vacancy measure the b11 lane validated -- largest INSCRIBED
+    # axis-aligned flat rectangle, float64, calibrated by injecting rectangles
+    # of known size -- was rebuilt independently for these three plates and
+    # reproduces that lane's numbers exactly: b11 r3 comes out at 0.46 torsos
+    # against its recorded 0.47, the 400x250 / 200x300 / 105x240 injections
+    # recover at 390x240 / 190x290 / 95x230 (the ~10px inward erosion the 11px
+    # window predicts), a 60x60 injection correctly loses to a larger real
+    # region, and heavy noise yields a largest flat rectangle of ZERO. By every
+    # check that lane ran, it is the same working measure.
+    #
+    # IT STILL GAVE THE WRONG ANSWER ON BEAT 05, AND ONLY THE OVERLAY CAUGHT
+    # IT. Beat 05 r1 measures 0.61 torsos, comfortably inside the one-torso
+    # bar, so on the number P5 passes. Overlay every flat pixel in magenta and
+    # look, as the standing instruction says: 61.4% OF THE FRAME IS FLAT, one
+    # continuous empty field from the top band to the bottom, against 34.6%
+    # for the b11 plate that passed. The reason the rectangle stays small is
+    # that the emptiness is PEPPERED WITH ISOLATED GRASS TUFTS, and any one
+    # tuft is enough to break every rectangle that would have crossed it.
+    # THE CONNECTED-REGION MEASURE OVER-REPORTED VACANCY BY MEASURING BRUSH
+    # SPACING; THE INSCRIBED-RECTANGLE MEASURE UNDER-REPORTS IT BY LETTING A
+    # FIVE-PIXEL MARK VETO A HOLE THE SIZE OF A MAN. Both are wrong in
+    # opposite directions on a sparse field, and the second one is worse
+    # because it fails in the direction of a PASS.
+    # SECOND FAILURE, ON A DIFFERENT PLATE AND A DIFFERENT MECHANISM: on beat
+    # 09's close-up the overlay shows the flat regions are the man's CHEEK,
+    # HAIR AND COLLAR, and the largest rectangle sits on his face. A
+    # flat-region measure on a close-up measures the SUBJECT, not the world,
+    # and cannot speak to "is there a real background" at all. Beat 09's P4 is
+    # therefore judged by eye on the background region only, and the number is
+    # not cited for it.
+    # SO: P5 IS NOT SCORED FROM THE RECTANGLE ALONE ON ANY OF THESE THREE.
+    # What is reported is the rectangle, the overall flat FRACTION with b11
+    # r3's 34.6% as the calibration point, and the overlay, and where they
+    # disagree the overlay wins. No replacement measure is invented here under
+    # time pressure -- eight have been retired this week and a ninth guessed at
+    # in an hour would be the same mistake with a new name.
+    #
+    # ======================================================================
+    # THE SEED SWEEP, AND ITS DECISION RULE, WRITTEN BEFORE ANY OF THE NINE
+    # RENDERS EXISTS. This is the one thing that must not be skipped.
+    # ======================================================================
+    # THE CONFOUND IS THIS LANE'S OWN AND IT IS THE SAME ONE THAT WAS BROKEN
+    # YESTERDAY. bf79e534: four wordings had 'established' that guard B turns
+    # his head, and all four ran seed 20260817; three fresh seeds of the
+    # byte-identical job showed the back turned in 2 of 3, so the head turn was
+    # A SEED EFFECT and four wordings had been arguing with one draw. ALL
+    # THREE PLATES ABOVE RAN SEED 20260817. Two of them independently returned
+    # "both men dark-haired, glasses on both, no sandy hair anywhere", which
+    # looks like a law about the checkpoint and is equally consistent with a
+    # law about one draw. Building a wording ladder on it now would be the
+    # confound rebuilt one day after it was dismantled.
+    # So: THREE FRESH SEEDS OF EACH BYTE-IDENTICAL PROMPT, one beat per
+    # machine, before any wording changes. Seeds 20260817-20260819 via
+    # `--seeds 3 --i-have-seen-a-sample` (one sample HAS been seen and judged
+    # for each, which is the only thing that flag may ever mean). s1 re-renders
+    # seed 20260817 on the same machine, which is a free determinism check
+    # against the sha256 already recorded: 05 da5637c8..., and a mismatch would
+    # invalidate every comparison in this file.
+    #
+    # THE RULES, AND EACH NAMES BOTH OUTCOMES:
+    #   D1 SANDY HAIR. Bound on at least ONE of the three fresh seeds of 05 or
+    #      10 -> the two-figure identity failure is a seed effect, the person
+    #      clauses are not the cause, and the next rung is a SEED BATCH, not a
+    #      rewording. Bound on NONE of six -> it is the wording, and the
+    #      specific suspect is stated in advance so it cannot be invented
+    #      afterwards: FOUR-TO-FIVE ATTRIBUTES PER PERSON CLAUSE against
+    #      (11,3)'s TWO, in a broken-up comma list against its strictly
+    #      parallel `one man with HAIR in a GARMENT`. The r2 test would then be
+    #      to cut back to two attributes per man in that exact shape -- which
+    #      COSTS CAST ATTRIBUTES, so it is a trade to be made deliberately and
+    #      with the founder's frozen wardrobe named as the thing being traded.
+    #   D2 GLASSES BLEEDING ONTO BOTH MEN. On all three fresh seeds of both
+    #      two-figure plates -> `glasses` over-applies across same-species
+    #      figures on this checkpoint and belongs only in a ONE-FIGURE plate,
+    #      which is a real constraint on beats 05 and 10 and a green light for
+    #      09. On some and not others -> seed, and it is not a constraint.
+    #   D3 THE UNSPECIFIED HAND. Beat 10's far man grew a bamboo pole with
+    #      `weapon` in the negative while beat 05's four specified hands came
+    #      back empty. If 10's far man is holding something at 2 or 3 of 3
+    #      fresh seeds while 05's hands stay empty at 2 or 3 of 3, THE
+    #      HAND-VACANCY LAW IS SUPPORTED with a matched control, and the rule
+    #      that carries to every future plate is: NAME WHAT EVERY HAND IN
+    #      FRAME IS DOING. If 05's hands also grow objects, the law is wrong
+    #      and it is written down as wrong.
+    #   D4 THE HIGH ANGLE AND THE MISSING HEDGEROW on beat 05. If the camera
+    #      is high and the hedgerow absent at all three fresh seeds, that is
+    #      the wording, and the stated suspect -- again, in advance -- is that
+    #      `sky, horizon` in the negative of a FRONT-FACING wide shot leaves
+    #      the camera nowhere to put a horizon except above the frame, so it
+    #      tilts down. (11,3) does not pay this because its subjects walk away
+    #      and the grass fills the frame regardless. Absent at some seeds only
+    #      -> seed, and nothing is concluded.
+    #   D5 BEAT 09's EYES. Shut at all three fresh seeds -> `thoughtful` plus
+    #      `mouth closed` is a wording that renders a resting face, and the
+    #      r2 variable is `eyes open` / `looking down in thought`. Open at any
+    #      seed -> seed, and beat 09 needs a seed batch rather than a rewrite.
+    # NOTHING IS PICKED FROM THIS SWEEP AND NO PLATE IS PROMOTED BY IT. Its
+    # entire job is to say which of five faults are properties of a wording
+    # and which are properties of one draw, so that the seeds that follow are
+    # spent on the right thing.
     5: {
         # ------------------------------------------------------------------
         # BEAT 05, "THE PATROL". node.md: "Two PATROL GUARDS jog in and halt,
@@ -740,6 +845,52 @@ DRAFTS = {
             "photorealism, 3d render, night"
         ),
         "seed": 20260817,
+        # ------------------------------------------------------------------
+        # R1 VERDICT, 2026-08-17. macbook1 (M1 Max, 1.73 s/step, 73.0s),
+        # seed 20260817, png sha256 da5637c8...  FIVE OF EIGHT FAIL.
+        # Judged by opening the PNG and then 4x-5x crops of both men's hands,
+        # the far man's hip and both heads, against the bar committed above
+        # before it was drawn. Nothing is re-scoped.
+        #   P1 APPROVED PAIR ......... FAIL, and this is the important one.
+        #      BOTH MEN CAME BACK DARK-HAIRED AND BOTH WEAR GLASSES. The far
+        #      man is guard A and is correct -- dark cropped hair, wire-rim
+        #      glasses, tan tunic, white waist sash. The near man is a SECOND
+        #      dark-haired bespectacled man in a full-length WHITE robe with a
+        #      NAVY waist sash: `light sandy hair` did not bind at all, the
+        #      `cream shirt` became a floor-length robe, the `brown wrap
+        #      skirt` is absent, and the `white shoulder sash` became a dark
+        #      waist sash. Guard B is simply not in this picture.
+        #   P2 two whole figures ..... MARGINAL PASS. Exactly two, no third
+        #      body in either band, but the far man's legs end in a stump with
+        #      a boot-shaped blob and his feet are not resolved.
+        #   P3 faces forward ......... PASS. Both faces front-on, no back
+        #      turned. (Both are also mouth-open and eyes-shut, on which see
+        #      the pose failure below.)
+        #   P4 taller man >=25% ...... PASS on the number, ~41% for the near
+        #      man, MEANINGLESS AS WRITTEN: "the taller man" cannot be
+        #      identified when the taller man is not in the frame.
+        #   P5 vacancy ............... THE MEASURE FAILED HERE AND THE MEASURE
+        #      IS WHAT IS REPORTED FIRST. See the note at the end of this
+        #      block. By eye this field is VACANT and P5 FAILS.
+        #   P6 nothing hanging ....... PASS, AND IT IS THE ONE CLEAN RESULT ON
+        #      THIS PLATE. All four hands opened at 4x-5x: guard A's two are
+        #      closed empty fists, the near man's two are open and empty, and
+        #      the dark shape at guard A's hip is his own trouser-and-boot
+        #      mass, not a strap. NO STRAP, NO CORD, NO TAB, NOTHING DETACHED
+        #      ANYWHERE. Beat 11's defect did not recur on a plate where both
+        #      men's arms were given a job.
+        #   P7 field in the plate .... PASS.
+        #   P8 glasses ............... PASS ON THE DARK-HAIRED MAN and then
+        #      OVER-APPLIED: the glasses are unmistakable wire-rims at 4x, and
+        #      they are also on the man who should not have them. Recorded as
+        #      P8 pass, P1 fail, because that is what the two conditions say.
+        # UNPRE-REGISTERED FAILURES, named because they are real and were not
+        # anticipated: THE POSE IS WRONG -- `arms swinging` came back as both
+        # men flinging their arms wide and overhead with mouths open, which
+        # reads as a cheer, not a jog. And THE CAMERA WENT HIGH-ANGLE: the
+        # `hedgerow behind` did not render at all, there is no horizon band,
+        # and the men are seen from above across an open field.
+        # ------------------------------------------------------------------
     },
     10: {
         # ------------------------------------------------------------------
@@ -872,6 +1023,45 @@ DRAFTS = {
             "photorealism, 3d render, night"
         ),
         "seed": 20260817,
+        # ------------------------------------------------------------------
+        # R1 VERDICT, 2026-08-17. macbook2 (M1 Pro, 139.9s), seed 20260817.
+        # THREE OF EIGHT FAIL, and one of the failures is the most useful
+        # result this lane produced.
+        #   P1 APPROVED PAIR + BOARD ON THE RIGHT MAN ... FAIL TWICE OVER.
+        #      Both men are BLACK-HAIRED and both wear glasses, exactly as in
+        #      beat 05 off a different prompt. `light sandy hair` bound on
+        #      neither figure. Worse for this beat specifically: THE BOARD IS
+        #      IN THE HANDS OF THE MAN WEARING GUARD A's TAN TUNIC, i.e. the
+        #      near man took A's costume and B's prop, and the far man got an
+        #      olive robe belonging to nobody. Q3 was pre-registered as a fail
+        #      on its own and it fired.
+        #   P2 two whole figures ..... PASS, both full-length, no third body.
+        #   P3 near man's face+hands . PASS, both in frame and unoccluded.
+        #   P4 near man >=45% ........ PASS, ~72% (y270 to y1150 of 1216).
+        #   P5 vacancy ............... PASS, 0.44 torsos, AND THE OVERLAY
+        #      AGREES for once: the flat pixels sit on the garments and the
+        #      skin, and the grass texture runs across the whole upper band.
+        #      This is the best world of the three plates.
+        #   P6 nothing hanging but the board ... FAIL, AND THE WAY IT FAILED
+        #      IS EVIDENCE FOR THE HAND-VACANCY LAW RATHER THAN AGAINST IT.
+        #      The near man's hands were the only ones this prompt specified
+        #      (`in both hands`) and they hold exactly what they were told to.
+        #      THE FAR MAN'S HANDS WERE NOT SPECIFIED, AND THEY CAME BACK
+        #      HOLDING A LARGE BAMBOO POLE that no clause asked for, with
+        #      `weapon` sitting in the negative. Read against beat 05, where
+        #      BOTH men's arms were given a job and all four hands came back
+        #      empty, this is a matched pair: specified hands stayed empty or
+        #      held the right thing, the one unspecified pair grew an object.
+        #   P7 field in the plate .... PASS.
+        #   P8 one flat unoccluded board, not yet flipped ... PASS ON FORM.
+        #      One board, flat, rectangular, bark-brown, no text, held in two
+        #      hands, unoccluded, and NOT flipped -- there is somewhere for
+        #      the beat to go. It is on the wrong man, which is P1's failure
+        #      and is not double-counted here.
+        # NOT PRE-REGISTERED AND NAMED ANYWAY: both men are barefoot or in
+        # sandals where the cast wears brown boots, and neither man is
+        # noticeably taller than the other.
+        # ------------------------------------------------------------------
     },
     9: {
         # ------------------------------------------------------------------
@@ -1004,6 +1194,43 @@ DRAFTS = {
             "shot, distant, photorealism, 3d render, dark, night"
         ),
         "seed": 20260817,
+        # ------------------------------------------------------------------
+        # R1 VERDICT, 2026-08-17. macbook3 (M1 Pro, 139.5s), seed 20260817.
+        # THREE OF SEVEN FAIL. This is the closest of the three plates and it
+        # clears both faults the beat was actually blocked on.
+        #   P1 guard A WITH WIRE-RIM GLASSES ... SPLIT, SCORED AS FAIL.
+        #      THE GLASSES BOUND, FIRST TIME IN THIS REPO. At 1x they are
+        #      unmistakable round wire-rims with thin dark frames and a visible
+        #      bridge -- not sunglasses, not goggles, so Q8 did not fire.
+        #      `wire-rim` had appeared in zero prompts repo-wide before this
+        #      one and it works. THE HAIR DID NOT: it came back mid-BROWN and
+        #      shaggy where guard A's is dark, near-black and cropped, and the
+        #      face reads as a teenager rather than an adult man. That is not
+        #      a quibble on this beat -- the recorded fault is verbatim "the
+        #      plate's guard is black-haired and the close-up that follows is
+        #      a brown-haired different man", and this plate IS the
+        #      brown-haired man. P1 says guard A and this is not guard A.
+        #   P2 exactly one face ...... PASS. One head, no second figure.
+        #   P3 head >=55% of frame ... FAIL, ~53% (crown y45 to chin y680 of
+        #      1216). A marginal miss and it is not softened; the bar said 55.
+        #   P4 REAL BACKGROUND ....... PASS, AND THIS IS THE RECORDED FAULT
+        #      CLEARED. The recorded fault on this beat's own plate is
+        #      "another blank background" and its scene plate "came back
+        #      WHITE". This one has identifiable tall grass, seed heads and
+        #      broad leaves across the entire frame, no white, no grey, no
+        #      gradient field and no drawn panel border. It is thrown out of
+        #      focus, which is a close-up doing what a close-up does, not a
+        #      blank. THE MEASURE DOES NOT SUPPORT THIS AND IS NOT CITED FOR
+        #      IT -- see the note at the end of this block.
+        #   P5 daylight .............. PASS, bright and warm.
+        #   P6 nothing hanging, no hand in frame ... PASS. There is no hand in
+        #      the frame at all, which was the intent: the cheapest available
+        #      form of the hand answer.
+        #   P7 mouth closed, EYES OPEN ... FAIL. Mouth is closed as asked, but
+        #      BOTH EYES ARE SHUT. `thoughtful` plus a closed mouth landed on
+        #      a man with his eyes closed, which is a man not thinking but
+        #      resting, and beat 09 is "Guard 1's face works through it".
+        # ------------------------------------------------------------------
     },
     14: {
         "slug": "the-defense",
