@@ -1,0 +1,67 @@
+# Still provenance (7.2), written AT RENDER TIME by goblin_ipa_sample.py
+# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat 08 —
+# not a wave, and not a candidate for the founder to pick from. The
+# prompt, seeds, steps, guidance and negative are byte-identical to the
+# wave-1 sample (commit 406909c); the ONLY change is the IP-Adapter
+# conditioning recorded below. The reference image is one of the
+# reference SLOTS listed under --refs, used because every distinct one
+# is used in turn — it is NOT a canonical goblin and nobody has picked
+# one. The slot FILENAMES are historic and may name a different beat;
+# only ip_adapter_reference_sha256 identifies the bytes.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 8
+beat_slug: inside-him
+beat_kind: two-subject
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260727
+seeds_in_batch: 4
+task: ep2-b08-nobald-0817
+render_round: ipa-consistency-1
+candidate_set: none (mechanism test, not a pick sheet)
+count_tag: 2boys
+negative_terms_removed: tall tree
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: h94/IP-Adapter/models/image_encoder
+ip_adapter_licence: Apache-2.0 (h94/IP-Adapter); image encoder weights derive from laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+ip_adapter_scale: 0.6
+ip_adapter_step_window: >-
+  on for steps 0-5 of 40 (15% of the denoise), then set_ip_adapter_scale(0.0) from callback_on_step_end for the remaining 34. The reference conditions the early, structure-forming steps only; the late steps are text-conditioned alone.
+ip_adapter_reference: 04-the-footnote-wave1-s2.png
+ip_adapter_reference_sha256: 293afe818773176a478c73ac40e8939facd5ba4abcd0ada9cf6ab626ea2e7576
+ip_adapter_reference_name_reliable: false
+ip_adapter_reference_name_note: >-
+  the filename above is a SLOT name under --refs, not a fact about these bytes: the slots keep their historic prefix while the beat varies, and this one claims a different beat than 08. Identify the reference by ip_adapter_reference_sha256, never by this name.
+ip_adapter_reference_slot: r2
+reference_set_distinct: 3 of 4 slots
+ip_adapter_reference_duplicate_slots: none (these bytes appear in one slot)
+ip_adapter_reference_prep: centre-cropped to square, then the pipeline's CLIPImageProcessor
+ip_adapter_reference_note: >-
+  one of the reference slots given to this run. Every DISTINCT reference is used in turn — slots holding the same bytes are rendered once, not once each — so the agreement number is a property of the mechanism and not an endorsement of any one creature. Choosing the goblin is R4's call and this run does not make it.
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, bald head — unchanged from the wave-1 sample, on purpose. It is the steward's translation of his sentence into slot tags and he has NOT ratified it. Holding it fixed is what makes this an A/B of the mechanism rather than a second, confounded question about the words.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+harness_sha256: be18f941387ddd4d75c432505ff5a8801b5fc239803e5a394f31446b6967de45
+drafts_sha256: 3fc1a3a843727208b0e4ca5b96af8e817af2e9be8156e6dbfd4ed6911f5acd70
+sampler_sha256: 6f7333bd91aaf960701fe623329164f32a4302a506b2dd54e25e23ea5e321f50
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 71
+negative_tokens_sent: 66
+extra_negative_tier: species
+prompt_tokens_added_by_mechanism: 0
+prompt: >-
+  2boys, two men, the near one light sandy hair, cream shirt, white sash, brown skirt, holds a bark clipboard in both hands, the far one a goblin, green skin, patched cloak, looks at his belly, arms down, tall grass, pale sky above, cinematic lighting, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, knight, white background, plain background, dark, night, photorealism, text, female goblin, elf
+colour_anchor_negative: none (negative byte-identical to arm 1)
+render_seconds: 9.5
+founder_verdict: null
+scored: false

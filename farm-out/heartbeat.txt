@@ -2506,3 +2506,4 @@
 13:47:45Z box-runner idle ready=0 failed=33
 13:57:49Z box-runner idle ready=0 failed=33
 14:06:07Z STARTED task=ep2-b08-nobald-0817-1786975502 attempt=1 on box-runner
+14:08:25Z DONE task=ep2-b08-nobald-0817-1786975502 rc=0 artifacts=3
