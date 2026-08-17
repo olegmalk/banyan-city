@@ -143,6 +143,25 @@ def main() -> int:
     ap.add_argument("--preview", default="",
                     help="write a look-at-it PNG: the plate with the mask "
                          "tinted and every protect box outlined")
+    ap.add_argument("--composite", default="",
+                    help="ALSO write the init with the --add geometry INKED IN, "
+                         "to be used as the init of a LOW-strength masked pass. "
+                         "This is the half that makes the attribute ours rather "
+                         "than the model's: with the shape already in the init, "
+                         "the sampler is asked to harmonise a frame that exists, "
+                         "not to invent one. At strength 0.2-0.35 only "
+                         "steps x strength steps run, so the inked structure "
+                         "survives. The bark clipboard split at 0.45 and held at "
+                         "0.30 for the same reason. The composite is drawn from "
+                         "the UNDILATED shapes while the mask is dilated, so the "
+                         "harmoniser gets a margin of real plate pixels to blend "
+                         "into on both sides of the ink.")
+    ap.add_argument("--ink", default="auto",
+                    help="R,G,B for the composited geometry, or 'auto' (default) "
+                         "to SAMPLE THE PLATE'S OWN DARKEST LINEART inside the "
+                         "mask bbox. Auto is the right default because colour "
+                         "does not travel between backends and a hand-picked "
+                         "black is a guess about a dialect we can simply measure.")
     ap.add_argument("--note", default="")
     a = ap.parse_args()
 
@@ -175,9 +194,15 @@ def main() -> int:
         print("!! %s" % exc, flush=True)
         return 2
 
+    # The ink follows the shapes as drawn; the MASK may then be grown. Keeping
+    # them separate is what leaves real plate pixels either side of the ink for
+    # the harmoniser to blend into.
+    undilated = mask.point(lambda v: 255 if v > 0 else 0)
+
     if a.dilate > 0:
         mask = mask.filter(ImageFilter.MaxFilter(2 * a.dilate + 1))
-        described.append("dilate %d px" % a.dilate)
+        described.append(
+            "dilate %d px (mask only -- the ink is not dilated)" % a.dilate)
 
     binary = mask.point(lambda v: 255 if v > 0 else 0)
     box = binary.getbbox()
@@ -215,6 +240,45 @@ def main() -> int:
     os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
     mask.save(a.out)
 
+    # --- the composite: ink the geometry into the plate ------------------------
+    composite_sha = ""
+    ink = None
+    if a.composite:
+        if a.ink.strip().lower() == "auto":
+            # The plate's own darkest lineart inside the region. Measured, not
+            # guessed: a hand-picked black is a claim about a dialect, and this
+            # tree has already learned that colour does not travel.
+            region = plate.crop((bbox[0], bbox[1], bbox[2] + 1, bbox[3] + 1))
+            px = list(region.convert("RGB").getdata())
+            ink = min(px, key=lambda t: t[0] + t[1] + t[2])
+        else:
+            try:
+                r, g, b = _ints(a.ink, "ink", 3)
+                ink = (r, g, b)
+            except ValueError as exc:
+                print("!! %s" % exc, flush=True)
+                return 2
+        comp = plate.copy()
+        comp.paste(Image.new("RGB", (W, H), ink), (0, 0), undilated)
+        os.makedirs(os.path.dirname(os.path.abspath(a.composite)) or ".",
+                    exist_ok=True)
+        comp.save(a.composite)
+        composite_sha = sha256_of(a.composite)
+        # The composite must be byte-identical to the plate everywhere the ink is
+        # not. That is the same promise as --protect and it is worth asserting
+        # rather than assuming, because this file becomes the init of a render.
+        import itertools
+        changed = sum(1 for o, n, m in itertools.zip_longest(
+            plate.convert("RGB").getdata(), comp.getdata(), undilated.getdata())
+            if o != n and not m)
+        if changed:
+            print("!! composite changed %d px OUTSIDE the inked geometry -- "
+                  "refusing, the init of a render must not drift." % changed,
+                  flush=True)
+            return 6
+        print("COMPOSITE %s  ink=%s  changed only inside the geometry"
+              % (a.composite, str(ink)), flush=True)
+
     preview_path = a.preview
     if preview_path:
         prev = plate.copy()
@@ -247,6 +311,13 @@ def main() -> int:
             "\n".join("  - %s" % s for s in described),
             "protect_boxes_px: %s" % (str([list(p) for p in protect]) or "[]"),
             "protect_violations: 0",
+            "composite_png: %s" % (os.path.basename(a.composite) or "null"),
+            "composite_sha256: %s" % (composite_sha or "null"),
+            "composite_ink_rgb: %s" % (str(list(ink)) if ink else "null"),
+            "composite_ink_source: %s"
+            % ("sampled: the plate's own darkest pixel inside the mask bbox"
+               if (a.composite and a.ink.strip().lower() == "auto")
+               else ("given on the command line" if a.composite else "null")),
             "preview_png: %s" % (os.path.basename(preview_path) or "null"),
             "authored_utc: %s" % stamp,
             "cost_usd: 0",
