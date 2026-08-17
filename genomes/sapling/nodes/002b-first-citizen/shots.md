@@ -1169,8 +1169,42 @@ One small round purple fruit trembles on the thinnest branch of a tiny sapling, 
 
 No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take. The fruit never touches him: the head-bounce this beat used to ask for was killed by the founder on 2026-08-15, and the superseded prompt is kept beside the correction in this board's source file, shots.md, not on this page.
 
+**KNEE-HEIGHT REWRITE 2026-08-17 — and it answers this beat's own open question.**
+His ruling: *"rewrite the beats to work at knee height. change the story."*
+~~"Wider — the whole sapling and the scavenger below it in one frame: the stem lets
+go, the fig falls, and lands in the grass at his feet. He notices."~~ → *"Wider — the
+sapling low in frame and the scavenger standing beside it, mid-stride away: the stem
+lets go and the fig drops the short distance into the grass by his heel. He stops
+mid-step and looks back down at it."* Nobody stands *below* a 40 cm plant. The three
+things `done_when` requires are untouched and still in order — the fall, the landing,
+the noticing — and the physics is now honest: the drop is about 30 cm, which is why
+it lands **by his heel** rather than at his feet in front of him.
+
+**`plate_requirement_0815.body_position` is answered, and it was flagged as an author
+call.** It read *"OPEN QUESTION — FLAGGED, NOT INVENTED. Beat 17 ends with him
+standing and turned away, so where his body is at the start of beat 19 is not
+established by anything we hold … the pose is an author call the chain must answer
+before the plate is commissioned."* **He is standing and mid-stride away, continuous
+from beat 17**, and the notice is a stop and a look back down. That is now in the
+script, so the plate has a pose to be built to and no render has to guess it.
+
+Superseded prompt sentence, kept: ~~"…drops from the branch of a tiny sapling standing
+tall and lands in the grass at the feet of a small round goblin walking below, who
+stops mid-step and looks down at it."~~ The replacement is **37 words against 38**, so
+it cannot newly overflow `compress()` on a tail-dropper beat; it was **NOT measured on
+the real CLIP tokenizer** (none installed here, $0, no GPU), so the count is the only
+guarantee offered. It gains the `40cm` scale anchor `check_sapling_scale.py`
+recognises and drops `standing tall`, which is posture rather than height (§3.3) but
+was doing nothing here.
+
+**WHAT IT COSTS: nothing.** Beat 19 has no pick and no usable footage either way —
+`plate_requirement_0815.fruit_must_be_on_the_stem` is still disqualifying and no
+beat-19 plate we own puts the fruit on the stem, so the beat was already blocked on a
+plate that does not exist. This rewrite changes what that plate must contain; it
+strands no take.
+
 ```
-One small round purple fruit drops from the branch of a tiny sapling standing tall and lands in the grass at the feet of a small round goblin walking below, who stops mid-step and looks down at it. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+One small round purple fruit drops from the branch of a tiny 40cm sapling and lands in the grass beside the heel of a small round goblin walking away, who stops mid-step and looks down at it. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **CORRECTION 2026-08-17 — THE HEAD-BOUNCE IS DEAD, and this board was the last
