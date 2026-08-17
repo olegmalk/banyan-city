@@ -1,0 +1,12 @@
+# The 31 clips and their 155 consecutive-frame sheets are 232 MB of DERIVED
+# bytes: every mp4 is reproducible from C:\banyan-farm\courier-box\farm-out on
+# the rtx5090 box (each output dir carries its own .sha256), and every sheet is
+# reproducible from the mp4 by `python3 pipeline/coldread_frames.py`. What is
+# NOT reproducible is the reading, so the reading is what gets committed --
+# verdicts land in review/ep2-picks/done-definitions.yaml, the freeze dates in
+# freeze-index.json, the rules the readers were held to in JUDGING-BRIEF.md.
+*.mp4
+*.meta.yaml
+cold/
+PLATE-b02.png
+PLATE-b03.png

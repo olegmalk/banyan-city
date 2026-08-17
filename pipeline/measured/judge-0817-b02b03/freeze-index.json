@@ -1,0 +1,370 @@
+{
+  "02-the-sprint-LTX-anchor-s20260817.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 95,
+    "terminal_freeze_len": 2,
+    "dup_pairs": 3,
+    "dup_runs": [
+      [
+        91,
+        3
+      ],
+      [
+        95,
+        2
+      ]
+    ]
+  },
+  "02-the-sprint-LTX-anchor-s20260818.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260819.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260820.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 4,
+    "dup_runs": [
+      [
+        22,
+        2
+      ],
+      [
+        27,
+        2
+      ],
+      [
+        46,
+        2
+      ],
+      [
+        51,
+        2
+      ]
+    ]
+  },
+  "02-the-sprint-LTX-anchor-s20260821.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260830.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260831.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260832.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260833.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260834.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260835.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 93,
+    "terminal_freeze_len": 4,
+    "dup_pairs": 48,
+    "dup_runs": [
+      [
+        5,
+        2
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        11,
+        4
+      ],
+      [
+        17,
+        3
+      ],
+      [
+        21,
+        3
+      ],
+      [
+        24,
+        5
+      ],
+      [
+        29,
+        2
+      ],
+      [
+        31,
+        2
+      ],
+      [
+        33,
+        31
+      ],
+      [
+        93,
+        4
+      ]
+    ]
+  },
+  "02-the-sprint-LTX-anchor-s20260836.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260837.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260838.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor-s20260839.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "02-the-sprint-LTX-anchor.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 86,
+    "terminal_freeze_len": 11,
+    "dup_pairs": 10,
+    "dup_runs": [
+      [
+        86,
+        11
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260822.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 69,
+    "terminal_freeze_len": 28,
+    "dup_pairs": 39,
+    "dup_runs": [
+      [
+        31,
+        3
+      ],
+      [
+        35,
+        2
+      ],
+      [
+        57,
+        8
+      ],
+      [
+        65,
+        2
+      ],
+      [
+        67,
+        2
+      ],
+      [
+        69,
+        28
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260823.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 1,
+    "dup_runs": [
+      [
+        92,
+        2
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260824.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260825.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260840.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260841.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 65,
+    "terminal_freeze_len": 32,
+    "dup_pairs": 31,
+    "dup_runs": [
+      [
+        65,
+        32
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260842.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260843.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260844.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 61,
+    "terminal_freeze_len": 36,
+    "dup_pairs": 60,
+    "dup_runs": [
+      [
+        29,
+        2
+      ],
+      [
+        31,
+        3
+      ],
+      [
+        34,
+        21
+      ],
+      [
+        55,
+        2
+      ],
+      [
+        59,
+        2
+      ],
+      [
+        61,
+        36
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260845.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 86,
+    "terminal_freeze_len": 11,
+    "dup_pairs": 10,
+    "dup_runs": [
+      [
+        86,
+        11
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260846.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 1,
+    "dup_runs": [
+      [
+        93,
+        2
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260847.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st-s20260848.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": 50,
+    "terminal_freeze_len": 47,
+    "dup_pairs": 47,
+    "dup_runs": [
+      [
+        48,
+        2
+      ],
+      [
+        50,
+        47
+      ]
+    ]
+  },
+  "03-bad-cover-LTX-st-s20260849.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  },
+  "03-bad-cover-LTX-st.mp4": {
+    "frames": 97,
+    "terminal_freeze_index": null,
+    "terminal_freeze_len": 0,
+    "dup_pairs": 0,
+    "dup_runs": []
+  }
+}
