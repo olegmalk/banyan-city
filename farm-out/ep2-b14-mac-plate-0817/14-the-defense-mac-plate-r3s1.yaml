@@ -1,0 +1,100 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260814
+render_seconds: 70.6
+png_sha256: "f47f6d0ae9a9c087066716d56d35a05c8dd30d6c055bd089bef917a27da9599c"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, low close-up, hands and dirt large in frame, patch of bare brown soil, tall green grass behind him, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 3
+scored: true
+# Written by OPENING THE IMAGE, not from any metric. No tool was used on this
+# frame and none is cited below.
+what_this_frame_shows: >-
+  ONE adult green goblin, bald, large pointed ears, in a dark maroon hooded
+  cloak, CROUCHED RIGHT DOWN over the ground with his torso folded forward and
+  his head low. BOTH green clawed hands are down in front of him, well below
+  waist height, fingers converging, and THE FINGERTIPS OF BOTH HANDS ARE IN
+  CONTACT WITH THE SOIL - there is a small dark dug divot directly under them
+  with loose crumbs of earth scattered around it. Nothing is held in either
+  hand. The lower half of the frame is a broad expanse of bare brown-tan soil
+  with scattered clods. GREEN GRASS BLADES rise along the bottom edge, and
+  grass tufts stand at the left and right frame edges at roughly his own depth,
+  those reading dry straw more than green. THE UPPER REGION IS THE PROBLEM: the
+  band above and behind his head and shoulders, running to both top corners, is
+  a PALE FEATURELESS GREENISH-WHITE WASH with no texture and no object in it,
+  plainly larger than his torso. His eyes are drawn as blank white slits with no
+  irises. The cloak is plain oxblood with no patchwork visible.
+verdict_against_pre_registered_bar: >-
+  NOT A PASS. Six axes hold and P5 FAILS. P1 LOW AND OVER THE GROUND - PASS,
+  crouched, not standing, ground occupying the lower half; r1's win preserved.
+  P2 BOTH HANDS DOWN - PASS, both visible, both low, neither on a knee (r1's
+  exact fault, cleared), nothing held. P3 CONTACT - PASS, and this was the axis
+  pre-registered as THE EXPECTED FAILURE (Q3): fingertips meet the soil in a dug
+  divot. P4 DIRT WITHIN A GREEN FIELD - PASSES AS WRITTEN (bare soil under the
+  hands AND green vegetation in the same frame) and MY BAR WAS UNDER-SPECIFIED,
+  which is said here rather than discovered later: it named both substances and
+  never named their RATIO, so a dirt plane with grass at the fringes satisfies
+  its text while the beat wants a dirt PATCH inside a green field. Scored a pass
+  on its text with the residual fault named and NOT counted as a pass. P5 NO
+  VACANCY - FAIL. The featureless upper wash is exactly the "no flat untextured
+  region larger than his torso, no featureless colour wash" the bar forbids.
+  P6 HEAD IN FRAME - PASS, head large and low, so the clip has a head to
+  animate the glancing with; Q6 portrait re-compose did not fire. P7 ONE ADULT
+  GOBLIN - PASS, one figure, adult proportions.
+  NONE OF THE SEVEN NAMED FAIL MODES FIRED. Q1 desert did not (green is
+  present), Q2 grass-wins did not (bare soil is present), Q3 did not, Q4 did
+  not, Q5 did not, Q6 did not, Q7 did not. The failure is one axis, not a mode.
+  RECORDED AND NOT SCORED, as the bar said in advance: costume identity (plain
+  oxblood cloak, no patchwork - drifted on r1 and r2 too and wants a REFERENCE,
+  not words), blank white eyes (no eye state was named, deliberately - that rule
+  is retracted in plate_scratch.py at four seeds), and `face turned away` not
+  binding (the face is angled down toward camera, not away).
+what_this_advances_and_what_it_does_not: >-
+  IT FALSIFIES THE READING r3 WAS BUILT TO TEST. STATE.md 2026-08-16 concluded
+  from r1 and r2 that "grass and dirt are bistable by wording - one wins or the
+  other does". BOTH SUBSTANCES ARE IN THIS FRAME AT SEPARATED DEPTHS, which
+  neither r1 nor r2 achieved, so they are not bistable and the beat does not
+  need a composition tool to hold both. r2's desert was the vacancy law, as r3
+  argued: it had removed the background's only noun and then forbidden it.
+  IT ALSO SHOWS THE INSTRUMENT WAS AIMED AT THE WRONG REGION, which is the
+  useful part. `tall green grass behind him` DID render - as tufts at the LEFT
+  AND RIGHT EDGES at his own depth, not as a band behind and above him. So the
+  clause bound as an OBJECT BESIDE HIM rather than as a background plane, the
+  upper band still had no noun of its own, and it went blank. Nothing grew in
+  the hole this time; the hole is the fail on its own terms.
+  This is a second, independent data point for beat 05's n=1 note that a clause
+  naming something BEHIND needs a behind: this camera is low and looking at the
+  ground, so there is almost no "behind" above his hunched back for the clause
+  to occupy. Different beat, different prompt, same direction. STILL NOT A LAW.
+  P3 IS NOT A FINDING AND MUST NOT BE READ AS ONE. The hand wording is
+  byte-identical to r1 and r2, so nothing in r3 can have fixed contact. Two
+  readings fit one picture equally - contact was always reachable at this seed
+  and r2's miss was about the ground substance, or this is one draw - and one
+  frame cannot separate them. What follows is only that MY PRE-REGISTERED
+  EXPECTATION WAS WRONG and the r4 state-tag rung I had queued is NOT EARNED.
+  NO SEED BATCH IS FIRED ON THIS WORDING. The decision rule committed before the
+  render says three fresh seeds only once ALL SEVEN axes hold; P5 fails, so the
+  seeds would be spent confirming a picture that is not a candidate.
+  A MAC PLATE IS EVIDENCE ABOUT A PICTURE, NEVER ABOUT A WORDING (MAE 61 of 255
+  between this renderer and the box's). Nothing here is cited as a wording that
+  works.
+next_rung_dictated_by_this_verdict: >-
+  Q1 and Q2 were distinguished in advance precisely because they dictate
+  different rungs, and NEITHER FIRED - so the depth separation is not the
+  problem and must not be re-litigated. The one variable for r4 is to give the
+  UPPER BAND ITS OWN NOUN instead of hanging a clause off "behind him", which is
+  what (11,3) actually did when it fixed this on the first sample. Sequential,
+  not parallel: r4 depends on this verdict.
