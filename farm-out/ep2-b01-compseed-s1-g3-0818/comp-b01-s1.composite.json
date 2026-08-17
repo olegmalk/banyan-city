@@ -1,0 +1,25 @@
+{
+  "cost_usd": 0.0,
+  "feather": 9,
+  "init": "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-brightbase-figmatte\\01-cold-open-bright-i35b-s1.png",
+  "init_sha256": "ac754458872d58ee81f316adf89d7a85f3a9090dcf868f404082aff60d9a0372",
+  "mask_grow": 12,
+  "mask_out": "C:\\banyan-farm\\leafcount-0817\\mask-b01-s1.png",
+  "model": "none -- plain PIL, no sampler, no network",
+  "note": "rung 2 init for the leaf-count bar (b3e9a252): the two extra lance blades patched out with same-row background. Geometry is the peer composite comp-s1 (cccbc85f), unchanged. Count is structural here, not prompted.",
+  "out": "C:\\banyan-farm\\leafcount-0817\\comp-b01-s1.png",
+  "out_sha256": "0e84d2304c6884e146d41a9b97704b0cdd7a899233a167fba6ecbb74d6588e60",
+  "purpose": "leaf COUNT fixed by construction before any sampler runs",
+  "remove": [
+    "330,724,108,34,10.3",
+    "240,760,52,27,0"
+  ],
+  "source_offset": [
+    "-300,0"
+  ],
+  "sources": [
+    "arXiv:2503.06884 -- prompt refinement does not improve counting",
+    "arXiv:2406.10210 (Make It Count, CVPR 2025) -- plain SDXL numerals score 26-28%; count is a layout problem"
+  ],
+  "tool": "pipeline/leaf_count_composite.py"
+}
