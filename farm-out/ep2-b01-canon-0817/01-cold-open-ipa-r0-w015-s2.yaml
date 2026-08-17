@@ -1,0 +1,69 @@
+# Still provenance (7.2), written AT RENDER TIME by goblin_ipa_sample.py
+# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat 04 —
+# not a wave, and not a candidate for the founder to pick from. The
+# prompt, seeds, steps, guidance and negative are byte-identical to the
+# wave-1 sample (commit 406909c); the ONLY change is the IP-Adapter
+# conditioning recorded below. The reference image is one of the four
+# wave-1 frames, used because all four are used in turn — it is NOT a
+# canonical goblin and nobody has picked one.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature, watermark, abstract, 3d render, photorealistic, shrubbery, bush, forest, full canopy
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 1
+beat_slug: cold-open
+beat_kind: guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262720
+seeds_in_batch: 4
+task: ep2-b01-canon-0817
+render_round: ipa-consistency-1
+candidate_set: none (mechanism test, not a pick sheet)
+count_tag: 
+negative_terms_removed: tall tree
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: h94/IP-Adapter/models/image_encoder
+ip_adapter_licence: Apache-2.0 (h94/IP-Adapter); image encoder weights derive from laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+ip_adapter_scale: 0.6
+ip_adapter_step_window: >-
+  on for steps 0-5 of 40 (15% of the denoise), then set_ip_adapter_scale(0.0) from callback_on_step_end for the remaining 34. The reference conditions the early, structure-forming steps only; the late steps are text-conditioned alone.
+ip_adapter_reference: 04-the-footnote-wave1-s0.png
+ip_adapter_reference_sha256: 2e0404cf130ccfb3113dac538f8e227c84be06850aff4c5acee89f67d4c4b894
+ip_adapter_reference_prep: centre-cropped to square, then the pipeline's CLIPImageProcessor
+ip_adapter_reference_note: >-
+  one of the four wave-1 frames. All four are used as the reference in turn across this run, so the agreement number is a property of the mechanism and not an endorsement of any one creature. Choosing the goblin is R4's call and this run does not make it.
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, bald head — unchanged from the wave-1 sample, on purpose. It is the steward's translation of his sentence into slot tags and he has NOT ratified it. Holding it fixed is what makes this an A/B of the mechanism rather than a second, confounded question about the words.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+harness_sha256: be18f941387ddd4d75c432505ff5a8801b5fc239803e5a394f31446b6967de45
+drafts_sha256: 542879b1ef2a361acc715082410cd0fd4d14921d76bc192ba493317d0985eca4
+sampler_sha256: ec504b3c62a06dbb8890a16984e028716ac3683faf5a0342f9a145834e30df9a
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 64
+negative_tokens_sent: 74
+extra_negative_tier: guard
+prompt_tokens_added_by_mechanism: 0
+prompt: >-
+  A tiny fig seedling in an open grassy field, exactly two wide oval cotyledon leaves with soft round tips, and one small deep purple-violet fig, green at its neck, matte, growing on its thin stem, whole plant in frame. Cinematic lighting, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  text, mature tree, large tree, thick trunk, woman, girl, boy, child, person, chibi, mascot, creature, face, green fig, green fruit, red fruit, white fruit, pale fruit, lobed leaves, five-fingered leaves, three leaves, four leaves, many leaves, lush foliage, dark, night, photorealism
+colour_anchor_negative: none (negative byte-identical to arm 1)
+render_seconds: 9.5
+founder_verdict: null
+scored: false
+# --- appended after the render by the sapling-canon anchor lane, 2026-08-17.
+approved: false
+provisional: true
+cost_usd_confirmed: 0
+note: |
+  ONE SAMPLE of ONE re-cut draft key (authored_b01_canon_0816). Not a pick,
+  not a seed confirmation, not approved for any cut. A lane reads the
+  sixteen frames against THIS BEAT's bar before anything built on it is
+  filed. Taste and trunk/graft calls are R4's and this run makes none.
