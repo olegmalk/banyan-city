@@ -354,3 +354,26 @@ with its rate and **nothing is filed off a failing plate**. The next instrument 
 miss is NOT a higher strength, NOT a new wording and NOT another seed sweep — it is the
 founder's call on the plate, or the ControlNet/T2I-Adapter hint §5 already named and
 deliberately left unfired.
+- **Canon application 1 — `ep2-b01-leafcanon-inpaint-0817` (fired and judged 2026-08-17, box,
+  bf16/CUDA, $0): AXIS A MISS — 0 of 4 exactly two blades, NOT BOUND against the 4-of-4 floor.**
+  `FAIL-VACANCY`, the mode §8.4 named before the pixels, fired on **4 of 4**: every frame grew a new
+  blade at the stem node the removed blade had been attached to (s20260819 twice, one of them sharply
+  drawn). The composite removed the blade but not the CUE — the node stayed in the plate and inside
+  the blend mask, so the 0.30 pass finished a node into a leaf. Same law the eyewear lane measured
+  from the other side (masked addition 5 of 5, masked removal 0 of 1). Height held with zero
+  regression: the apex is the fruit and the fruit region is byte-identical to the init (max |Δ| = 0),
+  which also proves the mask exclusion did what it claimed. No seam (outside-mask max |Δ| 22–28, blur
+  ramp only). Nothing filed off this plate. Cure named and NOT fired: patch the attachment as well as
+  the blade. **The 8-of-8 result stands on its own two inits and is not retrofitted to cover this
+  one.**
+- **Canon application 2 — `ep2-b21-leafcanon-inpaint-0817` (fired and judged 2026-08-17, box,
+  bf16/CUDA, $0): AXIS A BOUND — 4 of 4 exactly two blades.** `FAIL-VACANCY` did not fire.
+  **AXIS B holds 4 of 4 above this plate's own 3-of-4 baseline**, and tighter than either §7 fire:
+  apex 621 in → 620/622/622/622 out, |Δ| ≤ 1 px, flanking grass topping at y 554 **above** the plant
+  apex at 621 and silhouetted against the sky. Both halves of the founder's 2026-08-16 ruling hold in
+  one frame, on the beat's own scene, for the first time. `FAIL-BLUR` fired as §8.4 predicted: the
+  diffuse fill resolved into a blurred BACKGROUND OBJECT (disc / boxy form / blob / crescent, one per
+  seed), a LOOK fault and a founder card, not a count fault — nothing attached to the plant.
+  **The contrast between these two rungs is the finding: the CUE decides it, not the blade.** A
+  masked vacancy beside a surviving attachment node gets re-grown as anatomy; a masked vacancy
+  against open sky gets filled with background.

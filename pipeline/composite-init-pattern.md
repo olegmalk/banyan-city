@@ -321,3 +321,50 @@ naming which is the next lane's call, not this one's.
    fire; check the region diff and one untouched control object every time.
 7. **Report the failure as loudly as the pass**, with the numbers that would let
    the next lane disagree with the pictures rather than with the prose.
+
+---
+
+## 12. TWO LAWS FOR THE PATCH SOURCE — measured 2026-08-17, leaf-count lane
+
+Both were found by a sweep that would not converge, and both are now enforced in
+`pipeline/leaf_count_composite.py` rather than left as advice.
+
+**THE SOURCE LAW — never patch with pixels that satisfy your own object rule.** A
+residual sweep on beat 01's amber plate DIVERGED instead of converging: seed s2 went
+**741 → 867 → 957 px** of residual across three passes, s0 **615 → 160 → 284**. Cause:
+the background being cloned in (offset −300,0) *itself* matched the rule the sweep was
+detecting with — a dark blurred grass blob 300px away. The sweep was patching a blade
+with something that reads as a blade, so the residual **moved rather than shrank**. The
+tool now tests the source under the same rule before touching a pixel and refuses.
+This is the vacancy law's twin: *never leave an unpainted gap* has a partner, *never
+paint with something that reads as the thing you removed.*
+
+**NO CLONE SURVIVES A LUMINANCE GRADIENT — measure the boundary ring before you clone.**
+On beat 21's dawn plate (a radial horizon glow) the best of 50 lateral offsets still left
+an **out-of-sample boundary-ring MAE of 22.9**, and fitting a per-channel gain+offset, or
+a plane in x,y, on the inner ring made it **worse** out of sample (**27.8 / 26.3** — they
+fit the ring, not the hole). Cure: fill from the region's **own boundary** instead
+(`--fill diffuse`: blur the frame, keep only the inside, repeat). That keeps the plate's
+own light by construction, and it is not decal tell #4 either, because nothing is
+repeated. Cost: the fill is smooth, so the blend mask must cover it.
+
+**Two corollaries that cost a rung each, so they are written here rather than rediscovered:**
+
+1. **A mask fitted to a silhouette and then feathered leaves the object's dark cel
+   outline at partial alpha, and it comes back as a GHOST.** The outline lives exactly on
+   the boundary the mask fades across. Grow must exceed feather (12 vs 6 on beat 21) so
+   the outline sits inside the mask's solid core.
+2. **A rectangular `--protect` box prints a straight-edged tone panel** wherever the fill
+   reaches its edge — decal tell #3, from the tool that was supposed to prevent decals.
+   Protect by the object rule where you can (beat 01's pale stem is excluded by
+   `lum < 178` for free); a protected corridor is only safe where the mask never reaches
+   its edge.
+
+**And the law the two canon rungs proved on the sampler side, which is what a compositor
+is ultimately serving:** a masked vacancy is filled with whatever the surviving CUE
+suggests. Beat 01 left the stem NODE the blade grew from inside the mask and the 0.30
+pass re-grew a leaf there on **4 of 4** frames; beat 21's vacancy sat against open sky and
+the same recipe drew background instead, keeping the count at two on **4 of 4**. So
+**removal is only finished when the attachment is removed too** — which is the same
+finding the eyewear lane reached from the other side (masked addition 5 of 5, masked
+removal 0 of 1: the unmasked pixels either side still describe the thing).
