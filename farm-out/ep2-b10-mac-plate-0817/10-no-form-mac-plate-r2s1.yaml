@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 10
+beat_slug: "no-form"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260817
+render_seconds: 137.2
+png_sha256: "fb2651a209e59aa4319f1402b40e04d0ba9eaa76c77812cfafd765874ab56f47"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "2boys, full body, medium shot, two guard men standing together in tall grass, hedgerow behind, near taller man with light sandy hair, cream shirt, white shoulder sash, brown wrap skirt, holding a large flat bark board in both hands, one man behind with dark cropped hair, glasses, a tan tunic, hands behind his back, masterpiece, best quality"
+negative_prompt: "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, from behind, back view, close-up, portrait, distant, small figure, sky, horizon, white background, simple background, armor, helmet, knight, weapon, sign, banner, paper, book, photorealism, 3d render, night"
+done_when: "TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD HIS PARTNER; board hand-sized; field present at frame one. THE PLATE'S JOB IS COUNT, WORLD, CAST AND THE PRE-FLIP BOARD -- NOT A PROMISE ABOUT MOTION: this beat's action is a small in-hand manipulation, which measures 0 of 8 in-hand against 12 of 12 whole-body, and the composition fix for it reproduced 0 of 4. P1 approved pair not swapped AND the board in the sandy-haired man's hands, P2 exactly two whole figures, P3 near man's face and hands both in frame, P4 near man >=45% of frame height, P5 no flat region larger than a torso, P6 nothing hanging from any hand but the board, P7 field in the plate, P8 one flat unoccluded bark board in two hands, NOT yet flipped."
+why_this_plate: "Beat 10's four rounds split its conditions across seeds -- seedA had the pair and the world but the board faced camera instead of the partner and the caps drifted off-cast, seedB read the blank back perfectly with only one guard -- and its two plate prompts are 'two round bald guard men in plain brown tunics ... silly bureaucrats' and 'two bald guard men in plain brown tunics'. Neither names the cast and neither approved guard is bald, which is the whole of the recorded 'same guard-consistency fault as beat 05'. This plate supplies count, world and cast correctly and stages the board in its pre-flip state. It does NOT claim the flip will animate; that is a one-in-four lottery on this engine regardless of the plate, and saying so is the point."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 2
+scored: false

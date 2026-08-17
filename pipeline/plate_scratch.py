@@ -2745,6 +2745,50 @@ REVS = {
             "armor, helmet, knight, weapon, holding object, clipboard, "
             "photorealism, 3d render, night"
         ),
+        # ------------------------------------------------------------------
+        # R2 VERDICT. macbook1, 70.8s, seed 20260817 unchanged.
+        # OUTCOME A ON THE CAMERA. THE MECHANISM IS CONFIRMED.
+        # ------------------------------------------------------------------
+        # DELETING ONE WORD FROM THE NEGATIVE MOVED THE CAMERA. r1s1 at this
+        # exact seed is a downward plan view over an open field. r2 is close to
+        # EYE LEVEL, with a horizon band, a line of dark bushes reading as a
+        # hedgerow along the top left and right, and distant hills behind it.
+        # `hedgerow behind` had been in the positive all along and rendered
+        # nothing three times; it rendered here the moment the horizon it needs
+        # to stand on was allowed to exist. So the rule that carries to every
+        # future front-facing plate is: DO NOT FORBID `horizon` IN A SHOT THAT
+        # NEEDS ONE, and a clause that names something "behind" is dead in a
+        # plan view because a plan view has no behind.
+        # THE TRADE NAMED IN ADVANCE IS REAL AND IS NOT PAPERED OVER. `sky`
+        # stayed in the negative and a pale sky band arrived anyway. The two
+        # terms were doing one job; you cannot have a horizon and no sky.
+        # SCORING, against the unchanged bar: P1 FAIL, P2 PASS, P3 PASS,
+        # P4 PASS ~41%, P5 IMPROVED BUT NOT PASSED, P6 PASS, P7 PASS,
+        # P8 PASS-AND-OVER-APPLIED. Detail on the three that need it:
+        #   P1 is FAIL at this seed and THAT WAS EXPECTED AND IS NOT THE
+        #      VARIABLE. Both men are dark-haired with glasses, exactly as
+        #      r1s1 was, because the seed was deliberately held to isolate the
+        #      camera. D1 already established that sandy hair binds at 4 of 4
+        #      OTHER seeds, so beat 05's next step is A SEED BATCH OF THIS
+        #      EXACT WORDING, not another word.
+        #   P5 flat fraction 61.4% -> 52.6%, against 34.6% on the b11 plate
+        #      that passed. Better, and still not there. The rectangle measure
+        #      went the WRONG WAY over the same improvement (0.61 -> 0.68
+        #      torsos), which is the third demonstration in one day that it
+        #      cannot be trusted on a sparse field.
+        #   P6 PASS at 4x on all four hands -- open empty palms, closed empty
+        #      fingers, no strap, no cord, nothing detached. And guard A's WIDE
+        #      WHITE WAIST SASH renders properly here for the first time, with
+        #      a trailing end, which is a cast attribute arriving rather than
+        #      drifting.
+        # THE POSE IS PARTLY ITS OWN FAULT, WHICH THE PRE-REGISTRATION SAID
+        # WOULD BE THE ANSWER IF THIS HAPPENED. r1's men fling both arms
+        # overhead; r2's near man holds his arms out to the sides and the far
+        # man has one arm raised. Better, not a jog. So the plan view was
+        # AGGRAVATING the pose and is not the whole of it, and `arms swinging`
+        # is a live second question for beat 05 -- with the hand answer intact
+        # either way, since it is `arms swinging` that keeps the hands empty.
+        # ------------------------------------------------------------------
     },
     (9, 2): {
         # ------------------------------------------------------------------
@@ -2809,6 +2853,40 @@ REVS = {
             "background, plain background, sky, indoors, full body, wide "
             "shot, distant, photorealism, 3d render, dark, night"
         ),
+        # ------------------------------------------------------------------
+        # R2 VERDICT. macbook3, 137.1s, seed 20260817 unchanged.
+        # OUTCOME A ON THE EYES. THE VARIABLE WORKED ON THE FIRST SAMPLE.
+        # ------------------------------------------------------------------
+        #   P7 EYES OPEN, MOUTH CLOSED ... PASS, and this is the fix. Both eyes
+        #      are plainly open -- amber irises visible behind the lenses -- the
+        #      mouth is closed, and the brows are drawn slightly down into a
+        #      frown. It reads as a man working something out, which is the
+        #      beat. Three seeds of r1 gave three shut faces; one added tag
+        #      plus its mirror in the negative opened them at the first sample.
+        #      THE RULE THAT CARRIES: A FACE PLATE MUST NAME THE EYE STATE.
+        #      `thoughtful` on its own reliably closes them on this checkpoint,
+        #      and the beat that needs a face working through a thought is
+        #      exactly the beat that cannot afford that.
+        #   P1 guard A with wire-rims ... GLASSES PASS FOR THE FOURTH TIME
+        #      RUNNING, round wire frames, no drift to sunglasses. HAIR STILL
+        #      FAILS, and it is scored as a fail: dark brown and shaggy where
+        #      guard A's is near-black and CROPPED, and the face still reads
+        #      young rather than adult. Closer than r1's mid-brown, not there.
+        #      This is the one condition beat 09 has never met and it is the
+        #      condition the beat exists to fix.
+        #   P2 PASS one face. P4 PASS, real grass and leaves across the whole
+        #      frame -- four for four on the fault this beat was blocked on.
+        #      P5 PASS daylight. P6 PASS, no hand in frame.
+        #   P3 head >=55% ... FAIL, AND IT GOT WORSE, WHICH IS REPORTED
+        #      RATHER THAN ROUNDED. Read off a 50px ruler overlaid on the
+        #      frame: crown y60, chin y648, so 588 of 1216 = 48%. r1s1 was
+        #      ~53%. The bar was 55% and this is further from it.
+        # FIVE OF SEVEN PASS. Beat 09 is the closest of the three plates and
+        # its two open faults are now precisely stated: the framing is not
+        # tight enough, and the hair and age are not guard A's. Neither is
+        # touched here, because this rung tested the eyes and the eyes are the
+        # only thing it may claim.
+        # ------------------------------------------------------------------
     },
     (10, 2): {
         # ------------------------------------------------------------------
@@ -2890,6 +2968,65 @@ REVS = {
             "armor, helmet, knight, weapon, sign, banner, paper, book, "
             "photorealism, 3d render, night"
         ),
+        # ------------------------------------------------------------------
+        # R2 VERDICT. macbook2, 137.2s, seed 20260817 unchanged.
+        # THE INSTRUMENT DID NOT DEPLOY, WHICH IS NOT THE SAME AS THE
+        # INSTRUMENT FAILING, AND THE DIFFERENCE IS THE WHOLE VERDICT.
+        # ------------------------------------------------------------------
+        # `hands behind his back` DID NOT RENDER. Guard A's arms are FOLDED
+        # ACROSS HIS FRONT, in full view, at the centre of the frame. So the
+        # test this rung was built to run -- does occupying the other pair of
+        # hands move the prop -- WAS NEVER ACTUALLY RUN. Outcome C is not
+        # earned and is not claimed; a pose tag that does not bind cannot
+        # falsify anything about what a bound pose would have done. Recorded
+        # this way on purpose, because "we tried occupying the hands and it
+        # didn't work" would be a false entry that the next lane would trust.
+        #
+        # WHAT THE FOUR WORDS DID DO, at the far end of the prompt, exactly as
+        # (11,4) warned a mid-prompt edit can: THEY FIXED THE IDENTITY AT THE
+        # BAD SEED. This is the first time seed 20260817 has produced guard B
+        # at all. The left man is unmistakably blond with a cream shirt and a
+        # brown wrap skirt, the right man is black-haired with glasses. Four
+        # words about one man's hands moved another man's hair colour, in the
+        # helpful direction this time, which is the same mechanism that cost
+        # (11,4) its P1 and is a reason to distrust the attribution of ANY
+        # single-word result on this checkpoint.
+        #
+        # AND THE FOUNDER'S OWN NAMED DEFECT IS REPRODUCED BY THIS PLATE,
+        # WHICH IS THE SERIOUS FINDING. There are TWO boards. Opened at 5x, the
+        # right-hand board IS held -- a hand grips its lower edge, on GUARD A,
+        # so the prop is still on the wrong man. Opened at 3x, THE LEFT-HAND
+        # BOARD IS ATTACHED TO NOTHING: it hangs in the air beside guard B with
+        # NO HAND ON IT, while his visible hand is up at his own collar holding
+        # nothing at all. That is verbatim the defect the founder marked on the
+        # cast sheet -- "THE FLOATING CLIPBOARD ... Attached to nothing, no
+        # hand on it" -- and this lane has now reproduced it rather than
+        # cleared it. It is named here and in the report and it is not softened
+        # by the fact that the other board is held.
+        # SCORING: P1 FAIL (guard A's garment came back OLIVE GREEN, not tan,
+        # and the board is still his), P2 PASS, P3 FAIL (neither man's hands
+        # hold the board as described), P4 PASS ~76%, P5 MARGINAL -- 0.85
+        # torsos and 41.0% flat, the softest upper band of the day, though the
+        # haze does carry leaf shapes, P6 FAIL on the floating board, P7 PASS,
+        # P8 FAIL -- two boards, one unheld, neither in two hands.
+        #
+        # BEAT 10 IS NOT SOLVED AND THIS LANE STOPS HERE ON IT, with its budget
+        # spent and the state stated plainly rather than a fifth guess fired.
+        # THE MOST CAST-CORRECT PICTURE BEAT 10 HAS IS r1s3 (seed 20260819):
+        # blond man in a cream shirt and brown wrap skirt beside a black-haired
+        # man in glasses and a tan tunic, two whole figures, real grass -- with
+        # the board in the WRONG man's hands. So beat 10's blocker is now
+        # isolated to ONE condition and it is a hard one: PROP OWNERSHIP. The
+        # board went to guard A or to both men at 4 of 4 renders, across two
+        # wordings and four seeds, with the board clause inside guard B's own
+        # person clause and B named first. Hair and garments bind to their
+        # clauses; a prop does not. The honest remaining options are named in
+        # the r2 pre-registration above under outcome C and every one of them
+        # is bigger than a seed: retry the hand-occupying instrument with a
+        # pose tag that actually binds, dress both men identically so ownership
+        # stops mattering, or accept a composited or hand-corrected plate.
+        # THAT IS A PRODUCTION DECISION, NOT A LANE DECISION.
+        # ------------------------------------------------------------------
     },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
