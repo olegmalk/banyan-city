@@ -349,6 +349,12 @@ def main() -> int:
                          "component >= --residual-min-area survives. This is the "
                          "guard that stops a 50%% compositor defect reaching a "
                          "canon plate")
+    ap.add_argument("--mask-in", default=None, metavar="PNG",
+                    help="seed the blend mask from an existing mask PNG, so a "
+                         "SECOND compositor pass can be chained onto the first "
+                         "without losing the first pass's mask. Chaining is how "
+                         "two different object rules get applied to one plate -- a "
+                         "dark blade and a pale stub are not one rule")
     ap.add_argument("--mask-add", action="append", default=[], metavar="cx,cy,rx,ry[,ang]",
                     help="add this ellipse to the BLEND mask without patching a "
                          "pixel of it. This is how the following low-strength pass "
@@ -412,6 +418,15 @@ def main() -> int:
 
     out = src.copy()
     union = Image.new("L", (W, H), 0)
+    if args.mask_in:
+        seed = Image.open(args.mask_in).convert("L")
+        if seed.size != (W, H):
+            raise SystemExit(
+                "!! --mask-in %s is %dx%d but the init is %dx%d"
+                % (args.mask_in, seed.size[0], seed.size[1], W, H))
+        union = Image.composite(Image.new("L", (W, H), 255), union,
+                                seed.point(lambda v: 255 if v > 127 else 0))
+        print("mask-in     %s (seeded, bbox %s)" % (args.mask_in, union.getbbox()))
 
     for i, ((cx, cy, rx, ry, ang), (dx, dy)) in enumerate(zip(regions, offsets)):
         if dx == 0 and dy == 0 and args.fill != "diffuse":
@@ -709,6 +724,7 @@ def main() -> int:
             "source_offset": args.source_offset,
             "feather": args.feather,
             "mask_grow": args.mask_grow,
+            "mask_in": args.mask_in,
             "mask_add": args.mask_add,
             "fill": args.fill,
             "fill_iters": args.fill_iters,
