@@ -219,5 +219,31 @@ are UNTOUCHED.
 
 ## RESULTS
 
-(empty by design — filled in below, one committed unit per result, whatever it
-shows)
+**r8s1 — SEVEN OF SEVEN AS WRITTEN, with a defect the bar does not reach.**
+`da48af54`. macbook1, MPS/fp16, strength 0.30, 12 of 40 steps, $0,
+`mac_preflight.py` READY either side. Init
+`farm-out/ep2-b14-fieldcomp-0817/14-field-init-v6.png` (composite v6, `b2ff678e`),
+prompt and negative read from `plate_scratch.REVS[(14,6)]` at run time.
+
+- **P4′ PASSES** — one continuous field on all four sides of him, off all four
+  frame edges, bare brown soil under his hands. The axis that passed only on r6
+  across four seed draws now passes from the init.
+- **P2 and P5 both held**, which was a condition and not a bonus: two separate
+  hands (the 0.30 pass tidied rather than fused them), and the largest inscribed
+  flat rectangle 161×140 = 22540 px² sits **on his bald skull**.
+- **Q10 closed.** The band is still gone AND the field is a field.
+- **The defect, named because no axis reaches it:** an amorphous pale limb-like
+  mass at x 430..520, y 600..740, where the sampler resolved a leftover white
+  collar fragment plus grass. Not a vacancy (P5), not a second body (P7), and Q13
+  requires P2/P6 to regress. **The bar is not bent to fail it.** Forward-only
+  tightening for any next rung, applied to nothing here: **P8 NO UNRESOLVED FORM**.
+  Cause is the compositor's matte, not the sampler.
+- **This path is NOT figure-preserving:** 16.1% of the protected region changed by
+  >8 levels, maxdiff 217 (mask blur 8 + SDXL inpaint on base weights
+  reconstructing the frame through the VAE). Do not claim otherwise.
+- Compositor rejections that cost no GPU time: v1 blades-on-sand (a fringe drawn by
+  hand, C1 0.9%), v2 beaded chains, v3/v4 two measurement bugs, v5 a pale sand halo
+  tracing his silhouette. Four of the five faults on this beat's composite were the
+  compositor's, not the sampler's.
+
+**Shippability is R4's and Oleg's.** Nothing enqueued, no motion, no `plate_ack`.
