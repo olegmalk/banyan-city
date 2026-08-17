@@ -91,6 +91,53 @@ and `empty hands` embeds as something very close to `hands`. If a hand does not
 matter to the shot, frame it out or give it the cheapest state you can afford;
 what you may not do is leave it unmentioned and expect nothing to appear in it.
 
+TWO MORE OF THE SAME SHAPE, learned the same afternoon and put here beside the
+hand rule because all three are one idea: THE MODEL NEEDS THE THING NAMED, AND A
+NEGATIVE CANNOT SUPPLY IT.
+
+DO NOT FORBID `horizon` IN A SHOT THAT NEEDS ONE. Beat 05's plate came back as a
+downward plan view over an open field at 3 of 3 seeds -- no horizon band, no
+hedgerow, the figures shrinking, and at the highest of them the count breaking to
+THREE MEN with `distant, small figure` sitting in the negative. `horizon` was in
+that negative. A front-facing wide shot has to put a horizon SOMEWHERE; forbid it
+and the only place left is above the frame, so the camera tilts down until it is
+gone. Deleting that one word -- nothing else, same seed -- dropped the camera to
+near eye level and produced a horizon band, a hedgerow of dark bushes and distant
+hills. AND THE EXPLANATORY PART: `hedgerow behind` had been in the POSITIVE the
+whole time, rendering nothing three times running. A clause that names something
+"behind" is dead in a plan view, because a plan view has no behind. The trade is
+real and is not hidden: `sky` stayed forbidden and a pale sky band arrived
+anyway. You cannot have a horizon and no sky.
+
+A FACE PLATE MUST NAME THE EYE STATE. `thoughtful` plus `mouth closed` gave beat
+09 three shut-eyed faces at three seeds -- a man resting in a field, not a man
+working through a thought, which is what that beat is. `eyes open` in the
+positive with `closed eyes` in the negative opened them on the first sample. Note
+which configuration that is: the negative worked here because the POSITIVE asked
+for the opposite state, so it reinforced an instruction instead of trying to
+subtract a noun the prompt had invited. That is the only configuration in which a
+negative term has reliably worked on this repo's plates.
+
+A SINGLE-SEED OBSERVATION IS NOT A FINDING, AND SEED 20260817 HAS A RECORD.
+That one seed has now manufactured TWO plausible false laws in two days, both of
+which dissolved on fresh draws:
+  * 2026-08-16, `attribute_merge_law_0816` -- "two same-species figures merge
+    their described attribute sets". Falsified by (11,3), whose comment had named
+    in advance the outcome that would kill it and then honoured it.
+  * 2026-08-17 -- "`light sandy hair` does not bind on this checkpoint", observed
+    off TWO DIFFERENT PROMPTS (beats 05 and 10) which made it look like a
+    property of the model. It bound at 4 of 4 fresh seeds, and at one of them the
+    cream shirt AND the brown wrap skirt bound to the blond man while the tan
+    tunic bound to the dark-haired one, in the same frame.
+And bf79e534 broke a third on the motion side the day before: four wordings had
+"established" that guard B turns his head, and all four ran 20260817; at three
+fresh seeds the back stayed turned in 2 of 3.
+So: BEFORE BUILDING A WORDING LADDER ON ANY FAULT, SPEND THREE FRESH SEEDS ON THE
+BYTE-IDENTICAL PROMPT, and write the decision rule down first. Three renders is
+minutes on the Mac fleet and it is the cheapest insurance this file has. If the
+fault is a seed effect the ladder you were about to build would have "worked" for
+the wrong reason and been banked as a law.
+
 THE IRONY IS DELIBERATE AND IS THE REASON THIS PARAGRAPH IS HERE RATHER THAN IN
 A LANE REPORT. `pipeline/canon.yaml` exists because five times a decision moved
 and the thing that actually runs did not. A constraint on HOW WE MEASURE, left

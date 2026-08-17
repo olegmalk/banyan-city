@@ -8472,3 +8472,38 @@ frames: gaze level/up-at-hands/down, no sapling stem, oversized off-frame adult
 hands in two, and a detached pale grimacing face lying in the grass (confirmed
 by crop, and reproduced identically at fp32 and bf16, so it is **the vacancy
 law, not precision**).
+
+## 2026-08-17 — two process rules earned by near-misses, from the guard-plate lane
+
+**`git commit --amend` IS AS UNSAFE AS `git commit -a` IN THIS WORKTREE, AND THE
+STANDING RULE DID NOT COVER IT.** The rule everyone follows is *always
+`git commit -- <paths>`*, because a pathspec commit takes the working-tree state
+of those paths only and leaves the rest of the index alone. **`--amend` HAS NO
+PATHSPEC FORM. It commits the whole index.** On 2026-08-17 a lane amended its own
+last commit to fix backticks that zsh had eaten out of a `-m` message, and the
+amend swept **six of another lane's already-staged deletions**
+(`pipeline/jobs/ep2-b1{4,5,7}-s49*-0815.yaml`) into it — 750 deletions in a commit
+that should have been 74 insertions in one file. Caught in the same minute and
+undone with `git reset --soft HEAD~1` followed by a re-commit with the explicit
+pathspec, which puts the peer's deletions back in the index exactly as they were.
+So the rule now reads: **always `git commit -- <paths>`, and NEVER `--amend` in
+this worktree.** If a message needs fixing, write it to a file and use `-F` on the
+*next* commit, or leave it wrong — a wrong commit message costs nothing and a
+swept peer costs a lane its work. And write messages with `-F <file>` rather than
+`-m` in the first place: zsh evaluates backticks inside double quotes, which is
+what mangled the message and started this.
+
+**A SINGLE-SEED OBSERVATION IS NOT A FINDING, AND SEED 20260817 HAS A RECORD.**
+That one seed has now manufactured three plausible false laws in two days, every
+one of which dissolved on fresh draws: `attribute_merge_law_0816` ("two
+same-species figures merge their attribute sets", killed by b11 r3); "guard B's
+head turns" (four wordings had established it and all four ran 20260817 — back
+turned in 2 of 3 fresh seeds, bf79e534); and on 2026-08-17 "`light sandy hair`
+does not bind", which was observed off **two different prompts** and so looked
+like a property of the checkpoint — it bound at **4 of 4** fresh seeds, and at one
+of them the cream shirt and brown wrap skirt bound to the blond man while the tan
+tunic bound to the dark-haired one in the same frame. Before building a wording
+ladder on any fault, spend three fresh seeds on the byte-identical prompt with the
+decision rule written down first. Three plates is minutes on the Mac fleet. Both
+rules are also in `pipeline/plate_scratch.py`'s docstring, where a plate author
+meets them before writing a prompt.
