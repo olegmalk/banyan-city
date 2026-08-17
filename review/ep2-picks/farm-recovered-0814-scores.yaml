@@ -130,3 +130,94 @@ sets:
       rungs, not shipping plates.
     founder_card: none from this set on its own. See the cross-set cards at the foot of
       this file.
+
+  ep2-b09-scene-0814:
+    what_it_is: >-
+      Scene-carrying plate sheet for beat 09 "the-pause". Same harness and mechanism as
+      b05: 4 IP-Adapter rounds x 4 seeds, Animagine-XL-3.1, 832x1216, 40 steps, IPA
+      Plus at 0.6 on the first 15% of the denoise, same reference frame
+      (04-the-footnote-wave1-s0.png). Single figure, close on his face.
+    spec: pipeline/jobs/ep2-b09-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    consumer_named_in_spec: motion-wave, which finishes this beat off the plate
+    prompt_as_sent: >-
+      "1boy, a guard man in a brown tunic and sash in green summer grass, a treeline and
+      pale sky behind, short brown hair, close on his face working slowly through an
+      idea, eyes drifting, mouth slightly open." No `bald`; `short brown hair` positive.
+    bar_scored_against: >-
+      THE SET'S OWN SPEC, and the spec grants this beat a CONCESSION the others do not:
+      success is still "the world present, the cast/plant on-canon", but the `why` field
+      states "One guard, close on his face. The world is a band behind him rather than a
+      landscape -- the concession beat 04 got, for the same reason." So a band of
+      grass/treeline/sky behind the head is a PASS here; a landscape is not required.
+      Scored at that looser bar, as written, not tightened after seeing the pixels.
+    files: 16
+    distinct: 16
+    duplicate_cells: none — 16 distinct sha256.
+    score: 3 of 16
+    passes: [r3s0, r3s2, r3s3]
+    per_cell:
+      r0s0: FAIL — world absent. Full-body figure on a flat beige void. No grass, no
+        treeline, no sky, no band.
+      r0s1: FAIL — world absent, flat plain background.
+      r0s2: FAIL — world absent, flat plain background with a white halo around the
+        figure.
+      r0s3: FAIL — world absent, flat plain background.
+      r1s0: FAIL — world absent. Bust portrait on flat beige.
+      r1s1: FAIL — world absent, flat beige with a decorative cloud puff.
+      r1s2: FAIL — world absent, flat beige.
+      r1s3: FAIL — world absent, flat beige.
+      r2s0: FAIL — world absent, white void.
+      r2s1: FAIL — a tuft of grass sits under his feet on an otherwise white field.
+        That is a vignette on white, not a band behind him. Closest miss of the row.
+      r2s2: FAIL — plain background with one faint cloud shape. No ground plane.
+      r2s3: FAIL — flat grey-green plain background.
+      r3s0: PASS — grass and pale sky read as a band behind the head. Cast on-canon,
+        close on the face as the beat asks.
+      r3s1: FAIL — plain white behind the bust.
+      r3s2: PASS — BEST FRAME IN THE SET. Grass, a treeline and pale sky as a legible
+        band behind him; the only cell with all three elements of the world clause.
+      r3s3: PASS — grass band and pale sky behind. Cast on-canon.
+    findings:
+      this_is_the_failure_the_spec_named: >-
+        MOST DECISION-RELEVANT ITEM IN THIS SET. The spec wrote its own contingency:
+        "The failure worth reporting is the world absent, which would mean the scene
+        clause is still losing to the reference on this beat and it needs the bootstrap
+        route rather than a re-run." 13 of 16 cells are world-absent. By the spec's own
+        rule, beat 09 is a BOOTSTRAP-ROUTE beat, not a re-run beat. A second wave of the
+        same job at the same settings is predicted to fail the same way.
+      round_framing_is_deterministic: >-
+        The rounds split cleanly by framing: r0 and r2 are full-body, r1 and r3 are
+        busts. Every cell that carries any world at all is in r3. Framing is a property
+        of the round, not the seed — the same structural finding b05 produced, with a
+        different winning round (b05: r1; b09: r3). So there is no single "good round"
+        to carry across beats; the round interacts with the beat's shot size.
+      the_negative_prompt_lost: >-
+        `white background`, `plain background` and `character sheet` are ALL in the
+        negative prompt as sent, and 13 of 16 cells are character-sheet-style figures on
+        exactly those backgrounds. This is a measured instance of a negative term
+        failing to hold against the IP-Adapter reference, which is itself a
+        plain-background wave-1 frame. The reference is the likely source: conditioning
+        the structure-forming steps on a plain-background image installs the void before
+        the text ever gets a vote.
+      cast_reads_young: >-
+        The faces across all 16 read adolescent rather than adult. b09's prompt says
+        "a guard man" and does NOT carry the `adult` token that b05's and b11's prompts
+        do — a real wording difference between sibling jobs from the same lane on the
+        same day. Whether the look is acceptable is R4/founder taste and is NOT scored
+        here; the missing token is a mechanical fact and is worth fixing forward.
+      no_bald: 0 of 16 cells render a bald guard.
+    canon_now:
+      purple_fruit: NOT APPLICABLE — no fruit and no plant in prompt or frames.
+      two_leaves_average: NOT APPLICABLE — no sapling in frame.
+      knee_height_rewrite: NOT APPLICABLE — beat 09 is not among 12/13/15/19/20.
+    status: LIVE EVIDENCE — negative result, and the most actionable of the three
+      16-cell sets.
+    why_live: >-
+      It does not yield a usable plate, but it CLOSES a question rather than leaving it
+      open: it triggers the spec's own bootstrap clause and it identifies the
+      plain-background IP-Adapter reference as the mechanism installing the void. Both
+      survive today's canon because neither depends on fruit colour, leaf count or the
+      knee-height rewrite.
+    founder_card: none — this set produces a pipeline decision, not a taste call.
