@@ -1,0 +1,106 @@
+{
+  "cost_usd": 0.0,
+  "feather": 6,
+  "fill": "diffuse",
+  "fill_iters": 70,
+  "fill_radius": 6.0,
+  "init": "C:\\banyan-farm\\ep2-b01-purple-0813\\b01-fig-704x1280.png",
+  "init_sha256": "77db45c35967f12c7de6da8c004dae768acac0b20a4b7dae953f6348f36830d8",
+  "mask_add": [
+    "246,566,80,54",
+    "360,830,45,105"
+  ],
+  "mask_grow": 12,
+  "mask_out": "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png",
+  "model": "none -- plain PIL, no sampler, no network",
+  "note": "beat 01 canon plate: the two lower blades removed so the count is 2 by construction; the fruit is outside the blend mask and cannot be altered",
+  "out": "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png",
+  "out_sha256": "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857",
+  "purpose": "leaf COUNT fixed by construction before any sampler runs",
+  "remove": [],
+  "remove_auto": [
+    "390,826,438,926",
+    "392,930,532,1024"
+  ],
+  "remove_auto_detail": [
+    {
+      "box": "390,826,438,926",
+      "mask_bbox": [
+        367,
+        832,
+        432,
+        949
+      ],
+      "segments": [
+        {
+          "area": 227,
+          "bbox": [
+            390,
+            855,
+            409,
+            926
+          ]
+        }
+      ],
+      "source_offset": "0,0"
+    },
+    {
+      "box": "392,930,532,1024",
+      "mask_bbox": [
+        369,
+        914,
+        534,
+        1039
+      ],
+      "segments": [
+        {
+          "area": 3588,
+          "bbox": [
+            392,
+            937,
+            511,
+            1016
+          ]
+        }
+      ],
+      "source_offset": "0,0"
+    }
+  ],
+  "residual_check": {
+    "final": {
+      "components": [],
+      "total_px": 0
+    },
+    "passes": [
+      {
+        "components": [],
+        "pass": 0,
+        "total_px": 0
+      }
+    ],
+    "protect": [],
+    "regions": [
+      "412,822,536,1028"
+    ],
+    "rule": {
+      "auto_min_area": 120,
+      "object_bright": null,
+      "object_dark": 178.0,
+      "object_gmr_max": null,
+      "object_gmr_min": null,
+      "residual_min_area": 300
+    }
+  },
+  "source_offset": [],
+  "sources": [
+    "arXiv:2503.06884 -- prompt refinement does not improve counting",
+    "arXiv:2406.10210 (Make It Count, CVPR 2025) -- plain SDXL numerals score 26-28%; count is a layout problem"
+  ],
+  "sweep": {
+    "assert_clear": true,
+    "enabled": true,
+    "grow": 8,
+    "passes_allowed": 2
+  },
+  "tool": "pipeline/leaf_count_composite.py"
+}

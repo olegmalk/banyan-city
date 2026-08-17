@@ -1,0 +1,109 @@
+#### job ep2-b01-leafcanon-inpaint-0817-1786973593 attempt 1 start 2026-08-17T13:36:08Z
+
+==== step comp START 2026-08-17T13:36:11Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\leaf_count_composite.py", "--init", "C:\\banyan-farm\\ep2-b01-purple-0813\\b01-fig-704x1280.png", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--mask-out", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--remove-auto", "390,826,438,926", "--remove-auto", "392,930,532,1024", "--object-dark", "178", "--auto-min-area", "120", "--residual-min-area", "300", "--fill", "diffuse", "--fill-iters", "70", "--fill-radius", "6", "--feather", "6", "--sweep-grow", "8", "--mask-grow", "12", "--check", "--check-region", "412,822,536,1028", "--sweep", "--sweep-passes", "2", "--assert-clear", "--mask-add", "246,566,80,54", "--mask-add", "360,830,45,105", "--note", "beat 01 canon plate: the two lower blades removed so the count is 2 by construction; the fruit is outside the blend mask and cannot be altered"]
+init        C:\banyan-farm\ep2-b01-purple-0813\b01-fig-704x1280.png
+init size   704x1280
+init sha256 77db45c35967f12c7de6da8c004dae768acac0b20a4b7dae953f6348f36830d8
+remove-auto[0] box (390, 826, 438, 926) -> 1 segment(s), 227 px, mask bbox (367, 832, 432, 949) <- DIFFUSE FILL from its own boundary (70 passes, r=6.0)
+     segment   area   227 px  bbox (390, 855, 409, 926)
+remove-auto[1] box (392, 930, 532, 1024) -> 1 segment(s), 3588 px, mask bbox (369, 914, 534, 1039) <- DIFFUSE FILL from its own boundary (70 passes, r=6.0)
+     segment   area  3588 px  bbox (392, 937, 511, 1016)
+
+RESIDUAL CHECK  rule: lum<178.0 lum>None (G-R)>=None (G-R)<=None  min-area 300 px
+  check region (412, 822, 536, 1028)
+  pass 0: 0 residual px in 0 component(s) >= 300 px  -- CLEAR
+  FINAL: 0 residual px in 0 component(s) >= 300 px
+mask-add    ellipse cx=246 cy=566 rx=80 ry=54 ang=0.0 -- blend mask only, no pixel patched (keeps merge/split reachable)
+mask-add    ellipse cx=360 cy=830 rx=45 ry=105 ang=0.0 -- blend mask only, no pixel patched (keeps merge/split reachable)
+
+wrote       C:\banyan-farm\leafcanon-b01-0817\comp-b01-canon.png
+out sha256  88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857
+wrote mask  C:\banyan-farm\leafcanon-b01-0817\mask-b01-canon.png (bbox (149, 494, 535, 1038))
+wrote        C:\banyan-farm\leafcanon-b01-0817\comp-b01-canon.composite.json
+
+COUNT IS NOW STRUCTURAL, NOT PROMPTED. Verify by eye before any GPU step -- this is the sample.
+==== step comp END rc=0 2026-08-17T13:36:15Z ====
+
+==== step dry START 2026-08-17T13:36:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--init-sha256", "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857", "--mask-png", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--prompt-file", "C:\\banyan-farm\\leafcanon-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcanon-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\b01-leafcanon-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857
+mask png corners=- bbox=[149, 494, 534, 1037]  0.5469 x 0.4242 of 704x1280
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260817-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T13:36:15Z ====
+
+==== step s20260817 START 2026-08-17T13:36:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--init-sha256", "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857", "--mask-png", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--prompt-file", "C:\\banyan-farm\\leafcanon-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcanon-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\b01-leafcanon-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 18.00it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:04<00:03,  1.26s/it]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:05<00:02,  1.22s/it]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:05<00:00,  1.03it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.20it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 9s
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260817.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260817-mask.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260817.png.meta.yaml
+rc=0 render_s=4.4
+==== step s20260817 END rc=0 2026-08-17T13:36:33Z ====
+
+==== step s20260818 START 2026-08-17T13:36:33Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--init-sha256", "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857", "--mask-png", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--prompt-file", "C:\\banyan-farm\\leafcanon-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcanon-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\b01-leafcanon-s20260818.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260818", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.82it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.76it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.64it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.77it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260818.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260818-mask.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260818.png.meta.yaml
+rc=0 render_s=3.3
+==== step s20260818 END rc=0 2026-08-17T13:36:45Z ====
+
+==== step s20260819 START 2026-08-17T13:36:45Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--init-sha256", "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857", "--mask-png", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--prompt-file", "C:\\banyan-farm\\leafcanon-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcanon-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\b01-leafcanon-s20260819.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260819", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 22.39it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.32it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260819.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260819-mask.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260819.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260819 END rc=0 2026-08-17T13:36:58Z ====
+
+==== step s20260820 START 2026-08-17T13:36:58Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcanon-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcanon-b01-0817\\comp-b01-canon.png", "--init-sha256", "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857", "--mask-png", "C:\\banyan-farm\\leafcanon-b01-0817\\mask-b01-canon.png", "--prompt-file", "C:\\banyan-farm\\leafcanon-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcanon-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcanon-b01-0817\\b01-leafcanon-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:02,  2.02it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  7.30it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.20it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.92it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260820.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260820-mask.png
+WROTE C:\banyan-farm\leafcanon-b01-0817\b01-leafcanon-s20260820.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260820 END rc=0 2026-08-17T13:37:11Z ====
+
+==== step publish START 2026-08-17T13:37:11Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/leafcanon-b01-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-leafcanon-inpaint-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = ['b01-leafcanon-s20260817.png', 'b01-leafcanon-s20260817.png.meta.yaml', 'b01-leafcanon-s20260818.png', 'b01-leafcanon-s20260818.png.meta.yaml', 'b01-leafcanon-s20260819.png', 'b01-leafcanon-s20260819.png.meta.yaml', 'b01-leafcanon-s20260820.png', 'b01-leafcanon-s20260820.png.meta.yaml', 'comp-b01-canon.png', 'comp-b01-canon.composite.json', 'mask-b01-canon.png', 'prompt.txt', 'negative.txt']\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b01-leafcanon-s20260817.png\" in got else 1)"]
+published 13 of 13 ['b01-leafcanon-s20260817.png', 'b01-leafcanon-s20260817.png.meta.yaml', 'b01-leafcanon-s20260818.png', 'b01-leafcanon-s20260818.png.meta.yaml', 'b01-leafcanon-s20260819.png', 'b01-leafcanon-s20260819.png.meta.yaml', 'b01-leafcanon-s20260820.png', 'b01-leafcanon-s20260820.png.meta.yaml', 'comp-b01-canon.png', 'comp-b01-canon.composite.json', 'mask-b01-canon.png', 'prompt.txt', 'negative.txt']
+==== step publish END rc=0 2026-08-17T13:37:11Z ====
+#### job ep2-b01-leafcanon-inpaint-0817-1786973593 finished rc=0 2026-08-17T13:37:11Z
