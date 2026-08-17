@@ -2533,3 +2533,4 @@
 17:00:11Z box-runner idle ready=0 failed=33
 17:10:15Z box-runner idle ready=0 failed=33
 17:20:19Z box-runner idle ready=0 failed=33
+17:27:04Z STARTED task=ep2-b01-shape-a2-0813-1786987607 attempt=1 on box-runner
