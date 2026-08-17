@@ -5,8 +5,15 @@
 # NOT reproducible is the reading, so the reading is what gets committed --
 # verdicts land in review/ep2-picks/done-definitions.yaml, the freeze dates in
 # freeze-index.json, the rules the readers were held to in JUDGING-BRIEF.md.
+#
+# This matters more than housekeeping: on 2026-08-17 a peer lane's commit swept
+# this lane's uncommitted done-definitions.yaml edit into itself. In a tree
+# where that happens, 252 MB of untracked derived bytes is one `git add -A`
+# away from being committed by someone who never made them. Deny by name.
 *.mp4
 *.meta.yaml
 cold/
+cold-pad/
+cold-wide/
 PLATE-b02.png
 PLATE-b03.png
