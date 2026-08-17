@@ -3576,8 +3576,17 @@ def test_subprocess_reads_are_utf8(tmp: Path):
             if "encoding" not in kw:
                 bad.append(f"{src_file.name}:{n.lineno} "
                            f"subprocess.{n.func.attr}(text=...) with no encoding=")
+    # ONE check() FOR N OFFENDERS IS A MASK, and it caught its own author.
+    # 2026-08-17: a lane adding tests in this file introduced a NEW offender, and
+    # because the whole rule was a single check(), the suite's failure tally stayed
+    # at 1 — identical to the one pre-existing offender it already had. The new
+    # violation was invisible in the count and visible only in these printed
+    # lines, which nobody diffs. Same shape as the guard whose call site was
+    # unwired and still passed 42 of 47 checks: the tally has to MOVE when a new
+    # thing breaks, or the tally is not a measurement. So each offender is its own
+    # named assertion, and the aggregate stays as the floor for the empty case.
     for b in bad:
-        print(f"      x  {b}")
+        check(f"a text-mode subprocess read names its encoding: {b}", False)
     check("every text-mode subprocess read names its encoding", not bad)
     # and the file that actually broke must be readable as UTF-8, not as cp1252
     raw = (REPO / "pipeline" / "farm-queue.yaml").read_bytes()

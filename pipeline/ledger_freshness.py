@@ -367,7 +367,8 @@ def _git(*args, timeout=30, repo=None):
     """-> stdout, or None on any failure. Never raises, never blocks forever."""
     try:
         r = subprocess.run(("git",) + args, cwd=str(repo or REPO),
-                           capture_output=True, text=True, timeout=timeout)
+                           capture_output=True, text=True, timeout=timeout,
+                           encoding="utf-8")
     except (OSError, subprocess.SubprocessError):
         return None
     return r.stdout if r.returncode == 0 else None
