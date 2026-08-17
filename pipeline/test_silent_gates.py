@@ -12,6 +12,24 @@ The question each test below asks is the one that separates a check from a
 decoration: WHAT WOULD THIS PRINT IF THE THING IT READS WERE COMPLETELY BROKEN?
 If the answer is "the same as when everything is fine", the check is scenery.
 
+A FIXTURE MUST NOT STAND IN FOR THE CODE IT EXERCISES. Read this before
+simplifying anything below. On 2026-08-17 a mutation that swallowed
+`CannotCheck` inside `check_results_merged.farm_out_paths` — turning an
+unreadable ref into a silent pass, the exact defect this file exists to catch —
+SURVIVED the suite untouched, because the fixture patched `farm_out_paths`
+itself. The test replaced the function whose error handling it was meant to
+prove. Fixtures here now patch the lowest boundary they can (`git_out`, one
+subprocess call) so the real code path runs.
+
+That failure has a twin two functions away: a regex reading `json.dumps(job)`
+matched nothing, because dumping re-escapes the inline python it was searching,
+and gate 2 PASSED on a tree known to hold seven stranded sets. Same shape as a
+check reporting "no manifest at all" for sets whose manifest is spelled
+`SHA256SUMS.txt`. In all three the code reported the absence of the thing when
+what was absent was its own access to the thing — and in all three the suite was
+green. Only running against real data, and mutating the fix to confirm the
+assertions go red, found them.
+
 These live in their own file rather than in test_pipeline.py so the guards keep
 one obvious home as more of them are found.
 
@@ -441,6 +459,54 @@ def test_a_set_whose_manifest_attests_to_nothing_is_not_a_published_set():
         check("merged: a consistent set is not reported",
               "good-set" not in bad)
         check("merged: and only the bad ones are named", len(bad) == 2)
+    finally:
+        restore()
+
+
+def test_both_manifest_spellings_count_and_an_unattested_set_is_not_a_verdict():
+    """Knowing one spelling made the gate red on seven correctly attested sets.
+
+    Most publish steps write `<job-id>.sha256`; a newer family writes
+    `SHA256SUMS.txt`, hashing every file it copies. The first version of gate 1
+    knew only the first spelling and reported today's `ep2-b10-attrbind-eyewear-0817b`
+    and six others as "no manifest at all" — a check reporting the absence of the
+    thing when what was absent was its own knowledge of it.
+
+    And with that fixed, the sets left carrying no manifest are hand-assembled
+    rescues and the queue's own mirror: no publish step ever ran, so nothing lied.
+    Keeping them in the gate needed an allowlist of directories to forgive, which
+    is a gate waiting to become decoration. They are reported and do not set the rc.
+    """
+    import check_results_merged as crm
+
+    check("merged: <job>.sha256 is a manifest",
+          crm.is_manifest("farm-out/j/ep2-b05-scene-0814.sha256"))
+    check("merged: SHA256SUMS.txt is a manifest too",
+          crm.is_manifest("farm-out/j/SHA256SUMS.txt"))
+    check("merged: a png is not a manifest",
+          not crm.is_manifest("farm-out/j/05-the-patrol-ipa-r0.png"))
+
+    trees = {"results": ["farm-out/newstyle/a.png", "farm-out/newstyle/b.png",
+                         "farm-out/newstyle/SHA256SUMS.txt",
+                         "farm-out/rescued/x.png"],
+             "HEAD": []}
+    blobs = {"farm-out/newstyle/SHA256SUMS.txt":
+             "%064d  a.png\n%064d  b.png\n" % (1, 2)}
+    restore = _fake_refs(crm, trees, blobs)
+    try:
+        bad = [d for d, why, f, l in crm.inconsistent_sets("results")]
+        check("merged: a SHA256SUMS.txt set that matches is not a bad set",
+              "newstyle" not in bad)
+        check("merged: and a set with no manifest is not a bad set either",
+              "rescued" not in bad)
+        check("merged: the unattested set is still reported by name",
+              crm.unattested_sets("results") == ["rescued"])
+        buf = io.StringIO()
+        rc = crm.report(results_ref="results", main_ref="HEAD", out=buf)
+        check("merged: an unattested set does not make the run fail",
+              rc == crm.RC_OK)
+        check("merged: but it is printed as context",
+              "carry no manifest" in buf.getvalue())
     finally:
         restore()
 

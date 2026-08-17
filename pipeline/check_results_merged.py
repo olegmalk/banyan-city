@@ -94,12 +94,21 @@ RC_CANNOT_CHECK = 2
 # check starts reporting other people's directories as its leaks.
 _PUBLISH_DST = re.compile(
     r"""dst\s*=\s*["'][^"']*courier-box[\\/]+farm-out[\\/]+([A-Za-z0-9._-]+)""")
-# Directories nobody published through a job: hand-assembled rescues, the queue's
-# own mirror. They have no manifest by design and are not evidence of a defect.
-UNMANIFESTED_BY_DESIGN = frozenset({
-    "box", "b06-r6r7-recovered", "ep1-b05-v36-motion-r1a-g10",
-    "ep1-longclip-samples", "v34-plate-reseeds", "wave-goblin-prep-src",
-})
+
+def is_manifest(path: str) -> bool:
+    """Both spellings the specs use, because assuming one was wrong (2026-08-17).
+
+    Most publish steps write `<job-id>.sha256`; a newer family writes
+    `SHA256SUMS.txt`. The first version of this check knew only the first
+    spelling and reported seven of today's perfectly-attested sets as "no
+    manifest at all" -- including `ep2-b10-attrbind-eyewear-0817b`, which hashes
+    every file it copies. That is this file's own recurring failure mode wearing a
+    third mask: a check reporting the absence of the thing when what is absent is
+    its own knowledge of the thing. If a fourth naming appears, it belongs here,
+    not in an allowlist of directories to forgive.
+    """
+    name = os.path.basename(path)
+    return name.endswith(".sha256") or name.upper() == "SHA256SUMS.TXT"
 
 
 class CannotCheck(Exception):
@@ -170,28 +179,50 @@ def read_blobs(ref, paths, repo=None) -> dict:
 
 def set_shape(ref, by_dir, repo=None):
     """{dir: (n_files, n_manifest_lines, n_manifests)} for every set at `ref`."""
-    mans = {d: sorted(p for p in ps if p.endswith(".sha256"))
+    mans = {d: sorted(p for p in ps if is_manifest(p))
             for d, ps in by_dir.items()}
     blobs = read_blobs(ref, [m[0] for m in mans.values() if len(m) == 1], repo)
     shape = {}
     for d, ps in by_dir.items():
         m = mans[d]
-        files = [p for p in ps if not p.endswith(".sha256")]
+        files = [p for p in ps if not is_manifest(p)]
         lines = ([l for l in blobs.get(m[0], "").split("\n") if l.strip()]
                  if len(m) == 1 else [])
         shape[d] = (len(files), len(lines), len(m))
     return shape
 
 
+def unattested_sets(ref=RESULTS_REF, repo=None):
+    """CONTEXT, not a gate. Dirs with files and no manifest of any spelling.
+
+    This was a gate for one revision and it was wrong twice over. First it fired
+    on seven attested sets because it did not know `SHA256SUMS.txt` (see
+    `is_manifest`). Then, with that fixed, what remains are hand-assembled rescue
+    directories and the queue's own mirror -- sets nobody published through a job,
+    which have no manifest because no publish step ever ran, not because one lied.
+    Keeping it as a gate needed a hand-maintained allowlist of directories to
+    forgive, and an allowlist that must be edited every time the branch grows is a
+    gate waiting to become decoration. An unattested set is a weaker claim than a
+    lying manifest, so it is reported as a number and does not decide the rc.
+    """
+    by_dir = group_by_dir(farm_out_paths(ref, repo))
+    return sorted(d for d, (f, l, n) in set_shape(ref, by_dir, repo).items()
+                  if n == 0 and f)
+
+
 def inconsistent_sets(ref=RESULTS_REF, repo=None):
-    """GATE 1. [(dir, why, n_files, n_lines)] for sets that attest to nothing."""
+    """GATE 1. [(dir, why, n_files, n_lines)] for manifests that lie.
+
+    Only sets that HAVE a manifest are judged, because only a manifest can be
+    wrong. Empty and count-mismatched are the two ways a publish step attests to
+    something it never copied, which is the defect `publish_farm_out.py` refuses
+    at source.
+    """
     by_dir = group_by_dir(farm_out_paths(ref, repo))
     bad = []
     for d, (files, lines, n_man) in sorted(set_shape(ref, by_dir, repo).items()):
         if n_man == 0:
-            if d not in UNMANIFESTED_BY_DESIGN:
-                bad.append((d, "no manifest at all", files, 0))
-            continue
+            continue                      # unattested: reported, never a verdict
         if n_man > 1:
             continue                      # ambiguity, reported separately
         if files == 0 or lines == 0:
@@ -325,6 +356,15 @@ def report(results_ref=RESULTS_REF, main_ref="HEAD", repo=None, queue_dir=None,
                   "something nobody copied.\n")
     else:
         out.write("  ok  every published set's manifest matches its directory\n")
+    try:
+        unattested = unattested_sets(results_ref, repo)
+    except CannotCheck as exc:
+        out.write("!! CANNOT CHECK unattested sets: %s\n" % exc)
+        return RC_CANNOT_CHECK
+    out.write("  context: %d set(s) carry no manifest of either spelling%s\n"
+              % (len(unattested),
+                 " (" + ", ".join(unattested[:6])
+                 + (" ..." if len(unattested) > 6 else "") + ")" if unattested else ""))
 
     # -- GATE 2
     if queue_dir is None:
