@@ -397,3 +397,98 @@ sets:
       demonstrates the draft CAN produce a canon two-leaf plant at grass height, which
       makes the other three a seed-variance problem rather than a wording dead end.
     founder_card: none.
+
+  ep2-b18-scene-0814:
+    what_it_is: >-
+      WAVE sheet, 4 seeds of one round, `consistency_mechanism: none`. Plant-and-fruit
+      beat, no figure in the prompt. Animagine-XL-3.1, 832x1216.
+    spec: pipeline/jobs/ep2-b18-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    draft_key_rendered: >-
+      authored_b18_scene — head-matched, and distinguished from the newer
+      `authored_b18_scale_0816` by the ABSENCE of that key's added "with two big leaves"
+      and "the whole plant no taller than the grass around it".
+    prompt_as_sent: >-
+      "A deep purple-violet fig, green at its neck, matte, hangs from the thin branch of
+      a tiny sapling in green summer grass, a treeline and pale sky behind, the only fruit
+      in frame."
+    negative_as_sent: >-
+      74 tokens including, verbatim: mature tree, large tree, thick trunk, full canopy,
+      forest, bush, shrubbery, WOMAN, GIRL, BOY, CHILD, PERSON, chibi, mascot, creature,
+      FACE, green fig, green fruit, white background, DARK, NIGHT.
+    bar_scored_against: >-
+      THE SET'S OWN SPEC (world present, plant on-canon, usable frame-one) plus the
+      prompt's own assertions: one fig, purple-violet, green at its neck, matte, hanging
+      from a sapling's thin branch, "the only fruit in frame".
+    files: 4
+    distinct: 4
+    score: 0 of 4
+    per_cell:
+      s0: FAIL — a purple-haired GIRL occupies the frame. There IS a creditable fruit:
+        one deep aubergine-purple round fig hanging on a thin stem with two small green
+        leaves at its neck, which satisfies purple + green-at-the-neck. But it reads
+        glossy rather than matte, it hangs from a bare stem rather than a sapling, and
+        the unrequested human is the subject of the frame.
+      s1: FAIL — purple-haired girl, no fruit at all. A branch with dark leaves above her.
+      s2: FAIL — purple-haired girl, no fruit at all. Bare branches with green buds.
+      s3: FAIL — purple-haired girl, and TWO glossy purple cherry-like fruits on a
+        branch. "The only fruit in frame" is directly violated by the count.
+    findings:
+      SIX_NEGATIVE_TERMS_LOST_AT_ONCE_IN_ALL_FOUR_CELLS: >-
+        THE STRONGEST NEGATIVE-PROMPT RESULT IN THE RECOVERY, and it is clean because the
+        terms are indisputably in the negative as sent. `woman`, `girl`, `boy`, `child`,
+        `person` and `face` are ALL in the 74-token negative, and 4 of 4 cells render a
+        human with a clearly drawn face as the frame's subject. `dark` and `night` are
+        also in the negative and all four are dusk. Eight negative terms overridden
+        simultaneously, at a 4-of-4 rate, with no IP-Adapter in the run to blame — this
+        is the text path alone. Any plan that relies on a negative term to keep a figure
+        out of a plant-only frame is unsupported by this evidence.
+      THE_PURPLE_MIGRATED_FROM_THE_FRUIT_TO_THE_HAIR: >-
+        MOST DECISION-RELEVANT FINDING FOR THE PURPLE RULING. "deep purple-violet" is the
+        only colour term in the prompt and it attached to a HUMAN'S HAIR in 4 of 4 cells,
+        while the fruit it was written for appears in only 2 of 4 and is absent in the
+        other 2. The colour token did not merely fail to bind to its noun; it summoned a
+        carrier for itself. Read alongside the proven broadcast-class law for `bald` and
+        eyewear, this is the same shape of defect in the colour channel: the attribute
+        detaches from the clause it sits in and lands on whatever figure the model
+        prefers. Note that `1girl`/`1boy` count tags are ABSENT from this prompt
+        (`count_tag: None`), so nothing positively asked for a person.
+      purple_did_render_purple_on_this_path: >-
+        COLOUR CLAIM, PATH-QUALIFIED. On the CUDA/bf16 rtx5090 path, where a fruit
+        rendered at all (s0, s3) it rendered deep aubergine purple, NOT red. That is
+        worth recording because the known bf16/CUDA-vs-MPS divergence (MAE 60-61) runs
+        the other way — CUDA red where MPS is purple. This set shows the red shift is not
+        universal on the CUDA path. The claim does NOT transfer to the MPS path and no
+        MPS comparison exists in these bytes.
+      matte_and_only_one_both_failed: >-
+        `matte` lost in both fruit-bearing cells (each fruit is specular-highlighted), and
+        "the only fruit in frame" lost in s3 (two fruits).
+    canon_now:
+      purple_fruit_ALREADY_COMPLIED: >-
+        NOTABLE. This 08-14 prompt already asks for "deep purple-violet fig, green at its
+        neck, matte" and already carries `green fig, green fruit` in the NEGATIVE. It does
+        NOT predate the purple ruling in substance — it implements it. So this set is not
+        excused by its date on colour; it is a genuine 0-of-4 attempt at purple-fig canon,
+        and its failure mode is attachment, not intent.
+      two_leaves_average: >-
+        Not asked for in the rendered draft, which mentions no leaf count. The newer
+        `authored_b18_scale_0816` adds "with two big leaves". `average` vs `cotyledon`
+        does not arise here.
+      knee_height: >-
+        NOT APPLICABLE and NOT a rewrite target for the reason given under beat 12: beat
+        18 is a plant-only beat, and wave-drafts.yaml assigns it "no taller than the grass
+        around it", not `knee high`. The brief's grouping of 18 with the knee-height
+        rewrite does not match the file; the parenthetical list in the brief (12/13/15/19/20)
+        does not contain 18 either.
+    status: SUPERSEDED as a wording source; LIVE EVIDENCE as a mechanism result.
+    why_split: >-
+      Superseded because `authored_b18_scale_0816` now exists and adds the leaf count and
+      the scale anchor this draft lacks, so nobody should re-render `authored_b18_scene`
+      as-is. Live because the eight-negative-term failure and the purple-to-hair
+      migration are measured facts about the current text path that no later draft has
+      retested, and both are independent of the render date.
+    founder_card: >-
+      NONE on taste. But this set produces the one question only he can answer, recorded
+      at the foot of this file as card 1: the purple-fig wording is not the problem, the
+      attachment is, so the choice of remedy is a craft call.
