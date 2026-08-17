@@ -275,6 +275,47 @@ failure, `ledger_freshness.py:369` (`subprocess.run(text=...)` with no
 `encoding=`). That file is another lane's and off limits to this one; neither
 file touched here uses `subprocess`.
 
+## RESULT — the REMOVAL arm: 0 of 1, and it fails on the predicate it was aimed at
+
+`ep2-b10-attrbind-eyewear-0817b`, rendered on the box, scored against the bar as
+written above.
+
+| Predicate | Verdict | How it was established |
+|---|---|---|
+| `B_bare` | **FAIL** | the frames are **thinned, not gone** — both lens rims, the bridge and the temple arm survive as pale continuous arcs. The bar named this exact outcome in advance: *"no ghost of a frame left behind as a smear or a floating arc."* |
+| `A_untouched` | **PASS** | measured, not judged: **0 changed pixels** inside guard A's declared protect box `[430,160,590,280]` |
+| `cast_holds` | **PASS** | guard B's eyes, brows, hair and skin tone all survive; he reads as the same man |
+
+**Sample passes on all three or not at all, so: 0 of 1.** Not adopted. The bar is
+not being bent to call a thinned frame a removed one.
+
+Measured mask behaviour, for the next lane: **1098 of 1098** mask pixels changed
+(the pass did act), and **2040 px changed outside the hard mask** — that is the
+`--blur 3` soft edge doing what blur is for, not leakage; the protect box inside
+that same frame is untouched at 0.
+
+### Why it failed, and this is the part worth keeping
+
+**A thin band along an object's own outline cannot REMOVE that object, because the
+unmasked pixels immediately either side of the band still describe it.** The
+sampler filled the band with what the surrounding context implied, and either side
+of a frame stroke the context implies *frame*. Strength was not the problem —
+0.99 renoised the band completely and it came back as a frame anyway.
+
+**This yields an asymmetry that is more useful than the beat-10 fix would have
+been:**
+
+- **ADDING** an attribute works with a thin band, because the **ink** supplies the
+  structure and the surrounding context is not fighting it.
+- **REMOVING** an attribute does *not* work with a thin band. It needs a mask over
+  the whole host region — which for eyewear means the eye socket, which forces the
+  sampler to invent an eye and gambles identity, the veto axis.
+
+So the direction the founder's sentence points at — **draw the plate bare and add
+to one figure** — is not merely the convenient direction, it is the *correct* one,
+and this failure is the evidence. Removal is retired as a route for eyewear:
+not on taste, on mechanism.
+
 ## Why this is worth more than a beat-05 fix
 
 If Arm 2 holds, the mechanism is general: **any attribute, onto any one of
