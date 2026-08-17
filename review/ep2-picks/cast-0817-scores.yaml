@@ -381,3 +381,161 @@ beats:
         None that gate the fix. The wording defect is a mechanical correction, not
         a taste call, and the cast it must match is already frozen ("the cast stands
         as drawn", founder 2026-08-16).
+    CORRECTION_AFTER_SCORING_b08: >-
+      One claim in `defect_3` above is WRONG and is corrected here rather than
+      edited away, because the disagreement is the evidence. It said b08 scopes
+      `bald head` inside the goblin's own clause and so `bald` "cannot reach the
+      guard". b08's pixels falsify that: b08 declares `2boys`, scopes `bald head`
+      inside the goblin's clause, and its guard is STILL BALD 12 of 12. Clause
+      scoping does NOT contain `bald`. See b08.BALD_IS_BROADCAST_CLASS for the
+      corrected law. Everything else in the b07 entry stands -- the token is still
+      the cause, and b07 additionally has the `1boy` count defect b08 does not.
+
+  '08':
+    role: >-
+      Guard B + goblin, board staged in the NEAR owner's hands. Not listed in the
+      dispatch brief's per-spec design notes, but it is the seventh rung and it is
+      scored here. NOTE: a peer lane `b08-provenance` is live on this beat; this
+      entry is a SCORE against the bar, written in this lane's own file, and does
+      not touch that lane's provenance work.
+    done_when_quoted_from_done_definitions: >-
+      the clipboard comes DOWN and the point goes to the BELLY, both legible; both
+      guards and the scavenger in frame, since a point needs its target visible.
+    done_when_clause_superseded_and_read_as_such: >-
+      "both guards and the scavenger in frame" is SUPERSEDED by
+      `figure_count_ruled_from_the_script_0817`: the script asks for TWO figures
+      (Guard 2 + the scavenger), not three. Scored as two.
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: NO on the guard -- bald 12 of 12. But this beat produced the batch's most important LAW.
+
+    BALD_IS_BROADCAST_CLASS:
+      finding: >-
+        `bald` behaves EXACTLY like eyewear: it is BROADCAST-CLASS. Its presence
+        anywhere in the token stream puts it on every human head in frame,
+        regardless of which clause owns it.
+      the_four_way_evidence_within_one_batch: >-
+        Same model, same sampler, same reference set, same day. b06 -- no `bald`
+        token, `1boy` -- 0 of 12 bald. b05 -- no `bald` token, `2boys` -- 2 of 12
+        bald. b07 -- `bald head` unscoped, `1boy` -- 12 of 12 bald. b08 -- `bald
+        head` SCOPED INSIDE THE GOBLIN'S OWN CLAUSE behind `2boys` -- STILL 12 of
+        12 bald on the guard. The token's presence predicts the outcome; its clause
+        does not.
+      why_it_matters: >-
+        The prop-ownership grammar b06 established governs OBJECTS. It does not
+        govern broadcast-class ATTRIBUTES of bodies. Eyewear was already known to
+        broadcast (both faces, 5 of 5, versus one face 7 of 7). `bald` is the
+        second member of that class, and it was hiding inside a legitimate goblin
+        descriptor, since a goblin is properly bare-scalped.
+      tightened_FORWARD_only: >-
+        Any beat holding BOTH a human guard and the goblin cannot name the goblin's
+        bare scalp in words at all. The goblin's baldness must come from a
+        reference or be left unstated and inferred. This is stated forward for the
+        next rung and is NOT applied retroactively to these scores.
+
+    per_condition_rate:
+      c1_exactly_TWO_whole_bodied_figures_one_guard_one_goblin: >-
+        5 of 12 (r0s1, r0s2, r0s3, r1s1, r1s2). r1s0 and r1s3 each add a THIRD
+        green creature in the background. The whole r2 row is framed as a tight
+        two-shot with the guard cropped at the chest, so "whole-bodied" is lost
+        4 of 4. r0s0 is ambiguous -- both heads read pale-human while a green hand
+        appears, so neither figure is cleanly the goblin.
+      c1_SECOND_GUARD_control_the_bars_single_most_likely_failure: >-
+        DID NOT FIRE, 0 of 12. This is a genuine and useful negative. The bar
+        predicted that a two-guard reference set on a one-guard beat would pull a
+        third human body. It did not: the second body came out GREEN in 11 of 12.
+        Using refs-guards-twoinfield-nos2-0815 on a guard+goblin beat does not
+        manufacture an extra guard.
+      c2_board_in_the_GUARDS_hands_and_ONLY_his: >-
+        4 of 12, and WHERE they land is the finding -- all four are the r2 row,
+        the only row that draws the guard NEAREST, in the foreground. In the r0 and
+        r1 rows, where the two figures stand shoulder to shoulder at equal depth,
+        ownership fails 8 of 12. This independently corroborates the adjacency law
+        beat 10 was built to test: the prop goes to whoever is drawn nearest.
+      c3_guard_has_light_sandy_hair_cream_shirt_white_sash_brown_skirt: >-
+        0 of 12 on hair, because he has none. Garment half is decent -- cream/tan
+        shirt and a white sash render in most frames -- but the term is compound
+        and the hair clause fails every frame.
+      c4_HE_IS_NOT_BALD: 0 of 12. FAILS OUTRIGHT, all twelve. See BALD_IS_BROADCAST_CLASS.
+      c5_guard_reads_ADULT_not_a_child: 12 of 12, CLEAN. Adult proportions and adult faces throughout.
+      c6_goblin_green_with_POINTED_EARS_and_patched_cloak_reading_adult: >-
+        1 of 12 (r2s0). Green skin renders 11 of 12, but POINTED EARS appear only at
+        r2s0 and r2s1 and a PATCHED CLOAK only at r2s0, r2s1 and r2s2. Everywhere
+        else the goblin is a smooth green bald dome in the same robe as the guard --
+        a green man, not a goblin. r2s1 has the ears and the cloak but is drawn
+        CHILD-PROPORTIONED, so it fails the adult clause.
+      c7_BELLY_VISIBLE_AND_UNOCCLUDED: >-
+        3 of 12 (r2s0, r2s2, r2s3). The r0 and r1 rows robe the goblin to the neck,
+        so the belly is not merely occluded, it is not drawn at all. This matters
+        because the beat's `done_when` needs the belly legible as the point's target.
+      c8_goblins_hands_are_EMPTY: >-
+        2 of 12 (r2s0, r2s3). He holds the guard's board in 6 frames, a second board
+        in 2, and at r2s2 a POTTED PLANT that nothing in the prompt asked for.
+      c9_board_hand_sized_flat_rectangular_BARK_not_paper_no_hand_across_its_face: >-
+        0 of 12 on material, the same result as b06. The r2 row renders an
+        unmistakable WHITE PAPER SHEET ON A CLIPBOARD WITH A METAL CLIP -- the bar
+        excludes "paper" and "chrome clip" by name, and both are present in the
+        same object. The r0 and r1 rows render a dark slate or plastic clipboard.
+        Nothing reads as bark anywhere. Shape and flatness are fine, 10 of 12.
+      c10_grass_and_sky_above_both_real_no_white_or_plain_bg_no_plan_view: >-
+        5 of 12. No white or plain background anywhere, 12 of 12 on that half. The
+        r0 row is a HIGH DOWNWARD angle with only a thin sky band; the r2 row is too
+        tight to carry a sky. The r1 row is the only one with a real sky above.
+
+    pre_registered_fail_modes:
+      a_second_guard_arriving_from_the_refs: DID NOT FIRE, 0 of 12. The bar's most-feared failure did not happen.
+      the_board_on_the_goblin_or_in_both_pairs_of_hands: >-
+        FIRED HARD, 8 of 12 -- consistent with the recorded 9-of-12 fault, so the
+        near-owner staging did NOT prevent it except in the r2 row.
+      the_guard_coming_back_bald: FIRED, 12 of 12. See BALD_IS_BROADCAST_CLASS.
+      the_goblin_reading_as_a_human_child: >-
+        DID NOT FIRE as a HUMAN child. It fired as a GOBLIN child at r2s1, and far
+        more often as an adult green man with no goblin features at all.
+      the_belly_occluded_by_the_board_expected_to_be_the_closest_call: >-
+        DID NOT FIRE AS PREDICTED, and this is worth recording. The predicted
+        geometric tension between board and belly never arose. The belly is lost to
+        CLOTHING instead -- the goblin is robed to the neck in 9 of 12. The expected
+        closest call was not close; a different one replaced it.
+      eyewear_appearing_on_either_figure_unprompted: >-
+        DID NOT FIRE, 0 of 12. Second clean confirmation, after b05, that eyewear
+        never arrives unbidden. Per the spec this is a finding for the binding lane
+        and NOT something this job may attempt to fix.
+
+    pick: >-
+      r2s0, as the most informative frame rather than a usable one. Reasons: it is
+      the ONLY frame in twelve that is simultaneously a real goblin (pointed ears,
+      patched cloak, green skin, adult proportions), with his BELLY VISIBLE and his
+      hands off the board, and the board in the guard's hands and only his. That is
+      four of the beat's hardest terms landing together once. What it costs: the
+      guard is bald, the board is white paper under a metal clip rather than bark,
+      the guard is cropped at the chest, and only one of his hands is on the board.
+    verdict: >-
+      FAILS ITS BAR, 0 of 12 clear every term, and cannot pass while `bald`
+      broadcasts. Its value is diagnostic and high: it produced the broadcast-class
+      law for `bald`, it cleared the two-guard-refs worry to zero, and it
+      corroborated the adjacency law for prop ownership from a beat that was not
+      built to test it.
+    limits_from_the_spec_this_lane_respected:
+      not_a_passing_beat: >-
+        Per the spec's own `limits` (a): beat 08's action is a small in-hand prop
+        manipulation plus a point, which measures 0 of 8 in-hand against 12 of 12
+        whole-body. NO MOTION IS INFERRED HERE FROM ANY STILL.
+      goblin_is_not_reference_conditioned: >-
+        Per `limits` (b): --refs holds GUARDS, so the goblin's identity comes from
+        the prompt slot alone. The weak goblin identity in c6 is therefore NOT
+        evidence about the goblin references and must not be cited as such.
+      sidecar_fields_are_the_samplers: >-
+        Per `limits` (c): the sidecars' `cost_usd: 0.00`, `founder_verdict: null`,
+        `scored: false` are the sampler's own writes, not this spec's claims, and
+        `scored: false` in a sidecar does not contradict this file.
+    blocked_on: >-
+      (a) `bald` broadcasting off the goblin's descriptor -- the goblin's bare
+      scalp must stop being named in words on any beat that also holds a human;
+      (b) board material, the same bark-versus-paper wall as b06, 0 of 12;
+      (c) goblin identity, which needs pointed ears and a patched cloak to survive
+      past 1 of 12 -- and per the spec's limits that is a PROMPT-slot problem, not
+      a reference problem.
+    founder_cards_hit:
+      - >-
+        R4/taste: whether the goblin may read as a plain green man rather than a
+        goblin is a design call on the creature, not a scoring call. Named only.
