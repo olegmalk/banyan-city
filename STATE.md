@@ -8871,3 +8871,30 @@ healthy reference set, which is what `test_goblin_ipa.py` asserts.
 Not done, deliberately: **no spec was edited.** Seven peer specs whose bars belong to
 their authoring lanes, and the coordinator asked to be told so the lanes can be warned.
 Auto-injection in `box_enqueue` is next, now that the sync is verified.
+
+**AUTO-INJECTION IS LIVE, and every wave job filed from now on carries the check.**
+`box_enqueue.inject_drafts_expectation()` stamps `--expect-drafts-sha256 <filing-time
+hash>` into every step that can honour it, last, after all gates have run on the argv the
+author wrote. Verified on the real path, not a fixture: `ep2-b08-cast-0817 --dry-run`
+prints `step dry: run-time drafts check stamped, cbb3658ed516` and `step sample: …` and
+the flag is in the queued json. **No spec file was edited** — nobody has to remember it.
+Whitelist, not blacklist (`goblin_ipa_sample.py`, `goblin_ipa_beat.py`): a script that
+does not know the flag dies on an unknown argument, so `render_wave_sample.py` — same
+hole, no flag — is deliberately not stamped. A `drafts_ack` spec is stamped with the
+**harness's own** hash, because an ack is a deliberate fork and the repo hash would kill
+the very job the ack cleared. An author's own pin is never doubled.
+
+**READ THIS BEFORE THE NEXT `--sync-drafts`:** every backlog job filed against the older
+wording will now refuse at render time (rc 12) and must be re-filed. That is the intended
+behaviour — those jobs were cleared against words that no longer exist — but it means a
+drafts sync and a deep backlog now interact, where before they silently did not.
+
+**The sync was NOT rolled back after the two bites, and the reasoning is the coordinator's
+own.** Bite 2 is not created by the dedup fix; it is *exposed* by it. Pre-sync those seven
+jobs wrote 16 files of which 4 were byte-copies, and a lane scoring "N of 16" would have
+counted 4 duplicates as independent evidence and never known. Post-sync the same defect
+is a loud copy-out failure with the fix written on it. Loud beats silent — the same
+ruling as refuse-to-draw. Rolling back would restore 40% waste on a card we fight to keep
+fed, remove the guard from the box, and put the silent version of bite 2 back.
+Rollback remains one `Move-Item` away (`goblin_ipa_sample.py.bak-0812-ec504b3c`) if
+somebody disagrees.
