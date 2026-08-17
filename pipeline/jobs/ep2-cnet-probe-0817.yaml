@@ -1,0 +1,211 @@
+# CAPABILITY PROBE — does a scribble ControlNet actually CONSTRAIN animagine-xl-3.1?
+#
+# ############################################################################
+# STATUS: WRITTEN, VALIDATED, DELIBERATELY *NOT* ENQUEUED. Do not fire it
+# without reading this block. It passes every box_enqueue.py guard
+# (`--dry-run` clean), and it is held back for two independent reasons.
+#
+# 1. ITS CONSUMER IS GONE. This job was filed to tell the leaf-count lane
+#    whether structural conditioning was on the table. That lane has since
+#    ANSWERED THE QUESTION A BETTER WAY: commit cccbc85f reports COUNT 4 of 4
+#    exactly two leaves, HEIGHT 4 of 4, SHAPE 4 of 4, scored against a bar
+#    pre-registered at b3e9a252 before the pixels existed, clearing its own
+#    7-of-8 floor — by a composite layout patch, with "not one of them
+#    sampled from the model". Commit abeb7c92 independently ranked the
+#    options and reached the same verdict this lane did from the other
+#    direction: nobody has published exact count control on SDXL
+#    (CountDiffusion 34%->59% and needs Grounded SAM; CountGen ships a
+#    trained checkpoint and names identical overlapping instances as its
+#    worst case), so composite-then-inpaint at 0.30 wins on the only axis
+#    that matters — two leaves drawn into the init are two leaves, never a
+#    sample. Firing six GPU-minutes to answer a question nobody is waiting on,
+#    on a thin card, is the "no work without a consumer" rule exactly.
+#
+# 2. THE CODE IS NOT ON THE BOX AND PUTTING IT THERE IS NOT THIS LANE'S CALL.
+#    The box checkout (C:\banyan-farm\banyan-city) is at 755036a6 and has no
+#    pipeline\controlnet_probe.py. This repo is 55 commits ahead of
+#    origin/main, so the box cannot pull this job's driver without a push
+#    that would also publish eight other lanes' unpushed work. That is a
+#    sequencing decision for whoever owns the push, not for the lane that
+#    happens to need one file.
+#
+# WHAT IS STILL WORTH SOMETHING HERE. The pre-registered bar below was written
+# before any pixels and is unspent, so this stays a valid one-shot answer to a
+# question that WILL recur the moment a beat needs a pose, a framing or a
+# composition pinned rather than a count — the weights are local, Apache-2.0
+# and load offline at $0. Fire it then. Nothing about it expires.
+# ############################################################################
+#
+# WHY THIS IS NOT A RENDER OF ANYTHING. Beats 01 and 21 are plate-blocked on leaf
+# COUNT alone (4 of 6 plant plates failed count while the height half of the
+# founder's ruling bound 3 of 4). Count is not reachable by wording:
+# T2ICountBench (arXiv 2503.06884) finds CLIP text embeddings near-identical
+# across numerals and tests-and-rejects prompt refinement explicitly. So the
+# constraint has to arrive as pixels, and structural conditioning is the obvious
+# escape — except nobody had established whether we can actually do it.
+#
+# WHAT IS ALREADY SETTLED, BY MEASUREMENT, BEFORE THIS JOB EXISTS:
+#   * FIVE complete SDXL ControlNets are in the box's HF cache
+#     (xinsir scribble/canny/depth, diffusers depth, MistoLine), 2,386 MiB each,
+#     zero .incomplete, byte sizes matching B01-R9-PLAN.md's vetted table.
+#   * The scribble net loads OFFLINE (HF_HUB_OFFLINE=1): 1,251,014,160 params,
+#     cross_attention_dim 2048, block_out_channels [320,640,1280].
+#   * animagine-xl-3.1's UNet reports the identical 2048 / [320,640,1280].
+#     2048 is the SDXL marker (SD1.5 is 768), so the pairing is sound.
+#   * $0 and no download: every weight this job touches is already local.
+#
+# THAT IS COMPATIBILITY, NOT CAPABILITY. Unproven: that a run completes on our
+# finetune, and that the hint VISIBLY BINDS. A ControlNet that loads and then
+# ignores its condition is WORSE than no path, because it looks like one. This
+# job is built to be able to return NO.
+#
+# ONE SAMPLE PER RECIPE, WHICH IS WHAT THE FOUR ARMS ARE. Not a batch: one seed,
+# one prompt, one size, and the condition is the only thing that moves. Each arm
+# is a separate process so it can fail alone; batch configs are banned on this box.
+#
+#   A  nocontrol  no ControlNet. The model's own composition.
+#   B  left       the 2-leaf hint, stem base x=0.32.
+#   C  right      the SAME hint mirrored, stem base x=0.68.
+#   D  polarity   arm B's hint inverted, settling the white-on-black assumption
+#                 in author_scribble.py instead of trusting a code comment.
+#
+# LEAF COUNT IS HELD AT TWO IN EVERY CONTROL ARM AND IS NOT MEASURED. Arms B and
+# C differ in POSITION only. The leaf-count experiment belongs to another lane
+# which is testing wording right now; a probe that moved count would duplicate
+# its rung on a thin card and muddy this one. NO VERDICT about the founder's
+# two-leaf bar may be read from any frame this job produces.
+#
+# THE BAR IS PRE-REGISTERED, IN CODE, BEFORE THE PIXELS. Binding is a number, not
+# an impression, because "looks kind of like the hint" is how a lane talks itself
+# into a capability it does not have:
+#
+#     bind_ratio = mean|grad| inside the hint's dilated strokes
+#                / mean|grad| inside that same mask MIRRORED in x
+#
+# Mirroring rather than whole-frame comparison is what makes it robust: identical
+# shape, identical area, identical heights, so a frame whose structure is massed
+# near the horizon cannot inflate it.
+#   PASS = arm nocontrol within [0.85, 1.15] AND left > 1.25 AND right > 1.25.
+# The nocontrol bound is a KILL SWITCH ON MY OWN INSTRUMENT: arm A never saw a
+# hint, so if its ratio is off-centre the prompt carries a left/right bias of its
+# own and every number in the run is void. The metric is already tested against
+# synthetic frames (hint-as-output 159.4, mirrored structure 0.01, symmetric
+# noise 1.000 — `controlnet_probe.py --selftest`, 10 invariants).
+#
+# THE PROMPT IS THE PROBE'S OWN, written in controlnet_probe.py. It is NOT read
+# from pipeline/wave-drafts.yaml and is not any beat's approved wording, so this
+# cannot collide with a drafting lane and no frame here is a candidate for
+# anything. The hints are authored by pipeline/author_scribble.py — PIL and
+# stdlib only, no model, no photo-derived edge map — and committed with their
+# sha256 asserted at render time.
+#
+# THE HONEST ALTERNATIVE THIS IS BEING WEIGHED AGAINST: composite-then-inpaint at
+# strength 0.30, which already passed beats 06 (1de34880) and 10 (7029e0ff) and
+# needs no new code at all. If ControlNet costs more for the same result that is
+# a finding, not a disappointment — arXiv 2408.11721 already reports that
+# ControlNet segmentation conditioning LOWERS count error without eliminating it,
+# at a cost in naturalness. This job asks only whether the lever exists.
+#
+# WHAT IS NOT HERE: no pick, no ranking, no promotion, no publish, no spend, no
+# canon filename, and nothing touching any beat's approved wording or plate.
+
+id: ep2-cnet-probe-0817
+task: ep2-cnet-probe-0817
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: cnet-capability-0817
+
+consumer: >-
+  the leaf-count lane, via the team lead. That lane is researching mechanisms and
+  testing wording for "exactly two leaves" right now, and its next rung depends
+  on knowing whether structural conditioning is genuinely on the table or
+  whether composite-then-inpaint at 0.30 is the only proven lever. These four
+  frames answer that with a number. The 2-leaf hint itself
+  (pipeline/control/seedling-2leaf-0817.png) is handed to that lane as an input
+  regardless of the verdict.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\cnet-probe-0817\out, named
+  ep2-cnet-probe-0817-{nocontrol,left,right,polarity}.png. Scored ONLY by
+  `python3 pipeline/controlnet_probe.py --measure <dir>` against the
+  pre-registered bar above — arm nocontrol in [0.85,1.15] or the run is void,
+  then left > 1.25 and right > 1.25 to call the condition binding. A result where
+  left and right both sit near 1.0 is a legitimate and useful outcome: it says
+  the ControlNet ran and ignored its hint, and retires structural conditioning
+  for us in favour of the already-proven composite path. Leaf count is not
+  scored and no taste verdict is sought.
+
+why: >-
+  Beats 01 and 21 are blocked on count alone and the literature says wording
+  cannot fix it, so the next lever is structural. The weights are local, licensed
+  Apache-2.0 and load offline at $0, and the hint is authorable in one command —
+  but a ControlNet that loads and then ignores its condition would look exactly
+  like a working path while wasting every rung built on it. Six minutes settles
+  it before anyone builds on the assumption.
+
+est_minutes: 6   # 4 processes; measured on the b01-r9 path: ~43s load + ~15s/frame
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"        # every weight is already cached; a download here
+                             # would mean the cache moved and the job should die
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: nocontrol
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - nocontrol
+      - --out
+      - C:\banyan-farm\cnet-probe-0817\out
+  - name: left
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - left
+      - --out
+      - C:\banyan-farm\cnet-probe-0817\out
+  - name: right
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - right
+      - --out
+      - C:\banyan-farm\cnet-probe-0817\out
+  - name: polarity
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\controlnet_probe.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - polarity
+      - --out
+      - C:\banyan-farm\cnet-probe-0817\out
+
+artifacts:
+  - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-nocontrol.png
+  - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-left.png
+  - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-right.png
+  - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-polarity.png
