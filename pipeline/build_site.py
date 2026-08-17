@@ -1448,6 +1448,74 @@ def eyebrow_for(g: dict, n: dict) -> str:
     return f"{gid} · BRANCH"
 
 
+# ------------------------------------------------------------------ credits
+#
+# WHO MADE THIS CUT, ON THE SURFACE RATHER THAN IN THE YAML. Added 2026-08-17
+# after reading how mochi.tv presents the same thing: every card and every watch
+# page there carries the creator's handle and avatar, so making something buys
+# you a visible name. We already record strictly more than they do — author,
+# model, prompt, seed and cost, per leaf — and published none of it as identity.
+# The receipts table listed stage, form, length, cost, status and screening and
+# had NO "made by" column at all, on the one page whose whole claim is that the
+# audit trail is public.
+#
+# The `author` field is free prose, not a handle ("pipeline/render_t1.py
+# (deterministic compile of ...)"), so it is normalised to something short enough
+# to sit on a card. The normaliser is deliberately DUMB and falls through to the
+# raw author rather than guessing: an unrecognised credit shows up as itself and
+# is legible as unrecognised, which is the failure mode we want. It never invents
+# a name — `unattributed` is a real answer and is shown as one.
+_CREDIT_RULES = (
+    (re.compile(r"founding author|^founder\b", re.I), "founder"),
+    (re.compile(r"^pipeline/", re.I), "pipeline"),
+    (re.compile(r"^steward\b", re.I), "steward"),
+    (re.compile(r"claude-fable-5", re.I), "claude-fable-5"),
+    (re.compile(r"claude-opus-5", re.I), "claude-opus-5"),
+)
+
+
+def credit_label(meta: dict) -> str:
+    """Who or what made this version, short enough for a card.
+
+    Reads `author` first and `model` only as a fallback, because a model named
+    in `author` is already the credit ("claude-fable-5 (delegated steward)")
+    while a `model` beside a human author is the tool, not the maker.
+    """
+    author = str(meta.get("author") or "").strip()
+    for rx, label in _CREDIT_RULES:
+        if rx.search(author):
+            return label
+    if author:
+        # cut at the first parenthetical or dash — the prose after it is
+        # provenance detail that belongs in the receipt, not on a card
+        head = re.split(r"[(—-]", author)[0].strip().rstrip(",;")
+        return head[:28] or "unattributed"
+    model = str(meta.get("model") or "").strip()
+    if model and model.lower() != "none":
+        return re.split(r"[(—+]", model)[0].strip()[:28]
+    return "unattributed"
+
+
+def node_credits(n: dict) -> list:
+    """Distinct credits for a node, in the order its versions were published."""
+    out = []
+    for l in n.get("leaf_meta") or []:
+        c = credit_label(l)
+        if c not in out:
+            out.append(c)
+    return out
+
+
+def credits_line(n: dict, limit: int = 3) -> str:
+    """`made by x · y · z (+2)`, or "" when a node has no versions yet."""
+    cs = node_credits(n)
+    if not cs:
+        return ""
+    shown = " · ".join(html.escape(c) for c in cs[:limit])
+    more = f" +{len(cs) - limit}" if len(cs) > limit else ""
+    return f'<span class="credits">made by {shown}{more}</span>'
+
+
 def node_card(genome_id: str, n: dict, depth: int) -> str:
     # D11: the workshop is a first-class destination — every node with a shot
     # list advertises its board from the front page, not two clicks deep.
@@ -1463,12 +1531,14 @@ def node_card(genome_id: str, n: dict, depth: int) -> str:
     if n["children"]:
         kids = "<ul>" + "".join(node_card(genome_id, c, depth) for c in n["children"]) + "</ul>"
     n_vers = len(n["leaf_meta"])
+    credit = credits_line(n)
     return f"""<li><div class="card">
 {lineage}
 {chips(n)}
 <div class="title"><a href="{genome_id}/{html.escape(n['slug'])}.html">{html.escape(n['title'])}</a></div>
 {teaser}
 <div class="meta"><a href="{genome_id}/{html.escape(n['slug'])}.html">read / watch</a> · {n_vers} {'version' if n_vers == 1 else 'versions'}{board}{react}</div>
+{f'<div class="meta">{credit}</div>' if credit else ''}
 </div>{kids}</li>"""
 
 
@@ -1639,6 +1709,7 @@ def render_node_page(g: dict, n: dict) -> str:
         f"<tr><td>{leaf_cell(l)}</td><td>{html.escape(stage_word(l))}</td>"
         f"<td>{html.escape(str(l['form']))}</td>"
         f"<td>{html.escape(dur_label(l.get('seconds')) or '—')}</td>"
+        f"<td>{html.escape(credit_label(l))}</td>"
         f"<td>${l['cost_usd']:.2f}</td>"
         f"<td>{html.escape(str(l['status']))}</td><td>{screen_cell(l)}</td></tr>"
         for l in n["leaf_meta"]
@@ -1647,7 +1718,7 @@ def render_node_page(g: dict, n: dict) -> str:
 ({len(n['leaf_meta'])})</summary><div class="drawer-body">
 <p class="smallprint">A <em>leaf</em> is one render of this episode — script, storyboard, animatic
 or film. Every one publishes its prompt, model, seed and cost: this table is the audit trail.</p>
-<table><tr><th>version</th><th>stage</th><th>form</th><th>length</th><th>cost</th><th>status</th><th>screening</th></tr>{leaves_rows}</table>
+<table><tr><th>version</th><th>stage</th><th>form</th><th>length</th><th>made by</th><th>cost</th><th>status</th><th>screening</th></tr>{leaves_rows}</table>
 <p class="smallprint"><strong>Screening:</strong> rate any version (continuity, character, vibe) — the
 crowd narrows the shortlist, the author's taste file decides. Ratings are harvested into this
 episode's <code>sap/screening.yaml</code>.</p></div></details>"""
