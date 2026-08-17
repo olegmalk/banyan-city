@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260818
+padding_mask_crop: 64
+mask_blur_factor: 4
+init_image: C:/banyan-farm/attrbind-add-0817/b05-compA.png
+init_sha256: 83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986
+mask_png: b05-guardA-glassed-s2-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/attrbind-add-0817/b05-maskA.png
+mask_png_sha256: ffa886e0b469045ba157f24f1ff600fcd845f52193614023bb2887622c84aadb
+mask_white_px: 2800
+mask_bbox_px: [245, 117, 405, 181]
+mask_width_frac: 0.1923
+mask_height_frac: 0.0526
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-17T12:48:24Z
+render_seconds: 3.7
+wall_seconds: 9.3
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  Draw 2 of 5 in the PRE-REGISTERED seed set (pipeline/loop/attrbind-eyewear-0817.md, commit 7df75e2a, written BEFORE these pixels). Seed 20260818. Byte-identical init, mask, prompt, negative and strength as draw 1 (seed 20260817, which PASSED 3 of 3 predicates) -- SEED IS THE ONLY VARIABLE. Adoption threshold is 4 of 5 and all four of these are reported including failures. B_bare is predicted to hold regardless of seed because geometry guarantees it; A_glassed is the predicate genuinely at risk, since how well 0.30 harmonises an inked stroke is a sampling outcome.
+prompt: |-
+  round silver wire-rim glasses, a guard man face in sunlight, dark cropped hair, detailed cinematic anime, masterpiece, best quality
+negative: |-
+  sunglasses, goggles, thick frames, opaque lenses, tinted lenses, monocle, extra eyes, text, watermark, photorealism, 3d render, blurry, low quality, deformed

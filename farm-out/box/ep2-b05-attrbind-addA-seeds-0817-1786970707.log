@@ -1,0 +1,85 @@
+#### job ep2-b05-attrbind-addA-seeds-0817-1786970707 attempt 1 start 2026-08-17T12:48:08Z
+
+==== step dry START 2026-08-17T12:48:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s2.png", "--seed", "20260818", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986
+mask png corners=- bbox=[245, 117, 405, 181]  0.1923 x 0.0526 of 832x1216
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s2-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T12:48:12Z ====
+
+==== step seed20260818 START 2026-08-17T12:48:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s2.png", "--seed", "20260818", "--note", "Draw 2 of 5 in the PRE-REGISTERED seed set (pipeline/loop/attrbind-eyewear-0817.md, commit 7df75e2a, written BEFORE these pixels). Seed 20260818. Byte-identical init, mask, prompt, negative and strength as draw 1 (seed 20260817, which PASSED 3 of 3 predicates) -- SEED IS THE ONLY VARIABLE. Adoption threshold is 4 of 5 and all four of these are reported including failures. B_bare is predicted to hold regardless of seed because geometry guarantees it; A_glassed is the predicate genuinely at risk, since how well 0.30 harmonises an inked stroke is a sampling outcome."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.38it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.03it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.35it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.89it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s2.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s2-mask.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s2.png.meta.yaml
+rc=0 render_s=3.7
+==== step seed20260818 END rc=0 2026-08-17T12:48:25Z ====
+
+==== step seed20260819 START 2026-08-17T12:48:25Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s3.png", "--seed", "20260819", "--note", "Draw 3 of 5 in the PRE-REGISTERED seed set (pipeline/loop/attrbind-eyewear-0817.md, commit 7df75e2a, written BEFORE these pixels). Seed 20260819. Byte-identical init, mask, prompt, negative and strength as draw 1 (seed 20260817, which PASSED 3 of 3 predicates) -- SEED IS THE ONLY VARIABLE. Adoption threshold is 4 of 5 and all four of these are reported including failures. B_bare is predicted to hold regardless of seed because geometry guarantees it; A_glassed is the predicate genuinely at risk, since how well 0.30 harmonises an inked stroke is a sampling outcome."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.56it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.94it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  8.47it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s3.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s3-mask.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s3.png.meta.yaml
+rc=0 render_s=3.7
+==== step seed20260819 END rc=0 2026-08-17T12:48:38Z ====
+
+==== step seed20260820 START 2026-08-17T12:48:38Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s4.png", "--seed", "20260820", "--note", "Draw 4 of 5 in the PRE-REGISTERED seed set (pipeline/loop/attrbind-eyewear-0817.md, commit 7df75e2a, written BEFORE these pixels). Seed 20260820. Byte-identical init, mask, prompt, negative and strength as draw 1 (seed 20260817, which PASSED 3 of 3 predicates) -- SEED IS THE ONLY VARIABLE. Adoption threshold is 4 of 5 and all four of these are reported including failures. B_bare is predicted to hold regardless of seed because geometry guarantees it; A_glassed is the predicate genuinely at risk, since how well 0.30 harmonises an inked stroke is a sampling outcome."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.98it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.06it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.80it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.89it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s4.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s4-mask.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s4.png.meta.yaml
+rc=0 render_s=3.8
+==== step seed20260820 END rc=0 2026-08-17T12:48:51Z ====
+
+==== step seed20260821 START 2026-08-17T12:48:51Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\attrbind-add-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\attrbind-add-0817\\b05-compA.png", "--init-sha256", "83aa1ac14e1a3f7b6f5db4967cc39fcc3b78d877bcfba7449873a095decdb986", "--mask-png", "C:\\banyan-farm\\attrbind-add-0817\\b05-maskA.png", "--prompt-file", "C:\\banyan-farm\\attrbind-add-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\attrbind-add-0817\\negative.txt", "--strength", "0.30", "--pad-crop", "64", "--blur", "4", "--steps", "40", "--cfg", "7.5", "--out", "C:\\banyan-farm\\attrbind-add-0817\\b05-guardA-glassed-s5.png", "--seed", "20260821", "--note", "Draw 5 of 5 in the PRE-REGISTERED seed set (pipeline/loop/attrbind-eyewear-0817.md, commit 7df75e2a, written BEFORE these pixels). Seed 20260821. Byte-identical init, mask, prompt, negative and strength as draw 1 (seed 20260817, which PASSED 3 of 3 predicates) -- SEED IS THE ONLY VARIABLE. Adoption threshold is 4 of 5 and all four of these are reported including failures. B_bare is predicted to hold regardless of seed because geometry guarantees it; A_glassed is the predicate genuinely at risk, since how well 0.30 harmonises an inked stroke is a sampling outcome."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.51it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  2.03it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  3.29it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.80it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.77it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s5.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s5-mask.png
+WROTE C:\banyan-farm\attrbind-add-0817\b05-guardA-glassed-s5.png.meta.yaml
+rc=0 render_s=3.9
+==== step seed20260821 END rc=0 2026-08-17T12:49:04Z ====
+
+==== step publish START 2026-08-17T12:49:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/attrbind-add-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-attrbind-addA-seeds-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = [n for i in (2,3,4,5) for n in (\"b05-guardA-glassed-s%d.png\" % i,\n         \"b05-guardA-glassed-s%d.png.meta.yaml\" % i)] + [\"b05-compA.png\", \"b05-maskA.png\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if len([g for g in got if g.endswith(\".png\") and \"glassed\" in g]) == 4 else 1)"]
+published 10 of 10 ['b05-guardA-glassed-s2.png', 'b05-guardA-glassed-s2.png.meta.yaml', 'b05-guardA-glassed-s3.png', 'b05-guardA-glassed-s3.png.meta.yaml', 'b05-guardA-glassed-s4.png', 'b05-guardA-glassed-s4.png.meta.yaml', 'b05-guardA-glassed-s5.png', 'b05-guardA-glassed-s5.png.meta.yaml', 'b05-compA.png', 'b05-maskA.png']
+==== step publish END rc=0 2026-08-17T12:49:04Z ====
+#### job ep2-b05-attrbind-addA-seeds-0817-1786970707 finished rc=0 2026-08-17T12:49:04Z
