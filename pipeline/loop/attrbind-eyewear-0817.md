@@ -391,9 +391,42 @@ checkable rather than rhetorical.
 
 **The threshold is ≥4 of 5 seeds and this is N=1.** One sample passing is the
 go/no-go that justifies spending the other four, which is exactly what ONE SAMPLE
-is for. It is not the adoption. `ep2-b05-attrbind-addA-seeds-0817` carries seeds
-20260818/19/20/21 on the identical init, mask and strength — seed is the only
-variable.
+is for. It is not the adoption.
+
+### The four remaining seeds, pre-registered BEFORE they are fired
+
+Named here so nobody can wonder later whether the reported draws were the ones
+that flattered the mechanism. **Seeds 20260818, 20260819, 20260820, 20260821**, on
+the byte-identical init (`b05-compA.png`, sha `83aa1ac1…decdb986`), the
+byte-identical mask (`b05-maskA.png`, sha `ffa886e0…22c84aadb`), the same prompt,
+negative, strength 0.30, 40 steps, cfg 7.5, pad-crop 64, blur 4. **Seed is the
+only variable.** All four are reported, including any that fail, and the seed
+already fired (20260817) counts as draw 1 of 5.
+
+**What the outcomes mean, committed now so they cannot drift later:**
+
+- **5 of 5 or 4 of 5** → the mechanism is real and eyewear is controllable. Say so
+  and stop; do not keep sampling for a nicer number.
+- **Partial (2–3 of 5)** → report **the rate**. A mechanism that works most of the
+  time is a real finding but it is a *rate*, not a fix, and the honest number is
+  the thing that makes it usable — a 3-in-5 recipe means budgeting reseeds, which
+  is a decision someone can actually make.
+- **0–1 of 5** → the single pass was luck. Not adopted; say so plainly.
+- **Glasses land on guard A but something else regresses** — guard A's identity,
+  either man's hair or wardrobe, guard B changing at all — **is NOT a pass**,
+  however good the frames look. `cast_holds` is a full predicate, not a tiebreak.
+  Beat 14 is the cautionary case: it removed a sky band at the cost of the hands
+  and was correctly failed for it. A first draw can recover the axis everyone is
+  watching while the genuinely fragile axis sits somewhere else, and **4 of 4 and
+  1 of 4 are completely different findings that only the batch can separate.**
+
+One prediction on the record, so it can be wrong: `B_bare` should hold **5 of 5**
+regardless of seed, because it is guaranteed by geometry rather than by sampling —
+his pixels are outside the mask and the latent blend restores them every step. If
+`B_bare` ever fails, the mechanism is broken in a way no seed count can excuse,
+and that is the headline. The predicate genuinely at risk across seeds is
+`A_glassed`, because how well 0.30 harmonises an inked stroke is a sampling
+outcome — the faded temple arm on draw 1 is exactly that axis.
 
 ### One specific defect, recorded with its fix
 
