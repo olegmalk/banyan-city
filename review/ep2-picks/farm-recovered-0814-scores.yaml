@@ -768,3 +768,91 @@ sets:
       the beat; and the plant violates today's leaf-count, height and relation canon
       outright.
     founder_card: none on taste. Card 3 below is a factual flag, not a taste call.
+
+  ep2-b04-balloon-pair:
+    what_it_is: >-
+      A single MOTION clip on beat 04, rendered to answer ONE reproduction question.
+      704x1280, 73 frames, 24 fps, LTX-2.3-Distilled-Diffusers (bf16), two-stage 8 steps
+      @352x640 + 3 @704x1280, guidance 2.0, shift 1.0, seed 20260813, $0. Plus its init
+      png and a bench jsonl.
+    spec: pipeline/jobs/ep2-b04-balloon-pair-0813.yaml
+    dated: 2026-08-13
+    render_path: CUDA/bf16, rtx5090 Laptop GPU, LTX family.
+    consumer_named_in_spec: >-
+      review/ep2-picks/motion-0812.html — "the re-clip of the one beat he has spoken
+      positively about, on a still that fixes the fault he named."
+    bar_scored_against: >-
+      THE SET'S OWN SPEC, which is a single binary: "A 704x1280 mp4, 73 frames, read beside
+      the r2 take. ONE question: does the head balloon again at a different seed. Either
+      answer closes the item — reproduction gives me the pair I need for a hypothesis,
+      absence means seed luck and beat 04 is one reroll from usable."
+    files: 1 mp4 + 1 init png + 1 bench jsonl + manifest
+    format_check: PASS — 704x1280 and exactly 73 frames, both as declared.
+    score: the job SUCCEEDED — it asked a binary and returned a clean, unambiguous answer.
+    the_answer: >-
+      YES. IT REPRODUCES. The head balloons again at a different seed, so this is NOT seed
+      luck and beat 04 is NOT one reroll from usable.
+    what_the_clip_shows: >-
+      f0 is the init and the head is normally proportioned with an ordinary face. By f9 the
+      cranium has inflated into an enormous smooth dome filling roughly the top half of the
+      frame, the face is compressed into the lower third and the eyes have narrowed to
+      slits. It does not recover: the balloon is stable from f9 through f72.
+    THE_PAIR_IS_NOW_CONCRETE: >-
+      I did what the spec asked and read it beside the r2 take at
+      review/ep2-picks/motion-0812/04-the-footnote-LTX-motion-r2-0812.mp4 (704x1280, also
+      73 frames). r2 BALLOONS TOO, on a different seed, with the same onset window — normal
+      at f0, inflated by f9, stable through f45. r2's version is somewhat milder (the eyes
+      stay large and round, the face keeps more of its proportion) while the 0813 seed is
+      more severe (eyes to slits, face crushed), but both inflate. So the steward now has
+      exactly the pair the spec said was needed for a hypothesis, and the item is CLOSED
+      as reproduction rather than luck.
+    findings:
+      onset_is_immediate_not_gradual: >-
+        In both takes the inflation completes within the first ~9 frames and then holds. It
+        is not a slow drift that accumulates over the clip; it is a step change at motion
+        onset. That matters for any fix — trimming the clip or shortening it will not avoid
+        it, because the fault is already fully present in the first half second.
+      the_init_is_clean_in_this_set: >-
+        Unlike beat 19, beat 04's init is NOT a white plate — it has a blurred grass
+        background, so there is no white-burst opening here. The init is fine and the motion
+        step is what breaks it. This isolates the fault to LTX motion rather than the plate.
+      HYPOTHESIS_the_bald_dome_is_the_attractor: >-
+        OFFERED AS A HYPOTHESIS TO TEST, NOT A CONCLUSION, and it needs a cross-model
+        caveat. In both takes the region that inflates is a large, smooth, featureless BALD
+        cranium that already dominates a tight close-up. The same recovery contains an
+        Animagine still-path echo: beat 11's r2 cells render heads as featureless
+        flesh-coloured spheres. Different model families (LTX vs Animagine-XL), so this is
+        not one measured effect — but "an unfeatured smooth dome is where geometry
+        degenerates" is consistent with both, and it connects to this recovery's other
+        finding: beat 11 showed that hair only appears when POSITIVELY asked for. Giving the
+        head hair would give the model structure where it currently has a blank dome. That
+        is a cheap, single-variable test and it is the next thing I would run on this beat
+        — but it is a proposal, not a result.
+      provenance_gap_again: >-
+        Same defect as beat 19: the `.mp4.meta.yaml` `prompt:` field is EMPTY, so the clip
+        cannot be reproduced from its own sidecar under §7.2. Two of the three recovered
+        clips share this, so it is a harness bug rather than a one-off.
+      bench_numbers_recorded: >-
+        From bench-b04-balloonpair.jsonl: 213.3 s to sample a 3.04 s video (70.1 s of
+        compute per video-second), peak torch 7.9 GB against a 25.7 GB device, host peak
+        63.6 GB. `ok: true`. Useful for scheduling; no conclusion drawn from it here.
+    canon_now:
+      cast: >-
+        The goblin is bald, which is the counted historical defect and, for the goblin
+        specifically, the steward's unratified translation of "simple green goblin, nothing
+        complex" rather than a settled ruling. The figure also reads as a small child.
+        Neither is scored; both are R4's.
+      purple_fruit: NOT APPLICABLE — no fruit in frame.
+      two_leaves_average: NOT APPLICABLE — no plant in frame.
+      knee_height_rewrite: NOT APPLICABLE — beat 04 is not in the rewritten list.
+    status: LIVE EVIDENCE — and it CLOSES its item.
+    why_live: >-
+      The spec said either answer closes the question, and this one closes it in the
+      direction that changes the plan: the balloon is reproducible across seeds, so beat 04
+      needs a mechanism fix and not a reroll. Nothing since has retested it, the finding is
+      independent of every ruling that has landed, and the pair is now readable in main for
+      the first time.
+    founder_card: >-
+      none on taste. Beat 04 is the one beat he has spoken positively about, so card 4 below
+      records that its motion is currently blocked by a reproducible fault — a status note,
+      not a request for a verdict.
