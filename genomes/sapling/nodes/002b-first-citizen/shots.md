@@ -1053,6 +1053,50 @@ off this beat without the founder, and nothing here goes on his screen tonight.
 A small goblin boy, green skin, plump, solo, folds into a thin patch of shade, knees up around his ears, no girl, no child. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
+**KNEE-HEIGHT REWRITE 2026-08-17 — THE TRUNK-SLIDE IS GONE AND THE PROMPT ABOVE IS
+NOT TOUCHED.** His ruling: *"rewrite the beats to work at knee height. change the
+story."* This is the beat `done-definitions.yaml` has carried a flagged SCRIPT
+CONFLICT on since 2026-08-15 — *"the script says 'slides down the trunk', and the
+founder has ruled the sapling is tiny … so there is no trunk to slide down. The END
+STATE is what the beat needs; how he gets there is an author call, not a steward
+one."* That author call is now made.
+
+~~"The scavenger slides down the trunk and folds into the sapling's tiny shade,
+knees up around his ears."~~ → *"The scavenger's legs give out and he drops to sit
+in the grass at the base of the stem, then tips his head sideways into the sapling's
+hand-sized patch of shade — the only part of him it will cover — knees up around his
+ears."*
+
+**Why this is a new action and not a softer one.** The slide was a vertical descent
+*along the plant*, and no 40 cm plant affords one. The replacement is a collapse onto
+the ground *beside* it, and it carries a new idea the old line did not have: **the
+shade is smaller than he is, so he has to choose which part of himself to shade, and
+he chooses his eyes.** That is what makes the beat's line land — *"…Thanks for the
+shade"* is sincere and absurd at once, and the gift is now measurable at one head's
+worth. The beat's job is unchanged: this is where cover becomes company, where the
+fugitive stops hiding *behind* the plant and starts living *at* it, and it is the
+first time he addresses it. It still ends him on the ground with his hands in reach
+of the dirt, which is what beat 14 needs, and still folded small with knees up, which
+is what beat 17's opening plate was to be built from.
+
+**THE END STATE IS PRESERVED VERBATIM IN ITS OWN TERMS** — *"he ends FOLDED SMALL in
+the sapling's shade, knees up"* — so `done_when` is satisfied by the new line and no
+definition has to move. Its SCRIPT CONFLICT paragraph is now discharged and reads
+stale; re-transcribing it belongs to the pick lane that owns that file, and it is
+flagged there rather than edited from here.
+
+**The prompt above is deliberately unchanged, for two measured reasons.** It already
+stages the end state and never staged the approach — `folds into a thin patch of
+shade, knees up around his ears` beside `a tiny 40cm seedling … rooted in the ground
+beside him` — so it was never asking for a trunk-slide and is knee-height correct as
+written. And it sits at **exactly 77 CLIP tokens measured on the box's real
+tokenizer**, with eleven negatives the render script asserts; one added word sheds
+the trailing sentence and deletes the style anchor, which is the r4 defect this beat
+has already paid for once. Buying the sit-down in words is a later round's trade —
+`folds into` → `sits down into` is same-length and is the cheapest candidate — and
+it is a gross whole-body move, which is the class this engine renders (12 of 12
+stand-ups on beat 17's wide plate) rather than the small in-hand class it drops.
+
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
 
 Line: the apple defence. Camera on his hands in the dirt — embarrassment made physical.

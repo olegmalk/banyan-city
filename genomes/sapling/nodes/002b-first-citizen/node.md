@@ -85,7 +85,7 @@ Tight on the sapling's two leaves, perfectly still — the scavenger is still cr
 > **VO:** I have never related to a fantasy world more.
 
 **THE SHADE — 1:00–1:04**
-The scavenger slides down the trunk and folds into the sapling's tiny shade, knees up around his ears.
+The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade — the only part of him it will cover — knees up around his ears.
 
 > **SCAVENGER:** …Thanks for the shade.
 
