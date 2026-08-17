@@ -1,0 +1,144 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260814
+render_seconds: 70.6
+png_sha256: "7325ce7a94323d8fbdbeb3f0c77b0193016079907847f7a9e0ddd575fc246816"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, from above, close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "fingers at the dirt AND the glancing - embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back."
+why_this_plate: "The only existing plate (ep2-b14-plate-0814) is exactly the standing full-body shot the definition says to send back: no hands, no ground. The beat IS the hands. This plate exists to put them in frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 6
+scored: true
+# Written by OPENING THE IMAGE and two crops of it. Judged against the bar
+# committed at b1dabc0c, BEFORE this pixel existed, and against nothing else.
+# The one variable was the CAMERA ANGLE: `low close-up` -> `from above,
+# close-up`, on the founder's ruling ("for beat 14, fix it properly"). Seed
+# 20260814 for the sixth time, so r1-r6 differ by text alone.
+what_this_frame_shows: >-
+  A HIGH ANGLE LOOKING DOWN. ONE adult green goblin, bald, long pointed ears,
+  brown-oxblood ragged hooded cloak, crouched right down with knees splayed and
+  his torso folded, seen from above and slightly in front. THERE IS NO HORIZON
+  AND NO SKY ANYWHERE IN THE FRAME: the top edge is tall green grass drawn as
+  individual blades across the full width, and green grass continues past the
+  left, right and bottom edges too. He is on a large patch of bare pale
+  sand-cream soil that fills the middle of the frame, ringed by that grass on
+  ALL FOUR SIDES. BOTH FORFARMS come down the centre of the frame and CONVERGE
+  INTO A SINGLE FUSED HAND -- one wrist, one palm, six visible digits with dark
+  claws -- pressed into a shallow dug divot with dark crumbs thrown around it.
+  Contact is unmistakable. The hand mass is roughly the size of his skull and
+  the two are the largest elements in the frame. His whole FACE is visible
+  because the camera is above him: heavy brow, both blank white eye-slits, nose,
+  mouth, both ears, angled down toward his own hand. Legs cut off below the
+  knees, no feet. Cloak plain, no patchwork.
+verdict_against_pre_registered_bar: >-
+  P5 PASSES FOR THE FIRST TIME IN FOUR RUNGS AND r6 IS STILL NOT A PASS, because
+  P2 REGRESSED. Scored axis by axis, against the text as written:
+  P1 LOW AND OVER THE GROUND - PASS. Crouched, not standing, and the ground he
+  is over is the whole frame.
+  P2 BOTH HANDS IN FRAME AND DOWN - FAIL. The axis requires "both hands
+  visible". Two forearms arrive and terminate in ONE hand: a single wrist, a
+  single palm, six digits. r5 had two separate hands side by side with ten
+  fingertips in the divot (checked by re-opening r5 at the same zoom rather than
+  trusting its write-up). Nothing is held and nothing is on a knee, so the rest
+  of P2's text is satisfied; the hand COUNT is what fails.
+  P3 CONTACT - PASS. Claw tips are in a dug divot with loose crumbs, skin
+  meeting dirt, not hovering.
+  P4' DIRT WITHIN A GREEN FIELD, RATIO NAMED - PASS, AND THE STRONGEST OF ANY
+  RUNG. Bare soil under and around the hand, green vegetation on FOUR sides of
+  him and continuing past every frame edge, no isolated tufts. This is a dirt
+  patch inside a field, which is what the beat has wanted since 08-16 and what
+  r5 only marginally had.
+  P5 NO VACANCY - PASS. THE AXIS UNDER TEST, and the fault is DELETED rather
+  than filled: there is no above-horizon band at all, because there is no
+  horizon. The top of the frame is textured grass, both top corners included.
+  No dust haze band, no white background, no featureless wash larger than his
+  torso. Scored BY EYE as r3, r4 and r5 were. Supporting measure only, and the
+  bar's own rule that P5 is never scored from a rectangle alone is respected:
+  pipeline vacancy measure gives the largest inscribed flat rectangle in the
+  whole frame as 155x114 = 17670 px^2, which is 0.29 of this figure's own torso
+  area, AND IT SITS ON HIS BALD SKULL rather than in the background -- where
+  r5's largest sat in the right-edge wash at 65x320. The subject is now the
+  flattest thing in the frame, which is the opposite of a hole.
+  P6 HIS HEAD IS IN FRAME - PASS, and better than the failure I named in
+  advance. Q11 TOP-OF-SKULL PLATE did NOT fire: the high angle returned the
+  crown AND the entire face, so the clip has brow, eyes, nose and mouth to
+  animate the glancing with. NO FORWARD TIGHTENING OF P6 IS NEEDED and the one
+  I pre-registered as a candidate is withdrawn as unnecessary.
+  P7 ONE ADULT GOBLIN - PASS. One figure, adult proportions, green skin, no
+  second body. The skull reads large only through foreshortening; Q7 child/chibi
+  did not fire.
+  SO: SIX OF SEVEN, AND IT IS A DIFFERENT SIX. P5 and P4' are fixed and P2 is
+  broken, where r5 had P2 and failed P5. By the rule committed before the pixel
+  -- "a regression in ANY of P1, P2, P3, P4', P6, P7 FAILS r6 even if the band
+  is gone" -- THIS IS NOT A PASS. A band removed at the cost of the hands is the
+  fault the bar was written to catch, and it is scored that way.
+  WHICH FAIL MODES FIRED. Q9 fired ON P2 BUT NOT BY THE MECHANISM Q9 NAMED: I
+  predicted P1/P2 would go because `low` was secretly carrying r1's framing win,
+  and it was not -- the crouch and the tight hands-and-dirt framing both
+  survived losing that word, which retires that worry. P2 went to an ANATOMY
+  FUSION instead. Q10 THE FIELD LEAVES WITH THE SKY, the risk I called most
+  likely, did NOT fire and inverted: the field is stronger, not gone. Q8 camera
+  pulled back did not fire (hand and dirt are the frame). Q6 portrait
+  re-compose did not fire. Q1 desert, Q2 grass wins, Q3 hovering, Q4
+  hand-vacancy object, Q5 standing, Q7 child, Q11 skull all did not fire.
+  ONE SEED CANNOT ATTRIBUTE THE FUSION. A top-down view of two arms converging
+  toward one point is a harder pose than r5's side-by-side hands, so the angle
+  is a plausible cause -- but hands are this checkpoint's weakest anatomy at
+  every angle, and one draw cannot separate "the high angle fuses the hands"
+  from "this seed drew a bad hand". It is written down as UNATTRIBUTED.
+  A LOOSENESS IN P5, CONFESSED AND TIGHTENED FORWARD ONLY. P5 is a
+  per-region SIZE test and says nothing about the frame's TOTAL flat area. r6
+  measures 40.7% flat pixels overall and r5 measured 39.9% -- essentially
+  identical -- so the axis passed here and failed there on WHERE the flatness
+  is, not how much of it there is. r6 is scored as P5 PASS because that is what
+  the text says and because the mechanism agrees (the flat pixels are a named
+  noun, bare soil, broken up by grass, specks and shadow, with no room to grow
+  anything). r5 is NOT retroactively upgraded. Any tightening belongs to r7 and
+  should be founder-facing, because ~40% flat may simply be what this
+  cel-shaded style returns.
+  RECORDED AND NOT SCORED: costume drift for the sixth revision (it wants a
+  REFERENCE, not words); blank white eyes; `face turned away` STILL not binding
+  -- though from above it fails in a USEFUL direction, giving the beat a face;
+  the soil reads pale sand-cream rather than the "brown" P4' names, and exact
+  soil colour is on this bar's not-scored list, so it is reported and not used
+  to fail the axis; the expression reads sullen or glowering rather than
+  embarrassed, which is a LOOK judgement and the founder's.
+the_stop_rule_is_honoured: >-
+  b1dabc0c pre-registered: "P5 PASSES BUT ANY OF THE OTHER SIX REGRESSES -> NOT
+  A PASS. Report the trade by name and STOP." P2 regressed. THE LANE STOPS HERE.
+  No r7 wording rung, no second seed, no laddering to a picture that looks
+  acceptable. The camera-angle instrument did the exact job it was predicted to
+  do -- `from above` deletes the band instead of filling it, and it is the only
+  one of six rungs that moved P5 at all -- so the instrument is NOT spent and
+  the answer to "is the empty band reachable" is YES, BY MOVING THE CAMERA.
+  WHAT IS LEFT, NAMED AND NOT RUN. (1) THE CHEAPEST TEST OF THE FUSION, and the
+  one this lane would fire next if it had authority to spend the beat again:
+  THREE FRESH SEEDS OF THIS BYTE-IDENTICAL PROMPT. If two of three draw two
+  separate hands, the fusion was seed noise and this recipe is the beat's plate;
+  if all three fuse, the high angle costs the hands and the trade is real. That
+  is minutes on the Mac fleet and it settles an attribution one draw cannot.
+  (2) A COMPOSITIONAL TOOL, unchanged from r5's list: an img2img init or an
+  inpaint mask, now aimed at the HAND rather than at the sky. (3) THE HYBRID THE
+  FOUNDER MAY SIMPLY PREFER: r5's two-hand plate cropped below its horizon, a
+  framing decision and therefore R4.
+  WHETHER THIS PLATE SHIPS IS R4 AND THE FOUNDER'S ALONE. He authorised fixing
+  the beat, not this result. $0, one sample, nothing enqueued, no motion, no
+  `plate_ack`; shots.md, wave-drafts.yaml, farm-queue.yaml and genomes/
+  untouched.
+  A MAC PLATE IS EVIDENCE ABOUT A PICTURE, NEVER ABOUT A WORDING (MAE 61 of 255
+  against the box), so no wording here is claimed to work. macbook1 rendered it
+  and `mac_preflight.py` returned `verdict: READY, problems: []` with every
+  weight blob's sha256 re-read against its own filename BEFORE the rung was
+  authored -- which is the check two Macs failed while rendering pure noise that
+  passed size, file count and manifest.
