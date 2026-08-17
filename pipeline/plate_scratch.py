@@ -3918,6 +3918,78 @@ REVS = {
 }
 
 
+# ======================================================================
+# 2026-08-17. BEAT 14 "r7" IS NOT A WORDING RUNG. IT IS THREE FRESH SEEDS OF
+# r6, BYTE FOR BYTE, AND THE ONLY THING THAT VARIES IS THE SEED.
+# Pre-registered before the pixels exist.
+# ======================================================================
+# READ THE REV NUMBER CAREFULLY: it is r7 only because `--rev` is how this file
+# selects a draft, and a lane reading "r7" as a sixth wording of beat 14 would
+# be reading it wrong. NOTHING IN THE TEXT MOVES. r6's stop rule closed the
+# wording ladder and it stays closed.
+#
+# WHY THESE THREE DRAWS EXIST. r6 fixed P5 for the first time in four rungs --
+# `from above` DELETED the above-horizon band instead of trying to fill it --
+# and in the same frame P2 regressed: two forearms terminated in ONE FUSED HAND
+# where r5 had two hands with ten fingertips buried. r6's own verdict recorded
+# the attribution as IMPOSSIBLE AT ONE SEED and refused to guess: a top-down
+# view of two arms converging on a point is a harder pose than side-by-side
+# hands, but hands are this checkpoint's weakest anatomy at every angle, and one
+# draw cannot separate "the angle fuses them" from "this seed drew a bad hand".
+# THREE FRESH SEEDS IS THE ONLY INSTRUMENT THAT SEPARATES THEM, and the answer
+# changes what happens next, so it is measurement rather than taste. Authorised
+# on that ground by the coordinator; options (2) and (3) from r6's card -- crop
+# r5 below its horizon, and whether a soft gradient band is milder than a white
+# burst -- are LOOK decisions and went to the founder untouched.
+#
+# BYTE-IDENTITY IS STRUCTURAL HERE, NOT PROMISED. The rev is built by COPYING
+# r6's dict and overriding one key, so the prompt and negative CANNOT drift by a
+# character even if someone edits r6 later -- they would move together, which is
+# the correct behaviour for a replication. No second copy of the strings exists
+# to fall out of sync. (`dict(...)` also keeps `negative` present, so exit 6 is
+# satisfied structurally too, and the pos/neg clash check of exit 7 sees exactly
+# what r6 saw.)
+#
+# THE SEEDS: 20260820, 20260821, 20260822, from `--seeds 3` off this base. Fresh
+# -- none of them has drawn this beat -- and deliberately NOT 20260817, which
+# this repo records as the seed that manufactured two false laws in two days.
+# r6's own 20260814 is not re-drawn, because a replication that includes the
+# frame it is replicating is not three fresh seeds; with r6 the count is FOUR
+# DRAWS OF ONE PROMPT.
+# `--seeds 3` requires `--i-have-seen-a-sample` (exit 8) and that flag is
+# honest here: r6 IS the sample, it was opened, described and scored in
+# farm-out/ep2-b14-mac-plate-0817/...r6s1.yaml at 66e1b824 before these ran.
+#
+# THE BAR IS BYTE-IDENTICAL TO b1dabc0c: P1, P2, P3, P4', P5, P6, P7 and
+# Q1-Q11, every axis scored as written. TWO THINGS ARE FORBIDDEN AND SAID OUT
+# LOUD BECAUSE BOTH ARE TEMPTING NOW: P2 IS NOT SOFTENED because we now expect
+# it to fail (a bar bent toward the expected answer certifies nothing), and
+# NOTHING IS TIGHTENED on the strength of r6's passes either -- the P6
+# tightening r6 floated stays withdrawn, and P5's confessed looseness (it is a
+# per-region size test, blind to total flat area) is NOT patched mid-experiment.
+# r5 is not retroactively re-scored.
+#
+# WHAT THE RESULT MEANS, PRE-COMMITTED SO IT CANNOT DRIFT AFTER THE PIXELS:
+#   * P2 PASSES ON ANY ONE OF THE THREE -> THE FUSION IS SEED VARIANCE. `from
+#     above` costs the beat nothing and r6's recipe is LIVE: this wording plus a
+#     seed screen is the beat's plate path. Say so and STOP.
+#   * P2 FAILS 3 OF 3 (four of four counting r6) -> THE FUSION IS THE ANGLE.
+#     `from above` is SPENT AS WRITTEN: it buys P5 and P4' and it costs the
+#     hands, which on this beat is not a trade worth taking, because the beat IS
+#     the hands. The next instrument is then THE HAND, not the sky and not a
+#     word -- an inpaint mask or an img2img init over the hand region -- and it
+#     is NAMED, not fired here.
+#   * EITHER WAY THE LANE STOPS AT THREE. No fourth seed, no fifth wording rung,
+#     no seed picked after the fact: all three draws are reported whatever they
+#     show, which is why the seeds are written down in this commit BEFORE they
+#     exist.
+# Each draw is scored and committed on its own. $0, macbook1, `mac_preflight.py`
+# re-run to `verdict: READY, problems: []` before this batch. Nothing enqueued,
+# no motion, no `plate_ack`; shots.md, wave-drafts.yaml, farm-queue.yaml and
+# genomes/ untouched.
+REVS[(14, 7)] = dict(REVS[(14, 6)], seed=20260820)
+
+
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer
     ids = tok(text, truncation=False)["input_ids"]
