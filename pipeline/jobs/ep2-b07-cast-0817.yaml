@@ -1,0 +1,188 @@
+# ep2-b07-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 07, CONFISCATE.
+#
+# THE ONE VARIABLE. The draft key, and nothing else. Recipe, references, arm,
+# seed count and seed start are byte-identical to ep2-b09-plate-nos2-0815, the
+# job that drew this beat family's last box plates: same
+# refs-guards-twoinfield-nos2-0815, same --arm window4, same 4 seeds per cell,
+# no --ref-prefix and no --seed-start. What changes is the WORDING, from a
+# prompt that asked for an anonymous bald type to one that names the approved
+# cast. That is the whole experiment.
+#
+# WHY. `guard_plates_are_miscast_0816` in review/ep2-picks/done-definitions.yaml:
+# 0 of 17 guard plate prompts name the approved cast and 14 of 17 ask for `bald`,
+# and NEITHER APPROVED GUARD IS BALD. Guard A has dark cropped hair, guard B has
+# light sandy hair. 18 guard plates were drawn on 2026-08-16/17 against those
+# prompts and none passed. The founder froze the wardrobe on 2026-08-16 -- "the
+# cast stands as drawn", glasses included -- so this is a WORDING correction to
+# match a settled look, not a proposal about how the guards should look.
+#
+# WHY THIS BEAT NEEDS ITS OWN PLATE AND MUST NEVER INHERIT BEAT 08'S. Beats 07
+# and 08 want TWO figures, not three (`pipeline/insert_b0708_figure_count_0817.py`
+# corrected the three-figure done_when clauses, which were drafted from an
+# imagined master). One guard as actor plus the scavenger as target. BEAT 07'S
+# GUARD IS GUARD 1 -- guard A, dark cropped hair, wire-rims -- AND HE HAS NO
+# CLIPBOARD. The bark board is GUARD 2's prop; beats 06, 08 and 10 are the beats
+# that name it. So this prompt negates `clipboard` outright, and beat 08's
+# passing two-figure plate cannot stand in for this one no matter how good it is.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.7.authored_b07_cast_0817
+# (repo sha b75415098678b47cfbc3a8670de2c9982fcef01cbb180d2253da160004a4b94d, and
+# the harness copy on the box was hashed with certutil after the sync and matches
+# it exactly, so this job cannot render a wording the repo has superseded):
+#
+#   A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic, white
+#   sash points one arm at {{GOBLIN}} crouching low, other hand open, tall grass,
+#   treeline behind, pale sky above, cinematic lighting, masterpiece, best
+#   quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no
+#   clipboard, no dark, no night. No photorealism, no 3D render look. 9:16
+#   vertical, no text.
+#
+# THE TOKEN TRADE, NAMED SO IT IS THE FIRST SUSPECT AND NOT A MYSTERY LATER. The
+# real CLIP count of the string that gets sent is 76 of 77 positive, 60 of 77
+# negative, measured with sd_prompt.negative_tokens rather than with compress()'s
+# prose estimator -- which under-counts a comma-separated tag list by up to 10
+# tokens and let six earlier drafts pass at 78-82 real tokens with the style
+# anchor already truncated away. To fit a named cast beside a goblin, this beat's
+# longer tail was traded for the 14-token one beats 05, 06 and 09 carry. THE
+# TRADED WORDS ARE `Medium full shot`, `bright morning light`, `detailed` and
+# `newest`, and they are the first thing to blame if framing or light regresses
+# against this beat's older plates.
+#
+# THE LAWS APPLIED. Every hand in frame is specified -- the pointing arm AND
+# `other hand open` -- because an unspecified hand is a vacancy the model fills
+# with the largest noun and the negative does not reach it (beat 10 got a bamboo
+# pole and a duplicate board in unspecified hands with `weapon` negated). The
+# upper third gets its own positive noun, `pale sky above`: a ground noun cannot
+# fill a sky region, which is what three failed rungs on beat 14 cost to learn.
+# `horizon` is negated nowhere.
+#
+# THE PRE-REGISTERED RISK, and it is not negated on purpose. The 2026-08-16
+# ruling says every prompt showing guard A's face must name the wire-rims, and
+# this is guard A facing the lens. On a TWO-GUARD plate, `glasses` inside one
+# man's clause landed on BOTH men at 5 of 5 legible renders; there is no second
+# guard here to spread to, there is a goblin, and whether the eyewear reaches HIM
+# is unmeasured. It is scored as a read below rather than negated, because
+# negating `glasses` against a positive asking for `wire-rim glasses` is the
+# contradiction plate_scratch.py exits 7 on.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend,
+# nothing published as footage.
+id: ep2-b07-cast-0817
+task: ep2-b07-cast-0817
+node: 002b-first-citizen
+beat: 7
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, because the backlog was
+  empty and the autofill never authors work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. This is a STILL PLATE on an approved
+  node: no voice synthesis, no motion, no episode assembly, no publication.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'The beat-07 motion lane, which has never had a plate of its own. Every beat-07 re-round predates the
+  2026-08-15 two-figure plate, and that plate is beat 08''s -- it holds a guard with a CLIPBOARD, which is guard
+  2''s prop, while this beat''s actor is Guard 1 and its done_when names no board. It also holds a BALD guard, the
+  attribute `guard_plates_are_miscast_0816` says contradicts the cast in the first thing a viewer reads off a person.
+  A cast-correct two-figure plate here is what beat 07 needs before one more second of GPU goes into moving a wrong
+  man.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported as
+  N of 16 plus a per-condition rate across the four seeds so no claim rests on a single draw. A frame PASSES only
+  by clearing every term: (1) EXACTLY TWO whole figures, one adult human guard and one goblin, adjacent in the same
+  depth plane -- not three, not one, neither cropped to a fragment; (2) the guard has DARK CROPPED hair -- not blond,
+  not sandy, not shaggy, and NOT BALD; (3) WIRE-RIM GLASSES legible as round wire frames on his face, not sunglasses
+  and not absent; (4) tan wrap tunic and a white sash on him; (5) one arm extended toward the goblin and legible
+  as a POINT, with his other hand visible and empty; (6) NO board, clipboard, slab or paper anywhere in frame, in
+  any hand or on the ground; (7) the background carries all three bands with real content -- tall grass at ground
+  level, a treeline, and sky ABOVE the treeline -- with no white or plain field and no downward plan view; (8) neither
+  figure infantile and no blush. PRE-REGISTERED FAIL MODES, each recorded by name whether or not it fires: eyewear
+  reaching the GOBLIN; the goblin drawn as a human child; a third figure appearing; the traded words'' framing and
+  light regression (a tighter or flatter frame than this beat''s older plates). If a term turns out loose it is said
+  so and TIGHTENED FORWARD for the next round, never rewritten after seeing the picture.'
+why: 'Beat 07 is one of six beats `guard_plates_are_miscast_0816` shut on a single cause, and the only one of them
+  that has never had a plate holding its own two-shot with the right actor. The correction is pure wording: the cast
+  is frozen (founder, 2026-08-16, "the cast stands as drawn"), and once casting was right on the one correct plate
+  identity held 14 of 14. Four minutes of local GPU against six blocked beats, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817
+  - --draft-key
+  - authored_b07_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817
+  - --draft-key
+  - authored_b07_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b07-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (confiscate) the sampler actually writes. A glob
+  # without it matches nothing, publishes nothing, and still returns a code that
+  # reads like a render failure -- that is what made six rendered plates read as
+  # six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b07-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/07-confiscate-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b07-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817\07-confiscate-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817\07-confiscate-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817\07-confiscate-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b07-cast-0817\07-confiscate-ipa-r3-w015-s0.png
