@@ -80,7 +80,7 @@ The guards walk away arguing, backs to camera, genuinely trying to do their jobs
 > **VO:** Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.
 
 **RELATED — 0:55–1:00**
-Tight on the sapling's two leaves, perfectly still — the scavenger is still crouched behind the trunk, below frame.
+Tight on the sapling's two leaves, perfectly still — the scavenger is still crouched in the grass behind them, out of frame.
 
 > **VO:** I have never related to a fantasy world more.
 

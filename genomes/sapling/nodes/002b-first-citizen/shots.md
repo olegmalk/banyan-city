@@ -614,7 +614,17 @@ Two round guards in mismatched armor walk away from camera across an empty field
 
 ## Beat 12 — RELATED (0:55–1:00) ⬜ needs footage
 
-Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
+Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still crouched low in the grass behind the plant and a wide shot would read as him having left (caught by the comprehension gate).
+
+**KNEE-HEIGHT REWRITE 2026-08-17 — the prompt below is UNCHANGED and the pick
+survives.** His ruling was *"rewrite the beats to work at knee height. change the
+story."* Beat 12's script line said the scavenger was *"crouched behind the trunk,
+below frame"*, which only works if the plant is tall enough to have a crouching man
+below its leaves; at ~40 cm it is not. The line now reads *"crouched in the grass
+behind them, out of frame"*. **Nothing in the picture changed** — this beat's
+`done_when` requires the goblin ABSENT and the prompt already says `no trunk, no
+ground, no other character`, so the fix was entirely in off-screen prose.
+`ep2-b12-tightB` is therefore NOT invalidated.
 
 **Round 3 was rejected on all four (ledger record 19, `ep2-b12-r3-provisional`,
 `reject_all`, 0.88): every frame made a large pink RIPE FRUIT the subject of a beat
