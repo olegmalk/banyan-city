@@ -314,3 +314,86 @@ sets:
       independent of every ruling that has landed since, and changes how prompts are
       written going forward.
     founder_card: none from this set. It must not be attached to the open beat-11 card.
+
+  ep2-b12-scene-0814:
+    what_it_is: >-
+      WAVE sheet, not an IPA sheet — a different animal from the b05/b09/b11 sets above.
+      4 seeds of ONE round (`render_round: wave-sample-1`), `consistency_mechanism: none`
+      — no IP-Adapter at all. Plant-only beat, no figure. Animagine-XL-3.1, 832x1216.
+    spec: pipeline/jobs/ep2-b12-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    draft_key_rendered: >-
+      authored_b12_scene — confirmed by normalised head-match against
+      pipeline/wave-drafts.yaml. It is beat 12's ONLY draft key; the beat has exactly one
+      and this set rendered it.
+    prompt_as_sent: >-
+      "A tiny sapling in green summer grass, a treeline and pale sky behind, with exactly
+      two oversized cotyledon leaves and one thin bare side-branch, the whole plant no
+      taller than the grass around it. Tight shot, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic"
+    bar_scored_against: >-
+      THE SET'S OWN SPEC (world present: grass, hedge/treeline, sky; plant on-canon;
+      usable frame-one) PLUS the four countable clauses the prompt itself asserts:
+      exactly two leaves, one thin bare side-branch, no taller than the surrounding
+      grass, treeline and pale sky behind.
+    files: 4
+    distinct: 4
+    score: 1 of 4
+    passes: [s3]
+    per_cell:
+      s0: FAIL — FOUR leaves (top pair, one left, one lower-right). Plant stands well
+        clear of the grass tops. No treeline. Sky is dark teal, not pale.
+      s1: FAIL — SIX leaves. Plant well above the grass. No treeline. Sky is the closest
+        to "pale" in the set (pink-lilac dusk) but is a dusk sky, not a pale morning one.
+      s2: FAIL — roughly SIX leaves. Plant above the grass. No treeline. Dark blue sky.
+      s3: PASS on leaf count — cleanly, unambiguously TWO leaves, and the plant sits at
+        about grass height. Still no treeline and the sky is dark teal rather than pale.
+        The best cell in the set and the only one whose leaf count is canon.
+    findings:
+      leaf_count_is_the_failure_and_it_is_a_wording_failure: >-
+        3 of 4 cells overshoot the leaf count despite the prompt saying "EXACTLY two".
+        The word `exactly` did not bind. This is the same class of result as beat 11's
+        hair finding: an explicit count adjective is not self-enforcing in this sampler.
+      no_treeline_in_any_cell: >-
+        0 of 4 cells contain the treeline the prompt and the spec both ask for. The
+        `hedge/treeline` half of the world clause failed set-wide while the `grass` half
+        succeeded set-wide. Worth separating: this beat did NOT suffer the world-absent
+        collapse b09 did — the ground plane is there in all four, only the mid-ground is
+        missing.
+      no_bare_side_branch: 0 of 4 cells show the "one thin bare side-branch" the prompt
+        asks for and which THE-SAPLING.md lists in the 002a/b/c row as canon
+        ("two leaves + one thin side-branch"). The clause landed nowhere.
+      sky_ran_dark_against_its_own_negative: >-
+        The prompt asks for "pale sky", the negative (assembled from the draft's trailing
+        "No ..." sentences) blocks `dark` and `night`, and all four cells are dusk or
+        night skies. Same negative-term failure measured in b09 and b18.
+    canon_now:
+      two_leaves: >-
+        The COUNT is canon and was asked for correctly — THE-SAPLING.md: "Every prompt
+        that puts the plant in frame asks for exactly two leaves." 1 of 4 delivered it.
+      leaf_shape_wording_is_superseded: >-
+        The prompt's "oversized COTYLEDON leaves" is the retired steward inference. His
+        ruling of 2026-08-17 is "the sapling 2 leaves are average leaves"
+        (THE-SAPLING.md 2.2), which supersedes round/oval cotyledons. NOT charged against
+        this set — the set predates the ruling by three days — but any re-render of this
+        draft must drop `cotyledon` for `average`.
+      height_staging_IS_canon_correct: >-
+        CORRECTION TO THE BRIEF, and it matters. Beat 12 was NOT rewritten to knee
+        height and should not be. wave-drafts.yaml states the scoping rule explicitly:
+        `knee high` is for "beats 02/03/07/17, a person is in frame", whereas
+        "no taller than the grass around it" is for "beats 01/18/21, no person in frame
+        but grass is" — and that phrase is flagged in the file as "Verbatim from
+        `authored_b12_scene`", i.e. from THIS SET'S OWN PROMPT. Beat 12 is the SOURCE of
+        the phrase the 0816 scale rewrite adopted, not a casualty of it. THE-SAPLING.md
+        3.3 rules the phrase compatible with 40 cm and "not a violation". Separately,
+        THE-SAPLING.md has STRUCK the sentence describing the sapling as knee-high,
+        because a 40 cm knee implies a 1.4 m goblin and collides with 004's 90 cm row.
+      purple_fruit: NOT APPLICABLE — beat 12 has no fruit in its prompt.
+    status: LIVE EVIDENCE
+    why_live: >-
+      Beat 12's single draft is unchanged and is the one rendered here, so this is
+      current evidence about the current wording — not a stale staging. s3 additionally
+      demonstrates the draft CAN produce a canon two-leaf plant at grass height, which
+      makes the other three a seed-variance problem rather than a wording dead end.
+    founder_card: none.
