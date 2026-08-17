@@ -634,6 +634,54 @@ def head_commit_epoch():
     return int(out) if out.isdigit() else None
 
 
+def origin_commit_epoch():
+    """Commit time of `origin/main` — the newest commit the DEPLOY can see.
+
+    THE BUG THIS FIXES, measured 2026-08-17. This section compared the live
+    site against LOCAL HEAD and called an 8.5-hour gap a stuck deploy, then
+    told the reader "pushing again will not fix it; publish with REPO-MOVE.md
+    A0." Every part of that was wrong. banyan.city had built at 10:16:32Z from
+    `origin/main` tip 145a02d5, committed 10:14:57Z — a 95-second deploy, i.e.
+    working perfectly. The gap was 185 commits sitting on this machine that
+    nobody had pushed, deliberately, waiting on the founder.
+
+    A deploy cannot be late for a commit it has never been given. Measuring it
+    against HEAD makes the gate fail by construction whenever work is held, and
+    a gate that cries wolf on a healthy deploy is one a tired reader learns to
+    skip — then misses the real one. Local ref, no fetch: a network call inside
+    the gate is a hang waiting to happen, and a stale `origin/main` can only
+    make this check more conservative, never less.
+    """
+    out = _run(["git", "-C", REPO, "log", "-1", "--format=%ct", "origin/main"]).strip()
+    return int(out) if out.isdigit() else None
+
+
+def mirror_says_stuck(drift_s, primary_lag_s, fail_s):
+    """Is a newer mirror evidence of a STUCK primary? Pure, so it is testable.
+
+    TWO CONDITIONS, and the second is the one this gate was missing. A mirror
+    newer than the primary is normal: `pages.yml` carries
+    `schedule: cron "*/30 * * * *"`, so the mirror restamps itself every half
+    hour from the SAME commit, while Vercel only builds on push. On any day
+    without a push the mirror is newer by however long it has been.
+
+    It is evidence of a stuck deploy ONLY when the primary is also behind what
+    was actually pushed. Both must hold.
+    """
+    return drift_s > fail_s and primary_lag_s > fail_s
+
+
+def commits_held_locally():
+    """Commits on HEAD that are not on `origin/main`, or None if unknowable.
+
+    Not a failure and never counted as one. It is the difference between "the
+    deploy is broken" and "we have not pushed yet", which are opposite problems
+    with opposite fixes, and the gate said the first when it meant the second.
+    """
+    out = _run(["git", "-C", REPO, "rev-list", "--count", "origin/main..HEAD"]).strip()
+    return int(out) if out.isdigit() else None
+
+
 def head_short_sha():
     return _run(["git", "-C", REPO, "rev-parse", "--short=7", "HEAD"]).strip()
 
@@ -940,9 +988,16 @@ def check_public_freshness():
     else:
         pub_time, clock = pub_lm, "last-modified"
 
-    # 1. lag behind HEAD
-    if head_ct:
-        lag = head_ct - pub_time
+    # 1. lag behind what the deploy can SEE — origin/main, not local HEAD.
+    # Held commits are reported on their own line below and are not a failure.
+    held = commits_held_locally()
+    if held:
+        print("  %s %-10s %d commit%s on this machine and not on origin — the "
+              "deploy has never been offered them, so they are NOT counted as lag"
+              % (yellow("note"), "unpushed", held, "s" if held != 1 else ""))
+    ref_ct = origin_commit_epoch() or head_ct
+    if ref_ct:
+        lag = ref_ct - pub_time
         if lag > PUBLIC_STALE_FAIL_S:
             # Named by commit when we have one — "3 commits behind at 15ee724"
             # is something a reader can act on; "old per some clock" is not.
@@ -954,18 +1009,21 @@ def check_public_freshness():
                 % (time.strftime("%H:%M:%SZ", time.gmtime(pub_time)), clock)
             )
             failures.append(
-                "banyan.city is %s BEHIND HEAD (%s, HEAD committed %s). "
-                "The deploy is not firing — pushing again will not fix it; "
-                "publish with REPO-MOVE.md A0."
+                "banyan.city is %s BEHIND ORIGIN/MAIN (%s, origin/main committed %s). "
+                "This is a real deploy failure: the commit was pushed and the site "
+                "did not rebuild. Pushing again will not fix it; publish with "
+                "REPO-MOVE.md A0."
                 % (_ago(lag), origin,
-                   time.strftime("%H:%M:%SZ", time.gmtime(head_ct)))
+                   time.strftime("%H:%M:%SZ", time.gmtime(ref_ct)))
             )
-            print("  %s %-10s %s behind HEAD" % (red("FAIL"), "lag", _ago(lag)))
+            print("  %s %-10s %s behind origin/main" % (red("FAIL"), "lag", _ago(lag)))
         elif lag > PUBLIC_STALE_WARN_S:
-            print("  %s %-10s %s behind HEAD (build latency, or a skipped docs-only push)"
+            print("  %s %-10s %s behind origin/main (build latency, or a skipped docs-only push)"
                   % (yellow("warn"), "lag", _ago(lag)))
         else:
-            print("  %s %-10s %s behind HEAD" % (green(" ok "), "lag", _ago(max(lag, 0))))
+            print("  %s %-10s %s behind origin/main%s"
+                  % (green(" ok "), "lag", _ago(max(lag, 0)),
+                     " (held commits are not lag)" if held else ""))
 
     # 2. mirror cross-check — only ever clock-vs-same-clock. Comparing the
     # mirror's real build time against a cache-fill instant is what made this
@@ -992,15 +1050,31 @@ def check_public_freshness():
               % (yellow("warn"), "mirror", clock))
     else:
         drift = mir_time - pub_time
-        if drift > PUBLIC_STALE_FAIL_S:
+        # THE TWO SITES DO NOT REBUILD ON THE SAME TRIGGER, and comparing them as
+        # though they did is what made this fire on a healthy deploy. `pages.yml`
+        # carries `schedule: cron "*/30 * * * *"` — added on purpose so status.html
+        # does not freeze while the farm renders — so the mirror restamps itself
+        # every half hour FROM THE SAME COMMIT. Vercel only builds on push. On any
+        # day with no push, the mirror is newer by however long it has been, and
+        # that is the system working, not the primary dying.
+        # The signal only means something when the primary is ALSO behind what was
+        # pushed. `lag` is measured against origin/main immediately above, so a
+        # mirror newer than a CURRENT primary is a cron tick and nothing else.
+        primary_lag = (ref_ct - pub_time) if ref_ct else 0
+        if mirror_says_stuck(drift, primary_lag, PUBLIC_STALE_FAIL_S):
             failures.append(
-                "the Pages mirror is %s NEWER than banyan.city — the mirror rebuilt "
-                "and the primary did not, so the primary's deploy is STUCK. "
-                "Current content is at %s%s"
+                "the Pages mirror is %s NEWER than banyan.city AND banyan.city is "
+                "behind origin/main — the mirror rebuilt and the primary did not, "
+                "so the primary's deploy is STUCK. Current content is at %s%s"
                 % (_ago(drift), MIRROR_BASE, MIRROR_PROBE)
             )
             print("  %s %-10s %s newer than primary — primary deploy is STUCK"
                   % (red("FAIL"), "mirror", _ago(drift)))
+        elif drift > PUBLIC_STALE_FAIL_S:
+            print("  %s %-10s %s newer than primary, but the primary is current with "
+                  "origin/main — that is the mirror's */30 cron restamping the same "
+                  "commit, not a stuck deploy"
+                  % (green(" ok "), "mirror", _ago(drift)))
         else:
             print("  %s %-10s within %s of primary" % (green(" ok "), "mirror", _ago(abs(drift))))
     print()

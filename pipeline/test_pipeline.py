@@ -9628,6 +9628,7 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
 def main():
     import tempfile
     test_a_stale_harness_cannot_render_a_killed_wording()
+    test_a_newer_mirror_alone_is_not_a_stuck_deploy()
     test_beat_duration_from_timecode()
     test_beat_duration_fallback()
     with tempfile.TemporaryDirectory() as td:
@@ -11108,6 +11109,33 @@ def test_a_stale_harness_cannot_render_a_killed_wording():
           "harness_drafts_problems" in
           (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
           .split("def gate_checks")[1].split("\ndef ")[0])
+
+
+def test_a_newer_mirror_alone_is_not_a_stuck_deploy():
+    """The gate said STUCK on a healthy deploy for as long as work was held.
+
+    banyan.city built 95 seconds after the last PUSHED commit -- working
+    perfectly -- while 185 commits sat unpushed on the laptop. qa_local measured
+    lag against local HEAD, called it an 8.5h stuck deploy, and cited the Pages
+    mirror as corroboration. But `pages.yml` reruns on a */30 cron from the same
+    commit, so a newer mirror is the normal state of any day without a push.
+
+    Both directions are asserted here, because the fix is only worth having if
+    the check can still go red on the real failure it was written for.
+    """
+    import qa_local as q
+    H = 3600
+    check("a newer mirror with a CURRENT primary is the cron, not a stuck deploy",
+          not q.mirror_says_stuck(drift_s=11 * H, primary_lag_s=0, fail_s=3 * H))
+    check("a newer mirror AND a primary behind what was pushed is still STUCK",
+          q.mirror_says_stuck(drift_s=11 * H, primary_lag_s=5 * H, fail_s=3 * H))
+    check("a behind primary with no mirror drift does not fire this check",
+          not q.mirror_says_stuck(drift_s=0, primary_lag_s=5 * H, fail_s=3 * H))
+    check("both must clear the threshold, not merely be positive",
+          not q.mirror_says_stuck(drift_s=4 * H, primary_lag_s=1 * H, fail_s=3 * H))
+    check("lag is measured against origin/main, not HEAD",
+          "origin/main" in (REPO / "pipeline" / "qa_local.py")
+          .read_text(encoding="utf-8").split("def origin_commit_epoch")[1][:400])
 
 
 if __name__ == "__main__":
