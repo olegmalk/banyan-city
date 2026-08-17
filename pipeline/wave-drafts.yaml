@@ -523,6 +523,37 @@ beats:
       five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush
       foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_b01_geom_0817` -- 2026-08-17, geometry-vs-number rung.
+    # DERIVED FROM `authored_b01_scale_0816`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is
+    # the control: it is the draft `pipeline/jobs/ep2-b01-scale-0817.yaml` renders over 16
+    # stills, so the comparison is against a wording someone is already watching.
+    # ONE VARIABLE. `exactly two wide oval cotyledon leaves` becomes `wide oval cotyledon
+    # leaves opposed one either side of the stem`. The count assertion is gone; the same
+    # pair is described by its geometry instead. Every other clause -- the purple fig, the
+    # scale relation `no taller than the grass around it`, the style tail and the WHOLE
+    # negative -- is byte-identical to the control, including `no three leaves, no four
+    # leaves, no many leaves`, which stay because dropping them would be a second variable.
+    # WHY: `exactly two` runs 3 of 8 across the plant-only wave sheets and CLIP's embeddings
+    # are near-identical across numerals (T2ICountBench, arXiv 2503.06884), while the
+    # fig-shape clause landed a correct teardrop 1 of 1 on a plate with no fig in it. Shape
+    # language binds where count language does not; this asks whether that carries to leaves.
+    # `a pair of ...` measured fine and was REJECTED on purpose: `pair` is another way of
+    # saying two, and a win with it would not tell geometry from lexis.
+    # REAL CLIP (openai/clip-vit-large-patch14, sd_prompt.compress + negative_tokens):
+    # 73/77, headroom 4, POSITIVE DROPPED: none, STYLE ANCHOR PRESENT: True. Control on the
+    # same harness: 68/77, reproducing the figure ep2-b01-scale-0817 took from the box.
+    # FAILURE IS REACHABLE: `whole plant in frame` keeps the whole stem in shot, so a third
+    # leaf -- or a second opposed pair further up -- can appear and be counted against this.
+    authored_b01_geom_0817: >-
+      A tiny fig seedling in an open grassy field, wide oval cotyledon leaves opposed one
+      either side of the stem, and one small deep purple-violet fig, green at its neck,
+      matte, growing on its thin stem, whole plant in frame, no taller than the grass
+      around it. Cinematic lighting, masterpiece, best quality, very aesthetic No woman,
+      no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no
+      green fig, no green fruit, no red fruit, no white fruit, no pale fruit, no lobed
+      leaves, no five-fingered leaves, no three leaves, no four leaves, no many leaves, no
+      lush foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical,
+      no text.
   2:
     slug: the-sprint
     kind: goblin
