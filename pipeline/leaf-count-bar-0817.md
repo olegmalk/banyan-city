@@ -256,3 +256,13 @@ one-line-per-rung index lands here.
   was never fired and is now moot; the lane's second fire is unspent. Full score in that
   spec's `verdict_0817`. Remaining calls are the founder's: whether these are his "average
   leaves", and shippability of an off-canon mechanism plate.
+- **Replication — `ep2-b01-leafcomp-s3-0817` (fired and judged 2026-08-17, box, bf16/CUDA, $0):
+  4 of 4 again on a SECOND independent composite, so 8 of 8 across two inits.** Same recipe,
+  only the init moved; pre-registration at `1091024f` fixed what a partial would have meant
+  before the frames existed, and nothing had to be argued after. Merge and split stayed
+  reachable — every blade pixel and every patched pixel sat inside the denoised ellipse (worst
+  radius 0.897). Height tighter than the first fire: apex 620 in, 619–621 out, |Δ| ≤ 1px, grass
+  taller than the plant 4 of 4. Shape unchanged as an observation (broad-ovate to lance-ward
+  left blade, narrow curved right blade), so the founder's open "average leaves" card gains
+  nothing new. **AXIS A binding is a property of the recipe, not of one lucky composite.** The
+  2-fire ceiling is spent, both fires landed, and no third instrument is owed.
