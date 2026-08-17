@@ -1,0 +1,103 @@
+# Verdict on the three beat-01 count rungs rendered 2026-08-17 evening.
+#
+# Each bar below was PRE-REGISTERED in the job spec BEFORE its frames existed
+# (commits abb8b622 and 64cc6f43) and is applied AS WRITTEN. Nothing here is a
+# taste call: which frame ships, if any, is R4's and this file promotes nothing.
+#
+# METHOD. All 48 frames were pulled from the box's farm-out to a local scratch
+# dir and read on contact sheets built by pipeline/compare_sheet.py at 8 cells
+# per sheet, because a count read off a 16-cell strip is not a measurement --
+# this beat's own control verdict made that mistake first and corrected it.
+# Cells are named where they carry the verdict.
+
+rungs:
+  ep2-b01-nodecount-0817:
+    draft: authored_b01_nodecount_0817
+    lever: '`at one node` appended to the control''s leaf clause -- a numeral applied to a
+      structural feature rather than to the counted objects.'
+    frames: 16 of 16 read
+    primary_leaf_count: '3 of 16 (r2-s3, r3-s1, r3-s2, with r3-s3 arguable). Rows r0 and r1
+      are 0 of 8: every cell carries three to eight leaves on two to four stacked nodes.'
+    mechanism_node_count: 'NOT COLLAPSED. The wording did not reduce node count anywhere in
+      rows r0/r1 -- stems still show two to four leaf-bearing nodes, which is the exact
+      failure the rung was built to remove.'
+    secondary_height: '0 of 16. Every cell is macro-tight; where grass appears the plant
+      overtops it. No regression from the control''s 0 of 16, and no gain.'
+    verdict: NO EFFECT
+    rule_applied: 'Binding required 9 of 16; at or under 6 of 16 was declared NO EFFECT
+      before the frames existed. 3 of 16 is NO EFFECT.'
+
+  ep2-b01-stage-0817:
+    draft: authored_b01_stage_0817
+    lever: '`newly sprouted` -- a developmental-stage adjective, the only wording on the
+      board that constrains count without asserting a number.'
+    frames: 16 of 16 read
+    primary_leaf_count: '3 of 16 (r2-s3, r3-s1, r3-s2). Rows r0/r1 are 0 of 8.'
+    also_fired: 'FAIL-COLOUR on r0-s0 and r1-s1 -- each carries TWO purple figs, and the
+      inherited bar fails "more than one" fruit. Worth noting because the control did not
+      do this: the stage adjective may have pushed toward a fruiting cluster.'
+    secondary_height: 0 of 16.
+    verdict: NO EFFECT
+    rule_applied: 3 of 16 against a 9 of 16 bar.
+    note_on_the_prediction: 'This rung was pre-declared the most promising of the three, on
+      the ground that stage adjectives are the class that has bound here where numerals have
+      not. That prediction is WRONG and is recorded as wrong.'
+
+  ep2-b01-twoleaf-0817:
+    draft: authored_b01_twoleaf_0817
+    lever: '`two-leaf` as a hyphenated modifier of the plant -- the approved script''s own
+      words -- rather than a numeral quantifying a head noun.'
+    frames: 16 of 16 read
+    primary_leaf_count: '3 of 16 (r2-s3, r3-s1, r3-s2). Rows r0/r1 are 0 of 8.'
+    secondary_height: 0 of 16.
+    verdict: NO EFFECT
+    rule_applied: 3 of 16 against a 9 of 16 bar.
+    the_pre_registered_prediction_fired: 'Its own bar said: "if the tokeniser splits
+      `two-leaf` into `two` and `leaf`, this rung IS `exactly two` wearing a hyphen and will
+      null exactly like it did." It scored within one cell of `exactly two`. The attributive
+      compound is not a different lever.'
+
+# ---------------------------------------------------------------------------
+# THE FINDING THAT MATTERS, AND IT IS NOT ANY ONE OF THE THREE SCORES.
+the_passing_cells_are_the_same_cells_in_every_rung: >-
+  r2-s3, r3-s1 and r3-s2 pass in ALL THREE rungs, and r2-s3 is very nearly the same
+  picture each time: a bush-sized purple fig teardrop with exactly two green cotyledon
+  leaves perched on top. Three different wordings did not each independently discover
+  that composition. THE REFERENCE SET IS DRAWING IT. Which means the ~3 of 16 is not a
+  wording effect at all -- it is the arm's own floor, and every wording measured here has
+  been measuring the refs.
+
+prompt_side_count_control_on_this_arm_is_EXHAUSTED: >-
+  Five wordings have now been measured on this same grid against this same reference set:
+  `exactly two` 0 of 16, the unanchored canon draft 0 of 16, `opposed one either side of
+  the stem` 2 of 16, `at one node` 3 of 16, `newly sprouted` 3 of 16, `two-leaf` 3 of 16.
+  Every one lands in a 0-3 of 16 band whose passing cells are the same ref-driven
+  positions. That is not five near-misses, it is one null measured five times. The wording
+  is not the lever on this arm and further wordings should NOT be filed -- doing so spends
+  the card to re-answer an answered question, which is the mistake this lane has already
+  made once by re-running a clip that existed.
+
+what_this_licenses: >-
+  COMPOSITE-THEN-INPAINT IS THE ROUTE, and it is not a new bet: it already delivers exact
+  two-leaf count 8 of 8 across two independent inits with zero GPU spent on the count,
+  because with a composited init the thing you want is not a sample from the model. The
+  next beat-01 job should PRODUCE a plate by that route rather than TEST another wording.
+  Filed as the recommendation, not as a job -- authoring it is a build, not a rename.
+
+what_this_does_not_license: >-
+  It does not say prompt wording never controls count on SDXL, and it does not say the
+  refs are bad. It says that ON THIS ARM -- beat 01, refs-fig-leaf-0814, arm window4, this
+  checkpoint -- wording does not move the count, and that a rung run here measures the
+  reference set. A cleanly different arm is a different experiment with a different bar.
+
+height_is_a_separate_open_problem: >-
+  0 of 16 on all three, as on the control. Every cell is macro-tight and the grass is
+  absent or a strip, so `no taller than the grass around it` has no yardstick in shot.
+  This is a FRAMING failure and no count wording addresses it. It is the more shippable
+  defect of the two and nobody has run a rung at it.
+
+not_my_call: >-
+  Whether any of these 48 frames is usable is R4's. Several r2/r3 cells are striking
+  pictures -- a purple fig with two leaves against open ground -- and they are also
+  FAIL-SCALE against this beat's own bar, which asks for a seedling no taller than the
+  grass. Striking and wrong-for-the-beat is a taste question, not a measurement one.
