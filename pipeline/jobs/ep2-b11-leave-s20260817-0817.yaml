@@ -326,3 +326,82 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: FAIL
+  clip: farm-out/ep2-b11-leave-s20260817-0817/11-they-leave-s20260817-LTX-castplate.mp4
+  clip_sha256: 525ec91a64285e0562be9dde7cf9780e8c039d8e1f28de2e6f9fc0f7d2ca5570
+  read: >-
+    ALL 97 FRAMES OPENED CONSECUTIVELY in seven sheets, plus 3x head crops of
+    both men at f000, f020, f030, f040, f050, f055, f070, f075, f082, f085 and
+    f096. This reading is the verdict; every number below is a filter that came
+    after it. Bar applied is beat 11's own `done_when` verbatim, unsoftened.
+  against_done_when:
+    D1_two_guards: PASS to f082, FAIL after. Two men, correct count, no third
+      body at any frame.
+    D2_walking_away_from_camera: FAIL, AND IT IS THE OPPOSITE OF THE ACTION.
+      They come TOWARD the lens. Guard B's on-screen height goes 216 px at f000
+      to 294-304 px at f040-f060, +37%, while the stationary internal control
+      (the treeline row across the top of frame) sits at row 105 in every frame
+      sampled -- so this is the figures approaching, not a camera tilt. They
+      also track steadily LEFT, which is what walks guard A out of the picture.
+    D3_backs_turned_no_face: FAIL, AND THIS IS THE CLEAREST SINGLE DEFECT.
+      Guard B turns his head to his left and at f020 and f030 his FACE IS FULLY
+      DRAWN IN PROFILE -- brow, eye, nose and an open mouth mid-sentence. He is
+      back to a pure rear view by f070. `facing viewer` and `looking back` were
+      both in the negative and did not prevent it.
+    D4_both_present_whole_clip: FAIL. Guard A is clipped by the left frame edge
+      from about f072 and is GONE from f083. The last fourteen frames are one
+      man walking alone, which is not this beat.
+    D5_field_at_frame_one: PASS.
+    D6_no_head_or_costume_change_no_merge: PASS, AND IT IS THE RESULT WORTH
+      KEEPING. The fault that broke the take in the cut -- "the near guard's
+      bald scalp fills in with dark hair continuously across f16-f21", ending on
+      "two indistinguishable brown-haired backs" -- DID NOT RECUR. Guard A stays
+      dark-cropped-haired in the tan tunic and guard B stays light-sandy-haired
+      in the dark brown coat, in every frame each of them is in, and the two men
+      never converge. One sample cannot prove a mechanism, but the prediction
+      written before it fired ("your plate asks for the right men, so watch
+      whether the fault disappears") came out on the side of the plate.
+  hold_and_freeze:
+    terminal_freeze_index: >-
+      0. NO frozen tail. Measured as exact consecutive-frame ncc = 1.0000 and
+      reported separately from the hold. There is no such pair ANYWHERE in the
+      clip, and the last pair f095-f096 reads 0.888887.
+    hold: coldread_frames reports a hold every 3 frames (lag-3 autocorrelation
+      +0.97), i.e. 96 frames carrying about 32 distinct pictures, an effective
+      8.0 fps. That is a near-hold, not a freeze, and the two are not merged.
+    not_quoted: depth (retired AND inverted) and the old cadence statistic
+      (aliases odd hold periods to 1.00x). The tool printed 1.61x and it is
+      recorded here only as NOT USED.
+  instrument: >-
+    Deliberately no new tracker was built for the identity read, which is
+    eyes-only. The one number that needed measuring -- does the figure grow or
+    shrink -- uses a warm-coat mask (R > G+18 and R > B+18) with scipy connected
+    components, following the b17_hand_track pattern of validating BEFORE
+    judging: GATE-frozen, the same frame twice, returns an identical height
+    (312 px both times); GATE-scale, f000 upscaled 1.25x about its centre,
+    recovers a ratio of 1.250 against a wanted 1.25. The internal control is the
+    treeline row in the same frames rather than a global fit, because chained
+    camera-scale numbers are unreliable.
+  what_this_does_and_does_not_establish: >-
+    IT DOES NOT KILL THE WORDING. One take in three fails its action on this
+    engine for reasons nobody has isolated, so a single FAIL is inside the base
+    rate and a re-seed of this exact wording is a legitimate next step. What it
+    does establish is that TWO of the three failures are not seed noise but
+    wording: nothing in the prompt fixes the men's distance from the lens
+    (`walking away from the camera` was carried as a state tag and the render
+    read it as a heading, not as a receding one), and nothing holds guard B's
+    head from turning while `gesturing at each other as they argue` explicitly
+    invites him to address the man beside him. NO SEED BATCH SHOULD BE FILED OFF
+    THIS WORDING. The next single sample is a wording change, and the two
+    candidates the frames name are (a) a receding-scale term the plate can
+    anchor -- the men made smaller by their own motion rather than by a camera
+    word the negative also has to fight -- and (b) dropping the mutual-gesture
+    clause so the argument is carried by gait and hands rather than by a turned
+    head. One at a time, one sample each.
+  not_done_on_purpose: No re-render, no seed batch, no recipe change, no second
+    bar, no plate redraw. shots.md and pipeline/wave-drafts.yaml UNTOUCHED. The
+    clip is stamped approved false, provisional true, is_show_content false,
+    cost_usd 0 and is NOT proposed for the cut -- picking a take is the author's
+    call (R4). The broken take stays in the demo cut until a passing one exists.
+  evidence: pipeline/research/EVIDENCE-b11-castplate-0817.png
