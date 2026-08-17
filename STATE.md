@@ -8531,3 +8531,97 @@ died at four seeds.** Recorded here because the near-miss is the lesson:
 **The one rule that survived is the one that had a matched control at three seeds
 a side** — name what every hand in frame is doing. That is the difference, and it
 is the whole content of this addendum: a rule needs a control, not a good picture.
+## 2026-08-17 — beat 14: "grass and dirt are bistable" is dead, and the hole was above the horizon all along
+
+**Correcting this file.** The 2026-08-16 entry above concluded from beat 14's r1
+and r2 that *"grass and dirt are bistable by wording — one wins or the other
+does"* and filed the beat as needing a composition tool rather than adjectives.
+**That entry is left standing unedited and its diagnosis is wrong.** Three
+further rungs, each one variable, each pre-registered in a commit before the
+pixel, each a single sample opened and judged. All five revisions are draws of
+**one seed (20260814)**, so they differ by text alone.
+
+- **r2's desert was the vacancy law, not a fight over the ground.** r2 deleted
+  `green grass` from the positive *and put grass in the negative*, which removed
+  the background's only noun and then forbade it. The largest remaining noun was
+  dirt, so the dirt ran to the horizon — the same law that grew a colossus in
+  beat 08's reserved sky. Two things had moved at once and the conclusion was
+  drawn as if one had.
+- **r3 (`tall green grass behind him`) put both substances in one frame** — bare
+  soil under both sets of fingertips *and* green grass — which r1 and r2 never
+  did. **So they are not bistable.** It failed P5: the band above his hunched
+  back came back a featureless pale wash larger than his torso. The clause
+  rendered as *tufts beside him at his own depth*, because `behind him` is
+  anchored to the **figure**.
+- **r4 (`tall green grass background`) solved the composition the beat has wanted
+  since 08-16** — green grass on four sides of the bare soil, a dirt patch inside
+  a green field. **P4 passes.** The frame-anchored tag *did* reach the upper band
+  where the figure-anchored one never touched it — it turned it green and added
+  faint texture — but **what it delivered was the colour of grass, not grass.**
+- **The finding that matters, and it retires four rungs of effort in one line:
+  THE HOLE IS ABOVE THE HORIZON.** Grass grows on the ground, so no phrasing of a
+  grass noun can ever fill that band, and every rung so far had been **aiming a
+  ground noun at a sky region.** It is also why (11,3) got grass to its top edge
+  and this beat cannot: (11,3) looks *along* the field at two men walking away,
+  so the ground plane fills the frame geometrically. A low close-up on a
+  crouching figure has a horizon, and therefore has a sky.
+- **Naming that sky is contraindicated by our own record and the plan to do it
+  was withdrawn.** r4's commit had pre-registered "name the sky positively" as
+  the next rung. Beat 17's draft records that *deleting* `wide blue sky above`
+  **removed a colossus completely** — asking for a wide sky is what *manufactures*
+  the flat region. So the remaining move is not to fill the band but to **remove
+  it**, by framing tight enough that there is no above-horizon band, which is
+  also what beat 14's `done_when` actually asks for ("his hands and the ground
+  both in frame" — it says nothing about a field).
+
+**Two rules were confirmed and one bar was caught being loose.** `low close-up`
+and `hands and dirt large in frame` have sat **mid-prompt in every revision**,
+and leading framing tags are the one measured law this beat had never applied —
+r5 moves them to the front and **changes not one token**, verified as an
+identical tag multiset at the same 75/77. Separately: **r3's P4 named both
+substances and never named their ratio**, so a dirt plane with grass at the
+fringes satisfied its text. It was scored as written and **not retroactively
+failed** — bending a bar after the picture is how 8/12 "passes" became 0/12
+usable this week — and the ratio was added forward, for r4 on. **Nothing in
+either hand at three revisions running**, with both hands specified: a third
+data point for the hand rule, still not a proof.
+
+**No seed batch was fired at any rung**, because the committed decision rule
+spends three fresh seeds only once every axis holds, and P5 has not yet held.
+$0, single samples, nothing enqueued, no motion, no `plate_ack`.
+
+## 2026-08-17 — beats 07 and 08 need TWO figures, ruled from the script
+
+A filing lane escalated rather than decided a contradiction in our own files:
+beat 07's `done_when` wanted *"the second guard and the field"*, beat 08's wanted
+*"both guards and the scavenger"*, and the two-figure plate that passed carries
+*"Three or more figures fails"* in axis 1 of its own bar. **Resolved against the
+SCRIPT, which is the authority, not against either `done_when`.**
+
+**The script asks for two in both.** *"Guard 1 points at the scavenger,
+decisive."* — *"Guard 2 lowers the clipboard and points at the scavenger's
+belly."* One guard as actor, the scavenger as target, in each. **The rule is
+ACTOR PLUS THE TARGET OF THE ACTION**, and the control proving it was not fitted
+to the answer is **beat 10**: an equally singular stage direction that under the
+same rule correctly needs *two guards*, because the target of that gesture **is**
+the partner — which is the number beat 10's definition already carries.
+
+**Beat 06 is the decisive corroboration.** Identical grammatical shape to beat 08
+(*"GUARD 2 turns over a clipboard made of bark and reads"*), its `done_when` asks
+for **one** guard, and it **ships off a one-guard scene plate**. There is no
+reading on which 06 takes one and 08 takes three. The script is also **plural
+when it means both guards** (05 *"Two PATROL GUARDS jog in"*, 11 *"The guards walk
+away arguing"*) and both those definitions are correctly plural; and **beat 09, a
+one-figure close-up, sits between 07 and 08**, so the stretch already alternates
+coverage and was never a locked three-figure master. Beat 08's clause also
+refutes itself — it states its reason as *"since a point needs its target
+visible"*, and the target is the belly.
+
+**What this does NOT do: neither beat is unblocked. Only the count is settled.**
+The passing plate's guard is **bald**, and `guard_plates_are_miscast_0816` says
+neither approved guard is; beat 07's guard is Guard 1, who has no clipboard, so
+it wants its own plate; and 07 is separately gated. **The remaining work is a
+CAST problem on a two-figure composition that already renders — not a
+three-figure composition that has never existed.** That reframing is the value.
+Both `done_when` strings are left byte-identical with dated corrections beneath.
+The three queued engine probes are untouched and remain `is_show_content: false`.
