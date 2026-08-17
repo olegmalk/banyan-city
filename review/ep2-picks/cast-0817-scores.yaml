@@ -1,0 +1,139 @@
+# Scores for the seven cast-correction rungs ep2-b05..b11-cast-0817.
+# Written 2026-08-17 by the scoring lane. NO RENDERING was done: every frame
+# scored here already existed on the box when this lane opened.
+#
+# WHY THIS FILE AND NOT done-definitions.yaml: the brief said to record verdicts
+# in a file this lane owns if done-definitions.yaml was mid-write by a peer. It
+# was clean at open, but ~30 peer lanes are live this shift and one lane has
+# already lost this exact verdict set three times today by batching. These
+# verdicts are therefore written to a file with a single writer and committed one
+# beat at a time. done-definitions.yaml was READ, not written: every beat's
+# `done_when` below is quoted from it, not from the dispatch summary.
+
+denominator:
+  report_as: N of 12
+  reason: >-
+    refs-guards-twoinfield-nos2-0815 holds 3 DISTINCT images in 4 slots (s0 and
+    s3 byte-identical), so cell r3 is a redraw of r0 and carries no independent
+    evidence. Each beat writes 16 png of which 12 are distinct.
+  verified_independently_by_this_lane: >-
+    sha256 of all 112 png across the seven beats: every beat is exactly 12
+    distinct hashes, and r3 == r0 at all four seeds on all seven beats, zero
+    mismatches. The corrected denominator is confirmed, not taken on trust.
+  not_a_loosening: >-
+    12 was always the true count. Not one term of any bar is altered here; only
+    the denominator, which was miscounted. Every r3 frame was skipped.
+  duplication_is_not_a_fault_of_these_plates: >-
+    The 4 wasted cells per beat came from a five-days-stale sampler on the box,
+    fixed 2026-08-17 (`dedup_cells`). Pre-existing defect, not scored against
+    these plates.
+
+render_path_for_the_record:
+  host: rtx5090 box
+  precision_device: bf16 / CUDA
+  model: animagine-xl-3.1
+  colour_caveat: >-
+    bf16/CUDA renders RED where MPS renders PURPLE off the identical seed (MAE
+    60-61). Any colour reading below is a bf16/CUDA reading. The fruit is
+    PURPLE, canon-wide and retroactive; no colour call here overrides that.
+
+standing_limits_this_lane_respected:
+  taste_is_not_mine: >-
+    Picks with stated reasons are this lane's. Whether the LOOK is right is R4
+    and the founder's alone. Founder cards are named, never pre-empted.
+  no_diagnostic_rung_promoted: >-
+    b05, b10 and b11 are marked in their own specs as diagnostic rungs no lane
+    may promote to a shipping plate. None is promoted here regardless of score.
+
+beats:
+
+  '06':
+    role: >-
+      One guard (guard B), board INSIDE HIS OWN CLAUSE. The prop-ownership
+      grammar the other rungs copy, and the only guard beat already shipping.
+    done_when_quoted_from_done_definitions: >-
+      the guard turns the bark board over and reads off it; board hand-sized and
+      readable; field present at frame one; no white burst at the head of the clip.
+    scored: 12 of 12 frames looked at (r0/r1/r2 x s0-s3), r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: PARTLY -- the correction this batch exists for LANDED; other cast terms did not
+
+    per_condition_rate:
+      c1_exactly_one_adult_figure: >-
+        6 of 12. Two figures at r0s2, r0s3, r1s0, r1s1, r1s2, r1s3 -- the whole
+        r1 row plus half of r0. One figure at r0s0, r0s1 and all four of r2.
+        The pre-registered fail mode "a second figure appearing" FIRES, 6 of 12.
+      c1_adult_sub_reading: >-
+        WEAK across the board. The man reads adolescent rather than adult in most
+        cells -- soft face, slight build, and sneakers at r0s2 (green) and r0s3
+        (orange). Not scored as an outright child, but the bar says "adult" and
+        this is the honest reading.
+      c2_light_sandy_hair_not_dark_not_bald: >-
+        12 of 12. THIS IS THE FINDING. Every frame is light sandy/blond and NOT
+        ONE is bald. The defect the whole batch was cut for -- 14 of 17 plate
+        prompts asking `bald` when neither approved guard is bald -- is gone.
+      c3_cream_short_sleeve_shirt: 10 of 12. r1s1 and r1s3 add long dark under-sleeves; r1s2 is a long robe.
+      c4_white_sash_over_ONE_shoulder_not_waist: >-
+        0 of 12, and this is the worst term. Where a shoulder band exists it is
+        the WRONG COLOUR: dark brown at r0s0/r0s2/r0s3/r2s2, teal at r2s0, orange
+        at r2s1, blue-striped at r0s1 and r1s2. Where it is absent the sash has
+        gone to the WAIST: r1s0, r1s1, r1s3, r2s3.
+      c5_broad_dark_brown_wrap_skirt: >-
+        8 of 12. Brown and correct on all of r0 and all of r2. The r1 row renders
+        the skirt CREAM/TAN rather than dark brown, 0 of 4.
+      c6_board_in_BOTH_hands_reading_height_looking_down: >-
+        9 of 12. r2s1 has the board OUT OF HIS HANDS entirely, lying in the grass
+        behind him, hands clasped and empty. r2s2 has one hand only. r0s0 has a
+        hand partly across the board's face.
+      c7_hand_sized_flat_rectangular: >-
+        6 of 12. r0s1, r0s2, r1s1, r2s0 and r2s1 render LUMBER -- long planks,
+        one of them taller than the man. r0s0 also has an oversized plank standing
+        in the foreground beside the held one.
+      c8_surface_reads_as_ROUGH_BARK: >-
+        0 of 12, unchanged from four earlier wordings. Every board reads as
+        PLANED TIMBER -- sawn faces, straight cut edges, milled grain -- which the
+        bar excludes by name, except r2s2 and r2s3 which read as PALE PAPER,
+        which it also excludes by name.
+      c9_grass_plus_hedgerow_plus_sky_all_real: >-
+        8 of 12. The entire r2 row loses it -- those four are framed tight enough
+        that there is no sky band at all. r0s3 has no clear sky either.
+      c10_no_white_or_plain_bg_and_no_plan_view: >-
+        No white or plain background anywhere, 12 of 12 on that half. The plan
+        view is the problem: the r0 row is shot from a markedly HIGH DOWNWARD
+        angle and r0s2/r0s3 are close to true top-down. 8 of 12.
+
+    pre_registered_fail_modes:
+      sash_migrating_to_the_waist: >-
+        FIRED, 4 of 12 (r1s0, r1s1, r1s3, r2s3). The bar calls this the tell that
+        the two men have merged, and it coincides with the r1 row also being the
+        row that renders two figures -- consistent with a merge, not a coincidence.
+      board_reading_as_paper: FIRED, 2 of 12 (r2s2, r2s3). Planed timber, also excluded, fired on 10 more.
+      a_second_figure_appearing: FIRED, 6 of 12. The single largest defect on this beat.
+
+    pick: >-
+      r0s0, and it is a pick of the least-bad frame rather than a pass. Reasons:
+      it is the only frame that holds ONE figure, sandy non-bald hair, a cream
+      short-sleeve shirt, a dark-brown wrap skirt, a board in both hands at
+      reading height with the eyes down, AND all three world bands at once. What
+      it costs: the shoulder band is dark brown instead of white, the camera is
+      high, and the board is planed timber rather than bark. Runner-up r2s0 has a
+      cleaner read-down pose but loses the sky band and carries a plank.
+    verdict: >-
+      DOES NOT CLEAR ITS BAR -- 0 of 12 frames clear every term. But it is NOT a
+      null result: the cast defect this rung was cut to fix is fixed 12 of 12
+      (sandy, never bald), and the two remaining blockers are both OLD and both
+      NAMED -- the bark-vs-timber prop wording (0 of 12, the failure that already
+      cost four wordings and 23 inpaint samples and was only ever solved by
+      COMPOSITING) and a white one-shoulder sash that has never bound (0 of 12).
+    blocked_on: >-
+      (a) the board: prompt wording is exhausted as an instrument here, the
+      standing evidence says composite; (b) the white one-shoulder sash, which
+      needs its own wording rung; (c) single-figure control -- the two-guard ref
+      set is pulling a second man onto a one-guard beat.
+    founder_cards_hit:
+      - >-
+        R4/taste: whether an adolescent-reading guard is acceptable at all is a
+        taste call on the approved cast, not a scoring call. Named, not decided.
+    not_shippable_reason: >-
+      Its own shipping blocker (bark board) is untouched, so this does not
+      replace the shipping pick ep2-b06-scene-0814r.
