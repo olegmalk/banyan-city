@@ -172,9 +172,19 @@ steps:
     \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
     with open(os.path.join(dst, \"ep2-b05-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
     \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
-    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+    \ len(pngs), \"png + manifest ->\", dst)\n# frame count is 12, not 16: 4 seeds x 3 DISTINCT reference sha256s. refs-guards-twoinfield-nos2-0815 holds 3 distinct images in 4 slots (s0 and s3 are the same bytes; hashed on the box 2026-08-17), and dedup_cells drops the cell that would redraw s0, so the grid is 3 cells x 4 seeds. Hardcoded rather than derived from seeds x distinct-ref-sha256 because deriving it means mirroring the sampler slot enumeration while another lane is editing the sampler; derive it when that settles.\nraise SystemExit(0 if len(pngs) >= 12 else 1)\n"
 artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r0-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r2-w015-s0.png
-- C:\banyan-farm\goblin-ipa-0812\out-b05-cast-0817\05-the-patrol-ipa-r3-w015-s0.png
+
+# --- correction filed 2026-08-17, additive: `success:` above is
+# --- UNCHANGED and its superseded denominator stays visible. -------
+frame_count_correction_0817:
+  true_frame_count: 12
+  grid: '3 cells x 4 seeds -- 3 DISTINCT reference sha256s in 4 slots'
+  denominator_to_report: 'N of 12'
+  denominator_superseded: 'N of 16 (see the success: key above, left standing verbatim)'
+  reason: 'refs-guards-twoinfield-nos2-0815 is 3 distinct images in 4 slots -- s0 and s3 are byte-identical (26062B66DFCF9B22..., hashed on the box 2026-08-17). dedup_cells drops the cell that would redraw s0, so 12 frames are drawn, never 16. 12 WAS ALWAYS THE TRUE COUNT: the pre-sync renders of this beat wrote 16 files of which 4 were byte-copies of the other 12, so a scorer reporting N of 16 was counting duplicates as independent evidence.'
+  what_is_scored: 'UNCHANGED. Not one term of the bar is altered, loosened or removed -- only the denominator it is divided by, which was miscounted. Every condition in success: still applies per frame.'
+  also_corrected_in_this_spec: 'copy-out threshold >= 16 -> >= 12, and the declared artifact NN-*-ipa-r3-w015-s0.png removed: r3 is the deduplicated cell and is never written, which made box_runner retire the job rc 92 artifact-check after a full render. The threshold alone could not fail it -- that step is allow_fail: True.'
