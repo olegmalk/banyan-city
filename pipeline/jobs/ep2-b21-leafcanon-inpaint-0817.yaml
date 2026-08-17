@@ -1484,3 +1484,57 @@ artifacts:
 - C:\banyan-farm\leafcanon-b21-0817\b21-leafcanon-s20260820.png
 - C:\banyan-farm\leafcanon-b21-0817\b21-leafcanon-s20260820.png.meta.yaml
 - C:\banyan-farm\leafcanon-b21-0817\comp-b21-canon.png
+filed_0817: >-
+  Dry-ran clean and filed to backlog/ as ep2-b21-leafcanon-inpaint-0817-1786973615.json at
+  2026-08-17, payload delivered (prompt, negative, leaf_count_composite.py, inpaint_fruit.py).
+  Filed the moment it was authored rather than batched; the card feeds itself from backlog.
+verdict_0817: >-
+  RAN 2026-08-17 on the rtx5090 box, bf16/CUDA, animagine-xl-3.1, $0. 4 of 4 frames returned and
+  published to farm-out/ep2-b21-leafcanon-inpaint-0817/. The comp step's --assert-clear passed at
+  0 residual px and the composite hashed 83f4581d..., the value pinned here, so the init chain
+  reproduced on the box exactly as on the Mac. Scored against pipeline/leaf-count-bar-0817.md
+  section 8 as committed at f057e019, at 1x, 2x and 4x, on every frame.
+   * AXIS A COUNT -- **BOUND. 4 of 4 frames carry EXACTLY TWO blades on the sapling** (rate 100%,
+     which at N=4 is the 4-of-4 the bar requires). No third blade, no merge, no split, no illegible
+     plant. The drooping blade that failed this beat's first test is gone in every frame and did not
+     come back.
+   * AXIS A' FAIL-VACANCY -- did NOT fire. Nothing leaf-shaped and nothing attached to the plant
+     appeared in the vacated region. Read against beat 01's companion rung, where it fired 4 of 4,
+     this is the informative contrast: there the vacancy sat against a surviving stem NODE inside the
+     mask and the sampler completed the node into a leaf; here it sits against open sky, and what the
+     sampler drew was background, not anatomy.
+   * AXIS B HEIGHT -- **HOLDS 4 of 4, above the 3-of-4 baseline this plate set**, and the regression
+     is tighter than either prior fire: plant apex y=621 in the composite against 620/622/622/622
+     out, |delta| <= 1 px against the +/-12 px window. The grass line clause is fully scoreable here
+     and passes: the flanking grass tops at y=554, ABOVE the plant apex at y=621, silhouetted against
+     the pale sky in all four frames. Nothing waist-high, nothing tree-sized, nothing doubled.
+   * AXIS C SHAPE -- reported. The two keeper blades are broad ovate laminae with plain outlines,
+     the closest this lane has come to the founder's "average leaves"; whether they ARE his average
+     leaves is his call and is not settled here.
+   * FAIL-BLUR -- **FIRED, and it was named as this rung's known open risk before the frames
+     existed.** The diffuse fill's soft haze did not resolve into sky and grass; it resolved into a
+     blurred BACKGROUND OBJECT, and a different one per seed: s20260817 a pale disc, s20260818 a
+     boxy pale form, s20260819 a fuzzy dark blob, s20260820 a large pale crescent. By the bar this is
+     a LOOK fault and a founder card, not a count fault, and it does not touch the AXIS A result --
+     none of these shapes is attached to the plant or reads as a lamina. It is reported as loudly as
+     the pass: the plate is count-correct and scale-correct with an unexplained soft object beside
+     the stem.
+   * LOOK -- no mask seam: outside the mask max |delta| 19-34 on 950-1100 px, the blur ramp of
+     padding_mask_crop and nothing else; inside the mask mean |delta| 7.3-7.6. Both keeper blades and
+     the junction sat INSIDE the mask (--mask-add), so merge, split and a third blade were all
+     reachable and none occurred. Cel outlines in the plate's own dialect, light direction consistent,
+     no stem discontinuity.
+   * COLOUR -- no fig is asked for in this draft and none appeared. Plate and patch are both
+     bf16/CUDA on the same box, so the MPS-vs-CUDA purple/red split (MAE 60-61) is not in play.
+  VERDICT: PASS on the axis under test. Beat 21 has a canon plate whose leaf count is STRUCTURAL
+  rather than a coin flip and whose height holds 4 of 4 -- the two halves of the founder's 2026-08-16
+  ruling, on the beat's own scene, in the same frame for the first time. The motion seeds this beat's
+  own verdict withheld ("at a 50 percent leaf-count defect the seeds could not pay off") are now
+  payable on count and scale grounds.
+  WHAT STILL BLOCKS SHIPPING, and it is not mine to resolve: the FAIL-BLUR object. The honest options
+  are NAMED AND NOT FIRED -- (a) accept it as out-of-focus background dressing, (b) fill the vacancy
+  from a clean region of another seed of the same plate rather than by diffusion, (c) leave the
+  vacated region OUT of the blend mask so it stays smooth field, at the cost of making the count
+  unfalsifiable there. Which of those is worth a fire is the founder's call with this rate in hand.
+  FOUNDER CARDS, named and not settled: (1) whether these two blades are his "average leaves";
+  (2) whether the soft object beside the stem is acceptable background or a reshoot. R4.
