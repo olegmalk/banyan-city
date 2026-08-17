@@ -64,13 +64,57 @@ training-free mechanisms are (a) ORE-style per-clause text encoding, and
 (b) composite-then-inpaint — which is already **our own proven pattern** (bark
 clipboard, beats 06 and 10, low strength 0.30).
 
-## Which class does eyewear belong to — the question this lane answers
+## Which class does eyewear belong to — ANSWERED, from measurements already in hand
 
-Known here: **hair and garments BIND to their person clause. A prop does NOT** —
-it goes to whoever is drawn nearest. Eyewear is ambiguous by construction: worn
-like a garment, sited on a face like a prop. The 5/5 spread is prop-class
-behaviour, but that is inference, not measurement. Arm 1 below is what
-distinguishes them.
+It is **neither**, and the existing numbers already say so. Three distinct
+behaviours are on record from the same 9-render / 3-seed sweep:
+
+| Class | Behaviour | Evidence |
+|---|---|---|
+| hair, garments | **bind** to their person clause | separate cleanly at the same seed |
+| props (the bark board) | go to **ONE WRONG** figure — nearest/first drawn | 3 of 3 wrong |
+| eyewear | goes to **BOTH** figures | 5 of 5 |
+
+A prop failure is a *routing* failure: the attribute lands on exactly one
+figure, just not the chosen one. Eyewear does something different — it lands on
+**every** figure of the class. That is not misrouting, it is **broadcast**, and
+it is a third class which this lane names:
+
+> **Broadcast-class attribute.** An attribute whose token is absorbed into the
+> *global* conditioning and then applied wherever its host feature (here, a
+> face) appears in the frame.
+
+This is exactly what ALE-Edit predicts and it is why the class matters: CLIP is
+causal and the **EOS token carries global prompt semantics**, so `glasses` named
+in any clause is present in the pooled embedding that steers the whole frame.
+Nothing in the prompt says *which* face; every face qualifies.
+
+Corroboration that the wording is not the lever: **`wire-rim glasses` BINDS 7 of
+7** on beat 09's ONE-figure close-up — round silver frames every time, never
+sunglasses. The tag is not weak and the phrasing is not wrong. It fails only
+when there is a second face for it to also land on. **The number of eligible
+faces in the frame is the variable, not the wording.**
+
+## Arm 1 is RETIRED WITHOUT SPENDING A GPU-SECOND — it is self-defeating in both dialects
+
+Pre-registered as "expected to fail". It is worse than that: it cannot be run as
+written, and the reason is mechanical, checkable, and costs nothing to establish.
+
+- **`plate_scratch.py` dialect** (the Mac plate lane) does **no negation
+  lifting** at all. `no glasses` in its positive prompt puts the literal token
+  **glasses** into the positive — it would *guarantee* the defect it is meant to
+  test. The arm is self-defeating here.
+- **Box prose dialect** (`sd_prompt._NEGATION`) *does* lift `no X` into the
+  negative. But then `glasses` sits in the negative while guard A's clause asks
+  for `wire-rim glasses` in the positive — the exact contradiction
+  `plate_scratch.py` exits **7** on, and the standing decision already records it
+  as such. On a plate that names no eyewear at all, `no glasses` is
+  non-contradictory but also **vacuous**: the plate was not asking for glasses.
+
+So there is no wording in either dialect that both asks for eyewear and confines
+it. This is the vacancy law and ALE-Edit agreeing: **a negation cannot unbind a
+broadcast.** Arm 1 is closed on mechanism, not on pixels, and no card was spent
+on it. Recorded so the next lane does not re-file it.
 
 ## Pre-registered bar — written BEFORE the pixels exist
 
