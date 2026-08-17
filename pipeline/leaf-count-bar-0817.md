@@ -246,4 +246,13 @@ one-line-per-rung index lands here.
 
 ## 7. Results index (appended only after a rung is judged)
 
-_no rungs judged yet — this section is written before the pixels exist_
+- **Rung 2 — STRUCTURAL, `ep2-b01-leafcomp-inpaint-0817` (fired 2026-08-17, box, bf16/CUDA,
+  $0): COUNT BOUND, 4 of 4 exactly two blades (rate 100% ≥ 7/8).** Height held with no
+  regression — apex y 625 in the init vs 625/632/626/627 out, |Δ| ≤ 7px, nothing doubled;
+  baseline was 3 of 4, it holds 4 of 4. Shape reported: broad ovate left blade, narrower
+  curved right blade, closer to "average" than the init's lance quartet. No mask seam and no
+  decal tell at 4x — it reads drawn. Mechanism: the composite fixes the count in the pixels
+  and the 0.30 pass keeps it, so cardinality is out of the sampler's hands. Rung 1 (wording)
+  was never fired and is now moot; the lane's second fire is unspent. Full score in that
+  spec's `verdict_0817`. Remaining calls are the founder's: whether these are his "average
+  leaves", and shippability of an off-canon mechanism plate.
