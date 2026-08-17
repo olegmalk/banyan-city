@@ -450,6 +450,47 @@ a lower strength (~0.25) than strokes that follow existing contours. This is a
 geometry/strength interaction, not a prompt problem, and it is the first thing to
 move if a frame comes back incomplete.
 
+## BATCH RESULT — 5 of 5. The mechanism is real and eyewear is controllable.
+
+`ep2-b05-attrbind-addA-seeds-0817`, draws 2–5 on the pre-registered seeds, scored
+against the bar as written. Draw 1 (20260817) counts as draw 1 of 5.
+
+| Draw | Seed | `A_glassed` | `B_bare` (measured) | `cast_holds` | Sample |
+|---|---|---|---|---|---|
+| 1 | 20260817 | PASS | PASS — 0 px | PASS | **PASS** |
+| 2 | 20260818 | PASS | PASS — 0 px | PASS | **PASS** |
+| 3 | 20260819 | PASS | PASS — 0 px | PASS | **PASS** |
+| 4 | 20260820 | PASS | PASS — 0 px | PASS | **PASS** |
+| 5 | 20260821 | PASS | PASS — 0 px | PASS | **PASS** |
+
+**5 of 5.** Threshold was ≥4 of 5, so by the outcome mapping committed at
+`7df75e2a`: *"the mechanism is real and eyewear is controllable. Say so and stop;
+do not keep sampling for a nicer number."* Stopping.
+
+`B_bare` was **0 changed pixels against the original cast plate on every seed** —
+the prediction on the record held, and it held for the stated reason: geometry, not
+sampling. `cast_holds` held throughout; guard A's irises are pixel-stable across
+all five (brown/orange left, dark blue right, same highlights), and no hair, skin
+tone, garment or sash moved on either man. Mask pixels touched: 2733–2780 of 2800.
+
+**The `glasses` token was in the positive prompt of all five.** The word that
+landed on both men 5 of 5 when nothing confined it landed on exactly the chosen
+man 5 of 5 when a mask did. That is the founder's "control", measured.
+
+### The temple-arm fade is SYSTEMATIC, not variance — and that is better news
+
+It faded in **5 of 5**, not in some. So it is not a seed lottery but a
+**deterministic property of the recipe**: a thin isolated stroke crossing bare
+skin, with no neighbouring linework to reinforce it, does not survive 0.30. A
+reproducible defect has a fix (thicker ink there, or ~0.25 strength); a stochastic
+one only has a reseed budget. Recording it as systematic is what makes it
+actionable.
+
+It is also **not a bar failure**: near-frontal anime faces routinely omit visible
+temples, the frames read as complete round wire-rims, and neither pre-registered
+fail mode ("reading as pasted", "dissolved into skin or hair") occurred. Called as
+a PASS with the artifact named, rather than quietly averaged away.
+
 ## Why this is worth more than a beat-05 fix
 
 The mechanism is general in a way the beat-05 fix would not have been: **any
