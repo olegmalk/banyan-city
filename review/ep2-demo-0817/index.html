@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — episode 2 DEMO CUT, 2026-08-17 (beat 02 filled, beat 11's broken take retired)</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 650; color: #dfe3e8; }
+  p { max-width: 78ch; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  .callout.red { border-left-color: #b06060; }
+  .callout.green { border-left-color: #5f9d6c; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  video { width: 100%; max-width: 420px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  .warn { color: var(--warn); } .new { color: var(--new); }
+  tr.pick td { background: #1c2530; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  ul { max-width: 78ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Sapling — episode 2, DEMO CUT (2026-08-17)</h1>
+  <p class="sub">The 2026-08-16 demo cut, rebuilt. <strong>Beat 02 was a slate and now carries
+  footage. Beat 11's knowingly broken take is gone and replaced.</strong> 1:54,
+  <strong>16 beats of footage and 5 slates</strong>. No render, no voice synthesis, no GPU,
+  no spend, $0 — every clip in it was already on disk or already on the box.</p>
+</header>
+
+<p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF. PRIVATE REVIEW PAGE.</p>
+
+<div class="callout">
+  <p><strong>Two things changed since yesterday, and one of them is the first unqualified
+  good news this page has carried.</strong></p>
+  <ul>
+    <li><strong>Beat 02 — THE SPRINT — was a slate and is now footage.</strong> The slate's
+        stated reason on yesterday's page was that the only take <q>sprints straight out of
+        frame and the frame goes empty</q>. That reason is <strong>obsolete</strong>: sixteen
+        seeds of this beat existed unread, seven of them run and go down, and the one picked
+        never leaves frame at all. <strong>But the footage does NOT close beat 02's bar</strong>
+        — see below, and that is the honest headline, not the footage.</li>
+    <li><strong>Beat 11 — THEY LEAVE — no longer ships a broken clip.</strong> For two cuts it
+        carried <code>11-they-leave-b11-finalB-BROKEN.mp4</code>, in on purpose so the fault
+        would be visible. A take that <strong>passes all six of beat 11's pre-registered
+        conditions, unsoftened</strong>, landed today. <strong>The broken take is gone from this
+        cut and the &ldquo;knowingly broken&rdquo; row is now empty.</strong></li>
+  </ul>
+  <p><strong>Beat 03 was checked and deliberately NOT changed.</strong> A new pick exists for it
+  and it is <em>worse for the beat</em> than what is already in. The reasoning and the frames
+  behind that call are below, because &ldquo;we looked and left it alone&rdquo; is a decision that
+  should be readable, not invisible.</p>
+  <p>Everything else in this cut is the same source file it was on 2026-08-16, including
+  beat 17, which is still <strong>footage that misses its bar</strong>.</p>
+</div>
+
+<h2>The cut</h2>
+<video controls playsinline preload="metadata" src="/review/ep2-demo-0817/ep2-demo-0817.mp4"></video>
+<p class="sub">1:54 · 12.5 MB · 9:16 · captions burnt in · existing Chatterbox VO muxed in sync.
+<strong>Beat 02 runs from 0:10 to 0:14</strong> (it is silent in the script, so it carries no
+caption). <strong>Beat 11 runs from 0:50 to 0:55.</strong>
+sha256 <code>2f6aa019…</code></p>
+
+<h2 id="count">The honest count, not rounded up</h2>
+<div class="callout red">
+  <p>You asked to know if we have almost no proper footage. Here is the number without the
+  rounding, <strong>recounted from <code>review/ep2-picks/done-definitions.yaml</code> and from
+  the assembly manifest, not carried over from yesterday's page.</strong></p>
+  <p><strong>21 beats. 16 now carry footage. 5 are slates.</strong> (Yesterday: 15 and 6.)
+  But &ldquo;carries footage&rdquo; is the weaker claim. Of those 16, sorted by what authority
+  actually stands behind the clip <em>that is in the cut</em>:</p>
+  <ul>
+    <li><strong>9 have a clip a lane judged as doing its job</strong> — beats 03, 04, 05, 06, 10,
+        12, 13, 16, 21. <strong>Every single one carries a named fault. Zero are clean.</strong>
+        And all nine of those verdicts came off sparse contact sheets — see the next box.</li>
+    <li><strong>4 are steward picks with no lane verdict on the clip at all</strong> — beats 01,
+        08, 18, 20. Nobody with authority has said these work; a steward chose the least-bad of
+        what existed. (Beats 18 and 09 do carry an older <code>CONFUSING</code> verdict on the
+        <em>beat</em>; what has no verdict is the specific clip in the cut.)</li>
+    <li><strong>2 carry footage that MISSES its beat's pre-registered bar and is in the cut
+        anyway</strong> — <strong>beat 17</strong> (since yesterday) and <strong>beat 02</strong>
+        (new today). Both were read on consecutive frames and both failed the bar they were read
+        against. Neither bar has been reworded to fit its footage.</li>
+    <li><strong class="ok">1 has a clip that passes every one of its beat's pre-registered
+        conditions, unsoftened</strong> — <strong>beat 11</strong>, new today. It is the first
+        beat in this episode to manage that, and the first passing guard beat in the project.</li>
+    <li><strong>0 are knowingly broken.</strong> That row had beat 11 in it for two cuts and is
+        now empty.</li>
+  </ul>
+  <p>9 + 4 + 2 + 1 + 0 = 16. So the sentence that is true is: <em>nine of twenty-one beats have a
+  take somebody judged as performing its action, all nine with a named defect and none of them
+  clean; one beat, 11, has a take that clears its whole definition; two more have footage that is
+  honestly short of what their beats ask for; four rest on nobody's verdict; and five are still
+  slates.</em></p>
+</div>
+
+<div class="callout red">
+  <p><strong>And that 9 is softer than it sounds. This is the part not to skip, and today it got
+  a second data point.</strong></p>
+  <p>Those nine verdicts were reached off <strong>contact sheets sampling 4&ndash;6 frames out of
+  121</strong> — one frame in 20 to 30. The record says so about itself:</p>
+  <blockquote>Every episode-2 verdict was reached by a model reading sampled frames, and every
+  sheet from that lane on that night was 4-6 frames of 121. TEN beats are currently closed — 03,
+  04, 05, 06, 10, 11, 12, 13, 16 and 21 — and beat 11 is the first of the ten to be re-read
+  consecutively. The other nine have not been.</blockquote>
+  <p><strong>Only three clips in this cut have ever been read on consecutive frames: beats 02, 11
+  and 17.</strong> One of the three passes its bar (11) and two fail it (02, 17). Beat 11 is also
+  the beat whose <em>old</em> clip was the one re-read consecutively — and that read flipped it
+  from DONE to BROKEN, because the identity swap happened entirely between two sampled frames.
+  So the dense instrument has now been pointed at four clips across this beat's history and has
+  moved a verdict every time: one DONE&rarr;BROKEN, two passes&rarr;misses, one genuine pass.
+  <strong>The remaining thirteen footage beats have not had that treatment.</strong> The record's
+  own re-survey list still ranks <strong>beat 05 as the likeliest next to move from &ldquo;named
+  fault&rdquo; to &ldquo;broken&rdquo;</strong>, then beat 10.</p>
+  <p><strong>No old verdict has been silently upgraded here, and none has been overturned.</strong>
+  Every beat except 02 and 11 carries exactly the verdict and the fault it carried on 2026-08-16.
+  Where a new reading disagrees with the record, <strong>both readings are left standing</strong>
+  and the disagreement is printed — see <a href="#corrections" style="color:var(--new)">the record
+  corrections</a>.</p>
+  <p><strong>One thing about this cut that no previous version of this page said, and it should
+  have.</strong> The assembly fits each clip to its beat's slot, and where a clip is shorter than
+  its slot <strong>it holds its last frame</strong> to fill the gap. Measured on this build: beat
+  06 holds for 4.79 s, beat 18 for 5.92 s, beat 16 for 4.58 s, beat 04 for 2.13 s, beat 11 for
+  0.54 s, beat 17 for 0.67 s, beat 03 for 0.34 s. <strong>So &ldquo;no terminal freeze&rdquo;
+  measured on a source clip does not mean there is no freeze in the cut</strong>; on beats 06, 16
+  and 18 the majority of the beat's screen time is one held picture. Beat 02 is the only new clip
+  that needed no hold at all — its 4.04 s exactly fills its slot.</p>
+</div>
+
+<h2 id="freeze">The freeze test every lane has been quoting is weaker than it reads</h2>
+<div class="callout red">
+  <p><strong>This page was about to print &ldquo;no frozen tail&rdquo; as a measured fact on two
+  new picks. It cannot, and this is the retraction before the claim rather than after it.</strong></p>
+  <p>The instrument behind every <code>terminal_freeze_index</code> figure in our record
+  (<code>review/ep2-picks/exact_freeze_index.py</code>) asks one question of each adjacent pair:
+  <strong>are these two arrays the same picture</strong>, measured as <code>ncc == 1.0000</code> at
+  four decimal places. That is an <em>identity</em> test. A research lane demonstrated with a
+  synthetic control that <strong>an encoded 3&times;-held clip has a nonzero delta on all 71 of its
+  consecutive pairs</strong> — it passes the identity test cleanly <em>while visibly holding every
+  picture for three frames</em>. So <strong>&ldquo;terminal-freeze index 0&rdquo; means &ldquo;no
+  bit-identical consecutive frames were found&rdquo;, and it does not exclude a held picture.</strong>
+  Every such verdict in our record, on every beat, is softer than it has been stated.</p>
+  <p><strong>So the real check was run — on every clip in this cut, and on a control built from our
+  own footage at our own encoder settings.</strong> <code>ffmpeg -vf mpdecimate</code> counts how
+  many frames survive near-duplicate removal; total ÷ kept is the hold factor.
+  <strong>The control, rebuilt and re-measured from scratch for this page rather than quoted:</strong>
+  beat 11's own pick, held at 2&times; and 3&times; and re-encoded at crf 33 like our clips, reads
+  <strong>1.96&times;</strong> and <strong>2.74&times;</strong>; the same clip re-encoded without any
+  hold reads <strong>1.00&times;</strong>. So the instrument separates a held clip from a moving one
+  on our own material, at our own encoder settings, with the hold factor tracking the real hold
+  period.</p>
+  <p><strong>One limit of it found here, and it cuts against the instrument rather than for it.</strong>
+  A previous version of this page credited another lane with <strong>2.77&times; on a held clip under
+  heavy grain</strong>. That did not reproduce: the same 3&times;-held control with heavy synthetic
+  grain laid over it (<code>noise=alls=28</code>) reads <strong>1.52&times;</strong>, not 2.74&times;.
+  Grain pushes a genuinely held clip <em>toward</em> &ldquo;no hold&rdquo;. So the grain figure is
+  withdrawn from this page, and the direction of the error matters: <strong>a 1.00&times; reading is
+  a filter that failed to find a hold, not proof that none is there</strong> — most safely on a noisy
+  clip. Our clips are LTX output at crf 33 with no grain added, which is the case the control above
+  covers.</p>
+  <div class="scroll">
+  <table>
+    <tr><th>beat</th><th>frames</th><th>distinct pictures</th><th>hold</th><th>reading</th></tr>
+    <tr class="pick"><td class="n">16 WHY</td><td class="n">97</td><td class="n">20</td>
+        <td class="n bad"><strong>4.85&times;</strong></td>
+        <td class="bad"><strong>A real hold nobody had recorded</strong> — 97 frames carry twenty
+        pictures, an effective ~5 fps. The worst in the cut by a distance.</td></tr>
+    <tr><td class="n">03 BAD COVER</td><td class="n">97</td><td class="n">39</td>
+        <td class="n bad"><strong>2.49&times;</strong></td>
+        <td class="bad"><strong>Also new</strong> — the clip in the cut carries 39 pictures in 97
+        frames.</td></tr>
+    <tr><td class="n">04 THE FOOTNOTE</td><td class="n">97</td><td class="n">45</td>
+        <td class="n bad">2.16&times;</td><td class="bad">New. 45 pictures.</td></tr>
+    <tr><td class="n">13 THE SHADE</td><td class="n">97</td><td class="n">65</td>
+        <td class="n warn">1.49&times;</td><td class="warn">New, and mild.</td></tr>
+    <tr><td class="n">21, 10, 17, 05, 18, 12, 08</td><td class="n">97–121</td><td class="n">—</td>
+        <td class="n ok">1.03–1.13&times;</td><td>Essentially every frame distinct.</td></tr>
+    <tr class="pick"><td class="n new">02 THE SPRINT (new pick)</td><td class="n">97</td>
+        <td class="n">97</td><td class="n ok"><strong>1.00&times;</strong></td>
+        <td class="ok"><strong>No significant hold, measured rather than inferred.</strong></td></tr>
+    <tr class="pick"><td class="n new">11 THEY LEAVE (new pick)</td><td class="n">97</td>
+        <td class="n">97</td><td class="n ok"><strong>1.00&times;</strong></td>
+        <td class="ok"><strong>No significant hold, measured rather than inferred.</strong></td></tr>
+    <tr><td class="n">01, 06, 20</td><td class="n">46–233</td><td class="n">all</td>
+        <td class="n ok">1.00&times;</td><td>No significant hold.</td></tr>
+  </table>
+  </div>
+  <p><strong>This corrects a fault description that has been on this page since yesterday, in the
+  direction of the footage being better than stated.</strong> Yesterday's page said beat 17
+  <q>judders — 96 frames carry about 32 distinct pictures, an effective 8 fps</q> and called that
+  <q>the same defect the rest of the cut has</q>. Measured this way, <strong>beat 17 carries 93
+  distinct pictures of 97 (1.04&times;)</strong>, and <strong>the rest of the cut does not share the
+  defect</strong>: eleven of sixteen clips sit between 1.00&times; and 1.13&times;. The recorded
+  8-fps figures came from a lag-3 autocorrelation, and our own record already warns that that family
+  of measure aliases (<q>every odd hold period aliases to exactly 1.00x</q>).
+  <strong>Both readings stand.</strong> The same correction applies to beat 11's pick, whose record
+  says it <q>holds every 3 frames, ~32 distinct pictures</q>; mpdecimate keeps all 97 of its frames,
+  and the control above says the instrument would have caught a 3&times; hold if there were one.</p>
+  <p><strong>What this instrument is NOT.</strong> It is a near-duplicate detector with a tolerance,
+  not a motion measure. <strong>1.00&times; means no consecutive near-duplicates at mpdecimate's
+  default thresholds; it does not say the figure moved a lot, or at all.</strong> That question is
+  still only answerable by looking, which is the next box.</p>
+</div>
+
+<div class="callout">
+  <p><strong>And this is why these lanes read frames by hand: there is no off-the-shelf metric that
+  can answer our actual question.</strong> A research lane confirmed that no available automatic
+  measure distinguishes <em>the figure moved</em> from <em>the drawing was re-inked</em>. VBench's
+  dynamic-degree measure is <strong>boolean per clip</strong>, thresholds at roughly 16.5 px on our
+  frame size, and <strong>resamples to 8 fps — so a 24 fps 3&times; hold is structurally invisible
+  to it</strong>; its four other temporal dimensions score a frozen video near 1.0. The literature's
+  answer for animation is a benchmark plus <strong>human double-blind reading</strong>.
+  <strong>So the frame-by-frame reading behind every verdict on this page is the correct instrument,
+  not a stopgap standing in for one.</strong> Every number quoted here is a filter; the reading
+  decided.</p>
+</div>
+
+<h2 id="beat02">Beat 02 — new footage, and it misses its bar</h2>
+
+<div class="callout red">
+  <p><strong>BEAT 02 IS FOOTAGE THAT MISSES ITS BAR, IN THE CUT ANYWAY. It carries exactly the
+  status beat 17 has carried since 2026-08-16, and beat 17 is the precedent.</strong></p>
+  <p>Beat 17 was a slate, got real footage, and that footage performed two of its beat's three
+  scripted verbs. The call then was: keep it in the cut, do not reword the bar, and say on this
+  page that the beat misses it. <strong>Beat 02 is the same call for the same reason.</strong>
+  A better clip that misses its beat is still a clip that misses its beat, and this page's job is
+  to say so rather than to quietly bank the footage as progress.</p>
+</div>
+
+<p>The script, from <code>genomes/sapling/nodes/002b-first-citizen/node.md</code>:</p>
+<blockquote><strong>THE SPRINT — 0:06–0:11</strong><br>
+A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — sprints into frame,
+skids, and dives behind the sapling's thin trunk.</blockquote>
+
+<p>The beat's bar, from <code>review/ep2-picks/done-definitions.yaml</code>, written 2026-08-15
+retroactively from <code>node.md</code> and explicitly <q>NOT from any existing take, so it could
+not be bent to fit the clips that already exist</q>:</p>
+<blockquote><strong>done_when:</strong> he ARRIVES and GOES DOWN: entry, skid, dive, in that order
+and legible as one continuous move. Note the plate must already contain the sapling — every take
+that named a sapling not in frame grew a tree instead.</blockquote>
+
+<h3>Why it cannot close — and it is the plate, not the seed</h3>
+<p><strong>The plate contains no sapling and no trunk.</strong> It is the goblin standing centred
+in an empty sunlit field, full body, bare feet on grass. So <q>dives behind the sapling's thin
+trunk</q> is unrenderable off this plate <em>no matter which seed wins</em>. And there is no
+<strong>ENTRY</strong> either: he is already centre-frame and standing at frame 0, so he cannot
+sprint <em>into</em> frame. <strong>No take in the sixteen skids.</strong></p>
+<p>What the sixteen seeds were actually asked for is narrower than the beat:</p>
+<blockquote>He stays in the middle of the frame the whole time. He runs a few steps and drops flat
+to the ground. &lt;style tail&gt;</blockquote>
+<p>Seven of sixteen deliver exactly that. <strong>&ldquo;Runs and goes down&rdquo; is what the
+WORDING asked for; it is not what the BEAT asks for.</strong> The judging lane's verdict is
+<code>FAIL for all 16, and NOT on the action</code>, and its instruction is on the record:
+<q>Do not spend more seeds on this wording expecting done_when to close.</q>
+<strong>Beat 02 is a plate job now — a sapling in frame, and room for him to enter from.</strong>
+The bar has not been reworded and it will not be.</p>
+
+<h3>The pick: <code>s20260834</code></h3>
+<p>Sixteen seeds of the <code>anchor</code> wording were on the box and <strong>none had ever been
+read.</strong> All sixteen were read on consecutive frames against beat 02's own
+<code>done_when</code>. The wording is byte-identical across all sixteen and MD5 says all sixteen
+share <strong>one init plate</strong>, so the differences between them are seed variance and
+nothing else.</p>
+<p><strong><code>s20260834</code> is the only take with the whole arc and no dead air:</strong>
+run f000&ndash;082, forward pitch f083&ndash;086, prone f087&ndash;096.
+<strong>He never leaves frame.</strong> The face survives the entire run.
+On the freeze question, stated at the strength it was actually tested:
+<strong>no bit-identical consecutive frames were found anywhere in its 97</strong>
+(<code>freeze-index.json</code>: index <code>null</code>, zero duplicate pairs) — and because that
+test cannot exclude a held picture, the stronger check was run too:
+<strong>mpdecimate keeps 97 of 97 frames, hold 1.00&times;. No significant hold, measured.</strong>
+<a href="#freeze" style="color:var(--new)">Why that distinction matters.</a></p>
+<p>This is a steward pick with reasons, not a taste verdict — taste is yours (R4). It was made by
+opening consecutive frames and looking at them, not by ranking a metric. The runners-up are listed
+so you can veto, not so you have to compare.</p>
+
+<h3>Its named faults, because it has them</h3>
+<ul>
+  <li><strong>It misses its beat's bar</strong> — no entry, no skid, nothing to dive behind. This
+      is the fault that puts the beat below its definition rather than merely blemishing it, and
+      it is a property of the <em>plate</em>, so no seed on this wording can fix it.</li>
+  <li><strong>The face washes to a blank oval from about f090.</strong> This is the clip's one
+      craft fault and it is <strong>invisible in the cut</strong>: by f090 he is face-down with
+      his face pressed away from camera, so there is no face on screen to lose.</li>
+  <li><strong>It does NOT judder, and that is a correction to what this page would have said.</strong>
+      The standing assumption has been that every clip in this cut holds every third frame at an
+      effective 8 fps. Measured, this one keeps all 97 of its frames.</li>
+</ul>
+
+<h3>The runners-up (for veto only)</h3>
+<ul>
+  <li><strong><code>anchor</code> (the original seed)</strong> — identical arc and a slightly
+      clearer landing, but <strong>11 frames of the tail are one frozen picture</strong>.</li>
+  <li><strong><code>s20260831</code></strong> — the longest run of all sixteen, but the drop is
+      compressed into 8 frames at the very end and the sky bands to a flat strip.</li>
+</ul>
+
+<h2 id="beat11">Beat 11 — the broken take is gone, and this one passes</h2>
+
+<div class="callout green">
+  <p><strong>For two cuts, beat 11 shipped a clip whose own filename said BROKEN.</strong> Its
+  record: <q>total identity collapse away from the plate f16&ndash;f21</q> — a bald adult
+  continuously becoming a brown-haired, teen-proportioned figure, ending on two indistinguishable
+  backs, scored <strong>1/10</strong> by a blind reader who said <q>It does not read as one
+  continuous shot at all.</q> It was in the cut <strong>so the fault would be visible, NOT as a
+  passing take</strong>.</p>
+  <p><strong>That file is not in this cut. <code>s20260903</code> replaces it, and it passes all
+  six of beat 11's pre-registered conditions with nothing softened.</strong> It is the first
+  genuinely passing guard beat in the project.</p>
+</div>
+
+<h3>What it clears, condition by condition</h3>
+<ul>
+  <li><strong>Two guards, backs turned in all 97 frames.</strong> Guard B's head was cropped and
+      read at <strong>two-frame density</strong> across the whole clip and guard A's at four,
+      because a turn lasting three frames is invisible to a sampling interval of six. <strong>No
+      brow, eye, nose or mouth anywhere, on either man.</strong></li>
+  <li><strong>Both men fully in frame at f096</strong>, and the field present at f000.</li>
+  <li><strong>Identity and costume hold end to end</strong> — costume gap 49.1 &rarr; 49.3.</li>
+  <li><strong>They genuinely recede</strong> — coat heights 261 &rarr; 183 and 314 &rarr; 249.</li>
+  <li><strong>And it is their legs, not the lens.</strong> The fitted background scale is pinned
+      at <strong>exactly 1.000 in every sampled frame</strong>.</li>
+  <li><strong>No frozen tail — at the strength it was tested.</strong> Terminal-freeze index 0
+      means <em>no bit-identical consecutive frames</em>, which cannot exclude a held picture, so
+      the stronger check was run: <strong>mpdecimate keeps all 97 frames, hold 1.00&times;</strong>.
+      <strong>That also corrects this beat's own record</strong>, which says the clip <q>holds every
+      3 frames, ~32 distinct pictures</q> — it does not, and the control in
+      <a href="#freeze" style="color:var(--new)">the freeze box</a> shows the instrument would have
+      caught a 3&times; hold if there were one. Both readings stand.</li>
+</ul>
+
+<h3>What is still wrong — and it is a fault of the CUT, not of this clip</h3>
+<div class="callout red">
+  <p><strong>This take comes off the new cast-correct guard plate. Beats 05, 06 and 10 in this
+  same cut do not.</strong> Put four frames side by side and the discontinuity is not subtle:
+  beat 11's two men are a <em>dark-haired man in a cream tunic</em> and a <em>sandy-haired man in
+  a brown coat</em>, in a bright windblown field with <em>no sky in frame</em>. Beats 05, 06 and
+  10 are <em>brown-haired boys in brown shirts and vests</em> under a <em>blue cloudy sky</em>.
+  They do not read as the same two people, and beat 11 is also a much wider shot than the guard
+  beats around it.</p>
+  <p><strong>This is named rather than fixed.</strong> Fixing it means re-rendering 05, 06 and 10
+  off the plates that were redrawn today, which is a render question and not this lane's. No
+  verdict on 05, 06 or 10 has been changed, and beat 11's pass is not diminished by it: the
+  discontinuity is what happens when one beat gets the correct cast first.</p>
+</div>
+
+<h3>The pick, and the runners-up (for veto only)</h3>
+<p><code>s20260903</code> is the pick because <strong>it is the only take that delivers a full
+departure with the background scale pinned at exactly 1.000</strong>, so nothing about it needs a
+caveat.</p>
+<ul>
+  <li><strong><code>s20260912</code></strong> also passes all six and has the <em>biggest</em>
+      on-screen departure (0.615 / 0.651). <strong>It is not the pick because 13% of that is the
+      camera pulling back</strong> — a move its own negative prompt forbids by name. Net the
+      framing out and its own-legs recession is 0.707 / 0.748, the same as the pick's. <em>It is
+      the alternative if you want the bigger gesture and will accept the pull-back.</em></li>
+  <li><strong><code>s20260907</code> and <code>s20260901</code></strong> pass, and are cleaner but
+      milder.</li>
+  <li><strong><code>s20260913</code></strong> passes and is the weakest of the five — it clears
+      the condition; it does not sell the beat.</li>
+</ul>
+<p class="sub">The clip's own render-time sidecar says <q>picking it into an episode is the
+author's call and not this lane's</q>, and that line is left standing in the sidecar. <strong>This
+is a private demo cut with no leaf and no lineage entry — it is not the episode.</strong> The pick
+is a steward pick with reasons and stands unless you veto it; whether it goes into a canon episode
+is yours.</p>
+
+<h2 id="beat03">Beat 03 — checked, and deliberately not changed</h2>
+<p>Fifteen seeds of a <code>st</code> wording for beat 03 were also read today for the first time,
+nine of them fold into a crouch, and a pick was made from them: <code>s20260846</code>, the only
+fold in the wave that is eased rather than snapped. <strong>It is not in this cut, and that is a
+decision rather than an oversight.</strong></p>
+<p>Beat 03's bar:</p>
+<blockquote><strong>done_when:</strong> he crouches and the COVER IS COMICALLY INADEQUATE — the
+trunk hides a fraction of him and the joke is visible without dialogue. A crouch that actually
+conceals him fails the beat.</blockquote>
+<p><strong>The incumbent clip in this cut has a trunk in it. The new pick has nothing.</strong>
+Read on frames: in <code>ep2-b03-refire-0814</code> a thin dark trunk enters at the right edge
+around f015 and by f018&ndash;f023 there is a sapling with a thin trunk directly beside him; he
+then folds down small next to it, and the record's own words for that clip are <q>the
+size-mismatch joke reads weakly <strong>but it reads</strong></q>. In <code>s20260846</code>'s
+plate there is no trunk at all — two two-leaf sprouts a few inches tall at the lower frame edges
+and nothing he could be behind. <strong>Nine takes in that wave crouch and in none of them is he
+behind anything.</strong></p>
+<p>So swapping would trade a clip where the beat's joke half-reads for a smoother fold where it
+cannot read at all, and would also replace a lane-judged clip with a steward pick. <strong>Beat 03
+keeps the clip it had, keeps its verdict, and keeps its named fault.</strong> Like beat 02, the
+distance left on beat 03 is a <strong>plate</strong> job — a trunk in frame, thin enough to hide
+about one-sixth of him.</p>
+<div class="callout red">
+  <p><strong>One thing found while checking, which argues the other way and is printed so you can
+  overrule the decision rather than take it on trust.</strong> The clip that stays in this cut
+  <strong>holds: 97 frames carry 39 distinct pictures, 2.49&times;</strong> — see
+  <a href="#freeze" style="color:var(--new)">the freeze box</a>. The pick that was rejected is far
+  smoother, <strong>88 of 97, 1.10&times;</strong>. So the trade is not one-sided: <em>the joke
+  half-reads and the motion holds</em>, against <em>the motion is smooth and the joke cannot read at
+  all</em>.</p>
+  <p>It was decided on the bar, because beat 03's <code>done_when</code> is about the cover joke and
+  says nothing about smoothness, and because the incumbent has a lane verdict where the alternative
+  has an explicit <code>FAIL</code>. <strong>That is a steward call and it is the kind you can
+  reverse in one line.</strong> Nobody had recorded the 2.49&times; hold before today; it is now a
+  named fault on beat 03 either way.</p>
+</div>
+<p class="sub">Worth recording as frame content and not as an upgrade: the trunk in the incumbent
+is <em>not in its frame 0</em>. It grows in mid-clip, which is the exact behaviour beat 02's
+<code>done_when</code> warns about (<q>every take that named a sapling not in frame grew a tree
+instead</q>). It is doing useful work here by accident. No verdict has been moved on the strength
+of that.</p>
+
+<h2 id="cost">What a beat costs — the first real number we have</h2>
+<div class="callout">
+  <p>Three waves were judged today, on three different beats, and in <strong>all three the
+  wording was byte-identical and the init plate identical across every seed</strong>. So the
+  spread inside each wave is <strong>seed variance alone</strong> — nothing about the prompt, the
+  plate, the recipe or the flags differs between a seed that performs and one that does not.
+  That makes these the first honest yield figures the project has.</p>
+  <div class="scroll">
+  <table>
+    <tr><th>wave</th><th>seeds rendered</th><th>performing</th><th>rate</th>
+        <th>renders per performing take</th></tr>
+    <tr><td>beat 02 <code>anchor</code> — runs and goes down</td><td class="n">16</td>
+        <td class="n">7</td><td class="n">44%</td><td class="n">2.3</td></tr>
+    <tr><td>beat 03 <code>st</code> — folds into a crouch</td><td class="n">15</td>
+        <td class="n">9</td><td class="n">60%</td><td class="n">1.7</td></tr>
+    <tr><td>beat 11 <code>W4</code> — two guards walk away</td><td class="n">14</td>
+        <td class="n">5</td><td class="n">36%</td><td class="n">2.8</td></tr>
+    <tr class="pick"><td><strong>all three</strong></td><td class="n"><strong>45</strong></td>
+        <td class="n"><strong>21</strong></td><td class="n"><strong>47%</strong></td>
+        <td class="n"><strong>2.1</strong></td></tr>
+  </table>
+  </div>
+  <p><strong>A beat costs roughly two to three renders per performing take.</strong> That is the
+  number to plan with, and it replaces a guess. On beat 11 the wall-clock is also known — about
+  <strong>eleven minutes per render on an idle card</strong>, so about <strong>half an hour of
+  card time per usable guard beat</strong>. That figure is measured for beat 11's recipe only and
+  is not extended to the others.</p>
+  <p class="sub">&ldquo;Performing&rdquo; means the beat's action is legible as a body doing it —
+  for beat 02, he runs on an alternating gait <em>and</em> goes down; for beat 03, he folds from
+  standing into a crouch that reads; for beat 11, all six of that beat's conditions. Framing
+  faults do not subtract; illegibility does. A long held pose does not subtract either: terminal
+  freeze is counted and reported separately throughout, because six of beat 03's nine performers
+  hold a crouch for 50&ndash;75 frames with no duplicate pair anywhere, and calling that dead air
+  would have thrown the beat away.</p>
+</div>
+
+<h2 id="corrections">Five things the record had wrong, with both readings left standing</h2>
+<p class="sub">House style: a new reading that disagrees with a recorded one is printed beside it.
+Nothing below deletes or edits an existing entry, and no verdict has been overturned.</p>
+<div class="scroll">
+<table>
+  <tr><th>beat</th><th>what the record says</th><th>what the new reading says</th></tr>
+
+  <tr><td class="n">02</td>
+      <td><q>the frame goes nearly EMPTY by mid-clip — he sprints out of shot instead of skidding
+      and diving. A viewer cannot see the beat happen at all.</q></td>
+      <td><strong>Real, but a minority outcome, not the wording's behaviour.</strong> It
+      reproduces in exactly <strong>3 of 16</strong> seeds. In <strong>7 of 16</strong> he never
+      leaves frame and the beat is plainly visible. The <q>stays in the middle of the frame</q>
+      clause is doing work.</td></tr>
+
+  <tr><td class="n">03</td>
+      <td>older fault: <q>he ends small at the frame edge beside the sapling</q></td>
+      <td><strong>Contradicted by all 15</strong> takes of the <code>st</code> wording: everything
+      that moves ends <em>larger</em> than frame 0 and low in frame.
+      <strong>Note the scope:</strong> that is a finding about the <code>st</code> wording, and the
+      clip actually in this cut is a <code>refire-0814</code> take — so the older fault still
+      describes the clip you are watching. Both stand.</td></tr>
+
+  <tr><td class="n">03</td>
+      <td>newer fault, charged to the plate: <q>enlarged and cropped at the waist, feet gone</q></td>
+      <td><strong>Also not universal.</strong> It was charged to the plate off five arms at
+      <strong>one seed</strong>; <code>s20260846</code> and <code>s20260847</code> end with
+      <strong>feet in frame</strong> (0846's laced shoes are drawn in detail at the bottom edge).
+      Sixteen more seeds say it is seed-dependent, and a lane picking off this beat should not
+      assume the crop.</td></tr>
+
+  <tr><td class="n">11</td>
+      <td>this lane's own earlier figure: <q>the recession is 1 of 4</q></td>
+      <td><strong>Wrong, and the tool that produced it is named.</strong> A merge-blind measure
+      read the two men walking shoulder-to-shoulder as one blob and reported <strong>three
+      shrinking clips as growing</strong>. With two disjoint costume-keyed masks,
+      <strong>D2 passes 7 of 14</strong>. Both figures are on the record with the correction
+      beneath.</td></tr>
+
+  <tr><td class="n">11</td>
+      <td>the head turn was treated as a property of the wording — four wordings were authored to
+      suppress it</td>
+      <td><strong>It is a seed draw, not a wording property.</strong> It appears in <strong>2 of
+      14</strong>, and in <em>different places</em> — f008 in one clip, f048 in another — while
+      twelve clips of the byte-identical prompt never turn at all. A defect that moves around the
+      clip between draws is a draw. <strong>Four wordings were spent arguing with one seed.</strong></td></tr>
+</table>
+</div>
+<p><strong>And the thing that closes the mis-casting diagnosis with evidence instead of a theory:
+identity and both-men-in-frame held in 14 of 14.</strong> The bald-scalp-to-dark-hair collapse
+that broke the take this cut has been shipping <strong>did not recur once in fourteen renders</strong>
+on the correctly-cast plate. No bit-identical consecutive frames were found in 14 of 14 either —
+which, as <a href="#freeze" style="color:var(--new)">the freeze box</a> explains, is a weaker
+statement than it sounds and was only checked densely on the pick.</p>
+
+<h2>What this page does not claim</h2>
+<p><strong>No camera-scale figure is quoted for beats 02 or 03.</strong> The lane that read those
+31 clips <strong>deliberately made no scale claim</strong>, because it built no instrument with an
+internal control. So every word about framing on those two beats — <q>enlarged</q>,
+<q>cropped</q>, <q>feet in frame</q>, <q>never leaves frame</q> — describes <strong>what is in the
+frame and nothing else</strong>. That restraint is preserved here on purpose.</p>
+<p><strong>Beat 11's background-scale numbers are different, and that difference is the point.</strong>
+They come from a similarity transform fitted to the background only, validated on five gates —
+including a <strong>synthetic pull-back ramped to 0.70 that it recovered as 0.701 / 0.700</strong>
+and a <strong>synthetic pan it read back as zero scale change</strong>. Two of those gates caught
+real bugs in the tool and both failures are left in its source comments. That is a real
+instrument with an internal control. <strong>Its numbers are not extended to any clip it did not
+measure</strong>, which is every clip on this page except beat 11's fourteen.</p>
+<p><strong>And a tool defect worth knowing about rather than fixing:</strong>
+<code>pipeline/coldread_frames.py</code>'s motion-window rule latched onto an early micro-move on
+two beat-03 clips, so its dense strip did not cover the actual fold — a lane reading that strip
+would have called a performing clip frozen. <strong><code>--pad 60</code> forces consecutive
+coverage of the whole clip; a lower <code>--threshold</code> does not fix it.</strong></p>
+
+<h2>Every beat, what is in it, and what is wrong with it</h2>
+<p class="sub">Unchanged from 2026-08-16 except beats 02 and 11. No verdict below has been
+upgraded and none has been overturned.</p>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>Beat</th><th>What is in the cut</th><th>Named fault</th></tr>
+
+  <tr><td class="n">01</td><td>COLD OPEN</td><td class="warn">ep2-b01-purple · 9.7s</td>
+      <td><strong>Steward pick, no lane verdict</strong> — beat 01 has no recorded pick and is
+      still <q>IN ROUND 2</q>. The record calls this seed <q>a clean purple teardrop on the stem
+      and the best fig yet</q>, checked against the figgrow-r3 and lw-0815 alternatives.</td></tr>
+
+  <tr class="pick"><td class="n new">02</td><td class="new"><strong>THE SPRINT</strong></td>
+      <td class="new"><strong>NEW — ep2-b02-anchor-s20260834-0817 · 4.0s</strong><br>
+      <span style="color:var(--muted)">was a SLATE yesterday</span><br>
+      <span class="bad"><strong>MISSES ITS BAR, IN ANYWAY</strong></span></td>
+      <td class="new">He runs on a real gait f000–082, pitches forward f083–086 and lands prone
+      f087–096. No bit-identical consecutive frames anywhere, and he never leaves frame. Picked from sixteen seeds on a read
+      of consecutive frames.
+      <strong class="bad">The bar is <q>entry, skid, dive</q> on a plate that <q>must already
+      contain the sapling</q>, and the plate has no sapling, no trunk, and no room to enter from —
+      so the beat does NOT meet its pre-registered bar and no seed can make it.</strong>
+      Beat 02 is a plate job. <strong>Yesterday's slate reason —
+      <q>sprints straight out of frame and the frame goes empty</q> — is retired: that happens in
+      3 of 16 seeds and this is not one of them.</strong> Other faults: the face washes to a blank
+      oval from f090, which is invisible in the cut because he is face-down by then.
+      <strong>It does NOT judder</strong> — mpdecimate keeps 97 of 97 frames, hold
+      <strong>1.00&times;</strong>, re-measured on this build.
+      <a href="#beat02" style="color:var(--new)">Full reasoning above.</a></td></tr>
+
+  <tr><td class="n">03</td><td>BAD COVER</td><td class="ok">ep2-b03-refire-0814 · 4.0s</td>
+      <td>He ends small at the frame edge; the size-mismatch joke reads weakly but it reads.
+      Leg A of an A/B pair — the record does not say which leg shipped.
+      <strong>Checked today against a new 15-seed pick and deliberately kept</strong> — the new
+      pick's plate has no trunk at all, so its joke cannot read.
+      <a href="#beat03" style="color:var(--new)">Why, above.</a></td></tr>
+
+  <tr><td class="n">04</td><td>THE FOOTNOTE</td><td class="ok">ep2-b04-refire-0814 · 4.0s</td>
+      <td>Clean close-up on his held breath. Reads young — but that is the s0 reference you chose,
+      not a prompt fault. Leg A of an A/B pair. In the cut its last frame holds for 2.1 s.</td></tr>
+
+  <tr><td class="n">05</td><td>THE PATROL</td><td class="ok">ep2-b05-standB-0814 · trimmed 5.04→4.92s</td>
+      <td>The two guards read younger and softer-drawn than the guards in 06 and 11. A blind read
+      also found identity drift — hair texture and a hardening jaw on one boy, plus a chest tab and
+      the two props swapping hands. <strong>Ranked likeliest of the nine to move to
+      &ldquo;broken&rdquo; on a dense re-read, which has not been done.</strong>
+      <strong>Also: these are not the cast-correct guards that are now in beat 11.</strong></td></tr>
+
+  <tr><td class="n">06</td><td>THE CLIPBOARD</td><td class="ok">ep2-b06-scene-0814r · trimmed 5.04→1.92s</td>
+      <td>Picked from ONE seed; the second seed raised the board like a shield instead of reading
+      it. <strong>In the cut its last frame holds for 4.8 s — more than twice its own footage.</strong>
+      A blind read adds an eye-colour flip and a replaced prop.
+      <strong>Not the cast-correct guards.</strong></td></tr>
+
+  <tr><td class="n">07</td><td>CONFISCATE</td><td class="bad">SLATE</td>
+      <td>All three 2026-08-15 re-rounds still animate a hand closing around a sprout. No guard,
+      no point — the wrong action, again. Their own sidecars carry <code>shot_beat: 5</code>.
+      <strong>A finding landed today:</strong> beat 07's <code>done_when</code> needs the second
+      guard and the field present, and the only guard+goblin plate that has passed holds
+      <strong>two</strong> figures where the beat wants three. No clip off that plate can close
+      this beat. The row does not move — it was already a slate.</td></tr>
+
+  <tr><td class="n">08</td><td>INSIDE HIM</td><td class="warn">ep2-b08-twohander · 5.0s, trimmed to 4.2s in the cut</td>
+      <td><strong>Steward pick, no lane verdict.</strong> A guard does extend his arm — but
+      <strong>the clipboard never comes down</strong>, which is half the beat's action; only one
+      guard where the beat wants both; dusk-yellow field instead of daylight cel.
+      <strong>Sharpened today, not overturned:</strong> this clip's job is
+      <code>ep2-b08-twohander-0813</code>, which predates the two-figure guard+goblin plate drawn
+      on 2026-08-15 — so it cannot be off it. Beat 08's <code>done_when</code> requires both guards
+      AND the scavenger in frame, three figures, and the only plate that has passed holds two.</td></tr>
+
+  <tr><td class="n">09</td><td>THE PAUSE</td><td class="bad">SLATE — <strong>but see note</strong></td>
+      <td>The round-3 take changes face between the opening plate and the close-up — the record
+      calls it CONFUSING. <strong>Six new takes landed 2026-08-15 and a lane called four of them
+      live.</strong> They are NOT in this cut because beat 09 is <strong>blocked on your guard-cast
+      call</strong>: the definitions file says the third round is <q>owed and BLOCKED</q> pending
+      <q>lets do the guards on my taste</q>, while the job spec that fired these asserts the cast is
+      already approved. That contradiction is yours to settle, not the steward's.
+      <strong>Clearing it would take this cut from 16 footage beats to 17.</strong></td></tr>
+
+  <tr><td class="n">10</td><td>NO FORM</td><td class="ok">ep2-b10-pairB-0814 · trimmed 5.04→4.04s</td>
+      <td>Same guard-consistency fault as 05, and a blind read adds that the left boy loses a hard
+      angular older face for a rounder paler one and the carried board changes colour, shape and
+      hands. Its plate is the SAME file as beat 05's, so that is one fault and one fix, not two.
+      <strong>Not the cast-correct guards.</strong></td></tr>
+
+  <tr class="pick"><td class="n new">11</td><td class="new"><strong>THEY LEAVE</strong></td>
+      <td class="new"><strong>NEW — ep2-b11-w4-s20260903-0817 · 4.0s</strong><br>
+      <span style="color:var(--muted)">replaces <code>…finalB-BROKEN.mp4</code></span><br>
+      <span class="ok"><strong>PASSES ALL SIX CONDITIONS</strong></span></td>
+      <td class="new"><strong class="ok">The only clip in this cut that clears its beat's whole
+      definition unsoftened.</strong> Two guards, backs turned in all 97 frames at two-frame head-crop
+      density; both in frame at f096; costumes and identities holding; coats 261→183 and 314→249
+      against a fitted background scale of exactly 1.000, so they walk away rather than the camera
+      pulling back; no bit-identical consecutive frames.
+      <strong>The broken take it replaces is gone from this cut.</strong>
+      <strong class="bad">Named fault, and it belongs to the cut rather than the clip: this is the
+      cast-correct guard plate and beats 05, 06 and 10 are not, so beat 11's two men do not look
+      like the guards in the three beats before it.</strong> It is also a much wider shot than
+      those, and holds its last frame 0.54 s to fill the slot. <strong>It does NOT judder:</strong>
+      mpdecimate keeps 97 of 97 frames, hold <strong>1.00&times;</strong> — which contradicts this
+      clip's own render-time sidecar, and the sidecar's line is left standing.
+      <a href="#beat11" style="color:var(--new)">Full reasoning above.</a></td></tr>
+
+  <tr><td class="n">12</td><td>RELATED</td><td class="ok">ep2-b12-tightB · 5.0s, UNTRIMMED</td>
+      <td>The colour shifts warm-to-cool across the first second. The recorded 1.38s trim is
+      deliberately NOT used — the motion runs the whole clip, so that trim would have deleted three
+      quarters of the beat. The fault ships intact instead.</td></tr>
+
+  <tr><td class="n">13</td><td>THE SHADE</td><td class="ok">ep2-b13-refire-0814 · 4.0s</td>
+      <td>He settles at the base of the stem; the shade is thin but the fold-into-it happens.
+      Leg A of an A/B pair. <strong>A finding that could move this row is still unconfirmed</strong>
+      — that it looked frozen because the action asked for was too small a request, not because the
+      engine failed. Not applied.</td></tr>
+
+  <tr><td class="n">14</td><td>THE DEFENSE</td><td class="bad">SLATE</td>
+      <td>Both takes have him standing and looking down. The beat IS his hands at the dirt and
+      there are no hands in it. A plate that satisfies the beat's definition landed on 2026-08-16 —
+      but <em>a plate is not a clip</em>, nothing has been animated from it, and it does not change
+      this row.</td></tr>
+
+  <tr><td class="n">15</td><td>GOOD LISTENER</td><td class="bad">SLATE</td>
+      <td>The 0815 rounds do get him looking up — but <strong>the sapling is not in frame</strong>,
+      which the beat's definition calls the whole point. They are also badly washed out.</td></tr>
+
+  <tr><td class="n">16</td><td>WHY</td><td class="ok">ep2-b16-anim-0814 · 4.0s</td>
+      <td>Opens goblin-forward and sharp, then jumps to leaf-forward by f40 — a change of subject
+      inside the first second. The leaf came out lobed and palmate, contradicting the canon two
+      round cotyledons; recorded, not adopted. <strong>In the cut its last frame holds for
+      4.6 s.</strong></td></tr>
+
+  <tr><td class="n">17</td><td>GOODBYE</td>
+      <td class="warn">ep2-b17-full-s2-0815 · 4.0s<br>
+      <span class="bad"><strong>MISSES ITS BAR, IN ANYWAY</strong></span></td>
+      <td>He sits, pushes up off the grass, straightens, turns and walks away. Picked from twelve
+      takes on a cold read of consecutive frames.
+      <strong class="bad">The beat is <q>stand, brush, turn</q> and he never brushes</strong> — a
+      frame-by-frame audit of all 97 frames, cropped to torso and legs, found no hand-to-cloak
+      contact at any point, so this is two of three verbs and the beat does <em>not</em> meet its
+      pre-registered bar. It is kept because a real stand-and-turn beats the slate it replaced, not
+      because it passes. Other faults: the final frame is a motion
+      smear; the plate's light is midday blue where the script says afternoon.
+      <strong>Yesterday's page called this clip a judder at an effective 8 fps and that is
+      withdrawn</strong> — mpdecimate keeps 93 of its 97 frames, hold <strong>1.04&times;</strong>.
+      The withdrawn figure came from a lag-3 measure that aliases; the earlier reading is left on
+      the record beside this one.
+      <strong>Still open, unchanged since yesterday:</strong> <code>full-s1</code>,
+      <code>full-s3</code> and <code>full-s4</code> were sent for the same brush audit and no
+      result has reached the record. If one of them brushes, the pick changes and the cut gets
+      rebuilt.</td></tr>
+
+  <tr><td class="n">18</td><td>THE DECISION</td><td class="warn">ep2-b18-plainfig · 5.0s</td>
+      <td><strong>Steward pick, no lane verdict on this clip</strong> (the beat itself carries an
+      older <code>CONFUSING</code> verdict). From the recorded round-3 seedA, <q>the most fig-like
+      thing we have made</q>. Faults: a no-context reader ranks the fruit a PLUM, with fig fifth;
+      the background is a flat peach void, not a field; and <strong>in the cut its last frame holds
+      for 5.9 s — longer than its own footage.</strong></td></tr>
+
+  <tr><td class="n">19</td><td>THE DROP</td><td class="bad">SLATE</td>
+      <td>The fruit never leaves the branch. Every plate we have starts the fruit on the ground,
+      and a fall cannot be shot from that.</td></tr>
+
+  <tr><td class="n">20</td><td>EVIDENCE</td><td class="warn">ep2-b20-shape · head-trimmed 3.04→2.38s</td>
+      <td><strong>Steward pick, no lane verdict</strong> — beat 20 had only a <em>stills</em> pick
+      on record, no clip. The fruit IS in both hands. 16 head frames of init plate and white burst
+      were cut. Faults: near-static after that trim, dusk banded sky, and the fruit reads dark
+      rather than purple.</td></tr>
+
+  <tr><td class="n">21</td><td>THE ANSWER</td><td class="ok">ep2-b21-daylight-0814 · 5.0s</td>
+      <td>The leaf tilts over and stops — the move reads as deliberate, which is the whole beat.
+      Residual: a banded poster sky and a palette jump at frame one. Leg A of an A/B pair.</td></tr>
+</table>
+</div>
+<p class="sub"><span class="ok">green</span> = a lane judged this clip as doing its job, with the
+fault named · <span class="warn">amber</span> = steward pick with no lane verdict on the clip, or
+footage that misses its bar · <span class="bad">red</span> = slate ·
+<span class="new">blue</span> = new since 2026-08-16. <strong>Beat 02 is blue and
+<span class="bad">misses its bar</span></strong>: new footage, in the cut, and short of what the
+beat asks for — deliberately not green. <strong>Beat 11 is blue and
+<span class="ok">passes</span></strong>, the only row on this page that does.
+<strong>There is no longer a knowingly-broken row.</strong></p>
+
+<h2>Rules this cut was made under</h2>
+<p><strong>STEWARDSHIP §6 — narrative approval precedes media.</strong> Satisfied. Your words,
+2026-08-15: <q>i did read the script, just a while ago when we were making the first versions of
+the episodes. and i approved it.</q> <strong>No voice was synthesised for this cut</strong> — the
+VO is the Chatterbox take set that already existed in the node. Beat 02 has no VO line because the
+script gives it none; the beat is silent by design.</p>
+<p><strong>$0, no GPU, no new renders, no spend.</strong> Every clip in this cut was rendered
+before today and was already paid for at $0 on the local card; picking among them cost nothing.
+The only new work is one ffmpeg assembly and one file copy off the box.
+<strong>The render queue was not touched</strong> — no job was filed, cancelled or reordered.</p>
+<p><strong>Provenance (§7.2).</strong> Every source clip is published beside this page under
+<code>sources/</code> with its own sidecar, and the assembly manifest
+<code>ep2-demo-0817.mp4.meta.yaml</code> lists all 34 ingredients with the sha256 of the bytes as
+muxed. <strong>The records are not all equally strong and the sidecars say which is which:</strong>
+beat 11's is a genuine <em>render-time</em> sidecar written on the box (its mp4 hashes to the value
+in that directory's own <code>.sha256</code> manifest, checked after the copy); beats 02 and 17's
+are <strong>RECONSTRUCTED from their job specs</strong>, because those clips arrived as bare mp4s
+with no render-time sidecar. That is a weaker record and is labelled as one rather than dressed up
+as one.</p>
+<p><strong>Picks are steward work; taste is yours (R4).</strong> Both of today's picks were made by
+opening consecutive frames and looking at them, not by ranking a metric. Runners-up are listed for
+veto, and you are not being asked to compare anything.</p>
+<p><strong>Not canon, and nothing was published.</strong> This is a bench render. It has no leaf, it
+is not in <code>lineage.yaml</code>, no beat's verdict was changed to make it, and it has not been
+posted, announced or distributed anywhere. Whether it goes anywhere public is yours.</p>
+
+<footer>
+  Sapling · banyan.city · unlisted working page, 2026-08-17. Supersedes
+  <a href="/review/ep2-demo-0816/" style="color:var(--muted)">the 2026-08-16 cut</a> and
+  <a href="/review/ep2-demo-0815/" style="color:var(--muted)">the 2026-08-15 cut</a>, both left in
+  place. Cut sha256 <code>2f6aa019…</code>; beat 02 source
+  <code>dfc6a44a…</code>; beat 11 source <code>a99a0874…</code>.
+  Sources: <code>review/ep2-picks/done-definitions.yaml</code>
+  (<code>beats.02.judged_0817_anchor_wave</code>, <code>beats.03.judged_0817_st_wave</code>),
+  <code>pipeline/measured/judge-0817-b02b03/</code> (clips, strips, <code>freeze-index.json</code>),
+  <code>pipeline/jobs/ep2-b02-anchor-s20260834-0817.yaml</code>,
+  <code>pipeline/jobs/ep2-b11-leave-w4-s20260903-0817.yaml</code>,
+  <code>pipeline/b11_coat_track.py</code>,
+  <code>pipeline/loop/cycle-018.md</code>, and commits
+  <code>6d5da40e</code>, <code>c1aa2f70</code>, <code>08837596</code>, <code>91266fa4</code>.
+</footer>
+
+</div>
+</body>
+</html>

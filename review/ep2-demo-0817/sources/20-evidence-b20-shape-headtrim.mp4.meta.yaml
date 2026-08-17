@@ -1,0 +1,21 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 20
+size: 704x1280
+seconds: 3.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260806
+task: ep2-b20-shape-0813
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0142
+compute_s_per_video_s: 70.6
+demo_note: 'steward pick (beat 20 had only a STILLS pick on record, no clip). HEAD-TRIMMED 2026-08-15: frames 0-15 were the init plate plus a white burst (mean luma 239-244 vs 141 steady state); 73 frames -> 57, 3.04s -> 2.38s. Same edit class as trim_pass_0815. FAULTS: near-static after the trim (motion ends at pair 16), dusk banded sky not daylight cel, the fruit reads dark rather than purple.'
