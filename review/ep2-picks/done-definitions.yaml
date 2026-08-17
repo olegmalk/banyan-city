@@ -770,6 +770,34 @@ beats:
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,
       so it could not be bent to fit the clips that already exist.
     status: NO VERDICT YET
+    full_arm_read_0817:
+      date: '2026-08-17'
+      what_was_read: 'All four of ep2-b17-full-s5..s8-0816, cold-read today with pipeline/coldread_frames.py
+        (overview plus the in-window CONSECUTIVE strip for each). The mp4s are not on main''s worktree
+        — they were pulled out of the results-branch commits fcfe0396 (s5), e2638637 (s6), b36e268e (s7)
+        and ae28a35b (s8), which is where the box published them. Nobody had opened them.'
+      result: '4/4 STAND and 4/4 TURN AWAY — the rise runs about f045-f064, the back is to the lens by
+        f077 and holds to f096, with no cut, no scene change, no camera move and no second figure. 0/4
+        BRUSH. With the 0-of-4 already recorded for s1..s4 (see ep2-b17-insert-plate-0816), the `full`
+        wording stands at 8/8 stand-and-turn and 0/8 brush.'
+      what_the_engine_does_instead: 'Not an attenuated brush — a different action. It substitutes a hand
+        REACH/PLANT: in s6 frames 018-029 the near arm extends forward over the grass and STAYS extended;
+        in s5 frames 019-030 only the head and shoulder settle. Nothing sweeps across the cloak in any
+        of the four. This is why the brush cannot be scored as "faint": there is no brush to grade.'
+      why_no_pick: 'The brush is NOT conceded and beat 17 therefore holds no pick. `brushes off` is in
+        the APPROVED SCRIPT LINE (002b-t0-c, `approved_by: founder`), not merely in the done_when written
+        retroactively above, so dropping it is a rewrite of the bar rather than a pick among takes — an
+        authorship call, and not the pick lane''s to take. Two of three components at 8/8 is a real
+        result and it is recorded here, but it is not this beat''s done_when.'
+      seeds_are_retired_on_this_wording: 'No further seeds on `full`, and this is the reason: eight seeds
+        produced zero brushes, so the seed is not the variable, and the two components that do pass are
+        already 8/8 — more seeds cannot move either number. The live variable is SIZE IN FRAME, against
+        the converged finding that this engine renders gross whole-body motion (12 of 12 stand-ups on
+        this wide plate) and drops small in-hand actions (0 of 4 in the compound, 0 of 2 asked for alone
+        at the same seed, byte-identical otherwise). Specs already filed on that variable:
+        ep2-b17-insert-plate-0816 + insert-motion-0816, bigbody-s20260911..14-0817, platescale-0817,
+        scale-0817. Until one of those lands, beat 17 is framing/plate-blocked, not seed-blocked.'
+      read_by: pick lane (b17-pick), 2026-08-17
   '19':
     title: THE DROP
     script: the stem lets go, the fig falls, and lands in the grass at his feet. He notices.
