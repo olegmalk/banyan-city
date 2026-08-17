@@ -2488,3 +2488,4 @@
 12:42:59Z DONE task=ep2-b01-leafcomp-inpaint-0817-1786970463 rc=0 artifacts=9
 12:48:08Z STARTED task=ep2-b05-attrbind-addA-seeds-0817-1786970707 attempt=1 on box-runner
 12:49:04Z DONE task=ep2-b05-attrbind-addA-seeds-0817-1786970707 rc=0 artifacts=6
+12:51:14Z box-runner idle ready=0 failed=33
