@@ -45,6 +45,99 @@ standing_limits_this_lane_respected:
     b05, b10 and b11 are marked in their own specs as diagnostic rungs no lane
     may promote to a shipping plate. None is promoted here regardless of score.
 
+cross_beat_synthesis:
+  written_last: >-
+    Added after all seven were scored and committed individually. Nothing below
+    changes a single per-beat count; it only reads them together.
+
+  the_batch_verdict_in_one_line: >-
+    NO BEAT CLEARS ITS BAR -- 0 of 12 on all seven -- but the batch was not wasted:
+    it fixed the defect it was cut for on four of the seven beats, found the exact
+    wording that reintroduces it on the other two, produced one new law, retired one
+    lever, and exonerated three suspects.
+
+  what_the_batch_was_FOR_and_whether_it_worked:
+    the_defect: >-
+      Guard beats were shut because 0 of 17 plate prompts named the approved cast and
+      14 of 17 asked for `bald`, when neither approved guard is bald.
+    result: >-
+      FIXED where the token was actually removed. Bald rate by beat: b06 0 of 12,
+      b11 0 of 12, b10 1 of 12, b05 2 of 12, b09 2 of 12 -- and b07 12 of 12, b08
+      12 of 12. The two failures are exactly the two prompts that still contain the
+      string `bald head`. The correction works; it was not applied everywhere.
+
+  the_new_law_BALD_IS_BROADCAST_CLASS: >-
+    `bald` behaves like eyewear: present anywhere in the token stream, it lands on
+    every human head in frame regardless of which clause owns it. Proved by a
+    four-way contrast inside one batch on identical model, sampler, refs and day --
+    no token gives 0-2 of 12, token present gives 12 of 12, AND SCOPING IT INSIDE THE
+    GOBLIN'S OWN CLAUSE DOES NOT HELP (b08). The unprompted baseline for a bare
+    scalp is a small constant near 2 in 12. Consequence: on any beat holding both a
+    human and the goblin, the goblin's bare scalp cannot be named in words at all.
+
+  the_lever_retired: >-
+    ADJACENCY DOES NOT BIND A PROP. b10 drew the owner nearest and got sole
+    ownership 1 of 12. Combined with the earlier finding that a prop does not bind to
+    a person clause either, both cheap levers are now eliminated.
+
+  the_lever_offered_in_their_place: >-
+    OCCUPIED HANDS. b08 keeps the board on one man 4 of 4 when the second figure is a
+    visually distinct green goblin; b10 duplicates it onto a look-alike guard 6 of 12;
+    and b10's single successful frame is the one where the far man's hands are full.
+    Prop duplication tracks how ALIKE the two figures look, not their depth order.
+    Occupying the far man's hands has never actually rendered as an instrument -- the
+    one attempt came back with his arms folded -- and it is cheaper than either option
+    previously named as remaining (identical dress, or a composite).
+
+  the_suspects_exonerated:
+    from_the_camera: b11, 0 of 12 -- the walk never read across frame.
+    wrap: b11 -- the garment CUTS are right; the fault is duplication, not cut.
+    the_two_guard_reference_set: >-
+      b08, 0 of 12 -- the bar's most-feared failure, a second guard pulled in by a
+      two-guard ref set on a one-guard beat, never happened. The second body came out
+      green 11 of 12.
+
+  eyewear_the_negative_is_now_well_evidenced: >-
+    Across b05, b08, b10 and b11 -- four beats, 48 frames, eyewear named nowhere --
+    it appeared nowhere, 0 of 48. And on b09, the single-face beat where it IS named,
+    it bound 12 of 12. Both halves of the broadcast-class law now have clean evidence
+    on this model. Handed to the binding lane.
+
+  the_two_walls_that_did_not_move:
+    the_bark_board: >-
+      0 of 12 on b06, b08 and b10 alike, 36 frames without one convincing bark
+      surface. It renders as planed timber, dark slate, or white paper under a chrome
+      clip -- and the bar excludes all of those by name. Four earlier wordings and 23
+      inpaint samples already failed here, and the one board that ever shipped got
+      there by COMPOSITING. Prompt wording should be considered exhausted.
+    the_white_sash: >-
+      Fails on b05 (0 of 12), b06 (0 of 12), b09 (1 of 12) and b11 (duplicated onto
+      both men). Possibly one broadcast-class mechanism rather than four separate
+      wording bugs -- see b11.THE_WHITE_SASH_LOOKS_BROADCAST_CLASS_TOO. Untested; the
+      clean test names the sash for one man only.
+
+  defects_found_that_no_bar_pre_registered_TIGHTENED_FORWARD_ONLY:
+    note: >-
+      Recorded so they cannot be used to rescore these frames. Every count above is
+      against the bar exactly as written.
+    the_thoughtful_hand_trope: >-
+      b09's bar demands NO hands in frame and also asks for `thoughtful`; thoughtful
+      buys a hand at the chin 11 of 12. The two terms contradict each other.
+    female_reading_second_figure: b05, 3 of 12. The bars say "two men" but never say male explicitly.
+    the_high_downward_angle: >-
+      The r0 row tilts down on b05, b06, b07, b10 and b11. `horizon` is negated
+      nowhere. Not a plan view in the old sense, but not eye level either.
+    tight_framing_costs_the_world_bands: >-
+      The r2 row loses the sky band on b06, b08, b10 and b11 and crops figures below
+      whole-bodied. Reference slot r2 appears to pull framing in.
+
+  a_note_on_what_this_lane_did_NOT_do: >-
+    No rendering, no enqueueing, no re-rendering, $0 spent, and
+    pipeline/measured/queue-history.json was not opened. The seven specs, the
+    samplers, box_enqueue.py, wave-drafts.yaml, canon.yaml, genomes/ and the beat 14
+    and 17 plates were not written to. Frames were copied to a scratchpad outside the
+    repo, not into it.
+
 beats:
 
   '06':
