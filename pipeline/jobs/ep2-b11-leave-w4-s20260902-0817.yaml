@@ -1,3 +1,35 @@
+# 2026-08-17, W4 SEED 20260902. THE WORDING PERFORMED; THE VARIABLE IS NOW THE SEED.
+#
+# WHY A SEED SET IS ALLOWED HERE AND WAS NOT BEFORE. The standing rule is one
+# sample per wording before any seeds, and no seed batch for a wording nobody
+# has watched perform. W4 HAS NOW BEEN WATCHED, all 97 frames: two guards, backs
+# turned, walking away and ending smaller and further off than they began, both
+# still in frame at the last frame, identities and costumes holding. It clears
+# five of the six conditions -- D1, D2, D4, D5, D6 -- and fails ONE, D3, on
+# guard B turning his head into full profile for roughly f008-f022.
+#
+# THE CONFOUND THIS SET EXISTS TO BREAK, and it is the lane's own mistake worth
+# naming: ALL FOUR WORDINGS SO FAR RAN THE SAME SEED, 20260817. Four turns of
+# the same head at one seed is not four independent tests of a wording -- it is
+# consistent BOTH with "this checkpoint always turns a talking man's head" AND
+# with "this seed does". Three fresh seeds of the byte-identical W4 job separate
+# them, and nothing else changes: same plate, same prompt string, same negative,
+# same guidance, same sigmas, same two-stage, same crf, same offload, same 97
+# frames at 24fps at 704x1280. Only the id, the payload and out directories, the
+# output filenames and the seed differ.
+#
+# HOW IT WILL BE JUDGED. Beat 11's own done_when, unsoftened, as D1-D6 in the
+# `success` block below, on all 97 frames opened consecutively. The reading
+# decides; depth and cadence are not evidence and will not be quoted; the
+# terminal-freeze index is reported separately from the hold. DECISION RULE,
+# WRITTEN BEFORE ANY OF THE THREE EXIST: if guard B keeps his back turned in 2
+# or 3 of them, the turn is a SEED effect and W4 is a wording that produces a
+# usable take at some rate -- which is a render-N-and-pick production question
+# for the author (R4). If he turns in all three, the turn is a property of this
+# checkpoint under this scene and no amount of re-rolling fixes it, and the
+# question that goes to the author is whether beat 11's done_when should forbid
+# a profile at all when the script line is two men ARGUING as they walk.
+#
 # 2026-08-17, BEAT 11 WORDING W4. ONE VARIABLE: A BRAKE ON W2's RECESSION.
 #
 # W2 IS THE ONLY WORDING CHANGE THAT HAS MOVED ANYTHING ON THIS BEAT. It fixed
@@ -122,8 +154,8 @@
 # THE RECIPE IS FIXED AND THE QUESTION IS CLOSED. 704x1280, 97 frames, 24fps,
 # two-stage 8@352x640 + 3@704x1280, distilled sigmas, image-crf 33, guidance
 # 2.0, sequential offload. Nothing here sweeps it.
-id: ep2-b11-leave-w4brake-0817
-task: ep2-b11-leave-w4brake-0817
+id: ep2-b11-leave-w4-s20260902-0817
+task: ep2-b11-leave-w4-s20260902-0817
 node: 002b-first-citizen
 beat: 11
 runner: box
@@ -182,7 +214,7 @@ env:
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 payload:
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\cover_crop.py: |-
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\cover_crop.py: |-
     """Cover-crop an asserted source image to an exact WxH. No model, no network."""
     import argparse, hashlib, os, sys
     from PIL import Image
@@ -214,7 +246,7 @@ payload:
     print("src %dx%d sha %s" % (sw, sh, have), flush=True)
     print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
     print("WROTE %s" % a.out, flush=True)
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\stamp_sidecar.py: |-
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\stamp_sidecar.py: |-
     """Stamp the clip's provenance sidecar as unapproved and provisional.
     video_task.write_sidecar records model, prompt, negative, init sha and
     cost_usd 0, and it does not record whether the clip may ship. Nothing this
@@ -229,7 +261,7 @@ payload:
         sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
     with open(META, "a", encoding="utf-8", newline="\n") as fh:
         fh.write(
-            "# --- appended by ep2-b11-leave-w4brake-0817 after the render.\n"
+            "# --- appended by ep2-b11-leave-w4-s20260902-0817 after the render.\n"
             "approved: false\n"
             "provisional: true\n"
             "is_show_content: false\n"
@@ -242,40 +274,40 @@ payload:
             "  picking it into an episode is the author's call and not this\n"
             "  lane's.\n")
     print("stamped %s" % META, flush=True)
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-motion-prompt.txt: Two guards seen from behind walking off into the distance through tall grass, slowly getting a little smaller as the ground opens up between them and the camera, both men still walking and still in frame at the end, gesturing at each other as they argue. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-negative.txt: camera pan, camera tilt, zoom, dolly, push
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-motion-prompt.txt: Two guards seen from behind walking off into the distance through tall grass, slowly getting a little smaller as the ground opens up between them and the camera, both men still walking and still in frame at the end, gesturing at each other as they argue. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-negative.txt: camera pan, camera tilt, zoom, dolly, push
     in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
     freeze frame, facing viewer, looking back, bald, 3boys, extra person, crowd
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-jobs-encode.json: |-
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-jobs-encode.json: |-
     [
      {
       "beat": 11,
-      "embeds": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817-out\\b11-embeds.pt",
-      "prompt_file": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817\\b11-motion-prompt.txt",
-      "negative_file": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817\\b11-negative.txt"
+      "embeds": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817-out\\b11-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817\\b11-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817\\b11-negative.txt"
      }
     ]
-  C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-jobs-render.json: |-
+  C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-jobs-render.json: |-
     [
      {
       "beat": 11,
-      "seed": 20260817,
-      "embeds": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817-out\\b11-embeds.pt",
-      "init": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817-out\\b11-leave-init-704x1280.png",
-      "out": "C:\\banyan-farm\\ep2-b11-leave-w4brake-0817-out\\11-they-leave-w4brake-LTX-castplate.mp4"
+      "seed": 20260902,
+      "embeds": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817-out\\b11-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817-out\\b11-leave-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b11-leave-w4-s20260902-0817-out\\11-they-leave-w4-s20260902-LTX-castplate.mp4"
      }
     ]
 steps:
 - name: crop
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817\cover_crop.py
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\cover_crop.py
   - --src
   - C:\banyan-farm\courier-box\farm-out\ep2-b11-plate-pub-0817\11-they-leave-mac-plate-r3s1.png
   - --sha256
   - 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca
   - --out
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817-out\b11-leave-init-704x1280.png
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817-out\b11-leave-init-704x1280.png
   - --size
   - 704x1280
 - name: encode
@@ -285,7 +317,7 @@ steps:
   - --stage
   - encode
   - --jobs
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-jobs-encode.json
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-jobs-encode.json
 - name: render
   argv:
   - C:\banyan-video\venv\Scripts\python.exe
@@ -293,7 +325,7 @@ steps:
   - --stage
   - render
   - --jobs
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817\b11-jobs-render.json
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\b11-jobs-render.json
   - --size
   - 704x1280
   - --frames
@@ -311,18 +343,18 @@ steps:
   - --mode
   - production
   - --task
-  - ep2-b11-leave-w4brake-0817
+  - ep2-b11-leave-w4-s20260902-0817
   - --worker
   - rtx5090
   - --bench-jsonl
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817-out\bench-b11-leave-w4brake.jsonl
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817-out\bench-b11-leave-w4-s20260902.jsonl
   - --bench-label
-  - ep2-b11-leave-w4brake-0817
+  - ep2-b11-leave-w4-s20260902-0817
 - name: stamp
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817\stamp_sidecar.py
-  - C:\banyan-farm\ep2-b11-leave-w4brake-0817-out\11-they-leave-w4brake-LTX-castplate.mp4.meta.yaml
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817-out\11-they-leave-w4-s20260902-LTX-castplate.mp4.meta.yaml
 - name: publish
   allow_fail: true
   argv:
@@ -330,13 +362,13 @@ steps:
   - -c
   - |-
     import glob, hashlib, os, shutil
-    out_dir = "C:/banyan-farm/ep2-b11-leave-w4brake-0817-out"
-    pay_dir = "C:/banyan-farm/ep2-b11-leave-w4brake-0817"
-    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b11-leave-w4brake-0817"
+    out_dir = "C:/banyan-farm/ep2-b11-leave-w4-s20260902-0817-out"
+    pay_dir = "C:/banyan-farm/ep2-b11-leave-w4-s20260902-0817"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b11-leave-w4-s20260902-0817"
     os.makedirs(dst, exist_ok=True)
-    src = sorted(glob.glob(out_dir + "/11-they-leave-w4brake-LTX-castplate.mp4*")
+    src = sorted(glob.glob(out_dir + "/11-they-leave-w4-s20260902-LTX-castplate.mp4*")
                  + glob.glob(out_dir + "/b11-leave-init-704x1280.png")
-                 + glob.glob(out_dir + "/bench-b11-leave-w4brake.jsonl")
+                 + glob.glob(out_dir + "/bench-b11-leave-w4-s20260902.jsonl")
                  + glob.glob(pay_dir + "/b11-motion-prompt.txt")
                  + glob.glob(pay_dir + "/b11-negative.txt"))
     lines = []
@@ -346,13 +378,13 @@ steps:
         with open(c, "rb") as fh:
             h = hashlib.sha256(fh.read()).hexdigest()
         lines.append(h + "  " + os.path.basename(f))
-    with open(os.path.join(dst, "ep2-b11-leave-w4brake-0817.sha256"), "w", newline="\n") as fh:
+    with open(os.path.join(dst, "ep2-b11-leave-w4-s20260902-0817.sha256"), "w", newline="\n") as fh:
         fh.write("\n".join(sorted(lines)) + "\n")
     print("published", len(src), "file(s) + manifest ->", dst)
     raise SystemExit(0 if len(src) >= 3 else 1)
 artifacts:
-- C:\banyan-farm\ep2-b11-leave-w4brake-0817-out\11-they-leave-w4brake-LTX-castplate.mp4
-- C:\banyan-farm\ep2-b11-leave-w4brake-0817-out\b11-leave-init-704x1280.png
+- C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817-out\11-they-leave-w4-s20260902-LTX-castplate.mp4
+- C:\banyan-farm\ep2-b11-leave-w4-s20260902-0817-out\b11-leave-init-704x1280.png
 script_authority: >-
   Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
   `approved_on: 2026-08-03`. Beat 11 is THEY LEAVE, 0:50-0:55, and the scripted
@@ -366,49 +398,3 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
-outcome:
-  verdict: FIVE OF SIX CONDITIONS HOLD. The best take beat 11 has had, and one
-    named fault stands between it and the bar.
-  clip: farm-out/ep2-b11-leave-w4brake-0817/11-they-leave-w4brake-LTX-castplate.mp4
-  read: >-
-    All 97 frames opened consecutively, plus 3x-5x crops of guard B's head at
-    f000, f010, f020, f040, f060 and of the pair at f088.
-  against_done_when:
-    D1_two_guards: PASS. Two men in every frame, no third body, no frame where
-      one of them is missing or clipped by an edge.
-    D2_walking_away_from_camera: PASS, and the brake did what it was for. Coat
-      height peaks at 268 px around f016 and falls to 178 px at f096, a third
-      smaller, and they end deeper in the field than they began. Against W2's
-      overshoot (specks by f048) this is a walk, not a vanishing. Framing drift
-      is smaller too -- the treeline control moves 75 to 100 across the clip
-      against W2's 75 to 123 -- so more of this recession is the men's own legs.
-    D3_backs_turned_no_face: FAIL, AND IT IS NOW THE ONLY THING WRONG WITH THIS
-      SHOT. Guard B turns his head into full profile with an open mouth from
-      about f008 to f022 and is back to a clean rear view by f040. FOURTH
-      WORDING, FOURTH TURN.
-    D4_both_present_whole_clip: PASS. Both men are in the last frame, walking.
-    D5_field_at_frame_one: PASS.
-    D6_no_head_or_costume_change_no_merge: PASS. Dark-cropped hair over the tan
-      tunic on the left and light sandy hair over the dark brown coat on the
-      right, from f000 to f096, and although they walk close together late in
-      the clip they never blend into one figure.
-  terminal_freeze_index: >-
-    0. No exact ncc = 1.0000 pair anywhere in the clip; the last pair reads
-    0.999350, which is two small figures moving slowly at distance and not a
-    freeze. Reported separately from the hold. Depth and cadence not quoted.
-  the_confound_this_lane_created_and_is_now_breaking: >-
-    ALL FOUR WORDINGS RAN THE SAME SEED, 20260817. Four turns of the same head
-    at one seed is NOT four independent tests: it is equally consistent with
-    "this checkpoint turns a talking man's head" and with "this seed does".
-    Three fresh seeds of the byte-identical W4 job are filed as
-    ep2-b11-leave-w4-s20260901/2/3-0817 to separate them, with the decision rule
-    written into those specs before any of them rendered.
-  what_goes_to_the_author_and_not_to_this_lane: >-
-    If the turn survives re-seeding, the open question is a taste question and
-    belongs to R4, not here. The scripted line is "The guards walk away arguing,
-    backs to camera, genuinely trying to do their jobs", and a man glancing at
-    the colleague he is arguing with is not obviously a defect in that sentence
-    -- but beat 11's `done_when` says backs turned, both present, for the whole
-    clip, and this lane applies the bar as written rather than softening it to
-    fit a take it likes. Nothing here is proposed for the cut.
-  evidence: pipeline/research/EVIDENCE-b11-w4brake-0817.png
