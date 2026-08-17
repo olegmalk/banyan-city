@@ -19,6 +19,7 @@ Run: python3 pipeline/test_silent_gates.py
 """
 
 import io
+import json
 import sys
 import tempfile
 from contextlib import redirect_stdout
@@ -359,6 +360,216 @@ def test_the_publish_rcs_are_the_runners_rcs_and_not_new_numbers():
     check("publish: RC_ARTIFACTS_MISSING is box_runner's 92",
           pfo.RC_ARTIFACTS_MISSING is box_runner.RC_ARTIFACTS_MISSING
           and pfo.RC_ARTIFACTS_MISSING == 92)
+
+
+# -------------------------------------------------- check_results_merged
+
+def _fake_refs(crm, trees, blobs):
+    """Point check_results_merged at an in-memory repo instead of a real one.
+
+    Patches `git_out` — the single subprocess call — and NOT `farm_out_paths` or
+    `read_blobs`. That distinction is load-bearing: stubbing `farm_out_paths`
+    replaces the function whose error handling is the thing under test, and a
+    mutation that swallowed CannotCheck there survived the suite untouched. A
+    fixture must not stand in for the code it is meant to exercise.
+
+    `trees` is {ref: [paths]}; a ref absent from it fails the way git fails.
+    """
+    real = crm.git_out
+
+    def git_out(args, repo=None, binary=False, stdin=None):
+        args = list(args)
+        if args[0] == "ls-tree":
+            ref = args[3]
+            if ref not in trees:
+                raise crm.CannotCheck("fatal: not a tree object: %s" % ref)
+            return "\n".join(trees[ref])
+        if args[0] == "cat-file":
+            body = b""
+            for line in (stdin or b"").decode().splitlines():
+                _, _, path = line.partition(":")
+                content = blobs.get(path, "").encode()
+                body += (b"0" * 40 + b" blob %d\n" % len(content)) + content + b"\n"
+            return body if binary else body.decode()
+        raise AssertionError("unexpected git call in fixture: %s" % args)
+
+    crm.git_out = git_out
+
+    def restore():
+        crm.git_out = real
+    return restore
+
+
+def _set_paths(job, n, ext="png"):
+    return (["farm-out/%s/f%d.%s" % (job, i, ext) for i in range(n)]
+            + ["farm-out/%s/%s.sha256" % (job, job)])
+
+
+def _manifest(job, n):
+    return "\n".join("%064d  f%d.png" % (i, i) for i in range(n)) + "\n"
+
+
+def test_a_set_whose_manifest_attests_to_nothing_is_not_a_published_set():
+    """`published 0 file(s) + manifest` left a real empty manifest on the branch.
+
+    `farm-out/ep2-b01-final055-r2` on farm-results-rtx5090 holds one .sha256 with
+    zero lines and no pixels, because its publish step globbed a directory that
+    does not exist and wrote the manifest anyway. A directory like that is
+    indistinguishable from a published set to anything that lists directories,
+    which is why the check has to read the manifest against the file count.
+    """
+    import check_results_merged as crm
+
+    trees = {
+        "results": (_set_paths("good-set", 4)
+                    + ["farm-out/empty-set/empty-set.sha256"]
+                    + _set_paths("short-set", 4)),
+        "HEAD": [],
+    }
+    blobs = {
+        "farm-out/good-set/good-set.sha256": _manifest("good-set", 4),
+        "farm-out/empty-set/empty-set.sha256": "",
+        "farm-out/short-set/short-set.sha256": _manifest("short-set", 2),
+    }
+    restore = _fake_refs(crm, trees, blobs)
+    try:
+        bad = dict((d, why) for d, why, f, l in crm.inconsistent_sets("results"))
+        check("merged: an empty manifest is a bad set, not a published one",
+              "empty-set" in bad and "EMPTY" in bad["empty-set"])
+        check("merged: a manifest that undercounts its directory is a bad set",
+              "short-set" in bad)
+        check("merged: a consistent set is not reported",
+              "good-set" not in bad)
+        check("merged: and only the bad ones are named", len(bad) == 2)
+    finally:
+        restore()
+
+
+def test_a_failed_entry_owning_a_complete_set_is_reported_unless_a_run_succeeded():
+    """The eleven-set defect, and the false positive that makes the gate honest.
+
+    Pre-recovery this fired on exactly seven real entries — the six 08-14 scene
+    sheets and b01-shape — and went silent once they were in main. Without the
+    done/ lookup it fired on fifteen, and nine were wrong: b04-goblin-ipa-content,
+    b06-ipa-guardcast, b08-refresh and all six goblin-design arms have a LATER
+    rc=0 run publishing into the same directory, so the set on the branch belongs
+    to the success. Read done/ before believing failed/ — the same lesson that
+    nearly cost two re-rendered clips and five re-fired jobs.
+    """
+    import check_results_merged as crm
+
+    trees = {"results": _set_paths("stranded", 4) + _set_paths("retried", 4),
+             "HEAD": []}
+    blobs = {"farm-out/stranded/stranded.sha256": _manifest("stranded", 4),
+             "farm-out/retried/retried.sha256": _manifest("retried", 4)}
+
+    def spec(dirname):
+        return {"steps": [{"name": "publish", "argv": [
+            "python.exe", "-c",
+            'import glob\ndst = "C:/banyan-farm/courier-box/farm-out/%s"\n' % dirname]}]}
+
+    with tempfile.TemporaryDirectory() as td:
+        q = Path(td)
+        (q / "failed").mkdir()
+        (q / "done").mkdir()
+        for name, dirname in (("j-stranded-1", "stranded"), ("j-retried-1", "retried")):
+            (q / "failed" / (name + ".json")).write_text(
+                json.dumps(dict(spec(dirname), rc=92, id=name)), encoding="utf-8")
+        good = dict(spec("retried"), rc=0, id="j-retried-2")
+        (q / "done" / "j-retried-2.json").write_text(json.dumps(good), encoding="utf-8")
+
+        restore = _fake_refs(crm, trees, blobs)
+        try:
+            mis, unreadable = crm.mislabelled_failures(str(q), "results", "HEAD")
+            names = [d for _, d in mis]
+            check("merged: a failed entry owning a complete set is reported",
+                  "stranded" in names)
+            check("merged: an entry whose dir a later rc=0 run published is NOT",
+                  "retried" not in names)
+            check("merged: so the gate names one entry, not two", len(mis) == 1)
+
+            # the same set, once main can see it, is no longer a finding
+            trees["HEAD"] = _set_paths("stranded", 4)
+            mis2, _ = crm.mislabelled_failures(str(q), "results", "HEAD")
+            check("merged: and it goes quiet once main holds the set", mis2 == [])
+
+            # a job json that will not parse must be named, not skipped
+            (q / "failed" / "j-broken.json").write_text("{not json", encoding="utf-8")
+            _, unreadable = crm.mislabelled_failures(str(q), "results", "HEAD")
+            check("merged: an unparseable failed entry is named, not ignored",
+                  "j-broken" in unreadable)
+        finally:
+            restore()
+
+
+def test_the_publish_dst_is_read_from_argv_and_not_from_a_re_escaped_dump():
+    """A regex over json.dumps(job) matched nothing and the gate went green.
+
+    The publish step carries inline python, so `dst = "C:/..."` inside an argv
+    string becomes `dst = \\"C:/...` once the record is re-dumped, and a pattern
+    anchored on the quote finds zero directories. That produced a PASSING gate 2
+    on a tree known to hold seven stranded sets — this file's own failure mode,
+    caught only by running against real box data instead of a fixture.
+    """
+    import check_results_merged as crm
+
+    job = {"steps": [{"name": "publish", "argv": [
+        "python.exe", "-c",
+        'import glob, hashlib, os, shutil\n'
+        'dst = "C:/banyan-farm/courier-box/farm-out/ep2-b05-scene-0814"\n'
+        'src = sorted(glob.glob("C:/banyan-farm/out-b05-scene/05-the-patrol-ipa-*"))']}]}
+    check("merged: the publish dst is found in the real argv string",
+          crm.published_dirs_of(job) == {"ep2-b05-scene-0814"})
+    check("merged: and json.dumps would have hidden it",
+          not crm._PUBLISH_DST.findall(json.dumps(job)))
+
+    # a path the job READS is not a directory the job published
+    reader = {"steps": [{"name": "crop", "argv": [
+        "cover_crop.py", "--src",
+        r"C:\banyan-farm\courier-box\farm-out\ep2-b13-plate-0814\13-x.png"]}]}
+    check("merged: a path the job reads is not claimed as its output",
+          crm.published_dirs_of(reader) == set())
+
+
+def test_a_ref_this_check_cannot_read_is_never_a_pass():
+    """The results branch is not fetched in CI, and that must be loud.
+
+    A single-branch clone cannot see farm-results-rtx5090, so the natural
+    behaviour of a naive check is to find no divergence and report health. The
+    one place the leak hides is the branch this check cannot read.
+    """
+    import check_results_merged as crm
+
+    restore = _fake_refs(crm, {"HEAD": []}, {})
+    try:
+        buf = io.StringIO()
+        rc = crm.report(results_ref="not-fetched", main_ref="HEAD", out=buf)
+        check("merged: an unreadable results ref is RC_CANNOT_CHECK",
+              rc == crm.RC_CANNOT_CHECK)
+        check("merged: and it says CANNOT CHECK rather than ok",
+              "CANNOT CHECK" in buf.getvalue())
+    finally:
+        restore()
+
+
+def test_a_gate_that_did_not_run_says_so_instead_of_looking_clean():
+    """Gate 2 needs the queue; without it the output must not read as a pass."""
+    import check_results_merged as crm
+
+    trees = {"results": _set_paths("good-set", 4), "HEAD": _set_paths("good-set", 4)}
+    blobs = {"farm-out/good-set/good-set.sha256": _manifest("good-set", 4)}
+    restore = _fake_refs(crm, trees, blobs)
+    try:
+        buf = io.StringIO()
+        crm.report(results_ref="results", main_ref="HEAD", queue_dir=None, out=buf)
+        out = buf.getvalue()
+        check("merged: a skipped gate 2 says SKIPPED in words", "SKIPPED" in out)
+        check("merged: and does not claim the queue is clean",
+              "no failed/ entry owns a complete set" not in out)
+        check("merged: the divergence line carries its reason, not a verdict",
+              "not a verdict" in out)
+    finally:
+        restore()
 
 
 def main() -> int:
