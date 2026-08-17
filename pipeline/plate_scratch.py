@@ -3238,6 +3238,290 @@ REVS = {
             "indoors, photorealism, 3d render, dark, night"
         ),
     },
+    # ======================================================================
+    # 2026-08-17. BEAT 14, "THE DEFENSE", REVISION 3.
+    # THE PROMPT AND THE BAR IT WILL BE JUDGED BY, BOTH WRITTEN AND COMMITTED
+    # BEFORE A SINGLE PIXEL EXISTS. THE BAR DOES NOT GET SOFTENED AFTERWARDS.
+    # ======================================================================
+    # THE BEAT, QUOTED FROM ITS SCRIPT so the plate and the words cannot drift
+    # apart. genomes/sapling/nodes/002b-first-citizen/node.md, 1:04-1:10:
+    #   "THE DEFENSE - 1:04-1:10.  He picks at the dirt, embarrassed, glancing
+    #    around."
+    #   > SCAVENGER: "It was *one* apple. It fell off the cart. On the ground,
+    #     that's - that's foraging."
+    # And its done_when, done-definitions.yaml beats.'14':
+    #   "fingers at the dirt AND the glancing - embarrassment readable.
+    #    Requires a plate where his hands and the ground are both in frame; a
+    #    standing full-body plate cannot show this and should be sent back."
+    # The beat IS THE HANDS. Its recorded refire fault is "he stands and looks
+    # down instead of picking at the dirt. The beat IS the hands, and there are
+    # no hands in it."
+    #
+    # ------------------------------------------------------------------
+    # WHAT r1 AND r2 ALREADY SETTLED. NONE OF IT IS RE-DERIVED HERE.
+    # ------------------------------------------------------------------
+    # r1 (9eb7bd15) SOLVED THE THING THAT BLOCKED THE BEAT, ON THE FIRST
+    # SAMPLE: a low crouch with the ground in frame, which is exactly what the
+    # definition says a standing full-body plate cannot give. THE FRAMING
+    # LEVER IS NOT RE-OPENED AND ITS WORDING IS CARRIED FORWARD UNTOUCHED. r1
+    # failed on the DIRT -- one hand resting on a knee, no bare earth anywhere,
+    # only grass.
+    # r2 deleted `green grass` from r1's positive and named grass in the
+    # negative. Dirt arrived, and BOTH hands came down into frame. But the
+    # background went DESERT DUST -- re-creating the "beat 14 sat on DESERT
+    # DIRT" fault this project had already found and fixed once.
+    #
+    # ------------------------------------------------------------------
+    # THE DIAGNOSIS I DISAGREE WITH, AND WHY. This is the whole of r3.
+    # ------------------------------------------------------------------
+    # STATE.md 2026-08-16 stopped at two samples and wrote: "the two samples
+    # show grass and dirt are bistable by wording -- one wins or the other
+    # does -- while the beat needs a patch of bare dirt WITHIN a green field",
+    # and filed it as a composition problem needing a tool rather than
+    # adjectives. THAT STOP WAS THE RIGHT CALL AT THE TIME and the entry it
+    # left is why this rev is cheap to author. But the bistability conclusion
+    # is drawn from a comparison that MOVED TWO THINGS AT ONCE, and the
+    # cleaner reading is already in this file's own docstring:
+    #   r2 did not merely take grass off the ground. IT REMOVED THE
+    #   BACKGROUND'S ONLY NOUN AND THEN FORBADE IT. After r2's edit the only
+    #   world nouns left in the positive are `bare earth`, `loose dirt` and
+    #   `patch of bare brown soil` -- three synonyms for one substance -- and
+    #   `grass, lawn, meadow` sit in the negative. THE VACANCY LAW DOES THE
+    #   REST: an empty region is a hole filled with the largest noun in the
+    #   prompt, the negative does not reach it, and the largest noun in r2 is
+    #   dirt. So the dirt ran to the horizon. That is not two substances
+    #   fighting over one region; it is one region that was never given a noun.
+    # Beat 08 lost five samples to a colossus grown in a reserved sky; beat 17
+    # r2 grew three extra goblin heads in a flat grass margin with `solo`
+    # LEADING and `2boys` negated; beat 11 r3 fixed it on the first sample by
+    # GIVING THE BACKGROUND A NOUN OF ITS OWN. Beat 14 r2 is the same law with
+    # dirt in the role of the colossus.
+    #
+    # ------------------------------------------------------------------
+    # THE ONE VARIABLE: THE TWO GROUND SUBSTANCES ARE SEPARATED BY DEPTH,
+    # EACH GIVEN ITS OWN NOUN, INSTEAD OF ONE BEING BANNED.
+    # ------------------------------------------------------------------
+    # NEAR, under his hands: `patch of bare brown soil` -- KEPT BYTE-IDENTICAL
+    #     from r2, because that clause is what delivered bare dirt.
+    # FAR, above and behind him: `tall green grass behind him` -- ADDED. Not
+    #     `green grass`, which is r1's word and is a GROUND-PLANE noun that
+    #     competed for the same pixels as the soil and won. `tall grass` is
+    #     VERTICAL foliage that occupies a background band, it is the noun this
+    #     repo has already used for exactly this job ((11,3), and the three
+    #     0817 guard plates), and TALL GRASS CANNOT BECOME A CHARACTER.
+    # AND THE UN-BAN IT REQUIRES: `grass, lawn, meadow` comes back OUT of the
+    #     negative. This is not a second lever, it is a mechanical precondition
+    #     -- asking for grass while forbidding grass is the contradiction exit 7
+    #     exists to catch, and it would make whatever came back unattributable.
+    #     Said out loud so nobody has to guess whether it was noticed.
+    #
+    # r3 THEREFORE SITS EXACTLY BETWEEN r1 AND r2, WHICH MAKES THE ATTRIBUTION
+    # UNUSUALLY CLEAN, and this is checkable rather than asserted:
+    #   * r3's NEGATIVE is BYTE-IDENTICAL to r1's.
+    #   * r3's POSITIVE is r2's positive plus ONE clause.
+    #   * THE SEED IS UNCHANGED at 20260814 -- r1, r2 and r3 are three draws of
+    #     one seed, so nothing below is a seed difference. (And 20260814 is NOT
+    #     20260817, the seed with a record for manufacturing false laws.)
+    #
+    # WHAT IS DELIBERATELY *NOT* CHANGED, AND THIS IS THE HARDER DISCIPLINE.
+    # THE HAND WORDING IS BYTE-IDENTICAL TO r1 AND r2 -- `both clawed hands
+    # down at the bare earth, fingers picking at loose dirt`. r2's own comment
+    # pre-registered why: if the fingers still do not reach the soil once the
+    # grass is gone, that is a SEPARATE finding about verb binding and must not
+    # be confounded with this one. THAT EXPERIMENT RAN AND RETURNED: hands came
+    # down, contact did not. So verb-binding is now a NAMED OPEN FAULT with a
+    # named instrument waiting for it -- `picking at` is a VERB, and 24
+    # candidates failed on "pushes himself up to standing" because this model
+    # renders the verb's END state, so the state-tag form (`fingertips
+    # touching the soil`) is r4's variable and r4's alone. Firing both at once
+    # would buy a picture and no knowledge. P3 below is scored anyway, because
+    # a fault you are expecting is still a fault you must write down.
+    #
+    # BOTH HANDS ARE NAMED, AND ON THIS BEAT THAT IS THE CENTRAL RISK RATHER
+    # THAN A FORMALITY. The hand-vacancy law (this file's docstring, the only
+    # rule here with a matched control at three seeds a side) says an
+    # unspecified hand is an empty region that grows the largest noun and that
+    # the negative does not reach it: beat 10's unnamed far man grew a bamboo
+    # pole with `weapon` negated and a duplicate board at another seed, 2 of 3,
+    # against beat 05's four SPECIFIED hands at 0 of 3. A beat whose entire
+    # content is a pair of hands cannot afford to leave either of them vacant.
+    # Both are given a state, in a positive shape, never `empty hands` -- CLIP
+    # cannot represent negation and `empty hands` embeds close to `hands`.
+    # This also makes the law FALSIFIABLE here: see Q4.
+    #
+    # NO EYE-STATE TAG, AND THAT IS A DECISION. `face turned away` is carried
+    # from r1/r2, so there are no eyes to state. The rule "a face plate must
+    # name the eye state" is RETRACTED in this file's own docstring -- it was
+    # written off one picture and at four seeds delivered a usable pair of eyes
+    # 1 time in 4, a wink once and open-but-blank-white once. It is not built
+    # on here. The "glancing around" in the done_when is the CLIP's job; what
+    # the plate owes the clip is a head to animate, which is P6.
+    #
+    # A CROP OF THE STANDING PLATE IS NOT AN OPTION AND IS NOT BEING WEIGHED.
+    # A lane measured that a tight insert with no whole body goes out of
+    # distribution and RE-COMPOSES INTO A PORTRAIT (beat 17 r1's insert had no
+    # hole, so the clip manufactured one by pulling the camera back and put a
+    # face in it). That failure mode is Q6, named in advance, precisely because
+    # this framing is close to it.
+    #
+    # ------------------------------------------------------------------
+    # PLATE BAR, PRE-REGISTERED. USABLE ONLY IF ALL SEVEN HOLD.
+    # Every load-bearing axis is named, because a lane this week certified a
+    # prop's MATERIAL while never mentioning its SHAPE and scored 8/12
+    # "passes" with 0/12 usable.
+    # ------------------------------------------------------------------
+    #   P1 LOW AND OVER THE GROUND. He is crouched, squatting or kneeling --
+    #      NOT standing -- and the ground he is over is inside the frame. This
+    #      is r1's win and a regression here fails outright.
+    #   P2 BOTH HANDS IN FRAME AND DOWN. Both hands visible, both below waist
+    #      height, neither parked on a knee (r1's exact fault), and NOTHING in
+    #      either of them.
+    #   P3 CONTACT. At least one hand's fingers TOUCH the soil -- skin meeting
+    #      dirt, not hovering above it. This is the axis r3 changes no wording
+    #      for; a fail here is expected and informative, not a surprise, and
+    #      it hands r4 its variable.
+    #   P4 DIRT WITHIN A GREEN FIELD -- THE POINT OF THIS REVISION, AND BOTH
+    #      HALVES ARE REQUIRED. Bare brown soil under or around his hands, AND
+    #      green living vegetation present in the same frame. Bare ground with
+    #      a dust/desert background is r2's fault and FAILS. Green ground with
+    #      no bare soil anywhere is r1's fault and FAILS. One without the other
+    #      is not a partial pass; it is the same picture we already have.
+    #   P5 NO VACANCY. No flat untextured region larger than his torso -- no
+    #      dust haze band, no white background, no featureless colour wash --
+    #      and nothing grown in one. The hole itself is the fail, whether or not
+    #      something has arrived in it.
+    #   P6 HIS HEAD IS IN FRAME. Head inside the frame, turned down or away, so
+    #      the clip has a head to animate the "glancing around" with. A frame
+    #      cropped to hands and dirt alone FAILS -- it satisfies the letter of
+    #      "hands and ground in frame" and destroys the beat.
+    #   P7 ONE ADULT GOBLIN. Exactly one figure, adult proportions, green skin.
+    #      No second body anywhere including small in the background.
+    #   RECORDED AND NOT SCORED: costume identity against the goblin sheet
+    #      (it drifted on both r1 and r2 and wants a REFERENCE, not words --
+    #      out of scope for a wording rev and dishonest to score here), exact
+    #      soil colour, time of day, cloak tailoring.
+    #
+    # ------------------------------------------------------------------
+    # FAIL MODES NAMED IN ADVANCE so none can be talked into a pass after.
+    # ------------------------------------------------------------------
+    #   Q1 DESERT -- r2's exact signature: bare ground to the horizon, no green
+    #      anywhere. Means the un-ban alone was not enough, and r4's variable is
+    #      a negative that NAMES the failure world (`desert, sand, dunes, dry
+    #      cracked earth, wasteland`), which no beat-14 negative has ever done.
+    #   Q2 GRASS WINS -- r1's exact signature: green ground plane, no bare soil,
+    #      hand back on the knee. Means the depth separation does not bind and
+    #      the next instrument is COMPOSITIONAL (a mask, an init, a two-region
+    #      tool), not another adjective. Say so and stop rather than laddering.
+    #   Q3 HOVERING HANDS -- hands down, no contact. r2's residual fault
+    #      surviving, which isolates verb-binding as the sole remaining cause
+    #      and sends r4 to the state-tag form. THE EXPECTED OUTCOME.
+    #   Q4 HAND-VACANCY OBJECT -- a stick, pole, basket or broom in either hand
+    #      with all four nouns sitting in the negative. On the hand rule's own
+    #      account this should NOT happen here, because BOTH hands are
+    #      specified and the matched control is 0 of 3. IF IT HAPPENS ANYWAY THE
+    #      HAND-VACANCY LAW IS WEAKER THAN THIS FILE STATES and that gets
+    #      written down as a finding against the rule, not explained away.
+    #   Q5 STANDING -- regression to `ep2-b14-plate-0814`, the plate the
+    #      definition says to send back.
+    #   Q6 PORTRAIT RE-COMPOSE -- comes back a face or upper-body shot with no
+    #      ground. The measured out-of-distribution failure of tight inserts.
+    #   Q7 CHILD OR CHIBI -- proportions collapse to a boy, with `baby, child,
+    #      chibi` all negated.
+    #
+    # ------------------------------------------------------------------
+    # DECISION RULE, WRITTEN BEFORE THE RENDER.
+    # ------------------------------------------------------------------
+    # ONE SAMPLE, opened and judged, before anything else. Then:
+    #   * ALL SEVEN HOLD -> the picture is a candidate, and it is a candidate
+    #     ON ITS PIXELS ONLY. IT IS NOT A FINDING ABOUT THE WORDING UNTIL THREE
+    #     FRESH SEEDS OF THE BYTE-IDENTICAL PROMPT HAVE RUN -- a single-seed
+    #     observation is not a finding, seed 20260817 manufactured two false
+    #     laws in two days, and this file's own docstring was written by the
+    #     lane that then broke that rule within the hour. Three seeds is
+    #     minutes on the Mac fleet.
+    #   * P4 FAILS -> Q1 or Q2 above dictates the next rung, and they dictate
+    #     DIFFERENT rungs, which is why they are distinguished in advance.
+    #   * ONLY P3 FAILS -> r4, state tag, background wording byte-identical.
+    # SEEDS ARE PARALLELISED, RUNGS ARE NOT -- each rung depends on the
+    # previous verdict and a ladder run concurrently is a ladder with no
+    # controls.
+    #
+    # A MAC PLATE IS EVIDENCE ABOUT A PICTURE AND NEVER ABOUT A WORDING. The
+    # PNG travels forward as the literal first frame the box animates (the box
+    # has no text-to-video path), so a verdict on these pixels stands. "This
+    # wording worked on the Mac" is VOID at MAE 61 of 255 between the two
+    # renderers. Nothing here may be cited as proof a wording works.
+    #
+    # NOTHING IS ENQUEUED, NO MOTION IS FIRED, NO `plate_ack` IS WRITTEN, AND
+    # shots.md, wave-drafts.yaml and farm-queue.yaml ARE UNTOUCHED BY THIS
+    # LANE. If the plate passes, SAY SO AND STOP.
+    # ------------------------------------------------------------------
+    # THE TOKEN BUDGET, AND THE TWO WORDS IT COST. MEASURED, NOT ESTIMATED.
+    # ------------------------------------------------------------------
+    # THE GUARD IN THIS FILE FIRED ON THE FIRST DRAFT OF THIS REV AND IS THE
+    # REASON THIS PARAGRAPH EXISTS: `--dry` on macbook1 returned
+    # `TOKENS positive 80/77 TRUNCATED!! ... Refusing to draw.` Without it the
+    # style anchor would have gone silently off the tail, which is exactly the
+    # defect that killed nine drafts before `95d0c6d0` and exactly what the
+    # first beat-14 draft did at 96/77.
+    # r2's positive measures 74/77 on the real CLIP tokenizer, so THERE ARE
+    # THREE TOKENS OF ROOM and the added clause costs six. Every candidate was
+    # measured rather than guessed at (`tall green grass behind him` 6,
+    # `tall grass behind him` 5, `tall grass behind` 4, `tall grass
+    # background` 4). So the clause had to be paid for, and WHAT IT WAS PAID
+    # WITH IS A DELIBERATE TRADE RECORDED HERE RATHER THAN A QUIET EDIT:
+    #   `wiry` DELETED from `lean wiry adult goblin man`. A near-synonym of
+    #     `lean`, which stays, as does `adult` (which P7 needs against Q7).
+    #     Costume and build identity are explicitly NOT SCORED in this bar --
+    #     they drifted on r1 and r2 both and want a REFERENCE, not words.
+    #   `embarrassed` DELETED, and this is the one that deserves an argument
+    #     rather than an assertion, because the done_when says "embarrassment
+    #     readable". IT HAS NO FACE TO LAND ON. `face turned away` is in the
+    #     same prompt and is carried from r1 -- an emotion adjective with the
+    #     face turned out of view can only act as a diffuse style nudge. What
+    #     makes this beat read embarrassed is a grown man crouched picking at
+    #     dirt with his face averted, which is the POSTURE, and the "glancing
+    #     around" that completes it is the CLIP's job off the head P6 reserves.
+    #     If the plate passes every axis and still reads as nothing in
+    #     particular, THIS DELETION IS THE FIRST SUSPECT and it is named here
+    #     in advance so it cannot be rediscovered as a surprise.
+    # THE STYLE TAIL WAS NOT TOUCHED, though cutting `very aesthetic` would
+    # have bought two tokens and is the repo's own current standard (all three
+    # 0817 guard plates end at `masterpiece, best quality`). r1 and r2 both
+    # carry the longer tail, so cutting it here would change the style
+    # conditioning between r2 and r3 and confound the one thing this rev tests.
+    # RESULT, read off the real `--dry` step and not off this arithmetic:
+    # `TOKENS positive 76/77 ok / TOKENS negative 64/77 ok`. ONE TOKEN OF
+    # HEADROOM. The prediction from summing the measurements above was 77 and
+    # the truth is 76 -- the sub-word pieces do not add the way the candidate
+    # table suggests, which is itself the argument for running the step instead
+    # of trusting the sum. Stated plainly because the next lane to add a word
+    # here has one token to spend, and in a file whose whole subject is
+    # silently lost tails that is worth a sentence. The positive still ends on
+    # `very aesthetic`, which is `render_wave_goblin.ANCHOR_TAIL`, so the style
+    # anchor is intact and present in what will actually be sent.
+    (14, 3): {
+        "prompt": (
+            "1boy, solo, lean adult goblin man, green skin, bald head, "
+            "patchwork cloak, crouching low, both clawed hands down at the "
+            "bare earth, fingers picking at loose dirt, face turned away, "
+            "low close-up, hands and dirt large in frame, "
+            "patch of bare brown soil, tall green grass behind him, "
+            "masterpiece, best quality, very aesthetic"
+        ),
+        # Restated BYTE FOR BYTE, not inherited -- a rev merges over
+        # DRAFTS[14], never over the rev before it, and exit 6 refuses a rev
+        # that names a prompt without restating its negative. This one is
+        # byte-identical to DRAFTS[14]'s own negative, i.e. to r1's: r2's
+        # `grass, lawn, meadow` is GONE, deliberately, and that deletion is
+        # named in the comment above rather than left to be discovered.
+        "negative": (
+            "text, standing, walking, running, full body, wide shot, distant, "
+            "holding object, spear, staff, sword, stick, basket, broom, "
+            "2boys, baby, child, chibi, stitches, scars, tree, forest, house, "
+            "indoors, photorealism, 3d render, dark, night"
+        ),
+    },
 }
 
 
