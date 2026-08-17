@@ -263,12 +263,32 @@ founder's sentence read literally.
   `fa03f898`. All refusal paths exercised: protect violation → 5, `--sub`
   cancelling every `--add` → 4, init sha mismatch → 3, two shape flags → 2,
   mask/init size mismatch → 6, all-black mask → 7.
-- `pipeline/jobs/ep2-b10-attrbind-eyewear-0817.yaml` — commit `460565ee`, ONE
-  sample, `--backlog`, enqueue dry run rc=0, both payload scripts verified
-  byte-identical to the repo (a stale payload of this exact script has bitten
-  before). Geometry measured on the plate: 1098 white px, 0.109% of frame,
-  bbox `[281,357,361,393]`, irises outside the mask, the tall man's face
-  declared protected at `[430,160,590,280]` with 0 violations.
+- `pipeline/jobs/ep2-b10-attrbind-eyewear-0817.yaml` — commit `460565ee`, the
+  REMOVAL arm. Attempt 1 died **rc=2, "init not found"**: the box's checkout has
+  no `farm-out/ep2-b10-mac-plate-0817`, so the plate committed at `0ac649d5` was
+  not there. **That is the sha-asserted init gate working** — a loud stop instead
+  of a render of the wrong frame. Respun as
+  `ep2-b10-attrbind-eyewear-0817b.yaml` (commit `1e2d34e6`) against a copy beside
+  the job whose sha256 was verified **on the box**; nothing but the path moved.
+  Result above: **0 of 1**.
+- `pipeline/attribute_mask.py --composite/--ink` — commit `7fb1dfc7`. Inks the
+  same geometry into the plate so a low-strength pass harmonises a frame that
+  exists instead of inventing one. Ink follows the **undilated** shapes while the
+  mask is dilated, leaving real plate pixels either side for the blend. `--ink
+  auto` **samples the plate's own darkest lineart** rather than assuming black
+  (measured `(0,0,0)` on the beat-05 cast plate). The composite is asserted
+  byte-identical to the plate outside the ink, and refuses (exit 6) if it drifted.
+- `pipeline/jobs/ep2-b05-attrbind-addA-0817.yaml` — commit `a5b42b91`, the ADD
+  arm and the one the mechanism actually recommends. Init is the composite over
+  `ep2-b05-cast-0817`'s bare two-guard plate; geometry read off a **coordinate
+  grid** over guard A's face, not eyeballed — lenses `(294,146) r27` and
+  `(379,155) r24`, bridge, one temple to the ear; 2800 mask px, 0.277% of frame;
+  guard B's whole head protected at `[470,50,720,340]`, 0 violations. Strength
+  **0.30**. `glasses` is in the positive prompt **on purpose**: the claim is that
+  the mask, not the wording, decides where it lands.
+
+Also run: `lint_genome.py` rc=0, 0 violations (25 pre-existing licence warnings
+at the ratchet, none of them mine).
 
 Not mine and left alone: `pipeline/test_pipeline.py` has one pre-existing
 failure, `ledger_freshness.py:369` (`subprocess.run(text=...)` with no
