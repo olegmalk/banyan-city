@@ -1,0 +1,117 @@
+{
+  "id": "ep2-b01-stage-0817-1786992594",
+  "task": "ep2-b01-stage-0817",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 30,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "1",
+        "--character",
+        "fig",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-fig-leaf-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817",
+        "--draft-key",
+        "authored_b01_stage_0817",
+        "--arm",
+        "window4",
+        "--dry",
+        "--expect-drafts-sha256",
+        "101448883eb123553ee5c30d43f58470f1e2275edea70048e3d485811949cdc7"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "1",
+        "--character",
+        "fig",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-fig-leaf-0814",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817",
+        "--draft-key",
+        "authored_b01_stage_0817",
+        "--arm",
+        "window4",
+        "--task",
+        "ep2-b01-stage-0817",
+        "--expect-drafts-sha256",
+        "101448883eb123553ee5c30d43f58470f1e2275edea70048e3d485811949cdc7"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-stage-0817\"\nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended after the render by the count-control lane, 2026-08-17.\\n\"\n            \"approved: false\\n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b01_stage_0817). Not a pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads the\\n\"\n            \"  sixteen frames against THIS BEAT's pre-registered bar -- leaf count, node\\n\"\n            \"  count and height scored SEPARATELY -- before anything built on it is\\n\"\n            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). Without it the glob matches\n# nothing and the step publishes nothing while returning a code that reads like\n# a render failure. farm-out is not gitignored, so the runner pushes these itself.\n# The manifest is written from the files ACTUALLY COPIED, and the sha is read back\n# off the COPY at the destination -- a publish step has written a manifest for\n# files it never copied before.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-stage-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-stage-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/01-cold-open-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir + \"/01-cold-open-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-stage-0817.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\npngs = [f for f in src if f.endswith(\".png\")]\nprint(\"published\", len(src), \"file(s),\", len(pngs), \"png ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r3-w015-s0.png"
+  ],
+  "backlog": {
+    "filed_at": 1786992594,
+    "filed_at_iso": "2026-08-17T18:49:54Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b01-stage-0817.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-17T18:50:11Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T18:53:01Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0812\\out-b01-stage-0817\\01-cold-open-ipa-r3-w015-s0.png"
+  ]
+}
