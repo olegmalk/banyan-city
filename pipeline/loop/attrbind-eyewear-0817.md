@@ -366,6 +366,49 @@ to one figure** — is not merely the convenient direction, it is the *correct* 
 and this failure is the evidence. Removal is retired as a route for eyewear:
 not on taste, on mechanism.
 
+## RESULT — the ADD arm: 1 of 1, and it passes
+
+`ep2-b05-attrbind-addA-0817`, rendered on the box, scored against the bar as
+written above.
+
+| Predicate | Verdict | How it was established |
+|---|---|---|
+| `A_glassed` | **PASS** | round wire-rims that read as **drawn**, not pasted. Three-way comparison (bare / inked / harmonised) shows the 0.30 pass did real work: line weight now **varies** — heavy at the lens bottoms, tapering to nothing where the rims meet the brows, which is the anime wire-rim convention — the upper arcs **merge into the existing eyelid and brow linework** instead of sitting on top of it, the ruled bridge became a finer curved stroke, and the right rim picked up the plate's own warm rim light |
+| `B_bare` | **PASS** | measured, not judged: **0 changed pixels** in guard B's protect box `[470,50,720,340]`, both against the composite init **and against the original cast plate**. He is byte-identical to the plate the cast lane produced, so he cannot be wearing anything |
+| `cast_holds` | **PASS** | guard A's irises are unchanged (brown/orange left, dark blue right, same highlights) and visible through the lenses; brows, hair, skin tone, garment and sash all unchanged; guard B byte-identical |
+
+**1 of 1.** Mask behaviour: **2733 of 2800** mask px changed, 5933 px changed
+outside the hard mask — the `--blur 4` soft edge, entirely within guard A's own
+face. Guard B: zero.
+
+**The headline claim is proven, and it is the one the founder asked for.** The word
+`glasses` was in this job's **positive prompt** — the same word that broadcast to
+both men 5 of 5 when nothing confined it. Guard B came back bare anyway, because
+the mask, not the wording, decided where it could act. That is control, and it is
+checkable rather than rhetorical.
+
+### Not adopted yet — and saying so is the point of the bar
+
+**The threshold is ≥4 of 5 seeds and this is N=1.** One sample passing is the
+go/no-go that justifies spending the other four, which is exactly what ONE SAMPLE
+is for. It is not the adoption. `ep2-b05-attrbind-addA-seeds-0817` carries seeds
+20260818/19/20/21 on the identical init, mask and strength — seed is the only
+variable.
+
+### One specific defect, recorded with its fix
+
+**The temple arm faded almost entirely.** In the composite there was a clear
+stroke from the left lens to the ear; after harmonising it is nearly gone. The
+lenses and bridge survived because they run **alongside existing linework** (lids,
+brows) that supports them; the temple stroke crosses **bare skin with no
+neighbouring line** to reinforce it, so 0.30 dissolved it.
+
+Generalisable rule: **an inked stroke survives in proportion to the linework
+already beside it.** Isolated strokes over flat areas need either a thicker ink or
+a lower strength (~0.25) than strokes that follow existing contours. This is a
+geometry/strength interaction, not a prompt problem, and it is the first thing to
+move if a frame comes back incomplete.
+
 ## Why this is worth more than a beat-05 fix
 
 The mechanism is general in a way the beat-05 fix would not have been: **any
