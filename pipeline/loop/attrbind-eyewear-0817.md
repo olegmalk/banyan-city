@@ -338,8 +338,35 @@ not on taste, on mechanism.
 
 ## Why this is worth more than a beat-05 fix
 
-If Arm 2 holds, the mechanism is general: **any attribute, onto any one of
-several figures, by construction rather than by wording** — draw the frame
-without the attribute, then denoise only the region that should carry it.
+The mechanism is general in a way the beat-05 fix would not have been: **any
+attribute, onto any one of several figures, by construction rather than by
+wording** — draw the frame without the attribute, ink the attribute's geometry
+into the region that should carry it, then denoise only that region.
+
+**What generalises, precisely:**
+
+- **The diagnosis.** "Which figure gets this?" has no answer in a prompt, because
+  a broadcast-class attribute lives in conditioning that has no address. Any
+  attribute that can plausibly sit on more than one figure will broadcast. The
+  three-cell table is the cheap way to test any *new* attribute: render it with
+  one eligible figure, with two, and with none. If it lands on both, it is
+  broadcast and no wording will fix it.
+- **The lever.** `--protect` turns "we need to have control" from an intention
+  into an exit code. That applies to any figure and any attribute.
+- **The asymmetry.** Add with a thin band; do not try to remove with one. Draw the
+  plate *without* the attribute — which is also the cheapest prompt, since
+  omitting a token is free — and add it where you want it.
+- **The limit, stated honestly.** This only covers attributes expressible as
+  **geometry** — eyewear, a sash, an armband, a scar, a headband. An attribute
+  that is a *property of the whole figure* (a hair colour, a height, a body type)
+  has no thin band to ink and is not reachable this way. For those the lever is
+  the cast plate, not the mask.
+
+This lines up with what the ControlNet lane found independently today —
+**conditioning biases an attribute, it does not pin it.** Attention-level and
+conditioning-level fixes shift probabilities; a mask decides. That is the whole
+reason the mask route is the one that answers the founder's word, and it is why
+`--protect` refusing is a feature and not an inconvenience.
+
 "We need to have control" applies to every attribute we ever bind to one figure
 among several, and the founder asked for the mechanism, not the dodge.
