@@ -3721,6 +3721,200 @@ REVS = {
             "indoors, photorealism, 3d render, dark, night"
         ),
     },
+    # ======================================================================
+    # 2026-08-17. BEAT 14 REVISION 6. THE CAMERA ANGLE, FIRED ON THE FOUNDER'S
+    # OWN CALL. WRITTEN AND COMMITTED BEFORE THE PIXEL EXISTS.
+    # ======================================================================
+    # WHY THIS RUNG EXISTS AT ALL, since r5 pre-committed to be the last one.
+    # It is not this lane laddering around its own stop rule. r5's stop rule
+    # named the next instrument -- a CAMERA ANGLE, `from above` -- and
+    # deliberately did NOT fire it, for one reason that was correct: camera
+    # angle is a LOOK decision and look is R4, the founder's. THE FOUNDER HAS
+    # NOW MADE THE CALL: "for beat 14, fix it properly." So the instrument r5
+    # left on the bench is fired by authority, not by escalation. The wording
+    # ladder is still closed; this is not a sixth wording rung aimed at filling
+    # the band.
+    #
+    # THE MECHANISM, INHERITED AND NOT RE-DERIVED. Three rungs (r3, r4, r5)
+    # failed P5 and the diagnosis they converged on is that THE HOLE IS ABOVE
+    # THE HORIZON: grass grows on the ground, so every rung aimed a GROUND noun
+    # at a SKY region and none could ever reach it. r5 also proved the camera is
+    # the thing that has never moved -- it enlarged the SUBJECT, and a bigger
+    # subject at eye level still has a horizon in frame and therefore still has
+    # sky above his hunched back. `from above` does not FILL the band, it
+    # DELETES it: a high angle puts GROUND behind him where sky was.
+    # AND THE PLAN THAT IS STILL FORBIDDEN: naming the sky positively. That was
+    # r4's promised candidate, withdrawn at r5 on beat 17's evidence (DELETING
+    # `wide blue sky above` REMOVED A COLOSSUS) and beat 08's five samples lost
+    # to a colossus grown in a reserved sky. Asking for a wide sky MANUFACTURES
+    # the flat region P5 forbids. It is not re-opened here.
+    #
+    # ------------------------------------------------------------------
+    # THE ONE VARIABLE: `low close-up` BECOMES `from above, close-up`.
+    # ------------------------------------------------------------------
+    # The camera angle and nothing else. `low` is the camera-HEIGHT word in
+    # r5's leading framing cluster and it is the current angle; changing the
+    # angle IS editing that word. The subject's posture is NOT touched --
+    # `crouching low` is a separate clause and stays byte-identical, so P1's
+    # crouch does not depend on this edit. The clause stays LEADING, which is
+    # r5's one measured win (framing tags at the FRONT undid Q8's camera pull-
+    # back at zero token cost) and is preserved exactly. Both new tags are
+    # booru-native atomic tags -- `from above` and `close-up` are real Danbooru
+    # tags, which is the form this repo has measured as binding, where
+    # `low close-up` is film language.
+    # THE SEED IS UNCHANGED at 20260814. r1-r6 are SIX draws of one seed
+    # differing by text alone.
+    #
+    # WHY IT IS A SWAP AND NOT AN ADDITION, AND THIS IS MEASURED, NOT PREFERRED.
+    # Adding `from above` to r5 while KEEPING `low close-up` measures 78/77 on
+    # the real CLIP tokenizer and THE GUARD IN THIS FILE WOULD REFUSE TO DRAW IT
+    # (exit 5). So "add the angle and change nothing else" is not available at
+    # this budget; the token guard forces the trade. It is also the honest form:
+    # a prompt asking for a LOW camera and a HIGH camera in the same breath is a
+    # contradiction, which is what exit 7 exists to catch one level up.
+    # Every candidate was MEASURED on the venv's CLIPTokenizer against r5's
+    # exact positive (75/77), not summed from a table:
+    #   `from above,` added, `low close-up` kept ......... 78  REFUSED
+    #   `low close-up` -> `from above, close-up` ......... 77  CHOSEN
+    #   `low close-up` -> `close-up from above` ......... 76
+    #   `low close-up` -> `from above` .................. 73  (drops close-up)
+    #   `low close-up` -> `high angle, close-up` ........ 77
+    # 77/77 IS ZERO HEADROOM AND THAT IS SAID OUT LOUD, because this file's
+    # subject is silently lost tails and (20,3) is recorded as exactly this trap:
+    # one more word in this positive and the anchor leaves without a message.
+    # `close-up from above` at 76 would leave a token, and it is NOT chosen
+    # because it is a compound that is not a trained tag pair, where the whole
+    # point of the rev is that the angle must BIND. The real `--dry` step
+    # confirms 77 before anything is drawn rather than this comment asserting it.
+    # THE STYLE TAIL IS NOT TOUCHED. The positive still ends `masterpiece, best
+    # quality, very aesthetic` -- `very aesthetic` is
+    # `render_wave_goblin.ANCHOR_TAIL`, and cutting it would buy two tokens and
+    # confound the comparison, since r1-r5 all carry it. Note that
+    # plate_scratch.py does not call compress(), so there is no
+    # `STYLE ANCHOR PRESENT` line to read: it is checked by reading the string.
+    # The negative is BYTE-IDENTICAL to r3/r4/r5's, restated per exit 6, and
+    # `from above` and `close-up` appear in neither half, so exit 7 is clean.
+    #
+    # ------------------------------------------------------------------
+    # THE BAR. ALL SEVEN AXES CARRIED FORWARD UNCHANGED FROM e70c36f6 (P4'
+    # tightened forward there, restated unchanged at 3c20c13a). NOTHING IS
+    # SOFTENED, NOTHING IS ADDED, NOTHING IS TIGHTENED.
+    # ------------------------------------------------------------------
+    # P5 is scored by the SAME TEXT that failed r3, r4 and r5, so a pass here is
+    # comparable to those fails. The other six are carried so that the question
+    # "did the six that r5 passed SURVIVE the angle change" is answerable --
+    # A FIX THAT DELETES THE SKY BY LOSING THE BURIED HANDS IS NOT A FIX, and a
+    # regression in ANY of P1, P2, P3, P4', P6, P7 FAILS r6 even if the band is
+    # gone.
+    #   P1 LOW AND OVER THE GROUND -- crouched/squatting/kneeling, not standing,
+    #      ground he is over inside the frame.
+    #   P2 BOTH HANDS IN FRAME AND DOWN -- both visible, both below waist,
+    #      neither parked on a knee, nothing in either.
+    #   P3 CONTACT -- at least one hand's fingers TOUCH the soil, not hovering.
+    #   P4' DIRT WITHIN A GREEN FIELD, RATIO NAMED -- bare brown soil under or
+    #      around his hands, AND green living vegetation, AND the green reads as
+    #      A FIELD HE IS IN: green on more than one side of him and continuing
+    #      past the frame edge, not isolated tufts.
+    #   P5 NO VACANCY -- no flat untextured region larger than his torso, no
+    #      dust haze band, no white background, no featureless colour wash, and
+    #      nothing grown in one. The hole itself is the fail. THE AXIS UNDER
+    #      TEST, and the only axis three rungs have failed.
+    #   P6 HIS HEAD IS IN FRAME -- head inside the frame, turned down or away,
+    #      so the clip has a head to animate the "glancing around" with.
+    #   P7 ONE ADULT GOBLIN -- exactly one figure, adult proportions, green
+    #      skin, no second body anywhere including small in the background.
+    #   RECORDED AND NOT SCORED, unchanged: costume identity against the goblin
+    #      sheet (drifted on all five revisions; it wants a REFERENCE, not
+    #      words), blank white eyes, exact soil colour, time of day.
+    #
+    # A LOOSENESS IN P6 THAT THIS REV IS LIKELY TO EXPOSE, NAMED BEFORE THE
+    # PIXEL AND DELIBERATELY NOT ACTED ON. A high angle over a man whose face is
+    # already turned away can return THE TOP OF A BALD SKULL and nothing else --
+    # which satisfies P6 AS WRITTEN ("head inside the frame, turned down or
+    # away") while giving the clip a featureless dome rather than a face to
+    # glance with. If that happens, P6 IS SCORED AS WRITTEN -- A PASS -- and the
+    # tightening is proposed FORWARD for r7 ("some facial feature legible: brow,
+    # ear line, nose or eye"). It is NOT tightened now, because the whole
+    # purpose of this bar is that r5's six passes and r6's are comparable, and
+    # because bending a bar after seeing the picture is how 8/12 "passes" became
+    # 0/12 usable this week. Saying it in advance is what stops it being
+    # rediscovered as a surprise or quietly used to fail the rev.
+    #
+    # ------------------------------------------------------------------
+    # FAIL MODES NAMED IN ADVANCE. Q1-Q8 as committed at c81323c6 and e70c36f6
+    # all still live, plus three that belong to THIS instrument.
+    # ------------------------------------------------------------------
+    #   Q9  THE CROUCH GOES WITH `low`. P1 or P2 regresses because `low` in the
+    #       leading framing cluster, not `crouching low`, was the word carrying
+    #       r1's win. If this fires, r1's framing lever was never separable from
+    #       the camera height and the beat's composition cannot be steered by
+    #       tags at all -- report it, do not re-word around it.
+    #   Q10 THE FIELD LEAVES WITH THE SKY. P4' fails because a high angle can
+    #       fill the whole frame with soil and put no green anywhere -- deleting
+    #       the band by deleting the field. THAT IS A TRADE, NOT A FIX, and it
+    #       is scored as a FAIL of r6, not as a P5 win. This is the most likely
+    #       way this rev goes wrong and it is why P4' is carried unchanged.
+    #   Q11 TOP-OF-SKULL PLATE. The bald-dome case above. P6 passes as written;
+    #       recorded as an observation and a forward tightening for r7.
+    #   Q8  CAMERA PULLED BACK stays live: a high angle that also backs off
+    #       loses `hands and dirt large in frame` and fails P2.
+    #   Q6  PORTRAIT RE-COMPOSE stays live for the same reason it did at r5.
+    #
+    # ------------------------------------------------------------------
+    # DECISION RULE AND STOP RULE, BOTH PRE-REGISTERED. THIS IS THE ONLY RUNG
+    # THIS LANE FIRES.
+    # ------------------------------------------------------------------
+    # ONE SAMPLE, one seed (20260814), opened and judged by eye against the
+    # seven axes above AS WRITTEN. No seed batch: the committed rule spends
+    # three fresh seeds only once every axis holds, and `--seeds > 1` needs
+    # `--i-have-seen-a-sample` anyway (exit 8).
+    #   * ALL SEVEN HOLD -> the band is gone AND the six survived. That makes it
+    #     a CANDIDATE ON ITS PIXELS ONLY, and NOT a finding about the wording
+    #     until three fresh seeds of the byte-identical prompt have run (one
+    #     seed manufactured two false laws in this repo in two days). WHETHER IT
+    #     SHIPS IS R4 AND THE FOUNDER'S ALONE -- he authorised fixing the beat,
+    #     not the result. The lane writes the founder card and STOPS: nothing
+    #     enqueued, no motion, no `plate_ack`, no seed batch.
+    #   * P5 PASSES BUT ANY OF THE OTHER SIX REGRESSES -> NOT A PASS. Report the
+    #     trade by name (Q9, Q10, Q8, Q6) and STOP. A band removed by losing the
+    #     buried hands or the green field is the picture we already had.
+    #   * P5 FAILS A FOURTH TIME -> THE CAMERA-ANGLE INSTRUMENT IS SPENT TOO,
+    #     and that is the finding: the empty band is not reachable by ANY
+    #     leading-tag wording on this composition, angle tags included. NO r7
+    #     WORDING RUNG IS FIRED. What is left gets NAMED, not run: (1) a
+    #     two-region compositional tool -- an img2img init or an inpaint mask
+    #     over the band, which is what STATE.md's 2026-08-16 stop pointed at;
+    #     (2) a CROP of r5 or r6 below the horizon, which is a framing decision
+    #     and therefore R4; (3) the founder's own call that a soft gradient sky
+    #     is a milder fault than the white BURST that broke beats 06, 09 and 11
+    #     -- offered to him as a question, never scored here as a pass.
+    # A MAC PLATE IS EVIDENCE ABOUT A PICTURE AND NEVER ABOUT A WORDING (MAE 61
+    # of 255 between MPS and the box). The PNG travels forward as the literal
+    # first frame the box animates, so a verdict on these pixels stands; "this
+    # wording worked on the Mac" is void and is not claimed. macbook1 is the
+    # renderer for all six draws, and `mac_preflight.py` returned
+    # `verdict: READY, problems: []` with every weight blob's sha256 re-read
+    # against its own filename BEFORE this rung was authored -- two Macs
+    # rendered SDXL as pure noise for days on weights that passed size, file
+    # count and manifest.
+    # shots.md, wave-drafts.yaml, farm-queue.yaml and genomes/ are UNTOUCHED.
+    (14, 6): {
+        "prompt": (
+            "1boy, solo, from above, close-up, hands and dirt large in frame, "
+            "lean adult goblin man, green skin, bald head, "
+            "patchwork cloak, crouching low, both clawed hands down at the "
+            "bare earth, fingers picking at loose dirt, face turned away, "
+            "patch of bare brown soil, tall green grass background, "
+            "masterpiece, best quality, very aesthetic"
+        ),
+        # Byte-identical to r3's, r4's and r5's, restated per exit 6.
+        "negative": (
+            "text, standing, walking, running, full body, wide shot, distant, "
+            "holding object, spear, staff, sword, stick, basket, broom, "
+            "2boys, baby, child, chibi, stitches, scars, tree, forest, house, "
+            "indoors, photorealism, 3d render, dark, night"
+        ),
+    },
 }
 
 
