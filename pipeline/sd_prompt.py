@@ -257,6 +257,31 @@ def _token_estimate(text: str) -> int:
     renderer nothing but style tags, which is strictly worse than the truncation it
     was meant to prevent. Being pessimistic about a budget is not free when the
     penalty for "too long" is deleting the content.
+
+    A NUMBER FROM THE FALLBACK IS NOT EVIDENCE. Calibrated is not the same as
+    correct, and the error is not a small percentage either way — it changes the
+    VERDICT, because compress() uses this same estimate for its own fitting loop
+    and will drop clauses the real tokenizer would have kept. Measured on
+    2026-08-17, one draft, same code, only `transformers` importable or not:
+
+        real CLIP tokenizer   74/77 positive, ZERO faults
+        this fallback         85/77 positive, TWO faults — "STYLE ANCHOR MISSING"
+                              and "POSITIVE DROPPED: very aesthetic."
+
+    The fallback did not merely misreport a length; it shed the style tail and
+    then faulted the draft for the tail it had just shed. A lane quoting a token
+    count, headroom figure or fault list taken with `transformers` unavailable is
+    quoting an artefact of this function. Several 2026-08-17 lanes quoted counts
+    without recording which path produced them, and the numbers cannot be told
+    apart after the fact.
+
+    SO: before quoting any figure that comes through here, check
+    `_clip_tokenizer() is not None` and say which path you were on. On the Mac a
+    plain `python3` has no transformers; a venv that can render does (diffusers
+    depends on it), and the CLIP weights are already in the local HF cache, so the
+    real count is available offline — there is no reason to quote the estimate.
+    The box always has the real one, and it reports `positive_tokens` in every
+    sidecar, which is the figure to reconcile against.
     """
     tok = _clip_tokenizer()
     if tok is not None:

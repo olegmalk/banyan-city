@@ -8974,3 +8974,89 @@ re-run. All seven pass a real `box_enqueue --dry-run` and each takes one auto-in
 **What is unblocked now: scoring these seven at N of 12.** The frames exist, the
 denominator is correct in the spec, and the four copies per job are identified by name
 (`r3`, equal to `r0`) so a scorer can ignore them without hunting.
+
+---
+
+## 2026-08-17 — `bald` came from the goblin slot, not the drafts; b08 goes 12 of 12 haired on one deleted token
+
+**The two cast rungs that still shipped the defect are fixed and re-filed, and the
+root cause was not where it was reported.** `ep2-b07-cast-0817` and
+`ep2-b08-cast-0817` were the only two of the seven that still sent `bald head`, and
+`bald head` is **not a literal in either draft**. Both carry the `{{GOBLIN}}` marker,
+and `goblin_ipa_sample.py` line 65 fills it from its own constant —
+`GOBLIN_DEF = "green skin, bald head"`. The string beat 08 actually sent was
+`... the far one a goblin, green skin, bald head, patched cloak ...`. **Grepping the
+drafts for `bald` finds nothing, which is presumably how a batch built to remove
+`bald` shipped it twice.**
+
+**That turns the b06 contrast from a correlation into a cause.** b06 renders 12 of 12
+haired off the same refs, sampler, model and day; the mechanical difference is that
+`authored_b06_cast_0817` carries **no `{{GOBLIN}}` marker**. b07 and b08 are the only
+two cast drafts that carry the slot and the only two that went 12 of 12 bald — so
+**the other five cast specs need nothing.**
+
+**Result, measured: 0 of 12 → 12 of 12.** `ep2-b08-nobald-0817` (rc 0, 12 png) passes
+term 4 of its own bar — "HE IS NOT BALD" — at **12 of 12**, against the predecessor's
+12 of 12 bald on the same seeds. One variable: the insert script refuses to write
+unless the draft equals the predecessor's *sent* string minus exactly `, bald head`.
+So **`bald` was the whole mechanism, not a factor**, and no negation was needed.
+It also closes the broadcast-class law in both directions from inside one clause: the
+token sat scoped in the goblin's own clause and reached the guard, and deleting it
+from that clause released him. **The beat is NOT closed** — the species fault persists
+and `done_when` is unmet; one defect, one rung, one verdict. Verdict in
+`review/ep2-picks/nobald-0817-verdict.yaml` (own file; the scoring lane's
+`cast-0817-scores.yaml` is untouched, and no pick is made).
+
+`GOBLIN_DEF` was **not** touched and the insert scripts assert it: bald *for the
+goblin* is the founder's own 2026-08-12 ruling and eleven goblin beats share that
+constant. The slot comes out of these two drafts only.
+
+**Beat 07 got two rungs, because it had two defects.** `ep2-b07-nobald-0817` removes
+`bald` and nothing else. `ep2-b07-twofig-0817` adds the grammar fix — and it is **not
+a polish rung**: beat 07 scored **0 of 12 on containing a point at all**, its own
+action, because `compress()` splits on commas and `points` arrived as a list item
+whose nearest preceding noun was **`white sash`** — the sash was the subject of the
+verb — and there was **no goblin noun anywhere** for the species attributes to bind
+to, so they bound to the guard and green skin arrived as a green mitt. **It does not
+change the Danbooru count tag**: both rungs still derive and declare `1boy`, the
+goblin gets a *grammatical* subject slot and not a count slot. That is a hard limit —
+`goblin_ipa_sample.py` calls `wg.check(BEAT, d, ...)` directly and never calls
+`apply_variant_declaration`, so there is no per-variant count override, and `2boys`
+would need beat 7's `tag:` edited, which faults every sibling draft.
+
+### A token count from the fallback estimator is not evidence — this bit today
+
+`sd_prompt._token_estimate` falls back to a word-count approximation when
+`transformers` is not importable, and **`compress()` uses that same estimate for its
+own fitting loop**, so it sheds the style tail the real tokenizer would keep and then
+faults the draft for the tail it just shed. Same draft, same code, only the tokenizer
+differing:
+
+| path | positive | faults |
+|---|---|---|
+| real CLIP (`transformers`, `openai/clip-vit-large-patch14`) | 74/77 | **0** |
+| fallback estimate | 85/77 | **2** — `STYLE ANCHOR MISSING`, `POSITIVE DROPPED: very aesthetic.` |
+
+It changes the **verdict**, not just the number. Several lanes quoted token figures
+today without recording which path produced them and they cannot be told apart after
+the fact. **Before quoting a count, check `_clip_tokenizer() is not None` and say
+which path you were on.** A plain `python3` on the Mac has no transformers; a venv
+that can render does, and the CLIP weights are already in the local HF cache, so the
+real count is available offline — `/Users/artovonkugler/banyan-farm-m1pro/venv/bin/python3`
+with `HF_HUB_OFFLINE=1` works. The warning is also on `_token_estimate`'s own
+docstring, where a lane reaching for the cheap path will actually see it. **The box
+reports `positive_tokens` in every sidecar** and is the figure to reconcile against —
+b08's sidecar says 71, exactly the pre-filing local measurement, which is what makes
+the local real-CLIP numbers trustworthy for the rest of the batch.
+
+### Provenance defect found and deliberately not fixed
+
+Every sidecar these two beats write still records
+`goblin_definition_as_sent: "green skin, bald head"`, because the sampler writes
+`GOBLIN_DEF` into that field **unconditionally**, whether or not the draft carried the
+slot it fills. For these two beats **that field is false** and the `prompt:` field in
+the same sidecar disproves it. A later scorer trusting provenance over the prompt
+would re-diagnose a defect that is fixed. §7.2 says provenance always, and this is
+provenance that lies. Not fixed here — the sampler is shared and the field is correct
+for the eleven goblin beats that do carry the slot; the fix is to write it only when
+the slot was actually substituted, and it belongs to whoever owns that file.
