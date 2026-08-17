@@ -368,3 +368,52 @@ the same recipe drew background instead, keeping the count at two on **4 of 4**.
 **removal is only finished when the attachment is removed too** — which is the same
 finding the eyewear lane reached from the other side (masked addition 5 of 5, masked
 removal 0 of 1: the unmasked pixels either side still describe the thing).
+
+## 13. REMOVE THE CUE, NOT JUST THE OBJECT — the law to read before you design a mask
+
+**Measured 2026-08-17 on two canon rungs of the same recipe, one variable apart.**
+
+A masked vacancy is not filled with background. It is filled with **whatever the
+surviving cue suggests.**
+
+- Beat 01 (`ep2-b01-leafcanon-inpaint-0817`): the composite removed two blades and left
+  the **stem node** they grew from — inside the blend mask. At strength 0.30 the sampler
+  grew a blade back at that node on **4 of 4** frames, one of them fully drawn with a cel
+  outline. `FAIL-VACANCY`, 0 of 4 on the count axis.
+- Beat 21 (`ep2-b21-leafcanon-inpaint-0817`): the same recipe, the same strength, a
+  vacancy against **open sky** with no attachment left in it. Count held at exactly two
+  blades on **4 of 4**; what the sampler drew in the vacancy was background (a disc, a
+  blob, a crescent — `FAIL-BLUR`, a look fault, not anatomy).
+
+**So: an attachment point is a structural cue and it is as strong as an outline.** The
+eyewear lane measured the same law from the other side on the same day — masked
+**addition** works (5 of 5, protected face byte-identical) and masked **removal** does not
+(0 of 1: a thin band along an object's own outline thins it rather than removing it,
+because the unmasked pixels either side still describe it). Beats 01 and 21 show it is not
+only outlines: **a node, a stub, a socket, a hand still gripping, a shadow still cast — any
+surviving structure that implies the removed thing will be completed back into it.**
+
+Practical form, in the order a lane needs it:
+
+1. **Before masking, list the cues, not the object.** What else in this frame implies the
+   thing you are removing? Attachment, stub, cast shadow, occlusion contact, symmetry
+   partner.
+2. **Patch the cues too, or accept that the sampler will finish them** — and if you accept
+   it, say so in the bar in advance and do not score it as a surprise.
+3. **Do not "fix" it by shrinking the mask off the cue.** That makes a re-grow unobservable
+   and turns the rung into a guaranteed pass that measures nothing.
+4. **A cue on a structure you must keep is the hard case.** The node lives on the stem, so
+   patching it means touching the stem: clone along the object itself (a clean stretch of
+   the same stem) rather than from the background, and check the object's continuity by eye.
+
+**And the meta-finding of 2026-08-17, worth more than any single beat: THE COMPOSITOR HAS
+BEEN THE PROBLEM MORE OFTEN THAN THE MODEL.** Four separate instances in one day — one
+hand-fitted removal geometry reused across four seeds with only **9%** of the surviving
+dark pixels inside the declared ellipse (leaf-count lane); **five** rejected composites on
+one beat (beat 14); a decal risk on beat 17; and a publish step that wrote a manifest for
+files it had never copied. The generalisation is a requirement on tools, not on lanes:
+
+> **A tool must measure whether its region actually covers the object it claims to act on,
+> and refuse when it does not.** `--check` plus `--assert-clear` in
+> `leaf_count_composite.py` is that requirement implemented; a comment telling the next
+> lane to be careful is not.
