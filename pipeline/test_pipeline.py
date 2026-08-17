@@ -9956,6 +9956,19 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_an_acknowledgement_for_a_fired_receipt_is_surplus_not_stale(td)
     test_the_real_ledger_is_read_and_is_not_empty()
+    for _t in (test_one_beats_bar_recorded_on_another_beats_spec_fails,
+               test_a_cross_beat_bar_no_entry_rules_on_is_review_and_never_fail,
+               test_a_bar_the_register_calls_shared_is_silent,
+               test_an_entry_that_rules_neither_way_abstains_instead_of_passing,
+               test_a_dated_correction_sibling_takes_the_spec_out_of_the_group,
+               test_a_bars_entry_no_spec_carries_any_more_is_stale_and_fails,
+               test_an_excused_spec_is_quiet_while_its_record_still_backs_it,
+               test_an_excuse_the_record_no_longer_carries_stops_excusing,
+               test_the_bar_rule_reaches_the_real_exit_code_and_not_just_the_function,
+               test_a_second_card_carrying_one_ruling_counts_as_covered,
+               test_without_also_records_the_second_card_is_reported_uncovered):
+        with tempfile.TemporaryDirectory() as td:
+            _t(td)
     test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
     test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger()
     print()
@@ -10607,6 +10620,215 @@ def test_the_real_ledger_is_read_and_is_not_empty():
     check("it carries the real completed-run population", len(tasks) > 200)
     check("the two specs that were wrongly called un-fired are in it",
           {"ep2-b18-plantneg-0812", "ep2-b18-refresh-0811"} <= (tasks | specs))
+
+
+# --- INSTANCE 5: one beat's judging bar recorded on another beat's spec -----
+# THE LOSS, 2026-08-14/16. The ALL-21 wave was authored by copying one spec and
+# the paste went past the wave: 80 specs carried beat 02's `success` line and 13
+# of them are beat 02. queue_history.py copies `success` into the ledger's
+# `purpose`, so 352 rows published "a LEAN ADULT goblin sprints in…" as the bar
+# for clips of beats that do no such thing, and /queue showed it.
+#
+# rule_bar_serves_two_beats and `also_records:` LANDED UNTESTED in 6bb283f3 —
+# recovered whole from a lane that died on 2026-08-15 before it could write
+# these. Rules 1-4 are mutation-proofed and this rule was not, which put it
+# outside the only thing that keeps this file honest. Each assertion below was
+# run against a deliberately broken copy of check_canon_drift.py and observed
+# to go RED; the breakage each one catches is named beside it.
+_BAR = "a LEAN ADULT goblin sprints in, skids and dives behind a sapling"
+
+_SPECS_TWO_BEATS = {
+    "ep2-b02-sprint-0814.yaml": f"beat: 2\nsuccess: {_BAR}\n",
+    "ep2-b16-fig-0814.yaml": f"beat: 16\nsuccess: {_BAR}\n",
+}
+
+_REG_BAR_OWNED = f"""
+records:
+  structured: []
+  prose: []
+subjects: []
+bar_fields: [success]
+bars:
+- id: ep2-b02-sprint-bar
+  field: success
+  contains: {_BAR}
+  owned_by_beat: 2
+"""
+
+_REG_BAR_ACK = _REG_BAR_OWNED + """  acknowledged:
+    specs: [ep2-b16-fig-0814]
+    recorded_in: records/known.yaml
+    recorded_contains: beat 16 keeps the paste until it re-renders
+"""
+
+
+def test_one_beats_bar_recorded_on_another_beats_spec_fails(td):
+    # RED when: the FAIL branch is removed, or the call site at run() is unwired.
+    root = _fixture(td, register=_REG_BAR_OWNED, jobs=_SPECS_TWO_BEATS)
+    f = _fails(ccd.run(root), "bar_serves_two_beats")
+    check("a spec carrying another beat's recorded bar FAILS", len(f) == 1)
+    check("and it is the NON-owner spec that is named — the owner's is correct",
+          bool(f) and f[0].where == "pipeline/jobs/ep2-b16-fig-0814.yaml")
+    check("the finding says which beat the bar belongs to",
+          bool(f) and "beat 2's bar" in f[0].detail)
+
+
+def test_a_cross_beat_bar_no_entry_rules_on_is_review_and_never_fail(td):
+    # RED when: the REVIEW branch is promoted to FAIL. 13 groups on this repo
+    # span beats and only ONE is the defect; failing all 13 is 8% precision, the
+    # cry-wolf shape that got the runner watchdog switched off.
+    root = _fixture(td, register="records:\n  structured: []\n  prose: []\nsubjects: []\n",
+                    jobs=_SPECS_TWO_BEATS)
+    out = ccd.run(root)
+    check("an unadjudicated collision is never a FAIL",
+          _fails(out, "bar_serves_two_beats") == [])
+    check("but it is reported at REVIEW, so the register can rule on it",
+          any(f.level == ccd.REVIEW and f.rule == "bar_serves_two_beats" for f in out))
+
+
+def test_a_bar_the_register_calls_shared_is_silent(td):
+    # RED when: `shared: true` stops short-circuiting. A wave has ONE bar across
+    # twenty beats when it is written wave-wide on purpose.
+    reg = _REG_BAR_OWNED.replace("  owned_by_beat: 2\n", "  shared: true\n")
+    root = _fixture(td, register=reg, jobs=_SPECS_TWO_BEATS)
+    check("a deliberately wave-wide bar produces no finding of any level",
+          [f for f in ccd.run(root) if f.rule == "bar_serves_two_beats"] == [])
+
+
+def test_an_entry_that_rules_neither_way_abstains_instead_of_passing(td):
+    # RED when: a bars entry with no verdict falls through silently.
+    reg = _REG_BAR_OWNED.replace("  owned_by_beat: 2\n", "")
+    root = _fixture(td, register=reg, jobs=_SPECS_TWO_BEATS)
+    out = ccd.run(root)
+    check("an entry with neither owned_by_beat nor shared is CANNOT TELL, not a pass",
+          _fails(out, "bar_serves_two_beats") == []
+          and any(f.level == ccd.UNKNOWN and f.rule == "bar_serves_two_beats" for f in out))
+
+
+def test_a_dated_correction_sibling_takes_the_spec_out_of_the_group(td):
+    # RED when: _bar_groups stops consulting correction_sibling. A spec that has
+    # already written its own dated correction must not be failed for it again.
+    jobs = dict(_SPECS_TWO_BEATS)
+    jobs["ep2-b16-fig-0814.yaml"] += (
+        "success_CORRECTION_0817: >-\n"
+        "  CORRECTION, 2026-08-17. beat 16 is the fig; the line above is beat 02's bar.\n")
+    root = _fixture(td, register=_REG_BAR_OWNED, jobs=jobs)
+    check("a spec that records its own dated correction is quiet",
+          _fails(ccd.run(root), "bar_serves_two_beats") == [])
+
+
+def test_a_bars_entry_no_spec_carries_any_more_is_stale_and_fails(td):
+    # RED when: the trailing matched_entries sweep is dropped. A register that
+    # cannot go stale is the whole point — this is the fourth stale-record loss.
+    reg = _REG_BAR_OWNED.replace(_BAR, "a bar no spec in this repo has ever carried")
+    root = _fixture(td, register=reg, jobs=_SPECS_TWO_BEATS)
+    check("an entry asserting a collision that no longer exists FAILS on itself",
+          len(_fails(ccd.run(root), "stale_bar_entry")) == 1)
+
+
+def test_an_excused_spec_is_quiet_while_its_record_still_backs_it(td):
+    root = _fixture(td, register=_REG_BAR_ACK, jobs=_SPECS_TWO_BEATS,
+                    records={"records/known.yaml":
+                             "note: beat 16 keeps the paste until it re-renders\n"})
+    out = ccd.run(root)
+    check("a spec on the acknowledged list is not failed while the record stands",
+          _fails(out, "bar_serves_two_beats") == []
+          and _fails(out, "acknowledgement_unrecorded") == [])
+
+
+def test_an_excuse_the_record_no_longer_carries_stops_excusing(td):
+    # RED when: ack_live is not consulted, i.e. the suppression list is trusted
+    # without the record that is supposed to justify it.
+    root = _fixture(td, register=_REG_BAR_ACK, jobs=_SPECS_TWO_BEATS,
+                    records={"records/known.yaml": "note: nothing about beat 16 any more\n"})
+    out = ccd.run(root)
+    check("an unbacked suppression list FAILS on itself",
+          len(_fails(out, "acknowledgement_unrecorded")) == 1)
+    check("and the spec it was excusing is failed again",
+          len(_fails(out, "bar_serves_two_beats")) == 1)
+
+
+def test_the_bar_rule_reaches_the_real_exit_code_and_not_just_the_function(td):
+    """The unwired-call-site trap, made un-passable.
+
+    Proved today on another lane: a guard function written PERFECTLY whose call
+    site was never wired still passed 42 of 47 checks — only the few that ran the
+    real thing end to end and demanded the real exit code caught it. And
+    check_canon_drift.py itself has been found running green while checking
+    nothing. Every other assertion here calls ccd.run() directly; this one runs
+    the file the way CI and a human run it, argv in, stdout and exit code out, so
+    deleting `findings += rule_bar_serves_two_beats(root, reg)` from run() turns
+    THIS red with the function itself untouched.
+    """
+    import subprocess
+    root = _fixture(td, register=_REG_BAR_OWNED, jobs=_SPECS_TWO_BEATS)
+    r = subprocess.run([sys.executable, str(REPO / "pipeline" / "check_canon_drift.py"),
+                        "--root", str(root)], capture_output=True, text=True,
+                       encoding="utf-8")
+    check("the real entry point EXITS 1 on a bar recorded against the wrong beat",
+          r.returncode == 1)
+    check("the counted banner is what says so, not a stray log line",
+          "CANON-DRIFT: fail=1 " in r.stdout)
+    check("stdout names the rule and the offending spec",
+          "bar_serves_two_beats" in r.stdout and "ep2-b16-fig-0814.yaml" in r.stdout)
+
+
+# --- AND ONE RULING RECORDED ON TWO CARDS IS COVERED, NOT UNCOVERED --------
+# `also_records:` is coverage bookkeeping only, never adjudication: _card_resolution
+# must identify exactly ONE card or it abstains, so the second card carrying the
+# same ruling would sit on the uncovered list forever without this.
+
+_INBOX_TWO_CARDS_ONE_RULING = """
+- what: WHICH SEED IS THE GOBLIN
+  url: /review/ep2-picks/sheets/seed-picker-0816.jpg
+  resolved:
+    date: '2026-08-16'
+    verdict: seed s0 is the goblin
+- what: THE PLATES CARD ASKS THE SAME THING IN OLDER WORDS
+  url: /review/ep2-picks/sheets/plates-0812.jpg
+  resolved:
+    date: '2026-08-16'
+    verdict: seed s0 is the goblin
+"""
+
+_REG_ALSO_RECORDS = """
+records:
+  structured: []
+  prose: []
+subjects:
+- id: ep2-seed-is-goblin
+  kind: founder_decision
+  resolved_by:
+    card_url_contains: sheets/seed-picker-0816.jpg
+    verdict_matches: seed s0 is the goblin
+  also_records:
+  - card_url_contains: sheets/plates-0812.jpg
+  evidence:
+    file: review/inbox.yaml
+    contains: seed s0 is the goblin
+"""
+
+
+def test_a_second_card_carrying_one_ruling_counts_as_covered(td):
+    root = _fixture(td, inbox=_INBOX_TWO_CARDS_ONE_RULING, register=_REG_ALSO_RECORDS)
+    out = ccd.run(root)
+    check("neither card is left on the register's uncovered list",
+          [f for f in out if f.rule == "unregistered_decision"] == [])
+    check("and bookkeeping adjudicates nothing — it cannot manufacture a FAIL",
+          _fails(out) == [])
+
+
+def test_without_also_records_the_second_card_is_reported_uncovered(td):
+    # THE MUTATION, built in: delete the field and the same fixture must go loud.
+    # An assertion that passes with the mechanism removed is not testing it.
+    reg = _REG_ALSO_RECORDS.replace(
+        "  also_records:\n  - card_url_contains: sheets/plates-0812.jpg\n", "")
+    root = _fixture(td, inbox=_INBOX_TWO_CARDS_ONE_RULING, register=reg)
+    u = [f for f in ccd.run(root) if f.rule == "unregistered_decision"]
+    check("with the field gone the same decision is reported uncovered",
+          len(u) == 1 and "OLDER WORDS" in u[0].detail)
+    check("and it is an abstention, never a pass and never a FAIL",
+          bool(u) and u[0].level == ccd.UNKNOWN)
 
 
 
