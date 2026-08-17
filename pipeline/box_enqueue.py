@@ -867,10 +867,41 @@ def harness_drafts_problems(spec: dict, repo_sha: str = None,
     copies are dated 08-13 and 08-15. Only the Mac knows what the current
     wording is, so only the Mac can say whether a copy is stale.
 
-    The renderer keeps a second, later check of its own (see
-    --expect-drafts-sha256) because enqueue time and run time are not the same
-    moment: `--backlog` work sits for hours, and the queue was 3h40m deep the
-    day this was written.
+    THE SECOND CHECK, AND WHAT THIS DOCSTRING USED TO CLAIM ABOUT IT. Until
+    2026-08-17 the paragraph here read: "The renderer keeps a second, later
+    check of its own (see --expect-drafts-sha256) because enqueue time and run
+    time are not the same moment: `--backlog` work sits for hours." That flag
+    existed in exactly one place in the repo -- this docstring. It was in
+    neither sampler, neither wrapper, nor any spec. A false load-bearing
+    docstring is worse than a stale one: it closes the investigation, because a
+    reader believes the check exists and stops looking. The reasoning was right
+    and the check was absent, which is the one combination nobody audits.
+
+    The reasoning is still right, so the flag now exists:
+
+      goblin_ipa_sample.py --expect-drafts-sha256 <hex>   (also reachable
+      through goblin_ipa_beat.py, which passes it straight down)
+
+    It re-hashes `<harness>/wave-drafts.yaml` at RENDER time, before a module is
+    imported or a weight touched, and exits 12 having drawn nothing if the
+    wording moved between filing and running. A >=8-digit prefix is accepted;
+    an unusable one refuses rather than being skipped. IT IS OPT-IN AND INERT
+    WHEN ABSENT -- it was added to shared renderer plumbing with jobs in flight,
+    so nothing acquires the check by accident. Nothing here injects it yet:
+    THIS function still passes/refuses a spec on the enqueue-time comparison
+    alone, and a spec gets the run-time check only by naming the flag in its own
+    argv. Two things gate turning that into an automatic injection: every box
+    copy of goblin_ipa_sample.py must first hold the flag (an older copy dies on
+    an unknown argument), and someone must decide whether a job should be
+    KILLED or merely reported when a peer legitimately re-syncs the harness
+    under it. Until then, `--expect-drafts-sha256 <hash>` in the spec is the
+    whole interface.
+
+    AND FOR EVERY JOB THAT RAN WITHOUT IT, including all of them before today:
+    the mismatch is still detectable after the fact, because the sidecars record
+    it. `python3 pipeline/check_drafts_provenance.py <job-out-dir>` reads
+    `drafts_sha256` back and reports which frames were drawn from other wording
+    (rc 1 divergence, rc 2 nothing identifiable -- never a silent pass).
     """
     if repo_sha is None:
         repo_sha = file_sha256(REPO_DRAFTS)

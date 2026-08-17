@@ -122,7 +122,8 @@ def _run_sampler(expect, drafts_bytes=b"04:\n  slug: x\n"):
                 "--refs", td, "--out", td]
         if expect is not None:
             argv += ["--expect-drafts-sha256", expect]
-        p = subprocess.run(argv, capture_output=True, text=True, timeout=180)
+        p = subprocess.run(argv, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", timeout=180)
         return p.returncode, (p.stdout or "") + (p.stderr or "")
 
 
@@ -155,7 +156,8 @@ def test_a_missing_harness_drafts_file_refuses_when_the_check_was_asked_for():
             [sys.executable, str(HERE / "goblin_ipa_sample.py"),
              "--harness", str(harness), "--root", str(HERE.parent),
              "--refs", td, "--out", td, "--expect-drafts-sha256", GOOD[:8]],
-            capture_output=True, text=True, timeout=180)
+            capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=180)
         check("no drafts file + check asked for: rc 12", p.returncode == 12)
         check("no drafts file: says there is nothing to check against",
               "nothing to check it against" in (p.stdout or "") + (p.stderr or ""))
