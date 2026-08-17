@@ -139,6 +139,22 @@ one-line fix, none is systemic.
 
 ---
 
+## Two questions asked after the first pass, both answered
+
+**Does the stale wave sampler explain any of these? NO.** The box's sampler is five
+days behind and missing the dedup fix, so the worry was that some of these renders
+redrew a picture already drawn. Hashed every recovered frame in group C:
+`out-b05-scene` **16 png / 16 distinct sha256**, `out-b09-scene` 16/16,
+`out-b11-scene` 16/16, `out-b12-scene` 4/4. **No duplicates at all.** Not one of the
+33 failures traces to sampler staleness, and the 60 recovered frames are 60
+different pictures rather than a handful repeated. The sync still matters for
+future IP-Adapter runs; it does not explain anything here.
+
+**Where the failures actually live: `C:\banyan-queue\failed\`, not `done\`.**
+`done\` holds 1736 files and none of the 33 are in it. `failed\` holds exactly 68 —
+33 jsons + 35 logs — which is where the heartbeat's `failed: 33` comes from, and the
+two-log surplus is §D.
+
 ## What I would do with this, in order (the lead's call, not mine)
 
 1. **Look at the 60 frames in C** before re-rendering any of those six beats.
