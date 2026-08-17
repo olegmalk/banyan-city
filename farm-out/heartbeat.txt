@@ -2329,3 +2329,4 @@
 00:19:18Z DONE task=ep2-b11-leave-w2dist-0817-1786925590 rc=0 artifacts=2
 00:19:26Z STARTED task=ep2-b11-leave-w3faces-0817-1786925601 attempt=1 on box-runner
 00:25:15Z DONE task=ep2-b11-leave-w3faces-0817-1786925601 rc=0 artifacts=2
+00:25:21Z box-runner idle ready=0 failed=32
