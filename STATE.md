@@ -8898,3 +8898,79 @@ ruling as refuse-to-draw. Rolling back would restore 40% waste on a card we figh
 fed, remove the guard from the box, and put the silent version of bite 2 back.
 Rollback remains one `Move-Item` away (`goblin_ipa_sample.py.bak-0812-ec504b3c`) if
 somebody disagrees.
+
+## 2026-08-17 — all seven cast-0817 specs HAD ALREADY RENDERED, and the 16-file sets on disk each hold four byte-copies
+
+**This corrects the paragraph above** that reads *"none of the seven has rendered —
+no `farm-out/*cast-0817*` exists — so no published score counted duplicates."* The
+first two clauses are FALSE. That text stays standing because the reasoning built on
+it is worth seeing; the conclusion it reached survives, but by luck, not by absence.
+
+Measured on the box today, not inferred from `queue-history.json` (days stale, and it
+carries twelve duplicate filings — do not use it to answer "did this run"):
+
+| out dir under `C:\banyan-farm\goblin-ipa-0812\` | png files | DISTINCT sha256 |
+|---|---|---|
+| `out-b05-cast-0817` … `out-b11-cast-0817`, all seven | **16** | **12** |
+
+All seven rendered 2026-08-17 between 15:49 and 16:38, rc 0, and all seven also
+published into `C:\banyan-farm\courier-box\farm-out\ep2-bNN-cast-0817\` — the dirs the
+earlier note said did not exist. **An output dir proves a job ran; its absence proves
+nothing, and that asymmetry is exactly what got read backwards.** None of it is in the
+repo: `git ls-files | grep cast-0817` returns the seven specs and no frames.
+
+**The duplicate is cell `r3`, and it is a byte-copy of `r0` on all four seeds**
+(verified pair by pair). `refs-guards-twoinfield-nos2-0815` holds `s0` and `s3` as the
+same bytes — `26062B66DFCF9B22…` — so `r3` was always a re-render of `r0`. Four wasted
+frames per job, twenty-eight across the seven, drawn before the sync existed.
+
+**Did any recorded verdict score against 16? No — checked, and the answer is narrow
+enough to state precisely.** The only published citations of cast-0817 frames are in
+`pipeline/loop/attrbind-eyewear-0817.md`: line 105 (beat 09, eyewear correctly bound),
+line 107 (`05-the-patrol-ipa-r0-w015-s0.png`), line 321 (beat 05's bare two-guard
+plate). Every one names an **`r0`** frame — an original, never a copy — and every one is
+a qualitative single-frame read, not a tally. `grep "of 16\|/16"` over that file returns
+nothing. So no verdict counted a duplicate as independent evidence.
+
+**But the exposure was live, not prospective.** Sixteen files per job are sitting on the
+box under a bar that says *"scored by eye per frame across all 16, reported as N of
+16"*. Any lane that had opened those dirs and scored them as instructed would have
+counted `r3` four times over as independent evidence — a 4/16 inflation of whatever it
+concluded. Nothing protected against that except nobody having got there yet.
+
+**The failure mechanism was also misdiagnosed, and the real one is worse.** The
+`raise SystemExit(0 if len(pngs) >= 16 else 1)` line cannot fail these jobs: it sits on
+a step carrying `allow_fail: True`, and `box_runner` line 980 resets that step's rc to
+0. What fails them is the **declared artifacts list**, which names
+`NN-<slug>-ipa-r3-w015-s0.png` in all seven. Post-sync `r3` is the deduplicated cell and
+is never written; `resolve_artifact()` wildcards only the beat **slug**
+(`05-*-ipa-r3-w015-s0.png`), which cannot rescue a missing ref index. So a re-run lands
+`rc = RC_ARTIFACTS_MISSING` (**92**), `failed_step = artifact-check`, after the GPU has
+done every minute of the work. Fixing only the threshold would have fixed nothing.
+
+**All three corrected in all seven** (commits `99b72787` onward), by the house insert
+pattern `pipeline/insert_cast0817_frame_count_0817.py` — sha256 before/after, byte delta
+asserted against the exact payload, a backup per file, and a parsed-variant diff proving
+`artifacts` went 4→3 with `r3` the only loss, exactly one `argv` entry changed and by
+exactly the intended swap, and **`success:` byte-identical**:
+
+1. `>= 16` → `>= 12`, with the derivation written beside it. Hardcoded deliberately:
+   deriving it means mirroring the sampler's slot enumeration while another lane is
+   editing the sampler. The comment says so, so the better fix stays available.
+2. the `r3` sentinel dropped — three sentinels for three cells.
+3. `frame_count_correction_0817` added per spec: `true_frame_count: 12`,
+   `denominator_to_report: 'N of 12'`, the superseded `'N of 16'` named as superseded,
+   and the reason. **`success:` is untouched, so the pre-registered wording and its wrong
+   denominator both stay readable.** Not one term of any bar is altered, loosened or
+   removed, and the cast wording — the one-variable design — is not touched at all.
+
+**Nothing was re-filed, on purpose.** Re-filing re-renders frames already on disk, and
+the twelve distinct frames per job are valid evidence drawn by the sampler that the sync
+only taught to stop repeating itself. `box_runner`'s own note applies: *"re-publishing is
+seconds; re-rendering is not the fix."* The corrected specs are what runs if anyone does
+re-run. All seven pass a real `box_enqueue --dry-run` and each takes one auto-injected
+`--expect-drafts-sha256`, so a re-file would be stamped fresh and would not hit rc 12.
+
+**What is unblocked now: scoring these seven at N of 12.** The frames exist, the
+denominator is correct in the spec, and the four copies per job are identified by name
+(`r3`, equal to `r0`) so a scorer can ignore them without hunting.
