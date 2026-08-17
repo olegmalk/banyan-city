@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 704x1280
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260817
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/leafcue-b01-0817/comp-b01-cue.png
+init_sha256: df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed
+mask_png: b01-leafcue-s20260817-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/leafcue-b01-0817/mask-b01-cue.png
+mask_png_sha256: 2d2109ea33e2b30dac44572efedb44c15408af8e4da034fb7776ae3f73705bb8
+mask_white_px: 84183
+mask_bbox_px: [136, 480, 547, 1050]
+mask_width_frac: 0.5838
+mask_height_frac: 0.4453
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-17T14:18:30Z
+render_seconds: 3.5
+wall_seconds: 9.2
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region
+prompt: |-
+  a young sprout with two average leaves on a slender stem, one small teardrop fruit, soft blurred green summer field, hazy sunlit background, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  extra leaves, third leaf, many leaves, cluster of leaves, lobed leaves, fig leaf, extra fruit, second fruit, flower, bud, face, person, hand, text, watermark, photorealism, 3d render, low quality, deformed

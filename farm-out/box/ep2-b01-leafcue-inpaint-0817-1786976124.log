@@ -1,0 +1,134 @@
+#### job ep2-b01-leafcue-inpaint-0817-1786976124 attempt 1 start 2026-08-17T14:18:10Z
+
+==== step comp START 2026-08-17T14:18:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\leaf_count_composite.py", "--init", "C:\\banyan-farm\\ep2-b01-purple-0813\\b01-fig-704x1280.png", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\cueA.png", "--mask-out", "C:\\banyan-farm\\leafcue-b01-0817\\cueA-mask.png", "--remove-auto", "390,826,438,926", "--remove-auto", "392,930,532,1024", "--object-dark", "178", "--auto-min-area", "120", "--residual-min-area", "300", "--fill", "diffuse", "--fill-iters", "70", "--fill-radius", "6", "--feather", "6", "--sweep-grow", "8", "--mask-grow", "12", "--check", "--check-region", "412,822,536,1028", "--sweep", "--sweep-passes", "2", "--assert-clear", "--mask-add", "246,566,80,54", "--mask-add", "360,830,45,105", "--note", "pass A: BYTE-IDENTICAL to the fired ep2-b01-leafcanon-inpaint-0817 composite (88e4a8ab). This step changes nothing; it exists so the one variable is pass B alone."]
+init        C:\banyan-farm\ep2-b01-purple-0813\b01-fig-704x1280.png
+init size   704x1280
+init sha256 77db45c35967f12c7de6da8c004dae768acac0b20a4b7dae953f6348f36830d8
+remove-auto[0] box (390, 826, 438, 926) -> 1 segment(s), 227 px, mask bbox (367, 832, 432, 949) <- DIFFUSE FILL from its own boundary (70 passes, r=6.0)
+     segment   area   227 px  bbox (390, 855, 409, 926)
+remove-auto[1] box (392, 930, 532, 1024) -> 1 segment(s), 3588 px, mask bbox (369, 914, 534, 1039) <- DIFFUSE FILL from its own boundary (70 passes, r=6.0)
+     segment   area  3588 px  bbox (392, 937, 511, 1016)
+
+RESIDUAL CHECK  rule: lum<178.0 lum>None (G-R)>=None (G-R)<=None  min-area 300 px
+  check region (412, 822, 536, 1028)
+  pass 0: 0 residual px in 0 component(s) >= 300 px  -- CLEAR
+  FINAL: 0 residual px in 0 component(s) >= 300 px
+mask-add    ellipse cx=246 cy=566 rx=80 ry=54 ang=0.0 -- blend mask only, no pixel patched (keeps merge/split reachable)
+mask-add    ellipse cx=360 cy=830 rx=45 ry=105 ang=0.0 -- blend mask only, no pixel patched (keeps merge/split reachable)
+
+wrote       C:\banyan-farm\leafcue-b01-0817\cueA.png
+out sha256  88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857
+wrote mask  C:\banyan-farm\leafcue-b01-0817\cueA-mask.png (bbox (149, 494, 535, 1038))
+wrote        C:\banyan-farm\leafcue-b01-0817\cueA.composite.json
+
+COUNT IS NOW STRUCTURAL, NOT PROMPTED. Verify by eye before any GPU step -- this is the sample.
+==== step comp END rc=0 2026-08-17T14:18:17Z ====
+
+==== step compB START 2026-08-17T14:18:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\leaf_count_composite.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\cueA.png", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--mask-in", "C:\\banyan-farm\\leafcue-b01-0817\\cueA-mask.png", "--mask-out", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--remove", "384,920,15,23", "--remove", "412,845,19,23", "--source-offset=0,-70", "--fill", "diffuse", "--fill-iters", "60", "--fill-radius", "5", "--feather", "5", "--mask-grow", "10", "--check", "--check-region", "392,888,424,952", "--object-dark", "160", "--residual-min-area", "120", "--assert-clear", "--note", "pass B, THE ONE VARIABLE: the leaf-base fork on the stem and the surviving blade tip -- the two CUES that regrew a blade on 4 of 4 frames -- enter the patched region."]
+init        C:\banyan-farm\leafcue-b01-0817\cueA.png
+init size   704x1280
+init sha256 88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857
+mask-in     C:\banyan-farm\leafcue-b01-0817\cueA-mask.png (seeded, bbox (149, 494, 535, 1038))
+remove[0]   ellipse cx=384 cy=920 rx=15 ry=23 ang=0.0  <- DIFFUSE FILL from its own boundary (60 passes, r=5.0)  (mask bbox (356, 885, 412, 955))
+remove[1]   ellipse cx=412 cy=845 rx=19 ry=23 ang=0.0  <- DIFFUSE FILL from its own boundary (60 passes, r=5.0)  (mask bbox (380, 810, 444, 880))
+
+RESIDUAL CHECK  rule: lum<160.0 lum>None (G-R)>=None (G-R)<=None  min-area 120 px
+  check region (392, 888, 424, 952)
+  pass 0: 0 residual px in 0 component(s) >= 120 px  -- CLEAR
+  FINAL: 0 residual px in 0 component(s) >= 120 px
+
+wrote       C:\banyan-farm\leafcue-b01-0817\comp-b01-cue.png
+out sha256  df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed
+wrote mask  C:\banyan-farm\leafcue-b01-0817\mask-b01-cue.png (bbox (136, 480, 548, 1051))
+wrote        C:\banyan-farm\leafcue-b01-0817\comp-b01-cue.composite.json
+
+COUNT IS NOW STRUCTURAL, NOT PROMPTED. Verify by eye before any GPU step -- this is the sample.
+==== step compB END rc=0 2026-08-17T14:18:19Z ====
+
+==== step dry START 2026-08-17T14:18:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--init-sha256", "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed", "--mask-png", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--prompt-file", "C:\\banyan-farm\\leafcue-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcue-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\b01-leafcue-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed
+mask png corners=- bbox=[136, 480, 547, 1050]  0.5838 x 0.4453 of 704x1280
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260817-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-17T14:18:19Z ====
+
+==== step s20260817 START 2026-08-17T14:18:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--init-sha256", "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed", "--mask-png", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--prompt-file", "C:\\banyan-farm\\leafcue-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcue-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\b01-leafcue-s20260817.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260817", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.98it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  7.35it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.17it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260817.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260817-mask.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260817.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260817 END rc=0 2026-08-17T14:18:31Z ====
+
+==== step s20260818 START 2026-08-17T14:18:31Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--init-sha256", "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed", "--mask-png", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--prompt-file", "C:\\banyan-farm\\leafcue-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcue-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\b01-leafcue-s20260818.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260818", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.71s/it]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:02,  1.56it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.90it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  3.33it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260818.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260818-mask.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260818.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260818 END rc=0 2026-08-17T14:18:44Z ====
+
+==== step s20260819 START 2026-08-17T14:18:44Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--init-sha256", "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed", "--mask-png", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--prompt-file", "C:\\banyan-farm\\leafcue-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcue-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\b01-leafcue-s20260819.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260819", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.92it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  5.45it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.43it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.82it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260819.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260819-mask.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260819.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260819 END rc=0 2026-08-17T14:18:57Z ====
+
+==== step s20260820 START 2026-08-17T14:18:57Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcue-b01-0817\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png", "--init-sha256", "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed", "--mask-png", "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png", "--prompt-file", "C:\\banyan-farm\\leafcue-b01-0817\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcue-b01-0817\\negative.txt", "--out", "C:\\banyan-farm\\leafcue-b01-0817\\b01-leafcue-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "canon application of the composite-then-inpaint count mechanism: composited two-blade init restyled at 0.30 inside a mask covering both blades, the junction and the vacated region"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 15.87it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 12.43it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  2.45it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.31it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.90it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260820.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260820-mask.png
+WROTE C:\banyan-farm\leafcue-b01-0817\b01-leafcue-s20260820.png.meta.yaml
+rc=0 render_s=3.5
+==== step s20260820 END rc=0 2026-08-17T14:19:10Z ====
+
+==== step publish START 2026-08-17T14:19:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/leafcue-b01-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-leafcue-inpaint-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = ['b01-leafcue-s20260817.png', 'b01-leafcue-s20260817.png.meta.yaml', 'b01-leafcue-s20260818.png', 'b01-leafcue-s20260818.png.meta.yaml', 'b01-leafcue-s20260819.png', 'b01-leafcue-s20260819.png.meta.yaml', 'b01-leafcue-s20260820.png', 'b01-leafcue-s20260820.png.meta.yaml', 'comp-b01-cue.png', 'comp-b01-cue.composite.json', 'mask-b01-cue.png', 'prompt.txt', 'negative.txt']\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b01-leafcue-s20260817.png\" in got else 1)"]
+published 13 of 13 ['b01-leafcue-s20260817.png', 'b01-leafcue-s20260817.png.meta.yaml', 'b01-leafcue-s20260818.png', 'b01-leafcue-s20260818.png.meta.yaml', 'b01-leafcue-s20260819.png', 'b01-leafcue-s20260819.png.meta.yaml', 'b01-leafcue-s20260820.png', 'b01-leafcue-s20260820.png.meta.yaml', 'comp-b01-cue.png', 'comp-b01-cue.composite.json', 'mask-b01-cue.png', 'prompt.txt', 'negative.txt']
+==== step publish END rc=0 2026-08-17T14:19:10Z ====
+#### job ep2-b01-leafcue-inpaint-0817-1786976124 finished rc=0 2026-08-17T14:19:10Z

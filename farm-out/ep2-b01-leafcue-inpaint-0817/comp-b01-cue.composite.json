@@ -1,0 +1,63 @@
+{
+  "cost_usd": 0.0,
+  "feather": 5,
+  "fill": "diffuse",
+  "fill_iters": 60,
+  "fill_radius": 5.0,
+  "init": "C:\\banyan-farm\\leafcue-b01-0817\\cueA.png",
+  "init_sha256": "88e4a8abedcf30d572ce42645ee510b7ddf586ba26ce4598bda4ae6dc5676857",
+  "mask_add": [],
+  "mask_grow": 10,
+  "mask_in": "C:\\banyan-farm\\leafcue-b01-0817\\cueA-mask.png",
+  "mask_out": "C:\\banyan-farm\\leafcue-b01-0817\\mask-b01-cue.png",
+  "model": "none -- plain PIL, no sampler, no network",
+  "note": "pass B, THE ONE VARIABLE: the leaf-base fork on the stem and the surviving blade tip -- the two CUES that regrew a blade on 4 of 4 frames -- enter the patched region.",
+  "out": "C:\\banyan-farm\\leafcue-b01-0817\\comp-b01-cue.png",
+  "out_sha256": "df1be7ff183bf2714915e2ef3de591c02ceb9f821d095fef10d9b6d7be9c0fed",
+  "purpose": "leaf COUNT fixed by construction before any sampler runs",
+  "remove": [
+    "384,920,15,23",
+    "412,845,19,23"
+  ],
+  "remove_auto": [],
+  "remove_auto_detail": [],
+  "residual_check": {
+    "final": {
+      "components": [],
+      "total_px": 0
+    },
+    "passes": [
+      {
+        "components": [],
+        "pass": 0,
+        "total_px": 0
+      }
+    ],
+    "protect": [],
+    "regions": [
+      "392,888,424,952"
+    ],
+    "rule": {
+      "auto_min_area": null,
+      "object_bright": null,
+      "object_dark": 160.0,
+      "object_gmr_max": null,
+      "object_gmr_min": null,
+      "residual_min_area": 120
+    }
+  },
+  "source_offset": [
+    "0,-70"
+  ],
+  "sources": [
+    "arXiv:2503.06884 -- prompt refinement does not improve counting",
+    "arXiv:2406.10210 (Make It Count, CVPR 2025) -- plain SDXL numerals score 26-28%; count is a layout problem"
+  ],
+  "sweep": {
+    "assert_clear": true,
+    "enabled": false,
+    "grow": 4,
+    "passes_allowed": 2
+  },
+  "tool": "pipeline/leaf_count_composite.py"
+}

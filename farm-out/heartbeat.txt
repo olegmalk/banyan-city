@@ -2513,3 +2513,4 @@
 14:14:27Z STARTED task=ep2-b07-twofig-0817-1786975879 attempt=1 on box-runner
 14:16:39Z DONE task=ep2-b07-twofig-0817-1786975879 rc=0 artifacts=3
 14:18:10Z STARTED task=ep2-b01-leafcue-inpaint-0817-1786976124 attempt=1 on box-runner
+14:19:10Z DONE task=ep2-b01-leafcue-inpaint-0817-1786976124 rc=0 artifacts=9
