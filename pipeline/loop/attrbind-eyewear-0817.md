@@ -171,6 +171,80 @@ If anything renders on a Mac, `pipeline/mac_preflight.py` gates it first (two
 Macs are currently suspect; macbook1/macbook3 rendered SDXL as pure noise for
 days behind a UNet of exactly the right length with 88%/93% holes).
 
+## THE MECHANISM, written down for the next lane
+
+**Control over which figure carries an attribute is a MASK problem, not a wording
+problem, and the mask is authored by a step with no sampler in it.**
+
+Three parts, and the first two cost nothing:
+
+1. **`pipeline/attribute_mask.py`** — $0, PIL only, no GPU, no diffusers. Builds
+   a mask as a union of added shapes minus subtracted ones:
+   `ellipse`, **`ring`** (an annulus — the thin-band case), `quad`, `band`
+   (a thick line segment), `box`. Writes the mask PNG, a look-at-it preview with
+   the region tinted, and a provenance sidecar carrying every number.
+2. **`--protect x0,y0,x1,y1`** (repeatable) is the part that makes "control"
+   mean something. Each protect box is a region that must not change; **one
+   white pixel inside it and the tool refuses (exit 5)** and counts the overlap.
+   Spend guards in this tree are code rather than intentions, and so is this:
+   a mask that *cannot* reach guard B is checkable, where a wording is not.
+3. **`inpaint_fruit.py --mask-png`** consumes it (xor with `--ellipse`/`--quad`).
+   Everything outside the mask is restored every step by diffusers' latent-blend
+   branch, so the untouched figure is untouched by construction.
+
+**Why the mask had to become arbitrary.** A spectacle frame is neither a blob nor
+a convex polygon. `--ellipse` would have masked the whole eye socket and forced
+the sampler to *invent an eye*; `--quad` cannot curve. The `ring` shape masks the
+**frame path only** and leaves the irises outside the mask, so identity — the
+veto axis, held 14 of 14 — is protected geometrically instead of hopefully. The
+same flag retires the **board-MINUS-the-hand** limitation recorded against
+`inpaint_fruit.py` in `wave-drafts.yaml`, which `--sub` now expresses.
+
+**Which strength, and it is not one number.** Two recipes already exist in this
+tree and they are for different jobs:
+- **ADD an object that is not there → high strength (0.99).** Measured: img2img
+  at 0.35/0.55 could not add a fruit, 0 of 12. The unmasked region is restored
+  each step, so high strength costs nothing outside the mask.
+- **ADD detail onto structure that must keep its outline → composite first, then
+  LOW strength (0.30).** Measured: the bark board split at 0.45 and held at 0.30,
+  because crust relief and a straight silhouette live in the same frequency band.
+- **REMOVE a thin object → high strength on a band mask.** There is no outline
+  *inside* the band to preserve; the band is exactly what should go, and the
+  surrounding unmasked skin gives the sampler its context. This is the case filed
+  below and the reasoning is pre-registered, not retrofitted.
+
+### Both directions, and which one is blocked
+
+| Direction | Needs | Status |
+|---|---|---|
+| **REMOVE** eyewear from guard B on an existing plate | a plate that exists today | **FILED** — `pipeline/jobs/ep2-b10-attrbind-eyewear-0817.yaml`, backlogged, in the card's queue |
+| **ADD** wire-rims to guard A on a bare plate | a two-guard plate with BOTH men bare | **blocked on a real dependency** — the box-lane beat-05 draft deliberately names no eyewear and is a peer lane's in-flight job. Not a scheduling excuse: it is a physical dependency, and the moment such a plate lands this is one `attribute_mask.py` call plus one low-strength pass |
+
+The ADD direction is the one a production recipe would use, because it also
+removes the leak at source: with no eyewear token in the plate prompt there is
+nothing to broadcast. Removal is what could be tested today, and it is the
+founder's sentence read literally.
+
+## What was filed
+
+- `pipeline/loop/attrbind-eyewear-0817.md` — the bar, committed `f0e65e07`
+  **before** any pixels; this file.
+- `pipeline/attribute_mask.py` + `inpaint_fruit.py --mask-png` — commit
+  `fa03f898`. All refusal paths exercised: protect violation → 5, `--sub`
+  cancelling every `--add` → 4, init sha mismatch → 3, two shape flags → 2,
+  mask/init size mismatch → 6, all-black mask → 7.
+- `pipeline/jobs/ep2-b10-attrbind-eyewear-0817.yaml` — commit `460565ee`, ONE
+  sample, `--backlog`, enqueue dry run rc=0, both payload scripts verified
+  byte-identical to the repo (a stale payload of this exact script has bitten
+  before). Geometry measured on the plate: 1098 white px, 0.109% of frame,
+  bbox `[281,357,361,393]`, irises outside the mask, the tall man's face
+  declared protected at `[430,160,590,280]` with 0 violations.
+
+Not mine and left alone: `pipeline/test_pipeline.py` has one pre-existing
+failure, `ledger_freshness.py:369` (`subprocess.run(text=...)` with no
+`encoding=`). That file is another lane's and off limits to this one; neither
+file touched here uses `subprocess`.
+
 ## Why this is worth more than a beat-05 fix
 
 If Arm 2 holds, the mechanism is general: **any attribute, onto any one of
