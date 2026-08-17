@@ -1,0 +1,93 @@
+#### job ep2-b01-compseed-s3-g3-0818-1787006736 attempt 1 start 2026-08-17T22:52:08Z
+
+==== step comp START 2026-08-17T22:52:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0818-s3-g3\\leaf_count_composite.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-brightbase-figmatte\\01-cold-open-bright-i35b-s3.png", "--out", "C:\\banyan-farm\\leafcount-0818-s3-g3\\comp-b01-s3.png", "--mask-out", "C:\\banyan-farm\\leafcount-0818-s3-g3\\mask-b01-s3.png", "--remove", "330,724,108,34,10.3", "--remove", "240,760,52,27,0", "--source-offset=-300,0", "--feather", "9", "--mask-grow", "12", "--note", "rung 2 REPLICATION init: comp-s3 geometry unchanged from the peer composite (cccbc85f) and from the first fire. Count is structural, not prompted."]
+init        C:\banyan-farm\courier-box\farm-out\ep2-b01-brightbase-figmatte\01-cold-open-bright-i35b-s3.png
+init size   832x1216
+init sha256 4dcc1bcb10a77c0c61078781a1bf8e4b2750cd10b3f707fc0dfc4a7f18372833
+remove[0]   ellipse cx=330 cy=724 rx=108 ry=34 ang=10.3  <- background from offset -300,+0  (mask bbox (202, 663, 459, 785))
+remove[1]   ellipse cx=240 cy=760 rx=52 ry=27 ang=0.0  <- background from offset -300,+0  (mask bbox (166, 710, 314, 810))
+
+wrote       C:\banyan-farm\leafcount-0818-s3-g3\comp-b01-s3.png
+out sha256  5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9
+wrote mask  C:\banyan-farm\leafcount-0818-s3-g3\mask-b01-s3.png (bbox (172, 665, 452, 807))
+wrote        C:\banyan-farm\leafcount-0818-s3-g3\comp-b01-s3.composite.json
+
+COUNT IS NOW STRUCTURAL, NOT PROMPTED. Verify by eye before any GPU step -- this is the sample.
+==== step comp END rc=0 2026-08-17T22:52:12Z ====
+
+==== step s20260909 START 2026-08-17T22:52:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0818-s3-g3\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0818-s3-g3\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\negative.txt", "--out", "b01-compseed-s3-s20260909.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260909", "--note", "PRODUCTION, not a rung. Proven composite recipe (8 of 8 exact two-leaf count) at a fresh seed, to widen the candidate set beat 01's pick is made from. No setting differs from ep2-b01-leafcomp-inpaint-0817 except the seed."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00, 22.69it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  2.72it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.88it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE b01-compseed-s3-s20260909.png
+WROTE b01-compseed-s3-s20260909-mask.png
+WROTE b01-compseed-s3-s20260909.png.meta.yaml
+rc=0 render_s=3.9
+==== step s20260909 END rc=0 2026-08-17T22:52:26Z ====
+
+==== step s20260910 START 2026-08-17T22:52:26Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0818-s3-g3\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0818-s3-g3\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\negative.txt", "--out", "b01-compseed-s3-s20260910.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260910", "--note", "PRODUCTION, not a rung. Proven composite recipe (8 of 8 exact two-leaf count) at a fresh seed, to widen the candidate set beat 01's pick is made from. No setting differs from ep2-b01-leafcomp-inpaint-0817 except the seed."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.98it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.76it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:02,  1.41it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.20it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.79it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE b01-compseed-s3-s20260910.png
+WROTE b01-compseed-s3-s20260910-mask.png
+WROTE b01-compseed-s3-s20260910.png.meta.yaml
+rc=0 render_s=3.7
+==== step s20260910 END rc=0 2026-08-17T22:52:39Z ====
+
+==== step s20260911 START 2026-08-17T22:52:39Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0818-s3-g3\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0818-s3-g3\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\negative.txt", "--out", "b01-compseed-s3-s20260911.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260911", "--note", "PRODUCTION, not a rung. Proven composite recipe (8 of 8 exact two-leaf count) at a fresh seed, to widen the candidate set beat 01's pick is made from. No setting differs from ep2-b01-leafcomp-inpaint-0817 except the seed."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.51it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  2.65it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  7.21it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.38it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE b01-compseed-s3-s20260911.png
+WROTE b01-compseed-s3-s20260911-mask.png
+WROTE b01-compseed-s3-s20260911.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260911 END rc=0 2026-08-17T22:52:52Z ====
+
+==== step s20260912 START 2026-08-17T22:52:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\leafcount-0818-s3-g3\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\leafcount-0818-s3-g3\\comp-b01-s3.png", "--init-sha256", "5faab465681e726d4166f9635a7a39dc899b060831f1f96162e47dccc8daaab9", "--ellipse", "340,715,210,125", "--prompt-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\prompt.txt", "--negative-file", "C:\\banyan-farm\\leafcount-0818-s3-g3\\negative.txt", "--out", "b01-compseed-s3-s20260912.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260912", "--note", "PRODUCTION, not a rung. Proven composite recipe (8 of 8 exact two-leaf count) at a fresh seed, to widen the candidate set beat 01's pick is made from. No setting differs from ep2-b01-leafcomp-inpaint-0817 except the seed."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.25it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:01,  3.86it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.81it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.86it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE b01-compseed-s3-s20260912.png
+WROTE b01-compseed-s3-s20260912-mask.png
+WROTE b01-compseed-s3-s20260912.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260912 END rc=0 2026-08-17T22:53:05Z ====
+
+==== step publish START 2026-08-17T22:53:05Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil\nsrc = \"C:/banyan-farm/leafcount-0817\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-leafcomp-s3-0817\"\nos.makedirs(dst, exist_ok=True)\nnames = [\"b01-leafcomp-s3-s20260817.png\", \"b01-leafcomp-s3-s20260817.png.meta.yaml\", \"b01-leafcomp-s3-s20260818.png\", \"b01-leafcomp-s3-s20260818.png.meta.yaml\", \"b01-leafcomp-s3-s20260819.png\", \"b01-leafcomp-s3-s20260819.png.meta.yaml\", \"b01-leafcomp-s3-s20260820.png\", \"b01-leafcomp-s3-s20260820.png.meta.yaml\",\n         \"comp-b01-s3.png\", \"comp-b01-s3.composite.json\", \"mask-b01-s3.png\",\n         \"b01-leafcomp-s3-s20260817-mask.png\", \"prompt.txt\", \"negative.txt\"]\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, \"SHA256SUMS.txt\"), \"w\", newline=\"\\n\") as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), \"rb\").read()).hexdigest()\n        fh.write(\"%s  %s\\n\" % (h, n))\nprint(\"published\", len(got), \"of\", len(names), got)\nraise SystemExit(0 if \"b01-leafcomp-s3-s20260817.png\" in got else 1)"]
+published 14 of 14 ['b01-leafcomp-s3-s20260817.png', 'b01-leafcomp-s3-s20260817.png.meta.yaml', 'b01-leafcomp-s3-s20260818.png', 'b01-leafcomp-s3-s20260818.png.meta.yaml', 'b01-leafcomp-s3-s20260819.png', 'b01-leafcomp-s3-s20260819.png.meta.yaml', 'b01-leafcomp-s3-s20260820.png', 'b01-leafcomp-s3-s20260820.png.meta.yaml', 'comp-b01-s3.png', 'comp-b01-s3.composite.json', 'mask-b01-s3.png', 'b01-leafcomp-s3-s20260817-mask.png', 'prompt.txt', 'negative.txt']
+==== step publish END rc=0 2026-08-17T22:53:05Z ====
+!! declared artifacts missing: ["C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260817.png", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260817.png.meta.yaml", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260818.png", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260818.png.meta.yaml", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260819.png", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260819.png.meta.yaml", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260820.png", "C:\\banyan-farm\\leafcount-0818-s3-g3\\b01-leafcomp-s3-s20260820.png.meta.yaml"]
+#### job ep2-b01-compseed-s3-g3-0818-1787006736 finished rc=92 2026-08-17T22:53:05Z
