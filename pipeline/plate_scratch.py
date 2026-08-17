@@ -3634,6 +3634,93 @@ REVS = {
             "indoors, photorealism, 3d render, dark, night"
         ),
     },
+    # ======================================================================
+    # 2026-08-17. BEAT 14 REVISION 5, WRITTEN AFTER r4 WAS OPENED AND SCORED
+    # AND BEFORE r5 EXISTS. NOT ONE TOKEN CHANGES. ONLY THEIR ORDER.
+    # ======================================================================
+    # r4's SCORED RESULT (01a3098d, sha 91318616): P4' PASSES -- bare soil with
+    # green grass on four sides of it, a dirt patch inside a green field, which
+    # is what the beat has wanted since 08-16 and what r1, r2 and r3 each missed
+    # differently. P5 FAILS for the second rung: the band above his hunched back
+    # is still a flat wash larger than his torso. Q8 CAMERA PULLED BACK fired
+    # weakly -- r4 shows both boots where r3 cropped at the cloak, so the hands
+    # are smaller and `hands and dirt large in frame` is less true than it was.
+    #
+    # THE FINDING r4 PRODUCED, AND IT RETIRES THE RUNG r4's COMMIT PROMISED.
+    # THE HOLE IS ABOVE THE HORIZON. Grass grows on the ground, so no phrasing of
+    # a grass noun can put grass up there, and all four rungs so far have aimed a
+    # GROUND noun at a SKY region. r4's commit named the next candidate as
+    # NAMING THE SKY POSITIVELY. THAT CANDIDATE IS WITHDRAWN, and it is withdrawn
+    # on this repo's own strongest evidence about this exact failure mode rather
+    # than on a change of mind: beat 17's draft records that "an empty upper half
+    # in a portrait frame is a hole the model fills with the largest noun in the
+    # prompt (DELETING `wide blue sky above` REMOVED A COLOSSUS COMPLETELY)".
+    # Asking for a wide sky is what MANUFACTURES the flat region; beat 08 lost
+    # five samples to a colossus grown in a reserved sky. So naming a sky here
+    # would ask for precisely the large flat region P5 forbids. Recorded because
+    # I committed the opposite plan two commits ago and the reversal is the
+    # record.
+    #
+    # WHICH LEAVES THE OTHER HALF OF r4's OWN CONCLUSION: DO NOT FILL THE BAND,
+    # REMOVE IT. If the frame is tight enough on the crouch and the ground there
+    # is no above-horizon band to fill, and that fixes P5 and Q8 with one move
+    # instead of trading them off. It is also the direction the beat's own
+    # `done_when` asks for -- "a plate where his hands and the ground are both in
+    # frame" -- which says nothing about a field.
+    #
+    # THE ONE VARIABLE, AND IT IS FREE. THE FRAMING TAGS MOVE TO THE FRONT.
+    # `low close-up, hands and dirt large in frame` currently sit in the MIDDLE
+    # of the positive and have sat there in ALL FOUR revisions. The measured law
+    # this beat has therefore never once applied: LEADING FRAMING TAGS CARRY REAL
+    # WEIGHT AND TRAILING ONES ALMOST NONE -- a peer lost a whole render to a
+    # trailing `wide two-shot` and got a close-up with the subject missing, and
+    # (11,3), (17,2) and (5,2) all put the count tag first and the framing tags
+    # second for exactly this reason. (11,3) is the only guard plate that ever
+    # passed its own bar and that is its construction.
+    # NOT ONE TOKEN IS ADDED, REMOVED OR ALTERED. The multiset of words is
+    # identical to r4's; only the position of two clauses changes. So it costs no
+    # cast attribute, trades nothing, needs no deletion to pay for it, and the
+    # measurement is expected to come back at r4's 75/77 -- which the real `--dry`
+    # step will confirm rather than this comment asserting it. It is the cleanest
+    # single variable available on this beat and the cheapest.
+    #
+    # THE BAR IS UNCHANGED FROM r4: P1, P2, P3, P4', P5, P6, P7 and Q1-Q8, as
+    # committed at e70c36f6. Nothing is softened and nothing is added.
+    # THE NAMED RISK OF THIS REV, stated in advance: `low close-up` LEADING may
+    # over-tighten and re-compose into a portrait or an insert with no whole
+    # body. That is Q6, and it is a MEASURED failure of this framing family (a
+    # tight insert with no whole body goes out of distribution and re-composes
+    # into a portrait; beat 17 r1's insert had no hole so the clip manufactured
+    # one by pulling the camera back and put a face in it). If Q6 fires, leading
+    # framing tags are too strong for this composition and the answer is
+    # compositional -- a mask, an init, or the founder's own framing call -- not a
+    # sixth wording.
+    # DECISION RULE, unchanged: ONE SAMPLE, opened and judged. All axes holding
+    # makes it a CANDIDATE ON ITS PIXELS and NOT a finding about the wording
+    # until three fresh seeds of the byte-identical prompt have run. Seed stays
+    # 20260814, so r1-r5 are five draws of one seed differing by text alone.
+    # THIS IS THE LAST WORDING RUNG THIS LANE WILL FIRE. Two rungs have now
+    # failed the same axis; if a third does, P5 is not reachable by words on this
+    # composition and that gets reported as the answer rather than laddered
+    # around. STATE.md's 2026-08-16 stop pointed at a composition tool, and its
+    # instinct would then be vindicated even though its diagnosis is dead.
+    (14, 5): {
+        "prompt": (
+            "1boy, solo, low close-up, hands and dirt large in frame, "
+            "lean adult goblin man, green skin, bald head, "
+            "patchwork cloak, crouching low, both clawed hands down at the "
+            "bare earth, fingers picking at loose dirt, face turned away, "
+            "patch of bare brown soil, tall green grass background, "
+            "masterpiece, best quality, very aesthetic"
+        ),
+        # Byte-identical to r3's and r4's, restated per exit 6.
+        "negative": (
+            "text, standing, walking, running, full body, wide shot, distant, "
+            "holding object, spear, staff, sword, stick, basket, broom, "
+            "2boys, baby, child, chibi, stitches, scars, tree, forest, house, "
+            "indoors, photorealism, 3d render, dark, night"
+        ),
+    },
 }
 
 
