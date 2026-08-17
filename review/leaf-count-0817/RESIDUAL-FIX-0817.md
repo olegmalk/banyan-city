@@ -84,3 +84,46 @@ Cost: **$0** — PIL only, no model, no GPU, no network.
   A stem that came out BROKEN would be a vacancy and would have to be re-swept with a
   `--protect` box instead — it did not happen here, and it is checked by eye, not
   assumed.
+
+## Three primitives added while building the beats 01 and 21 canon plates
+
+Same file, same opt-in discipline (all four `cccbc85f` composites still reproduce
+byte-for-byte with the new flags absent — re-checked after every one of these).
+
+- **`--remove-auto x0,y0,x1,y1`** — segment the blade inside a box with the object
+  rule and patch **its own silhouette**. Beat 21's third blade is a 130x110px curve
+  that no ellipse fits: an ellipse pair over it either stopped short of the tip or
+  ate the stem, and the first attempt left a leaf-shaped **ghost** because a mask
+  fitted to the silhouette and then feathered leaves the blade's dark cel outline
+  sitting at partial alpha. Cure: `--sweep-grow` must exceed `--feather` so the
+  outline sits inside the mask's solid core (12 vs 6 here).
+- **`--fill diffuse`** — fill from the region's own boundary instead of cloning.
+  Measured, not preferred: on beat 21's dawn plate the best lateral offset left an
+  out-of-sample boundary-ring MAE of **22.9**, and fitting a per-channel gain+offset
+  or a plane on the inner ring made it **worse** out of sample (27.8 / 26.3). The
+  glow gradient defeats every clone. Diffuse fill keeps the plate's own light by
+  construction and is not a repeat.
+- **`--mask-add cx,cy,rx,ry[,ang]`** — add an ellipse to the blend mask **without
+  patching a pixel**, so the following 0.30 pass reaches the KEEPER blades and the
+  junction. Without it a mask over the vacancy alone would guarantee the count by
+  construction and measure nothing.
+- **`--auto-min-area`** — separate floor for segmentation, because beat 01's thin
+  third blade is 227 px while the residual gate on that plate is 300 px.
+
+**Two honest limits found by trying, both reported rather than papered over:**
+
+1. **`--protect` cuts the blend mask with a straight rectangle**, and on beat 01 that
+   printed a visible rectangular tone panel down the stem — decal tell #3. Cure used
+   here: no protect box at all, because the object rule (`lum < 178`) already excludes
+   this plate's pale stem. A protected corridor is only safe where the mask does not
+   reach its edge.
+2. **Near a legitimately dark structure the diffuse fill does not converge**: the
+   interpolation next to a dark stem stays dark, so the detector keeps firing (beat 21
+   2846 -> 2661 px across passes; beat 01's earlier variant 2299 -> 2993). The gate's
+   check region is therefore declared clear of the stem corridor, and the corridor is
+   judged by eye. Stated before firing, not after.
+
+**Cross-machine determinism, which is the standard now:** both canon composites were
+built on the Mac and rebuilt on the rtx5090 box from the same arguments and hash the
+same bytes — beat 01 init `77db45c3…` -> `88e4a8ab…`, beat 21 init `ab8fb736…` ->
+`83f4581d…`.

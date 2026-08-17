@@ -147,6 +147,32 @@ def ellipse_mask(size, cx, cy, rx, ry, angle, feather):
     return mask
 
 
+def diffuse_fill(img, hard_mask, iters: int, radius: float):
+    """Fill the masked region from ITS OWN BOUNDARY, keeping the plate's light.
+
+    A shifted clone cannot serve a plate with a strong luminance gradient: on
+    beat 21's dawn plate the best available lateral offset still left an
+    out-of-sample boundary-ring MAE of 22.9, and fitting a gain/offset or a plane
+    on the inner ring made it worse out of sample (27.8 / 26.3). Copying is also
+    decal tell #4, a visible repeat.
+
+    So the fill is PROCEDURAL: blur the whole frame, keep only the part inside the
+    region, repeat. Outside pixels never move, so each pass pulls the boundary's
+    own colour and gradient inward and the region converges to a smooth
+    interpolation of its own surroundings -- the plate's own light by
+    construction, no clone, no import. Deterministic: same arguments, same bytes.
+
+    The vacancy law is satisfied: the region is FILLED with plausible background,
+    never left empty. What it is not is textured -- that is the 0.30 pass's job,
+    and it is the reason the blend mask must cover the filled region.
+    """
+    out = img.copy()
+    for _ in range(int(iters)):
+        out = Image.composite(
+            out.filter(ImageFilter.GaussianBlur(radius)), out, hard_mask)
+    return out
+
+
 def parse_box(spec: str) -> tuple[int, int, int, int]:
     """x0,y0,x1,y1 -- half-open, as PIL crop boxes are."""
     parts = [p.strip() for p in spec.split(",") if p.strip() != ""]
@@ -257,6 +283,13 @@ def main() -> int:
                     help="write the union mask here, for inpaint_fruit --mask-png")
     ap.add_argument("--remove", action="append", default=[], metavar="cx,cy,rx,ry[,ang]",
                     help="an extra leaf to patch out; repeatable")
+    ap.add_argument("--remove-auto", action="append", default=[], metavar="x0,y0,x1,y1",
+                    help="an extra leaf to patch out, SEGMENTED inside this box "
+                         "with the object rule and patched to its own silhouette "
+                         "instead of to a guessed ellipse. Repeatable. Needs an "
+                         "object rule; honours --protect. Use this when the blade "
+                         "is a curve no ellipse fits -- an ellipse over a curved "
+                         "leaf either misses its tip or eats the stem")
     ap.add_argument("--source-offset", action="append", default=[], metavar="dx,dy",
                     help="where to copy background from for the matching --remove. "
                          "Given once, it applies to every --remove.")
@@ -293,6 +326,10 @@ def main() -> int:
     ap.add_argument("--residual-min-area", type=int, default=120,
                     help="components smaller than this are noise, not a blade "
                          "(default 120 px)")
+    ap.add_argument("--auto-min-area", type=int, default=None,
+                    help="minimum segment area for --remove-auto (default: "
+                         "--residual-min-area). Separate because a thin blade can "
+                         "be smaller than the residual you are willing to gate on")
     ap.add_argument("--sweep", action="store_true",
                     help="PATCH the residual components the check found, fitted "
                          "to their own silhouette, from --source-offset")
@@ -312,22 +349,52 @@ def main() -> int:
                          "component >= --residual-min-area survives. This is the "
                          "guard that stops a 50%% compositor defect reaching a "
                          "canon plate")
+    ap.add_argument("--mask-add", action="append", default=[], metavar="cx,cy,rx,ry[,ang]",
+                    help="add this ellipse to the BLEND mask without patching a "
+                         "pixel of it. This is how the following low-strength pass "
+                         "is allowed to reach the KEEPER blades and the junction: a "
+                         "mask over the patched vacancy alone would guarantee the "
+                         "count by construction and measure nothing, because merge "
+                         "and split can only happen where the sampler runs")
+    ap.add_argument("--fill", choices=("clone", "diffuse"), default="clone",
+                    help="where patched pixels come from. `clone` (default, and "
+                         "what every committed composite used) copies the plate "
+                         "shifted by --source-offset. `diffuse` fills each region "
+                         "from its own boundary ring, which is the only option "
+                         "that survives a strong luminance gradient -- on beat "
+                         "21's dawn plate no lateral offset got the out-of-sample "
+                         "ring MAE below 22.9, and a gain/offset or plane fit made "
+                         "it worse")
+    ap.add_argument("--fill-iters", type=int, default=80,
+                    help="diffuse-fill passes (default 80)")
+    ap.add_argument("--fill-radius", type=float, default=8.0,
+                    help="diffuse-fill blur radius per pass, px (default 8)")
     ap.add_argument("--note", default="")
     ap.add_argument("--dry-run", action="store_true",
                     help="print the plan and the arithmetic, write nothing")
     args = ap.parse_args()
 
-    if not args.remove:
-        raise SystemExit("!! nothing to do: pass at least one --remove")
-    if not args.source_offset:
+    if not args.remove and not args.remove_auto:
+        raise SystemExit(
+            "!! nothing to do: pass at least one --remove or --remove-auto")
+    if not args.source_offset and args.fill != "diffuse":
         raise SystemExit(
             "!! --source-offset is REQUIRED. Leaving the region empty is the "
             "vacancy the model fills with another leaf -- the patch must carry "
-            "real background pixels.")
-    if len(args.source_offset) not in (1, len(args.remove)):
+            "real background pixels. (`--fill diffuse` satisfies the same law by "
+            "synthesising background from the region's own boundary instead.)")
+    if (args.fill == "clone" and args.remove
+            and len(args.source_offset) not in (1, len(args.remove))):
         raise SystemExit(
             "!! give one --source-offset for all %d --remove, or one each; got %d"
             % (len(args.remove), len(args.source_offset)))
+    if args.remove_auto and not any(v is not None for v in (
+            args.object_dark, args.object_bright,
+            args.object_gmr_min, args.object_gmr_max)):
+        raise SystemExit(
+            "!! --remove-auto segments the blade with the OBJECT RULE, so it "
+            "needs at least one of --object-dark / --object-bright / "
+            "--object-gmr-min / --object-gmr-max, measured on THIS plate.")
 
     init_sha = sha256_of(args.init)
     src = Image.open(args.init).convert("RGB")
@@ -338,18 +405,33 @@ def main() -> int:
 
     regions = [parse_ellipse(r) for r in args.remove]
     offsets = [parse_offset(o) for o in args.source_offset]
+    if not offsets:
+        offsets = [(0, 0)]
     if len(offsets) == 1:
-        offsets = offsets * len(regions)
+        offsets = offsets * max(1, len(regions))
 
     out = src.copy()
     union = Image.new("L", (W, H), 0)
 
     for i, ((cx, cy, rx, ry, ang), (dx, dy)) in enumerate(zip(regions, offsets)):
-        if dx == 0 and dy == 0:
+        if dx == 0 and dy == 0 and args.fill != "diffuse":
             raise SystemExit(
                 "!! --source-offset 0,0 for region %d copies the leaf onto "
                 "itself and changes nothing." % i)
         m = ellipse_mask((W, H), cx, cy, rx, ry, ang, args.feather)
+        if args.fill == "diffuse":
+            hard = ellipse_mask((W, H), cx, cy, rx, ry, ang, 0)
+            need = m.getbbox()
+            out = Image.composite(
+                diffuse_fill(out, hard, args.fill_iters, args.fill_radius),
+                out, m)
+            union = Image.composite(Image.new("L", (W, H), 255), union, m)
+            print("remove[%d]   ellipse cx=%d cy=%d rx=%d ry=%d ang=%.1f  "
+                  "<- DIFFUSE FILL from its own boundary (%d passes, r=%.1f)  "
+                  "(mask bbox %s)"
+                  % (i, cx, cy, rx, ry, ang, args.fill_iters, args.fill_radius,
+                     need))
+            continue
         # The source patch is the SAME plate shifted by the offset, so every
         # pixel laid down is real background from this exact frame -- same
         # palette, same grain, same light. Nothing is invented and nothing is
@@ -373,6 +455,64 @@ def main() -> int:
         print("remove[%d]   ellipse cx=%d cy=%d rx=%d ry=%d ang=%.1f  "
               "<- background from offset %+d,%+d  (mask bbox %s)"
               % (i, cx, cy, rx, ry, ang, dx, dy, need))
+
+    # ---- object-fitted removal (--remove-auto) -----------------------------
+    # An ellipse over a curved blade either stops short of its tip or eats the
+    # stem. Here the blade is SEGMENTED inside a declared box with the object
+    # rule and patched to its own silhouette, which is the pattern doc's rule 2
+    # ("fitted to the object, not to the mask") done properly.
+    auto_log = []
+    if args.remove_auto:
+        protect_auto = [parse_box(p) for p in args.protect]
+        adx, ady = offsets[0] if offsets else (0, 0)
+        for i, spec in enumerate(args.remove_auto):
+            bx = parse_box(spec)
+            comps = [c for c in components(
+                object_pixels(src, [bx], protect_auto, args.object_dark,
+                              args.object_bright, args.object_gmr_min,
+                              args.object_gmr_max))
+                if c[0] >= (args.auto_min_area
+                            if args.auto_min_area is not None
+                            else args.residual_min_area)]
+            if not comps:
+                raise SystemExit(
+                    "!! --remove-auto %s found nothing >= %d px under the object "
+                    "rule. Re-derive the rule on this plate, or widen the box."
+                    % (spec, args.auto_min_area
+                       if args.auto_min_area is not None
+                       else args.residual_min_area))
+            m = silhouette_mask((W, H), [c[2] for c in comps],
+                                args.sweep_grow, args.feather, protect_auto)
+            need = m.getbbox()
+            if args.fill == "diffuse":
+                hard = silhouette_mask((W, H), [c[2] for c in comps],
+                                       args.sweep_grow, 0, protect_auto)
+                patch = diffuse_fill(out, hard, args.fill_iters, args.fill_radius)
+            else:
+                if not (0 <= need[0] - adx and need[2] - adx <= W
+                        and 0 <= need[1] - ady and need[3] - ady <= H):
+                    raise SystemExit(
+                        "!! remove-auto[%d]: source-offset %+d,%+d reads outside "
+                        "the frame for bbox %s" % (i, adx, ady, need))
+                patch = Image.new("RGB", (W, H))
+                patch.paste(src, (adx, ady))
+            out = Image.composite(patch, out, m)
+            union = Image.composite(Image.new("L", (W, H), 255), union, m)
+            print("remove-auto[%d] box %s -> %d segment(s), %d px, mask bbox %s "
+                  "<- %s"
+                  % (i, bx, len(comps), sum(c[0] for c in comps), need,
+                     "DIFFUSE FILL from its own boundary (%d passes, r=%.1f)"
+                     % (args.fill_iters, args.fill_radius)
+                     if args.fill == "diffuse"
+                     else "background from %+d,%+d" % (adx, ady)))
+            for area, bbox, _ in comps:
+                print("     segment   area %5d px  bbox %s" % (area, bbox))
+            auto_log.append({
+                "box": "%d,%d,%d,%d" % bx,
+                "segments": [{"area": a, "bbox": list(b)} for a, b, _ in comps],
+                "mask_bbox": list(need),
+                "source_offset": "%d,%d" % (adx, ady),
+            })
 
     # ---- residual check / sweep -------------------------------------------
     # The fault this closes: one hand-fitted ellipse was reused across four
@@ -404,6 +544,7 @@ def main() -> int:
             "object_gmr_min": args.object_gmr_min,
             "object_gmr_max": args.object_gmr_max,
             "residual_min_area": args.residual_min_area,
+            "auto_min_area": args.auto_min_area,
         }
         residual_log["regions"] = ["%d,%d,%d,%d" % r for r in check_regions]
         residual_log["protect"] = ["%d,%d,%d,%d" % p for p in protect]
@@ -417,7 +558,7 @@ def main() -> int:
             print("  protect      %s" % (p,))
 
         sdx, sdy = parse_offset(args.sweep_offset) if args.sweep_offset else offsets[0]
-        if args.sweep:
+        if args.sweep and args.fill == "clone":
             src_boxes = []
             for x0, y0, x1, y1 in check_regions:
                 sb = (x0 - sdx, y0 - sdy, x1 - sdx, y1 - sdy)
@@ -476,18 +617,25 @@ def main() -> int:
             need = m.getbbox()
             if need is None:
                 break
-            if not (0 <= need[0] - dx and need[2] - dx <= W
-                    and 0 <= need[1] - dy and need[3] - dy <= H):
-                raise SystemExit(
-                    "!! sweep pass %d: source-offset %+d,%+d reads outside the "
-                    "frame for bbox %s" % (p, dx, dy, need))
-            shifted = Image.new("RGB", (W, H))
-            shifted.paste(src, (dx, dy))
-            out = Image.composite(shifted, out, m)
+            if args.fill == "diffuse":
+                hard = silhouette_mask((W, H), [c[2] for c in comps],
+                                       args.sweep_grow, 0, protect)
+                patch = diffuse_fill(out, hard, args.fill_iters, args.fill_radius)
+            else:
+                if not (0 <= need[0] - dx and need[2] - dx <= W
+                        and 0 <= need[1] - dy and need[3] - dy <= H):
+                    raise SystemExit(
+                        "!! sweep pass %d: source-offset %+d,%+d reads outside the "
+                        "frame for bbox %s" % (p, dx, dy, need))
+                patch = Image.new("RGB", (W, H))
+                patch.paste(src, (dx, dy))
+            out = Image.composite(patch, out, m)
             union = Image.composite(Image.new("L", (W, H), 255), union, m)
             print("     swept %d component(s) fitted to their own silhouette "
-                  "(grow %d, feather %d) <- background from %+d,%+d"
-                  % (len(comps), args.sweep_grow, args.feather, dx, dy))
+                  "(grow %d, feather %d) <- %s"
+                  % (len(comps), args.sweep_grow, args.feather,
+                     "DIFFUSE FILL" if args.fill == "diffuse"
+                     else "background from %+d,%+d" % (dx, dy)))
 
         final = object_pixels(out, check_regions, protect,
                               args.object_dark, args.object_bright,
@@ -509,6 +657,14 @@ def main() -> int:
                 "BLADE, so nothing is written. Widen --remove, raise "
                 "--sweep-passes, or re-derive the object rule on this plate."
                 % (len(left), args.residual_min_area))
+
+    for spec in args.mask_add:
+        cx, cy, rx, ry, ang = parse_ellipse(spec)
+        m = ellipse_mask((W, H), cx, cy, rx, ry, ang, args.feather)
+        union = Image.composite(Image.new("L", (W, H), 255), union, m)
+        print("mask-add    ellipse cx=%d cy=%d rx=%d ry=%d ang=%.1f -- blend mask "
+              "only, no pixel patched (keeps merge/split reachable)"
+              % (cx, cy, rx, ry, ang))
 
     if args.mask_grow > 0:
         union = union.filter(ImageFilter.MaxFilter(3))
@@ -553,6 +709,12 @@ def main() -> int:
             "source_offset": args.source_offset,
             "feather": args.feather,
             "mask_grow": args.mask_grow,
+            "mask_add": args.mask_add,
+            "fill": args.fill,
+            "fill_iters": args.fill_iters,
+            "fill_radius": args.fill_radius,
+            "remove_auto": args.remove_auto,
+            "remove_auto_detail": auto_log,
             "residual_check": residual_log,
             "sweep": {
                 "enabled": bool(args.sweep),
