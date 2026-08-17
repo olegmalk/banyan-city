@@ -680,3 +680,142 @@ beats:
         round cannot be another wording pass -- it needs the reference-weight or
         crop decision in (a) above, which is a recipe change and therefore wants ONE
         SAMPLE before any batch.
+
+  '10':
+    role: >-
+      Guard B drawn NEAREST so the clipboard binds by ADJACENCY -- the prop law
+      USED, not fought. Eyewear deliberately omitted on both guards. Marked in its
+      own spec as a DIAGNOSTIC RUNG no lane may promote to a shipping plate.
+    done_when_quoted_from_done_definitions: >-
+      TWO guards in frame; the near one flips the bark board and holds its blank
+      back TOWARD HIS PARTNER; board hand-sized; field present at frame one.
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: MOSTLY YES on hair -- but the experiment this rung exists for FAILED.
+
+    THE_EXPERIMENTS_OWN_TERM:
+      condition_1_board_in_the_NEAR_MANS_hands_and_ONLY_his: >-
+        1 of 12 strictly (r1s2), 2 of 12 if r2s0's single hand is allowed instead of
+        both. The bar calls this "the pass/fail of the experiment". IT FAILED.
+      the_answer_the_bar_pre_committed_to: >-
+        Quoting the bar: "the board reaching the far man or both men anyway ... would
+        mean adjacency is not the binding either and the remaining options are all
+        bigger than a rung (identical dress, or a composite)." IT REACHED THEM
+        ANYWAY, 10 of 12. ADJACENCY IS NOT THE BINDING. Drawing the owner nearest
+        does not give him the prop. That conclusion is the rung's deliverable and it
+        was pre-committed to in writing before the pixels existed.
+      a_SECOND_board_appearing: >-
+        6 of 12 (r0s0, r0s1, r0s2, r1s1, r2s1, r2s3). Scored honestly against the
+        founder's exact named defect, which was "a SECOND board HANGING IN THE AIR
+        with no hand on it": that precise variant did NOT fire here -- in every one
+        of the six the duplicate is in the far man's hands. It is a duplication
+        fault, not the floating-board fault.
+
+    CROSS_BEAT_FINDING_THE_REAL_BINDING_MAY_BE_OCCUPIED_HANDS:
+      the_contrast: >-
+        b08 and b10 disagree, and the disagreement is informative. b08's r2 row
+        staged the owner NEAREST and got sole ownership 4 of 4. b10 stages the owner
+        nearest and gets it 1 of 12. The difference is not the staging -- it is WHO
+        THE SECOND FIGURE IS. In b08 the far figure is a GREEN GOBLIN, visually
+        unmistakable; the board never duplicates onto him. In b10 both figures are
+        GUARDS in the same tan tunic; the board duplicates onto the twin 6 of 12.
+      the_hypothesis_this_supports: >-
+        Prop duplication tracks the VISUAL SIMILARITY of the two figures, not their
+        depth order. A prop duplicates onto a body that looks like its owner.
+      the_accidental_evidence_inside_b10_itself: >-
+        The ONE frame that achieves sole ownership, r1s2, is also the one frame
+        where the far man is made VISUALLY DIFFERENT (he renders bald) AND HIS HANDS
+        ARE FULL -- he is holding a clump of grass. That is the single frame in
+        twelve where the board stays put.
+      why_this_is_a_LEAD_and_not_a_conclusion: >-
+        done-definitions records that b10's earlier r2 tried exactly this lever and
+        it never actually got tested: "The r2 attempt to occupy guard A's hands
+        (`hands behind his back`) DID NOT RENDER AT ALL - his arms came back folded
+        in front - so that instrument was never actually tested." Here the far man's
+        hands got occupied BY ACCIDENT and ownership held. Occupying the far man's
+        hands is therefore still an UNTESTED instrument with one accidental
+        datapoint in its favour, and it is CHEAPER than either option the bar named
+        as remaining (identical dress, or a composite). Offered as the next lever.
+
+    per_condition_rate:
+      c2_exactly_TWO_adult_whole_bodied_figures_neither_a_child: >-
+        8 of 12. The r2 row crops both men to chest-up fragments, 0 of 4. Both men
+        read adolescent rather than adult throughout, which is a taste flag below.
+      c3_near_man_light_sandy_hair_cream_shirt_brown_wrap_skirt: >-
+        6 of 12. The sandy hair is reliable, 12 of 12; the CREAM SHIRT is what
+        fails, arriving as a tan tunic at r0s0/r0s1/r0s2/r1s0/r1s1 and orange at r1s3.
+      c4_far_man_DARK_CROPPED_hair_and_a_tan_tunic_HIS_SASH_NOT_SCORED: >-
+        7 of 12. Scored without the sash, exactly as the bar instructs. Failures:
+        the far man renders BLOND at r0s1, r2s1, r2s3, BALD at r1s2, and his hair is
+        not visible at all in the cropped r2s0.
+      c5_NEITHER_MAN_IS_BALD: >-
+        11 of 12. Bald appears once, on the far man at r1s2. b10's prompt carries NO
+        `bald` token, and 1 of 12 sits right on the ~2-in-12 unprompted baseline
+        established from b05 and b09. Consistent with the broadcast-class law: no
+        token, no epidemic.
+      c6_the_two_men_are_distinguishable_both_dark_or_both_sandy_is_a_FAIL: >-
+        8 of 12. Fails as BOTH BLOND at r0s1, r2s1 and r2s3 -- the merge, and the
+        same failure direction b05 showed. Where it passes it passes clearly.
+      c7_board_hand_sized_flat_rectangular_and_BLANK_on_the_face_shown_no_hand_across_it: >-
+        9 of 12. Flat and rectangular everywhere. Fails as NOT BLANK at r0s0, where
+        the near board carries white markings across its face, and on a hand lying
+        across the face at r1s0 and r2s2.
+      c8_tall_grass_hedgerow_band_and_sky_ABOVE_it_all_three_real: >-
+        7 of 12. The whole r2 row is framed too tight to carry a sky band, 0 of 4,
+        and r0s1 has grass where its sky should be.
+      c9_no_white_or_plain_background_and_not_a_downward_plan_view: >-
+        6 of 12. No white or plain background anywhere, 12 of 12 on that half. The
+        r0 row is shot from a HIGH DOWNWARD angle with grass filling the frame, and
+        the r2 row tilts down too.
+      c10_the_far_mans_hands_are_EMPTY_no_pole_no_duplicate_board_nothing: >-
+        1 of 12 (r2s0). The worst term on the beat and the mechanical cause of the
+        ownership failure: the far man's hands are on the near man's board in 8
+        frames, on a duplicate board in 2, and full of grass at r1s2.
+      board_material_scored_SEPARATELY_per_the_bar: >-
+        0 of 12 read as bark. The r0 and r1 rows render dark green slate or planed
+        brown timber; the whole r2 row renders WHITE PAPER. Same wall as b06 and b08.
+
+    pre_registered_fail_modes:
+      the_board_reaching_the_far_man_or_both_men_anyway: >-
+        FIRED, 10 of 12. This is the rung's answer: adjacency is not the binding.
+      a_SECOND_board_hanging_in_the_air_with_no_hand_on_it: >-
+        DID NOT FIRE in its exact form, 0 of 12. A second board appears 6 of 12 but
+        always held. The founder's specific named defect did not reproduce.
+      the_board_reading_as_paper_rather_than_bark: FIRED, 12 of 12 (paper in the r2 row, slate or planed timber elsewhere).
+      eyewear_appearing_on_either_man_unprompted: >-
+        DID NOT FIRE, 0 of 12. Third clean confirmation in this batch, across two
+        faces and twelve frames, that eyewear never arrives unbidden.
+
+    pick: >-
+      r1s2, picked for what it TEACHES rather than for what it shows, and it is not
+      a usable frame. Reasons: it is the only frame in twelve where the board stays
+      in one man's two hands with the other man not touching it, and it is
+      simultaneously the only frame where the far man is both visually distinct and
+      holding something else -- which is the lead described above. What it costs: the
+      far man is BALD (the one bald frame on the beat), he is holding a clump of
+      grass nothing asked for, and the board is planed timber rather than bark. As a
+      picture it is worse than r1s1; as evidence it is the only frame that matters.
+    verdict: >-
+      FAILS ITS BAR, 0 of 12, AND THE EXPERIMENT RETURNS A CLEAN NEGATIVE:
+      adjacency does not bind a prop to its owner. That is a real result, and it
+      retires a lever rather than leaving it open. The cast side is healthy -- sandy
+      hair 12 of 12, bald only 1 of 12, the two men distinguishable 8 of 12.
+    blocked_on: >-
+      Prop ownership, still, and now with adjacency eliminated alongside the person
+      clause. The bar said the remaining options were identical dress or a
+      composite; this lane offers a THIRD and cheaper one first -- occupy the far
+      man's hands, which has never actually rendered as an instrument and which this
+      beat accidentally evidenced once. Board material (bark, 0 of 12) is a second,
+      independent blocker shared with b06 and b08.
+    diagnostic_only_NOT_PROMOTED: >-
+      CAST HOLDS ON HAIR, DIAGNOSTIC ONLY, EYEWEAR ABSENT BY DESIGN. Its own spec
+      forbids promotion to a shipping plate and this lane does not promote it.
+    founder_cards_hit:
+      - >-
+        R4/taste: both guards read adolescent rather than adult across all twelve.
+        Same flag as b05 and b06; the founder's call on the approved cast, named only.
+      - >-
+        R4/taste, NOT a scoring call and NOT this lane's to make: if prop ownership
+        needs a COMPOSITE, that is a route decision on how this show makes props,
+        and the bark board already shipped once by compositing rather than
+        prompting. Flagged for the founder, not chosen here.
