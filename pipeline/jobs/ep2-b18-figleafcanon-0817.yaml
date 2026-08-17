@@ -158,3 +158,39 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b18-figleafcanon-0817\18-the-decision-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+verdict_0817:
+  verdict: FAIL-COLOUR
+  also_fired: [FAIL-COUNT, FAIL-LEAFSHAPE, FAIL-PERSON]
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 16 of 16, at full resolution off the box copies
+  bar_as_written: 'PASS is a held macro of a tiny fig sapling''s THINNEST BRANCH against a soft sky,
+    carrying EXACTLY TWO wide oval cotyledon leaves with soft round tips, and hanging below them ONE
+    small purple fig -- a plain purple teardrop with matte dusty skin. FAIL-COLOUR includes green, red,
+    pale or white fruit, an eggplant/aubergine read, or gloss/shine. FAIL-LEAFSHAPE (deeply lobed or
+    five-fingered) is named as the failure worth reporting.'
+  finding: 'FAIL-COLOUR is the axis that fires hardest and most consistently. Wherever a fruit is
+    legible it is PALE GREY (r0-s0, r0-s3, r1-s0, r1-s3, r3-s0, r3-s3), RED (r0-s2), or DARK
+    RED-BROWN/RUSSET (r2-s3, r3-s2). Not one frame returns a plain matte purple fig. Pale and red are
+    both registered FAIL-COLOUR terms.
+    FAIL-COUNT fires everywhere too, in both directions: rows r0 carry five or more leaves, and rows
+    r2/r3 carry NONE AT ALL -- bare twigs holding a giant ovoid, which fails "EXACTLY TWO" just as
+    surely as eight would.
+    FAIL-LEAFSHAPE, the failure this spec said was worth reporting, DOES fire but only narrowly: r0-s3
+    returns deeply lobed three-lobed fig leaves and r1-s2 returns palmate ones. So mature-tree foliage
+    is still reachable in this wording, on roughly 2 of 16.
+    FAIL-COUNTFRUIT fires on r1-s0, r1-s1 and r3-s0 (multiple fruits).
+    FAIL-PERSON fires on r3-w015-s2: an anime girl''s face, grey hair, among orange-brown fruits.'
+  read_against_its_pair: 'Its sibling ep2-b18-canon-0817 PASSED on the same day, on the same beat, from
+    the same card -- fruit drawn, purple measured at 269-332 deg across 12 of 16 frames. So beat 18 is
+    NOT colour-blocked as a beat; this particular draft is. The difference between the two drafts is
+    where the next rung should look, because one of them gets purple out of this renderer reliably and
+    this one gets grey, red and russet.'
+  mechanism_note: 'Rows r2 and r3 collapse the same way they do in all three beat-01 arms judged today:
+    the IP-Adapter goblin reference bleeds in as a giant ovoid and, in r3-s2, as a face. On beats with
+    no character in them that reference is a liability.'
+  filed_off_this: 'NOTHING off this arm. Beat 18''s three motion seeds were filed off the arm that
+    passed (ep2-b18-canon-0817, plate r2-w015-s2), not off this one.'

@@ -166,3 +166,46 @@ artifacts:
 - C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s1.png
 - C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s2.png
 - C:\banyan-farm\out-b21-scale-0817\21-the-answer-wave1-s3.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+# THIS IS THE FIRST TEST EVER MADE OF THE FOUNDER'S 2026-08-16 SAPLING RULING.
+verdict_0817:
+  verdict: FAIL-COUNT
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 4 of 4, at full resolution off the box copies
+  bar_as_written: 'PASS: a sapling with EXACTLY TWO leaves standing NO TALLER THAN THE SURROUNDING
+    GRASS, with the grass line, the treeline and the pale sky all in frame, and one thin bare
+    side-branch. The failure worth reporting -- "and it is the whole question" -- is the plant coming
+    back waist-high, tree-sized, or with three or more leaves. Leaf TILT, fruit colour and leaf SHAPE
+    are all excluded by name.'
+  ruling_under_test: 'The founder, 2026-08-16, verbatim: "make sure it has 2 leafs and has a set height,
+    height might be a bit hard for the ai to make exact, so dont go crazy on it, just dont go double in
+    size suddenly." Two independent halves. THE_SAPLING.md records height as a RELATION, not an
+    absolute, so the objective tests are (1) leaf count and (2) the doubling constraint.'
+  half_one_leaf_count: 'FAILS, 2 of 4. s1 and s3 return exactly two leaves. s0 returns THREE (two
+    opposite plus one drooping lower leaf) and s2 returns THREE (one opposite pair plus a tall apical
+    leaf). A plate that returns three leaves half the time is not a plate for a beat where the plant is
+    the entire shot -- so the sample verdict is FAIL-COUNT.'
+  half_two_scale: 'BINDS, and this is the large positive result of the whole pass. `no taller than the
+    grass around it` holds on 3 of 4. s1 and s3 sit clearly BELOW the surrounding grass line, with the
+    grass silhouetted against the sky well above the plant. s0 is level with the flanking blades. Only
+    s2 overtops the grass. NOTHING doubled in size, nothing came back waist-high, nothing came back
+    tree-sized -- the three failure modes the founder actually named for height did not occur. The
+    height half of his ruling survives its first contact with the renderer.'
+  not_scored: 'Cotyledon SHAPE was not judged: THE-SAPLING.md 2.2 flags round/oval as steward inference
+    and vetoable in one line, so shape is not a fail axis. Leaf tilt is the motion job''s bar. No fig is
+    asked for in this draft, so colour does not arise.'
+  bar_looseness_scored_as_written: 'Two PASS clauses in this bar went UNMET on all four frames and are
+    reported rather than used to fail the sample any harder: there is no TREELINE in any frame (the
+    horizon is grass against sky), and no thin bare SIDE-BRANCH on any plant. Read strictly and
+    conjunctively, 0 of 4 clear every clause. Read as the bar''s own "failure worth reporting" sentence
+    frames it -- count and height -- the split is count-fails/height-binds. Both readings are given
+    because the bar does not say which it means, and it is NOT being bent after the fact in either
+    direction. Tighten it FORWARD: the next rung must state a RATE (how many of N) and must say whether
+    treeline and side-branch are PASS requirements or scene-dressing.'
+  filed_off_this: 'NOTHING. Beat 21 gets no motion seeds: at a 50 percent leaf-count defect the seeds
+    could not pay off, because on this beat the sapling IS the shot. The wording lever to move next is
+    leaf count alone -- the height clause should be carried forward UNCHANGED, since it is the one thing
+    here that demonstrably works.'

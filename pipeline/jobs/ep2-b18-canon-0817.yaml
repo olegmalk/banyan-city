@@ -186,3 +186,45 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b18-canon-0817\18-the-decision-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+verdict_0817:
+  verdict: PASS-DRAWN
+  colour_answer: purple (violet/magenta family)
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 16 of 16, at full resolution off the box copies
+  bar_as_written: 'SUCCESS IS A READABLE ANSWER, NOT A PURPLE ONE. PASS-DRAWN: ONE fruit in frame,
+    hanging from a thin branch, in a held macro. A word in the purple family means the canon as written
+    survives this card; red/maroon/crimson/wine/brown/russet means it does not; GREEN would be the most
+    informative failure. NO FRUIT IN FRAME is a FAIL. Leaf count, plant height and the final colour
+    VERDICT are all excluded by name.'
+  finding: 'IT DRAWS. Fruit is in frame in 16 of 16 -- the only registered FAIL for this axis (no fruit)
+    never fires. The frames are held macros and the fruit hangs from a thin branch or stem. So the
+    canon wording draws on this renderer.'
+  colour_measured_not_guessed: 'Hue was measured per frame on the saturated dark fruit mass (circular
+    mean of HSV hue). 12 of 16 land in the violet/magenta purple family (269-332 deg); ZERO land in red,
+    maroon, wine, brown or russet; ZERO are green. The remaining 2+2 read blue/cyan and are a mask
+    artefact -- those are the frames dominated by dark teal LEAVES, not fruit. The chosen plate
+    r2-w015-s2 measures 305 deg. So the registered question is answered PURPLE, and THE CANON AS
+    WRITTEN SURVIVES THIS CARD. The negative''s colour terms are binding.'
+  honest_caveat: 'The purple sits toward magenta rather than deep violet, and the fruit is heavily
+    GLOSSY with a hard specular highlight. Neither is a registered fail on THIS bar (gloss is not
+    listed here). Both WOULD fail the sibling arm ep2-b18-figleafcanon-0817, which bans gloss and the
+    aubergine read by name and did fail. The same pixels clearing one bar and failing the other is not
+    a contradiction -- the two bars ask different questions -- but it means beat 18 has a plate that
+    certifies the COLOUR WORDING, not a plate certified as matte-and-shippable.'
+  not_my_call: 'Whether this plate''s gloss and near-aubergine read are shippable is R4 and belongs to
+    the founder. FOUNDER CARD, raised and not settled here.'
+  filed_off_this: 'THREE MOTION SEEDS, backlogged 2026-08-17 the moment this verdict was in:
+    ep2-b18-tremble-s20260871-0817, -s20260872-, -s20260873-, all off plate r2-w015-s2
+    (sha256 ab70a4adec4cb7b69df131febea47af2987d0bbab7e8a4c77810048b29e0a3f1, read off the box manifest
+    and recomputed on the pulled copy). The 704x1280 cover crop was PRODUCED and looked at, not
+    arithmetic''d. Beat 18 is the only one of the three beats judged today that earned motion.'
+  bar_looseness_for_next_rung: 'This bar''s PASS-DRAWN clause says "ONE fruit in frame" but pre-registers
+    only "NO FRUIT IN FRAME" as the fail. Most frames actually hold two to four fruits; only about 5 of
+    16 hold exactly one. Scored AS WRITTEN that is not a fail here, and it is not being retro-fitted
+    into one. Tighten it FORWARD: the next rung should register FAIL-COUNTFRUIT explicitly, the way the
+    figleafcanon arm already does, or drop "ONE" from the PASS clause. The plate picked for motion is
+    one of the single-fruit frames, so the ambiguity does not travel downstream.'

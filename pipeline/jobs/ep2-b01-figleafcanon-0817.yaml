@@ -194,3 +194,38 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-figleafcanon-0817\01-cold-open-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+verdict_0817:
+  verdict: FAIL-COUNT
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 16 of 16, at full resolution off the box copies
+  bar_as_written: 'PASS: a seedling with EXACTLY TWO leaves, whole plant in frame, one fruit, front-lit.
+    The failure this job exists to catch: leaves coming back LOBED and FIVE-FINGERED, *or* three/four/
+    many of them. Leaf SHAPE is explicitly NOT scored (steward inference, vetoable). Fruit colour is
+    explicitly NOT this lane''s.'
+  finding: 'The registered failure is disjunctive and it split cleanly, which makes this the most
+    informative of the three beat-01 arms:
+    (a) THE LOBE HALF BOUND. The leaves do NOT come back deeply lobed or five-fingered. They come back
+        NARROW, POINTED and lance-shaped. Three rounds of mature-tree fig foliage have been suppressed
+        by the corrected leaf clause. That is a genuine win and it should be kept.
+    (b) THE COUNT HALF DID NOT. Rows r0 and r1 carry four to eight leaves. 0 of 16 show two.
+    So the corrected clause fixed the SHAPE it was aimed at and left the COUNT untouched.'
+  worse_than_the_bar_expected: 'Rows r2 and r3 do not contain a plant at all. They return a dark red
+    MECHANICAL OBJECT -- a hanging lamp or a camera lens with a glowing element -- and in two frames a
+    PERSON: r3-w015-s1 is a human hand holding a lens, r3-w015-s3 is an anime face inside a red hood.
+    FAIL-PERSON is NOT pre-registered on this bar (its siblings both register it), so it is reported as
+    an unregistered defect found rather than used as the verdict axis. Tighten it FORWARD: every plant
+    beat''s bar should carry FAIL-PERSON, because the mechanism that produces it is live here -- see
+    below.'
+  mechanism_note: 'The sidecars say this run conditioned on IP-Adapter Plus at scale 0.6 over steps 0-5,
+    with a GOBLIN frame (04-the-footnote-wave1-s2.png) as the reference. On a beat with no character in
+    it, that reference is a liability, and the faces and the giant blobs are where it bled through. The
+    later reference cells (r2, r3) are consistently the broken ones across ALL THREE beat-01 arms and
+    both beat-18 arms judged today. That is a mechanism-level finding, not a wording one.'
+  not_my_call: 'The fruit reads RED/pink here rather than purple. This bar hands colour to the founder
+    and the fig lane by name, so this lane does NOT fail it on colour -- but the observation is passed
+    on, because the founder''s 2026-08-14 ruling is canon-wide and retroactive.'
+  filed_off_this: 'NOTHING on beat 01.'

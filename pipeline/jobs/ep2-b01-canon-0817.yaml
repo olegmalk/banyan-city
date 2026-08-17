@@ -148,3 +148,31 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b01-canon-0817\01-cold-open-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-canon-0817\01-cold-open-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-canon-0817\01-cold-open-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+verdict_0817:
+  verdict: FAIL-COUNT
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 16 of 16, at full resolution off the box copies
+  bar_as_written: 'PASS is a seedling with EXACTLY TWO leaves ... bearing ONE small deep purple-violet
+    fig ... whole plant in frame. FAIL-COUNT (three or more leaves) is named in this spec as "the
+    failure worth reporting, because the two-leaf clause is the half of his ruling this draft exists
+    to test".'
+  finding: 'FAIL-COUNT on every frame that shows a readable plant. Rows r0 and r1 return leggy stems
+    carrying roughly five to eight leaves -- not three, not four, many. Rows r2 and r3 do not fail on
+    count so much as collapse: the frame fills with one giant purple mass (a fig-shaped or leaf-shaped
+    blob larger than the plant) with a small seedling of three to five leaves in front of it. ZERO of
+    16 frames show a two-leaf seedling. The two-leaf clause DOES NOT BIND in this wording.'
+  what_did_bind: 'The colour did. Wherever a fruit is legible it is purple or purple-violet, never
+    green, red, pale or white -- so FAIL-COLOUR did NOT fire, and the negative''s colour terms
+    (`green fig, green fruit, red fruit, white fruit, pale fruit`) are doing their job. That is a real
+    result and it is the half of this draft that survives.'
+  not_my_call: 'Whether any of these frames is SHIPPABLE (look, framing, the giant-blob composition)
+    is R4 and the founder''s. Filed as a founder card, not settled here.'
+  filed_off_this: 'NOTHING. A beat whose plant is wrong cannot be rescued by motion -- that is beat
+    16''s expensive failure, where a wrong plant IS the shot. Beat 01 gets no seeds.'
+  bar_looseness_for_next_rung: 'This bar names attributes per FRAME but never a RATE over the batch,
+    so "does the sample pass" was not actually defined. It did not matter here (0 of 16), but the next
+    rung should say plainly how many of N must clear before the wording is called bound.'

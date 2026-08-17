@@ -153,3 +153,30 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-scale-0817\01-cold-open-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the beat-01/18/21 judging lane. The bar above
+# was read FIRST, off this committed file, before any frame was opened.
+verdict_0817:
+  verdict: FAIL-COUNT
+  also_fired: FAIL-SCALE
+  scored_by: beat-18 judging lane, 2026-08-17
+  frames_read: 16 of 16, at full resolution off the box copies
+  bar_as_written: 'PASS is a seedling with EXACTLY TWO leaves bearing ONE small deep purple-violet fig,
+    the whole plant in frame and NO TALLER THAN THE GRASS AROUND IT. FAIL-SCALE = bush or waist height,
+    or overtops the grass. FAIL-COUNT = three or more leaves, or one.'
+  finding: 'FAIL-COUNT on 16 of 16: every readable plant carries three to eight leaves. FAIL-SCALE
+    fires on top of it and in a way the bar did not anticipate -- the grass is mostly NOT IN FRAME at
+    all. Where a grass line does appear (r1, r2) it is a thin strip at the bottom that the plant or the
+    giant purple mass towers over, so the plant overtops the grass. Rows r2/r3 put a bush-sized purple
+    form in frame with grass tiny behind it: that is FAIL-SCALE at its most literal.'
+  read_against_its_pair: 'The unanchored arm ep2-b01-canon-0817 failed the SAME axis (FAIL-COUNT, 0 of
+    16) on the same reference set. So adding the grass relation changed nothing about leaf count, and
+    the grass-relation anchor did not bind here EITHER -- it mostly failed to put grass in the frame.
+    Compare beat 21, judged the same day, where the same relation DID bind on 3 of 4 frames. The
+    difference is worth the next lane''s attention: beat 21''s draft puts the grass line, treeline and
+    sky in the prose; this one leans on `no taller than the grass around it` with a macro-tight frame
+    that has no room for grass. The anchor appears to need a FRAME that contains its yardstick.'
+  not_my_call: 'Which frame, if any, is shippable -- R4, the founder''s. Filed as a founder card.'
+  filed_off_this: 'NOTHING. Beat 01 gets no motion seeds; the plant is wrong and in this beat the plant
+    is the entire shot.'
