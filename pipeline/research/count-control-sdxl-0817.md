@@ -137,6 +137,8 @@ This was the cheapest thing to be wrong about, and it is not wrong. The
   against the official diffusers controlnets, so the widely repeated "xinsir beats
   the official ones" is community consensus, not a measured claim on that card.
 
+### Attend-and-Excite is the wrong tool
+
 **Attend-and-Excite** (SIGGRAPH 2023) — <https://arxiv.org/pdf/2301.13826>,
 code <https://github.com/yuval-alaluf/Attend-and-Excite>, project page
 <https://yuval-alaluf.github.io/Attend-and-Excite/>
@@ -146,3 +148,97 @@ code <https://github.com/yuval-alaluf/Attend-and-Excite>, project page
   makes a missing thing appear. It has **no mechanism for capping a count at two**,
   and cannot suppress a third leaf. Wrong tool for our failure; it addresses "the
   seedling has no leaves," not "the seedling has four."
+
+## 5. The two dedicated count-control methods, and their real numbers
+
+Both are SDXL-based, so the architecture is right. Neither is exact.
+
+**CountGen / Make It Count** (CVPR 2025) —
+<https://make-it-count-paper.github.io/>, code
+<https://github.com/Litalby1/make-it-count>,
+paper <https://openaccess.thecvf.com/content/CVPR2025/papers/Binyamin_Make_It_Count_Text-to-Image_Generation_with_an_Accurate_Number_of_CVPR_2025_paper.pdf>
+
+- Built on **SDXL**; code is public. But it is **not training-free**: it ships a
+  *trained* re-layout predictor and inference wants a downloaded checkpoint at
+  `pipeline/mask_extraction/relayout_weights/relayout_checkpoint.pth`. Weights we do
+  not have; free to fetch, but it is a new dependency, and it was trained against
+  base-SDXL internal features — pointing it at animagine's finetuned UNet is
+  off-distribution and unproven.
+- Its own framing of why this is hard is the best sentence in the literature for our
+  situation: the model "needs to keep a sense of separate identity for every instance
+  of the object, **even if several objects look identical or overlap**." Two leaves on
+  one stem are identical, adjacent and often overlapping — the worst case named by the
+  paper that is trying to fix it.
+- CountGen is limited to **single-class** objects.
+
+**CountDiffusion** — <https://arxiv.org/html/2505.04347>
+
+- **Training-free, plug-and-play**, explicitly demonstrated on **SDXL**. Closest
+  thing to a drop-in.
+- But it needs **Grounded SAM** at inference to detect/segment and count the
+  instances. That is the load-bearing dependency, and it is the part most likely to
+  break on us: Grounded SAM detecting two attached cotyledons on a stylised anime
+  seedling as two instances is not something anyone has shown.
+- **The honest numbers:** SDXL baseline count accuracy **34%**, CountDiffusion
+  **59%**; single-class MAE 2.33 → 0.90 objects. Authors concede it "still struggles"
+  as counts rise, limited by both base model and counting model.
+
+**So the ceiling of the published art is ~59% on the drop-in method and ~83% on
+Bounded Attention's metric.** Nobody has published exact count control on SDXL. Any
+plan of the form "add method X and the plate will have two leaves" is false.
+
+## 6. Verdict: the cheap proven thing wins, and it is not close
+
+Our composite-then-inpaint pattern — build the structure with plain image processing,
+then denoise at **strength ~0.30** — is the only approach on the table where the count
+is **not a sample from the model at all**. Two leaves drawn into the init are two
+leaves; the sampler is only asked to restyle pixels it is already sitting on.
+
+External support for the mechanism (tutorial-grade, not papers, but uncontested):
+low denoising 0.2–0.35 "preserves identity or layout" and is for "small refinements,
+cleanup, light style shifts"; if the output loses subject/pose/composition, lower the
+strength — <https://stable-diffusion-art.com/denoising-strength/>,
+<https://www.rundiffusion.com/img2img-docs>,
+<https://wiki.shakker.ai/en/webui-img2img-denoising-strength-guide>.
+Mechanically: noise is added to the init latent in proportion to strength and only
+`steps x strength` denoising steps run, so at 0.30 most of the init's structure is
+never destroyed to begin with — <https://deepwiki.com/AUTOMATIC1111/stable-diffusion-webui/4.2-image-to-image-(img2img)>
+
+And **iterative inpainting with a per-step check has a paper behind it**: *Steerable
+Scene Generation with Post Training and Inference-Time Search*
+(<https://arxiv.org/pdf/2505.04831>) incrementally inpaints masked regions under a
+task-specific reward and uses **the number of feasible objects as its proof of
+concept**. Inpaint-one-at-a-time-and-verify is a recognised way to get counts right;
+it is exactly what beats 06 and 10 did by hand for the clipboard.
+
+Ranked recommendation for the count problem:
+
+1. **Composite-then-inpaint at 0.30** (already proven here, $0, no new weights, count
+   is deterministic). The leaves come from PIL/compositing, not from the sampler.
+2. **Add a scribble/lineart ControlNet hint on top of a composited init** if the
+   restyle drifts — `xinsir/controlnet-scribble-sdxl-1.0` or `TheMistoAI/MistoLine`,
+   both of which *advertise* crude hand-drawn strokes as valid input, and both
+   Apache-2.0/OpenRAIL++. Treat it as a *bias*, never a guarantee: the count paper
+   measured segmentation-ControlNet as reducing count error while trading away
+   semantic correspondence and producing unnatural images
+   (<https://arxiv.org/html/2408.11721v1>).
+3. **Regional prompting / Attention Couple** — mature tooling
+   (<https://stable-diffusion-art.com/regional-prompter/>,
+   <https://github.com/lllyasviel/Fooocus/discussions/913>,
+   <https://github.com/pamparamm/ComfyUI-ppm/issues/21>) but **no source found that
+   claims or measures count control**; it steers *where* prompts apply, not how many
+   instances appear. Do not spend rungs here on a count promise nobody makes.
+4. **CountDiffusion / CountGen** — last, and only if 1-3 fail. New dependencies
+   (Grounded SAM; a trained relayout checkpoint), unproven on an anime finetune, and
+   even at their best they are 59%/83%, not 100%.
+
+Dead-end warnings so nobody re-walks them:
+
+- **More wording will not fix count.** Rejected by T2ICountBench directly
+  (<https://arxiv.org/abs/2503.06884>) — the CLIP text encoder barely varies with the
+  numeral. This is settled literature, not our opinion.
+- **Do not download SD1.5 controlnets.** They will not load on SDXL at all.
+- **Do not reach for "lllyasviel's SDXL controlnet."** It does not exist as his own
+  weights.
+- **CoreML animagine cannot take a controlnet** — any Mac controlnet work must be
+  diffusers/MPS.
