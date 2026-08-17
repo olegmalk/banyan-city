@@ -1,0 +1,23 @@
+#### job ep2-b0708-twofig-pub-0817-1786961018 attempt 1 start 2026-08-17T10:10:09Z
+
+==== step fetch START 2026-08-17T10:10:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b0708-twofig-pub-0817\\fetch_plates.py"]
+fetched 08-inside-him-twofig-mac-r3-s0.png      1130691 bytes  sha d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238  OK
+fetched 08-inside-him-twofig-mac-r3-s0.yaml        3085 bytes  sha e28136652e6b0a1988bf727d0695123aeb90153eb4dab007b6a2ce42922a2c8c  OK
+fetched 07-confiscate-twofig-mac-r1-s0.png      1119030 bytes  sha cf97f87834571995aac5e7c2d2a7f091e721e16f07ff11b4cc12ad190d20012b  OK
+fetched 07-confiscate-twofig-mac-r1-s0.yaml        2673 bytes  sha 68f91e55086a30d1bab901d88708a478ff653bd5a374bccdb6c7999fafb4ed49  OK
+all four blobs match their asserted sha256.
+==== step fetch END rc=0 2026-08-17T10:10:16Z ====
+
+==== step stamp START 2026-08-17T10:10:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b0708-twofig-pub-0817\\stamp_sidecar.py"]
+stamped 07-confiscate-twofig-mac-r1-s0.yaml
+stamped 08-inside-him-twofig-mac-r3-s0.yaml
+stamped 2 sidecar(s)
+==== step stamp END rc=0 2026-08-17T10:10:16Z ====
+
+==== step publish START 2026-08-17T10:10:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# THE GLOBS CARRY THE BEAT SLUGS (08-inside-him and 07-confiscate). Without\n# them the glob matches nothing and the step publishes nothing while\n# returning a code that reads like a fetch failure. farm-out is NOT\n# gitignored, so the runner pushes these itself and no runner change is\n# needed for them to reach origin/farm-results-rtx5090 -- which is the whole\n# point of this job.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b0708-twofig-pub-0817-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b0708-twofig-pub-0817\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/08-inside-him-twofig-mac-r3-s0.*\")\n             + glob.glob(out_dir + \"/07-confiscate-twofig-mac-r1-s0.*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b0708-twofig-pub-0817.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 4 else 1)"]
+published 4 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b0708-twofig-pub-0817
+==== step publish END rc=0 2026-08-17T10:10:16Z ====
+#### job ep2-b0708-twofig-pub-0817-1786961018 finished rc=0 2026-08-17T10:10:16Z

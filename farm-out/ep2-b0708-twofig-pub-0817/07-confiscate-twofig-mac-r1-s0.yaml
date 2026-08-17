@@ -1,0 +1,36 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r1 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 7
+beat_slug: confiscate
+script_line: "So we confiscate the apple."  # camera on the pointing guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260726
+round: r1
+prompt_tokens_measured: 74/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, arm outstretched, pointing at another, green skinned goblin, pointed ears, patched cloak, grass field, treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, huge tree trunk"
+what_this_frame_shows: >-
+  TWO whole adult figures, adjacent and in the SAME depth plane, on a sunlit grass field with a treeline and blue hills. LEFT is an adult green goblin, pointed ears, stern angular face, tan tunic with a brown scarf and blue belt. RIGHT is a bald HUMAN man with ROUND human ears, adult stern face, brown robe, purple sash. An arm is fully outstretched across the frame with the index finger extended - but the arm and hand are GREEN, so it is the GOBLIN who is pointing, and he points out of frame toward the viewer rather than at his companion. Framing came in tighter than the cowboy shot asked for, closer to a bust two-shot, so both bodies are cut at the waist by the bottom edge. No blush. Neither figure is chibi or infantile.
+verdict_against_pre_registered_bar: "PASS on the written bar - 1 (exactly two figures), 2 (adult round-eared human beside an adult pointed-eared goblin), 3 (adjacent, same depth plane, a gesture between them reads), 5 (both adult), 6 (no blush). NAMED FAULT, reported rather than glossed: the extended pointing arm belongs to the GOBLIN, and beat 07's action is the GUARD pointing at him. The bar never contained a pointing axis, so this is a pass with a fault, not a silent pass."
+founder_verdict: null
+scored: false
+# --- appended after the fetch by the backlog-depth lane, 2026-08-17.
+approved: false
+provisional: true
+cost_usd_confirmed: 0
+note: |
+  A PLATE republished onto the results branch so box_enqueue's plate
+  check can fetch and measure it. Not a pick, not a take, not approved
+  for any cut, and nothing here was re-rendered: these are the Mac
+  bytes of ep2-b0708-twofig-mac-0815 with this block appended. Taste
+  and trunk/graft calls are R4's and this job makes none.

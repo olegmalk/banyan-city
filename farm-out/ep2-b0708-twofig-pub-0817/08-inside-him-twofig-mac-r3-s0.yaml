@@ -1,0 +1,36 @@
+# Still provenance (7.2), written by the beats 07+08 plate lane on the Mac
+# (Apple M1 Pro, MPS). Round r3 of the tags-only two-figure recipe.
+# `what_this_frame_shows` was written by OPENING the image, not from a metric.
+platform: local-gpu (Apple M1 Pro, MPS)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+spec: pipeline/jobs/ep2-b0708-twofig-mac-0815.yaml
+shot_beat: 8
+beat_slug: inside-him
+script_line: "The apple is inside him, Dren."  # camera follows the pointing finger to the goblin's belly
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260727
+round: r3
+prompt_tokens_measured: 76/77   # real CLIP tokenizer, before firing
+negative_tokens_measured: 77/77
+prompts_from: authored for this plate test (shots.md UNTOUCHED)
+prompt: "cowboy shot, eye level, 2boys, facing viewer, standing side by side, bald human man, adult, stern face, brown tunic, sash, holding clipboard with both hands, green skinned goblin, pointed ears, patched cloak, looking down, grass field, treeline, blue sky, outdoors, anime key visual, cel shading, masterpiece, best quality"
+negative_prompt: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, photorealism, solo, 1boy, size difference, giant, towering, from behind, back turned, blush, red cheeks, chibi, child, shota, young boy, elf, baby, dark, huge tree trunk"
+what_this_frame_shows: >-
+  EXACTLY TWO whole adult figures, both facing viewer at cowboy-shot scale, shoulder to shoulder in the SAME depth plane, on sunlit grass with distant blue hills, a treeline and blue sky. LEFT is an adult green goblin, large pointed ears, angular stern face, teal robe with a maroon sash, a small brown tag-board clipped at his hip. RIGHT is a bald HUMAN man with ROUND human ears, adult stern face, brown hooded cloak over a tan tunic and a white sash. He holds a CLIPBOARD at chest height with a bright CHROME CLIP across its top rim. BOTH HIS HANDS GRIP THE BOARD AT ITS LEFT AND RIGHT SIDE EDGES - only fingertips notch the rim, NO PALM AND NO FINGER CROSSES THE FACE. The face is one clean dark quadrilateral. MEASURED by flood fill with the mask overlay opened and confirmed not to have leaked: exposed face component 20141 px, bbox 215x164, largest fully unoccluded inscribed rectangle 83x144 at 1.73:1. Material is dark maroon-brown with a chrome clip, which the bar does not score. No blush on either figure. Neither is chibi or infantile.
+verdict_against_pre_registered_bar: "PASS - the only seed to clear every axis at once: 1 (exactly two figures), 2 (adult human with round ears beside an adult goblin with pointed ears), 3 (same depth plane, adjacent, belly reachable by an extended arm), 4 (rectangle, flat face to camera, long edge 1/8.4 of frame height), 5 (both adult), 6 (no blush), and 7 (no hand across the face; edge grip only). THIS IS THE BEAT 08 PLATE. Its clean rectangle is smaller than beat 10's passing 223x197, which is the one reason round 4 was fired."
+founder_verdict: null
+scored: false
+# --- appended after the fetch by the backlog-depth lane, 2026-08-17.
+approved: false
+provisional: true
+cost_usd_confirmed: 0
+note: |
+  A PLATE republished onto the results branch so box_enqueue's plate
+  check can fetch and measure it. Not a pick, not a take, not approved
+  for any cut, and nothing here was re-rendered: these are the Mac
+  bytes of ep2-b0708-twofig-mac-0815 with this block appended. Taste
+  and trunk/graft calls are R4's and this job makes none.
