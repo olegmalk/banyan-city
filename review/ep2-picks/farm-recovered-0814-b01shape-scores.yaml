@@ -1,0 +1,225 @@
+# The last two of the eleven recovered farm sets — 2026-08-17.
+#
+# review/ep2-picks/farm-recovered-0814-scores.yaml scored NINE of the eleven and stopped on
+# a session limit. This file is the remaining TWO: ep2-b01-shape and ep2-b01-shapeB. It is a
+# SEPARATE file on purpose — the nine are another lane's record, committed and clean, and a
+# shared worktree is no place to append to a file I do not own. Read the two together; they
+# are one pair and the pair is the finding.
+#
+# The nine already filed, DO NOT RE-SCORE: ep2-b05/b09/b11/b12/b18/b21-scene-0814,
+# ep2-b01-styleprobe, ep2-b19-overhead, ep2-b04-balloon-pair.
+
+lane: farm-recovered-b01shape-reader, 2026-08-17
+scored_here: [ep2-b01-shape, ep2-b01-shapeB]
+completes: review/ep2-picks/farm-recovered-0814-scores.yaml — 11 of 11 sets now have a verdict
+render_path_for_both: >-
+  CUDA/bf16, LTX-2.3-Distilled-Diffusers, rtx5090 Laptop GPU, local-gpu, $0.00. Recorded
+  with every colour claim below, because bf16/CUDA renders red where MPS renders purple off
+  an identical seed (MAE 60-61). The amber drift measured here is a CUDA/bf16 measurement.
+
+the_pair_is_not_a_pair:
+  headline: >-
+    THE SEED PAIR DOES NOT EXIST. These two specs are byte-identical twins except for four
+    things: the job id, the output filename, the bench filename, and THE SEED —
+    shape = 20260806, shapeB = 20260813. They were authored to be a two-seed A/B of one
+    wording. Only ONE seed was ever rendered. There is no second arm anywhere on disk.
+  mechanism_read_off_the_two_specs: >-
+    Both specs write their render manifest to the SAME ABSOLUTE PATH,
+    `C:\banyan-farm\ep2-b01-figgrow-055-r3\b01-fig-jobs-render.json`, and the two versions of
+    that file differ only in `seed` and `out`. Whichever job's payload was written second won,
+    so the job called `shape` executed shapeB's render manifest — seed 20260813, output
+    `01-cold-open-LTX-shapeB-0813.mp4`. Then shape's publish step globbed
+    `01-cold-open-LTX-shape-0813.mp4*`, matched nothing, copied only the png, and returned
+    exit 1 under `allow_fail: true` — so the JOB PASSED while producing no footage.
+    `ep2-b01-figgrow-055-r3-0812.yaml` claims the same directory, making it three specs deep.
+  already_diagnosed_not_re_diagnosed_here: >-
+    Commit 8507a5fd, "the job called shape rendered its twin's clip, and only the artifact
+    check caught it". Counted, not re-opened.
+  the_guard_exists_and_agrees: >-
+    `review/ep2-picks/check_job_collisions.py` run on the two specs today REFUSES them, rc=1,
+    naming both the shared payload directory and the shared declared artifact, and its own
+    words for the consequence are "the box would render one clip under two names". The guard
+    reproduces this failure exactly. It is an advisory wrapper invoked BEFORE box_enqueue by
+    hand (`check && enqueue`), not a refusal inside box_enqueue itself — see the one-line
+    out-of-scope note at the foot.
+  evidence_on_disk: >-
+    farm-out/ep2-b01-shape/ holds ONE payload file and it is byte-identical to shapeB's init
+    png, sha256 77db45c35967f12c7de6da8c004dae768acac0b20a4b7dae953f6348f36830d8. Across the
+    two directories: 6 files, 2 DISTINCT MEDIA ARTIFACTS (one png, one mp4). Hashed, not
+    assumed — the same discipline that caught the 16-files/12-distinct sampler defect.
+
+sets:
+
+  ep2-b01-shape:
+    what_it_is: >-
+      The seed-20260806 arm of THE SWEEP — the founder's two shape notes ("the figs .. just
+      look like weird green balls") propagated to beat 01. LTX i2v off a cover-cropped
+      beat-01 plate. Declared 704x1280, 233 frames, 24 fps.
+    spec: pipeline/jobs/ep2-b01-shape-0813.yaml
+    dated: 2026-08-13
+    consumer_named_in_spec: >-
+      "The episode-2 cold open: first motion sample from the beat-01 frame carrying his two
+      approvals (s2 composition, 0.55 style). One sample; his look decides scale."
+    bar_scored_against: >-
+      THE SET'S OWN `success` FIELD, whose first clause is "A 704x1280 mp4 of beat 1 with the
+      shape notes applied".
+    files: 2
+    distinct: 1 — the init png, and it is shapeB's init png byte-for-byte
+    score: 0 of 1 — THERE IS NO CLIP. The set's declared artifact
+      `01-cold-open-LTX-shape-0813.mp4` was never published and does not exist in main.
+    manifest_honesty: >-
+      HONEST. `ep2-b01-shape-0813.sha256` lists exactly one line, the png, and that line
+      verifies. The manifest does not claim a clip it lacks. Nothing here lies; the set is
+      simply empty of footage.
+    status: NOT EVIDENCE — no footage to score, so it can be neither live nor superseded.
+    its_only_value: the collision diagnosis above.
+    what_this_costs_us: >-
+      The shape wording has been tested at exactly ONE seed on beat 01. Every "it reproduces"
+      claim about the beat-01 fig shape rests on a single sample. Beat 04's balloon was only
+      believed once it reproduced at a second seed (commit 60a9f05f); this has not had that.
+    unrun_followup: >-
+      `pipeline/jobs/ep2-b01-shape-a2-0813.yaml` was authored the same day as the fix for
+      exactly this collision. There is NO farm-out/ep2-b01-shape-a2 directory — it has never
+      run. Zero-dependency, $0, and it is the second seed the finding needs. NOT enqueued
+      here (out of my scope); named as a runnable job for whoever holds the box lane.
+
+  ep2-b01-shapeB:
+    what_it_is: >-
+      The seed-20260813 arm, and the ONLY arm that exists. The founder's fig-shape note
+      applied to beat 01: "the fig is a FIG SHAPE, not a ball: a small teardrop, wider and
+      heavier at its lower end and tapering up to a slight narrow neck ... NOT a sphere, NOT
+      a round ball, NOT an apple", with the failures named in the negative (green ball, round
+      ball, sphere, spherical fruit, apple, marble).
+    spec: pipeline/jobs/ep2-b01-shapeB-0813.yaml
+    dated: 2026-08-13
+    init: >-
+      `b01-fig-704x1280.png` — a cover-crop of `b01-final055-i55-s0.png`, sha-asserted before
+      the crop wrote anything. This is the PRE-attachment-patch beat-01 plate.
+    files: 4 — 1 mp4, 1 init png, 1 meta yaml, 1 manifest
+    distinct: 4, all four sha256 distinct; both manifest lines verify
+    format_check: >-
+      PASS. 704x1280, exactly 233 frames, 24 fps, 9.708 s — every number as declared in the
+      spec and in the meta. Seed 20260813, guidance 2.0, steps 8@352x640+3@704x1280.
+    bar_scored_against: >-
+      THE SET'S OWN `success` FIELD, decomposed into its four testable clauses (704x1280 mp4
+      of beat 1 / fig a teardrop with a narrow neck rather than a green ball / the beat's own
+      action unchanged / the named failure mode "the shape not moving"). Canon that postdates
+      2026-08-13 is reported below but NOT charged — see `canon_now`.
+    score: 3 of 4 success clauses
+    per_clause:
+      mp4_at_size: PASS — see format_check. Nothing about this render is malformed.
+      fig_is_a_teardrop_not_a_ball: >-
+        PASS, and emphatically. The fig reads as a clean teardrop: a heavy lower lobe
+        tapering up through a genuinely narrow neck to the stem join, matte-skinned, with
+        none of the specular ring a sphere would carry. It is unmistakably not a ball, not a
+        marble and not an apple. The named negatives held. This is the single strongest
+        result in the whole eleven-set recovery on a founder note.
+      beats_own_action_unchanged: >-
+        FAIL, and the failing half is the EXCLUSIVITY, not the action. The prompt asks that
+        the fig "slowly darkens and settles heavier, THE ONLY THING IN FRAME THAT MOVES",
+        with "the grass and the leaves holding still". The fig does darken and settle heavier
+        — that half lands cleanly. But it is not the only thing moving: the entire frame
+        drifts warm and the grass changes species-of-look, from green summer blades to dry
+        gold, with new blades rising into frame. MEASURED, mean RGB over the frame:
+        f0 172.5/177.8/121.6 (green-dominant, G>R) -> f58 154.0/112.2/53.7 -> f116
+        148.3/107.9/50.1 -> f174 144.2/104.4/47.7 -> f232 140.7/101.9/45.6. That is a
+        MONOTONE global amber collapse of dG -75.9 and dB -76.0 across 9.7 seconds. The
+        "static camera" and "grass dead still" clauses are what pay for it.
+      the_named_failure_did_not_occur: >-
+        PASS, and better than pass. The spec pre-registered the failure worth reporting as
+        "the shape not moving, which would put it in the plate and not the prompt". Not only
+        did the shape move — THE INIT PLATE CONTAINS NO FIG AT ALL. The plant in
+        `b01-fig-704x1280.png` is a bare stem with blades and no fruit of any kind. So the
+        prompt did not reshape an existing green ball; it CREATED a correctly-shaped fig out
+        of a plate that had none. The fig-shape clause is therefore a PROMPT-SIDE lever with
+        no plate dependency, which is the opposite of the answer the spec braced for.
+    freeze_check: >-
+      CLEAN — no frozen frames. 232 consecutive pairs measured at thumbnail scale: mean MAE
+      1.42, min 1.05, max 12.68, and ZERO pairs below 0.5. The clip moves for its full 9.7 s.
+      The single largest jump is the f0->f1 boundary (12.68), which is the step off the pale
+      init plate straight into the warm-drifted look — i.e. the drift defect is already
+      complete by frame 1 rather than easing in. Worth knowing: this is not the "literally
+      just frozen frames" class of defect that killed the K recipe.
+    canon_now:
+      purple_fruit_NOT_CHARGED: >-
+        The fig here is amber-brown/dark olive, NOT purple. Fig-region mean RGB: f58
+        138.6/93.7/51.9, f116 116.3/79.4/37.9, f174 117.4/84.9/39.4, f232 143.3/106.0/52.3 —
+        R>G>B in every sample, no frame where B exceeds G. NOT CHARGED: the prompt asks for a
+        "green fig" and the set rendered 2026-08-13, ONE DAY before the founder made purple
+        canon-wide and retroactive (2026-08-14). Consequence, not a fault: the fig-shape
+        wording is proven and reusable, but the COLOUR half must be rewritten to purple
+        before any re-run, and the negative must stop blocking only apple-red confusions.
+      average_leaves_NOT_CHARGED: >-
+        The prompt says "two oversized COTYLEDON leaves" — the retired steward inference.
+        Superseded by his 2026-08-17 ruling that they are "average leaves". NOT CHARGED, the
+        set predates it by four days. Same correction the other lane recorded for beats 12
+        and 21; must change on any re-render. Note the shape sweep pushed `cotyledon` INTO
+        beat 01 deliberately as one of its two clauses, so retiring the word retires half of
+        this spec's purpose.
+      exactly_two_leaves_FAILS_and_is_already_diagnosed: >-
+        COUNTED, NOT RE-DIAGNOSED. The init plate carries FOUR blades — a large pale terminal
+        blade, an upper-left leaf, a lower-left leaf and a lower-right blade — and the clip
+        inherits all four for its whole run. This is beat 01's known stopped item, not a new
+        finding: the attachment patch took the re-grow rate to 3 of 4 and beat 01 stops there
+        (commit 2beb9dd8), because a mask can delete a blade but not the anatomy — the
+        unmasked stem still describes a leaf-bearing node and the 0.30 pass completes it.
+        This plate is the PRE-patch plate, so four blades is the expected reading.
+      height_is_a_relation_NOT_SCORED: >-
+        No person in frame, so the 40 cm / shorter-than-him relation has no referent here,
+        and beat 01 sits in wave-drafts' "no taller than the grass around it" group
+        (01/18/21) rather than the `knee high` group (02/03/07/17) — the same scoping the
+        other lane established for beats 12, 18 and 21. Observed anyway: at f0 the plant
+        stands well clear of the grass, and by f232 the risen grass has closed most of that
+        gap. Not charged; recorded because it is the one thing the drift accidentally fixed.
+      bald_guard_NOT_APPLICABLE: no figure in frame. The 14-of-17 `bald` plate defect cannot
+        appear in a plant-only beat.
+    status: >-
+      LIVE EVIDENCE on the fig-shape lever; SUPERSEDED as footage.
+    why_split: >-
+      LIVE because the shape result is independent of every ruling that has landed since —
+      teardrop-versus-ball is a geometry question, the founder asked it in his own words, and
+      nothing has retested it. It is also the only place the lever has been shown to work
+      with NO fig in the plate, which generalises it to the other twenty-five live prompts
+      that mention a fig. SUPERSEDED as footage on four separate counts, any one of which is
+      disqualifying: the fig is green not purple, the leaves are cotyledon not average, the
+      plate carries four blades not two, and the warm drift breaks the beat's own
+      "only thing in frame that moves".
+    founder_card: >-
+      NAMED, NOT RESOLVED — one card, and it is a look-at-it, not a promotion. He asked why
+      the figs look like weird green balls; the answer to that question now exists as a 9.7 s
+      clip and it works. He has never seen it. But it cannot be promoted: beat 01 is stopped
+      by its own rule at 1 of 4, and the clip's fig is green a day before purple became
+      canon. So the card is "the shape note is answered, on a clip that is not publishable" —
+      a taste look at the SHAPE only. I am not promoting it and I am not ruling on it.
+      Explicitly NOT attached to the open beat-11 9-of-10 plate card, which nobody has ruled
+      on either.
+
+cross_set_findings:
+  the_shape_lever_is_proven_and_portable: >-
+    One clip, one seed, but the mechanism is clean: an explicit geometric description plus
+    the failure modes named in the negative produced a correct teardrop fig from a plate with
+    no fig in it. Contrast this with the count adjective `exactly two`, which the other lane
+    measured at 3 of 8 across the plant-only wave sheets. Shape language BINDS where count
+    language does not. That is a wording-design result worth carrying into the leaf-count
+    problem: describe the geometry, do not assert the number.
+  what_changes_about_what_we_believe_is_filmed:
+    - The beat-01 shape sweep is ONE clip at ONE seed, not a two-seed A/B. The file listing
+      reads as a pair and is not one. Any record that counts eleven sets as eleven renders is
+      counting a set that contains no footage.
+    - ep2-b01-shape-a2-0813.yaml has never run and is the missing second seed. Runnable now,
+      no dependency, $0.
+    - The fig-shape clause is a prompt-side lever, not a plate property. Beats whose figs
+      read as green balls do not need new plates.
+    - Every fig prompt in the sweep says GREEN. The sweep predates purple canon by one day,
+      so the whole propagation now needs a colour pass before any of it is re-run.
+
+one_line_out_of_scope_notes:
+  - >-
+    check_job_collisions.py reproduces this exact failure at rc=1 but is a hand-run wrapper
+    ahead of box_enqueue rather than a refusal inside it, so nothing stops the next colliding
+    pair from being queued — spend guards are code, and this guard is not yet.
+  - >-
+    farm-recovered-0814-scores.yaml references "card 2 below", "Card 3 below" and "card 4
+    below" but the file ENDS at beat 04's founder_card — the cross-set card section the nine
+    verdicts point to was never written before that lane hit its limit; four cards are cited
+    and none exist. Not authored here: writing them would be re-doing the nine.
