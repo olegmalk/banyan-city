@@ -661,3 +661,110 @@ sets:
       card (card 2 below), with the caveat that the choice is a genuine two-way, not a
       three-way, because no middle was found.
     founder_card: card 2 below.
+
+  ep2-b19-overhead:
+    what_it_is: >-
+      A single MOTION clip on beat 19 — one sample, one question. 704x1280, 121 frames,
+      24 fps. LTX-2.3-Distilled-Diffusers (bf16), two-stage 8 steps @352x640 + 3 steps
+      @704x1280, seed 20260806, $0. Plus its init png and a bench jsonl.
+    spec: pipeline/jobs/ep2-b19-overhead-0812.yaml
+    dated: 2026-08-12
+    render_path: CUDA/bf16, rtx5090 Laptop GPU. LTX, not Animagine — a different model
+      family from the six still sets above, so none of their findings transfer here.
+    consumer_named_in_spec: review/ep2-picks/motion-0812.html — "whether stating an
+      object's POSITION controls where it lands, the last unproven half of the contents
+      rule."
+    bar_scored_against: >-
+      THE SET'S OWN SPEC, which is unusually precise and has three testable parts: "A
+      704x1280 mp4, 121 frames, in which (a) the trunk is rooted in the grass beside him
+      with NOTHING growing out of his head, (b) one branch reaches above his skull, and
+      (c) the fig falls from that branch ONTO HIS HEAD and then to the ground. The failure
+      worth reporting is the head sprout returning as soon as anything is placed above him
+      — that would mean above-him and on-him are not separable."
+    files: 1 mp4 + 1 init png + 1 bench jsonl + manifest
+    distinct: 1 clip
+    format_check: PASS — 704x1280 and exactly 121 frames, both as declared.
+    score: 2 of 3 clauses
+    per_clause:
+      a_trunk_beside_him_nothing_from_his_head: >-
+        PASS, and this is the set's headline. The trunk is rooted in the grass to his
+        left, clearly separate from him, and across all 121 frames NOTHING grows out of
+        his head. The named failure mode did NOT occur.
+      b_branch_above_his_skull: >-
+        PASS. A long branch arcs up and over, reaching above his head, with the fig
+        hanging at its tip. Minor imprecision: the tip sits above-and-to-the-right of his
+        skull rather than directly over its centre, so the fig hangs off-axis from the
+        head it is supposed to hit.
+      c_fig_falls_onto_his_head_then_to_ground: >-
+        FAIL, and the failure is interesting rather than dull. The fig at the branch tip
+        NEVER LEAVES — it is still hanging there at f120. Instead a SECOND dark fig-shaped
+        object materialises near the ground by his feet around f90 and stays there through
+        f120. So the fruit did not fall; it DUPLICATED. And no frame shows the fig in
+        contact with his head, so the "onto his head" beat — the whole point of the shot —
+        does not happen at all.
+    findings:
+      THE_PLACEMENT_RULE_IS_CONFIRMED: >-
+        The spec's actual question was "whether stating an object's POSITION controls where
+        it lands, the last unproven half of the contents rule." The answer is YES for
+        position and NO for trajectory. Stating the trunk BESIDE him and the branch ABOVE
+        him put both exactly there and kept the head clear — so above-him and on-him ARE
+        separable, and the head sprout is not an inevitable consequence of placing anything
+        overhead. That retires the worry the spec was written to test. What position
+        control does NOT buy is MOTION ALONG A PATH: the model satisfied "fig above" and
+        "fig on the ground" by instantiating a fig in each place rather than moving one
+        between them.
+      duplication_is_the_new_fault_to_name: >-
+        The fault to carry forward is not the head sprout, it is OBJECT DUPLICATION as the
+        model's way of satisfying two positions for one noun. That is a distinct and
+        cheaper problem than the one this beat started with.
+      THE_WHITE_BURST_OPENING_IS_VISIBLE_AND_MEASURED_HERE: >-
+        CROSS-LINKS DIRECTLY TO THE b05/b09/b11 SCENE JOBS. Frame 0 of this clip IS the
+        init image — I measured MAE 6.63 between them, i.e. identical bar video compression
+        — and the init is a WHITE-BACKGROUND character bust with no world in it at all. Its
+        top-left 100x100 mean is (254.7, 255.0, 255.0) pure white, against (193.3, 179.0,
+        178.3) at frame 15. So the clip opens on a white plate and the world arrives after
+        the motion starts. This is precisely the artifact the b05/b09/b11 scene-carrying
+        plate jobs were written to eliminate — their `why` field says "a white plate means
+        the world is built by the motion words and can only arrive mid-clip, which is the
+        artifact the founder has now caught three times." This recovery contains both the
+        disease and the attempted cure, and the disease is now quantified rather than
+        described.
+      provenance_gap: >-
+        The clip's `.mp4.meta.yaml` has an EMPTY `prompt:` field. Under §7.2 every render
+        publishes model, prompt and cost; model and cost are present, the prompt is not.
+        The clip therefore cannot be reproduced from its own sidecar. Worth fixing in the
+        harness that writes these.
+      cast_observations_not_scored: >-
+        The goblin is bald here. Per the standing instruction this is counted, not
+        re-diagnosed — and note it is a different question from the guards: bald is the
+        steward's unratified translation of his "simple green goblin, nothing complex",
+        whereas the guard ruling is settled. Separately the figure reads as a CHILD with a
+        chibi-proportioned head, not the "lean and wiry, narrow angular skull, adult"
+        goblin that beat 13's adult drafts specify. And the clip's look is flat hard-outlined
+        cel with an olive-yellow palette, well away from the detailed cinematic anime house
+        style. All three are R4 taste territory and none is scored.
+    canon_now:
+      purple_fruit: >-
+        The fig renders DARK PURPLE-BLACK in this clip, which is on the right side of the
+        08-14 ruling despite being rendered 08-12. COLOUR CLAIM PATH-QUALIFIED: this is
+        the LTX bf16/CUDA path, and the known bf16/CUDA-vs-MPS divergence (CUDA red where
+        MPS is purple, MAE 60-61) was measured on the Animagine still path, not on LTX. No
+        MPS comparison for this clip exists, so the claim does not transfer.
+      two_leaves_average: >-
+        NOT MET, but not this set's bar either — the plant here is a tall multi-leaf
+        branching sapling with roughly six leaves, not a two-leaf seedling, and it stands
+        far TALLER than the goblin. Under today's canon (exactly two leaves; ~40 cm; always
+        shorter than he is) this plant is off on count, height and relation. Flagged for
+        the record because it is the plant the finished beat-19 motion currently shows.
+      knee_height_rewrite: >-
+        RELEVANT — beat 19 IS in the brief's list of beats changed today (12/13/15/19/20).
+        See status.
+    status: LIVE EVIDENCE on the placement mechanism; SUPERSEDED as footage.
+    why_split: >-
+      Live because the position-control answer, the duplication fault and the measured
+      white-burst opening are mechanism results that no later work has retested, and the
+      spec said either answer closes the item. Superseded as footage on two independent
+      grounds: beat 19 was rewritten today, so the staging in this clip may no longer be
+      the beat; and the plant violates today's leaf-count, height and relation canon
+      outright.
+    founder_card: none on taste. Card 3 below is a factual flag, not a taste call.
