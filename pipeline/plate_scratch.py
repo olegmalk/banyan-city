@@ -2653,6 +2653,244 @@ REVS = {
             "photorealism, 3d render, night"
         ),
     },
+    # ======================================================================
+    # 2026-08-17, THE r2 RUNG FOR ALL THREE GUARD PLATES. ONE VARIABLE EACH,
+    # AND EACH VARIABLE IS THE ONE THE SEED SWEEP IDENTIFIED AS WORDING.
+    # WRITTEN AND COMMITTED BEFORE ANY OF THE THREE PIXELS.
+    # ======================================================================
+    # WHY THREE REVS IN ONE COMMIT IS NOT A BATCH. A ladder cannot be
+    # parallelised -- rung 2 depends on rung 1's verdict -- but THREE LADDERS
+    # CAN RUN SIDE BY SIDE, because beat 05's camera angle, beat 09's eyelids
+    # and beat 10's prop ownership are independent questions on independent
+    # plates. Each of these is rung 2 of its own ladder, off its own judged
+    # rung 1, fired on its own machine. Nothing here depends on anything else
+    # here.
+    # WHAT IS DELIBERATELY NOT FIXED IN ANY OF THEM. D2 (glasses landing on
+    # both men in a two-guard plate) is a CAST question, not a wording bug to
+    # be solved in a lane: either guard A's wire-rims are left out of 05 and 10
+    # or guard B is drawn wearing them, and that is R4's call. `glasses` is
+    # therefore left EXACTLY where r1 had it in both two-figure prompts, so
+    # that whatever the founder decides is decided against pictures that
+    # isolate one variable rather than pictures that moved two.
+    # THIS IS EACH PLATE'S FOURTH AND LAST SEED IN THIS LANE. Three went to
+    # the r1 sweep. If a rung 2 fails, the honest report is "the variable was
+    # identified and the fix did not take", not a fifth guess.
+    (5, 2): {
+        # ------------------------------------------------------------------
+        # BEAT 05, r2. THE ONE VARIABLE: `horizon` IS DELETED FROM THE
+        # NEGATIVE. Nothing else moves -- not one byte of the positive, not the
+        # seed, not the other twenty-five negative terms, and `sky` STAYS.
+        #
+        # WHY. D4 came back 3 of 3 wording, not seed: every beat 05 render is a
+        # downward high-angle over an open field with no horizon band and no
+        # hedgerow, and at s3 it is so high and so far that the count breaks to
+        # THREE FIGURES -- this beat's historical fault -- with `distant, small
+        # figure` sitting in the negative and failing to hold. The mechanism
+        # named in advance and now tested: A FRONT-FACING WIDE SHOT HAS TO PUT
+        # A HORIZON SOMEWHERE. Forbid it and the only place left is above the
+        # frame, so the camera tilts down until it is gone, and everything else
+        # follows -- the men shrink, the field opens into one flat expanse
+        # (61.4% of r1s1 is flat against 34.6% on the b11 plate that passed),
+        # and `hedgerow behind` has no ground to stand on because there is no
+        # `behind` in a plan view.
+        # `sky` STAYS ON PURPOSE. The vacancy law says an empty upper band gets
+        # filled with the largest noun in the prompt, and deleting `hedgerow`
+        # was never the problem -- what is wanted is a horizon WITH a hedgerow
+        # on it, not open sky. If r2 returns eye level with a hedgerow and no
+        # sky, the mechanism is confirmed and the fix is free. If it returns a
+        # sky band anyway, then `sky` and `horizon` were doing one job and the
+        # trade is a real one, to be named rather than papered over.
+        # WHY NOT ALSO FIX THE POSE. `arms swinging` came back as both men
+        # flinging their arms wide and overhead at 3 of 3 -- also wording. It
+        # is left alone because a plan view at that distance is exactly the
+        # framing in which a jog reads as a jumping-jack, so the camera is the
+        # candidate CAUSE of the pose fault and not an independent second bug.
+        # If eye level returns and the arms are still overhead, THEN the pose
+        # is its own fault and beat 05 has a fifth-seed question worth asking.
+        #
+        # THE BAR IS UNCHANGED: P1-P8 exactly as committed in 7b193483, and
+        # good staging with the wrong men is still a FAIL. What r2 is scored
+        # on above all is P2 (exactly two whole figures), P5 (vacancy, judged
+        # by the overlay and the flat FRACTION against b11 r3's 34.6%, never by
+        # the retired rectangle alone) and the presence of a hedgerow.
+        # OUTCOMES NAMED IN ADVANCE:
+        #   A. EYE LEVEL, HEDGEROW PRESENT, TWO FIGURES -> the mechanism is
+        #      confirmed, and the rule that carries to every future
+        #      front-facing plate is: DO NOT FORBID `horizon` IN A SHOT THAT
+        #      NEEDS ONE.
+        #   B. EYE LEVEL BUT THE COUNT OR THE CAST DEGRADES -> the camera fix
+        #      took and cost something; r1s1 and r2 both stay on disk and the
+        #      choice is between two pictures.
+        #   C. STILL HIGH-ANGLE -> `horizon` was not the lever, the mechanism
+        #      is dead as stated, and beat 05's plate is NOT solved by a
+        #      negative-side edit. The next instrument would be a positive-side
+        #      one (`eye level`, `low angle`, a named horizon noun) and this
+        #      lane says so rather than spending its last seed guessing.
+        "slug": "the-patrol",
+        # BYTE-IDENTICAL to the base draft. Not one character differs.
+        "prompt": (
+            "2boys, full body, wide shot, two guard men jogging together in "
+            "tall grass, hedgerow behind, one man with dark cropped hair, "
+            "glasses, a tan tunic and a white waist sash, one taller man "
+            "with light sandy hair, a cream shirt, a white shoulder sash and "
+            "a brown wrap skirt, arms swinging, masterpiece, best quality"
+        ),
+        # Restated byte for byte from the base draft APART FROM the deletion of
+        # `horizon`, which is the single variable. Exit 6 requires the
+        # restatement and is right to. 70/77.
+        "negative": (
+            "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, "
+            "from behind, back view, close-up, portrait, distant, small "
+            "figure, sky, white background, simple background, "
+            "armor, helmet, knight, weapon, holding object, clipboard, "
+            "photorealism, 3d render, night"
+        ),
+    },
+    (9, 2): {
+        # ------------------------------------------------------------------
+        # BEAT 09, r2. THE ONE VARIABLE: THE EYE STATE. `eyes open` is added
+        # to the positive and `closed eyes` to the negative. That is one
+        # variable expressed on both sides of the same tag, not two.
+        #
+        # WHY. D5 came back 3 of 3: the man's eyes are SHUT at every seed.
+        # `thoughtful` plus `mouth closed` describes a man at rest, and the
+        # checkpoint drew one -- three times, including one where a green leaf
+        # arrived between his lips. Beat 09's script line is "Guard 1's face
+        # WORKS THROUGH IT, slowly" and its done_when is "close on Guard 1's
+        # face working through the thought": a man with his eyes closed is not
+        # working through anything, he is dozing in a field.
+        # WHY BOTH SIDES FOR ONE VARIABLE, when the standing lesson is that
+        # negatives fail on nouns the positive invited. `closed eyes` is not an
+        # invited noun here -- the positive will now ask for the OPPOSITE
+        # state, so the negative is reinforcing a positive instruction rather
+        # than trying to subtract something the prompt asked for. That is the
+        # one configuration in which a negative term has reliably worked on
+        # this repo's plates: (11,3)'s three head-turn terms moved both heads
+        # precisely because the positive said `from behind`.
+        # WHAT IS NOT TOUCHED. `mouth closed` STAYS, and it stays for a
+        # measured reason that has not changed: beat 11's best take turns guard
+        # B into full profile WITH AN OPEN MOUTH from f008, so this checkpoint
+        # animates a talking man's head, and beat 09 is a man thinking BEFORE
+        # he speaks. The tunic colour is also left alone even though it drifted
+        # white / white-and-black / ORANGE across the three seeds -- that is a
+        # second fault and it is named in the r1 verdict, not fixed here.
+        #
+        # THE BAR IS UNCHANGED: P1-P7 exactly as committed in 7b193483,
+        # including P3's head >=55% of frame height (r1s1 landed at ~53% and
+        # that was recorded as a fail, not softened) and P1's "no glasses is a
+        # FAIL" -- which has now passed three times running.
+        # OUTCOMES NAMED IN ADVANCE:
+        #   A. EYES OPEN, P1-P6 HOLD -> beat 09 has a usable plate and the rule
+        #      that carries is: A FACE PLATE MUST NAME THE EYE STATE, because
+        #      `thoughtful` alone reliably closes them.
+        #   B. EYES OPEN BUT THE FACE CHANGES (hair, age, the glasses) -> the
+        #      edit reshuffled the picture, r1 stays on disk beside it, and the
+        #      finding is "reachable, at a cost".
+        #   C. EYES STILL SHUT -> a positive state tag plus its negative cannot
+        #      open this checkpoint's eyes on a `thoughtful` face, and the
+        #      honest next instrument is a different EXPRESSION word entirely
+        #      (`frowning`, `squinting in thought`) rather than an eyelid tag.
+        #      Beat 09 would stop here for this lane and say so.
+        "slug": "the-pause",
+        # r1's positive with `eyes open` inserted before `thoughtful`. 68/77.
+        "prompt": (
+            "1boy, solo, close-up, face filling the frame, a guard man with "
+            "dark cropped hair and wire-rim glasses, eyes open, thoughtful, "
+            "mouth closed, a tan wrap tunic collar and a white sash on his "
+            "shoulder, tall grass and a green hedgerow behind him, sunny "
+            "day, masterpiece, best quality"
+        ),
+        # Restated byte for byte from r1 APART FROM `closed eyes`, the other
+        # half of the single variable. 72/77.
+        "negative": (
+            "text, 2boys, 3boys, crowd, bald, closed eyes, hands, holding "
+            "object, clipboard, armor, helmet, knight, child, girl, white "
+            "background, simple background, grey background, blank "
+            "background, plain background, sky, indoors, full body, wide "
+            "shot, distant, photorealism, 3d render, dark, night"
+        ),
+    },
+    (10, 2): {
+        # ------------------------------------------------------------------
+        # BEAT 10, r2. THE ONE VARIABLE: `hands behind his back` IS ADDED TO
+        # GUARD A's CLAUSE. Four words, at the end of the man who must NOT be
+        # holding the board. The negative is restated byte for byte and the
+        # seed does not move.
+        #
+        # WHY THIS AND NOT A REWORDING OF THE BOARD CLAUSE. The sweep found the
+        # board on the WRONG MAN at 3 of 3 -- guard A alone at s1 and s3, BOTH
+        # men at s2 -- and it is not the seed. The board clause already sits
+        # INSIDE guard B's person clause, immediately after his wrap skirt, and
+        # B is already the FIRST man named. Every ordering lever this prompt
+        # has is already pointed the right way and the prop still goes to
+        # whichever figure the model draws nearest. So a prop does not bind to
+        # its person clause the way hair and garments demonstrably do (D1: at
+        # 10 s3 the cream shirt and brown wrap skirt bound to the blond man
+        # while the tan tunic bound to the dark-haired one, in the same frame
+        # where the board went to the wrong one).
+        # THE INSTRUMENT IS THE LAW THIS LANE JUST ESTABLISHED, USED FOR A
+        # SECOND PURPOSE. D3: an unspecified hand is an empty region and this
+        # checkpoint puts a noun in it. Beat 10's own far man proved it -- a
+        # bamboo pole at one seed and a DUPLICATE OF THE BOARD at another.
+        # `hands behind his back` does two things with one clause: it removes
+        # the empty region that grew the pole, and it removes the only other
+        # pair of hands the board could be placed in. If the board is a noun
+        # looking for hands, this is the shot where there is exactly one pair
+        # available and they are already told to hold it.
+        # IT IS ALSO RIGHT FOR THE BEAT, which is worth saying because a fix
+        # that fights the script is not a fix: guard A is the man LISTENING in
+        # beat 10 -- Guard 2 has the board and the line -- and hands behind the
+        # back is what a listening bureaucrat's hands do.
+        # THE COST IS NAMED: THIS PROMPT NOW MEASURES 77/77, the entire budget,
+        # with zero headroom. Nothing was cut to make room, so no second
+        # variable sneaked in, but it means beat 10 cannot take another
+        # additive rung after this one -- the next thing tried here would have
+        # to be a DELETION. That is a real constraint on this beat and it is
+        # recorded now rather than discovered later.
+        #
+        # THE BAR IS UNCHANGED: P1-P8 exactly as committed in 7b193483, and P1
+        # still fails on a board in the dark-haired man's hands even if
+        # everything else holds. P6 is now judged on FOUR hands as always, with
+        # A's two expected to be out of sight behind him -- HANDS HIDDEN BEHIND
+        # A BACK IS NOT A FAIL OF P6; they were given a state and the state put
+        # them there.
+        # OUTCOMES NAMED IN ADVANCE:
+        #   A. BOARD IN THE SANDY-HAIRED MAN'S TWO HANDS AND NOWHERE ELSE ->
+        #      the prop-ownership problem is solved by OCCUPYING THE OTHER
+        #      HANDS, which is a general rule for every two-figure plate with
+        #      a prop, and it is a second, independent confirmation of the
+        #      hand-vacancy law.
+        #   B. BOARD ON THE RIGHT MAN BUT A DUPLICATE APPEARS, or A's hidden
+        #      hands come back holding something anyway -> occupying a hand
+        #      with a POSE is weaker than occupying it with an OBJECT, which is
+        #      a useful distinction and would be written down as one.
+        #   C. BOARD STILL ON GUARD A -> prop ownership is NOT reachable by
+        #      hand-state wording on this checkpoint. Then beat 10's plate
+        #      cannot name which man holds the board, and the honest options
+        #      are to draw the two men IDENTICALLY DRESSED so it does not
+        #      matter, or to accept that beat 10 needs a composited or
+        #      hand-corrected plate. Either is a bigger call than a seed, and
+        #      this lane would stop and say so rather than spend a fifth.
+        "slug": "no-form",
+        "prompt": (
+            "2boys, full body, medium shot, two guard men standing together "
+            "in tall grass, hedgerow behind, near taller man with light "
+            "sandy hair, cream shirt, white shoulder sash, brown wrap skirt, "
+            "holding a large flat bark board in both hands, one man behind "
+            "with dark cropped hair, glasses, a tan tunic, hands behind his "
+            "back, masterpiece, best quality"
+        ),
+        # Restated BYTE FOR BYTE from the base draft. Not one term added or
+        # removed, so a change in the board's owner is attributable to the four
+        # words in the positive and to nothing else. 74/77.
+        "negative": (
+            "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, "
+            "from behind, back view, close-up, portrait, distant, small "
+            "figure, sky, horizon, white background, simple background, "
+            "armor, helmet, knight, weapon, sign, banner, paper, book, "
+            "photorealism, 3d render, night"
+        ),
+    },
     (14, 2): {
         # r1 came back a correct LOW CROUCH with the ground in frame -- the
         # framing lever worked on the first sample and the standing-plate
