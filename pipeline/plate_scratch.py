@@ -531,6 +531,480 @@ DRAFTS = {
         ),
         "seed": 20260816,
     },
+    # ======================================================================
+    # 2026-08-17, THE THREE REMAINING GUARD PLATES: 05, 10 AND 09.
+    # PROMPTS AND BARS BOTH WRITTEN AND COMMITTED BEFORE A SINGLE PIXEL.
+    # ======================================================================
+    # WHY THESE THREE AND NOT FOUR. `guard_plates_are_miscast_0816` settles
+    # beats 05, 06, 07, 09, 10 and 11 at once: 0 of 17 plate prompts for those
+    # beats name any approved-cast attribute and 14 of 17 ask for `bald`, so
+    # every guard plate the project owns invented its own man. Beat 11 has now
+    # been redrawn and its plate passes 7/7. 06 already ships off a scene plate
+    # whose only fault is cast consistency, and 07 is gated (the goblin is in
+    # frame -- `corrections_to_the_brief.beat_07_is_not_goblin_free`). 08 IS
+    # DELIBERATELY NOT DRAWN HERE: it needs a two-figure guard+goblin reference
+    # that does not exist, and inventing the goblin's half of it in a guard
+    # lane is exactly the improvisation this whole finding is about.
+    #
+    # THE CAST IS CLOSED AND IS READ OFF THE SHEET, NOT OFF A PROMPT. Founder,
+    # 2026-08-16: "the cast stands as drawn", glasses included. Verified here by
+    # OPENING review/ep2-picks/sheets/guard-cast-0816.jpg rather than trusting a
+    # description of it:
+    #   GUARD A (= "GUARD 1" in the script; beats 05 and 09) -- dark cropped
+    #     hair, WIRE-RIM GLASSES, plain tan/beige wrap tunic, WIDE WHITE WAIST
+    #     SASH, dark brown cropped trousers, brown boots.
+    #   GUARD B (= "GUARD 2", the clipboard guard; beats 06, 10) -- light sandy
+    #     hair, cream short-sleeved shirt, WHITE SASH DIAGONALLY OVER ONE
+    #     SHOULDER, broad dark-brown wrap skirt, brown boots, TALLER AND
+    #     HEAVIER than A.
+    # The script assignment is not guessed either: node.md gives beat 09 to
+    # "Guard 1" and beat 10 to "Guard 2", and done-definitions'
+    # `beats.09.cast_gate_closed_0816` names guard A as the man in 09. So the
+    # near man holding the board in 10 is B, and the face in 09 is A.
+    # `wire-rim` appears in ZERO prompts repo-wide before these three.
+    #
+    # THE STRUCTURE IS COPIED FROM (11,3), WHICH IS THE ONLY GUARD PLATE THAT
+    # HAS EVER PASSED ITS OWN BAR (7/7, and then 4 of 4 clips off it showed no
+    # recurrence of the identity collapse that broke the beat's take). Reused
+    # verbatim where it is reusable:
+    #   * count tag FIRST (`2boys` / `1boy, solo`), framing tags second --
+    #     leading framing tags bind and trailing ones do not.
+    #   * `two guard men ... together` as the count clause. This is the
+    #     construction that fixed beat 11's count on one sample, and beat 05's
+    #     count history is the worst in the project (words have produced 1, 3
+    #     and 3+ guards there), so it is not improved on.
+    #   * ONE PERSON CLAUSE PER MAN, each holding that man's hair AND his
+    #     garments. (11,3) falsified `attribute_merge_law_0816` doing this:
+    #     with the body count right and each set inside one clause, hair
+    #     colour binds to garment cleanly and the pair does not swap.
+    #   * tall grass PLUS a hedgerow, always. The vacancy law says an empty
+    #     region with no noun of its own gets filled with the largest noun in
+    #     the prompt; the hedgerow gives the upper band a noun in advance.
+    #     (11,3) measured 0.47 torsos of largest inscribed flat rectangle
+    #     against a 1.0 bar with exactly this pairing.
+    #   * `masterpiece, best quality` and nothing more. The style tail was cut
+    #     back to the one proven at 70/77 (95d0c6d0) after nine drafts lost
+    #     their tail to compress().
+    #
+    # WHAT IS NOT COPIED, AND WHY EACH NEGATIVE IS AUTHORED FRESH. (11,3) is a
+    # REAR view; its negative forbids `face`, `looking at viewer`, `profile`,
+    # `from side`, `close-up` and `portrait`. Two of these three plates need a
+    # face and one of them IS a close-up. Inheriting that negative would draw a
+    # plate fighting itself, which is the landmine documented at the rev merge
+    # site and the reason exit 7 exists. So the head-turn terms appear in NONE
+    # of the three (no rear views here) and each negative is written against
+    # its own framing. Every pair below was checked for a positive/negative
+    # collision and measured on the real CLIP tokenizer before this commit:
+    # 05 72/77 pos 72/77 neg, 10 72/77 pos 74/77 neg, 09 65/77 pos 69/77 neg.
+    #
+    # THE ONE DEFECT CARRIED IN FROM BEAT 11, AND THE POSITIVE-SIDE ANSWER ALL
+    # THREE GET. (11,3) passes 7/7 with one named defect: a narrow dark strap
+    # hangs from guard B's left hand. It survived (11,4) at the same seed with
+    # `holding object` AND `clipboard` in the negative -- twice-named and
+    # untouched -- so THE NEGATIVE DOES NOT REACH IT. (11,4) also killed the
+    # obvious hypothesis: the strap is NOT the homeless sash clause. Anchoring
+    # the sash to a visible surface BOUND (a waist sash appeared on both men
+    # where r3 had none) AND THE STRAP STAYED, so the two coexist. What r3, r4
+    # and every other guard plate share is that THEY NEVER SAY WHAT THE HANDS
+    # ARE DOING. An unspecified hand is a region with no noun of its own, which
+    # is the vacancy law at the scale of a hand. (11,5) pre-registered that
+    # instrument and died before firing it, so it is UNTESTED, not proven --
+    # and these three plates are authored from scratch, so they pay none of the
+    # re-edit cost that made (11,4) lose guard B's hair colour.
+    # THEREFORE, IN ALL THREE: NO HAND IS LEFT UNSPECIFIED. 05 gives both men
+    # `arms swinging` (they are jogging; the arms have a job). 10 gives the near
+    # man's hands the beat's own prop, `in both hands`. 09 excludes hands from
+    # the frame entirely by framing on the face, which is the cheapest form of
+    # the same answer. Each is checked at 8x on every hand that is in frame.
+    # This is ONE mechanism applied three ways, and it is falsifiable: if a
+    # strap, cord or tab still hangs off a SPECIFIED hand, the object is not
+    # attributable to hand-vacancy either and that is a real finding.
+    #
+    # THE SASH GETS A CAMERA-VISIBLE HOME IN ALL THREE, which is the one thing
+    # (11,4) positively established. None of these three is a rear view, so
+    # A's waist sash and B's shoulder sash are both surfaces the camera sees.
+    #
+    # WHAT A MAC PLATE IS AND IS NOT EVIDENCE OF. These are drawn on the Mac
+    # fleet. The PNG travels forward as the literal first frame the box
+    # animates (the box has no text-to-video path), so a verdict on the PICTURE
+    # stands. A verdict on the WORDING DOES NOT: same prompt, same negative,
+    # same seed, same checkpoint gives MAE 61 of 255 between this renderer and
+    # the box's. Nothing below may be cited as "this wording works".
+    5: {
+        # ------------------------------------------------------------------
+        # BEAT 05, "THE PATROL". node.md: "Two PATROL GUARDS jog in and halt,
+        # scanning the field. Their armor doesn't match."
+        # done_when, done-definitions beats.'05': "two guards jog in together
+        # FROM FRAME ONE, stop, and scan; both adult men in tunic and sash;
+        # field present at frame one; neither redrawn mid-clip."
+        #
+        # BOTH MEN AT FRAME 0 IS THE WHOLE JOB OF THIS PLATE. Beat 05 has
+        # burned four rounds on the count and words alone have returned one
+        # guard, three guards and "four-ish": round 1 had one guard f20-f80
+        # and the second arriving at f100, round 2 overshot to THREE at both
+        # seeds, round 3's geometry lever did not bind it either. The recorded
+        # lever is "COUNT supplied by the plate", and a plate can only supply
+        # a count it actually contains, so two whole men stand in frame one.
+        #
+        # WHY FRONT-ON AND NOT (11,3)'s REAR VIEW. Three reasons, none of them
+        # aesthetic. The done_when requires "tunic and sash" to be READABLE,
+        # and both sashes are worn on the front -- a rear view is what left
+        # beat 11's sash with nowhere visible to be. Guard A's wire-rim
+        # glasses cannot exist in a rear view at all. And beat 05 is the beat
+        # that INTRODUCES these two men, so the shot the audience meets them
+        # in is the one that has to carry their faces.
+        #
+        # `armor doesn't match` IS IN THE SCRIPT AND IS DELIBERATELY NOT DRAWN.
+        # The approved cast wears no armour; `armor, helmet, knight` are in
+        # the negative here as they are in every guard prompt, and the joke
+        # line does not override "the cast stands as drawn". Flagged, not
+        # silently dropped.
+        #
+        # PLATE BAR, PRE-REGISTERED. All seven must hold, and good staging
+        # with the wrong men is a FAIL -- identity is the point:
+        #   P1 THE APPROVED PAIR, AND NOT SWAPPED. One man dark cropped hair
+        #      + tan tunic + white waist sash; ONE MAN TALLER with light sandy
+        #      hair + cream shirt + white shoulder sash + brown wrap skirt.
+        #      NEITHER BALD. Judged against guard-cast-0816.jpg.
+        #   P2 EXACTLY TWO WHOLE FIGURES, full-length, no third body. Top and
+        #      bottom bands cropped and swept separately, because beat 05's
+        #      failure mode is specifically a third man.
+        #   P3 BOTH FACES VISIBLE AND FORWARD, neither man's back to camera.
+        #   P4 the taller man spans >=25% of frame height, so the costumes are
+        #      legible at all.
+        #   P5 NO FLAT UNTEXTURED REGION LARGER THAN A TORSO, measured with
+        #      the float64 largest-inscribed-flat-rectangle measure that was
+        #      validated by injecting rectangles of known size, and OVERLAID
+        #      back onto the frame before the number is believed.
+        #   P6 NOTHING HANGS FROM ANY OF THE FOUR HANDS -- no strap, cord,
+        #      lanyard, tab or pendant -- and nothing detached anywhere in
+        #      frame. Judged at 8x on every hand, never at 1x: at 1x beat 11's
+        #      strap is a two-pixel line and two revisions "passed" it by not
+        #      being looked at closely enough. A SASH IS NOT A FAIL OF P6.
+        #   P7 FIELD PRESENT IN THE PLATE ITSELF, since the beat's own
+        #      done_when demands it at frame one.
+        #   P8 GLASSES ON THE DARK-HAIRED MAN, or their absence named. At this
+        #      framing they are a handful of pixels, so this is scored as
+        #      PRESENT / ABSENT / NOT LEGIBLE and NOT LEGIBLE is not a pass.
+        # FAIL MODES NAMED IN ADVANCE: Q1 bald pair, Q2 wrong count (the
+        # historical one), Q3 backs turned, Q4 costume swap (sandy hair takes
+        # the tan tunic), Q5 vacancy, Q6 a hanging strap, Q7 armour arriving
+        # off the script line, Q8 both men the same height.
+        "slug": "the-patrol",
+        "done_when": (
+            "two guards jog in together FROM FRAME ONE, stop, and scan; both "
+            "adult men in tunic and sash; field present at frame one; neither "
+            "redrawn mid-clip. THE PLATE'S JOB: supply the COUNT, the WORLD "
+            "and the CAST at frame zero, since four rounds of words have "
+            "returned 1, 3 and 3+ guards. P1 approved pair not swapped, "
+            "P2 exactly two whole figures, P3 both faces forward, P4 taller "
+            "man >=25% of frame height, P5 no flat region larger than a "
+            "torso, P6 nothing hanging from any of the four hands judged at "
+            "8x, P7 field in the plate, P8 glasses present or their absence "
+            "named. Good staging with the wrong men is a FAIL."
+        ),
+        "why": (
+            "Beat 05 introduces both guards and every plate it has ever had "
+            "was mis-cast: its own six prompts are all of the 'two round "
+            "guard men ... silly harmless bureaucrats with round soft bodies "
+            "and bare heads' family, and neither approved guard is bald. The "
+            "recorded shipping fault, 'the two guards read younger and "
+            "softer-drawn than the guards in beats 06 and 11', was filed as a "
+            "taste call and is not one -- it is that no guard plate names the "
+            "cast, so each beat improvised a different man. This is the first "
+            "staged picture of the APPROVED pair arriving in a field, drawn "
+            "front-on because the sashes and guard A's wire-rim glasses only "
+            "exist on the side of him a rear view cannot see."
+        ),
+        "prompt": (
+            "2boys, full body, wide shot, two guard men jogging together in "
+            "tall grass, hedgerow behind, one man with dark cropped hair, "
+            "glasses, a tan tunic and a white waist sash, one taller man "
+            "with light sandy hair, a cream shirt, a white shoulder sash and "
+            "a brown wrap skirt, arms swinging, masterpiece, best quality"
+        ),
+        # AUTHORED FOR THIS FRAMING, NOT INHERITED. (11,3)'s head-turn block
+        # (`looking back, profile, from side`) and its `face` and `portrait`
+        # terms are ABSENT ON PURPOSE: this plate needs two faces. What is
+        # kept from it is the count block (`1boy, 3boys, solo`), the anti-bald
+        # block, the vacancy block (`sky, horizon, white background, simple
+        # background`) and the anti-armour block. `holding object, clipboard`
+        # stay even though they have been shown not to reach a hanging strap
+        # -- they do stop a whole clipboard arriving in beat 05, where the
+        # script gives neither man a prop yet.
+        "negative": (
+            "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, "
+            "from behind, back view, close-up, portrait, distant, small "
+            "figure, sky, horizon, white background, simple background, "
+            "armor, helmet, knight, weapon, holding object, clipboard, "
+            "photorealism, 3d render, night"
+        ),
+        "seed": 20260817,
+    },
+    10: {
+        # ------------------------------------------------------------------
+        # BEAT 10, "NO FORM". node.md: "Guard 2 flips the clipboard around:
+        # the back is blank."
+        # done_when, done-definitions beats.'10': "TWO guards in frame; the
+        # near one flips the bark board and holds its blank back TOWARD HIS
+        # PARTNER; board hand-sized; field present at frame one."
+        #
+        # THIS PLATE IS NOT PROMISED TO WORK IN MOTION AND THAT IS SAID HERE
+        # RATHER THAN IN A REPORT. Beat 10's action is a SMALL IN-HAND PROP
+        # MANIPULATION, which is the one thing this engine measurably drops:
+        # twelve beat-17 cells gave 12 of 12 whole-body stand-ups and 0 of 8
+        # in-hand brushes ON THE SAME PLATE, and all four `full` cells stand
+        # and turn while none brushes. The composition claim that a tight
+        # insert would fix it -- make the action the largest movement in frame
+        # -- WAS KILLED: it reproduced 0 of 4. So no composition promise is
+        # made here. A CORRECT PLATE IS STILL WORTH DRAWING, because the plate
+        # supplies count, world and cast, which are three of beat 10's four
+        # conditions and are exactly what its round-3 seeds split between
+        # them; the flip is the fourth and it remains a lottery.
+        #
+        # THE BOARD IS DRAWN IN ITS *PRE* STATE, and this is a deliberate
+        # structural choice with a receipt. Twenty-four candidates failed on
+        # "pushes himself up to standing" because THIS CHECKPOINT RENDERS A
+        # VERB'S END STATE: a plate that said "flipping" would come back
+        # mid-flip or finished, with nowhere left to travel. So the board is
+        # held in both hands with its written face toward the near man -- the
+        # state beat 06 ends in and beat 10 begins in -- and the whole of the
+        # flip is left for the animator.
+        #
+        # SIZE-IN-FRAME, HONESTLY BOUNDED. `medium shot` replaces (11,3)'s
+        # `wide shot` and `large flat bark board` replaces a hand-sized one,
+        # so the near man's body and the board are as big as they can be while
+        # a second whole man is still in frame. That is a legibility argument
+        # about the PLATE, not the retired composition claim about MOTION.
+        # The board is asked to be LARGE while beat 10's own done_when says
+        # `board hand-sized`: those are compatible -- hand-sized held forward
+        # at a medium shot IS large in frame -- but if the render returns a
+        # slab instead of a board, that is a P-condition failure and is scored
+        # as one. The prop-inflation risk is known and named: wave-drafts
+        # records `filling the lower third` as the construction motion-wave
+        # measured inflating props into slabs, which is why that wording is
+        # NOT used here.
+        #
+        # THE NEAR MAN IS GUARD B AND THAT IS NOT A GUESS. node.md gives this
+        # line to GUARD 2, wave-drafts derives guard B carrying "the bark
+        # clipboard, which is also the prop the script gives the clipboard
+        # guard", and beat 06's board beat is Guard 2's as well. B is also the
+        # taller and heavier man, which is what puts him nearest camera.
+        #
+        # PLATE BAR, PRE-REGISTERED. All eight must hold:
+        #   P1 THE APPROVED PAIR, NOT SWAPPED, AND THE BOARD ON THE RIGHT MAN.
+        #      NEAR: light sandy hair, cream shirt, white shoulder sash, brown
+        #      wrap skirt, taller. BEHIND: dark cropped hair, tan tunic.
+        #      NEITHER BALD. THE BOARD MUST BE IN THE SANDY-HAIRED MAN'S
+        #      HANDS. A prop on the wrong figure is the recorded failure of
+        #      this checkpoint -- 9 of 12 frames in one round -- so this is
+        #      scored separately and a board on the dark-haired man is a FAIL
+        #      even if everything else holds.
+        #   P2 EXACTLY TWO WHOLE FIGURES, no third body.
+        #   P3 THE NEAR MAN'S FACE AND HANDS BOTH IN FRAME. The flip needs the
+        #      hands; the cast needs the face.
+        #   P4 the near man spans >=45% of frame height (higher than beat 05's
+        #      25% because this plate's argument is legibility of a prop).
+        #   P5 NO FLAT UNTEXTURED REGION LARGER THAN A TORSO, measured with
+        #      the validated float64 measure and overlaid before believed.
+        #   P6 NOTHING HANGS FROM ANY HAND that is not the board itself -- no
+        #      strap, cord, lanyard or tab. Judged at 8x on all four hands.
+        #   P7 FIELD PRESENT IN THE PLATE ITSELF.
+        #   P8 ONE BOARD, FLAT, UNOCCLUDED, HELD IN TWO HANDS, and readable as
+        #      a hand-held bark board rather than a sign, banner, slab, page
+        #      or book. Its written face toward the near man, its blank back
+        #      NOT yet toward the partner -- a plate that has already flipped
+        #      it is a FAIL, because the beat would have nowhere to go.
+        # FAIL MODES NAMED IN ADVANCE: Q1 bald pair, Q2 wrong count, Q3 the
+        # board on guard A, Q4 costume swap, Q5 vacancy, Q6 a hanging strap,
+        # Q7 the board inflated into a slab or turned into a sign with text,
+        # Q8 the board already flipped, Q9 the near man's hands cropped out.
+        "slug": "no-form",
+        "done_when": (
+            "TWO guards in frame; the near one flips the bark board and holds "
+            "its blank back TOWARD HIS PARTNER; board hand-sized; field "
+            "present at frame one. THE PLATE'S JOB IS COUNT, WORLD, CAST AND "
+            "THE PRE-FLIP BOARD -- NOT A PROMISE ABOUT MOTION: this beat's "
+            "action is a small in-hand manipulation, which measures 0 of 8 "
+            "in-hand against 12 of 12 whole-body, and the composition fix for "
+            "it reproduced 0 of 4. P1 approved pair not swapped AND the board "
+            "in the sandy-haired man's hands, P2 exactly two whole figures, "
+            "P3 near man's face and hands both in frame, P4 near man >=45% of "
+            "frame height, P5 no flat region larger than a torso, P6 nothing "
+            "hanging from any hand but the board, P7 field in the plate, "
+            "P8 one flat unoccluded bark board in two hands, NOT yet flipped."
+        ),
+        "why": (
+            "Beat 10's four rounds split its conditions across seeds -- seedA "
+            "had the pair and the world but the board faced camera instead of "
+            "the partner and the caps drifted off-cast, seedB read the blank "
+            "back perfectly with only one guard -- and its two plate prompts "
+            "are 'two round bald guard men in plain brown tunics ... silly "
+            "bureaucrats' and 'two bald guard men in plain brown tunics'. "
+            "Neither names the cast and neither approved guard is bald, which "
+            "is the whole of the recorded 'same guard-consistency fault as "
+            "beat 05'. This plate supplies count, world and cast correctly "
+            "and stages the board in its pre-flip state. It does NOT claim "
+            "the flip will animate; that is a one-in-four lottery on this "
+            "engine regardless of the plate, and saying so is the point."
+        ),
+        "prompt": (
+            "2boys, full body, medium shot, two guard men standing together "
+            "in tall grass, hedgerow behind, near taller man with light "
+            "sandy hair, cream shirt, white shoulder sash, brown wrap skirt, "
+            "holding a large flat bark board in both hands, one man behind "
+            "with dark cropped hair, glasses, a tan tunic, masterpiece, "
+            "best quality"
+        ),
+        # AUTHORED FOR THIS FRAMING. `holding object` and `clipboard` are
+        # ABSENT, and their absence is the one real difference from beat 05's
+        # negative: this beat's subject IS a held board, so forbidding held
+        # objects would be the self-contradiction exit 7 exists to catch, one
+        # synonym away from tripping it. What replaces them is a block against
+        # the WRONG BOARD -- `sign, banner, paper, book` -- since the recorded
+        # failure is the prop becoming a slab or a titled sign, not the prop
+        # being absent. `text` covers writing appearing on it.
+        "negative": (
+            "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, "
+            "from behind, back view, close-up, portrait, distant, small "
+            "figure, sky, horizon, white background, simple background, "
+            "armor, helmet, knight, weapon, sign, banner, paper, book, "
+            "photorealism, 3d render, night"
+        ),
+        "seed": 20260817,
+    },
+    9: {
+        # ------------------------------------------------------------------
+        # BEAT 09, "THE PAUSE". node.md: "Guard 1's face works through it,
+        # slowly."
+        # done_when, done-definitions beats.09: "close on Guard 1's face
+        # working through the thought, in daylight; face holds, no morphing;
+        # a real background behind him."
+        #
+        # THIS IS THE BEAT THE GLASSES QUESTION WAS ACTUALLY ABOUT, and the
+        # file says so: `beats.11.glasses_do_not_affect_this_beat_0816` --
+        # beat 11 is backs-turned, BEAT 09 IS HIS FACE IN CLOSE-UP.
+        # `cast_gate_closed_0816` is explicit about what this plate owes:
+        # "GUARD A WEARS WIRE-RIM GLASSES and beat 09's new plate must NAME
+        # them, along with the rest of the frozen wardrobe - dark hair, tan
+        # wrap tunic, wide white waist sash. The unnamed wire-rims are part of
+        # why 'THE FACE CHANGES': a prompt that does not say glasses lets each
+        # frame decide." `wire-rim` appears in ZERO prompts repo-wide. It is
+        # written out in full here rather than as plain `glasses`, which is
+        # what 05 and 10 could afford at their framings -- at a close-up the
+        # frame shape is legible and is the thing being frozen.
+        #
+        # THE RECORDED FAULT IS THE BACKGROUND, AND IT IS FIRST-CLASS HERE.
+        # Beat 09's round 1 gave a real world and lost the framing; round 2
+        # won the framing at both seeds; round 3 kept the framing and lost the
+        # FACE -- "the plate's guard is black-haired and the close-up that
+        # follows is a brown-haired different man". And the beat's own scene
+        # plate "came back WHITE so it does not help": the recorded fault on
+        # the plate itself is *another blank background*. So the background is
+        # not a trailing style word here. It is a NAMED NOUN IN THE POSITIVE
+        # -- `tall grass and a green hedgerow behind him` -- and FIVE separate
+        # blank-background terms sit in the negative. This is the vacancy law
+        # applied where it has actually bitten this beat.
+        #
+        # WHY A CLOSE-UP PLATE AT ALL. The recorded lever, verbatim: "a plate
+        # that IS a close-up of this guard's face, so identity comes from the
+        # reference at the framing the beat actually uses - A FULL-BODY PLATE
+        # CANNOT SUPPLY A FACE". Every guard plate the project owns is a full
+        # or medium body. This is the first close one.
+        #
+        # THE HANDS ARE SOLVED BY EXCLUSION, which is the cheapest form of the
+        # answer the other two plates give positively. Beat 11's strap hangs
+        # from an unspecified hand; a face-filling frame has no hand in it to
+        # put anything in. `hands` is in the negative as well, and that is
+        # belt-and-braces rather than the instrument -- the negative has now
+        # failed three times on nouns the POSITIVE invited, and this positive
+        # invites no hand at all.
+        #
+        # `mouth closed` IS IN THE POSITIVE FOR A MEASURED REASON. Beat 11's
+        # best take turns guard B's head "into full profile WITH AN OPEN
+        # MOUTH" from f008; the checkpoint animates a talking man's head.
+        # Beat 09 is a man thinking BEFORE he speaks, so the plate starts
+        # closed-mouthed and gives the line somewhere to arrive from.
+        #
+        # PLATE BAR, PRE-REGISTERED. All seven must hold:
+        #   P1 GUARD A AND NOT A STRANGER: dark cropped hair, WIRE-RIM
+        #      GLASSES ON HIS FACE, an adult man's face. Judged against
+        #      guard-cast-0816.jpg. NO GLASSES IS A FAIL OF P1, not a note --
+        #      this is the beat whose whole problem is that the wardrobe was
+        #      never written down.
+        #   P2 EXACTLY ONE FACE, one head, no second figure and no crowd.
+        #   P3 THE HEAD FILLS THE FRAME -- head height >=55% of frame height,
+        #      measured crown to chin, so this is a face and not the chest-up
+        #      medium that failed round 1.
+        #   P4 A REAL BACKGROUND: identifiable foliage or grass behind him
+        #      across the WHOLE frame, no white, grey, gradient or blank
+        #      field, no drawn panel border (round 1 seedB drew a panel).
+        #      Measured with the validated float64 flat-rectangle measure AND
+        #      overlaid before the number is believed; a close-up has a
+        #      shallower background than a wide, so the bar is stated in the
+        #      same unit as the others: no flat region larger than a torso.
+        #   P5 DAYLIGHT, per the done_when's "in daylight".
+        #   P6 NOTHING HANGING ANYWHERE and no hand in frame at all.
+        #   P7 MOUTH CLOSED, eyes open, an adult's face working -- not a
+        #      finished expression and not mid-speech.
+        # FAIL MODES NAMED IN ADVANCE: Q1 no glasses, Q2 blank or panelled
+        # background (the recorded fault), Q3 too wide a framing, Q4 a second
+        # figure, Q5 a child's or a girl's face, Q6 night or interior light,
+        # Q7 mouth open, Q8 the glasses rendered as sunglasses or goggles.
+        "slug": "the-pause",
+        "done_when": (
+            "close on Guard 1's face working through the thought, in "
+            "daylight; face holds, no morphing; a real background behind him. "
+            "THE PLATE'S JOB: supply GUARD A'S FACE AT THE FRAMING THE BEAT "
+            "USES, since a full-body plate cannot supply a face and round 3 "
+            "resolved a black-haired plate into a brown-haired stranger. "
+            "P1 guard A with WIRE-RIM GLASSES (no glasses is a FAIL), P2 "
+            "exactly one face, P3 head >=55% of frame height, P4 a real "
+            "foliage background with no flat region larger than a torso and "
+            "no panel border, P5 daylight, P6 nothing hanging and no hand in "
+            "frame, P7 mouth closed with eyes open."
+        ),
+        "why": (
+            "Beat 09 is recorded CONFUSING, not merely unfinished: 'THE FACE "
+            "CHANGES between the first frame and the close-up' at both seeds, "
+            "so the drift is the recipe and not one unlucky roll. Two causes "
+            "are named in the file and this plate is the first thing to "
+            "address either. The framing cause is that no plate this beat has "
+            "ever had is a close-up, and identity cannot be carried into a "
+            "close-up by a full-body reference. The wardrobe cause is that "
+            "guard A's wire-rim glasses are drawn on the approved sheet and "
+            "written in no prompt anywhere, so every frame decides them "
+            "afresh. `wire-rim` appears in zero prompts repo-wide before this "
+            "one. The plate's own recorded fault is a third thing -- 'another "
+            "blank background' -- so the background is a named noun in the "
+            "positive here and five terms in the negative."
+        ),
+        "prompt": (
+            "1boy, solo, close-up, face filling the frame, a guard man with "
+            "dark cropped hair and wire-rim glasses, thoughtful, mouth "
+            "closed, a tan wrap tunic collar and a white sash on his "
+            "shoulder, tall grass and a green hedgerow behind him, sunny "
+            "day, masterpiece, best quality"
+        ),
+        # AUTHORED FOR A CLOSE-UP, WHICH IS WHY NOTHING HERE IS INHERITED.
+        # (11,3)'s negative forbids `close-up`, `portrait` and `face` -- all
+        # three of which this plate IS. Inheriting it would have drawn a plate
+        # fighting its own negative and the only symptom would be a subtly
+        # wrong picture read as a finding about the checkpoint. That is the
+        # documented landmine, and exit 7 would have caught this one on
+        # `close-up`. What this negative carries instead is the FIVE-TERM
+        # BLANK-BACKGROUND BLOCK against the beat's own recorded fault, plus
+        # `full body, wide shot, distant` to hold the framing that round 2
+        # won, plus `indoors` and `dark, night` for the done_when's daylight.
+        "negative": (
+            "text, 2boys, 3boys, crowd, bald, hands, holding object, "
+            "clipboard, armor, helmet, knight, child, girl, white "
+            "background, simple background, grey background, blank "
+            "background, plain background, sky, indoors, full body, wide "
+            "shot, distant, photorealism, 3d render, dark, night"
+        ),
+        "seed": 20260817,
+    },
     14: {
         "slug": "the-defense",
         "done_when": (
