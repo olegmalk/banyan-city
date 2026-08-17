@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 5
+beat_slug: "the-patrol"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260818
+render_seconds: 70.7
+png_sha256: "f43306ece0464cd3e5b80bd93e5c968f549340386ebe1943cef7e7744b5ba070"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "2boys, full body, wide shot, two guard men jogging together in tall grass, hedgerow behind, one man with dark cropped hair, glasses, a tan tunic and a white waist sash, one taller man with light sandy hair, a cream shirt, a white shoulder sash and a brown wrap skirt, arms swinging, masterpiece, best quality"
+negative_prompt: "text, bald, bare head, 1boy, 3boys, solo, crowd, girl, child, from behind, back view, close-up, portrait, distant, small figure, sky, horizon, white background, simple background, armor, helmet, knight, weapon, holding object, clipboard, photorealism, 3d render, night"
+done_when: "two guards jog in together FROM FRAME ONE, stop, and scan; both adult men in tunic and sash; field present at frame one; neither redrawn mid-clip. THE PLATE'S JOB: supply the COUNT, the WORLD and the CAST at frame zero, since four rounds of words have returned 1, 3 and 3+ guards. P1 approved pair not swapped, P2 exactly two whole figures, P3 both faces forward, P4 taller man >=25% of frame height, P5 no flat region larger than a torso, P6 nothing hanging from any of the four hands judged at 8x, P7 field in the plate, P8 glasses present or their absence named. Good staging with the wrong men is a FAIL."
+why_this_plate: "Beat 05 introduces both guards and every plate it has ever had was mis-cast: its own six prompts are all of the 'two round guard men ... silly harmless bureaucrats with round soft bodies and bare heads' family, and neither approved guard is bald. The recorded shipping fault, 'the two guards read younger and softer-drawn than the guards in beats 06 and 11', was filed as a taste call and is not one -- it is that no guard plate names the cast, so each beat improvised a different man. This is the first staged picture of the APPROVED pair arriving in a field, drawn front-on because the sashes and guard A's wire-rim glasses only exist on the side of him a rear view cannot see."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

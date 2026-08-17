@@ -50,6 +50,47 @@ So, for anyone about to draw here:
     NO COLOUR WORD IN THE PROMPT AT ALL. The box does not. Canon colours must
     be written into the words for the box path regardless of what lands here.
 
+NAME WHAT EVERY HAND IN FRAME IS DOING, INCLUDING THE HANDS YOU DO NOT CARE
+ABOUT (2026-08-17). This is a rule about authoring a plate, not about one beat,
+which is why it is here and not in a draft.
+
+AN UNSPECIFIED HAND IS AN EMPTY REGION, AND THIS CHECKPOINT FILLS EMPTY REGIONS
+WITH NOUNS. It is the vacancy law -- the one that says a flat margin with no noun
+of its own grows the largest noun in the prompt -- applied to a body part instead
+of to a sky. And as with every other instance of it, THE NEGATIVE DOES NOT REACH
+IT: beat 11's strap survived a revision whose negative named it twice, at the
+same seed, in a frame where three other added terms demonstrably moved both
+heads.
+
+THE EVIDENCE IS A CONTROL NOBODY PLANNED, which is most of why it is worth
+believing. Two plates were drawn the same afternoon for unrelated reasons:
+  * BEAT 05 specified BOTH men's arms (`arms swinging`). All four hands, opened
+    at 4x-5x across three seeds: empty fists and open palms. NOTHING in any of
+    them, no strap, no cord, nothing detached. 0 of 3 seeds grew an object.
+  * BEAT 10 specified ONLY the near man's (`... in both hands`). He holds
+    exactly the board he was given, every time. THE FAR MAN'S HANDS WERE NOT
+    MENTIONED AND THEY CAME BACK HOLDING A LARGE BAMBOO POLE at one seed and a
+    DUPLICATE OF THE BOARD at another -- with `weapon` sitting in the negative
+    for the pole. 2 of 3 seeds grew an object; at the third his hands are
+    clasped together, which is the model choosing a pose of its own and is
+    exactly what naming one would have done on purpose.
+Two conditions, one variable, three seeds each, in work aimed at something else
+entirely: 2 of 3 against 0 of 3.
+
+IT ALSO EXPLAINS THE STRAP RETROACTIVELY, and that is worth saying because two
+revisions were spent on the wrong hypothesis. Beat 11's narrow dark strap was
+never a stubborn prop and was never the sash -- (11,4) proved the sash bound to
+a back while the strap stayed. It was an unspecified hand in a plate that
+described two men in full-length view and never once said what their hands were
+doing.
+
+SO, WHEN AUTHORING: every hand that will be in frame gets a state. `loose fists
+at their sides`, `arms swinging`, `hands clasped`, `holding X in both hands` --
+a POSITIVE SHAPE, never `empty hands`, because CLIP cannot represent negation
+and `empty hands` embeds as something very close to `hands`. If a hand does not
+matter to the shot, frame it out or give it the cheapest state you can afford;
+what you may not do is leave it unmentioned and expect nothing to appear in it.
+
 THE IRONY IS DELIBERATE AND IS THE REASON THIS PARAGRAPH IS HERE RATHER THAN IN
 A LANE REPORT. `pipeline/canon.yaml` exists because five times a decision moved
 and the thing that actually runs did not. A constraint on HOW WE MEASURE, left
@@ -735,6 +776,107 @@ DRAFTS = {
     # entire job is to say which of five faults are properties of a wording
     # and which are properties of one draw, so that the seeds that follow are
     # spent on the right thing.
+    #
+    # ======================================================================
+    # THE SWEEP RAN. NINE RENDERS, THREE MACHINES, ~7 MINUTES OF WALL CLOCK.
+    # RESULTS AGAINST THE FIVE RULES EXACTLY AS THEY WERE WRITTEN ABOVE.
+    # Nothing is picked, nothing is promoted, and no rule is reinterpreted.
+    # ======================================================================
+    # THE COMPARISON BASE IS SOUND, checked before anything was read out of the
+    # pictures. `--seeds 3` re-renders s1 at seed 20260817, and on all three
+    # machines that re-render is BYTE-IDENTICAL to the plate committed at
+    # 0ac649d5 -- 05 da5637c8..., 10 453a1f83..., 09 5dbb9e8b... So the
+    # renderer is deterministic per machine and every difference below is the
+    # seed and nothing else.
+    #
+    #   D1 SANDY HAIR -- IT IS A SEED EFFECT, AND THE RULE SAID SO IN ADVANCE.
+    #      `light sandy hair` BOUND on 4 of the 4 fresh-seed two-figure
+    #      renders: beat 05 s2 (a plainly blond man beside a black-haired one),
+    #      05 s3, beat 10 s2 (platinum), and beat 10 s3 (blond, and there the
+    #      cream shirt AND the brown wrap skirt bound to him correctly while
+    #      the tan tunic bound to the dark-haired man). THE PERSON CLAUSES ARE
+    #      NOT THE CAUSE. The pre-registered suspect -- four-to-five attributes
+    #      per clause against (11,3)'s two -- IS WRONG AS AN EXPLANATION OF
+    #      THIS FAULT and is recorded as wrong. Seed 20260817 alone returned
+    #      two dark-haired men from BOTH prompts, which is what made it look
+    #      like a law.
+    #      THIS IS THE SECOND TIME IN TWO DAYS THAT SEED 20260817 HAS
+    #      MANUFACTURED A FALSE LAW. bf79e534 broke the first one (four
+    #      wordings, four turned heads, one seed). A lane that had skipped
+    #      straight to r2 here would have rewritten the person clauses, thrown
+    #      away cast attributes to do it, watched sandy hair "come back", and
+    #      banked a third false law on top of the other two.
+    #   D2 GLASSES BLEEDING ONTO BOTH MEN -- IT IS THE WORDING, AND IT IS A
+    #      REAL CONSTRAINT ON BEATS 05 AND 10. Both men wear glasses in every
+    #      two-figure render where the faces are legible: 05 s1, 05 s2, 10 s1,
+    #      10 s2, 10 s3 -- 5 of 5. `glasses` was attached to exactly one person
+    #      clause in both prompts. So on this checkpoint an eyewear tag
+    #      OVER-APPLIES ACROSS TWO SAME-SPECIES FIGURES even when hair and
+    #      garments separate cleanly at the same seed, which is a sharper fact
+    #      than "attributes do not bind": THESE attributes bind and THAT one
+    #      spreads. Consequence, stated plainly: guard A's wire-rims cannot be
+    #      named in a two-guard plate without putting them on guard B too, so
+    #      either they are left out of 05 and 10 and the beats rely on 09's
+    #      close-up to carry them, or guard B is drawn wearing them and the
+    #      founder is told. THAT IS A CAST QUESTION AND IS NOT THIS LANE'S
+    #      CALL -- it is the first thing the founder should be asked about
+    #      these plates.
+    #   D3 THE UNSPECIFIED HAND -- SUPPORTED, WITH ITS MATCHED CONTROL, AT
+    #      2 OF 3 AGAINST 0 OF 3. Beat 10's far man, whose hands no clause
+    #      mentions, holds a BAMBOO POLE at s1 and a DUPLICATE OF THE BOARD at
+    #      s2; at s3 his hands are CLASPED TOGETHER and empty. Beat 05, whose
+    #      four hands are all covered by `arms swinging`, comes back with
+    #      nothing in any hand at all three seeds. Reported as 2 of 3 and not
+    #      as a law without exceptions, because the exception is real and is
+    #      itself informative: left alone, the model either puts an object in
+    #      the hand or invents a pose for it, and naming the pose is the same
+    #      instrument either way. This is the finding promoted into this file's
+    #      DOCSTRING, where a plate author meets it before writing a prompt.
+    #   D4 THE HIGH ANGLE AND THE MISSING HEDGEROW -- IT IS THE WORDING,
+    #      3 OF 3. Every beat 05 render is a downward high-angle across an open
+    #      field with no horizon band and no hedgerow behind anyone; s3 is so
+    #      high and so far that it also breaks the count to THREE FIGURES,
+    #      which is beat 05's historical Q2 firing again with `distant, small
+    #      figure` in the negative. The pre-registered suspect stands and is
+    #      not softened: `sky, horizon` in the negative of a FRONT-FACING wide
+    #      shot leaves the camera nowhere to put a horizon except above the
+    #      frame, so it tilts down until the horizon is gone -- and a `hedgerow
+    #      behind` needs a horizon to stand on. (11,3) never paid this because
+    #      its men walk away and grass fills the frame regardless. The r2
+    #      variable for beat 05 is therefore ONE THING: drop `horizon` from the
+    #      negative (keeping `sky`) so the camera can hold eye level. Nothing
+    #      about the person clauses is touched, because D1 just showed they are
+    #      not the problem.
+    #   D5 BEAT 09'S EYES -- IT IS THE WORDING, 3 OF 3 SHUT. `thoughtful` plus
+    #      `mouth closed` renders a man RESTING, not thinking, at every seed.
+    #      The r2 variable is `eyes open` in the positive and `closed eyes` in
+    #      the negative. One variable, and it is the only change beat 09 needs
+    #      to try next.
+    #
+    # AND FOUR THINGS THE SWEEP SETTLED THAT NO RULE ASKED ABOUT, recorded
+    # because a seed sweep is the only cheap chance to learn them:
+    #  1. `wire-rim glasses` BINDS AT 3 OF 3 on beat 09, as unmistakable round
+    #     silver wire frames every time, never sunglasses and never goggles.
+    #     The founder's ruling has landed in a picture.
+    #  2. BEAT 09'S RECORDED FAULT IS CLEARED AT 3 OF 3. Tall grass, seed heads
+    #     and broad leaves fill the background of every one; the beat whose own
+    #     plate came back WHITE and was recorded as "another blank background"
+    #     now has three that are not.
+    #  3. THE BOARD LANDS ON THE WRONG MAN AT 3 OF 3, AND THIS ONE IS NOT THE
+    #     SEED. The board clause sits INSIDE guard B's person clause, and the
+    #     board went to the dark-haired man alone at s1 and s3 and to BOTH men
+    #     at s2. Guard B never held it alone. So a PROP does not bind to the
+    #     person clause it is written in the way HAIR and GARMENTS do; it
+    #     attaches to whichever figure the model draws first or nearest. That
+    #     matches this repo's recorded "a prop attached to the wrong figure in
+    #     9 of 12 frames" and it is the real blocker on beat 10's plate -- a
+    #     harder one than anything the wording ladder was aimed at, because
+    #     beat 10's done_when names WHICH man flips the board.
+    #  4. FOOTWEAR DRIFTS TO MODERN SHOES -- white and red SNEAKERS at 05 s2,
+    #     05 s3 and 10 s2, sandals elsewhere -- where the cast wears brown
+    #     boots. `brown boots` was cut from both prompts for the 77-token
+    #     budget and its absence is visible in the pictures. A cast attribute
+    #     dropped for tokens does not stay dropped; it gets replaced.
     5: {
         # ------------------------------------------------------------------
         # BEAT 05, "THE PATROL". node.md: "Two PATROL GUARDS jog in and halt,
