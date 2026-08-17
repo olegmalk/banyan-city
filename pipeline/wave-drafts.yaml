@@ -576,6 +576,70 @@ beats:
       fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no five-fingered
       leaves, no three leaves, no four leaves, no many leaves, no lush foliage, no dark, no
       night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b01_stage_0817` -- 2026-08-17, DEVELOPMENTAL-STAGE rung.
+    # DERIVED FROM `authored_b01_geom_0817`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is the
+    # control: rendered over 16 stills and SCORED (2 of 16 leaf count, 0 of 16 height, purple
+    # 16 of 16), so this rung has a real denominator on the same grid.
+    # ONE VARIABLE, A PURE ADDITION TO THE SUBJECT: `A tiny fig seedling` becomes `A tiny newly
+    # sprouted fig seedling`. THE LEAF CLAUSE IS UNTOUCHED, which is what makes this independent
+    # of the node rung rather than a second guess at it -- that one varies the leaf clause and
+    # this one does not touch it.
+    # WHY THIS IS THE MOST PROMISING WORDING ON THE BOARD: it is the only one that constrains
+    # leaf count WITHOUT ASSERTING A NUMBER. A newly sprouted seedling has one node and one pair
+    # of leaves by botany. Numerals barely reach the conditioning -- CLIP's embeddings are
+    # near-identical across them (T2ICountBench, arXiv 2503.06884) -- and on this arm `exactly
+    # two` ran 0 of 16 while a CONTINUOUS adjective, the height relation, bound. Stage adjectives
+    # are that class. This rung is the direct test of that split and it was PRE-DECLARED as the
+    # discriminator in the node rung's own bar before that rung rendered.
+    # REAL CLIP (openai/clip-vit-large-patch14, sd_prompt.compress + negative_tokens): 76/77,
+    # headroom 1, POSITIVE DROPPED: none, STYLE ANCHOR PRESENT: True. Control: 73/77, headroom 4.
+    # `just sprouted` and `a few days old` both measured 76/77 clean and were REJECTED as
+    # paraphrases -- firing three wordings of one question spends the card to learn once.
+    # `with its first leaves` was DISQUALIFIED at 66/77: it makes compress() shed the style
+    # sentence and the anchor goes missing. Discarded, not trimmed.
+    # FAILURE IS REACHABLE: the control scored 2 of 16 on this grid, `whole plant in frame` keeps
+    # the whole stem in shot, and `newly sprouted` may simply read as "small" -- which the draft
+    # ALREADY says twice (`tiny`, `no taller than the grass`), in which case nothing moves.
+    authored_b01_stage_0817: >-
+      A tiny newly sprouted fig seedling in an open grassy field, wide oval cotyledon leaves
+      opposed one either side of the stem, and one small deep purple-violet fig, green at its
+      neck, matte, growing on its thin stem, whole plant in frame, no taller than the grass
+      around it. Cinematic lighting, masterpiece, best quality, very aesthetic No woman, no
+      girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no green
+      fig, no green fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no
+      five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush foliage, no
+      dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b01_twoleaf_0817` -- 2026-08-17, ATTRIBUTIVE-COMPOUND rung.
+    # DERIVED FROM `authored_b01_geom_0817`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is the
+    # same control on the same grid as the stage rung beside it.
+    # ONE VARIABLE, A PURE ADDITION TO THE SUBJECT: `A tiny fig seedling` becomes `A tiny
+    # two-leaf fig seedling`. THE LEAF CLAUSE IS UNTOUCHED.
+    # THIS IS THE APPROVED SCRIPT'S OWN WORDING AND NOT AN INVENTION. Beat 01's script line,
+    # node.md verbatim, reads "A tiny TWO-LEAF banyan sapling in a green field".
+    # WHY IT IS NOT JUST `exactly two` AGAIN, WHICH IS THE OBVIOUS OBJECTION: `exactly two wide
+    # oval cotyledon leaves` is a NUMERAL QUANTIFYING A HEAD NOUN; `two-leaf` is a HYPHENATED
+    # MODIFIER OF THE PLANT, a property of the seedling rather than a count of objects in the
+    # frame, and it tokenises and attends differently. `a pair of ...` was rejected on this arm
+    # as "another lexical route to a cardinality", and that reasoning holds for any wording whose
+    # job is to STATE A TOTAL -- it does not settle whether an attributive compound behaves like
+    # one. That is the distinction this rung measures. IF IT BINDS IT IS THE CHEAPEST FIX
+    # AVAILABLE, because the script already says it and no new canon is needed.
+    # REAL CLIP (openai/clip-vit-large-patch14, sd_prompt.compress + negative_tokens): 76/77,
+    # headroom 1, POSITIVE DROPPED: none, STYLE ANCHOR PRESENT: True. Control: 73/77, headroom 4.
+    # FAILURE IS REACHABLE AND IS THE STRONGLY PREDICTED OUTCOME: three count-bearing wordings
+    # have now scored 0-2 of 16 on this arm, and if the tokeniser splits `two-leaf` into `two`
+    # and `leaf` this rung IS `exactly two` wearing a hyphen and will null exactly like it. That
+    # is a real possibility and it is written down BEFORE the frames exist rather than offered
+    # afterwards as an explanation.
+    authored_b01_twoleaf_0817: >-
+      A tiny two-leaf fig seedling in an open grassy field, wide oval cotyledon leaves opposed
+      one either side of the stem, and one small deep purple-violet fig, green at its neck,
+      matte, growing on its thin stem, whole plant in frame, no taller than the grass around it.
+      Cinematic lighting, masterpiece, best quality, very aesthetic No woman, no girl, no boy,
+      no child, no person, no chibi, no mascot, no creature, no face, no green fig, no green
+      fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no five-fingered
+      leaves, no three leaves, no four leaves, no many leaves, no lush foliage, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
     # -- `authored_b01_geom_0817` -- 2026-08-17, geometry-vs-number rung.
     # DERIVED FROM `authored_b01_scale_0816`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is
     # the control: it is the draft `pipeline/jobs/ep2-b01-scale-0817.yaml` renders over 16
