@@ -1,0 +1,132 @@
+# Verdicts for the ELEVEN RECOVERED SETS — the 60 scene/wave PNGs plus clips that
+# were rendered 2026-08-12/14, pushed to branch `farm-results-rtx5090`, and stranded
+# there because nothing in the pipeline merges that branch back to main. Recovered in
+# commits 9da6738f / 8d066666 and read for the first time here, 2026-08-17.
+#
+# WHY THIS FILE AND NOT cast-0817-scores.yaml: these are DIFFERENT, OLDER renders of
+# several of the same beats. `review/ep2-picks/cast-0817-scores.yaml` holds today's
+# `-cast-0817` rungs (scored `N of 12`) for beats 5, 9, 11 among others. Conflating the
+# two records would corrupt both. Both that file and done-definitions.yaml were clean
+# in this worktree when this lane started, but the recovered sets are a separate
+# provenance line, so they get a separate file this lane owns.
+#
+# METHOD, held constant for every set below:
+#   * Each set is scored against ITS OWN spec's `success:` clause, quoted verbatim per
+#     set. Where a set predates a ruling that is now canon, that is recorded as
+#     `canon_now` and NOT charged against the set's score. Bars are tightened forward
+#     only.
+#   * Distinct counts are sha256 of the PNG bytes, computed in this worktree, not
+#     trusted from the file count. Today's cast-0817 batch was 16 files / 12 distinct
+#     (r3 byte-identical to r0) from a stale sampler; that defect is ABSENT here.
+#   * Counts are out of the distinct total.
+#   * Picks-with-reasons are the steward's. Taste is R4/founder's alone. Nothing here
+#     is promoted to a shipping plate.
+#   * Render path is recorded with every colour claim: all of these are CUDA/bf16 on
+#     the rtx5090, which renders red where MPS renders purple off an identical seed
+#     (MAE 60-61). No colour verdict below is portable to the MPS path.
+
+lane: farm-recovered-reader, 2026-08-17
+source_branch: farm-results-rtx5090
+recovery_commits: [9da6738f, 8d066666]
+integrity: 155 tracked files, sha256-verified against each set's own manifest on both
+  sides of the transfer (0 missing, 0 mismatched, 0 undeclared). Re-hashed here.
+
+sets:
+
+  ep2-b05-scene-0814:
+    what_it_is: >-
+      Scene-carrying plate sheet for beat 05 "the-patrol". 4 IP-Adapter rounds (r0-r3)
+      x 4 seeds (s0-s3). Animagine-XL-3.1, 832x1216, 40 steps, guidance 7.5, seed
+      20260724, IP-Adapter Plus SDXL ViT-H at scale 0.6 on steps 0-5 of 40 (15% window)
+      then scale 0 for the remaining 34 — reference conditions structure-forming steps
+      only, late steps text-conditioned alone. Reference image is one of the four
+      wave-1 frames (04-the-footnote-wave1-s0.png), used in turn across the run, so
+      agreement is a property of the mechanism and not an endorsement of any creature.
+    spec: pipeline/jobs/ep2-b05-scene-0814.yaml
+    dated: 2026-08-14, stills-drafts lane
+    render_path: CUDA/bf16, rtx5090, local-gpu, $0.00
+    consumer_named_in_spec: motion-wave, which finishes this beat off the plate
+    bar_scored_against: >-
+      THE SET'S OWN SPEC, verbatim: "Plate frames with the beat's own location ALREADY
+      IN THEM -- grass, hedge/treeline, sky as the beat requires. Pass is a usable
+      frame-one for motion: the world present, the cast/plant on-canon. The failure
+      worth reporting is the world absent."
+    files: 16
+    distinct: 16
+    duplicate_cells: none — 16 distinct sha256. The stale-sampler r3==r0 defect that
+      halved today's cast-0817 batch is NOT present in this set.
+    score: 7 of 16
+    passes: [r0s0, r0s1, r1s0, r1s1, r1s2, r1s3, r3s2]
+    per_cell:
+      r0s0: PASS — grass, treeline, blue sky with cloud. Two adult men, brown tunics,
+        short brown hair, belly covered, bark clipboard. Usable frame-one.
+      r0s1: PASS — grass, treeline, sky with cloud, two adult men on-canon. Carries
+        two backpacks nobody asked for; extra prop, not a bar failure.
+      r0s2: FAIL — world partial. Near-overhead framing puts grass edge-to-edge with
+        NO sky and no hedge/treeline. Cast is fine; the world clause is what fails.
+      r0s3: FAIL — grass and hedge present, sky absent. Cast fine.
+      r1s0: PASS — grass, treeline behind, sky. Two adult men, tunic and sash, belly
+        covered, clipboards. Cleanest cast read in the set.
+      r1s1: PASS — BEST FRAME IN THE SET. Grass, a receding tree avenue, pale blue sky
+        with cloud, two unambiguously adult men in tunic and sash, both clipboards.
+        Depth in the background the motion step could actually push into.
+      r1s2: PASS — grass, treeline, sky. Cast on-canon.
+      r1s3: PASS — grass, hedge and treeline, pale sky. Cast on-canon.
+      r2s0: FAIL — crop blowout. Heads fill the frame, no sky, no treeline, world gone.
+      r2s1: FAIL — same crop blowout; the nearer figure is the back of a head at
+        half-frame height. World absent.
+      r2s2: FAIL — same. World absent.
+      r2s3: FAIL — same. World absent.
+      r3s0: FAIL — world absent (tight crop) AND one guard is BALD.
+      r3s1: FAIL — sky absent, crop tight, world thin.
+      r3s2: PASS — grass, treeline, sky present; two adult men, sash visible.
+      r3s3: FAIL — world absent, close two-head crop.
+    findings:
+      round_is_the_variable_not_the_seed: >-
+        The pass rate is almost entirely a property of the ROUND, not the seed. r1 is
+        4 of 4. r0 is 2 of 4. r2 is 0 of 4. r3 is 1 of 4. Whatever changed between the
+        IP-Adapter rounds moved framing wholesale, and r1's setting is the one that
+        put the world in frame one on every seed it was given.
+      r2_is_a_crop_scope_failure_not_a_world_failure: >-
+        All four r2 cells fail the same way and it is not that the scene clause lost to
+        the reference — grass is still there. The FRAMING collapsed to a head-and-
+        shoulders two-shot. The spec anticipated "world absent, which would mean the
+        scene clause is losing to the reference"; r2 is a different fault than the one
+        the spec was watching for, so it does NOT trigger the bootstrap route the spec
+        prescribes.
+      cast_fix_was_already_in_this_prompt: >-
+        DECISION-RELEVANT. This 08-14 prompt already carries the cast fix. Verbatim
+        positive: "2boys, two adult guard men in brown tunics and sashes walk in green
+        summer grass, a hedge and dark treeline behind, pale blue morning sky above,
+        short brown hair, one holding a bark clipboard." No `bald`, no `round`, no
+        `soft`, no `silly harmless bureaucrats`. `short brown hair` is asked for
+        positively. So this set is NOT one of the 14-of-17 older plate prompts that
+        asked for `bald`.
+      one_bald_survived_anyway: >-
+        1 of 16 cells (r3s0) still renders a bald guard off a prompt that never says
+        `bald` and positively asks for `short brown hair`. This is consistent with the
+        proven broadcast-class attribute law rather than contradicting it: the token is
+        absent here, so the bald head is model prior leaking through, at a 1-in-16 rate
+        once the token is gone versus the near-total rate seen when it is present.
+        Counted, not re-diagnosed.
+      sidecar_header_is_stale: >-
+        Every sidecar in this set opens "ONE SAMPLE of a CONSISTENCY MECHANISM on beat
+        04" and carries a `goblin_definition_as_sent: green skin, bald head` field.
+        Both are boilerplate carried from the beat-04 wave-1 job. The authoritative
+        fields disagree with the header: `shot_beat: 5`, `beat_slug: the-patrol`, and
+        the `prompt:` field contains no goblin and no `bald`. Anyone grepping these
+        sidecars for `bald` will get a false positive on all 16 cells.
+    canon_now:
+      purple_fruit: NOT APPLICABLE — no fruit and no plant in this beat's prompt or in
+        any of the 16 frames. The retroactive purple ruling does not reach this set.
+      two_leaves_average: NOT APPLICABLE — no sapling in frame.
+      knee_height_rewrite: NOT APPLICABLE — beat 05 is not among the beats rewritten
+        today (12/13/15/19/20).
+    status: LIVE EVIDENCE
+    why_live: >-
+      Beat 05's named consumer (motion off a scene-carrying plate) still exists, the
+      set answers the question its spec asked, and r1 is a 4-of-4 round whose framing
+      finding is not recorded anywhere else. The seven passing frames are diagnostic
+      rungs, not shipping plates.
+    founder_card: none from this set on its own. See the cross-set cards at the foot of
+      this file.
