@@ -1,8 +1,15 @@
 # PATCH, NOT APPLIED — `sapling-cotyledon-shape` against his 2026-08-17 ruling
 
-**Status: written, unapplied, ready.** This file exists because the patch has now
-been derived TWICE by two lanes and landed ZERO times, and a third derivation is
-waste. Apply it verbatim when `pipeline/canon.yaml` goes clean.
+**Status: written, unapplied, ready — and as of 2026-08-17 DRY-RUN VERIFIED
+against a copy.** This file exists because the patch has now been derived THREE
+times by three lanes and landed ZERO times, and a fourth derivation is waste.
+Apply it verbatim when `pipeline/canon.yaml` goes clean.
+
+**The verification is already done — see "Dry-run proof" below.** The third lane
+found that `--register` lets you run the whole checker against a PATCHED COPY
+without touching the ` M` file, so the fire-red demonstration this patch demands
+has been performed and recorded. Whoever lands it does not need to re-derive or
+re-prove anything; apply, re-run the two commands below, and commit.
 
 **Target:** subject `sapling-cotyledon-shape` in `pipeline/canon.yaml`
 (entry begins at line 246 as of commit `cda39571`).
@@ -139,9 +146,73 @@ Whoever fixes this properly should consider whether `contains:` needs to assert
 against prose OUTSIDE `~~`-struck and `>`-quoted blocks, which is a
 `check_canon_drift.py` change and belongs to that lane, not to this patch.
 
+## Dry-run proof (2026-08-17, third lane) — the rule DOES go red
+
+`check_canon_drift.py --register <path>` reads an alternate register while
+resolving `evidence.file` against the real repo. So the entire patch can be
+exercised on a copy in a temp dir with **zero writes to `pipeline/canon.yaml`**,
+which is what makes the fire-red demonstration possible while the file is ` M`.
+
+Method: copy `pipeline/canon.yaml`, apply all four changes to the copy, run the
+checker twice — once with the live evidence string, once with a deliberately
+absent one (`'CANON-STRING-THAT-IS-NOT-IN-THE-FILE'`).
+
+| Register | `CANON-DRIFT:` totals | `sapling-cotyledon-shape` |
+|---|---|---|
+| repo, unpatched (baseline) | `fail=1 ack=70 review=17 cannot-tell=72` | no evidence FAIL — **passing on struck text** |
+| patched, live string | `fail=1 ack=70 review=17 cannot-tell=72` | no evidence FAIL, 7 ACKs still fire |
+| patched, absent string | `fail=2 ack=70 review=17 cannot-tell=72` | **`FAIL register_evidence_missing`** |
+
+Three things this establishes, none of which a green run would have:
+
+1. **The evidence gate is live, not decorative.** Feeding it a string that is not
+   in `THE-SAPLING.md` produces `FAIL register_evidence_missing
+   sapling-cotyledon-shape` and lifts the total from `fail=1` to `fail=2`. The
+   grading is `FAIL` at `check_canon_drift.py:512-515`, not `UNKNOWN` — so a
+   future stale string fails CI rather than shrugging.
+2. **The live string is correct.** `'The canon is ORDINARY LEAVES'`
+   (`THE-SAPLING.md:61`) satisfies the gate; verified by the middle row passing
+   where the bottom row fails, same file, same run.
+3. **The rule keeps firing after the `forbids:` deletion.** Removing
+   `no simple oval leaves` does not disarm the entry: all seven
+   `prompt_contradicts_canon` ACKs on b01/b18 survive, `ack=70` unchanged. The
+   deleted negative was contributing nothing but the self-contradiction.
+
+**The one pre-existing `FAIL` is not ours and must not be chased:**
+`resolved_but_open ep2-goblin-character-gate` in
+`review/ep2-picks/done-definitions.yaml` — another lane's file, red before and
+after the patch, identical in all three rows. `check_canon_drift.py` therefore
+exits **1 both before and after**; the correct success criterion for this patch
+is *`fail` stays at 1 and the FAIL line is the goblin one*, NOT exit 0. A lander
+who expects exit 0 will think they broke something.
+
+Also confirmed empirically: the baseline row proves the note's central finding.
+The unpatched gate does **not** fail today, because
+`'The working canon is ROUND/OVAL COTYLEDONS'` is still physically present at
+`THE-SAPLING.md:81` inside the `~~`-struck superseded block. The gate was green
+on text the file marks as dead — exactly the failure mode described above, now
+measured rather than argued.
+
+Gates run at the same time, own steps, exit codes read: `lint_genome.py` **exit
+0** (`✓ tree healthy`, 25 pre-existing licence warnings, ratchet unchanged).
+`test_pipeline.py` still fails only on `ledger_freshness.py:369` (missing
+`encoding="utf-8"`), another lane's in-flight file — untouched, no second
+failure added.
+
 ## Provenance
 
 Written 2026-08-17 by the steward (Claude Opus 5), ControlNet-capability lane,
 as a hand-off artifact. No render, no GPU, no spend, no canon file touched. The
 `forbids:` defect and the struck-through-evidence finding are both this lane's;
 the rest re-states an analysis the narrative lane reached independently.
+
+"Dry-run proof" added 2026-08-17 by a third lane (Claude Opus 5), dispatched to
+land this patch and blocked by the same ` M`. Verified at the time of writing
+that `pipeline/canon.yaml` (+130) and `check_canon_drift.py` (+301, 408
+insertions) are still uncommitted, that the peer diff still does not touch this
+entry, and that the entry is still unpatched at `canon.yaml:246` — i.e. the
+blocker is unchanged, so the refusal to commit stands for a third time. That
+lane's contribution is the `--register` verification route and the three
+measured rows: the fire-red demonstration is now DONE rather than merely
+demanded, so the patch is no longer blocked on anything but the file going
+clean. No render, no GPU, no spend, nothing outside a temp dir written.
