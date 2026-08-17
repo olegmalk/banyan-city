@@ -539,3 +539,144 @@ beats:
       - >-
         R4/taste: whether the goblin may read as a plain green man rather than a
         goblin is a design call on the creature, not a scoring call. Named only.
+
+  '09':
+    role: >-
+      Guard A close-up ALONE. Wire-rims KEPT, because there is no second face for
+      them to leak onto. Its variable against the earlier Mac plates is IP-Adapter
+      REFERENCE CONDITIONING, aimed at hair colour and texture.
+    done_when_quoted_from_done_definitions: >-
+      close on Guard 1's face working through the thought, in daylight; face holds,
+      no morphing; a real background behind him.
+    scored: 12 of 12 frames looked at, r3 skipped as a byte-copy of r0
+    frames_clearing_EVERY_term: 0 of 12
+    cast_holds: PARTLY, and the rung returned a clean, decisive TRADE. See the_trade.
+
+    how_condition_2_was_MEASURED_not_eyeballed: >-
+      The bar demands the head measure at least 55% of frame height and says
+      "measured, not eyeballed". Each 832x1216 frame was re-rendered locally with
+      horizontal gridlines every 10% of frame height and the skull-top and chin
+      read off against them. Per-frame head height, top of hair to chin:
+      r0s0 ~28%, r0s1 ~27%, r0s2 ~26%, r0s3 ~30%, r1s0 ~25%, r1s1 ~25%,
+      r1s2 ~29%, r1s3 ~28%, r2s0 ~33%, r2s1 ~34%, r2s2 ~35%, r2s3 ~34%.
+
+    the_trade:
+      summary: >-
+        The rung asked whether IP-Adapter reference conditioning would move hair
+        colour and texture. It did -- and it took the framing as payment, which the
+        bar predicted in writing.
+      condition_1_hair_MOVED: >-
+        Near-black cropped hair arrives at 3 of 12 (r1s2, r1s3, r2s2), where the Mac
+        rung lost this condition outright. Reference conditioning is the instrument
+        that touches hair, as designed.
+      condition_2_framing_REGRESSED: >-
+        0 of 12, and WORSE than the rung it was meant to beat. Measured 25-35%
+        against a 55% bar; the Mac rung it was correcting posted 48-53%. The r0 and
+        r1 rows are chest-up or waist-up MEDIUM shots, not close-ups at all.
+      this_is_the_rungs_ANSWER_not_a_mystery: >-
+        Quoting the bar's own pre-registered fail mode: "the reference set pulling
+        the FRAMING back to the two-in-field full body the refs depict, which would
+        cost condition 2 while winning condition 1 -- if that happens it is the
+        rung's answer, not a mystery." IT FIRED, EXACTLY AS WRITTEN. The refs depict
+        two men at full length in a field, and they dragged a close-up out to a
+        medium. Reference conditioning and tight framing are in direct conflict on
+        this beat, and that is now measured rather than suspected.
+
+    per_condition_rate:
+      c1_hair_NEAR_BLACK_and_CROPPED_not_mid_brown_not_shaggy_not_blond_not_bald: >-
+        3 of 12 (r1s2, r1s3, r2s2). Failure modes split: BLOND/SILVER at r0s0, r0s3,
+        r2s1; MID-BROWN rather than near-black at r1s0, r1s1, r2s0, r2s3; and BALD
+        at r0s1 and r0s2.
+      c1_bald_sub_finding_that_QUANTIFIES_THE_MODEL_PRIOR: >-
+        IMPORTANT AND USED AS A CONTROL. b09's prompt contains NO `bald` token at
+        all, yet bald still appeared 2 of 12. b05, also with no `bald` token, also
+        gave 2 of 12. b07 and b08, which DO carry the token, gave 12 of 12. So the
+        model's unprompted baseline for a bare scalp on this beat family is about
+        2 in 12, and the token is what drives it to 12 in 12. The token is the
+        cause; the prior is a small constant.
+      c2_head_at_least_55_percent_of_frame_height: >-
+        0 of 12, measured. Best in the batch is r2s2 at ~35%, still twenty points
+        under the bar. See how_condition_2_was_MEASURED_not_eyeballed.
+      c3_WIRE_RIM_GLASSES_legible_as_round_wire_frames: >-
+        12 of 12, PERFECT, and the Mac rung's win is HELD. Round wire frames,
+        correctly drawn, no sunglasses, never absent. This also confirms the
+        broadcast-class law from its clean side: with ONE face in frame the term
+        binds every single time. The pre-registered worry "eyewear absent at any
+        seed" did not fire once.
+      c4_a_real_background_grass_and_hedgerow_with_actual_content_not_white_not_plain: >-
+        12 of 12, PERFECT, and the Mac rung's other win is HELD. Deep tall grass in
+        every frame, hedgerow or treeline in most, sky where the framing allows.
+      c5_one_adult_man_only_no_second_figure_and_no_child: >-
+        12 of 12 on COUNT -- one figure everywhere, no second body, no child. This
+        is the cleanest count in the entire batch.
+      c6_face_toward_lens_EYES_OPEN_mouth_closed_thoughtful_not_blank_or_comic: >-
+        8 of 12. Eyes are closed, squeezed shut or fully downcast at r0s0, r0s2,
+        r1s0 and r1s2. Mouth is closed and the register is thoughtful rather than
+        comic everywhere -- that half of the term is clean 12 of 12.
+      c7_the_face_reads_ADULT_not_young: >-
+        5 of 12. The Mac rung's third named fault is NOT fixed. The r2 row in
+        particular reads adolescent -- large eyes, soft jaw, small nose -- which is
+        the same row that wins the framing and hair terms.
+      c8_tan_tunic_collar_and_a_white_sash_over_the_shoulder: >-
+        1 of 12. Two compounding misses: the TAN tunic renders CREAM or WHITE almost
+        everywhere, and the shoulder sash renders DARK -- black, charcoal or deep
+        green -- rather than white at r0s0, r0s1, r0s2, r0s3, r1s2, r1s3, r2s1,
+        r2s2. Where a white band exists at r1s1 it has gone to the WAIST.
+      c9_NO_hands_and_no_board_clipboard_or_paper_anywhere_in_frame: >-
+        0 of 12, AND THIS IS THE DEFECT THAT KILLS EVERY FRAME ON ITS OWN. A HAND IS
+        IN FRAME IN ALL TWELVE, and in eleven of them it is raised to the chin,
+        cheek or spectacles. The board half of the term is clean -- no board,
+        clipboard or paper anywhere, 12 of 12 -- so this is purely the hands.
+      c10_daylight: 12 of 12, CLEAN. Bright, unambiguous daylight in every frame.
+
+    pre_registered_fail_modes:
+      the_costume_card_collapse_a_turnaround_sheet_or_plain_ground_character_card: >-
+        DID NOT FIRE, 0 of 12. The defect this beat's previous box plate actually
+        died of is gone. Every frame is a scene, not a character card.
+      the_reference_set_pulling_the_FRAMING_back: FIRED, 12 of 12. The rung's answer. See the_trade.
+      eyewear_absent_at_any_seed: DID NOT FIRE, 0 of 12. Present and correct in all twelve.
+      unpre_registered_defect_TIGHTENED_FORWARD_ONLY: >-
+        THE THOUGHTFUL-HAND TROPE. The word "thoughtful" reliably buys a hand at the
+        chin, 11 of 12, which collides head-on with condition 9's "NO hands". The
+        bar named the hands term and named the thoughtful term and did not notice
+        they contradict each other. Said so here and TIGHTENED FORWARD for the next
+        rung: either negate hands explicitly or drop "thoughtful" for a wording that
+        does not summon the trope. NOT scored retroactively -- c9 is scored exactly
+        as the bar wrote it, 0 of 12.
+
+    pick: >-
+      r2s2, on reasons. It is the only frame that clears the hair term AND posts the
+      largest measured head height in the batch (~35%), while holding wire-rims, a
+      real grass background, one adult figure, eyes open behind the lenses and
+      daylight. In other words it is the single frame where both of the rung's two
+      target conditions are as close together as they ever get. What it costs: the
+      head is still twenty points under the 55% bar, a hand is at the face, the
+      shoulder sash is dark instead of white, and the face reads young. Runner-up
+      r1s3 has the cleanest near-black cropped hair and open eyes but a smaller head
+      at ~28%.
+    verdict: >-
+      FAILS ITS BAR -- 0 of 12 clear every term, and condition 9 alone fails all
+      twelve. But it is a SUCCESSFUL EXPERIMENT: it holds both conditions the Mac
+      rung won (wire-rims 12 of 12, real background 12 of 12), it moves the hair
+      condition the Mac path could not touch (3 of 12), and it establishes by
+      measurement that reference conditioning buys hair by spending framing.
+    blocked_on: >-
+      (a) The framing-versus-refs conflict, now measured and needing a real decision
+      rather than another rung: reference conditioning at this weight cannot coexist
+      with a 55% head. Options are lower reference weight, a crop pass, or a
+      close-up reference -- all bigger than a wording change.
+      (b) Hands in frame, 12 of 12, which needs an explicit negation.
+      (c) The white shoulder sash, which fails on b06 and b09 alike and is looking
+      like a batch-wide wording problem rather than a per-beat one.
+    founder_cards_hit:
+      - >-
+        R4/taste: the face reading ADOLESCENT on 7 of 12 is the Mac rung's third
+        named fault and it is unfixed. Whether that is acceptable on the approved
+        cast is the founder's call. Named, not decided.
+      - >-
+        R4/taste and a REAL DECISION, not a rung: done-definitions records that beat
+        09 EARNS a third round on the understandable test because the face changes
+        between the plate and the close-up. This lane's measurement says the third
+        round cannot be another wording pass -- it needs the reference-weight or
+        crop decision in (a) above, which is a recipe change and therefore wants ONE
+        SAMPLE before any batch.
