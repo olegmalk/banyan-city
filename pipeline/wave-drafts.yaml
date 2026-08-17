@@ -523,6 +523,59 @@ beats:
       five-fingered leaves, no three leaves, no four leaves, no many leaves, no lush
       foliage, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_b01_nodecount_0817` -- 2026-08-17, NODE-COUNT rung.
+    # DERIVED FROM `authored_b01_geom_0817`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is
+    # the control: it is the draft `pipeline/jobs/ep2-b01-geom-0817.yaml` rendered over 16
+    # stills and SCORED (2 of 16 count, 0 of 16 height), so this rung has a real denominator
+    # on the same grid rather than a hypothetical one.
+    # ONE VARIABLE, AND IT IS A PURE ADDITION: ` at one node` is appended to the control's
+    # leaf clause. The control clause survives character for character. Everything else --
+    # the purple fig, `green at its neck`, the scale relation, the style tail and the WHOLE
+    # negative including `no three leaves, no four leaves, no many leaves` -- is byte-identical.
+    # WHY: the geometry clause BOUND. Its clean cells show swollen node joints with exactly
+    # two opposed leaves AT EVERY NODE; the model honoured the arrangement and stacked it two
+    # or three times up the stem, which is how eight cells that each obey "opposed, one either
+    # side" still return four to six leaves. `opposed one either side of the stem` describes a
+    # NODE, not a plant, so it was never a count constraint and could not have been. The free
+    # variable is NODE COUNT and this names it.
+    # THE PREDICTION IS PRE-REGISTERED AND IT IS NOT OPTIMISTIC. `one` is a numeral, and the
+    # settled outside finding is that numerals barely reach the conditioning -- CLIP's text
+    # embeddings are near-identical across numerals (T2ICountBench, arXiv 2503.06884), which
+    # is exactly why `exactly two` runs 0 of 16 on this arm. So this rung tests a NARROWER
+    # claim than "numbers work": whether a numeral binds when it is applied to a STRUCTURAL
+    # feature the model draws explicitly (a node, which it renders as a visible swollen joint)
+    # rather than to the counted objects themselves. If it nulls, the designated follow-up is
+    # a DEVELOPMENTAL-STAGE adjective -- a newly sprouted seedling has one node by botany
+    # without asserting any number -- which is the class of wording that has actually bound
+    # here (height bound; `exactly two` did not). That follow-up is NOT smuggled in.
+    # REAL CLIP (openai/clip-vit-large-patch14, sd_prompt.compress + negative_tokens):
+    # 76/77, headroom 1, POSITIVE DROPPED: none, STYLE ANCHOR PRESENT: True. Control on the
+    # same harness: 73/77, headroom 4. HEADROOM 1 IS THE COST OF THE ADDITION and it is
+    # recorded rather than hidden: beat 01 carries no goblin definition, so nothing else needs
+    # that room on this beat, but this draft must not be extended without re-measuring.
+    # THREE OF THE BRIEF'S OWN WORDINGS WERE DISCARDED ON MEASUREMENT, not trimmed to fit:
+    # `, one node only` (66/77), `a single node, bare stem below` (67/77) and the brief's
+    # literal `a single node, the stem bare beneath them` (69/77) each make compress() shed
+    # the trailing style sentence, so `very aesthetic` -- the anchor -- goes MISSING.
+    # `a single node` (74/77, anchor True) survived and was REJECTED anyway: it REPLACES
+    # `the stem` instead of adding to it, so a win with it could not be told apart from a
+    # change of referent. The wording that ships leaves the control's clause intact.
+    # `cotyledon` IS DEPARTED FROM THE BRIEF AND KEPT ON PURPOSE: canon subject
+    # `sapling-cotyledon-shape` says the "average leaves" ruling is "about shape, not about
+    # vocabulary or scale" and names `wide oval cotyledon leaves` COMPLIANT. Removing it would
+    # be an unauthorised second variable.
+    # FAILURE IS REACHABLE AND IS THE STATUS QUO: the control scored 2 of 16 on this exact
+    # grid and `whole plant in frame` keeps the whole stem in shot, so a second node further
+    # up can appear and be counted against this.
+    authored_b01_nodecount_0817: >-
+      A tiny fig seedling in an open grassy field, wide oval cotyledon leaves opposed one either
+      side of the stem at one node, and one small deep purple-violet fig, green at its neck,
+      matte, growing on its thin stem, whole plant in frame, no taller than the grass around it.
+      Cinematic lighting, masterpiece, best quality, very aesthetic No woman, no girl, no boy,
+      no child, no person, no chibi, no mascot, no creature, no face, no green fig, no green
+      fruit, no red fruit, no white fruit, no pale fruit, no lobed leaves, no five-fingered
+      leaves, no three leaves, no four leaves, no many leaves, no lush foliage, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
     # -- `authored_b01_geom_0817` -- 2026-08-17, geometry-vs-number rung.
     # DERIVED FROM `authored_b01_scale_0816`, WHICH IS LEFT STANDING BYTE-IDENTICAL and is
     # the control: it is the draft `pipeline/jobs/ep2-b01-scale-0817.yaml` renders over 16
