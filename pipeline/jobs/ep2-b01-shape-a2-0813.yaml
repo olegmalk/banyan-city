@@ -8,6 +8,27 @@
 # seeds. A payload directory is shared state and a derived twin needs its own.
 #
 # Only the directory changes. Same prompt, same seed 20260806, same everything else.
+#
+# THIS JOB HAS ALREADY RUN. DO NOT RE-FILE IT. Appended 2026-08-17 by the lane that
+# re-filed it by mistake, so the next person does not make the same call a third time.
+# It ran 2026-08-13T14:40:03Z as ep2-b01-shape-a2-0813-1786629788, rc=0, and published
+# 3 files. Its clip has been on `origin/farm-results-rtx5090` at
+# farm-out/ep2-b01-shape-a2/01-cold-open-LTX-shape-a2-0813.mp4 ever since.
+#
+# WHY IT LOOKED UNRUN, because the wrong check is a convincing one. Farm results live
+# on the farm-results-rtx5090 BRANCH, not on main, so `ls farm-out/` in a main checkout
+# shows nothing for this job -- while showing ep2-b01-shape/ and ep2-b01-shapeB/, which
+# ARE on main. Absence next to two present siblings reads as "never ran" and is not.
+# THE CORRECT CHECK IS THE ONE ep2-b01-scale-0817.yaml SPELLS OUT IN ITS OWN HEADER:
+# a `C:\banyan-queue\done` entry for the task id AND the output dir on the box. Either
+# one would have caught this; the repo working tree catches nothing.
+#
+# WHAT THIS CORRECTS ABOUT THE RECORD. The 2026-08-13 shape sweep is NOT "one clip at
+# one seed". Both seeds exist and have since 08-13: shapeB at seed 20260813 on main,
+# this job at seed 20260806 on farm-results-rtx5090. The entries in
+# review/ep2-picks/farm-recovered-0814-b01shape-scores.yaml saying this spec "has never
+# run and is the missing second seed" are wrong on both counts. Left unedited -- that
+# file is another lane's and the disagreement is the record.
 id: ep2-b01-shape-a2-0813
 task: ep2-b01-shape-a2-0813
 node: 002b-first-citizen
