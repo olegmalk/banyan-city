@@ -182,3 +182,85 @@ Engine probe, never to be cut into an episode. Sidecar stamped
 No `plate_ack`, no `gate:`, no `gate_ref:`. Opening a shot mid-gesture changes
 how the action reads, which is authorship; this lane measures whether the engine
 *can*, and does not propose that it *should*.
+
+---
+
+## RESULT, 2026-08-17 — FAIL. The answer is NO.
+
+`ep2-b17-gestureinit-0817`, one seed (20260917), 11 minutes, $0. Clip
+`0f38b4eb`, init `340427011b`, prompt `05942938` and negative `50fb304c` —
+the same prompt bytes as all five prior clips, so **only the init differed**.
+Full scoring is in the spec's `outcome:` block; this is the answer to the
+question the bar was written to settle.
+
+**Scored as written: peak excursion 176.6 px = 0.98 hand-widths at f055,
+against a 1.0 bar. It misses by 3.4 px and it is a FAIL.** 0.98 is precisely
+the number a lane is tempted to round up, and rounding it is how eight of
+twelve "passes" on this episode became zero of twelve usable. At the last frame
+holding a formed hand with discrete claws (~f043–f045) travel is 0.87–0.88 hw,
+so it fails on that reading too. M1 passes by construction, M3 passes on
+landmarks (SHOE_L 8 px at NCC 0.98, SHOE_R 4 px at 0.99, GRASS_TL 14 px at
+0.97), M4 passes. **M2 — the only axis that separates a brush from a pose
+change — fails.**
+
+**And the near-miss on the number is not a near-miss on the action.** Travel
+ramps monotonically from 0.00 hw to 0.98 hw over f000–f055 and then plateaus at
+0.92–0.98 for the remaining 41 frames. A brush oscillates — the winner ran 231
+px at f030, 101 at f048, 250 at f064. There is no return stroke, no second
+pass, no oscillation at any amplitude. **The engine moved the arms once into a
+new resting position and held it for the back half of the clip.**
+
+### What this settles
+
+**Initiation is NOT the defect.** The probe handed the engine the gesture
+already underway, in its own dialect, from the one frame it ever brushed in,
+with the hand and head larger than anywhere this beat has been tested (head
+~27% of frame height, against 16.0% as the highest PASS in the stills
+calibration). It still did not complete a stroke. Combined with what was
+already on the record — a seated, hands-empty, outdoors, 40%-headroom plate at
+0/8; four fresh seeds on a byte-identical composition at 0/4; the action asked
+for alone at 0/2 — **the plate route is exhausted. No plate a lane can build
+reaches this verb on this checkpoint.**
+
+One contrast is worth keeping, because it is the clearest statement of the
+failure: on the WIDE plate this engine substituted STAND + TURN AWAY eight
+times out of eight; on this TIGHT plate, with no room to stand, it substituted
+a two-armed settle-and-hold. **The substitution follows the framing, but it is
+always a substitution.** Taking away the room to stand did not buy the brush —
+it only changed which non-brush arrived.
+
+### What this does NOT settle, and what is not this lane's to say
+
+**The brush is not conceded and this lane has no standing to concede it.**
+`brushes off` is in the approved script line `002b-t0-c`. The finding is that
+the INSTRUMENT does not reach it, not that the verb should go. The three
+remaining routes are all authorship or infrastructure, and every one of them is
+above a lane:
+
+1. **Accept the rate.** One clip in five did perform the brush and that clip is
+   real. "Render five and pick" is a production-cost decision — R4's.
+2. **Restage.** Re-cut beat 17 so the brush is not required in the same shot as
+   the stand, or open mid-gesture. An R4 rewrite of an approved line.
+3. **Change the engine.** LTX-2.3-Distilled is the constraint being measured
+   here, not beat 17. A checkpoint with better fine-hand articulation is an
+   infrastructure question, and lanes are already on LTX weights and distill.
+
+**No further beat-17 rung is filed, and that is deliberate rather than
+neglectful** — the stop rule above pre-registered exactly this branch, and a
+fifth wording on a fourth plate would have no consumer. The next move on this
+beat belongs to the founder.
+
+### One thing the bar could not see — reported, not bent
+
+M2 measures the **excursion magnitude** of one hand. It cannot distinguish a
+hand sweeping ACROSS CLOTH from a hand travelling to a new resting position,
+and the only reason that did not matter is that this clip fails M2 anyway. A
+future bar on this action wants a direction or cloth-relative displacement
+term. **This is a forward-only note for whoever writes the next bar; it is
+applied to nothing retroactively and no number is minted for it here.** The
+obvious candidate was tried and is untrustworthy: centroid separation between
+the two arm+hand blobs reads 282 px at f000, 232 px minimum, 296 px at f096 —
+it says the hands never converge, while the pictures plainly show them
+overlapping in the image plane, because each blob is arm+hand and the two arms
+enter from opposite sides. Six measures have been retired for cause on this
+beat this week; a seventh is not being minted on the strength of one clip.

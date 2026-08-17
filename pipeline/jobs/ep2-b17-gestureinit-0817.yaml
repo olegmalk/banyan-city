@@ -505,3 +505,103 @@ script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_b
   $0, no voice synthesis, no episode assembly. NOTHING HERE CONCEDES `brushes off`:
   dropping the verb would be an R4 rewrite of an approved line and is the founder''s
   alone.'
+outcome:
+  verdict: FAIL
+  scored_as_written: 'PEAK EXCURSION 176.6 px = 0.98 HAND-WIDTHS AT f055. THE BAR IS 1.0
+    (180 px). IT MISSES BY 3.4 px AND IS SCORED A FAIL. Recorded in these words because
+    0.98 is exactly the number a lane is tempted to round, and rounding it is how 8 of
+    12 "passes" on this episode became 0 of 12 usable. The bar was committed in 640724b8
+    before this init existed and is neither loosened to manufacture a pass nor tightened
+    to manufacture a kill. THE NEAR-MISS ON THE NUMBER IS NOT A NEAR-MISS ON THE ACTION,
+    which is the more important half: at the last frame containing a formed hand with
+    discrete claws (~f043-f045) travel is 0.87-0.88 hw, so it fails on that reading too,
+    and the shape of the curve is not a stroke at all -- see motion_shape below.'
+  axes:
+    M1_contact: PASS. A hand is in contact with the cloak at frame 0 and stays in contact
+      throughout. This axis was satisfied BY CONSTRUCTION -- the init was chosen for it --
+      and on its own it proves nothing, which is why the bar never rested on it.
+    M2_traversal: 'FAIL. 176.6 px = 0.98 hw peak (f055); 0.87-0.88 hw at the last
+      formed-hand frame. Below 1.0 on both readings.'
+    M3_hand_not_camera: PASS. Not a camera move. SHOE_L max shift 8 px at NCC 0.98, SHOE_R
+      4 px at 0.99, GRASS_TL 14 px at 0.97. The other-hand control is USELESS here and is
+      not quoted as evidence -- it rises with the travelling hand to a ratio of 0.95,
+      which is the F3 signature, because BOTH arms move; the landmarks are what settle it,
+      exactly as they did on ep2-b17-bigbody-s20260912-0817.
+    M4_continuous_path: PASS. A smooth monotonic path, no teleport, no reappearance.
+  motion_shape_the_real_finding: 'ONE SLOW POSE CHANGE AND THEN A 40-FRAME HOLD -- NOT A
+    STROKE. Travel ramps monotonically 0.00 hw at f000 to 0.98 hw at f055 and then
+    PLATEAUS at 0.92-0.98 for the whole remainder (f056-f096, 41 frames). A brush
+    oscillates: the winner did 231 px at f030, 101 at f048, 250 at f064 -- repeated
+    strokes. There is no return, no second pass, no oscillation of any amplitude here.
+    The engine moved the arms once into a new resting position and stopped. Under the
+    pre-registered wording that is contact plus insufficient traversal, and it is nearer
+    F1 for the back half of the clip than to anything that could be called brushing.'
+  f4_recorded_not_load_bearing: 'From about f048 the near hand loses its discrete claws
+    and becomes a broad pale slab with smeared dark suggestions of digits, the two
+    forearms reading as two horizontal bands whose hands overlap in the middle. By the
+    precedent set on ep2-b17-bigbody-s20260912-0817 that degradation is F4 MORPH. It is
+    recorded for consistency but it is NOT load-bearing on this verdict, because the 1.0
+    bar is never crossed at any frame, formed or morphed.'
+  f5_did_not_happen_and_the_prediction_held: No scene break, no second figure, no face,
+    nothing in the background margin. The spec predicted lower vacancy risk than the
+    named prior because this init's background is dense grass with no sky band and its
+    largest near-flat square is ~100x100 px against a ~350 px head. That prediction held.
+  f7_did_not_happen_and_this_is_informative: 'HE DOES NOT STAND. Recorded separately and
+    scored as nothing, per the bar. But the contrast is the most interesting thing in the
+    clip: on the WIDE plate this engine substituted STAND + TURN AWAY 8 times out of 8;
+    on this TIGHT plate, where there is no room to stand, it substituted a two-armed
+    settle-and-hold instead. THE SUBSTITUTION FOLLOWS THE FRAMING, BUT IT IS ALWAYS A
+    SUBSTITUTION. Removing the room to stand did not buy the brush; it only changed which
+    non-brush arrived.'
+  what_the_bar_could_not_see_reported_not_bent: 'M2 measures the EXCURSION MAGNITUDE of
+    one hand. It cannot distinguish a hand sweeping ACROSS CLOTH from a hand travelling to
+    a new resting position, and the only reason that did not matter here is that this clip
+    fails M2 anyway. A future bar on this action wants a DIRECTION or CLOTH-RELATIVE
+    displacement term, not just a magnitude. STATED AS A FORWARD-ONLY NOTE FOR WHOEVER
+    WRITES THE NEXT ONE, applied to nothing retroactively, and deliberately not turned
+    into a number here: the obvious candidate, centroid separation between the two
+    arm+hand blobs, was computed and is NOT trustworthy on this clip (282 px at f000,
+    min 232, 296 at f096 -- it says the hands never converge, while the pictures plainly
+    show them overlapping in the image plane, because each blob is arm+hand and the arms
+    enter from opposite sides). Six measures have been retired for cause on this beat this
+    week; a seventh is not being minted on the strength of one clip.'
+  provenance: 'Verified at the artifact, not asserted from intent. The box''s own published
+    manifest and a local recompute agree on the clip (0f38b4eb) and on the init
+    (340427011b). The positive prompt hashes 05942938 and the negative 50fb304c -- THE
+    SAME VALUES AS ALL FIVE PRIOR CLIPS, so ONLY THE INIT differed. Sidecar records seed
+    20260917 (fresh -- not the winner''s 20260901 nor the reseeds'' 20260911-14), model
+    diffusers/LTX-2.3-Distilled-Diffusers, guidance 2.0, 704x1280, 97 frames, cost_usd 0,
+    and carries approved: false, provisional: true, is_show_content: false.'
+  init_fidelity_measured_not_claimed: 'The box-side init is NOT byte-identical to the frame
+    this lane inspected (PNG sha 340427011b against 4f48609d) and IS structurally
+    identical: compared pixel-by-pixel, 88.3% of pixels differ but MAXDIFF IS 2 COUNTS on
+    any channel and mean absolute difference is 0.74. That is the swscale/colour-conversion
+    difference between two ffmpeg builds, not a compositor fault. Stated as a measurement
+    because "the figure was untouched" is not a claim anyone may make unmeasured -- a peer
+    lane measured 16.1% of a protected region changed at maxdiff 217 on a path assumed to
+    be figure-preserving.'
+  stop_rule_honoured: 'THE PRE-REGISTERED STOP RULE SAID: sample fails -> STOP, no reseed,
+    no second wording, no recipe sweep, no new plate. IT IS HONOURED. One seed was spent,
+    11 minutes, $0, and nothing further is filed on beat 17 by this lane. The beat had
+    already burned twelve seeds at zero and the recorded lesson is to change instrument
+    rather than climb; climbing here would have been a fifth wording on a fourth plate.'
+  brush_not_conceded: 'NOTHING HERE CONCEDES THE BRUSH AND THIS LANE HAS NO STANDING TO.
+    `brushes off` is in the approved script line 002b-t0-c; dropping it, re-cutting the
+    beat into two shots, or accepting a render-five-and-pick cost are all R4 authorship
+    calls and the founder''s alone. What is established is narrower and is the whole point
+    of the job: THE PLATE ROUTE IS EXHAUSTED. Even handed the gesture ALREADY UNDERWAY, in
+    the engine''s own dialect, from the one frame it ever brushed in, it does not complete
+    a stroke. Initiation is therefore NOT the defect, so no plate a lane can build reaches
+    this verb on this checkpoint.'
+  evidence:
+  - pipeline/research/EVIDENCE-b17-gestureinit-dense-0817.png
+  - pipeline/research/EVIDENCE-b17-gestureinit-hands-0817.png
+  - pipeline/research/EVIDENCE-b17-gesture-init-f026.png
+  instrument: pipeline/b17_hand_track.py, unmodified, re-validated on this machine against
+    the reseed lane's published numbers BEFORE it judged anything (winner peak frame 64
+    exactly, control 2.2 px to f040). HAND_W held at 180 and the bar at 1.0. Depth and
+    cadence NOT computed and NOT quoted -- depth is retired and inverted, and cadence
+    aliases odd hold periods to 1.00x.
+  not_done_on_purpose: No reseed, no re-plate, no wording variant, no recipe change, no
+    second bar, no guidance or CFG change, no new checkpoint. shots.md, wave-drafts.yaml,
+    canon.yaml and genomes/ UNTOUCHED. Engine probe, never to be cut into an episode.
