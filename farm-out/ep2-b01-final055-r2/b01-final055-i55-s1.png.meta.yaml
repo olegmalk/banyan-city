@@ -1,0 +1,38 @@
+task: ep2-b01-final055-r2-0812
+node: 002b-first-citizen
+beat: 1
+arm: i55
+strength: 0.55
+model: cagliostrolab/animagine-xl-3.1
+dtype: bfloat16
+pipeline: StableDiffusionXLImg2ImgPipeline
+harness: pipeline/runpod_render.py
+harness_sha256: dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c
+harness_modified_for_this_round: false
+init_image: "C:\\banyan-farm\\wave-goblin-prep\\out-b01-t2i\\01-cold-open-wave1-s2.png"
+init_sha256: 874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454
+init_provenance: >-
+  ep2-b01-t2i-fig-0811 seed s2, the frame the founder called "really
+  good" at ~23:45 on 2026-08-11. Also committed on farm-results-rtx5090
+  at farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261720
+seed_rule: SEED(20260719) + BEAT(1) + k*1000
+prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1
+prompt_source_sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+positive: "A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative: "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism"
+positive_recomputed_not_captured: true
+positive_delta_vs_r8_sent: >-
+  this positive is r8's SENT positive plus the height predicate
+  ` no taller than the grass around it`, which runpod_render.py cannot
+  strip and r8 deletes script-side. Asserted exact by the dry step.
+negative_carries_lighting_block: false
+repo_commit: unknown
+cost_usd: 0
+sha256: 8caad7862dc62351e654f97b553f7de3fa28b602f7372b1d0a16c25f76ce8a99
+provisional: >-
+  Not a pick, not canon, not published, not assembled. A three-arm
+  strength probe; the verdict on it is R4's.
