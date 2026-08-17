@@ -2405,6 +2405,14 @@ beats:
       attention, no dark, no night, no dusk, no sunset, no dim lighting, no
       moody lighting, no low key, no shadows dominant. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    authored_b05_cast_0817: >-
+      Two guard men halt in tall grass, hedgerow behind, pale sky above, one
+      with dark cropped hair, tan wrap tunic, white waist sash, the other with
+      light sandy hair, cream shirt, brown wrap skirt, arms swinging,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no armor, no helmet, no knight, no clipboard, no white
+      background, no plain background, no dark, no night. No photorealism, no
+      3D render look. 9:16 vertical, no text.
   6:
     slug: the-clipboard
     kind: guard
@@ -3294,6 +3302,14 @@ beats:
       weapon, no dark, no night, no dusk. No photorealism, no 3D render look.
       9:16 vertical, no text.
 
+    authored_b06_cast_0817: >-
+      A guard man with light sandy hair, cream shirt, white shoulder sash and
+      brown wrap skirt turns over a bark board in both hands at reading
+      height, looking down, tall grass, hedgerow behind, pale sky above,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no armor, no helmet, no knight, no white background, no plain
+      background, no dark, no night. No photorealism, no 3D render look. 9:16
+      vertical, no text.
   7:
     slug: confiscate
     kind: guard
@@ -3468,6 +3484,13 @@ beats:
       masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet,
       no knight, no jewelry, no ornament, no dark, no night. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    authored_b07_cast_0817: >-
+      A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+      white sash points one arm at {{GOBLIN}} crouching low, other hand open,
+      tall grass, treeline behind, pale sky above, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no clipboard, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
   8:
     slug: inside-him
     kind: two-subject
@@ -3922,6 +3945,14 @@ beats:
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+    authored_b09_cast_0817: >-
+      A guard man with dark cropped hair and wire-rim glasses, close on his
+      face, head and shoulders, eyes open, thoughtful, mouth closed, tan tunic
+      collar, white shoulder sash, tall grass and hedgerow behind him,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no hands, no clipboard, no armor, no helmet, no knight, no
+      white background, no plain background, no closed eyes, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
   10:
     slug: no-form
     kind: guard
