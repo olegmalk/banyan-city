@@ -59,7 +59,8 @@ SOIL_ELLIPSE = (350, 965, 205, 140)          # cx, cy, rx, ry
 FIGURE_SEED = (416, 380)
 # Where the figure certainly is NOT, for the low-pass light field's reference.
 # (top-left sand, read off the grid)
-FIGURE_PROTECT_PAD = 7                        # px dilation of the matte
+FIGURE_PROTECT_PAD = 7   # px standoff for the inpaint mask
+FIGURE_TINT_PAD = 2      # px the ground tint stops short of him
 
 
 def sha256_of(p: Path) -> str:
@@ -121,7 +122,7 @@ def figure_matte(a: np.ndarray) -> np.ndarray:
     outside[0, :] = outside[-1, :] = True
     outside[:, 0] = outside[:, -1] = True
     fig |= ~reach(outside, ~fig)
-    return dilate(fig, FIGURE_PROTECT_PAD)
+    return fig
 
 
 def grass_palette(a: np.ndarray, keep: np.ndarray) -> dict:
@@ -162,7 +163,15 @@ def main() -> int:
         print("!! init is %s, expected %dx%d" % (im.size, W, H)); return 2
     arr = np.asarray(im)
 
-    fig = figure_matte(arr)
+    fig_raw = figure_matte(arr)
+    # TWO PADS, and the reason is a defect v5 showed by eye. A single 7px pad left
+    # a PALE SAND HALO tracing his whole silhouette -- the untinted rim between
+    # his outline and the protect boundary -- which is decal tell #3, a swatch
+    # stopping short of the object's own edge, drawn by the compositor itself.
+    # So the ground is tinted up to 2px off him (no halo) while the INPAINT MASK
+    # keeps the full 7px standoff, so the sampler still cannot reach him.
+    fig = dilate(fig_raw, FIGURE_TINT_PAD)
+    fig_mask = dilate(fig_raw, FIGURE_PROTECT_PAD)
     soil = np.zeros((H, W), bool)
     cx, cy, rx, ry = SOIL_ELLIPSE
     yy, xx = np.mgrid[0:H, 0:W]
@@ -226,7 +235,15 @@ def main() -> int:
     # split lesson: in this dialect a strong dark line IS an edge, and a
     # composited line stronger than the object's own outline gets resolved as an
     # object boundary at the rung above.
-    outline = tuple(int(v * 0.45) for v in pal["dark"])
+    # THE OUTLINE MUST STILL BE VEGETATION. A uniform 0.45x darkening of the
+    # measured dark green gave (68,72,45) -- greenness 18, sitting exactly ON the
+    # threshold the checks use -- so v3/v4's dense blade ink formed a NET of
+    # non-green lines that cut the sward into thousands of small cells: C1 read
+    # 1.7% and 0 of 4 edges on a composite whose field is visually continuous.
+    # The fix is the INK, not the check: a cel outline in this dialect is a DARK
+    # GREEN, not a desaturated olive, so the darkening preserves the hue.
+    outline = (int(pal["dark"][0] * 0.50), int(pal["dark"][1] * 0.62),
+               int(pal["dark"][2] * 0.42))
     clumps = []
     step = 46.0 / max(0.2, a.density)
     y = -20.0
@@ -240,30 +257,48 @@ def main() -> int:
                 clumps.append((px, py, depth))
             x += row_step
         y += row_step * 0.78
+    # A BLADE IS A TAPERED POLYGON, NOT A STRING OF DOTS. v2 stamped 5-6 shrinking
+    # ellipses along each bezier and at this scale they read as beaded chains --
+    # decal tell #4 (a visible repeat) and #5 (detail at the wrong scale, read
+    # against his hand as the in-frame ruler). Caught by eye at 1x before any GPU
+    # ran, which is what image processing buys: a rejection costs seconds.
+    def blade(base, mid, tip, wdt, col, oc):
+        pts, n = [], 9
+        left, right = [], []
+        for i in range(n + 1):
+            t = i / float(n)
+            bx = (1 - t) ** 2 * base[0] + 2 * (1 - t) * t * mid[0] + t ** 2 * tip[0]
+            by = (1 - t) ** 2 * base[1] + 2 * (1 - t) * t * mid[1] + t ** 2 * tip[1]
+            dx = 2 * (1 - t) * (mid[0] - base[0]) + 2 * t * (tip[0] - mid[0])
+            dy = 2 * (1 - t) * (mid[1] - base[1]) + 2 * t * (tip[1] - mid[1])
+            L = max(1e-3, (dx * dx + dy * dy) ** 0.5)
+            nx, ny = -dy / L, dx / L
+            r = wdt * (1.0 - t) ** 0.85
+            left.append((bx + nx * r, by + ny * r))
+            right.append((bx - nx * r, by - ny * r))
+        pts = left + right[::-1]
+        d.polygon(pts, fill=col, outline=oc)
+
+    # PATCHINESS, so the field is not wallpaper. A low-frequency field thins the
+    # clumps in places and a per-clump size jitter breaks the uniform hatch --
+    # decal tell #4 is a visible repeat, and a perfectly even field of blades is
+    # one.
+    patch = mottle(88, 1.0)
     for px, py, depth in clumps:
-        hgt = 46 + 74 * depth
-        nb = int(rng.integers(4, 8))
+        if rng.random() > 0.58 + 0.42 * (0.5 + 0.5 * patch[py, px]):
+            continue
+        hgt = (52 + 86 * depth) * rng.uniform(0.72, 1.28)
+        nb = int(rng.integers(5, 10))
         for _ in range(nb):
-            lean = rng.uniform(-0.62, 0.62)
-            L = hgt * rng.uniform(0.62, 1.15)
-            wdt = max(2, int(3.0 + 3.4 * depth))
-            tipx, tipy = px + lean * L, py - L
-            midx = px + lean * L * 0.42 + rng.uniform(-6, 6)
-            midy = py - L * 0.55
+            lean = rng.uniform(-0.70, 0.70)
+            L = hgt * rng.uniform(0.55, 1.20)
+            wdt = 2.4 + 2.6 * depth
+            tip = (px + lean * L, py - L)
+            mid = (px + lean * L * 0.40 + rng.uniform(-7, 7), py - L * 0.58)
             shade = rng.random()
-            col = pal["light"] if shade > 0.72 else (pal["mid"] if shade > 0.3 else pal["dark"])
-            for t in (0.0, 0.25, 0.5, 0.75, 1.0):
-                bx = (1 - t) ** 2 * px + 2 * (1 - t) * t * midx + t ** 2 * tipx
-                by = (1 - t) ** 2 * py + 2 * (1 - t) * t * midy + t ** 2 * tipy
-                r = wdt * (1.0 - 0.82 * t)
-                d.ellipse([bx - r - 0.9, by - r - 0.9, bx + r + 0.9, by + r + 0.9],
-                          fill=outline)
-            for t in (0.0, 0.2, 0.4, 0.6, 0.8, 1.0):
-                bx = (1 - t) ** 2 * px + 2 * (1 - t) * t * midx + t ** 2 * tipx
-                by = (1 - t) ** 2 * py + 2 * (1 - t) * t * midy + t ** 2 * tipy
-                r = wdt * (1.0 - 0.9 * t)
-                if r > 0.4:
-                    d.ellipse([bx - r, by - r, bx + r, by + r], fill=tuple(int(v) for v in col))
+            col = pal["light"] if shade > 0.74 else (pal["mid"] if shade > 0.34 else pal["dark"])
+            blade((px + rng.uniform(-3, 3), py), mid, tip, wdt,
+                  tuple(int(v) for v in col), outline)
 
     drawn = np.asarray(layer).astype(np.int16)
     base = arr.astype(np.int16)
@@ -287,30 +322,40 @@ def main() -> int:
     # whole paint region, which CONTAINS the plate's own fringe clumps, so a
     # fringe-not-a-field outcome is still reachable and the bar stays falsifiable.
     mask = np.zeros((H, W), np.uint8)
-    mask[dilate(paint, 2) & ~fig] = 255
+    mask[dilate(paint, 2) & ~fig_mask] = 255
     Image.fromarray(mask).save(a.mask_out)
 
     # ---- the checks -------------------------------------------------------
     o = np.asarray(comp).astype(np.int16)
     gm = o[..., 1] - (o[..., 0] + o[..., 2]) // 2
     green = (gm > 18) & ~fig
-    s = np.zeros((H, W), bool)
-    ys, xs = np.nonzero(green & paint)
     fails = []
-    if len(ys) == 0:
+    if not (green & paint).any():
         print("FAIL-C1 no green painted"); return 3
-    s[ys[0], xs[0]] = True
-    comp_green = reach(s, green)
-    # the largest component: retry from the biggest leftover if needed
-    for _ in range(4):
-        rest = green & ~comp_green
-        if rest.sum() <= comp_green.sum():
+    # SEED THE FLOOD FROM A DEEP INTERIOR PIXEL, NOT THE TOPMOST ONE. v3 scored
+    # C1 at 0.0% on a composite whose sward was fine: the first nonzero green
+    # pixel was a blade tip in row 0, ringed by its own dark outline, so the
+    # flood measured a 46 px island and the retry loop kept picking its
+    # neighbours. Eroding first guarantees the seed is inside a large region --
+    # a measurement bug that would have been read as a compositor failure.
+    er = green.copy()
+    for _ in range(6):
+        e = er.copy()
+        e[1:, :] &= er[:-1, :]; e[:-1, :] &= er[1:, :]
+        e[:, 1:] &= er[:, :-1]; e[:, :-1] &= er[:, 1:]
+        er = e
+    comp_green = np.zeros((H, W), bool)
+    pool = er if er.any() else green
+    for _ in range(6):
+        rest = pool & ~comp_green
+        if not rest.any():
             break
         ry_, rx_ = np.nonzero(rest)
-        s2 = np.zeros((H, W), bool); s2[ry_[0], rx_[0]] = True
+        s2 = np.zeros((H, W), bool); s2[ry_[len(ry_) // 2], rx_[len(rx_) // 2]] = True
         cand = reach(s2, green)
         if cand.sum() > comp_green.sum():
             comp_green = cand
+        pool = pool & ~cand
     c1 = comp_green.sum() / float(W * H)
     edges = sum([comp_green[0, :].any(), comp_green[-1, :].any(),
                  comp_green[:, 0].any(), comp_green[:, -1].any()])

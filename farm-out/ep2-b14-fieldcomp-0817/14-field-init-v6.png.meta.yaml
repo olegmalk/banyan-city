@@ -1,0 +1,19 @@
+tool: "pipeline/beat14_field_composite.py"
+sampler: "NONE -- plain image processing, $0, no GPU, no network"
+bar: "pipeline/loop/beat14-field-init-0817.md (d850c276), pre-registered"
+init: "farm-out/ep2-b14-mac-plate-0817/14-the-defense-mac-plate-r7s1.png"
+init_sha256: "ef2c0c22a77bec8647897f7e17302425c3d504c88a0d78f82a238d93c8111f43"
+composite_sha256: "142eb060425e73b66f076558906c3bd880f782791e28a3720877bc71d30cc89c"
+mask_png: "MASK-v6.png"
+rng_seed: 14
+density: 1.0
+soil_ellipse_px: [350, 965, 205, 140]
+figure_seed_px: [416, 380]
+figure_protect_pad_px: 7
+palette_measured_from_plate: {"n_px": 59451, "dark": [151, 159, 100], "mid": [171, 184, 121], "light": [199, 219, 136]}
+checks: {"C1_green_frac": 0.6839, "C2_edges": 4, "C3_both_sides": true, "C4_bare_px": 78109, "C5_figure_maxdiff": 0, "C6_drawn_dark": 11, "C6_plate_dark": 2, "C8_plate_grass_in_mask": 58490}
+fails: []
+geometry_is_the_stewards: "Read off a 104x152 coordinate grid drawn over the plate, not eyeballed. The founder approved fixing beat 14 properly and named no geometry; these numbers are the first thing a correction should move."
+date: "2026-08-17"
+approved: false
+provisional: true
