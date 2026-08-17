@@ -2418,3 +2418,4 @@
 10:10:09Z STARTED task=ep2-b0708-twofig-pub-0817-1786961018 attempt=1 on box-runner
 10:10:16Z DONE task=ep2-b0708-twofig-pub-0817-1786961018 rc=0 artifacts=2
 10:10:29Z STARTED task=ep2-b17-platescale-0817-1786958061 attempt=1 on box-runner
+10:13:24Z DONE task=ep2-b17-platescale-0817-1786958061 rc=0 artifacts=4
