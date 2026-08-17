@@ -412,3 +412,41 @@ outcome:
     clip, and this lane applies the bar as written rather than softening it to
     fit a take it likes. Nothing here is proposed for the cut.
   evidence: pipeline/research/EVIDENCE-b11-w4brake-0817.png
+seed_set_result_0817:
+  headline: >-
+    THE DECISION RULE WAS MET FOR D3 AND THE ANSWER IS "SEED". Guard B keeps his
+    back turned in 2 of the 3 fresh seeds (20260901 and 20260903 clean, 20260902
+    turns), so the head turn is NOT a property of the wording and not a property
+    of the checkpoint under this scene -- it is the seed. Four wordings had
+    "proved" it was wording-invariant; all four ran seed 20260817. That was this
+    lane's own confound and breaking it cost three eleven-minute renders.
+  the_harder_half: >-
+    AND THE SAME LOTTERY EATS THE BRAKE. W4's D2 pass -- the clean recession,
+    268 px down to 178 -- DID NOT REPRODUCE. All three fresh seeds grow instead:
+    216 to 282 (s20260901), 218 to 252 (s20260902), 232 to 258 (s20260903). So
+    the recession is 1 of 4 and the honest reading is the same one the b17
+    bigbody lane reached today about a different claim: A SINGLE PASS AT A
+    SINGLE SEED IS NOT A LEVER. W2's recession result stands as an OBSERVATION
+    (that clause did change the behaviour at that seed, twice over, against a
+    base that went the other way) but "the receding clause fixes D2" is NOT
+    established and must not be built on. The framing drift caveat also grew:
+    the treeline control moves 57-71 px across the three fresh seeds against
+    W4's 25.
+  per_seed:
+    s20260817: D1 pass, D2 PASS, D3 fail, D4 pass, D5 pass, D6 pass. Freeze 0.
+    s20260901: D1 pass, D2 fail (grow), D3 PASS, D4 pass, D5 pass, D6 pass. Freeze 0.
+    s20260902: D1 pass, D2 fail (grow), D3 fail, D4 pass, D5 pass, D6 pass. Freeze 0.
+    s20260903: D1 pass, D2 fail (grow), D3 PASS, D4 pass, D5 pass, D6 pass. Freeze 0.
+  what_holds_in_all_four: >-
+    D1, D4, D5 and D6 pass in EVERY ONE of the four. Two men, both present in
+    the last frame, field at frame one, and identities and costumes holding end
+    to end with no merge and no head change -- 4 of 4. Against the take standing
+    in the cut, whose defining fault was identity collapse, THE PLATE HAS
+    SETTLED THAT QUESTION. What is not settled is the camera-relative motion.
+  no_pick_is_proposed: >-
+    None of the four clears all six conditions, so this lane picks nothing and
+    proposes nothing for the cut. Which of these is closest is a taste question
+    and R4's. The next mechanical step, if anyone takes it, is more seeds of W4
+    read only for D2 -- at 1 of 4 the honest framing is "render N and pick",
+    which is a production-cost decision for the author and not this lane's call.
+  evidence: pipeline/research/EVIDENCE-b11-w4-seeds-0817.png

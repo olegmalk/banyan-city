@@ -398,3 +398,11 @@ script_authority: >-
   sample of a wording, and if it performs, updating the shot board is a
   separate deliberate act by whoever owns the beat. Picking a take into the cut
   is the author's call (R4), never this lane's.
+outcome:
+  verdict: rendered and read; see the key seed_set_result_0817 in
+    pipeline/jobs/ep2-b11-leave-w4brake-0817.yaml for the three-seed result this clip is one third of.
+  clip: farm-out/ep2-b11-leave-w4-s20260901-0817/11-they-leave-w4-s20260901-LTX-castplate.mp4
+  read: all 97 frames opened consecutively, plus 3x head crops of guard B at
+    f000, f008, f016, f024, f032 and f048.
+  terminal_freeze_index: 0 -- no exact ncc = 1.0000 pair anywhere in the clip.
+    Depth and cadence not quoted.
