@@ -187,3 +187,50 @@ artifacts:
 - C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r1-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r2-w015-s0.png
 - C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r3-w015-s0.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-17 by the count-control lane that filed this job.
+# The bar above was PRE-REGISTERED in commit 201aff9f before the frames existed
+# and was read off the committed file, not rewritten around the result.
+verdict_0817:
+  verdict: FAIL-COUNT
+  also_fired: FAIL-SCALE
+  scored_by: count-control lane, 2026-08-17
+  frames_read: 16 of 16. Triaged on a contact sheet, then the four cells whose count was not
+    unambiguous at that size (r0s0, r2s3, r3s1, r3s3) were re-read at full resolution before
+    scoring. A count read off a thumbnail is not a measurement.
+  prompt_actually_sent_was_verified: 'The sidecars record drafts_sha256 76baa97ec31c -- the sha of
+    the wave-drafts.yaml this lane committed -- positive_tokens 73, matching the local measurement
+    exactly, and tokenizer openai/clip-vit-large-patch14 on the box. The style tail is present in the
+    recorded prompt. So the box rendered THIS wording and not a stale harness copy.'
+  primary_leaf_count: '2 of 16. PASS: r2s3 and r3s1. FAIL-COUNT on the other fourteen, which run
+    from one leaf (r3s0) through three (r0s3, r3s3) to roughly six (r0s1, r0s2, r1s2).'
+  secondary_height_relation: '0 of 16, and it fails the same way the control did. Almost every frame
+    is macro-tight with the grass absent or reduced to a strip at the bottom, so `no taller than the
+    grass around it` has no yardstick in shot. Rows r2 and r3 put a BUSH-SIZED purple fig in frame
+    with a tiny sprout on top of it -- FAIL-SCALE at its most literal.'
+  read_against_the_control: 'ep2-b01-scale-0817 scored 0 of 16 on leaf count; this scores 2 of 16.
+    THE PRE-REGISTERED RULE SAYS THIS IS NO EFFECT AND IT IS APPLIED AS WRITTEN: binding required 9
+    of 16, and anything at or under 6 of 16 -- the rate `exactly two` already runs across the wave
+    sheets -- was declared NO EFFECT before the frames existed. 2 against 0 out of 16 is also not a
+    difference this sample size can distinguish from noise. The height half did not regress (0 and 0),
+    so the bar''s other requirement is satisfied trivially and proves nothing.'
+  what_this_licenses_and_what_it_does_not: 'The validity threat written into the bar BEFORE the run
+    has now fired, so the narrow reading is the one that was pre-committed: THREE different wordings
+    have scored 0-2 of 16 on this reference set (`authored_b01_canon_0816`, `authored_b01_scale_0816`
+    and this one), and the frames are ref-saturated -- giant purple fig masses, macro framing, grass
+    mostly gone. This falsifies "geometry binds ON THIS ARM". It does NOT falsify "geometry binds",
+    because on this arm nothing has moved the count yet, including two count-asserting wordings. The
+    clean follow-up is the same one variable on a frame that is not ref-saturated. That is a different
+    job and is not smuggled into this one.'
+  one_observation_worth_a_forward_card_and_not_a_claim: 'In BOTH cells that passed, the two leaves are
+    OPPOSED, one either side of the stem -- the exact geometry the wording asked for. Where the model
+    drew a small sprout at all, it drew the asked-for arrangement. That is 2 cells and is nowhere near
+    evidence; it is the reason the follow-up is worth running on a frame that actually contains a
+    seedling rather than a bush-sized fruit.'
+  colour_did_bind: 'FAIL-COLOUR did NOT fire on any of the 16. Every fruit reads deep purple-violet
+    and not one is green, on a beat whose 2026-08-13 sweep was green throughout. The purple anchor and
+    the `no green fig, no green fruit` negative are holding; only count and scale are failing.'
+  not_my_call: 'Which frame, if any, is shippable -- R4, the founder''s. No pick is made and none of
+    these is promoted. Measurement is the lane''s; taste is his.'
+  filed_off_this: 'NOTHING. No motion seeds, no promotion, no follow-up job filed by this lane.'
