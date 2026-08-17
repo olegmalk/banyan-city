@@ -210,6 +210,14 @@ A third, cheap and decisive: `tasklist /FI "PID eq <pid from the last heartbeat>
 The heartbeat carries its own `pid`; here 2748 was simply absent from the process
 list.
 
+**And a naming trap worth not tripping over.** The heartbeats report
+`"host": "MSI"`, which reads like the 5070Ti machine. It is not. Checked:
+`hostname` = `MSI` and `nvidia-smi` = **RTX 5090 Laptop GPU, 24463 MiB** — the box
+is an MSI-branded laptop that holds the 5090. So `platform: local-gpu (rtx5090)`
+in the render sidecars is **accurate**, not a stale hardcode, and a heartbeat
+saying `MSI` is not evidence that a job ran on the 12 GB card. Verify with
+`nvidia-smi`, not the hostname.
+
 **It self-heals, eventually.** `banyan-runner-watchdog` exists and did restart it —
 a fresh `runner_up` with a new pid at `12:35:21Z`, which then claimed work
 immediately. So the correct response to a stalled fire is **diagnose, wait for the
