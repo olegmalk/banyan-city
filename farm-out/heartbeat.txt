@@ -2482,3 +2482,4 @@
 12:39:04Z STARTED task=ep2-b05-attrbind-addA-0817-1786969777 attempt=1 on box-runner
 12:39:21Z DONE task=ep2-b05-attrbind-addA-0817-1786969777 rc=0 artifacts=4
 12:39:34Z STARTED task=ep2-cnet-probe-0817-1786969442 attempt=1 on box-runner
+12:41:06Z DONE task=ep2-cnet-probe-0817-1786969442 rc=0 artifacts=4

@@ -1,0 +1,108 @@
+{
+  "id": "ep2-cnet-probe-0817-1786969442",
+  "task": "ep2-cnet-probe-0817",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 30,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "nocontrol",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\cnet-probe-0817\\src\\pipeline\\controlnet_probe.py",
+        "--root",
+        "C:\\banyan-farm\\cnet-probe-0817\\src",
+        "--repo-commit",
+        "072498e14dd20870701f034b579e70ef270a0c48",
+        "--arm",
+        "nocontrol",
+        "--out",
+        "C:\\banyan-farm\\cnet-probe-0817\\out"
+      ]
+    },
+    {
+      "name": "left",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\cnet-probe-0817\\src\\pipeline\\controlnet_probe.py",
+        "--root",
+        "C:\\banyan-farm\\cnet-probe-0817\\src",
+        "--repo-commit",
+        "072498e14dd20870701f034b579e70ef270a0c48",
+        "--arm",
+        "left",
+        "--out",
+        "C:\\banyan-farm\\cnet-probe-0817\\out"
+      ]
+    },
+    {
+      "name": "right",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\cnet-probe-0817\\src\\pipeline\\controlnet_probe.py",
+        "--root",
+        "C:\\banyan-farm\\cnet-probe-0817\\src",
+        "--repo-commit",
+        "072498e14dd20870701f034b579e70ef270a0c48",
+        "--arm",
+        "right",
+        "--out",
+        "C:\\banyan-farm\\cnet-probe-0817\\out"
+      ]
+    },
+    {
+      "name": "polarity",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\cnet-probe-0817\\src\\pipeline\\controlnet_probe.py",
+        "--root",
+        "C:\\banyan-farm\\cnet-probe-0817\\src",
+        "--repo-commit",
+        "072498e14dd20870701f034b579e70ef270a0c48",
+        "--arm",
+        "polarity",
+        "--out",
+        "C:\\banyan-farm\\cnet-probe-0817\\out"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-nocontrol.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-left.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-right.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-polarity.png"
+  ],
+  "backlog": {
+    "filed_at": 1786969442,
+    "filed_at_iso": "2026-08-17T12:24:02Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-cnet-probe-0817.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-17T12:39:34Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-17T12:41:06Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-nocontrol.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-left.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-right.png",
+    "C:\\banyan-farm\\cnet-probe-0817\\out\\ep2-cnet-probe-0817-polarity.png"
+  ]
+}
