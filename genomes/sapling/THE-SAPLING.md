@@ -52,32 +52,67 @@ Wordings that violate it, found live on 2026-08-16 and corrected below:
 *"only three or four leaves"* (beat 01), and any prompt that describes foliage
 without a count.
 
-### 2.2 Shape — ⚠ STEWARD INFERENCE, NOT HIS WORDS. VETOABLE IN ONE LINE.
+### 2.2 Shape — HIS RULING, 2026-08-17: AVERAGE LEAVES
 
-**The working canon is ROUND/OVAL COTYLEDONS.**
+> *"the sapling 2 leaves are average leaves"*
+>
+> — the founder, 2026-08-17
 
-**He did not say this.** He ruled two leaves; the shape is the steward's
-inference from that ruling, recorded here so he can strike it in one line
-without a new card. The reasoning, written down so the veto is cheap:
+**The canon is ORDINARY LEAVES.** A plain, unremarkable leaf — the shape anyone
+draws when you say "leaf" — and nothing exotic on either side of it. His sentence
+rules out the *special* leaf in both directions:
 
-- A two-leaf plant at ~40 cm is a **cotyledon-stage seedling**, and cotyledons
-  are round or oval. That is what a seed's first two leaves are.
-- **Deeply lobed, five-fingered fig leaves are MATURE-TREE foliage.** They are
-  incompatible with a two-leaf seedling: a fig does not carry palmate leaves and
-  two of them.
-- The existing evidence already leaned the same way before he ruled. *"wide oval
-  cotyledon leaves with soft round tips, not narrow, not pointed, not
-  lance-shaped"* appears on **four** beats (12, 15, 19, 20) against *"deeply
-  lobed fig leaves with five fingers"* on **one** (01). The growth ladder in
-  `style.md` puts 001 at *"two oversized cotyledon leaves"* and 002a/b/c at
-  *"two leaves + one thin side-branch"* — cotyledon language, not fig-leaf
-  language.
+- **Out: deeply lobed, five-fingered fig leaves.** A palmate mature-fig leaf is
+  the opposite of average. It is a botanical specimen and it reads as one.
+- **Out: a leaf drawn as a feature.** No lance shapes, no exaggerated
+  silhouette, no leaf whose shape is the subject of the shot.
 
-**TO VETO:** one line — *"lobed, not round"* — and this section inverts. Nothing
-else in this file depends on it.
+**What his words do NOT settle, and are not stretched to cover:** leaf SIZE in
+the frame (§4 still records `oversized` and `big` as both live and unruled), and
+whether the two leaves are called *cotyledons*. "Average" is a ruling about
+shape. It is not a ruling about vocabulary or about scale.
 
-**The negative `no simple oval leaves`** (live on beats 01 and 18) is the exact
-inverse of this inference and is corrected below.
+#### THIS SUPERSEDES THE STEWARD INFERENCE OF 2026-08-16 — both dates stay visible
+
+House style is §6's: superseded text stands and the correction is added beside
+it. Until 2026-08-17 this section read:
+
+> ~~**Shape — ⚠ STEWARD INFERENCE, NOT HIS WORDS. VETOABLE IN ONE LINE.**~~
+> ~~**The working canon is ROUND/OVAL COTYLEDONS.** He did not say this. He
+> ruled two leaves; the shape is the steward's inference from that ruling…~~
+> ~~A two-leaf plant at ~40 cm is a **cotyledon-stage seedling**, and cotyledons
+> are round or oval.~~ ~~**TO VETO:** one line — *"lobed, not round"* — and this
+> section inverts.~~
+
+**The veto arrived, and it went neither of the two ways the inference offered.**
+The inference framed the question as round-or-lobed. He answered *average*, which
+**keeps the inference's practical effect** — the palmate fig leaf is still out,
+so §6.3 stands unchanged — and **drops its botanical claim**: the canon no longer
+asserts the leaves are round *because they are cotyledons*. It asserts they are
+ordinary because he said so. What was the steward's to defend is now his, and
+§2.2 is no longer the one inference in this file.
+
+Both dates, so nobody applies the older rule: **2026-08-16** (steward inference,
+round/oval cotyledons) → **2026-08-17** (his ruling, average leaves). Same shape
+of supersession §5 records for 2026-08-08's *"dont overthink the leafs on it"* →
+the 2026-08-16 two-leaf ruling. The evidence the inference leaned on is not
+deleted either, and it survives his ruling intact: *"wide oval cotyledon leaves
+with soft round tips, not narrow, not pointed, not lance-shaped"* on beats 12,
+15, 19 and 20 describes an average leaf and is compliant; *"deeply lobed fig
+leaves with five fingers"* on beat 01 does not and is not.
+
+**The negative `no simple oval leaves`** (live on beats 01 and 18) is still
+wrong, and it is now wrong against **his words** rather than against an
+inference: an average leaf is closer to a simple oval than to anything else, so a
+prompt forbidding simple ovals forbids the canon. §6.3 stands.
+
+**NOT DONE HERE, and it is a real gap.** `pipeline/canon.yaml`'s subject
+`sapling-cotyledon-shape` still encodes the 08-16 inference, and
+`check_canon_drift.py` reads it — so the machine check enforces the superseded
+inference until that lane carries his ruling into it. Both files were
+**uncommitted in another lane's hands** as this was written (` M` in
+`git status`), and editing either would have put two lanes in one file — the
+mistake §6.6 already declined once. Flagged, not touched.
 
 ---
 
@@ -258,7 +293,8 @@ until someone with the authority rules:
 
 **Both dates are given so nobody applies the older rule and skips scoring the
 leaves.** As of 2026-08-16 leaf **count** is scored and is canon; leaf **shape**
-is scored against the inference in §2.2 until he vetoes it. The 08-08 sentence
+is scored against §2.2, which as of **2026-08-17** is his own ruling
+(*"the sapling 2 leaves are average leaves"*) and no longer a steward inference. The 08-08 sentence
 survives only in its other half — the **character-sheet decline** still stands,
 and this file is prose, not a sheet, which is what the card asked him for.
 
@@ -489,6 +525,12 @@ records his ruling and marks its own one inference as inference.
 ## Provenance
 
 Written by the steward (Claude Opus 5), 2026-08-16, from the founder's ruling of
-the same date. §2.2 is steward inference and is labelled as such. All other
-sections are his words, the ledgered growth ladder, or measurements re-derived
-from the repo.
+the same date. All sections are his words, the ledgered growth ladder, or
+measurements re-derived from the repo.
+
+**Revised 2026-08-17 by the steward (Claude Opus 5), narrative lane** — §2.2 only.
+The one section that was labelled steward inference is now his ruling
+(*"the sapling 2 leaves are average leaves"*, 2026-08-17); the superseded
+inference is kept struck-through beside it with both dates. Nothing else in the
+file moved, no machine-checkable subject was edited (see §2.2's last paragraph on
+`pipeline/canon.yaml`), and $0 was spent: no render, no GPU, no voice.
