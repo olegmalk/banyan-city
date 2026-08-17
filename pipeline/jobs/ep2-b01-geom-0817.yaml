@@ -1,0 +1,189 @@
+# ep2-b01-geom-0817 -- 2026-08-17, geometry-vs-number rung. $0, local card, no provider.
+# ONE RUNG, ONE VARIABLE, against a control that has already been scored.
+# Draft key: authored_b01_geom_0817. Measured on the REAL CLIP before this file was filed
+# (openai/clip-vit-large-patch14 via sd_prompt.compress + negative_tokens, the two functions
+# render_wave_goblin.check() itself calls): positive 73/77, headroom 4, POSITIVE DROPPED:
+# none, STYLE ANCHOR PRESENT: True. The control measures 68/77 on that same harness, which
+# reproduces the figure ep2-b01-scale-0817 recorded off the box's own CLIP -- that agreement
+# is why the two rows are comparable. The fallback estimator was not used: it changes
+# verdicts and not merely numbers. The first geometry wording tried came back 67/77 with the
+# style tail SILENTLY DELETED by compress() and ANCHOR False; it was discarded, not trimmed.
+# Steps, needs and env were COPIED from the control by pipeline/insert_b01_geom_0817.py's
+# sibling authoring script rather than retyped, so byte-identity is how the file was made.
+# NEVER RUN: no farm-out/ep2-b01-geom-0817 and no out-b01-geom-0817 dir exists.
+id: ep2-b01-geom-0817
+task: ep2-b01-geom-0817
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: count-control lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean
+est_minutes: 14
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 1 COLD OPEN, node.md verbatim (em dashes transliterated
+  to `--` because the box shell is cp1252 and mojibakes them): "A tiny two-leaf banyan sapling in a green
+  field. On the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing
+  in frame that moves." This is a STILL PLATE on an approved node: no voice synthesis, no footage render,
+  no episode assembly, no publication.'
+script_line: 'Beat 1 COLD OPEN, node.md verbatim: "A tiny two-leaf banyan sapling in a green field. On
+  the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only thing in frame
+  that moves."'
+consumer: 'The count-control question, which is now the most repeatable defect in the plant beats and is
+  a WORDING problem rather than a seed problem. `exactly two` is running 3 of 8 across the plant-only wave
+  sheets (beat 21''s 2 of 4 plus beat 12''s 1 of 4), and on THIS beat''s own grid it is running 0 of 16 --
+  ep2-b01-scale-0817 scored FAIL-COUNT on 16 of 16 and its unanchored pair ep2-b01-canon-0817 scored the
+  same 0 of 16 on the same reference set. The cause is settled OUTSIDE this repo: CLIP''s text embeddings
+  are near-identical across numerals, so a number barely reaches the conditioning (T2ICountBench, arXiv
+  2503.06884), and nobody has published exact count control on SDXL -- full read in
+  pipeline/research/count-control-sdxl-0817.md. Against that, the fig-SHAPE clause landed a correct
+  teardrop-with-narrow-neck 1 of 1 on a plate that contained NO FIG AT ALL, so the wording CREATED the
+  geometry rather than reshaping a wrong one. Shape language binds where count language does not. This
+  asks the one question that follows: does it carry to LEAVES.'
+why: 'THE ONE VARIABLE is the number-assertion, replaced by a description of the same pair''s GEOMETRY.
+  Control `authored_b01_scale_0816` says `exactly two wide oval cotyledon leaves`; this draft says `wide
+  oval cotyledon leaves opposed one either side of the stem`. Everything else is byte-identical -- the
+  purple fig clauses, the scale relation `no taller than the grass around it`, the style tail, the
+  reference set, the arm, the seeds, and the ENTIRE negative including `no three leaves, no four leaves,
+  no many leaves`. Those negatives STAY: removing them would be a second variable and the comparison
+  would stop being real. pipeline/insert_b01_geom_0817.py proves the single variable mechanically --
+  it refuses unless the control with only that one phrase swapped reproduces this draft character for
+  character.
+  THE PHRASING WAS CHOSEN AGAINST THE HYPOTHESIS, NOT FOR ITS TOKEN COUNT. Seven candidates were measured
+  and all seven fit inside 77. `a pair of ...` was REJECTED even though it fits, because `pair` is simply
+  another lexical route to a cardinality, and a win with it could not distinguish "geometry binds" from
+  "the numeral was the problem". The wording that ships asserts no total at all: `opposed` is a relation
+  and `one either side of the stem` is a distributive placement, not a count of leaves in the frame.
+  COLOUR: nothing green is propagated. This lineage is already purple -- `one small deep purple-violet
+  fig` in the positive and `no green fig, no green fruit` in the negative, both inherited byte-identical
+  from the control. The 2026-08-13 beat-01 sweep that says `green` throughout is NOT this lineage.
+  IS NOT: a mask rung. Beat 01''s mask route is closed by its own stop rule -- a mask can delete a blade
+  but not the anatomy, because the unmasked stem still describes a leaf-bearing node and the 0.30 pass
+  completes it. This is prompt-side and stays prompt-side. $0, local card, no provider.'
+success: 'THIS BAR IS BEAT 01''s AND IS CARRIED FORWARD FROM THE CONTROL''s OWN BAR RATHER THAN REWRITTEN.
+  It was PRE-REGISTERED in commit 201aff9f BEFORE ANY FRAME OF THIS RUNG EXISTS. Sixteen stills at
+  832x1216 (4 reference cells x 4 seeds) -- the control''s grid exactly, because a count result needs a
+  denominator and the comparison is only real on the same grid.
+  PRIMARY, leaf count out of 16: PASS is EXACTLY TWO leaves on the plant. FAIL-COUNT = three or more, or
+  one.
+  SECONDARY, height relation out of 16, SCORED SEPARATELY on the same frames so that a count fix cannot
+  silently break the half that is supposed to hold: the whole plant in frame and NO TALLER THAN THE GRASS
+  AROUND IT. FAIL-SCALE = bush or waist height, overtopping the grass, or the founder''s 2026-08-16
+  "dont make it double in size suddenly".
+  ALSO FAIL, inherited unchanged: FAIL-COLOUR (a green, red, pale or white fruit, or more than one) and
+  FAIL-PERSON (any face, figure, chibi or mascot -- the beat has no character in it).
+  THE DECISION RULE, written before the frames exist so the read cannot be softened afterwards: geometry
+  BINDS only if leaf count reaches 9 of 16 AND the height count does not fall below the control''s on the
+  same grid. 6 of 16 is the rate `exactly two` runs across the wave sheets, so anything at or under it is
+  NO EFFECT; a height regression is a REGRESSION however the count reads. Scored AS WRITTEN and tightened
+  FORWARD ONLY, never retroactively.
+  FAILURE IS REACHABLE AND IS CURRENTLY THE STATUS QUO: the control scored 0 of 16 on this exact grid, and
+  `whole plant in frame` keeps the whole stem in shot, so a third leaf -- or a second opposed pair further
+  up the stem -- can appear and be counted against this. This is not a framing that cannot fail.
+  A THREAT TO VALIDITY, RECORDED NOW SO A NULL RESULT IS NOT OVER-READ. Two DIFFERENT wordings have now
+  scored 0 of 16 on this reference set (`authored_b01_scale_0816` and the unanchored `authored_b01_canon_0816`),
+  and the judging lane found the frames macro-tight, with the grass mostly NOT IN FRAME and the plant
+  reading as a giant purple mass carrying three to eight leaves. If the reference set is dominating the
+  composition, NO prompt wording will move the leaf count and this rung will measure the refs rather than
+  the words. So a 0-of-16 here falsifies "geometry binds ON THIS ARM" and NOT "geometry binds"; the clean
+  follow-up would be the same one variable on a frame that is not ref-saturated, which is a different job
+  and is not smuggled into this one.
+  NOT A PICK and NOT A TASTE CALL: which of the sixteen, if any, ships is R4''s and this job makes no such
+  claim. Measurement is the lane''s; taste is the founder''s.'
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817
+  - --draft-key
+  - authored_b01_geom_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '1'
+  - --character
+  - fig
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-fig-leaf-0814
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817
+  - --draft-key
+  - authored_b01_geom_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b01-geom-0817
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Stamp EVERY sidecar in the out dir as an unapproved provisional take.\n# goblin_ipa_sample.py writes\
+    \ model, prompt, negative, seed, cost_usd 0.00 and\n# `scored: false` at render time, and it does\
+    \ NOT write whether the still may\n# ship. REFUSES if it found no sidecar -- a run whose provenance\
+    \ files did not\n# get written must not pass silently.\nimport glob, os\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-geom-0817\"\
+    \nside = sorted(glob.glob(out_dir + \"/*.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar\
+    \ yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, \"\
+    a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended\
+    \ after the render by the sapling-canon anchor lane, 2026-08-17.\\n\"\n            \"approved: false\\\
+    n\"\n            \"provisional: true\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"\
+    note: |\\n\"\n            \"  ONE SAMPLE of ONE re-cut draft key (authored_b01_geom_0817). Not a\
+    \ pick,\\n\"\n            \"  not a seed confirmation, not approved for any cut. A lane reads the\\\
+    n\"\n            \"  sixteen frames against THIS BEAT's bar before anything built on it is\\n\"\n\
+    \            \"  filed. Taste and trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"\
+    stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads like\n# a render failure. farm-out is not gitignored,\
+    \ so the runner pushes these itself.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/goblin-ipa-0812/out-b01-geom-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-geom-0817\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(out_dir + \"/01-cold-open-ipa-r*-w015-s*.png\")\n             + glob.glob(out_dir\
+    \ + \"/01-cold-open-ipa-r*-w015-s*.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-geom-0817.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b01-geom-0817\01-cold-open-ipa-r3-w015-s0.png
