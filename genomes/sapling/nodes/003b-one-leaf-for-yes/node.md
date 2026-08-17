@@ -26,7 +26,7 @@ this place going to be called?*
 **COLD OPEN — 0:00–0:06**
 Dawn. The sapling — thin trunk, two oversized leaves, one thin branch now bare — with the scavenger's green hands cradling its fig in the foreground.
 
-> **VO (dry, tired, engineer):** I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.
+> **VO (dry, tired, engineer):** I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger.
 
 **EVIDENCE RETURNED — 0:06–0:11**
 The scavenger sets the fig down at the base of the trunk, deliberately, like evidence.
@@ -80,7 +80,7 @@ The leaf stays still — then gives the smallest, most reluctant half-tilt.
 **THE FIG QUESTION — 1:05–1:10**
 He holds the fig up beside the bare branch it fell from.
 
-> **SCAVENGER:** Were you the fruit? Did you MEAN to hit my head?
+> **SCAVENGER:** Were you the fruit? Did you MEAN to drop it at my feet?
 
 **GUILTY — 1:10–1:15**
 A very long pause on the leaf — then it tilts.
@@ -133,6 +133,36 @@ committed nodes 001/002b. Loop cycle 007 — the founding author's verdict
 that the picture did not correlate with the script. Predecessor archived
 as `leaves/003b-t0-a.md`; published video leaves 003b-t3-a/b are takes of
 that era.
+
+**TWO LINES REWRITTEN 2026-08-17 ON HIS RULING, and both were the same defect.**
+He killed the head-bounce in 002b beat 19 on 2026-08-15 — *"ok then just make the
+fig fall on the ground and the goblin will notice it"* — and this published node
+was the last place still depending on it. Told a line on the live site contradicted
+his ruling he answered: *"yes, i understand a line on the site is contradicting it.
+well.. lets rewrite it, we didn't think when first publishing it and we dont have
+viewers for now so its fine to change it."*
+
+Superseded text, kept here so nobody restores it by finding it quoted elsewhere:
+
+- **THE FIG QUESTION** — ~~"Were you the fruit? Did you MEAN to hit my head?"~~ →
+  *"Were you the fruit? Did you MEAN to drop it at my feet?"* The accusation of
+  **intent** is the beat's whole job and is untouched; the tilt in GUILTY is still
+  a confession and *"I knew it!"* still lands. Only the impact is gone, and the new
+  wording matches 002b beat 19's own text (*"lands in the grass at his feet"*).
+- **COLD OPEN VO** — ~~"Yesterday I spent my only fruit on a stranger's head."~~ →
+  *"Yesterday I spent my only fruit on a stranger."* Found while verifying the
+  first: it is the same dead staging one beat into the episode, and the wry
+  accounting joke ("spent") does not need the head. The line is now 16 spoken words
+  against 18, so it stays inside `synth_vo`'s `LONG_LINE_WORDS = 22` and is still
+  spoken as one utterance rather than stitched.
+
+**WHAT THIS COSTS — two VO takes, and no re-synthesis was done.** `clips/01-vo.mp3`
+and `clips/13-vo.mp3` speak the superseded words (verified in their manifests:
+`13-vo.json` carries the chunk *"Did you MEAN to hit my head?"*). They are now
+stale and must be re-recorded before this node is assembled again. **Nothing was
+voiced here**: STEWARDSHIP.md §6 forbids synthesis from a script the founder has
+not read, and he has authorised the rewrite, not yet read it. The old mp3s are left
+in place as receipts of what was said.
 
 ## Siblings
 

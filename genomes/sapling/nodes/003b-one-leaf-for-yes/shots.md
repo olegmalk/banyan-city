@@ -143,7 +143,20 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 
 ## Beat 13 — THE FIG QUESTION (1:05–1:10) ⬜ needs footage
 
-Line: "Were you the fruit? Did you MEAN to hit my head?" Camera on fig and bare branch together.
+Line: "Were you the fruit? Did you MEAN to drop it at my feet?" Camera on fig and bare branch together.
+
+**HIS RULING, 2026-08-17 — the line no longer depends on the head-bounce.** The
+line read *"Did you MEAN to hit my head?"* until today, which only made sense if
+the fig had struck him in 002b beat 19, and he killed that contact on 2026-08-15
+(*"ok then just make the fig fall on the ground and the goblin will notice it"*).
+Asked about the contradiction he ruled: *"yes, i understand a line on the site is
+contradicting it. well.. lets rewrite it, we didn't think when first publishing it
+and we dont have viewers for now so its fine to change it."* The accusation is
+what the beat is for and it is intact — he is still charging the plant with
+**intent**, the next beat's tilt is still a confession, and *"I knew it!"* still
+lands. Only the impact is gone. The prompt below is unchanged: it never asked for
+the bounce, it asks for the fig held up beside the branch and a look between them,
+which is the accusation staged.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin raises a ripe fig up beside the bare thin branch it fell from, holding both in the same frame and looking between them accusingly, eyebrows climbing. Morning light, deadpan comic staging. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
