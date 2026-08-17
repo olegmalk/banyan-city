@@ -1,0 +1,111 @@
+platform: "local-gpu (Apple Silicon, MPS) -- macbook1"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+pipeline: "StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)"
+cost_usd: 0.0
+shot_beat: 14
+beat_slug: "the-defense"
+size: "832x1216"
+steps: 40
+steps_actually_run: 12
+guidance: 7.5
+strength: 0.3
+seed: 20260820
+mask_blur_factor: 8
+render_seconds: 46.1
+png_sha256: "55da00842a0d06216b1063dafdd443e9d679f8c96062f4c059f13bdd7c975fc7"
+init_image: "farm-out/ep2-b14-fieldcomp-0817/14-field-init-v6.png"
+init_sha256: "142eb060425e73b66f076558906c3bd880f782791e28a3720877bc71d30cc89c"
+mask_png: "farm-out/ep2-b14-fieldcomp-0817/14-field-mask-v6.png"
+mask_sha256: "8d878c75cfe3d0d4cb3455c103439da86712adc0492d6a73067030c38de8f52d"
+prompts_from: "plate_scratch.REVS[(14,6)] -- byte-identical to r6, s1, s2, s3 by construction, read at run time"
+prompt: "1boy, solo, from above, close-up, hands and dirt large in frame, lean adult goblin man, green skin, bald head, patchwork cloak, crouching low, both clawed hands down at the bare earth, fingers picking at loose dirt, face turned away, patch of bare brown soil, tall green grass background, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, sword, stick, basket, broom, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+bar: "pipeline/loop/beat14-field-init-0817.md (d850c276), pre-registered"
+the_one_thing_changed: "the INIT. Wording, negative, camera angle, size, steps and guidance are r6's."
+founder_verdict: null
+approved: false
+provisional: true
+scored: false
+date: "2026-08-17"
+scored: true
+renderer: "macbook1; mac_preflight.py verdict READY problems: [] BEFORE and AFTER this render, every weight blob's sha256 re-read against its own filename"
+what_this_frame_shows: >-
+  High angle looking down. ONE adult goblin, bald with a large domed skull, one
+  pointed ear, purple-mauve cloak with a white collar, stooped right down over the
+  ground with his back arched, knees bent under him, head low and his face angled
+  toward the camera. NO SKY, NO HORIZON, NO BAND. TWO SEPARATE HANDS, two distinct
+  wrists, fingers and pale claws of BOTH pushed into a dark brown crumbly dug
+  patch with clods thrown around it. Around that dug patch is a bare pale-tan
+  clearing roughly 415x260 px. EVERY OTHER PART OF THE FRAME IS A CONTINUOUS GREEN
+  GRASS FIELD -- above him, below him, left and right, running off all four frame
+  edges, with no bare sand between clumps anywhere. Face readable under the heavy
+  brow: scowl, one eye reading RED, a fang. ONE DEFECT, DESCRIBED SO THE VERDICT
+  IS CHECKABLE: at x 430..520, y 600..740, where the init had his white collar tip
+  and grass, the 12 denoise steps resolved the leftover collar fragment and the
+  grass around it into an AMORPHOUS PALE YELLOW-GREEN LIMB-LIKE MASS with contour
+  lines and a claw-like tip. It is neither figure nor grass. See
+  AB-r8s1-unresolved-form-init-left-render-right.png.
+verdict_against_pre_registered_bar: >-
+  SEVEN OF SEVEN AS WRITTEN, WHICH IS THE FIRST TIME ANY BEAT-14 FRAME HAS CLEARED
+  THE BAR -- and it is reported together with a defect the bar does not reach, so
+  the two are not confused.
+  P1 PASS (stooped low over the ground, knees bent under him, not standing).
+  P2 PASS -- two separate hands, two wrists, both below the waist, neither on a
+  knee, nothing held. THE CONDITION HELD: the 0.30 pass tidied the hands rather
+  than fusing them (AB-r8s1-hands-*.png at 2x); the fingers read slightly broader
+  than the init's, which P2 does not measure.
+  P3 PASS, fingers and claws of both hands buried in dark crumbs.
+  P4' PASS, AND IT IS THE AXIS UNDER TEST. Bare brown soil under his hands, green
+  living vegetation, and the green reads as A FIELD HE IS IN: green on all four
+  sides of him and continuing past all four frame edges, with no isolated tufts and
+  no sand plane between clumps. This axis passed only on r6 across four seed draws
+  and failed 3 of 4; it passes here from the INIT rather than from a lucky sample.
+  P5 PASS -- THE CONDITION HELD, no band, no horizon, no wash. Largest inscribed
+  flat rectangle 161x140 = 22540 px^2 at x=292 y=324, which sits ON HIS BALD SKULL,
+  so the flattest thing in frame is the subject rather than a hole -- the same
+  evidence r6, s1 and s3 gave. Flat fraction 31.5% reported under P5's confessed
+  looseness and NOT used to score (s3 measured 46.8%).
+  P6 PASS (head low in frame, whole face readable: brow, eyes, nose, fang).
+  P7 PASS AS WRITTEN -- exactly one figure, adult limbs and adult face, green skin,
+  no second body anywhere and nothing small in the background. THIS IS THE
+  BORDERLINE AND IT IS SAID OUT LOUD: the unresolved mass above is ONE READING away
+  from firing Q15. It reads to me as a smear, not a creature and not a second body,
+  so P7 is scored PASS; the crop and the coordinates are committed so anyone who
+  reads it as a second body can fail P7 and therefore the rung, on the evidence
+  rather than on my word.
+  Q1-Q11 DID NOT FIRE. Q10 -- the field leaves with the sky -- is the mode this
+  rung existed to close, and it is closed: the band is still gone AND the field is
+  a field. Q12 DECAL did not fire on any of the five tells; Q13, Q14 and Q16 did
+  not fire (the clearing kept 78109 px of bare earth and the sward is textured
+  ground, not a green wash).
+  A LOOSENESS THE BAR DID NOT REACH, NAMED AND TIGHTENED FORWARD ONLY. The
+  unresolved mass is a real defect and NO AXIS AS WRITTEN CATCHES IT: it is not a
+  vacancy (P5), not a second body (P7), and Q13 requires P2 or P6 to regress, which
+  neither did. The bar is NOT bent to fail it and this rung is NOT re-scored on a
+  harsher reading, because bending a bar after the picture is how 8/12 passes became
+  0/12 usable. THE FORWARD TIGHTENING, for any next rung and applied to nothing
+  here: "P8 NO UNRESOLVED FORM -- no region may hold an ambiguous mass that reads as
+  neither the one goblin nor a named background material." Its cause is the
+  COMPOSITOR, not the sampler: the figure matte is built from a colour rule seeded
+  on his skull, and it missed the white collar tip and the pale foot area, so those
+  sat inside the paint region and the sampler was handed an ambiguity to resolve.
+  The compositor check to add forward: verify by eye at 3x that the matte covers
+  every non-ground pixel of him -- collar, footwear, all costume -- because C5's
+  maxdiff-0 is only ever true of whatever the matte happens to be.
+  MEASURED AND WORTH KNOWING FOR ANY LANE THAT REUSES THIS PATH: this render is
+  NOT figure-preserving. 16.1% of the 7px-standoff protected region changed by more
+  than 8 levels, maxdiff 217, from mask blur 8 plus SDXL inpaint on base weights
+  (unet.in_channels=4) reconstructing the whole frame through the VAE. "Outside the
+  mask is the founder's own pixels" is FALSE on this path and must not be claimed.
+  RECORDED AND NOT SCORED, all carried forward and all the founder's: the clearing
+  ring still reads PALE SAND rather than the brown P4' names (the dug patch under
+  his hands is genuinely dark brown and that is what P4' is scored on); the
+  expression still reads SCOWLING AND SLY WITH A RED EYE AND A FANG, never
+  embarrassed, unchanged across all five frames now; costume drift; blank-to-red eye
+  drift; oversized skull. The finished blades read as fine hatch line work rather
+  than the broad blades of the init -- the sampler thinned them -- which is
+  in-dialect and is an observation, not an axis.
+  SHIPPABILITY IS NOT SCORED HERE AND IS NOT MINE. The bar is cleared as written;
+  in my own judgement the unresolved mass is a defect I would not hand to motion,
+  and that call is R4's and Oleg's. Nothing is enqueued, no motion, no plate_ack.
