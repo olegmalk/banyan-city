@@ -1,0 +1,215 @@
+# ep2-b0708-twofig-pub-0817 -- 2026-08-17, backlog-depth lane.
+# THE GATE THAT KEEPS BEATS 07 AND 08 UNRENDERABLE. It draws nothing.
+#
+# WHAT IS ACTUALLY BLOCKED, established by reading the files and not by
+# guesswork. On 2026-08-15 the plate lane drew the missing two-figure plate for
+# beats 07 and 08 (`ep2-b0708-twofig-mac-0815`, 18 frames, 6 rounds, $0 on the
+# Mac) and its written outcome names two frames that cleared the pre-registered
+# bar:
+#   08-inside-him-twofig-mac-r3-s0.png -- "the only frame of eighteen that
+#     clears every axis at once, axis 7 included": two whole distinct figures,
+#     adult human guard with ROUND ears beside an adult goblin with pointed
+#     ears, same depth plane, adjacent, outdoors, no blush, neither infantile,
+#     and a clipboard rectangle gripped at its two SIDE EDGES with no palm or
+#     finger across the face.
+#   07-confiscate-twofig-mac-r1-s0.png -- clears bars 1, 2, 3, 5 and 6.
+# The same outcome records that r3-s0 is "arguably the BETTER beat-07 init,
+# because there both figures stand with arms at rest, so the motion lane has the
+# gesture left to perform".
+#
+# AND NO MOTION HAS EVER BEEN FIRED OFF EITHER OF THEM. Verified by hand on
+# 2026-08-17: beat 08's only motion job, `ep2-b08-lw-0815`, crops
+# `courier-box\farm-out\ep2-b08-plate-0814\08-inside-him-ipa-r0-w015-s0.png` --
+# a plate whose own spec calls it "a single figure with the goblin a few dozen
+# pixels away in the far background, so the beat's scripted two-shot is NOT in
+# frame". Every beat-07 re-round is older than the plate. So both beats' motion
+# record is entirely off a SUPERSEDED single-figure plate, which is the one
+# class of stale work this lane was told to look for.
+#
+# WHY A WHOLE JOB EXISTS TO MOVE FOUR FILES. box_enqueue.py refuses a motion job
+# whose `--src` it cannot fetch from RESULTS_BRANCH = origin/farm-results-rtx5090
+# (plate_problems -> "BLOCKED: could not fetch this job's --src, so its picture
+# was NOT checked"), and that refusal is waivable ONLY with
+# `plate_ack: "unfetchable: ..."`. THIS LANE FILES NO plate_ack ANYWHERE.
+# Measured on 2026-08-17:
+#   git show origin/farm-results-rtx5090:farm-out/ep2-b0708-twofig-mac-0815/
+#     -> fatal: exists on disk, but not in 'origin/farm-results-rtx5090'
+# The plates were drawn on a Mac, so they went to origin/main; the courier
+# branch only ever contains what the BOX itself produced. Until they are
+# published through a box job's publish step they are invisible to the guard,
+# and every motion spec on beats 07 and 08 is legally unfileable. That is the
+# entire reason this file exists, and it is why it is filed BEFORE the motion
+# specs rather than beside them.
+#
+# THE SAME TWO-JOB STRUCTURE `ep2-b17-bigbody-plate-0816` USED, copied on
+# purpose -- that lane also had a Mac-drawn plate, also refused to waive, and
+# also published it first so the guards could measure it like any other plate.
+#
+# NO GPU, NO MODEL, NO NETWORK BEYOND FOUR RAW BLOBS, NO SPEND, seconds. It does
+# not compete for the card, so filing it cannot delay a render.
+id: ep2-b0708-twofig-pub-0817
+task: ep2-b0708-twofig-pub-0817
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 15
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: backlog-depth lane, 2026-08-17 -- filed to backlog the moment it dry-ran clean, because it is the
+  gate two beats' motion is waiting on and it costs the card nothing to clear
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINES, node.md verbatim: beat 07 CONFISCATE (0:34-0:37) "Guard 1 points
+  at the scavenger, decisive."; beat 08 INSIDE HIM (0:37-0:42) "Guard 2 lowers the clipboard and points
+  at the scavenger''s belly." THIS JOB RENDERS AND ANIMATES NOTHING. It moves two already-drawn stills
+  from origin/main onto the results branch with their sha256 asserted before anything is written: no voice
+  synthesis, no footage render, no episode assembly, no publication, and shots.md and wave-drafts.yaml
+  are both UNTOUCHED.'
+consumer: 'Beat 07 motion and beat 08 motion, neither of which can be filed at all until these bytes are
+  fetchable from origin/farm-results-rtx5090 -- box_enqueue''s plate check refuses them otherwise and this
+  lane will not waive it. Secondarily the beat-08 board inpaint, which needs a maskable rectangle whose
+  face no hand crosses; r3-s0 is the first plate on the project that has one (measured by the plate lane:
+  exposed face component 20141 px, largest fully unoccluded inscribed rectangle 83x144, grip at the two
+  side edges with only fingertips notching the rim). There is no outcome of this job that leaves those
+  beats where they are: it either makes them fileable or it fails loudly on a sha mismatch.'
+success: 'Four files plus a sha256 manifest on farm-out/ep2-b0708-twofig-pub-0817. THIS JOB''S BAR IS NOT
+  A BEAT''S BAR -- it animates neither beat 07''s point ("Guard 1 points at the scavenger, decisive.")
+  nor beat 08''s ("Guard 2 lowers the clipboard and points at the scavenger''s belly."); no motion is
+  judged here and no frozen-frame verdict applies. PASS is byte-exactness and nothing else. The two PNGs
+  must be byte-identical to origin/main and the fetch step EXITS NONZERO on any sha256 mismatch rather
+  than continuing, so "the file moved between machines" can never quietly become "the file changed":
+  08-inside-him-twofig-mac-r3-s0.png sha256 d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238,
+  07-confiscate-twofig-mac-r1-s0.png sha256 cf97f87834571995aac5e7c2d2a7f091e721e16f07ff11b4cc12ad190d20012b,
+  both 832x1216. The two sidecar YAMLs are fetched against sha256
+  e28136652e6b0a1988bf727d0695123aeb90153eb4dab007b6a2ce42922a2c8c (r3-s0) and
+  68f91e55086a30d1bab901d88708a478ff653bd5a374bccdb6c7999fafb4ed49 (r1-s0) and are THEN STAMPED, so the
+  published YAMLs intentionally differ from origin/main by exactly one appended provenance block -- said
+  here in advance so a later reader cannot mistake the difference for corruption. PRE-REGISTERED FAIL
+  MODES: FAIL-SHA (any of the four blobs does not match its asserted digest -- the job must exit nonzero,
+  not warn); FAIL-STAMP (the stamp step finds no sidecar and must refuse rather than call the job clean);
+  FAIL-EMPTY (fewer than 4 files reach the destination, which is the failure a beat-slug-less publish glob
+  produces and the reason the glob below carries 08-inside-him and 07-confiscate explicitly).'
+why: 'Beats 07 and 08 have a passing two-figure plate and zero motion off it, and the only thing standing
+  between them and a fileable motion spec is that the plate lives on the wrong branch. Measured, not
+  assumed: `git show origin/farm-results-rtx5090:farm-out/ep2-b0708-twofig-mac-0815/` returns "exists on
+  disk, but not in origin/farm-results-rtx5090", while all four blobs are present on origin/main and their
+  content sha256 matches the worktree exactly (checked with `git cat-file blob` on 2026-08-17, not by
+  trusting the filenames). NEVER ALREADY RUN: no `ep2-b0708-twofig-pub-0817` entry in C:\banyan-queue\done
+  and no `ep2-b0708-twofig-pub-0817` directory under C:\banyan-farm\courier-box\farm-out, both listed by
+  hand off the box on 2026-08-17; the only ep2-b0708 artefact anywhere is the Mac job''s own farm-out dir
+  on main, and the courier has no ep2-b0708 directory at all. $0, no GPU, no provider, no spend.'
+est_minutes: 2
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b0708-twofig-pub-0817\fetch_plates.py: |-
+    #!/usr/bin/env python3
+    """Fetch the two passing two-figure plates and REFUSE on any sha mismatch.
+
+    No model, no GPU, no spend. The bytes are the ones committed to origin/main,
+    so every sha256 asserted here is verifiable against the repo by anyone with
+    `git cat-file blob origin/main:<path> | shasum -a 256`.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b0708-twofig-pub-0817-out"
+    RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
+           "farm-out/ep2-b0708-twofig-mac-0815/")
+    UA = {"User-Agent": "banyan-city-twofig-pub/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("08-inside-him-twofig-mac-r3-s0.png",
+         "d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238"),
+        ("08-inside-him-twofig-mac-r3-s0.yaml",
+         "e28136652e6b0a1988bf727d0695123aeb90153eb4dab007b6a2ce42922a2c8c"),
+        ("07-confiscate-twofig-mac-r1-s0.png",
+         "cf97f87834571995aac5e7c2d2a7f091e721e16f07ff11b4cc12ad190d20012b"),
+        ("07-confiscate-twofig-mac-r1-s0.yaml",
+         "68f91e55086a30d1bab901d88708a478ff653bd5a374bccdb6c7999fafb4ed49"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-38s %8d bytes  sha %s  OK" % (name, len(raw), have),
+              flush=True)
+    print("all four blobs match their asserted sha256.", flush=True)
+  C:\banyan-farm\ep2-b0708-twofig-pub-0817\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp both fetched plate sidecars as unapproved provisional stills.
+
+    The Mac sidecars record model, prompt, negative, seed and cost, and they do
+    NOT record whether the still may ship. REFUSES if it finds no sidecar -- a
+    run whose provenance files did not get written must not pass silently.
+    """
+    import glob, os, sys
+
+    OUT = r"C:\banyan-farm\ep2-b0708-twofig-pub-0817-out"
+    side = sorted(glob.glob(os.path.join(OUT, "*-twofig-mac-*.yaml")))
+    if not side:
+        sys.exit("!! no sidecar yaml in %s -- refusing to call the job clean." % OUT)
+    for p in side:
+        with open(p, "a", encoding="utf-8", newline="\n") as fh:
+            fh.write(
+                "# --- appended after the fetch by the backlog-depth lane, 2026-08-17.\n"
+                "approved: false\n"
+                "provisional: true\n"
+                "cost_usd_confirmed: 0\n"
+                "note: |\n"
+                "  A PLATE republished onto the results branch so box_enqueue's plate\n"
+                "  check can fetch and measure it. Not a pick, not a take, not approved\n"
+                "  for any cut, and nothing here was re-rendered: these are the Mac\n"
+                "  bytes of ep2-b0708-twofig-mac-0815 with this block appended. Taste\n"
+                "  and trunk/graft calls are R4's and this job makes none.\n")
+        print("stamped %s" % os.path.basename(p), flush=True)
+    print("stamped %d sidecar(s)" % len(side), flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b0708-twofig-pub-0817\fetch_plates.py
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b0708-twofig-pub-0817\stamp_sidecar.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOBS CARRY THE BEAT SLUGS (08-inside-him and 07-confiscate). Without
+    # them the glob matches nothing and the step publishes nothing while
+    # returning a code that reads like a fetch failure. farm-out is NOT
+    # gitignored, so the runner pushes these itself and no runner change is
+    # needed for them to reach origin/farm-results-rtx5090 -- which is the whole
+    # point of this job.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b0708-twofig-pub-0817-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b0708-twofig-pub-0817"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(out_dir + "/08-inside-him-twofig-mac-r3-s0.*")
+                 + glob.glob(out_dir + "/07-confiscate-twofig-mac-r1-s0.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b0708-twofig-pub-0817.sha256"), "w",
+              newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 4 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b0708-twofig-pub-0817-out\08-inside-him-twofig-mac-r3-s0.png
+- C:\banyan-farm\ep2-b0708-twofig-pub-0817-out\07-confiscate-twofig-mac-r1-s0.png
