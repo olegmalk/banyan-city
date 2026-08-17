@@ -197,6 +197,60 @@ modified paths in the gap):
 **Net: one future failure mode, two named directories, zero lanes blocked
 today.** The hold is affordable, and the thing to watch is the tripwire below.
 
+## Where the check runs: the Mac today, the box only after the push
+
+The box is the right long-term home — it is the only machine holding both
+branches and the queue — and it is **not runnable there today**. Measured, not
+assumed.
+
+**The blocker is the push hold itself.** The box's clone tracks `origin/main`, so
+on the box "absent from `main`" means "absent from `origin/main`", and local
+`main` is 147 commits ahead. Run exactly as the box would run it:
+
+```
+$ check_results_merged.py --main-ref origin/main --queue-dir C:\banyan-queue
+gate 2, failed/ entries owning a complete set absent from origin/main: 8
+  MISLABELLED ep2-b01-final055-r2 / ep2-b01-shape / ep2-b05-scene-0814
+              ep2-b09 / ep2-b11 / ep2-b12 / ep2-b18 / ep2-b21-scene-0814
+```
+
+**All eight are false positives** — every one is a set recovered into `main`
+today and verified by sha. On the box the gate's red would mean "the push is
+held", not "results are stranded", and a guard whose red means something other
+than what it says is the fifth decoration, not the fourth. The same run from the
+Mac, where local `main` is visible, is **rc=0 with both gates green**.
+
+**A second reason not to stage it there.** The established scheduled-task pattern
+runs a copy OUTSIDE the clone — `banyan-box-autofill` executes
+`C:\banyan-farm\box-autofill.cmd`, which runs `C:\banyan-farm\box_autofill.py`,
+not the clone's copy. That is the same staged-copy arrangement whose drift caused
+group 5 of the triage, and a staged copy of a *guard* silently reading old logic
+is worse than no guard: it would report green from last week's rules.
+
+**So it runs from the Mac for now**, on demand, which is the only place both refs
+resolve. Nothing was wired into `box_runner.py` and the runner was not touched or
+restarted — the card was never at risk.
+
+**Preconditions for moving it to the box**, in order: the push lands (or the
+check is given a ref that can see local `main`); it is invoked from the clone
+rather than a staged copy, so its logic cannot go stale; and it runs as its own
+scheduled task with `MultipleInstances IgnoreNew` like the autofill tick, never
+inside the runner's loop — a daemon edit needs a human login to restart and a bug
+in it stops the card.
+
+`RC_CANNOT_CHECK` is loud wherever it runs, which is the one property that must
+not be lost in the move. Both unreadable-input paths exit **2** and say so:
+
+```
+!! CANNOT CHECK: ... cannot read `origin/farm-results-NOPE`.
+   NOT passing: the branch this check cannot read is the one place the leak hides.
+!! CANNOT CHECK mislabelled failures: queue dir not readable: ...
+```
+
+A wrapper that discards that exit code, or logs it to a file nobody reads,
+recreates precisely today's pattern — a check that quietly reports "couldn't
+tell". Whatever schedules this must treat 2 as an alarm, not as "no findings".
+
 ## THE LIVE TRIPWIRE: two beat-14 directories the box cannot reach
 
 ```
