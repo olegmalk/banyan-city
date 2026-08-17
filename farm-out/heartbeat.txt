@@ -2473,3 +2473,4 @@
 12:23:05Z DONE task=ep2-b10-cast-0817-1786968762 rc=0 artifacts=4
 12:23:34Z STARTED task=ep2-b11-cast-0817-1786968849 attempt=1 on box-runner
 12:26:23Z DONE task=ep2-b11-cast-0817-1786968849 rc=0 artifacts=4
+12:26:48Z box-runner idle ready=0 failed=33
