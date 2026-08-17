@@ -188,6 +188,36 @@ is R4, the founder's alone.
 - **Arm 3 — ORE-style split encoding.** Only if Arm 2 fails or is too heavy for
   the card. Per-clause text encoding with object-specific EOS.
 
+## Operational: THE BOX RUNNER LIES ABOUT ITS OWN STATE — do not trust `State: Running`
+
+Cost this lane ~8 minutes on 2026-08-17 and it will cost the next lane more if it
+is not written down. The scheduled task `banyan-box-runner` reported
+**`State: Running`** continuously while the runner was **dead**: no job claimed,
+three jobs sitting in `ready/`, GPU at 0% with 0 MiB used.
+
+**The task state is worthless as evidence.** The two signals that are not:
+
+1. **The heartbeat gap.** `C:\banyan-queue\heartbeats.jsonl` — the runner normally
+   writes every ~15s. Compare the last `ts` against the box's own clock
+   (`powershell Get-Date -Format o`), not against your laptop's. Here the last
+   event was a `job_done` at `12:27:26Z` and the box clock read `12:35:17Z` — an
+   8-minute gap on a 15-second poll. That is dead, whatever the task says.
+2. **GPU memory at zero**, not just utilisation. 0 MiB *used* means no model is
+   resident, so nothing is mid-render. Utilisation alone cannot tell "idle" from
+   "between steps".
+
+A third, cheap and decisive: `tasklist /FI "PID eq <pid from the last heartbeat>"`.
+The heartbeat carries its own `pid`; here 2748 was simply absent from the process
+list.
+
+**It self-heals, eventually.** `banyan-runner-watchdog` exists and did restart it —
+a fresh `runner_up` with a new pid at `12:35:21Z`, which then claimed work
+immediately. So the correct response to a stalled fire is **diagnose, wait for the
+watchdog, and re-check the artifacts** — not re-file the job. An output dir under
+`C:\banyan-farm\courier-box\farm-out` proves a job ran; **absence proves nothing**.
+And do not consult `pipeline/measured/queue-history.json` for this — days stale,
+twelve duplicate filings.
+
 ## Machine discipline
 
 Fixed seed set across arms; one variable at a time. Backend split is real —
