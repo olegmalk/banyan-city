@@ -2717,3 +2717,4 @@
 16:23:56Z STARTED task=ep2-b01-nub-motion-0818-1787070221 attempt=1 on box-runner
 16:30:13Z DONE task=ep2-b01-nub-motion-0818-1787070221 rc=0 artifacts=2
 16:30:21Z box-runner idle ready=0 failed=39
+16:40:24Z box-runner idle ready=0 failed=39
