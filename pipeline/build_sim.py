@@ -4472,17 +4472,45 @@ def build(out_dir: Path):
                        f'<a href="https://github.com/{GH}/issues/1">be the '
                        'first &rarr;</a></p>')
 
+    # --- what this caption is allowed to call the cut. It said "the working cut"
+    # unconditionally, which stopped being true on 2026-08-13: the founder closed
+    # episode 1 — "we have already published it dude, we are done. lets move on to
+    # episode 2." — recorded in review/inbox.yaml and carried verbatim in
+    # pipeline/measured/episode-progress.yaml `ep1_publication_CORRECTION_0819`.
+    # `data.cut_passed()` now reads that ruling, so the wording follows the same
+    # flag the milestones line does and the two can never disagree again.
+    #
+    # THE STILLS COUNT STAYS, because it is still a true measurement — it just is
+    # not an ASK any more. 14/15 carry a pick made one at a time; the fifteenth was
+    # passed the way the other eleven were, by publishing the cut, and the caption
+    # says so instead of leaving a gap that reads as an outstanding gate.
+    ruling = data.publication_ruling()
+    if passed:
+        cut_line = ('the published cut'
+                    + (f', live since {_e(ruling["date"])}' if ruling else '')
+                    + f' — {tot["final"]}/{tot["total"]} beat STILLS carry a pick '
+                      'made on its own; publishing the cut passed the rest')
+    else:
+        cut_line = (f'the working cut — {tot["final"]}/{tot["total"]} beat STILLS '
+                    'carry the author’s pick; the motion over them is a separate '
+                    'clock — see “When is an episode finished”')
+
     player = (f'<figure class="phone"><video controls playsinline preload="metadata" '
               f'poster="{_e(hero["poster"])}" src="{_e(hero["video"])}"></video>'
               f'<figcaption>Episode {hero["number"]} · “{_e(hero["title"])}” — '
-              f'the working cut — {tot["final"]}/{tot["total"]} beat STILLS carry the '
-              f'author’s pick; the motion over them is a separate clock — see '
-              f'“When is an episode finished”</figcaption></figure>'
+              f'{cut_line}</figcaption></figure>'
               ) if hero["video"] else (
         f'<p><a class="btn" href="{_e(hero["watch"])}">▶ Watch episode {hero["number"]} &rarr;</a></p>')
 
+    # Same ruling, same reason as the caption above: once the episode is
+    # published, a still with no pick of its own is a MEASUREMENT, not a gate.
+    # Left as "waiting on the author" it contradicted the caption two lines up —
+    # one surface saying publishing passed the rest, the other still counting him
+    # as the blocker — which is exactly the drift this pass exists to remove.
     waiting = (f'{tot["awaiting_render"]} waiting on a render · '
-               f'{tot["awaiting_pick"]} waiting on the author to pick')
+               + (f'{tot["awaiting_pick"]} passed with the cut rather than on '
+                  'its own' if passed
+                  else f'{tot["awaiting_pick"]} waiting on the author to pick'))
 
     out = f"""<!doctype html>
 <html lang="en">

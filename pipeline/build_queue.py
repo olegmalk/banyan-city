@@ -347,6 +347,57 @@ main { max-width: 1180px; }
 
 # ---------------------------------------------------------------- reading
 
+# --- the episode-1 publication correction, applied at RENDER time -------------
+# Ten of the `upcoming` rows this page draws were authored 2026-08-11..13, while
+# episode 1 was still open, and their `consumer:` prose still names the reader as
+# the man being asked to pass it: "the episode-1 cut he is being asked to pass"
+# (three rows still drawn `held` — the page counts those as "held on you") and
+# "the next ep1 screening cut" (seven he cancelled himself). He closed episode 1
+# on 2026-08-13 — "we have already published it dude, we are done. lets move on
+# to episode 2." — recorded three times in review/inbox.yaml's `resolved:`
+# entries and carried verbatim in pipeline/measured/episode-progress.yaml
+# `ep1_publication_CORRECTION_0819`. Episode 1 has been live for a week.
+#
+# THE SPECS THEMSELVES ARE NOT REWRITTEN. A job spec is the record of what was
+# asked for on the day it was written, and editing its body would destroy that —
+# the same reason that correction key keeps `states_before` beside the new states
+# instead of overwriting them. So the correction is applied to the page's copy of
+# the row, not to the file: the original sentence stays readable and a dated
+# sibling follows it, which is this house's way of superseding a written thing.
+#
+# Applied here in `load()` because it is the one door all of this page's data
+# comes through — the HTML cards, queue-data.json, queue-detail.json and the
+# SPECS map the live block matches a running job against all read what this
+# returns, so correcting it once means no two surfaces can disagree.
+EP1_DRIFT_PHRASES = ("being asked to pass", "the next ep1 screening cut",
+                     "episode-1 cut he is about")
+EP1_SHIPPED_CORRECTION = (
+    "CORRECTION 2026-08-19 — the sentence above was written before the founder "
+    "closed episode 1 on 2026-08-13 (“we have already published it dude, we "
+    "are done. lets move on to episode 2.”). Episode 1 is published and "
+    "live; nothing here is waiting on him to pass it. See "
+    "ep1_publication_CORRECTION_0819 in pipeline/measured/episode-progress.yaml.")
+
+
+def ep1_drift(text) -> bool:
+    """Does this consumer line still narrate episode 1 as awaiting his pass?"""
+    low = str(text or "").lower()
+    return any(p in low for p in EP1_DRIFT_PHRASES)
+
+
+def apply_ep1_correction(data: dict) -> dict:
+    """Append the dated correction to every upcoming row that still asks him to
+    pass a published episode. Idempotent, and it never edits the sentence it
+    corrects. Returns `data` for chaining."""
+    for row in (data.get("upcoming") or []):
+        if not isinstance(row, dict):
+            continue
+        said = row.get("consumer")
+        if said and ep1_drift(said) and EP1_SHIPPED_CORRECTION not in said:
+            row["consumer"] = f"{said} {EP1_SHIPPED_CORRECTION}"
+    return data
+
+
 def load(path: Path = None) -> dict | None:
     """The committed history, or None. Never raises: a missing or half-written
     file must degrade this page to an honest sentence, not red the whole site
@@ -356,7 +407,7 @@ def load(path: Path = None) -> dict | None:
         data = json.loads(p.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
-    return data if isinstance(data, dict) else None
+    return apply_ep1_correction(data) if isinstance(data, dict) else None
 
 
 def acknowledged_failures() -> int:

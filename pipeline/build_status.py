@@ -119,10 +119,54 @@ def vo_scenes(d: Path = None) -> int:
     return len(list(clips.glob("[0-9][0-9]-vo.mp3"))) if clips.is_dir() else 0
 
 
+# Where a WHOLE-EPISODE ruling lives. The leaf convention below records an
+# approval per node, and it works when the pass arrives as a leaf; episode 1's
+# did not. On 2026-08-13 the founder closed the episode out loud — "we have
+# already published it dude, we are done. lets move on to episode 2." — recorded
+# three times in review/inbox.yaml's `resolved:` entries and carried verbatim and
+# dated in this file's `ep1_publication_CORRECTION_0819`. No T3 leaf was ever
+# stamped for it, so the leaf test returned False for six days and every page
+# built on it kept asking a man to pass a cut he had already published (the same
+# defect the correction key describes for /status's per-beat counts, one surface
+# over). The ruling is read where it actually lives.
+PROGRESS_FILE = REPO / "pipeline" / "measured" / "episode-progress.yaml"
+
+
+def publication_ruling(path: Path = None) -> dict | None:
+    """The founder's recorded whole-episode pass for episode 1, or None.
+
+    Shape-checked rather than trusted: a correction key missing either the date
+    or the words he actually said is not a ruling and returns None, so a
+    half-written record can never flip a page to "passed".
+    """
+    try:
+        doc = yaml.safe_load((path or PROGRESS_FILE).read_text(
+            encoding="utf-8", errors="replace")) or {}
+    except Exception:
+        return None
+    if not isinstance(doc, dict):
+        return None
+    for key, val in doc.items():
+        if not (isinstance(key, str)
+                and key.startswith("ep1_publication_CORRECTION_")
+                and isinstance(val, dict)):
+            continue
+        date = str(val.get("ruling_date") or "").strip()
+        said = str(val.get("ruling_verbatim") or "").strip()
+        if date and said:
+            return {"date": date, "verbatim": said,
+                    "recorded_in": str(val.get("ruling_recorded_in") or "")}
+    return None
+
+
 def cut_passed(d: Path = None) -> bool:
-    """Has the author passed a full cut? True only when a T3 leaf carries
+    """Has the author passed a full cut? True when a T3 leaf carries
     `approved_by: founder` — the same convention T0 scripts already use
-    (STEWARDSHIP.md §6). Until then the page must call the cut 'working'."""
+    (STEWARDSHIP.md §6) — or when he closed the whole episode and that ruling is
+    on the record (`publication_ruling`, above). Until one of those exists the
+    page must call the cut 'working'."""
+    if publication_ruling():
+        return True
     d = d or EPISODE
     for f in (d / "leaves").glob("*.yaml"):
         try:
