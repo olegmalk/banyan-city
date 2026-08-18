@@ -1,0 +1,31 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 1
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260837
+task: ep2-b01-growmotion-b12-0818
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0189
+compute_s_per_video_s: 52.8
+# --- appended by ep2-b01-growmotion-b12-0818 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  A CANDIDATE TAKE FOR THE EPISODE 2 COLD OPEN. It animates the
+  founder's own 2026-08-13 route -- a small inpainted nub, grown by
+  the motion prompt -- on the frame-1 plate that passed its bar 7 of
+  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered
+  in pipeline/jobs/ep2-b01-growmotion-b12-0818.yaml BEFORE this render
+  existed. Not approved and not cut until those frames are opened.
