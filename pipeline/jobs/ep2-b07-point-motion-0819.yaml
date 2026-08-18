@@ -1,0 +1,460 @@
+# 2026-08-19, BEAT 07 MOTION. ONE SAMPLE, ONE SEED, OFF THE ONE PLATE THAT
+# CLEARS FIGURE COUNT AND CAST.
+#
+# ============================================================================
+# THE VERDICT THIS EXECUTES
+# ============================================================================
+# review/ep2-picks/b07-twofig-nobald-0817-verdict.yaml, filed today by the
+# beat-07 judging lane after opening all 24 frames of both 0817 rungs
+# individually at native 832x1216. Its finding, in one line:
+#
+#   NO FRAME CLEARS THE STILL BAR -- term 5, the POINT, is 0 of 12 on both
+#   rungs -- BUT ONE FRAME CLEARS THE FIGURE-COUNT CLAUSE AND THE
+#   CAST/IDENTITY CLAUSE: ep2-b07-twofig-0817 r1-s3.
+#
+# That frame is the FIRST PLATE BEAT 07 HAS EVER OWNED that holds two whole
+# figures -- one adult human guard, one goblin, shoulder to shoulder in one
+# depth plane -- with the guard cast correctly (dark cropped hair, legible
+# wire-rim glasses, tan-family wrap tunic, wide white sash) and NO BOARD
+# anywhere in frame. Every earlier beat-07 candidate failed on one of those:
+# the 2026-08-15 two-figure plate is beat 08's and holds a CLIPBOARD, which is
+# guard 2's prop, on a BALD man.
+#
+# ============================================================================
+# WHY THIS IS A MOTION JOB AND NOT A THIRTEENTH STILL
+# ============================================================================
+# Stated plainly because the obvious reading of "the point is 0 of 12" is
+# "render more stills until it isn't", and that is the wrong next job.
+#
+# THE STILL PATH'S NEXT LEVER IS NOT AVAILABLE TO THIS LANE. Rung B's own spec
+# predicted, before its pixels existed, that if the point were still absent the
+# residual suspect would be the DANBOORU COUNT TAG. Both rungs derive and
+# declare `1boy` on a two-figure beat; the goblin got a grammatical subject slot
+# and never a count slot. Today's verdict corroborates the prediction on both
+# halves: the point is absent AND rung B multiplies the goblin to three or more
+# figures in 10 of 12. Fixing that needs a PER-VARIANT COUNT DECLARATION --
+# goblin_ipa_sample.py calling wg.apply_variant_declaration, which already
+# exists and which the sampler simply never calls. That is a shared-sampler
+# change, it is on this lane's do-not-touch list, and it belongs to whoever owns
+# that file. Filing another still against the same limit would burn the card on
+# a question already answered twice.
+#
+# WHAT r1-s3 MAKES NEWLY ASKABLE IS A DIFFERENT QUESTION, AND IT HAS BEEN OPEN
+# SINCE 2026-08-15. done-definitions.yaml, `figure_count_ruled_from_the_script_0817`,
+# last paragraph, names three queued engine probes and their shared question:
+# "whether a gesture binds to the GUARD once both figures are fixed by an init
+# -- in text-to-image it did not, a pointing arm attaching to the goblin 3 of 3
+# and a board 9 of 12 however worded." NOBODY HAS EVER ASKED IT IN
+# IMAGE-TO-VIDEO OFF A TWO-FIGURE BEAT-07 PLATE, because until this frame no
+# such plate existed. The still evidence says text-to-image cannot aim a point
+# on this beat. It says nothing at all about whether i2v can, off an init that
+# has already spent the count and the casting.
+#
+# AND THE PRIOR IS FAVOURABLE, WHICH IS WHY IT IS WORTH THE CARD TIME. This
+# engine's converged finding is that it renders GROSS WHOLE-BODY MOTION and
+# drops small in-hand actions: 12 of 12 whole-body against 0 of 8 in-hand
+# (done-definitions.yaml beat 10; ep2-b14-mac-motion-0818's outcome sharpened it
+# further -- on beat 14 the arm REACHED, and only the finger-scale picking
+# failed). RAISING AN ARM AND EXTENDING IT AT A MAN STANDING BESIDE YOU IS
+# GROSS WHOLE-BODY MOTION. It is the class this engine does render. That is a
+# prediction, made here before the render, and it is the reason this job exists
+# rather than a hope attached to it afterwards.
+#
+# ============================================================================
+# WHAT THE BEAT ASKS FOR, QUOTED NOT PARAPHRASED
+# ============================================================================
+# genomes/sapling/nodes/002b-first-citizen/node.md, 0:34-0:37, verbatim:
+#
+#   **CONFISCATE - 0:34-0:37**
+#   Guard 1 points at the scavenger, decisive.
+#   > **GUARD 1:** So we confiscate the apple.
+#
+# TWO FIGURES, NOT THREE. `figure_count_ruled_from_the_script_0817` (top level
+# of done-definitions.yaml, and repeated in beats.'07'): the actor is Guard 1,
+# the target is the scavenger, the second guard appears nowhere in the beat's
+# line, dialogue or stage direction, and the three-figure blocker is REMOVED.
+# The same ruling supersedes the `done_when` clause demanding "the clipboard
+# stays the same object in the same hands" -- the clipboard is guard 2's prop
+# and with guard 2 out of frame that clause has no subject in the shot. This
+# job honours both: the plate has two figures and no board, and no board is
+# asked for or expected.
+#
+# THE PLATE CLEARS THE PLATE HALF OF THE BEAT AND ONLY THAT HALF, and saying so
+# now is the difference between a bar and a rationalisation. r1-s3 supplies the
+# COUNT, the CAST, the WORLD and the ABSENCE OF THE BOARD. It does NOT contain
+# the beat: the guard's near hand is joined with the goblin's at frame centre
+# and neither arm is extended. THE POINT IS ENTIRELY THIS CLIP'S JOB.
+#
+# ============================================================================
+# THE PLATE'S NAMED DEFECTS, CARRIED FORWARD SO THEY ARE NOT DISCOVERED LATER
+# ============================================================================
+# r1-s3 is NOT approved, NOT picked and NOT clean. Three faults, from today's
+# verdict, and they are stated here rather than left in the other file:
+#   1. THE GOBLIN WEARS ROUND RED WIRE-RIM GLASSES. The eyewear-reaching-the-
+#      goblin fail mode was pre-registered by rung B's spec as an unmeasured
+#      risk; it is now measured at 5 of 12 and it fired on this exact frame.
+#   2. COSTUME MERGE. The goblin wears the guard's own pale wrap tunic and
+#      white sash. Not a pre-registered term -- recorded as a new fault.
+#   3. THE SKY BAND IS A SLIVER. The treeline is a thin dark strip at the
+#      extreme top edge with sky only in the corners. Term 7 passes, barely.
+# NONE OF THE THREE BLOCKS THE QUESTION THIS JOB ASKS, which is where the
+# pointing arm lands. All three would block a CUT, and no cut is proposed.
+#
+# ============================================================================
+# THE BAR, PRE-REGISTERED. IT IS NOT REWRITTEN AFTERWARDS.
+# ============================================================================
+# Judged by opening ALL 97 frames CONSECUTIVELY via pipeline/coldread_frames.py
+# with --pad 60 (done-definitions.yaml beats.'03'.instrument_note: the motion-
+# window rule latches onto an early micro-move and its dense strip can miss the
+# action entirely). NEVER by `depth` or `cadence`: both are retired and depth is
+# inverted, and no number from either will be quoted.
+#
+#   PASS requires ALL FOUR:
+#     M1 THE ARM EXTENDS. The guard's arm leaves the joined-hands position it
+#        holds at f000 and extends. Measured as hand position RELATIVE TO HIS
+#        OWN SHOULDER, not relative to the frame, so a camera move cannot score
+#        as an action.
+#     M2 IT IS AIMED AT THE GOBLIN. The extended arm's line runs toward the
+#        goblin, who is at frame right. This is the clause the twelve stills
+#        failed: r1-s0 of rung B produced the only pointing hand in either rung
+#        and aimed it UP AND AWAY. An arm that extends anywhere else is M1
+#        without M2, and that is a FAIL.
+#     M3 IT IS THE GUARD'S ARM. The pointing limb belongs to the human guard at
+#        frame left, not to the goblin. Named as its own clause because this is
+#        the exact failure text-to-image produced 3 of 3 on this beat family --
+#        the pointing arm attached to the goblin -- and the whole reason the
+#        question is being re-asked off an init.
+#     M4 BOTH MEN STAY THEMSELVES AND STAY TWO. The guard keeps dark cropped
+#        hair, wire-rims and his pale wrap tunic and white sash; the goblin
+#        keeps green skin and pointed ears; NO THIRD FIGURE ARRIVES; no reframe,
+#        no location change, no cut.
+#
+#   FAIL MODES, NAMED IN ADVANCE:
+#     F1 FROZEN ARMS -- hands in the same position relative to his shoulder at
+#        f000 and f096, only the linework re-inked.
+#     F2 THE GOBLIN POINTS -- M1 and M2 pass on the wrong limb. THE PREDICTED
+#        FAILURE IF ONE COMES, on the 3-of-3 text-to-image record.
+#     F3 AIMLESS EXTENSION -- M1 without M2. The arm rises and goes nowhere,
+#        which is exactly what r1-s0 did in a still.
+#     F4 A THIRD FIGURE ARRIVES. Rung B multiplied the goblin in 10 of 12
+#        stills. Whether an init suppresses that in motion is unknown, and if a
+#        third figure walks in the clip fails regardless of the arm.
+#     F5 IDENTITY COLLAPSE -- the guard goes bald or loses the glasses, or the
+#        two men merge into one costume. Beat 11's take collapsed exactly this
+#        way through a turn, off a plate that did not contain the cast; this
+#        plate does contain it, which is what makes the test meaningful.
+#     F6 CAMERA-ONLY -- the frame pushes, pulls or drifts and both men keep the
+#        same relative geometry.
+#     F7 SCENE BREAK -- cut, reframe to a portrait, new location.
+#
+#   A PARTIAL IS A FAIL AND A CHANGED PICTURE IS NOT A PASS. If M1+M3 pass and
+#   M2 fails, that is still a FAIL -- and it is also the most useful single
+#   outcome short of a pass, because it would say the gesture is renderable and
+#   only the aim is missing, which is a different production decision from
+#   "beat 07 cannot be animated".
+#
+# ============================================================================
+# THE RECIPE, AND WHAT DIFFERS FROM THE PROVEN ONE
+# ============================================================================
+# Everything is the fixed production recipe, byte for byte with
+# ep2-b14-mac-motion-0818 and through it ep2-b17-bigbody-motion-0816 (12 of 12
+# stand-ups): 704x1280, 24 fps, guidance 2.0, distilled sigmas, two-stage,
+# image-crf 33, sequential offload, production mode. The negative is
+# byte-identical to both.
+#
+# TWO THINGS DIFFER AND BOTH ARE DECLARED:
+#   1. THE PLATE. That is the point of the job.
+#   2. FRAMES: 97, not 121. 97 at 24 fps is this beat family's established clip
+#      length (every beat-02 and beat-03 wave on the box is 97) and beat 07 is a
+#      THREE-SECOND shot, 0:34-0:37, the shortest in the stretch. Named here so
+#      nobody later reads this as a byte-identical A/B against the beat-14 clip.
+#
+# NOT SWEPT, BY INSTRUCTION: guidance, CFG, checkpoint, wording and seed. ONE
+# SAMPLE, ONE SEED, ONE RECIPE. The plate's three named defects are WATCHES on
+# this clip, not levers this job pulls; nothing is added to the negative to
+# chase them, because a second variable on a sample whose whole job is to
+# isolate the first is the error the ONE-SAMPLE rule exists to prevent.
+#
+# ============================================================================
+# GUARDS
+# ============================================================================
+# --src is a plate PUBLISHED by ep2-b07-twofig-0817, whose spec is in
+# pipeline/jobs and whose --refs is refs-guards-twoinfield-nos2-0815 -- NOT on
+# CARD_REFS_DENYLIST -- so the plate check and the refs check both RUN and both
+# PASS. NO plate_ack ANYWHERE IN THIS LANE. Measured before filing with
+# box_enqueue's own functions on the exact crop the box will make:
+# border_flatness 0.0659 against the 0.62 refuse line, border_colour_flatness
+# 0.0142. The producing job's outputs are on origin/farm-results-rtx5090
+# (27 paths under farm-out/ep2-b07-twofig-0817/), so the plate guard's fetch
+# resolves. Payload dir and out dir are distinct. Publish glob carries the beat
+# slug 07-confiscate. Every --out is an absolute Windows path.
+#
+# $0. Local card, no provider, no paid engine. Silent: no voice synthesis, no
+# episode assembly, nothing published as footage.
+id: ep2-b07-point-motion-0819
+task: ep2-b07-point-motion-0819
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 07 judging lane, 2026-08-19 -- filed off its own verdict the moment that verdict was committed,
+  because the finding licensed exactly one next job and the backlog does not author work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, so STEWARDSHIP.md
+  §6 is satisfied and this is a script the founder has read. The action clause animates beat 07''s OWN
+  scripted stage direction. Silent, $0, no voice synthesis and no episode assembly. shots.md and
+  pipeline/wave-drafts.yaml are UNTOUCHED.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'THE OPEN ENGINE QUESTION ON BEAT 07, and beat 07''s cut slot behind it. done-definitions.yaml''s
+  `figure_count_ruled_from_the_script_0817` names it: whether a gesture binds to the GUARD once both figures
+  are fixed by an init -- in text-to-image it did not, a pointing arm attaching to the goblin 3 of 3. Twelve
+  fresh stills on 2026-08-17 could not aim a point either (0 of 12, both rungs, review/ep2-picks/b07-twofig-nobald-0817-verdict.yaml).
+  This is the first time the question can be asked in image-to-video, because r1-s3 is the first beat-07
+  plate that holds two whole figures with the right man in them. A FAIL IS ALSO CONSUMED: F3 aimless extension
+  would say the gesture renders and only the aim is missing, F2 would say the limb still binds to the wrong
+  character even off an init, and those are different production decisions. Beat 07 is currently a SLATE
+  in review/ep2-demo-0818, so anything legible here is upside on nothing.'
+success: 'A 704x1280 mp4, 97 frames at 24 fps, opening on ep2-b07-twofig-0817 r1-s3. PASS is M1+M2+M3+M4
+  as pre-registered above BEFORE this render existed: the guard''s arm leaves its joined-hands position
+  and extends, measured relative to his own shoulder and not to the frame; the extension is AIMED at the
+  goblin at frame right; the pointing limb is THE GUARD''S and not the goblin''s; and both men hold their
+  identities with no third figure, no reframe and no cut. FAIL is any of F1 frozen arms, F2 the goblin points
+  (the predicted failure if one comes, on the 3-of-3 text-to-image record), F3 aimless extension (what the
+  one pointing still did), F4 a third figure arrives (rung B multiplied the goblin in 10 of 12 stills),
+  F5 identity collapse, F6 camera-only, F7 scene break. A PARTIAL IS A FAIL. Judged by opening all 97 frames
+  CONSECUTIVELY via pipeline/coldread_frames.py --pad 60, never by depth or cadence, both retired.'
+why: 'Beat 07 is a SLATE in the episode cut and has never had a plate of its own. It now has one -- the
+  only frame in 24 that clears both figure count and cast -- and the only clause it fails is the beat''s
+  own action, which is what a motion job is for. The still path''s next lever is a per-variant count declaration
+  in a shared sampler, which is another lane''s file, so the still lane is BLOCKED while this question is
+  not. Seven minutes of local GPU, $0, no provider, one seed.'
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b07-point-motion-0819\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b07-point-motion-0819\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. This lane's
+    standing requirement is that anything it publishes says so on its face, so
+    the keys are appended here rather than asserted in a commit message nobody
+    downstream reads. REFUSES if the sidecar is missing -- a clip whose
+    provenance file did not get written must not pass silently.
+
+    `is_show_content: true`: this animates beat 07's own scripted line on the
+    beat's own plate, so it is a candidate for the cut and not an engine probe.
+    It is still `approved: false` and `provisional: true`, and the INIT PLATE
+    ITSELF IS UNAPPROVED AND CARRIES THREE NAMED FAULTS -- see plate_faults
+    below. Nothing is cut until the 97 frames are opened against the bar
+    pre-registered in this spec, and R4 taste calls are the founder's.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b07-point-motion-0819 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: true\n"
+            "note: |\n"
+            "  BEAT 07 CONFISCATE, animating the beat's own scripted stage\n"
+            "  direction on ep2-b07-twofig-0817 r1-s3 -- the only frame of 24\n"
+            "  that clears both the figure-count clause and the cast/identity\n"
+            "  clause of that job's pre-registered bar.\n"
+            "  THE INIT PLATE IS UNAPPROVED AND HAS THREE NAMED FAULTS: the\n"
+            "  goblin wears round red wire-rim glasses (the eyewear fail mode\n"
+            "  that spec pre-registered, measured at 5 of 12 and fired on this\n"
+            "  frame); the goblin wears the guard's own tunic and sash (costume\n"
+            "  merge); and the sky band is a sliver. None blocks the question\n"
+            "  this clip asks -- where the pointing arm lands -- and all three\n"
+            "  would block a cut.\n"
+            "  Judged against the bar in pipeline/jobs/ep2-b07-point-motion-0819.yaml\n"
+            "  committed BEFORE this render existed. Not approved and not cut\n"
+            "  until those 97 frames are opened consecutively.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b07-point-motion-0819\b07-motion-prompt.txt: 'The guard raises his arm and points
+    at the goblin beside him, decisive. 2D anime, hand-drawn cel animation, flat cel shading, clean ink
+    linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b07-point-motion-0819\b07-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b07-point-motion-0819\b07-jobs-encode.json: |-
+    [
+     {
+      "beat": 7,
+      "embeds": "C:\\banyan-farm\\ep2-b07-point-motion-0819-out\\b07-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b07-point-motion-0819\\b07-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b07-point-motion-0819\\b07-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b07-point-motion-0819\b07-jobs-render.json: |-
+    [
+     {
+      "beat": 7,
+      "seed": 20260819,
+      "embeds": "C:\\banyan-farm\\ep2-b07-point-motion-0819-out\\b07-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b07-point-motion-0819-out\\b07-twofig-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b07-point-motion-0819-out\\07-confiscate-LTX-twofig-r1s3.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-point-motion-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b07-twofig-0817\07-confiscate-ipa-r1-w015-s3.png
+  - --sha256
+  - 95e63800a585d0cf87ba9a1e7b499e8145db65600766cacf966be3ffcd2253fd
+  - --out
+  - C:\banyan-farm\ep2-b07-point-motion-0819-out\b07-twofig-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b07-point-motion-0819\b07-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b07-point-motion-0819\b07-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b07-point-motion-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b07-point-motion-0819-out\bench-b07-twofig.jsonl
+  - --bench-label
+  - ep2-b07-point-motion-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-point-motion-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b07-point-motion-0819-out\07-confiscate-LTX-twofig-r1s3.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (07-confiscate). Without it the glob
+    # matches nothing and the step publishes nothing while returning a code
+    # that reads like a render failure -- that is what made six rendered
+    # plates read as six failures on 2026-08-14. No allow_fail: a publish
+    # that cannot find its files is a FAIL of the job, not a footnote.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b07-point-motion-0819-out"
+    pay_dir = "C:/banyan-farm/ep2-b07-point-motion-0819"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b07-point-motion-0819"
+    os.makedirs(dst, exist_ok=True)
+    files = sorted(glob.glob(out_dir + "/07-confiscate-LTX-twofig-r1s3.mp4*")
+                   + glob.glob(out_dir + "/b07-twofig-init-704x1280.png")
+                   + glob.glob(out_dir + "/bench-b07-twofig.jsonl")
+                   + glob.glob(pay_dir + "/b07-motion-prompt.txt")
+                   + glob.glob(pay_dir + "/b07-negative.txt"))
+    lines = []
+    for f in files:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b07-point-motion-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(files), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(files) >= 6 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b07-point-motion-0819-out\07-confiscate-LTX-twofig-r1s3.mp4
+- C:\banyan-farm\ep2-b07-point-motion-0819-out\b07-twofig-init-704x1280.png
+plate_faults:
+  init: farm-out/ep2-b07-twofig-0817/07-confiscate-ipa-r1-w015-s3.png
+  sha256: 95e63800a585d0cf87ba9a1e7b499e8145db65600766cacf966be3ffcd2253fd
+  status: 'UNAPPROVED AND PROVISIONAL. It clears the figure-count and cast/identity clauses of its own job''s
+    pre-registered bar and fails that bar overall on term 5, the point. It is NOT a pick and no plate_ack
+    is written for it anywhere.'
+  named_faults:
+  - 'the goblin wears round RED wire-rim glasses -- the eyewear-reaching-the-goblin fail mode, pre-registered
+    by ep2-b07-twofig-0817 as an unmeasured risk, now measured at 5 of 12 and fired on this frame'
+  - 'costume merge: the goblin wears the guard''s own pale wrap tunic and white sash'
+  - 'the sky band is a sliver -- the treeline is a thin strip at the extreme top edge, so term 7 passes
+    only barely and this frame is not evidence the wording delivers a sky'
+  what_they_block: 'A CUT, all three. None of them blocks the question this job asks, which is which limb
+    the pointing gesture attaches to.'
