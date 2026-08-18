@@ -1,0 +1,121 @@
+{
+  "id": "ep2-b01-nub-motion-0818-1787070221",
+  "task": "ep2-b01-nub-motion-0818",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 33,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-nubcomp-b-0818\\b01-nubcomp-s20260826.png",
+        "--sha256",
+        "1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36",
+        "--out",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-nub-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\b01-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\b01-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "121",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b01-nub-motion-0818",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\bench-b01-nubgrow.jsonl",
+        "--bench-label",
+        "ep2-b01-nub-motion-0818"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\stamp_sidecar.py",
+        "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\01-cold-open-LTX-nubgrow.mp4.meta.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing ONE file is a FAIL of the job. No allow_fail.\nimport hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-nub-motion-0818-out\"\npay_dir = \"C:/banyan-farm/ep2-b01-nub-motion-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-nub-motion-0818\"\nWANT = [\n    (out_dir, \"01-cold-open-LTX-nubgrow.mp4\"),\n    (out_dir, \"01-cold-open-LTX-nubgrow.mp4.meta.yaml\"),\n    (out_dir, \"b01-nub-init-704x1280.png\"),\n    (out_dir, \"bench-b01-nubgrow.jsonl\"),\n    (pay_dir, \"b01-motion-prompt.txt\"),\n    (pay_dir, \"b01-negative.txt\"),\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor d, name in WANT:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b01-nub-motion-0818.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(WANT) else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\01-cold-open-LTX-nubgrow.mp4",
+    "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-nub-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1787070221,
+    "filed_at_iso": "2026-08-18T16:23:41Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b01-nub-motion-0818.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-18T16:23:56Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-18T16:30:13Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\01-cold-open-LTX-nubgrow.mp4",
+    "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-nub-init-704x1280.png"
+  ]
+}
