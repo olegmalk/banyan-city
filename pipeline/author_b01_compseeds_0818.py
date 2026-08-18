@@ -29,6 +29,7 @@ change; there is none here. The sample was 8 of 8 and it is already scored.
 $0, local card, no provider. Beat 01 is a STILL PLATE on an approved node.
 """
 import copy
+import ntpath
 import os
 import sys
 
@@ -45,11 +46,16 @@ COMPS = {
 # Fresh seeds, four to a job, none of them drawn before on this recipe. Grouped
 # so a job is ~7 minutes: small enough that a crash costs one job, big enough
 # that the queue is not mostly overhead.
+# ROUND 2. Seeds 20260901-20260912 were drawn on 2026-08-17 and their 24 frames
+# exist -- the jobs failed on a path bug, not on the render, and the frames were
+# recovered out of C:\Windows\System32 into farm-out by hand. Re-running them
+# would spend the card to redraw pictures we already have.
 SEED_GROUPS = [
-    [20260901, 20260902, 20260903, 20260904],
-    [20260905, 20260906, 20260907, 20260908],
-    [20260909, 20260910, 20260911, 20260912],
+    [20260913, 20260914, 20260915, 20260916],
+    [20260917, 20260918, 20260919, 20260920],
+    [20260921, 20260922, 20260923, 20260924],
 ]
+GROUP_OFFSET = 3   # so ids continue g4, g5, g6 rather than colliding with round 1
 
 
 def seed_steps(src_steps):
@@ -71,7 +77,7 @@ def main() -> None:
         pub = [s for s in src["steps"] if s["name"] == "publish"]
         comp = [s for s in src["steps"] if s["name"] == "comp"]
 
-        for gi, group in enumerate(SEED_GROUPS, 1):
+        for gi, group in enumerate(SEED_GROUPS, 1 + GROUP_OFFSET):
             job_id = "ep2-b01-compseed-%s-g%d-0818" % (comp_tag, gi)
             out_path = "pipeline/jobs/%s.yaml" % job_id
             if os.path.exists(out_path):
@@ -98,7 +104,16 @@ def main() -> None:
                 source image and the job would composite the wrong picture.
                 """
                 if isinstance(obj, str):
-                    return obj.replace(r"C:\banyan-farm\leafcount-0817", workdir)
+                    # BOTH SPELLINGS. The steps use backslashes, but the publish
+                    # step is an inline python program whose paths are written
+                    # with forward slashes. Rewriting only the backslash form
+                    # left publish pointing at the SOURCE job's directory, so it
+                    # copied that job's frames into this job's farm-out folder,
+                    # printed "published 14 of 14" and exited 0. It published a
+                    # different job's work under this job's name.
+                    return (obj.replace(r"C:\banyan-farm\leafcount-0817", workdir)
+                               .replace("C:/banyan-farm/leafcount-0817",
+                                        workdir.replace("\\", "/")))
                 if isinstance(obj, list):
                     return [relocate(v) for v in obj]
                 if isinstance(obj, dict):
@@ -120,8 +135,16 @@ def main() -> None:
                     if a == "--seed":
                         argv[i + 1] = str(seed)
                     elif a == "--out":
-                        argv[i + 1] = argv[i + 1].replace(
-                            os.path.basename(argv[i + 1]),
+                        # ntpath, NOT os.path. These are WINDOWS paths and this
+                        # script runs on a Mac, where os.path.basename() finds no
+                        # "/" separator and returns THE WHOLE STRING. The old line
+                        # therefore replaced the entire absolute path with a bare
+                        # filename, and the box wrote 24 renders into the runner
+                        # service's working directory -- C:\Windows\System32 --
+                        # where the artifact check could not find them and the job
+                        # failed rc=92 with every render actually complete.
+                        argv[i + 1] = ntpath.join(
+                            ntpath.dirname(argv[i + 1]),
                             "b01-compseed-%s-s%d.png" % (comp_tag, seed))
                     elif a == "--note":
                         argv[i + 1] = (
@@ -130,23 +153,51 @@ def main() -> None:
                             "the candidate set beat 01's pick is made from. No setting "
                             "differs from ep2-b01-leafcomp-inpaint-0817 except the seed.")
                 steps.append(st)
-            if pub:
-                p = copy.deepcopy(pub[0])
-                # Publish under this job's own id or the manifest names files it
-                # never copied — a step that has already lied once in this repo.
-                for i, a in enumerate(p.get("argv", [])):
-                    if isinstance(a, str) and "leafcomp-inpaint-0817" in a:
-                        p["argv"][i] = a.replace("ep2-b01-leafcomp-inpaint-0817", job_id)
-                # The frame-count assertion keeps its teeth.
-                p.pop("allow_fail", None)
-                steps.append(p)
+            # THE PUBLISH STEP IS REGENERATED, NOT PATCHED. The source job's
+            # version carries a hardcoded `names = [...]` listing ITS OWN
+            # filenames (b01-leafcomp-s2026081x.png). Rewriting the directory
+            # inside it is not enough: the step would look for the other job's
+            # frames in this job's folder, find none, and -- because it only
+            # asserts on one specific old filename -- report success over an
+            # empty copy. This builds the list from the seeds actually rendered
+            # and asserts on the count, so it cannot pass while publishing
+            # nothing.
+            names = []
+            for seed in group:
+                base = "b01-compseed-%s-s%d" % (comp_tag, seed)
+                names += [base + ".png", base + ".png.meta.yaml", base + "-mask.png"]
+            wd_fwd = workdir.replace("\\", "/")
+            dst_fwd = "C:/banyan-farm/courier-box/farm-out/" + job_id
+            prog = (
+                "import hashlib, os, shutil\n"
+                "src = %r\n" % wd_fwd +
+                "dst = %r\n" % dst_fwd +
+                "os.makedirs(dst, exist_ok=True)\n"
+                "names = %r\n" % (names,) +
+                "got = []\n"
+                "for n in names:\n"
+                "    p = os.path.join(src, n)\n"
+                "    if os.path.isfile(p):\n"
+                "        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\n"
+                "with open(os.path.join(dst, 'SHA256SUMS.txt'), 'w', newline='\\n') as fh:\n"
+                "    for n in got:\n"
+                "        h = hashlib.sha256(open(os.path.join(dst, n), 'rb').read()).hexdigest()\n"
+                "        fh.write('%s  %s\\n' % (h, n))\n"
+                "print('published', len(got), 'of', len(names))\n"
+                "raise SystemExit(0 if len(got) == len(names) else 1)\n")
+            steps.append({"name": "publish",
+                          "argv": [r"C:\banyan-farm\venv\Scripts\python.exe", "-c", prog]})
 
             job = copy.deepcopy(src)
             job["id"] = job_id
             job["task"] = job_id
             job["steps"] = relocate(steps)
             job["payload"] = relocate(src.get("payload") or {})
-            job["artifacts"] = relocate(src.get("artifacts") or [])
+            # The runner fails a job whose declared artifacts are missing, and
+            # that check is the only reason last night's breakage was caught at
+            # all. It is worth nothing if it names another job's files.
+            job["artifacts"] = [ntpath.join(workdir, "b01-compseed-%s-s%d.png"
+                                            % (comp_tag, seed)) for seed in group]
             job["est_minutes"] = 7
             job["priority"] = 40
             job["owner"] = ("count-control lane, 2026-08-18 -- production seeds off a "
