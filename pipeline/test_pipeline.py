@@ -4006,9 +4006,25 @@ def test_a_revived_worker_cannot_choke_on_the_tasks_list():
 
     live = _y.safe_load((REPO / "pipeline" / "farm-queue.yaml").read_text(
         encoding="utf-8")) or {}
+    # WAS `len(tasks) > 0`, CHANGED 2026-08-18, and the reason matters because
+    # loosening an anti-vacuity guard is exactly the edit that should be argued
+    # for rather than made. The guard's job is "this test is looking at
+    # something", i.e. catch a file that stopped parsing or a key that got
+    # renamed — NOT "there is work queued". On 2026-08-18 the last five entries
+    # in tasks: were retired (all five finished 2026-08-09, all five with DONE
+    # lines on farm-results-hand the promoter cannot read), and an empty queue is
+    # a legitimate, already-tested state: farm_worker.py:143 is null-safe on it
+    # and the test above at `tasks:\nbacklog:` asserts that shape on purpose. A
+    # green farm should not have to keep a dead entry alive to satisfy a test.
+    #
+    # So the guard now checks the thing it was protecting: the file parsed and
+    # the key is still there. Vacuity of the per-entry loop below is covered by
+    # part 2, which feeds promotable() two entries that MUST be rejected — that
+    # is what makes a green run mean "the queue is clean" rather than "the check
+    # did nothing", and it runs whether tasks: holds five entries or none.
+    check("the queue file parses and still has a tasks: key to look at",
+          "tasks" in live)
     tasks = live.get("tasks") or []
-    check("the live tasks: list is non-empty, so this test is looking at something",
-          len(tasks) > 0)
 
     # SELECTION IS THE WORKER'S RULE, COPIED EXACTLY: farm_worker.py:680 reads
     # `task.get("worker", "any") not in ("any", a.name)` and skips on true. So an
