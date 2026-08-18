@@ -1,0 +1,171 @@
+id: ep2-b14-mac-motion-s2-0818
+task: ep2-b14-mac-motion-s2-0818
+node: 002b-first-citizen
+beat: 14
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 14 motion lane, 2026-08-18
+consumer: 'BEAT 14''S CUT SLOT IN THE EPISODE 2 ASSEMBLY. Not a probe -- unlike ep2-b17-insert-motion-0816 this
+  animates the beat''s own staged plate, the one the steward ruled shipped on 2026-08-18, and a PASS is a take that
+  can be cut. Judged by opening all 121 frames consecutively via pipeline/coldread_frames.py against the bar pre-registered
+  in this spec before the render, NEVER by depth, which is retired and inverted. A FAIL is also consumed: it tells
+  beat 14''s owner whether the remaining gap is one gesture (the dirt) or the whole staging, which are different
+  production decisions.'
+success: 'A 704x1280 mp4, 121 frames at 24 fps, opening on the published r1s1 plate. PASS is M1+M2+M3+M4 as pre-registered
+  above: fingers reaching the ground and disturbing it, measured relative to his own knee and not to the frame;
+  a distinguishable glance away and back; the two together reading as embarrassment and not as a search; and the
+  same goblin, in place, with the camera locked. THE STANDING PER-SEED CHECK OVERRIDES ALL FOUR: if a pale limb-like
+  mass appears in any frame the clip FAILS, that being this beat''s known 1-in-3 plate fault and r1s2''s exact signature.
+  FAIL is any of F1 frozen hands (THE PREDICTED OUTCOME, since in-hand actions measure 0 of 8 on this engine against
+  12 of 12 whole-body), F2 head-only, F3 camera-only, F4 morph, F5 scene break, F6 pale mass, F7 he stands up. A
+  partial is a FAIL and a changed picture is not a pass.'
+why: SEED 20260819 of a recipe whose first sample PASSED its bar and was looked at. Same plate, same recipe, only
+  the seed moves. Filed to keep the card fed.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import\
+    \ Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\"\
+    , default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's provenance\
+    \ sidecar.\n\nvideo_task.write_sidecar records model, prompt, negative, init sha and\ncost_usd 0, and it does\
+    \ not record whether the clip may ship. This lane's\nstanding requirement is that anything it publishes says\
+    \ so on its face, so\nthe keys are appended here rather than asserted in a commit message nobody\ndownstream\
+    \ reads. REFUSES if the sidecar is missing -- a clip whose\nprovenance file did not get written must not pass\
+    \ silently.\n\nUNLIKE the beat-17 probe lane this clip IS a candidate for the cut, so it is\nstamped `is_show_content:\
+    \ true`. It is still `approved: false` and\n`provisional: true`: nothing is cut until the frames are opened\
+    \ against the\nbar this spec pre-registered, and R4 taste calls are the founder's.\n\"\"\"\nimport os, sys\n\
+    \nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"!! no sidecar at %s -- refusing to call the\
+    \ job clean.\" % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n\
+    \        \"# --- appended by ep2-b14-mac-motion-s2-0818 after the render.\\n\"\n        \"approved: false\\\
+    n\"\n        \"provisional: true\\n\"\n        \"is_show_content: true\\n\"\n        \"note: |\\n\"\n      \
+    \  \"  A CANDIDATE TAKE FOR BEAT 14'S CUT SLOT, not an engine probe. It\\n\"\n        \"  animates the beat's\
+    \ own staged plate -- 14-the-defense-mac-plate-r1s1,\\n\"\n        \"  the seed the steward ruled shipped on\
+    \ 2026-08-18 -- and it is judged\\n\"\n        \"  against the bar pre-registered in pipeline/jobs/ep2-b14-mac-motion-s2-0818.yaml\\\
+    n\"\n        \"  BEFORE this render existed. Not approved and not cut until those 121\\n\"\n        \"  frames\
+    \ have been opened consecutively. The standing per-seed check\\n\"\n        \"  overrides every other clause:\
+    \ if a pale limb-like mass appears in any\\n\"\n        \"  frame, this clip is a FAIL.\\n\")\nprint(\"stamped\
+    \ %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-motion-prompt.txt: He picks at the dirt with his fingers, embarrassed,
+    and glances to the side. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key
+    art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-jobs-encode.json: "[\n {\n  \"beat\": 14,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b14-mac-motion-s2-0818-out\\\\b14-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b14-mac-motion-s2-0818\\\\b14-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b14-mac-motion-s2-0818\\\
+    \\b14-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-jobs-render.json: "[\n {\n  \"beat\": 14,\n  \"seed\": 20260819,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b14-mac-motion-s2-0818-out\\\\b14-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b14-mac-motion-s2-0818-out\\\\b14-mac-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b14-mac-motion-s2-0818-out\\\\14-the-defense-LTX-macplate-r1s1.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b14-mac-plate-0818\14-the-defense-mac-plate-r1s1.png
+  - --sha256
+  - df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc
+  - --out
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818-out\b14-mac-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818\b14-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b14-mac-motion-s2-0818
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818-out\bench-b14-macplate.jsonl
+  - --bench-label
+  - ep2-b14-mac-motion-s2-0818
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b14-mac-motion-s2-0818-out\14-the-defense-LTX-macplate-r1s1.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (14-the-defense). Without it the glob\n# matches nothing and the step publishes\
+    \ nothing while returning a code\n# that reads like a render failure. No allow_fail: a publish that cannot\n\
+    # find its files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b14-mac-motion-s2-0818-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b14-mac-motion-s2-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b14-mac-motion-s2-0818\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/14-the-defense-LTX-macplate-r1s1.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b14-mac-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b14-macplate.jsonl\")\n               + glob.glob(pay_dir + \"/b14-motion-prompt.txt\")\n     \
+    \          + glob.glob(pay_dir + \"/b14-negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b14-mac-motion-s2-0818.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b14-mac-motion-s2-0818-out\14-the-defense-LTX-macplate-r1s1.mp4
+- C:\banyan-farm\ep2-b14-mac-motion-s2-0818-out\b14-mac-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`, so §6 is satisfied
+  and this is a script the founder has read. The action clause animates beat 14''s OWN scripted line -- "He picks
+  at the dirt, embarrassed, glancing around" -- staged on the beat''s own plate, so unlike the beat-17 probe lane
+  this clip IS a candidate for the cut. It is still `approved: false` and `provisional: true` on its sidecar: nothing
+  gets cut until the 121 frames are opened against the pre-registered bar, and the taste call is the founder''s
+  under R4. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED. Silent, $0, no voice synthesis and no episode
+  assembly.'
