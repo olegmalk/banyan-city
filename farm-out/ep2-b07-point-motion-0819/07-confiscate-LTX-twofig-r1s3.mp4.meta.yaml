@@ -1,0 +1,39 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 7
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260819
+task: ep2-b07-point-motion-0819
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0171
+compute_s_per_video_s: 58.4
+# --- appended by ep2-b07-point-motion-0819 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  BEAT 07 CONFISCATE, animating the beat's own scripted stage
+  direction on ep2-b07-twofig-0817 r1-s3 -- the only frame of 24
+  that clears both the figure-count clause and the cast/identity
+  clause of that job's pre-registered bar.
+  THE INIT PLATE IS UNAPPROVED AND HAS THREE NAMED FAULTS: the
+  goblin wears round red wire-rim glasses (the eyewear fail mode
+  that spec pre-registered, measured at 5 of 12 and fired on this
+  frame); the goblin wears the guard's own tunic and sash (costume
+  merge); and the sky band is a sliver. None blocks the question
+  this clip asks -- where the pointing arm lands -- and all three
+  would block a cut.
+  Judged against the bar in pipeline/jobs/ep2-b07-point-motion-0819.yaml
+  committed BEFORE this render existed. Not approved and not cut
+  until those 97 frames are opened consecutively.
