@@ -1,0 +1,39 @@
+#### job ep2-b08-twofig-gesture-0818-1787067011 attempt 1 start 2026-08-18T15:30:31Z
+
+==== step fetch START 2026-08-18T15:30:35Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08gesture-0818\\fetch_init.py"]
+fetched 08-inside-him-twofig-mac-r3-s0.png 1130691 bytes sha d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238 OK
+==== step fetch END rc=0 2026-08-18T15:30:35Z ====
+
+==== step dry START 2026-08-18T15:30:35Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08gesture-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png", "--init-sha256", "d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238", "--ellipse", "445,620,335,165", "--prompt-file", "C:\\banyan-farm\\b08gesture-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08gesture-0818\\negative.txt", "--out", "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260830", "--note", "mask geometry check. Writes the mask and exits before a model is loaded. The ellipse was measured off the init on 2026-08-18 and looked at: x 110-780, y 455-785 of 832x1216, which covers the guard's two hands and the whole clipboard, the gap between the men, the goblin's outstretched hand and his belly and sash -- and clears BOTH FACES and BOTH LOWER ROBES, so neither identity nor the ground plane is inside the region being redrawn.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238
+mask ellipse corners=- bbox=[110, 455, 780, 785]  0.8053 x 0.2714 of 832x1216
+WROTE C:\banyan-farm\b08gesture-0818\b08-twofig-gesture-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-18T15:30:35Z ====
+
+==== step s20260830 START 2026-08-18T15:30:35Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08gesture-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png", "--init-sha256", "d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238", "--ellipse", "445,620,335,165", "--prompt-file", "C:\\banyan-farm\\b08gesture-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08gesture-0818\\negative.txt", "--out", "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-s20260830.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260830", "--note", "ONE SAMPLE, ONE SEED, ONE VARIABLE (the gesture). The composite/init route ruled for beat 08 on 2026-08-18: the pair, their adult scale relative to each other and the single ground plane all come from the init and none of them from the words, because the words are the thing that was falsified -- every wording round returned a colossus, and the round that deleted the sky returned one anyway. Only the gesture is asked of the sampler. Strength 0.30 is the proven finish band (8 of 8 exact counts on beat 01); see this spec's header for why a FAIL here is expected to be ambiguous between 'the route cannot do it' and '0.30 finishes and does not add'."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:00,  6.28it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  2.07it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.03it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.61it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.84it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b08gesture-0818\b08-twofig-gesture-s20260830.png
+WROTE C:\banyan-farm\b08gesture-0818\b08-twofig-gesture-s20260830-mask.png
+WROTE C:\banyan-farm\b08gesture-0818\b08-twofig-gesture-s20260830.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260830 END rc=0 2026-08-18T15:30:49Z ====
+
+==== step publish START 2026-08-18T15:30:49Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08gesture-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-twofig-gesture-0818\"\nNAMES = [\n    \"b08-twofig-gesture-s20260830.png\",\n    \"b08-twofig-gesture-s20260830-mask.png\",\n    \"b08-twofig-gesture-s20260830.png.meta.yaml\",\n    \"08-inside-him-twofig-mac-r3-s0.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-twofig-gesture-0818.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b08-twofig-gesture-0818
+==== step publish END rc=0 2026-08-18T15:30:49Z ====
+#### job ep2-b08-twofig-gesture-0818-1787067011 finished rc=0 2026-08-18T15:30:49Z

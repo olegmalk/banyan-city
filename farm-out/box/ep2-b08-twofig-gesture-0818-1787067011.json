@@ -1,0 +1,126 @@
+{
+  "id": "ep2-b08-twofig-gesture-0818-1787067011",
+  "task": "ep2-b08-twofig-gesture-0818",
+  "node": "002b-first-citizen",
+  "beat": 8,
+  "worker": "box-runner",
+  "priority": 36,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08gesture-0818\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08gesture-0818\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png",
+        "--init-sha256",
+        "d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238",
+        "--ellipse",
+        "445,620,335,165",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08gesture-0818\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08gesture-0818\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260830",
+        "--note",
+        "mask geometry check. Writes the mask and exits before a model is loaded. The ellipse was measured off the init on 2026-08-18 and looked at: x 110-780, y 455-785 of 832x1216, which covers the guard's two hands and the whole clipboard, the gap between the men, the goblin's outstretched hand and his belly and sash -- and clears BOTH FACES and BOTH LOWER ROBES, so neither identity nor the ground plane is inside the region being redrawn.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260830",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08gesture-0818\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png",
+        "--init-sha256",
+        "d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238",
+        "--ellipse",
+        "445,620,335,165",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08gesture-0818\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08gesture-0818\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-s20260830.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260830",
+        "--note",
+        "ONE SAMPLE, ONE SEED, ONE VARIABLE (the gesture). The composite/init route ruled for beat 08 on 2026-08-18: the pair, their adult scale relative to each other and the single ground plane all come from the init and none of them from the words, because the words are the thing that was falsified -- every wording round returned a colossus, and the round that deleted the sky returned one anyway. Only the gesture is asked of the sampler. Strength 0.30 is the proven finish band (8 of 8 exact counts on beat 01); see this spec's header for why a FAIL here is expected to be ambiguous between 'the route cannot do it' and '0.30 finishes and does not add'."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08gesture-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-twofig-gesture-0818\"\nNAMES = [\n    \"b08-twofig-gesture-s20260830.png\",\n    \"b08-twofig-gesture-s20260830-mask.png\",\n    \"b08-twofig-gesture-s20260830.png.meta.yaml\",\n    \"08-inside-him-twofig-mac-r3-s0.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-twofig-gesture-0818.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-s20260830.png",
+    "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png"
+  ],
+  "backlog": {
+    "filed_at": 1787067011,
+    "filed_at_iso": "2026-08-18T15:30:11Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b08-twofig-gesture-0818.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-18T15:30:31Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-18T15:30:49Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b08gesture-0818\\b08-twofig-gesture-s20260830.png",
+    "C:\\banyan-farm\\b08gesture-0818\\08-inside-him-twofig-mac-r3-s0.png"
+  ]
+}

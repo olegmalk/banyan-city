@@ -1,0 +1,41 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260830
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b08gesture-0818/08-inside-him-twofig-mac-r3-s0.png
+init_sha256: d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238
+mask_png: b08-twofig-gesture-s20260830-mask.png
+mask_shape: ellipse
+mask_centre_px: [445, 620]
+mask_radii_px: [335, 165]
+mask_bbox_px: [110, 455, 780, 785]
+mask_width_frac: 0.8053
+mask_height_frac: 0.2714
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-18T15:30:48Z
+render_seconds: 3.8
+wall_seconds: 9.7
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED, ONE VARIABLE (the gesture). The composite/init route ruled for beat 08 on 2026-08-18: the pair, their adult scale relative to each other and the single ground plane all come from the init and none of them from the words, because the words are the thing that was falsified -- every wording round returned a colossus, and the round that deleted the sky returned one anyway. Only the gesture is asked of the sampler. Strength 0.30 is the proven finish band (8 of 8 exact counts on beat 01); see this spec's header for why a FAIL here is expected to be ambiguous between 'the route cannot do it' and '0.30 finishes and does not add'.
+prompt: |-
+  a tall bald guard in a brown cloak lowers his clipboard and points one finger at the green goblin's belly beside him, both men standing together on the same grass field, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  giant, colossus, towering figure, huge, different scale, floating, deleted sky, raised clipboard, second board, extra board, extra arms, extra hands, extra fingers, deformed hands, third person, crowd, text, watermark, photorealism, 3d render, low quality, deformed
