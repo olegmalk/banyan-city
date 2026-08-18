@@ -273,3 +273,15 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   verdict. Sidecar stamped approved: false / provisional: true; nothing is cut until the frames are opened
   against the pre-registered bar, and the taste call is the founder''s under R4. Silent, $0, no voice
   synthesis, no episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-18 after the render. The bar above is unedited.
+# ============================================================================
+outcome:
+  verdict: FAIL on G5/H6 (style break) -- and G1+G2 PASSED, the first time the growth arc has ever rendered.
+  ran: 'rtx5090, all five steps rc=0, published 6 files. Read off f000/f040/f080/f120 on a contact sheet.'
+  g1_growth: 'PASS. The nub swells continuously from a small green node at f000 to a round fruit by f120, attached throughout -- the 2026-08-12 detached-fig fault (H5) did NOT reproduce.'
+  g2_purple: 'PASS. Deep purple-violet from ~f040 on. The arc the script asks for -- swells, darkens, rounds -- is all present.'
+  g3_leaves: 'PASS. Two blades in every sampled frame.'
+  g5_h6_style_break: 'FAIL, and it is the whole failure. By f040 the painterly amber plate is gone: flat cel drawing on a blank beige ground, grass field vanished, framing zoomed into the plant. Cause identified, one variable: the motion prompt''s style tail says "flat cel shading, clean ink linework" -- copied byte-identical from the b14/b17 recipe, where the PLATES are flat-cel anime. Beat 01''s plate is painterly cinematic ("detailed cinematic anime, warm amber backlight"), so the prompt''s style words fought the plate and won. On b14 the same tail was invisible because plate and tail agreed.'
+  what_this_licenses: 'A one-variable follow-up: same everything, style tail matched to the plate''s own style words. Filed as ep2-b01-growmotion-b-0818. It does NOT license a recipe sweep.'
