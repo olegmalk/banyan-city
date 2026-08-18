@@ -1,0 +1,343 @@
+# ep2-b07-point-crf10-0819 -- 2026-08-19, queue-filler lane.
+#
+# ep2-b07-point-motion-0819 WAS FILED AT 21:20 AND FINISHED AT 21:52. THE
+# FINDING THAT INVALIDATES ITS RECIPE LANDED IN BETWEEN. Its own bench row says
+# `"image_crf": 33`, and forty minutes after it was queued the beat-09 pair
+# measured what that flag does to a conditioning image with a person in it.
+#
+# THE MEASUREMENT, from ep2-b09-faceturn-0819 and ep2-b09-faceturn-crf10-0819 --
+# two runs identical in every byte except this one integer:
+#     f001->f002 face-crop step ..... 39.34  ->   0.66
+#     ten largest steps in the clip .. the ten EARLIEST  ->  spread f14-f94
+#     drift from frame 0 ............ 74.23  ->  32.82
+#     background strip drift ........ 60.89  ->   9.89
+# At CRF 33 the init is abandoned at the first denoising step and an adult man
+# is a different, younger person by frame 21. At CRF 10 the same init holds for
+# all 121 frames AND the performance survives. `--image-crf` round-trips the
+# still through libx264 before it conditions anything (ltx_i2v.py:1072); at 33
+# the sampler is handed a smear and invents its own scene.
+#
+# WHY BEAT 07 IS THE RIGHT PLACE TO SPEND THE NEXT SEVEN MINUTES. It is one of
+# the four SLATES in review/ep2-demo-0818/sources/picks-0818.yaml -- no footage
+# at all -- and the take just rendered for it is the first motion the beat has
+# ever had. Beat 07 is a POINTING BEAT: `done_when` needs Guard 1's point to be
+# legible as a point and identity to hold against the plate. Both of those are
+# exactly what a discarded init destroys. Judging the CRF-33 take on its merits
+# and then discovering the recipe was compromised would waste the judgement as
+# well as the render.
+#
+# ------------------------------------------------------------------
+# THE ONE VARIABLE: `--image-crf 33` BECOMES `--image-crf 10`.
+# ------------------------------------------------------------------
+# This file was DERIVED from its parent programmatically -- the parent read,
+# the job id substituted in all 31 places it occurs, that single argument
+# changed, nothing retyped. So "one variable" is a fact about the file rather
+# than a claim in a comment. Init, its asserted sha256, prompt, negative, seed,
+# frames, fps, guidance, sigmas, two-stage, offload, the stamp step and the
+# publish step are all the parent's. The parent is the control.
+#
+# THIS DOES NOT PRE-JUDGE THE PARENT. A separate lane owns the beat-07 verdict
+# and is scoring the CRF-33 take against the bar its spec pre-registered. That
+# verdict stands on its own terms whatever this returns; the two clips together
+# are worth more than either, because they isolate the flag on a SECOND subject
+# class -- two figures and a gesture, where beat 09 was one face. If the effect
+# reproduces here it is a property of the flag, not of faces.
+#
+# WHAT THIS IS NOT. Not a batch: one seed, one clip. Not a pick, a promotion or
+# a plate_ack, and nothing here decides whether beat 07's slate is filled --
+# that is the beat-07 lane's call on its own bar, and taste is R4. $0, local
+# card, no provider.
+
+id: ep2-b07-point-crf10-0819
+task: ep2-b07-point-crf10-0819
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 07 judging lane, 2026-08-19 -- filed off its own verdict the moment that verdict was committed,
+  because the finding licensed exactly one next job and the backlog does not author work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, so STEWARDSHIP.md
+  §6 is satisfied and this is a script the founder has read. The action clause animates beat 07''s OWN
+  scripted stage direction. Silent, $0, no voice synthesis and no episode assembly. shots.md and
+  pipeline/wave-drafts.yaml are UNTOUCHED.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'THE OPEN ENGINE QUESTION ON BEAT 07, and beat 07''s cut slot behind it. done-definitions.yaml''s
+  `figure_count_ruled_from_the_script_0817` names it: whether a gesture binds to the GUARD once both figures
+  are fixed by an init -- in text-to-image it did not, a pointing arm attaching to the goblin 3 of 3. Twelve
+  fresh stills on 2026-08-17 could not aim a point either (0 of 12, both rungs, review/ep2-picks/b07-twofig-nobald-0817-verdict.yaml).
+  This is the first time the question can be asked in image-to-video, because r1-s3 is the first beat-07
+  plate that holds two whole figures with the right man in them. A FAIL IS ALSO CONSUMED: F3 aimless extension
+  would say the gesture renders and only the aim is missing, F2 would say the limb still binds to the wrong
+  character even off an init, and those are different production decisions. Beat 07 is currently a SLATE
+  in review/ep2-demo-0818, so anything legible here is upside on nothing.'
+success: 'A 704x1280 mp4, 97 frames at 24 fps, opening on ep2-b07-twofig-0817 r1-s3. PASS is M1+M2+M3+M4
+  as pre-registered above BEFORE this render existed: the guard''s arm leaves its joined-hands position
+  and extends, measured relative to his own shoulder and not to the frame; the extension is AIMED at the
+  goblin at frame right; the pointing limb is THE GUARD''S and not the goblin''s; and both men hold their
+  identities with no third figure, no reframe and no cut. FAIL is any of F1 frozen arms, F2 the goblin points
+  (the predicted failure if one comes, on the 3-of-3 text-to-image record), F3 aimless extension (what the
+  one pointing still did), F4 a third figure arrives (rung B multiplied the goblin in 10 of 12 stills),
+  F5 identity collapse, F6 camera-only, F7 scene break. A PARTIAL IS A FAIL. Judged by opening all 97 frames
+  CONSECUTIVELY via pipeline/coldread_frames.py --pad 60, never by depth or cadence, both retired.'
+why: 'Beat 07 is a SLATE in the episode cut and has never had a plate of its own. It now has one -- the
+  only frame in 24 that clears both figure count and cast -- and the only clause it fails is the beat''s
+  own action, which is what a motion job is for. The still path''s next lever is a per-variant count declaration
+  in a shared sampler, which is another lane''s file, so the still lane is BLOCKED while this question is
+  not. Seven minutes of local GPU, $0, no provider, one seed.'
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b07-point-crf10-0819\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b07-point-crf10-0819\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. This lane's
+    standing requirement is that anything it publishes says so on its face, so
+    the keys are appended here rather than asserted in a commit message nobody
+    downstream reads. REFUSES if the sidecar is missing -- a clip whose
+    provenance file did not get written must not pass silently.
+
+    `is_show_content: true`: this animates beat 07's own scripted line on the
+    beat's own plate, so it is a candidate for the cut and not an engine probe.
+    It is still `approved: false` and `provisional: true`, and the INIT PLATE
+    ITSELF IS UNAPPROVED AND CARRIES THREE NAMED FAULTS -- see plate_faults
+    below. Nothing is cut until the 97 frames are opened against the bar
+    pre-registered in this spec, and R4 taste calls are the founder's.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b07-point-crf10-0819 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: true\n"
+            "note: |\n"
+            "  BEAT 07 CONFISCATE, animating the beat's own scripted stage\n"
+            "  direction on ep2-b07-twofig-0817 r1-s3 -- the only frame of 24\n"
+            "  that clears both the figure-count clause and the cast/identity\n"
+            "  clause of that job's pre-registered bar.\n"
+            "  THE INIT PLATE IS UNAPPROVED AND HAS THREE NAMED FAULTS: the\n"
+            "  goblin wears round red wire-rim glasses (the eyewear fail mode\n"
+            "  that spec pre-registered, measured at 5 of 12 and fired on this\n"
+            "  frame); the goblin wears the guard's own tunic and sash (costume\n"
+            "  merge); and the sky band is a sliver. None blocks the question\n"
+            "  this clip asks -- where the pointing arm lands -- and all three\n"
+            "  would block a cut.\n"
+            "  Judged against the bar in pipeline/jobs/ep2-b07-point-crf10-0819.yaml\n"
+            "  committed BEFORE this render existed. Not approved and not cut\n"
+            "  until those 97 frames are opened consecutively.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b07-point-crf10-0819\b07-motion-prompt.txt: 'The guard raises his arm and points
+    at the goblin beside him, decisive. 2D anime, hand-drawn cel animation, flat cel shading, clean ink
+    linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b07-point-crf10-0819\b07-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b07-point-crf10-0819\b07-jobs-encode.json: |-
+    [
+     {
+      "beat": 7,
+      "embeds": "C:\\banyan-farm\\ep2-b07-point-crf10-0819-out\\b07-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b07-point-crf10-0819\\b07-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b07-point-crf10-0819\\b07-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b07-point-crf10-0819\b07-jobs-render.json: |-
+    [
+     {
+      "beat": 7,
+      "seed": 20260819,
+      "embeds": "C:\\banyan-farm\\ep2-b07-point-crf10-0819-out\\b07-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b07-point-crf10-0819-out\\b07-twofig-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b07-point-crf10-0819-out\\07-confiscate-LTX-twofig-r1s3.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-point-crf10-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b07-twofig-0817\07-confiscate-ipa-r1-w015-s3.png
+  - --sha256
+  - 95e63800a585d0cf87ba9a1e7b499e8145db65600766cacf966be3ffcd2253fd
+  - --out
+  - C:\banyan-farm\ep2-b07-point-crf10-0819-out\b07-twofig-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b07-point-crf10-0819\b07-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b07-point-crf10-0819\b07-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b07-point-crf10-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b07-point-crf10-0819-out\bench-b07-twofig.jsonl
+  - --bench-label
+  - ep2-b07-point-crf10-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-point-crf10-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b07-point-crf10-0819-out\07-confiscate-LTX-twofig-r1s3.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (07-confiscate). Without it the glob
+    # matches nothing and the step publishes nothing while returning a code
+    # that reads like a render failure -- that is what made six rendered
+    # plates read as six failures on 2026-08-14. No allow_fail: a publish
+    # that cannot find its files is a FAIL of the job, not a footnote.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b07-point-crf10-0819-out"
+    pay_dir = "C:/banyan-farm/ep2-b07-point-crf10-0819"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b07-point-crf10-0819"
+    os.makedirs(dst, exist_ok=True)
+    files = sorted(glob.glob(out_dir + "/07-confiscate-LTX-twofig-r1s3.mp4*")
+                   + glob.glob(out_dir + "/b07-twofig-init-704x1280.png")
+                   + glob.glob(out_dir + "/bench-b07-twofig.jsonl")
+                   + glob.glob(pay_dir + "/b07-motion-prompt.txt")
+                   + glob.glob(pay_dir + "/b07-negative.txt"))
+    lines = []
+    for f in files:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b07-point-crf10-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(files), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(files) >= 6 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b07-point-crf10-0819-out\07-confiscate-LTX-twofig-r1s3.mp4
+- C:\banyan-farm\ep2-b07-point-crf10-0819-out\b07-twofig-init-704x1280.png
+plate_faults:
+  init: farm-out/ep2-b07-twofig-0817/07-confiscate-ipa-r1-w015-s3.png
+  sha256: 95e63800a585d0cf87ba9a1e7b499e8145db65600766cacf966be3ffcd2253fd
+  status: 'UNAPPROVED AND PROVISIONAL. It clears the figure-count and cast/identity clauses of its own job''s
+    pre-registered bar and fails that bar overall on term 5, the point. It is NOT a pick and no plate_ack
+    is written for it anywhere.'
+  named_faults:
+  - 'the goblin wears round RED wire-rim glasses -- the eyewear-reaching-the-goblin fail mode, pre-registered
+    by ep2-b07-twofig-0817 as an unmeasured risk, now measured at 5 of 12 and fired on this frame'
+  - 'costume merge: the goblin wears the guard''s own pale wrap tunic and white sash'
+  - 'the sky band is a sliver -- the treeline is a thin strip at the extreme top edge, so term 7 passes
+    only barely and this frame is not evidence the wording delivers a sky'
+  what_they_block: 'A CUT, all three. None of them blocks the question this job asks, which is which limb
+    the pointing gesture attaches to.'
+
+# ---------------------------------------------------------------------------
+# ADDENDUM TO THE INHERITED BAR. The `success` field above is the PARENT's,
+# carried byte-identical on purpose: beat 07's own clauses are not this lane's
+# to rewrite, and scoring both clips against one bar is what makes them
+# comparable. This addendum ADDS the flag question and changes nothing above it.
+# ---------------------------------------------------------------------------
+crf_addendum_bar: 'THE FLAG QUESTION, pre-registered before this clip exists and
+  scored SEPARATELY from the beat''s own clauses. Measured exactly as the beat-09
+  pair was: a figure/head bounding box read off frame 1, the SAME crop applied to
+  every frame, mean abs interframe difference and drift from frame 0 in float64,
+  plus a background-only strip as a control.
+  PASS-CRF requires both: (1) the f001->f002 crop step falls well below the parent
+  run''s, and the ten largest interframe steps are no longer simply the ten
+  earliest; (2) by eye at 1x, the figures at f021 are the figures in the init --
+  same count, same clothing, same build, not substituted.
+  FAIL modes, reported by name whether or not they fire: FAIL-COLLAPSE-UNCHANGED
+  (the flag does nothing here, which would mean beat 09''s result is subject- or
+  plate-specific rather than a property of the flag -- a clean and important
+  answer); FAIL-FROZEN (a held init that buys identity by spending motion, which
+  on a POINTING beat would be fatal in a way it was not on beat 09 -- the point IS
+  the motion); FAIL-ARTEFACT (blocking or banding from the lower CRF, the untested
+  direction); FAIL-MORPH-LATE (identity survives f021 and goes later; report the
+  frame).
+  NOT SCORED HERE: whether beat 07''s slate is filled. That is the beat-07 lane''s
+  call against the beat''s own done_when, and it is unaffected by this addendum.'
