@@ -1,0 +1,18 @@
+#### job ep2-b14-mac-plate-0818-1787066808 attempt 1 start 2026-08-18T15:27:03Z
+
+==== step fetch START 2026-08-18T15:27:06Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b14-mac-plate-0818\\fetch_plate.py"]
+fetched 14-the-defense-mac-plate-r1s1.png          1274802 bytes  sha df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc  OK
+fetched 14-the-defense-mac-plate-r1s1.yaml            1519 bytes  sha d36f31c2c55ebb290facda625273fb77ce32acb38412ba0b37bbfcae944f1a55  OK
+fetched 14-the-defense-mac-plate-r1s2.png          1233387 bytes  sha 0f5a771da0e201ffee6a80ef7e066ade108111b5107b3f6879fc508697cb1c8e  OK
+fetched 14-the-defense-mac-plate-r1s2.yaml            1519 bytes  sha ea9b4146044454363172509facf72fc87555c8ddc9c6bbf4e2e9291dc24f0400  OK
+fetched 14-the-defense-mac-plate-r1s3.png          1074913 bytes  sha 5f67ec0bcd58cc6c28d7505f4934c2951392f4b23b6c99db99c2d1dcc4b94ead  OK
+fetched 14-the-defense-mac-plate-r1s3.yaml            1519 bytes  sha 2dcf6fd624ef22350fbacfbda7d60d3971306ba463ff0f3255c2f6f6f2379ba6  OK
+every file matches its asserted sha256.
+==== step fetch END rc=0 2026-08-18T15:27:13Z ====
+
+==== step publish START 2026-08-18T15:27:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. Two reasons and both\n# are scars. A glob that misses publishes nothing while returning a code\n# that reads like a fetch failure; and box_enqueue.output_path_problems\n# refuses a spec whose declared artifacts are never named by any step,\n# which a wildcard defeats. Missing ONE file is a FAIL of the job.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/ep2-b14-mac-plate-0818-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b14-mac-plate-0818\"\nNAMES = [\n    \"14-the-defense-mac-plate-r1s1.png\",\n    \"14-the-defense-mac-plate-r1s1.yaml\",\n    \"14-the-defense-mac-plate-r1s2.png\",\n    \"14-the-defense-mac-plate-r1s2.yaml\",\n    \"14-the-defense-mac-plate-r1s3.png\",\n    \"14-the-defense-mac-plate-r1s3.yaml\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b14-mac-plate-0818.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b14-mac-plate-0818
+==== step publish END rc=0 2026-08-18T15:27:13Z ====
+#### job ep2-b14-mac-plate-0818-1787066808 finished rc=0 2026-08-18T15:27:13Z

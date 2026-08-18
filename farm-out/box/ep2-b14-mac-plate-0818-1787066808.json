@@ -1,0 +1,54 @@
+{
+  "id": "ep2-b14-mac-plate-0818-1787066808",
+  "task": "ep2-b14-mac-plate-0818",
+  "node": "002b-first-citizen",
+  "beat": 14,
+  "worker": "box-runner",
+  "priority": 20,
+  "needs_gpu": false,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b14-mac-plate-0818\\fetch_plate.py"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. Two reasons and both\n# are scars. A glob that misses publishes nothing while returning a code\n# that reads like a fetch failure; and box_enqueue.output_path_problems\n# refuses a spec whose declared artifacts are never named by any step,\n# which a wildcard defeats. Missing ONE file is a FAIL of the job.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/ep2-b14-mac-plate-0818-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b14-mac-plate-0818\"\nNAMES = [\n    \"14-the-defense-mac-plate-r1s1.png\",\n    \"14-the-defense-mac-plate-r1s1.yaml\",\n    \"14-the-defense-mac-plate-r1s2.png\",\n    \"14-the-defense-mac-plate-r1s2.yaml\",\n    \"14-the-defense-mac-plate-r1s3.png\",\n    \"14-the-defense-mac-plate-r1s3.yaml\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b14-mac-plate-0818.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b14-mac-plate-0818-out\\14-the-defense-mac-plate-r1s1.png",
+    "C:\\banyan-farm\\ep2-b14-mac-plate-0818-out\\14-the-defense-mac-plate-r1s1.yaml"
+  ],
+  "backlog": {
+    "filed_at": 1787066808,
+    "filed_at_iso": "2026-08-18T15:26:48Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b14-mac-plate-0818.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-18T15:27:03Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-18T15:27:13Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b14-mac-plate-0818-out\\14-the-defense-mac-plate-r1s1.png",
+    "C:\\banyan-farm\\ep2-b14-mac-plate-0818-out\\14-the-defense-mac-plate-r1s1.yaml"
+  ]
+}
