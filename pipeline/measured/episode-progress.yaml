@@ -300,6 +300,14 @@ episodes:
   total_beats: 15
   states_read_from: review/ep1-audit-0812/index.html (the "Where each beat stands on your word" table),
     superseded in one place by review/inbox.yaml
+  states_read_from_CORRECTION_0819: >-
+    CORRECTION, 2026-08-19: the audit page named above is now superseded WHOLESALE, not "in one place",
+    and review/inbox.yaml is the source for every row below. The audit table was written before the
+    founder published episode 1 and closed it on 2026-08-13; all fifteen beats are `done` on that
+    ruling. The line above is left standing because it is what the measurement read at 09:40Z on
+    2026-08-14. See `ep1_publication_CORRECTION_0819` at the top of this file for his words, the date,
+    which four beats hold an individual verdict, which eleven are passed by the publication, and the
+    fifteen states this replaced.
   beats:
   - n: 1
     state: done
