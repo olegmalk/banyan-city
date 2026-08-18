@@ -1,0 +1,40 @@
+#### job ep2-b08-boardcomp-0818-1787076858 attempt 1 start 2026-08-18T18:47:44Z
+
+==== step fetch START 2026-08-18T18:47:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08boardcomp-0818\\fetch_init.py"]
+fetched 08-boardlowered-comp-0818.png 1123709 bytes sha 487ef4e8e498357f9078d75b5205d1843cc4f0c73c74d4d45714edf3d0f64b51 OK
+fetched 08-boardlowered-sample-mask-0818.png 3296 bytes sha a0727b3ebbf8ec6ccb74b5290f2be79e97e69b092541eadd4f270919062fa43a OK
+==== step fetch END rc=0 2026-08-18T18:47:48Z ====
+
+==== step dry START 2026-08-18T18:47:48Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08boardcomp-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08boardcomp-0818\\08-boardlowered-comp-0818.png", "--init-sha256", "487ef4e8e498357f9078d75b5205d1843cc4f0c73c74d4d45714edf3d0f64b51", "--mask-png", "C:\\banyan-farm\\b08boardcomp-0818\\08-boardlowered-sample-mask-0818.png", "--prompt-file", "C:\\banyan-farm\\b08boardcomp-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08boardcomp-0818\\negative.txt", "--out", "C:\\banyan-farm\\b08boardcomp-0818\\b08-boardcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260830", "--note", "mask geometry check. Writes the mask and exits before a model is loaded. The mask is NOT an ellipse this time and that is deliberate: it is the UNION of (a) beat08_gesture_composite.py's own seam mask -- every pixel the compositor touched, grown 12 -- and (b) the exact ellipse 445,620,335,165 carried unchanged from ep2-b08-twofig-gesture-0818. Union bbox x 110-785, y 455-853 of 832x1216, 19.9% of frame. The seam half puts the WHOLE lowered board inside the redrawable region (sample_mask_covers_whole_moved_board: true), so B4a is a real test rather than a protected region scoring a guaranteed pass. The ellipse half keeps the goblin's belly and the gap between the men inside the mask, so B4b's predicted FAIL is a finding and not an artefact of a mask drawn away from the thing being scored (pattern doc \u00a713.3). Looked at as a magenta overlay on the composite before filing: both faces and both lower robes are outside it.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 487ef4e8e498357f9078d75b5205d1843cc4f0c73c74d4d45714edf3d0f64b51
+mask png corners=- bbox=[110, 455, 785, 853]  0.8113 x 0.3273 of 832x1216
+WROTE C:\banyan-farm\b08boardcomp-0818\b08-boardcomp-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-18T18:47:48Z ====
+
+==== step s20260830 START 2026-08-18T18:47:48Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08boardcomp-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08boardcomp-0818\\08-boardlowered-comp-0818.png", "--init-sha256", "487ef4e8e498357f9078d75b5205d1843cc4f0c73c74d4d45714edf3d0f64b51", "--mask-png", "C:\\banyan-farm\\b08boardcomp-0818\\08-boardlowered-sample-mask-0818.png", "--prompt-file", "C:\\banyan-farm\\b08boardcomp-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08boardcomp-0818\\negative.txt", "--out", "C:\\banyan-farm\\b08boardcomp-0818\\b08-boardcomp-s20260830.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260830", "--note", "ONE SAMPLE, ONE SEED. Same words, same negative, same seed 20260830, same 40 steps, 7.5 cfg, 0.30 strength, 64 pad-crop, 8 blur as ep2-b08-twofig-gesture-0818. TWO things differ from that run and both are declared: the INIT is now the board-lowered composite instead of the raw plate, and the MASK is a superset of that run's ellipse instead of the ellipse itself. The mask being a SUPERSET is what keeps the comparison honest -- anything the previous mask could have drawn, this one can also draw, so a second FAIL on the point is stronger evidence than the first, not weaker."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:03,  1.66it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:05<00:08,  2.05s/it]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:05<00:04,  1.42s/it]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.67it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.19it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 10s
+WROTE C:\banyan-farm\b08boardcomp-0818\b08-boardcomp-s20260830.png
+WROTE C:\banyan-farm\b08boardcomp-0818\b08-boardcomp-s20260830-mask.png
+WROTE C:\banyan-farm\b08boardcomp-0818\b08-boardcomp-s20260830.png.meta.yaml
+rc=0 render_s=4.8
+==== step s20260830 END rc=0 2026-08-18T18:48:07Z ====
+
+==== step publish START 2026-08-18T18:48:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08boardcomp-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-boardcomp-0818\"\nNAMES = [\n    \"b08-boardcomp-s20260830.png\",\n    \"b08-boardcomp-s20260830-mask.png\",\n    \"b08-boardcomp-s20260830.png.meta.yaml\",\n    \"08-boardlowered-comp-0818.png\",\n    \"08-boardlowered-sample-mask-0818.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-boardcomp-0818.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b08-boardcomp-0818
+==== step publish END rc=0 2026-08-18T18:48:07Z ====
+#### job ep2-b08-boardcomp-0818-1787076858 finished rc=0 2026-08-18T18:48:07Z
