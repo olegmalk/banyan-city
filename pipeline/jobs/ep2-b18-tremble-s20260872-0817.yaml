@@ -195,3 +195,48 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b18-tremble-s20260872-0817\18-the-decision-LTX-ep2-b18-tremble-s20260872-0817.mp4
 - C:\banyan-farm\ep2-b18-tremble-s20260872-0817\b18-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-18 by the night supervisor (v2). Scored against
+# the bar pre-registered in this spec's own done_when, which was written before
+# these pixels existed and is NOT edited here.
+# ============================================================================
+verdict: FAIL-STROBE. The defect this three-seed set was filed to detect is present on this seed, and
+  it is present by measurement, not impression. A second defect -- a hold/jump judder -- is recorded
+  below but is NOT what fails it, because the bar never named it.
+verdict_measured:
+  read_how: '121 frames decoded (704x1280, 24fps, 121 frames, confirmed by ffprobe), measured at
+    176x320, and LOOKED at twice: a 9-panel sheet across the clip, then a 12-frame CONSECUTIVE strip
+    at f040-f051, because a strobe is a frame-to-frame defect that a sheet sampled every 15 frames
+    cannot see.'
+  strobe_the_failing_clause: 'FAIL. Adjacent-frame specular pumping -- |bright(n) - bright(n-1)| as a
+    fraction of clip max -- exceeds 25% on 28 of 120 frame pairs. The sibling that passes, s20260871,
+    scores 0 of 120 on the identical measurement with the identical code. Supporting numbers, all
+    against s20260871 in brackets: whole-frame luminance high-frequency std 3.13 [0.95]; bright-pixel
+    count HF std 41.4 [10.3] swinging over a 41-197 range; backdrop band HF std 24.1 [10.9]. On the
+    consecutive strip the highlight visibly changes size and intensity between neighbouring frames and
+    the backdrop shadow band jumps rather than drifts. That is the bar''s "the lighting or the specular
+    highlight flickers, pulses or blinks", and it is the failure the spec said would be the one worth
+    reporting -- because it means the RECIPE, not the plate, is the lever.'
+  other_clauses_all_pass: 'Not frozen (mean interframe 9.7, drift 45.0). Colour holds -- hue 313 deg,
+    spread 3.0 deg, subject RGB 58,25,53 -> 59,30,54. One fruit throughout, attached at the neck, never
+    leaves frame, no face or figure. So this is a single-clause failure on a clip that is otherwise
+    on-canon.'
+second_defect_recorded_not_scored:
+  judder: 'STATED AND NOT SCORED, because the bar does not name it and a bar is not widened after the
+    pixels exist. 56 of 120 frame pairs measure under 0.5 interframe diff -- near-duplicates -- yet the
+    MEAN is 9.75 and the max is 35.3, and the longest consecutive still run is 1 frame. That shape is
+    not a tremble: the clip alternates between holding still and jumping hard, roughly every other
+    frame. The bar''s FAIL-FROZEN asks whether the plate sits still and this does not, so it cannot be
+    failed on that clause either. Filed as a follow-up below rather than smuggled into this verdict.'
+what_this_licenses: 'Nothing new on its own. Combined with its two siblings the three-seed set has done
+  exactly the job it was filed for: 1 clean pass, 1 strobe, 1 decay says the recipe is ALIVE on a purple
+  plate and the strobe is seed-borne rather than universal -- which is the opposite of the 0812 reading
+  where the strobe looked like a recipe property. That is the finding. It does NOT license a fourth
+  seed and it does not license a recipe change: s20260871 already clears the bar, so there is nothing
+  to fix before something needs fixing.'
+follow_ups_named:
+  - 'The tremble bar has no SUSTAIN clause and no JUDDER clause. Both gaps showed up in this set (this
+    seed judders, s20260873 decays). Any future beat-18 or plant-tremble spec should pre-register
+    motion in every quarter and a cap on near-duplicate frame pairs. Named here so it is inherited
+    rather than re-derived; NOT applied retroactively to these three.'
