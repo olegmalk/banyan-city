@@ -4173,7 +4173,12 @@ def build(out_dir: Path):
         onmach += (f'<p class="mono">{_e(dwho)} reported its own on-disk queue at '
                    f'its last idle check-in: <b>{dready}</b> '
                    f'job{"s" if dready != 1 else ""} ready'
-                   + (f', {dfailed} failed' if dfailed else "")
+                   # Same rule as the chip above, on the no-JS floor: a pile that
+                   # is entirely written up is a fact, not an alarm, and saying
+                   # so costs four words.
+                   + (f', {dfailed} failed'
+                      + (" (all triaged)" if 0 < dfailed <= acknowledged_failures()
+                         else "") if dfailed else "")
                    + f' · {age_el(dwhen, now)}</p>')
 
     if fin:
