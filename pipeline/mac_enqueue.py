@@ -113,11 +113,12 @@ def cmd_status():
               % (h, ("ALIVE  " if alive else "DEAD   ") + detail, "/".join(counts(h))))
 
 
-def file_job(host, beat, note=""):
+def file_job(host, beat, note="", seeds=1):
     jid = "mac-b%02d-%s" % (beat, time.strftime("%m%d-%H%M%S"))
     job = {"id": jid,
            "argv": [VENV % (host, host), PLATE_SCRIPT.replace("~", "/Users/%s" % host),
-                    "--beat", str(beat)],
+                    "--beat", str(beat)]
+                   + (["--seeds", str(seeds), "--i-have-seen-a-sample"] if seeds > 1 else []),
            "cwd": "/Users/%s/banyan-city" % host,
            "timeout_s": 1800,
            "note": note}
@@ -134,6 +135,10 @@ def main():
     ap.add_argument("--beat", type=int)
     ap.add_argument("--spread", help="comma-separated beats, round-robined over live hosts")
     ap.add_argument("--note", default="")
+    # plate_scratch refuses >1 seed without --i-have-seen-a-sample. Passing it is
+    # only honest once a sample HAS been looked at; eight beats were sampled and
+    # read on 2026-08-18 before this flag was used.
+    ap.add_argument("--seeds", type=int, default=1)
     ap.add_argument("--force", action="store_true",
                     help="file even if the worker looks dead (it will just sit there)")
     a = ap.parse_args()
@@ -167,7 +172,7 @@ def main():
 
     for i, b in enumerate(beats):
         h = live[i % len(live)]
-        ok, jid, out = file_job(h, b, a.note)
+        ok, jid, out = file_job(h, b, a.note, a.seeds)
         print("  %-10s beat %-3s %s %s" % (h, b, "filed" if ok else "FAILED", jid))
         if not ok:
             print("     ", out[:200])

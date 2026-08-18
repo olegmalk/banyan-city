@@ -56,6 +56,11 @@ from pathlib import Path
 QUEUE = Path(os.path.expanduser("~/banyan-queue"))
 DIRS = ("ready", "running", "done", "failed")
 POLL_S = 5
+# How often an IDLE worker restates that it is alive. Not once per idle stretch:
+# that was the first design and after eighteen quiet minutes all three workers
+# read DEAD to `mac_enqueue --status` while their processes were running fine.
+# A liveness signal that decays into silence is not a liveness signal.
+IDLE_BEAT_S = 60
 # A job that has not finished in this long is stuck rather than slow. A plate at
 # 832x1216 / 40 steps measures 70-140 s on these machines, so half an hour is
 # twenty times the longest observed run and will only fire on a real hang.
@@ -147,18 +152,19 @@ def main():
     ensure_dirs()
     beat("worker_start", pid=os.getpid())
     print("mac_worker draining %s" % QUEUE, flush=True)
-    idle_logged = False
+    last_idle_beat = 0.0
     while True:
         ready = sorted((QUEUE / "ready").glob("*.json"))
         if not ready:
-            # Say "idle" ONCE per idle stretch, not every five seconds. A log
-            # that repeats itself is a log nobody reads at 3am.
-            if not idle_logged:
+            # Restate idleness every IDLE_BEAT_S -- often enough that a reader
+            # can tell "idle" from "dead", rarely enough that the log stays
+            # readable. Every five seconds would be noise; once would be silence.
+            if time.time() - last_idle_beat >= IDLE_BEAT_S:
                 beat("worker_idle", ready=0)
-                idle_logged = True
+                last_idle_beat = time.time()
             time.sleep(POLL_S)
             continue
-        idle_logged = False
+        last_idle_beat = 0.0
         run_one(ready[0])
 
 
