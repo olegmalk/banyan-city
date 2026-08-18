@@ -1413,6 +1413,22 @@
     he never said - and instead of being left at full length, which overstated what is open. The stem,
     the side-branch, leaf size in frame and "mascot-simple" remain undetermined and are listed in THE-SAPLING.md
     SS4; none of them was this card''s ask and none is raised here. $0, no GPU, no render, nothing enqueued.'
+  resolved:
+    date: '2026-08-17'
+    verdict: 'HIS WORDS, LATER THE SAME DAY THIS CARD WAS NARROWED: "the sapling 2 leaves are
+      average leaves". That answers the one thing the card had left. The card was cut down to the
+      shape residue while THE-SAPLING.md SS2.2 still recorded shape as a STEWARD INFERENCE inviting
+      a one-line veto; he then ruled it himself, SS2.2 was rewritten to "Shape - HIS RULING,
+      2026-08-17: AVERAGE LEAVES", and canon subject sapling-cotyledon-shape now says the ruling
+      "no longer rests on an inference and is no longer vetoable in one line". The steward guess it
+      asked him to veto -- round/oval cotyledons -- is SUPERSEDED and kept struck through beside it.
+      CLOSED ON HIS OWN WORDS, NOT ON THE STEWARD''S READING OF THEM. Note the shape of the error:
+      the card was correct when written, correct when narrowed, and stale within hours, because a
+      ruling propagated into canon, the drafts and the checkers and not back to the board. That is
+      the second time this exact drift has been found on this subject. What his sentence still does
+      NOT settle, and what is therefore not closed here: whether the leaves are called cotyledons
+      (vocabulary), and leaf SIZE in frame -- canon says "average" is a ruling about shape, not
+      about vocabulary or scale, and THE-SAPLING.md SS4 still carries oversized/big unruled.'
 - what: 'BEAT 13 ASKS FOR A TREE WE NO LONGER HAVE - and we have quietly been shipping a different action
     for days without putting it to you. Your script (genomes/sapling/nodes/002b-first-citizen/node.md,
     beat 13 THE SHADE, 1:00-1:04) reads: "The scavenger slides down the trunk and folds into the sapling''s
@@ -1522,6 +1538,16 @@
     origin/main tip 145a02d5 committed 10:14:57Z - a 95-second deploy, i.e. working. The 8.5h "lag" that
     qa_local reports is unpushed commits, not a stuck deploy, and its advice to publish via REPO-MOVE.md
     A0 is wrong for this situation. The Pages mirror looking newer is its own */30 cron, not evidence.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'PUSHED, on his word ("ok push"). 189 commits went up and deployed as bc981716,
+      READY at 22:45:12Z. THE CARD WAS ALSO WRONG ABOUT WHOSE PERMISSION IT NEEDED: it was raised
+      against HANDOVER-0817''s standing line "do not push without Oleg", inherited from sessions his
+      dad was running, and the operator is Roman -- the founder and R4. The authority for publishing
+      banyan.city was his all along, so the hold was waiting on the wrong person. Recorded because
+      the hold cost real time: the review board, the corrected status page and a night of findings
+      were invisible to him while the board that would have told him sat unpublished behind the same
+      push. A card asking permission to publish cannot be read until it is published.'
 - what: 'THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four. Five casting
     rounds have not moved it. Second half of the same question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?
     Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.'
