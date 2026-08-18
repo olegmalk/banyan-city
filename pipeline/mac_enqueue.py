@@ -83,6 +83,46 @@ def known_revs(repo_script="pipeline/plate_scratch.py"):
     return {(int(b), int(r)) for b, r in pairs}
 
 
+def remote_has_rev(host, beat, rev):
+    """Does THIS HOST's checkout carry REVS[(beat, rev)]?
+
+    THE HOLE THIS CLOSES, AND IT FIRED THE HOUR --rev WAS ADDED. `known_revs`
+    reads the FILER's copy of plate_scratch.py. The job runs the WORKER's copy,
+    out of `~/banyan-city` on the mac, and the two are only equal if somebody
+    pulled. On 2026-08-19 a beat-19 rev 3 was filed against a macbook whose pull
+    had ABORTED on an untracked file; the local guard passed, the remote refused
+    at rc=4 in 0.1s, and the queue recorded a job that never drew anything.
+
+    THE COST WAS SMALL AND THAT IS EXACTLY WHY IT IS WORTH GUARDING. plate_scratch
+    checks the rev before it loads the model, so the failure is fast and loud. The
+    expensive version of the same bug is the one this guard really exists for: a
+    host whose checkout is stale by one commit HAS the rev key but with the
+    PREVIOUS wording in it. Then nothing refuses, a plate comes back, and it is
+    scored as the rev that was commissioned. The sidecar records `revision`, so the
+    evidence survives -- but only for whoever thinks to look, and the picture looks
+    fine.
+
+    Returns (ok, detail). A host we cannot ask is NOT assumed good.
+    """
+    pat = r"^REVS\[\(%d, *%d\)\]|^    \(%d, *%d\): \{" % (beat, rev, beat, rev)
+    rc, out = ssh(host, "grep -cE '%s' %s 2>/dev/null || true"
+                  % (pat, PLATE_SCRIPT))
+    if rc != 0:
+        return False, "could not read %s (rc=%d)" % (PLATE_SCRIPT, rc)
+    hits = out.strip().splitlines()[-1].strip() if out.strip() else "0"
+    if not hits.isdigit():
+        return False, "unreadable grep result: %s" % hits[:60]
+    return int(hits) > 0, "%s hit(s)" % hits
+
+
+def head_commit(host):
+    """The worker checkout's HEAD, reported alongside a refusal so the fix is
+    obvious (`git pull`) rather than a mystery."""
+    rc, out = ssh(host, "cd %s && git log --oneline -1 2>/dev/null"
+                  % PLATE_SCRIPT.rsplit("/pipeline/", 1)[0])
+    return out.strip().splitlines()[-1][:72] if (rc == 0 and out.strip()) else "unknown"
+
+
 def worker_alive(host):
     """Alive by the worker's OWN heartbeat, not by `ps` and not by a claim file.
 
@@ -223,6 +263,20 @@ def main():
 
     for i, b in enumerate(beats):
         h = live[i % len(live)]
+        # THE REV MUST EXIST ON THE HOST THAT WILL RUN IT, not just here.
+        # Checked per host rather than once, because --spread hands different
+        # beats to different machines and their checkouts drift independently.
+        if a.rev != 1:
+            ok, detail = remote_has_rev(h, b, a.rev)
+            if not ok:
+                print("  skip %-10s beat %-3s rev %d NOT IN THAT HOST'S CHECKOUT "
+                      "(%s). Its HEAD is %s.\n"
+                      "     Fix: ssh %s 'cd ~/banyan-city && git pull --ff-only'\n"
+                      "     Filing anyway would queue a job that exits 4 without "
+                      "drawing -- or, worse, one that draws the PREVIOUS wording "
+                      "under this rev's name."
+                      % (h, b, a.rev, detail, head_commit(h), h))
+                continue
         ok, jid, out = file_job(h, b, a.note, a.seeds, a.rev)
         print("  %-10s beat %-3s %s %s" % (h, b, "filed" if ok else "FAILED", jid))
         if not ok:
