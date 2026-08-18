@@ -1,0 +1,389 @@
+# BEAT 08 -- A CONTROLNET-HINTED PLATE THAT STAGES THE POINT FROM THE START.
+# ONE SAMPLE, ONE SEED, ONE PROMPT, ONE SIZE. THE CONDITION IS THE ONLY VARIABLE.
+#
+# ============================================================================
+# THE ROUTE THIS EXECUTES, AND WHY IT IS NOT ANY OF THE THREE THAT ARE CLOSED
+# ============================================================================
+# pipeline/b08-arm-route-0819.md, written last night, ruled beat 08 at STAGING
+# rather than at the arm. Its finding, on pixels rather than on a metric: the
+# signed board-lowered composite has BOTH of the guard's hands on the clipboard
+# (HAND_L 545,505-645,618 and HAND_R 693,505-793,618, fingers curled over the
+# front face), so any arm added to that init is a THIRD arm -- and `extra arms`
+# is in this beat's own negative. B4a's success is what forecloses B4b.
+#
+#   Route C, further compositing of that plate -- CLOSED. composite-init-pattern
+#     .md 9b already ran the cut-and-rotate and rejected it on pixels: it pasted
+#     a crop containing a SECOND CLIPBOARD onto the goblin's chest.
+#   Route B, ControlNet + masked inpaint -- NOT OPENED HERE, on purpose. No
+#     driver in this tree pairs a ControlNet with a mask, and the probe's own
+#     `observed_not_scored` (a sparse hint at scale 0.8 FLATTENS THE WHOLE
+#     FRAME) is exactly the failure that would appear outside such a mask. It is
+#     a separate one-sample question with its own bar and it must not be
+#     smuggled in as an implementation detail of a beat job.
+#   Route A, a plate campaign that stages the point -- THIS. It is the only
+#     route that resolves the two-hands problem, because the pointing hand has
+#     to be drawn by something that knows it is a hand rather than inked in as
+#     geometry over a picture that already spent both hands.
+#
+# ============================================================================
+# WHY A HINT AND NOT A THIRTEENTH WORDING
+# ============================================================================
+# Text-to-image cannot aim this point. done-definitions.yaml,
+# `figure_count_ruled_from_the_script_0817`: a pointing arm attached to the
+# GOBLIN 3 of 3 and a board 9 of 12, however worded. The mechanism is known and
+# is not a wording bug -- CLIP's encoder is causal and its pooled embedding
+# carries the whole prompt's semantics, so an attribute named anywhere lands on
+# whichever figure the sampler likes (attribute_mask.py's header; ALE-Edit,
+# arXiv 2412.04715). A WORDING CANNOT AIM IT, and a negative cannot unbind it.
+#
+# GEOMETRY IS PER-LOCATION, which is why a hint is one of the few levers that
+# can say WHICH figure grows the arm. And the lever is MEASURED, not hoped for:
+# ep2-cnet-probe-0817 ran on 2026-08-17 and scored bind_ratio 35.363 (left) and
+# 21.530 (right) against BIND_MIN = 1.25, with the nocontrol arm at 1.012 inside
+# its pre-registered [0.85, 1.15] kill-switch band -- every threshold written in
+# controlnet_probe.py before any pixels existed. Its four frames were then
+# OPENED: both control arms trace the authored stroke, and mirroring the hint
+# moves the drawing with it. The hint decides the drawing.
+#
+# ============================================================================
+# THE TWO PIECES OF NEW CODE, AND WHAT WAS ALREADY RUN ON EACH
+# ============================================================================
+# The route memo refused to file a job that would ship "two pieces of code
+# nobody has run". Both of these have been run, at $0, on this Mac, before this
+# spec was written:
+#
+#   pipeline/author_b08_pose_hint.py -- PIL and stdlib only, no torch, no
+#     network. --selftest PASSES 27 invariants. Its output was DRAWN and OPENED
+#     at full size, and looking at it sent it back three times: the first ears
+#     read as HORNS, both heads floated above the shoulders with a visible gap,
+#     and the ground ticks were hidden inside the leg capsules and so were
+#     saying nothing at all. All three are fixed and each fix carries the
+#     observation in its comment. THE HINT IN THIS JOB IS THE ONE THAT WAS
+#     LOOKED AT: sha256 19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+#
+#   pipeline/controlnet_plate.py -- controlnet_probe.py's render path with its
+#     constants lifted to arguments and NOTHING ELSE CHANGED: same base, same
+#     net, same variant trap, same from_pipe module reuse, same sidecar shape.
+#     A separate file because the probe's verdict is filed against ITS constants
+#     and editing them would retroactively move what that verdict was measured
+#     on. --selftest PASSES 15 invariants without torch or weights.
+#
+# ============================================================================
+# THE BAR IS THE DRAWING, AND IT WAS ASSERTED BEFORE THE PIXELS
+# ============================================================================
+# Every clause of the bar below that a PICTURE can carry is a measured property
+# of the hint and is asserted in author_b08_pose_hint.py --selftest. The staging
+# was not argued for in a prompt and then hoped for; it was solved:
+#
+#   both feet lines            y = 1149.1, identical to the pixel        -> B3
+#   stature ratio              1.100 (guard taller, nobody towers)       -> B5
+#   board top below shoulder   177.4 px                                  -> B4
+#   fingertip                  (246.5, 695.1), 26.8 px clear of the
+#                              goblin's torso, at his navel height       -> B4
+#   arm extension              0.847 of a whole arm -- a real point, not
+#                              a locked-out stretch and not a folded jab -> B4
+#
+# AND THE STAGING FIXES 9b's THIRD BLOCKER ON PURPOSE. The composite route died
+# partly because "the path is occupied" -- the goblin's own green fist sat dead
+# centre of the gap between the men. In this hint his arms hang at his sides, so
+# the lane between the fingertip and the belly is EMPTY.
+#
+# ============================================================================
+# WHY TWO ARMS IS ONE SAMPLE AND NOT A BATCH
+# ============================================================================
+# One seed, one prompt, one size, one scale. The ONLY thing that moves between
+# the two processes is whether the ControlNet is attached -- which is exactly
+# the shape ep2-cnet-probe-0817 was filed and accepted in. The nocontrol arm is
+# not a spare: the finding this job exists for is WHICH FIGURE GROWS THE ARM,
+# and against a 3-of-3 prior a single hinted frame where the point lands on the
+# guard cannot be told from luck. The control arm at the same seed is what turns
+# it into evidence. No scale sweep, no wording variant, no second seed.
+#
+# THE HINT ARM RUNS FIRST. If the card is lost after one process, the hinted
+# frame still answers the question and the control arm alone answers nothing new.
+#
+# ============================================================================
+# WHAT THE WORDING GIVES UP, AND TO WHOM
+# ============================================================================
+# The prompt is 68 estimated tokens against CLIP's 77 (measured with
+# sd_prompt._token_estimate on this Mac, which has no real CLIP; the box's real
+# tokenizer re-checks it before any weights load and REFUSES rather than letting
+# diffusers truncate the style anchor off the tail). Fitting meant giving up
+# clauses, and the ones given up are the ones THE HINT NOW CARRIES AS PIXELS:
+# `arms down`, `both standing on the same grass`, `an arm's length apart`,
+# `pointed ears`, `narrow angular skull`. That is the trade this route buys --
+# geometry moves out of the prompt and into the condition, which frees tokens
+# for identity and for the style anchor. `lean and wiry` from beat 14's adult
+# wording is the one clause given up that the hint does NOT carry; it is named
+# here rather than quietly dropped.
+#
+# THE CAST IS FROZEN AND IS NOT THIS LANE'S TO CHANGE. Guard 2 off the approved
+# sheet ("the cast stands as drawn"): light sandy hair, cream shirt, white sash,
+# brown wrap skirt -- NOT bald, which 14 of 17 older prompts for these beats
+# asked for and which the boardcomp init still has. The goblin is beat 14's
+# ADULT wording (`authored_b14_adult`: "a small goblin man ... adult") with the
+# {{GOBLIN}} pair `green skin, plump` that render_wave_goblin.py defaults to.
+# NO EYEWEAR INSTRUMENT IS ATTEMPTED -- no `glasses` in the negative, no binding
+# device -- because a dedicated lane owns that problem and beat 07 measured
+# eyewear reaching the goblin 5 of 12 with it open. Leading token is "Two men,"
+# so the draft derives `2boys`, which is the tag beat 08 declares.
+#
+# ============================================================================
+# NOT A DUPLICATE OF THE BEAT-07 SAMPLE
+# ============================================================================
+# b08-arm-route-0819.md 6 says do not duplicate ep2-b07-point-motion-0819. That
+# job asks whether a point binds to the guard in IMAGE-TO-VIDEO off a board-free
+# two-figure init that already exists; this asks whether a hand-authored hint can
+# make a STILL GENERATOR draw the staging in the first place, on a beat whose
+# only two-figure plate has both hands committed to a board. Different engine,
+# different beat, different mechanism, and neither answer substitutes for the
+# other: if the point binds in i2v there, beat 08 still needs a board-free plate
+# to run it off, and this is the campaign that would produce one.
+#
+# NO SPEND, NO PROVIDER, NO CANON FILENAME, NO PUBLISH TO THE SITE, NO POST,
+# NO ASSEMBLY, NO PICK. Every weight is already local. No video is encoded
+# anywhere on this path, so no motion recipe's --image-crf is inherited by it.
+
+id: ep2-b08-cnetplate-0819
+task: ep2-b08-cnetplate-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 34
+max_attempts: 1
+owner: beat 08 staging lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate, for its cut slot in the episode 2 assembly. The beat has NO
+  VERDICT YET in review/ep2-picks/done-definitions.yaml, its wording lever is
+  spent (a point attaching to the goblin 3 of 3), and its composite/init route
+  was closed last night on the init's own pixels. This is the first sample down
+  Route A of pipeline/b08-arm-route-0819.md, and its result decides one thing:
+  whether a hand-authored geometric hint can put the pointing arm on the GUARD
+  in a two-figure plate that no wording has ever produced. Judged by opening
+  both PNGs at full size against the bar this spec pre-registers.
+
+success: >-
+  Two 832x1216 PNGs with sidecars, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-cnetplate-0819 with a sha256
+  manifest. PASS requires ALL FIVE of B1-B5 below ON THE HINTED ARM. The
+  nocontrol arm is not scored against the bar -- it is the control, and its only
+  job is to say what the same seed and the same words do WITHOUT the condition.
+  A FAIL is a real and useful outcome: if the hinted arm also puts the point on
+  the goblin, then the strongest structural lever this repo has does not aim a
+  gesture, and beat 08's staging is not reachable by conditioning a still
+  generator at all -- which retires Route A and leaves the beat waiting on
+  ep2-b07-point-motion-0819's i2v answer instead. A partial is a FAIL.
+
+why: >-
+  Beat 08 is the last guard beat with no plate and no verdict. Its wording lever
+  is measured spent, its composite route is closed on pixels, and the one lever
+  that has never been tried on it is the one that was proven to bind two days
+  ago and then sat unread for two days. Four minutes, $0, no provider, no
+  download -- every weight this job touches is already in the box cache and the
+  hint was drawn on this Mac with PIL.
+
+est_minutes: 4   # 2 processes; measured on the probe's path, ~45s load + ~60s/frame
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"        # every weight is already cached; a download here
+                             # would mean the cache moved and the job should die
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# THE DRIVER AND THE HINT RUN AS A LOOSE COPY, AND THAT IS RECORDED RATHER THAN
+# GLOSSED. Both were staged at C:\banyan-farm\b08cnetplate-0819\src and both
+# were hash-verified on BOTH ends before this spec was written:
+#   pipeline\controlnet_plate.py            2a1bd19ecebe1b4c779c07e70f4632731c9d21fdd96d6bda6e233f74274fa67f
+#   pipeline\control\b08-pose-0819.png      19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+# `--repo-commit dc7348f3` is passed explicitly because a loose tree is not a
+# git checkout: `git rev-parse` finds nothing in it and the sidecar would record
+# `unknown`, which is the exact defect B01-R9-PLAN.md's stage 1 shipped. The
+# hint's sha is ALSO asserted by the driver at render time (--control-sha256),
+# so a hint edited on the box after staging fails the job instead of silently
+# rendering a different pose than the one that was looked at.
+
+payload:
+  C:\banyan-farm\b08cnetplate-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08cnetplate-0819\negative.txt: >-
+    giant, colossus, towering figure, huge, different scale, floating, deleted
+    sky, raised clipboard, second board, extra board, extra arms, extra hands,
+    extra fingers, deformed hands, third person, crowd, girl, child, chibi,
+    armor, helmet, knight, text, watermark, photorealism, 3d render, low
+    quality, deformed
+
+steps:
+  - name: hint
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08cnetplate-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08cnetplate-0819\src
+      - --repo-commit
+      - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+      - --task
+      - ep2-b08-cnetplate-0819
+      - --arm
+      - hint
+      - --control
+      - pipeline/control/b08-pose-0819.png
+      - --control-sha256
+      - 19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+      - --scale
+      - '0.8'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08cnetplate-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08cnetplate-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08cnetplate-0819\out
+  - name: nocontrol
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08cnetplate-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08cnetplate-0819\src
+      - --repo-commit
+      - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+      - --task
+      - ep2-b08-cnetplate-0819
+      - --arm
+      - nocontrol
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08cnetplate-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08cnetplate-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08cnetplate-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # THE STEP THIS JOB EXISTS TO NOT REPEAT. ep2-cnet-probe-0817 rendered
+        # all four of its arms on 2026-08-17 and was invisible for two days
+        # because it had no step like this one: it declared artifacts under its
+        # own working directory and nothing ever carried them to farm-out, which
+        # is the only path by which a box result reaches the repo. box_enqueue
+        # now REFUSES a spec without one (courier_problems, 2026-08-19), and
+        # this job is the first filed through that guard.
+        #
+        # THE GLOBS NAME THE FILES EXACTLY. A glob that matches nothing publishes
+        # nothing while exiting 0, which is what made six rendered plates read as
+        # six failures on 2026-08-14. No allow_fail, and the count is asserted.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08cnetplate-0819/out"
+        src_dir = "C:/banyan-farm/b08cnetplate-0819/src"
+        pay_dir = "C:/banyan-farm/b08cnetplate-0819"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetplate-0819"
+        os.makedirs(dst, exist_ok=True)
+        files = sorted(glob.glob(out_dir + "/ep2-b08-cnetplate-0819-hint.png*")
+                       + glob.glob(out_dir + "/ep2-b08-cnetplate-0819-nocontrol.png*")
+                       + glob.glob(src_dir + "/pipeline/control/b08-pose-0819.png")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-cnetplate-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 7 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08cnetplate-0819\out\ep2-b08-cnetplate-0819-hint.png
+  - C:\banyan-farm\b08cnetplate-0819\out\ep2-b08-cnetplate-0819-nocontrol.png
+
+# ============================================================================
+# THE BAR, PRE-REGISTERED. IT IS NOT REWRITTEN AFTERWARDS.
+# ============================================================================
+# Carried from review/ep2-picks/done-definitions.yaml beats.'08' done_when as
+# amended by `figure_count_ruled_from_the_script_0817` (TWO figures, not three),
+# and from ep2-b08-boardcomp-0818's own bar. The correspondence to that spec's
+# lettering is stated so nobody can read this as a bar that moved: boardcomp's
+# B1 is this B3, its B2 and B3 are this B2, its B4 is this B4, its B5 is this B5.
+bar:
+  b1_the_pair: >-
+    TWO figures and only two -- one guard and one goblin, both whole in frame.
+    Not three, not a crowd, not one figure with a second head.
+  b2_the_adults_read: >-
+    The guard reads ADULT, and the goblin reads an ADULT GOBLIN -- beat 14's own
+    identity wording, a small goblin man, green skin, plump, adult. Not a child,
+    not a chibi, not a monster girl, not a second human. THIS IS THE ONE CLAUSE
+    THE HINT CANNOT CARRY: a contour says how tall a figure is, not how old, so
+    this is scored by eye against the wording and nothing in the geometry
+    guarantees it.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The hint pins both
+    foot lines at y=1149.1, identical to the pixel; the render must not break it
+    by floating a figure or splitting the plane.
+  b4_lowered_board_and_point: >-
+    THE CLAUSE THIS SAMPLE EXISTS FOR, and it has two halves that are scored
+    separately because the composite route passed one and failed the other. (a)
+    THE CLIPBOARD IS DOWN -- at the guard's hip, in ONE hand, not raised at his
+    chest and not in both hands. (b) THE POINT GOES TO THE BELLY -- the guard's
+    other arm is extended and the gesture is aimed at the goblin's belly, both
+    legible.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE PRIMARY FINDING, and it is stated as its own clause because it is the
+    thing twelve stills could not do. The pointing arm must grow from THE
+    GUARD's shoulder, not the goblin's. Text-to-image put it on the goblin 3 of
+    3, so this is scored against the nocontrol arm rendered at the same seed and
+    the same words: if the point lands on the guard in BOTH arms, the hint gets
+    no credit and the finding is that this seed simply behaved.
+  b5_no_colossus: >-
+    Neither figure towers over the other. The hint carries a stature ratio of
+    1.100 -- the guard taller, nobody towering -- and this is the fault every
+    wording round returned.
+fail_is:
+  g1: The point attaches to the GOBLIN, or to nobody. This is the pre-registered
+    3-of-3 fail mode and it is the outcome that retires Route A.
+  g2: A third arm, a second board, extra hands or extra fingers -- the founder's
+    own named defect from the beat 10 plate lane.
+  g3: The clipboard stays raised at chest height, or is held in both hands.
+  g4: The ground plane splits, or a figure floats.
+  g5: A colossus returns, or either figure reads as a child or a chibi.
+observed_not_scored: >-
+  FRAME FLATTENING. ep2-cnet-probe-0817 recorded that at conditioning_scale 0.8
+  with a sparse hint the condition does not merely place the subject, it
+  FLATTENS THE WHOLE FRAME -- both of its control arms lost the environment the
+  uncontrolled arm invented. This hint is denser than that one (ink fraction
+  0.058), but the effect is expected here too and is NOT a fail: no clause of
+  the bar above asks for a world, and 0.8 is the only conditioning scale this
+  repo has measured, so substituting an unproven number would trade a known
+  quantity for a guess. If the hinted arm passes B1-B5 and comes back flat, the
+  NEXT question is a scale rung, with its own sample and its own bar.
+not_done_on_purpose: >-
+  ONE SAMPLE, ONE SEED, ONE SCALE. No sweep, no second wording, no re-authored
+  hint, no promotion, no pick, no plate_ack waiver, no canon filename, and
+  nothing touching any beat's approved wording or any other beat's plate. No
+  ControlNet-plus-mask, which is Route B and its own question.
+licence_note: >-
+  Clean, and identical to the probe's. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M), control net xinsir/controlnet-scribble-sdxl-1.0
+  (apache-2.0, no attribution condition). The hint is drawn by
+  pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
+  annotator, so the lllyasviel/Annotators landmine (B01-R9-PLAN.md 9, DO NOT USE
+  FOR CANON) is not touched.
