@@ -385,3 +385,37 @@ artifacts:
 - C:\banyan-farm\nubinpaint-0818\b01-nub-s20260825.png.meta.yaml
 - C:\banyan-farm\nubinpaint-0818\b01-nub-s20260825-mask.png
 - C:\banyan-farm\nubinpaint-0818\b01-nub-dry-mask.png
+
+# ---------------------------------------------------------------------------
+# VERDICT, appended 2026-08-18 by the job-authoring lane that filed this job.
+# The bar above was NOT edited after the frame existed: the enqueued JSON on the
+# box (queue/done/ep2-b01-nubinpaint-0818-1787061174.json) carries it verbatim.
+verdict_0818: "RAN 2026-08-18 13:53Z on the rtx5090, animagine-xl-3.1 bf16/CUDA, 9.8s render, 20s wall, rc=0 on all\
+  \ four steps, $0. One PNG + mask + sidecar published to farm-out/ep2-b01-nubinpaint-0818/ with SHA256SUMS.txt. Scored\
+  \ against the bar above as it stood in the job JSON filed at ts 1787061174 -- the box's own copy in done/ep2-b01-nubinpaint-0818-1787061174.json\
+  \ carries that bar verbatim and predates the render, so the pre-registration is a receipt rather than a claim.\n\
+  VERDICT: FAIL-COLOUR. The 2026-08-10 defect came back, wearing the same clothes.\n * THE ADD WORKED, which is the\
+  \ half worth keeping. The mask returned exactly ONE rounded body, span 21x31 px, sitting at the pedicel tip with\
+  \ the stalk emerging from its lower edge -- so criteria (a-shape), (b), (d) and (e) are met: one object, no second\
+  \ fruit, no flower cluster, no extra leaf, nothing purple or violet. Against the two leaf blades' 79x73 and 82x61\
+  \ px lit spans it is about a quarter of a leaf. The mask capped the size as designed; the founder's SMALL was delivered\
+  \ structurally, not hoped for.\n * IT IS NOT GREEN, and that is the fail. Mean RGB 243,219,127 over the 447 blade-bright\
+  \ pixels, HSV hue 48 deg, sat 0.48, val 0.95; brightest pixel 250,245,151, i.e. near-blown. Green is hue 90-150.\
+  \ On a plate whose background sits at 213,126,64 the object reads as a lit closed bud or a petal caught in the backlight\
+  \ -- not an unripe fig, and not the script's `green nub`.\n * THE GLOW BANS DID NOT HOLD. glowing, glow, orb, white\
+  \ sphere, specular highlight, glossy, shiny and lens flare were all in the negative -- they are pipeline/b01-fig/negative-r2.txt,\
+  \ written precisely because the 2026-08-10 sample's fruit wore a blown white specular cap -- and the sample came\
+  \ back luminous anyway. So that negative is NOT the instrument for colour here, at least not at 0.99 in a 32x38\
+  \ mask inside a backlit frame: the crop's context is amber rim-light in every direction and a full-strength pass\
+  \ reads that as the subject's own material.\n * PLATE HELD, AND IT IS MEASURED: max |dRGB| outside the mask bbox\
+  \ (388,727)-(420,765) is 2 of 255 across 1712 pixels -- the blur-8 ramp and the crop paste-back, nothing else. Both\
+  \ leaves, the main stem, the grass and the motes are the picked plate's own pixels. Criterion (c) passes and the\
+  \ pick is not spent.\n * PEDICEL: its own free tip is inside the mask and was overwritten by the body, so `attached\
+  \ at the tip` is satisfied by occupancy rather than by a drawn join. Worth knowing before the next mask is placed.\n\
+  NEXT INSTRUMENT, and it is not a sixth wording. Colour is what did not bind, and the negative already carries the\
+  \ strongest colour wording this repo owns; a second seed at 0.99 is not owed, because one sample answered the question\
+  \ that was asked. The route with evidence behind it is the composite one the leaf lane proved 8 of 8: put the nub\
+  \ INTO the init with plain PIL -- a small matte green body sampled from the sprout's own green, at this same tip\
+  \ -- and then blend at 0.30, which is where 0.30 actually belongs. That makes colour STRUCTURAL instead of prompted,\
+  \ the same move that fixed leaf count.\nNOT A PICK, NOT A TASTE CALL, NOTHING APPROVED. Beat 01 still has no shippable\
+  \ frame-1 plate, and this run claims none."
