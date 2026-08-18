@@ -171,6 +171,67 @@ def cmd_status():
               % (h, ("ALIVE  " if alive else "DEAD   ") + detail, "/".join(counts(h))))
 
 
+def cmd_collect(hosts, dry=False):
+    """Bring every farm-out artefact on every host back into this checkout.
+
+    WHY THIS EXISTS: THE DOCSTRING AT THE TOP OF THIS FILE HAS ADVERTISED
+    `--collect` SINCE THE FILE WAS WRITTEN AND IT WAS NEVER IMPLEMENTED. That is
+    worse than not offering it. A render that finishes on a mac lives ONLY on that
+    mac until a human hand-scps it, and the advertised flag is exactly what stops
+    anyone noticing -- you read the usage block, believe collection is handled, and
+    it is not. Four plates were hand-copied on 2026-08-19 before this was spotted.
+    It is the same class of hole as `farm-out is NOT gitignored so the box runner
+    pushes its own artefacts`: durability has to be a mechanism, not a habit.
+
+    ADDITIVE ONLY, DELIBERATELY. `--ignore-existing` means a file already in this
+    checkout is NEVER overwritten by a host's copy. A collector that can clobber is
+    a collector that can silently replace a scored artefact with a stale one from a
+    machine that was behind; the safe direction for a puller is "add what is
+    missing". Anything genuinely divergent shows up as a file we do not have, under
+    a name we can look at, rather than as a quiet overwrite.
+
+    IT DOES NOT COMMIT. Collecting and committing are different decisions -- what
+    lands here still has to be looked at and scored by somebody before it is part
+    of the record, and a collector that auto-committed would put unjudged pixels in
+    the tree wearing a commit message.
+    """
+    import os
+    repo_out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                            "farm-out")
+    os.makedirs(repo_out, exist_ok=True)
+    total = 0
+    for h in hosts:
+        # -a preserves times so a later run can tell old from new; --ignore-existing
+        # is the whole safety story above; -i prints one line per file ACTUALLY
+        # transferred, which is what makes the count below a measurement.
+        flags = ["-a", "--ignore-existing", "-i"]
+        if dry:
+            flags.append("-n")
+        p = subprocess.run(["rsync"] + flags
+                           + ["-e", "ssh -o ConnectTimeout=15 -o BatchMode=yes",
+                              "%s:banyan-city/farm-out/" % h, repo_out + "/"],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        out = p.stdout.decode("utf-8", "replace")
+        if p.returncode != 0:
+            print("  %-10s FAILED rc=%d  %s" % (h, p.returncode, out.strip()[:160]))
+            continue
+        # rsync -i marks new files with a leading '>'; directories ('cd') are not
+        # artefacts and are not counted, or every run would report work it did not do.
+        files = [l for l in out.splitlines() if l.startswith(">")]
+        total += len(files)
+        print("  %-10s %d new file(s)%s" % (h, len(files), " [dry run]" if dry else ""))
+        for l in files[:12]:
+            print("       %s" % l.split(None, 1)[-1])
+        if len(files) > 12:
+            print("       ... and %d more" % (len(files) - 12))
+    print("collected %d file(s) into %s" % (total, repo_out))
+    if total and not dry:
+        print("NOT COMMITTED. Look at them, score them, then commit with an "
+              "explicit pathspec -- unjudged pixels do not belong in the tree "
+              "under a commit message that implies somebody read them.")
+    return 0
+
+
 def file_job(host, beat, note="", seeds=1, rev=1):
     # THE REV HAS TO TRAVEL, AND FOR ONE DAY IT DID NOT. plate_scratch.py takes
     # `--rev` and merges REVS[(beat, rev)] over DRAFTS[beat]; this filer only
@@ -201,6 +262,10 @@ def file_job(host, beat, note="", seeds=1, rev=1):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--collect", action="store_true",
+                    help="scp finished frames back from every host (additive; never overwrites)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="with --collect: list what would be pulled, transfer nothing")
     ap.add_argument("--host")
     ap.add_argument("--beat", type=int)
     ap.add_argument("--spread", help="comma-separated beats, round-robined over live hosts")
@@ -217,6 +282,12 @@ def main():
     ap.add_argument("--force", action="store_true",
                     help="file even if the worker looks dead (it will just sit there)")
     a = ap.parse_args()
+
+    if a.collect:
+        # Collect from EVERY host by default, including ones whose worker is not
+        # alive: a dead worker's finished renders are exactly the ones most likely
+        # to be stranded, and pulling a file needs no daemon.
+        return cmd_collect([a.host] if a.host else list(HOSTS), dry=a.dry_run)
 
     if a.status or not (a.beat or a.spread):
         cmd_status()
