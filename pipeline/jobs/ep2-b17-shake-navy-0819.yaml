@@ -189,3 +189,60 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b17-shake-navy-0819\17-goodbye-LTX-shake-navy-0819.mp4
 - C:\banyan-farm\ep2-b17-shake-navy-0819\b17-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the night supervisor (v2), against the bar
+# pre-registered above before the render existed. The bar is not edited.
+# ============================================================================
+verdict: PASS on all five clauses -- S1, S2, S3, P1 and the new P2. Naming the colour held the colour.
+  Beat 17 now has a take that keeps the action, the world AND the garment.
+verdict_measured:
+  p2_garment_colour: 'PASS, the clause this sample existed for. Median hue/saturation of the
+    pre-registered torso box: f036 = RGB 35,48,83, hue 223.8 deg, sat 0.58; f060 = RGB 52,59,99, hue
+    231.1 deg, sat 0.47. Both inside the required 180-260 deg at sat >= 0.40. For comparison on the
+    identical measurement: the plate cloak is 220 deg / 0.65, and the 0819 take that provoked this
+    clause was 346 deg / 0.24 -- it would have failed on both axes. The cloak is navy, patterned, and
+    stays navy.'
+  p1_plate_fidelity: 'PASS, and slightly better than 0819. Mean |RGB| from the f000 init: f008 = 12.5
+    (ceiling 40), f096 = 24.6 (ceiling 55). 0819 read 13.6 and 31.0. Blue sky and green meadow intact.'
+  s1_stand: 'PASS. Seated at f000, crouched at f012, upright from f024.'
+  s2_shake: 'PASS on the reversal test -- and I nearly called this wrong by eye, which is worth
+    recording. The consecutive strip f030-f041 LOOKS static: he holds the cloak open and neighbouring
+    frames are hard to tell apart. Measured, it is not static. Horizontal extent of the dark garment
+    mass across f024-f071 runs 125 -> 166 (opening) -> 136 (closing) -> 175 (opening), a swing of 68 px
+    on a 176 px-wide measurement frame -- 39% of frame width -- with 17 direction reversals. The strip
+    I looked at happened to sit inside one opening phase. Against the sibling: 0819 swings 46 px with
+    10 reversals, so this take''s cloak moves MORE, not less. Feet stay planted throughout. The clause
+    asked for one reversal of at least a fold-width; it got seventeen, at many fold-widths.'
+  s3_turn: 'PASS. From f072 he is turned away, and by f084-f096 he stands with his back to the lens,
+    cloak hanging and flaring behind him. A departure, face away by design.'
+  fail_modes: 'F1 no. F2 STAND-ONLY no -- the cloak is gripped and worked. F3 no cut, no second figure,
+    no extra face, nothing grown in the sky. F4 no teleport. F6 no -- cel style holds.'
+caveats_recorded_not_scored:
+  overall_motion_is_the_lowest_of_the_three: 'THE HONEST COST, and no clause covers it. Interframe
+    median is 0.50 with 48 of 96 pairs under 0.5, against 3.18 and 41 of 96 on the 0819 take and 3.18-
+    class motion on 0818. So while the CLOAK moves more, the CLIP moves less -- he stands very still
+    between cloak movements, and half the frame pairs are near-duplicates. This is the same
+    near-duplicate judder flagged on ep2-b18-tremble-s20260872 tonight, and no beat-17 bar has ever
+    named it either. Recorded, not scored, and named as a follow-up.'
+  a_note_on_constraint_and_motion: 'Not a finding, a hypothesis worth one line: this take added a
+    constraint to the prompt (name the garment colour) and overall motion fell. That is the direction
+    the 0818 sampler research predicts for heavier conditioning. It is ONE observation across ONE pair
+    of clips with a shared seed, which is not evidence, and it is written here so nobody mistakes it
+    for the measured claim it is not.'
+pick_of_the_three_beat_17_takes: 'ep2-b17-shake-navy-0819. Reasons, one line each: it is the only take
+  that holds the plate''s WORLD and its GARMENT at once (0818 lost both, 0819 lost the garment); its
+  cloak action is the largest of the three by measurement, 68 px of hem swing against 0819''s 46; and
+  it clears every clause any beat-17 bar has pre-registered. Against it: it is the stillest of the
+  three between cloak movements, and if the cut needs a livelier body, 0819 is the alternative and its
+  only defect is a pink cloak. That is a taste call and it is stated as one -- the pick here is the
+  steward''s technical pick under the 2026-08-18 widening, veto-able in one line, and promotion into
+  the episode belongs to the assembly lane.'
+what_this_licenses: 'Nothing further on beat 17 from this lane. The beat now has a take that matches
+  the restaged canon line and holds its plate; what remains is a taste look and an assembly decision,
+  neither of which is a render. It does NOT license a fourth take, a reseed, or the ltx_i2v.py
+  conditioning-strength change withdrawn in the 0819 verdict.'
+follow_ups_named:
+- 'Every beat-17 bar so far -- 0818, 0819 and this one -- has scored the action and left near-duplicate
+  frame pairs unmeasured. Three specs, same blind spot. The next one should pre-register a cap on the
+  share of frame pairs under 0.5 interframe, the same clause beat 18 needs.'
