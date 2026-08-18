@@ -347,6 +347,22 @@ def main() -> int:
                          "turned a legible cloak into a smudge, and the ramps "
                          "alone hold the boundary (ring MAE 7.4).")
     ap.add_argument("--settle-radius", type=float, default=1.2)
+    ap.add_argument("--sample-mask-out", default="",
+                    help="ALSO write the 0.30 sample's --mask-png: this tool's "
+                         "own seam mask UNIONED with --gesture-ellipse. The "
+                         "union is the point. The seam half makes B4a (does the "
+                         "composited descent survive the pass) a real test by "
+                         "putting the WHOLE lowered board inside the region the "
+                         "sampler may redraw, instead of protecting it and "
+                         "scoring a guaranteed pass. The ellipse half keeps B4b "
+                         "(the point) observable -- pattern doc §13.3 forbids "
+                         "shrinking a mask off the thing being tested, and a "
+                         "mask that excluded the goblin would make the missing "
+                         "point an artefact of the mask rather than a finding.")
+    ap.add_argument("--gesture-ellipse", default="445,620,335,165",
+                    help="cx,cy,rx,ry -- the gesture zone, carried unchanged "
+                         "from ep2-b08-twofig-gesture-0818 where it was measured "
+                         "and verified to clear both faces and both lower robes.")
     ap.add_argument("--note", default="")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
@@ -444,6 +460,21 @@ def main() -> int:
     }
     Image.fromarray((mask * 255).astype(np.uint8)).save(a.mask_out)
     print("WROTE %s" % a.mask_out, flush=True)
+
+    if a.sample_mask_out:
+        cx, cy, rx, ry = (int(v) for v in a.gesture_ellipse.split(","))
+        ell = Image.new("L", (W, H), 0)
+        ImageDraw.Draw(ell).ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=255)
+        sample = np.maximum(np.asarray(ell), (mask * 255).astype(np.uint8))
+        sm = sample > 127
+        ys_s, xs_s = np.nonzero(sm)
+        plan["sample_mask_bbox"] = [int(xs_s.min()), int(ys_s.min()),
+                                    int(xs_s.max()), int(ys_s.max())]
+        plan["sample_mask_px"] = int(sm.sum())
+        plan["sample_mask_covers_whole_moved_board"] = bool((moved & ~sm).sum() == 0)
+        plan["gesture_ellipse"] = a.gesture_ellipse
+        Image.fromarray(sample).save(a.sample_mask_out)
+        print("WROTE %s" % a.sample_mask_out, flush=True)
     print("plan " + json.dumps(plan, sort_keys=True), flush=True)
     if a.dry_run:
         print("DRY RUN -- mask and plan only, nothing composited.", flush=True)
