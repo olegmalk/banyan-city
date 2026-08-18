@@ -1529,6 +1529,17 @@
     keep the bounce on purpose: they are receipts of bytes actually sent. NO REWRITE IS PROPOSED, deliberately
     - 003b is an approved, published script and the choice between changing the child and restoring the
     parent is a taste call. $0, no GPU, no render, nothing enqueued, no 003b file touched.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'HIS WORDS TODAY: "change the head bounce line even though its published. we discussed
+      this, its fine." Applied the same hour. The live 003b node.md and shots.md had already been
+      corrected on 2026-08-17; the one genuinely stale copy -- the archived Phase-0 leaf
+      003b-t0-a.md:47, status live under R6 -- now carries the corrected line ("Did you MEAN to drop it
+      at my feet?") with the original struck through under a dated note quoting him. A revisions list
+      was opened on 003b-t0-c.yaml mirroring 002b''s. Built receipts are NOT edited: the T1 animatic
+      and the 01/13 VO takes still speak the superseded line and are flagged for re-takes. THE RE-TAKES
+      ARE RULED LEGAL under SS6: the only delta from the approved script is the line he himself ordered
+      changed, twice, in writing. T1 rebuild is queued as next machine work; T2 and VO re-synth follow.'
 - what: 'BEAT 01 KEEPS MAKING A PICTURE YOUR OWN BAR CALLS WRONG - and it may be the picture you want.
     Three prompt rungs ran tonight, 48 frames. The seedling rows fail the way they always have (three
     to eight leaves, never two). But rows r2/r3 keep drawing a BUSH-SIZED PURPLE FIG with two little
@@ -1549,6 +1560,24 @@
     Do NOT file another count wording. Composite-then-inpaint already gives 8 of 8. SEPARATE AND UNASKED:
     height is 0 of 16 on every rung including the control - every frame is macro-tight with the grass
     out of shot - and no count wording touches it. That is a framing rung nobody has run.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'DECIDED STEWARD-SIDE under his 2026-08-18 delegation ("do you really need me to decide
+      this? ... just leave me the taste questions for now"). THE BAR HOLDS. The approved script line is
+      the bar''s source -- "a tiny two-leaf banyan sapling ... a green nub swells" -- and the growth
+      ladder is the show''s spine: the shade the town is named for is only earned at node 004, so a
+      shrub-sized fruit in episode 2''s first frame spends the arc''s payoff in frame one. Cost of
+      holding: zero -- the composite route already passes 8 of 8 and 48 candidates existed before this
+      was written. The handsome big-fig frames stay archived with full provenance; if that look is ever
+      wanted it is a deliberate script choice later, not an accident now. AND THE PICK IS MADE, off a
+      48-frame sweep read at native and 4x: base plate ep2-b01-compseed-s3-g5-0818 / seed s20260917 --
+      cleanest leaf render of the batch, a bare pedicel exactly where the nub lands, grass yardstick in
+      frame, zero artifacts. All 48 held exactly two leaves (the composite did its job) and NONE carries
+      a fruit, which is correct rather than a defect: the composite negative bans it, and his own
+      2026-08-13 resolved verdict is "inpaint a SMALL fig into frame 1, then let the motion prompt grow
+      it" -- frame 1''s state is the GREEN NUB of the approved script, pre-ripe; purple is the ripe
+      state. One nub-inpaint sample is being filed on the box. VETO by naming a different frame or
+      overruling the bar in one line.'
 - what: 'MAY I PUSH? 185 commits are on this machine and not on GitHub, the oldest from 2026-08-15. The
     site is serving what was pushed at 10:16 on 08-17 and nothing since - including tonight''s fixes to
     the status page, which is currently telling you that you owe twelve decisions you already made. The
@@ -1576,16 +1605,20 @@
 - what: 'THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four. Five casting
     rounds have not moved it. Second half of the same question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?
     Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.'
-  url: 'local: review/ep2-picks/cast-0817-scores.yaml'
+  url: /review/ep2-guards-0818
   group: taste
   since: '2026-08-17'
   kind: decision
   episode: 2
-  verdict_hint: 'adults, recast until they read grown / accept them as they are / stage around it (crop,
-    angle, coverage). And separately: green man yes / no'
+  verdict_hint: 'recast until they read grown / accept them as they are / stage around it (crop, angle,
+    coverage -- REAL option: b08''s guard scored adult 12 of 12 and b09''s close-up 5 of 12, so the
+    adolescent read is not universal). And separately: green man yes / no'
   note_for_lanes: 'Seven guard beats were cast-corrected and scored on 08-17, N of 12 per beat, in review/ep2-picks/cast-0817-scores.yaml.
     The adjective route is already closed by his 2026-08-12 ruling - body-type and tone words stay out
-    of the prompt and the register is staged - so "just say adult" is not available and this needs him.'
+    of the prompt and the register is staged - so "just say adult" is not available and this needs him.
+    PAGE BUILT 2026-08-18 at /review/ep2-guards-0818 -- per-beat sheets from the 64 cast-0817 frames
+    (r3==r0 by sha, so 12 distinct per beat), scores on captions, the 08-12 adjective-route closure
+    quoted, and the goblin reference embedded. This is now the ONE open taste question on the board.'
 - what: 'BEAT 14 CLEARS EVERY AXIS AND THE LANE THAT BUILT IT STILL WOULD NOT HAND IT TO MOTION. It passes
     all seven scored axes, and it carries an unresolved pale limb-like mass that no axis catches. Coordinates
     are committed. Ship it or fix it - both are defensible and neither is mine.'
@@ -1602,6 +1635,13 @@
     embarrassed. So the question is no longer "is there a fault" but "is 1-in-3 an acceptable
     reseed rate for this beat". My pick among the three is r1s1 and it is a pick, not a claim
     that the beat is solved.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'DECIDED STEWARD-SIDE: SHIP r1s1 and hand it to motion. Three fresh seeds reproduced the
+      pale-mass fault at 1 in 3 (r1s2), and r1s1 is clean -- so the fault is a reseed cost, not a
+      blocker, and re-staging a beat that clears every scored axis to remove a 1-in-3 artifact would
+      trade a known-good frame for an unknown one. The pale mass stays on record as a per-seed check
+      for every future b14 take. Sheets: /review/ep2-mac-plates-0818. VETO: "re-stage 14" in one line.'
 - what: 'BEAT 17''S BRUSH IS EXHAUSTED BY EVIDENCE, and the cheapest way out edits an approved line. Twelve
     seeds produced zero brushes; handed the gesture mid-stroke from its own best frame it still would not
     complete a stroke. Three routes and all three are yours: accept roughly 1-in-5 and render five to pick
@@ -1614,6 +1654,20 @@
   episode: 2
   verdict_hint: 'render five and pick / restage without the brush (accepting the script edit) / change
     the checkpoint'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'DECIDED STEWARD-SIDE AND APPLIED: restage, route two, as a staging-mechanics edit under
+      his 2026-08-18 delegation. node.md:108 now reads "The scavenger pushes himself up, gives his
+      cloak a shake, and turns to go." -- the brush was a measured engine limit (0 of 8 across retired
+      seeds; 8 of 8 stand-and-turn; a tight insert plate drawn so a stroke had somewhere to go still
+      would not complete one), and the shake is whole-body motion, the class this engine renders 12 of
+      12. Intent preserved: he tidies himself and leaves; nothing spoken moved, so the VO take stands.
+      The original line is struck through in place, shots.md''s prompt was corrected the same day (the
+      superseded prompt kept verbatim because eight retired seeds are measurements OF that exact
+      string), and done-definitions carries script_RESTAGE_CORRECTION_0818. Render-five and
+      checkpoint-swap were rejected: five renders spend the card on a measured 0-of-12, and a
+      checkpoint swap risks whole-episode consistency for one gesture. VETO by restoring the original
+      line -- it is kept in place for exactly that.'
 - what: 'BEAT 21 - ARE ITS TWO BLADES YOUR "AVERAGE LEAVES"? You ruled on 2026-08-17 that the sapling''s
     two leaves are average leaves, and canon reads that as a ruling about SHAPE, not about vocabulary or
     size. Beat 21 is the one plate where the question is live. Second, smaller: its soft background object
@@ -1624,6 +1678,16 @@
   kind: decision
   episode: 2
   verdict_hint: 'yes those are average leaves / no, they are X. And: dress the background / reshoot it'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'DECIDED STEWARD-SIDE, both halves, off the pixels rather than the yaml. (1) The blades
+      COMPLY with his 2026-08-17 "average leaves" ruling: in all four leafcanon-inpaint-0817 renders
+      they are plain teardrop-ovals -- the shape anyone draws -- no lobes, no serration, no lance; if
+      anything plainer than beat 01''s. Canon says "average" rules shape, and this is that shape. No
+      reshoot. (2) The soft background object is THE SETTING SUN, inherited from the plate before
+      inpainting -- intentional dressing, kept. Only seed s20260817 renders it clean; s20260818/19/20
+      each break it on the inpaint-mask seam (a notched box, a floating shrub-clump, a bitten disc), so
+      s20260817 is the usable frame. VETO in one line on either half.'
 - what: 'BEAT 11 r1s1 - I AM PROMOTING IT AND YOU CAN VETO. It scores 9 of 10 on a beat whose take was
     recorded BROKEN, so nobody promoted it and it sat unused. Picking takes is mine under your own
     boundary, so I am picking this one rather than asking you to. Say nothing and it stands.'
@@ -1659,3 +1723,16 @@
     verdict READY with zero-byte holes at zero before any of it ran. Ten jobs, zero new failures, queue
     drained unattended. The four entries in failed/ are yesterday''s tilde refusals and are left there
     with their logs on purpose.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'One of three prompt fixes worked, and each failure closed a question. b20 FIXED: the
+      adult goblin draws (bald, lined face, patchwork cloak); the chibi child is gone; bonus, the fig
+      came back deep purple off the unchanged words "a ripe fig", corroborating the Mac-backend-purple
+      finding. b08 FALSIFIED the wording route: with the sky deleted and grass edge to edge the
+      colossus returned anyway, two figures on unrelated ground planes -- so b08 scale goes to the
+      COMPOSITE/INIT route, which forces one ground plane by construction, and no further wording is
+      filed. b10: the card''s "no goblin" was MY misread -- the script wants two guards and no goblin
+      (the blank board is shown to the partner; beat 10 is the control in the 0817 figure-count
+      ruling) -- and the plank fault reproduced exactly, so the bark board goes the composite route
+      too, which is the only way a board has ever shipped. Sample sheet:
+      /review/ep2-mac-plates-0818/recast-samples.jpg.'
