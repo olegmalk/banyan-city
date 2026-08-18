@@ -337,27 +337,94 @@ DRAFTS = {
             "look: the picture its motion takes were animated from "
             "(farm-out/ep2-b08-twohander/b19-init-704x1280.png, sha 6c403952) "
             "is a COSTUME CARD -- one figure, waist-up, eyes closed, on flat "
-            "blank paper, no field, no second guard and no scavenger. Its "
-            "done_when needs three bodies and a belly in frame. No wording "
-            "reaches a target that is not in the picture, which is why every "
-            "lever failed. Cycle 018 measured the other half of this: on beat "
-            "17's WIDE full-body plate with ~40% headroom the engine moved a "
-            "whole body in 12 of 12 takes. This plate gives beat 08 beat 17's "
-            "composition -- wide, full-length, real field, room above the "
-            "heads -- and changes nothing else."
+            "blank paper, no field, no second guard and no scavenger. No "
+            "wording reaches a target that is not in the picture, which is "
+            "why every lever failed. REWRITTEN 2026-08-18, because the first "
+            "Mac sample off the earlier wording came back with a HILL-SIZED "
+            "goblin looming over three tiny guards and this field promised a "
+            "plate that no longer exists. WHAT IT IS NOW. (1) TWO FIGURES, "
+            "not three: done-definitions "
+            "`figure_count_ruled_from_the_script_0817` reads the script as "
+            "Guard 2 plus the scavenger, and the `done_when` above still "
+            "asks for both guards and is superseded by that ruling, not by "
+            "this note. (2) THE ADULT GOBLIN, in beat 14's identity wording "
+            "character for character, because beat 14 is the man the founder "
+            "chose and the plate that renders him. (3) THE GUARD IS NAMED -- "
+            "guard B in the frozen wardrobe, in beat 10's exact clause, "
+            "since `two adult guard men in uniform` described nobody. (4) "
+            "THE UPPER BAND IS TALL GRASS. The earlier draft reserved it as "
+            "`wide blue sky above` with `small figures low in frame`, which "
+            "is the vacancy hole this beat has already paid for: it lost "
+            "five samples to a colossus grown in a reserved sky, and its r4 "
+            "proved a negative naming `giant, colossal, monster, kaiju, "
+            "statue, face in the sky` removes it NOT AT ALL. So the hole is "
+            "DELETED rather than negated and no giant words were added. "
+            "Cycle 018 still governs the framing -- on beat 17's WIDE "
+            "full-body plate the engine moved a whole body in 12 of 12 "
+            "takes -- but the room above the heads is grass, not sky."
         ),
+        # ------------------------------------------------------------------
+        # CAST + SCALE CORRECTION, 2026-08-18. The 08-18 Mac sample off the
+        # previous wording came back with a HILL-SIZED goblin looming over
+        # three tiny guards. Four changes, each with a receipt already in this
+        # file or in done-definitions.yaml:
+        #   1. `3boys` -> `2boys`. done-definitions
+        #      `figure_count_ruled_from_the_script_0817`: beat 08 is Guard 2
+        #      and the scavenger, TWO figures. The `done_when` above still
+        #      says "both guards and the scavenger" and is left standing --
+        #      that ruling supersedes it and says so in its own text.
+        #   2. THE GOBLIN IS NOW THE ADULT, in beat 14's identity wording
+        #      copied character for character (`lean wiry adult goblin man,
+        #      green skin, bald head, patchwork cloak`). The old `a lean adult
+        #      goblin man` was a fifth wording of one character; beat 14 is
+        #      the one the founder chose and it is the one that renders.
+        #   3. `wide blue sky above` and `small figures low in frame` are
+        #      DELETED and the upper band gets a noun of its own, `tall
+        #      grass`. This is beat 11's vacancy law applied to the beat that
+        #      first paid for it -- see the block at beat 11: "beat 08 lost
+        #      five samples to a colossus grown in a reserved sky, and beat 08
+        #      r4 proved a negative naming `giant, colossal, monster, kaiju,
+        #      statue, face in the sky` removes it NOT AT ALL". So no giant
+        #      words were added to the negative; the hole is filled instead.
+        #      `scenery` goes with them: it is the tag that makes the
+        #      landscape the subject and the men the staffage.
+        #   4. THE GUARD IS NAMED. Guard B (= Guard 2, the one with the bark
+        #      clipboard) in the frozen wardrobe of
+        #      `guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816`,
+        #      and in beat 10's exact clause so the two plates cannot draw two
+        #      different men. `uniform` described nobody. Guard A is not in
+        #      this shot, so his wire-rims are not named and the D2
+        #      glasses-bleed problem is not bought here.
+        # `arm's length apart` carries the one spatial condition the beat
+        # needs -- the belly has to be reachable by an extended arm -- without
+        # `size difference` or "one taller", which is a GIANTESS TAG on this
+        # checkpoint and is what the beat-11 block forbids.
+        # Measured on the real CLIP tokenizer before commit: 76/77 positive,
+        # 75/77 negative, no positive/negative collision (exit 7 clean).
+        # ------------------------------------------------------------------
         "prompt": (
-            "3boys, full body, wide shot, scenery, standing in a green field, "
-            "two adult guard men in uniform facing a lean adult goblin man, "
-            "green skin, bald head, patchwork cloak, near guard holds a "
-            "wooden clipboard at chest height, small figures low in frame, "
-            "wide blue sky above, sunny day, masterpiece, best quality"
+            "2boys, full body, wide shot, standing in tall grass, an adult "
+            "guard man with light sandy hair, cream shirt, white shoulder "
+            "sash, brown wrap skirt, lowers a bark clipboard and points at "
+            "the belly of a lean wiry adult goblin man, green skin, bald "
+            "head, patchwork cloak, arm's length apart, sunny day, "
+            "masterpiece, best quality"
         ),
+        # `2boys` LEAVES the negative -- it is now the count being asked for,
+        # and leaving it would be the exit-7 contradiction. `3boys` takes its
+        # place. `distant, small figure` and `sky` are the scale block; `sky`
+        # goes in but `horizon` deliberately does NOT, because D4 in the beat
+        # 11 sweep measured that `horizon` in the negative of a FRONT-FACING
+        # wide shot tilts the camera down until the figures shrink -- which is
+        # this beat's exact fault. `stick` joins the held-object block for the
+        # goblin's unnamed hands (D3: an unspecified pair grows an object).
         "negative": (
-            "text, close-up, portrait, upper body, cropped, bust, "
-            "1boy, 2boys, 4boys, solo, white background, simple background, "
-            "baby, child, chibi, stitches, scars, spear, staff, sword, "
-            "tree, forest, house, indoors, photorealism, 3d render, dark, night"
+            "text, close-up, portrait, upper body, cropped, "
+            "1boy, 3boys, 4boys, solo, distant, small figure, "
+            "white background, simple background, baby, child, chibi, "
+            "stitches, scars, spear, staff, sword, stick, "
+            "tree, forest, house, sky, indoors, photorealism, 3d render, "
+            "dark, night"
         ),
         "seed": 20260816,
     },
@@ -1202,11 +1269,32 @@ DRAFTS = {
             "the flip will animate; that is a one-in-four lottery on this "
             "engine regardless of the plate, and saying so is the point."
         ),
+        # PROP-SIZE CORRECTION, 2026-08-18, AND IT IS THE ONLY CHANGE HERE.
+        # `a large flat bark board` -> `a hand-sized bark board`. The 08-18
+        # Mac sample came back with the board as a PLAIN PLANK, and this
+        # beat's own `done_when` says "board hand-sized" -- the prompt was
+        # literally asking for the defect. Nothing else moves: seed, cast
+        # clauses, framing and the whole negative are byte-identical to r1.
+        #
+        # NO GOBLIN IS ADDED TO THIS BEAT, and that is a deliberate refusal.
+        # The 08-18 plate card in review/inbox.yaml lists beat 10 as "no
+        # goblin at all" alongside beats 08 and 20 as one cast defect. IT IS
+        # NOT ONE. node.md 0:45-0:50 is "Guard 2 flips the clipboard around:
+        # the back is blank"; this beat's `done_when` reads "TWO guards in
+        # frame ... holds its blank back TOWARD HIS PARTNER"; and
+        # done-definitions `figure_count_ruled_from_the_script_0817` uses
+        # BEAT 10 AS THE CONTROL that proves the actor-plus-target rule --
+        # "the target of beat 10's gesture IS the partner", Guard 1, who asked
+        # the question in beat 09. A goblin here would be a third body in a
+        # two-guard shot and would break the count condition to fix a fault
+        # this beat does not have. The card's own line invites this: "stop me
+        # if the read is wrong."
+        # Measured: 73/77 positive, 74/77 negative, exit 7 clean.
         "prompt": (
             "2boys, full body, medium shot, two guard men standing together "
             "in tall grass, hedgerow behind, near taller man with light "
             "sandy hair, cream shirt, white shoulder sash, brown wrap skirt, "
-            "holding a large flat bark board in both hands, one man behind "
+            "holding a hand-sized bark board in both hands, one man behind "
             "with dark cropped hair, glasses, a tan tunic, masterpiece, "
             "best quality"
         ),
@@ -1567,16 +1655,55 @@ DRAFTS = {
         # enforced IN WORDS on the box path, because the Mac's free purple
         # does not travel there; and A MAC PLATE IS NEVER A PREDICTION ABOUT
         # WHAT THE BOX WILL DRAW FROM THE SAME WORDING.
+        # ------------------------------------------------------------------
+        # !! CAST CORRECTION, 2026-08-18, AND IT ENDS r1's LIFE AS A CONTROL.
+        # READ THIS BEFORE TRUSTING THE THREE PARAGRAPHS ABOVE. They describe
+        # r1 as "THE CONTROL -- the failing prompt, byte for byte" and as
+        # "byte-identical to the `prompt:` field of
+        # farm-out/ep2-b20-idfix/20-evidence-wave1-s3.yaml". THAT IS NO LONGER
+        # TRUE OF THE STRING BELOW. It is left standing unedited because it is
+        # what the record said, and because this file has already been burned
+        # once by a comment that was WRONG AND LOAD-BEARING (see the 08-16
+        # correction above). The colour question it existed to serve is
+        # ANSWERED and closed by `backend_divergence_probe.py` -- same prompt,
+        # same seed, Mac returns PURPLE and the box returns RED, so the
+        # variable was never the wording -- and REVS[(20,2)] and [(20,3)]
+        # restate their own positive AND negative in full, so neither of them
+        # inherits anything from here and neither is disturbed by this edit.
+        #
+        # WHAT CHANGED AND WHY. The 08-18 Mac sample drew A ROUND-HEADED CHIBI
+        # CHILD WITH BIG EYES -- a second goblin in an episode that has one,
+        # and the "cute goblin" the founder rejected on beat 04. The prompt
+        # asked for exactly that: `a small goblin boy` and `huge eyes`.
+        #   `a small goblin boy` -> beat 14's identity wording, character for
+        #       character: `lean wiry adult goblin man, green skin, bald head,
+        #       patchwork cloak`. Beat 14 is the adult the founder chose and
+        #       is the plate that renders him correctly; beat 20 now asks for
+        #       the same man in the same words rather than a sixth wording.
+        #   `huge eyes widening` -> `eyes widening`. The widening IS the
+        #       staging -- the look up to the bare branch is half of
+        #       `done_when` -- but `huge eyes` is a chibi cue and is the other
+        #       half of what came back. The gesture is kept, the child is not.
+        # STAGING IS OTHERWISE UNTOUCHED: both hands to the fig, the look up,
+        # the bare branch, the field and the whole lighting tail are the same
+        # words in the same order. The fruit stays `a ripe fig` -- purple is
+        # a live founder ruling but the colour lever belongs to the revs, and
+        # changing cast and colour in one draw would make neither attributable.
+        # Negative: `baby, chibi` join `girl, child` so the block matches beat
+        # 14's, and the duplicate `photorealistic` is dropped to pay for them
+        # (`photorealism` was already in the same list).
+        # Measured: 74/77 positive, 76/77 negative, exit 7 clean.
+        # ------------------------------------------------------------------
         "prompt": (
-            "1boy, a small goblin boy, green skin, bald head, patchwork "
-            "cloak, solo, in a sunny grassy field, raises a ripe fig in both "
-            "hands in front of him like evidence, huge eyes widening as he "
-            "looks up at a bare branch above. Warm amber afternoon light, "
-            "cinematic lighting, detailed, newest, masterpiece, best "
+            "1boy, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, solo, in a sunny grassy field, raises a ripe "
+            "fig in both hands in front of him like evidence, eyes widening "
+            "as he looks up at a bare branch above. Warm amber afternoon "
+            "light, cinematic lighting, detailed, newest, masterpiece, best "
             "quality, very aesthetic"
         ),
         "negative": (
-            "photorealistic, text, girl, child, glowing eyes, glowing orb, "
+            "text, girl, baby, child, chibi, glowing eyes, glowing orb, "
             "dark, night, dusk, sunset, dim lighting, moody lighting, low "
             "key, shadows dominant, photorealism, leaf on head, plant girl, "
             "alraune, monster girl, flower on head, head wreath, hair "
