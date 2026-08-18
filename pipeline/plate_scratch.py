@@ -4801,6 +4801,154 @@ REVS[(19, 3)] = {
     "seed": 20260819,
 }
 
+# ==========================================================================
+# 2026-08-19. BEAT 15, GOOD LISTENER. THE FIRST PLATE THIS BEAT HAS EVER BEEN
+# ASKED FOR AT CANON SCALE. WRITTEN BEFORE ANY PIXEL EXISTS.
+# ==========================================================================
+# WHY THIS IS r1 OF A NEW LADDER AND NOT RUNG SEVEN OF THE OLD ONE. Beat 15
+# already owns a six-rung plate ladder (farm-out/ep2-b15-mac-plate-0815/,
+# 2026-08-15, r1-r6, every sidecar still `scored: false`) and twelve wave
+# stills scored ALL CANDIDATES FAIL. Firing a seventh wording at a question
+# six wordings have closed is the move this repo has repeatedly been wrong to
+# make, and beat 19's ladder stopped at three tonight for exactly that reason.
+# THIS IS NOT THAT. Every one of those six rungs asked for the SUPERSEDED
+# staging -- r1 `head tipped far back, looking up`, r5 `head tilted back ...
+# two huge broad leaves HIGH ABOVE HIS HEAD`, r6 `one thin bare stalk TALLER
+# THAN HE IS`. On 2026-08-17 the founder ruled *"rewrite the beats to work at
+# knee height. change the story"* and beat 15 was restaged; THE-SAPLING.md
+# §6.1 then corrected `taller than he is` by name and cites r6's own sidecar
+# as an instance of the violation. The old ladder measured a plant canon no
+# longer has. Nothing on it transfers, so this is rung one.
+#
+# WHAT THE OLD LADDER DID BUY, so it does not read as waste. Judged 2026-08-19
+# against beats.'15'.done_when: r1 close-up, no plant in shot. r2 a scale
+# double -- one giant seated figure with a tiny goblin at its base. r3 and r5
+# grew the plant OUT OF HIS SHOULDER. r4 and r5 set him on a floating disc of
+# grass in open sky. r6 drew a conical leaf-mountain the size of a hill with a
+# speck of a figure beneath it. Six rungs, six different ways to fail the same
+# clause, and not one of them a plant a stranger would call a seedling.
+#
+# THE ONE THING EVERY BEAT-15 ATTEMPT HAS SHARED, and it is the finding: the
+# plant. Eight idfix stills drew DETACHED LEAVES FLOATING at the frame edges
+# with no stem and no root; four `tonight` stills drew a real rooted plant
+# INDOORS against wall panels; ep2-b15-plate-0814 -- the init all six of the
+# 0815 motion takes were animated from -- drew a wiry multi-node weed topped
+# with a white SPHERE. `authored_b15_plate` in wave-drafts.yaml asked for `a
+# tiny sapling with broad round cotyledon leaves` and got that ball on a stick.
+# So the plant is DESCRIBED here instead of named, the way beat 19's r3 does
+# it: style.md's node table, row 002a/b/c, ~40 cm, two leaves on a thin stem.
+# `two leaves` forecloses the multi-node weed GEOMETRICALLY -- a plant with
+# exactly two leaves has nowhere to put a fourth node -- and `rooted in the
+# soil` puts attachment in the POSITIVE, where six failures say it has to live.
+# `floating leaves` is in the negative too and is not trusted to do the work:
+# this file's own record is that the negative has failed four times running on
+# nouns the positive left vague.
+#
+# THE CAST WORDING IS BEAT 19 r3's, CHARACTER FOR CHARACTER, AND THAT IS
+# DELIBERATE. `lean wiry adult goblin man, green skin, bald head, patchwork
+# cloak` scored P7 PASS on three separate draws on this checkpoint TODAY. The
+# beat-15 draft it replaces opens `A small goblin BOY` and its plate came back
+# a round-headed child in a modern shirt, cargo shorts and sneakers -- the noun
+# put the child in the picture, which is the same law beat 08 measured on
+# 2026-08-17. No costume word is left to a reference here; the cloak is stated.
+#
+# HE IS SEATED, AND THAT IS NOT THIS FILE'S INVENTION. Beat 13, the beat
+# immediately before, ends with *"his legs give out and he drops to sit in the
+# grass at the base of the stem"* -- node.md, the live approved script. A
+# standing beat-15 plate contradicts the frame before it. `both hands on his
+# knees` is carried verbatim from beat 19 r2, where it bound on the first draw
+# and solved that beat's contact fault; it also names what both hands are
+# doing, per this file's own vacancy law.
+#
+# ── NO HEAD DIRECTION IS ASKED FOR, AND THAT IS THE §6 LINE. ──────────────
+# Beat 15 is one of the five beats restaged on 2026-08-17, and
+# leaves/002b-t0-c.yaml records `approval_status: NOT YET READ BY HIM`. The
+# ONE clause that restage moved is where he looks: `He looks up at the
+# sapling` became `he tips his head DOWN until his eyes are level with the two
+# leaves`. Everything else this plate stages -- he is seated, the sapling is
+# beside him, BOTH SHARE THE FRAME -- is in the sentence he read and approved
+# on 2026-08-03 and is untouched by the restage. So this prompt contains no
+# gaze word at all, in either direction. A plate is an i2v init and the clip
+# performs the look; drawing one now with no head direction in it keeps the
+# fixture useful under either reading and asks the founder for nothing he has
+# not already given. P8 below scores nothing about the gaze, and no term about
+# it may be added after the draw.
+#
+# THE BAR, PRE-REGISTERED, SCORED N OF 7 ON ONE SEED.
+#   P1 BOTH IN ONE FRAME. The goblin and the plant are both wholly inside the
+#      frame, neither cropped. This is done_when's whole point and a frame
+#      that fails it fails the beat however well it is drawn.
+#   P2 ROOTED AND ATTACHED. One stem meets the ground; the leaves are attached
+#      to that stem. Any leaf not joined to a stem fails this, whatever else
+#      is in shot -- eight of twelve prior candidates died here.
+#   P3 THE PLANT IS THE SAPLING. Exactly ONE plant, TWO leaves, ONE thin stem.
+#      Extra stalks, extra leaves, a bead-strung vine, a multi-node weed or a
+#      bud/ball at the tip all FAIL.
+#   P4 SCALE. The plant is SHORTER than the seated goblin's head. It may not
+#      tower over him (§3.2: ~40 cm, always shorter than he is).
+#   P5 OUTDOORS IN AN OPEN FIELD. Real grass at ground level and real sky or
+#      treeline. An interior, a wall panel, a white void or a floating disc of
+#      grass in empty sky all FAIL -- his own beat-21 ruling was *"doesnt look
+#      like the sapling is outside"*.
+#   P6 ONE LEAN ADULT GOBLIN, SEATED, IN A PATCHWORK CLOAK. Not a child, not a
+#      chibi, not two figures, not standing, not in modern clothes.
+#   P7 NOT A CLOSE-UP. His body and the plant both read at a glance.
+#      done_when names this failure by name.
+#   P8 GAZE: NOT SCORED, BY DESIGN. See the §6 paragraph above.
+#
+# FAIL MODES NAMED IN ADVANCE, recorded whether or not they fire, so a defect
+# that arrives cannot be reported as a surprise or quietly dropped:
+#   Q1 the plant grows out of his shoulder or head (mac r3 and r5 both did)
+#   Q2 a scale double -- one giant figure and one tiny one (mac r2)
+#   Q3 a hill-sized plant (mac r6, on `taller than he is`)
+#   Q4 a sphere or bud on the stem tip (ep2-b15-plate-0814, the init that
+#      poisoned all six 0815 motion takes)
+#   Q5 indoors, wall panels, a doorway (the four `tonight` stills)
+#   Q6 modern dress -- shirt, cargo shorts, sneakers (plate-0814's reference)
+#   Q7 a mature tree, thick branch or trunk anywhere in frame
+# A term found loose is said so and tightened FORWARD, never rewritten after
+# the picture is seen.
+#
+# ONE SAMPLE, one seed. $0, Apple MPS, nothing on the box, no provider.
+DRAFTS[15] = {
+    "slug": "good-listener",
+    "prompt": (
+        "1boy, solo, lean wiry adult goblin man, green skin, bald head, "
+        "patchwork cloak, sitting in the grass beside a tiny 40cm sapling "
+        "rooted in the soil, two leaves on one thin stem, both hands on his "
+        "knees, his face visible, wide shot, sunny grassy field, cinematic "
+        "lighting, masterpiece, best quality, very aesthetic"
+    ),
+    # Beat 19 r3's negative with the three fruit terms removed -- this beat has
+    # no fruit in it, and a negative naming a noun the positive never mentions
+    # is dead weight that this repo has already audited off 94 specs once. The
+    # four added terms are the beat-15 failures actually observed, not guesses.
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
+        "close-up, portrait, floating leaves, leaf on head, potted plant, "
+        "flower pot, large tree, thick branch, trunk, forest, house, indoors, "
+        "night, dark, photorealism, 3d render"
+    ),
+    "seed": 20260819,
+    "done_when": (
+        "he and the SAPLING ARE IN THE SAME FRAME, the plant rooted and "
+        "attached, one stem and two leaves, shorter than he is, outdoors in "
+        "an open field, one seated lean adult goblin in a patchwork cloak, "
+        "not a close-up. Gaze is deliberately unscored (STEWARDSHIP.md §6 -- "
+        "beat 15's restage is unread by the founder)."
+    ),
+    "why": (
+        "Beat 15 is a SLATE in every cut we have made. Twelve wave stills, six "
+        "mac plates and six LTX motion takes have been judged against it and "
+        "all 24 fail, every one of them on the plant or on the frame rather "
+        "than on the acting. All six motion takes were animated from ONE init "
+        "whose plant is a wiry weed topped with a white sphere, so no reseed "
+        "can reach the bar. This is the plate that has to exist before beat 15 "
+        "can be animated at all, and it is the first one asked for since the "
+        "2026-08-17 knee-height restage."
+    ),
+}
+
 
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer

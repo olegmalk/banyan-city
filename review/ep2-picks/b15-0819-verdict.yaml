@@ -1,0 +1,255 @@
+# BEAT 15 — GOOD LISTENER. THE VERDICT THE SLATE WAS WAITING FOR.
+# 2026-08-19, the beat-15 lane. $0 — no provider, no paid engine, no GPU on the
+# box. Written by the steward (Claude Opus 5); nothing here is the founder's.
+#
+# This file is NEW and this lane is its only writer. It does not edit
+# done-definitions.yaml, cast-0817-scores.yaml, steward-picks-0815.yaml or any
+# leaf; where it disagrees with one of those it says so and leaves the other
+# file standing.
+lane: beat-15 judging lane, 2026-08-19
+beat: 15
+title: GOOD LISTENER
+cost_usd: 0.00
+
+the_slate_this_closes: >-
+  review/ep2-demo-0818/sources/picks-0818.yaml carries beat 15 as a SLATE with the
+  detail "No ep2-b15 job dated 0817 or 0818; no footage exists." That detail is
+  TRUE AS FAR AS IT GOES and it undercounts the beat badly. No job is dated 0817 or
+  0818, but twenty-six ep2-b15-* task directories sit on the box and TWENTY MP4s
+  live in them. Fourteen of those twenty are beat-15 motion; five are beat-13
+  renders misfiled under b15 task names (ep2-b15-lw, -refire, -refireB, -wave,
+  -waveB all publish `13-remake-LTX-0813.mp4`) and are not this beat's evidence.
+  Beat 15 has never been short of takes. It has been short of a verdict.
+
+definition_judged_against:
+  source: review/ep2-picks/done-definitions.yaml beats.'15'.done_when, quoted verbatim
+  text: >-
+    "he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in shot is the whole
+    point of the beat — a close-up of him looking up at nothing fails it however
+    well he acts."
+  status_in_that_file_when_this_was_written: NO VERDICT YET
+
+  ONE_CLAUSE_OF_IT_IS_STALE_AND_IS_NOT_MINE_TO_EDIT: >-
+    "he LOOKS UP" IS SUPERSEDED AND done-definitions.yaml SAYS SO NOWHERE, because
+    the file that discharges it is a different lane's. On 2026-08-17 the founder
+    ruled "rewrite the beats to work at knee height. change the story" and beat 15
+    was restaged: node.md:98 now reads "He tips his head down and sideways until
+    his eyes are level with the two leaves, and talks to them from a hand's width
+    away; both of them share the frame." genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+    (the 2026-08-17 revisions entry, `what_it_costs`) flagged the staleness in
+    writing rather than editing the pick lane's file — "beats.15.done_when's 'he
+    LOOKS UP' ... need re-transcribing to the level/downward look" — and that flag
+    is still open two days later. THIS FILE DOES NOT EDIT IT EITHER. It records
+    which clause every take is scored on and which is scored not at all:
+      SCORED, and unchanged by the restage: "the SAPLING IS IN THE SAME FRAME",
+        "both in shot is the whole point", "a close-up ... fails it". These are in
+        the sentence the founder read and approved on 2026-08-03 and the restage
+        did not touch them.
+      NOT SCORED: the head direction. "he LOOKS UP" describes a staging canon has
+        replaced, and the replacement is recorded `approval_status: NOT YET READ BY
+        HIM`. Scoring a take against either version would be scoring it against a
+        line nobody can currently certify. No take below passes or fails on gaze.
+
+# ══════════════════════════════════════════════════════════════════════════
+# THE STANDING BLOCKER, FOUND BEFORE ANY PIXEL WAS PULLED. READ THIS FIRST.
+# ══════════════════════════════════════════════════════════════════════════
+stewardship_6_gate:
+  status: LIVE. Beat 15 may not be animated today, and lifting that is the founder's.
+  record: genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, revisions
+    entry dated 2026-08-17, `beats: [12, 13, 15, 19, 20]`
+  verbatim: >-
+    "NOT YET READ BY HIM. He authorised the rewrite; he has not read the result.
+    STEWARDSHIP.md §6 therefore forbids voice synthesis, footage render and episode
+    assembly FROM THESE FIVE BEATS until he does."
+  also_in_node_md: >-
+    node.md:204 — "NO MEDIA MAY BE MADE FROM THESE FIVE BEATS UNTIL HE READS THEM
+    (STEWARDSHIP.md §6)."
+  what_this_forbids_and_what_it_does_not: >-
+    §6 names three things and a still plate is none of them: voice synthesis,
+    footage render, episode assembly. A PLATE IS A STILL FIXTURE, and the repo has
+    behaved that way consistently — the beat-19 lane, working the same 2026-08-17
+    restage list on the same day as this one, drew three plate revisions for beat 19
+    on the Mac (farm-out/ep2-b19-mac-plate-0819/) and enqueued no motion. This lane
+    draws a plate and files no motion job for the same reason, and says so rather
+    than leaving it to be inferred.
+  consequence_for_this_beat: >-
+    A MOTION JOB FOR BEAT 15 CANNOT BE FILED TODAY BY ANYONE BUT HIM. That is not a
+    finding about the footage; it is the reason the footage half of this beat has to
+    wait even though the card is free. What CAN be done without him is the thing the
+    beat is actually blocked on anyway — see `the_real_blocker` below — so nothing
+    is idled by the gate.
+  what_would_lift_it: >-
+    The founder reading the five restaged beats (12, 13, 15, 19, 20) in node.md and
+    saying so. One sentence discharges it for all five at once. It is ONE TASTE-FREE
+    READ, not a taste question, and it currently blocks beat 15, beat 19 and beat 20
+    together.
+
+# ══════════════════════════════════════════════════════════════════════════
+# WHAT EXISTS. INVENTORIED, NOT ESTIMATED.
+# ══════════════════════════════════════════════════════════════════════════
+inventory:
+  method: >-
+    `dir /s /b C:\banyan-farm\courier-box\farm-out\` on the rtx5090 box filtered to
+    b15, cross-read against every pipeline/jobs/ep2-b15-*.yaml spec (31 of them).
+  task_dirs_on_the_box: 26
+  mp4s_in_them: 20
+  beat_15_motion_takes: 14
+  not_beat_15: >-
+    5 of the 20 are `13-remake-LTX-0813.mp4` published by ep2-b15-lw, -refire,
+    -refireB, -wave and -waveB. Those five tasks carry beat-15 names and beat-13
+    payloads. Recorded so the next lane does not count them as beat-15 evidence, as
+    a filename-only inventory would.
+  written_verdicts_found_on_any_of_the_14: 0
+  where_looked: >-
+    every ep2-b15-*.yaml spec (the string `verdict` appears in 22 of them and in
+    every case it is the boilerplate sentence "No verdict is being recorded or
+    revised here" inside success_CORRECTION_0816); review/ep2-picks/*.yaml;
+    pipeline/loop/; STATE.md. steward-picks-0815.yaml holds the only beat-15 verdict
+    in the repo and it is on TWELVE STILLS, not on any clip.
+  stills_already_ruled_elsewhere_and_not_re_judged_here: >-
+    review/ep2-picks/steward-picks-0815.yaml beats.'15' — "ALL CANDIDATES FAIL",
+    12 candidates, 8 with no rooted plant at all (detached leaves floating free at
+    the frame edges) and 4 indoors against wall panels. That ruling stands and this
+    file does not disturb it.
+
+# ══════════════════════════════════════════════════════════════════════════
+# VERDICT 1 — THE SIX 0815 MOTION TAKES. NEVER JUDGED UNTIL NOW.
+# ══════════════════════════════════════════════════════════════════════════
+verdict_0819_motion:
+  scored_on: '2026-08-19'
+  scorer: steward (Claude Opus 5), beat-15 lane — sighted, frames extracted and looked at
+  takes: 6
+  result: ALL SIX FAIL
+  provenance_check: >-
+    Every mp4 was pulled from the box with scp and its sha256 verified against the
+    manifest the producing job wrote itself (ep2-b15-<task>-0815.sha256). All six
+    match byte for byte. Frame counts and durations re-measured with ffprobe against
+    the `--frames` argument in each spec: lookup/lookupB 49f/2.04s, twobeat/twobeatB
+    97f/4.04s, long/longB 193f/8.04s. Nothing below is read off a ledger.
+  what_the_six_are: >-
+    THREE PROMPTS AT TWO SEEDS EACH, and — this is the whole story — ALL SIX SHARE
+    ONE INIT IMAGE. Every one of the six specs crops the same file with the same
+    asserted sha256:
+      C:\banyan-farm\courier-box\farm-out\ep2-b15-plate-0814\15-good-listener-ipa-r0-w015-s0.png
+      sha256 43648513f936a52f6b83f8c66b3f15b102f1c73c2a4fe2899c3e477e75618fb9
+    (verified independently by this lane after pulling the plate: the bytes on the
+    box hash to that string and the job's manifest agrees.)
+    Seeds: 20260815 for lookup/long/twobeat, 20260902 for the B twins.
+    Prompts: lookup "He opens his eyes and turns his head to look up at the small
+    plant beside him."; long "He raises his head and his mouth moves as he speaks.";
+    twobeat "He raises his head until he is looking straight ahead. Then his mouth
+    opens and closes as he speaks."
+
+  THE_INIT_DECIDES_THE_BEAT_AND_THE_INIT_FAILS_IT: >-
+    The plate was looked at full size before any clip was. It shows a bald,
+    round-headed CHILD-proportioned goblin STANDING, eyes closed, head down, in a
+    green shirt, white cargo shorts and modern SNEAKERS — no patchwork cloak. To his
+    right is a thin wiry multi-node stalk carrying small pointed paired leaves and
+    topped by a WHITE-AND-BLACK SPHERE. That object is not the sapling. Canon is
+    ~40 cm with two broad round leaves on a thin stem (THE-SAPLING.md §3.2;
+    style.md row 002a/b/c); this is a weed with a ball on it.
+    THEREFORE: no seed and no motion prompt reachable from this init can pass
+    done_when, because i2v does not replace the subject it is conditioned on. Six
+    takes were spent discovering this and the plate could have been looked at first.
+
+  clause_by_clause:
+    SAPLING_IN_THE_SAME_FRAME:
+      lookup_s20260815: FAIL — the object stays in frame for the whole 49 frames, but it is the weed-with-a-sphere, not the sapling. Fails on identity, not on framing.
+      lookupB_s20260902: FAIL — same object; and by the final frame HIS FACE DEFORMS, the head turning away as an eye smears across the cheek. Identity break on the character as well.
+      long_s20260815: FAIL — same object, held in frame through a slow push-in.
+      longB_s20260902: FAIL — same object, and the push-in has carried it to the frame edge by the last frame.
+      twobeat_s20260815: >-
+        FAIL, AND THIS IS THE ONE THAT FAILS THE CLAUSE ITSELF RATHER THAN ON PLANT
+        IDENTITY. The push-in tightens continuously to a head-and-shoulders close-up.
+        Frames checked at 40/56/72/88/96: the stem and its sphere are visible at 40,
+        faint at the right edge at 56, and GONE FROM 72 ONWARD — the last third of the
+        clip is his face alone with a few loose leaves drifting past. This is
+        done_when's own named failure, arrived at literally: "a close-up of him
+        looking up at nothing fails it however well he acts." And he does act — the
+        head comes up and the mouth opens on the line. The acting is the best of the
+        six and it is spent on a frame the plant has left.
+      twobeatB_s20260902: >-
+        FAIL on plant identity, PASS on framing — the only take of the six that both
+        moves the head and keeps the plant in frame from frame 0 to frame 96. Checked
+        at 40/56/72/88/96: stem and sphere present in all five, no push-in, full body
+        held. If the init had carried the real sapling this take's framing would have
+        been the answer.
+    CLOSE_UP_OF_HIM_LOOKING_UP_AT_NOTHING:
+      fires_on: twobeat_s20260815 (from frame 72)
+      does_not_fire_on: the other five
+    GAZE:
+      scored: false
+      why: see definition_judged_against.ONE_CLAUSE_OF_IT_IS_STALE_AND_IS_NOT_MINE_TO_EDIT
+      recorded_not_scored: >-
+        Because it will be asked: the head does come up in twobeat and twobeatB and
+        does NOT in lookup, lookupB, long or longB. In lookup — the one take whose
+        prompt literally says "look up at the small plant beside him" — the head never
+        rises at all; it rotates so his face goes AWAY from both the camera and the
+        plant. Recorded as a measurement of the engine, not as a score.
+    ALSO_TRUE_OF_ALL_SIX_AND_INHERITED_FROM_THE_INIT:
+      - he is STANDING. Beat 13, the frame immediately before, ends "his legs give out and he drops to sit in the grass at the base of the stem". A standing beat 15 does not cut to.
+      - no patchwork cloak. Modern shirt, cargo shorts and sneakers.
+      - a child read — round skull, small body — where canon is a lean wiry adult.
+
+  best_of_the_six: 15-good-listener-LTX-twobeatB.mp4 (ep2-b15-twobeatB-0815, seed 20260902)
+  why_it_is_best_and_still_fails: >-
+    It is named rather than picked. It is the only one of the six that holds a full
+    two-shot for its whole length while the head rises and the mouth moves — the
+    framing behaviour the beat needs, demonstrated on this engine at this size. It
+    fails because the thing sharing the frame with him is a weed with a ball on top
+    and he is a standing child in sneakers. NOTHING ABOUT IT IS A SEED PROBLEM, so
+    reseeding it is not the next step.
+
+# ══════════════════════════════════════════════════════════════════════════
+# VERDICT 2 — THE SIX MAC PLATES OF 2026-08-15. ALSO NEVER JUDGED.
+# ══════════════════════════════════════════════════════════════════════════
+verdict_0819_mac_plates:
+  where: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r1..r6.png
+  drawn: '2026-08-15', Apple MPS, animagine-xl-3.1, 832x1216, seed 20260734, $0
+  state_before_today: >-
+    every sidecar `scored: false`, `founder_verdict: null`, and no reference to any
+    of the six anywhere in the repo except THE-SAPLING.md §6.1, which cites r6's
+    sidecar as an instance of the `taller than he is` canon violation. Six plates
+    were drawn, none was ever read.
+  result: ALL SIX FAIL
+  per_rung:
+    r1: FAIL — a tight close-up of his head and shoulders in tall grass. No stem, no rooted plant, nothing in frame but him and grass blades. done_when's named failure, in a still.
+    r2: FAIL — a SCALE DOUBLE. One huge seated cloaked figure fills the frame and a tiny goblin sits at its base. Two figures where the beat has one, and the plants are thin weedy stalks.
+    r3: FAIL — seated goblin in a field, and the plant GROWS OUT OF HIS SHOULDER. Nothing rooted in the ground.
+    r4: FAIL — closest on body and world: one seated cloaked goblin, a small leafy sprig to his left. Fails because the ground is a FLOATING DISC of grass in open sky, and the sprig is a many-leaved weed, not two leaves on a stem.
+    r5: FAIL — head tipped far back looking at empty sky; the sprig again sits at his shoulder rather than in the soil; floating grass disc again.
+    r6: FAIL, and the most instructive — a conical LEAF-MOUNTAIN the size of a hill fills the frame with a speck of a figure beneath it. Its prompt asked for "one thin bare stalk taller than he is" and it got one. THE-SAPLING.md §6.1 corrected that phrase by name on 2026-08-16.
+  what_the_six_share: >-
+    Every one asks for the SUPERSEDED staging — "looking up", "head tipped far back",
+    "two huge broad leaves HIGH ABOVE HIS HEAD", "taller than he is". They are six
+    rungs of a ladder measuring a plant canon no longer has. That is why a seventh
+    rung of THAT ladder would be worthless and a first rung of a new one is not.
+
+# ══════════════════════════════════════════════════════════════════════════
+# THE REAL BLOCKER
+# ══════════════════════════════════════════════════════════════════════════
+the_real_blocker:
+  clause: THE SAPLING IS IN THE SAME FRAME — specifically the SAPLING half of it.
+  statement: >-
+    Beat 15 has now been judged on 24 artefacts: 12 wave stills (steward-picks-0815,
+    ALL CANDIDATES FAIL), 6 mac plates (this file) and 6 LTX motion takes (this
+    file). NOT ONE FAILS ON THE ACTING. Every single one fails because the thing
+    sharing the frame with him is not the sapling: detached leaves floating with no
+    stem (8), a houseplant indoors (4), a weed topped with a white sphere (the init
+    under all 6 clips), a sprig growing out of his shoulder (2), a hill (1), nothing
+    at all (1), a scale-double's weeds (1).
+  therefore_not_a_motion_problem: >-
+    A motion reseed cannot fix it — i2v does not replace the subject it is
+    conditioned on, and six clips off one bad init is the proof. The beat is blocked
+    on a PLATE, and it has been blocked on a plate since before the first clip was
+    rendered.
+  and_this_matches_a_finding_a_sibling_lane_reached_tonight: >-
+    The beat-19 lane recorded in pipeline/plate_scratch.py on 2026-08-19, after three
+    one-variable revisions: "THE PLANT IS NOT REACHABLE BY WORDS ON THIS CHECKPOINT
+    and a fourth wording is the thing this repo has repeatedly been wrong to fire."
+    Beat 15's evidence is the same failure on a different beat. The one difference
+    that makes a fresh rung honest here rather than a seventh wording: beat 19's
+    three rungs all asked the CURRENT canon and failed; beat 15's six rungs all asked
+    the SUPERSEDED pre-restage canon (a plant taller than he is, seen from below) and
+    have never once asked for the ~40 cm plant the story now has. That question is
+    unfired, not closed.
