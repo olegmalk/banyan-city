@@ -183,3 +183,67 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b17-shake-noamber-0819\17-goodbye-LTX-shake-noamber-0819.mp4
 - C:\banyan-farm\ep2-b17-shake-noamber-0819\b17-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the night supervisor (v2), against the bar
+# pre-registered above before the render existed. The bar is not edited. This
+# verdict also FALSIFIES a claim I published two hours earlier tonight, and the
+# correction is carried into the research file rather than left standing.
+# ============================================================================
+verdict: PASS on all four clauses -- S1, S2, S3 and the new P1. Beat 17 now has a take that matches
+  canon AND keeps the plate's world. The one variable was the answer.
+verdict_measured:
+  p1_plate_fidelity: 'PASS, and not marginally. Mean |RGB| distance from the f000 init: f008 = 13.6
+    against a ceiling of 40; f096 = 31.0 against a ceiling of 55. The 0818 take read 80.7 and 87.3 on
+    the identical measurement. That is an 83% reduction in early drift and 65% at the end, from
+    deleting six words. Band detail: the SKY, which moved 102.4 levels in the amber take, moves 8.7
+    here. Ground 64.4 -> 16.7. The blue sky and the green meadow are still a blue sky and a green
+    meadow at f096.'
+  s1_stand: 'PASS. Seated at f000, crouched and rising by f012, fully upright by f024, continuous.'
+  s2_shake: 'PASS on the reversal test as written. Across f030-f041 he takes the cloak in both hands
+    and spreads it OUT to both sides into a wide sheet (f030-f038), then it collapses BACK in and
+    settles (f039-f041). Hem displacement is a large fraction of the frame width -- many fold-widths --
+    and his feet stay planted in the same grass. Out and back, torso not translating: the clause is
+    met.'
+  s3_turn: 'PASS. By f084-f095 he is turned away in profile-to-back, striding off toward the open
+    field with the cloak trailing behind him. Face away from the lens, which is by design for this
+    beat. It reads as a departure, which is what done_when asks for.'
+  fail_modes: 'F1 no. F2 STAND-ONLY no -- the cloak is actively handled. F3 no cut, no second figure,
+    no extra face; nothing grew in the flat sky. F4 no teleport. F6 no -- cel style holds throughout.'
+caveats_recorded_not_scored:
+  the_cloak_still_recolours: 'THE REAL RESIDUAL DEFECT AND A GAP IN MY OWN P1 CLAUSE. The plate dresses
+    him in a DARK BLUE-VIOLET cloak. From f024 on he is wearing a PINK-AND-CREAM patchwork poncho. The
+    world is preserved and the garment is not. P1 passes anyway because it measures whole-frame and
+    band-level distance, and a garment is a small share of the pixels -- so a clause I wrote
+    specifically to catch plate infidelity does not catch the plate infidelity that survived. Named
+    honestly: my ceiling was the right idea at the wrong granularity.'
+  motion_texture: '41 of 96 frame pairs measure under 0.5 interframe against a median of 3.18 -- the
+    same near-duplicate pattern flagged as judder on ep2-b18-tremble-s20260872 tonight. No clause here
+    covers it, so it is not scored, and the follow-up list already carries the judder gap.'
+  camera_inconclusive: 'Edge-strip correlation against f016 reads 0.92 / 0.53 / 0.76 / 0.68 at
+    f032/f056/f080/f096. That LOOKS like drift and it is NOT reported as a camera move, because the
+    cloak spreads across the frame edges in exactly that window and the edge strips are measuring the
+    cloak. The measurement cannot separate the two here. Inconclusive, stated as inconclusive.'
+  reads_as_spreading_not_shaking: 'Taste observation, explicitly not a score: the gesture reads as
+    opening the cloak wide rather than shaking dust out of it. It satisfies S2''s reversal test, which
+    is what S2 asks. Whether it reads as the line intends is R4.'
+what_this_falsifies:
+  my_own_claim_from_two_hours_ago: 'THE 0818 COLLAPSE WAS THE PROMPT, NOT THE CONDITIONING BOUNDARY.
+    ep2-b17-shake-0818''s verdict called its 92%-drift-by-f008 "the cleanest instance we have of an
+    I2V conditioning-boundary collapse", and pipeline/research/latent-boundary-cold-open-0819.md
+    published beat 17 as the hypothesis'' clean HIT. This render is the controlled test of that claim
+    -- same init, SAME SEED 20260941, same negative, same recipe, one prompt clause removed -- and
+    drift at f008 fell from 80.7 to 13.6. A conditioning-boundary artifact does not disappear because
+    six words left the positive prompt. The boundary was not the cause; "afternoon light warming
+    toward amber" was.'
+  what_survives: 'The structural facts are unchanged and still worth knowing: LTX''s latent quantum is
+    8 pixel frames and frame 0 is the conditioning image. What is withdrawn is the CLAIM that beat 17
+    demonstrated a boundary artifact. It demonstrated a prompt doing exactly what it said, very fast.
+    The cold-open half of that research file was already a negative result and is unaffected.'
+  why_this_matters_beyond_beat_17: 'The mechanism had a real cost attached: the 0818 verdict named a
+    start-frame conditioning-strength knob -- a code change to ltx_i2v.py -- as the next move. That
+    would have been building a mechanism to fix a prompt. It is now explicitly NOT ruled.'
+what_this_licenses: 'ONE more beat-17 sample if anyone wants the cloak colour held: a P2 garment-region
+  clause and whatever prompt change targets it. It does NOT license the ltx_i2v.py conditioning-strength
+  change, which is withdrawn as unmotivated. It does not license a reseed. Promotion of this take into
+  the cut is the assembly lane''s and the founder''s, not this lane''s.'

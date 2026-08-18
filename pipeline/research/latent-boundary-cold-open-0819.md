@@ -95,3 +95,48 @@ G1's cause. Recorded here rather than quietly dropped.
   conditioning strength. `pipeline/ltx_i2v.py` exposes no `--init-strength`, so it is
   a code change and a daytime decision — the same answer as
   `guidance-schedule-feasibility-0818.md`.
+
+---
+
+## CORRECTION, same night: the "hit" was not a hit
+
+**Appended a few hours after the above, by the same steward, after running the
+controlled test this file should have waited for.**
+
+The section titled *"Hit: beat 17 abandons its plate inside latent 1"* is **withdrawn
+as a claim about the conditioning boundary.** Its numbers are correct; its
+attribution was wrong.
+
+`ep2-b17-shake-noamber-0819` is the control: **same init, same seed 20260941, same
+negative, same recipe, same frame count**, with one clause — `afternoon light warming
+toward amber` — removed from the positive prompt. Result:
+
+| | f008 | f096 | sky band @f096 |
+|---|---|---|---|
+| 0818, amber clause present | 80.7 | 87.3 | 102.4 |
+| 0819, amber clause removed | **13.6** | **31.0** | **8.7** |
+
+An 83% reduction in early drift from deleting six words. **A conditioning-boundary
+artifact does not disappear because a prompt clause did.** The plate collapse was the
+prompt getting exactly what it asked for, very fast — not the VAE, not latent 1, not
+the I2V anchor.
+
+What survives unchanged: the structural facts (LTX's quantum is 8 pixel frames; frame
+0 is the conditioning image), and the **cold-open half of this file, which was already
+a negative result** and is untouched. So both halves now read the same way: the
+latent-boundary hypothesis is **not** demonstrated anywhere in our material. It
+remains a plausible mechanism from the literature with no instance of its own here.
+
+**What this cost, and why the correction matters more than the finding did.** The 0818
+verdict named a start-frame conditioning-strength knob — a code change to
+`ltx_i2v.py`, which every render passes through — as the next move. On the wrong
+attribution, that change would have been built to fix a prompt. It is now explicitly
+withdrawn as unmotivated.
+
+**The methodological lesson, stated plainly because I got this wrong twice tonight in
+the same direction:** a measurement that matches a hypothesis is not the hypothesis
+confirmed. Beat 17's 92%-by-f008 lined up beautifully with a documented mechanism and
+I wrote it up as a hit before running the one-variable control that could have
+separated them — the control being cheap, local, six minutes, and $0. The cold-open
+half of this file was rigorous precisely because it *had* a comparison built in (the
+passing seed). The beat-17 half had none until now.
