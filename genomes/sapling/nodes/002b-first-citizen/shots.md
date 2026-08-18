@@ -1154,8 +1154,57 @@ One oversized green leaf of a tiny sapling fills the frame and turns very slight
 Line: "you didn't see me." Camera on him standing to leave.
 
 ```
+A small round goblin pushes himself up to standing, gives his patchwork cloak a shake, and turns away from the tiny sapling standing tall toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+```
+
+**CORRECTION 2026-08-18 — THE BRUSH IS RESTAGED AS A SHAKE, and this board was the
+last place still asking a render for it.** `node.md:108` was restaged the same day
+under the founder's 2026-08-18 delegation (*"just leave me the taste questions for
+now... try to select which decisions I should make, more strategically from now
+on"*) and now reads *"The scavenger pushes himself up, gives his cloak a shake, and
+turns to go."* The record is
+`review/ep2-picks/done-definitions.yaml` beats.'17'.`script_RESTAGE_CORRECTION_0818`,
+which marks the brush **superseded for rendering purposes** — no new beat-17 job may
+ask for it and no take is failed for not having it. Leaving this prompt as it was
+would have pointed the next render at the one gesture the script no longer contains.
+
+**What changed in the prompt above, and nothing else did.** ~~brushes dust off his
+patchwork cloak with two quick swipes~~ → `gives his patchwork cloak a shake`. Every
+other clause is byte-identical: the stand-up, the turn away, the sapling, the open
+field, the static camera, the amber light, the style anchor and the negatives. The
+corrected prompt is **54 words against the superseded 58**, so it cannot newly
+overflow `compress()`; **it was NOT measured on the real CLIP tokenizer** — no
+tokenizer is installed on this machine and this change was $0 with no GPU — so the
+word count is the only guarantee offered here.
+
+**Why, and it is measured rather than argued.** `done-definitions.yaml`
+beats.'17'.`full_arm_read_0817` read eight takes on the `full` wording and scored
+**8/8 stand, 8/8 turn away, 0/8 brush** — and not a faint brush: the engine
+substitutes a hand REACH/PLANT and nothing sweeps across the cloak in any of them.
+Handed a tight insert plate drawn so a stroke had somewhere to go
+(`ep2-b17-insert-plate-0816` → `insert-motion-0816`) it still would not complete a
+stroke. A shake is gross whole-body motion, the class this engine renders at 12 of
+12 on this plate.
+
+**Superseded 2026-08-18, kept verbatim so nobody restores it by finding it quoted
+somewhere else — and because THE EIGHT RETIRED SEEDS' HISTORY LIVES IN THIS EXACT
+STRING.** `seeds_are_retired_on_this_wording` retires further seeds *on this
+wording*; the 0/8, the s1..s4 insert result and the `ep2-b17-full-s5..s8-0816` reads
+are all measurements OF the sentence below, and they stop being interpretable the
+moment it is gone. It is kept for the same reason `done_when_superseded_0815` is
+kept beside its replacement two beats down:
+
+```
 A small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling standing tall toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**The eight `17-goodbye-r1-*` / `17-goodbye-r3-*` stills under `takes/stills/` keep
+the brush in their sidecars and are NOT corrected.** Those record the bytes actually
+sent to the model; editing them would falsify a receipt rather than fix a render.
+They are stale as to the brush and they lose to the restage. **VETO-ABLE in one
+line** — the founder restores the superseded prompt above and the struck clause in
+`node.md:108`, and nothing else has to be undone: beat 17 holds no pick, no spoken
+line moved, and beat 17's VO take is untouched.
 
 ## Beat 18 — THE DECISION (1:27–1:34) ⬜ needs footage
 

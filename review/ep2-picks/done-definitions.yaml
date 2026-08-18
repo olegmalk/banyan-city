@@ -783,6 +783,57 @@ beats:
   '17':
     title: GOODBYE
     script: The scavenger stands, brushes off, and turns to go.
+    script_RESTAGE_CORRECTION_0818:
+      date: '2026-08-18'
+      key_name_why: 'Named `script_RESTAGE_...` and not `restage_...` on purpose. check_canon_drift.py''s
+        `correction_sibling` splits a dated key on `^(.+?)_[A-Z][A-Z_0-9]*_(\d{4})$` and matches the BASE
+        against the key it discharges; base `restage` prefix-matches no key in this block, so a plain
+        `restage_CORRECTION_0818` would parse as a correction and cover nothing. Base `script` covers
+        `script` and every `script_*` sibling, which is the key that actually went stale here.'
+      script_now: The scavenger pushes himself up, gives his cloak a shake, and turns to go.
+      applies_to: 'The `script` and `done_when` keys above and every beat-17 spec that quotes them. NOTHING
+        ABOVE IS DELETED OR REWRITTEN: the recorded line, the retroactive done_when and the whole `full_arm_read_0817`
+        evidence block stay exactly as written, because they are the measurement that produced this change
+        and a record that erased them could not justify it.'
+      what_changed_in_canon: '`genomes/sapling/nodes/002b-first-citizen/node.md:108` now reads "The scavenger
+        pushes himself up, gives his cloak a shake, and turns to go." The superseded line is kept struck
+        through beneath a dated note in node.md itself. `brushes off` -> `gives his cloak a shake`: three
+        beats in, three beats out, same rhythm, same word count, same intent — he tidies himself before
+        he leaves.'
+      superseded_for_rendering: '"The scavenger stands, brushes off, and turns to go." is SUPERSEDED FOR
+        RENDERING PURPOSES. No new beat-17 job may ask for a brush, and no take is failed for not having
+        one. It remains the historical script line and every take, verdict and spec that quotes it stays
+        valid as a record of what was asked at the time.'
+      why: 'THE 0-OF-8 STANDS AND IS THE WHOLE REASON. `full_arm_read_0817` above measured 8/8 STAND, 8/8
+        TURN AWAY and 0/8 BRUSH across eight seeds on the `full` wording, and `what_the_engine_does_instead`
+        found not an attenuated brush but a different action — a hand REACH/PLANT, nothing sweeping across
+        the cloak in any of the four read. Handed a tight insert plate drawn so that a stroke had somewhere
+        to go (ep2-b17-insert-plate-0816 -> ep2-b17-insert-motion-0816) the engine still would not complete
+        a stroke. Seeds were retired on this wording for that reason. A shake is GROSS WHOLE-BODY motion,
+        the class this engine renders at 12 of 12 on this plate, so the restage moves the ask onto the
+        variable that measures instead of the one that does not.'
+      authority: 'STEWARD, not the founder, and said plainly. `why_no_pick` above declined to drop the
+        brush because `brushes off` sits in the APPROVED SCRIPT LINE (002b-t0-c, `approved_by: founder`)
+        and dropping it is a rewrite of the bar rather than a pick among takes. That restraint was right
+        on 2026-08-17 and is discharged by his 2026-08-18 delegation: "just leave me the taste questions
+        for now... try to select which decisions I should make, more strategically from now on." A staging
+        mechanic that preserves the beat''s intent is now steward-side; taste verdicts on rendered results
+        (R4) and publication are not, and neither moved here.'
+      veto: 'HE MAY VETO IN ONE LINE and the original text is preserved in two places for exactly that
+        — struck through at node.md:108 and quoted verbatim in `superseded_for_rendering` above. Restoring
+        it means putting that sentence back in node.md and deleting this key; nothing else has to be undone,
+        because no take, pick or verdict was changed by this entry.'
+      what_it_costs: 'NOTHING RE-RENDERS AND NOTHING IS STRANDED. Beat 17 holds no pick, so no pick moves.
+        The eight `full` takes keep their 8/8 stand-and-turn read and are now measured against a bar they
+        can actually meet. NO SPOKEN LINE MOVED, so 002b''s beat-17 VO take stays valid.
+        THE PROMPT WAS BROUGHT WITH IT the same day rather than left stale — `shots.md` beat 17 read "brushes
+        dust off his patchwork cloak with two quick swipes" and now reads "gives his patchwork cloak a shake",
+        every other clause byte-identical, 54 words against 58, under a dated CORRECTION 2026-08-18 note that
+        keeps the superseded prompt verbatim. Keeping it is not optional: `seeds_are_retired_on_this_wording`
+        retires seeds ON THAT WORDING, so the 0/8 and the s1..s4 insert result are measurements OF that exact
+        string and stop being interpretable without it. The eight `17-goodbye-r1-*`/`r3-*` still sidecars keep
+        the brush and are NOT corrected — they are receipts of bytes actually sent.'
+      written_by: steward (Claude Opus 5), narrative lane, 2026-08-18
     done_when: 'stand, brush, turn — a departure. NOTE the turn takes his face away from the lens by design,
       so the staging law does not apply here: this is the one beat where turning away IS the action.'
     definition_written: 2026-08-15, written retroactively from node.md and NOT from any existing take,

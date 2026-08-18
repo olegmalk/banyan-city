@@ -105,9 +105,20 @@ Close on the sapling's leaf; the scavenger sits blurred behind it.
 > **VO:** He talks to me because I'm the only thing here that won't file a report. Buddy, I *wish* I could. I can't even wave.
 
 **GOODBYE — 1:22–1:27**
-The scavenger stands, brushes off, and turns to go.
+The scavenger pushes himself up, gives his cloak a shake, and turns to go.
 
 > **SCAVENGER:** If anyone asks — you didn't see me. Which is true. You're a plant.
+
+*restaged 2026-08-18 — steward staging edit under the founder's 2026-08-18
+delegation ("just leave me the taste questions for now"). The brush gesture is a
+measured engine limit (0 of 8 across retired seeds; 8 of 8 stand-and-turn; handed
+a tight insert plate drawn so a stroke had somewhere to go it still would not
+complete a stroke — see `review/ep2-picks/done-definitions.yaml` beats.'17' and
+`script_RESTAGE_CORRECTION_0818` there). Intent preserved: he tidies himself and
+leaves, and the shake is whole-body motion, which this engine renders at 12 of 12. Nothing
+spoken moved, so beat 17's VO take stands. VETO-ABLE in one line; the original
+text is right here:*
+~~The scavenger stands, brushes off, and turns to go.~~
 
 **THE DECISION — 1:27–1:34**
 Extreme close-up: the one fig on the thinnest branch, stem trembling.

@@ -190,6 +190,59 @@ revisions:
       discharged; beats.15.done_when's "he LOOKS UP" and beats.20.done_when's "then the
       look UP" both need re-transcribing to the level/downward look. Two lanes in one
       file is the mistake THE-SAPLING.md §6.6 already declined once.
+  - date: 2026-08-18
+    beat: 17
+    quote: "just leave me the taste questions for now... try to select which decisions I should make, more strategically from now on."
+    recorded_on: '2026-08-18'
+    author: steward (Claude Opus 5), narrative lane — model-written stage direction
+    what: |-
+      THE BRUSH IS RESTAGED AS A SHAKE, AND THIS ONE IS NOT HIS SENTENCE — it is the
+      steward's edit to a line HE approved, made under the delegation quoted above,
+      and that is why it is the first entry in this list whose `quote` is a grant of
+      authority rather than an instruction about a beat.
+      17 GOODBYE — "The scavenger stands, brushes off, and turns to go." → "The
+      scavenger pushes himself up, gives his cloak a shake, and turns to go." Stage
+      direction only. NO SPOKEN LINE MOVED, so beat 17's VO take stays valid, and the
+      superseded line is kept struck through beneath a dated note at node.md:108.
+      WHY, MEASURED AND NOT ARGUED. `review/ep2-picks/done-definitions.yaml`
+      beats.'17'.full_arm_read_0817 read eight takes and scored 8/8 STAND, 8/8 TURN
+      AWAY, 0/8 BRUSH — and not a faint brush: the engine substitutes a hand
+      REACH/PLANT and nothing sweeps across the cloak. Handed a tight insert plate
+      drawn so a stroke had somewhere to go (ep2-b17-insert-plate-0816 →
+      insert-motion-0816) it still would not complete a stroke, and seeds were retired
+      on the wording for that reason. A shake is gross whole-body motion, the class
+      this engine renders at 12 of 12 on this plate. The restage moves the ask onto
+      the variable that measures.
+      WHAT THE PICK LANE COULD NOT DO, AND WHY IT CAN NOW. beats.'17'.why_no_pick
+      declined to drop the brush precisely because it sits in THIS leaf's approved
+      script line — "an authorship call, and not the pick lane's to take". Correct on
+      2026-08-17; discharged by his 2026-08-18 delegation, which puts staging
+      mechanics that preserve a beat's intent on the steward's side of the line.
+    veto: |-
+      ONE LINE UNDOES IT. The original sentence is preserved struck through at
+      node.md:108 and quoted verbatim in done-definitions.yaml
+      beats.'17'.script_RESTAGE_CORRECTION_0818.superseded_for_rendering. Restoring it means
+      putting that sentence back and deleting that key; no take, pick or verdict was
+      changed, so nothing else has to be undone.
+    what_it_costs: |-
+      NOTHING RE-RENDERS AND NOTHING IS STRANDED. Beat 17 holds no pick, so no pick
+      moves. The eight `full` takes keep their 8/8 stand-and-turn read and are now
+      measured against a bar they can meet. Beat 17's VO is untouched.
+      THE PROMPT MOVED WITH THE SCRIPT, same day. `shots.md` beat 17 read "brushes
+      dust off his patchwork cloak with two quick swipes" and now reads "gives his
+      patchwork cloak a shake" — every other clause byte-identical, 54 words against
+      58, under a dated CORRECTION 2026-08-18 note. The superseded prompt is kept
+      verbatim in that note and is NOT deletable: `seeds_are_retired_on_this_wording`
+      retires seeds on that exact string, so the 0/8 read is a measurement OF it.
+      Leaving the prompt stale would have pointed the next beat-17 render at the one
+      gesture the script no longer contains — script-vs-prompt drift in reverse.
+      The eight `17-goodbye-r1-*`/`r3-*` still sidecars keep the brush and are NOT
+      corrected; they are receipts of bytes actually sent.
+    approval_status: |-
+      HE HAS NOT READ THIS LINE. `approved_by: founder` above is deliberately
+      unchanged — it gates the whole node and every other beat is untouched — and
+      this entry is the per-beat record. STEWARDSHIP.md §6 gates media from beats he
+      has not read; nothing was voiced, rendered or enqueued for this pass. $0, no GPU.
 approval_scope: |-
   Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
   It is NOT approval of the shot prompts: all 21 were found written in the v2
