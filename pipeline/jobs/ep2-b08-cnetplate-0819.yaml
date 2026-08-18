@@ -387,3 +387,107 @@ licence_note: >-
   pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
   annotator, so the lllyasviel/Annotators landmine (B01-R9-PLAN.md 9, DO NOT USE
   FOR CANON) is not touched.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the lane that filed it, after opening both
+# PNGs at full size. Scored against the bar THIS SPEC PRE-REGISTERED ABOVE. The
+# bar is NOT edited here and not one clause of it was reworded after the pixels.
+#
+# The job ran clean: three steps, rc=0 each, 2026-08-18T22:36-22:37Z, hint arm
+# load 10.9s / render 14.8s, nocontrol 5.2s / 9.7s, 7 files published to
+# courier-box\farm-out and pulled here with every sha256 verified against the
+# manifest computed on the box. $0.
+# ============================================================================
+verdict: >-
+  FAIL against B1-B5, and the most useful frame this beat has produced. B2 and
+  B4b fail; B4c -- the clause the whole route exists for -- PASSES against its
+  own control, for the first time on this beat.
+verdict_measured:
+  read_how: 'Both PNGs opened at full size, then measured, because an eye that has
+    just spent an hour authoring a hint is the eye most likely to see what it drew.
+    Evidence panel: farm-out/ep2-b08-cnetplate-0819/EVIDENCE-b08-cnetplate-0819.png
+    (hint | hinted as-rendered | hinted brightened x3.2 for reading | nocontrol).'
+  b1_the_pair: 'PASS. Two figures, both whole, and only two.'
+  b2_the_adults_read: 'FAIL, and measured rather than impressioned. BOTH FIGURES ARE
+    GREEN. The guard''s head samples (33,78,49) against the goblin''s (31,72,49) --
+    indistinguishable, green channel dominant by more than 2x on both. The guard has
+    pointed ears and no sandy hair. The frozen cast did not survive: this is one
+    goblin pointing at another. This was the clause named IN ADVANCE as the one the
+    hint could not carry -- a contour says how tall a figure is, not how old or what
+    species -- and it failed exactly there.'
+  b3_one_ground_plane: 'PASS. Both stand in the same grass at the same depth, which
+    the hint pinned at y=1149.1 for both.'
+  b4a_board_down: 'PASS. A dark clipboard hangs at the guard''s hip, in ONE hand,
+    well below his shoulder. Legible as a board and legible as lowered. This is the
+    half the composite route also passed, now reached in a single generation rather
+    than by compositing.'
+  b4b_legible_point: 'FAIL. The arm extends and it is aimed correctly, but it ends in
+    NOTHING -- the fingertip region samples (30,32,25), background. No hand, no
+    finger, no contact with the belly. What is drawn is a bare green limb terminating
+    in mid-air beside the goblin''s hip. A gesture with no hand on the end of it is
+    not a point, and the clause says "both legible".'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, and it is the finding. The pointing arm
+    grows from the GUARD''s shoulder -- sleeve-coloured at the upper arm (40,37,33),
+    bare at the forearm -- and reaches across toward the goblin. THE CONTROL FRAME AT
+    THE SAME SEED AND THE SAME WORDS PUT IT ON THE GOBLIN, so the hint gets the credit
+    and this is not the seed behaving. Twelve stills could not do this; wording put
+    the arm on the goblin 3 of 3 and this makes it 4 of 4 uncontrolled.'
+  b5_no_colossus: 'PASS on the hinted arm, and the contrast is the point. The
+    nocontrol arm is the most extreme colossus this beat has produced -- one goblin
+    filling the frame while the second figure stands about one eighth his height in
+    the background. The hint held the 1.100 stature ratio it was drawn with. The fault
+    every wording round returned was removed by geometry in one shot.'
+what_the_control_arm_settles: 'It is not a spare frame and it earned its 15 seconds.
+  At the same seed and the same words, WITHOUT the condition, the model produced all
+  three pre-registered fail modes at once: G1 the point on the GOBLIN (his own green
+  hand, unmistakable), G5 a COLOSSUS, and -- not pre-registered, recorded as new --
+  THE GUARD''S FROZEN WARDROBE BOUND TO THE GOBLIN. Cream shirt, white sash and brown
+  wrap skirt are all present in that frame and all of them are on the wrong body. That
+  is the BROADCAST failure attribute_mask.py documents, caught in the open.'
+what_this_settles: 'A HAND-AUTHORED HINT AIMS A GESTURE ON THIS CHECKPOINT. That was
+  the open question and it is now answered affirmatively, with its control. It also
+  settles the sharper half: geometry is per-location and IDENTITY IS NOT. The hint
+  moved the arm, killed the colossus and set the ground plane, and it did nothing
+  whatever for who the figures are -- `green skin` went to both bodies because a
+  contour cannot say which body it belongs to. Anyone building on this should take
+  the composition from the hint and must still solve identity another way.'
+observed_not_scored: 'THE HINT WAS TRACED, NOT INTERPRETED, AND THAT IS THE NEXT RUNG.
+  At conditioning_scale 0.8 a dense full-body contour does not guide the drawing, it
+  BECOMES the drawing: both figures came back as flat untextured mannequins with the
+  exact polygon silhouettes that were authored -- boxy torsos, rectangular limbs, no
+  cloth, no folds, no faces beyond a mark. This sharpens ep2-cnet-probe-0817''s
+  flattening note in a way that note could not have predicted: with a SPARSE hint the
+  environment flattened, and here the environment is FINE -- the grass and sky are
+  detailed and well drawn -- and the flattening landed entirely on the CONDITIONED
+  REGIONS. 0.8 was carried because it is the only scale this repo has measured, and
+  substituting an unproven number would have traded a known quantity for a guess. It
+  is now the obvious variable, and it is a one-sample question with its own bar.'
+authoring_error_found: 'MINE, and it is not the ControlNet''s fault. The frame is
+  NIGHT -- mean luma 22.9 against the control arm''s 95.1, a quarter as bright. The
+  negative was assembled from ep2-b08-boardcomp-0818, which was written for an INPAINT
+  over an already-daylit init and so never needed a darkness clause; beat 08''s own
+  cast draft carries `no dark, no night` and I dropped it while trimming to CLIP''s 77
+  tokens. The measured negative came back at 76 of 77 on the box''s real tokenizer, so
+  there was no room to notice. Any re-run of this recipe must free tokens for `dark,
+  night` before anything else.'
+guard_that_paid_for_itself: 'The token check added to controlnet_plate.py for this job
+  measured the prompt at 64 of 77 and the NEGATIVE AT 76 OF 77 -- one token from
+  silent truncation, on a negative whose tail is where `deformed` and `low quality`
+  sit. The authoring-time estimate on this Mac said 71 and was wrong by five in the
+  dangerous direction. Without the box-side check that margin would not have been
+  visible to anybody.'
+what_this_does_not_license: 'It does not license a pick, a plate_ack, a cut, or a
+  canon filename -- neither frame is any of those and neither is approved. It does not
+  license raising the strength, sweeping the scale in this job, or re-running the same
+  recipe with a patched negative and calling that a new question. And it does not
+  license Route B (ControlNet plus mask), which remains its own sample with its own
+  bar and is if anything less attractive now: the tracing observed above is exactly
+  what would appear inside a mask.'
+next_rung_named_not_taken: 'ONE sample, one variable: the same hint, the same seed,
+  the same words with `dark, night` restored to the negative, at a LOWER
+  conditioning_scale (0.4-0.5 is the obvious first probe) and/or a thinner stroke --
+  the xinsir card names stroke weight as the second control dial and this hint was
+  drawn at 7px. The question that rung asks is whether the hint can keep B3, B4a, B4c
+  and B5 while giving the checkpoint back enough freedom to draw people instead of
+  tracing polygons. It is NOT filed here, because scaling an unapproved result is the
+  thing that wastes an hour.'

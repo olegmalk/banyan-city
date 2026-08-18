@@ -230,3 +230,68 @@ it bears directly on everything above.
    beat 08's answer is a plate change and not a conditioning problem at all, and this
    document's Route A should be re-scoped before anything is filed against it. **Read
    that job's verdict before opening beat 08 again.**
+
+---
+
+## 7. Route A was built and fired the next morning — and it aims the gesture
+
+Appended 2026-08-19 by the lane that picked this up. Both loose ends §5 left are
+now closed, and Route A has its first sample: `ep2-b08-cnetplate-0819`
+(evidence: `farm-out/ep2-b08-cnetplate-0819/EVIDENCE-b08-cnetplate-0819.png`).
+
+**The courier gap in §2 is now a refusal, not a warning.** `box_enqueue.
+courier_problems` blocks any spec whose declared artifacts live outside
+`courier-box\farm-out` unless some step actually writes into it — a copy verb
+beside the path, or an `--out` that lands there. *Mentioning* the path does not
+count, and that is asserted. Blast radius measured across all 962 specs that
+declare artifacts: 100 refusals, 97 of them from the pre-courier era
+(ep1, and ep2 dated 0811–0812) — from the whole current era it fires on exactly
+one spec, `ep2-cnet-probe-0817`, which is the incident.
+
+**The hint tool exists and it draws people.** `author_b08_pose_hint.py`, PIL
+only, contours rather than a stick figure, with the arm solved by the two-link
+triangle from a fixed fingertip clearance so both failure modes refuse — too far
+apart raises on a stretched limb, too close on a folded elbow. Every clause of
+the bar a picture can carry is asserted in its `--selftest` before any pixels.
+
+**The result, in one line: THE HINT AIMS THE GESTURE, AND DOES NOTHING FOR
+IDENTITY.** Scored against a bar pre-registered in the spec:
+
+- **B4c — the pointing arm grew from the GUARD.** First time on this beat. Not
+  luck: the nocontrol arm at the *same seed and the same words* put it on the
+  goblin, making the uncontrolled tally 4 of 4.
+- **B5 — the colossus was removed by geometry in one shot.** The control frame
+  is the most extreme colossus this beat has produced (one goblin filling the
+  frame, the other at about an eighth his height) and it also bound the guard's
+  *frozen wardrobe* — cream shirt, white sash, brown wrap skirt — onto the
+  goblin. §6.2's BROADCAST class, caught in the open.
+- **B1, B3, B4a — pass.** Two whole figures, one ground plane, and a clipboard
+  legibly lowered at the guard's hip in one hand, reached in a single generation
+  rather than by compositing.
+- **B2 — FAIL, and it was named in advance as the clause geometry cannot carry.**
+  Both figures came back green with pointed ears; the two heads measure (33,78,49)
+  and (31,72,49), indistinguishable. **A contour cannot say which body an
+  attribute belongs to**, so `green skin` went to both. Anyone building on this
+  takes the composition from the hint and must still solve identity elsewhere.
+- **B4b — FAIL.** The arm is aimed but ends in nothing: the fingertip region
+  samples background. A gesture with no hand on the end of it is not a point.
+
+**Two things the next lane should not have to rediscover.** First, at
+conditioning scale 0.8 a dense full-body contour is **traced, not interpreted** —
+both figures returned as flat mannequins with the authored polygon silhouettes,
+while the grass and sky around them are detailed and fine. That inverts §2's
+observation rather than repeating it: with a sparse hint the *environment*
+flattened; with a dense one the flattening lands on the *conditioned regions*.
+Second, the frame is NIGHT (mean luma 22.9 against the control's 95.1) because
+the negative was assembled from `ep2-b08-boardcomp-0818` — written for an inpaint
+over an already-daylit init, so it never needed `no dark, no night`, which beat
+08's own cast draft does carry. That is an authoring error, not a ControlNet
+behaviour, and the negative measured 76 of 77 tokens so there was no room to
+notice.
+
+**The next rung is named and deliberately not taken:** same hint, same seed,
+`dark, night` restored to the negative, at a LOWER conditioning scale (0.4–0.5)
+and/or a thinner stroke — does the hint keep B3, B4a, B4c and B5 while giving the
+checkpoint back enough freedom to draw people instead of polygons? One sample,
+its own bar. **Route B (ControlNet + mask) is if anything less attractive now**:
+the tracing above is exactly what would appear inside a mask.
