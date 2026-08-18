@@ -9173,3 +9173,53 @@ reported rather than hacked in overnight.
 bars and tradeoffs on the steward, so beat 08's arm and beat 14's restage came off his
 board. What is left is the only taste question: watch the cold open. Full detail in
 `HANDOVER-0819.md`. Spend $0.
+
+## 2026-08-19 morning lane — the cut refreshed, and a probe recovered off the box
+
+**`review/ep2-demo-0819/` is live**: the 0818 cut with two clips swapped and nothing
+else touched — same node, same `render_t3` bench invocation, same VO byte for byte,
+the same nineteen other source files. Still 1:52, 17 footage beats, 4 slates, $0.
+Cut sha `2920c419…`.
+
+- **Beat 18** takes the tremble the 0818 page had itself called "the cheapest upgrade
+  this cut has available" and declined for want of a verdict. `s20260871` lifts the
+  slot's adjacent-frame median from **2.63 to 5.68** and cuts near-still pairs from
+  **120 of 262 to 14**.
+- **Beat 17** gets `shake-navy-0819` — the first take of that beat that does not miss
+  its own bar. The incumbent had been in every cut since 2026-08-15 doing two of three
+  verbs.
+- Both clips hash-chained end to end: box `.sha256` → pulled bytes → committed git blob
+  → assembly-manifest ingredient row.
+- **Correction published on the page.** The 0818 page's "in the cut its last frame holds
+  for N s" is wrong about the mechanism — there is no held-frame path for real footage,
+  the assembler palindromes. Verified frame by frame on both cuts (beat 18) and spot
+  checked on beat 06. Beats 04, 11 and 16 use the same phrasing, are flagged, and were
+  not measured. No clip and no verdict changed.
+- Named and not fixed: beat 17 is 4.04s in a 4.71s slot, so the last 0.67s is a rewind
+  (cut frame 97+k **is** the source's frame 96−k). And it is the least mobile of its
+  three takes — its own verdict calls that a taste call, so the livelier alternative
+  (`shake-noamber`, 3.18 interframe, pink cloak) is offered on the page rather than
+  swallowed.
+
+**`ep2-cnet-probe-0817` RAN on 2026-08-17 and PASSES — the tree had it recorded as
+never fired.** No outcome block, two commits saying it was held back, a driver commit
+saying "not run yet", five empty queue dirs, `backlog_empty`, and a repo-wide `find`
+returning two files. The box had all four arms written 12:39–12:41Z. **Why nobody knew:
+the spec declares `artifacts:` but has no publish step**, so nothing ever couriered them
+to `courier-box\farm-out\`. `box_enqueue.output_path_problems` checks artifacts are
+*named* by a step, not that any step *copies* them off the box — named, not built.
+Now published to `farm-out/ep2-cnet-probe-0817/` with a sha manifest and a verdict
+appended to the spec, bar unedited. Scored on CPU at $0 against a bar written in code:
+nocontrol **1.012** (metric sane), left **35.363**, right **21.530** against a bar of
+>1.25, polarity neutral. Pixels opened: the drawn seedling traces the authored stroke,
+mirroring the hint moves it, and the uncontrolled arm at the same seed puts a plant
+somewhere else in a scene it invented. **Spatial conditioning binds on this checkpoint.**
+
+**Beat 08's arm: no job filed, and the reason is the init, not the tool.** Opened the
+signed board-lowered composite at full size first. **Both of the guard's hands grip the
+clipboard**, so a pointing finger would be a *third* arm — and `extra arms` is in the
+beat's own negative. **B4a's success is what forecloses B4b.** Conditioning does not
+help: no driver in this tree pairs a ControlNet with a mask, and no hint tool can draw
+an arm. The route is now a staging campaign rather than an arm patch —
+`pipeline/b08-arm-route-0819.md` writes up all three routes with what each still needs.
+Nothing queued by this lane. Spend $0.
