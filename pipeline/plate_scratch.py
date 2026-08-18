@@ -1554,6 +1554,174 @@ DRAFTS = {
         ),
         "seed": 20260814,
     },
+    19: {
+        # ------------------------------------------------------------------
+        # BEAT 19, "THE DROP". node.md (002b-first-citizen:118, commit
+        # a483eb52, the author's own 2026-08-15 edit): "the stem lets go, the
+        # fig falls, and lands in the grass at his feet. He notices."
+        #
+        # done-definitions beats.'19'.done_when: "WIDE enough to hold the
+        # whole sapling and him at once; the fruit STARTS ON THE STEM, falls,
+        # and LANDS ON THE GROUND; and he NOTICES it. Three things, in that
+        # order: the fall, the landing, the noticing. NO CONTACT WITH HIS BODY
+        # -- a take where the fruit touches him fails this beat now, however
+        # well it moves."
+        #
+        # WHY THIS PLATE EXISTS AT ALL, AND WHY IT IS THE ONLY THING BLOCKING
+        # THE BEAT. The beat's own entry ends `status: NO VERDICT YET -- and
+        # not renderable until the plate exists`, and beat 19 is one of the
+        # four SLATES in review/ep2-demo-0818/sources/picks-0818.yaml. The
+        # requirement has been written down since 2026-08-15 under
+        # `plate_requirement_0815` and was recorded there as "a requirement,
+        # not a job -- the plate still needs commissioning". This is the
+        # commissioning.
+        #
+        # !! THE FIG HANGS. IT DOES NOT LIE IN THE GRASS. This is the single
+        # clause that kills every plate the project already owns, and it is
+        # quoted rather than paraphrased because a lane briefed to draw "a
+        # fallen fig in the grass beside him" would reproduce the exact
+        # blocker: `plate_requirement_0815.fruit_must_be_on_the_stem` --
+        # "UNCHANGED AND STILL DISQUALIFYING. The fruit has to have somewhere
+        # to fall from, so it must be ON THE STEM in the plate. Every beat-19
+        # plate we own shows it already lying in the grass, which is exactly
+        # why the beat was blocked; the ruling changed where the fruit LANDS,
+        # not where it STARTS, so no existing plate is rescued by it. Asking a
+        # plate with the fruit already down for a fall is what made fruit
+        # materialise in mid-air." The founder's ruling_0815 ("just make the
+        # fig fall on the ground and the goblin will notice it") moved the
+        # LANDING off his head and onto the ground. It did not move the start.
+        #
+        # THE HEAD-BOUNCE IS DEAD and nothing here asks for it: `bounces off
+        # his head` was superseded on 2026-08-15 by the founder's own second
+        # ruling, and `NO CONTACT WITH HIS BODY` is now a disqualifying clause
+        # of done_when. That is why this plate stages him AN ARM'S LENGTH
+        # CLEAR of the plant and why `holding fruit` and `fruit in hand` are
+        # in the negative: the plate must not hand the motion a contact it is
+        # forbidden to end in.
+        #
+        # THE BODY POSITION, AND THIS IS A FLAGGED STEWARD CALL RATHER THAN AN
+        # INVENTION. `plate_requirement_0815.body_position` reads "OPEN
+        # QUESTION -- FLAGGED, NOT INVENTED. Beat 17 ends with him standing
+        # and turned away, so where his body is at the start of beat 19 is not
+        # established by anything we hold. ... Do not let a render pick this
+        # by default." It is not being picked by default here; it is DERIVED
+        # from the two beats that bracket it, and the derivation is written
+        # down so the author can overturn it in one line:
+        #   * BEAT 20 opens "The scavenger picks the fig up with both hands
+        #     and looks up at the bare branch." A man who picks a fig off the
+        #     ground with BOTH hands in the next beat is low beside it at the
+        #     end of this one. Standing does not hand beat 20 its opening.
+        #   * BEAT 14 already renders this character correctly CROUCHING with
+        #     his hands down at the earth, so a low pose is the pose this
+        #     checkpoint draws him in without a fight.
+        #   * `scavenger_in_frame` requires "his face is visible, or becomes
+        #     visible when he looks", and a kneeling three-quarter body keeps
+        #     the face available without a close-up, which P2 forbids.
+        # If the author wants him standing, this draft is one word from it and
+        # the plate is redrawn for $0. Nothing downstream is built on it yet.
+        #
+        # THE FRUIT IS PURPLE, and on this beat that is enforced IN THE WORDS
+        # rather than hoped for. Founder ruling 2026-08-16 (done-definitions
+        # beats.'20'.colour_ruled_0816): "the fruit should be purple. it
+        # should not be that hard to make it purple." RED IS REJECTED and no
+        # beat gets an exception. `deep purple` is in the positive because
+        # `backend_divergence_probe.py` measured the colour to be a BACKEND
+        # property -- same prompt, same seed, the Mac returns purple and the
+        # box returns red -- so a Mac plate that comes back purple proves
+        # nothing about the box and the word carries the canon either way.
+        #
+        # THE SAPLING IS TINY AND THAT IS CANON, NOT A STYLE PREFERENCE.
+        # style.md's node table, row 002a/b/c: ~40 cm, "two leaves + one thin
+        # side-branch", and "the branch is where the fig grew and fell". So
+        # the fruit hangs from `its thin side-branch` and not from a stem in
+        # the abstract, and `knee-high` is deliberately NOT used -- that is
+        # row 004's height (~90 cm) and would be a canon drift. Beat 20's
+        # recorded failure is the same defect from the other end: "THE BRANCH
+        # IS THE WRONG TREE -- a thick gnarled MATURE-TREE limb ... a dead oak
+        # limb overhead is not the branch this fruit fell from", diagnosed
+        # there as "the plant improvised per beat rather than described once".
+        # `large tree, thick branch, trunk, forest` are in the negative for
+        # exactly that, and the positive names the small plant positively,
+        # which is the instrument -- the negative is belt-and-braces and is
+        # not being relied on. Same for `fruit on the ground`: the working
+        # lever is the POSITIVE saying `hanging from its thin side-branch`,
+        # because the recorded lesson on this checkpoint is that the negative
+        # has repeatedly failed on nouns the positive itself invited.
+        #
+        # THE CAST WORDING IS BEAT 14'S, CHARACTER FOR CHARACTER: `lean wiry
+        # adult goblin man, green skin, bald head, patchwork cloak`. Beat 20
+        # was corrected to this same string on 2026-08-18 after `a small
+        # goblin boy` drew "A ROUND-HEADED CHIBI CHILD WITH BIG EYES" -- the
+        # "cute goblin" the founder rejected on beat 04. This beat gets the
+        # adult the founder chose, in the words that already render him, and
+        # not a seventh wording of the same man.
+        #
+        # PLATE BAR, PRE-REGISTERED BEFORE THE DRAW. All seven must hold:
+        #   P1 THE FIG IS ON THE PLANT: exactly one fruit, ATTACHED to the
+        #      sapling's branch and clear of the ground. A fig resting in the
+        #      grass is a FAIL of P1 outright, not a note -- it is the
+        #      recorded blocker and no other term can rescue it.
+        #   P2 WIDE ENOUGH: the WHOLE sapling (root line to top leaves) AND
+        #      the whole of him are inside the frame at once. done_when's
+        #      first clause. A crop that loses either end is a FAIL.
+        #   P3 NO CONTACT: no part of the fruit or the plant touches his body,
+        #      and both his hands are empty and away from the fruit.
+        #   P4 HIS FACE IS VISIBLE -- eyes and mouth readable, not the back of
+        #      his head and not turned fully away. `scavenger_in_frame`: "a
+        #      noticing you cannot see on his face is not one."
+        #   P5 THE FRUIT READS PURPLE to a naive eye. Red, maroon, brown or
+        #      "reddish purple" is a FAIL, per the founder's 08-16 ruling and
+        #      beat 20's C-terms.
+        #   P6 THE PLANT IS THE SAPLING: small, thin, a few leaves, rooted in
+        #      the ground. A mature tree, a thick limb or a trunk entering the
+        #      frame is a FAIL -- beat 20's exact recorded fault.
+        #   P7 ONE FIGURE, an adult man's build and face. No second figure, no
+        #      child, no chibi.
+        # FAIL MODES NAMED IN ADVANCE, each to be reported whether or not it
+        # fires: Q1 the fig already on the ground (the blocker), Q2 a crop
+        # that loses the top of the plant or his feet, Q3 the fig in his hand
+        # or against his body, Q4 his back to the lens, Q5 a red or brown
+        # fruit, Q6 a mature tree or an overhead limb, Q7 a chibi child, Q8 no
+        # fruit drawn at all, Q9 more than one fruit.
+        # ------------------------------------------------------------------
+        "slug": "the-drop",
+        "done_when": (
+            "WIDE enough to hold the whole sapling and him at once; the fruit "
+            "STARTS ON THE STEM, falls, and LANDS ON THE GROUND; and he "
+            "NOTICES it. NO CONTACT WITH HIS BODY. THE PLATE'S JOB is frame "
+            "one of that: P1 exactly one fig ATTACHED to the sapling's branch "
+            "and clear of the ground (a fig in the grass is the recorded "
+            "blocker and fails outright), P2 the whole sapling and the whole "
+            "of him in frame at once, P3 no contact and both hands empty, P4 "
+            "his face visible, P5 the fruit reads purple to a naive eye, P6 "
+            "the plant is the tiny sapling and not a mature tree or a thick "
+            "limb, P7 one adult figure."
+        ),
+        "why": (
+            "Beat 19 is a SLATE in the 0818 cut and its own entry says why: "
+            "'not renderable until the plate exists'. Every plate the project "
+            "owns puts the fig already in the grass, which is the recorded "
+            "blocker -- a fall cannot be shot from a fruit that has already "
+            "landed. This plate puts it back on the branch, stages him clear "
+            "of the plant so the motion cannot end in the contact done_when "
+            "disqualifies, and keeps him low so beat 20 opens where beat 19 "
+            "leaves him."
+        ),
+        "prompt": (
+            "1boy, solo, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, kneeling beside a tiny sapling rooted in the "
+            "grass, one deep purple fig hanging from its thin side-branch, "
+            "his face visible, wide shot, sunny grassy field, cinematic "
+            "lighting, masterpiece, best quality, very aesthetic"
+        ),
+        "negative": (
+            "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
+            "close-up, portrait, holding fruit, fruit in hand, fruit on the "
+            "ground, large tree, thick branch, trunk, forest, house, indoors, "
+            "night, dark, photorealism, 3d render"
+        ),
+        "seed": 20260819,
+    },
     20: {
         "slug": "evidence",
         # THIS BAR CERTIFIES COLOUR AND NOTHING ELSE, and saying so in advance
