@@ -1,0 +1,52 @@
+{
+  "body_rgb_bottom": [
+    116,
+    155,
+    109
+  ],
+  "body_rgb_top": [
+    172,
+    231,
+    162
+  ],
+  "centre_px": [
+    405,
+    750
+  ],
+  "colour_is_measured_not_typed": "hue and saturation are read off this plate's own green pixels and value is read off the light inside the nub's own footprint. No constant colour appears anywhere in this tool.",
+  "cost_usd": 0.0,
+  "feather_px": 1.6,
+  "footprint_px": [
+    395,
+    737,
+    415,
+    763
+  ],
+  "grad": [
+    1.1,
+    0.74
+  ],
+  "init": "C:/banyan-farm/courier-box/farm-out/ep2-b01-compseed-s3-g5-0818/b01-compseed-s3-s20260917.png",
+  "init_sha256": "49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b",
+  "local_light_value": 0.824,
+  "model": "none -- plain PIL, no sampler, no network, no GPU",
+  "note": "Builds the init the inpaint step will read, ON THE BOX, from the picked plate byte-pinned by --init-sha256. No model, no network, no GPU, $0. ONE argument differs from ep2-b01-nubcomp-0818: --hue-percentile 0.98 instead of the default median, which takes the nub's hue from a GREENER PIXEL OF THIS SAME PLATE (111.4 deg instead of 90.0). It is still sampled, not typed -- 111.4 deg is a hue this picture contains, sitting between its green quartile at 100.0 and its greenest pixel at 128.6 -- and saturation, value, geometry, gradient and feather are byte-identical to the previous rung. Deterministic: this exact command ran on this box at 2026-08-18 and produced sha256 e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059, which the next step asserts.",
+  "nub_hue_deg": 111.43,
+  "nub_sat": 0.2979,
+  "nub_sat_percentile": 0.9,
+  "out": "C:/banyan-farm/nubcomp-b-0818/comp-b01-nub-b.png",
+  "out_sha256": "e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059",
+  "purpose": "the fruit's COLOUR made structural before any sampler runs",
+  "radii_px": [
+    10,
+    13
+  ],
+  "sampled_green_px": 6047,
+  "sampled_hue_band_deg": [
+    60.0,
+    170.0
+  ],
+  "sampled_min_sat": 0.12,
+  "tool": "pipeline/nub_composite.py",
+  "value_cap": 0.92
+}

@@ -1,0 +1,57 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260826
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/nubcomp-b-0818/comp-b01-nub-b.png
+init_sha256: e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059
+mask_png: b01-nubcomp-s20260826-mask.png
+mask_shape: ellipse
+mask_centre_px: [404, 746]
+mask_radii_px: [16, 19]
+mask_bbox_px: [388, 727, 420, 765]
+mask_width_frac: 0.0385
+mask_height_frac: 0.0312
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-18T14:29:13Z
+render_seconds: 3.8
+wall_seconds: 9.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE VARIABLE. Strength 0.30, steps 40, cfg 7.5, pad-crop 64, blur 8, seed 20260826, prompt and negative all byte-identical to ep2-b01-nubcomp-0818 -- the SAME seed on purpose, so the sampler's noise is held fixed and the only thing that moved between the two frames is the composited hue (90.0 deg -> 111.4 deg). The measured amber pull of that pass was -21.4 deg; if it is a constant of this recipe, this frame lands near 90 deg, mid-band. If it is not a constant, this frame says so. Not a pick, not approved for any cut.
+prompt: |-
+  a tiny round green nub, an unripe fig bud, matte green skin, on the thin pedicel of a young sprout, soft blurred summer grass, warm amber backlight, hazy out-of-focus background, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  ripe fig, purple fruit, purple, violet, magenta, dark fruit, large fruit, big fruit, two fruit, second fruit, cluster of fruit, berries, flower, blossom, extra leaves, many leaves, third leaf, leaf blade, person, face, hand, text, watermark, signature, glowing, glow, orb, white sphere, specular highlight, glossy, shiny, lens flare, photorealism, 3d render, low quality, blurry, deformed
+# --- appended after the render by the job-authoring lane, 2026-08-18.
+# The renderer's own `approved: false` and `provisional:` lines are above and
+# were asserted present before this block was written.
+cost_usd_confirmed: 0
+approved_stamp: false
+provisional_stamp: true
+init_was_composited: true
+init_composite_sha256: e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059
+not_a_pick: |
+  ONE SAMPLE of the frame-1 nub COMPOSITE+0.30 route (ep2-b01-nubcomp-b-0818):
+  the nub's colour was pasted into the init by pipeline/nub_composite.py in
+  plain PIL, sampled off this plate's own green pixels, and this pass only
+  shaded it. Not a pick, not a seed confirmation, not approved for any cut,
+  not voiced and not animated. Read against the bar pre-registered in the
+  spec before anything is built on it. Taste and trunk/graft calls are R4's
+  and this run makes none.
