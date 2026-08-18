@@ -1,0 +1,41 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260923
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/leafcount-0818-s1-g6/comp-b01-s1.png
+init_sha256: 0e84d2304c6884e146d41a9b97704b0cdd7a899233a167fba6ecbb74d6588e60
+mask_png: b01-compseed-s1-s20260923-mask.png
+mask_shape: ellipse
+mask_centre_px: [340, 715]
+mask_radii_px: [210, 125]
+mask_bbox_px: [130, 590, 550, 840]
+mask_width_frac: 0.5048
+mask_height_frac: 0.2056
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-18T10:12:37Z
+render_seconds: 3.9
+wall_seconds: 9.8
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  PRODUCTION, not a rung. Proven composite recipe (8 of 8 exact two-leaf count) at a fresh seed, to widen the candidate set beat 01's pick is made from. No setting differs from ep2-b01-leafcomp-inpaint-0817 except the seed.
+prompt: |-
+  a young sprout with two average leaves on a slender stem, soft blurred summer grass, warm amber backlight, hazy out-of-focus background, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  extra leaves, many leaves, cluster of leaves, lobed leaves, fig leaf, flower, bud, fruit, fig, face, person, hand, text, watermark, photorealism, 3d render, low quality, deformed
