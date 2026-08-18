@@ -1,0 +1,32 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 11
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260817
+task: ep2-b11-crf10-0819
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0171
+compute_s_per_video_s: 58.4
+# --- appended by ep2-b11-crf10-0819 after the render.
+approved: false
+provisional: true
+is_show_content: false
+note: |
+  ONE SAMPLE, ONE VARIABLE, NOT A PICKED TAKE. This clip is the job
+  ep2-b11-leave-w4brake-0817 re-run with the conditioning still's
+  libx264 round-trip lowered from CRF 33 to CRF 10 and NOTHING
+  else changed. The parent cleared five of beat 11's six
+  conditions and failed D3 -- guard B turns his face to camera
+  from about f008 to f022. Whether this clip may be cut is the
+  author's call (R4) and never this lane's.
