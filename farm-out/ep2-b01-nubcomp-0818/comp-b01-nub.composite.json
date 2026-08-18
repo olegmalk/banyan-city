@@ -1,0 +1,52 @@
+{
+  "body_rgb_bottom": [
+    132,
+    155,
+    109
+  ],
+  "body_rgb_top": [
+    197,
+    231,
+    162
+  ],
+  "centre_px": [
+    405,
+    750
+  ],
+  "colour_is_measured_not_typed": "hue and saturation are read off this plate's own green pixels and value is read off the light inside the nub's own footprint. No constant colour appears anywhere in this tool.",
+  "cost_usd": 0.0,
+  "feather_px": 1.6,
+  "footprint_px": [
+    395,
+    737,
+    415,
+    763
+  ],
+  "grad": [
+    1.1,
+    0.74
+  ],
+  "init": "C:/banyan-farm/courier-box/farm-out/ep2-b01-compseed-s3-g5-0818/b01-compseed-s3-s20260917.png",
+  "init_sha256": "49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b",
+  "local_light_value": 0.824,
+  "model": "none -- plain PIL, no sampler, no network, no GPU",
+  "note": "Builds the init the inpaint step will read, ON THE BOX, from the picked plate byte-pinned by --init-sha256. No model, no network, no GPU, $0. The nub's hue and saturation are measured off this plate's own green pixels and its value off the light inside its own footprint, so no colour constant appears anywhere in the recipe. Deterministic: this exact command was run on this box at 2026-08-18 and produced sha256 a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7, which the next step asserts. If Pillow ever changes under us the assert fires and the job stops rather than inpainting over a different picture.",
+  "nub_hue_deg": 90.0,
+  "nub_sat": 0.2979,
+  "nub_sat_percentile": 0.9,
+  "out": "C:/banyan-farm/nubcomp-0818/comp-b01-nub.png",
+  "out_sha256": "a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7",
+  "purpose": "the fruit's COLOUR made structural before any sampler runs",
+  "radii_px": [
+    10,
+    13
+  ],
+  "sampled_green_px": 6047,
+  "sampled_hue_band_deg": [
+    60.0,
+    170.0
+  ],
+  "sampled_min_sat": 0.12,
+  "tool": "pipeline/nub_composite.py",
+  "value_cap": 0.92
+}

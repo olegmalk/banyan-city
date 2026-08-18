@@ -1,0 +1,57 @@
+#### job ep2-b01-nubcomp-0818-1787062191 attempt 1 start 2026-08-18T14:10:14Z
+
+==== step comp START 2026-08-18T14:10:18Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\nubcomp-0818\\nub_composite.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-compseed-s3-g5-0818\\b01-compseed-s3-s20260917.png", "--init-sha256", "49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b", "--centre", "405,750", "--radii", "10,13", "--grad", "1.10,0.74", "--feather", "1.6", "--out", "C:\\banyan-farm\\nubcomp-0818\\comp-b01-nub.png", "--note", "Builds the init the inpaint step will read, ON THE BOX, from the picked plate byte-pinned by --init-sha256. No model, no network, no GPU, $0. The nub's hue and saturation are measured off this plate's own green pixels and its value off the light inside its own footprint, so no colour constant appears anywhere in the recipe. Deterministic: this exact command was run on this box at 2026-08-18 and produced sha256 a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7, which the next step asserts. If Pillow ever changes under us the assert fires and the job stops rather than inpainting over a different picture."]
+init        C:\banyan-farm\courier-box\farm-out\ep2-b01-compseed-s3-g5-0818\b01-compseed-s3-s20260917.png
+init size   832x1216
+init sha256 49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b
+green px    6047 (0.60% of frame) in 60-170 deg at sat>=0.12
+nub hue     90.0 deg (median of the plate's own greens; quartiles 76.4 / 100.0)
+nub sat     0.298 (p90 of the plate's own greens; median 0.195, max 0.372)
+local light value 0.824 (mean HSV value of the init under the footprint)
+body        21x27 px at centre (405,750), footprint (395,737)-(415,763)
+body rgb    top (197, 231, 162) -> bottom (132, 155, 109), feather 1.60 px
+
+wrote       C:\banyan-farm\nubcomp-0818\comp-b01-nub.png
+out sha256  a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7
+wrote       C:\banyan-farm\nubcomp-0818\comp-b01-nub.composite.json
+
+COLOUR IS NOW STRUCTURAL, NOT PROMPTED. Look at it before the GPU step -- this is the sample.
+==== step comp END rc=0 2026-08-18T14:10:19Z ====
+
+==== step dry START 2026-08-18T14:10:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\nubcomp-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\nubcomp-0818\\comp-b01-nub.png", "--init-sha256", "a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7", "--ellipse", "404,746,16,19", "--prompt-file", "C:\\banyan-farm\\nubcomp-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\nubcomp-0818\\negative.txt", "--out", "C:\\banyan-farm\\nubcomp-0818\\b01-nubcomp-dry.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260826", "--note", "DRY RUN: asserts the COMPOSITE's sha256 (not the plate's -- the composite is what this pass paints on) and writes the mask PNG before any model loads, so a mask that has drifted off the composited body is caught for $0 and 0 GPU-seconds. Same ellipse 404,746,16,19 as the 0.99 run: the nub body (395,737)-(415,763) sits wholly inside it, so every composited pixel gets shaded and no hard paste edge is left outside the blend.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7
+mask ellipse corners=- bbox=[388, 727, 420, 765]  0.0385 x 0.0312 of 832x1216
+WROTE C:\banyan-farm\nubcomp-0818\b01-nubcomp-dry-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-18T14:10:19Z ====
+
+==== step s20260826 START 2026-08-18T14:10:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\nubcomp-0818\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\nubcomp-0818\\comp-b01-nub.png", "--init-sha256", "a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7", "--ellipse", "404,746,16,19", "--prompt-file", "C:\\banyan-farm\\nubcomp-0818\\prompt.txt", "--negative-file", "C:\\banyan-farm\\nubcomp-0818\\negative.txt", "--out", "C:\\banyan-farm\\nubcomp-0818\\b01-nubcomp-s20260826.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260826", "--note", "ONE SAMPLE of the structure-first route on beat 01's frame 1. The nub's SHAPE, SIZE, PLACE and COLOUR are already in the init, put there by pipeline/nub_composite.py in plain PIL; this pass runs at strength 0.30, which is the preserve-the-init band, and its whole job is to shade a pasted oval into a drawn fruit -- cel line, form shadow, contact with the pedicel. Prompt and negative are BYTE-IDENTICAL to ep2-b01-nubinpaint-0818, so the only things that changed are the init and the strength: that is the instrument, and it is the one the 0.99 FAIL-COLOUR verdict argues for. Not a pick, not approved for any cut."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.87it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.81it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.14it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.83it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\nubcomp-0818\b01-nubcomp-s20260826.png
+WROTE C:\banyan-farm\nubcomp-0818\b01-nubcomp-s20260826-mask.png
+WROTE C:\banyan-farm\nubcomp-0818\b01-nubcomp-s20260826.png.meta.yaml
+rc=0 render_s=3.7
+==== step s20260826 END rc=0 2026-08-18T14:10:32Z ====
+
+==== step stamp START 2026-08-18T14:10:32Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# Stamp the sample's sidecar as an unapproved provisional take.\n# inpaint_fruit.py already writes `approved: false` and a `provisional:` block at\n# render time, so this ASSERTS those rather than writing them again -- appending a\n# second `approved:`/`provisional:` key would leave a sidecar with duplicate keys,\n# and a provenance file that parses ambiguously is worse than one unstamped.\n# REFUSES if it found no sidecar, or one missing the renderer's own gate lines: a\n# run whose provenance did not get written must not pass silently.\nimport glob\nout_dir = \"C:/banyan-farm/nubcomp-0818\"\nside = sorted(glob.glob(out_dir + \"/b01-nubcomp-*.png.meta.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, encoding=\"utf-8\") as fh:\n        text = fh.read()\n    for needed in (\"approved: false\", \"provisional:\"):\n        if needed not in text:\n            raise SystemExit(\"!! %s is missing %r written by inpaint_fruit.py -- refusing.\" % (p, needed))\n    with open(p, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended after the render by the job-authoring lane, 2026-08-18.\\n\"\n            \"# The renderer's own `approved: false` and `provisional:` lines are above and\\n\"\n            \"# were asserted present before this block was written.\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"approved_stamp: false\\n\"\n            \"provisional_stamp: true\\n\"\n            \"init_was_composited: true\\n\"\n            \"init_composite_sha256: a2ec5421d00eb8bd3e6cc7a85c9bf7d2137ecf790458d9bfb6a791af7ccb29b7\\n\"\n            \"not_a_pick: |\\n\"\n            \"  ONE SAMPLE of the frame-1 nub COMPOSITE+0.30 route (ep2-b01-nubcomp-0818):\\n\"\n            \"  the nub's colour was pasted into the init by pipeline/nub_composite.py in\\n\"\n            \"  plain PIL, sampled off this plate's own green pixels, and this pass only\\n\"\n            \"  shaded it. Not a pick, not a seed confirmation, not approved for any cut,\\n\"\n            \"  not voiced and not animated. Read against the bar pre-registered in the\\n\"\n            \"  spec before anything is built on it. Taste and trunk/graft calls are R4's\\n\"\n            \"  and this run makes none.\\n\")\nprint(\"stamped\", len(side), \"sidecar(s) in\", out_dir)\n"]
+stamped 1 sidecar(s) in C:/banyan-farm/nubcomp-0818
+==== step stamp END rc=0 2026-08-18T14:10:32Z ====
+
+==== step publish START 2026-08-18T14:10:32Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# Publish THIS job's own files out of THIS job's own directory. farm-out is not\n# gitignored, so the runner pushes them itself and the frame reaches the Mac\n# without anybody logging in. The names are spelled out rather than globbed, and\n# the exit code asserts the exact count -- a publish step that cannot find its\n# frames must fail the job, so there is no allow_fail over this one.\n# The COMPOSITE and its sidecar ship too: the init is half the experiment on this\n# rung, and a verdict that cannot see what went in cannot say what the pass did.\nimport hashlib, os, shutil\nsrc = 'C:/banyan-farm/nubcomp-0818'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-b01-nubcomp-0818'\nos.makedirs(dst, exist_ok=True)\nnames = ['b01-nubcomp-s20260826.png', 'b01-nubcomp-s20260826.png.meta.yaml',\n         'b01-nubcomp-s20260826-mask.png', 'b01-nubcomp-dry-mask.png',\n         'comp-b01-nub.png', 'comp-b01-nub.composite.json']\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, 'SHA256SUMS.txt'), 'w', newline='\\n') as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), 'rb').read()).hexdigest()\n        fh.write('%s  %s\\n' % (h, n))\nprint('published', len(got), 'of', len(names), '->', dst)\nraise SystemExit(0 if len(got) == len(names) else 1)\n"]
+published 6 of 6 -> C:/banyan-farm/courier-box/farm-out/ep2-b01-nubcomp-0818
+==== step publish END rc=0 2026-08-18T14:10:32Z ====
+#### job ep2-b01-nubcomp-0818-1787062191 finished rc=0 2026-08-18T14:10:32Z
