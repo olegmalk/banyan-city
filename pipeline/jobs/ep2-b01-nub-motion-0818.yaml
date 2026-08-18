@@ -1,0 +1,439 @@
+# 2026-08-18, BEAT 01 GROWTH MOTION. ONE SAMPLE, ONE SEED.
+#
+# ============================================================================
+# THE VERDICT THIS EXECUTES
+# ============================================================================
+# Founder, resolved 2026-08-13: "inpaint a SMALL fig into frame 1, then let the
+# motion prompt grow it." The first half is done and passed its own bar seven of
+# seven on 2026-08-18 (ep2-b01-nubcomp-b-0818). THIS IS THE SECOND HALF, and it
+# is the first time it has been fired.
+#
+# §6 IS SATISFIED: node 002b-first-citizen carries `approved_by: founder`,
+# `approved_on: 2026-08-03`.
+#
+# ============================================================================
+# THE SCRIPT LINE, VERBATIM, AND IT IS THE WHOLE PROMPT
+# ============================================================================
+# genomes node 002b-first-citizen node.md, beat 1 COLD OPEN:
+#
+#   "A tiny two-leaf banyan sapling in a green field. On the thinnest branch a
+#    green nub swells, darkens and rounds into a single fig -- the only thing in
+#    frame that moves."
+#
+# The action clause below is that sentence's second half, word for word. Nothing
+# is added to it except the fixed style suffix every motion job in this lane
+# carries. "The only thing in frame that moves" is the script's own phrase and
+# it is scored as a clause, not treated as flavour -- see M5.
+#
+# ============================================================================
+# WHAT FRAME 1 ACTUALLY IS, MEASURED NOT ASSUMED
+# ============================================================================
+# farm-out/ep2-b01-nubcomp-b-0818/b01-nubcomp-s20260826.png, 832x1216, sha256
+# 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36 as recorded
+# in that job's own SHA256SUMS.txt on the results branch. A dusk field in warm
+# amber backlight, blurred grass, one two-leaf sapling in silhouette, and on its
+# stem a small green nub. From that job's measured verdict:
+#
+#   nub body      ONE component, 25x32 px, at (394,734)-(418,765)
+#   attached      pedicel contact at (407,744), distance 0.0 px
+#   hue           median 81.9 deg, saturation 0.436, value 0.749
+#   purple        0 px
+#
+# SO THE NUB IS ABOUT 0.08% OF THE FRAME. That is the single most important fact
+# about this job and it is why the odds section below says what it says.
+#
+# Measured before filing with box_enqueue's own functions on the exact 704x1280
+# cover-crop the box will make: border_flatness 0.151 against the 0.62 refuse
+# line, border_colour_flatness 0.058. No plate_ack is needed and none is used.
+#
+# ============================================================================
+# WHICH CANON GOVERNS THE COLOUR -- A CORRECTION, MADE IN THE OPEN
+# ============================================================================
+# THIS JOB WAS COMMISSIONED CITING `ep2-fig-purple`. THAT IS THE WRONG SUBJECT
+# FOR THIS BEAT and pipeline/canon.yaml says so in its own words. `ep2-fig-purple`
+# has `scope.beats: [19, 20]`. The subject that covers beat 1 is
+# `sapling-fig-not-green`, `scope.beats: [1, 18]`, whose entry states outright:
+# "Beats 1 and 18 only: 19 and 20 belong to ep2-fig-purple and are not
+# double-covered."
+#
+# NOTHING ABOUT THE REQUIREMENT CHANGES -- both subjects say the fig is purple,
+# and `sapling-fig-not-green` exists precisely because the 2026-08-13/14 purple
+# ruling was written into beats 19 and 20 only and green survived on beat 1 by
+# omission until 2026-08-16 named it. The citation is corrected so that anyone
+# auditing this clip against the canon checker looks up the subject that will
+# actually fire on beat 1. The origin ruling is still the founder's 2026-08-13/14
+# purple call; `sapling-fig-not-green` is the entry that carries it here.
+#
+# TWO MORE SUBJECTS ARE IN SCOPE and are scored below rather than assumed:
+#   sapling-two-leaves  scope.beats includes 1; forbids three or four leaves.
+#   sapling-height      "just dont make it double in size suddenly" (2026-08-16).
+#
+# AND THE GREEN NUB AT FRAME 1 IS NOT A CANON BREACH. Green is the START of the
+# founder's own approved arc -- his script says the nub "swells, DARKENS and
+# rounds into a single fig", and his 2026-08-13 verdict asks for a SMALL fig
+# inpainted and then grown. A frame-1 green nub is that verdict executed. What
+# `sapling-fig-not-green` forbids is a fig that STAYS green, which is exactly
+# what M2 below scores at the END of the clip.
+#
+# ============================================================================
+# THE ODDS, STATED BEFORE THE RENDER AND NOT AFTER
+# ============================================================================
+# The converged finding on this engine is that it renders GROSS WHOLE-BODY
+# motion (12 of 12 beat-17 stand-ups) and DROPS SMALL LOCAL ACTIONS (0 of 8
+# in-hand). A 25x32 px nub swelling on a 832x1216 plate is emphatically in the
+# second class by size -- it is smaller than any hand this engine has failed to
+# animate. Beat 14's clip on 2026-08-18 refined that split: the gross ARM reach
+# rendered and the fine finger PICK did not, so the dividing line is the size
+# and locality of the change, not the body part.
+#
+# BY THAT LINE, THE PREDICTED OUTCOME IS N1: THE NUB IS FROZEN AND THE GRASS AND
+# THE LIGHT MOVE. It is named here before the render rather than discovered
+# after it. A second, near-equally likely outcome is N5, the shot reframing --
+# beat 17's insert clip did exactly that when handed an abstract composition
+# with no whole body in it, and this plate is abstract, dark and blurred.
+#
+# IT IS STILL THE RIGHT SAMPLE. It is seven minutes and $0 on an empty card, it
+# is the second half of a founder verdict whose first half is done and passing,
+# and it is the cold open of episode 2 -- the first thing anyone will see. Both
+# outcomes are the finding: a pass unlocks the cold open, and a fail tells the
+# beat's owner that "grow it with the motion prompt" is not reachable and the
+# arc has to be carried some other way, which is a decision that should be made
+# on evidence rather than on the assumption that it will work.
+#
+# ============================================================================
+# THE BAR, PRE-REGISTERED. IT IS NOT REWRITTEN AFTERWARDS.
+# ============================================================================
+# Judged by opening ALL 121 frames CONSECUTIVELY via pipeline/coldread_frames.py.
+# NEVER by `depth` -- retired and inverted -- and never by `cadence`, which
+# aliases to 1.00x on odd hold periods. Any tracker gets its own mask overlaid
+# back onto the frames before a single number from it is quoted; on beat 14 a
+# colour tracker had to be thrown away because the head and the grass were three
+# RGB levels apart, and this plate is a warm monochrome, so treat every
+# segmentation result as guilty until overlaid.
+#
+#   PASS requires ALL FIVE:
+#     M1 IT GROWS. The nub is visibly LARGER at f120 than at f000, measured as
+#        its own area against the plate's leaf pair in the same frame so that a
+#        camera scale change cannot score as growth.
+#     M2 IT ENDS PURPLE. The end-state fruit reads deep purple-violet on the
+#        cold read. SUPPORTED BY, NOT DECIDED BY, a measurement in the same
+#        terms the nubcomp rung used: median hue of the fruit body in [260,320]
+#        degrees with saturation >= 0.25. THAT NUMERIC BAND IS THE STEWARD'S
+#        OPERATIONALISATION OF THE FOUNDER'S WORD "purple" AND HE RULED NO
+#        NUMBER -- it is written down here so the reading is checkable, and if
+#        the cold read and the band disagree the cold read wins and the
+#        disagreement gets reported.
+#     M3 EXACTLY TWO LEAVES THROUGHOUT. Counted on the overview sheet and on
+#        every strip, not just at f000 and f120. `sapling-two-leaves` forbids
+#        three or four.
+#     M4 THE PLANT DOES NOT DOUBLE IN SIZE. The founder's own words, 2026-08-16,
+#        carried by `sapling-height`. The FIG grows; the SAPLING does not. Stem
+#        height and leaf span at f120 within 1.5x of f000.
+#     M5 THE CAMERA IS STATIC AND THE FIG IS THE SUBJECT OF THE MOTION. No pan,
+#        tilt, zoom, dolly or reframe -- tested by whole-frame registration for
+#        best-fit zoom and translation, the way beat 14's camera clause was
+#        settled, not by eye off a contact sheet. The plate is otherwise stable.
+#
+#   ON "THE ONLY THING IN FRAME THAT MOVES", WHICH IS THE SCRIPT'S OWN PHRASE.
+#   Scored, and scored honestly: this is a dusk field of blurred grass and
+#   drifting motes, and some ambient sway is the overwhelmingly likely result.
+#   Ambient grass drift is recorded as A NAMED FAULT against the script line, not
+#   quietly excused -- but it does not by itself fail M5, because the clause M5
+#   tests is that the CAMERA is static and the FIG is what changes. If the grass
+#   moves MORE than the fig does, that is a FAIL and it is N4 below.
+#
+#   FAIL MODES, NAMED IN ADVANCE:
+#     N1 NUB FROZEN -- the nub is the same size and colour at f000 and f120 while
+#        grass and light move. THE PREDICTED OUTCOME.
+#     N2 STAYS GREEN -- it grows and does not darken to purple. This is the
+#        `sapling-fig-not-green` breach and it is a FAIL on its own.
+#     N3 THE WHOLE PLANT GROWS -- sapling doubles, leaves multiply, a second
+#        sapling arrives. Breaches sapling-height or sapling-two-leaves.
+#     N4 AMBIENT-ONLY -- grass, light and motes move more than the fig does. The
+#        script's own clause, inverted.
+#     N5 SCENE BREAK / REFRAME -- the shot cuts, pushes in, pulls back or
+#        recomposes. Beat 17's insert did exactly this off an abstract plate.
+#     N6 MORPH -- the fig detaches, multiplies, or reappears elsewhere without a
+#        continuous path. A teleport is not growth.
+#
+# ============================================================================
+# THE RECIPE -- UNCHANGED, WHICH IS THE POINT
+# ============================================================================
+# Byte for byte the fixed production recipe used by ep2-b17-bigbody-motion-0816
+# (12 of 12 stand-ups) and ep2-b14-mac-motion-0818: 704x1280, 121 frames, 24 fps,
+# guidance 2.0, distilled sigmas, two-stage, image-crf 33, sequential offload,
+# production mode. The negative is byte-identical to both. THE PLATE IS THE ONLY
+# VARIABLE, and no new recipe is introduced, so this is one sample of an
+# existing recipe class and not a recipe change.
+#
+# THE SOURCE IS 832x1216 AND THE RENDER IS 704x1280. cover_crop.py handles that
+# the way every motion spec in this lane does: scale by max(704/832, 1280/1216)
+# = 1.0526 to 876x1280, then centre-crop 86 px from each side. The nub at
+# (407,744) lands near (342,783) of 704x1280 -- comfortably inside, nowhere near
+# a cropped edge. Stated because a crop that clipped the subject would be a
+# silent fault.
+#
+# NOT SWEPT, BY INSTRUCTION: guidance, CFG, checkpoint, seed. ONE SEED.
+#
+# ============================================================================
+# GUARDS
+# ============================================================================
+# --src is the frame PUBLISHED by ep2-b01-nubcomp-b-0818, whose spec is in
+# pipeline/jobs and which names no --refs, so the plate check and the refs check
+# both RUN and both PASS. NO plate_ack ANYWHERE. Payload dir and out dir are
+# distinct. Publish names every file in full rather than by wildcard. Every
+# --out is an absolute Windows path. No allow_fail anywhere in this spec.
+#
+# $0. Local card, no provider, no paid engine.
+id: ep2-b01-nub-motion-0818
+task: ep2-b01-nub-motion-0818
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 33
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 01 growth-motion lane, 2026-08-18
+consumer: 'THE COLD OPEN OF EPISODE 2''S CUT -- the first shot of the episode, so this is show content
+  and not a probe. It is the second half of the founder''s resolved 2026-08-13 verdict ("inpaint a SMALL
+  fig into frame 1, then let the motion prompt grow it"), whose first half passed 7 of 7 on 2026-08-18
+  and has been sitting finished with nothing fired off it. Judged by opening all 121 frames consecutively
+  via pipeline/coldread_frames.py against the bar pre-registered in this spec before the render, NEVER
+  by depth or cadence. A FAIL is also consumed: it tells beat 01''s owner that the growth arc cannot be
+  carried by the motion prompt and has to be staged some other way.'
+success: 'A 704x1280 mp4, 121 frames at 24 fps, opening on the published nubcomp frame. PASS is M1+M2+M3+M4+M5
+  as pre-registered above: the nub visibly grows measured against the leaf pair in its own frame; the end-state
+  fruit reads deep purple-violet on the cold read, supported by median hue in [260,320] and saturation
+  >= 0.25 (a steward operationalisation of the founder''s word, not a founder-ruled number -- the cold
+  read wins if they disagree); exactly two leaves in every frame per `sapling-two-leaves`; the SAPLING
+  does not double in size per `sapling-height` and the founder''s own "just dont make it double in size
+  suddenly"; and the camera is static by whole-frame registration with the fig as the subject of the motion.
+  FAIL is any of N1 nub frozen (THE PREDICTED OUTCOME, since a 25x32 px change is smaller than any in-hand
+  action this engine has ever dropped), N2 stays green, N3 the whole plant grows, N4 ambient-only, N5 scene
+  break or reframe, N6 morph. Ambient grass drift is recorded as a named fault against the script''s "the
+  only thing in frame that moves" but does not alone fail M5; grass moving MORE than the fig is N4 and
+  does. A partial is a FAIL and a changed picture is not a pass.'
+why: 'The card is EMPTY -- running/ and backlog/ are both clear as of filing. Seven minutes, $0, no provider,
+  no new plate campaign, no recipe change. The init already exists, already passed its own pre-registered
+  bar, and cost nothing; it has been finished and unused since 14:29Z today. This is the cheapest remaining
+  step in a founder verdict that is half-built.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-nub-motion-0818\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b01-nub-motion-0818\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. THIS CLIP IS
+    SHOW CONTENT -- the cold open of episode 2, animating the beat's own script
+    line off the beat's own approved frame 1 -- so it is stamped
+    `is_show_content: true`. It is still `approved: false` and `provisional:
+    true`: nothing is cut until the 121 frames are opened against the bar this
+    spec pre-registered, and R4 taste calls are the founder's.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b01-nub-motion-0818 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: true\n"
+            "note: |\n"
+            "  THE COLD OPEN OF EPISODE 2, and a candidate for the cut. Second half\n"
+            "  of the founder's resolved 2026-08-13 verdict: inpaint a small fig into\n"
+            "  frame 1, then let the motion prompt grow it. Frame 1 is\n"
+            "  b01-nubcomp-s20260826.png, which passed its own bar 7 of 7.\n"
+            "  Judged against the bar pre-registered in\n"
+            "  pipeline/jobs/ep2-b01-nub-motion-0818.yaml BEFORE this render existed.\n"
+            "  THE COLOUR CANON THAT GOVERNS BEAT 1 IS `sapling-fig-not-green`\n"
+            "  (canon.yaml scope beats [1, 18]), NOT `ep2-fig-purple` (beats [19, 20],\n"
+            "  which that entry says are 'not double-covered'). A green nub at frame 1\n"
+            "  is the START of the founder's own approved arc and is not a breach; a\n"
+            "  fig that is still green at f120 is.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b01-nub-motion-0818\b01-motion-prompt.txt: 'A tiny two-leaf banyan sapling in a green
+    field. On the thinnest branch a green nub swells, darkens and rounds into a single fig -- the only
+    thing in frame that moves. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework,
+    anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b01-nub-motion-0818\b01-negative.txt: camera pan, camera tilt, zoom, dolly, push
+    in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b01-nub-motion-0818\b01-jobs-encode.json: |-
+    [
+     {
+      "beat": 1,
+      "embeds": "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\b01-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b01-nub-motion-0818\\b01-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b01-nub-motion-0818\b01-jobs-render.json: |-
+    [
+     {
+      "beat": 1,
+      "seed": 20260831,
+      "embeds": "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\b01-nub-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b01-nub-motion-0818-out\\01-cold-open-LTX-nubgrow.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-nub-motion-0818\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-nub-motion-0818-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-nub-motion-0818\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-nub-motion-0818\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-nub-motion-0818
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-nub-motion-0818-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-nub-motion-0818
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-nub-motion-0818\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-nub-motion-0818-out\01-cold-open-LTX-nubgrow.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses
+    # publishes nothing while returning a code that reads like a render
+    # failure, and box_enqueue.output_path_problems refuses a spec whose
+    # declared artifacts are never named by any step -- which a wildcard
+    # defeats. Missing ONE file is a FAIL of the job. No allow_fail.
+    import hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b01-nub-motion-0818-out"
+    pay_dir = "C:/banyan-farm/ep2-b01-nub-motion-0818"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-nub-motion-0818"
+    WANT = [
+        (out_dir, "01-cold-open-LTX-nubgrow.mp4"),
+        (out_dir, "01-cold-open-LTX-nubgrow.mp4.meta.yaml"),
+        (out_dir, "b01-nub-init-704x1280.png"),
+        (out_dir, "bench-b01-nubgrow.jsonl"),
+        (pay_dir, "b01-motion-prompt.txt"),
+        (pay_dir, "b01-negative.txt"),
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for d, name in WANT:
+        f = os.path.join(d, name)
+        if not os.path.isfile(f):
+            raise SystemExit("!! missing %s -- refusing to call the job clean." % f)
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+    with open(os.path.join(dst, "ep2-b01-nub-motion-0818.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(lines), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(lines) == len(WANT) else 1)
+artifacts:
+- C:\banyan-farm\ep2-b01-nub-motion-0818-out\01-cold-open-LTX-nubgrow.mp4
+- C:\banyan-farm\ep2-b01-nub-motion-0818-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`, so §6 is
+  satisfied and this is a script the founder has read. The action clause is beat 1''s OWN scripted sentence,
+  node.md verbatim -- "On the thinnest branch a green nub swells, darkens and rounds into a single fig
+  -- the only thing in frame that moves" -- with nothing added but the lane''s fixed style suffix. It also
+  executes the founder''s resolved 2026-08-13 verdict directly: "inpaint a SMALL fig into frame 1, then
+  let the motion prompt grow it." This IS show content, the cold open, and its sidecar says so; it is still
+  `approved: false` and `provisional: true` and nothing is cut until the frames are opened against the
+  pre-registered bar. R4 is the founder''s. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED. Silent,
+  $0, no voice synthesis and no episode assembly.'
