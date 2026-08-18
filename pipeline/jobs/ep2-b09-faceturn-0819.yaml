@@ -1,0 +1,232 @@
+# ep2-b09-faceturn-0819 -- 2026-08-19, queue-filler lane.
+#
+# THE CARD WAS EMPTY WHEN THIS WAS WRITTEN. C:\banyan-queue held 0 ready, 0
+# running and 0 backlog, and autofill's own status read `backlog_empty` with
+# "the card idles until a lane files real work". Meanwhile the 0818 cut
+# (review/ep2-demo-0818/sources/picks-0818.yaml) carries FOUR SLATES -- beats
+# 07, 09, 15 and 19. A slate is not an absence of work; it is a beat with no
+# footage, which is the most consumer-named job there is. This is one of them.
+#
+# WHAT THIS JOB IS: THE FIRST FACIAL-CHANGE MOTION EVER RENDERED ON THIS CARD.
+# Every LTX clip this project has made moves a PLANT (b18's trembling stem,
+# b01's growing nub), a WHOLE BODY (b02's sprint, b11's walk-away, b17's stand
+# and turn) or a LIMB (b08's gesture, b14's fingers). Not one has asked a FACE
+# to change while the head stays put. Beat 09's script is exactly that and
+# nothing else -- node.md: "Guard 1's face works through it, slowly." So beat
+# 09 is blocked on an engine question nobody has ever asked, and the question
+# costs seven minutes and $0 to answer.
+#
+# THE ONE VARIABLE IS THE SUBJECT CLASS. The sampler recipe below is
+# ep2-b18-tremble-s20260871-0817's, unchanged: 121 frames, 704x1280, 24 fps,
+# guidance 2.0, distilled sigmas, two-stage, image-crf 33, sequential offload.
+# That recipe has a PASS on this card dated 2026-08-18, so its one-sample gate
+# is already spent and this is not a new recipe -- it is the proven recipe
+# pointed at a class of subject it has never been pointed at. Frames, fps,
+# guidance and sigmas are held byte-identical on purpose: if this comes back
+# frozen, the answer is "LTX does not move faces at this push", and it is
+# attributable to the subject rather than to a setting somebody also changed.
+#
+# !! THE INIT PLATE FAILS ITS OWN PLATE BAR AND THAT IS WRITTEN DOWN HERE
+# BEFORE THE CLIP EXISTS, NOT DISCOVERED AFTERWARDS. review/ep2-picks/
+# cast-0817-scores.yaml scores 09-the-pause-ipa-r2-w015-s2 as the batch PICK
+# "on reasons" -- the only frame clearing the hair term while posting the
+# largest measured head in the batch -- and the same file's verdict on the
+# batch is "FAILS ITS BAR -- 0 of 12 clear every term". Its three named costs,
+# quoted:
+#   * c2 framing: 0 of 12. This frame measures ~35% head height against a 55%
+#     bar. It is a medium, not the close-up beat 09 needs.
+#   * c9 hands: 0 of 12, "THE DEFECT THAT KILLS EVERY FRAME ON ITS OWN". A
+#     hand is at the chin or the spectacles in eleven of twelve, this one
+#     included, and beat 09's plate bar says no hand in frame at all.
+#   * c7 adult: 5 of 12 -- and this frame's own row "reads adolescent".
+# THEREFORE: `is_show_content: false`. THIS CLIP MUST NEVER BE CUT INTO AN
+# EPISODE, whatever it shows. It is an instrument, not footage, and the beat-09
+# slate in the cut stays a slate when this lands. Anyone tempted to promote it
+# should read the three lines above first.
+#
+# WHY FILE MOTION ON A FAILING PLATE AT ALL, AND WHY THAT IS NOT THE MISTAKE
+# THIS REPO KEEPS MAKING. The mistake on record is scaling an unapproved
+# RESULT -- rendering fifteen beats off a recipe nobody looked at. This is the
+# opposite shape: ONE clip, one seed, on the proven recipe, to answer ONE
+# question that no plate can answer no matter how good it gets. A perfect
+# beat-09 plate would still not tell us whether the engine can move a face,
+# and the plate lane's own `blocked_on` says its next step "needs the
+# reference-weight or crop decision ... which is a recipe change and therefore
+# wants ONE SAMPLE before any batch". Those two unknowns are independent and
+# can be paid for in parallel. If the face does not move, the crop decision is
+# moot and beat 09 needs a different route entirely -- which is worth knowing
+# before anyone spends a rung on framing.
+#
+# WHAT THIS JOB DOES NOT TOUCH. The guards CAST question is R4 and open: the
+# founder has not ruled on a face reading adolescent on 7 of 12, and this job
+# does not assume, imply or pre-empt an answer. No pick, no promotion, no
+# plate_ack, no leaf, no lineage entry. If the cast call goes the other way
+# every pixel here is discarded and only the ENGINE finding survives -- which
+# is the whole reason the finding is worth the seven minutes.
+#
+# $0. Local card, no provider, nothing spends.
+id: ep2-b09-faceturn-0819
+task: ep2-b09-faceturn-0819
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+owner: queue-filler lane, 2026-08-19 -- filed against an EMPTY card with four slates in the cut, which
+  is the contradiction this job exists to end
+est_minutes: 7
+is_show_content: false
+is_show_content_why: 'The init plate fails its own pre-registered plate bar on three named terms (c2
+  framing 0 of 12 at ~35% against a 55% bar, c9 a hand in frame 0 of 12, c7 the face reads adult only
+  5 of 12). A clip inherits its plate''s cast defects frame for frame. This is an ENGINE MEASUREMENT and
+  must never be cut into an episode, however well it moves.'
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+  -- the leaf the render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard
+  1''s face works through it, slowly." One man, one face, no second figure, no dialogue in this beat.
+  This is a SILENT MOTION CLIP on an approved node: no voice synthesis, no episode assembly, no
+  publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+consumer: 'The beat-09 SLATE in review/ep2-demo-0818/sources/picks-0818.yaml, whose own detail line reads
+  "Stills only (cast, mac-plate). No motion has ever been rendered for this beat that a verdict lets into
+  a cut." This clip does not fill that slot and is barred from it -- it answers the ENGINE precondition
+  the slot is blocked on underneath the cast question: whether this sampler can make a face change at
+  all. Every prior LTX clip on this card moved a plant, a whole body or a limb; none moved a face.'
+success: 'THIS BAR IS THE FACIAL-CHANGE ENGINE QUESTION AND NOTHING ELSE, and it is written before this
+  clip exists. Output is ONE 704x1280 mp4, 121 frames at 24 fps.
+  PASS requires BOTH halves:
+  (A) THE FACE MOVES. Measured, not eyeballed, and measured ON A FACE CROP RATHER THAN THE WHOLE FRAME
+  -- that distinction is the point of the job. Beat 09''s plate has deep tall grass across the whole
+  background, and whole-frame interframe diff would score a frozen face as motion the moment a blade of
+  grass stirs. So: crop the head bounding box from frame 0, apply the same crop to every frame, and report
+  mean abs interframe diff and drift from frame 0 over THAT region, the way ep2-b18-motion-0812 was
+  measured on 2026-08-17. PASS-A needs visible, describable change in the face itself -- brows, eyelids,
+  gaze or a small head tilt -- confirmed by eye at 1x AND by the crop measure.
+  (B) IDENTITY HOLDS. done_when''s own second clause is "face holds, no morphing". It is the SAME MAN at
+  f000 and f120: dark cropped hair that does not change colour, round wire-rim glasses present and
+  legible in every frame, exactly one face, an adult.
+  Pre-registered FAIL modes, each to be reported by name whether or not it fires:
+  FAIL-FROZEN (the face crop''s interframe diff is indistinguishable from codec noise while the grass
+  moves -- this is THE result the job is filed to be able to state, and it is a clean answer, not a
+  wasted run);
+  FAIL-MORPH (identity collapses: hair changes colour, the glasses vanish or turn into sunglasses or
+  goggles, or the man at f120 is a different man -- beat 11''s recorded fault is "total identity collapse
+  away from the plate across f16-f21", so this is a measured risk on this engine, not a worry);
+  FAIL-MOUTH (the mouth opens into speech. Beat 09 is a man thinking BEFORE he speaks, and beat 11''s best
+  take turned a head "into full profile WITH AN OPEN MOUTH" from f008, so the checkpoint is on record as
+  animating a talking head unasked);
+  FAIL-SECOND-FACE (any second figure, face, child or chibi enters frame);
+  FAIL-CAMERA (the frame pans, tilts, zooms or dollies -- static locked framing is asked for in the
+  positive and banned in the negative);
+  FAIL-STROBE (the lighting flickers, pulses or blinks, the defect measured in ep2-b18-motion-0812).
+  NOT SCORED HERE, and their absence is not a defect: whether this plate is CASTABLE (it is not -- see
+  `is_show_content_why`), the framing, the hand at his face, and whether an adolescent-reading guard is
+  acceptable. All four are the founder''s R4 call and one of them is an open card. NOT a pick: this job
+  promotes nothing and this clip is barred from the cut by its own header.'
+why: 'Beat 09 is a slate in the current cut and the card was empty. The blocker underneath the open cast
+  question is an ENGINE unknown no plate can retire: no facial-change motion has ever been rendered here.
+  The sampler recipe is byte-identical to a run that PASSED on 2026-08-18, so the one-sample gate is spent
+  and the single new variable is the subject class. Seven minutes, $0, and the answer is useful whichever
+  way the cast call goes.'
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-faceturn-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-faceturn-0819\b09-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b09-faceturn-0819\b09-negative.txt: 'open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text'
+  C:\banyan-farm\ep2-b09-faceturn-0819\b09-jobs-encode.json: '[{"beat": 9, "embeds": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\b09-embeds.pt", "prompt_file": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\b09-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\b09-negative.txt"}]'
+  C:\banyan-farm\ep2-b09-faceturn-0819\b09-jobs-render.json: '[{"beat": 9, "seed": 20260819, "embeds": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\b09-embeds.pt", "init": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\b09-init-704x1280.png", "out": "C:\\banyan-farm\\ep2-b09-faceturn-0819\\09-the-pause-LTX-ep2-b09-faceturn-0819.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-faceturn-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-cast-0817\09-the-pause-ipa-r2-w015-s2.png
+  - --sha256
+  - 55a56b8faa5c1c8abcd3cc7306800a616e91210a65995b498e0b9a5e191e0e8e
+  - --out
+  - C:\banyan-farm\ep2-b09-faceturn-0819\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-faceturn-0819\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-faceturn-0819\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-faceturn-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-faceturn-0819\bench-ep2-b09-faceturn-0819.jsonl
+  - --bench-label
+  - ep2-b09-faceturn-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    # farm-out is NOT gitignored: the runner pushes whatever lands here itself,
+    # so a clip that reaches this dir survives without any change to the runner.
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b09-faceturn-0819"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b09-faceturn-0819/09-the-pause-LTX-ep2-b09-faceturn-0819.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b09-faceturn-0819/b09-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b09-faceturn-0819/bench-ep2-b09-faceturn-0819.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b09-faceturn-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # >=2 so a run that wrote the init but no clip cannot pass silently.
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b09-faceturn-0819\09-the-pause-LTX-ep2-b09-faceturn-0819.mp4
+- C:\banyan-farm\ep2-b09-faceturn-0819\b09-init-704x1280.png
