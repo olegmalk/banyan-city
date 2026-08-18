@@ -157,3 +157,17 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-18 (night) after the render. The bar above is unedited.
+# ============================================================================
+outcome:
+  verdict: FAIL on G1 (the fig is replaced, not grown) and H4 (measured push-in). Two independent clauses, neither a taste call.
+  ran: 'rtx5090, all five steps rc=0, published 6 files, 261s, peak torch 12.0GB. Read off a 21-frame sheet (every 6th frame) plus every frame f30-f53 through the transition, cropped on the fig.'
+  g1_growth: 'FAIL, and this is the decisive one. The nub is mint green and small through f37; at f38 -- the very next frame -- it is a fully formed, final-size, deep purple ovoid. One frame. There is no intermediate colour and no swell: the fig is REPLACED, not grown. Compare seed 20260826, which ramps mint -> pale lilac -> pink-mauve -> deep purple over ~16 frames (f18-f34). "Growth by a continuous path" is not satisfied by a pop, however pretty the destination.'
+  g2_purple: 'PASS on the end state alone -- deep purple-violet, richest of the four seeds -- but it arrives by cut, so G2 cannot rescue G1.'
+  g3_leaves: 'PASS. Two blades in every frame read.'
+  g4_size_grass: 'PASS on the fig itself: no balloon, stays below the grass tops.'
+  g5_h4_camera: 'FAIL. Whole-frame registration f0->f120 (upper band, brightness-normalised, best fit over zoom x translation) lands at zoom 1.30, i.e. a 30 percent push-in over five seconds. The passing seed 20260826 measures 1.05 on the same test, so this is not the measure being loose -- it is a real dolly. H4 was named in advance.'
+  worth_keeping: 'The one thing this seed does better than the pick: its end frame is the most faithful to the plate of all four. At f120 the dawn sky wedge (purple-blue flanks, amber shaft between) is still there and the grass is still individually drawn -- where the pick has bloomed to pale amber with wide yellow streaks. So the recipe CAN hold the plate''s look for five seconds; the pick simply did not on its seed. That is a finding about the recipe, not a licence to change it.'
+  what_this_licenses: 'Nothing new. Seed variation only, which is already filed (b5, b6). It does NOT license a motion-prompt edit to suppress the push -- that would be a second variable on a recipe with one pass in four, and the push is seed-borne (1.05 vs 1.30 on identical prompts).'

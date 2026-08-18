@@ -157,3 +157,16 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-18 (night) after the render. The bar above is unedited.
+# ============================================================================
+outcome:
+  verdict: FAIL on G5/H6 (style break) -- by the same clause and the same reading that failed ep2-b01-growmotion-0818. And it holds the best growth arc yet rendered.
+  ran: 'rtx5090, all five steps rc=0, published 6 files. Read off a 21-frame sheet plus every frame f60-f83 cropped on the fig.'
+  g1_growth: 'PASS, and better than the pick. From f60 to f83 the fig swells and darkens through a genuinely continuous path -- mint, teal, grey-blue, slate violet, violet, deep purple -- 24 frames of ramp with no cut anywhere, and a small green calyx draws itself in at the join. Attached throughout; the 2026-08-12 detach fault (H5) did not reproduce. If the bar were G1 alone this would be the pick.'
+  g2_purple: 'PASS. Deep purple-violet end state, arrived at by the ramp above.'
+  g3_leaves: 'PASS. Two blades throughout.'
+  g5_h6_style_break: 'FAIL. By f60 the plate has stopped being the plate. The painterly backlit grass -- individually drawn blades, deep purple-blue sky wedge, warm amber shaft -- has flattened into a near-uniform pale-orange field, and thin bright hairline strokes appear scattered across the upper frame that exist nowhere in the plate''s vocabulary. Whole-frame registration residual is 0.77 at f120, the second worst of the four seeds, and a high residual here means the background is not merely moving but changing content.'
+  the_line_this_draws: 'This verdict needs a stated line, because the pick (seed 20260826) also deviates from the plate -- it blooms -- and PASSED. The line is: a change in the LIGHT is a caveat, a loss of the DRAWING is a failure. On the pick, the sun comes up and washes the frame, but the grass blades stay blades, drawn in the plate''s own hand. Here the engine loses the image: blades stop being blades and become flat smudges, and stray strokes arrive that belong to no hand at all. That is the same fault class that failed ep2-b01-growmotion-0818 (flat cel drawing on a blank ground), arrived at from the opposite direction.'
+  what_this_licenses: 'Nothing new. Seed variation only (b5, b6 filed). A "hold the plate detail" prompt clause would be a second variable and is not ruled.'

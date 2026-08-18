@@ -160,3 +160,26 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
+
+# ============================================================================
+# OUTCOME + THE PICK, appended 2026-08-18 (night). The bar above is unedited.
+# The PASS itself was recorded the same evening in commit 72295a21 and on
+# review/ep2-cold-open-0818/, but never written into this spec; the reading
+# below is a fresh one, done tonight against the same bar, alongside the three
+# seed variants, so the pick rests on frames and not on a commit message.
+# ============================================================================
+outcome:
+  verdict: PASS, with one stated caveat (the bloom). Re-read tonight; the earlier PASS stands.
+  ran: 'rtx5090. Re-read tonight off a 21-frame sheet (every 6th frame) plus every frame f18-f41 cropped on the fig.'
+  g1_growth: 'PASS. Continuous ramp over ~16 frames: mint (f18-f24), pale mint/lilac (f25), pink-mauve (f26-f33), mauve, deep purple (f34-f41), swelling as it goes and attached the whole way. Of the four seeds this is the only one whose colour path has no cut in it except 20260828''s, which broke the frame instead.'
+  g2_purple: 'PASS. Deep purple-violet end state.'
+  g3_leaves: 'PASS. Two blades in every frame read.'
+  g4_size_grass: 'PASS. No balloon; the fig stays below the grass tops.'
+  g5_camera: 'PASS on registration. Whole-frame best fit f0->f120 is zoom 1.05 with a 4-unit shift -- the tightest lock of the four seeds (20260827 measures 1.30, i.e. a real 30 percent dolly).'
+  caveat_bloom: 'Restated, not hidden: the light blooms hard between the first and second seconds and keeps rising, so by f120 the sky has washed from dawn purple to pale amber and wide yellow streaks cross the frame. More than "only the fig moves". It is a change in the LIGHT and not a loss of the DRAWING -- every grass blade is still a drawn blade in the plate''s own hand -- which is why it is a caveat here and a FAIL on seed 20260828, where the blades dissolved. That line is written out in that seed''s spec.'
+pick:
+  chosen: seed 20260826 (this spec) -- the clip already on review/ep2-cold-open-0818/ as cold-open-candidate.mp4.
+  pool: 'Four seeds of one recipe, all read tonight against this identical bar: 20260826 PASS, 20260827 FAIL (fig replaced in a single frame f37->f38; measured 1.30x push-in), 20260828 FAIL (best growth arc of all four, but the painterly grass dissolves to a flat wash with stray hairline strokes), 20260829 FAIL (arc over by f15, then 106 frames of a motionless fig; frame blows out to yellow glare).'
+  reason: 'It is the only seed that clears the bar, so the pick is arithmetic rather than taste -- one pass in four. It also happens to be the only one that both grows the fig continuously AND keeps the camera locked; each of the other three trades one of those away.'
+  not_hidden: 'Two of the rejects beat the pick on one axis each, and the founder should know it before he blesses the pick: 20260827''s end frame is the most faithful to the plate of the four (dawn sky wedge intact, grass still crisply drawn, where the pick has bloomed to pale amber), and 20260828 has a visibly better growth ramp (24 continuous frames through teal and slate to deep purple, with a green calyx drawing itself in at the join). Both are shown on the seed sheet on the review page. What that pair says about the recipe -- it can hold the plate, and it can ramp the colour, just not yet in the same take -- is a finding for a daytime call, not a licence to add variables tonight.'
+  taste_note: 'This is a screening pick among candidates that met a pre-registered technical bar, not a taste verdict. Whether the cold open is GOOD, and whether it is the one that opens the episode, is the founder''s under R4. Nothing is promoted, cut or published on the strength of this pick.'
