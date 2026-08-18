@@ -326,3 +326,14 @@ frame_count_correction_0817:
   reason: 'refs-guards-twoinfield-nos2-0815 is 3 distinct images in 4 slots -- s0 and s3 are byte-identical (26062B66DFCF9B22..., hashed on the box 2026-08-17). dedup_cells drops the cell that would redraw s0, so 12 frames are drawn, never 16. 12 WAS ALWAYS THE TRUE COUNT: the pre-sync renders of this beat wrote 16 files of which 4 were byte-copies of the other 12, so a scorer reporting N of 16 was counting duplicates as independent evidence.'
   what_is_scored: 'UNCHANGED. Not one term of the bar is altered, loosened or removed -- only the denominator it is divided by, which was miscounted. Every condition in success: still applies per frame.'
   also_corrected_in_this_spec: 'copy-out threshold >= 16 -> >= 12, and the declared artifact NN-*-ipa-r3-w015-s0.png removed: r3 is the deduplicated cell and is never written, which made box_runner retire the job rc 92 artifact-check after a full render. The threshold alone could not fail it -- that step is allow_fail: True.'
+
+# --- pointer filed 2026-08-19 by the beat-07 judging lane, ADDITIVE. Nothing
+# --- above this line is edited; `success:` and frame_count_correction_0817
+# --- stand byte-identical to what was committed before the render. ---------
+verdict_0819:
+  full_clause_by_clause: review/ep2-picks/b07-twofig-nobald-0817-verdict.yaml
+  earlier_partial_verdict_not_overturned: 'review/ep2-picks/nobald-0817-verdict.yaml, filed 2026-08-17, scores three of this bar''s eight terms. It stands unedited.'
+  headline: 'NO FRAME CLEARS THE BAR. term 5 -- one arm extended toward the goblin, legible as a POINT -- is 0 of 12, so the beat''s own action still does not render. ONE frame, r1-s3, clears the figure-count clause AND the cast/identity clause: 2 whole figures (guard + goblin, same plane), dark cropped hair, wire-rims, tan-family wrap tunic, white sash, no board.'
+  per_term: 't1 2/12, t2 3/12, t3 12/12, t4 5/12, t5 0/12, t6 12/12, t7 6/12, t8 10/12.'
+  fail_modes: 'eyewear reaching the GOBLIN FIRED 5/12 (including on r1-s3, in red frames); goblin-as-a-human-child DID NOT FIRE on this rung; third figure FIRED 10/12; traded-words framing regression FIRED 4/12, framing half only, and all four are one reference cell rather than a wording effect.'
+  filed_off_it: pipeline/jobs/ep2-b07-point-motion-0819.yaml

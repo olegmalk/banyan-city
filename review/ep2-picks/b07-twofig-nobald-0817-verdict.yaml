@@ -1,0 +1,402 @@
+# BEAT 07 CONFISCATE -- FULL CLAUSE-BY-CLAUSE VERDICT on the two 0817 rungs.
+# Filed 2026-08-19 by the beat-07 judging lane. SINGLE WRITER OF THIS FILE.
+#
+# ============================================================================
+# WHY THIS FILE EXISTS WHEN A VERDICT ALREADY EXISTS -- READ THIS FIRST
+# ============================================================================
+# review/ep2-picks/nobald-0817-verdict.yaml ALREADY CARRIES SECTIONS FOR BOTH
+# JOBS, filed 2026-08-17 by the lane that authored the fix. THAT VERDICT IS NOT
+# RE-JUDGED, NOT OVERTURNED AND NOT EDITED. Nothing here touches that file,
+# cast-0817-scores.yaml, review/inbox.yaml or review/ep2-demo-*.
+#
+# WHAT IT LEFT UNSCORED, WHICH IS WHY THERE WAS STILL WORK. Both specs
+# pre-register a bar with EIGHT numbered terms and FOUR named fail modes. The
+# 2026-08-17 verdict scores THREE of them -- `he is not bald` (term 2), the
+# goblin-as-a-mitt question, and the point (term 5) -- plus goblin
+# multiplication as an instance of term 1. Terms 3, 4, 6, 7 and 8 were never
+# scored at all, and three of the four pre-registered fail modes were never
+# recorded by name. The bar's own words are "each recorded by name whether or
+# not it fires". This file completes that, and carries the already-scored terms
+# forward rather than re-deciding them.
+#
+# ITS OWN CAVEAT IS THE OTHER REASON. That file opens by telling the reader it
+# was written by the lane that authored the fix, and it says its per-frame
+# baldness count is "a contact-sheet read at 340 px width ... a read and not an
+# instrument". This lane opened all 24 PNGs at native 832x1216 and cropped the
+# ambiguous heads to 2x. Two of its per-frame calls do not survive that, and
+# they are recorded below as DISAGREEMENTS, not corrections -- see
+# `disagreements_with_the_0817_verdict`. NEITHER CHANGES A PASS/FAIL OUTCOME.
+
+method:
+  frames_read: 24 of 24, every PNG of both jobs, opened individually at native 832x1216
+  never_a_contact_sheet: >-
+    No sheet, no thumbnail grid, no montage. Each frame was opened on its own.
+    Five heads whose hair was genuinely ambiguous at full frame were then cropped
+    and upscaled 2x with LANCZOS and re-opened: twofig r1-s3, twofig r2-s2,
+    twofig r2-s3, nobald r2-s1, nobald r1-s1. Those five crops are what the
+    baldness disagreements below rest on.
+  provenance_verified_from_the_bytes: >-
+    All 24 PNGs and all 24 sidecars scp'd from
+    C:\banyan-farm\courier-box\farm-out\ and checked against each job's OWN
+    .sha256 manifest written by the box: 48 of 48 OK, 0 mismatches. The prompt
+    field of each sidecar was read directly and confirms `bald head` was NOT sent
+    on either rung.
+  the_provenance_field_that_lies: >-
+    CONFIRMED INDEPENDENTLY, and it is the 0817 verdict's finding, not this
+    lane's. Every sidecar still records `goblin_definition_as_sent: "green skin,
+    bald head ..."` while its own `prompt:` field proves `bald head` was not
+    sent. The authoritative field is `prompt:`. Not fixed here -- the sampler is
+    another lane's file.
+  what_was_NOT_done: >-
+    No pick is offered, no plate is approved, no `plate_ack` is written, no
+    taste-axis score is given. R4 is the founder's. This file scores a
+    pre-registered bar and files one sample.
+
+denominator:
+  report_as: N of 12
+  carried_forward_unchanged_from: frame_count_correction_0817 in both specs
+  confirmed_by_the_bytes: >-
+    12 PNG in each farm-out dir, r0/r1/r2 x s0..s3. No r3 file exists in either.
+    Nothing is scored out of 16.
+
+# ############################################################################
+# RUNG B -- ep2-b07-twofig-0817
+# ############################################################################
+ep2-b07-twofig-0817:
+  rung: 'B -- rung A''s `bald` removal PLUS the grammar fix. Two variables against the original, one against rung A.'
+  prompt_sent_verbatim_from_the_sidecar: >-
+    1boy, a guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+    white sash, one hand open, the guard points his other arm at a crouching
+    goblin with green skin, tall grass, treeline behind, pale sky above,
+    cinematic lighting, masterpiece, best quality, very aesthetic
+  headline: 'ONE FRAME OF 12 CLEARS BOTH THE FIGURE-COUNT CLAUSE AND THE CAST/IDENTITY CLAUSE: r1-s3. NO FRAME CLEARS THE WHOLE BAR -- term 5, the beat''s own action, is 0 of 12.'
+
+  term_1_exactly_two_figures:
+    bar_as_written: 'EXACTLY TWO whole figures, one adult human guard and one goblin, adjacent in the same depth plane -- not three, not one, neither cropped to a fragment'
+    score: 2 of 12 PASS
+    pass: [r1-s3, r2-s3]
+    per_frame_so_it_can_be_recounted:
+      r0-s0: 'FAIL -- 3. Guard centre, one goblin at left, one at right.'
+      r0-s1: 'FAIL -- 6+. Guard, four small goblins in the field, one goblin head filling the lower foreground.'
+      r0-s2: 'FAIL -- 7+. Guard plus six goblins at four depths, plus a bald head shape at the bottom edge.'
+      r0-s3: 'FAIL -- 4, AND THE MERGE. The acting figure IS green-skinned with pointed ears wearing the guard''s tunic, sash and wire-rims. Three small goblins behind.'
+      r1-s0: 'FAIL -- 5. Guard, two large cropped goblin heads flanking at eye level, one full goblin at right in a matching tunic, one at lower left.'
+      r1-s1: 'FAIL -- 4. Guard, one goblin beside him in the identical tunic and sash, two small hatted figures in the far field.'
+      r1-s2: 'FAIL -- 5+. TWO bald human guards, three small goblins at right, a green mass at the bottom edge. Two guards is the wrong pair for this beat whatever else is right.'
+      r1-s3: 'PASS -- exactly 2. Adult human guard left, one goblin right, shoulder to shoulder in one depth plane, both whole. Verified on a top-band and a bottom-band crop: two heads, two pairs of legs, no third figure anywhere.'
+      r2-s0: 'FAIL -- 3, two of them fragments. Bald guard in profile, one goblin upper-left, a third figure''s sleeve and hand entering at lower-left.'
+      r2-s1: 'FAIL -- 2 FIGURES BUT NO GOBLIN. Both are human. The clause names one guard and one goblin, so a two-human frame fails it.'
+      r2-s2: 'FAIL -- 3. Guard right, goblin upper-left, and a THIRD green forearm and hand entering from the right edge behind the guard (confirmed on a right-edge crop).'
+      r2-s3: 'PASS -- exactly 2. Goblin left, guard right, same plane, both whole.'
+
+  term_2_dark_cropped_hair:
+    bar_as_written: 'the guard has DARK CROPPED hair -- not blond, not sandy, not shaggy, and NOT BALD'
+    score: 3 of 12 PASS
+    pass: [r1-s0, r1-s3, r2-s2]
+    fail_reasons:
+      bald: [r0-s1, r0-s2, r0-s3, r1-s1, r1-s2, r2-s0, r2-s1]
+      haired_but_not_cropped: 'r0-s0 (a long bowl fringe covering the ears) and r2-s3 (a shaggy spiky two-tone dark-and-white cut). Both fail the clause''s own "not shaggy", and both are counted as fails rather than quietly folded into a not-bald count.'
+    note_on_r2_s1: >-
+      Two figures, and they disagree. The FOREGROUND ACTING figure is bald; the
+      smaller background figure has black hair. Scored on the acting figure,
+      which is what the clause is about.
+
+  term_3_wire_rim_glasses:
+    bar_as_written: 'WIRE-RIM GLASSES legible as round wire frames on his face, not sunglasses and not absent'
+    score: 12 of 12 PASS
+    reading: >-
+      Legible thin metal frames on the acting figure in every frame. Never
+      sunglasses, never absent. This is the strongest term in the batch and it
+      reproduces the beat-09 lane's 7-of-7.
+    one_divergence_recorded_not_used_to_fail: >-
+      The bar says "round wire frames". They are round in 8 frames and thin
+      RECTANGULAR wire frames in 4 (r1-s2, r1-s3, r2-s1, r2-s2). Recorded because
+      the record should say what is there; NOT used to fail those four, because
+      the clause's operative test is wire-rim / not sunglasses / not absent and
+      tightening a term after seeing the picture is the thing the bar forbids. If
+      roundness is meant to bind it should be TIGHTENED FORWARD in the next
+      round's wording, not applied backwards here.
+
+  term_4_tan_wrap_tunic_and_white_sash:
+    bar_as_written: 'tan wrap tunic and a white sash on him'
+    score: 5 of 12 PASS
+    pass: [r1-s0, r1-s1, r1-s3, r2-s1, r2-s3]
+    white_sash_alone: 12 of 12 -- the sash binds everywhere and is the single most reliable garment in the batch
+    tunic_is_what_fails: 'r0-s0 dark maroon, r0-s1 orange, r0-s2 dark maroon, r0-s3 orange, r2-s0 dark red, r2-s2 dark maroon -- six frames render a RED-FAMILY tunic where the prompt says tan. r1-s2 renders a sleeveless shift, not a wrap tunic.'
+    marginality_stated: 'The five passes are pale beige/cream/khaki rather than a saturated tan. Scored PASS because beige-to-tan is one hue step and the failures are a different colour family entirely; a lane that wants tan exactly should say so in the wording rather than read it back out of this score.'
+
+  term_5_one_arm_extended_toward_the_goblin_legible_as_a_point:
+    bar_as_written: 'one arm extended toward the goblin and legible as a POINT, with his other hand visible and empty'
+    score: 0 of 12 PASS
+    verdict: >-
+      THE BEAT'S OWN ACTION DID NOT ARRIVE. This CONFIRMS the 2026-08-17 verdict
+      at the same number and is not a re-decision: it was read again here because
+      it is the clause the beat exists for.
+    the_one_frame_that_changed: >-
+      r1-s0 carries an unmistakable extended index finger -- the only pointing
+      HAND in either rung -- raised at roughly 45 degrees UP AND AWAY from the
+      goblin, who is at his hip on the far side. The gesture became DRAWABLE and
+      did not become AIMED. Its other hand is a closed fist at the waist, visible
+      and empty, so the clause's second half passes in that frame alone.
+    everything_else: 'In the other 11 the guard''s hands are clasped, at his sides, joined with the goblin''s, or raised in a fist. No arm is extended toward the goblin in any frame of rung B.'
+
+  term_6_no_board_clipboard_slab_or_paper:
+    bar_as_written: 'NO board, clipboard, slab or paper anywhere in frame, in any hand or on the ground'
+    score: 12 of 12 PASS
+    reading: 'The `clipboard` negation held completely. Not one board, slab or sheet in either rung, in any hand or on the ground. This was the specific reason beat 07 could not inherit beat 08''s plate, and it is the cleanest result in the file.'
+
+  term_7_three_background_bands:
+    bar_as_written: 'the background carries all three bands with real content -- tall grass at ground level, a treeline, and sky ABOVE the treeline -- with no white or plain field and no downward plan view'
+    score: 6 of 12 PASS
+    pass: [r0-s0, r0-s2, r0-s3, r1-s1, r1-s2, r1-s3]
+    fail:
+      r0-s1: 'no treeline at all; the upper band is a plain whitish-grey wash'
+      r1-s0: 'distant blue MOUNTAINS where the treeline should be. Grass and sky are both real; the middle band is the wrong noun.'
+      r2-s0: 'grass edge to edge. No treeline, no sky.'
+      r2-s1: 'grass and a low bush line. No sky band.'
+      r2-s2: 'grass and blurred foliage. No sky.'
+      r2-s3: 'grass and two thin trunks. No sky.'
+    the_pattern_and_it_is_not_random: >-
+      ALL FOUR r2 FRAMES FAIL THIS TERM AND ALL FOUR FAIL IT THE SAME WAY: the
+      camera is close enough that the frame contains no sky at all. Reference cell
+      r2 draws a tight two-shot; r0 and r1 draw medium-fulls. This is a REFERENCE
+      property, not a seed property, and it is the mechanism behind the framing
+      fail mode below.
+    plan_view_clause: 'r0-s0, r0-s2, r0-s3 and r1-s3 are moderate high angles. None is a downward plan view; the clause is not triggered.'
+
+  term_8_neither_figure_infantile_and_no_blush:
+    bar_as_written: 'neither figure infantile and no blush'
+    score: 10 of 12 PASS
+    fail:
+      r0-s0: 'the guard is drawn with a child''s head-to-body ratio -- an oversized head on a short body. He reads as a boy of about ten in an adult''s costume.'
+      r2-s1: 'the second figure reads as a child, big-headed and shouting.'
+    blush: 'NO BLUSH IN ANY FRAME of either rung. Recorded because the bar names it.'
+
+  pre_registered_fail_modes_every_one_recorded_by_name:
+    eyewear_reaching_the_GOBLIN:
+      fired: true
+      count: 5 of 12
+      frames: [r0-s3, r1-s3, r2-s0, r2-s2, r2-s3]
+      reading: >-
+        THE SPEC'S NAMED RISK IS REAL AND IT IS NOW MEASURED. The spec said the
+        risk was unmeasured because there was no second guard for `glasses` to
+        spread to -- there was a goblin, and it spread to the goblin. On r1-s3 the
+        goblin wears ROUND RED wire-rim frames of his own; on r2-s0/s2/s3 he wears
+        silver ones. So eyewear is broadcast-class exactly as `bald` was, and it
+        crosses a SPECIES boundary, not just a person boundary.
+      what_it_does_not_license: 'It does NOT license negating `glasses`. plate_scratch.py exits 7 on a negative that contradicts a positive asking for wire-rims, and the 2026-08-16 ruling requires the wire-rims be named on guard A. This is recorded as a measured fault, not as a lever.'
+    the_goblin_drawn_as_a_human_child:
+      fired: false
+      reading: 'On rung B the goblins are drawn as goblins -- green, pointed-eared, tusked or fanged -- at every appearance. Not one is a human child. THIS FAIL MODE FIRES ON RUNG A INSTEAD, at nobald r1-s0; see below.'
+    a_third_figure_appearing:
+      fired: true
+      count: 10 of 12
+      reading: >-
+        The dominant fault of rung B and the one its own spec predicted. Only
+        r1-s3 and r2-s3 hold two figures. Counts run to seven. The spec wrote the
+        prediction before the pixels -- a character given a NOUN and no NUMBER is
+        free to be drawn several times -- and that is what happened.
+    the_traded_words_framing_and_light_regression:
+      fired: true
+      count: 4 of 12
+      frames: [r2-s0, r2-s1, r2-s2, r2-s3]
+      reading: >-
+        A TIGHTER FRAME, exactly as the spec warned when it named `Medium full
+        shot` and `bright morning light` among the traded words. All four r2
+        frames are close two-shots with the sky gone and the treeline gone. The
+        light is not flat -- these are the warmest frames in the batch -- so the
+        regression is FRAMING ONLY and the light half of the fail mode is
+        recorded as NOT fired.
+      but_the_attribution_is_not_clean: >-
+        Said plainly rather than charged to the traded words by default: the
+        tight frames are all in ONE reference cell and none of the other eight
+        frames is tight. That is a reference-set signature. `Medium full shot`
+        being absent may be why r2 was free to go tight, but 8 of 12 frames from
+        the same wording are medium-fulls, so the traded words are at most a
+        permissive cause and not the driver.
+
+# ############################################################################
+# RUNG A -- ep2-b07-nobald-0817
+# ############################################################################
+ep2-b07-nobald-0817:
+  rung: 'A -- `bald` removed and nothing else. The sash still governs `points` and the goblin still has no noun, deliberately left broken.'
+  prompt_sent_verbatim_from_the_sidecar: >-
+    1boy, a guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+    white sash points one arm at green skin crouching low, other hand open, tall
+    grass, treeline behind, pale sky above, cinematic lighting, masterpiece, best
+    quality, very aesthetic
+  headline: 'NO FRAME CLEARS THE FIGURE-COUNT CLAUSE. Term 1 is 0 of 12, and the reason is the one rung A was built to leave broken: with no noun the goblin is either ABSENT (5 of 12) or PAINTED ONTO THE GUARD (4 of 12).'
+
+  term_1_exactly_two_figures:
+    score: 0 of 12 PASS
+    per_frame_so_it_can_be_recounted:
+      r0-s0: 'FAIL -- ONE figure. No goblin anywhere.'
+      r0-s1: 'FAIL -- the goblin is present only as a cropped bald green head filling the bottom edge. A fragment, which the clause excludes by name.'
+      r0-s2: 'FAIL -- same fragment, same position.'
+      r0-s3: 'FAIL -- ONE figure. No goblin.'
+      r1-s0: 'FAIL -- 2 figures, but the second is a small HUMAN CHILD with black hair in a matching tunic and a green face. Not a goblin.'
+      r1-s1: 'FAIL -- 2 figures, but the second is the MERGE: bald, green-faced, in the guard''s own tunic and wire-rims, with no pointed ears and human morphology throughout.'
+      r1-s2: 'FAIL -- 2 figures, BOTH HUMAN. No goblin.'
+      r1-s3: 'FAIL -- 2 figures, BOTH HUMAN. No goblin. (This is the most cast-correct WARDROBE in either rung -- see term 4 -- and it has no goblin in it.)'
+      r2-s0: 'FAIL -- the acting figure IS green and bald; the second figure is cropped with its head entirely out of frame. A merge and a fragment in one picture.'
+      r2-s1: 'FAIL -- ONE figure. No goblin.'
+      r2-s2: 'FAIL -- 2 figures, but the green one has HUMAN HAIR and no pointed ears. Green paint on a man, which is precisely the mitt fault one level up.'
+      r2-s3: 'FAIL -- 2 figures, the green one has human hair and one faint pointed ear. Marginal, and scored FAIL: a green-skinned man with a human haircut is not "one goblin".'
+    the_finding_this_produces: >-
+      GRAMMAR IS WHAT PUTS THE GOBLIN IN THE PICTURE, and rung A proves it by its
+      absence rather than by argument. Without a noun the goblin is MISSING
+      ENTIRELY in 5 of 12 (r0-s0, r0-s3, r1-s2, r1-s3, r2-s1) and painted onto a
+      human in 4 more (r1-s1, r2-s0, r2-s2, r2-s3). Rung B, which adds the noun
+      and nothing else that could do this, draws a distinct pointed-eared goblin
+      in 10 of 12 -- and multiplies him. The noun is what makes him drawable; the
+      missing COUNT is what makes him multiply. Two separate mechanisms, and both
+      rungs together separate them.
+
+  term_2_dark_cropped_hair:
+    score: 4 of 12 PASS
+    pass: [r1-s3, r2-s1, r2-s2, r2-s3]
+    note_on_r2_s1: 'PASSES term 2 on clear black cropped hair (crop-verified at 2x). It still fails the frame on term 1 -- one figure, no goblin -- so its term-2 pass changes no outcome.'
+    fail_reasons:
+      bald: [r0-s0, r0-s1, r0-s2, r0-s3, r1-s0, r2-s0]
+      blond_or_sandy: 'r1-s2 -- the left man is light blond. The clause excludes blond and sandy by name.'
+      haired_but_marginal_and_scored_fail: 'r1-s1 -- a very close dark crop with a visible hairline rather than a bare scalp. NOT bald on the pixels, but too close to call "cropped hair" on a bar this specific, so it is scored FAIL and the disagreement with the 0817 read is recorded below rather than hidden inside a pass.'
+
+  term_3_wire_rim_glasses:
+    score: 12 of 12 PASS on at least one figure; 10 of 12 unambiguous
+    reading: 'Legible wire frames everywhere. On r1-s2 and r1-s3 the frame holds TWO men and only one of them wears them, so which man is "the guard" is undecidable from the picture; those two are recorded as ambiguous rather than scored either way.'
+
+  term_4_tan_wrap_tunic_and_white_sash:
+    score: 2 of 12 PASS
+    pass: [r1-s3, r2-s3]
+    reading: >-
+      r1-s3 IS THE MOST CAST-CORRECT WARDROBE IN EITHER RUNG -- a genuinely tan
+      wrap tunic with a wide white waist sash, on both men, which is guard A's
+      frozen costume as drawn. It is worth naming because it shows the wording
+      CAN land the garment; this frame simply has no goblin in it.
+    white_sash_alone: 12 of 12
+    tunic_fails: 'r0-s1/s2/s3 and r2-s0/s2 render red or orange; r0-s0 renders brown; r1-s0/s1/s2 and r2-s1 render white or cream, and r1-s0/s1/s2 and r2-s1 are sleeveless shifts or a tank rather than a wrap tunic.'
+
+  term_5_one_arm_extended_toward_the_goblin_legible_as_a_point:
+    score: 0 of 12 PASS
+    verdict: >-
+      No point on rung A either, and here not even a pointing hand. r1-s0 raises
+      an arm with the fingers SPLAYED, aimed upward at nothing; every other frame
+      has the hands clasped, at the sides, or joined with the other figure's. In
+      5 of 12 there is no goblin to point at even in principle.
+
+  term_6_no_board_clipboard_slab_or_paper:
+    score: 12 of 12 PASS
+
+  term_7_three_background_bands:
+    score: 9 of 12 PASS
+    fail: [r2-s0, r2-s2, r2-s3]
+    reading: >-
+      The same r2 signature as rung B and from the same reference cell: the frame
+      goes tight and the sky leaves. Rung A holds it in 9 of 12 against rung B's 6
+      of 12, and the difference is that rung B's extra goblins crowd the field
+      where rung A's frames are emptier. Not a wording effect.
+
+  term_8_neither_figure_infantile_and_no_blush:
+    score: 8 of 12 PASS
+    fail:
+      r0-s0: 'the guard has a child''s head-to-body ratio'
+      r0-s2: 'same, a large head on a slight body -- reads about twelve'
+      r0-s3: 'same'
+      r1-s0: 'the guard is adult, but the SECOND figure is a small child. Fails on "neither figure".'
+    blush: 'NO BLUSH IN ANY FRAME.'
+
+  pre_registered_fail_modes_every_one_recorded_by_name:
+    eyewear_reaching_the_GOBLIN:
+      fired: true
+      count: 4 of 12
+      frames: [r1-s1, r2-s0, r2-s2, r2-s3]
+      reading: 'Fires on rung A too, at a similar rate, so it is independent of the grammar fix. Wherever a green figure exists it tends to arrive wearing the guard''s glasses.'
+    the_goblin_drawn_as_a_human_child:
+      fired: true
+      count: 1 of 12
+      frame: r1-s0
+      reading: >-
+        UNAMBIGUOUS AND THE PUREST INSTANCE EITHER RUNG PRODUCED: a small
+        black-haired child, roughly waist-high to the guard, in a matching cream
+        tunic and white sash, with a green face and no pointed ears. The `child`
+        negation was in the negative prompt and did not reach him -- consistent
+        with the standing vacancy law, since with no goblin noun there was no
+        occupied region for a negative to act on.
+    a_third_figure_appearing:
+      fired: false
+      reading: >-
+        RECORDED AS NOT FIRED, and the opposite fired instead. No rung A frame
+        holds three figures. The failure runs the other way -- the goblin is
+        ABSENT in 5 of 12. Reported because the bar says every mode is recorded
+        whether or not it fires, and because "third figure did not appear" would
+        be badly misread as a good result here.
+    the_traded_words_framing_and_light_regression:
+      fired: true
+      count: 3 of 12
+      frames: [r2-s0, r2-s2, r2-s3]
+      reading: 'Framing only, same r2 reference signature. The light half did not fire.'
+
+# ############################################################################
+disagreements_with_the_0817_verdict:
+  status: RECORDED, NOT OVERTURNED. The 2026-08-17 sections stand exactly as written and this lane did not edit them.
+  scope: >-
+    Only the shared term -- `he is not bald` -- can be compared at all, since the
+    0817 verdict scored no other term. Two frames per rung read differently at
+    native resolution than they did on a 340 px contact sheet.
+  rung_A_nobald:
+    the_0817_read: 'bald 8 of 12; haired [r1-s2, r1-s3, r2-s2, r2-s3]'
+    this_lanes_read: 'bald 6 of 12; not-bald [r1-s1, r1-s2, r1-s3, r2-s1, r2-s2, r2-s3]'
+    r2-s1: 'The clearest of the four. A 2x crop of the head shows a full head of short BLACK hair with a defined hairline and separated strands. It is not a bald scalp. This lane reads it not-bald.'
+    r1-s1: 'Genuinely marginal at any resolution: a very close dark crop with a visible hairline. This lane reads hair present but scores the frame FAIL on term 2 anyway, because "cropped hair" is more than a hairline.'
+  rung_B_twofig:
+    the_0817_read: 'bald 7 of 12; haired [r0-s0, r1-s0, r1-s3, r2-s1, r2-s3]'
+    this_lanes_read: 'bald 7 of 12; not-bald [r0-s0, r1-s0, r1-s3, r2-s2, r2-s3]'
+    r2-s2: 'A 2x crop shows a short DARK crop with a strong specular highlight on the crown. The highlight is what reads as scalp at thumbnail size. This lane reads it not-bald.'
+    r2-s1: 'Not a disagreement about pixels but about WHICH FIGURE. The frame holds a bald foreground figure and a haired background one. This lane scores the acting figure, which is bald.'
+  why_it_changes_nothing: >-
+    Every frame in dispute fails the bar on a DIFFERENT term regardless of its
+    hair: r2-s1 and r1-s1 on term 1, r2-s2 on term 1. No pass, no pick and no
+    filed job turns on any of these four calls. Said explicitly so nobody
+    relitigates a count that decides nothing.
+  what_is_NOT_disputed: >-
+    The 0817 verdict's two load-bearing findings are CONFIRMED here on the same
+    numbers, read independently and at full resolution: the point is 0 of 12 on
+    both rungs, and the goblin-noun fix works (absent-or-merged on rung A,
+    distinct and pointed-eared on rung B). Its conclusion that the residual
+    suspect is the COUNT TAG is corroborated by this file's term 1: rung B is
+    2 of 12 and the eight failures are all overcounts.
+
+# ############################################################################
+the_one_frame_that_clears_figure_count_and_cast:
+  frame: farm-out/ep2-b07-twofig-0817/07-confiscate-ipa-r1-w015-s3.png
+  sha256: 95e63800a585d0cf87ba9a1e7b499e8145db65600766cacf966be3ffcd2253fd
+  what_it_clears: 'term 1 (exactly two, guard and goblin, same plane, neither a fragment), term 2 (dark cropped hair), term 3 (wire-rim glasses), term 4 (tan-family wrap tunic and white sash), term 6 (no board), term 7 (all three bands, marginally), term 8 (neither infantile, no blush).'
+  what_it_does_NOT_clear:
+    term_5: 'NO POINT. His near hand is joined with the goblin''s at frame centre and neither arm is extended. This frame does not contain the beat.'
+    eyewear_fail_mode: 'THE GOBLIN WEARS ROUND RED WIRE-RIM GLASSES. The named risk fired on this exact frame.'
+    costume_merge: 'The goblin wears the guard''s own pale wrap tunic and white sash. Not a pre-registered term -- recorded as a NEW fault so the next lane does not discover it as a surprise.'
+    term_7_marginality: 'The treeline is a thin dark strip at the extreme top edge and the sky is a sliver above it in the corners only. It passes, barely, and a lane wanting a real sky band should not cite this frame as evidence the wording delivers one.'
+  it_is_not_a_pick: >-
+    NO PICK IS OFFERED AND THIS IS NOT ONE. It clears two clauses of eight-plus-four
+    and fails the clause the beat exists for. It is named because the lead's branch
+    turns on exactly that question and because it is the FIRST beat-07 plate that
+    has ever held two whole figures with a cast-correct guard and no clipboard.
+    No `plate_ack`, no `approved:`, no `provisional:` is written for it here.
+    R4 is the founder's.
+
+what_was_filed_off_this_verdict:
+  job: pipeline/jobs/ep2-b07-point-motion-0819.yaml
+  why_the_motion_branch_and_not_another_still: >-
+    Because term 5 is the only clause left and a STILL cannot settle it any
+    better than twelve stills already have. Rung B's own spec named the next
+    lever for the still path -- a per-variant COUNT declaration in
+    goblin_ipa_sample.py -- and that is a shared-sampler change, explicitly on
+    this lane's do-not-touch list and another lane's call. What r1-s3 makes newly
+    possible is the OTHER question, which no still can answer and which the
+    engine-probe backlog has been carrying open since 2026-08-15: whether a
+    pointing gesture binds to the GUARD once both figures are already fixed by an
+    init. In text-to-image it did not -- a pointing arm attached to the goblin 3
+    of 3. Nobody has ever asked it in image-to-video off a two-figure beat-07
+    plate, because until this frame there was no such plate.
+  one_sample_one_seed: 'ONE seed, ONE recipe, ONE plate. No sweep. Bar pre-registered in the spec BEFORE enqueue.'
+  cost: '$0. Local card, no provider.'
