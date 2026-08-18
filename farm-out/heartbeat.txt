@@ -2730,3 +2730,4 @@
 17:56:01Z STARTED task=ep2-b01-growmotion-b-0818-1787075747 attempt=1 on box-runner
 18:02:19Z DONE task=ep2-b01-growmotion-b-0818-1787075747 rc=0 artifacts=2
 18:04:24Z box-runner idle ready=0 failed=39
+18:09:08Z STARTED task=ep2-b01-growmotion-b2-0818-1787076519 attempt=1 on box-runner
