@@ -1,0 +1,284 @@
+# BEAT 08, RUNG 2 -- THE SAME HINT AT A LOWER CONDITIONING SCALE.
+# ONE SAMPLE. ONE ARM. ONE VARIABLE, AND IT IS NAMED IN ITS OWN SPEC BEFORE THE
+# PIXELS: conditioning_scale 0.8 -> 0.45.
+#
+# ============================================================================
+# WHAT RUNG 1 SETTLED, AND WHY THAT MAKES THIS THE NEXT QUESTION AND NOT A SWEEP
+# ============================================================================
+# ep2-b08-cnetplate-0819 (verdict appended to its own spec 2026-08-19) FAILED
+# B1-B5 and settled the thing the whole route existed to ask:
+#
+#   B4c PASSED -- THE POINTING ARM GREW FROM THE GUARD. First time on this beat.
+#     It is not the seed behaving: the nocontrol arm at the SAME SEED and the
+#     SAME WORDS put the arm on the goblin, taking the uncontrolled tally to
+#     4 of 4, and produced the most extreme colossus this beat has seen with the
+#     guard's frozen wardrobe bound onto the goblin as well.
+#   B1, B3, B4a, B5 PASSED -- two whole figures, one ground plane, a clipboard
+#     legibly lowered at the hip in ONE hand, and the stature ratio held.
+#   B2 FAILED, exactly where rung 1 said in advance geometry could not help:
+#     both figures came back green with pointed ears, the two heads measuring
+#     (33,78,49) and (31,72,49).
+#   B4b FAILED -- the arm is aimed but ends in nothing; the fingertip region
+#     samples background.
+#
+# AND IT NAMED ITS OWN NEXT VARIABLE, in `observed_not_scored`: at scale 0.8 a
+# DENSE full-body contour is TRACED, NOT INTERPRETED. Both figures returned as
+# flat untextured mannequins wearing the exact polygon silhouettes that were
+# authored -- boxy torsos, rectangular limbs, no cloth and no folds -- while the
+# grass and sky AROUND them came back detailed and well drawn. That inverts the
+# probe's sparse-hint flattening note rather than repeating it: there the
+# ENVIRONMENT flattened, here the environment is fine and the flattening landed
+# entirely on the CONDITIONED REGIONS.
+#
+# ============================================================================
+# THE ONE VARIABLE, AND THE ONE LINE THAT JUSTIFIES ITS VALUE
+# ============================================================================
+# conditioning_scale 0.45. The xinsir card frames scale and stroke weight as the
+# two dials running from "prompt wins" to "condition wins"; 0.8 was chosen as
+# the condition-wins end and it won COMPLETELY, so 0.45 sits just above half of
+# it -- enough authority left to hold a pose the prompt has never been able to
+# produce, and most of the drawing handed back to the checkpoint.
+#
+# EVERYTHING ELSE IS HELD. Same hint file, byte-identical and sha-asserted at
+# render time (19cfad48...). Same seed 20260819. Same size, same steps, same
+# guidance, same base, same ControlNet, same driver at the same commit. Same
+# positive prompt, word for word.
+#
+# ============================================================================
+# ONE THING CHANGED THAT IS NOT THE VARIABLE, AND CALLING IT A VARIABLE WOULD BE
+# DISHONEST: THE NEGATIVE IS BUG-FIXED
+# ============================================================================
+# Rung 1's frame came back NIGHT -- mean luma 22.9 against its own control arm's
+# 95.1. That was an AUTHORING ERROR and rung 1 recorded it as one, in its own
+# verdict, as mine: the negative was assembled from ep2-b08-boardcomp-0818, which
+# was written for an INPAINT over an already-daylit init and so never needed a
+# darkness clause, while beat 08's own cast draft (`authored_b08_cast_0817`)
+# carries `no dark, no night` and always has. Restoring those two tokens is
+# PARITY WITH THE HOUSE NEGATIVE, not an experiment, and it is stated here rather
+# than folded in quietly because a spec that changes two things and reports one
+# is how a lane fools itself.
+#
+# ROOM WAS MADE BY DELETING REDUNDANCY, NOT BY CUTTING A LIVE CLAUSE. Rung 1's
+# negative measured 76 of 77 on the box's real tokenizer -- one token from silent
+# truncation -- so `dark, night` could not simply be appended. Removed:
+#   `huge`          -- duplicates `giant`
+#   `extra board`   -- duplicates `second board`
+#   `deleted sky`   -- rung 1 returned a sky; the clause had nothing to do
+#   `third person`  -- ambiguous as a negative, and `crowd` covers the harm
+# MEASURED ON THE BOX'S REAL TOKENIZER BEFORE FILING, not estimated here: the
+# positive is 64 of 77 and the new negative is 69 of 77. Rung 1 is the reason
+# that measurement is taken on the box -- the authoring-time estimate on the Mac
+# said 71 for a negative that was really 76, wrong by five in the dangerous
+# direction.
+#
+# ============================================================================
+# ONE ARM, BECAUSE THE CONTROLS ARE ALREADY ON DISK
+# ============================================================================
+# Rung 1 published both a hinted frame at 0.8 and a nocontrol frame at the same
+# seed, and the nocontrol frame does not depend on conditioning scale -- so
+# re-rendering it would be a second copy of a picture we already have. This job
+# renders ONE new frame and is read as a three-way comparison against
+# farm-out/ep2-b08-cnetplate-0819/{hint,nocontrol}. That is fewer GPU-seconds and
+# a better experiment, not a corner cut.
+#
+# NO SPEND, NO PROVIDER, NO CANON FILENAME, NO PICK, NO PUBLISH TO THE SITE, NO
+# POST, NO ASSEMBLY. No video is encoded anywhere on this path, so no motion
+# recipe's --image-crf reaches it.
+
+id: ep2-b08-cnetplate-r2-0819
+task: ep2-b08-cnetplate-r2-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 34
+max_attempts: 1
+owner: beat 08 staging lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate, for its cut slot in the episode 2 assembly. Rung 1 proved the
+  hint can AIM the gesture and cannot draw a character; this rung decides whether
+  the aiming survives at a scale where the checkpoint is free to draw people
+  instead of tracing polygons. Its answer is what tells the next lane whether the
+  hint stays in beat 08's recipe at all, and it is read by whoever takes the
+  identity question (see b2 below), because a traced mannequin has nowhere for an
+  identity lever to attach.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-cnetplate-r2-0819 with a sha256
+  manifest, and read side by side against rung 1's two frames. See verdict_rule
+  below -- all three outcomes it enumerates are informative and one of them is a
+  PASS-ON-PURPOSE with B2 failing exactly as pre-registered.
+
+why: >-
+  Rung 1 named this variable in its own verdict and deliberately did not take it,
+  because scaling an unapproved result is the thing that wastes an hour. It is
+  now ruled. Two minutes, $0, no provider, no download: every weight is already
+  in the box cache, the hint was drawn on a Mac with PIL, and the driver and hint
+  are already staged and hash-verified on the box.
+
+est_minutes: 2   # ONE process; rung 1 measured 10.9s load + 14.8s render
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Driver and hint staged at C:\banyan-farm\b08cnetplate-r2-0819\src and
+# hash-verified on BOTH ends before this spec was written:
+#   pipeline\controlnet_plate.py        2a1bd19ecebe1b4c779c07e70f4632731c9d21fdd96d6bda6e233f74274fa67f
+#   pipeline\control\b08-pose-0819.png  19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+# Both are byte-identical to rung 1's and unmodified since dc7348f3, so the ONLY
+# difference between the two runs really is the number below.
+
+payload:
+  C:\banyan-farm\b08cnetplate-r2-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08cnetplate-r2-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+steps:
+  - name: hint045
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08cnetplate-r2-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08cnetplate-r2-0819\src
+      - --repo-commit
+      - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+      - --task
+      - ep2-b08-cnetplate-r2-0819
+      - --arm
+      - hint045
+      - --control
+      - pipeline/control/b08-pose-0819.png
+      - --control-sha256
+      - 19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+      - --scale
+      - '0.45'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08cnetplate-r2-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08cnetplate-r2-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08cnetplate-r2-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Required by box_enqueue.courier_problems (2026-08-19): a job whose
+        # artifacts live outside courier-box\farm-out must have a step that
+        # carries them there, because the courier pushes from farm-out and from
+        # nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible
+        # for two days for want of exactly this.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08cnetplate-r2-0819/out"
+        pay_dir = "C:/banyan-farm/b08cnetplate-r2-0819"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetplate-r2-0819"
+        os.makedirs(dst, exist_ok=True)
+        files = sorted(glob.glob(out_dir + "/ep2-b08-cnetplate-r2-0819-hint045.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-cnetplate-r2-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08cnetplate-r2-0819\out\ep2-b08-cnetplate-r2-0819-hint045.png
+
+# ============================================================================
+# THE BAR. CARRIED FROM RUNG 1 UNCHANGED, WORD FOR WORD WHERE IT APPLIES.
+# ============================================================================
+bar:
+  b1_the_pair: >-
+    TWO figures and only two -- one guard and one goblin, both whole in frame.
+  b2_the_adults_read: >-
+    EXPECTED FAIL, PRE-REGISTERED, AND NOT THIS RUNG'S VARIABLE. The guard should
+    read as an adult HUMAN with sandy hair and the goblin as an adult goblin.
+    Rung 1 returned two green figures with pointed ears and this rung is not
+    expected to fix that, because THE REASON IS STRUCTURAL AND ALREADY KNOWN: a
+    contour cannot say which body an attribute belongs to, so `green skin` enters
+    the pooled embedding and lands on both. Lowering the conditioning scale
+    returns drawing freedom; it does not create a per-figure identity channel. A
+    PASS here would be the surprise and would mean the tracing was itself
+    suppressing the wording. THE IDENTITY LEVER IS THE NEXT DESIGN QUESTION --
+    per-figure IPAdapter is the obvious candidate -- and it is deliberately NOT
+    opened here, because two unproven mechanisms in one sample is a guess with a
+    GPU attached.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The hint pins both foot
+    lines at y=1149.1; at 0.45 the condition must still be strong enough to hold
+    it.
+  b4a_board_down: >-
+    The clipboard is DOWN at the guard's hip, in ONE hand, not raised at his
+    chest and not in both hands.
+  b4b_legible_point: >-
+    The gesture ends in a HAND aimed at the goblin's belly. Rung 1 failed this
+    with a limb terminating in mid-air, and it is genuinely live at a lower
+    scale: the hint draws only a thin finger stroke and no hand shape, so a
+    freer checkpoint is exactly what could supply one.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE CLAUSE THAT MUST SURVIVE. The pointing arm grows from THE GUARD's
+    shoulder, not the goblin's. This is what rung 1 bought and what a scale drop
+    could plausibly spend; if it is lost at 0.45 then the lever has a floor
+    between here and 0.8.
+  b5_no_colossus: >-
+    Neither figure towers over the other. The uncontrolled frame at this seed is
+    an extreme colossus, so this clause is entirely the condition's doing.
+  b6_drawn_not_traced: >-
+    NEW, AND IT IS THIS RUNG'S OWN QUESTION. The figures must read as DRAWN
+    CHARACTERS -- cloth with folds, shaded limbs, a face with features -- and not
+    as flat fills inside the authored polygon outlines. Scored by opening the
+    frame beside rung 1's at 1:1, and against the world it renders: rung 1's
+    grass and sky were already good, so the comparison is figures-to-figures.
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS, and all three branches are useful. (1) If B1, B3,
+  B4a, B4c and B5 hold AND B6 passes AND B2 fails as pre-registered, the verdict
+  is PASS-ON-PURPOSE: conditioning scale is the tracing dial, the composition
+  lever is real and usable, and beat 08's remaining blocker is identity alone.
+  (2) If the pose degrades -- the arm leaves the guard, the ground plane splits,
+  the board rises or a colossus returns -- the verdict is that the lever has a
+  FLOOR between 0.45 and 0.8, and the next rung is a value between them rather
+  than a new mechanism. (3) If the figures are STILL traced at 0.45, the verdict
+  is that tracing is not a scale artifact at all and the DENSE full-body contour
+  is the wrong hint class for this checkpoint -- which retires this hint's shape
+  and points at a sparser skeleton or an early control_guidance_end instead.
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE variable. No scale sweep, no second seed, no
+  re-authored hint, no stroke-weight change, no control_guidance_end change, no
+  identity mechanism, no ControlNet-plus-mask, no pick, no plate_ack waiver and
+  no canon filename. The nocontrol control is rung 1's already-published frame
+  and is not re-rendered.
+licence_note: >-
+  Clean and identical to rung 1's. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M), control net xinsir/controlnet-scribble-sdxl-1.0
+  (apache-2.0, no attribution condition). The hint is drawn by
+  pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
+  annotator, so the lllyasviel/Annotators landmine is not touched.
