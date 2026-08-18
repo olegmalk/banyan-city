@@ -19,12 +19,8 @@ success: A 704x1280 mp4, 121 frames at 24 fps, opening on the passed nub plate. 
   H2 stays green, H3 leaf count breaks, H4 balloon or camera push, H5 the fig detaches or teleports (the 2026-08-12
   fault, named in advance), H6 scene break. A partial is a FAIL. Judged by opening all 121 frames consecutively;
   depth is retired and no number from it will be quoted.
-why: 'SEED 20260830 of the recipe whose first sample PASSED its bar. Same plate, same recipe, only the seed moves
-  -- and the sweep now has a reason beyond feeding the card: of three seeds read tonight, s20260826 PASSED, s20260827
-  FAILED (the fig is REPLACED between two adjacent frames, f37->f38, plus a measured 1.30x push-in) and s20260828
-  FAILED (cleanest growth ramp yet, but the painterly grass dissolves into a flat wash with stray hairline strokes).
-  One pass in three means the pick set has exactly one member and no alternative to compare it against; more seeds
-  of an already-passed recipe is the ruled way to get one. Bar identical, unchanged. $0.'
+why: SEED 20260830 of the PASSED cold-open recipe -- widening the pick set overnight. Same plate, same recipe, only
+  the seed.
 est_minutes: 12
 needs:
 - cuda
@@ -161,18 +157,79 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
-
-# ============================================================================
-# OUTCOME, appended 2026-08-18 (night) after the render. The bar above is unedited.
-# ============================================================================
-outcome:
-  verdict: FAIL on G1 (a two-frame pop, not a continuous path) -- and it is the best clip of the six on every OTHER axis, which is what makes it worth reading twice.
-  ran: 'rtx5090, all five steps rc=0, published 6 files. Read off a 21-frame sheet plus every frame f08-f31 cropped on the fig, plus a per-frame blob measurement through the flip.'
-  g1_growth: 'FAIL, and it was a close call that went against the clip on measurement rather than impression. There IS one genuine in-between frame -- f018 is half mint, half pale pink, the colour caught mid-change -- which is more than seed 20260827 managed (nothing at all between its two frames). But measure the fig itself and the step is bigger, not smaller: blob area holds at 20-24 px through f008-f017, and lands at 46 px by f019 and stays there. That is a 2.1x jump in area (about 1.45x across) in two frames, where 20260827''s was 1.75x in one. So the nub does not swell into the fruit here either -- a bigger fruit arrives in its place, with one blended frame of cover. After f019 the growth is genuinely continuous and exemplary (46 px at f019 to 138 px at f120, a smooth 1.6x across with no step anywhere), which is exactly why the two frames at the front are the whole failure. A partial is a FAIL and the bar says so.'
-  g2_purple: 'PASS. Deep purple-violet, reached at f019 and held.'
-  g3_leaves: 'PASS. Two blades in every frame read.'
-  g4_size_grass: 'PASS. 1.61x across from f040 to f120 with the camera locked, so that is all real growth and it is under a doubling. Stays below the grass tops.'
-  g5_camera: 'PASS, and the best of the six seeds: whole-frame registration f000->f060 AND f000->f120 both land at zoom 1.00, shift (0,0). Not merely inside tolerance -- no measurable move at all. The pick measures 1.05.'
-  style: 'The best plate fidelity of the six, by a clear margin. At f120 the dawn sky wedge is still there -- purple-blue flanks, amber shaft between -- the grass blades are still individually drawn, and the warm motes read as the plate''s own. Where the pick blooms to pale amber with wide yellow streaks by f120, this seed simply keeps the picture it started with.'
-  what_this_costs_us: 'Stated plainly because it is uncomfortable: this seed beats the pick on the camera clause, on plate fidelity, and on the smoothness of the growth once it starts. It loses on two frames near the front, and the bar is conjunctive, so it loses. The right response is NOT to soften G1 to admit it -- G1 is the clause that separates "the fig grew" from "a fig appeared", which is the whole point of the shot.'
-  what_this_licenses: 'Nothing further tonight. See the sweep summary appended to ep2-b01-growmotion-b-0818.yaml: six seeds, one pass, and three INDEPENDENT failure axes, which is why more seeds is the wrong next move and no b7 was filed.'
+pick:
+  chosen: seed 20260826 (this spec) -- the clip already on review/ep2-cold-open-0818/ as cold-open-candidate.mp4.
+  pool: 'Four seeds of one recipe, all read tonight against this identical bar: 20260826 PASS, 20260827 FAIL (fig
+    replaced in a single frame f37->f38; measured 1.30x push-in), 20260828 FAIL (best growth arc of all four, but
+    the painterly grass dissolves to a flat wash with stray hairline strokes), 20260829 FAIL (arc over by f15, then
+    106 frames of a motionless fig; frame blows out to yellow glare).'
+  reason: It is the only seed that clears the bar, so the pick is arithmetic rather than taste -- one pass in four.
+    It also happens to be the only one that both grows the fig continuously AND keeps the camera locked; each of
+    the other three trades one of those away.
+  not_hidden: 'Two of the rejects beat the pick on one axis each, and the founder should know it before he blesses
+    the pick: 20260827''s end frame is the most faithful to the plate of the four (dawn sky wedge intact, grass
+    still crisply drawn, where the pick has bloomed to pale amber), and 20260828 has a visibly better growth ramp
+    (24 continuous frames through teal and slate to deep purple, with a green calyx drawing itself in at the join).
+    Both are shown on the seed sheet on the review page. What that pair says about the recipe -- it can hold the
+    plate, and it can ramp the colour, just not yet in the same take -- is a finding for a daytime call, not a licence
+    to add variables tonight.'
+  taste_note: This is a screening pick among candidates that met a pre-registered technical bar, not a taste verdict.
+    Whether the cold open is GOOD, and whether it is the one that opens the episode, is the founder's under R4.
+    Nothing is promoted, cut or published on the strength of this pick.
+sweep_summary:
+  tally: SIX seeds of one recipe, one plate, one bar. 20260826 PASS. 20260827, 20260828, 20260829, 20260830, 20260831
+    all FAIL. One in six.
+  the_pick_is_unchanged: 'Neither late seed displaces it, but 20260830 came close enough that saying so matters:
+    it is the ONLY seed with a perfectly locked camera (registration 1.00 at both f060 and f120, against the pick''s
+    1.05) and it holds the plate''s dawn look better than any of the six -- sky wedge intact, blades still drawn,
+    where the pick blooms to pale amber. It fails on two frames near the front, where the fig steps 2.1x in area
+    instead of swelling. The bar is conjunctive and a partial is a FAIL, so it loses, and G1 was NOT softened to
+    let it in. G1 is the clause that separates "the fig grew" from "a fig appeared", which is the entire shot.'
+  three_independent_axes: 'THE REASON THE SWEEP STOPS HERE, and it is a finding rather than fatigue. The six failures
+    are not one recurring fault, they are three faults that vary independently seed to seed. COLOUR PATH -- 2 of
+    6 ramp continuously (20260826 over 16 frames, 20260828 over 24), 4 of 6 pop in 1 to 4 frames. CAMERA LOCK --
+    2 of 6 hold (20260830 at 1.00, 20260826 at 1.05); the rest measure 1.10, 1.10, 1.10, 1.30. PLATE FIDELITY --
+    best to worst: 20260830 (holds it), 20260827 (holds it), 20260826 (blooms, blades intact), 20260831 (fades to
+    a wash), 20260828 (drawing dissolves, stray strokes), 20260829 (blows out to yellow glare). No seed but the
+    pick is acceptable on all three at once, and no two failures share a cause. Rolling seeds is therefore three
+    dice at once, and six rolls bought exactly one winner -- which is what a 1-in-6 rate on three independent axes
+    looks like. A seventh seed is a lottery ticket, not an experiment, so none was filed and the card was allowed
+    to empty honestly.'
+  what_would_actually_move_it: 'Named, not started. Each of the three axes has an obvious one-variable attack --
+    the negative prompt already lists "zoom, dolly, push in" and yet four of six pushed, which is a real finding
+    about how much that negative is worth on this engine; the colour pop might be a step-count or a scheduler question;
+    the bloom/fade might be a plate-conditioning strength question. Every one of those is a RECIPE change, which
+    means a new sample under the one-sample rule, and none of them is ruled tonight. They are also premature: the
+    pick already clears the bar, and what the cold open needs next is the founder''s eye on it under R4, not a sixth
+    engineering variable.'
+  where_the_evidence_is: Per-seed verdicts with the measurements are appended to each of pipeline/jobs/ep2-b01-growmotion-b{2,3,4,5,6}-0818.yaml.
+    The six last frames are on review/ep2-cold-open-0818/ as seed-sweep-f120.jpg, pick first with a gold border.
+sweep_summary_correction:
+  the_claim: '"No two failures share a cause." (sweep_summary.three_independent_axes, last line.)'
+  why_it_is_wrong: 'The same block measures COLOUR PATH as "4 of 6 pop in 1 to 4 frames". A fault present in four
+    of six seeds is by definition a shared cause, and it is the SAME clause that kills them: of the five rejects,
+    FOUR fail G1 -- b2 (fig replaced, not grown), b4 (arc finishes in 15 frames, then 106 static), b5 (two-frame
+    pop), b6 (four-frame pop, 2.9x area step). Only b3 fails on something else alone (G5/H6 style break). G1 is
+    not one of three dice rolling independently. It is the recipe''s dominant, systematic failure mode, and the
+    other two axes ride along on top of it.'
+  what_the_failure_actually_is: 'Not "the growth is random seed to seed" but "this recipe does not DISTRIBUTE change
+    across the clip". Every G1 reject is the same shape: the subject holds, then steps 2.1x-2.9x in area across
+    1-4 frames, with at most one blended frame over the join. b4 is the same defect stretched -- all the change
+    in the first 15 frames, then nothing. The two seeds that pass G1 ramp over 16 and 24 frames. So the variable
+    is temporal distribution of change, and it is a property of the recipe, not of the seed.'
+  what_survives_unchanged: 'The conclusion "do not roll a seventh seed" is CORRECT and is not being reopened --
+    if anything this strengthens it. Rolling seeds against a systematic recipe defect is worse than a lottery: the
+    pop is the expected outcome at 4 of 6, not the unlucky one. The pick is unchanged, G1 is unchanged, and no bar
+    moved.'
+  what_it_changes: The next move. "A seventh seed is a lottery ticket" reads as "nothing to do here but wait for
+    R4". The corrected reading names a specific, testable, one-variable experiment -- attack the temporal distribution
+    of change -- which is exactly what sweep_summary. what_would_actually_move_it already lists under "the colour
+    pop might be a step-count or a scheduler question" but files as premature. With the card idle and the founder
+    asleep, a one-variable sample against the dominant failure mode is the highest-information thing the GPU can
+    do, and it needs no taste call to start. Filed as its own spec with its own pre-registered bar under the one-sample
+    rule; the variable itself is being chosen from OUTSIDE-repo research (scheduler/shift/CFG/step-count evidence
+    for video diffusion) rather than from our own comments, per the 2026-08-04 research-before-solving directive.
+  what_this_licenses: ONE sample of ONE recipe change against G1 temporal distribution. It does NOT license a batch,
+    a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
+    and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
+    on R4 alone.
