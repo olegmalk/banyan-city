@@ -1,0 +1,213 @@
+# ep2-b09-faceturn-crf10-0819 -- 2026-08-19, queue-filler lane.
+#
+# THIS IS THE ONE FOLLOW-UP ep2-b09-faceturn-0819's VERDICT LICENSES, and it is
+# filed rather than described. Read that spec's appended verdict first; the
+# short of it is that the engine CAN move a face (a slow eye close-and-reopen
+# over forty frames on a locked camera, which is a first for this card) and
+# that IT THROWS THE INIT AWAY IN THE FIRST TWO FRAMES. The measurement is not
+# ambiguous: the ten largest mean-abs interframe steps in the whole 121-frame
+# clip are the ten EARLIEST, largest first (39.34, 36.90, 33.17, ... decaying
+# monotonically), so this is not an identity that drifts, it is an init that is
+# abandoned at the first denoising step and a scene the sampler then invents
+# and holds. An anime man in three-quarter profile with dark brown hair and a
+# hand at his cheek is, by f021, a front-facing child with a white crown streak
+# and blue eyes.
+#
+# ------------------------------------------------------------------
+# THE ONE VARIABLE: `--image-crf 33` BECOMES `--image-crf 10`.
+# ------------------------------------------------------------------
+# Every other byte of this spec is the parent's, produced by substituting the
+# job id and that single argument -- the payload, the prompt files, the
+# negative, the seed, the init frame, its asserted sha256, frames, fps,
+# guidance, sigmas, two-stage, offload and the publish step are all carried
+# programmatically rather than retyped, so "one variable" is a fact about the
+# file and not a claim in a comment.
+#
+# THE MECHANISM, READ OFF THE RENDERER RATHER THAN GUESSED. ltx_i2v.py:1072:
+#   if a.image_crf:
+#       init = _crf_roundtrip(init, a.image_crf, str(Path(a.embeds).parent), ...)
+# and the flag's own help text: "round-trip the still through libx264 at this
+# CRF first". THE CONDITIONING IMAGE IS DELIBERATELY DEGRADED BEFORE IT
+# CONDITIONS ANYTHING. CRF 33 is heavy compression. If the init arrives at the
+# sampler already smeared, "the sampler ignored the init" and "the init was not
+# there to be followed" are the same event, and this is the cheapest test that
+# separates them.
+#
+# STATED AS A HYPOTHESIS, NOT A DIAGNOSIS, AND THE DIFFERENCE MATTERS HERE.
+# This project has a written record of building "two confident performance
+# mechanisms out of its own code comments" and retracting both. So: this lane
+# has read OUR renderer, not the LTX literature. A research lane is reading the
+# Lightricks reference implementation, the diffusers i2v path, ComfyUI's LTXV
+# conditioning nodes and the community issue threads in parallel with this run,
+# and if it comes back with a better first knob -- conditioning noise scale,
+# the distilled model's CFG recommendation, frame count -- THAT is the next
+# rung and this one is simply a datum. The sample is the test, not the
+# confirmation, and it is filed now rather than held because it costs seven
+# minutes on a card that would otherwise be idle.
+#
+# WHY NOT ALSO TRY A BETTER PLATE, A LOWER CFG AND A SHORTER CLIP. Because
+# then nothing is attributable. The parent clip is the control and this differs
+# from it by one integer.
+#
+# `is_show_content: false` FOR THE SAME TWO REASONS AS THE PARENT, both of
+# which still hold: the init plate fails its own plate bar on three named terms
+# (framing 0 of 12, a hand in frame 0 of 12, adult 5 of 12), and the guards
+# cast question is R4 and open. NOTHING HERE IS A PICK, A PROMOTION OR A
+# PLATE_ACK, and the beat-09 slate in the 0818 cut stays a slate when this
+# lands. $0. Local card, no provider, nothing spends.
+id: ep2-b09-faceturn-crf10-0819
+task: ep2-b09-faceturn-crf10-0819
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+owner: queue-filler lane, 2026-08-19 -- the single follow-up ep2-b09-faceturn-0819's verdict licenses, filed the same hour the verdict was written rather than left for a morning
+est_minutes: 7
+is_show_content: false
+is_show_content_why: 'Unchanged from the parent and still true. The init plate fails its own pre-registered plate bar on three named terms (framing 0 of 12 at ~35% against a 55% bar, a hand in frame 0 of 12, the face reads adult only 5 of 12), and a clip inherits its plate''s cast defects frame for frame. This is an ENGINE MEASUREMENT and must never be cut into an episode, however well it moves or however well the init holds.'
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+  -- the leaf the render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard
+  1''s face works through it, slowly." One man, one face, no second figure, no dialogue in this beat.
+  This is a SILENT MOTION CLIP on an approved node: no voice synthesis, no episode assembly, no
+  publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+consumer: 'The beat-09 SLATE in review/ep2-demo-0818/sources/picks-0818.yaml, one of the cut''s four.
+  This clip is barred from that slot exactly as its parent was; what it buys the slot is the answer to
+  whether the init can be made to hold on a face at all. If it cannot, beat 09 does not get its motion
+  from an i2v push off a plate and the route has to change -- which is a bigger, cheaper thing to learn
+  now than after a good plate has been paid for.'
+why: 'The parent clip settled that the engine can move a face and that it discards the init in the first
+  two frames. The renderer degrades the conditioning still through libx264 before using it, at CRF 33.
+  One integer tests whether the abandonment is the sampler ignoring the init or the init arriving already
+  destroyed. Seven minutes, $0, on a card that would otherwise idle.'
+success: 'THIS BAR IS THE INIT-ADHERENCE QUESTION AND NOTHING ELSE, and it is written before this clip
+  exists. Output is ONE 704x1280 mp4, 121 frames at 24 fps, off the same init as ep2-b09-faceturn-0819.
+  THE COMPARISON IS THE RESULT. Every number below is measured exactly as the parent''s were -- head
+  bounding box read off frame 1 at x 30-570, y 0-560 of 704x1280, the SAME crop applied to all 121
+  frames, mean abs interframe difference and drift from frame 0 in float64, with the whole frame and a
+  background-only strip (y 900-1280) as controls -- so the two clips are comparable number for number.
+  PASS: THE EARLY COLLAPSE IS SUBSTANTIALLY REDUCED. Concretely, all three must hold:
+  (1) the f001->f002 face-crop interframe step falls well below the parent''s 39.34 -- a step under 20 is
+  a clear pass, 20-30 is a partial and is to be reported as such rather than rounded either way;
+  (2) the ten largest interframe steps are no longer simply the ten earliest, i.e. the motion is no longer
+  entirely front-loaded (parent: face-crop interframe mean 8.237 in the first third against 0.431 in the
+  middle);
+  (3) BY EYE at 1x, the man at f021 is recognisably the man in the init -- same hair colour with no white
+  or blond crown streak, same three-quarter orientation, the hand still at his cheek, and NOT a child.
+  Pre-registered FAIL modes, each reported by name whether or not it fires:
+  FAIL-COLLAPSE-UNCHANGED (the early steps and the f021 identity are indistinguishable from the parent --
+  this is a CLEAN ANSWER and the most likely one: it would mean the conditioning degradation is not the
+  lever and the next knob is a real conditioning-strength parameter or the CFG, not the codec);
+  FAIL-FROZEN (a cleaner init holds so hard that nothing moves at all -- the opposite failure, and it
+  would mean this recipe trades identity against motion on a single axis, which is itself the finding);
+  FAIL-MORPH-LATE (identity survives f021 and collapses later instead -- report the frame);
+  FAIL-STROBE, FAIL-CAMERA, FAIL-SECOND-FACE, FAIL-MOUTH (all four carried from the parent unchanged; the
+  parent fired none of them and a change here would be attributable to the one variable);
+  FAIL-ARTEFACT (a low CRF is the untested direction on this recipe -- if the clip comes back blocky,
+  banded or otherwise wrong in a way the parent was not, that is the cost of the trade and is reported).
+  NOT SCORED HERE: whether this plate is castable, the framing, the hand, the adolescent read. All R4,
+  one of them an open founder card. NOT a pick. This clip is barred from the cut by its own header.'
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-faceturn-crf10-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-negative.txt: 'open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text'
+  C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-jobs-encode.json: '[{"beat": 9, "embeds": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\b09-embeds.pt", "prompt_file": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\b09-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\b09-negative.txt"}]'
+  C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-jobs-render.json: '[{"beat": 9, "seed": 20260819, "embeds": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\b09-embeds.pt", "init": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\b09-init-704x1280.png", "out": "C:\\banyan-farm\\ep2-b09-faceturn-crf10-0819\\09-the-pause-LTX-ep2-b09-faceturn-crf10-0819.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-cast-0817\09-the-pause-ipa-r2-w015-s2.png
+  - --sha256
+  - 55a56b8faa5c1c8abcd3cc7306800a616e91210a65995b498e0b9a5e191e0e8e
+  - --out
+  - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-faceturn-crf10-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\bench-ep2-b09-faceturn-crf10-0819.jsonl
+  - --bench-label
+  - ep2-b09-faceturn-crf10-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    # farm-out is NOT gitignored: the runner pushes whatever lands here itself,
+    # so a clip that reaches this dir survives without any change to the runner.
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b09-faceturn-crf10-0819"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b09-faceturn-crf10-0819/09-the-pause-LTX-ep2-b09-faceturn-crf10-0819.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b09-faceturn-crf10-0819/b09-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b09-faceturn-crf10-0819/bench-ep2-b09-faceturn-crf10-0819.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b09-faceturn-crf10-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # >=2 so a run that wrote the init but no clip cannot pass silently.
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b09-faceturn-crf10-0819\09-the-pause-LTX-ep2-b09-faceturn-crf10-0819.mp4
+- C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-init-704x1280.png

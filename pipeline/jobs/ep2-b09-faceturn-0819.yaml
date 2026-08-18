@@ -230,3 +230,126 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b09-faceturn-0819\09-the-pause-LTX-ep2-b09-faceturn-0819.mp4
 - C:\banyan-farm\ep2-b09-faceturn-0819\b09-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the lane that filed it, scored against the
+# bar pre-registered in this spec's own `success` field, which was written and
+# committed before the pixels existed (commit "no LTX clip on this card has
+# ever moved a face"). rc 0, published to farm-out, pulled, and the mp4's
+# sha256 recomputed locally against the box's own manifest: they match
+# (0732ae881bd95cfd...). 121 frames decoded, all of them measured, six opened
+# at full resolution.
+# ============================================================================
+verdict: 'FAILS THE BAR -- and it is the most informative failure this lane could
+  have got, because it splits the question the job was filed to ask. PASS needed
+  BOTH halves. (A) THE FACE MOVES: YES, and this is a first for this card. (B)
+  IDENTITY HOLDS: NO, and not by a margin -- the init is DISCARDED IN THE FIRST
+  TWO FRAMES.'
+verdict_measured:
+  method: 'As the bar specified and for the reason it specified. The head bounding
+    box was read off frame 1 (x 30-570, y 0-560 of 704x1280), the SAME crop applied
+    to all 121 frames, and mean abs interframe difference plus drift from frame 0
+    computed over that region in float64 -- alongside the whole frame and a
+    background-only strip (y 900-1280, almost pure grass) as controls. The bar said
+    a whole-frame measure would score a frozen face as motion the moment a blade of
+    grass stirred; the controls are what make that claim checkable rather than
+    asserted.'
+  face_crop: 'interframe median 0.221, mean 3.373, max 39.34; drift from f0 reaches 74.23 by the last frame.'
+  whole_frame: 'interframe median 0.241, mean 3.383, max 35.47; drift from f0 73.74.'
+  background_strip_control: 'interframe median 0.118, mean 2.847, max 29.58; drift from f0 60.89.'
+  what_the_controls_show: 'The face crop drifts FURTHER than the grass (74.2 vs 60.9)
+    and its peak interframe step is larger (39.3 vs 29.6). So the movement is not
+    background masking a frozen face. The precaution the bar took was worth taking
+    and it came back clean.'
+  where_the_motion_sits_in_time: 'face-crop interframe mean by third: first 8.237,
+    middle 0.431, last 1.452. The clip spends its first third changing and its
+    remaining two thirds nearly still -- the inverse of the b14 pair, which sat
+    frozen for eighty frames and put everything in the last third.'
+  the_single_sharpest_number: 'THE LARGEST INTERFRAME STEP IN THE WHOLE CLIP IS THE
+    VERY FIRST ONE. f001->f002 = 39.34, f002->f003 = 36.90, f003->f004 = 33.17, and
+    the ten largest steps are the ten earliest, decaying monotonically. This is not
+    an identity that DRIFTS over 121 frames. It is an init that is ABANDONED at the
+    first denoising step and a scene the sampler then re-invents and holds.'
+term_A_the_face_moves: 'PASS, and it is a real capability finding rather than a
+  technicality. After the collapse settles the face performs a genuine, slow
+  change with the head essentially still: eyes OPEN at f021, fully CLOSED by f061
+  and still closed at f081, OPEN AGAIN with the brows drawn by f091 and f121. That
+  is a close-and-reopen over roughly forty frames, which is exactly the register
+  beat 09 asks for -- "Guard 1''s face works through it, SLOWLY". THE ENGINE CAN
+  MOVE A FACE. No LTX clip on this card had ever established that.'
+term_B_identity_holds: 'FAIL, total. The man in the init and the man in the clip
+  are not the same person, and every element of the change was named in the
+  negative and happened anyway:
+  HAIR -- uniformly dark brown at f001; a large WHITE/BLOND streak across the crown
+  from f021 onward. `hair colour change`, `blond hair` and `silver hair` were all in
+  the negative.
+  EYES -- downcast and unreadable at f001; bright BLUE from f021 on. Never specified,
+  so never protected, which is this repo''s own recorded law about unspecified
+  attributes.
+  AGE -- the init reads adolescent (the plate lane scored c7 adult at 5 of 12); the
+  clip reads outright CHILD from f021 to the end. `child`, `baby` and `chibi` were
+  in the negative.
+  POSE AND SHOT -- f001 is a tight three-quarter profile with his hand up at his
+  cheek; by f021 he is front-on, chest-up, and THE HAND HAS SIMPLY GONE. The
+  background gains dark foliage at the top-left that is not in the init.
+  GLASSES -- the one thing that held. Round wire-rims are present and correctly
+  drawn in every frame opened. The plate lane measured that term at 12 of 12 and it
+  survives the collapse, which is worth recording: it is the only attribute of this
+  cast that the motion path has ever been shown to keep.'
+pre_registered_fail_modes:
+  FAIL-FROZEN: 'DID NOT FIRE. Ruled out by measurement, not by eye -- and ruled out
+    against the background control, which is the form of the answer that was in
+    doubt.'
+  FAIL-MORPH: 'FIRED, and completely. See term_B.'
+  FAIL-MOUTH: 'DID NOT FIRE. The mouth is closed in all six frames opened (f001,
+    f021, f061, f081, f091, f121), including f081, which carries the largest
+    interframe step after the collapse. Stated with its limit: six frames of 121
+    were opened at full resolution, so this is "not observed" rather than "proved
+    absent across every frame".'
+  FAIL-SECOND-FACE: 'DID NOT FIRE. One face, no second figure, in every frame opened
+    and in every thumbnail.'
+  FAIL-CAMERA: 'DID NOT FIRE, and the split is worth stating because it is easy to
+    misread this clip as a camera move. The pale diagonal in the lower-left corner
+    sits in the SAME PLACE at f001, f021, f061, f081, f091 and f121, so the frame is
+    locked -- no pan, no tilt, no zoom, no dolly. What changed is the SHOT: subject
+    orientation, subject scale and background content were re-invented while the
+    camera held. The bar had no name for that and it belongs to FAIL-MORPH.
+    TIGHTENED FORWARD, not scored retroactively: a future bar on this recipe should
+    carry "the shot is the init''s shot" as a term distinct from the camera term.'
+  FAIL-STROBE: 'DID NOT FIRE, measured. Whole-frame mean luminance stays between
+    101.42 and 104.38 across all 121 frames, largest single-frame step 0.945 (0.794
+    after f021). The defect measured in ep2-b18-motion-0812 is absent here.'
+what_this_settles: '1. THE ENGINE CAN MOVE A FACE. Asked for the first time,
+  answered yes: a slow eye close-and-reopen with the head still, over forty frames,
+  on a locked camera. Beat 09''s script line is not beyond this sampler.
+  2. THE INIT DOES NOT SURVIVE THE FIRST DENOISING STEP ON A FACE SUBJECT, and the
+  numbers locate it precisely -- the ten largest interframe steps in the clip are
+  the ten earliest, largest first. This is the same defect beat 11 recorded as
+  "total identity collapse away from the plate across f16-f21", now REPLICATED on a
+  different beat, a different plate, a different subject and a different lane. Two
+  independent observations of the same window make it a property of the RECIPE, not
+  of beat 11''s plate, which is how it has been carried until today.
+  3. THE b18 RECIPE IS NOT BEAT-AGNOSTIC. It holds a macro of a fruit and it does
+  not hold a person. b18 passed because it had no identity to lose. Any lane
+  reaching for "the recipe with a PASS on it" for a beat with a face should read
+  this first.
+  4. THE NEGATIVE PROMPT DID NOT DEFEND IDENTITY. `hair colour change`, `blond
+  hair`, `silver hair`, `child`, `baby` and `chibi` were all present and all
+  overridden. Consistent with this project''s repeated finding that the negative
+  fails on the thing the picture wants to become.'
+what_this_does_NOT_settle: 'Whether beat 09 is castable, whether an
+  adolescent-reading guard is acceptable, the framing, or the hand at his face. All
+  four are R4 and one of them is an open founder card. No pick, no promotion, no
+  plate_ack, no leaf, no lineage entry. `is_show_content: false` stands and this
+  clip is barred from the cut by its own header -- and the collapse above is a
+  second, independent reason it could never have gone in.'
+what_this_licenses: 'EXACTLY ONE follow-up, and it is filed rather than described:
+  ep2-b09-faceturn-crf10-0819. The mechanism is read off the renderer, not guessed
+  -- ltx_i2v.py line 1072: `if a.image_crf: init = _crf_roundtrip(init, a.image_crf,
+  ...)`, whose own help text is "round-trip the still through libx264 at this CRF
+  first". The conditioning image is DELIBERATELY DEGRADED before it conditions
+  anything, and this recipe degrades it at CRF 33, which is heavy. That is a
+  mechanical, checkable candidate for an init abandoned at the first step, and it is
+  ONE FLAG. The follow-up changes `--image-crf 33` to `--image-crf 10` and NOTHING
+  ELSE. Stated as a hypothesis and not a diagnosis: this lane has read the code, not
+  the LTX literature, and the sample is the test rather than the confirmation.'
