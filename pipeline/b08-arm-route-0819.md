@@ -194,3 +194,39 @@ cannot free a hand that is drawn holding something.**
 Two things for whoever picks this up: the courier-step gap in §2 is a real
 `box_enqueue` warning waiting to be written, and Route A's hint tool is the smallest
 piece of new code that would move beat 08 at all.
+
+---
+
+## 6. Addendum, same night — a sibling lane is already asking the harder half
+
+Written after the fact: while this was being drafted, another lane filed
+`pipeline/jobs/ep2-b07-point-motion-0819.yaml` (`bdee2b70`) against **beat 07**, and
+it bears directly on everything above.
+
+- It found beat 07 a two-figure plate that clears both the count and the cast clause
+  (`ep2-b07-twofig-0817` r1-s3, 1 frame of 24) — **a guard and a goblin, and no board
+  anywhere**, so neither of the guard's hands is committed. That is precisely the
+  property §3 above finds missing from beat 08's init.
+- It asks the question this document could not: **does a pointing gesture bind to the
+  GUARD once both figures are fixed by an init?** — in **i2v**, on the engine that
+  renders whole-body motion, rather than in a still generator.
+- And it reports the result that most constrains Route A: **in text-to-image the point
+  attached to the goblin 3 of 3.** Twelve tries could not aim it.
+
+**Three consequences for the routes above, and none of them is a retraction.**
+
+1. **There is a fourth route, and it is already running:** let the motion engine stage
+   the point from a board-free two-figure init. Beat 08 would then need a plate without
+   the board in the guard's hands — which is the same staging campaign Route A names,
+   arrived at from the other side.
+2. **Route A's risk is now quantified.** The 3-of-3 misattachment is the BROADCAST class
+   `attribute_mask.py`'s own header documents: CLIP's causal encoder puts an attribute
+   named anywhere into the pooled embedding, so "pointing" lands on whichever figure the
+   sampler likes. **A wording cannot aim it.** This is an argument *for* the ControlNet
+   version of Route A rather than against it — geometry is per-location, so a hint is one
+   of the few levers that can say *which* figure grows the arm. It is the strongest
+   reason yet to build the two-figure hint tool named above.
+3. **Do not duplicate the beat-07 sample.** If the point binds to the guard in i2v there,
+   beat 08's answer is a plate change and not a conditioning problem at all, and this
+   document's Route A should be re-scoped before anything is filed against it. **Read
+   that job's verdict before opening beat 08 again.**
