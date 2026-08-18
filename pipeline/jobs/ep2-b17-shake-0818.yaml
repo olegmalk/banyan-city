@@ -203,3 +203,94 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b17-shake-0818\17-goodbye-LTX-shake-0818.mp4
 - C:\banyan-farm\ep2-b17-shake-0818\b17-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the night supervisor (v2), scored against the
+# bar pre-registered in this spec's own done_when BEFORE the render existed. The
+# bar is not edited. The clip also has a large defect the bar never named, and
+# that is reported as a gap rather than smuggled in as a failure.
+# ============================================================================
+verdict: PASS on S1+S2+S3, with no pre-registered FAIL mode triggered. THE RESTAGE BET COLLECTED --
+  the engine that would not draw a brush in eight seeds draws a cloak shake on the first one.
+verdict_measured:
+  read_how: '97 frames at 704x1280/24fps confirmed by ffprobe. Looked at: a 9-panel sheet every 12
+    frames, and three 12-frame CONSECUTIVE strips -- f000-f011, f030-f041 and f084-f095 -- because
+    S2 is a frame-to-frame claim and a sheet cannot settle it. Measurements below are on frames
+    decoded at 176x320.'
+  s1_stand: 'PASS. He goes from seated in the grass (f000-f012) to crouched and rising (f012-f024) to
+    fully upright (f036 on), continuously and followably. Expected -- this init is 8 of 8 on standing --
+    and per the spec this pass is not news.'
+  s2_shake_the_load_bearing_clause: 'PASS, and it passes on the exact test written before the render.
+    The clause required the hem or a fold to REVERSE DIRECTION at least once by at least one
+    fold-width while the torso is not translating with it. On the consecutive strip f030-f041 he
+    takes the cloak in his hand (f030-f031), lifts it UP AND OUT to his right into a large extended
+    sheet of fabric (f032-f034), then sweeps it DOWN AND ACROSS his body (f035-f038) and lets it
+    settle (f039-f041). That is one full out-and-back of the hem, across roughly a third of the frame
+    width -- many fold-widths, not one -- while his feet stay planted in the same patch of grass and
+    the torso does not travel. It is not cloth trailing a moving body: he grips it and moves it.
+    F2 STAND-ONLY, the predicted failure, did NOT occur.'
+  s3_turn: 'PASS. By f084-f095 he is standing with his back to the lens, facing away across the open
+    field, cloak swinging behind him. His face leaving frame is by design here, as done-definitions
+    records, so it is not scored as a staging-law violation.'
+  fail_modes_all_clear: 'F1 FROZEN no -- continuous whole-body action end to end. F2 STAND-ONLY no --
+    see S2. F3 SCENE BREAK / second figure / extra face: no cut, no second figure, no extra face, and
+    notably nothing grew in the large flat sky the plate guard flagged. F4 MORPH/TELEPORT no -- he is
+    one continuous body throughout. F5 CAMERA MOVE no -- see below, measured carefully. F6 STYLE BREAK
+    to photoreal/3D no -- clean ink linework and flat cel shading hold the whole way.'
+  f5_camera_measured_honestly: 'PASS. The first camera measurement I ran was WRONG and is discarded
+    rather than quoted: correlating frame-edge strips against f000 gave ~0.00, which looked like a
+    violent camera move and is actually the palette collapse below destroying pixel correlation. Redone
+    among POST-COLLAPSE frames only, edge-strip correlation against f016 holds at 0.96 / 0.92 / 0.92 /
+    0.81 / 0.92 / 0.92 at f024-f096. No translation. A horizon-row detector reads 255 at f016 and 214
+    from f040 on, but that detector re-locks onto a different gradient once he stands up, so it is
+    reported and NOT treated as evidence of a move.'
+the_defect_the_bar_did_not_name:
+  what_happens: 'THE PLATE IS ABANDONED IN THE FIRST EIGHT FRAMES. Mean absolute RGB distance from the
+    f000 plate: f001 25.1, f002 45.8, f003 62.1, f004 76.5, f005 79.2, f008 80.7 -- then a plateau
+    (f016 83.3, f096 87.3). 92% OF THE TOTAL DRIFT IS COMPLETE BY FRAME 8, 95% by f016. Concretely:
+    the plate opens on a blue sky over a green meadow with a dark blue-violet cloak, and by f008 it is
+    an amber-brown sky over a dry brown field with an ORANGE patchwork cloak. The sky band alone moves
+    102 levels. It is a continuous ramp, not a cut -- which is why F3 does not fire.'
+  why_it_is_not_scored_as_a_fail: 'Because this bar never asked for plate fidelity. Its clauses are
+    S1/S2/S3 and F1-F6, and a colour collapse is none of them. Failing it here would be widening a bar
+    after seeing the pixels, which is the one thing this lane must not do -- the same discipline
+    applied to ep2-b18-tremble-s20260873 earlier tonight, in the opposite direction. Recorded as the
+    gap it is.'
+  my_own_prompt_is_partly_responsible: 'Owned, not hidden: I put "afternoon light warming toward amber"
+    in the POSITIVE prompt, copied from shots.md. I invited a warm shift. The engine took that
+    invitation and also dried the grass and recoloured the garment, which is a change to the WORLD and
+    not to the light -- but the next attempt must remove that clause before blaming the engine for all
+    of it. One variable.'
+  the_light_versus_drawing_rule: 'By the rule established on 2026-08-18 -- a change in the LIGHT is a
+    caveat, a loss of the DRAWING is a failure -- the DRAWING is fully intact here: linework is clean,
+    cel shading holds, every blade and fold is still drawn. So this is formally a caveat. I record that
+    the rule sits awkwardly on this clip, because ground cover and garment colour changing is more than
+    light, and the rule was written for a bloom rather than for a world swap.'
+  usability: 'As it stands this take cannot cut against neighbouring beat-17 material, which lives in
+    the plate''s blue-and-green afternoon. That is a usability statement, not a re-score.'
+the_finding_that_generalises:
+  i2v_conditioning_boundary: 'This is the cleanest instance we have of an I2V conditioning-boundary
+    collapse, and it lands exactly where the 0818 sampler research predicts. LTX''s VAE temporal
+    quantum is 8 pixel frames: frame 0 IS the conditioning image (latent 0) and pixel frames 1-8 are
+    latent 1. Our drift is 92% complete by f008 -- i.e. the model walks away from the plate inside the
+    FIRST latent step and then holds the new look steady for the remaining 88 frames. That is not a
+    seed effect and no reseeding will address it.'
+  cross_check_against_the_cold_open: 'Measured tonight on all eight cold-open clips as well, and the
+    honest result there is NEGATIVE and is recorded in
+    pipeline/research/latent-boundary-cold-open-0819.md: every cold-open seed front-loads into latent
+    1, INCLUDING the one that passes, so front-loading is a property of this recipe rather than the
+    thing that separates pass from fail on that beat. Beat 17 is the clean case; the cold open is not.'
+what_this_licenses: 'A SECOND beat-17 sample with ONE variable changed -- the amber clause removed from
+  the positive prompt -- and with a PLATE FIDELITY clause pre-registered in its bar. It does NOT
+  license a reseed (the action rendered on the first try; the seed is not the problem), a bar edit
+  here, or any promotion of this take into the cut. The restaged line is now PROVEN renderable, which
+  is the question this job existed to answer.'
+follow_ups_named:
+- 'Next beat-17 spec: pre-register a plate-fidelity clause (mean RGB distance from the init at f008 and
+  f096, with a stated ceiling). Every beat-17 bar so far has scored the ACTION and left the WORLD
+  unmeasured, which is how an orange cloak passed a bar.'
+- 'Remove "afternoon light warming toward amber" from the positive prompt. One variable, next sample.'
+- 'The knob the research names for this defect is start-frame conditioning strength. It is NOT exposed
+  by pipeline/ltx_i2v.py -- there is no --init-strength -- so reaching it is a code change and a
+  daytime decision, same conclusion as the guidance-schedule question in
+  pipeline/research/guidance-schedule-feasibility-0818.md.'
