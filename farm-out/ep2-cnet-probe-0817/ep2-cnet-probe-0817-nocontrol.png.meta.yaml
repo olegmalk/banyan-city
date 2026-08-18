@@ -1,0 +1,34 @@
+# Capability-probe provenance (7.2), written AT RENDER TIME by
+# controlnet_probe.py on the rtx5090. NOT a take, NOT a candidate.
+platform: local-gpu (rtx5090)
+task: ep2-cnet-probe-0817
+arm: nocontrol
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLPipeline (text2img, NO control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260817
+cost_usd: 0
+controlnet: none (baseline arm; the metric's sanity check)
+repo_commit: 072498e14dd20870701f034b579e70ef270a0c48
+model_load_seconds: 5.0
+render_seconds: 9.6
+rendered_utc: 2026-08-17T12:39:54Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  A CAPABILITY PROBE, not a take and not canon. Never takes a canon
+  filename, is not published, not posted, not assembled. Its prompt is
+  the probe's own and is not any beat's approved wording.
+leaf_count_note: >-
+  LEAF COUNT IS NOT MEASURED OR CLAIMED HERE. Count is held at two in
+  every control arm and only POSITION varies, because the leaf-count
+  experiment belongs to another lane. No verdict about the founder's
+  two-leaf bar may be read from this frame.
+measurement: >-
+  Binding is scored by pipeline/controlnet_probe.py --measure as
+  bind_ratio = mean|grad| inside the hint's dilated strokes / mean
+  inside the same mask mirrored in x. Pre-registered: arm nocontrol in
+  [0.85,1.15] or the metric is void; left and right each >1.25 to pass.

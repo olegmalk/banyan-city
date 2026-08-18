@@ -1,0 +1,43 @@
+# Capability-probe provenance (7.2), written AT RENDER TIME by
+# controlnet_probe.py on the rtx5090. NOT a take, NOT a candidate.
+platform: local-gpu (rtx5090)
+task: ep2-cnet-probe-0817
+arm: left
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260817
+cost_usd: 0
+controlnet: xinsir/controlnet-scribble-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition)
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 0.8
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: pipeline/control/seedling-2leaf-0817.png
+control_image_sha256: ccc1a7aaa4fb21f0c294bd574cf566e5ad16ccb06531e82ad74643d46ed82eca
+control_polarity: white-on-black
+control_authored_by: pipeline/author_scribble.py (PIL, no model, no photo-derived edge map)
+repo_commit: 072498e14dd20870701f034b579e70ef270a0c48
+model_load_seconds: 6.3
+render_seconds: 13.8
+rendered_utc: 2026-08-17T12:40:18Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  A CAPABILITY PROBE, not a take and not canon. Never takes a canon
+  filename, is not published, not posted, not assembled. Its prompt is
+  the probe's own and is not any beat's approved wording.
+leaf_count_note: >-
+  LEAF COUNT IS NOT MEASURED OR CLAIMED HERE. Count is held at two in
+  every control arm and only POSITION varies, because the leaf-count
+  experiment belongs to another lane. No verdict about the founder's
+  two-leaf bar may be read from this frame.
+measurement: >-
+  Binding is scored by pipeline/controlnet_probe.py --measure as
+  bind_ratio = mean|grad| inside the hint's dilated strokes / mean
+  inside the same mask mirrored in x. Pre-registered: arm nocontrol in
+  [0.85,1.15] or the metric is void; left and right each >1.25 to pass.

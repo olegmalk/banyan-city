@@ -229,3 +229,65 @@ artifacts:
   - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-left.png
   - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-right.png
   - C:\banyan-farm\cnet-probe-0817\out\ep2-cnet-probe-0817-polarity.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the morning lane. Scored against the bar
+# this spec pre-registered in code (controlnet_probe.py: A_LO/A_HI = 0.85/1.15,
+# BIND_MIN = 1.25) before any pixels existed. The bar is NOT edited here.
+#
+# READ THIS FIRST: THIS JOB RAN. It ran on 2026-08-17 at 12:39-12:41Z and every
+# arm completed. The repo did not know, and two later documents say it never
+# fired, because THIS SPEC HAS NO PUBLISH STEP -- it declares artifacts under
+# C:\banyan-farm\cnet-probe-0817\out\ and nothing ever copies them to
+# C:\banyan-farm\courier-box\farm-out\, which is the only path by which a box
+# result reaches this tree. The four renders and their sidecars sat on the box
+# for two days. They are now published to farm-out/ep2-cnet-probe-0817/ with a
+# sha256 manifest computed on the pulled bytes.
+# ============================================================================
+verdict: PASS. The condition BINDS on this checkpoint, and it binds far past the bar.
+verdict_measured:
+  read_how: 'pipeline/controlnet_probe.py --measure on the pulled outputs -- the probe''s own
+    metric, run on CPU, $0, no weights and no GPU. The four renders were then OPENED and looked
+    at side by side (farm-out/ep2-cnet-probe-0817/EVIDENCE-cnet-binds-0819.png), because a metric
+    agreeing with me is not a sample. --selftest passes all 10 invariants on this machine.'
+  metric_sane: 'PASS, and this gate had to clear first or every other number is void. Arm
+    nocontrol reads bind_ratio 1.012 (grad 18.45 inside the hint mask, 18.22 in the same mask
+    mirrored), inside the pre-registered [0.85, 1.15]. With no ControlNet attached the metric
+    cannot tell the hint region from its mirror -- which is exactly what it must do.'
+  binds_left: 'PASS. 35.363, against a bar of >1.25. Inside the hint''s strokes the mean gradient
+    is 39.96; in the mirrored mask it is 0.64.'
+  binds_right: 'PASS. 21.530, against a bar of >1.25. 35.81 inside, 1.19 mirrored. The mirrored
+    hint moves the drawn plant with it, so this is the condition steering the frame and not a
+    fixed compositional habit of the checkpoint.'
+  polarity: 'white-on-black CONFIRMED (arm polarity reads 0.999 on an inverted hint -- neutral,
+    i.e. the inverted hint carries no signal). The hints authored by pipeline/author_scribble.py
+    are the right way round.'
+  looked_at: 'The two control arms draw a green two-leaf seedling whose stem line, leaf splay and
+    horizontal position trace the authored stroke, on a plain cream ground. The nocontrol arm at
+    the same seed and prompt puts a seedling somewhere else entirely, inside a full illustrated
+    scene with sky, water and scattered marks. The hint decides the drawing.'
+observed_not_scored: 'NOT A CLAUSE, and it matters for anything built on this. At
+  controlnet_conditioning_scale 0.8 with a SPARSE hint, the condition does not merely place the
+  subject -- it flattens the whole frame. Both control arms lost the environment the uncontrolled
+  arm invented. That is a feature if the goal is to pin a composition and a defect if the goal is
+  to change one region of an existing picture; the second needs a mask, not a stronger hint.'
+licence_note: 'Clean. Base cagliostrolab/animagine-xl-3.1 (CreativeML Open RAIL++-M), control net
+  xinsir/controlnet-scribble-sdxl-1.0 (apache-2.0, no attribution condition). The hints are drawn
+  by pipeline/author_scribble.py with PIL -- no photo-derived edge map and no annotator, so the
+  lllyasviel/Annotators landmine (B01-R9-PLAN.md 9, DO NOT USE FOR CANON) is not touched.'
+what_this_settles: 'The question the cache crosswalk left open in its own closing words -- "What is
+  NOT established by any of the above: that the condition BINDS" -- is settled affirmatively.
+  Hand-authored spatial structure controls what this checkpoint draws and where. Compatibility was
+  already known; capability now is too.'
+what_this_licenses: 'It licenses AUTHORING A COMPOSITION with a hand-drawn hint. It does NOT
+  license the job it was fetched for tonight: see pipeline/b08-arm-route-0819.md, which finds that
+  beat 08 does not have an arm-shaped hole to fill. It also does not license an inpaint or img2img
+  use without a further sample -- no driver in this tree pairs a ControlNet with a mask, and the
+  frame-flattening observed above is precisely the failure that would appear if one were bolted on
+  without measuring the pixels outside the mask.'
+process_defect_found: 'This spec declares artifacts: but has no publish step, so its results could
+  not reach the repo. Every other job of this era ends with an inline python -c that copies named
+  files to courier-box/farm-out and writes a .sha256. box_enqueue.output_path_problems checks that
+  declared artifacts are NAMED by a step; it does not check that any step COPIES them off the box.
+  Named, not built -- a queue-time warning for a gpu job with no courier destination would have
+  saved two days here.'

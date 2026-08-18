@@ -1,0 +1,196 @@
+# Beat 08's pointing arm — the route, decided 2026-08-19
+
+**Decision: no job filed. Not for want of a tool — the tool question got answered
+tonight, and favourably — but because beat 08 does not have an arm-shaped hole to
+fill. The init that survived 0.30 has both of the guard's hands committed to the
+clipboard, so any arm added to it is a *third* arm.**
+
+This closes the "source an arm for this init" framing that the boardcomp verdict
+opened, and reopens the beat one level up, at staging. $0 spent. Nothing queued.
+
+---
+
+## 1. Where this started
+
+`ep2-b08-boardcomp-0818` returned `PASS-ON-PURPOSE` on 2026-08-18, exactly as its
+own verdict rule defined it:
+
+> `B4a` PASSES and `B4b` FAILS as pre-registered. THE COMPOSITE/INIT ROUTE IS
+> PROVEN FOR BEAT 08.
+
+- **B4a — board down, grips survive** — PASS, and better than survive: the cloak
+  came back as continuous brown cloth with plausible folds and the fist as a drawn
+  fist with knuckles.
+- **B4b — point gesture** — FAIL, pre-registered as an expected FAIL. `0.30`
+  finishes what the init contains and does not originate a limb.
+- B1, B2, B3, B5 — all PASS, measured: mean |diff| **10.61 inside** the mask,
+  **0.04 outside**, only **231 px** of the untouched 80% of the frame differing by
+  more than 8 levels.
+
+Its `what_this_settles` named the remaining gap in one line — *"SOURCING AN ARM.
+Not the plate, not the compositor, not the denoise strength"* — and
+`composite-init-pattern.md` §9b named two candidate levers:
+
+> Beat 08's staging needs a redrawn arm — **pose-conditioned generation, or a
+> plate campaign that stages the point** — and no further composite of this plate.
+
+Tonight's job was to read the ControlNet probe, decide between those two, and fire
+at most one sample.
+
+## 2. The probe: it ran, it was stranded for two days, and it PASSES
+
+**The repo's record was wrong.** `pipeline/jobs/ep2-cnet-probe-0817.yaml` carried no
+outcome block, two commits said it was deliberately held back
+(`4d41a7f6`, `88f9a743`), the driver commit said *"Not run yet"*, all five
+`C:\banyan-queue\*` directories are empty, `autofill.json` reads `backlog_empty`,
+and a repo-wide `find` for `*cnet*` returned exactly two files — the spec and a
+research note. Every repo-side signal says it never fired.
+
+**The box says otherwise.** `C:\banyan-farm\cnet-probe-0817\out\` holds all four
+arms and all four sidecars, written **2026-08-17 12:39–12:41Z**. They are now
+pulled and published to `farm-out/ep2-cnet-probe-0817/` with a sha256 manifest
+computed on the pulled bytes.
+
+**Why nobody knew, and it is a process defect worth fixing:** *this spec has no
+publish step.* It declares `artifacts:` under `C:\banyan-farm\cnet-probe-0817\out\`
+and nothing ever copies them to `C:\banyan-farm\courier-box\farm-out\`, which is the
+only path by which a box result reaches this tree. `box_enqueue.output_path_problems`
+checks that declared artifacts are *named* by some step; it does not check that any
+step *couriers* them off the box. **Named, not built:** a queue-time warning for a
+GPU job with no courier destination would have saved two days here.
+
+**Scored against its own bar, which was written in code before any pixels existed**
+(`A_LO, A_HI = 0.85, 1.15`; `BIND_MIN = 1.25`), by running the probe's own
+`--measure` on CPU at $0:
+
+| arm | `bind_ratio` | bar | |
+|---|---|---|---|
+| `nocontrol` | **1.012** | must be in [0.85, 1.15] | metric sane, not void |
+| `left` | **35.363** | > 1.25 | PASS, 28× the bar |
+| `right` | **21.530** | > 1.25 | PASS, 17× the bar |
+| `polarity` | 0.999 | — | white-on-black confirmed |
+
+**And the pixels were opened, because a metric agreeing with me is not a sample**
+(`farm-out/ep2-cnet-probe-0817/EVIDENCE-cnet-binds-0819.png`). Both control arms
+draw a green two-leaf seedling whose stem line, leaf splay and horizontal position
+trace the authored stroke. Mirroring the hint moves the plant with it. The
+uncontrolled arm, at the same seed and the same prompt, puts a seedling somewhere
+else entirely inside a full illustrated scene. **The hint decides the drawing.**
+
+So the crosswalk's own closing caveat — *"What is NOT established by any of the
+above: that the condition BINDS"* — is now settled affirmatively, and the licence
+position is clean: base is OpenRAIL++-M, the scribble net is Apache-2.0 with no
+attribution condition, and the hints are drawn by `author_scribble.py` with PIL, so
+the `lllyasviel/Annotators` landmine is never touched.
+
+**One thing observed and deliberately not scored:** at `conditioning_scale 0.8` with
+a sparse hint, the condition does not merely place the subject — **it flattens the
+whole frame.** Both control arms lost the environment the uncontrolled arm invented.
+That is a feature when the goal is to pin a composition, and a defect when the goal
+is to change one region of an existing picture.
+
+## 3. Why no b08 arm sample was filed anyway
+
+The ruled sample was: take the signed board-lowered composite as init, condition a
+pointing arm onto it, carry B1–B5 with B4b now expected to PASS.
+
+**I opened the init at full size before designing anything, as
+`composite-init-pattern.md` §10 step 4 requires. It cannot host that gesture.**
+
+`farm-out/ep2-b08-boardcomp-0818/08-boardlowered-comp-0818.png`, 832×1216,
+sha256 `487ef4e8…`:
+
+1. **Both of the guard's hands are on the board.** `HAND_L` (545,505)-(645,618) and
+   `HAND_R` (693,505)-(793,618), one at each lower corner of the clipboard, fingers
+   curled over its front face. Visible, not inferred.
+2. **A pointing finger requires a hand that is not holding something.** Adding an
+   extended arm while both hands stay gripped draws a **third arm** — and
+   `extra arms` is in this beat's own negative prompt.
+3. **So B4a's success is what forecloses B4b on this init.** The clause the sample
+   existed to protect — *"both hands still grip its edges"* — is the same fact that
+   makes the gesture unreachable. That is not a defect in the sample; it is the
+   sample telling us the ask was mis-shaped.
+
+This sits *on top of* §9b's three already-published blockers, each fatal alone and
+all three re-confirmed by eye tonight: no pointing hand exists in the plate (the
+near hand is a four-finger back-of-hand grip, and no rotation of a curled fist is a
+point); no forearm exists to move (the near arm is under the cloak and the cream
+under-robe, ~230 px of reach required between `HAND_L`'s edge and the goblin's belly
+at (315, 588)); and the path is occupied (the goblin's own green fist,
+x 355–475 / y 585–700, sits dead centre of the gap — I cropped it and it fills
+almost the entire span between his belt and the guard's robe).
+
+**Conditioning does not solve any of those.** The probe proves a hint controls what
+the model *draws*; it says nothing about a hint persuading a checkpoint to give an
+existing figure a limb it does not have, inside a mask, at low strength, matching
+that figure's cloak and lineart. Filing that as "one sample" would have meant
+shipping two pieces of code nobody has run — there is **no driver in this tree that
+pairs a ControlNet with a mask** (every driver is inpaint-without-control or
+control-without-inpaint), and **no hint tool that can draw an arm**
+(`author_scribble.py` draws exactly two hardcoded shapes, a stem and lens leaves).
+Two unproven mechanisms plus a fourth structural blocker is not a sample, it is a
+guess with a GPU attached.
+
+**An empty queue on an honest "no ruled route yet" is the correct outcome here, and
+this is the reasoning that makes it honest rather than tired.**
+
+## 4. What remains, with what is now known about each
+
+### Route A — a plate campaign that stages the point *(the live one)*
+
+Generate a **new two-figure plate in which the guard is already pointing** — one
+hand on the board at his waist, the other extended toward the goblin's belly. This
+is the only route that resolves the two-hands problem, because the pointing hand has
+to be drawn by something that knows it is a hand, not inked in as geometry.
+
+Now cheaper than it was yesterday, because of §2: a hand-authored hint can pin the
+composition that free-running text2img has never produced, and **it needs no new
+driver at all** — `controlnet_probe.py` already runs text2img + control, and the
+frame-flattening observed there is a *feature* for this use. What it still needs:
+
+- **A hint that can draw two standing figures**, a board at waist height, and one
+  extended arm. `author_scribble.py` cannot; its two shapes are hardcoded.
+  `pipeline/attribute_mask.py` already has the right primitive grammar
+  (`band:` is documented as *"a thick line segment — a bridge, a temple arm"*, plus
+  `ellipse:`, `quad:`, `ring:`, `box:`) and would need a way to emit a hint PNG
+  rather than a mask. That is the smallest piece of new code on the table.
+- **Re-clearing B1, B2, B3 and B5**, which the current init already passes. A new
+  plate puts the ground plane, the guard's adulthood, the goblin's identity and the
+  scale relationship back in play. That is the real cost of this route and it should
+  be stated before it is started, not after.
+- The standing constraint that beat 08's `done_when` wants **three figures** and the
+  only passing plate we have holds **two** is untouched by any of this.
+
+### Route B — ControlNet + masked inpaint *(needs its own probe first)*
+
+Only worth opening if Route A's plate campaign stalls. It would need a driver that
+does not exist, and the frame-flattening in §2 is precisely the failure that would
+show up outside the mask. **It is a separate one-sample question with its own bar**,
+and it must not be smuggled in as an implementation detail of a beat-08 job.
+
+### Route C — further compositing of this plate *(closed)*
+
+`composite-init-pattern.md` §9b already ran the cut-and-rotate attempt and rejected
+it on pixels (`EVIDENCE-arm-attempt-rejected.png`: it pasted a rotated crop
+containing a *second clipboard* onto the goblin's chest). Inking a `band:` from the
+guard's shoulder to the belly fails the same way for a new reason — it would cross
+the lowered board, emerge from no shoulder, and still leave both hands gripped.
+**A compositor cannot manufacture a limb the plate never drew, and it certainly
+cannot free a hand that is drawn holding something.**
+
+## 5. What was actually done tonight
+
+- Read the probe's spec, driver, queue state and box working directory. **Found the
+  outputs stranded on the box** and pulled them.
+- Scored them with the probe's own pre-registered metric ($0, CPU) — **PASS**, and
+  opened the four renders side by side.
+- Published them to `farm-out/ep2-cnet-probe-0817/` with a sha manifest, built
+  `EVIDENCE-cnet-binds-0819.png`, and appended a verdict to the spec **without
+  editing its bar**.
+- Opened the beat-08 composite at full size and **rejected the ruled sample on the
+  init rather than on a metric.**
+- **Filed nothing. Queued nothing. Spent nothing.**
+
+Two things for whoever picks this up: the courier-step gap in §2 is a real
+`box_enqueue` warning waiting to be written, and Route A's hint tool is the smallest
+piece of new code that would move beat 08 at all.
