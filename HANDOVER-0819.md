@@ -181,18 +181,20 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 - **The 8 files in `C:\banyan-queue\ready` are not work.** They are all `.HOLD`,
   `.HOLD-wrong-action` or `.DUP-already-ran` suffixed and the runner correctly
   reports `ready=0`. Do not be fooled by the file count as I nearly was.
-- **banyan.city** — up, 200, but **stale at end of shift, and this touches the one
-  founder question.** Last `Ready` deploy is 23m old; behind it sit one `Building` at
-  17m and five `Queued`. **I did not cancel anything**, on the predecessor's evidence
-  that the one clone allowed to run finished at 41:22 while all three that were killed
-  never did. Let a slow clone run.
-- **Consequence to know before you point Roman at the cold open:** production still
-  serves the *pre-correction* text of `review/ep2-cold-open-0818/`. The clip, the
-  frames and the six-seed sheet are unchanged and correct — the only thing missing is
-  the paragraph replacing "three independent axes" with the four-of-five reading. The
-  page is still fine for the taste call; it just carries superseded reasoning until
-  the queue drains. Verified live: the old sentence is still being served, the new one
-  is not. Re-check before handing him the link.
+- **banyan.city** — up, 200. The deploy backlog **cleared itself again**, which is now
+  the third time this pattern has resolved without intervention: it peaked at one
+  `Building` plus five `Queued` behind a 23-minute-old `Ready`, and drained to a
+  `Ready` 10m old with one build in flight. **I cancelled nothing**, on the
+  predecessor's evidence that the one clone allowed to run finished at 41:22 while all
+  three that were killed never did. That evidence is now stronger, not weaker. Let a
+  slow clone run.
+- **BUT the cold-open page is still serving pre-correction text**, and that is the one
+  founder question. Verified at handover with a cache-buster: the page still says
+  "three independent axes" and not the four-of-five correction, `x-vercel-cache: HIT`,
+  despite a Ready deploy since the commit. It is committed and will land as the
+  backlog finishes clearing. The clip, frames and six-seed sheet are unchanged and
+  correct, so the page is still usable for the taste call — it just carries superseded
+  reasoning. **Re-check the live text before handing Roman the link.**
 - **Spend** — $0. Everything was local GPU, local ffmpeg, and reading.
 
 ## 7. Where to look
