@@ -440,9 +440,19 @@ what_this_settles: 'ONE INTEGER RE-ROLLS THE WHOLE TAKE. Same seed 20260817, sam
   on 2026-08-17 -- was picked at CRF 33; re-rendering it at 10 would not sharpen it,
   it would replace it with an unknown clip that has to be judged from scratch. The
   same warning applies to every other beat with a take already chosen at 33.
-  (b) BEAT 11''S HEAD TURN IS NOT A CODEC ARTEFACT. Four wordings, fourteen seeds and
-  now two conditioning qualities have all produced it. The one lever the record shows
-  as never actually tried is the wording''s own `gesturing at each other as they
+  (b) THE CODEC IS NOT THE LEVER ON THIS SEED''S TURN -- a narrower claim than it
+  first looks, and the narrowing is this lane''s own correction. THE TURN IS NOT
+  UNIVERSAL: the seed-volume lane''s re-judgement records ep2-b11-leave-w4-s20260903
+  and s20260907 as SIX OF SIX with backs turned in every one of 97 frames, so at CRF
+  33 this defect already has a nonzero pass rate across seeds. What this sample shows
+  is that at the parent''s own seed, 20260817, a cleaner init did not convert the turn
+  into a clean rear view -- it kept it and drew it better. ONE SAMPLE AT ONE SEED
+  CANNOT MEASURE A RATE and this lane does not claim it did; a claim that CRF 10 turns
+  less often would need the seed set re-run, which is a batch and is not licensed by
+  anything here. What is closed is the hypothesis this spec was filed on: that the
+  smeared conditioning still was WHY guard B turns. It is not, because the turn
+  survives the still arriving clean. The lever the record shows as never actually
+  tried is the wording''s own `gesturing at each other as they
   argue` clause: ep2-b11-leave-w4brake-0817''s header says it was KEPT deliberately
   because W3 showed no negative could suppress the turn -- but asking for two men to
   argue with each other and then forbidding a face is asking the picture to contradict
@@ -469,3 +479,24 @@ is_this_clip_cuttable: 'NO, AS IT STANDS, and that is a judgement about this fil
   plate_ack, no leaf, no lineage entry, nothing written to done-definitions.yaml or
   to any cut. Beat 11''s standing candidate is unaffected and remains the author''s
   call (R4).'
+limits_of_this_sample: 'ONE CLIP, ONE SEED, ONE VALUE. It compares CRF 33 with CRF 10
+  at seed 20260817 on wording W4 and nothing else. It cannot and does not measure a
+  rate, an optimum between 10 and 33, or what the same change would do to a different
+  seed or a different beat. It also inherits the stated limit of its own instrument:
+  the fixed HEAD_B box holds guard B''s head only to about f030, so its late numbers
+  were not quoted as evidence, and the late reads are by eye on full frames instead.'
+recovered_plates_looked_at_NOT_scored: 'Three beat-11 plates were recovered off
+  macbook2 by a peer lane on 2026-08-19 and landed unjudged in farm-out/ep2-b11-mac-plate-0818/
+  (r1s1, r1s2, r1s3, seed 20260816, animagine-xl-3.1, each with its own sidecar
+  carrying the seven-term plate bar). THIS LANE OPENED ALL THREE SO THEY ARE NOT
+  UNSEEN, and deliberately does NOT score them -- scoring a plate against that bar is
+  its own unit of work with its own reading, and a glance is not a verdict. What the
+  glance showed, as raw description: r1s1 has ONE figure, not two; r1s2 has two, but
+  one near and one far off across the field, which is not a pair walking away
+  together; r1s3 is the closest of the three -- two men, both from behind, both in
+  tan-brown robes with white sashes, on a path in tall grass -- with the left man
+  reading much smaller and further back than a shoulder-to-shoulder pair would. None
+  of the three obviously improves on the r3 plate this job used, which stages both men
+  together at a matched scale. AND ON THIS BEAT''S EVIDENCE THE PLATE IS NOT WHAT IS
+  WRONG: two clips off r3 at two conditioning qualities both held both men''s hair,
+  costume and colour separation for as long as they were in frame.'
