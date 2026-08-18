@@ -4284,6 +4284,146 @@ REVS = {
 # genomes/ untouched.
 REVS[(14, 7)] = dict(REVS[(14, 6)], seed=20260820)
 
+# ==========================================================================
+# 2026-08-19. BEAT 14 REVISION 8. THE RESTAGE: EMBARRASSMENT PUT IN THE BODY
+# INSTEAD OF ASKED FOR IN A WORD. WRITTEN BEFORE THE PIXEL EXISTS.
+# ==========================================================================
+# THE FINDING THAT FORCES THIS AND IT IS SETTLED, NOT SUSPECTED. Three data
+# points, quoted from ep2-b14-mac-motion-s2-0818.yaml's own verdict:
+#   * plate seed r1s3, recorded in done-definitions: "reads sullen rather than
+#     embarrassed";
+#   * motion seed 1 off that plate: "the face is flat, half-lidded, brows
+#     level. It reads SULLEN -- or defiant -- not caught-out";
+#   * motion seed 2, same plate, same prompt, same recipe, only the seed
+#     changed: "FAIL, and identically to seed 1 ... Second seed, same read."
+# The verdict's own conclusion: "THE SULLEN FACE IS STAGING, NOT SEED ... Settled:
+# re-rolling seeds will not buy an embarrassed face." So the one thing this rev
+# must NOT be is another seed, and the one thing it must not do is name the
+# emotion harder.
+#
+# WHY NAMING IT HARDER IS NOT AVAILABLE, AND THE FILE ALREADY KNEW. `embarrassed`
+# was in the BASE draft's positive and it is GONE by r5 -- five rungs of this
+# beat have run without it. The word was tried and the beat is still sullen. An
+# expression adjective on this checkpoint buys a face doing an adjective; it does
+# not buy a man who has just been caught. The instrument left is the BODY.
+#
+# ------------------------------------------------------------------
+# THE ONE VARIABLE: THE POSE CLAUSE. Everything else is r6, byte for byte.
+# ------------------------------------------------------------------
+#   `both clawed hands down at the bare earth, fingers picking at loose dirt,
+#    face turned away`
+#      ->
+#   `one clawed hand picking at loose dirt, hand behind head, head down,
+#    shoulders up`
+# The leading framing cluster (`from above, close-up, hands and dirt large in
+# frame`) is UNTOUCHED -- it is r5's one measured win and the founder's own r6
+# camera call, and moving it would confound this rev with that one. The cast
+# wording, the soil, the grass and the whole style tail are byte-identical to
+# r6. The negative is byte-identical to r3/r4/r5/r6's, restated per exit 6.
+#
+# WHY THAT PARTICULAR POSE AND NOT A DIFFERENT ONE. `hand behind head` is the
+# sheepish gesture -- the hand up to scratch the back of the head while the head
+# drops and the shoulders come up -- and it is the single most legible
+# caught-out cue in the drawing tradition this checkpoint was trained on. It is
+# also legible WITHOUT the face, which matters: `face turned away` is what the
+# beat has been drawing and the fix cannot depend on a face the framing may not
+# hold. And it carries the one thing `face turned away` never did -- a REASON
+# the face is down. A bowed head over dirt reads sullen because nothing in the
+# frame says he is reacting to anybody. A hand up behind the head says he is.
+#
+# IT IS A BOORU-NATIVE ATOMIC TAG, AND THAT IS WHY IT IS THIS PHRASE AND NOT A
+# BETTER SENTENCE. r6's own note is the precedent: `from above` and `close-up`
+# were chosen over the more descriptive `close-up from above` because "the
+# compound is not a trained tag pair, where the whole point of the rev is that
+# the angle must BIND". `hand behind head` is a real Danbooru tag. `hand behind
+# his neck` and `one hand at the nape` are prose, they are 2-4 tokens dearer,
+# and on this beat's budget they do not fit anyway. Measured on the venv's real
+# CLIPTokenizer against r6's exact positive (77/77, zero headroom):
+#   `... the other hand up behind his neck, head ducked, shoulders raised` .. 81  REFUSED
+#   `... other hand behind his neck, head ducked, shoulders up` ............. 79  REFUSED
+#   `... hand behind his neck, head ducked, shoulders up` ................... 78  REFUSED
+#   `... hand behind neck, head down, shoulders up` ......................... 76
+#   `... hand behind head, head ducked, shoulders up` ....................... 77  (zero headroom)
+#   `... hand behind head, head down, shoulders up` ......................... 76  CHOSEN
+# The chosen line is the only candidate that is both booru-native and leaves a
+# token of headroom, which this file's whole subject is silently losing.
+#
+# IT KEEPS BOTH HALVES OF done_when, AND THAT IS THE CONSTRAINT THAT SHAPED IT.
+# done_when is "fingers at the dirt AND the glancing". Sending both hands to the
+# neck would buy the register by deleting half the beat. So ONE hand stays in the
+# dirt -- the beat's own subject, the reason a low framing was ever asked for --
+# and only the second hand moves. `hands and dirt large in frame` is unchanged
+# and P2 still scores exactly what it scored on r3-r7.
+#
+# THE R4 LINE, NAMED RATHER THAN STEPPED OVER. ep2-b14-mac-motion-s2-0818's
+# verdict says it licenses "NOTHING", and specifically that "a restage of beat 14
+# for the embarrassed glance is NOT ruled -- it is the founder's call under R4".
+# That line is right about MOTION and about the BEAT, and neither is filed here.
+# What it cannot mean is that the open question stays open with no pixels
+# attached to it: the founder's screening standard is taste-only, one question at
+# a time, ALWAYS WITH PIXELS, and the 2026-08-18 board put the restage half of
+# this question to him with nothing to look at. A $0 still is what turns an
+# argument into a card. THIS REV DECIDES NOTHING: no motion, no pick, no
+# plate_ack, no leaf, no lineage, nothing enqueued on any GPU queue. It draws one
+# picture so the call he already owns can be made on an image instead of on two
+# lanes' prose.
+#
+# THE BAR. P1, P2, P3, P4', P5, P6 and P7 ARE CARRIED FORWARD BYTE-IDENTICAL and
+# scored exactly as written on r3-r7 -- nothing softened, nothing tightened, and
+# P5 is NOT patched even though its confessed looseness is still on the record.
+# Carrying them is what makes "did the restage cost anything" answerable at all.
+# ONE AXIS IS ADDED, and adding an axis mid-ladder is normally forbidden in this
+# file, so the exemption is stated: r3-r7 are rungs of the P5 BACKGROUND ladder
+# and this is not a rung of it. It is a different question, and a question with
+# no axis cannot be answered by a picture.
+#   P8 READS CAUGHT-OUT. The judged clause, and it is judged BY EYE at 1x with
+#      no measure, because no measure this repo owns reads register. PASS needs
+#      a man who has just been caught at something: the lowered head and the
+#      hand up behind the head both present and legible, the shoulders up rather
+#      than slumped. EXPLICIT FAILS, from the three data points above: FLAT AND
+#      HALF-LIDDED (the sullen read), DEFIANT, SCOWLING or SLY (all three are
+#      recorded on this beat's draws in pipeline/loop/beat14-field-init-0817.md:
+#      "scowling, sly or sullen -- never embarrassed on all four draws"), and
+#      BLANK. A face that merely hides is NOT a pass -- hiding is what r1-r7
+#      already do.
+# NEW FAIL MODES NAMED IN ADVANCE, on top of Q1-Q11 which all still stand:
+#   Q12 THE SECOND HAND GOES SOMEWHERE ELSE -- to the face, the mouth, the ear,
+#       or off frame entirely. A hand that lands on the NAPE rather than the
+#       crown is a near miss and is reported as one; a hand at the FACE is a
+#       plain fail, because that is the thoughtful-hand trope beat 09 measured
+#       at 11 of 12 and it reads pondering, not caught.
+#   Q13 THE DIRT HAND IS LOST. One hand named instead of two may drop the
+#       ground contact the beat exists for. This is the cost that would make the
+#       trade a bad one and it is the first thing to look at.
+#   Q14 THE POSE GOES COY OR CUTE -- a bashful anime blush pose rather than a
+#       grown man caught out. `baby, child, chibi` are already in the negative;
+#       this is the same defect arriving through the staging instead of the cast.
+# ONE SAMPLE. One seed, one draw, opened and scored on its own before anything
+# else is filed on it -- and if P8 fails, the answer is that the BODY is spent
+# too and the next instrument is a reference or a mask, not a ninth wording.
+# $0, Apple MPS, nothing enqueued on the box.
+REVS[(14, 8)] = {
+    "prompt": (
+        "1boy, solo, from above, close-up, hands and dirt large in frame, "
+        "lean adult goblin man, green skin, bald head, "
+        "patchwork cloak, crouching low, one clawed hand picking at loose "
+        "dirt, hand behind head, head down, shoulders up, "
+        "patch of bare brown soil, tall green grass background, "
+        "masterpiece, best quality, very aesthetic"
+    ),
+    # Byte-identical to r3's, r4's, r5's and r6's, restated per exit 6.
+    "negative": (
+        "text, standing, walking, running, full body, wide shot, distant, "
+        "holding object, spear, staff, sword, stick, basket, broom, "
+        "2boys, baby, child, chibi, stitches, scars, tree, forest, house, "
+        "indoors, photorealism, 3d render, dark, night"
+    ),
+    # r6's seed, unchanged. The seed is the ONE variable this beat has already
+    # exhausted (two motion seeds, same read), so holding it fixed is what makes
+    # r8 comparable to r6 on the axis that matters.
+    "seed": 20260814,
+}
+
 
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer

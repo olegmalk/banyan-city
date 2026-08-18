@@ -65,6 +65,24 @@ def known_beats(repo_script="pipeline/plate_scratch.py"):
     return {int(x) for x in re.findall(r"^\s{4}(\d+): \{", src, re.M)}
 
 
+def known_revs(repo_script="pipeline/plate_scratch.py"):
+    """(beat, rev) pairs plate_scratch can actually merge.
+
+    Read from the file, like known_beats, so adding a rev there does not
+    silently fail here. Both spellings the file uses are matched: the entries
+    inside the REVS literal (`    (14, 6): {`) and the assignments appended
+    after it (`REVS[(14, 7)] = ...`).
+    """
+    import re
+    try:
+        src = open(repo_script, encoding="utf-8").read()
+    except OSError:
+        return set()
+    pairs = re.findall(r"^\s{4}\((\d+),\s*(\d+)\): \{", src, re.M)
+    pairs += re.findall(r"^REVS\[\((\d+),\s*(\d+)\)\]", src, re.M)
+    return {(int(b), int(r)) for b, r in pairs}
+
+
 def worker_alive(host):
     """Alive by the worker's OWN heartbeat, not by `ps` and not by a claim file.
 
@@ -113,11 +131,23 @@ def cmd_status():
               % (h, ("ALIVE  " if alive else "DEAD   ") + detail, "/".join(counts(h))))
 
 
-def file_job(host, beat, note="", seeds=1):
-    jid = "mac-b%02d-%s" % (beat, time.strftime("%m%d-%H%M%S"))
+def file_job(host, beat, note="", seeds=1, rev=1):
+    # THE REV HAS TO TRAVEL, AND FOR ONE DAY IT DID NOT. plate_scratch.py takes
+    # `--rev` and merges REVS[(beat, rev)] over DRAFTS[beat]; this filer only
+    # ever sent `--beat`, so every job it filed drew REV 1 -- the BASE draft --
+    # whatever the lane thought it had commissioned. On beat 14 that is not a
+    # near miss: the base draft is the r1 wording five rungs ago, and a lane
+    # asking for r8 would have got r1 back with an r8 story attached to it, with
+    # nothing in the output to say so (the sidecar records `revision`, so the
+    # evidence exists -- but only for whoever thinks to look). Same failure shape
+    # as the merge landmine plate_scratch guards at its own end: the test quietly
+    # does not test what you think.
+    jid = "mac-b%02d%s-%s" % (beat, "" if rev == 1 else "r%d" % rev,
+                              time.strftime("%m%d-%H%M%S"))
     job = {"id": jid,
            "argv": [VENV % (host, host), PLATE_SCRIPT.replace("~", "/Users/%s" % host),
                     "--beat", str(beat)]
+                   + ([] if rev == 1 else ["--rev", str(rev)])
                    + (["--seeds", str(seeds), "--i-have-seen-a-sample"] if seeds > 1 else []),
            "cwd": "/Users/%s/banyan-city" % host,
            "timeout_s": 1800,
@@ -139,6 +169,11 @@ def main():
     # only honest once a sample HAS been looked at; eight beats were sampled and
     # read on 2026-08-18 before this flag was used.
     ap.add_argument("--seeds", type=int, default=1)
+    # Applies to every beat in the call. A rev number is per-beat in
+    # plate_scratch, so --spread with --rev is refused below rather than
+    # silently filing rev N of beats that have no rev N.
+    ap.add_argument("--rev", type=int, default=1,
+                    help="revision of the inline draft (plate_scratch REVS[(beat, rev)])")
     ap.add_argument("--force", action="store_true",
                     help="file even if the worker looks dead (it will just sit there)")
     a = ap.parse_args()
@@ -156,6 +191,22 @@ def main():
               "Refusing: the run would load the model and then exit."
               % (unknown, sorted(have)))
         return 2
+    if a.rev != 1:
+        if len(beats) > 1:
+            print("!! --rev %d with %d beats. A rev number means something "
+                  "different in every beat's REVS table, so one flag cannot be "
+                  "right for all of them. File them one at a time." % (a.rev, len(beats)))
+            return 3
+        # Same refusal shape as the unknown-beat guard above, and for the same
+        # reason: plate_scratch exits 4 on a missing rev AFTER argparse but
+        # BEFORE the model loads, so this costs nothing there -- but the job
+        # still lands in `done` with rc=4 and looks like a render that ran.
+        revs = known_revs()
+        if revs and (beats[0], a.rev) not in revs:
+            print("!! plate_scratch.py has no rev %d for beat %d -- it knows %s. "
+                  "Refusing." % (a.rev, beats[0],
+                                 sorted(r for b, r in revs if b == beats[0])))
+            return 3
 
     live = []
     for h in ([a.host] if a.host else list(HOSTS)):
@@ -172,7 +223,7 @@ def main():
 
     for i, b in enumerate(beats):
         h = live[i % len(live)]
-        ok, jid, out = file_job(h, b, a.note, a.seeds)
+        ok, jid, out = file_job(h, b, a.note, a.seeds, a.rev)
         print("  %-10s beat %-3s %s %s" % (h, b, "filed" if ok else "FAILED", jid))
         if not ok:
             print("     ", out[:200])
