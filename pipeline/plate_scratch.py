@@ -4499,6 +4499,74 @@ REVS[(14, 8)] = {
     # r8 comparable to r6 on the axis that matters.
     "seed": 20260814,
 }
+# --------------------------------------------------------------------------
+# r8 SCORED, 2026-08-19, macbook3, seed 20260814, rc 0.
+# farm-out/ep2-b14-mac-plate-0819/14-the-defense-mac-plate-r8s1.png
+# sha256 ca0eb53ead9ad068da677ab38db2fa699abc6f0facb387b8f72b5f6dd3ed50e2
+# (sidecar confirms `revision: 8`, so the new --rev plumbing carried the right
+# draft -- the first thing checked, since the whole point of that fix was that
+# a wrong rev is invisible in the picture).
+#
+# VERDICT: FAILS. 4 of 8 terms hold. AND THE EXPERIMENT DID NOT RUN THE TEST IT
+# WAS DESIGNED TO RUN, which is a more useful thing to say than "the restage
+# failed" and is the difference between a finding and a story.
+#
+#   P1 LOW AND OVER THE GROUND ... PASS. Crouched, ground under him, in frame.
+#   P2 BOTH HANDS IN FRAME AND DOWN, NEITHER PARKED ON A KNEE ... FAIL, and by
+#      the exact clause this rev was steering away from. `hand behind head` did
+#      NOT BIND AT ALL -- there is no hand anywhere near his head. The second
+#      hand went to his KNEE, which P2 forbids by name. See the note below on
+#      why this must NOT be counted into the r7 ladder's P2 tally.
+#   P3 CONTACT .................. PASS. Fingers are IN the soil, clods thrown,
+#      not hovering. Q13 DID NOT FIRE: naming one hand instead of two did not
+#      cost the ground contact, which was the feared price of the trade.
+#   P4' DIRT WITHIN A GREEN FIELD  FAIL. Bare soil is present under the hand and
+#      green is present, but the term's own exclusion catches it: what is there
+#      is ISOLATED TUFTS -- individual blades at the corners against a pale
+#      ground -- and not green reading as a field he is in.
+#   P5 NO VACANCY, THE AXIS UNDER TEST ... FAIL. A flat pale cream wash fills
+#      the mid-frame on both sides of him, far larger than his torso. This is
+#      the FOURTH rung to fail P5.
+#   P6 HIS HEAD IS IN FRAME ..... PASS. In frame, turned down, available to
+#      animate.
+#   P7 ONE ADULT GOBLIN ......... PASS. One figure, adult proportions, green.
+#   P8 READS CAUGHT-OUT ......... FAIL, and on the exact fail this bar named in
+#      advance. The brow is furrowed and the eyes are narrowed into a downward
+#      GLARE. That is the SCOWLING read, listed with FLAT AND HALF-LIDDED,
+#      DEFIANT and SLY as explicit fails. It is now a fourth data point for the
+#      register defect, alongside plate r1s3 and the two motion seeds.
+#   Q12 THE SECOND HAND GOES SOMEWHERE ELSE ... FIRED, and WORSE than predicted.
+#      The bar predicted a near miss -- the hand landing on the nape instead of
+#      the crown -- and said that would be reported as a near miss. What
+#      happened is that the tag did not render at all.
+#   Q13 THE DIRT HAND IS LOST ... DID NOT FIRE.
+#   Q14 THE POSE GOES COY OR CUTE  DID NOT FIRE. No blush, no bashful pose, an
+#      adult throughout.
+#
+# WHY "THE BODY IS SPENT" WOULD BE AN OVERCLAIM, AND THE HONEST READING.
+# The rev's stop rule said: "if P8 fails, the answer is that the BODY is spent
+# too and the next instrument is a reference or a mask, not a ninth wording."
+# P8 failed, so THE STOP HOLDS -- there is no r9 and this lane fires no ninth
+# wording. But the REASON is not the one the stop rule anticipated. The
+# hypothesis was "a staged caught-out pose will not read as caught-out". That
+# was never tested, because the pose was never drawn: `hand behind head` was
+# ignored. What r8 actually measured is that A BOORU-NATIVE POSE TAG DOES NOT
+# BIND AT THIS FRAMING, on a prompt whose leading cluster is already spending
+# its authority on `from above, close-up, hands and dirt large in frame`. The
+# register question is therefore still OPEN, and it is open on a compositional
+# instrument rather than a lexical one -- an inpaint mask or an img2img init
+# over the arm region, or a reference pose. That is the same instrument r5's
+# stop rule named for the hands on a different axis, arrived at independently
+# from the other side. NAMED, NOT FIRED.
+#
+# !! DO NOT FOLD r8's P2 FAILURE INTO THE r7 LADDER. r6/r7 exist to answer
+# whether `from above` costs the hands, and their decision rule turns on P2
+# failing 3 of 3. r8 is NOT a rung of that ladder: its P2 failure is caused by
+# THIS REV'S OWN POSE EDIT, which deliberately moved a hand off the ground and
+# then failed to place it. Counting it would corrupt the one measurement r6 and
+# r7 were filed to make. r8's P5 failure is likewise not a fourth seed of r7 --
+# it is a different prompt.
+# --------------------------------------------------------------------------
 
 # ==========================================================================
 # 2026-08-19. BEAT 19 REVISION 2. THE HANDS, PUT SOMEWHERE POSITIVELY.
@@ -4557,6 +4625,116 @@ REVS[(19, 2)] = {
         "field, cinematic lighting, masterpiece, best quality, very aesthetic"
     ),
     # Byte-identical to r1's, restated per exit 6.
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
+        "close-up, portrait, holding fruit, fruit in hand, fruit on the "
+        "ground, large tree, thick branch, trunk, forest, house, indoors, "
+        "night, dark, photorealism, 3d render"
+    ),
+    "seed": 20260819,
+}
+# --------------------------------------------------------------------------
+# r2 SCORED, 2026-08-19, macbook1, seed 20260819, rc 0.
+# farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png
+# sha256 7075a4e8d8906711dbbab16bff950a7a689574070444d52eb9041073167693be.
+#
+# VERDICT: FAILS THE BAR -- AND THE ONE VARIABLE DID EXACTLY WHAT IT WAS FILED
+# TO DO. THE HANDS ARE FIXED.
+#   P3 NO CONTACT ............ PASS, cleanly. Both hands are folded on his
+#      knees, empty, nowhere near the plant. Q3 does not fire. `both hands on
+#      his knees` bound on the first draw, and the positive-placement law from
+#      beats 05 and 10 holds a third time -- the negative could not do this and
+#      six words in the positive could.
+#   P1 THE FIG IS ON THE PLANT  FAIL, AND WORSE THAN r1 ON THE COUNT. r1 had
+#      one fruit at the tip plus three beads down one stalk. r2 has TWO arcing
+#      stalks flanking him carrying roughly EIGHT purple figs between them.
+#      Attachment is still won -- every fruit is aloft, none is in the grass --
+#      and the count is lost by more.
+#   P6 THE PLANT IS THE SAPLING  FAIL, and this is a REGRESSION from r1's pass.
+#      There are two plants, not one, and they are drooping vine arcs, not a
+#      40 cm sapling with two leaves and a thin side-branch. Q6 still does not
+#      fire (no mature tree, no thick limb, no trunk).
+#   P2 PASS. P4 PASS, face visible and readable. P5 PASS, unmistakably purple.
+#      P7 PASS, one lean adult goblin.
+#   Q1 THE FIG ALREADY ON THE GROUND ... DID NOT FIRE, second draw running.
+#   NOTED, NOT SCORED: `kneeling` drifted to SITTING. No term asks for kneeling
+#      by name -- `body_position` is a flagged open question and sitting still
+#      satisfies the derivation (he is low, both hands are free, and beat 20
+#      opens on him picking the fig up from the ground). Recorded so the author
+#      can overturn it, not scored against a term that does not exist.
+#
+# WHAT THIS SETTLES: the hands were a WORDING problem and they are solved. The
+# fruit count is NOT, and two draws now say the same thing -- ask this
+# checkpoint for a thin stalk with a fig on it and it draws a bead-strung vine.
+# That is the r3 variable, named in advance at r2 and unchanged by this result.
+# --------------------------------------------------------------------------
+
+# ==========================================================================
+# 2026-08-19. BEAT 19 REVISION 3. THE PLANT, DESCRIBED FROM CANON INSTEAD OF
+# LEFT TO THE CHECKPOINT. WRITTEN AFTER r2 WAS DRAWN AND SCORED.
+# ==========================================================================
+# THE VARIABLE WAS NAMED BEFORE r2 EXISTED and r2 did not change it: "if r2
+# clears the hands and Q9 fires again, the next edit is the plant's description
+# -- the canon `two leaves and one thin side-branch` shape from style.md row
+# 002a/b/c, which also answers P6's recorded caveat that the fruit is hanging
+# from the stalk's TIP where canon puts it on a side-branch."
+#
+# ------------------------------------------------------------------
+# THE ONE VARIABLE: THE PLANT CLAUSE.
+#   `a tiny sapling rooted in the grass` + `one deep purple fig hanging from
+#    its thin side-branch`
+#      ->
+#   `a tiny sapling with two leaves and one thin side-branch` + `a single deep
+#    purple fig hanging from that branch`
+# ------------------------------------------------------------------
+# EVERY OTHER CLAUSE IS r2's, BYTE FOR BYTE, INCLUDING `both hands on his
+# knees` -- r2's win is carried, not re-tested. Negative and seed unchanged
+# from r1 and r2, so r1, r2 and r3 are three draws of ONE seed differing by
+# text alone.
+#
+# WHY THIS WORDING AND NOT A NEGATIVE. `fruit on the ground` and `thick branch`
+# are already in the negative and the extra fruit arrived anyway; there is no
+# negative tag for "eight figs instead of one" that the positive does not
+# invite first. This file's own record is that the negative has failed four
+# times now on nouns the positive left vague. So the plant is DESCRIBED:
+# style.md's node table, row 002a/b/c -- ~40 cm, "two leaves + one thin
+# side-branch", "the branch is where the fig grew and fell". `two leaves`
+# forecloses the multi-node vine geometrically: a plant with exactly two leaves
+# has nowhere to hang eight fruit. `a single ... fig` states the count in the
+# positive where it can bind. And `that branch` points the fruit at the
+# side-branch rather than the stalk's tip, which is P6's recorded caveat and
+# beat 20's recorded fault ("the plant improvised per beat rather than
+# described once") answered in the same six words.
+#
+# THE BAR IS UNCHANGED, P1-P7 and Q1-Q9 byte for byte. In particular P6 is
+# still NOT tightened to demand the side-branch even though this rev supplies
+# it -- a bar edited to match the rung it is about to score certifies nothing.
+# If r3 draws the side-branch, that is reported as an unscored gain, the way
+# r1's caveat was recorded rather than scored.
+#
+# 77/77. ZERO HEADROOM, SAID OUT LOUD, the way (14,6) says it: one more word in
+# this positive and `very aesthetic` -- render_wave_goblin.ANCHOR_TAIL -- leaves
+# without a message. Three cheaper spellings were measured on the venv's real
+# CLIPTokenizer looking for a token back and none of them buys one:
+#   `... sapling with two leaves and one thin side-branch` + `that branch` .. 77  CHOSEN
+#   `... sapling, two leaves and one thin side-branch` + `that branch` ...... 77
+#   `... sapling with two leaves and one thin side-branch` + `the branch` ... 77
+#   `... sapling, two leaves and one thin side-branch` + `the side-branch` .. 79  REFUSED
+# The one trim that WOULD have paid is dropping `deep` from `deep purple`, and
+# it is declined: `deep purple` is the canon colour phrase r1 and r2 both drew
+# with, the founder's 08-16 colour ruling is live, and moving the colour word in
+# the same draw as the plant word would put two variables in one picture.
+# ONE SAMPLE. $0, Apple MPS, nothing on the box.
+REVS[(19, 3)] = {
+    "prompt": (
+        "1boy, solo, lean wiry adult goblin man, green skin, bald head, "
+        "patchwork cloak, kneeling beside a tiny sapling with two leaves and "
+        "one thin side-branch, both hands on his knees, a single deep purple "
+        "fig hanging from that branch, his face visible, wide shot, sunny "
+        "grassy field, cinematic lighting, masterpiece, best quality, very "
+        "aesthetic"
+    ),
+    # Byte-identical to r1's and r2's, restated per exit 6.
     "negative": (
         "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
         "close-up, portrait, holding fruit, fruit in hand, fruit on the "
