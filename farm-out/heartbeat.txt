@@ -2714,3 +2714,4 @@
 15:54:03Z box-runner idle ready=0 failed=39
 16:04:06Z box-runner idle ready=0 failed=39
 16:14:10Z box-runner idle ready=0 failed=39
+16:23:56Z STARTED task=ep2-b01-nub-motion-0818-1787070221 attempt=1 on box-runner
