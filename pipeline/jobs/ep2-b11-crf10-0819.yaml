@@ -1,0 +1,359 @@
+# ep2-b11-crf10-0819 -- 2026-08-19, beat 11 lane. ONE SAMPLE, ONE INTEGER.
+#
+# THIS IS ep2-b11-leave-w4brake-0817 RE-RUN WITH `--image-crf 33` LOWERED TO 10.
+# Every other byte that reaches the machine is the parent's, carried across by a
+# script rather than retyped: the payload, the prompt string, the negative, the
+# seed 20260817, the plate and its asserted sha256, 97 frames, 24 fps, guidance
+# 2.0, distilled sigmas, two-stage, sequential offload and the publish step. The
+# derivation then REVERSED its own substitutions on the child and demanded the
+# parent back byte for byte, and got it, so "one variable" is a fact about this
+# file and not a claim in this comment.
+#
+# ------------------------------------------------------------------
+# WHY, IN NUMBERS THAT ARE NOT THIS BEAT'S.
+# ------------------------------------------------------------------
+# Tonight a sibling lane ran the same one-integer test on beat 09 (specs
+# ep2-b09-faceturn-0819 and ep2-b09-faceturn-crf10-0819, both with their verdicts
+# appended). Two byte-identical runs differing ONLY in that integer:
+#   f001->f002 face-crop interframe step   39.34 (crf 33)  ->   0.66 (crf 10)
+#   ten largest steps in the 121-frame clip  the ten EARLIEST  ->  spread f014-f094
+#   background-strip drift                  60.89           ->   9.89
+#   identity at f021                        an adult man had become a child
+#                                           ->  the same man, held for all 121 frames
+# The mechanism is read off our renderer, not guessed: ltx_i2v.py:1083 calls
+# _crf_roundtrip() on the conditioning still, which encodes and decodes it through
+# libx264 at `--image-crf` BEFORE it is VAE-encoded. The still the sampler sees is
+# not the still we chose.
+#
+# ------------------------------------------------------------------
+# WHY THE PARENT IS w4brake AND NOT THE BROKEN 0814 TAKE.
+# ------------------------------------------------------------------
+# The obvious target is the take done-definitions.yaml calls BROKEN -- beat 11's
+# `status_override_0815`, "total identity collapse away from the plate across
+# f16-f21", pick ep2-b11-finalB-0814. IT IS THE WRONG TARGET AND THE SAME FILE
+# SAYS WHY. `plate_is_miscast_0816` records that that take's conditioning plate
+# was opened and shows TWO BALD MEN IN BROWN OVERCOATS -- neither of the two
+# approved guards -- and `override_third_check_REREAD_0816` rules that no lever
+# which binds identity to a plate can help a plate that does not contain the
+# identity: "Do not spend another round on identity-holding levers for this beat
+# until it has a plate of the approved men." A codec cannot exonerate that plate,
+# and a clip conditioned on it could not be cut whatever came back.
+#
+# BEAT 11 MOVED ON, and the newer work is what this test belongs to. On 2026-08-17
+# the beat got its first cast-correct staged plate (r3s1, published as
+# farm-out/ep2-b11-plate-pub-0817/11-they-leave-mac-plate-r3s1.png, sha256
+# 425d59f6...; plate_scratch.py's DRAFTS[11] passes it 7 of 7) and four wordings
+# were run off it. The last, W4, is this job's parent, and its own `outcome:`
+# block scores it against beat 11's done_when: D1 two guards PASS, D2 walking away
+# PASS, D4 both present PASS, D5 field at frame one PASS, D6 no head or costume
+# change and no merge PASS -- and
+#   D3 backs turned, no face: FAIL. "Guard B turns his head into full profile
+#   with an open mouth from about f008 to f022 and is back to a clean rear view
+#   by f040. FOURTH WORDING, FOURTH TURN."
+# FIVE OF SIX, ONE FAULT, AND THE FAULT IS IN THE EARLY WINDOW. That window --
+# f008-f022 -- is the same stretch of frames in which the beat-09 pair showed the
+# init being discarded and the sampler substituting its own idea of the subject.
+# Confirmed here by eye before this spec was written: at f000 guard B is the back
+# of a sandy head; at f016 and f022 he has an eye, a nose and an open mouth.
+#
+# ------------------------------------------------------------------
+# THE LEVER, MEASURED ON THIS BEAT'S OWN PLATE BEFORE THE RENDER.
+# ------------------------------------------------------------------
+# The parent's init was round-tripped locally through the exact ffmpeg commands
+# _crf_roundtrip issues, at both values, and compared to the clean plate in
+# float64 (mean abs, 0-255). This is what the sampler was handed:
+#   CRF 33   FIG 5.741   HEAD_A 5.994   HEAD_B 6.589   BG 5.847   FULL 5.192
+#   CRF 10   FIG 1.565   HEAD_A 1.665   HEAD_B 1.636   BG 1.638   FULL 1.482
+# The whole 704x1280 conditioning frame survives CRF 33 as 17.6 KB. AND THE BOX
+# THE CODEC DAMAGES MOST IS GUARD B'S HEAD, 6.589 -- the highest number of the
+# five, on the one head in this shot that fails. Opened at 4x, his head at CRF 33
+# is ringing and halo: the hair silhouette blown out, the nape and collar smeared,
+# the back-of-head contour that carries "this man is facing away" mushed. At CRF
+# 10 it is indistinguishable from the plate. So the prediction is specific: the
+# model was being asked to keep facing away a head whose facing-away was the part
+# it could not see.
+#
+# ------------------------------------------------------------------
+# WHAT WEAKENS THIS HYPOTHESIS, SAID BEFORE THE RESULT RATHER THAN AFTER.
+# ------------------------------------------------------------------
+# (a) THE BEAT-09 SIGNATURE IS ABSENT FROM THIS PARENT. Measured on the parent
+#     clip with the instrument this spec pre-registers below: its first interframe
+#     step is 3.419 (FIG) and is nowhere near its largest; the ten largest steps
+#     sit at f005-f037. This clip does NOT throw its init away at frame one the
+#     way the beat-09 clip did -- it opens on the plate and holds the field, the
+#     costumes and both men. What it has is a LOCAL early defect, not a collapse.
+#     A smaller defect has less room to be caused by one flag.
+# (b) CRF 33 IS THE UPSTREAM DEFAULT AND IS DELIBERATE. _crf_roundtrip's own
+#     docstring: Lightricks' media_io.load_image_and_preprocess round-trips at
+#     DEFAULT_IMAGE_CRF=33 "to match the compressed frames the model saw in
+#     training -- a clean PNG is out of distribution by their own reckoning." So
+#     CRF 10 is the off-distribution direction, FAIL-ARTEFACT and FAIL-FROZEN are
+#     live risks rather than politeness, and a research lane is reading the
+#     reference implementation in parallel. Beat 09 says 10 was better THERE; it
+#     does not say 10 is right, only that 33 was wrong once.
+# (c) A CLEAN ANSWER OF "NO" IS WORTH THE SEVEN MINUTES. Beat 11 has spent four
+#     wordings and thirteen seeds on this one head. If the codec is not the lever,
+#     that eliminates it for every beat still fighting an early-window defect, and
+#     it costs an idle card eleven minutes and $0.
+#
+# NOT A PROMOTION. No pick, no plate_ack, no leaf, no lineage entry, no edit to
+# done-definitions.yaml or to the cut. Taste is R4. $0, local card, no provider.
+id: ep2-b11-crf10-0819
+task: ep2-b11-crf10-0819
+node: 002b-first-citizen
+beat: 11
+runner: box
+priority: 25
+needs_gpu: true
+max_attempts: 1
+sample: true
+cost_usd: 0
+is_show_content: true
+is_show_content_why: 'TRUE, and the difference from tonight''s beat-09 CRF pair is deliberate and factual.
+  Those two are `is_show_content: false` because their init plate fails its own plate bar on three named
+  terms, so no quality of motion could ever get them into an episode. THIS JOB''S PLATE IS THE OPPOSITE
+  CASE: it is beat 11''s first cast-correct staged plate, r3s1, which plate_scratch.py''s DRAFTS[11] passes
+  7 of 7 and calls the beat-11 deliverable, and the parent render off it cleared five of beat 11''s six
+  conditions. If the one remaining fault clears, what comes back is potentially real footage for the beat-11
+  slot, and marking it unusable in advance would be a false record. IT IS STILL NOT A PICK. No pick, no
+  plate_ack, no leaf, no lineage entry, no edit to done-definitions.yaml or to any cut; the artifact''s
+  own sidecar is stamped `approved: false`, `provisional: true` by the publish step, which is the stricter
+  label and the right one for a file nobody has watched. The two are not in conflict: this key says the
+  clip is not an engine probe, the sidecar says it is not cleared to ship. Picking it is the author''s
+  call (R4) and never this lane''s.'
+owner: beat 11 lane, 2026-08-19. Derived programmatically from ep2-b11-leave-w4brake-0817 by substituting
+  the job id, two artifact filename tokens and one integer; the derivation reversed itself and reproduced
+  the parent's needs, env, payload, steps and artifacts byte for byte.
+consumer: 'THE BEAT-11 SLOT IN THE ep2 CUT. review/ep2-picks/done-definitions.yaml still records that
+  slot as `status_override_0815: BROKEN TAKE - THIS BEAT NEEDS A NEW ONE`, and its `done_when` is quoted
+  verbatim into the bar below. What is in flight for that slot today is the 2026-08-17 wave off the first
+  cast-correct plate: the parent of this job cleared five of six conditions, and the seed-volume lane''s
+  re-judgement of a sibling seed (ep2-b11-leave-w4-s20260903) hands over a take it reads as six of six.
+  So this clip serves the slot twice over and neither use is a promotion: it is a second candidate off
+  a cast-correct plate, and -- whichever way it lands -- it is the answer to whether the codec is the
+  lever on the one fault that has cost this beat four wordings and thirteen seeds. THE SECOND CONSUMER
+  IS EVERY OTHER BEAT: an early-window defect is the commonest failure on this card, and `--image-crf
+  33` is in every recent i2v spec in pipeline/jobs/.'
+why: Eleven minutes on a card that is otherwise idle, $0, no provider, no new checkpoint, no wording change,
+  no seed batch, one sample. Beat 09's pair established tonight that this flag can be the difference between
+  an init held for 121 frames and an init discarded in two. Beat 11's only remaining fault sits in the
+  same early window, and the box the codec damages most in beat 11's own plate is the head that fails.
+the_lever_measured_before_the_render: 'The parent''s init was round-tripped locally through the exact
+  ffmpeg commands _crf_roundtrip issues and compared with the clean plate in float64, mean abs on 0-255,
+  per box. CRF 33: FIG 5.741, HEAD_A 5.994, HEAD_B 6.589, BG 5.847, FULL 5.192 -- the whole 704x1280 still
+  survives as 17.6 KB. CRF 10: FIG 1.565, HEAD_A 1.665, HEAD_B 1.636, BG 1.638, FULL 1.482. The most damaged
+  box is guard B''s head, which is the head that turns.'
+the_one_variable: '`--image-crf` 33 -> 10 in the `render` step''s argv. Nothing else. Seed 20260817 unchanged,
+  plate sha256 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca unchanged, prompt and
+  negative byte-identical, 97 frames at 24fps, guidance 2.0, distilled sigmas, two-stage, sequential offload
+  all unchanged.'
+success: 'PRE-REGISTERED IN FULL BEFORE THE JOB WAS ENQUEUED AND BEFORE ANY PIXEL OF THE CHILD EXISTED.
+  Output is ONE 704x1280 mp4, 97 frames at 24fps, off the same init as ep2-b11-leave-w4brake-0817.
+
+  THE INSTRUMENT, and it is the same ruler on both clips. Five boxes read off the PARENT''s f000 and applied
+  UNCHANGED to every frame of both clips, never re-fitted: FIG x180-580 y240-780 (both figures), HEAD_A
+  x210-340 y255-375 (guard A''s head), HEAD_B x410-530 y250-370 (guard B''s head), BG x0-704 y900-1280
+  (grass only at f000, the background control), FULL the whole frame (second control). Mean abs interframe
+  difference and drift from f000, float64, plus the ten largest steps and their frame indices, thirds,
+  the luminance range and the count of trailing exactly-identical frames. STATED LIMIT OF THE INSTRUMENT:
+  the men recede, so the fixed HEAD_B box holds guard B''s head only to roughly f030 and measures field
+  after that. Its early numbers are evidence and its late numbers are not, and no verdict will quote the
+  late ones as if they were.
+
+  THE PARENT''S NUMBERS, MEASURED AND WRITTEN DOWN HERE FIRST so the comparison cannot be tuned afterwards.
+  FIG first step 3.419, mean 3.124, thirds 4.057/3.638/1.676, drift to f096 37.661. HEAD_A first 4.876,
+  mean 3.971, thirds 3.347/4.698/3.868. HEAD_B first 6.854, mean 2.817, thirds 5.594/2.536/0.321, drift
+  to f096 33.568 with a peak of 52.505 mid-clip. BG first 7.347, mean 3.685, drift 22.524. FULL mean 2.168,
+  drift 23.713. Luminance 148.76-153.31, largest single-frame step 0.479. Terminal identical-frame run
+  0.
+
+  THE READING IS THE VERDICT AND THE METRIC IS ONLY A FILTER, as the parent''s own bar said. Judged by
+  opening f000, f004, f008, f012, f016, f020, f022, f028, f040, f060 and f096 at full resolution, plus
+  3x crops of guard B''s head at two-frame density across f000-f040 and guard A''s at four -- the same
+  density the 0817 lane read the parent at.
+
+  PASS. All three clauses must hold. P1 IS THE CENTRAL CLAUSE AND IT IS D3: GUARD B KEEPS HIS BACK TO
+  CAMERA THROUGH f008-f022. No eye, no nose, no mouth, no profile in any frame opened, and no look back
+  anywhere in the clip. In the parent he is in full profile with an open mouth from about f008 to f022
+  and clean again by f040; a pass here is a clean rear view across that whole window. This is a by-eye
+  clause and is not decided by a number. P2 SUPPORTS P1 WITH THE STATISTIC: guard B''s head stops doing
+  most of its work in the first third. Parent HEAD_B thirds are 5.594/2.536/0.321. Below 4.0 in the first
+  third is a clear pass, 4.0-5.0 is a PARTIAL and will be reported as a partial rather than rounded either
+  way, above 5.0 is unchanged. The mid-clip drift peak of 52.505 against an end value of 33.568 -- the
+  bump that is the turn and the turn back -- should shrink. P3 THE OTHER FIVE CONDITIONS SURVIVE THE CHANGE,
+  quoted from beat 11''s own done_when in review/ep2-picks/done-definitions.yaml, "two guards walk away
+  from camera, backs turned, still arguing; both present the whole clip; field present at frame one":
+  D1 two guards and no third body in every frame; D2 they end further away than they began by their own
+  height and not by the camera moving; D4 both men in every frame including f096; D5 field at frame one;
+  D6 neither man''s head or costume changes -- dark cropped hair over the tan coat on the left, sandy
+  hair over the dark brown on the right -- and the shot does not end on two indistinguishable backs. All
+  five PASSED in the parent, so any loss here is attributable to the one variable and is a fail, not a
+  fault.
+
+  PRE-REGISTERED FAIL MODES, EACH REPORTED BY NAME WHETHER OR NOT IT FIRES. FAIL-COLLAPSE-UNCHANGED: guard
+  B turns in the same window and the read is indistinguishable from the parent''s. THIS IS THE MOST LIKELY
+  OUTCOME and it is a clean answer: it eliminates the codec as the lever for this defect and sends the
+  next rung at a conditioning-strength parameter, the CFG or the wording instead. FAIL-FROZEN: the cleaner
+  init holds so hard that the shot stops being a walk -- a nonzero terminal identical-frame run, or D2
+  lost because nobody recedes. The opposite failure, and it would mean this recipe trades adherence against
+  motion on one axis, which is itself the finding. FAIL-ARTEFACT: blocking, banding, posterisation or
+  any wrongness the parent does not have. CRF 10 is the OFF-DISTRIBUTION direction here -- upstream chose
+  33 deliberately to match training-time compression -- so this is a live risk and not a formality. FAIL-MORPH-LATE:
+  the early window clears and identity or costume breaks later instead. Report the frame. This is beat
+  11''s historic fault under a new name and the reason f040, f060 and f096 are in the read. FAIL-MERGE:
+  the shot ends on two indistinguishable backs (carried verbatim from the parent''s D6 fail mode). FAIL-D2-INVERTED:
+  the men grow rather than recede, or the recession is the camera pushing in rather than their legs --
+  checked against the background, not by the figure height alone, because a quotient is not a picture.
+  FAIL-EXIT: either man leaves frame before f096. FAIL-THIRD-BODY: a third figure appears.
+
+  NOT SCORED HERE: whether this take should be cut, whether it beats ep2-b11-leave-w4-s20260903, the glasses
+  question, and anything else that is taste. All R4. The job SUCCEEDS MECHANICALLY IF THE CLIP RENDERS
+  AT ALL -- a frozen clip is a successful job and a failed sample, and the two are never confused.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b11-crf10-0819\cover_crop.py: "\"\"\"Cover-crop an asserted source image to an exact\
+    \ WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\nap =\
+    \ argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\"\
+    , default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\n\
+    ap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as\
+    \ fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\n\
+    if a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\\
+    n   have %s\" % (a.sha256, have))\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"\
+    RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)),\
+    \ int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh\
+    \ - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\n\
+    print(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\n\
+    print(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b11-crf10-0819\stamp_sidecar.py: "\"\"\"Stamp the clip's provenance sidecar as unapproved\
+    \ and provisional.\nvideo_task.write_sidecar records model, prompt, negative, init sha and\ncost_usd\
+    \ 0, and it does not record whether the clip may ship. Nothing this\nlane publishes may read as picked,\
+    \ so the keys are written on the artifact\nitself rather than asserted in a commit message nobody\
+    \ downstream reads.\nREFUSES if the sidecar is missing -- a clip whose provenance file did not\nget\
+    \ written must not pass silently.\n\"\"\"\nimport os, sys\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n\
+    \    sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META,\
+    \ \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b11-crf10-0819\
+    \ after the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n     \
+    \   \"is_show_content: false\\n\"\n        \"note: |\\n\"\n        \"  ONE SAMPLE, ONE VARIABLE, NOT\
+    \ A PICKED TAKE. This clip is the job\\n\"\n            \"  ep2-b11-leave-w4brake-0817 re-run with\
+    \ the conditioning still's\\n\"\n            \"  libx264 round-trip lowered from CRF 33 to CRF 10\
+    \ and NOTHING\\n\"\n            \"  else changed. The parent cleared five of beat 11's six\\n\"\n\
+    \            \"  conditions and failed D3 -- guard B turns his face to camera\\n\"\n            \"\
+    \  from about f008 to f022. Whether this clip may be cut is the\\n\"\n            \"  author's call\
+    \ (R4) and never this lane's.\\n\")\nprint(\"stamped %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b11-crf10-0819\b11-motion-prompt.txt: Two guards seen from behind walking off into
+    the distance through tall grass, slowly getting a little smaller as the ground opens up between them
+    and the camera, both men still walking and still in frame at the end, gesturing at each other as they
+    argue. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic
+    lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b11-crf10-0819\b11-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze
+    frame, facing viewer, looking back, bald, 3boys, extra person, crowd
+  C:\banyan-farm\ep2-b11-crf10-0819\b11-jobs-encode.json: "[\n {\n  \"beat\": 11,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b11-crf10-0819-out\\\\b11-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b11-crf10-0819\\\\b11-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b11-crf10-0819\\\
+    \\b11-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b11-crf10-0819\b11-jobs-render.json: "[\n {\n  \"beat\": 11,\n  \"seed\": 20260817,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b11-crf10-0819-out\\\\b11-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b11-crf10-0819-out\\\\b11-leave-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b11-crf10-0819-out\\\\11-they-leave-crf10-LTX-castplate.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b11-crf10-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b11-plate-pub-0817\11-they-leave-mac-plate-r3s1.png
+  - --sha256
+  - 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca
+  - --out
+  - C:\banyan-farm\ep2-b11-crf10-0819-out\b11-leave-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b11-crf10-0819\b11-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b11-crf10-0819\b11-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b11-crf10-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b11-crf10-0819-out\bench-b11-crf10-0819.jsonl
+  - --bench-label
+  - ep2-b11-crf10-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b11-crf10-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b11-crf10-0819-out\11-they-leave-crf10-LTX-castplate.mp4.meta.yaml
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b11-crf10-0819-out\"\npay_dir =\
+    \ \"C:/banyan-farm/ep2-b11-crf10-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b11-crf10-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(out_dir + \"/11-they-leave-crf10-LTX-castplate.mp4*\"\
+    )\n             + glob.glob(out_dir + \"/b11-leave-init-704x1280.png\")\n             + glob.glob(out_dir\
+    \ + \"/bench-b11-crf10-0819.jsonl\")\n             + glob.glob(pay_dir + \"/b11-motion-prompt.txt\"\
+    )\n             + glob.glob(pay_dir + \"/b11-negative.txt\"))\nlines = []\nfor f in src:\n    shutil.copy2(f,\
+    \ dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith\
+    \ open(os.path.join(dst, \"ep2-b11-crf10-0819.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n\
+    raise SystemExit(0 if len(src) >= 3 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b11-crf10-0819-out\11-they-leave-crf10-LTX-castplate.mp4
+- C:\banyan-farm\ep2-b11-crf10-0819-out\b11-leave-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. Beat 11 is THEY LEAVE, 0:50-0:55, and the scripted line this job animates is quoted here
+  whole: "The guards walk away arguing, backs to camera, genuinely trying to do their jobs." Nothing is
+  invented beside it -- the prompt says walking away from camera, seen from behind, gesturing at each
+  other as they argue, and stops there. The cast is the founder''s own: guard A approved 2026-08-14, guard
+  B 2026-08-15, and "the cast stands as drawn" 2026-08-16. Silent, $0, no voice synthesis and no episode
+  assembly. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED: this is a sample of a wording, and if
+  it performs, updating the shot board is a separate deliberate act by whoever owns the beat. Picking
+  a take into the cut is the author''s call (R4), never this lane''s.'
