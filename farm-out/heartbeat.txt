@@ -2761,3 +2761,4 @@
 19:59:58Z box-runner idle ready=0 failed=39
 20:08:33Z STARTED task=ep2-b17-shake-noamber-0819-1787083704 attempt=1 on box-runner
 20:14:25Z DONE task=ep2-b17-shake-noamber-0819-1787083704 rc=0 artifacts=2
+20:14:34Z box-runner idle ready=0 failed=39
