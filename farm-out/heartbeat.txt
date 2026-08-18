@@ -2661,3 +2661,4 @@
 10:11:55Z STARTED task=ep2-b01-compseed-s1-g6-0818-1787047823 attempt=1 on box-runner
 10:12:51Z DONE task=ep2-b01-compseed-s1-g6-0818-1787047823 rc=0 artifacts=4
 10:13:03Z STARTED task=ep2-b01-compseed-s3-g4-0818-1787047829 attempt=1 on box-runner
+10:13:58Z DONE task=ep2-b01-compseed-s3-g4-0818-1787047829 rc=0 artifacts=4
