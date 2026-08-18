@@ -195,3 +195,58 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b18-tremble-s20260873-0817\18-the-decision-LTX-ep2-b18-tremble-s20260873-0817.mp4
 - C:\banyan-farm\ep2-b18-tremble-s20260873-0817\b18-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-18 by the night supervisor (v2). Scored against
+# the bar pre-registered in this spec's own done_when, which was written before
+# these pixels existed and is NOT edited here. The interesting part of this
+# verdict is a place where the bar is SILENT, and it is resolved in the
+# direction the bar's own words point, not in the direction I would prefer.
+# ============================================================================
+verdict: PASS, and it is the weakest pass of the three by a wide margin. Every pre-registered clause is
+  met. The clip nevertheless stops trembling a little under halfway through and holds nearly still for
+  the rest, which the bar does not forbid because the bar never asked for SUSTAINED motion.
+verdict_measured:
+  read_how: '121 frames decoded (704x1280, 24fps, 121 frames, confirmed by ffprobe), measured at
+    176x320, plus a 9-panel sheet at f000/015/030/045/060/075/090/105/120.'
+  motion_the_contested_clause: 'PASSES THE CLAUSE AS WRITTEN, and the numbers are the whole story.
+    Interframe medians by quarter: f000-030 med 9.22, f030-060 med 4.10, f060-090 med 0.72, f090-120
+    med 0.45 with a max of 0.73 and 16 of 30 pairs under 0.5. Drift from f000 peaks at 72.9 and settles
+    back to 37.0. Visually the last six panels of the sheet -- f045 through f120 -- are near
+    indistinguishable. So: the first half genuinely moves, and moves more than either sibling; the
+    second half is effectively a still frame.'
+  why_that_is_not_fail_frozen: 'The bar defines FAIL-FROZEN as "the plate simply sits still". This plate
+    does not simply sit still -- its first quarter is the liveliest of all three seeds at med 9.22. And
+    the PASS clause asks that "the thin stem and the fig visibly MOVE -- a fine tremble or a small
+    sway", without qualifying for how long. Read literally, which is the only honest way to read a bar
+    written before the pixels, this clip visibly moves. I am not hardening the clause after the fact to
+    catch a clip I dislike, and I am not softening anything either: the measurement is on the record
+    above so anyone can disagree with the reading without re-deriving the data.'
+  lighting_steady_no_strobe: 'PASS. Adjacent-frame specular pumping exceeds 25% of clip max on 5 of 120
+    pairs (s20260872, the strobe FAIL, scores 28; s20260871 scores 0). Luminance HF std 1.90, backdrop
+    band HF std 8.55 -- the lowest of the three. Some of the residual comes from the genuinely active
+    first third rather than from flicker.'
+  colour_holds_purple: 'PASS. Hue 315 deg, total spread 4.4 deg across 121 frames. Subject RGB f000
+    58,25,53 -> f060 59,30,54 -> f120 59,30,54.'
+  count_attach_person: 'PASS. One round fig throughout, never two and never leafward, attached at the
+    neck, never exits frame, no face or figure at any sampled frame.'
+the_bar_gap_this_exposed:
+  what_is_missing: 'The bar has no SUSTAIN clause. It can distinguish "moves" from "sits still" but not
+    "moves throughout" from "moves then stops". This seed lives exactly in that gap, and so, from the
+    other direction, does s20260872''s judder.'
+  why_it_is_not_patched_here: 'Editing done_when now would retro-fit a bar to a result, which is the one
+    thing this lane exists not to do. The gap is filed as a follow-up on both this spec and s20260872
+    so the NEXT tremble bar inherits it.'
+  practical_consequence: 'If the assembly lane needs five seconds of tremble -- and the beat''s own
+    prompt says "trembling as though it is about to let go", which is a sustained idea -- then this
+    clip is not the one to use, and s20260871 is. That is a usability statement, not a re-score.'
+pick_candidate: 'NOT the pick. s20260871 is, and the deciding measurement is the one above: 0.45 median
+  interframe in the final quarter here against 5.16 there. Full reasoning is in
+  pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml under pick_candidate.'
+what_this_licenses: 'Nothing new. It contributes one third of the three-seed finding -- 1 pass, 1
+  strobe, 1 decay -- which settles that the recipe works on a purple plate and that its failures vary
+  by seed. No fourth seed, no recipe change, no bar edit.'
+follow_ups_named:
+  - 'Next plant-tremble bar must pre-register motion in EVERY quarter (a floor on per-quarter median
+    interframe diff), not just motion somewhere in the clip. This seed is the reason.'
+  - 'Same bar should cap near-duplicate frame pairs, to catch the hold/jump judder seen on s20260872.'
