@@ -9060,3 +9060,57 @@ would re-diagnose a defect that is fixed. §7.2 says provenance always, and this
 provenance that lies. Not fixed here — the sampler is shared and the field is correct
 for the eleven goblin beats that do carry the slot; the fix is to write it only when
 the slot was actually substituted, and it belongs to whoever owns that file.
+
+## 2026-08-18 (night) — seven renders read, one pick, nothing invented
+
+Overnight supervisor loop. Full write-up in `HANDOVER-0818-night.md`; the verdicts
+themselves are appended to the specs that produced them, not summarised here.
+
+**Cold open (beat 01) — the seed sweep closed at one pass in six.** `20260826` PASSES
+and remains the pick, published at `review/ep2-cold-open-0818/` with all six last
+frames on one sheet. `20260827` replaces the fig between two adjacent frames and
+pushes in a measured 1.30x; `20260828` has the best growth ramp yet rendered and
+loses the drawing under it; `20260829` finishes the arc by f15 and then holds a
+motionless fig for 106 frames in a yellow glare; `20260830` is the best-looking clip
+of the six — the only one with a camera at exactly 1.00 and the plate's dawn sky
+intact — and fails on a two-frame, 2.1x step where the fig should swell; `20260831`
+does the same in four frames and drifts 64 px. **The sweep stopped on a finding**:
+the six failures sit on three *independent* axes (colour path 2/6, camera lock 2/6,
+plate fidelity a full spread) with no two sharing a cause, so further seeds are a
+lottery rather than an experiment. Also worth knowing before anyone spends a variable
+on it: the negative prompt already says "zoom, dolly, push in" and **four of six
+pushed anyway**.
+
+**New rule, forced by the sweep and now written into the specs:** *a change in the
+LIGHT is a caveat, a loss of the DRAWING is a failure.* It is what separates the
+pick's bloom (blades still drawn) from `20260828`'s dissolve (blades gone, stray
+strokes arrive).
+
+**Beat 14 — a second seed settled the seed-vs-staging question by splitting it.** The
+sullen face and the never-returning glance reproduce on both seeds, so they are
+staging and no re-roll will fix them. The frozen two-thirds reproduces too. But the
+dirt reach did **not**: seed 1 broke ground, seed 2's hands never left his knees. So
+seed 1's reading — that the gross half of this beat renders and belongs with the
+12-of-12 whole-body record — is **weakened to 1 of 2**. The 0-of-8 in-hand record is
+untouched. Beat 14 is now a re-stage-or-cut decision for R4, not a render problem.
+
+**Beat 08 — the composite/init route is proven.** The Mac-side rigid board-lowering
+composite survived a 0.30 pass and came back *cleaner*: the seam ghost resolved into
+cloak folds, the mushy fist into a drawn fist. Measured mean |diff| 10.61 inside the
+mask against **0.04 outside** it. The pre-registered B4b (a pointing finger 0.30 was
+never given) failed exactly as predicted. Beat 08's remaining problem is one thing —
+**sourcing an arm** — and that is a new route needing its own sample and a production
+choice.
+
+**Deploy — a three-hour clone wedge that resolved itself.** Three builds in a row
+never printed `Cloning completed:`. Evidence, false leads and the resolution are in
+`pipeline/deploy-weight-finding-0818.md`. Two things to carry: `Previous build caches
+not available` prints on *healthy* builds and is not a symptom, and most of a day's
+CANCELED count is our own build guard skipping docs-only pushes. The repo is 4.92 GiB
+of pack (1976 MB checkout, mostly render media) in front of a site that builds in
+about twenty seconds once the clone lands; nothing was fixed and nothing was moved,
+because that is architectural and touches where the project's evidence lives.
+
+**The card was left empty, deliberately.** Every 0818 spec has been run and all five
+of tonight's verdicts license nothing further; the three live questions are all R4.
+$0 spent.
