@@ -114,3 +114,42 @@ conversation, and the wrong choice quietly breaks provenance, which is the one t
 
 What I did tonight: measured it, killed two false leads, stopped the cancel loop, verified
 the fallback serves, and wrote this down.
+
+---
+
+## Update, ~70 minutes later: it cleared on its own
+
+Everything above was written while a sixth build sat wedged at 31 minutes with nine
+deploys queued behind it. I stopped cancelling, wrote the file, and went back to
+reading renders. By the next check:
+
+- the wedged build and the entire nine-deep queue had **drained**;
+- four commits pushed in the interval deployed **READY** normally;
+- one of them was CANCELED, correctly — it touched only a job spec, so the build
+  guard returned SKIP, which is the designed behaviour and not a failure;
+- `https://banyan.city/` is **current**, not merely up: it serves tonight's pages,
+  including `review/ep2-cold-open-0818/` with its new six-seed sheet.
+
+So the episode lasted roughly three hours and resolved with **no intervention at
+all**. That is worth as much as the measurements, and it points the same way they
+did:
+
+1. **The "edge, not cliff" reading holds.** A permanent weight threshold does not
+   un-cross itself while the repo keeps growing. Clone throughput dipped, three
+   builds fell off the far side of it, and it recovered. The repo is the
+   precondition; the variance is the trigger.
+2. **Cancelling was never the fix, and now there is proof.** The one thing that
+   demonstrably worked is the thing I did after stopping: nothing. Whoever meets
+   this next should let a slow clone finish — one of them took 41:22 and completed —
+   rather than kill it at 20 minutes and start a fresh clone at the back of the
+   queue.
+3. **It will happen again.** Nothing was fixed, and the underlying number is
+   unchanged: 4.92 GiB of pack for a site whose build takes ~20 seconds once the
+   clone lands. The architectural question in the section above is still open, and
+   still not mine to answer at 3 a.m.
+
+The practical guidance for the next steward is therefore short. Check `Cloning
+completed:` — not the cache line, which is on healthy builds too. If it is missing
+on three builds in a row, note the time and leave it alone. If the site is serving
+(it was, throughout), there is no outage; hand out Pages URLs and let the daytime
+conversation decide whether to move the media.
