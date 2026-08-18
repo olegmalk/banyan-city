@@ -357,3 +357,115 @@ script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_b
   assembly. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED: this is a sample of a wording, and if
   it performs, updating the shot board is a separate deliberate act by whoever owns the beat. Picking
   a take into the cut is the author''s call (R4), never this lane''s.'
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19, scored against the bar pre-registered in this
+# spec's own `success` field before the clip existed. rc 0, published, pulled,
+# and every hash in the box's own manifest recomputed locally and matched: mp4
+# 8e0c0ce5..., and -- the point of checking -- init fe2cc043..., prompt
+# e99e8f98..., negative 1a29d6a9... are BYTE-IDENTICAL to the parent's, so the
+# one-variable claim is verified on the artifacts and not only on the spec. The
+# box's own run log carries `conditioning still round-tripped through libx264
+# crf=10`, and the parent's carries `crf=33`. 97 frames each, measured by the
+# same code with the same boxes.
+# ============================================================================
+verdict: 'FAILS ITS CENTRAL CLAUSE, and the failure is clean and useful.
+  FAIL-COLLAPSE-UNCHANGED FIRED: guard B still turns his face to camera in the same
+  early window, and if anything he turns FURTHER. FAIL-EXIT ALSO FIRED, which the
+  parent never did: guard A walks out of the left edge and is absent for the last
+  twelve frames. THE CODEC IS NOT THE LEVER ON THIS BEAT''S FAULT. What the run
+  does establish is bigger than the fault and is stated under
+  what_this_settles below: `--image-crf` does not clean a take up, IT RE-ROLLS IT.'
+the_mechanism_did_what_it_was_predicted_to_do: 'Said first, because it is true and
+  it is not what decided the verdict. The cleaner conditioning DID arrive and it IS
+  measurable. Frame 0 against the CLEAN plate: FIG 7.672 -> 6.550, HEAD_A 7.917 ->
+  6.660, FULL 6.659 -> 5.595. The f000->f001 FIG interframe step HALVED, 3.419 ->
+  1.858. Background-strip drift 22.524 -> 18.240 and whole-frame drift 23.713 ->
+  16.092, so the world is held better too. Every one of those moved in the direction
+  the beat-09 pair predicted. THE SHOT STILL GOT WORSE. A mechanism can be real, and
+  measurable, and still not be the lever on the defect you are pointing it at.'
+pass_clauses:
+  P1_guard_B_keeps_his_back_turned_f008_f022: 'FAIL, by eye at 3x on the
+    pre-registered head box, parent above and child below in one strip. Parent f008
+    is a profile with an open mouth; CHILD f008 IS A THREE-QUARTER FACE -- both
+    brows, both eyes, nose and mouth all drawn, and drawn more crisply than the
+    parent''s, which is exactly what a sharper init buys. The turn runs about
+    f004-f030 in both clips. Read at full resolution at f000, f008, f016, f096 and
+    on the fixed-box strip at f000, f004, f008, f012, f016, f020, f022, f028.'
+  P2_head_B_stops_working_in_the_first_third: 'FAIL against the number written down
+    in advance. HEAD_B thirds parent 5.594 / 2.536 / 0.321, child 6.371 / 2.128 /
+    0.064. The bar said below 4.0 is a clear pass, 4.0-5.0 a partial, above 5.0
+    unchanged. It measured 6.371 -- HIGHER than the parent. Reported as the bar
+    demanded and not rounded toward the hypothesis.'
+  P3_the_other_five_conditions_survive: 'FAIL, on D4, and this is a fault the parent
+    did not have. Measured with the beat''s own instrument, pipeline/b11_coat_track.py,
+    the same one the 0817 seed lane judged its nine clips with:
+    `both_men_every_frame` parent true -> child FALSE, `first_frame_missing_a_man`
+    parent None -> child 85, guard A absent f085-f096. By eye he does not dissolve
+    or morph -- he walks LEFT, is clipped by the frame edge from about f076, and is
+    gone by f088. D2 WEAKENED but did not invert: guard B''s coat 310 -> 243 (0.784)
+    against the parent''s 317 -> 165 (0.521), with the fitted background scale at
+    1.000 in both, so no camera push accounts for it -- they simply leave less.
+    Guard A''s own ratio (282 -> 165, 0.585) is NOT quoted as evidence because he is
+    clipped by the edge while it is measured. D1 PASS (two men, no third body). D5
+    PASS (field at frame one). D6 PASS (tan/brown colour gap 48.8 -> 46.5, no head
+    change, no costume change, no merge).'
+pre_registered_fail_modes:
+  FAIL-COLLAPSE-UNCHANGED: 'FIRED. Named in the bar as the most likely outcome and it
+    is the one that happened. It eliminates the codec as the lever for this defect.'
+  FAIL-EXIT: 'FIRED. Guard A leaves frame at f085 and the clip ends on one man. The
+    parent kept both men for all 97 frames. Attributable to the one variable.'
+  FAIL-FROZEN: 'DID NOT FIRE. Terminal identical-frame run 0, and the child MOVES
+    MORE than the parent, not less: FIG mean interframe 3.661 against 3.124.'
+  FAIL-ARTEFACT: 'DID NOT FIRE. This was the untested direction and it came back
+    clean -- no blocking, no banding, no posterisation. The child''s linework is
+    visibly crisper than the parent''s. Luminance 148.48-151.12, largest single-frame
+    step 0.256 against the parent''s 0.479.'
+  FAIL-MORPH-LATE: 'DID NOT FIRE. Nobody''s head or costume changes; the colour gap
+    holds to 46.5. The late fault is an exit, not a morph, and the two are not the
+    same thing.'
+  FAIL-MERGE: 'DID NOT FIRE. The two never blend; one of them leaves instead.'
+  FAIL-D2-INVERTED: 'DID NOT FIRE. The men shrink rather than grow and the fitted
+    background scale is 1.000, so the camera did not push in.'
+  FAIL-THIRD-BODY: 'DID NOT FIRE. No third figure in any frame opened.'
+what_this_settles: 'ONE INTEGER RE-ROLLS THE WHOLE TAKE. Same seed 20260817, same
+  prompt, same negative, same plate, same sampler, same 97 frames -- and the parent
+  walks two men away together into the field while the child walks them sideways and
+  loses one off the left edge. THIS IS NOT A CLEANER VERSION OF THE SAME CLIP, IT IS
+  A DIFFERENT CLIP. Three consequences, each a claim about the record rather than
+  about this file:
+  (a) "LOWER THE CRF EVERYWHERE" IS NOT A FREE QUALITY FIX and must not be applied as
+  a blanket default. It invalidates every seed selection made at 33. Beat 11''s best
+  take today -- ep2-b11-leave-w4-s20260903, read six of six by the seed-volume lane
+  on 2026-08-17 -- was picked at CRF 33; re-rendering it at 10 would not sharpen it,
+  it would replace it with an unknown clip that has to be judged from scratch. The
+  same warning applies to every other beat with a take already chosen at 33.
+  (b) BEAT 11''S HEAD TURN IS NOT A CODEC ARTEFACT. Four wordings, fourteen seeds and
+  now two conditioning qualities have all produced it. The one lever the record shows
+  as never actually tried is the wording''s own `gesturing at each other as they
+  argue` clause: ep2-b11-leave-w4brake-0817''s header says it was KEPT deliberately
+  because W3 showed no negative could suppress the turn -- but asking for two men to
+  argue with each other and then forbidding a face is asking the picture to contradict
+  its own instruction. Deleting that clause is the cheap untried rung. It is a WORDING
+  change, i.e. a different variable, so this lane does not file it off the back of
+  this sample.
+  (c) BEAT 11 DOES NOT NEED A NEW PLATE ON ACCOUNT OF ANY OF THIS. Both clips open on
+  the cast-correct r3 plate and both hold both men''s hair, costume and colour
+  separation for as long as they are in frame. The plate is not what is wrong.'
+what_this_does_NOT_settle: 'Nothing about taste, and nothing about beat 09. The
+  beat-09 pair''s own result stands on its own clip: there the init was measurably
+  discarded at the first denoising step and a lower CRF held it for 121 frames. Here
+  the init was NOT being discarded -- the parent already opened on its plate and held
+  both identities -- which is exactly the weakness this spec wrote down before the
+  render (see the header, (a) under WHAT WEAKENS THIS HYPOTHESIS). So the two results
+  do not contradict each other: a smeared init is a real defect where a shot depends
+  on fine detail arriving intact, and it is not the explanation for every early-window
+  fault. Nor does this establish 33 as right; it establishes that the choice is not
+  free and cannot be made globally without re-judging what it changes.'
+is_this_clip_cuttable: 'NO, AS IT STANDS, and that is a judgement about this file and
+  not a retraction of `is_show_content: true`. It is real footage off a cast-correct
+  plate, not an engine probe -- but it shows a face where the beat requires backs
+  turned, and it ends on one man where the beat requires two. NOT A PICK, no
+  plate_ack, no leaf, no lineage entry, nothing written to done-definitions.yaml or
+  to any cut. Beat 11''s standing candidate is unaffected and remains the author''s
+  call (R4).'
