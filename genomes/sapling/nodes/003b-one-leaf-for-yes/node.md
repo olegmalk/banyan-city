@@ -142,6 +142,13 @@ his ruling he answered: *"yes, i understand a line on the site is contradicting 
 well.. lets rewrite it, we didn't think when first publishing it and we dont have
 viewers for now so its fine to change it."*
 
+**RE-RULED 2026-08-18, in his own words a second time.** Asked again precisely
+because the line was already published, he said: *"change the head bounce line even
+though its published. we discussed this, its fine."* Same instruction, twice — the
+two rewrites below stand, and the last stale copy of the line anywhere in this node,
+the archived predecessor script `leaves/003b-t0-a.md:47`, was corrected the same way
+today with its superseded text kept struck through beside it.
+
 Superseded text, kept here so nobody restores it by finding it quoted elsewhere:
 
 - **THE FIG QUESTION** — ~~"Were you the fruit? Did you MEAN to hit my head?"~~ →
@@ -163,6 +170,14 @@ stale and must be re-recorded before this node is assembled again. **Nothing was
 voiced here**: STEWARDSHIP.md §6 forbids synthesis from a script the founder has
 not read, and he has authorised the rewrite, not yet read it. The old mp3s are left
 in place as receipts of what was said.
+
+**THE BUILT T1 ANIMATIC CARRIES THEM TOO, and it is not edited.**
+`leaves/003b-t1-a.html` was rendered before the rewrite and still prints both
+superseded lines — frame 1/21's *"on a stranger's head"* and frame 13/21's *"Did you
+MEAN to hit my head?"*. Built artifacts are receipts of bytes actually rendered and
+correcting one would falsify it. So the re-take list for this node is three items,
+not two: a fresh `render_t1.py sapling 003b` pass, and re-synthesised `01-vo` and
+`13-vo`. None of them may run before he reads the rewritten script (§6).
 
 ## Siblings
 

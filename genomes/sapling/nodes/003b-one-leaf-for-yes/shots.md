@@ -158,6 +158,13 @@ lands. Only the impact is gone. The prompt below is unchanged: it never asked fo
 the bounce, it asks for the fig held up beside the branch and a look between them,
 which is the accusation staged.
 
+**Re-ruled 2026-08-18** — asked again because the line was already published, he
+said: *"change the head bounce line even though its published. we discussed this,
+its fine."* The correction above is confirmed in his words a second time and the
+prompt below still stands unchanged. Superseded line, kept struck through so
+nobody restores it by finding it quoted here:
+~~"Were you the fruit? Did you MEAN to hit my head?"~~
+
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin raises a ripe fig up beside the bare thin branch it fell from, holding both in the same frame and looking between them accusingly, eyebrows climbing. Morning light, deadpan comic staging. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```

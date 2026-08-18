@@ -26,3 +26,73 @@ approved_on: 2026-08-12
 # them without recording a read that did not happen.
 # On THIS node his sentence is also a direct verdict: "the episode 3 script is
 # fine" names episode 3, which is 003b.
+
+# Changes made to the approved script AFTER approval. Mirrors 002b-t0-c's
+# `revisions` list: each entry is his words plus what they cost. The list is
+# opened here because this node had none and its script has now moved twice —
+# 002b-t0-c's own 2026-08-15 entry says in terms why a missing list is the
+# defect ("the only record of what has been changed in an APPROVED script
+# showed the script frozen while its beat 19 had in fact moved").
+revisions:
+  - date: 2026-08-17
+    beats: [1, 13]
+    quote: |-
+      yes, i understand a line on the site is contradicting it. well.. lets
+      rewrite it, we didn't think when first publishing it and we dont have
+      viewers for now so its fine to change it.
+    recorded_on: '2026-08-18'
+    author: steward (Claude Opus 5) — model-written wording on his instruction
+    what: |-
+      THE HEAD-BOUNCE LEAVES EPISODE 3. Both lines depended on the fig striking
+      the scavenger in 002b beat 19, which he killed on 2026-08-15 ("ok then just
+      make the fig fall on the ground and the goblin will notice it"). 003b was
+      the last place still depending on it, and it was live on banyan.city.
+      13 THE FIG QUESTION — "Were you the fruit? Did you MEAN to hit my head?" →
+      "Were you the fruit? Did you MEAN to drop it at my feet?" The accusation of
+      INTENT is the beat's whole job and is untouched; beat 14's tilt is still a
+      confession and "I knew it!" still lands. The new wording matches 002b beat
+      19's own text ("lands in the grass at his feet").
+      01 COLD OPEN VO — "Yesterday I spent my only fruit on a stranger's head." →
+      "Yesterday I spent my only fruit on a stranger." Same dead staging, one beat
+      in. 16 spoken words against 18, so still inside synth_vo's
+      LONG_LINE_WORDS = 22 and still spoken as one utterance rather than stitched.
+      NO OTHER LINE MOVED and no stage direction moved.
+  - date: 2026-08-18
+    beats: [1, 13]
+    quote: "change the head bounce line even though its published. we discussed this, its fine."
+    recorded_on: '2026-08-18'
+    author: steward (Claude Opus 5), narrative lane
+    what: |-
+      NO NEW CHANGE TO THE LIVE SCRIPT — this is the same instruction given a
+      second time, in his own words, and it is recorded because it answers the
+      one objection the 08-17 rewrite could not answer on the steward's authority:
+      the lines were already PUBLISHED. He waived that himself ("even though its
+      published"). What it did reach today is the last stale copy of the line in
+      the node, `leaves/003b-t0-a.md:47` — the archived Phase-0 predecessor, which
+      is `status: live` under R6 and still read the old wording. Corrected there
+      the same way, superseded text kept struck through beneath a dated note.
+      A confirmation of the 08-17 note was added to `shots.md` beat 13 and to
+      `node.md`'s correction record. `003b-t0-a` and `003b-t0-c` now agree.
+    what_it_costs: |-
+      THREE RE-TAKES OUTSTANDING, none of them run and none of them runnable yet.
+      `clips/01-vo.mp3` and `clips/13-vo.mp3` speak the superseded words
+      (`13-vo.json` carries the chunk "Did you MEAN to hit my head?"), and the
+      built animatic `leaves/003b-t1-a.html` prints both superseded lines in its
+      1/21 and 13/21 frames. NONE of the three is edited: an mp3, a manifest and a
+      rendered page are receipts of bytes actually produced, and correcting one
+      would falsify it. They are stale, they are flagged, and they need a fresh
+      `render_t1.py sapling 003b` plus re-synthesis of 01 and 13 before this node
+      is assembled or re-published.
+      NOTHING WAS VOICED OR RENDERED FOR THIS PASS — $0, no GPU.
+      UPDATE, same day, integration pass: `render_t1.py sapling 003b` HAS NOW RUN
+      (rc 0) and `leaves/003b-t1-a.html` prints the corrected lines — so the
+      storyboard leaf above is no longer stale. Still outstanding and unchanged:
+      `clips/01-vo.mp3`, `clips/13-vo.mp3` and `13-vo.json`, which are voice takes
+      and wait on §6 (T2 re-render and VO re-synthesis both still to do). $0, no GPU.
+    approval_status: |-
+      HE HAS NOT READ THE REWRITTEN LINES. He authorised the rewrite twice; that
+      is not a read. `approved_by` above is deliberately unchanged — it is the
+      D22 delegated approval that gates the whole node, and this entry is the
+      per-beat gate for beats 1 and 13: STEWARDSHIP.md §6 forbids voice synthesis,
+      footage render and episode assembly from those two beats until he reads them.
+      The other 19 beats are untouched by this and are not gated by it.
