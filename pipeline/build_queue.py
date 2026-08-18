@@ -93,6 +93,18 @@ TELEMETRY_URL_LEGACY = f"{RAW}/{RESULTS_BRANCH}/telemetry.json"
 # number the status page's queue block keys on.
 STALE_MINUTES = 15
 
+# THE DENOMINATOR UNDER THE FAILED CHIP. Telemetry publishes `queue.failed` as a
+# bare count of jsons in the box's failed/ dir, and this page rendered it red as
+# "39 sitting failed" — true, and still a lie by omission, because all 39 were
+# diagnosed and written down (33 in the triage doc, 6 in the compseed specs'
+# own SUPERSEDED headers). A permanent red number nobody can act on teaches a
+# reader to stop reading red numbers. So the acknowledged ids are committed, the
+# page subtracts them, and red is reserved for a failure that is actually new.
+# Counts, not ids — telemetry publishes no id list; the blind spot that leaves is
+# stated in the yaml's own header rather than hidden.
+ACK_FAILED_FILE = "pipeline/measured/failed-acknowledged.yaml"
+ACK_DOC = "pipeline/queue-failure-triage-0817.md"
+
 # Oleg reads this in Dubai and every clock face on every page of this site is
 # +04 and says so. The JSON underneath is UTC and stays that way.
 TZ = datetime.timezone(datetime.timedelta(hours=4))
@@ -345,6 +357,29 @@ def load(path: Path = None) -> dict | None:
     except (OSError, ValueError):
         return None
     return data if isinstance(data, dict) else None
+
+
+def acknowledged_failures() -> int:
+    """How many entries in the box's failed/ pile are triaged and written down.
+
+    The LIST is the source of truth, never the file's own `count:` — a stale
+    hand-maintained integer is exactly the kind of number this whole change
+    exists to stop publishing. Unreadable, absent or unparseable all return 0,
+    which makes the chip fall back to the old plain red count: on a failed read
+    the page under-claims rather than quietly marking new failures as known.
+    """
+    try:
+        import yaml
+        doc = yaml.safe_load(
+            (REPO / ACK_FAILED_FILE).read_text(encoding="utf-8", errors="replace"))
+    except Exception:
+        return 0
+    if not isinstance(doc, dict):
+        return 0
+    rows = doc.get("acknowledged")
+    if not isinstance(rows, list):
+        return 0
+    return sum(1 for r in rows if isinstance(r, dict) and r.get("id"))
 
 
 def spec_success(rel: str) -> str | None:
@@ -1011,7 +1046,19 @@ LIVE_JS = """
         var running = q.running || 0, ready = q.ready || 0;
         chip("work", running + " rendering");
         chip(ready ? "work" : "", ready + " waiting on the card");
-        if (q.failed) chip("bad", q.failed + " sitting failed");
+        /* RED ONLY FOR WHAT IS ACTUALLY NEW. ACK_FAILED is how many of the
+           box's failures are triaged in the repo; anything above that line is
+           unexamined and is what the founder needs to see. */
+        if (q.failed) {
+          var fresh = q.failed - ACK_FAILED;
+          if (ACK_FAILED <= 0 || fresh > 0) {
+            chip("bad", fresh > 0 && ACK_FAILED > 0
+              ? q.failed + " sitting failed \\u2014 " + fresh + " not yet triaged"
+              : q.failed + " sitting failed");
+          } else {
+            chip("", q.failed + " failed, all triaged \\u2014 " + ACK_DOC);
+          }
+        }
         if (typeof q.done_24h === "number") chip("", q.done_24h + " finished in 24 h");
         if (q.runner_alive === false) chip("bad", "nothing is draining this queue");
         if (q.kinds) {
@@ -1643,6 +1690,8 @@ def build(out_dir: Path):
     consts = (f"var TEL_URL={json.dumps(TELEMETRY_URL)},"
               f"TEL_URL_LEGACY={json.dumps(TELEMETRY_URL_LEGACY)},"
               f"STALE_MIN={STALE_MINUTES},"
+              f"ACK_FAILED={acknowledged_failures()},"
+              f"ACK_DOC={json.dumps(ACK_DOC)},"
               f"RESULTS_BASE={json.dumps(RESULTS_BASE)},"
               f"RESULTS_BRANCH={json.dumps(RESULTS_BRANCH)},"
               f"THUMB_BASE={json.dumps(THUMB_BASE)},"

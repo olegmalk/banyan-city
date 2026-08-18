@@ -1152,6 +1152,36 @@ def read_box_queue() -> dict:
         return {}
 
 
+ACK_FAILED_FILE = "pipeline/measured/failed-acknowledged.yaml"
+ACK_FAILED_DOC = "pipeline/queue-failure-triage-0817.md"
+
+
+def acknowledged_failures() -> int:
+    """How many of the box's failed/ entries are triaged and written down.
+
+    The chip under this used to read a flat red "39 sitting failed" — a true
+    count that said nothing, because every one of the 39 had been diagnosed
+    (33 in the triage doc, 6 in the compseed specs' own SUPERSEDED headers).
+    Red that never goes out is red a reader learns to skip, so the acknowledged
+    ids are committed and the page subtracts them.
+
+    Counted off the LIST, never the file's `count:` — same contract as
+    read_box_queue: unreadable, absent and unparseable all return 0, and 0 puts
+    the chip back to the plain red count. On a failed read the page must
+    over-report failures, never mark an unexamined one as known.
+    """
+    try:
+        import yaml as _yaml
+        with open(REPO / ACK_FAILED_FILE, encoding="utf-8") as fh:
+            doc = _yaml.safe_load(fh) or {}
+        rows = doc.get("acknowledged") if isinstance(doc, dict) else None
+        if not isinstance(rows, list):
+            return 0
+        return sum(1 for r in rows if isinstance(r, dict) and r.get("id"))
+    except Exception:
+        return 0
+
+
 def read_work_daily() -> dict:
     """The box's per-day machine time, or {} — same contract as read_box_queue.
 
@@ -2936,8 +2966,19 @@ LIVE_JS = """
     }
     if (typeof q.done_24h === "number") chip("good", String(q.done_24h), "finished in 24 h");
     if (typeof q.done_today === "number") chip("good", String(q.done_today), "finished today");
+    /* RED ONLY FOR WHAT IS UNEXAMINED. ACK_FAILED is how many of these are
+       triaged in the repo; a pile that is fully written down is a fact, not an
+       alarm, and anything above that line is the thing worth a red chip. */
     if (typeof q.failed === "number" && q.failed > 0) {
-      chip("bad", String(q.failed), "sitting failed");
+      var freshFailed = q.failed - ACK_FAILED;
+      if (ACK_FAILED <= 0) {
+        chip("bad", String(q.failed), "sitting failed");
+      } else if (freshFailed > 0) {
+        chip("bad", String(q.failed), "sitting failed \\u2014 " + freshFailed +
+          " not yet triaged");
+      } else {
+        chip("", String(q.failed), "failed, all triaged \\u2014 " + ACK_DOC);
+      }
     }
     if (q.runner_alive === false) {
       chip("bad", null, "nothing is draining this queue — the box's runner is not running");
@@ -4544,7 +4585,9 @@ var BOX_TEL = {json.dumps(BOX_TEL_URL)}, BOX_TEL_LEGACY = {json.dumps(BOX_TEL_UR
     BOX_STALE = {int(BOX_QUEUE_STALE_MINUTES)},
     BOX_MEDIANS = {json.dumps(boxq["medians"] if boxq else {})},
     BOX_MEDIAN_FALLBACK = {json.dumps(boxq["fallback"] if boxq else None)},
-    BOX_BAKED = {json.dumps(boxq["measured_at"] if boxq else "the build")};
+    BOX_BAKED = {json.dumps(boxq["measured_at"] if boxq else "the build")},
+    ACK_FAILED = {acknowledged_failures()},
+    ACK_DOC = {json.dumps(ACK_FAILED_DOC)};
 /* The strip's vocabulary, sent over from Python so the baked blocks and the
    redrawn ones cannot end up with two spellings of the same kind. */
 var QKIND_CSS = {json.dumps(QUEUE_KIND_CSS)},
