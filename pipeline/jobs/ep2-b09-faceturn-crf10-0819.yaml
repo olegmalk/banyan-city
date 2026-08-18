@@ -211,3 +211,104 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\09-the-pause-LTX-ep2-b09-faceturn-crf10-0819.mp4
 - C:\banyan-farm\ep2-b09-faceturn-crf10-0819\b09-init-704x1280.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19, scored against the bar pre-registered in this
+# spec's own `success` field before the pixels existed. rc 0, published, pulled,
+# mp4 sha256 recomputed locally against the box's own manifest (331e4a8d..., match).
+# 121 frames decoded and measured by the same code that measured the parent, with
+# the same head box, the same controls and the same float64 path, so every number
+# below is comparable to the parent's line for line.
+# ============================================================================
+verdict: 'PASSES ITS BAR ON ALL THREE CLAUSES, decisively, and it is the largest
+  single result this lane has produced. `--image-crf 33` WAS DESTROYING THE
+  CONDITIONING IMAGE. One integer moved and the init went from abandoned at the
+  first denoising step to held for 121 frames, on a byte-identical prompt, seed,
+  plate, sampler and frame count.'
+the_comparison:
+  measured_the_same_way: 'Head box x 30-570, y 0-560 of 704x1280, read off the
+    PARENT''s frame 1 and applied unchanged to both clips so the two are measured
+    against one ruler. Whole frame and a grass-only strip (y 900-1280) as controls.'
+  f001_to_f002_face_step: 'parent 39.34  ->  child 0.66. A SIXTYFOLD REDUCTION on
+    the single number that diagnosed the defect. The parent''s largest interframe
+    step in the whole clip was its first; the child''s first step is smaller than
+    its own median motion.'
+  ten_largest_face_steps: 'parent: frames 1,2,3,4,5,6,7,9,8,10 -- the ten earliest,
+    largest first, which is what "the init is thrown away" looks like as a number.
+    child: frames 88,86,14,90,80,94,83,22,28,92 -- distributed across the clip,
+    which is what a performance looks like.'
+  face_drift_from_f0: 'parent 74.23  ->  child 32.82, less than half.'
+  background_strip_drift: 'parent 60.89  ->  child 9.89. The world stops being
+    re-invented too. And the ORDER is now right: the face drifts 32.8 while the
+    background drifts 9.9, so the SUBJECT moves and the WORLD holds. In the parent
+    the background was drifting 60.9, which is not a background at all.'
+  motion_by_third: 'parent 8.237 / 0.431 / 1.452 (front-loaded collapse then
+    stillness). child 3.003 / 0.511 / 2.951 (motion at both ends).'
+pass_clauses:
+  clause_1_early_collapse_reduced: 'PASS, far past the bar. The bar said a first
+    step under 20 is a clear pass and 20-30 a partial. It measured 0.66.'
+  clause_2_motion_no_longer_front_loaded: 'PASS. The ten largest steps are no longer
+    the ten earliest; the largest cluster sits at f080-f094.'
+  clause_3_the_man_at_f021_is_the_man_in_the_init: 'PASS, by eye at 1x. Same
+    three-quarter orientation, same dark brown hair carrying the init''s own pale
+    highlight (not the invented white crown streak the parent grew), same round
+    wire-rims, same tan tunic and white shoulder sash, and THE HAND IS STILL AT HIS
+    FACE -- the parent deleted it by f021. He is not a child. At f121 he is still
+    the same man: eyes now fully closed, head tilted down, the hand lowered.'
+the_performance_that_survived: 'Worth stating separately, because the parent proved
+  the engine CAN move a face and the worry was that holding the init would buy
+  identity by spending motion. It did not. Across the clip the eyes go from downcast
+  behind the lenses, to narrowed and looking down-left at f021, to fully closed with
+  the brows drawn at f121, and the hand travels down off the cheek. That is "Guard
+  1''s face works through it, slowly" performed by the picture rather than described
+  by the prompt.'
+pre_registered_fail_modes:
+  FAIL-COLLAPSE-UNCHANGED: 'DID NOT FIRE. This was named as the most likely outcome
+    and it is wrong, which is the point of naming it in advance.'
+  FAIL-FROZEN: 'DID NOT FIRE. Face-crop interframe mean 2.155 with motion in both the
+    first and last thirds. The feared trade -- identity bought by spending motion --
+    did not happen.'
+  FAIL-MORPH-LATE: 'DID NOT FIRE. Identity holds at f121, not just past f021.'
+  FAIL-ARTEFACT: 'DID NOT FIRE. This was the untested direction and it came back
+    clean: no blocking, no banding, no posterisation. The child frames are if
+    anything cleaner than the parent''s.'
+  FAIL-STROBE: 'DID NOT FIRE. Luminance 101.42-105.27, largest single-frame step
+    1.149 against the parent''s 0.945 -- marginally larger, nowhere near a flicker.'
+  FAIL-CAMERA: 'DID NOT FIRE. The pale diagonal in the lower-left corner holds
+    position at f021 and f121. Locked, as in the parent.'
+  FAIL-SECOND-FACE: 'DID NOT FIRE. One face throughout.'
+  FAIL-MOUTH: 'DID NOT FIRE. Mouth closed in every frame opened. Same stated limit as
+    the parent: frames opened at full resolution, not all 121.'
+what_this_settles_AND_IT_IS_NOT_ONLY_BEAT_09: 'THE CONDITIONING STILL WAS BEING
+  DESTROYED BEFORE IT CONDITIONED ANYTHING, on every i2v job on this card that
+  carries `--image-crf 33`. That flag round-trips the init through libx264 at that
+  CRF (ltx_i2v.py:1072). At 33 the init arrives smeared and the sampler substitutes
+  its own prior within two frames; at 10 it arrives intact and holds for 121 frames.
+  CONSEQUENCES BEYOND THIS BEAT, each of which is a claim about the record and not
+  about this clip:
+  (a) Beat 11''s "total identity collapse away from the plate across f16-f21" and
+  this beat''s parent are now BOTH explicable by one flag rather than by two plates.
+  That does not retroactively pass beat 11 -- it means beat 11 is worth RE-RUNNING at
+  a low CRF before anyone concludes anything about its plate.
+  (b) "The b18 recipe holds a fruit and not a person" is refined: b18 held because a
+  macro of a fruit has little for a smeared init to lose. The recipe was degrading
+  ITS init too; the subject just did not care.
+  (c) Any lane about to spend a rung on a PLATE for a beat whose motion collapsed
+  should check the CRF first. A better plate cannot survive being compressed at 33.'
+what_this_does_NOT_settle: 'Nothing about CAST or taste. This clip inherits the
+  parent''s init, which fails its own plate bar on framing, a hand in frame and the
+  adult read; holding that init faithfully means holding those defects faithfully
+  too, and the man in this clip still reads young. `is_show_content: false` stands,
+  the beat-09 slate stays a slate, and no pick, promotion or plate_ack is made here.
+  Nor does this establish 10 as the RIGHT value -- it establishes that 33 is wrong.
+  The optimum between them is unmeasured and does not need to be measured before the
+  finding is used.'
+what_this_licenses: 'NOT a batch. The honest next steps, in order of cheapness:
+  (1) a research lane is already reading the Lightricks reference implementation,
+  the diffusers i2v path and ComfyUI''s LTXV conditioning nodes -- if the upstream
+  conditioning-strength parameter is a better lever than a codec round-trip, that is
+  a better fix than this one and this result does not preclude it;
+  (2) re-running the beats whose motion collapsed (11 above all) at a low CRF, ONE
+  SAMPLE each, before any plate work is commissioned for them;
+  (3) an explicit decision about the default in every future i2v spec, which is a
+  route call and belongs to whoever owns the recipe, not to this verdict.'
