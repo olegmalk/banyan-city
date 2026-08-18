@@ -11,8 +11,9 @@ written. I verified that against disk and the box before touching anything, and 
 correct action was to stand down from the recovery and go find real work instead. If
 you inherit a "resume the crashed lane" brief, check it the same way first.
 
-The night's work was **five verdicts, two research findings, one restage proven, and
-one correction to a finding of my predecessor's — plus one to a finding of my own.**
+The night's work was **seven verdicts, three research findings, beat 17's restage
+proven and closed, and two corrections — one to a finding of my predecessor's and one
+to a finding of my own that a control render falsified the same night.**
 
 ---
 
@@ -38,7 +39,7 @@ time). So three were taken and answered here, with reasons, veto-able by one lin
 - **The 4.92 GiB repo and the deploy clone** — architectural, unchanged, still a
   daytime conversation. Evidence remains in `pipeline/deploy-weight-finding-0818.md`.
 
-## 2. Verdicts filed tonight — five, each against a bar written before its pixels
+## 2. Verdicts filed tonight — seven, each against a bar written before its pixels
 
 Every one is appended to the spec that produced it. No bar was edited, in either
 direction, and where a clip fell in a gap the bar had left, the gap is named rather
@@ -56,7 +57,9 @@ than patched.
   FAIL-FROZEN as "the plate simply sits still" and asks only that the fig "visibly
   MOVE", without saying for how long. So it passes, and I did not harden the clause
   after the fact to catch a clip I disliked.
-- **Beat 17 shake — PASS on S1+S2+S3.** See §3; this is the night's result.
+- **Beat 17, three takes — PASS, PASS, PASS**, on progressively stricter bars: action
+  only, then action + plate, then action + plate + garment. See §3; this is the
+  night's result and the third take is the pick.
 - The three-seed beat-18 set's real finding is the *comparison*: 1 pass, 1 strobe, 1
   decay means **the strobe is seed-borne**, where the 0812 read had it looking like a
   property of the recipe. Opposite conclusion, and the reason three seeds were filed
@@ -102,11 +105,29 @@ start-frame conditioning-strength change to `ltx_i2v.py` as the next move, which
 have been patching the code path every render passes through in order to fix a prompt.
 **Withdrawn as unmotivated.**
 
-**Residual defect, and it is a hole in a clause I wrote myself:** the world is
-preserved and the *garment* is not. His dark blue-violet cloak still becomes a
-pink-and-cream poncho from f024 on. P1 passes anyway, because it measures whole-frame
-and band-level distance and a cloak is a small share of the pixels. Right idea, wrong
-granularity — the next bar needs a garment-region clause.
+**Residual defect, and it was a hole in a clause I wrote myself:** the world was
+preserved and the *garment* was not. His dark navy cloak became a pink-and-cream
+poncho from f024 on, and P1 passed anyway because it measures whole-frame distance
+and a cloak is a small share of the pixels. Right idea, wrong granularity.
+
+**So a third take closed it.** `ep2-b17-shake-navy-0819` — one variable again, the
+positive prompt now *names* the cloak's colour, seed held — **passes all five
+clauses.** P2 (the new garment clause) reads hue 223.8/sat 0.58 at f036 and 231.1/0.47
+at f060, inside the required 180–260° at ≥0.40, against a plate of 220°/0.65 and the
+0819 failure of 346°/0.24. P1 improved to 12.5 and 24.6. **Beat 17 now has a take that
+keeps the action, the world and the garment at once, and it is the pick of the three.**
+
+Two things worth carrying from how that verdict was reached. **S2 nearly went wrong by
+eye**: the consecutive strip looks frozen, and measured, the hem swings 68px with 17
+direction reversals — more than either sibling. The strip I opened sat inside a single
+opening phase. And the **honest cost is unscored**: overall motion is the lowest of the
+three (interframe median 0.50, half the frame pairs near-duplicates). The cloak moves
+more while the clip moves less. Three beat-17 specs now share that blind spot.
+
+The negative prompt was deliberately left alone throughout. Naming what you want in
+the positive is the lever with evidence behind it; banning what you don't is the one
+without — four of six cold-open seeds pushed in against an explicit "zoom, dolly,
+push in".
 
 ## 4. Two research findings, both zero-GPU, one of them a clean negative
 
@@ -152,9 +173,11 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 
 ## 6. State of the machines and the site
 
-- **rtx5090** — healthy, every job tonight `rc=0`. `ep2-b17-shake-noamber-0819`
-  finished at 20:14:34Z and **has been judged and committed** (PASS on S1/S2/S3/P1).
-  Nothing is in flight at handover.
+- **rtx5090** — healthy, every job tonight `rc=0`. Three beat-17 renders, all judged
+  and committed before handover. **Nothing is in flight and the queue is empty** — and
+  that is a stop on a result, not fatigue: beat 17's chain closed with a take that
+  passes every clause any bar has asked of it, so the next move there is a taste look,
+  not a render.
 - **The 8 files in `C:\banyan-queue\ready` are not work.** They are all `.HOLD`,
   `.HOLD-wrong-action` or `.DUP-already-ran` suffixed and the runner correctly
   reports `ready=0`. Do not be fooled by the file count as I nearly was.
@@ -177,7 +200,8 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 | Thing | Path |
 |---|---|
 | Beat 17, the restage proven + the plate collapse | `pipeline/jobs/ep2-b17-shake-0818.yaml` |
-| Beat 17, the one follow-up, **in flight and unjudged** | `pipeline/jobs/ep2-b17-shake-noamber-0819.yaml` |
+| Beat 17, the amber control that withdrew my finding | `pipeline/jobs/ep2-b17-shake-noamber-0819.yaml` |
+| **Beat 17, the pick — action + world + garment** | `pipeline/jobs/ep2-b17-shake-navy-0819.yaml` |
 | Beat 18 tremble, three verdicts + the pick | `pipeline/jobs/ep2-b18-tremble-s2026087{1,2,3}-0817.yaml` |
 | Latent boundary: the hit, the miss, and my own correction | `pipeline/research/latent-boundary-cold-open-0819.md` |
 | The dead-negative audit | `pipeline/research/cfg1-deadneg-audit-0818.md` |
@@ -186,14 +210,10 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 
 ## 8. What I would pick up first
 
-1. **Beat 17's cloak colour.** The take passes and the garment is still wrong. One
-   variable — name the plate's cloak colour in the positive prompt — plus a P2
-   garment-region clause in the bar, since P1 demonstrably cannot see it. This is the
-   only render-side thing beat 17 still needs.
-2. **Beat 08's arm** — the one piece of ruled work I did not reach. It is a steward
+1. **Beat 08's arm** — the one piece of ruled work I did not reach. It is a steward
    route choice, not a founder question.
-3. **`ep2-b01-growmotion-b7`/`b8`** were queued by another lane and are unjudged. They
+2. **`ep2-b01-growmotion-b7`/`b8`** were queued by another lane and are unjudged. They
    are seeds, not variables; the sweep's stop conclusion is unaffected either way.
-4. **Named, not built:** `box_enqueue.py` has no queue-time warning for guidance ≤ 1.0
+3. **Named, not built:** `box_enqueue.py` has no queue-time warning for guidance ≤ 1.0
    paired with a live negative. It must warn rather than block — two of the 94 are
    deliberate guidance probes.
