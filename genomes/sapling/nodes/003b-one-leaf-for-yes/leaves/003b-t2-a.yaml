@@ -5,7 +5,7 @@ tier: T2
 form: animatic-mp4
 content: 003b-t2-a.mp4
 author: pipeline/render_t2.py v2 (deterministic kinetic-text cut of the T0/T1 script)
-model: "kokoro-82M via kokoro-onnx (local neural TTS, $0) — cast: af_sarah, am_michael, am_puck; chromium shot cards; brown-noise wind bed"
+model: "kokoro-82M via kokoro-onnx (local neural TTS, $0) — cast: af_sarah, am_puck, bm_fable; chromium shot cards; brown-noise wind bed"
 prompt: none            # deterministic — the script is the source
 seed: none
 cost_usd: 0.00
