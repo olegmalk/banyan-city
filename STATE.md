@@ -9114,3 +9114,62 @@ because that is architectural and touches where the project's evidence lives.
 **The card was left empty, deliberately.** Every 0818 spec has been run and all five
 of tonight's verdicts license nothing further; the three live questions are all R4.
 $0 spent.
+
+## 2026-08-19 (night) — the restage collected, and two findings got corrected
+
+Supervisor v2, replacing a crashed predecessor. **The crash brief was wrong and
+checking it was the first useful act:** I was told the beat-08 boardcomp verdict was
+unfinished. It was appended, committed (`bae1e273`) and clean in git, and the
+predecessor's own handover was already written. Verify a recovery brief against disk
+and the box before acting on it.
+
+**Beat 17's restage is proven renderable.** `brushes off` → `gives his cloak a shake`
+was restaged on 0818 off a measured 0/8 brush record, and nothing had been rendered
+against the new line — so the beat had no take matching canon. `ep2-b17-shake-0818`
+fixed that on ONE seed and PASSED S1+S2+S3. On the consecutive strip f030–f041 he
+takes the cloak in hand, lifts it up and out into an extended sheet, sweeps it down
+across his body and lets it settle: one out-and-back of the hem across a third of the
+frame, feet planted. The engine that would not draw a brush in eight seeds drew a
+shake on the first one. **F2 STAND-ONLY, the predicted failure, did not occur.**
+
+**And the same clip abandons its plate in eight frames** — 92% of all colour drift
+from the init complete by f008, blue-sky green meadow to amber-sky brown field with an
+orange cloak, then steady for 88 frames. No clause covered plate fidelity, so it is
+recorded as a bar gap, not scored as a failure; part of the cause was my own
+"afternoon light warming toward amber" in the positive prompt. The follow-up
+(`ep2-b17-shake-noamber-0819`) removes exactly that clause, holds the seed, and adds a
+P1 plate-fidelity ceiling set from the measured failure rather than from taste.
+
+**LTX's latent quantum is 8 pixel frames and frame 0 IS the conditioning image.** Beat
+17's 92%-by-f008 is a textbook I2V conditioning-boundary collapse. The same test on
+all eight cold-open clips comes back NEGATIVE: every seed front-loads into latent 1,
+*including the pick, which front-loads hardest of all* (32.7%). So front-loading is
+that recipe's constant, not G1's cause — a lead that looked strongest, measured not to
+apply. `pipeline/research/latent-boundary-cold-open-0819.md`.
+
+**Two corrections.** The 0818 sweep stopped on "three independent axes… no two failures
+share a cause", two lines under its own "colour path pops in 4 of 6"; four of five
+rejects fail G1 by the same shape, so it was never three dice. The stop decision was
+right and stands — the reason was wrong, and it pointed at "wait for R4" instead of at
+a variable. Then my own replacement mechanism ("the recipe does not distribute change
+across the clip") turned out to describe the passing seed too, and was narrowed rather
+than quietly dropped.
+
+**Beat 18 tremble, three seeds: 1 pass, 1 strobe, 1 decay.** s20260871 is the pick —
+the only seed with motion in all four quarters and 0 of 120 specular pumps. s20260872
+FAIL-STROBE at 28 of 120 pumps, caught only on a consecutive-frame strip. s20260873
+passes as written and stops moving halfway, which exposed a bar with no SUSTAIN clause
+— named for the next spec, not retro-fitted. The set's finding: **the strobe is
+seed-borne**, where the 0812 read had it looking like a recipe property.
+
+**The CFG-1 audit closes clean.** 94 specs pair guidance 1.0 with a live negative,
+where the uncond pass never runs — and **zero of 94** ever credited the negative with
+an effect. Already-known mechanism (`ltx23-negcfg-b13-0816.md`), already guarded in
+`ltx_i2v.py:sidecar_negative`. A guidance *schedule* is not reachable: `--guidance` is
+scalar and diffusers 0.39.0's LTX2 signature is `guidance_scale: float`, so it was
+reported rather than hacked in overnight.
+
+**Founder board: four questions down to one.** The 0818 widening puts route choices,
+bars and tradeoffs on the steward, so beat 08's arm and beat 14's restage came off his
+board. What is left is the only taste question: watch the cold open. Full detail in
+`HANDOVER-0819.md`. Spend $0.
