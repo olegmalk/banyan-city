@@ -1,0 +1,15 @@
+# Composite provenance (7.2). No model, no sampler, no GPU, $0.
+tool: pipeline/beat08_gesture_composite.py
+init: 08-inside-him-twofig-mac-r3-s0.png
+init_sha256: d9cd8b1a4642a60a3362d07feef30b47999bbe988e4ef52d047d1f4d06113238
+out_sha256: 487ef4e8e498357f9078d75b5205d1843cc4f0c73c74d4d45714edf3d0f64b51
+plan: {"board_bbox_derived": [528, 486, 770, 711], "board_grow": 20, "board_leak_px": 0, "board_px": 39419, "drop_px": 130, "edge_ramp": 20, "fill": "stretch", "hand_l": [545, 505, 645, 618], "hand_px": 8571, "hand_r": [693, 505, 793, 618], "mask_frac_of_frame": 0.0824, "mask_px": 83352, "point_arm_attempted": false, "src_h": 58, "unit_px": 42032, "vacated_px": 29302}
+point_arm: "not attempted"
+checks: [["C1 board+hands moved as ONE unit", true, "board 39419 px, hands 8571 px"], ["C2 the board actually descends", true, "drop 130 px"], ["C3 nothing changes outside the grown mask", true, "max delta 0/255"], ["C4 a dark board face exists at the new height", true, "20807 board-face px inside the destination"], ["C5 no board left behind in the vacancy", true, "density 0.0299 vs untouched cloak 0.0368, largest blob 382 px in 49 components"], ["C6 the fill reads as cloak, not as the board it replaced", true, "fill lum 112 vs cloak 125 vs board 45"], ["C7 the patch boundary has no visible step", true, "ring MAE 7.4 (beat 21's rejected clone: 22.9)"], ["C8 the fill has cloth detail, it is not a smudge", true, "gradient energy 5.62 vs untouched cloak 8.15 (69%; the diffuse fill this replaced scored 14%)"], ["C9 the fill had real cloth above it to stretch", true, "min headroom 58 rows"]]
+fails: []
+cost_usd: 0
+approved: false
+provisional: >-
+  A STEWARD COMPOSITE, not a pick and not canon. Ground truth is the
+  founder (R4).
+note: "BOARD LOWERED ONLY. Signed by the steward after looking at it full-frame and at 2x. The pointing arm is NOT in it and is not reachable by compositing this plate -- see the header's three blockers."

@@ -83,7 +83,12 @@ the fold lines in their correct x positions and the pale chest wedge keeps
 widening downward the way it already does. It repeats nothing (not decal tell
 #4) and it inherits the plate's own light by construction. The rectangular edge
 is then killed by a cosine ramp into the plate's own neighbouring pixels on each
-side, and a few small constrained blurs settle the boundary.
+side. NO SETTLE BLUR: it was tried at 4 iterations of radius 1.2 and it was the
+single largest cause of the smear, dropping the fill's detail to 27% of the
+cloak's when the ramps alone hold the boundary at 69% (C8, and ring MAE 7.4
+against beat 21's rejected 22.9). A `flat` mode is kept and is NOT the default,
+because one flat colour per column turns the guard's pale chest wedge -- which
+widens as it descends -- into a hard vertical bar.
 
 $0. Pure PIL, numpy and scipy (as pipeline/b17_hand_track.py already uses). No
 model, no sampler, no GPU, no network. The init is asserted by sha256 before a
@@ -131,6 +136,12 @@ BELLY = (315, 588)
 # The only cream pixels on the guard's near side that could stand in for a
 # forearm. They are robe, not sleeve -- see the header, blocker 2.
 SLEEVE_L = (455, 545, 560, 615)
+
+# A patch of the guard's own cloak that the edit never touches, used as the
+# baseline for "how many dark fold pixels does this garment normally carry".
+# Measured 2026-08-18: it carries them at density 0.037, which is MORE than the
+# vacancy fill does.
+CLOAK_REF = (540, 300, 780, 470)
 
 SKIN = dict(r_min=150, rb_min=30, l_min=130)
 
@@ -200,7 +211,8 @@ def feathered(mask, feather):
     return np.asarray(m, np.float32)[:, :, None] / 255.0
 
 
-def stretch_fill(arr, hole, src_h, edge_ramp, settle_iters, settle_radius):
+def stretch_fill(arr, hole, src_h, edge_ramp, settle_iters, settle_radius,
+                 visible_h=None, mode="stretch"):
     """Fill `hole` by resampling the cloth DIRECTLY ABOVE it down over the gap.
 
     §12 rules this rather than diffusion (which, seeded from the plate, is a
@@ -230,12 +242,26 @@ def stretch_fill(arr, hole, src_h, edge_ramp, settle_iters, settle_radius):
         if have < 4:
             continue
         strip = src[top:y0, x, :]                      # (have, 3)
-        n = y1 - y0 + 1
+        # Only the top `visible_h` rows of the hole are ever seen -- the rest is
+        # covered by the board at its new height. Stretching the source over the
+        # WHOLE hole was a 4.5x vertical magnification and it read as a smear;
+        # stretching it over the visible part only is about 2.5x.
+        yv = y1 if visible_h is None else min(y1, y0 + visible_h - 1)
+        n = yv - y0 + 1
+        if mode == "flat":
+            # CEL FILL. Anime cloth is flat colour bounded by lines, so the
+            # style-correct invention is a flat band per column, not a gradient.
+            # A stretch of a soft gradient reads as a photographic smudge in a
+            # picture that has no soft gradients in it.
+            out[y0:y1 + 1, x, :] = np.median(strip, axis=0)
+            continue
         t = np.linspace(0.0, have - 1.0, n)
         i0 = np.floor(t).astype(int)
         i1 = np.minimum(i0 + 1, have - 1)
         w = (t - i0)[:, None]
-        out[y0:y1 + 1, x, :] = strip[i0] * (1 - w) + strip[i1] * w
+        out[y0:yv + 1, x, :] = strip[i0] * (1 - w) + strip[i1] * w
+        if yv < y1:                                    # hold the last row down
+            out[yv + 1:y1 + 1, x, :] = out[yv, x, :]
 
     # Cosine ramp into the plate's own neighbours on the left and right of each
     # row, so the patch does not print a straight-edged tone panel (decal tell
@@ -298,11 +324,29 @@ def main() -> int:
     ap.add_argument("--mask-grow", type=int, default=12)
     ap.add_argument("--board-grow", type=int, default=12)
     ap.add_argument("--board-grow-max", type=int, default=26)
-    ap.add_argument("--src-h", type=int, default=50,
-                    help="rows of cloth above the hole used as fill source")
-    ap.add_argument("--edge-ramp", type=int, default=34)
-    ap.add_argument("--settle-iters", type=int, default=6)
-    ap.add_argument("--settle-radius", type=float, default=1.6)
+    ap.add_argument("--src-h", type=int, default=58,
+                    help="rows of cloth above the hole used as fill source. 58 "
+                         "is the measured ceiling: the guard's gold cloak clasp "
+                         "sits at y 400-425 and the board's mask starts at 486, "
+                         "so a taller source would stretch the clasp into a "
+                         "smear.")
+    ap.add_argument("--fill", choices=("stretch", "flat"), default="stretch",
+                    help="stretch = resample the cloth above the hole down over "
+                         "it; flat = one flat colour per column. BOTH WERE "
+                         "LOOKED AT: flat turns the guard's pale chest wedge, "
+                         "which widens downward, into a hard vertical BAR, so "
+                         "stretch is the default despite flat being nearer to "
+                         "how cel art is actually painted.")
+    ap.add_argument("--vis-pad", type=int, default=16,
+                    help="rows below the vacancy still stretched, as slack under "
+                         "the feathered edge of the lowered board")
+    ap.add_argument("--edge-ramp", type=int, default=20)
+    ap.add_argument("--settle-iters", type=int, default=0,
+                    help="0 by default. The settle blur was the single biggest "
+                         "source of the smear -- 4 iterations at radius 1.2 "
+                         "turned a legible cloak into a smudge, and the ramps "
+                         "alone hold the boundary (ring MAE 7.4).")
+    ap.add_argument("--settle-radius", type=float, default=1.2)
     ap.add_argument("--note", default="")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
@@ -362,8 +406,14 @@ def main() -> int:
               % (a.board_grow_max, leak), flush=True)
         return 3
 
-    hands = dilate((in_window(arr.shape, HAND_L) | in_window(arr.shape, HAND_R))
-                   & skin_mask(ai), 6)
+    # The hands, like the board, are DERIVED. A plain box-and-skin-rule caught
+    # bright grass at the right edge of HAND_R (grass passes R>150, R-B>30,
+    # lum>130), carried it down with the unit and printed a hard bright block
+    # against the cloak's silhouette at x 755-795. Taking the largest skin
+    # COMPONENT inside each box drops the specks and keeps the hand.
+    sk = skin_mask(ai)
+    hands = dilate(biggest_component(sk & in_window(arr.shape, HAND_L))
+                   | biggest_component(sk & in_window(arr.shape, HAND_R)), 6)
     unit = board | hands
     n_board, n_hands = int(board.sum()), int(hands.sum())
 
@@ -390,7 +440,7 @@ def main() -> int:
         "mask_px": int(mask.sum()),
         "mask_frac_of_frame": round(float(mask.mean()), 4),
         "point_arm_attempted": bool(a.point_arm),
-        "fill": "stretch", "src_h": a.src_h, "edge_ramp": a.edge_ramp,
+        "fill": a.fill, "src_h": a.src_h, "edge_ramp": a.edge_ramp,
     }
     Image.fromarray((mask * 255).astype(np.uint8)).save(a.mask_out)
     print("WROTE %s" % a.mask_out, flush=True)
@@ -405,7 +455,8 @@ def main() -> int:
     shifted[a.drop:, :, :] = src[:H - a.drop, :, :]
 
     base, _, headroom = stretch_fill(arr, unit, a.src_h, a.edge_ramp,
-                                     a.settle_iters, a.settle_radius)
+                                     a.settle_iters, a.settle_radius,
+                                     visible_h=a.drop + a.vis_pad, mode=a.fill)
     # The feather is a Gaussian, and a Gaussian has a tail: left unclamped it
     # moved pixels 16 px outside the declared inpaint mask by up to 4/255. The
     # blend must live entirely inside the region the spec declares, so the alpha
@@ -433,7 +484,7 @@ def main() -> int:
                     "point, the stretch is not anatomy, and the paste lands on "
                     "top of the goblin's own fist. Saved for inspection."
                     % (SLEEVE_L[2] - SLEEVE_L[0], reach))
-        fails.append("C8 the pointing arm is synthesised, not moved -- see the note")
+        fails.append("C10 the pointing arm is synthesised, not moved -- see the note")
 
     out_u8 = np.clip(out, 0, 255).astype(np.uint8)
 
@@ -452,12 +503,26 @@ def main() -> int:
     checks.append(("C4 a dark board face exists at the new height",
                    int(face_dest.sum()) > 15000,
                    "%d board-face px inside the destination" % int(face_dest.sum())))
-    # C5 -- and this is the one that catches the bug the first cut shipped: no
-    # pixel that still reads as BOARD may survive where the board used to be.
+    # C5 -- the one that catches the bug the first cut shipped: no BOARD may
+    # survive where the board used to be. A raw count of rule-satisfying pixels
+    # is the wrong form and it was tried first: the guard's cloak is drawn with
+    # dark fold shadows that satisfy the board rule all by themselves (untouched
+    # cloak carries them at density 0.037), so a raw count flags the plate's own
+    # drawing style, and the earlier settle blur "passed" the check only by
+    # lightening those folds. The honest test is two clauses -- the vacancy must
+    # not be DENSER in board-rule pixels than the guard's own untouched cloak,
+    # and no single BLOB may survive, because a leftover board slab is one big
+    # component while fold lines are many thin ones.
     left_behind = board_face_mask(out_u8.astype(int)) & vacated & ~moved
-    checks.append(("C5 no board pixels left behind in the vacancy",
-                   int(left_behind.sum()) < 200,
-                   "%d px still satisfy the board rule" % int(left_behind.sum())))
+    ref = in_window(arr.shape, CLOAK_REF) & ~dilate(unit | moved, a.mask_grow + 4)
+    ref_d = float(board_face_mask(ai)[ref].mean()) if ref.any() else 1.0
+    vac_d = float(left_behind.sum()) / max(int((vacated & ~moved).sum()), 1)
+    lab_l, n_l = ndimage.label(left_behind)
+    biggest = int(ndimage.sum(left_behind, lab_l, range(1, n_l + 1)).max()) if n_l else 0
+    checks.append(("C5 no board left behind in the vacancy",
+                   vac_d <= 1.5 * ref_d and biggest < 1200,
+                   "density %.4f vs untouched cloak %.4f, largest blob %d px in "
+                   "%d components" % (vac_d, ref_d, biggest, n_l)))
     # C6 -- the source law, measured. If the fill were a blurred copy of the
     # board its mean would sit near the board's, not near the cloak's.
     vac_only = vacated & ~moved & ~dilate(moved, 8)
@@ -474,6 +539,32 @@ def main() -> int:
     rm = ring_mae(arr, out_u8, unit & ~moved, 6)
     checks.append(("C7 the patch boundary has no visible step",
                    rm < 14.0, "ring MAE %.1f (beat 21's rejected clone: 22.9)" % rm))
+    # C8 -- THE CHECK THAT ACTUALLY CATCHES THE BUG THAT SHIPPED, and it is here
+    # because C5 and C6 both waved that bug through. A blurred copy of the board
+    # is not dark (blurring lifts it) and its mean luminance sits near the
+    # cloak's, so neither a colour rule nor a luminance rule sees anything wrong.
+    # What is wrong with a smear is that it has NO DETAIL. Measured on the same
+    # plate, mean |gradient| over the visible vacancy against the guard's own
+    # untouched cloak (8.15):
+    #     diffuse fill, the shipped bug ....... 1.12   14%   rejected by eye
+    #     flat fill, settle 4 ................. 1.50   18%   rejected by eye
+    #     stretch fill, settle 4 .............. 2.16   27%   rejected by eye
+    #     stretch fill, settle 0 (this one) ... 5.62   69%   signed by eye
+    # The bar is set at 45%, which separates every variant a look rejected from
+    # the one a look accepted.
+    def gradient_energy(img, mask):
+        Lg = lum(img.astype(float))
+        gx = np.abs(np.diff(Lg, axis=1, prepend=Lg[:, :1]))
+        gy = np.abs(np.diff(Lg, axis=0, prepend=Lg[:1, :]))
+        return float(np.maximum(gx, gy)[mask].mean()) if mask.any() else 0.0
+    vis_vac = vacated & ~moved & ~dilate(moved, 8)
+    g_fill = gradient_energy(out_u8, vis_vac)
+    g_ref = gradient_energy(ai, ref)
+    checks.append(("C8 the fill has cloth detail, it is not a smudge",
+                   g_ref <= 0 or g_fill >= 0.45 * g_ref,
+                   "gradient energy %.2f vs untouched cloak %.2f (%.0f%%; the "
+                   "diffuse fill this replaced scored 14%%)"
+                   % (g_fill, g_ref, 100 * g_fill / max(g_ref, 1e-6))))
     checks.append(("C9 the fill had real cloth above it to stretch",
                    headroom >= 20, "min headroom %d rows" % headroom))
 
