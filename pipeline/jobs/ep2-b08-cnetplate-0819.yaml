@@ -53,7 +53,7 @@
 # spec was written:
 #
 #   pipeline/author_b08_pose_hint.py -- PIL and stdlib only, no torch, no
-#     network. --selftest PASSES 27 invariants. Its output was DRAWN and OPENED
+#     network. --selftest PASSES 28 invariants. Its output was DRAWN and OPENED
 #     at full size, and looking at it sent it back three times: the first ears
 #     read as HORNS, both heads floated above the shoulders with a visible gap,
 #     and the ground ticks were hidden inside the leg capsules and so were
