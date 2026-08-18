@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 19
+beat_slug: "the-drop"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260819
+render_seconds: 70.6
+png_sha256: "3cc0b6bcb67e1527c11d7df0a732e77d7cea68a9d9696dc7468b7cc93be60944"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, lean wiry adult goblin man, green skin, bald head, patchwork cloak, kneeling beside a tiny sapling rooted in the grass, one deep purple fig hanging from its thin side-branch, his face visible, wide shot, sunny grassy field, cinematic lighting, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, 2boys, girl, baby, child, chibi, elf, standing, walking, close-up, portrait, holding fruit, fruit in hand, fruit on the ground, large tree, thick branch, trunk, forest, house, indoors, night, dark, photorealism, 3d render"
+done_when: "WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls, and LANDS ON THE GROUND; and he NOTICES it. NO CONTACT WITH HIS BODY. THE PLATE'S JOB is frame one of that: P1 exactly one fig ATTACHED to the sapling's branch and clear of the ground (a fig in the grass is the recorded blocker and fails outright), P2 the whole sapling and the whole of him in frame at once, P3 no contact and both hands empty, P4 his face visible, P5 the fruit reads purple to a naive eye, P6 the plant is the tiny sapling and not a mature tree or a thick limb, P7 one adult figure."
+why_this_plate: "Beat 19 is a SLATE in the 0818 cut and its own entry says why: 'not renderable until the plate exists'. Every plate the project owns puts the fig already in the grass, which is the recorded blocker -- a fall cannot be shot from a fruit that has already landed. This plate puts it back on the branch, stages him clear of the plant so the motion cannot end in the contact done_when disqualifies, and keeps him low so beat 20 opens where beat 19 leaves him."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

@@ -1720,6 +1720,82 @@ DRAFTS = {
             "ground, large tree, thick branch, trunk, forest, house, indoors, "
             "night, dark, photorealism, 3d render"
         ),
+        # ------------------------------------------------------------------
+        # r1 SCORED, 2026-08-19, macbook1, 70.6 s, seed 20260819, rc 0.
+        # farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r1s1.png
+        # sha256 3cc0b6bcb67e1527c11d7df0a732e77d7cea68a9d9696dc7468b7cc93be60944
+        # (recomputed on the pulled copy, not read off the renderer's word).
+        # Opened at full resolution and scored against the seven terms above,
+        # exactly as written, before anything was filed on it.
+        #
+        # VERDICT: FAILS THE BAR, 2 of 7 terms down -- AND IT CLEARS THE ONE
+        # DEFECT THAT HAS BLOCKED THIS BEAT SINCE 2026-08-15.
+        #
+        #   P1 THE FIG IS ON THE PLANT ... FAIL, on the COUNT half only, and
+        #      the split matters. ATTACHMENT: won. A round deep-purple fruit
+        #      sits at the top of the stalk, well clear of the ground, exactly
+        #      where done_when needs it to start. COUNT: lost. Three or four
+        #      smaller purple beads are strung down the stem below it. The bar
+        #      said "exactly one fruit" and this is not one fruit.
+        #   P2 WIDE ENOUGH ........... PASS. The whole plant, tip to root
+        #      line, and the whole of him are in frame together. His feet are
+        #      behind him under the cloak rather than cropped, and the plant's
+        #      base is occluded by grass rather than cut off.
+        #   P3 NO CONTACT ............ FAIL, AND THIS IS THE DISQUALIFYING
+        #      ONE. HIS HAND IS CLOSED AROUND THE STEM. The fruit itself is
+        #      untouched, so the letter of "the fruit touches him" is not
+        #      broken -- but the plant is in his fist, and a fig cannot fall
+        #      from a stem a man is holding. Q3 fires.
+        #   P4 HIS FACE IS VISIBLE ... PASS. Clean profile, eye and mouth both
+        #      readable. `scavenger_in_frame` is satisfied.
+        #   P5 THE FRUIT READS PURPLE  PASS, unmistakably -- deep violet, no
+        #      argument needed. The founder's 08-16 ruling lands on the first
+        #      draw on this path, as the Mac's measured purple bias predicted.
+        #   P6 THE PLANT IS THE SAPLING  PASS ON THE TERM AS WRITTEN, with a
+        #      caveat that is not a soft pass and must not be read as one. The
+        #      term forbids a mature tree, a thick limb or a trunk, and none is
+        #      present: Q6 did not fire, which is beat 20's recorded fault
+        #      absent here. THE CAVEAT: what came back is a lanky flower stalk
+        #      taller than his kneeling head, and the fruit hangs from its TIP.
+        #      Canon (style.md, row 002a/b/c) is ~40 cm with "two leaves + one
+        #      thin side-branch", and "the branch is where the fig grew and
+        #      fell". A tip is not a side-branch, and this is the same defect
+        #      beat 20 died of from the other end -- the plant improvised per
+        #      beat instead of described once. Recorded against P6, not scored
+        #      against it, because P6 as written does not ask for the branch.
+        #   P7 ONE FIGURE, ADULT .... PASS. One lean, wiry, bald adult goblin.
+        #      Beat 14's cast wording holds on a beat it had never been used
+        #      on. Q7 did not fire.
+        #
+        # FAIL MODES, ALL NINE REPORTED AS PROMISED:
+        #   Q1 the fig already on the ground ..... DID NOT FIRE. **THIS IS THE
+        #      RESULT.** `plate_requirement_0815` records that EVERY beat-19
+        #      plate this project owns shows the fruit already lying in the
+        #      grass, and that this is "exactly why the beat was blocked". It
+        #      is up on the plant here on the first draw. The blocker is
+        #      answerable by wording, and that was not known before today.
+        #   Q2 crop loses the plant or his feet .. DID NOT FIRE.
+        #   Q3 fruit in hand or against his body . FIRED -- via the STEM, not
+        #      the fruit. See P3.
+        #   Q4 back to the lens .................. DID NOT FIRE.
+        #   Q5 red or brown fruit ................ DID NOT FIRE.
+        #   Q6 mature tree or overhead limb ...... DID NOT FIRE.
+        #   Q7 chibi child ....................... DID NOT FIRE.
+        #   Q8 no fruit drawn .................... DID NOT FIRE.
+        #   Q9 more than one fruit ............... FIRED. See P1.
+        #
+        # WHY BOTH FAILURES HAVE THE SAME CAUSE, AND IT IS A LAW THIS FILE
+        # ALREADY WROTE DOWN. The header of this module records it from beats
+        # 05 and 10: "BEAT 05 specified BOTH men's arms. ... BEAT 10 specified
+        # ONLY the near man's." An unspecified limb does not stay still; the
+        # model finds it a job. This positive said nothing whatsoever about his
+        # hands, so the model gave them the nearest object. `holding fruit` and
+        # `fruit in hand` were in the negative and did not save it -- which is
+        # the third time in this file the negative has failed on a noun the
+        # positive invited, and the reason the r1 comment above said in advance
+        # that "the working lever is the POSITIVE". It was right about the
+        # fruit's position and it did not apply the same law to the hands.
+        # ------------------------------------------------------------------
         "seed": 20260819,
     },
     20: {
@@ -4422,6 +4498,72 @@ REVS[(14, 8)] = {
     # exhausted (two motion seeds, same read), so holding it fixed is what makes
     # r8 comparable to r6 on the axis that matters.
     "seed": 20260814,
+}
+
+# ==========================================================================
+# 2026-08-19. BEAT 19 REVISION 2. THE HANDS, PUT SOMEWHERE POSITIVELY.
+# WRITTEN AFTER r1 WAS DRAWN AND SCORED, BEFORE r2 EXISTS.
+# ==========================================================================
+# r1's full verdict is in DRAFTS[19] above and is not repeated. The short of
+# it: 5 of 7 terms hold, the recorded blocker (Q1, the fig already lying in the
+# grass) DID NOT FIRE for the first time in this beat's history, and two terms
+# failed -- P3 because his hand closed around the stem, and P1 because three or
+# four extra purple beads came down the stalk behind the fruit.
+#
+# ------------------------------------------------------------------
+# THE ONE VARIABLE: `both hands on his knees` IS ADDED. Nothing else moves.
+# ------------------------------------------------------------------
+# THE CHOICE OF INSTRUMENT IS NOT A PREFERENCE, IT IS THIS FILE'S OWN LAW.
+# `holding fruit` and `fruit in hand` were already in r1's negative and the
+# hand still went to the plant. The module header records why, from beats 05
+# and 10: an arm the positive does not place is an arm the model finds a job
+# for, and the answer is to place it. `both hands on his knees` is the
+# cheapest positive placement that (a) is a real trained pose, (b) is
+# physically what a kneeling man's hands do, (c) is compatible with beat 20
+# opening on him picking the fig up with both hands -- they are already free
+# and already low -- and (d) does not move his body, his face, the plant, the
+# fruit, the light or the framing, all of which passed.
+#
+# WHY NOT ALSO FIX THE FRUIT COUNT IN THE SAME DRAW, SINCE IT IS ALSO A FAIL.
+# Because two edits make an unattributable picture, and because the two
+# defects are not equally urgent. P3 is a `done_when` clause -- "NO CONTACT
+# WITH HIS BODY" -- and a stem in his fist forecloses the beat's whole action:
+# a fig cannot fall from a branch a man is holding. P1's extra beads are a
+# plant-shape defect on a plate that is otherwise the first one this beat has
+# ever had with the fruit aloft. So the hands go first, alone.
+# THE COUNT DEFECT IS NOT DROPPED, IT IS NAMED AS r3's VARIABLE IN ADVANCE:
+# if r2 clears the hands and Q9 fires again, the next edit is the plant's
+# description -- the canon `two leaves and one thin side-branch` shape from
+# style.md row 002a/b/c, which also answers P6's recorded caveat that the
+# fruit is hanging from the stalk's TIP where canon puts it on a side-branch.
+# That is one edit, it fixes two recorded faults, and it is written down here
+# so it cannot be re-derived as a discovery later.
+#
+# THE BAR IS UNCHANGED. P1-P7 and Q1-Q9 exactly as pre-registered in
+# DRAFTS[19], byte for byte. NOTHING IS SOFTENED -- in particular P1 is NOT
+# relaxed to "at least one fruit" now that we know the count is the harder
+# half, and P6 is NOT tightened to demand the side-branch even though the
+# caveat above says it should eventually. A bar edited between rungs makes the
+# rungs incomparable, and this beat's whole hope is that r1 and r2 differ by
+# one string.
+# THE SEED IS UNCHANGED at 20260819, so r1 and r2 are two draws of one seed
+# differing by text alone. ONE SAMPLE. $0, Apple MPS, nothing on the box.
+REVS[(19, 2)] = {
+    "prompt": (
+        "1boy, solo, lean wiry adult goblin man, green skin, bald head, "
+        "patchwork cloak, kneeling beside a tiny sapling rooted in the "
+        "grass, both hands on his knees, one deep purple fig hanging from "
+        "its thin side-branch, his face visible, wide shot, sunny grassy "
+        "field, cinematic lighting, masterpiece, best quality, very aesthetic"
+    ),
+    # Byte-identical to r1's, restated per exit 6.
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
+        "close-up, portrait, holding fruit, fruit in hand, fruit on the "
+        "ground, large tree, thick branch, trunk, forest, house, indoors, "
+        "night, dark, photorealism, 3d render"
+    ),
+    "seed": 20260819,
 }
 
 
