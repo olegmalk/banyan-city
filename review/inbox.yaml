@@ -1470,6 +1470,31 @@
     reading and is the steward''s, not his. NO REWRITE IS PROPOSED and none should be authored before
     he answers - the last time a lane chose for him here it chose silently. $0, no GPU, no render, nothing
     enqueued; no beat-13 job was touched and the r9 lane that owns the beat was not disturbed.'
+  resolved:
+    date: '2026-08-18'
+    verdict: 'HIS WORDS, VERBATIM: "the shipped version stands (no slide, he sits down beside it,
+      thin shade)". That is the card''s first option taken as written. No slide, he sits beside the
+      seedling, the shade stays a thin patch, and the growth ladder is not bent for this beat --
+      a shade big enough to sit IN remains node 004, the rung the town is named for.
+      WHAT THIS RATIFIES, AND IT IS MORE THAN THE CARD ASKED. The card quoted the script as still
+      reading "slides down the trunk and folds into the sapling''s tiny shade". IT NO LONGER DID by
+      the time he read it: node.md was rewritten at 2026-08-17T15:58 in commit ecb4d4b6 -- one of
+      the five beat rewrites recorded as UNREAD BY HIM -- and now reads "his legs give out and he
+      drops to sit in the grass at the base of the stem, then tips his head sideways into the
+      sapling''s hand-sized patch of shade". Its own revision list says "the trunk-slide is gone".
+      So the change had already been made to an approved script and was awaiting his read; this
+      ruling is that read, for BEAT 13 ONLY. The remaining four rewrites (12, 15, 19, 20) are still
+      unread and nothing here approves them.
+      THIRD INSTANCE OF THE SAME DRIFT IN TWO DAYS, and it is worth naming rather than filing
+      quietly: the card was accurate when written and stale when answered, because the script, the
+      shot board and the prompts all moved and the board did not. The prompts had been saying
+      "beside" since August under an internal note calling it "an author call, not a steward one";
+      the shot board carries the old line struck through with a dated CONFLICT; only the board still
+      asked. He has now been handed a stale card twice in one session.
+      STILL WRONG SOMEWHERE ELSE, not fixed by this: pipeline/measured/queue-history.json carries
+      the superseded "slides down the trunk" success bar on ten-plus rows. That file is already
+      flagged days-stale and never to be trusted for run status; it is now also wrong about the
+      action. Not edited here -- it is a measurement snapshot, not canon.'
 - what: 'EPISODE 3 STILL ASKS ABOUT THE HEAD-BOUNCE YOU REMOVED - and both lines are published. On 2026-08-15
     you ruled beat 19 of episode 2: "ok then just make the fig fall on the ground and the goblin will
     notice it", and you changed the script yourself the same day. Beat 19 now reads "the stem lets go,
@@ -1564,12 +1589,19 @@
 - what: 'BEAT 14 CLEARS EVERY AXIS AND THE LANE THAT BUILT IT STILL WOULD NOT HAND IT TO MOTION. It passes
     all seven scored axes, and it carries an unresolved pale limb-like mass that no axis catches. Coordinates
     are committed. Ship it or fix it - both are defensible and neither is mine.'
-  url: 'local: pipeline/farm-branch-merge-gap-0817.md'
+  url: /review/ep2-mac-plates-0818
   group: taste
   since: '2026-08-17'
   kind: decision
   episode: 2
-  verdict_hint: 'ship it as-is / fix the mass first / show me the frame and I will say'
+  verdict_hint: 'ship r1s1 and accept the fault recurs at ~1 in 3 seeds / re-stage the beat so it
+    cannot happen / show me more seeds first'
+  note_for_lanes: 'UPDATED 2026-08-18 with pixels, because the card used to point at a markdown
+    file. Three fresh seeds were drawn on the Mac farm and THE FAULT REPRODUCED: r1s2 carries the
+    same pale limb-like mass at lower right, r1s1 is clean, r1s3 reads sullen rather than
+    embarrassed. So the question is no longer "is there a fault" but "is 1-in-3 an acceptable
+    reseed rate for this beat". My pick among the three is r1s1 and it is a pick, not a claim
+    that the beat is solved.'
 - what: 'BEAT 17''S BRUSH IS EXHAUSTED BY EVIDENCE, and the cheapest way out edits an approved line. Twelve
     seeds produced zero brushes; handed the gesture mid-stroke from its own best frame it still would not
     complete a stroke. Three routes and all three are yours: accept roughly 1-in-5 and render five to pick
@@ -1605,3 +1637,25 @@
     reconciled. Reconciling them is the steward''s job and this card is that reconciliation, not a
     request. Same file also claims a2 never ran - it ran 2026-08-13 - and the disagreement is left
     standing on purpose as the record.'
+- what: 'THE MAC FARM IS DRAWING PLATES AGAIN, and it immediately found that BEAT 20 IS A DIFFERENT
+    GOBLIN FROM BEAT 14. Twenty plates across eight beats, drawn by a queue on three MacBooks with
+    nobody driving. Beat 14 is the adult you chose; beat 20 is a round-headed chibi child with big
+    eyes - the cute goblin you rejected on beat 04. Same episode, two characters, which is the exact
+    thing the character gate existed to stop. THAT ONE IS MINE AND I AM FIXING IT: the beat-20 prompt
+    never got the cast correction, so it is a defect and not a taste call. Same for beat 08 (a goblin
+    the size of a hill over three tiny guards) and beat 10 (no goblin at all, and the bark board is a
+    plain plank). Nothing on this card needs an answer - it is here so you can see what the machines
+    are producing and stop me if the read is wrong.'
+  url: /review/ep2-mac-plates-0818
+  group: result
+  since: '2026-08-18'
+  kind: sheet
+  episode: 2
+  verdict_hint: 'say nothing and I fix b08, b10 and b20 and re-draw them. Say "no, the chibi is fine"
+    or "leave b08 alone" if I have misread any of it'
+  note_for_lanes: 'Provenance: plate_scratch.py inline prompts, unchanged, one seed per beat then three
+    seeds on the promising ones. All twenty passed a noise/flatness check - no repeat of the pure-noise
+    failure macbook1 and macbook3 produced in the past, and all three machines were preflighted to
+    verdict READY with zero-byte holes at zero before any of it ran. Ten jobs, zero new failures, queue
+    drained unattended. The four entries in failed/ are yesterday''s tilde refusals and are left there
+    with their logs on purpose.'
