@@ -64,6 +64,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import ntpath
 import os
 import re
 import subprocess
@@ -1160,6 +1161,88 @@ def refs_problems(spec: dict, jobs_dir: str = None, load=None) -> list:
             % (job_id, ", ".join(bad), src, len(CARD_REFS_DENYLIST))]
 
 
+def output_path_problems(spec: dict) -> list:
+    """Would this job write its outputs somewhere nobody will look for them?
+
+    WHAT THIS IS FOR, measured 2026-08-17. Six jobs were filed, all six rendered
+    perfectly, and all six failed rc=92 with their frames written into
+    C:\\Windows\\System32 -- the runner service's working directory. The card
+    then idled for eleven hours because a failed queue is a silent one. The
+    cause was a RELATIVE `--out`: the authoring script called
+    os.path.basename() on a Windows path from a Mac, where there is no "/" to
+    split on, so it returned the whole string and the "replace the basename"
+    line replaced the entire absolute path with a bare filename.
+
+    Nothing in this file objected, because every existing check asks what a job
+    is ALLOWED to do and none asked whether it can put its output where it says
+    it will. These three do:
+
+      1. an output flag whose value is not an absolute Windows path
+      2. a declared artifact no step ever names -- the runner fails the job on
+         missing artifacts, which is the only reason last night surfaced at all,
+         and that check is worth nothing if the list names another job's files
+      3. an inline publish step reading a directory this job never writes to.
+         The forward-slash spelling is why this one is separate: a relocation
+         that rewrote only backslash paths left publish copying the SOURCE job's
+         frames into this job's folder, printing "published 14 of 14" and
+         exiting 0. It published another job's work under this job's name.
+
+    Returns a list of problems, empty when the spec is sound.
+    """
+    problems = []
+    steps = spec.get("steps") or []
+    out_flags = ("--out", "--output", "--out-file", "--mask-out", "--outdir", "--out-dir")
+    abs_win = re.compile(r"^[A-Za-z]:[\\/]")
+
+    argv_blobs = []
+    for st in steps:
+        argv = st.get("argv") or []
+        argv_blobs.append(" ".join(str(a) for a in argv))
+        for i, a in enumerate(argv):
+            if str(a) in out_flags and i + 1 < len(argv):
+                val = str(argv[i + 1])
+                if not abs_win.match(val):
+                    problems.append(
+                        "BLOCKED: step %r passes %s %r, which is NOT an absolute path. "
+                        "The runner's working directory is C:\\Windows\\System32, so a "
+                        "relative output is written there, the artifact check cannot "
+                        "find it, and the job fails with the render already done."
+                        % (st.get("name"), a, val))
+    all_argv = " ".join(argv_blobs)
+
+    for art in spec.get("artifacts") or []:
+        base = ntpath.basename(str(art))
+        if base and base not in all_argv:
+            problems.append(
+                "BLOCKED: declared artifact %r is never named by any step. Either the "
+                "job does not produce it, or the artifacts list was carried from "
+                "another spec -- both make the runner's missing-artifact check "
+                "meaningless." % base)
+
+    # 3. an inline publish program must read a directory some step writes into.
+    written_dirs = set()
+    for st in steps:
+        argv = st.get("argv") or []
+        for i, a in enumerate(argv):
+            if str(a) in out_flags and i + 1 < len(argv):
+                d = ntpath.dirname(str(argv[i + 1]))
+                if d:
+                    written_dirs.add(d.replace("/", "\\").rstrip("\\").lower())
+    for st in steps:
+        argv = st.get("argv") or []
+        if len(argv) >= 3 and str(argv[1]) == "-c":
+            for m in re.finditer(r"""src\s*=\s*['"]([^'"]+)['"]""", str(argv[2])):
+                d = m.group(1).replace("/", "\\").rstrip("\\").lower()
+                if written_dirs and d not in written_dirs:
+                    problems.append(
+                        "BLOCKED: step %r reads src=%r, which no step in this job writes "
+                        "to (this job writes: %s). A publish step pointed at another "
+                        "job's directory copies that job's frames out under this job's "
+                        "name and exits 0."
+                        % (st.get("name"), m.group(1), ", ".join(sorted(written_dirs))))
+    return problems
+
+
 def gate_checks(spec: dict, job: dict) -> list:
     problems = []
     for key in ("gate", "gate_ref"):
@@ -1197,6 +1280,9 @@ def gate_checks(spec: dict, job: dict) -> list:
     # other check in this file and still render a superseded line, because the
     # wording lives in a file on the box that nothing compares to ours.
     problems += harness_drafts_problems(spec)
+    # Where the outputs LAND. Every check above asks whether the job is allowed
+    # to run; this one asks whether anyone will be able to find what it made.
+    problems += output_path_problems(spec)
     return problems
 
 

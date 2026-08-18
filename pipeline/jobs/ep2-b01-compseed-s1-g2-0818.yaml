@@ -1,3 +1,12 @@
+# SUPERSEDED 2026-08-18, AND LEFT STANDING AS THE PROVENANCE OF ITS OWN FRAMES.
+# This spec RAN and its four renders SUCCEEDED, but a relative `--out` wrote them
+# into C:\Windows\System32 (the runner service's working directory), its artifacts
+# named another spec's files, and its publish step read another job's directory and
+# reported "published 14 of 14" over frames it did not make. The job failed rc=92.
+# The frames were recovered by hand into farm-out/<this id>/ and are real; this file
+# is what produced them, which is why it is not deleted.
+# DO NOT REFILE IT. box_enqueue.output_path_problems() now refuses it (5 problems),
+# and the re-run lives at the g4/g5/g6 ids on fresh seeds.
 id: ep2-b01-compseed-s1-g2-0818
 task: ep2-b01-compseed-s1-g2-0818
 node: 002b-first-citizen

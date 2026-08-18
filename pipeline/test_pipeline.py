@@ -9628,6 +9628,7 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
 def main():
     import tempfile
     test_a_stale_harness_cannot_render_a_killed_wording()
+    test_a_job_cannot_be_filed_with_outputs_nobody_can_find()
     test_a_newer_mirror_alone_is_not_a_stuck_deploy()
     test_beat_duration_from_timecode()
     test_beat_duration_fallback()
@@ -11107,6 +11108,57 @@ def test_a_stale_harness_cannot_render_a_killed_wording():
 
     check("the guard runs inside gate_checks, not only when called by hand",
           "harness_drafts_problems" in
+          (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
+          .split("def gate_checks")[1].split("\ndef ")[0])
+
+
+def test_a_job_cannot_be_filed_with_outputs_nobody_can_find():
+    """Six jobs rendered perfectly into C:\\Windows\\System32 and the card idled 11h.
+
+    2026-08-17. A relative `--out` sent every frame to the runner service's
+    working directory; the artifacts list was carried from another spec; and the
+    publish step -- whose paths use forward slashes -- was left reading the
+    SOURCE job's directory, so it copied that job's frames out under this job's
+    name and exited 0. Nothing in box_enqueue objected, because every check
+    there asked whether a job was ALLOWED to run and none asked whether anyone
+    could find what it made.
+    """
+    import box_enqueue as bq
+    absout = r"C:\banyan-farm\jobdir\frame.png"
+    ok = {"steps": [{"name": "s1", "argv": ["py.exe", "x.py", "--out", absout]}],
+          "artifacts": [absout]}
+    check("a spec whose outputs are absolute and declared is filed",
+          bq.output_path_problems(ok) == [])
+
+    relative = {"steps": [{"name": "s1", "argv": ["py.exe", "x.py", "--out", "frame.png"]}],
+                "artifacts": []}
+    check("a RELATIVE --out is refused (this is the System32 bug)",
+          any("NOT an absolute path" in p for p in bq.output_path_problems(relative)))
+
+    foreign = {"steps": [{"name": "s1", "argv": ["py.exe", "x.py", "--out", absout]}],
+               "artifacts": [r"C:\banyan-farm\jobdir\someone-elses-frame.png"]}
+    check("an artifact no step produces is refused",
+          any("never named by any step" in p for p in bq.output_path_problems(foreign)))
+
+    publish_elsewhere = {
+        "steps": [{"name": "s1", "argv": ["py.exe", "x.py", "--out", absout]},
+                  {"name": "publish", "argv":
+                   ["py.exe", "-c", "src = 'C:/banyan-farm/OTHERJOB'\nprint(src)\n"]}],
+        "artifacts": [absout]}
+    check("a publish step reading a directory this job never writes is refused",
+          any("no step in this job writes" in p
+              for p in bq.output_path_problems(publish_elsewhere)))
+
+    same_dir_fwd = {
+        "steps": [{"name": "s1", "argv": ["py.exe", "x.py", "--out", absout]},
+                  {"name": "publish", "argv":
+                   ["py.exe", "-c", "src = 'C:/banyan-farm/jobdir'\nprint(src)\n"]}],
+        "artifacts": [absout]}
+    check("the same directory spelled with forward slashes is accepted",
+          bq.output_path_problems(same_dir_fwd) == [])
+
+    check("the guard runs inside gate_checks, not only when called by hand",
+          "output_path_problems" in
           (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
           .split("def gate_checks")[1].split("\ndef ")[0])
 
