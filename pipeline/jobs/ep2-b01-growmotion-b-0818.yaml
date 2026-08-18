@@ -199,3 +199,45 @@ sweep_summary:
     No seed but the pick is acceptable on all three at once, and no two failures share a cause. Rolling seeds is therefore three dice at once, and six rolls bought exactly one winner -- which is what a 1-in-6 rate on three independent axes looks like. A seventh seed is a lottery ticket, not an experiment, so none was filed and the card was allowed to empty honestly.'
   what_would_actually_move_it: 'Named, not started. Each of the three axes has an obvious one-variable attack -- the negative prompt already lists "zoom, dolly, push in" and yet four of six pushed, which is a real finding about how much that negative is worth on this engine; the colour pop might be a step-count or a scheduler question; the bloom/fade might be a plate-conditioning strength question. Every one of those is a RECIPE change, which means a new sample under the one-sample rule, and none of them is ruled tonight. They are also premature: the pick already clears the bar, and what the cold open needs next is the founder''s eye on it under R4, not a sixth engineering variable.'
   where_the_evidence_is: 'Per-seed verdicts with the measurements are appended to each of pipeline/jobs/ep2-b01-growmotion-b{2,3,4,5,6}-0818.yaml. The six last frames are on review/ep2-cold-open-0818/ as seed-sweep-f120.jpg, pick first with a gold border.'
+
+# ============================================================================
+# CORRECTION, appended 2026-08-18 23:2x by the night supervisor (v2).
+# Nothing above is edited: the bar, the per-seed verdicts and the PICK all
+# stand exactly as written. What is corrected is one sentence of REASONING in
+# sweep_summary.three_independent_axes, because it is contradicted by the data
+# in the two lines directly above it, and because the wrong reason pointed at
+# the wrong next move.
+# ============================================================================
+sweep_summary_correction:
+  the_claim: '"No two failures share a cause." (sweep_summary.three_independent_axes, last line.)'
+  why_it_is_wrong: 'The same block measures COLOUR PATH as "4 of 6 pop in 1 to 4 frames". A fault
+    present in four of six seeds is by definition a shared cause, and it is the SAME clause that
+    kills them: of the five rejects, FOUR fail G1 -- b2 (fig replaced, not grown), b4 (arc finishes
+    in 15 frames, then 106 static), b5 (two-frame pop), b6 (four-frame pop, 2.9x area step). Only
+    b3 fails on something else alone (G5/H6 style break). G1 is not one of three dice rolling
+    independently. It is the recipe''s dominant, systematic failure mode, and the other two axes
+    ride along on top of it.'
+  what_the_failure_actually_is: 'Not "the growth is random seed to seed" but "this recipe does not
+    DISTRIBUTE change across the clip". Every G1 reject is the same shape: the subject holds, then
+    steps 2.1x-2.9x in area across 1-4 frames, with at most one blended frame over the join. b4 is
+    the same defect stretched -- all the change in the first 15 frames, then nothing. The two seeds
+    that pass G1 ramp over 16 and 24 frames. So the variable is temporal distribution of change,
+    and it is a property of the recipe, not of the seed.'
+  what_survives_unchanged: 'The conclusion "do not roll a seventh seed" is CORRECT and is not being
+    reopened -- if anything this strengthens it. Rolling seeds against a systematic recipe defect is
+    worse than a lottery: the pop is the expected outcome at 4 of 6, not the unlucky one. The pick
+    is unchanged, G1 is unchanged, and no bar moved.'
+  what_it_changes: 'The next move. "A seventh seed is a lottery ticket" reads as "nothing to do here
+    but wait for R4". The corrected reading names a specific, testable, one-variable experiment --
+    attack the temporal distribution of change -- which is exactly what sweep_summary.
+    what_would_actually_move_it already lists under "the colour pop might be a step-count or a
+    scheduler question" but files as premature. With the card idle and the founder asleep, a
+    one-variable sample against the dominant failure mode is the highest-information thing the GPU
+    can do, and it needs no taste call to start. Filed as its own spec with its own pre-registered
+    bar under the one-sample rule; the variable itself is being chosen from OUTSIDE-repo research
+    (scheduler/shift/CFG/step-count evidence for video diffusion) rather than from our own comments,
+    per the 2026-08-04 research-before-solving directive.'
+  what_this_licenses: 'ONE sample of ONE recipe change against G1 temporal distribution. It does NOT
+    license a batch, a bar change, or a re-pick. If the sample clears G1 it becomes a second
+    candidate in the cold-open pick set and the founder sees both; if it does not, the pick still
+    stands alone and the cold open is still shippable on R4 alone.'
