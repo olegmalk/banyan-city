@@ -171,3 +171,55 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   gets cut until the 121 frames are opened against the pre-registered bar, and the taste call is the founder''s
   under R4. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED. Silent, $0, no voice synthesis and no episode
   assembly.'
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the judging lane (not the filing lane).
+# Scored against the bar THIS SPEC PRE-REGISTERED (ep2-b14-mac-motion-0818's
+# M1-M4 plus the standing pale-mass override, carried verbatim); not edited.
+#
+# READ HOW: all 121 frames measured on two whole-clip instruments, plus eight
+# matched source frames opened side by side against ep2-b14-mac-motion-s2-0818,
+# the crf-33 clip AT THIS SAME SEED. depth and cadence not computed, not quoted.
+# $0, CPU, nothing re-rendered.
+# ============================================================================
+verdict: >-
+  FAIL on M1, M2 and M3 -- identically to the crf-33 clip at this seed, and WORSE
+  on motion. M1 is F1, frozen hands, the outcome this beat's specs predict for
+  in-hand actions. crf 10 did not merely fail to help here; it cost movement.
+verdict_measured:
+  m1_dirt: 'FAIL -- F1, FROZEN HANDS. His hands stay on his knees for all 121 frames.
+    They never travel toward the ground, nothing is planted, and the grass in front of
+    the knees at f120 is the same unbroken green it was at f000. The crf-33 clip at
+    this seed failed the same clause the same way, so crf changes nothing about it.'
+  m2_glance: 'FAIL. One monotonic lift, held. Never turns aside, never returns.'
+  m3_embarrassment: 'FAIL. Flat, half-lidded, sullen. Fourth clip on this beat with
+    that read, now across two seeds and two crf values.'
+  m4_himself_and_put: 'PASS. Same adult goblin, one figure, both knees down for all
+    121 frames, no reframe, no location change, camera locked. F7 clear.'
+  pale_limb_mass_check: 'PASS -- NO PALE LIMB-LIKE MASS in any of the 121 frames,
+    screened whole-clip rather than sampled. The pale-cream pixel count runs
+    6196-6508 px per frame with no spike -- a FLATTER and LOWER curve than the
+    crf-33 clip at this seed, which already cleared this override at 6283-7171. The
+    pale oval is his own knee in pale grey trousers.'
+the_crf_question_answered: 'CRF 10 REMOVED MOTION AT THIS SEED, and this is the sharper
+  half of the pair''s answer. Mean |delta| per consecutive frame pair: 3.58 at crf 33
+  against 1.08 AT CRF 10 -- a third as much movement. Consecutive-frame pairs below
+  0.5: ELEVEN at crf 33 against EIGHTY-EIGHT at crf 10. Longest frozen run: 1 frame
+  against 14. coldread''s motion window collapses from 99.2% of the clip to 4.2%.
+  Whatever a cleaner conditioning image buys elsewhere, on this beat at this seed it
+  bought stillness -- which is consistent with the mechanism (a less-degraded init is
+  a stronger anchor, and this engine''s drift was part of what read as movement) and
+  is the opposite of what beat 14 needs.'
+what_this_settles: 'Read with its sibling, the pair closes crf as a suspect for beat
+  14 from both directions: at seed 20260818 crf 10 changed nothing (82 frozen pairs
+  against 86), and at seed 20260819 it made the clip stiller. Neither seed recovered
+  the glance or the embarrassed read. The 2026-08-18 conclusion -- that these are
+  properties of the STAGING and of this engine''s action repertoire -- survives a
+  direct test of the one variable that had been proposed against it.'
+prior_verdicts_needing_re_litigation: 'NONE ON BEAT 14. ep2-b14-mac-motion-s2-0818
+  STANDS unamended, including its F1 frozen-hands finding, which reproduces here. No
+  re-run filed and none ruled for this beat; beat 14 needs a staging decision under
+  R4, not another render. This judgement is scoped to beat 14 and says nothing about
+  whether another beat''s crf-33 failure is crf-bound.'
+not_done_on_purpose: 'No re-render, no third seed, no trim, no pick, no cut, and no
+  edit to any other lane''s recorded outcome.'

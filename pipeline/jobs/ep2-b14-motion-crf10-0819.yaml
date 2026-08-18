@@ -170,3 +170,74 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   gets cut until the 121 frames are opened against the pre-registered bar, and the taste call is the founder''s
   under R4. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED. Silent, $0, no voice synthesis and no episode
   assembly.'
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the judging lane (not the filing lane).
+# Scored against the bar THIS SPEC PRE-REGISTERED, which is ep2-b14-mac-motion-
+# 0818's M1-M4 plus the standing pale-mass override, carried verbatim. Neither
+# is edited here.
+#
+# READ HOW: all 121 frames measured on two whole-clip instruments, and the
+# action opened CONSECUTIVELY via pipeline/coldread_frames.py --pad 60 (strip-05
+# = f089-f108), plus eight matched source frames read side by side against the
+# crf-33 clip at the same seed. depth and cadence were NOT computed and are not
+# quoted; coldread's own HOLD flag is reported because it is an input, not a
+# score. $0, CPU, nothing re-rendered.
+# ============================================================================
+verdict: >-
+  FAIL on M2 and M3 -- IDENTICALLY TO THE CRF-33 CLIP AT THE SAME SEED. crf was
+  not the flag. This spec asked "whether the frozen 80 frames and the sullen read
+  were the flag, not the staging", and the answer is that they are the staging.
+verdict_measured:
+  m1_dirt: 'PASS, with the crf-33 clip''s caveat intact. By f095-f108 both hands are
+    off the knees, fingers spread and in contact with broken soil; the knees do not
+    move. Read consecutively, not inferred.'
+  m2_glance: 'FAIL, and in the same shape as the baseline. The head lifts from fully
+    bowed to fully raised in one continuous monotonic arc and then HOLDS raised to
+    f120. It never turns aside and it never comes back. The bar excluded exactly this
+    by name.'
+  m3_embarrassment: 'FAIL. From the moment the face is visible it is flat and
+    half-lidded and reads SULLEN. Third clip in a row on this beat with that read,
+    now across two seeds AND two crf values.'
+  m4_himself_and_put: 'PASS. Same adult goblin -- green skin, bald head, pointed ears,
+    red-and-dark patchwork scarf -- one figure, on both knees for all 121 frames, no
+    reframe, no location change, camera locked. F7 clear.'
+  pale_limb_mass_check: 'PASS -- NO PALE LIMB-LIKE MASS, and this was checked across
+    ALL 121 FRAMES rather than sampled, because the override says "any frame". A
+    pale-cream mask (bright, low-saturation, not green-dominant) counted per frame
+    runs 5585-7230 px with NO spike anywhere; the crf-33 clip already cleared on this
+    override runs HIGHER, 5889-7772. The pale oval at lower-left is his own knee in
+    pale grey trousers, present in the plate, still a knee at f120.'
+the_crf_question_answered: 'THE THREE NAMED CRF-33 DEFECTS ALL SURVIVE AT CRF 10, and
+  two of the three are unchanged to within noise. FROZEN FRAMES: 82 consecutive-frame
+  pairs below 0.5 mean |delta| at crf 33 against 86 AT CRF 10, longest frozen run 48
+  against 49 -- marginally WORSE, not better. Mean |delta| per frame pair 2.41 against
+  2.48. The motion window moved about ten frames earlier (coldread: pairs 71..111
+  against 69..105) and that is the whole of the difference. SULLEN FACE: unchanged.
+  MONOTONIC HEAD LIFT: unchanged.'
+the_conditioning_claim_does_not_reproduce_at_this_size: 'STATED CAREFULLY, because it
+  is the premise this job was filed on and because two true numbers can measure two
+  different things. This spec''s `why` cites "measured face drift 39.34 vs 0.66 at crf
+  10". On the DELIVERED CLIPS that ratio is not there: mean |init - f000| is 7.32 at
+  crf 33 and 6.31 at crf 10 whole-frame, and 6.32 against 5.41 inside the face band --
+  an improvement of about 15%, not of sixty times. The 39.34/0.66 figure is most
+  plausibly the CONDITIONING IMAGE''S OWN round-trip measured in isolation, which is a
+  real and much larger effect; what this measurement says is that by the time the
+  frame has also been through the VAE and the output encode, that difference is
+  second-order and does not reach the picture. NOTHING HERE ACCUSES THAT MEASUREMENT
+  OF BEING WRONG -- it says it does not transfer to this beat''s output.'
+what_this_settles: 'Beat 14''s failures are not an encoder artefact. The 2026-08-18
+  pair attributed them to STAGING and to this engine''s action repertoire, and holding
+  everything constant but the conditioning crf reproduces both failing clauses exactly.
+  That closes crf as a suspect for this beat.'
+prior_verdicts_needing_re_litigation: 'NONE ON BEAT 14. ep2-b14-mac-motion-0818 and
+  ep2-b14-mac-motion-s2-0818 both STAND, unamended: their M1-M4 findings reproduce
+  clause for clause at crf 10, and this lane reached them independently before reading
+  them. No re-run is filed for this beat and none is ruled -- what beat 14 needs is a
+  staging decision under R4, which two prior specs already said and which crf 10 does
+  not change. Re-testing other beats'' crf-33 failures is outside this judgement: this
+  is evidence about BEAT 14, and a beat whose init or action class differs could still
+  be crf-bound.'
+not_done_on_purpose: 'No re-render, no third seed, no wording variant, no trim, no
+  pick, no cut. Nothing in this verdict touches ep2-b14-mac-motion-0818''s or
+  -s2-0818''s recorded outcomes, which are another lane''s and are left byte-identical.'
