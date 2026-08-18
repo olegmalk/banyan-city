@@ -1243,6 +1243,79 @@ def output_path_problems(spec: dict) -> list:
     return problems
 
 
+def courier_problems(spec: dict) -> list:
+    """Will anything ever CARRY this job's outputs off the box?
+
+    WHAT THIS IS FOR, measured 2026-08-19 and it cost two days.
+    `ep2-cnet-probe-0817` ran on 2026-08-17 at 12:39-12:41Z and every one of its
+    four arms completed. NOBODY KNEW. Its spec carried no outcome block, two
+    commits said it had been deliberately held back, its own driver commit said
+    "Not run yet", every `C:\\banyan-queue\\*` directory was empty and a repo-wide
+    find for *cnet* returned only the spec and a research note -- so two later
+    documents state as fact that it never fired. The renders were sitting in
+    `C:\\banyan-farm\\cnet-probe-0817\\out\\` the whole time. When they were
+    finally pulled they PASSED, 28x and 17x over a bar pre-registered in code.
+
+    The cause is one missing step. The spec declares `artifacts:` under its own
+    working directory and NOTHING EVER COPIES THEM to
+    `C:\\banyan-farm\\courier-box\\farm-out\\`, which is the only path by which a
+    box result reaches this tree -- the runner pushes from there and from
+    nowhere else. Every other job of that era ends with an inline `python -c`
+    that copies its named files there and writes a .sha256; this one just
+    stopped.
+
+    output_path_problems above asks whether the declared artifacts are NAMED by
+    some step. That check passed here, and passing it is worthless on its own:
+    NAMED IS NOT DELIVERED. A job can produce exactly what it promised, in
+    exactly the place it promised, and still be invisible to everyone who needed
+    it. So this asks the next question -- does any step put those bytes where
+    the courier looks?
+
+    Returns a list of problems, empty when the spec is sound.
+    """
+    COURIER = r"c:\banyan-farm\courier-box\farm-out"
+    arts = [str(a) for a in (spec.get("artifacts") or [])]
+    if not arts:
+        return []          # a job that promises no artifact strands nothing
+    stranded = [a for a in arts if not norm_dest(a).startswith(COURIER)]
+    if not stranded:
+        return []          # it writes straight into the courier's own directory
+
+    # Two ways a step can be the courier, and both are real in this repo:
+    # an inline program that copies files there, and a driver whose --out IS
+    # a path under farm-out. Anything else -- merely mentioning the path in a
+    # comment, say -- must not count, or the check waves through the exact
+    # spec that caused this.
+    copy_verbs = ("shutil.copy", "copyfile", "copytree", "copy2", "xcopy",
+                  "robocopy", "copy /y", ".write(", "open(")
+    out_flags = ("--out", "--output", "--out-file", "--mask-out", "--outdir",
+                 "--out-dir", "--publish-to", "--dest")
+    for st in spec.get("steps") or []:
+        argv = [str(x) for x in (st.get("argv") or [])]
+        for i, x in enumerate(argv):
+            if x in out_flags and i + 1 < len(argv):
+                if norm_dest(argv[i + 1]).startswith(COURIER):
+                    return []
+        blob = " ".join(argv)
+        low = blob.replace("/", "\\").lower()
+        if COURIER in low and any(v in blob for v in copy_verbs):
+            return []
+
+    return ["BLOCKED: this job declares artifacts that live OUTSIDE "
+            "C:\\banyan-farm\\courier-box\\farm-out and no step copies them into "
+            "it, so nothing will carry them off the box -- the courier pushes "
+            "from farm-out and from nowhere else. Stranded: %s. This is exactly "
+            "how ep2-cnet-probe-0817 was lost: it rendered all four arms "
+            "successfully on 2026-08-17 at 12:39-12:41Z, its outputs sat in "
+            "C:\\banyan-farm\\cnet-probe-0817\\out for TWO DAYS, and the repo "
+            "recorded it as never having run in two separate documents until "
+            "someone looked at the box by hand on 2026-08-19 -- at which point "
+            "it PASSED its own pre-registered bar. Add a publish step that "
+            "copies the named files into "
+            "C:\\banyan-farm\\courier-box\\farm-out\\<job-id>\\ and writes a "
+            ".sha256 beside them." % ", ".join(ntpath.basename(a) for a in stranded)]
+
+
 def gate_checks(spec: dict, job: dict) -> list:
     problems = []
     for key in ("gate", "gate_ref"):
@@ -1283,6 +1356,10 @@ def gate_checks(spec: dict, job: dict) -> list:
     # Where the outputs LAND. Every check above asks whether the job is allowed
     # to run; this one asks whether anyone will be able to find what it made.
     problems += output_path_problems(spec)
+    # And the half that one cannot see: NAMED IS NOT DELIVERED. A job can write
+    # exactly what it promised, exactly where it promised, and still never reach
+    # this tree because nothing carries it to the courier's directory.
+    problems += courier_problems(spec)
     return problems
 
 

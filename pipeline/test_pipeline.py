@@ -9645,6 +9645,7 @@ def main():
     import tempfile
     test_a_stale_harness_cannot_render_a_killed_wording()
     test_a_job_cannot_be_filed_with_outputs_nobody_can_find()
+    test_a_finished_job_cannot_be_filed_with_nothing_to_carry_it_home()
     test_a_newer_mirror_alone_is_not_a_stuck_deploy()
     test_beat_duration_from_timecode()
     test_beat_duration_fallback()
@@ -11175,6 +11176,79 @@ def test_a_job_cannot_be_filed_with_outputs_nobody_can_find():
 
     check("the guard runs inside gate_checks, not only when called by hand",
           "output_path_problems" in
+          (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
+          .split("def gate_checks")[1].split("\ndef ")[0])
+
+
+def test_a_finished_job_cannot_be_filed_with_nothing_to_carry_it_home():
+    """ep2-cnet-probe-0817 rendered all four arms and was invisible for two days.
+
+    2026-08-17 12:39-12:41Z: it ran, it succeeded, and it PASSED its own bar by
+    28x. Nobody knew until 2026-08-19, because the spec declared artifacts under
+    its own working directory and no step copied them into
+    C:\\banyan-farm\\courier-box\\farm-out -- the only path by which a box result
+    reaches this tree. Two later documents state as fact that the job never
+    fired. output_path_problems passed it, because it only asks whether the
+    declared artifacts are NAMED by a step. Named is not delivered.
+    """
+    import box_enqueue as bq
+    out = r"C:\banyan-farm\jobdir\frame.png"
+    step = {"name": "s1", "argv": ["py.exe", "x.py", "--out", out]}
+
+    stranded = {"steps": [step], "artifacts": [out]}
+    probs = bq.courier_problems(stranded)
+    check("a job whose artifacts nothing couriers off the box is refused",
+          any("nothing will carry them off the box" in p for p in probs))
+    check("the refusal names the incident that cost two days",
+          any("ep2-cnet-probe-0817" in p for p in probs))
+
+    published = {
+        "steps": [step,
+                  {"name": "publish", "argv":
+                   ["py.exe", "-c",
+                    'import shutil\n'
+                    'dst = "C:/banyan-farm/courier-box/farm-out/jobdir"\n'
+                    'shutil.copy2("C:/banyan-farm/jobdir/frame.png", dst)\n']}],
+        "artifacts": [out]}
+    check("the same job WITH a publish step into farm-out is filed",
+          bq.courier_problems(published) == [])
+
+    # The forward-slash spelling is the one every real publish step uses, and
+    # the backslash spelling is what `artifacts:` uses -- both must resolve.
+    backslashed = {
+        "steps": [step,
+                  {"name": "publish", "argv":
+                   ["py.exe", "-c",
+                    'import shutil\n'
+                    'shutil.copy2(src, r"C:\\banyan-farm\\courier-box\\farm-out\\j")\n']}],
+        "artifacts": [out]}
+    check("a publish step spelled with backslashes is accepted too",
+          bq.courier_problems(backslashed) == [])
+
+    direct = {"steps": [{"name": "s1", "argv":
+                         ["py.exe", "x.py", "--out",
+                          r"C:\banyan-farm\courier-box\farm-out\j\frame.png"]}],
+              "artifacts": [r"C:\banyan-farm\courier-box\farm-out\j\frame.png"]}
+    check("a job that writes STRAIGHT into farm-out needs no publish step",
+          bq.courier_problems(direct) == [])
+
+    # MENTIONING the path is not couriering it. This is the shape of the bug:
+    # a spec can talk about farm-out in its own text and still move nothing.
+    mentions_only = {
+        "steps": [step,
+                  {"name": "note", "argv":
+                   ["py.exe", "-c",
+                    'print("results go to C:/banyan-farm/courier-box/farm-out later")\n']}],
+        "artifacts": [out]}
+    check("merely NAMING farm-out without copying anything is still refused",
+          any("nothing will carry them off the box" in p
+              for p in bq.courier_problems(mentions_only)))
+
+    check("a job that declares no artifacts strands nothing and is not refused",
+          bq.courier_problems({"steps": [step], "artifacts": []}) == [])
+
+    check("the guard runs inside gate_checks, not only when called by hand",
+          "courier_problems" in
           (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
           .split("def gate_checks")[1].split("\ndef ")[0])
 
