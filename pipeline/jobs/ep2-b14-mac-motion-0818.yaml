@@ -386,3 +386,74 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   true` on its sidecar: nothing gets cut until the 121 frames are opened against the pre-registered bar,
   and the taste call is the founder''s under R4. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED.
   Silent, $0, no voice synthesis and no episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-18 after the render. NOTHING ABOVE THIS LINE HAS
+# BEEN EDITED -- the bar it is judged against is the one committed in 138e7e98
+# BEFORE the card ran, and it has not been rewritten to fit the result.
+# ============================================================================
+outcome:
+  verdict: FAIL, on M2 and M3. NOT the predicted F1 -- the hands moved.
+  ran: 'rtx5090, 2026-08-18T15:43:10Z -> 15:49:56Z, all five steps rc=0, ~7 min, $0. Clip sha256 1529920cd6ea204bf4b1d1098ed5237aadc62fcbae36ab3a0a96f906d1c2e253,
+    121 frames, 704x1280, 24 fps. f000 is the plate (mean |init - f000| 7.32, the VAE and crf-33 round-trip).'
+  how_it_was_read: 'All 121 frames opened CONSECUTIVELY via pipeline/coldread_frames.py (3 strips + overview).
+    depth and cadence were NOT computed and are not quoted; coldread printed its own retired cadence figure
+    of 22.50x and it is ignored. A COLOUR TRACKER WAS BUILT AND THROWN AWAY BEFORE ANY NUMBER WAS QUOTED:
+    the bald head samples R222 G224 B149 and the grass beside it R217 G204 B149, so no hue or green-dominance
+    rule separates them -- the first mask returned 703-px-wide "heads" spanning the whole frame. Camera
+    motion is therefore measured by whole-frame registration, not segmentation.'
+  m1_dirt: 'PASS, with the caveat named in the next key rather than buried. The hands travel from clasped
+    together ON HIS KNEES at f000 to planted in the ground on either side of them by f105, which is a
+    large displacement relative to his own knee -- the knees do not move and the hands leave them. AND
+    THE GROUND IS DISTURBED: at f000 the area in front of his knees is unbroken green grass with one small
+    dark patch between them; by f121 there is an exposed patch of dark brown soil under and between both
+    hands, with his dark claw tips sunk into it. Bare earth where there was grass is the disturbance the
+    bar asked for and it is visible at full resolution without a tracker.'
+  m1_caveat: 'IT IS ONE REACH-AND-SCRAPE, NOT A PICK. Mean |delta| between consecutive frames in the hands
+    band: 0.14-0.60 from f002 to f080, rising to 2.80 at f086, 7.85-11.62 across f092-f110, back to 0.35
+    by f116. So 80 of 121 frames -- two thirds of the clip -- are FROZEN before anything happens, the whole
+    action occupies about f085-f112 (1.1 s), and the last ten frames are frozen again. The beat wants a
+    repeated fidget; this is a single arrival followed by a hold.'
+  m2_glance: 'FAIL. His head does lift -- from fully bowed with the face hidden at f000 to fully raised
+    with the face visible by f105 -- but it NEVER COMES BACK, and it never turns to the side. The bar required
+    "a distinguishable look away and return", and the script''s word is "glancing around". This is a single
+    monotonic lift held for the last twenty frames, which is the drift the bar excluded by name.'
+  m3_embarrassment: 'FAIL. With the face up from f105 on, the expression is flat and half-lidded and reads
+    SULLEN, not caught-out. This is the same fault review/ep2-picks/done-definitions.yaml already recorded
+    against seed r1s3 of this beat''s plates ("reads sullen rather than embarrassed") -- it has now reproduced
+    in motion off a different seed, which makes it a property of the beat''s staging rather than of one
+    plate.'
+  m4_himself_and_put: 'PASS. Same adult goblin throughout -- green skin, bald head, pointed ears, red-and-dark
+    patchwork scarf. No second figure, no reframe to a portrait, no location change. HE DOES NOT STAND
+    UP (F7 not hit): he straightens from hunched to upright but stays on his knees with both knees on the
+    ground for all 121 frames. THE CAMERA IS LOCKED, measured rather than eyeballed: best-fit centre zoom
+    between f000 and f120 is x1.00 at 0.01 granularity (MAE does not improve at any scale from 1.00 to
+    1.60) and best-fit translation is dy=0 dx=0 at 4 px granularity. An apparent push-in in the contact
+    sheets was an artefact of the sheets'' own per-strip cell sizes and is retracted.'
+  pale_limb_mass_check: 'PASS -- NO PALE LIMB-LIKE MASS. Checked deliberately, because this is the standing
+    per-seed check that overrides everything else and because there IS a large pale cream oval at frame
+    lower-left. IT IS HIS OWN LEFT KNEE in pale grey trousers, present in plate r1s1 in exactly that position,
+    and it is still a knee at f121 where his forearm partly crosses it. Nothing flesh-coloured, rounded
+    and unattached appears in any frame. So motion did not introduce the fault a clean plate did not have,
+    which is what the check existed to catch.'
+  what_this_settles: 'THE PREDICTION IN THIS SPEC WAS WRONG IN THE INTERESTING DIRECTION, and that is
+    the finding. F1 FROZEN HANDS was named as the likely outcome on the strength of 0 of 8 in-hand actions
+    against 12 of 12 whole-body. The hands were not frozen: they reached, planted and broke ground. What
+    that actually shows is that BEAT 14''S ACTION DECOMPOSES, and the two halves behave exactly as the
+    12-of-12 / 0-of-8 split predicts once they are told apart. Reaching an arm down to the ground is GROSS
+    WHOLE-BODY motion and it rendered. Picking repeatedly at dirt with the fingers is fine in-hand action
+    and it did not -- the hands arrive and then hold. The 0-of-8 record is not contradicted; it is sharpened,
+    and "the engine cannot do this beat" is too coarse a claim to keep making.'
+  what_this_does_not_settle: 'ONE SEED. Whether the frozen 80-frame head is a property of the recipe, the
+    plate or the seed is untested, and no second seed was fired. Whether the sullen read is fixable by
+    wording, by plate or not at all is a taste question and an authorship one, not this lane''s.'
+  for_the_beats_owner: 'THREE THINGS, none of them decisions this lane takes. (1) The gap to done_when
+    is now TWO named clauses -- the glance must return, and the face must read embarrassed rather than
+    sullen -- not the whole shot, which is a different production decision from re-staging beat 14. (2)
+    THE CLIP IS BADLY SHAPED FOR A CUT even setting the bar aside: 80 of its 121 frames are frozen, so
+    only the last ~40 carry anything, and a trim to the f085-f121 window is the obvious first edit. (3)
+    The sullen read has now appeared on two different seeds of this beat, so it should be treated as a
+    staging property.'
+  not_done_on_purpose: 'ONE SAMPLE, ONE SEED. No sweep, no second seed, no wording variant, no re-plate,
+    no trim. Guidance, CFG and checkpoint untouched. The sidecar says approved false and provisional true;
+    nothing is cut and R4 is the founder''s.'
