@@ -1271,6 +1271,15 @@ def courier_problems(spec: dict) -> list:
     it. So this asks the next question -- does any step put those bytes where
     the courier looks?
 
+    THE BLAST RADIUS WAS MEASURED BEFORE THIS WENT IN, not assumed. Run over
+    every spec in pipeline/jobs (962 of them declare artifacts), it refuses 100:
+    88 ep1 specs and 9 ep2 specs all dated 0811-0812, which is the era BEFORE
+    courier-box existed and results came back another way -- plus
+    ep2-cnet-probe-0817. So from the whole courier era it fires on exactly one
+    spec, and that spec is the incident. Those older specs are refused only if
+    somebody re-files one, and if they do, the refusal is correct: their
+    outputs would strand today for the same reason this one did.
+
     Returns a list of problems, empty when the spec is sound.
     """
     COURIER = r"c:\banyan-farm\courier-box\farm-out"
