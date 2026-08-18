@@ -2739,3 +2739,4 @@
 18:28:27Z STARTED task=ep2-b14-mac-motion-s2-0818-1787076535 attempt=1 on box-runner
 18:34:44Z DONE task=ep2-b14-mac-motion-s2-0818-1787076535 rc=0 artifacts=2
 18:34:54Z STARTED task=ep2-b01-growmotion-b5-0818-1787077828 attempt=1 on box-runner
+18:41:11Z DONE task=ep2-b01-growmotion-b5-0818-1787077828 rc=0 artifacts=2
