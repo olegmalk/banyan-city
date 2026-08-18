@@ -146,6 +146,15 @@ SITE_INPUTS=(
   # build_pulse (build_site.py:3065) draws /pulse — the queue and the render
   # box's vitals over time — from the cache below.
   pipeline/build_pulse.py
+  # build_queue (build_site.py:3255-3256) draws /queue — every render as a
+  # browsable gallery, plus queue-data.json and queue-detail.json. MISSING FROM
+  # THIS LIST UNTIL 2026-08-18, and missing for the same reason episode_eta.py
+  # was: build_site imports it INSIDE the function that calls it, so the
+  # column-0 sibling-import walk in test_pipeline never demanded it and nothing
+  # noticed. A push that changed only this file would skip the build and leave
+  # banyan.city serving a stale /queue — which is exactly what it is: one of the
+  # four builders qa_local.py runs.
+  pipeline/build_queue.py
   pipeline/site_theme.py
   # the /status page's inline-SVG charts — the sapling tree and the render
   # box's per-day work bars — and the ONE definition of what each beat state
