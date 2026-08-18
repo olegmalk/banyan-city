@@ -1,0 +1,131 @@
+{
+  "id": "ep2-b01-nubinpaint-0818-1787061174",
+  "task": "ep2-b01-nubinpaint-0818",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 40,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\nubinpaint-0818\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-compseed-s3-g5-0818\\b01-compseed-s3-s20260917.png",
+        "--init-sha256",
+        "49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b",
+        "--ellipse",
+        "404,746,16,19",
+        "--prompt-file",
+        "C:\\banyan-farm\\nubinpaint-0818\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\nubinpaint-0818\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-dry.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260825",
+        "--note",
+        "DRY RUN: asserts the picked plate's sha256 and writes the mask PNG beside the output BEFORE any model loads, so a misplaced ellipse is caught for $0 and 0 GPU-seconds. The mask geometry is the steward's; the founder's 2026-08-13 word was `inpaint a SMALL fig into frame 1` and named no size and no position.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260825",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\nubinpaint-0818\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-compseed-s3-g5-0818\\b01-compseed-s3-s20260917.png",
+        "--init-sha256",
+        "49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b",
+        "--ellipse",
+        "404,746,16,19",
+        "--prompt-file",
+        "C:\\banyan-farm\\nubinpaint-0818\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\nubinpaint-0818\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260825",
+        "--note",
+        "ONE SAMPLE on the founder's resolved 2026-08-13 verdict (inpaint a SMALL fig into frame 1, then let the motion prompt grow it), painted onto the plate PICKED for beat 01 on 2026-08-18. Frame 1 is pre-ripe by the approved script -- a GREEN NUB, not a ripe purple fig. Strength 0.99 because this ADDS an object the init lacks, which is the 2026-08-10 fig recipe and not the compseed lane's 0.30 blend. Not a pick, not approved for any cut."
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Stamp the sample's sidecar as an unapproved provisional take.\n# inpaint_fruit.py already writes `approved: false` and a `provisional:` block at\n# render time, so this ASSERTS those rather than writing them again -- appending a\n# second `approved:`/`provisional:` key would leave a sidecar with duplicate keys,\n# and a provenance file that parses ambiguously is worse than one unstamped.\n# REFUSES if it found no sidecar, or one missing the renderer's own gate lines: a\n# run whose provenance did not get written must not pass silently.\nimport glob\nout_dir = \"C:/banyan-farm/nubinpaint-0818\"\nside = sorted(glob.glob(out_dir + \"/b01-nub-*.png.meta.yaml\"))\nif not side:\n    raise SystemExit(\"!! no sidecar yaml in %s -- refusing to call the job clean.\" % out_dir)\nfor p in side:\n    with open(p, encoding=\"utf-8\") as fh:\n        text = fh.read()\n    for needed in (\"approved: false\", \"provisional:\"):\n        if needed not in text:\n            raise SystemExit(\"!! %s is missing %r written by inpaint_fruit.py -- refusing.\" % (p, needed))\n    with open(p, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n            \"# --- appended after the render by the job-authoring lane, 2026-08-18.\\n\"\n            \"# The renderer's own `approved: false` and `provisional:` lines are above and\\n\"\n            \"# were asserted present before this block was written.\\n\"\n            \"cost_usd_confirmed: 0\\n\"\n            \"approved_stamp: false\\n\"\n            \"provisional_stamp: true\\n\"\n            \"not_a_pick: |\\n\"\n            \"  ONE SAMPLE of the frame-1 nub inpaint (ep2-b01-nubinpaint-0818) on the plate\\n\"\n            \"  picked for beat 01 on 2026-08-18. Not a pick, not a seed confirmation, not\\n\"\n            \"  approved for any cut, not voiced and not animated. Read against the bar\\n\"\n            \"  pre-registered in the spec before anything is built on it. Taste and\\n\"\n            \"  trunk/graft calls are R4's and this run makes none.\\n\")\nprint(\"stamped\", len(side), \"sidecar(s) in\", out_dir)\n"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Publish THIS job's own files out of THIS job's own directory. farm-out is not\n# gitignored, so the runner pushes them itself and the frame reaches the Mac\n# without anybody logging in. The names are spelled out rather than globbed, and\n# the exit code asserts the exact count -- a publish step that cannot find its\n# frames must fail the job, so there is no allow_fail over this one.\nimport hashlib, os, shutil\nsrc = 'C:/banyan-farm/nubinpaint-0818'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-b01-nubinpaint-0818'\nos.makedirs(dst, exist_ok=True)\nnames = ['b01-nub-s20260825.png', 'b01-nub-s20260825.png.meta.yaml',\n         'b01-nub-s20260825-mask.png', 'b01-nub-dry-mask.png']\ngot = []\nfor n in names:\n    p = os.path.join(src, n)\n    if os.path.isfile(p):\n        shutil.copy2(p, os.path.join(dst, n)); got.append(n)\nwith open(os.path.join(dst, 'SHA256SUMS.txt'), 'w', newline='\\n') as fh:\n    for n in got:\n        h = hashlib.sha256(open(os.path.join(dst, n), 'rb').read()).hexdigest()\n        fh.write('%s  %s\\n' % (h, n))\nprint('published', len(got), 'of', len(names), '->', dst)\nraise SystemExit(0 if len(got) == len(names) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825.png",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825.png.meta.yaml",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825-mask.png",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-dry-mask.png"
+  ],
+  "backlog": {
+    "filed_at": 1787061174,
+    "filed_at_iso": "2026-08-18T13:52:54Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b01-nubinpaint-0818.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-18T13:53:10Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-18T13:53:33Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825.png",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825.png.meta.yaml",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-s20260825-mask.png",
+    "C:\\banyan-farm\\nubinpaint-0818\\b01-nub-dry-mask.png"
+  ]
+}
