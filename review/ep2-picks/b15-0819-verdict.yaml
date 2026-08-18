@@ -253,3 +253,93 @@ the_real_blocker:
     the SUPERSEDED pre-restage canon (a plant taller than he is, seen from below) and
     have never once asked for the ~40 cm plant the story now has. That question is
     unfired, not closed.
+
+# ══════════════════════════════════════════════════════════════════════════
+# VERDICT 3 — THE PLATE THIS LANE COMMISSIONED, DREW AND SCORED THE SAME NIGHT
+# ══════════════════════════════════════════════════════════════════════════
+verdict_0819_new_plate:
+  what_was_done: >-
+    The blocker above says beat 15 is blocked on a plate. So a plate was drawn —
+    two rungs, one variable apart, on Apple MPS, $0, nothing on the box. The bar
+    was registered in pipeline/plate_scratch.py DRAFTS[15] BEFORE either picture
+    existed: P1-P7 scored, P8 gaze deliberately unscored, seven fail modes named
+    in advance. P9 (eyewear) was added FORWARD after r1 arrived wearing
+    spectacles nothing had asked for, and scored on r2 only — a bar edited to
+    match the rung it is about to score certifies nothing.
+  files: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png and -r2s1.png
+  r1:
+    score: 6 of 7, all seven named fail modes silent
+    passed: BOTH IN ONE FRAME, ROOTED AND ATTACHED, SCALE (plant below his head), OUTDOORS IN AN OPEN FIELD, ONE LEAN ADULT GOBLIN SEATED IN A PATCHWORK CLOAK, NOT A CLOSE-UP
+    failed: THE PLANT IS THE SAPLING — leaves on two or three nodes, roughly five of them, where the script says "the two leaves"
+    sha256: 8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe
+  r2:
+    variable: '`two leaves on one thin stem` -> `two leaves at the top of one bare stem`. Every other clause byte-identical, same seed, 77/77 tokens.'
+    score: 6 of 8
+    failed: THE PLANT IS THE SAPLING (unmoved, indistinguishable from r1) and EYEWEAR (spectacles again, second sighting on a second prompt at the same seed)
+    sha256: b4b28ab54f0ca7dace0b50f302a101fd085cc2f4fcdbfc45f13bd92446d9a103
+  the_recorded_blocker_is_dead: >-
+    Beat 15's blocker was that no plate we owned put HIM AND A ROOTED PLANT
+    OUTDOORS IN ONE FRAME AT CANON SCALE. Eight candidates had detached floating
+    leaves, four were indoors, six mac plates put the plant on his shoulder or
+    grew it to the size of a hill, and the init under all six motion takes was a
+    weed with a ball on it. Two draws and that is over: rooted, attached,
+    outdoors, below his head, both wholly in frame, twice running, with a seated
+    lean adult in a patchwork cloak instead of a standing child in sneakers.
+  what_it_is_now_blocked_on: THE LEAF COUNT, and that is a smaller problem with a route attached.
+  the_ladder_stops_at_two: >-
+    Two wordings, no movement. The beat-19 lane reached the same finding tonight
+    after three rungs and wrote the rule into plate_scratch.py: "THE PLANT IS NOT
+    REACHABLE BY WORDS ON THIS CHECKPOINT and a fourth wording is the thing this
+    repo has repeatedly been wrong to fire." A rung three is NOT filed here.
+  the_route_named_and_not_fired: >-
+    A COMPOSITE INIT, and beat 15 is a far cheaper composite than beat 19 because
+    its other half is already done. r1 passes the man, the pose, the cloak, the
+    field, the scale and the wide two-shot framing — six of eight terms, and the
+    six that twenty-four prior artifacts could not produce together. The plant is
+    ALREADY DRAWN AND ALREADY PICKED one beat away: `ep2-b12-tightB` is beat 12's
+    pick and 002b-t0-c.yaml records it as surviving the knee-height rewrite
+    intact, prompt untouched byte for byte. The next beat-15 step is r1's frame
+    with b12's leaves composited in on a thin stem at ~40 cm — the pattern is
+    pipeline/composite-init-pattern.md and it has been built twice already
+    (beat14_field_composite.py, beat08_gesture_composite.py). That is a build,
+    not a rev; it is named so the next lane inherits a route rather than a
+    mystery, and it is the job after this lane's.
+  eyewear: >-
+    NOT THIS BEAT'S PROBLEM AND REPORTED ANYWAY. Both plates put spectacles on a
+    face from a prompt that never mentions eyewear. The eyewear-binding lane is
+    chasing exactly this on beats 05 and 10; this is an independent sighting on a
+    third beat, on a different prompt family, at a known seed. Handed over, not
+    solved here.
+
+# ══════════════════════════════════════════════════════════════════════════
+# WHAT WAS FILED, AND THE ONE THING ONLY THE FOUNDER CAN DO
+# ══════════════════════════════════════════════════════════════════════════
+filed:
+  job: pipeline/jobs/ep2-b15-macplate-publish-0819.yaml
+  runner: box, needs_gpu false, est 1 minute, cost_usd 0
+  what_it_does: >-
+    Fetches both committed plates by asserted sha256 (refusing on any mismatch)
+    and republishes them to courier-box/farm-out, where box_enqueue's own `--src`
+    fetch guard can reach them. No plate_ack waiver is used. It draws nothing.
+  why_this_and_not_a_motion_job: >-
+    STEWARDSHIP.md §6. Beat 15's restage is unread by the founder, so a footage
+    render from this beat is not fileable by this lane today. A still fixture is
+    not one of the three things §6 names, and the beat's actual blocker is the
+    plate anyway — so nothing is idled by the gate.
+  it_publishes_two_failing_plates_on_purpose: >-
+    Said in the spec's own header so it cannot be read as a pass smuggled through
+    a copy step: NO MOTION JOB MAY CROP EITHER FILE AS-IS. r1 is published as the
+    COMPOSITE BASE, which is what the next step needs on the card.
+
+the_one_open_item_and_it_is_his: >-
+  READ THE FIVE RESTAGED BEATS. Not a taste question — a read. On 2026-08-17 the
+  steward rewrote the staging of beats 12, 13, 15, 19 and 20 on the founder's own
+  instruction ("rewrite the beats to work at knee height. change the story"), and
+  002b-t0-c.yaml has recorded `NOT YET READ BY HIM` for two days. Until he reads
+  them, STEWARDSHIP.md §6 blocks footage on beat 15, beat 19 and beat 20 together
+  — three of the four slates in the 0818 cut. One read discharges all three. The
+  five rewrites are five one-line stage directions at node.md:189-199 and no
+  spoken line moved in any of them, so all 18 existing 002b VO takes stay valid
+  either way. Everything that does not need him is done: the plate exists, it is
+  scored, the route past its one remaining fault is named, and the fixture is on
+  the card.

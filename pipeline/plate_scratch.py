@@ -4949,6 +4949,170 @@ DRAFTS[15] = {
     ),
 }
 
+# --------------------------------------------------------------------------
+# r1 SCORED, 2026-08-19, Apple MPS, seed 20260819, 141.1s, rc 0.
+# farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png
+# sha256 recorded in the sidecar beside it.
+#
+# VERDICT: 6 OF 7, AND ALL SEVEN NAMED FAIL MODES STAYED SILENT. This is the
+# best beat-15 plate that exists, on the first draw of the new ladder, and the
+# six things it fixed are the six things twenty-four prior artifacts died on.
+#   P1 BOTH IN ONE FRAME .......... PASS. Both wholly inside the frame, neither
+#      cropped. Twenty-four artifacts had not managed this with a real plant.
+#   P2 ROOTED AND ATTACHED ........ PASS, cleanly. One stem rises out of the
+#      grass with its base in shot and every leaf joins it. This is the clause
+#      that killed eight of the twelve wave stills (detached leaves floating at
+#      the frame edges) and `rooted in the soil` in the POSITIVE bound on the
+#      first draw -- the positive-placement law holds again.
+#   P3 THE PLANT IS THE SAPLING ... FAIL, AND IT IS THE ONLY FAILURE. One
+#      plant, one thin stem, no bead vine, no ball -- but the leaves sit on
+#      TWO OR THREE NODES, roughly four or five of them, where the bar says
+#      exactly two. `two leaves` moved the count enormously (the init under all
+#      six motion takes was a multi-node weed topped with a sphere; mac r6 was a
+#      hill) and did not reach two. Scored FAIL as written, not softened.
+#   P4 SCALE ...................... PASS, and this is the first time. The
+#      plant's top sits BELOW the seated goblin's head. Every previous beat-15
+#      draw asked for a plant taller than he is and got one.
+#   P5 OUTDOORS IN AN OPEN FIELD .. PASS. Grass to the horizon, real sky and a
+#      cloud band. No interior, no wall panel, no floating disc of turf.
+#   P6 ONE LEAN ADULT GOBLIN ...... PASS. One figure, seated in the grass, lean
+#      and long-limbed with an angular skull, in a plaid patchwork cloak, both
+#      hands on his knees. Not a child, not a chibi, not standing, no sneakers.
+#      `boy` -> `lean wiry adult goblin man` did exactly what beat 08 measured.
+#   P7 NOT A CLOSE-UP ............. PASS. Wide, whole body, plant reads.
+#   P8 GAZE ....................... NOT SCORED, as registered. (Recorded and
+#      not scored: his head is down and turned slightly toward the plant side.)
+#   Q1-Q7 ......................... NONE FIRED. No plant on his shoulder, no
+#      scale double, no hill, no bud-sphere, no interior, no modern dress, no
+#      mature tree. Seven named in advance, seven silent.
+#
+# FOUND LOOSE AND TIGHTENED FORWARD, NOT REWRITTEN: HE IS WEARING SPECTACLES,
+# and nothing in the prompt asks for eyewear. No term of the bar covers it so
+# it is not scored here, and it is not waved off either -- an unprompted
+# attribute arriving on a face is precisely what the eyewear-binding lane is
+# chasing on beats 05 and 10, and this is a third independent sighting of it on
+# a prompt that never mentions glasses. It is added to the bar as P9 FROM r2
+# FORWARD, where it can be scored on a draw that was measured against it.
+#
+# ==========================================================================
+# BEAT 15 REVISION 2. THE ONE VARIABLE IS THE LEAF COUNT. NOTHING ELSE MOVES.
+# ==========================================================================
+# THE VARIABLE, and it is the only clause that differs from r1:
+#   `two leaves on one thin stem`  ->  `two leaves at the top of one bare stem`
+# `bare` says the stem carries nothing between the soil and the leaves, which
+# is the second node the picture actually grew; `at the top` puts both leaves
+# at ONE node instead of leaving their position to the checkpoint. This is the
+# same move beat 19 r3 made and it is worth making once here for a reason that
+# beat did not have: there the plant clause competed with a fig hanging off it
+# and the count never came down, HERE THERE IS NO FRUIT and the count already
+# came most of the way. Beat 19's ladder stopped at three rungs on a closed
+# question; this is rung two on an open one, and if r2 does not reach two
+# leaves the answer is the composite route that lane already named
+# (pipeline/composite-init-pattern.md), not a rung three.
+#
+# EVERY OTHER CLAUSE IS r1's, BYTE FOR BYTE -- the cast wording, `sitting in
+# the grass`, `rooted in the soil`, `40cm`, `both hands on his knees`, `his
+# face visible`, `wide shot`, `sunny grassy field` and the style tail. Six
+# passing terms are CARRIED, not re-tested. STILL NO GAZE WORD, in either
+# direction: the §6 line r1 was drawn on does not move because a leaf did.
+# The negative is restated byte for byte below, per this file's exit-6 guard.
+# Seed unchanged at 20260819, so r1 and r2 are two draws of ONE seed differing
+# by four words. ONE SAMPLE. $0, Apple MPS, nothing on the box.
+REVS[(15, 2)] = {
+    "slug": "good-listener",
+    "prompt": (
+        "1boy, solo, lean wiry adult goblin man, green skin, bald head, "
+        "patchwork cloak, sitting in the grass beside a tiny 40cm sapling "
+        "rooted in the soil, two leaves at the top of one bare stem, both "
+        "hands on his knees, his face visible, wide shot, sunny grassy field, "
+        "cinematic lighting, masterpiece, best quality, very aesthetic"
+    ),
+    # Byte-identical to DRAFTS[15]'s, restated per exit 6. `glasses` is NOT
+    # added: r1's spectacles are one sighting and the standing finding in this
+    # repo is that the negative does not reach a noun the positive left vague.
+    # Putting eyewear in the negative on the same draw that moves the leaf
+    # clause would also be two variables in one picture.
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, standing, walking, "
+        "close-up, portrait, floating leaves, leaf on head, potted plant, "
+        "flower pot, large tree, thick branch, trunk, forest, house, indoors, "
+        "night, dark, photorealism, 3d render"
+    ),
+    "seed": 20260819,
+    "done_when": (
+        "r1's bar, unchanged in every term, PLUS P9 EYEWEAR: no spectacles or "
+        "goggles on his face, nothing in the prompt asks for them. P3 is NOT "
+        "loosened to accept r1's node count -- a bar edited to match the rung "
+        "it is about to score certifies nothing. Gaze stays unscored (§6)."
+    ),
+    "why": (
+        "r1 scored 6 of 7 with all seven named fail modes silent, and the one "
+        "failure is the leaf count: two or three nodes where the script says "
+        "'his eyes are level with the two leaves'. One clause moves."
+    ),
+}
+# --------------------------------------------------------------------------
+# r2 SCORED, 2026-08-19, Apple MPS, seed 20260819, rc 0, 77/77 tokens.
+# farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r2s1.png
+# sha256 b4b28ab54f0ca7dace0b50f302a101fd085cc2f4fcdbfc45f13bd92446d9a103
+#
+# VERDICT: 6 OF 8. THE ONE VARIABLE DID NOT MOVE ITS TERM, AND THAT IS THE
+# RESULT. Two rungs have now aimed two wordings at the leaf count and the
+# picture has not changed shape.
+#   P3 THE PLANT IS THE SAPLING . FAIL, INDISTINGUISHABLE FROM r1. Still one
+#      thin stem carrying leaves on TWO OR THREE NODES, roughly five of them.
+#      `bare` did not clear the stem and `at the top` did not gather the pair.
+#      Everything the words could buy on this axis was already bought by r1's
+#      `two leaves`, which took it from a multi-node weed with a sphere down to
+#      a seedling and then stopped.
+#   P9 EYEWEAR .................. FAIL, and this is the term's first scored
+#      outing. HE IS STILL WEARING SPECTACLES. Nothing in either prompt asks
+#      for eyewear; it has now arrived on two different prompts at the same
+#      seed on this checkpoint, which makes it a second independent sighting
+#      for the eyewear-binding lane rather than a fluke of one draw.
+#   P1, P2, P4, P5, P6, P7 ...... PASS, all six carried intact from r1. Both
+#      wholly in frame, rooted and attached, plant below his head, open field
+#      to a real horizon, one seated cloaked lean adult with both hands on his
+#      knees, wide shot. Nothing regressed.
+#   P8 GAZE ..................... NOT SCORED (§6). Recorded: head down, level.
+#   Q1-Q7 ....................... NONE FIRED, second draw running.
+#
+# THE LADDER STOPS AT TWO, AND THE RULE IS THIS FILE'S OWN, WRITTEN BY THE
+# BEAT-19 LANE TONIGHT: "THE PLANT IS NOT REACHABLE BY WORDS ON THIS
+# CHECKPOINT and a fourth wording is the thing this repo has repeatedly been
+# wrong to fire." Beat 19 needed three rungs to learn it because its plant
+# clause competed with a fig; beat 15 has no fruit and learned it in two. A
+# rung three is NOT filed.
+#
+# THE ROUTE, NAMED AND NOT FIRED, and beat 15 is a far cheaper composite than
+# beat 19 because ITS OTHER HALF IS ALREADY DONE:
+#   * THE FRAME IS SOLVED. r1 and r2 pass six of eight terms — the seated
+#     cloaked lean adult, the open field, the scale, the wide two-shot framing
+#     and both subjects inside the frame. Twenty-four prior artifacts could not
+#     produce that frame with any plant in it at all.
+#   * THE PLANT IS ALREADY DRAWN AND ALREADY PICKED, one beat away.
+#     `ep2-b12-tightB` is beat 12's PICK and 002b-t0-c.yaml records that it
+#     "SURVIVES INTACT" through the knee-height rewrite, prompt untouched byte
+#     for byte. It is the canon leaves, held to a bar, on this show.
+#   * SO THE NEXT BEAT-15 STEP IS A COMPOSITE INIT — r1's man, pose, cloak,
+#     field, scale and framing with beat 12's leaves composited in on a thin
+#     stem at ~40 cm, a hand's width from his face — NOT a third prompt. The
+#     pattern is in pipeline/composite-init-pattern.md and has been built twice
+#     already (beat14_field_composite.py, beat08_gesture_composite.py). That is
+#     a build rather than a rev, it is bigger than this lane's one job, and it
+#     is named here so the next lane inherits a route instead of a mystery.
+#
+# WHAT THE TWO RUNGS BOUGHT, so they do not read as waste. Beat 15's recorded
+# blocker was that no plate we owned put HIM AND A ROOTED PLANT OUTDOORS IN ONE
+# FRAME AT CANON SCALE — eight candidates had floating leaves, four were
+# indoors, six mac plates put the plant on his shoulder or made it the size of
+# a hill, and the init under all six motion takes was a weed with a ball on it.
+# Two draws, and that blocker is DEAD: P1, P2, P4 and P5 pass twice running.
+# Beat 15 is no longer blocked on "we cannot get him and a plant into a field
+# together"; it is blocked on "we cannot get the leaf count to two", which is a
+# smaller, differently-shaped problem with a route and a passing asset attached.
+# --------------------------------------------------------------------------
+
 
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer

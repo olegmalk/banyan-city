@@ -1,0 +1,211 @@
+# EPISODE 2, BEAT 15 — PUT THE PLATE ON THE BOX. NO GPU, NO SPEND, NO MODEL.
+# 2026-08-19. $0, about one minute, zero VRAM. This job draws nothing: it
+# fetches beat-15 plate bytes that already exist and are already committed, and
+# republishes them into courier-box/farm-out where the box's own enqueue guards
+# can fetch and measure them like any other plate.
+#
+# ── WHY THIS JOB AND NOT A MOTION JOB, SAID PLAINLY BECAUSE IT IS THE WHOLE
+#    POINT. Beat 15 is one of the five beats restaged on 2026-08-17 under the
+#    founder's "rewrite the beats to work at knee height. change the story",
+#    and genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml records
+#    the per-beat gate on that pass verbatim: "NOT YET READ BY HIM. He
+#    authorised the rewrite; he has not read the result. STEWARDSHIP.md §6
+#    therefore forbids voice synthesis, footage render and episode assembly
+#    FROM THESE FIVE BEATS until he does." A BEAT-15 MOTION JOB IS THEREFORE
+#    NOT FILEABLE TODAY BY THIS LANE. §6 names three things and a still
+#    fixture is none of them, which is why the plate could be drawn and this
+#    publish can run. Nothing here renders footage, synthesises a voice, or
+#    assembles an episode.
+#
+# ── WHAT IT UNBLOCKS, WHICH IS NOT NOTHING. box_enqueue refuses a motion job
+#    whose `--src` init it cannot fetch, and separately refuses one whose
+#    producing job has no spec in pipeline/jobs. THIS IS THAT SPEC. When the
+#    founder reads the five restaged beats — one read, no taste call, and it
+#    discharges beats 15, 19 and 20 at once — beat 15's motion job is a
+#    fifteen-minute file against an init that is already on the card and
+#    already verified. Filing it now means the gate lifting costs a render,
+#    not a render plus a plate plus a fetch. NO `plate_ack` WAIVER IS USED
+#    ANYWHERE IN THIS LANE.
+#
+# ── WHY THE PLATE HAD TO BE REDRAWN AT ALL. Beat 15 has been judged on 24
+#    artifacts and not one fails on the acting (review/ep2-picks/b15-0819-verdict.yaml):
+#    twelve wave stills ALL CANDIDATES FAIL, six mac plates of 2026-08-15 that
+#    no file in this repo had ever read, and six LTX motion takes that had
+#    never been judged against the beat's own done_when. ALL SIX MOTION TAKES
+#    CROP ONE INIT — ep2-b15-plate-0814/15-good-listener-ipa-r0-w015-s0.png,
+#    sha 43648513… — and that plate is a standing round-headed child in a
+#    shirt, cargo shorts and sneakers beside a wiry multi-node weed topped with
+#    a white sphere. i2v does not replace the subject it is conditioned on, so
+#    no seed reachable from it can pass "the SAPLING IS IN THE SAME FRAME".
+#    The beat was blocked on a plate before the first clip was ever rendered.
+#
+# ── THE BYTES BEING PUBLISHED, AND WHAT THEY SCORED. Both revisions are
+#    fetched, so the box holds the evidence and not only the pick, and every
+#    sha256 below is verifiable against the repo by anyone who clones it. The
+#    bar was registered in pipeline/plate_scratch.py BEFORE either drew.
+#
+#      r1s1  6 of 7 with all seven named fail modes silent. First beat-15 plate
+#            at canon scale (plant BELOW his head), first rooted and attached,
+#            first outdoors with a seated adult goblin in a patchwork cloak,
+#            both wholly in frame. Failed P3 only: the leaves sit on two or
+#            three nodes where the script says "the two leaves".
+#      r2s1  the one-variable rung on that clause — `two leaves on one thin
+#            stem` -> `two leaves at the top of one bare stem`, every other
+#            clause byte-identical, same seed. 6 of 8: P3 UNMOVED, and P9
+#            (eyewear, added forward after r1 drew spectacles nothing asked
+#            for) also FAIL. Both scores are written out beside their revs.
+#
+# ── NEITHER PLATE PASSES ITS BAR, AND THIS JOB PUBLISHES THEM ANYWAY. Said
+#    first so it cannot be read as a pass smuggled through a copy step: no
+#    beat-15 motion job may be conditioned on either of these as a finished
+#    init, because the plant in both is a multi-node seedling and beat 15's
+#    whole point is the two leaves his eyes come level with. WHAT THEY ARE IS
+#    THE COMPOSITE BASE. Two rungs aimed two wordings at the leaf count and the
+#    picture did not change shape, which is the finding the beat-19 lane
+#    recorded in plate_scratch.py the same night — "THE PLANT IS NOT REACHABLE
+#    BY WORDS ON THIS CHECKPOINT". A rung three is deliberately NOT filed.
+#    Beat 15's composite is cheap because its other half is already done: r1
+#    passes the man, the pose, the cloak, the field, the scale and the two-shot
+#    framing, and `ep2-b12-tightB` — beat 12's PICK, recorded as surviving the
+#    knee-height rewrite intact — is the canon leaves already drawn and already
+#    held to a bar. The next beat-15 step is r1's frame with b12's leaves
+#    composited in on a thin stem (pipeline/composite-init-pattern.md, built
+#    twice before), and THAT composite is what the eventual motion job crops.
+#    `plate_pick` below names r1 as that base and says what it is not.
+#
+# ── NO GAZE WORD IS IN EITHER PLATE, IN EITHER DIRECTION, AND THAT IS THE §6
+#    LINE HELD IN THE PIXELS. The single clause the 2026-08-17 restage moved is
+#    where he looks ("He looks up at the sapling" -> "he tips his head DOWN
+#    until his eyes are level with the two leaves"). Everything these plates
+#    stage — seated, the sapling beside him, BOTH SHARING THE FRAME — is in the
+#    sentence he read and approved on 2026-08-03. A plate is an i2v init and
+#    the clip performs the look, so an init with no head direction baked into
+#    it is usable under either reading and asks him for nothing he has not
+#    already given.
+id: ep2-b15-macplate-publish-0819
+task: ep2-b15-macplate-publish-0819
+node: 002b-first-citizen
+beat: 15
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: beat-15 judging lane, 2026-08-19
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A FILE COPY of
+  still plates already committed to origin/main: no model, no GPU, no voice, no motion, no episode
+  assembly, no publication. The per-beat §6 gate on beat 15''s 2026-08-17 restage is LIVE and is the
+  reason this is a plate publish and not a motion render — see the header.'
+script_line: 'Beat 15 GOOD LISTENER (1:10-1:15): "He tips his head down and sideways until his eyes are
+  level with the two leaves, and talks to them from a hand''s width away; both of them share the frame."
+  (node.md:98, restaged 2026-08-17, NOT YET READ BY THE FOUNDER — no clause of it is rendered here.)'
+consumer: 'The beat-15 SLATE in review/ep2-demo-0818/sources/picks-0818.yaml, whose entry reads "No
+  ep2-b15 job dated 0817 or 0818; no footage exists." This job puts the init that beat needs onto the card
+  so that the motion render is one file away the moment STEWARDSHIP.md §6 is discharged. Immediately
+  downstream: box_enqueue''s own `--src` fetch guard, which refuses any beat-15 motion job until this
+  plate is reachable at a farm-out path.'
+success: 'Four files on farm-out/ep2-b15-macplate-publish-0819 — two PNGs and two provenance yamls — each
+  byte-identical to the file on origin/main, plus a sha256 manifest this job writes itself. The fetch step
+  REFUSES on any sha256 mismatch instead of continuing, so a partial or corrupted copy is a nonzero exit
+  and not a quiet half-success. Not one pixel is generated: success here is a verified copy, and the only
+  interesting failure is a mismatch, which would mean the committed bytes and the fetched bytes disagree.'
+plate_pick: '15-good-listener-mac-plate-r1s1.png, sha256 8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe
+  — AND IT IS PICKED AS A COMPOSITE BASE, NOT AS AN INIT. It is the frame: one seated lean adult goblin
+  in a patchwork cloak, both hands on his knees, in an open sunny field, a rooted plant beside him below
+  his head height, both subjects wholly inside a wide two-shot. Six of eight terms, and the six are the
+  ones twenty-four prior artifacts could not produce together. What it is NOT is a beat-15 init: its
+  plant carries leaves on two or three nodes and the beat is about the TWO leaves. r1 over r2 because
+  the two score identically on every shared term and r1 carries the larger figure and the cleaner ground
+  plane where the canon leaves have to land. NO MOTION JOB MAY CROP EITHER FILE AS-IS.'
+why: 'Beat 15 is a slate on every cut we have made, and 24 judged artifacts say it is blocked on a plate
+  rather than on a seed or on acting. The plate now exists. The card is free of beat-15 work, this job
+  needs no GPU so it cannot displace anything that does, and it is the only step of this beat that
+  STEWARDSHIP.md §6 permits today. $0, no provider, no paid engine.'
+est_minutes: 1
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b15-macplate-publish-0819\fetch_plate.py: |-
+    #!/usr/bin/env python3
+    """Fetch the Mac-drawn beat-15 plates and REFUSE on any sha mismatch.
+
+    No model, no GPU, no spend. Every sha256 below is the hash of a file
+    committed to origin/main, so anyone who clones the repo can verify this
+    script's assertions without running it.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b15-macplate-publish-0819-out"
+    RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
+           "farm-out/ep2-b15-mac-plate-0819/")
+    UA = {"User-Agent": "banyan-city-b15-plate/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("15-good-listener-mac-plate-r1s1.png",
+         "8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe"),
+        ("15-good-listener-mac-plate-r1s1.yaml",
+         "58a19d731f0c29744c0c905e607e665940ac1e47c4adb489b85dd22109ed5c87"),
+        ("15-good-listener-mac-plate-r2s1.png",
+         "b4b28ab54f0ca7dace0b50f302a101fd085cc2f4fcdbfc45f13bd92446d9a103"),
+        ("15-good-listener-mac-plate-r2s1.yaml",
+         "6a7c60e79fb212a3a1449a6ee16a6ee1ddc88c458ac22b7ae38d929f3b30bf57"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-40s %7d bytes  sha %s  OK" % (name, len(raw), have),
+              flush=True)
+    print("every file matches its asserted sha256.", flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-macplate-publish-0819\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob -- both halves of that
+    # are scars this repo has already paid for. A glob that misses publishes
+    # nothing while returning a code that reads like a fetch failure, and
+    # box_enqueue.output_path_problems refuses a spec whose declared artifacts
+    # are never named by any step, which a wildcard defeats. Missing ONE file
+    # is a FAIL of this job, not a partial success.
+    import hashlib, os, shutil
+    from_dir = "C:/banyan-farm/ep2-b15-macplate-publish-0819-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b15-macplate-publish-0819"
+    NAMES = [
+        "15-good-listener-mac-plate-r1s1.png",
+        "15-good-listener-mac-plate-r1s1.yaml",
+        "15-good-listener-mac-plate-r2s1.png",
+        "15-good-listener-mac-plate-r2s1.yaml",
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for name in NAMES:
+        src = os.path.join(from_dir, name)
+        if not os.path.isfile(src):
+            raise SystemExit("!! missing %s -- publishing nothing." % name)
+        shutil.copy2(src, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+    with open(os.path.join(dst, "ep2-b15-macplate-publish-0819.sha256"),
+              "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(NAMES), "file(s) + manifest ->", dst)
+    raise SystemExit(0)
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\ep2-b15-macplate-publish-0819\15-good-listener-mac-plate-r1s1.png
+- C:\banyan-farm\courier-box\farm-out\ep2-b15-macplate-publish-0819\15-good-listener-mac-plate-r2s1.png
