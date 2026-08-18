@@ -282,3 +282,81 @@ licence_note: >-
   (apache-2.0, no attribution condition). The hint is drawn by
   pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
   annotator, so the lllyasviel/Annotators landmine is not touched.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size beside
+# rung 1's two. Scored against the bar and the verdict_rule THIS SPEC
+# PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 2 steps rc=0, 2026-08-18T22:51Z, load 6.0s / render 13.7s, 4 files
+# published to courier-box\farm-out and pulled with every sha verified. $0.
+# Evidence: farm-out/ep2-b08-cnetplate-r2-0819/EVIDENCE-b08-scale-dial-0819.png
+# (hint | 0.80 brightened | 0.45 as rendered | nocontrol).
+# ============================================================================
+verdict: >-
+  THE DIAL IS REAL AND 0.45 IS STILL TOO HIGH. The pre-registered rule anticipated
+  a floor below 0.45 and instead found a CEILING above it: the whole pose survived
+  the drop, one bar clause FLIPPED FROM FAIL TO PASS, and the tracing is much
+  reduced but not gone. None of the three branches fires cleanly and saying so is
+  more honest than forcing one.
+verdict_measured:
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b2_the_adults_read: 'FAIL, EXACTLY AS PRE-REGISTERED, and the prediction was made
+    for the right reason. Both figures are green with pointed ears: heads measure
+    (166,196,106) and (163,198,101) -- indistinguishable, the same result as rung 1
+    at a completely different exposure and a completely different level of detail.
+    Returning drawing freedom did not create a per-figure identity channel, which is
+    what this spec said it would not do. The wardrobe scrambled further: the frozen
+    cream shirt / white sash / brown wrap skirt came back as white drapes and tan
+    trousers ON BOTH FIGURES, with the goblin bare-midriffed. THE IDENTITY LEVER IS
+    NOW THE ONLY THING BETWEEN THIS ROUTE AND A USABLE BEAT-08 PLATE.'
+  b3_one_ground_plane: 'PASS. Both stand in the same grass with cast shadows at the
+    same level. Held at 0.45.'
+  b4a_board_down: 'PASS. A brown board hangs at the guard''s hip with his fingers
+    visible curled under it -- and it is better drawn than rung 1''s, which was a
+    flat rectangle.'
+  b4b_legible_point: 'PASS, AND IT FLIPPED. This clause FAILED at 0.8 with a limb
+    terminating in mid-air, and this spec predicted before the render that "a freer
+    checkpoint is exactly what could supply one". It did: there is a modelled hand
+    with a clearly extended index finger. The aim is the weak part -- the finger
+    points down-and-left into the gap rather than squarely at the navel -- so this is
+    a pass on legibility and a marginal one on aim.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS. The arm still grows from the GUARD''s
+    shoulder. This is what the scale drop was most likely to spend and it did not
+    spend it -- 0.45 is still enough authority to decide which figure grows the limb.'
+  b5_no_colossus: 'PASS. The stature relationship the hint carries survived.'
+  b6_drawn_not_traced: 'PARTIAL, WHICH IS NOT A PASS, and the split is the finding.
+    Its three positive tests all pass and ALL THREE WERE ABSENT AT 0.8: cloth with
+    folds (white draped garments on both), shaded limbs (the pointing arm is modelled
+    with light and shadow), and faces with features (brows, eyes, nose, mouth on both,
+    versus a mark and a dot at 0.8). Its negative test FAILS: the silhouettes are
+    still the authored polygons -- rectangular columnar legs, a boxy torso, straight
+    shoulder lines. So the checkpoint was given back the SURFACE and not the OUTLINE.'
+what_this_settles: 'CONDITIONING SCALE IS THE TRACING DIAL, measured, one variable,
+  same seed and same hint. At 0.8 the checkpoint drew nothing inside the outline; at
+  0.45 it drew a hand, two faces, cloth and shading. That was the open question and it
+  is answered. It also settles the shape of the trade: the pose clauses did NOT start
+  degrading at 0.45, so the useful range has not been exhausted downward and the next
+  value is not a gamble against losing B4c.'
+what_this_did_not_settle: 'Where the ceiling actually is. 0.45 sits above it. The
+  silhouette is the last thing still being traced, and the next rung is the same
+  sample at 0.25-0.30 -- the value at which the condition should hold layout while the
+  outline itself becomes the checkpoint''s. NOT FILED HERE: rung 1 named its variable
+  and did not take it, and this rung is respecting the same discipline.'
+the_negative_fix_worked: 'Confirmed and it was a bug, not a variable. Mean luma 151.6
+  against rung 1''s 22.9 at the same seed and the same positive prompt. Restoring
+  `dark, night` -- which beat 08''s own cast draft has always carried and which
+  boardcomp''s inpaint-era negative never needed -- put the beat back in daylight in
+  one shot. The trimmed negative measured 69 of 77 on the box''s real tokenizer, with
+  8 tokens of headroom where rung 1 had one.'
+what_this_does_not_license: 'No pick, no plate_ack, no cut, no canon filename; this
+  frame is not approved and is not a candidate. It does not license a scale SWEEP --
+  the next value is one sample with its own bar. And it does not license opening an
+  identity mechanism in the same job as a scale change, which is the whole reason B2
+  was pre-registered to fail rather than quietly patched.'
+next_rung_named_not_taken: 'ONE sample: identical in every respect except
+  conditioning_scale 0.25-0.30. Its question is whether the SILHOUETTE becomes the
+  checkpoint''s while B3, B4a, B4c and B5 still hold -- and its pre-registered risk is
+  that this is where the pose finally starts to go, which would locate the usable band
+  between that value and 0.45. After that, and only after that, the identity question:
+  per-figure IPAdapter is the candidate and it is a separate probe with its own bar.'
