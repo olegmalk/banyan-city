@@ -1,0 +1,158 @@
+# 2026-08-18, BEAT 14 MOTION LANE. THE PLATE, PUBLISHED RATHER THAN WAIVED.
+#
+# WHY THIS JOB EXISTS AT ALL, and it renders nothing. box_enqueue refuses a
+# motion job twice over when it cannot check the picture being animated: once
+# because the --src is not fetchable from origin/farm-results-rtx5090, and again
+# because the job that produced it has no spec in pipeline/jobs. Both refusals
+# are waivable with `plate_ack:` and NEITHER IS WAIVED HERE. A 2026-08-14 job
+# that took that shortcut turned out to be cropping the WRONG BEAT'S PLATE.
+# This spec is the producing job the second guard looks for, and
+# farm-out/ep2-b14-mac-plate-0818 is what the first one reads. Same shape as
+# ep2-b17-insert-plate-0816, deliberately, because that pair worked.
+#
+# WHAT THE PICTURE IS. One 832x1216 plate drawn $0 on macbook1 (Apple Silicon,
+# MPS, animagine-xl-3.1, 40 steps, guidance 7.5, seed 20260814, 70.6 s) by
+# `pipeline/plate_scratch.py --beat 14`. An adult green goblin in a red and
+# dark patchwork scarf kneels low in grass, head bowed, both clawed hands
+# together at his knees, the ground filling the bottom third of the frame.
+#
+# WHY THIS SEED AND NOT THE OTHER TWO. The 2026-08-18 board asked the founder
+# one question about this beat -- ship r1s1, or re-stage the whole beat -- and
+# the steward's ruling of 2026-08-18 is SHIP r1s1 AND HAND IT TO MOTION. The
+# fault behind the question is a PALE LIMB-LIKE MASS, a flesh-coloured rounded
+# shape at frame bottom-right that is not part of him and is not anything else
+# either. It recurs at roughly 1 in 3 seeds on this beat: r1s2 has it, r1s1 and
+# r1s3 do not. All three seeds are published here, not just the pick, so the
+# fault is readable next to the frame that does not carry it and nobody has to
+# take the pick on trust.
+#
+# MEASURED BEFORE FILING with box_enqueue's own functions, on the exact
+# 704x1280 cover-crop the box will make: border_flatness 0.158 against the 0.62
+# refuse line, border_colour_flatness 0.0001. Nowhere near a blank-paper card,
+# so no `card:` ack is needed and none is used.
+#
+# WHY IT IS FETCHED OVER HTTP RATHER THAN COPIED. It was drawn on a Mac, so it
+# is on origin/main, not on the box's courier worktree -- the courier only ever
+# contains what the box itself produced. The Mac farm has no queue and nothing
+# collects its output, which is why this plate sat unreadable on one laptop
+# from 16:41 until it was pulled and committed for this job. The bytes are
+# asserted by sha256 BEFORE anything is written and the fetch step EXITS
+# NONZERO on any mismatch, so "the file moved between machines" cannot quietly
+# become "the file changed".
+#
+# NO GPU, NO MODEL, NO SPEND, seconds. It does not compete for the card.
+id: ep2-b14-mac-plate-0818
+task: ep2-b14-mac-plate-0818
+node: 002b-first-citizen
+beat: 14
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: beat 14 motion lane, 2026-08-18
+consumer: 'The init plate for ep2-b14-mac-motion-0818, published as a farm-out artifact so the enqueue
+  guards can fetch and measure it like any other plate. box_enqueue refuses a motion job whose --src it
+  cannot fetch, and separately refuses one whose producing job has no spec in pipeline/jobs -- this IS
+  that spec, and NO plate_ack waiver is used anywhere in this lane. Downstream of that: beat 14''s cut
+  slot in the episode 2 assembly.'
+success: 'Three 832x1216 pngs and their provenance yamls on farm-out/ep2-b14-mac-plate-0818, each byte-identical
+  to the file on origin/main (the fetch step REFUSES on any sha256 mismatch rather than continuing), plus
+  a sha256 manifest. The pick, r1s1, has png sha256 df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc
+  -- that is the one ep2-b14-mac-motion-0818 crops, and its --sha256 assertion is the same string.'
+why: 'The card is empty -- ready/ holds only HOLD and DUP files, running/ and backlog/ are both empty --
+  and this job is the cheapest thing standing between an empty card and a ruled, runnable motion sample.
+  It needs no GPU, so it can run while anything else renders. $0, no provider, no paid engine.'
+est_minutes: 1
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+payload:
+  C:\banyan-farm\ep2-b14-mac-plate-0818\fetch_plate.py: |-
+    #!/usr/bin/env python3
+    """Fetch the Mac-drawn beat-14 plates and REFUSE on any sha mismatch.
+
+    No model, no GPU, no spend. The bytes are the ones committed to origin/main
+    in 5d872ac3, so every sha256 asserted here is verifiable against the repo by
+    anyone who clones it.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b14-mac-plate-0818-out"
+    RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b14-mac-plate-0818/"
+    UA = {"User-Agent": "banyan-city-b14-motion/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("14-the-defense-mac-plate-r1s1.png",
+         "df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc"),
+        ("14-the-defense-mac-plate-r1s1.yaml",
+         "d36f31c2c55ebb290facda625273fb77ce32acb38412ba0b37bbfcae944f1a55"),
+        ("14-the-defense-mac-plate-r1s2.png",
+         "0f5a771da0e201ffee6a80ef7e066ade108111b5107b3f6879fc508697cb1c8e"),
+        ("14-the-defense-mac-plate-r1s2.yaml",
+         "ea9b4146044454363172509facf72fc87555c8ddc9c6bbf4e2e9291dc24f0400"),
+        ("14-the-defense-mac-plate-r1s3.png",
+         "5f67ec0bcd58cc6c28d7505f4934c2951392f4b23b6c99db99c2d1dcc4b94ead"),
+        ("14-the-defense-mac-plate-r1s3.yaml",
+         "2dcf6fd624ef22350fbacfbda7d60d3971306ba463ff0f3255c2f6f6f2379ba6"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-42s %7d bytes  sha %s  OK" % (name, len(raw), have), flush=True)
+    print("every file matches its asserted sha256.", flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b14-mac-plate-0818\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob. Two reasons and both
+    # are scars. A glob that misses publishes nothing while returning a code
+    # that reads like a fetch failure; and box_enqueue.output_path_problems
+    # refuses a spec whose declared artifacts are never named by any step,
+    # which a wildcard defeats. Missing ONE file is a FAIL of the job.
+    import hashlib, os, shutil
+    from_dir = "C:/banyan-farm/ep2-b14-mac-plate-0818-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-mac-plate-0818"
+    NAMES = [
+        "14-the-defense-mac-plate-r1s1.png",
+        "14-the-defense-mac-plate-r1s1.yaml",
+        "14-the-defense-mac-plate-r1s2.png",
+        "14-the-defense-mac-plate-r1s2.yaml",
+        "14-the-defense-mac-plate-r1s3.png",
+        "14-the-defense-mac-plate-r1s3.yaml",
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for name in NAMES:
+        f = os.path.join(from_dir, name)
+        if not os.path.isfile(f):
+            raise SystemExit("!! missing %s -- refusing to call the job clean." % f)
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+    with open(os.path.join(dst, "ep2-b14-mac-plate-0818.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(lines), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(lines) == len(NAMES) else 1)
+artifacts:
+- C:\banyan-farm\ep2-b14-mac-plate-0818-out\14-the-defense-mac-plate-r1s1.png
+- C:\banyan-farm\ep2-b14-mac-plate-0818-out\14-the-defense-mac-plate-r1s1.yaml
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`, so §6 is
+  satisfied. This job renders nothing and animates nothing: it moves three already-drawn stills from origin/main
+  onto the results branch with every sha asserted. shots.md and pipeline/wave-drafts.yaml are UNTOUCHED.
+  Silent, $0, no voice synthesis and no episode assembly.'
