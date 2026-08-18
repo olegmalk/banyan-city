@@ -298,6 +298,70 @@ spend rounds chasing a bigger board face or a tighter shot — both are already
 dead.** If you need bark on beat 08, the next honest lever is a different one, and
 naming which is the next lane's call, not this one's.
 
+### 9b. STAGING, not material — the 2026-08-18 addendum, and a check the suite was missing
+
+§9 above is about beat 08's *material*. This is a different ask on the same beat —
+its **staging** (clipboard down, guard pointing at the goblin's belly) — and it ends
+in a stop, not a sample.
+
+**The measurement that set it up.** `ep2-b08-twofig-gesture-0818` ran 0.30 over the
+two-figure plate: inside the mask **32.9%** of pixels moved >8 levels, outside it
+**0.1%**, and every one of those redrawn pixels went into redrawing the *same
+staging*. `FAIL` on B4 alone. So 0.30 finishes, it does not add — the gesture has to
+be in the INIT. That is the composite route, and `pipeline/beat08_gesture_composite.py`
+is the attempt.
+
+**Half of it is reachable and is signed.** Lowering the board is a rigid translation
+of a quadrilateral and both grips as one unit —
+`farm-out/ep2-b08-boardcomp-0818/`, 130px to the waist, max delta 0/255 outside the
+mask.
+
+**The other half is not reachable from this plate, and that is a property of the
+plate, not of the tool.** Three blockers, each fatal alone: (1) **no pointing hand
+exists** — the guard's near hand is a four-finger back-of-hand grip curled over the
+board edge, and no rotation of a curled fist is a point; the goblin's hand is a
+curled claw, green, and the other character's; (2) **no forearm exists to move** —
+his near arm is under the cloak and under-robe, ~235px of reach required; (3) **the
+path is occupied** — the goblin's own fist sits dead centre of the gap, so crossing
+it is an occlusion decision, not a translation. Run anyway so the claim rests on
+pixels (`EVIDENCE-arm-attempt-rejected.png`): the result pastes a rotated crop
+containing **a second clipboard** onto the goblin's chest. **A cut-and-rotate
+compositor cannot manufacture a limb the plate never drew.** Beat 08's staging needs
+a redrawn arm — pose-conditioned generation, or a plate campaign that stages the
+point — and no further composite of this plate.
+
+**THE LAW THIS COST, AND IT GENERALISES PAST BEAT 08: A SMEAR IS INVISIBLE TO EVERY
+COLOUR RULE. MEASURE DETAIL.** The first cut of the tool filled the board's vacancy
+with `diffuse` seeded from the plate itself, so the seed inside the hole *was* the
+board; at radius 7 the blur carries ~83px and the hole is 240×186, so the centre
+never washed out and the "fill" was a blurred copy of the object — the source law
+broken, decal tell #3, and **five checks passed it**. It was caught by looking. Both
+obvious repairs then also passed it: a dark-pixel count (a blurred board is not
+dark) and a mean-luminance test (a blurred board's mean sits near the cloak's). What
+is actually wrong with a smear is that it has **no detail**. Mean |gradient| over the
+visible vacancy, against the same garment's untouched cloak at **8.15**:
+
+| fill | energy | share | verdict by eye |
+|---|---|---|---|
+| diffuse (the shipped bug) | 1.12 | 14% | rejected |
+| flat, settle 4 | 1.50 | 18% | rejected |
+| stretch, settle 4 | 2.16 | 27% | rejected |
+| **stretch, settle 0** | **5.62** | **69%** | **signed** |
+
+A bar at **45% of the untouched neighbour's gradient energy** separates every
+variant a look rejected from the one it accepted. Two corollaries: the **settle blur
+was itself the largest single cause of the smear** (4 iterations at radius 1.2 cost
+42 points of detail share while cosine ramps alone held the boundary at ring MAE
+7.4); and **a flat-colour fill is not automatically style-correct** — one flat colour
+per column turned the guard's downward-widening chest wedge into a hard vertical bar.
+
+Two smaller traps, both of the same family — *a rule written for an object also fires
+on the picture*: the leftover-board check was counting **the cloak's own dark fold
+lines** (untouched cloak carries them at density 0.037, *more* than the fill's
+0.0299), and the hand mask's skin rule was catching **bright grass**, riding it down
+with the unit and printing a hard block against the cloak's silhouette. Both are now
+component-based and both are baselined against the plate's own untouched pixels.
+
 ## 10. Running the pattern on a new attribute — the order that worked
 
 1. **Split the ask by axis** and ask what CLIP does with each. Material and scale
