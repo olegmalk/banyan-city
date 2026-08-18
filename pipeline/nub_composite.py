@@ -136,6 +136,14 @@ def main() -> int:
     ap.add_argument("--min-sat", type=float, default=0.12,
                     help="minimum saturation for a plate pixel to count as a green "
                          "sample (default 0.12)")
+    ap.add_argument("--hue-percentile", type=float, default=0.50,
+                    help="which percentile of the sampled greens' HUE the nub takes "
+                         "(default 0.50, the median). Raising it picks a greener pixel "
+                         "OUT OF THIS PLATE rather than typing a greener number: the "
+                         "0.30 pass was measured pulling the composited hue 21.4 deg "
+                         "amber-ward (ep2-b01-nubcomp-0818 went in at 90.0 and came "
+                         "out at 68.6), so the compensation is a percentile, and every "
+                         "value it can return is a hue this picture actually contains.")
     ap.add_argument("--sat-percentile", type=float, default=0.90,
                     help="which percentile of the sampled greens' saturation the nub "
                          "takes (default 0.90: the plate's own greens are shadowed and "
@@ -187,12 +195,14 @@ def main() -> int:
             "This plate has no green to sample, so any green pasted into it would "
             "be a hex guess wearing a measurement. Refusing."
             % (len(hues), h_lo, h_hi, a.min_sat))
-    nub_hue = median(hues)
+    nub_hue = percentile(hues, a.hue_percentile)
     nub_sat = percentile(sats, a.sat_percentile)
     print("green px    %d (%.2f%% of frame) in %g-%g deg at sat>=%g"
           % (len(hues), 100.0 * len(hues) / (W * H), h_lo, h_hi, a.min_sat))
-    print("nub hue     %.1f deg (median of the plate's own greens; quartiles %.1f / %.1f)"
-          % (nub_hue, percentile(hues, 0.25), percentile(hues, 0.75)))
+    print("nub hue     %.1f deg (p%.0f of the plate's own greens; median %.1f, "
+          "quartiles %.1f / %.1f, greenest %.1f)"
+          % (nub_hue, a.hue_percentile * 100, median(hues), percentile(hues, 0.25),
+             percentile(hues, 0.75), max(hues)))
     print("nub sat     %.3f (p%.0f of the plate's own greens; median %.3f, max %.3f)"
           % (nub_sat, a.sat_percentile * 100, median(sats), max(sats)))
 

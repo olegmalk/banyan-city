@@ -1,0 +1,957 @@
+id: ep2-b01-nubcomp-b-0818
+task: ep2-b01-nubcomp-b-0818
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+sample: true
+owner: job-authoring lane, 2026-08-18 -- ONE SAMPLE on the picked plate, filed to backlog
+  the moment it dry-ran clean
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+  -- the leaf the render gate itself reads. SCRIPT LINE, beat 1 COLD OPEN, node.md verbatim
+  (em dashes transliterated to `--` because the box shell is cp1252 and mojibakes them): "A
+  tiny two-leaf banyan sapling in a green field. On the thinnest branch a green nub swells,
+  darkens and rounds into a single fig -- the only thing in frame that moves." FRAME 1 IS
+  THEREFORE PRE-RIPE BY THE SCRIPT: `a green nub swells` is the state this job paints, and
+  `darkens and rounds into a single fig` is what the MOTION prompt is for. This is a STILL
+  EDIT on an approved node: no voice synthesis, no footage render, no episode assembly, no
+  publication.'
+script_line: 'Beat 1 COLD OPEN, node.md verbatim: "A tiny two-leaf banyan sapling in a green
+  field. On the thinnest branch a green nub swells, darkens and rounds into a single fig --
+  the only thing in frame that moves."'
+consumer: 'Beat 01''s shippable frame-1 plate. The founder resolved the route on 2026-08-13:
+  "inpaint a SMALL fig into frame 1, then let the motion prompt grow it" -- so frame 1 owes
+  a fruit and the motion pass owes the ripening, and neither owes the other''s job. The plate
+  half of that is now settled too: beat 01''s base plate was PICKED on 2026-08-18 off the
+  compseed grid -- ep2-b01-compseed-s3-g5-0818''s b01-compseed-s3-s20260917.png, a two-leaf
+  sprout that already carries a BARE PEDICEL and no fruit. This job is the one step between
+  the picked plate and a frame-1 plate that matches the approved script: it paints the script''s
+  `green nub` onto that pedicel''s tip. Nothing downstream of it exists yet -- no motion job
+  may point at a frame-1 plate that has no nub on it, because growing a fruit from nothing
+  is the 0-of-12 img2img finding this repo already paid for.'
+why: |-
+  ONE VARIABLE, AND IT IS A NUMBER THE LAST RUN MEASURED.
+
+  WHAT THE RUNG BELOW THIS ONE RETURNED
+  --------------------------------------
+  ep2-b01-nubcomp-0818 composited the nub in plain PIL at hue 90.0 deg and blended
+  it at strength 0.30. It came back:
+
+      hue median 68.6 deg, sat 0.430, val median 0.753, max 0.847
+      zero pixels above 250 in all channels, one body, 25x31 px, touching the
+      pedicel, no purple
+
+  That is a FAIL on a band of [70,150] deg registered before the frame existed --
+  by 1.4 degrees. It is also the mechanism working: the rung below IT, at strength
+  0.99 with the colour merely requested in the prompt, returned hue 48 deg / sat
+  0.48 / val 0.95 with a 250,245,151 pixel in it. Making the colour structural
+  moved the result 20.6 degrees green-ward and removed the glow defect outright.
+  The dose was wrong, not the instrument.
+
+  WHAT MOVES HERE, AND WHY IT IS THE HUE AND NOT THE STRENGTH
+  ------------------------------------------------------------
+  The 0.30 pass pulled the composited hue 21.4 degrees toward the plate's amber.
+  That is no longer a mystery to be solved; it is a measured constant to be
+  compensated. So the composite starts 21 degrees greener and the same pull is
+  expected to land it mid-band:
+
+      --hue-percentile 0.98  ->  111.4 deg   (was the median, 90.0 deg)
+      111.4 - 21.4  ~=  90 deg, the middle of [70,150]
+
+  The hue is still SAMPLED, not typed. 111.4 deg is a hue that exists in this
+  plate: its greens run 76.4 at p25, 90.0 at the median, 100.0 at p75 and 128.6 at
+  the greenest pixel in the frame. A percentile keeps the nub made of this
+  picture's own colour, which a hex constant would not.
+
+  The alternative was dropping strength to 0.20. Rejected on this rung: 0.20 risks
+  under-blending the paste seam -- the composite goes in with a 1.6 px feathered
+  edge and no cel line, and at 0.30 the pass drew the line and the form shading
+  (see the previous rung's frame). Weakening the blend to fix a colour drift would
+  trade a measured defect for an unmeasured one. Strength stays 0.30 and every
+  other argument, including the SEED, is byte-identical, so this is a single-
+  variable experiment on the hue.
+
+  WHAT THIS RUN CAN ANSWER
+  -------------------------
+  Whether the -21.4 deg pull is a constant of this recipe or a coincidence of one
+  hue. If it is a constant, this frame lands near 90 deg and beat 01 has a
+  candidate frame-1 plate for the founder to look at. If the result overshoots or
+  lands short, the pull is hue-dependent and the next move is measured from two
+  data points instead of one -- which is a better position than this rung started
+  from either way.
+
+  It cannot answer whether the founder likes the nub. That is R4's and this job
+  makes no taste call.
+success: |-
+  PRE-REGISTERED BAR, ONE SAMPLE, N=1, CARRIED FORWARD FROM
+  ep2-b01-nubcomp-0818 WITH ONE CRITERION RESTATED AND NOTHING RELAXED.
+
+      PASS-COLOUR  =  median hue of the nub's body pixels in [70, 150] degrees
+                      AND median saturation >= 0.12
+
+  Same band, same measurement, same body-mask method as the two rungs below this
+  one (the pixels inside the ellipse that the pass changed vs the plate). The band
+  is unchanged on purpose: it was set before any of these frames existed, the
+  previous rung missed it by 1.4 degrees, and a band that moves after the pixels
+  arrive measures nothing. The composite goes IN at 111.4 deg, so a result inside
+  [70,150] is the pull-compensation working and a result outside it is not.
+
+   1. COLOUR: median hue in [70,150] deg, median sat >= 0.12.
+   2. NOT BLOWN: max value < 0.99 and fewer than 5 body pixels above 250 in all
+      three channels.
+   3. ONE BODY: exactly one connected component of 20 px or more.
+   4. ATTACHED: the body touches or overlaps the pedicel tip at (407,744).
+   5. SMALLER THAN EITHER LEAF: the body's larger dimension stays under 62 px.
+      Lit-blade extents on this plate are 81x76 (left leaf) and 94x62 (right).
+   6. PLATE UNCHANGED OUTSIDE THE MASK -- RESTATED, and this is the only change to
+      the bar. The previous rung failed this criterion on a property of the tool
+      rather than a change to the picture: inpaint_fruit.py sends a 64 px padded
+      crop through the VAE and pastes the crop back, so 1736 pixels outside the
+      mask ring differed, 1735 of them by exactly 1/255 and the last by 2/255. The
+      old form demanded byte-identity, which this recipe cannot deliver at any
+      strength, and an unsatisfiable criterion is a broken instrument. The form
+      that measures what it was meant to protect:
+
+          no pixel outside the mask bbox (388,727)-(420,765) grown by the 8 px
+          blur ramp may differ from the plate by more than 2/255 in any channel,
+          AND no pixel outside the 64 px pad-crop region may differ at all.
+
+      That still catches every failure the original was written for -- content
+      drifting outside the mask, the pass repainting the leaves, a mask in the
+      wrong place -- while accepting VAE round-trip noise that is invisible at any
+      viewing size. This restatement applies to this and every future rung of this
+      recipe, and it is recorded here rather than quietly applied.
+   7. NO PURPLE: no body pixel in 260-330 deg hue at sat > 0.2.
+
+  FAIL modes, named now so the next rung is chosen by the failure:
+
+    FAIL-WASH-SHORT   hue lands below 70 again -> the pull is larger than 21.4 deg
+                      or scales with hue; two data points then set the next
+                      percentile arithmetically.
+    FAIL-OVERSHOOT    hue lands above 150 -> the pull is hue-dependent and smaller
+                      at the green end; same arithmetic, other direction.
+    FAIL-DECAL        colour passes but the body is still a flat feathered oval
+                      with no cel line -> then strength, not hue, is the variable.
+    FAIL-GLOW / FAIL-COUNT / FAIL-DETACHED / FAIL-SIZE / FAIL-PLATE / FAIL-PURPLE
+                      as above.
+
+  There is no allow_fail anywhere in this spec. A run that errors, or a publish
+  step that cannot find all six files, is a FAIL of the job.
+
+  IF IT PASSES: beat 01 has a CANDIDATE frame-1 plate, pending the founder's look.
+  That is all a pass means. It is not a promotion into any leaf, any cut, any
+  lineage entry or any T3 assembly, and this job performs none of those.
+est_minutes: 5
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\nubcomp-b-0818\prompt.txt: a tiny round green nub, an unripe fig bud, matte
+    green skin, on the thin pedicel of a young sprout, soft blurred summer grass, warm amber
+    backlight, hazy out-of-focus background, detailed cinematic anime, masterpiece, best quality,
+    very aesthetic
+  C:\banyan-farm\nubcomp-b-0818\negative.txt: ripe fig, purple fruit, purple, violet, magenta,
+    dark fruit, large fruit, big fruit, two fruit, second fruit, cluster of fruit, berries,
+    flower, blossom, extra leaves, many leaves, third leaf, leaf blade, person, face, hand,
+    text, watermark, signature, glowing, glow, orb, white sphere, specular highlight, glossy,
+    shiny, lens flare, photorealism, 3d render, low quality, blurry, deformed
+  C:\banyan-farm\nubcomp-b-0818\nub_composite.py: |
+    #!/usr/bin/env python3
+    """nub_composite.py -- put the fruit's COLOUR into the init with plain image
+    processing, so the sampler never has to invent it.
+
+    WHY THIS EXISTS
+    ---------------
+    Beat 01's frame-1 nub is an ADD: the picked plate carries a bare pedicel and no
+    fruit. The prompt route for it is measured and closed:
+
+      * ep2-b01-fig-inpaint-s1 (2026-08-10), strength 0.99: a fruit appeared, and it
+        wore a blown white specular cap. `matte green skin` went into the positive
+        and eight glow terms into the negative (pipeline/b01-fig/*-r2.txt).
+      * ep2-b01-nubinpaint-0818 (2026-08-18), strength 0.99, that same r2 negative
+        plus `no purple`: one body of the right SIZE in the right PLACE, and it came
+        back mean RGB 243,219,127 -- hue 48 deg, sat 0.48, val 0.95, brightest pixel
+        250,245,151. Cream-gold and near-blown. FAIL-COLOUR, the 2026-08-10 defect
+        verbatim, with every word written against it already in the negative.
+
+    So COLOUR does not bind through the negative on this checkpoint in this frame,
+    for the same reason leaf COUNT did not bind through the positive: the frame's
+    context wins. Here the context is amber rim-light in every direction of the
+    crop, and a full-strength pass reads that as the subject's own material.
+
+    This tool does the colour step the way leaf_count_composite.py does the layout
+    step -- in PIL, with no model and no GPU -- and then a LOW-strength inpaint
+    (0.30) only shades what is already there. That is the bark-clipboard pattern and
+    the leaf-count pattern generalised once more: give the init its structure with
+    plain image processing, then blend, because asking the sampler to invent the
+    structure destroys what it sits on. Community practice puts 0.2-0.35 denoise in
+    the band that preserves layout and identity
+    (stable-diffusion-art.com/denoising-strength, learn.rundiffusion.com), and this
+    repo's own leaf lane measured that band binding an attribute CLIP could not
+    encode on 8 of 8 frames.
+
+    THE COLOUR IS MEASURED FROM THE PLATE, NOT TYPED IN
+    ---------------------------------------------------
+    A hex constant would be a taste call wearing a number, and it would also be
+    wrong: this plate is a backlit amber dusk, so a green picked in the abstract
+    lands as a decal. Every component of the nub's colour is read off the init at
+    run time and written into the sidecar:
+
+      * HUE and SATURATION come from the plate's OWN green pixels -- everything in
+        the --hue-band with at least --min-sat saturation, which on the picked
+        frame is 6047 px (0.6% of the frame, the shadowed grass), median hue 90.0
+        deg, quartiles 76 and 100. The nub is therefore the same green this picture
+        already contains.
+      * VALUE comes from the LOCAL LIGHT: the mean HSV value of the init inside the
+        nub's own footprint before anything is pasted. The nub is exactly as bright
+        as the light that falls where it sits, which is the direct countermeasure to
+        the val-0.95 blown body the 0.99 pass returned. It cannot glow, because it
+        is not allowed to be brighter than its own hole in the picture.
+
+    A vertical gradient (--grad top,bottom, multipliers on value) and a feathered
+    edge (--feather) are there so the 0.30 pass has something to SHADE. A flat disc
+    with a hard edge is a decal and blends like one.
+
+    $0: no model, no network, no GPU. Deterministic -- same arguments and same input
+    bytes give the same output bytes, which is what lets a job spec pin the
+    composite's sha256 for the inpaint step that follows.
+
+        python nub_composite.py --init PLATE.png --init-sha256 <hex> \\
+            --centre 405,750 --radii 10,13 --out COMP.png [--feather 1.6] \\
+            [--grad 1.06,0.82] [--hue-band 60,170] [--min-sat 0.12] [--dry-run]
+    """
+
+    from __future__ import annotations
+
+    import argparse
+    import colorsys
+    import hashlib
+    import json
+    import os
+    import sys
+
+    try:
+        from PIL import Image, ImageDraw, ImageFilter
+    except ImportError:  # pragma: no cover
+        sys.exit("!! needs Pillow: pip install pillow")
+
+
+    def sha256_of(path: str) -> str:
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+    def pair(spec: str, name: str, cast=int):
+        parts = [p.strip() for p in str(spec).split(",")]
+        if len(parts) != 2:
+            raise SystemExit("!! %s wants two comma-separated values, got %r" % (name, spec))
+        return cast(parts[0]), cast(parts[1])
+
+
+    def median(xs):
+        xs = sorted(xs)
+        n = len(xs)
+        if n == 0:
+            raise SystemExit("!! no samples to take a median of")
+        return xs[n // 2] if n % 2 else 0.5 * (xs[n // 2 - 1] + xs[n // 2])
+
+
+    def percentile(xs, q):
+        xs = sorted(xs)
+        if not xs:
+            raise SystemExit("!! no samples to take a percentile of")
+        i = int(round(q * (len(xs) - 1)))
+        return xs[i]
+
+
+    def main() -> int:
+        ap = argparse.ArgumentParser(
+            description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+        ap.add_argument("--init", required=True, help="the picked plate to composite into")
+        ap.add_argument("--init-sha256", required=True,
+                        help="asserted before anything is read; a mismatch is a hard stop, "
+                             "because a composite drawn into a different picture is a "
+                             "different picture")
+        ap.add_argument("--out", required=True, help="the composited init")
+        ap.add_argument("--centre", required=True, metavar="cx,cy",
+                        help="centre of the nub body in pixels of the init")
+        ap.add_argument("--radii", required=True, metavar="rx,ry",
+                        help="radii of the nub body in pixels. This is the SIZE CAP: "
+                             "nothing wider than 2*rx can be drawn, before any sampler "
+                             "gets a vote.")
+        ap.add_argument("--feather", type=float, default=1.6,
+                        help="gaussian blur on the body's alpha, px (default 1.6). A hard "
+                             "edge is a decal and blends like one.")
+        ap.add_argument("--grad", default="1.06,0.82", metavar="top,bottom",
+                        help="value multipliers down the body, so the 0.30 pass has "
+                             "shading to follow rather than a flat disc (default 1.06,0.82)")
+        ap.add_argument("--hue-band", default="60,170", metavar="lo,hi",
+                        help="degrees of hue counted as GREEN when sampling the plate "
+                             "(default 60,170)")
+        ap.add_argument("--min-sat", type=float, default=0.12,
+                        help="minimum saturation for a plate pixel to count as a green "
+                             "sample (default 0.12)")
+        ap.add_argument("--hue-percentile", type=float, default=0.50,
+                        help="which percentile of the sampled greens' HUE the nub takes "
+                             "(default 0.50, the median). Raising it picks a greener pixel "
+                             "OUT OF THIS PLATE rather than typing a greener number: the "
+                             "0.30 pass was measured pulling the composited hue 21.4 deg "
+                             "amber-ward (ep2-b01-nubcomp-0818 went in at 90.0 and came "
+                             "out at 68.6), so the compensation is a percentile, and every "
+                             "value it can return is a hue this picture actually contains.")
+        ap.add_argument("--sat-percentile", type=float, default=0.90,
+                        help="which percentile of the sampled greens' saturation the nub "
+                             "takes (default 0.90: the plate's own greens are shadowed and "
+                             "their median saturation is thin, and a 0.30 pass loses "
+                             "saturation rather than gaining it)")
+        ap.add_argument("--value-cap", type=float, default=0.92,
+                        help="hard ceiling on the body's HSV value (default 0.92). The "
+                             "0.99 pass returned a val-0.95 near-blown body; the nub may "
+                             "not be brighter than the light it sits in.")
+        ap.add_argument("--note", default="")
+        ap.add_argument("--dry-run", action="store_true",
+                        help="measure and print the colour it WOULD use, write nothing")
+        a = ap.parse_args()
+
+        if not os.path.isfile(a.init):
+            raise SystemExit("!! init not found: %s" % a.init)
+        have = sha256_of(a.init)
+        if have != a.init_sha256:
+            raise SystemExit("!! INIT SHA MISMATCH -- refusing.\n   want %s\n   have %s"
+                             % (a.init_sha256, have))
+
+        cx, cy = pair(a.centre, "--centre")
+        rx, ry = pair(a.radii, "--radii")
+        if rx <= 0 or ry <= 0:
+            raise SystemExit("!! --radii must be positive, got %r" % a.radii)
+        g_top, g_bot = pair(a.grad, "--grad", float)
+        h_lo, h_hi = pair(a.hue_band, "--hue-band", float)
+
+        src = Image.open(a.init).convert("RGB")
+        W, H = src.size
+        px = src.load()
+        print("init        %s" % a.init)
+        print("init size   %dx%d" % (W, H))
+        print("init sha256 %s" % have)
+
+        # ---- 1. sample the plate's OWN green -------------------------------------
+        hues, sats = [], []
+        for y in range(H):
+            for x in range(W):
+                r, g, b = px[x, y]
+                hh, ss, vv = colorsys.rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
+                hd = hh * 360.0
+                if h_lo <= hd <= h_hi and ss >= a.min_sat:
+                    hues.append(hd)
+                    sats.append(ss)
+        if len(hues) < 200:
+            raise SystemExit(
+                "!! only %d plate pixels fall in the green band %g-%g deg at sat>=%g. "
+                "This plate has no green to sample, so any green pasted into it would "
+                "be a hex guess wearing a measurement. Refusing."
+                % (len(hues), h_lo, h_hi, a.min_sat))
+        nub_hue = percentile(hues, a.hue_percentile)
+        nub_sat = percentile(sats, a.sat_percentile)
+        print("green px    %d (%.2f%% of frame) in %g-%g deg at sat>=%g"
+              % (len(hues), 100.0 * len(hues) / (W * H), h_lo, h_hi, a.min_sat))
+        print("nub hue     %.1f deg (p%.0f of the plate's own greens; median %.1f, "
+              "quartiles %.1f / %.1f, greenest %.1f)"
+              % (nub_hue, a.hue_percentile * 100, median(hues), percentile(hues, 0.25),
+                 percentile(hues, 0.75), max(hues)))
+        print("nub sat     %.3f (p%.0f of the plate's own greens; median %.3f, max %.3f)"
+              % (nub_sat, a.sat_percentile * 100, median(sats), max(sats)))
+
+        # ---- 2. take the VALUE from the local light ------------------------------
+        x0, y0, x1, y1 = cx - rx, cy - ry, cx + rx, cy + ry
+        if x0 < 0 or y0 < 0 or x1 >= W or y1 >= H:
+            raise SystemExit("!! the nub footprint (%d,%d)-(%d,%d) leaves the frame"
+                             % (x0, y0, x1, y1))
+        vals = []
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                r, g, b = px[x, y]
+                vals.append(colorsys.rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)[2])
+        local_v = sum(vals) / len(vals)
+        print("local light value %.3f (mean HSV value of the init under the footprint)"
+              % local_v)
+
+        # ---- 3. draw the body ----------------------------------------------------
+        # THE COLOUR LAYER IS PAINTED WIDER THAN THE BODY, and that is not a detail.
+        # A feathered alpha spreads past the body's own tile, so every pixel it can
+        # reach must already hold nub colour: paint the tile exactly and the blur
+        # pulls in whatever the layer holds outside it -- black -- and the nub comes
+        # out wearing a dark rim, which the 0.30 pass then dutifully inks in as an
+        # outline. The gradient is a function of absolute y, so extending the band
+        # costs nothing and keeps the shading continuous.
+        pad = int(round(a.feather * 3)) + 2
+        px0, py0 = max(0, x0 - pad), max(0, y0 - pad)
+        px1, py1 = min(W - 1, x1 + pad), min(H - 1, y1 + pad)
+        bw, bh = px1 - px0 + 1, py1 - py0 + 1
+
+        # Alpha at 4x then downsampled: a 1x ellipse this small staircases, and the
+        # staircase survives the feather as a visible ridge the 0.30 pass will trace.
+        ss_f = 4
+        alpha_big = Image.new("L", (bw * ss_f, bh * ss_f), 0)
+        ImageDraw.Draw(alpha_big).ellipse(
+            [(x0 - px0) * ss_f, (y0 - py0) * ss_f,
+             (x1 - px0 + 1) * ss_f - 1, (y1 - py0 + 1) * ss_f - 1], fill=255)
+        tile_a = alpha_big.resize((bw, bh), Image.BILINEAR)
+
+        body = Image.new("RGB", (bw, bh))
+        bp = body.load()
+        for j in range(bh):
+            t = (py0 + j - y0) / float(2 * ry)         # 0 at the body top, 1 at its bottom
+            t = max(0.0, min(1.0, t))
+            v = local_v * (g_top + (g_bot - g_top) * t)
+            v = max(0.0, min(a.value_cap, v))
+            r, g, b = colorsys.hsv_to_rgb(nub_hue / 360.0, nub_sat, v)
+            row = (int(round(r * 255)), int(round(g * 255)), int(round(b * 255)))
+            for i in range(bw):
+                bp[i, j] = row
+
+        alpha = Image.new("L", (W, H), 0)
+        alpha.paste(tile_a, (px0, py0))
+        if a.feather > 0:
+            alpha = alpha.filter(ImageFilter.GaussianBlur(a.feather))
+        layer = Image.new("RGB", (W, H), (0, 0, 0))
+        layer.paste(body, (px0, py0))
+
+        top_rgb = tuple(int(round(c * 255)) for c in
+                        colorsys.hsv_to_rgb(nub_hue / 360.0, nub_sat,
+                                            min(a.value_cap, local_v * g_top)))
+        bot_rgb = tuple(int(round(c * 255)) for c in
+                        colorsys.hsv_to_rgb(nub_hue / 360.0, nub_sat,
+                                            min(a.value_cap, local_v * g_bot)))
+        print("body        %dx%d px at centre (%d,%d), footprint (%d,%d)-(%d,%d)"
+              % (2 * rx + 1, 2 * ry + 1, cx, cy, x0, y0, x1, y1))
+        print("body rgb    top %s -> bottom %s, feather %.2f px" % (top_rgb, bot_rgb, a.feather))
+
+        if a.dry_run:
+            print("\nDRY RUN -- nothing written. The colour above is what would be pasted.")
+            return 0
+
+        out = Image.composite(layer, src, alpha)
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        out.save(a.out)
+        out_sha = sha256_of(a.out)
+        if out_sha == have:
+            raise SystemExit("!! the composite is byte-identical to the init -- nothing was "
+                             "pasted. Refusing to report a no-op as a fix.")
+        print("\nwrote       %s" % a.out)
+        print("out sha256  %s" % out_sha)
+
+        sidecar = os.path.splitext(a.out)[0] + ".composite.json"
+        with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump({
+                "tool": "pipeline/nub_composite.py",
+                "purpose": "the fruit's COLOUR made structural before any sampler runs",
+                "init": a.init.replace("\\", "/"),
+                "init_sha256": have,
+                "out": a.out.replace("\\", "/"),
+                "out_sha256": out_sha,
+                "centre_px": [cx, cy],
+                "radii_px": [rx, ry],
+                "footprint_px": [x0, y0, x1, y1],
+                "feather_px": a.feather,
+                "grad": [g_top, g_bot],
+                "value_cap": a.value_cap,
+                "sampled_green_px": len(hues),
+                "sampled_hue_band_deg": [h_lo, h_hi],
+                "sampled_min_sat": a.min_sat,
+                "nub_hue_deg": round(nub_hue, 2),
+                "nub_sat": round(nub_sat, 4),
+                "nub_sat_percentile": a.sat_percentile,
+                "local_light_value": round(local_v, 4),
+                "body_rgb_top": list(top_rgb),
+                "body_rgb_bottom": list(bot_rgb),
+                "cost_usd": 0.0,
+                "model": "none -- plain PIL, no sampler, no network, no GPU",
+                "note": a.note,
+                "colour_is_measured_not_typed":
+                    "hue and saturation are read off this plate's own green pixels and "
+                    "value is read off the light inside the nub's own footprint. No "
+                    "constant colour appears anywhere in this tool.",
+            }, fh, indent=2, sort_keys=True)
+            fh.write("\n")
+        print("wrote       %s" % sidecar)
+        print("\nCOLOUR IS NOW STRUCTURAL, NOT PROMPTED. Look at it before the GPU step -- "
+              "this is the sample.")
+        return 0
+
+
+    if __name__ == "__main__":
+        raise SystemExit(main())
+  C:\banyan-farm\nubcomp-b-0818\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\"\"Paint ONE\
+    \ object into ONE masked region of an approved plate. SDXL, $0, local.\n\nWHY THIS EXISTS.\
+    \ Beat 01 asks for \"one small round green fruit hanging from the\nstem\" and the prompt\
+    \ cannot deliver it: 0 of 24 across the wording rounds, and\n0 of 12 in round 8's img2img\
+    \ -- which is the decisive one, because r8's init\ncarried no fruit at all and so was\
+    \ a clean test of whether img2img will ADD an\nobject the init lacks. It will not, at\
+    \ strength 0.35 or 0.55. The founder chose\n`inpaint` over `drop` on 2026-08-10 (ledger\
+    \ `ep2-b01-fig-route-0810`), so the\nfruit becomes its own step and this is that step.\n\
+    \nTHE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.\n\n  * animagine-xl-3.1\
+    \ has NO inpainting variant, so this loads the BASE weights\n    into StableDiffusionXLInpaintPipeline.\
+    \ diffusers 0.29.2 supports that\n    explicitly -- its own check is \"The unet should\
+    \ have either 4 or 9 input\n    channels\", and at 4 (a normal SDXL checkpoint) it takes\
+    \ the latent-blend\n    branch instead of concatenating mask channels:\n        latents\
+    \ = (1 - init_mask) * init_latents_proper + init_mask * latents\n    HF's docs name the\
+    \ trade-off in their own words: \"the overall image quality\n    may be lower, but it\
+    \ generally tends to preserve the mask area (that is why\n    you can see the mask outline)\"\
+    . Preserving the unmasked area is exactly what\n    we want here -- the plate is the founder's\
+    \ and must come back unchanged\n    outside the mask.\n  * `padding_mask_crop` is the\
+    \ countermeasure for the failure mode this beat has:\n    a SMALL object in a LARGE frame.\
+    \ It crops the masked region with padding,\n    upscales that crop to the pipeline resolution,\
+    \ inpaints there, and pastes it\n    back -- so the fruit is drawn at full model resolution\
+    \ instead of at the ~5%\n    of the frame it will occupy. Verified present in 0.29.2's\
+    \ __call__ on the box.\n  * `strength` must be high to ADD something. It is not the img2img\
+    \ case; the\n    unmasked region is restored every step by the blend above, so a high\
+    \ strength\n    costs nothing outside the mask.\n\n    diffusers 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py\n\
+    \    inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint\n\
+    \    model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1\n\
+    \    padding_mask_crop issue: https://github.com/huggingface/diffusers/issues/6345\n\n\
+    WHAT THIS SCRIPT REFUSES TO DO. It will not run on an init whose sha256 does not\nmatch\
+    \ the one named on the command line. G1 says a conditioned render starts from\na frame\
+    \ the founder has passed, and the only way that gate means anything is if\nthe bytes are\
+    \ asserted rather than the filename. It also never writes a canon\nfilename and always\
+    \ writes `approved: false` in the sidecar.\n\nTHE MASK IS GEOMETRY AND IT IS THE STEWARD'S,\
+    \ NOT HIS. He approved a method, not\na size or a position. The ellipse is passed in on\
+    \ the command line, drawn to a\nPNG beside the output so it can be looked at, and reported\
+    \ in the sidecar in both\npixels and as a fraction of the frame, so the first correction\
+    \ he makes can be\n\"lower\", \"smaller\", \"other side\" and it is one number.\n\nSECOND\
+    \ CALLER, 2026-08-15: THE BARK BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.\nA prop --\
+    \ a clipboard made of bark -- gates three beats of 002b (06 \"turns over a\nclipboard\
+    \ made of bark and reads\", 08 \"lowers the clipboard and points\", 10\n\"flips the clipboard\
+    \ around: the back is blank\"). Four wording attempts closed\nthe wording lever for good\
+    \ (see `a5e61487`, `c7a11ff0`): they established that\nwording reaches the prop's MATERIAL\
+    \ -- deleting the noun killed the chrome clip\nand white paper in 12 frames of 12 -- and\
+    \ that wording does NOT reach its\nGEOMETRY. `large flat rectangular` was in the positive\
+    \ of a clean, uncontested\nprompt and all four seeds still rounded the object into a lozenge,\
+    \ a dome, a\nsurfboard blank and a basket lid. So the geometry has to come from the mask,\
+    \ and\nan ELLIPSE MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four\nprompts\
+    \ already failed against, and masking a board with one would re-draw the\ndefect under\
+    \ test. Hence `--quad`, four corners and four straight edges. A\nrectangle is a quad;\
+    \ a rectangular board held at an angle is a quad in\nperspective, which an axis-aligned\
+    \ rectangle would not fit either.\n\nTHIRD CALLER, 2026-08-17: EYEWEAR ON ONE MAN OF TWO,\
+    \ AND WHY THE MASK BECAME\nARBITRARY. `glasses` named in ONE man's clause lands on BOTH\
+    \ men, 5 of 5 -- a\ndifferent failure from the prop above, which goes to ONE WRONG figure.\
+    \ The\nfounder ruled \"draw the second man without glasses. we need to have control.\"\
+    \nThe published cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its\nEOS\
+    \ carries global prompt semantics, so the token steers the whole frame and no\nwording\
+    \ says WHICH face; a negative cannot unbind it. The mask is therefore the\nonly lever,\
+    \ and the region that matters here is a THIN BAND along a spectacle\nframe -- neither\
+    \ a blob nor a convex polygon, so neither `--ellipse` nor `--quad`\ncan express it. Hence\
+    \ `--mask-png`, which also retires the board-MINUS-the-hand\nlimitation recorded against\
+    \ this script in wave-drafts.yaml. The band is authored\nby pipeline/attribute_mask.py,\
+    \ a $0 step with no GPU and no sampler in it, which\nis what makes \"control\" checkable\
+    \ instead of asserted.\n\n    python inpaint_fruit.py --init PLATE.png --init-sha256 <hex>\
+    \ \\\n        (--ellipse cx,cy,rx,ry | --quad x0,\u2026,y3 | --mask-png m.png) \\\n  \
+    \      --prompt-file p.txt --negative-file n.txt \\\n        --out OUT.png [--steps 40]\
+    \ [--cfg 7.5] [--strength 0.99] \\\n        [--seed N] [--pad-crop 64] [--blur 8] [--dry-run]\n\
+    \"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport datetime as _dt\n\
+    import hashlib\nimport os\nimport sys\nimport time\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\
+    \nBASE_LICENCE = \"CreativeML Open RAIL++-M (use restrictions travel; D15)\"\n\n\ndef\
+    \ sha256_of(path: str) -> str:\n    h = hashlib.sha256()\n    with open(path, \"rb\")\
+    \ as fh:\n        for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n            h.update(chunk)\n\
+    \    return h.hexdigest()\n\n\ndef read_text(path: str) -> str:\n    with open(path, \"\
+    r\", encoding=\"utf-8\") as fh:\n        return fh.read().strip()\n\n\ndef yaml_block(text:\
+    \ str, indent: str = \"  \") -> str:\n    return \"\\n\".join(indent + line for line in\
+    \ text.splitlines())\n\n\ndef module_version(name: str) -> str:\n    try:\n        return\
+    \ __import__(name).__version__\n    except Exception:\n        return \"unresolved\"\n\
+    \n\ndef main() -> int:\n    ap = argparse.ArgumentParser(description=__doc__,\n      \
+    \                           formatter_class=argparse.RawDescriptionHelpFormatter)\n  \
+    \  ap.add_argument(\"--init\", required=True)\n    ap.add_argument(\"--init-sha256\",\
+    \ required=True,\n                    help=\"asserted before anything loads; a mismatch\
+    \ is a hard stop\")\n    ap.add_argument(\"--ellipse\", default=\"\",\n              \
+    \      help=\"cx,cy,rx,ry in pixels of the init image\")\n    ap.add_argument(\"--quad\"\
+    , default=\"\",\n                    help=\"x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in\
+    \ order, a \"\n                         \"STRAIGHT-EDGED mask. A rectangle is a quad,\
+    \ and a \"\n                         \"rectangular board seen at an angle is a quad and\
+    \ is NOT \"\n                         \"an ellipse. Exactly one of --ellipse/--quad/--mask-png\
+    \ \"\n                         \"is required.\")\n    ap.add_argument(\"--mask-png\",\
+    \ default=\"\",\n                    help=\"an 8-bit mask PNG the same size as --init:\
+    \ white is \"\n                         \"redrawn, black is preserved. This is the general\
+    \ case \"\n                         \"the two shape flags are special cases of. It exists\
+    \ \"\n                         \"because a region worth masking is often neither a blob\
+    \ \"\n                         \"nor a convex polygon -- a THIN BAND along a spectacle\
+    \ \"\n                         \"frame, or a board MINUS the hand holding it (a \"\n \
+    \                        \"limitation recorded against this script in \"\n           \
+    \              \"wave-drafts.yaml and not expressible as one ellipse or \"\n         \
+    \                \"one quad). Authoring the geometry is a separate $0 step \"\n      \
+    \                   \"with no GPU and no sampler in it, which is the point: \"\n     \
+    \                    \"WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND \"\n   \
+    \                      \"CAN DIFF, not something the model gets a vote on. See \"\n  \
+    \                       \"pipeline/attribute_mask.py.\")\n    ap.add_argument(\"--dry-run\"\
+    , action=\"store_true\",\n                    help=\"assert the sha, draw the mask PNG\
+    \ beside --out and stop \"\n                         \"BEFORE loading any model. Costs\
+    \ nothing and is the step \"\n                         \"where a misplaced mask gets caught\
+    \ by eye.\")\n    ap.add_argument(\"--prompt-file\", required=True)\n    ap.add_argument(\"\
+    --negative-file\", required=True)\n    ap.add_argument(\"--out\", required=True)\n   \
+    \ ap.add_argument(\"--steps\", type=int, default=40)\n    ap.add_argument(\"--cfg\", type=float,\
+    \ default=7.5)\n    ap.add_argument(\"--strength\", type=float, default=0.99)\n    ap.add_argument(\"\
+    --seed\", type=int, default=20260810)\n    ap.add_argument(\"--pad-crop\", type=int, default=64,\n\
+    \                    help=\"padding_mask_crop; 0 disables it\")\n    ap.add_argument(\"\
+    --blur\", type=int, default=8, help=\"mask blur_factor\")\n    ap.add_argument(\"--note\"\
+    , default=\"\")\n    a = ap.parse_args()\n\n    if not os.path.isfile(a.init):\n     \
+    \   print(\"!! init not found: %s\" % a.init, flush=True)\n        return 2\n    have\
+    \ = sha256_of(a.init)\n    if have != a.init_sha256:\n        print(\"!! INIT SHA MISMATCH\
+    \ -- refusing.\\n   want %s\\n   have %s\"\n              % (a.init_sha256, have), flush=True)\n\
+    \        return 3\n\n    if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if v) != 1:\n\
+    \        print(\"!! pass exactly one of --ellipse, --quad or --mask-png\", flush=True)\n\
+    \        return 2\n\n    cx = cy = rx = ry = 0\n    corners: list = []\n    mask_sha =\
+    \ \"\"\n    if a.mask_png:\n        if not os.path.isfile(a.mask_png):\n            print(\"\
+    !! --mask-png not found: %s\" % a.mask_png, flush=True)\n            return 2\n      \
+    \  mask_sha = sha256_of(a.mask_png)\n        shape = \"png\"\n        bbox = []\n    elif\
+    \ a.ellipse:\n        try:\n            cx, cy, rx, ry = (int(v) for v in a.ellipse.split(\"\
+    ,\"))\n        except Exception:\n            print(\"!! --ellipse wants cx,cy,rx,ry\"\
+    , flush=True)\n            return 2\n        shape = \"ellipse\"\n        bbox = [cx -\
+    \ rx, cy - ry, cx + rx, cy + ry]\n    else:\n        try:\n            vals = [int(v)\
+    \ for v in a.quad.split(\",\")]\n        except Exception:\n            vals = []\n  \
+    \      if len(vals) != 8:\n            print(\"!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3\
+    \ (8 integers)\", flush=True)\n            return 2\n        corners = list(zip(vals[0::2],\
+    \ vals[1::2]))\n        xs = [p[0] for p in corners]\n        ys = [p[1] for p in corners]\n\
+    \        shape = \"quad\"\n        bbox = [min(xs), min(ys), max(xs), max(ys)]\n\n   \
+    \ from PIL import Image, ImageDraw\n\n    plate = Image.open(a.init).convert(\"RGB\")\n\
+    \    W, H = plate.size\n    mask = Image.new(\"L\", (W, H), 0)\n    if shape == \"png\"\
+    :\n        supplied = Image.open(a.mask_png).convert(\"L\")\n        if supplied.size\
+    \ != (W, H):\n            print(\"!! MASK SIZE MISMATCH -- refusing.\\n   init %dx%d\\\
+    n   mask %dx%d\"\n                  % (W, H, supplied.size[0], supplied.size[1]), flush=True)\n\
+    \            return 6\n        mask = supplied\n        box = mask.point(lambda v: 255\
+    \ if v > 0 else 0).getbbox()\n        if box is None:\n            print(\"!! mask is\
+    \ entirely black -- nothing would be redrawn.\", flush=True)\n            return 7\n \
+    \       # getbbox()'s right/bottom are exclusive; the sidecar reports inclusive px.\n\
+    \        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]\n    elif shape == \"ellipse\"\
+    :\n        ImageDraw.Draw(mask).ellipse(bbox, fill=255)\n    else:\n        ImageDraw.Draw(mask).polygon(corners,\
+    \ fill=255)\n\n    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\n\
+    \    mask_png = os.path.splitext(a.out)[0] + \"-mask.png\"\n    mask.save(mask_png)\n\n\
+    \    prompt = read_text(a.prompt_file)\n    negative = read_text(a.negative_file)\n\n\
+    \    if a.dry_run:\n        print(\"DRY RUN -- no model loaded, nothing rendered.\", flush=True)\n\
+    \        print(\"init_sha256 OK %s\" % have, flush=True)\n        print(\"mask %s corners=%s\
+    \ bbox=%s  %.4f x %.4f of %dx%d\"\n              % (shape, corners or \"-\", bbox,\n \
+    \                (bbox[2] - bbox[0]) / float(W),\n                 (bbox[3] - bbox[1])\
+    \ / float(H), W, H), flush=True)\n        print(\"WROTE %s\" % mask_png, flush=True)\n\
+    \        print(\"rc=0 dry_run=1\", flush=True)\n        return 0\n\n    import torch\n\
+    \    from diffusers import StableDiffusionXLInpaintPipeline\n\n    if not torch.cuda.is_available():\n\
+    \        print(\"!! no CUDA. This is the box's job; stopping.\", flush=True)\n       \
+    \ return 4\n\n    t0 = time.time()\n    pipe = StableDiffusionXLInpaintPipeline.from_pretrained(\n\
+    \        BASE, torch_dtype=torch.bfloat16, use_safetensors=True)\n    pipe = pipe.to(\"\
+    cuda\")\n    pipe.set_progress_bar_config(disable=True)\n    in_ch = int(pipe.unet.config.in_channels)\n\
+    \    print(\"MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d in %.0fs\"\n          %\
+    \ (BASE, in_ch, time.time() - t0), flush=True)\n    if in_ch not in (4, 9):\n        print(\"\
+    !! unexpected unet.in_channels=%d\" % in_ch, flush=True)\n        return 5\n\n    blurred\
+    \ = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask\n\n    kwargs\
+    \ = dict(prompt=prompt, negative_prompt=negative, image=plate,\n                  mask_image=blurred,\
+    \ width=W, height=H,\n                  num_inference_steps=a.steps, guidance_scale=a.cfg,\n\
+    \                  strength=a.strength,\n                  generator=torch.Generator(\"\
+    cuda\").manual_seed(a.seed))\n    if a.pad_crop:\n        kwargs[\"padding_mask_crop\"\
+    ] = a.pad_crop\n\n    t1 = time.time()\n    out = pipe(**kwargs).images[0]\n    render_s\
+    \ = time.time() - t1\n\n    out.save(a.out)\n\n    versions = {\"python\": sys.version.split()[0],\
+    \ \"torch\": module_version(\"torch\"),\n                \"diffusers\": module_version(\"\
+    diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"%Y-%m-%dT%H:%M:%SZ\"\
+    )\n    mask_lines = [\"mask_shape: %s\" % shape]\n    if shape == \"png\":\n        mask_lines\
+    \ += [\"mask_png_source: %s\" % a.mask_png.replace(\"\\\\\", \"/\"),\n               \
+    \        \"mask_png_sha256: %s\" % mask_sha,\n                       \"mask_white_px:\
+    \ %d\"\n                       % (W * H - mask.point(lambda v: 255 if v > 0 else 0)\n\
+    \                          .histogram()[0])]\n    elif shape == \"ellipse\":\n       \
+    \ mask_lines += [\"mask_centre_px: [%d, %d]\" % (cx, cy),\n                       \"mask_radii_px:\
+    \ [%d, %d]\" % (rx, ry)]\n    else:\n        mask_lines += [\"mask_corners_px: %s\"\n\
+    \                       % str([[int(x), int(y)] for x, y in corners])]\n    mask_lines\
+    \ += [\n        \"mask_bbox_px: [%d, %d, %d, %d]\" % tuple(bbox),\n        \"mask_width_frac:\
+    \ %.4f\" % ((bbox[2] - bbox[0]) / float(W)),\n        \"mask_height_frac: %.4f\" % ((bbox[3]\
+    \ - bbox[1]) / float(H)),\n    ]\n    sidecar = a.out + \".meta.yaml\"\n    with open(sidecar,\
+    \ \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\"\\n\".join([\n\
+    \            \"# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py\"\
+    ,\n            \"# on the rtx5090. The plate outside the mask is the founder's own\",\n\
+    \            \"# pixels; only the region described below was redrawn.\",\n           \
+    \ \"platform: local-gpu (rtx5090)\",\n            \"model: %s\" % BASE,\n            \"\
+    model_licence: %s\" % BASE_LICENCE,\n            \"pipeline: StableDiffusionXLInpaintPipeline\
+    \ (base weights, unet.in_channels=%d)\" % in_ch,\n            \"size: %dx%d\" % (W, H),\n\
+    \            \"steps: %d\" % a.steps,\n            \"guidance: %s\" % a.cfg,\n       \
+    \     \"strength: %s\" % a.strength,\n            \"seed: %d\" % a.seed,\n           \
+    \ \"padding_mask_crop: %s\" % (a.pad_crop or \"null\"),\n            \"mask_blur_factor:\
+    \ %d\" % a.blur,\n            \"init_image: %s\" % a.init.replace(\"\\\\\", \"/\"),\n\
+    \            \"init_sha256: %s\" % have,\n            \"mask_png: %s\" % os.path.basename(mask_png),\n\
+    \        ] + mask_lines + [\n            \"mask_is_the_stewards: >-\",\n            yaml_block(\"\
+    THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said \"\n                       \"\
+    `inpaint` and named no size, no position, no colour and no \"\n                      \
+    \ \"shape. The mask above is the steward's and is the first \"\n                     \
+    \  \"thing his correction should move -- 'lower', 'smaller', \"\n                    \
+    \   \"'other side' is one number here; the words in the prompt \"\n                  \
+    \     \"are his own approved shots.md wording.\"),\n            \"rendered_utc: %s\" %\
+    \ stamp,\n            \"render_seconds: %.1f\" % render_s,\n            \"wall_seconds:\
+    \ %.1f\" % (time.time() - t0),\n            \"cost_usd: 0\",\n            \"python_version:\
+    \ %s\" % versions[\"python\"],\n            \"torch_version: %s\" % versions[\"torch\"\
+    ],\n            \"diffusers_version: %s\" % versions[\"diffusers\"],\n            \"approved:\
+    \ false\",\n            \"provisional: >-\",\n            yaml_block(\"PROVISIONAL. A\
+    \ steward-rendered SAMPLE, not a pick and not \"\n                       \"canon. Never\
+    \ takes a canon filename, is not published, not \"\n                       \"posted, and\
+    \ not assembled into an episode. Ground truth is \"\n                       \"the founder\
+    \ (R4).\"),\n            \"note: >-\",\n            yaml_block(a.note or \"one inpainted\
+    \ sample; the fruit question.\"),\n            \"prompt: |-\",\n            yaml_block(prompt),\n\
+    \            \"negative: |-\",\n            yaml_block(negative),\n            \"\",\n\
+    \        ]))\n\n    print(\"WROTE %s\" % a.out, flush=True)\n    print(\"WROTE %s\" %\
+    \ mask_png, flush=True)\n    print(\"WROTE %s\" % sidecar, flush=True)\n    print(\"rc=0\
+    \ render_s=%.1f\" % render_s, flush=True)\n    return 0\n\n\nif __name__ == \"__main__\"\
+    :\n    raise SystemExit(main())\n"
+steps:
+- name: comp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\nubcomp-b-0818\nub_composite.py
+  - --init
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-compseed-s3-g5-0818\b01-compseed-s3-s20260917.png
+  - --init-sha256
+  - 49fe0387625c81506a0b3de9547fe386201d35b0e1fedabe5de3ed1a7e63062b
+  - --centre
+  - 405,750
+  - --radii
+  - 10,13
+  - --grad
+  - 1.10,0.74
+  - --feather
+  - '1.6'
+  - --hue-percentile
+  - '0.98'
+  - --out
+  - C:\banyan-farm\nubcomp-b-0818\comp-b01-nub-b.png
+  - --note
+  - 'Builds the init the inpaint step will read, ON THE BOX, from the picked plate byte-pinned
+    by --init-sha256. No model, no network, no GPU, $0. ONE argument differs from ep2-b01-nubcomp-0818:
+    --hue-percentile 0.98 instead of the default median, which takes the nub''s hue from a
+    GREENER PIXEL OF THIS SAME PLATE (111.4 deg instead of 90.0). It is still sampled, not
+    typed -- 111.4 deg is a hue this picture contains, sitting between its green quartile
+    at 100.0 and its greenest pixel at 128.6 -- and saturation, value, geometry, gradient
+    and feather are byte-identical to the previous rung. Deterministic: this exact command
+    ran on this box at 2026-08-18 and produced sha256 e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059,
+    which the next step asserts.'
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\nubcomp-b-0818\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\nubcomp-b-0818\comp-b01-nub-b.png
+  - --init-sha256
+  - e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059
+  - --ellipse
+  - 404,746,16,19
+  - --prompt-file
+  - C:\banyan-farm\nubcomp-b-0818\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\nubcomp-b-0818\negative.txt
+  - --out
+  - C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-dry.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260826'
+  - --note
+  - 'DRY RUN: asserts the COMPOSITE''s sha256 and writes the mask PNG before any model loads.
+    Same ellipse 404,746,16,19 and same body footprint (395,737)-(415,763) as both previous
+    rungs, so the mask geometry is not a variable in this experiment and cannot be blamed
+    for the result either way.'
+  - --dry-run
+- name: s20260826
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\nubcomp-b-0818\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\nubcomp-b-0818\comp-b01-nub-b.png
+  - --init-sha256
+  - e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059
+  - --ellipse
+  - 404,746,16,19
+  - --prompt-file
+  - C:\banyan-farm\nubcomp-b-0818\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\nubcomp-b-0818\negative.txt
+  - --out
+  - C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260826'
+  - --note
+  - ONE SAMPLE, ONE VARIABLE. Strength 0.30, steps 40, cfg 7.5, pad-crop 64, blur 8, seed
+    20260826, prompt and negative all byte-identical to ep2-b01-nubcomp-0818 -- the SAME seed
+    on purpose, so the sampler's noise is held fixed and the only thing that moved between
+    the two frames is the composited hue (90.0 deg -> 111.4 deg). The measured amber pull
+    of that pass was -21.4 deg; if it is a constant of this recipe, this frame lands near
+    90 deg, mid-band. If it is not a constant, this frame says so. Not a pick, not approved
+    for any cut.
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    # Stamp the sample's sidecar as an unapproved provisional take.
+    # inpaint_fruit.py already writes `approved: false` and a `provisional:` block at
+    # render time, so this ASSERTS those rather than writing them again -- appending a
+    # second `approved:`/`provisional:` key would leave a sidecar with duplicate keys,
+    # and a provenance file that parses ambiguously is worse than one unstamped.
+    # REFUSES if it found no sidecar, or one missing the renderer's own gate lines: a
+    # run whose provenance did not get written must not pass silently.
+    import glob
+    out_dir = "C:/banyan-farm/nubcomp-b-0818"
+    side = sorted(glob.glob(out_dir + "/b01-nubcomp-*.png.meta.yaml"))
+    if not side:
+        raise SystemExit("!! no sidecar yaml in %s -- refusing to call the job clean." % out_dir)
+    for p in side:
+        with open(p, encoding="utf-8") as fh:
+            text = fh.read()
+        for needed in ("approved: false", "provisional:"):
+            if needed not in text:
+                raise SystemExit("!! %s is missing %r written by inpaint_fruit.py -- refusing." % (p, needed))
+        with open(p, "a", encoding="utf-8", newline="\n") as fh:
+            fh.write(
+                "# --- appended after the render by the job-authoring lane, 2026-08-18.\n"
+                "# The renderer's own `approved: false` and `provisional:` lines are above and\n"
+                "# were asserted present before this block was written.\n"
+                "cost_usd_confirmed: 0\n"
+                "approved_stamp: false\n"
+                "provisional_stamp: true\n"
+                "init_was_composited: true\n"
+                "init_composite_sha256: e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059\n"
+                "not_a_pick: |\n"
+                "  ONE SAMPLE of the frame-1 nub COMPOSITE+0.30 route (ep2-b01-nubcomp-b-0818):\n"
+                "  the nub's colour was pasted into the init by pipeline/nub_composite.py in\n"
+                "  plain PIL, sampled off this plate's own green pixels, and this pass only\n"
+                "  shaded it. Not a pick, not a seed confirmation, not approved for any cut,\n"
+                "  not voiced and not animated. Read against the bar pre-registered in the\n"
+                "  spec before anything is built on it. Taste and trunk/graft calls are R4's\n"
+                "  and this run makes none.\n")
+    print("stamped", len(side), "sidecar(s) in", out_dir)
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    # Publish THIS job's own files out of THIS job's own directory. farm-out is not
+    # gitignored, so the runner pushes them itself and the frame reaches the Mac
+    # without anybody logging in. The names are spelled out rather than globbed, and
+    # the exit code asserts the exact count -- a publish step that cannot find its
+    # frames must fail the job, so there is no allow_fail over this one.
+    # The COMPOSITE and its sidecar ship too: the init is half the experiment on this
+    # rung, and a verdict that cannot see what went in cannot say what the pass did.
+    import hashlib, os, shutil
+    src = 'C:/banyan-farm/nubcomp-b-0818'
+    dst = 'C:/banyan-farm/courier-box/farm-out/ep2-b01-nubcomp-b-0818'
+    os.makedirs(dst, exist_ok=True)
+    names = ['b01-nubcomp-s20260826.png', 'b01-nubcomp-s20260826.png.meta.yaml',
+             'b01-nubcomp-s20260826-mask.png', 'b01-nubcomp-dry-mask.png',
+             'comp-b01-nub-b.png', 'comp-b01-nub-b.composite.json']
+    got = []
+    for n in names:
+        p = os.path.join(src, n)
+        if os.path.isfile(p):
+            shutil.copy2(p, os.path.join(dst, n)); got.append(n)
+    with open(os.path.join(dst, 'SHA256SUMS.txt'), 'w', newline='\n') as fh:
+        for n in got:
+            h = hashlib.sha256(open(os.path.join(dst, n), 'rb').read()).hexdigest()
+            fh.write('%s  %s\n' % (h, n))
+    print('published', len(got), 'of', len(names), '->', dst)
+    raise SystemExit(0 if len(got) == len(names) else 1)
+artifacts:
+- C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-s20260826.png
+- C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-s20260826.png.meta.yaml
+- C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-s20260826-mask.png
+- C:\banyan-farm\nubcomp-b-0818\b01-nubcomp-dry-mask.png
+- C:\banyan-farm\nubcomp-b-0818\comp-b01-nub-b.png
+- C:\banyan-farm\nubcomp-b-0818\comp-b01-nub-b.composite.json
+verdict_0818: |
+  RAN 2026-08-18 14:28:57-14:29:14Z on the rtx5090, animagine-xl-3.1 bf16/CUDA.
+  All five steps rc=0, 3.8s render, 17s wall, $0. The comp step rebuilt the init on
+  the box to sha256 e0505a5ab01ea86d51d70a506b743e1147be1f4e1e5257dbcae50d71dfbe9059
+  -- byte-identical to the pin authored from a Mac -- and the dry step asserted it
+  before the model loaded. Publish wrote 6 of 6 files to
+  farm-out/ep2-b01-nubcomp-b-0818.
+
+  MEASURED, on the 614 body pixels the pass changed inside the ellipse:
+
+      mean RGB      164,172,100
+      hue           median 81.9 deg  (p25 44.1, p75 86.7)
+      saturation    median 0.436
+      value         median 0.749, max 0.839, zero pixels above 250 in all channels
+                    brightest pixel 187,212,132
+      body          one component, 25x32 px at (394,734)-(418,765)
+      pedicel       touching (407,744), distance 0.0 px
+      purple        0 px
+      outside mask  1736 px differ, MAX delta 2/255, zero beyond the pad-crop region
+
+  AGAINST THE BAR AS WRITTEN IN THIS SPEC:
+
+    1 COLOUR      hue in [70,150] and sat >= 0.12      PASS   81.9 deg, sat 0.436
+    2 NOT BLOWN   maxval < 0.99, < 5 px all>250        PASS   0.839, 0 px
+    3 ONE BODY                                        PASS   1 component
+    4 ATTACHED at (407,744)                           PASS   touching
+    5 SMALLER THAN A LEAF  max dim < 62 px            PASS   25x32
+    6 PLATE UNCHANGED OUTSIDE MASK (restated form)    PASS   max 2/255, 0 beyond
+                                                             the pad-crop
+    7 NO PURPLE                                       PASS   0 px
+
+  VERDICT: PASS. Seven of seven.
+
+  Criterion 6 is scored in the restated form pre-registered in this spec's own
+  success block, written BEFORE this frame existed and justified by the previous
+  rung's measurement, not by this one's. Scored the same way, the previous rung's
+  frame also passes criterion 6 and still fails on colour at 68.6 deg -- so the
+  restatement did not rescue a failed frame, which is the test of whether it was an
+  honest correction.
+
+  THE COMPENSATION WORKED AND THE PULL IS NOT A CONSTANT. That is the finding, and
+  it is more useful than the pass:
+
+      composite 90.0 deg  ->  result 68.6 deg   (pull -21.4)
+      composite 111.4 deg ->  result 81.9 deg   (pull -29.5)
+
+  Predicted ~90 deg, got 81.9. The pass pulls harder from the green end, so the
+  drift is hue-dependent rather than a fixed offset, and 111.4 deg landed 8 degrees
+  short of the middle of the band while still sitting comfortably inside it (11.9
+  deg of margin above the lower edge). Two data points now bound it: anything
+  composited between roughly 100 and 129 deg -- the top quartile of this plate's own
+  greens -- should land inside [70,150]. Nobody has to guess the next percentile.
+
+  Everything else held while the hue moved: same seed, same prompt, same negative,
+  same geometry, one body, still attached, still 25 px wide against leaves of 81 and
+  94, nothing blown, no purple. Against the 0.99 prompt-only rung the difference is
+  the whole point -- 48 deg / sat 0.48 / val 0.95 with a 250,245,151 pixel then,
+  81.9 deg / sat 0.436 / val 0.749 with nothing blown now. To the eye it reads as a
+  small green fruit on the pedicel with a darker contact shadow where the two meet,
+  smaller than either leaf, in a frame that is otherwise untouched.
+
+  STATUS: BEAT 01 HAS A CANDIDATE FRAME-1 PLATE, PENDING THE FOUNDER'S LOOK.
+  farm-out/ep2-b01-nubcomp-b-0818/b01-nubcomp-s20260826.png with its sidecar and
+  mask. That is all a pass means. It has NOT been promoted into any leaf, any
+  lineage entry, any cut or any T3 assembly, it is not voiced and not animated, and
+  its sidecar still reads `approved: false` / `provisional_stamp: true`. Whether
+  this is the right nub for the frame is a taste call, it is R4's, and this job does
+  not make it.
