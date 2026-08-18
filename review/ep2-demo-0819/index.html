@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — episode 2 DEMO CUT, 2026-08-19 (beats 17 and 18 swapped to the night's two passes)</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 650; color: #dfe3e8; }
+  p { max-width: 78ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  .callout.red { border-left-color: #b06060; }
+  .callout.green { border-left-color: #5f9d6c; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  video { width: 100%; max-width: 420px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  img.strip { width: 100%; height: auto; border: 1px solid var(--line);
+              border-radius: 5px; display: block; margin: 14px 0 6px; }
+  img.plate { width: 100%; max-width: 260px; height: auto; border: 1px solid var(--line);
+              border-radius: 5px; display: block; margin: 14px 0 6px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  .warn { color: var(--warn); } .new { color: var(--new); }
+  tr.pick td { background: #1c2530; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  ul { max-width: 78ch; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Sapling — episode 2, DEMO CUT (2026-08-19)</h1>
+  <p class="sub">The 2026-08-18 cut with two clips swapped and nothing else touched. Same node,
+  same assembly command, same VO byte for byte, the same nineteen other source files.
+  1:52, <strong>17 beats of footage and 4 slates</strong> — unchanged counts.
+  No render, no voice synthesis, no GPU, no spend, $0.</p>
+</header>
+
+<p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF. PRIVATE REVIEW PAGE.</p>
+
+<div class="callout green">
+  <p><strong>WHAT CHANGED SINCE 2026-08-18 — two lines.</strong></p>
+  <ul>
+    <li><strong>Beat 18 — THE DECISION</strong> — the fig now trembles.
+        <code>ep2-b18-tremble-s20260871-0817</code> replaces <code>ep2-b18-plainfig</code>:
+        <span class="ok"><strong>PASS</strong></span>, motion in all four quarters, zero specular
+        pumping, named the pick of three seeds. <strong>The 2026-08-18 page called this swap
+        &ldquo;the cheapest upgrade this cut has available&rdquo; and declined to make it because the
+        clips had no verdict. They have verdicts now.</strong></li>
+    <li><strong>Beat 17 — GOODBYE</strong> — he finally does the thing the beat says he does.
+        <code>ep2-b17-shake-navy-0819</code> replaces <code>ep2-b17-full-s2-0815</code>:
+        <span class="ok"><strong>PASS on all five clauses</strong></span> — action, world
+        <em>and</em> garment. <strong>The incumbent had been in every cut since 2026-08-15 missing
+        its own bar; this is the first take of the beat that does not.</strong></li>
+  </ul>
+</div>
+
+<div class="callout">
+  <p><strong>Nineteen beats are the same source file they were yesterday, and that is a bounded
+  claim rather than a fresh sweep.</strong> What was actually re-read is every episode-2 job spec
+  that changed in git since the 2026-08-18 cut was committed — eleven files, listed line by line in
+  <a href="/review/ep2-demo-0819/sources/picks-0819.yaml"><code>sources/picks-0819.yaml</code></a>.
+  Of those eleven: two are the swaps below, three are superseded beat-17 steps in the same chain,
+  four are beat-01 seeds (<code>b7</code> and <code>b8</code> carry <em>no verdict block at all</em>,
+  and unjudged footage does not displace a judged incumbent), and one is a correction to the
+  <em>reasoning</em> behind beat 01's sweep that leaves its pick standing. <strong>Every other
+  beat's line on this page is copied from yesterday's reading, not re-derived.</strong></p>
+</div>
+
+<h2>The cut</h2>
+<video controls playsinline preload="metadata" src="/review/ep2-demo-0819/ep2-demo-0819.mp4"></video>
+<p class="sub">1:52 · 13.1 MB · 9:16 · captions burnt in · existing Chatterbox VO muxed in sync.
+<strong>Beat 17 runs 1:21–1:26. Beat 18 runs 1:26–1:37.</strong>
+sha256 <code>2920c419…</code></p>
+
+<h2 id="beat17">Beat 17 — the beat finally does what the script says</h2>
+
+<p class="sub">Beat 17 is GOODBYE. On 2026-08-18 its line was restaged, from <q>brushes off</q> to
+<q>gives his cloak a shake</q>, on the strength of eight seeds that measured 8/8 stand, 8/8 turn and
+<strong>0/8 brush</strong> — the engine would not draw the brush. Nothing had been rendered against
+the new line, so the beat had no take matching its own canon. Three takes followed. This is the
+third, and it is the only one that keeps the action, the world and the garment at once.</p>
+
+<h3>Was, and now</h3>
+<p class="sub">Top row: the incumbent, <code>ep2-b17-full-s2-0815</code>, at four points in the beat's
+slot. Bottom row: the new take at the same four points. Same slot, same VO, same captions.</p>
+<img class="strip" src="/review/ep2-demo-0819/b17-was-vs-now.jpg" alt="Two rows of four frames each. Top row, the old take: a green goblin sits crouched in a meadow under a plain mauve cloak, stays crouched, then stands with the cloak hanging straight down, then walks away with it trailing — his hands never touch it. Bottom row, the new take: he sits crouched, then stands gripping the cloak in both hands and holding it wide open like a sheet, then the cloak sweeps across him, then he walks away.">
+
+<div class="callout green">
+  <p><strong>The difference is the second frame of each row, and it is the whole beat.</strong> In the
+  top row his hands never reach the cloak at any point in 97 frames — that was audited frame by frame
+  and it is why the incumbent has always been labelled as missing its bar. In the bottom row he takes
+  the cloak in both hands and opens it into a full extended sheet of fabric.</p>
+  <p><strong>All five clauses PASS, against a bar written before the render existed:</strong></p>
+  <ul>
+    <li><strong>S1 stand</strong> — <span class="ok">PASS.</span> He comes up off the grass.</li>
+    <li><strong>S2 the shake</strong> — <span class="ok">PASS</strong>, and this is the load-bearing
+        one. Across f030–f041 he lifts the cloak up and out into an extended sheet, sweeps it down
+        across his body and lets it settle: one full out-and-back of the hem across roughly a third
+        of the frame, feet planted. That is not cloth trailing a moving body.</li>
+    <li><strong>S3 turn and go</strong> — <span class="ok">PASS.</span> He strides off with his back
+        to the lens.</li>
+    <li><strong>P1 the world</strong> — <span class="ok">PASS.</span> Distance from the init plate
+        reads 12.5 at f008 against a ceiling of 40, and 24.6 at f096 against 55. The sky stays a blue
+        sky over a green meadow.</li>
+    <li><strong>P2 the garment</strong> — <span class="ok">PASS.</span> Cloak hue 223.8° at sat 0.58
+        (f036) and 231.1° at 0.47 (f060), inside a required 180–260° at ≥0.40, against a plate of
+        220°/0.65.</li>
+  </ul>
+</div>
+
+<h3>How the previous two takes died, because it explains what this one is</h3>
+<p><strong>Take one</strong> drew the shake on its very first seed — the engine that would not draw a
+brush in eight seeds drew a shake immediately — <strong>and then abandoned the plate in eight
+frames</strong>: 92% of all colour drift was complete by f008, a blue sky over green meadow becoming
+an amber sky over a dry brown field. Part of that was self-inflicted; the positive prompt said
+<q>afternoon light warming toward amber</q>.</p>
+<p><strong>Take two</strong> deleted those six words and nothing else. The plate held — 13.6 at f008
+where take one read 80.7 — and every action clause held with it. <strong>But the cloak became a
+pink-and-cream poncho from f024 on, and the plate clause passed it anyway</strong>, because that
+clause measures whole-frame distance and a cloak is a small share of the pixels. Right idea, wrong
+granularity.</p>
+<p><strong>Take three, the one in this cut,</strong> changed one variable again — the positive prompt
+now <em>names</em> the cloak's colour — held the seed, and added the garment clause that take two's
+failure showed was missing. It passes all five.</p>
+
+<h3>The checkerboard is the plate's, not the render's</h3>
+<p>The cloak in this take is a blue-grey with a bold checkerboard weave, where the incumbent's was
+plain mauve. That is a visible change and it is worth saying where it came from: <strong>the pattern
+is already in the init plate.</strong> The plate was pulled and looked at rather than assumed —
+sha256 <code>74e8eccf…</code>, the same file the job's own step manifest names:</p>
+<img class="plate" src="/review/ep2-demo-0819/b17-init-plate.jpg" alt="The init plate: a green goblin sits in a bright green meadow under a wide blue sky with streaked clouds, wrapped in a blue-grey cloak with a faint darker checkerboard pattern.">
+<p class="sub"><strong>Named gap, not a failure:</strong> the garment clause tests hue and saturation,
+which is a colour test. Nothing in any bar tests the cloak's <em>pattern</em>, and the checkerboard
+reads bolder in the back half of the clip than in the plate. That is unmeasured. It is recorded here
+rather than scored, because inventing a clause after seeing the pixels is how bars stop meaning
+anything.</p>
+
+<h3>Two honest costs, neither of them scored</h3>
+<div class="callout red">
+  <p><strong>1. It is the least mobile of the three takes.</strong> Source interframe median 0.50 —
+  the lowest of the chain. In the cut, beat 17's slot measures an adjacent-frame median of 0.40 with
+  58 of 112 frame pairs near-duplicate; the incumbent measured 0.31 with 72 of 112.
+  <strong>So the beat is barely livelier overall than it was.</strong> The cloak moves more while the
+  clip moves less, and no clause on any of the three beat-17 specs asks about overall motion. That is
+  a shared blind spot, named rather than patched.</p>
+  <p><strong>2. The cut rewinds its last 0.67 seconds.</strong> The clip is 4.04s and beat 17's slot
+  is 4.71s, because the slot is sized to the VO. When footage is shorter than its slot the pipeline
+  fills it by palindrome — the clip forward, then the clip reversed. <strong>Proven frame by frame,
+  not assumed:</strong> cut frame 97+k is the source's frame 96−k at a residual of 3.8–4.2, identical
+  to the 3.8–4.7 baseline of matching forward frames, while the distance from a
+  held-last-frame hypothesis climbs monotonically to 37. <strong>The last sixteen frames are the
+  source's f096 down to f081, played backwards.</strong></p>
+</div>
+<img class="strip" src="/review/ep2-demo-0819/b17-reversal-tail.jpg" alt="Six frames from the last 0.7 seconds of beat 17: the goblin walks away from the camera through the meadow with his checkered cloak trailing, his stride and the cloak's fold shifting between frames.">
+<p class="sub">This is the same mechanism that put the backwards tail on beat 01, and it is
+<strong>much quieter here</strong>: a reversed walk cycle still reads as a walk cycle, where a
+reversed growing fig reads as a fig un-growing. It is still a rewind. <strong>Not fixed, and for the
+same reason as on beat 01</strong> — shortening the slot means cutting the VO, filling it means a
+longer clip, which is a render, and replacing the palindrome with a held frame is a pipeline change
+that would apply to every beat of every episode and should be argued before it ships.</p>
+
+<h3>What it does not fix</h3>
+<p class="sub">This is a different plate from the incumbent's, so the swap is a swap and not a tweak.
+The beat still ends on a walk-away rather than the script's afternoon light, and the guards-vs-cast
+consistency problems elsewhere in the episode are untouched by it.</p>
+
+<h2 id="beat18">Beat 18 — the fig trembles, and you cannot see it in a contact sheet</h2>
+
+<p class="sub">Beat 18 is THE DECISION: <q>Extreme close-up: the one fig on the thinnest branch, stem
+trembling.</q> The incumbent was a steward pick with no lane verdict on the clip at all. Three motion
+seeds had been sitting finished on the box since 2026-08-17, unjudged. All three were judged
+overnight against the bar their spec pre-registered.</p>
+
+<img class="strip" src="/review/ep2-demo-0819/b18-in-cut.jpg" alt="Eight frames across beat 18 in the cut: an extreme close-up of a single glossy deep purple fig hanging from one thin dark stem against a pale peach and lavender backdrop, with a small bright specular highlight near the top. The eight frames look almost identical.">
+
+<div class="callout">
+  <p><strong>Those eight frames look identical, and that is the point worth carrying off this
+  page.</strong> They are sampled every 17 frames. The tremble is fine and fast; a sheet sampled at
+  that spacing cannot see it, and neither could a sheet sampled every 15 frames see the
+  <em>strobe</em> that failed one of its siblings. <strong>Both defects and both passes on this beat
+  live between adjacent frames.</strong></p>
+</div>
+
+<h3>Six consecutive frames of the stem, cropped</h3>
+<img class="strip" src="/review/ep2-demo-0819/b18-stem-consecutive.jpg" alt="Six tightly cropped consecutive frames of the fig's thin dark stem against a pale backdrop; the stem's curve leans and straightens visibly from frame to frame.">
+<p class="sub">Every second frame across a quarter-second. The stem's curve leans, straightens and
+leans back. That is the beat.</p>
+
+<div class="callout green">
+  <p><strong>VERDICT: PASS. Every clause met, every pre-registered failure mode measured and
+  absent.</strong></p>
+  <ul>
+    <li><strong>Not frozen</strong> — <span class="ok">PASS,</span> measured rather than eyeballed as
+        the bar demands. Mean absolute interframe difference by quarter: <strong>5.56 / 6.67 / 6.05 /
+        5.16.</strong> Motion is not merely present, it is <em>even</em> — no quarter is carried by
+        another. 4 of 120 frame pairs fall below 0.5; the longest still run is one frame.</li>
+    <li><strong>No strobe</strong> — <span class="ok">PASS,</span> and this is the clause that killed
+        the 2026-08-12 attempt. Adjacent-frame specular pumping exceeds 25% of clip max on
+        <strong>0 of 120</strong> pairs. The highlight is present and steady in every frame read.</li>
+    <li><strong>Colour</strong> — <span class="ok">PASS.</span> Median hue of the saturated subject
+        holds at 315° with a total spread of <strong>4.1°</strong> across all 121 frames.</li>
+    <li><strong>Count, attachment, no person</strong> — <span class="ok">PASS</span> on all three.
+        One fruit, joined at the neck, never leafward, no figure anywhere.</li>
+  </ul>
+</div>
+
+<h3>The comparison is a finding in its own right</h3>
+<p>Three seeds of one recipe returned <strong>1 pass, 1 strobe, 1 decay</strong> — s20260872 pumps
+the specular past 25% on 28 of 120 adjacent pairs, and s20260873 moves for the first half and stops
+dead (quarters 9.22 / 4.10 / 0.72 / 0.45). <strong>That means the strobe is seed-borne</strong>,
+where the 2026-08-12 read had it looking like a property of the recipe. Opposite conclusion, and the
+reason three seeds were filed instead of one. It also means no fourth seed is licensed: 1-in-3 is
+this show's normal rate.</p>
+
+<h3>What the swap actually buys in the cut, measured</h3>
+<div class="callout">
+  <p>Beat 18's slot is 10.96s — the longest in the episode, because its VO is the longest. Both the
+  old clip and the new one are 5.04s, so both are palindromed and looped to fill it, and the fill is
+  identical. What differs is what is happening during those eleven seconds:</p>
+  <table>
+    <tr><th>Beat 18's slot</th><th>Adjacent-frame median</th><th>Near-duplicate pairs</th></tr>
+    <tr><td>2026-08-18 cut — <code>b18-plainfig</code></td><td class="n">2.63</td><td class="n">120 of 262</td></tr>
+    <tr class="pick"><td>2026-08-19 cut — <code>b18-tremble-s20260871</code></td><td class="n ok">5.68</td><td class="n ok">14 of 262</td></tr>
+  </table>
+  <p><strong>Nearly half the old slot was near-still. Five percent of the new one is.</strong></p>
+</div>
+
+<h3>What it does not fix, and these are the plate's</h3>
+<p class="sub">The fruit still reads aubergine or plum rather than fig; the backdrop is still a flat
+peach void with a drifting diagonal band rather than a field; the plate is glossy with a hard
+specular. All three are carried forward unchanged from the incumbent, all three are properties of the
+plate rather than the motion, and <strong>whether that look ships is R4 and yours alone</strong> —
+the beat-18 spec says so in as many words and this page does not assume the answer.</p>
+
+<h2 id="correction">A correction to yesterday's page</h2>
+<div class="callout red">
+  <p><strong>The 2026-08-18 page said of beat 18 that &ldquo;in the cut its last frame holds for
+  5.9 s&rdquo;. That is wrong, and it was wrong about the mechanism rather than the arithmetic.</strong>
+  There is no held-frame path for real footage in the assembler — a clip shorter than its slot is
+  palindromed and then looped. Verified frame by frame on <em>both</em> cuts: in the 2026-08-18 cut,
+  beat 18's frames 122–242 are its source's frames 120 down to 0 (residual 1.9–2.0, matching the
+  1.6–2.0 forward baseline), and the held-frame hypothesis is off by 10 to 24.</p>
+  <p><strong>Flagged, not fixed:</strong> yesterday's rows for beats 04, 06, 11 and 16 use the same
+  &ldquo;last frame holds for N s&rdquo; phrasing and are therefore suspect too. Only beat 06 was spot
+  checked here — its final twenty frames are not still (jumps of 12–15 levels every third frame), so
+  that row is wrong as well. Beats 04, 11 and 16 were not measured and are not being asserted either
+  way. <strong>No clip changed and no verdict changed; only a description of what the assembler does
+  with them.</strong></p>
+</div>
+
+<h2 id="notchanged">What was looked at today and deliberately NOT changed</h2>
+<p class="sub">House rule: <q>we looked and left it alone</q> is a decision, and it should be readable
+rather than invisible.</p>
+
+<div class="callout">
+  <p><strong>Beat 01 — two more seeds landed and neither is judged.</strong>
+  <code>ep2-b01-growmotion-b7</code> and <code>b8</code> were queued by another lane and carry no
+  verdict block at all. <strong>Unjudged footage does not displace a judged incumbent</strong>, so the
+  cold open does not move, and the backwards-growth tail it brought with it on 2026-08-18 is still
+  there. A correction was appended overnight to that sweep's <em>reasoning</em> — its stop conclusion
+  was right but the stated reason (<q>three independent axes</q>) was not; four of five rejects fail
+  the same clause. <strong>The pick is unaffected.</strong></p>
+  <p><strong>Beat 14 stays in with its FAIL.</strong> Nothing new was filed on it. It still fails on
+  the glance and on the read of the face, it is still in anyway and still labelled, and its own
+  recommended f085–f121 trim is still not applied because 1.5s in a 5.1s slot would be looped to fill
+  it.</p>
+  <p><strong>Beat 08's pointing arm was ruled on today and produced no render.</strong> The board-lowered
+  composite route is proven; the gap is sourcing the arm. The candidate lever — pose-conditioned
+  generation — turns out to rest on a probe that <em>never ran</em>, so nothing is proven either way
+  and nothing was filed off a guess. The route finding is written up in
+  <code>pipeline/b08-arm-route-0819.md</code>. <strong>An empty queue on an honest &ldquo;no ruled
+  route yet&rdquo; is the correct outcome, not a stalled one.</strong></p>
+  <p><strong>Beats 03, 05, 06, 07, 09, 10, 20 — unchanged and not re-swept.</strong> No episode-2 job
+  spec for any of them has changed in git since yesterday's cut. Their rows below are yesterday's
+  reading, carried.</p>
+</div>
+
+<h2 id="count">The honest count</h2>
+<div class="callout">
+  <p><strong>17 beats of 21 carry footage. 4 are slates (07, 09, 15, 19).</strong> Identical to
+  yesterday — no beat gained or lost footage.</p>
+  <p><strong>Of the 17, the number that clear their own beat's whole written definition is now
+  four</strong>, up from two: beat 11 (all six conditions since 2026-08-17), beat 01 (all five clauses
+  with a stated caveat), and today <strong>beat 17 (all five) and beat 18 (all four)</strong>.
+  Beats 02 and 14 remain footage that misses its bar and is in anyway, each labelled below. The rest
+  are steward picks with no lane verdict on the clip.</p>
+  <p><strong>Four ingredients still mark themselves provisional in their own render-time records:
+  beats 01, 02, 11 and 14.</strong> Neither new clip does. The assembly manifest copies that flag
+  rather than interpreting it. Nothing in this cut is approved and nothing is canon.</p>
+</div>
+
+<h2>Every beat, what is in it, and what is wrong with it</h2>
+<p class="sub">Unchanged from 2026-08-18 except beats 17 and 18. No verdict below has been upgraded
+and none has been overturned.</p>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>Beat</th><th>What is in the cut</th><th>Named fault</th></tr>
+
+  <tr><td class="n">01</td><td>COLD OPEN</td>
+      <td class="ok">ep2-b01-nubgrow-b-s20260826-0818 · 5.0s<br>
+      <span class="ok"><strong>PASSES ITS BAR, ONE CAVEAT</strong></span></td>
+      <td>Your own 2026-08-13 route: a nub inpainted into frame 1 and grown by the motion prompt.
+      One of six seeds to clear a bar written before any existed. <strong>Caveat: the light blooms
+      from dawn purple to pale amber.</strong> <strong class="bad">Named fault belonging to the CUT:
+      5.0s of clip in a 9.5s VO-led slot, so the last half-second plays the growth backwards.</strong>
+      Re-checked today: <code>b7</code> and <code>b8</code> landed and are unjudged, so the pick does
+      not move. <a href="/review/ep2-demo-0818/#beat01">Frames on yesterday's page.</a></td></tr>
+
+  <tr><td class="n">02</td><td>THE SPRINT</td>
+      <td class="warn">ep2-b02-anchor-s20260834-0817 · 4.0s<br>
+      <span class="bad"><strong>MISSES ITS BAR, IN ANYWAY</strong></span></td>
+      <td>He runs, pitches forward and lands prone; he never leaves frame.
+      <strong class="bad">The bar is <q>entry, skid, dive</q> on a plate that <q>must already contain
+      the sapling</q>, and the plate has no sapling — so no seed can close this beat.</strong> Beat 02
+      is a plate job. Still the newest verdict's own pick.</td></tr>
+
+  <tr><td class="n">03</td><td>BAD COVER</td><td class="ok">ep2-b03-refire-0814 · 4.0s</td>
+      <td>He ends small at the frame edge; the size-mismatch joke reads weakly but it reads. Leg A of
+      an A/B pair. The <code>s20260846</code> swap the record offers stays declined — all fifteen of
+      its seeds are <code>done_when</code> FAILs off a trunkless plate.</td></tr>
+
+  <tr><td class="n">04</td><td>THE FOOTNOTE</td><td class="ok">ep2-b04-refire-0814 · 4.0s</td>
+      <td>Clean close-up on his held breath. Reads young — the s0 reference you chose, not a prompt
+      fault. Leg A of an A/B pair. <strong>Yesterday's row said its last frame holds for 2.1s; see the
+      correction above — that phrasing is suspect and was not measured.</strong></td></tr>
+
+  <tr><td class="n">05</td><td>THE PATROL</td><td class="ok">ep2-b05-standB-0814 · trimmed 5.04→4.92s</td>
+      <td>The two guards read younger and softer-drawn than the guards in 06 and 11; a blind read also
+      found identity drift and props swapping hands. <strong>Ranked likeliest of the nine to move to
+      &ldquo;broken&rdquo; on a dense re-read, which has not been done.</strong>
+      <strong>Not the cast-correct guards.</strong></td></tr>
+
+  <tr><td class="n">06</td><td>THE CLIPBOARD</td><td class="ok">ep2-b06-scene-0814r · trimmed 5.04→1.92s</td>
+      <td>Picked from ONE seed; the second raised the board like a shield instead of reading it. A
+      blind read adds an eye-colour flip and a replaced prop. <strong>Not the cast-correct
+      guards.</strong> <strong class="bad">Correction: yesterday's row said its last frame holds for
+      4.8s. Measured today — the final twenty frames are not still. It is palindromed and looped like
+      every other short clip.</strong></td></tr>
+
+  <tr><td class="n">07</td><td>CONFISCATE</td><td class="bad">SLATE</td>
+      <td>Beat 07 needs a second guard and the field present; the only guard+goblin plate that has
+      passed holds <strong>two</strong> figures where the beat wants three. The one 0817 motion job
+      declares <code>is_show_content: false</code> — it must never be cut into an episode.</td></tr>
+
+  <tr><td class="n">08</td><td>INSIDE HIM</td><td class="warn">ep2-b08-twohander · 5.0s, trimmed to 4.2s</td>
+      <td><strong>Steward pick, no lane verdict.</strong> A guard extends his arm — but
+      <strong>the clipboard never comes down</strong>, which is half the beat's action; one guard where
+      the beat wants both. <strong>Ruled today and deliberately not rendered: the composite route is
+      proven and the arm has no proven source. See <a href="#notchanged">above</a>.</strong></td></tr>
+
+  <tr><td class="n">09</td><td>THE PAUSE</td><td class="bad">SLATE — <strong>but see note</strong></td>
+      <td>Six takes from 2026-08-15 are NOT in this cut because beat 09 is <strong>blocked on your
+      guard-cast call</strong>: the definitions file says the third round is <q>owed and BLOCKED</q>,
+      while the job spec that fired those asserts the cast is already approved. That contradiction is
+      yours to settle. <strong>Clearing it would take this cut from 17 footage beats to 18.</strong></td></tr>
+
+  <tr><td class="n">10</td><td>NO FORM</td><td class="ok">ep2-b10-pairB-0814 · trimmed 5.04→4.04s</td>
+      <td>Same guard-consistency fault as 05, plus a face and a carried board that change across the
+      clip. Its plate is the SAME file as beat 05's, so that is one fault and one fix, not two.</td></tr>
+
+  <tr><td class="n">11</td><td>THEY LEAVE</td>
+      <td class="ok">ep2-b11-w4-s20260903-0817 · 4.0s<br>
+      <span class="ok"><strong>PASSES ALL SIX CONDITIONS</strong></span></td>
+      <td>Two guards, backs turned in all 97 frames; costumes and identities holding; they walk away
+      rather than the camera pulling back, against a fitted background scale of exactly 1.000.
+      <strong class="bad">Named fault belonging to the cut: this is the cast-correct guard plate and
+      beats 05, 06 and 10 are not, so beat 11's two men do not look like the guards in the three beats
+      before it.</strong></td></tr>
+
+  <tr><td class="n">12</td><td>RELATED</td><td class="ok">ep2-b12-tightB · 5.0s, UNTRIMMED</td>
+      <td>The colour shifts warm-to-cool across the first second. The recorded 1.38s trim is
+      deliberately NOT used — it would have deleted three quarters of the beat's motion. The fault
+      ships intact instead.</td></tr>
+
+  <tr><td class="n">13</td><td>THE SHADE</td><td class="ok">ep2-b13-refire-0814 · 4.0s</td>
+      <td>He settles at the base of the stem; the shade is thin but the fold-into-it happens. Leg A of
+      an A/B pair. A finding that could move this row — that it looked frozen because the action asked
+      for was too small a request — is still unconfirmed and not applied.</td></tr>
+
+  <tr><td class="n">14</td><td>THE DEFENSE</td>
+      <td class="warn">ep2-b14-macplate-r1s1-0818 · 5.0s<br>
+      <span class="bad"><strong>MISSES ITS BAR, IN ANYWAY</strong></span></td>
+      <td><strong class="bad">FAIL on M2 (the glance lifts but never returns and never turns aside)
+      and M3 (the face reads sullen, not embarrassed — the second time off a different seed).</strong>
+      M1 passes and that is the news: the hands reach, plant and break real soil where the spec had
+      predicted frozen hands. 80 of 121 frames are frozen before anything happens; the recommended
+      trim is not applied because 1.5s in a 5.1s slot would be looped.
+      <a href="/review/ep2-demo-0818/#beat14">Full reasoning on yesterday's page.</a></td></tr>
+
+  <tr><td class="n">15</td><td>GOOD LISTENER</td><td class="bad">SLATE</td>
+      <td>The 0815 rounds do get him looking up — but <strong>the sapling is not in frame</strong>,
+      which the beat's definition calls the whole point. No work has been filed on this beat
+      since.</td></tr>
+
+  <tr><td class="n">16</td><td>WHY</td><td class="ok">ep2-b16-anim-0814 · 4.0s</td>
+      <td>Opens goblin-forward and sharp, then jumps to leaf-forward by f40 — a change of subject
+      inside the first second. The leaf came out lobed and palmate, contradicting the canon two round
+      cotyledons. <strong>Yesterday's &ldquo;last frame holds for 4.6s&rdquo; is suspect; see the
+      correction above.</strong></td></tr>
+
+  <tr class="pick"><td class="n new">17</td><td class="new"><strong>GOODBYE</strong></td>
+      <td class="new"><strong>NEW — ep2-b17-shake-navy-0819 · 4.0s</strong><br>
+      <span style="color:var(--muted)">replaces <code>ep2-b17-full-s2-0815</code></span><br>
+      <span class="ok"><strong>PASSES ALL FIVE CLAUSES</strong></span></td>
+      <td class="new"><strong>The first take of this beat that does not miss its own bar.</strong> The
+      incumbent had been in every cut since 2026-08-15 doing two of three verbs — a frame-by-frame
+      audit of all 97 frames found no hand-to-cloak contact anywhere. The line was restaged on
+      2026-08-18 and this is the third take of the chain that followed: stand, a full out-and-back of
+      the cloak with feet planted, turn and go, plate held (12.5 at f008 against 40) and cloak held
+      (223.8° at sat 0.58, inside 180–260° at ≥0.40). One variable from its predecessor — the prompt
+      now names the colour. <strong class="bad">Two honest costs, neither scored: it is the least
+      mobile of the three takes overall, and the cut rewinds its last 0.67s.</strong>
+      <a href="#beat17">Frames, the was-vs-now and the reasoning above.</a></td></tr>
+
+  <tr class="pick"><td class="n new">18</td><td class="new"><strong>THE DECISION</strong></td>
+      <td class="new"><strong>NEW — ep2-b18-tremble-s20260871 · 5.0s</strong><br>
+      <span style="color:var(--muted)">replaces <code>ep2-b18-plainfig</code></span><br>
+      <span class="ok"><strong>PASSES ITS BAR</strong></span></td>
+      <td class="new">The upgrade yesterday's page flagged and declined to make. Three seeds were
+      judged overnight and this is the pick: <strong>motion in all four quarters (5.56 / 6.67 / 6.05 /
+      5.16), zero specular pumping on 120 of 120 adjacent pairs, hue held at 315° ± 4.1° across 121
+      frames.</strong> In the slot it lifts the adjacent-frame median from 2.63 to 5.68 and cuts
+      near-still pairs from 120 to 14 of 262. Its siblings failed 1 strobe / 1 decay, which is what
+      proves <strong>the strobe is seed-borne, not baked into the recipe.</strong>
+      <strong class="bad">Unfixed, and all the plate's: the fruit reads plum, the backdrop is a flat
+      peach void, the plate is glossy. That look is R4.</strong>
+      <a href="#beat18">Frames and the full measurement above.</a></td></tr>
+
+  <tr><td class="n">19</td><td>THE DROP</td><td class="bad">SLATE</td>
+      <td>The fruit never leaves the branch. Every plate we have starts the fruit on the ground, and a
+      fall cannot be shot from that.</td></tr>
+
+  <tr><td class="n">20</td><td>EVIDENCE</td><td class="warn">ep2-b20-shape · head-trimmed 3.04→2.38s</td>
+      <td><strong>Steward pick, no lane verdict.</strong> The fruit IS in both hands. Faults:
+      near-static after the trim, dusk banded sky, and the fruit reads dark rather than purple. The
+      0818 replacement plates were rejected as the wrong character entirely.</td></tr>
+
+  <tr><td class="n">21</td><td>THE ANSWER</td><td class="ok">ep2-b21-daylight-0814 · 5.0s</td>
+      <td>The leaf tilts over and stops — the move reads as deliberate, which is the whole beat.
+      Residual: a banded poster sky and a palette jump at frame one. Leg A of an A/B pair.</td></tr>
+</table>
+</div>
+<p class="sub"><span class="ok">green</span> = a lane judged this clip as doing its job, with the
+fault named · <span class="warn">amber</span> = steward pick with no lane verdict on the clip, or
+footage that misses its bar · <span class="bad">red</span> = slate ·
+<span class="new">blue</span> = new since 2026-08-18. <strong>Both blue rows
+<span class="ok">pass their bars</span></strong> — the first cut where that is true of every new
+clip in it. <strong>There is no knowingly-broken row.</strong></p>
+
+<h2>Rules this cut was made under</h2>
+<p><strong>STEWARDSHIP §6 — narrative approval precedes media.</strong> Satisfied: your words,
+2026-08-15, <q>i did read the script, just a while ago when we were making the first versions of the
+episodes. and i approved it</q>. <strong>No voice was synthesised for this cut</strong> — the VO is
+byte for byte the Chatterbox take set the 2026-08-17 and 2026-08-18 cuts used, copied forward. Beats
+02, 19 and 21 carry no VO because the script gives them none.</p>
+<p><strong>ONE SAMPLE BEFORE ANY BATCH.</strong> No recipe changed here and nothing was rendered.
+Both new clips were single samples read against bars written before they existed; beat 18's three
+seeds were filed precisely to separate <q>the recipe is dead</q> from <q>one unlucky seed</q>, and the
+answer came back 1 pass / 1 strobe / 1 decay, which licenses no fourth seed.</p>
+<p><strong>$0, no GPU, no new renders, no spend.</strong> Every clip was rendered before today at $0
+on the local card. The only new work is one ffmpeg assembly and two file copies off the box.
+<strong>The render queue was not touched</strong> — no job was filed, cancelled or reordered, on
+either of today's two tasks.</p>
+<p><strong>Provenance (§7.2).</strong> Every source clip is published beside this page under
+<code>sources/</code> with its own render-time sidecar, and the assembly manifest
+<code>ep2-demo-0819.mp4.meta.yaml</code> lists all 35 ingredients with the sha256 of the bytes as
+muxed; none was refused by the licence gate. <strong>Both new clips were verified twice</strong> —
+their bytes hash to the values in their own job directories' <code>.sha256</code> manifests on the
+box, checked after the copy, and those same hashes appear in the assembly manifest. A per-beat
+manifest of what is in this cut and why is at
+<a href="/review/ep2-demo-0819/sources/picks-0819.yaml"><code>sources/picks-0819.yaml</code></a>.</p>
+<p><strong>Picks are steward work; taste is yours (R4).</strong> Both swaps were made against
+pre-registered bars, and both bars were written by the lane that then had to live with them. You are
+not being asked to compare anything. <strong>The one thing worth your eye is beat 18's look</strong> —
+whether a glossy aubergine on a peach void is the fig this show has — which its own spec says is R4
+and nobody else's.</p>
+<p><strong>Not canon, and nothing was published.</strong> This is a bench render. It has no leaf, it
+is not in <code>lineage.yaml</code>, no beat's verdict was changed to make it, and it has not been
+posted, announced or distributed anywhere.</p>
+
+<footer>
+  Sapling · banyan.city · unlisted working page, 2026-08-19. Supersedes
+  <a href="/review/ep2-demo-0818/">the 2026-08-18 cut</a>,
+  <a href="/review/ep2-demo-0817/">the 2026-08-17 cut</a> and
+  <a href="/review/ep2-demo-0816/">the 2026-08-16 cut</a>, all left in place.
+  Cut sha256 <code>2920c419…</code>; beat 17 source <code>912af66f…</code>;
+  beat 18 source <code>d950537a…</code>; beat 17 init plate <code>74e8eccf…</code>.
+  Sources: <code>pipeline/jobs/ep2-b17-shake-navy-0819.yaml</code>,
+  <code>pipeline/jobs/ep2-b17-shake-noamber-0819.yaml</code>,
+  <code>pipeline/jobs/ep2-b17-shake-0818.yaml</code>,
+  <code>pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml</code> (and its
+  <code>s20260872</code>/<code>s20260873</code> siblings),
+  <code>pipeline/b08-arm-route-0819.md</code>,
+  <code>review/ep2-demo-0819/sources/picks-0819.yaml</code>.
+</footer>
+
+</div>
+</body>
+</html>
