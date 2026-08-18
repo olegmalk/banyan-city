@@ -4634,6 +4634,63 @@ REVS[(19, 2)] = {
     "seed": 20260819,
 }
 # --------------------------------------------------------------------------
+# r3 SCORED, 2026-08-19, macbook1, seed 20260819, rc 0, sidecar `revision: 3`.
+# farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png
+# sha256 de7a256c29b0a752b335e1e022c111e654c4c65cbe43b05fb98bd9573e1c6cbf
+#
+# VERDICT: FAILS, 5 of 7, THE SAME SCORE AS r2 BY A DIFFERENT ROUTE. AND THIS
+# CLOSES THE WORDING LADDER ON THE PLANT.
+#   P1 THE FIG IS ON THE PLANT ... FAIL. The count came DOWN -- roughly eight
+#      fruit at r2, THREE at r3 -- so `a single ... fig` moved the number in the
+#      right direction and did not reach one. A NEW defect arrived with it: the
+#      three read as faceted purple CRYSTALS or gems rather than round soft
+#      fruit. Recorded as part of P1's failure, not as a separate term; the bar
+#      asks for a fig and a gem is not one.
+#   P6 THE PLANT IS THE SAPLING . FAIL, unchanged from r2 and this is the whole
+#      finding. There are STILL TWO PLANTS, and they are still thin bare whips
+#      with a leaf cluster at the tip -- not one ~40 cm sapling with two leaves
+#      and a thin side-branch. `two leaves and one thin side-branch` was
+#      supposed to foreclose the multi-node vine geometrically. It did not.
+#   P3 NO CONTACT ..... PASS, held from r2. Hands still folded on his knees.
+#   P2 PASS. P4 PASS. P5 PASS, purple. P7 PASS, one lean adult goblin.
+#   Q1 THE FIG ALREADY ON THE GROUND ... DID NOT FIRE, THIRD DRAW RUNNING.
+#
+# THE LADDER STOPS HERE, AND THE RULE IS THIS FILE'S OWN. Three rungs have now
+# aimed three different wordings at ONE axis -- r1 `a tiny sapling rooted in the
+# grass`, r2 the same, r3 `a tiny sapling with two leaves and one thin
+# side-branch` plus `a single ... fig` -- and the plant has come back as a
+# multi-fruit bead vine every time, twice doubled. Beat 14's ladder stopped at
+# three on P5 for exactly this reason and named a composition tool; beat 11's
+# stopped at three. THE PLANT IS NOT REACHABLE BY WORDS ON THIS CHECKPOINT and
+# a fourth wording is the thing this repo has repeatedly been wrong to fire.
+#
+# THE INSTRUMENT IS NAMED AND NOT FIRED, and it is concrete rather than a
+# gesture at "composition":
+#   * THE PROJECT ALREADY OWNS THE PICTURE IT CANNOT WRITE. Beat 18's plate
+#     PASSES its bar as ONE round deep-purple-violet fig hanging from ONE very
+#     thin branch, green at its neck. That is precisely the object this beat
+#     keeps failing to draw, already drawn and already scored.
+#   * THE ROUTE EXISTS IN THIS REPO. pipeline/composite-init-pattern.md,
+#     beat14_field_composite.py and beat08_gesture_composite.py are the same
+#     move made twice before: build the init by COMPOSITING a passing element
+#     into a passing frame instead of asking one prompt for both.
+#   * SO THE NEXT BEAT-19 STEP IS A COMPOSITE INIT -- r3's man, pose, field and
+#     framing (5 of 7 terms already passing, and the hands solved) with beat
+#     18's fig-on-a-branch composited in at the right scale -- NOT a fourth
+#     prompt. That is a build, it is bigger than a rev, and it is named here so
+#     the next lane inherits a route rather than a mystery.
+#
+# WHAT THE THREE RUNGS BOUGHT, so the ladder does not read as a waste: the
+# recorded blocker is DEAD. `plate_requirement_0815` said every beat-19 plate we
+# own shows the fruit already lying in the grass and that this is "exactly why
+# the beat was blocked". Three draws, three times aloft, Q1 never fired. The
+# hands went from gripping the stem to folded on his knees on one edit. Beat 19
+# is no longer blocked on "we cannot get the fruit off the ground"; it is
+# blocked on "we cannot get the plant down to one", which is a smaller and
+# differently-shaped problem with a route attached.
+# --------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
 # r2 SCORED, 2026-08-19, macbook1, seed 20260819, rc 0.
 # farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png
 # sha256 7075a4e8d8906711dbbab16bff950a7a689574070444d52eb9041073167693be.
