@@ -136,10 +136,18 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 - **The 8 files in `C:\banyan-queue\ready` are not work.** They are all `.HOLD`,
   `.HOLD-wrong-action` or `.DUP-already-ran` suffixed and the runner correctly
   reports `ready=0`. Do not be fooled by the file count as I nearly was.
-- **banyan.city** — up, 200. Deploys were queuing again at end of shift: one Building
-  at 13m with three Queued behind it. **I did not cancel anything**, on the
-  predecessor's evidence that the one clone allowed to run finished at 41:22 while
-  all three that were killed never did. Let a slow clone run.
+- **banyan.city** — up, 200, but **stale at end of shift, and this touches the one
+  founder question.** Last `Ready` deploy is 23m old; behind it sit one `Building` at
+  17m and five `Queued`. **I did not cancel anything**, on the predecessor's evidence
+  that the one clone allowed to run finished at 41:22 while all three that were killed
+  never did. Let a slow clone run.
+- **Consequence to know before you point Roman at the cold open:** production still
+  serves the *pre-correction* text of `review/ep2-cold-open-0818/`. The clip, the
+  frames and the six-seed sheet are unchanged and correct — the only thing missing is
+  the paragraph replacing "three independent axes" with the four-of-five reading. The
+  page is still fine for the taste call; it just carries superseded reasoning until
+  the queue drains. Verified live: the old sentence is still being served, the new one
+  is not. Re-check before handing him the link.
 - **Spend** — $0. Everything was local GPU, local ffmpeg, and reading.
 
 ## 7. Where to look
