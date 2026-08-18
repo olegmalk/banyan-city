@@ -1,0 +1,191 @@
+# ep2-b17-shake-navy-0819 -- the one follow-up the 0819 no-amber verdict licensed.
+#
+# 0819 PASSED all four clauses and kept the plate's WORLD -- blue sky, green meadow,
+# plate distance 13.6 at f008 against a ceiling of 40. It did not keep the plate's
+# GARMENT: a deep navy cloak (RGB 36,59,104, hue 220, sat 0.65) becomes dusty pink
+# (RGB 144,110,118, hue 346, sat 0.24) from f024 on. P1 passed anyway, because it
+# measures whole-frame distance and a cloak is a small share of the pixels -- my own
+# clause at the wrong granularity.
+#
+# ONE VARIABLE: the positive prompt now NAMES the cloak's colour. Same init, SAME SEED
+# 20260941, same negative, same recipe. The negative is deliberately untouched --
+# adding "pink cloak" there would be a second variable, and this engine has already
+# been measured ignoring an explicit negative (four of six cold-open seeds pushed in
+# against "zoom, dolly, push in"). Name what you want; do not bank on banning what you
+# do not.
+#
+# P2 is pre-registered with numbers read off the plate and off the measured failure,
+# and is scored SEPARATELY: action, plate and garment are three results. Collapsing
+# them is how an orange cloak passed on 0818 and a pink one on 0819.
+#
+# $0. Local card, no provider, nothing spends.
+id: ep2-b17-shake-navy-0819
+task: ep2-b17-shake-navy-0819
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 20
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: night supervisor (v2), 2026-08-19 -- the one follow-up ep2-b17-shake-noamber-0819 licensed
+consumer: 'Beat 17. ep2-b17-shake-noamber-0819 PASSED all four clauses and kept the plate''s world,
+  but his cloak still changes colour: the plate dresses him in deep navy and from f024 he wears dusty
+  pink. P1 could not see it because P1 measures whole-frame distance and a cloak is a small share of
+  the pixels. This sample names the colour and adds the clause that can see it.'
+success: A 704x1280 mp4, 97 frames at 24fps on the same init. PASS is S1+S2+S3+P1 unchanged, PLUS P2.
+done_when: 'PRE-REGISTERED BEFORE THE RENDER. S1/S2/S3, F1-F6 and P1 are CARRIED OVER UNCHANGED from
+  ep2-b17-shake-noamber-0819 -- read that spec for their exact wording. P1''s ceilings stay at mean
+  |RGB| from the f000 init below 40 at f008 and below 55 at f096; the 0819 take cleared them at 13.6
+  and 31.0, so holding them is not a new burden.
+
+  NEW, AND THE ONLY ADDITION: P2 GARMENT COLOUR. Measured on frames decoded at full size, in the fixed
+  box rows 30%-55% of height by columns 35%-65% of width -- the standing figure''s torso, which is where
+  the cloak is in every frame of the 0819 take. At BOTH f036 and f060 the median hue of that box must
+  fall in the BLUE family, 180-260 degrees, with median saturation at or above 0.40.
+
+  Those numbers are read off the plate and the failure, not invented: the init''s cloak measures RGB
+  36,59,104 = hue 220 deg, saturation 0.65, value 0.41. The 0819 take''s garment measures RGB 144,110,118
+  = hue 346 deg, saturation 0.24 -- so 0819 FAILS this clause on both axes, which is the point of writing
+  it. A pass means the cloak stayed the colour the plate painted it.
+
+  P2 IS SCORED SEPARATELY AND THE VERDICT MUST REPORT ACTION, PLATE AND GARMENT AS THREE RESULTS. Collapsing
+  them is how an orange cloak passed a bar on 0818 and how a pink one passed on 0819.
+
+  NOT SCORED: beauty, whether it ships, the grade -- R4. No brush is asked for or scored.'
+why: 'ONE VARIABLE. The 0819 positive prompt says only ''a patchwork cloak'' and never names its colour,
+  so nothing in the conditioning defends the navy against the model''s own prior. This sample names
+  it and changes nothing else -- same init, SAME SEED 20260941, same negative, same recipe, same frame
+  count -- so any change in garment colour is attributable to the clause.
+
+  The negative was deliberately NOT touched. Adding ''pink cloak'' there would be a second variable,
+  and the cold-open sweep already showed this engine ignoring negatives it was given (four of six seeds
+  pushed in against an explicit ''zoom, dolly, push in''). Naming the thing you want in the positive
+  is the lever with evidence behind it; banning what you do not want is the one without.
+
+  If P2 still fails with the colour named and the seed held, the finding is that this plate''s garment
+  cannot be held by prompt at all, and the next move is a region-locked composite -- the route already
+  proven on beat 08 by composite-init-pattern.md 9b -- not a third prompt wording.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-shake-navy-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\
+    \nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n     \
+    \   h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!!\
+    \ SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale\
+    \ = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\n\
+    im = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left,\
+    \ top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\n\
+    im.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f\
+    \ -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" %\
+    \ a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-shake-navy-0819\b17-motion-prompt.txt: A small round goblin in a DEEP NAVY-BLUE
+    patchwork cloak -- the cloak is dark blue, the colour it already is in this frame pushes himself
+    up from the grass to standing, GIVES HIS CLOAK A SHAKE -- he grips the cloak and shakes it out,
+    the patchwork fabric flaps and billows and settles, the hem swinging out and back -- and then turns
+    away toward the open field. 2D anime, hand-drawn cel animation, static locked framing, the frame
+    never moves, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed,
+    newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b17-shake-navy-0819\b17-negative.txt: brushing, brushing off, wiping, sweeping
+    the hand across the cloak, dusting himself off, camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame, second goblin, second character, duplicate character, extra face, face in the background,
+    crowd, photorealistic, 3D render, CGI, live action, text
+  C:\banyan-farm\ep2-b17-shake-navy-0819\b17-jobs-encode.json: "[\n {\n  \"beat\": 17,\n  \"embeds\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\b17-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\b17-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\b17-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b17-shake-navy-0819\b17-jobs-render.json: "[\n {\n  \"beat\": 17,\n  \"seed\":\
+    \ 20260941,\n  \"embeds\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\b17-embeds.pt\"\
+    ,\n  \"init\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\b17-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-navy-0819\\\\\\\\17-goodbye-LTX-shake-navy-0819.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-shake-navy-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-full-s1-0815\b17-init-704x1280.png
+  - --sha256
+  - 74e8eccf9653edadd9cdd70b419b9a325932bede3238ace06a2308fb95452a6a
+  - --out
+  - C:\banyan-farm\ep2-b17-shake-navy-0819\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-shake-navy-0819\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-shake-navy-0819\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-shake-navy-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-shake-navy-0819\bench-shake-navy-0819.jsonl
+  - --bench-label
+  - ep2-b17-shake-navy-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-shake-navy-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-shake-navy-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-LTX-shake-navy-0819.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b17-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-shake-navy-0819.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n  \
+    \  c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-shake-navy-0819.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-shake-navy-0819\17-goodbye-LTX-shake-navy-0819.mp4
+- C:\banyan-farm\ep2-b17-shake-navy-0819\b17-init-704x1280.png
