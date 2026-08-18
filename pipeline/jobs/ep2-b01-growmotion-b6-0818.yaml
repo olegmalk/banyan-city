@@ -161,3 +161,17 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
+
+# ============================================================================
+# OUTCOME, appended 2026-08-18 (night) after the render. The bar above is unedited.
+# ============================================================================
+outcome:
+  verdict: FAIL on G1 (a four-frame pop with a 2.9x area step) and G5/H4 (zoom 1.10 with a 64 px drift).
+  ran: 'rtx5090, all five steps rc=0, published 6 files. Read off a 21-frame sheet plus a per-frame blob measurement through the flip and whole-frame registration at f060 and f120.'
+  g1_growth: 'FAIL, though it is the softest pop of the three. The change occupies f018-f021 -- mint falls 13 -> 6 -> 0 px while purple rises 2 -> 5 -> 37 -- so there are three transitional frames rather than one or none. But the step in the fig itself is the largest of the sweep: 16 px of mint at f017 becomes 46 px of purple by f022, a 2.9x jump in area. What follows is excellent and continuous (46 px to 193 px by f120, no step anywhere), which again puts the entire failure in the first fifth of a second.'
+  g2_purple: 'PASS. Deep purple-violet end state.'
+  g3_leaves: 'PASS. Two blades throughout.'
+  g4_size_grass: 'PASS. 1.78x across f040->f120 raw, about 1.62x once the camera''s own 1.10 is divided out -- under a doubling, and it stays below the grass tops.'
+  g5_h4_camera: 'FAIL. Whole-frame registration gives zoom 1.10 at BOTH f060 and f120, with the frame also drifting to shift (-8,-16) units -- about 64 px vertically at full resolution. That is a push plus a tilt, not a lock, against 1.00/(0,0) on seed 20260830 and 1.05 on the pick.'
+  style: 'Degrades, in the milder direction of seed 20260828''s failure rather than its severe one. The dawn sky wedge flattens into a uniform warm amber by the middle third and the grass loses its edges to a soft blur by the last third -- but the blades stay blade-shaped and no stray hairline strokes appear, so it does not reach the loss-of-drawing line written into that seed''s spec. It did not need to: the camera clause fails cleanly and on a number.'
+  what_this_licenses: 'Nothing. This closed the six-seed sweep; the summary and the reasoning for stopping are appended to ep2-b01-growmotion-b-0818.yaml.'
