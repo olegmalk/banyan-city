@@ -83,6 +83,31 @@ clause covered plate fidelity, so it is recorded as a gap and **not** scored as 
 failure. Part of it is mine — I put "afternoon light warming toward amber" in the
 positive prompt myself.
 
+**The follow-up ran and PASSED all four clauses, and it cost me a finding.**
+`ep2-b17-shake-noamber-0819` — same init, same seed, same negative, same recipe, that
+one clause deleted — reads **13.6 at f008 against a ceiling of 40** and **31.0 at f096
+against 55**, where the amber take read 80.7 and 87.3. The sky that had moved 102
+levels moves 8.7. Action clauses all hold: he stands, spreads the cloak wide and lets
+it collapse back with his feet planted, and strides off with his back to the lens.
+**Beat 17 now has a take that matches canon and keeps the plate's world.**
+
+That result **falsifies what I wrote three hours earlier.** I had called the 0818
+collapse "the cleanest instance we have of an I2V conditioning-boundary collapse" and
+published beat 17 as that hypothesis's clean hit. A boundary artifact does not vanish
+because six words leave a prompt. The cause was the prompt. Both the verdict and
+`latent-boundary-cold-open-0819.md` are corrected, retitled and banner-flagged rather
+than quietly edited — **the hypothesis is now demonstrated nowhere in our material.**
+It had a price attached, which is why it mattered: the 0818 verdict had named a
+start-frame conditioning-strength change to `ltx_i2v.py` as the next move, which would
+have been patching the code path every render passes through in order to fix a prompt.
+**Withdrawn as unmotivated.**
+
+**Residual defect, and it is a hole in a clause I wrote myself:** the world is
+preserved and the *garment* is not. His dark blue-violet cloak still becomes a
+pink-and-cream poncho from f024 on. P1 passes anyway, because it measures whole-frame
+and band-level distance and a cloak is a small share of the pixels. Right idea, wrong
+granularity — the next bar needs a garment-region clause.
+
 ## 4. Two research findings, both zero-GPU, one of them a clean negative
 
 - **The latent-boundary lead: one hit, one miss.**
@@ -127,12 +152,9 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 
 ## 6. State of the machines and the site
 
-- **rtx5090** — healthy. `ep2-b17-shake-noamber-0819` was claimed at 20:08:33Z and
-  should be done by ~20:15Z; **it is the one thing in flight and it is unjudged.**
-  Its bar is pre-registered and carries S1/S2/S3 verbatim plus a new P1 plate-fidelity
-  ceiling (mean |RGB| from init < 40 at f008, < 55 at f096 — set from the measured 0818
-  failure of 80.7/87.3, not from taste). **P1 is scored separately from the action and
-  the verdict must report both.**
+- **rtx5090** — healthy, every job tonight `rc=0`. `ep2-b17-shake-noamber-0819`
+  finished at 20:14:34Z and **has been judged and committed** (PASS on S1/S2/S3/P1).
+  Nothing is in flight at handover.
 - **The 8 files in `C:\banyan-queue\ready` are not work.** They are all `.HOLD`,
   `.HOLD-wrong-action` or `.DUP-already-ran` suffixed and the runner correctly
   reports `ready=0`. Do not be fooled by the file count as I nearly was.
@@ -164,10 +186,10 @@ palette collapse destroying correlation. Redone among post-collapse frames it ho
 
 ## 8. What I would pick up first
 
-1. **Judge `ep2-b17-shake-noamber-0819`** against its P1 clause. If P1 still fails
-   with the amber clause gone and the seed held, the collapse is the conditioning
-   boundary and not the prompt — and the next move is a start-frame conditioning knob
-   `ltx_i2v.py` does not expose, which is a daytime decision, not another sample.
+1. **Beat 17's cloak colour.** The take passes and the garment is still wrong. One
+   variable — name the plate's cloak colour in the positive prompt — plus a P2
+   garment-region clause in the bar, since P1 demonstrably cannot see it. This is the
+   only render-side thing beat 17 still needs.
 2. **Beat 08's arm** — the one piece of ruled work I did not reach. It is a steward
    route choice, not a founder question.
 3. **`ep2-b01-growmotion-b7`/`b8`** were queued by another lane and are unjudged. They
