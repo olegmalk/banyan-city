@@ -1,0 +1,205 @@
+# ep2-b17-shake-0818 -- 2026-08-18, night supervisor (v2).
+#
+# THE FIRST RENDER OF THE RESTAGED BEAT 17. On 2026-08-18 the steward restaged the
+# action under the founder's delegation: "The scavenger stands, brushes off, and turns
+# to go." became "The scavenger pushes himself up, gives his cloak a shake, and turns
+# to go." (node.md:108, superseded line kept struck through beneath it). The restage
+# was justified by measurement -- 8/8 STAND, 8/8 TURN, 0/8 BRUSH across eight seeds --
+# but NOTHING HAS BEEN RENDERED AGAINST THE NEW LINE. Beat 17 therefore has no take
+# that matches canon, and that is what this job fixes.
+#
+# ONE SAMPLE. The wording is new, and a new wording is a recipe change under the
+# founder's one-sample rule. Everything else is deliberately held constant:
+#   * the init is the WIDE full-body plate, sha 74e8eccf, asserted in bytes by
+#     cover_crop.py before a single pixel is generated -- the same plate that drove
+#     8 of 8 stand-and-turn, so S1 and S3 are near-certain and are NOT the question;
+#   * the recipe is byte-for-byte the one already proven on this beat (97f, 704x1280,
+#     guidance 2.0, distilled sigmas, two-stage, crf 33, sequential offload), cloned
+#     from ep2-b17-amp2-armsup-0816 rather than retyped;
+#   * ONE seed. Reseeding an unwatched wording is what retired four levers on
+#     2026-08-16.
+#
+# THE BAR IS WRITTEN BELOW, BEFORE THE RENDER, and its S2 clause is deliberately hard
+# to satisfy by accident: cloth that merely trails him as he stands is not a shake.
+# The restage's whole bet is that a shake is whole-body motion where a brush was fine
+# hand action. S2 is the clause that collects on that bet or calls it.
+#
+# $0. Local card, no provider, nothing spends.
+id: ep2-b17-shake-0818
+task: ep2-b17-shake-0818
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 20
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: night supervisor (v2), 2026-08-18 -- first render of the RESTAGED beat 17 action
+consumer: Beat 17's slot in the episode 2 cut. The beat was restaged on 2026-08-18 -- `brushes off`
+  became `gives his cloak a shake` -- because the brush is a measured engine limit (0 of 8 across eight
+  seeds on the `full` wording, and it still would not complete a stroke on a tight insert plate drawn
+  so a stroke had somewhere to go). NOTHING HAS BEEN RENDERED AGAINST THE NEW LINE YET. This is that
+  render, and it is ONE sample because the wording is new.
+success: A 704x1280 mp4, 97 frames at 24fps, opening on the WIDE full-body init (sha 74e8eccf, the plate
+  that drove 8 of 8 stand-and-turn). PASS is S1+S2+S3 together, with S2 the only clause genuinely in
+  doubt.
+done_when: 'PRE-REGISTERED BEFORE THE RENDER EXISTS. Beat 17''s done_when in review/ep2-picks/done-definitions.yaml
+  reads ''stand, brush, turn -- a departure'', and the 0818 correction supersedes `brush` FOR RENDERING
+  while defining no replacement clause. So the shake clause is written here, now, and it is written
+  tight enough that it cannot be satisfied by the standing motion alone.
+
+  S1 STAND: he goes from seated in the grass to upright on his feet, continuously, followable across
+  consecutive frames. Expected to pass -- this init is 8 of 8 on it -- and a pass here is NOT news.
+
+  S2 SHAKE (THE LOAD-BEARING CLAUSE): the cloak FABRIC moves as fabric, distinctly from the body that
+  wears it. To pass, the cloak must show, in a window of consecutive frames, a displacement of its hem
+  or a fold that REVERSES DIRECTION at least once -- out and back, the shape of a shake -- of at least
+  one fold-width, while the torso is not itself translating by that amount in the same direction. Cloth
+  that merely trails the body as he rises or swings once as he turns is NOT a shake and is scored F2,
+  not a partial pass. Read by opening consecutive frames, never by a single diff number.
+
+  S3 TURN: he turns away from the sapling toward the open field. His face leaving the lens is BY DESIGN
+  here -- done-definitions records that this is the one beat where turning away IS the action -- so
+  it is not a staging-law violation and must not be scored as one.
+
+  Pre-registered FAIL modes: F1 FROZEN (no whole-body motion; measure it, do not eyeball it). F2 STAND-ONLY
+  (S1 and S3 happen, the cloak never shakes -- the expected failure if the engine treats a shake the
+  way it treated the brush; this is a FAIL, not a partial pass, and it is the informative outcome).
+  F3 SCENE BREAK or a second figure or any extra face. F4 MORPH or TELEPORT. F5 CAMERA MOVE (frame edges
+  or horizon translating). F6 STYLE BREAK to photoreal/3D.
+
+  NOT SCORED: whether the take is beautiful, whether it ships, and the amber grade -- all R4. Also not
+  scored: any brush. `brushes off` is superseded for rendering and no take may be failed for lacking
+  a brush stroke.'
+why: 'The restaged line has never been tested, so beat 17 currently has NO take that matches canon.
+  This is the cheapest possible test of it: the plate already exists and is verified in bytes, the recipe
+  is the one already proven on this beat, and the only new thing is the wording. Eleven minutes on the
+  local card, $0, no new checkpoint, no sweep, ONE seed.
+
+  It is also a real experiment rather than a formality. The 0-of-8 brush finding says this engine will
+  not render a fine hand action against cloth. The restage bet is that a SHAKE is whole-body motion,
+  which the engine renders at 12 of 12. S2 is written to tell those two apart: if the cloak only trails
+  his body, the bet was wrong and the restage bought nothing, and that is worth knowing before the beat
+  is staged a third time.'
+est_minutes: 11
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-shake-0818\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\n\
+    from PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\
+    \nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n     \
+    \   h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!!\
+    \ SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale\
+    \ = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\n\
+    im = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left,\
+    \ top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\n\
+    im.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f\
+    \ -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" %\
+    \ a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-shake-0818\b17-motion-prompt.txt: A small round goblin in a patchwork cloak
+    pushes himself up from the grass to standing, GIVES HIS CLOAK A SHAKE -- he grips the cloak and
+    shakes it out, the patchwork fabric flaps and billows and settles, the hem swinging out and back
+    -- and then turns away toward the open field. 2D anime, hand-drawn cel animation, static locked
+    framing, the frame never moves, flat cel shading, clean ink linework, anime key art, afternoon light
+    warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b17-shake-0818\b17-negative.txt: brushing, brushing off, wiping, sweeping the hand
+    across the cloak, dusting himself off, camera pan, camera tilt, zoom, dolly, push in, pull back,
+    tripod, cut to another shot, scene change, different location, split screen, still image, freeze
+    frame, second goblin, second character, duplicate character, extra face, face in the background,
+    crowd, photorealistic, 3D render, CGI, live action, text
+  C:\banyan-farm\ep2-b17-shake-0818\b17-jobs-encode.json: "[\n {\n  \"beat\": 17,\n  \"embeds\": \"\
+    C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\b17-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\b17-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\b17-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b17-shake-0818\b17-jobs-render.json: "[\n {\n  \"beat\": 17,\n  \"seed\": 20260941,\n\
+    \  \"embeds\": \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\b17-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\b17-init-704x1280.png\",\n  \"out\":\
+    \ \"C:\\\\\\\\banyan-farm\\\\\\\\ep2-b17-shake-0818\\\\\\\\17-goodbye-LTX-shake-0818.mp4\"\n }\n\
+    ]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-shake-0818\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-full-s1-0815\b17-init-704x1280.png
+  - --sha256
+  - 74e8eccf9653edadd9cdd70b419b9a325932bede3238ace06a2308fb95452a6a
+  - --out
+  - C:\banyan-farm\ep2-b17-shake-0818\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-shake-0818\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-shake-0818\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '97'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-shake-0818
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-shake-0818\bench-shake-0818.jsonl
+  - --bench-label
+  - ep2-b17-shake-0818
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (17-goodbye). Without it the glob matches\n# nothing and the step\
+    \ publishes nothing while returning a code that reads\n# like a render failure.\nimport glob, hashlib,\
+    \ os, shutil\nsrc_dir = \"C:/banyan-farm/ep2-b17-shake-0818\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-shake-0818\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(src_dir + \"/17-goodbye-LTX-shake-0818.mp4*\"\
+    )\n             + glob.glob(src_dir + \"/b17-init-704x1280.png\")\n             + glob.glob(src_dir\
+    \ + \"/bench-shake-0818.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c =\
+    \ os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-shake-0818.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-shake-0818\17-goodbye-LTX-shake-0818.mp4
+- C:\banyan-farm\ep2-b17-shake-0818\b17-init-704x1280.png
