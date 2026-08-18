@@ -1,0 +1,251 @@
+# Per-beat source manifest for review/ep2-demo-0818/ep2-demo-0818.mp4
+#
+# ONE LINE PER BEAT: which take is in the cut, and WHY it is the one in the cut.
+# `why` is exactly one of:
+#   new              — footage that was not in the 2026-08-17 cut
+#   carry-forward    — the 2026-08-17 pick, re-checked today against every take
+#                      dated 2026-08-17/18 and kept because nothing newer earned
+#                      the slot
+#   slate            — no footage exists that a verdict lets into a cut
+#
+# THE CARRY-FORWARDS ARE NOT LAZINESS. Every ep2 job dated 0817/0818 was read
+# before this cut was assembled. Only beats 01, 02, 03, 07, 08, 11, 14, 17 and 18
+# produced any new MOTION at all; everything else dated 0817/0818 is plates and
+# stills, which cannot fill a cut slot. Of those nine, 02 and 11 are already the
+# 0817 picks, 07 and 08's new takes declare `is_show_content: false` (engine
+# probes, never cuttable), 03 and 17's new takes carry written FAIL verdicts, 18's
+# three new takes have NO verdict written on them at all, and 01 and 14 are the
+# two changes below. No 0817 pick has been retracted or called broken by any
+# later verdict.
+#
+# Nothing here is promoted, approved or canon. This is a bench assembly (--out),
+# it has no leaf, and it is not in lineage.yaml.
+
+cut: review/ep2-demo-0818/ep2-demo-0818.mp4
+sha256: 79463e3c1a19cd67e013fab4badbd80ad6cdfacd4a56bc59e96065aaa5ff4a1a
+duration_s: 112.47
+footage_beats: 17
+slate_beats: 4
+supersedes: review/ep2-demo-0817/ep2-demo-0817.mp4
+cost_usd: 0.0
+
+beats:
+
+  - beat: 1
+    slug: COLD OPEN
+    take: 01-cold-open-b01-nubgrow-b-s20260826-0818.mp4
+    why: new
+    detail: >-
+      Replaces the 0817 pick `01-cold-open-b01-purple.mp4`. Seed 20260826 of
+      ep2-b01-growmotion-b-0818 — the founder's own 2026-08-13 route (inpaint a
+      nub into frame 1, grow it with the motion prompt), on the frame-1 plate
+      that passed its bar 7 of 7. The ONLY seed of six that cleared its
+      pre-registered bar (G1 growth, G2 purple, G3 two leaves, G4 scale, G5
+      camera). Stated caveat: the light blooms from dawn purple to pale amber.
+      Copied off the box; bytes hash to the value in that job's own .sha256.
+    source: rtx5090 C:\banyan-farm\courier-box\farm-out\ep2-b01-growmotion-b-0818\01-cold-open-LTX-nubgrow-b-s20260826.mp4
+    verdict: pipeline/jobs/ep2-b01-growmotion-b-0818.yaml — PASS, one caveat
+    provisional: true
+
+  - beat: 2
+    slug: THE SPRINT
+    take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
+    why: carry-forward
+    detail: >-
+      Still the newest verdict's own pick (done-definitions.yaml
+      beats.'02'.judged_0817_anchor_wave.PICK = s20260834). All sixteen seeds
+      FAIL the beat's structural bar — the plate has no sapling — so no seed can
+      close beat 02. Footage that misses its bar, in anyway, exactly as on 0817.
+    provisional: true
+
+  - beat: 3
+    slug: BAD COVER
+    take: 03-bad-cover-b03-refire-0814.mp4
+    why: carry-forward
+    detail: >-
+      A swap candidate exists and is deliberately NOT taken: s20260846 is the
+      0817 st-wave PICK and done-definitions.yaml calls it "an available swap for
+      whoever owns the cut" — but all fifteen of its seeds carry
+      done_when_verdict FAIL (its plate has no trunk, so the size-mismatch joke
+      cannot read), and refire-0814's verdict is on record as NOT overturned.
+      Swapping a written FAIL in over an incumbent whose verdict stands is not a
+      staging call; it needs the beat's owner. Named on the page rather than done
+      quietly.
+
+  - beat: 4
+    slug: THE FOOTNOTE
+    take: 04-the-footnote-b04-refire-0814.mp4
+    why: carry-forward
+    detail: >-
+      No ep2-b04 job dated 0817/0818. The only new artefact is a RECOVERED 0813
+      clip (farm-out/ep2-b04-balloon-pair), whose verdict is a FAIL — the balloon
+      fault reproduces at a second seed.
+
+  - beat: 5
+    slug: THE PATROL
+    take: 05-the-patrol-b05-standB-trim.mp4
+    why: carry-forward
+    detail: >-
+      0817/0818 work on this beat is stills only (cast, attrbind, mac-plate).
+      review/ep2-guards-0818 reads 0 of 12 frames clear of every term of the
+      beat's bar, so no new plate is ready to animate from.
+
+  - beat: 6
+    slug: THE CLIPBOARD
+    take: 06-the-clipboard-b06-scene-0814r-trim.mp4
+    why: carry-forward
+    detail: >-
+      Stills only (ep2-b06-cast-0817); review/ep2-guards-0818 reads 0 of 12.
+
+  - beat: 7
+    slug: CONFISCATE
+    take: null
+    why: slate
+    detail: >-
+      One motion job exists dated 0817 (ep2-b07-twofig-turn-0817) and it declares
+      `is_show_content: false` in its own spec — "it must never be cut into an
+      episode". An engine probe is not footage.
+
+  - beat: 8
+    slug: INSIDE HIM
+    take: 08-inside-him-b08-twohander.mp4
+    why: carry-forward
+    detail: >-
+      Both 0817 motion takes are `is_show_content: false` engine probes. The 0818
+      still lane FAILed on B4 (the clipboard stays raised) and ep2-b08-boardcomp-0818
+      is a board-only sample filed as a pre-registered FAIL.
+
+  - beat: 9
+    slug: THE PAUSE
+    take: null
+    why: slate
+    detail: >-
+      Stills only (cast, mac-plate). No motion has ever been rendered for this
+      beat that a verdict lets into a cut. Still blocked on the guard-cast call.
+
+  - beat: 10
+    slug: NO FORM
+    take: 10-no-form-b10-pairB-trim.mp4
+    why: carry-forward
+    detail: >-
+      Stills only; guards-0818 reads 0 of 12, and review/ep2-mac-plates-0818
+      rejects the new b10 plate outright ("no goblin at all"). That condemns the
+      new plate, not this clip.
+
+  - beat: 11
+    slug: THEY LEAVE
+    take: 11-they-leave-b11-w4-s20260903-0817.mp4
+    why: carry-forward
+    detail: >-
+      It IS the newest take and the picked one — s20260903 passes all six of the
+      beat's pre-registered conditions unsoftened. s20260912 also passes six but
+      its own verdict rejects it for an unrequested 13 percent camera pull-back.
+      The 2026-08-17 "b11 r1s1 promotion" on the board is a PLATE, not motion.
+    provisional: true
+
+  - beat: 12
+    slug: RELATED
+    take: 12-related-b12-tightB-untrimmed.mp4
+    why: carry-forward
+    detail: No ep2-b12 job dated 0817 or 0818 exists anywhere in the tree.
+
+  - beat: 13
+    slug: THE SHADE
+    take: 13-the-shade-b13-refire-0814.mp4
+    why: carry-forward
+    detail: No ep2-b13 job dated 0817 or 0818 exists anywhere in the tree.
+
+  - beat: 14
+    slug: THE DEFENSE
+    take: 14-the-defense-b14-macplate-r1s1-0818.mp4
+    why: new
+    detail: >-
+      WAS A SLATE ON EVERY PREVIOUS CUT. First footage this beat has ever had.
+      Seed 20260818 of ep2-b14-mac-motion-0818, animating the r1s1 plate ruled
+      shipped on 2026-08-18. Its verdict is a FAIL on M2 (the glance never
+      returns) and M3 (the face reads sullen, not embarrassed); M1 (hands to the
+      dirt) and M4 (same figure, camera locked) PASS, and the standing pale-limb
+      check PASSES. It is in because real footage of the beat beats a slate for
+      review purposes, not because it passes. Bytes hash to 1529920c…, the value
+      recorded in the verdict itself.
+    source: rtx5090 C:\banyan-farm\courier-box\farm-out\ep2-b14-mac-motion-0818\14-the-defense-LTX-macplate-r1s1.mp4
+    verdict: pipeline/jobs/ep2-b14-mac-motion-0818.yaml — FAIL on M2 and M3
+    not_trimmed: >-
+      The verdict's owner-note says 80 of 121 frames are frozen and "a trim to
+      the f085-f121 window is the obvious first edit". NOT DONE, and for a
+      mechanical reason rather than a taste one: that window is 1.54s and beat
+      14's slot in this cut is 5.08s, so the trimmed clip would be looped or
+      palindromed to fill it — which is worse than the frozen head it removes.
+      The full take is in, and the frozen two-thirds is visible.
+    provisional: true
+
+  - beat: 15
+    slug: GOOD LISTENER
+    take: null
+    why: slate
+    detail: No ep2-b15 job dated 0817 or 0818; no footage exists.
+
+  - beat: 16
+    slug: WHY
+    take: 16-why-b16-anim-0814.mp4
+    why: carry-forward
+    detail: No ep2-b16 job dated 0817 or 0818 exists anywhere in the tree.
+
+  - beat: 17
+    slug: GOODBYE
+    take: 17-goodbye-b17-full-s2-0815.mp4
+    why: carry-forward
+    detail: >-
+      All five 0817 takes carry written FAIL verdicts — the four bigbody seeds
+      (s20260911-914) read "0 OF 4 REPRODUCE", and gestureinit-0817 measures 0.98
+      hand-widths against a pre-registered 1.0 bar. The 0818 script restage states
+      that no pick, take or verdict was changed. The incumbent still misses its
+      own bar (he never brushes) and is in anyway, unchanged from 0817.
+
+  - beat: 18
+    slug: THE DECISION
+    take: 18-the-decision-b18-plainfig.mp4
+    why: carry-forward
+    detail: >-
+      FLAGGED, because this is the cheapest upgrade available to this cut and it
+      was not taken. Three fresh motion seeds exist on the box —
+      ep2-b18-tremble-s2026087{1,2,3}-0817 — off a plate whose own verdict is
+      PASS-DRAWN. NO VERDICT HAS BEEN WRITTEN ON THE CLIPS THEMSELVES. Nothing
+      calls them a pass, so nothing licenses a swap, and this lane did not write
+      one on its way past. A reading pass there is the next real move on beat 18.
+
+  - beat: 19
+    slug: THE DROP
+    take: null
+    why: slate
+    detail: >-
+      The only new artefact is a RECOVERED 0812 clip whose verdict is a FAIL —
+      the fig duplicated instead of falling and frame 0 is the white burst.
+
+  - beat: 20
+    slug: EVIDENCE
+    take: 20-evidence-b20-shape-headtrim.mp4
+    why: carry-forward
+    detail: >-
+      Stills only. review/ep2-mac-plates-0818 rejects the new b20 plates ("all
+      the wrong character — a round-headed chibi child"), which condemns the new
+      plate and not this clip.
+
+  - beat: 21
+    slug: THE ANSWER
+    take: 21-the-answer-b21-daylight-0814.mp4
+    why: carry-forward
+    detail: >-
+      ep2-b21-leafcanon-inpaint-0817 passes "on the axis under test" but it is a
+      4-frame PLATE and its own text says the motion seeds are "now payable",
+      i.e. not yet fired. Its sibling ep2-b21-scale-0817 is FAIL-COUNT. No b21
+      motion dated 0817/0818 exists, on disk or on the box.
+
+voice:
+  policy: >-
+    NO VOICE WAS SYNTHESISED FOR THIS CUT (STEWARDSHIP §6). The VO set is byte
+    for byte the one the 2026-08-17 cut used — the existing Chatterbox 0.5B takes
+    already in the node — copied forward unchanged. Beats 2, 19 and 21 carry no
+    VO because the script gives them none.
+  engine: chatterbox-0.5B
+  tracks: 18

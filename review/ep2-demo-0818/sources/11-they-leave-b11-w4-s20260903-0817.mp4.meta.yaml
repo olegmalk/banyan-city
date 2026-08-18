@@ -1,0 +1,103 @@
+# Shot provenance (7.2) — the block down to `compute_s_per_video_s` is the
+# sidecar video_task wrote AT RENDER TIME on the box, copied byte-for-byte from
+# C:\banyan-farm\courier-box\farm-out\ep2-b11-leave-w4-s20260903-0817\. The mp4
+# beside it hashes to a99a0874c2b77c76c12c877044d9cbd176996e58d325111dcb9078504702433e,
+# which is the value in that directory's own ep2-b11-leave-w4-s20260903-0817.sha256
+# manifest, checked after the copy. This is a RENDER-TIME record, not a
+# reconstruction — unlike beats 02 and 17 in this same cut.
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 11
+size: 704x1280
+seconds: 4.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260903
+task: ep2-b11-leave-w4-s20260903-0817
+cost_usd: 0
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0174
+compute_s_per_video_s: 57.3
+# --- appended by ep2-b11-leave-w4-s20260903-0817 after the render, and LEFT
+# STANDING because it was true when it was written and its caution still governs.
+approved: false
+provisional: true
+is_show_content: false
+note: |
+  ONE SAMPLE OF ONE WORDING, NOT A PICKED TAKE. Beat 11 currently
+  holds a knowingly broken take in the cut; this is the first
+  attempt at a replacement off the first staged plate of the two
+  APPROVED guards. It has not been read by anyone at the moment it
+  is written, no seed batch may be filed off it before it is, and
+  picking it into an episode is the author's call and not this
+  lane's.
+# --- appended 2026-08-17 by the demo-cut lane. Two fields the render-time
+# sidecar left EMPTY (`prompt: ''`, `negative: ''`) are supplied here from the
+# job spec that produced this exact cell, and they are labelled as coming from
+# there rather than from the render.
+prompt_source: pipeline/jobs/ep2-b11-leave-w4-s20260903-0817.yaml (the render-time sidecar recorded prompt and negative as empty strings)
+prompt: >-
+  Two guards seen from behind walking off into the distance through tall grass,
+  slowly getting a little smaller as the ground opens up between them and the
+  camera, both men still walking and still in frame at the end, gesturing at each
+  other as they argue. 2D anime, hand-drawn cel animation, flat cel shading, clean
+  ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+  best quality, very aesthetic.
+negative: >-
+  camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another
+  shot, scene change, different location, split screen, still image, freeze frame,
+  facing viewer, looking back, bald, 3boys, extra person, crowd
+init_plate: 11-they-leave-mac-plate-r3s1.png (farm-out/ep2-b11-plate-pub-0817 — the published plate of the two APPROVED guards), cover-cropped to 704x1280
+init_plate_sha256: 425d59f6057b3df1f1e7445f92a888d11a68ef21c9ccb83a7334e40718e6f0ca
+script_line: >-
+  Beat 11 THEY LEAVE, node 002b-first-citizen — the two guards walk away.
+demo_note: >-
+  STEWARD PICK of the fourteen-seed ep2-b11 W4 wave, judged 2026-08-17 and
+  recorded in commits c1aa2f70, 72c2c800, c7c82769, 039a83d6, 01ae1119, 08837596
+  and 91266fa4. It PASSES ALL SIX of beat 11's pre-registered conditions,
+  unsoftened: two guards with backs turned in all 97 frames (guard-B head crops
+  read at TWO-frame density, guard-A at four — no brow, eye, nose or mouth on
+  either man anywhere); both men fully in frame at f096 and the field present at
+  f000; costumes and identities holding end to end, costume gap 49.1 -> 49.3;
+  coat heights 261 -> 183 (0.701) and 314 -> 249 (0.793); and the fitted
+  background scale pinned at exactly 1.000 in every sampled frame, so the
+  recession is the men walking and not a camera pull-back. Terminal-freeze index
+  0, reported separately from the hold (holds every 3 frames, ~32 distinct
+  pictures — this clip judders at an effective 8 fps like the rest of the cut).
+  The background-scale figure comes from a similarity transform fitted to the
+  background only, validated on five gates including a synthetic pull-back it
+  recovered to 0.700 and a synthetic pan it read back as zero scale change. NO
+  camera-scale claim is made about any clip that instrument did not measure.
+  IT REPLACES 11-they-leave-b11-finalB-BROKEN.mp4, which was in the 2026-08-15
+  and 2026-08-16 cuts on purpose so the fault would be visible: the near guard's
+  identity collapsed away from the plate across f16-f21 and a blind reader scored
+  it 1/10. That take is gone from this cut.
+  WHAT IS STILL WRONG, and it is not the action: this take comes off the NEW
+  cast-correct guard plate, and beats 05, 06 and 10 in this same cut do not. Read
+  side by side, beat 11's two men (a dark-haired man in a cream tunic and a
+  sandy-haired man in a brown coat, in a bright windblown field with no sky in
+  frame) do not look like the brown-haired boys in brown shirts and vests under a
+  blue cloudy sky in 05, 06 and 10. The cast discontinuity is a real fault of the
+  cut and is named on the demo page; it is not a fault of this clip, and no
+  verdict on 05, 06 or 10 has been changed here.
+  Second: this clip is a much wider shot than the guard beats around it.
+  Its own render-time note above says picking it into an EPISODE is the author's
+  call (R4). This is a private demo cut with no leaf and no lineage entry, not an
+  episode; the pick is a steward pick with reasons and stands unless the founder
+  vetoes it.
+provisional_reason: >-
+  Stamped `approved: false` / `provisional: true` / `is_show_content: false` by
+  its own job spec before any lane read it. A lane has now read all 97 frames
+  consecutively and it clears all six conditions, but nothing about that makes it
+  an approved take or canon. Taste is the founder's (R4).
+runners_up_for_veto_only: >-
+  s20260912 also passes all six with the largest on-screen departure (0.615 /
+  0.651) but its fitted background scale ends at 0.87 — the camera pulled back
+  13%, and netted out its own-legs recession is 0.707 / 0.748, the same as this
+  pick's. s20260907 and s20260901 pass and are cleaner but milder. s20260913
+  passes and is the weakest of the five. Recorded for veto, not as a comparison
+  chore.
