@@ -32,6 +32,72 @@ goblin_gate_CORRECTION_0816: >-
   Some of these beats are still blocked on other, real grounds (beat 08 needs a two-figure guard+goblin
   reference that nothing on disk has; beat 19 is not renderable until a plate exists with the fruit ON
   THE STEM). Those grounds are simply not this one.
+ep1_publication_CORRECTION_0819:
+  correction: >-
+    CORRECTION, 2026-08-19 (resolved-but-open drift audit; third of its class, after the goblin gate
+    above and the sapling review card). READ THIS BEFORE ANY EPISODE-1 BEAT ROW BELOW. All fifteen of
+    episode 1's beats now read `state: done`. Eleven were changed on this date; four already were.
+    THE RULING IS THE AUTHORITY AND IT IS OLDER THAN THE MEASUREMENT: the founder closed episode 1 on
+    2026-08-13, recorded three separate times in the `resolved:` entries of review/inbox.yaml -- the
+    beat-02 rerun sheet, the sixteen-frame arm sheet, and the v42 provisional-cut card -- each
+    carrying the same verbatim words, quoted in `ruling_verbatim` below. Episode 1 has been PUBLISHED
+    and live for over a week. This file was measured 2026-08-14 09:40Z, a day AFTER that ruling, off
+    review/ep1-audit-0812/index.html, an audit table written before it; the per-beat states were
+    never reconciled with the whole-episode publication, so the status page kept publishing an
+    open episode.
+    THE TWO KINDS OF PASS, KEPT DISTINCT RATHER THAN BLENDED: beats 8, 9, 12 and 15 hold an
+    INDIVIDUAL verdict on their own motion -- beat 8 on "beat 8 looks good", and 9, 12 and 15 on
+    "yeah keep em still" -- and their notes are untouched by this correction. The other eleven (1, 2,
+    3, 4, 5, 6, 7, 10, 11, 13, 14) were never screened one at a time and are PASSED BY WHOLE-EPISODE
+    PUBLICATION: shipping the cut passed everything in the cut. Each of the eleven now says so in its
+    own note, in those words, so a reader of one row never has to come back up here to learn which
+    kind of pass it is holding.
+    WHY THIS MATTERED ENOUGH TO CORRECT: pipeline/episode_eta.py `read_progress()` feeds the sapling
+    tree in pipeline/charts.py, which published "EP 1 · 4/15 passed" on /status for six days after
+    the episode went live -- ten leaves drawn "waiting for your look" and one "waiting on a decision",
+    aimed at an author who had already ruled and moved on. A page that asks a man to re-decide what he
+    closed is the same defect as one that tells him he is blocking work he unblocked; that was
+    goblin_gate_CORRECTION_0816, and this is the same class one episode over.
+    WHAT IS NOT BEING CLAIMED. This records a WHOLE-EPISODE pass, not fifteen individual taste
+    verdicts, and it does not pretend the open per-beat questions were answered -- they were closed
+    UNREAD, which each note says: beat 02's loop, beat 05's sapling reveal, beat 06's sixteen-frame
+    sheet and its unscreened v42 zoom-out, beat 07's discarded half of its footage. It does not touch
+    the licence gate either: beats 6, 9, 12 and 15 remain licence-gated for REDISTRIBUTION of their
+    stills (the standing D15 debt), which is a rights question and never was a taste one. And it
+    invents no verdict the founder did not give -- the pass is his sentence, applied at the scope he
+    said it at.
+    BEAT-LEVEL TASTE RE-OPENS ONLY IF HE REOPENS IT (R4 -- taste belongs to the author). No lane may
+    re-file any of these fifteen as `candidate-awaiting-founder` or `blocked-decision` on its own
+    initiative. If he asks to look at episode 1 again, that request is the authority, and a dated
+    sibling correction is written here beside this one rather than erasing it.
+  ruling_verbatim: we have already published it dude, we are done. lets move on to episode 2.
+  ruling_date: '2026-08-13'
+  ruling_recorded_in: review/inbox.yaml (three resolved entries, all episode 1)
+  passed_individually: [8, 9, 12, 15]
+  passed_by_publication: [1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14]
+  counts_before: {done: 4, candidate-awaiting-founder: 10, blocked-decision: 1}
+  counts_after: {done: 15}
+  # The rows exactly as the 2026-08-14 09:40Z measurement left them. Kept because
+  # house style is that a superseded reading stays on the record and a dated
+  # sibling is written beside it -- these were true of the audit page they were
+  # read from, they were merely never checked against the ruling that predated
+  # them by a day.
+  states_before:
+    1: candidate-awaiting-founder
+    2: blocked-decision
+    3: candidate-awaiting-founder
+    4: candidate-awaiting-founder
+    5: candidate-awaiting-founder
+    6: candidate-awaiting-founder
+    7: candidate-awaiting-founder
+    8: done
+    9: done
+    10: candidate-awaiting-founder
+    11: candidate-awaiting-founder
+    12: done
+    13: candidate-awaiting-founder
+    14: candidate-awaiting-founder
+    15: done
 episodes:
 - number: 2
   node: 002b-first-citizen
@@ -236,51 +302,63 @@ episodes:
     superseded in one place by review/inbox.yaml
   beats:
   - n: 1
-    state: candidate-awaiting-founder
-    note: never judged, ever — no verdict has ever been recorded. A seed twin (ep1-b11/b13 pattern) is
-      landing a second candidate before he looks
+    state: done
+    note: never judged individually — no per-beat verdict was ever recorded, and the seed twin
+      (ep1-b11/b13 pattern) landed a second candidate he never had to look at. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 2
-    state: blocked-decision
-    note: his pick, but the loop is the open question — 'shorten the line, accept the loop, or pick differently?'
+    state: done
+    note: his pick, and the loop was the open question — 'shorten the line, accept the loop, or pick
+      differently?' The published cut carries the loop; the question closed unanswered. Passed by
+      whole-episode publication, founder 2026-08-13.
   - n: 3
-    state: candidate-awaiting-founder
-    note: still is canon, motion unjudged — the frame is settled, the movement over it is not
+    state: done
+    note: still is canon; the motion over it was never judged on its own. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 4
-    state: candidate-awaiting-founder
-    note: fix wired, unjudged — answers a note he gave, not screened since
+    state: done
+    note: fix wired, never screened on its own — it answers a note he gave. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 5
-    state: candidate-awaiting-founder
-    note: his sapling-reveal ask HAS four candidate frames he has never seen — the audit line saying no
-      candidate existed was true of the node and false of the repo
+    state: done
+    note: his sapling-reveal ask HAS four candidate frames he never saw — the audit line saying no
+      candidate existed was true of the node and false of the repo. The ask closed unpicked. Passed by
+      whole-episode publication, founder 2026-08-13.
   - n: 6
-    state: candidate-awaiting-founder
-    note: his zoom-out is in the cut for the first time and he has not seen it in context; separately,
-      sixteen frames on one sheet await a pick. Licence-gated for publication
+    state: done
+    note: his zoom-out landed in the v42 bench cut he chose not to screen, and sixteen frames on one
+      sheet closed unpicked; the PUBLISHED cut is the older one his earlier word grandfathered. Passed
+      by whole-episode publication, founder 2026-08-13.
   - n: 7
-    state: candidate-awaiting-founder
-    note: 'fix wired, unjudged. Open secondary: the beat throws away half its footage — flagged, not fixed'
+    state: done
+    note: 'fix wired, never screened on its own. The secondary — the beat throws away half its footage
+      — was flagged, never fixed, and shipped that way. Passed by whole-episode publication, founder
+      2026-08-13.'
   - n: 8
     state: done
     note: DONE on his word — 'beat 8 looks good'. The only beat in the episode with a positive verdict
-      on its motion
+      on its own motion
   - n: 9
     state: done
     note: held still under 'yeah keep em still'. Licence-gated for publication
   - n: 10
-    state: candidate-awaiting-founder
-    note: fix wired, unjudged
+    state: done
+    note: fix wired, never screened on its own. Passed by whole-episode publication, founder 2026-08-13.
   - n: 11
-    state: candidate-awaiting-founder
-    note: never judged, ever; seed twin ep1-b11-seedB-0813 queued so he has two candidates
+    state: done
+    note: never judged individually; seed twin ep1-b11-seedB-0813 was queued for a second candidate he
+      never had to pick between. Passed by whole-episode publication, founder 2026-08-13.
   - n: 12
     state: done
     note: held still under 'yeah keep em still'. Licence-gated for publication
   - n: 13
-    state: candidate-awaiting-founder
-    note: never judged, ever; seed twin ep1-b13-seedB-0813 queued
+    state: done
+    note: never judged individually; seed twin ep1-b13-seedB-0813 queued. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 14
-    state: candidate-awaiting-founder
-    note: still is canon, motion unjudged
+    state: done
+    note: still is canon, motion never judged on its own. Passed by whole-episode publication, founder
+      2026-08-13.
   - n: 15
     state: done
     note: held still under 'yeah keep em still'. Licence-gated for publication
