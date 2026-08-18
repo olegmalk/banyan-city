@@ -1,4 +1,12 @@
-# Testing the latent-boundary lead against our own clips — one clean hit, one clean miss
+# Testing the latent-boundary lead against our own clips — it does not apply to either
+
+> **READ THE CORRECTION AT THE BOTTOM FIRST.** This file was written in two passes on
+> one night. The first pass called beat 17 a clean confirmation of the
+> latent-boundary hypothesis. A controlled render a few hours later — same seed, one
+> prompt clause removed — cut the effect by 83% and **withdrew that**. The original
+> section is kept intact below because the correction has to be readable against what
+> it corrects, but the headline conclusion is: **the hypothesis is not demonstrated
+> anywhere in our material.**
 
 2026-08-19, night supervisor (v2) · zero GPU, zero spend · measurement on clips
 already rendered
@@ -9,8 +17,9 @@ not a sampler artifact at all but a **latent-chunk / I2V conditioning-boundary**
 artifact. It ends with a falsifiable instruction — *check whether your pop starts at
 frame 1 and settles at frame 4* (Wan's quantum; **LTX's is 8**).
 
-We checked. **It is emphatically true on beat 17 and false on the cold open**, and
-the difference is the useful part.
+We checked. ~~**It is emphatically true on beat 17 and false on the cold open**, and
+the difference is the useful part.~~ **SUPERSEDED — see the correction at the bottom.
+It is false on the cold open, and the beat-17 "hit" turned out to be a prompt clause.**
 
 ---
 
@@ -23,7 +32,7 @@ static, is exactly one latent frame wide and sits exactly on the I2V conditionin
 boundary. `LTXVAddGuide` enforcing `frame_idx` divisible by 8 is the same number seen
 from the tooling side.
 
-## Hit: beat 17 abandons its plate inside latent 1
+## ~~Hit~~ WITHDRAWN: beat 17 abandons its plate inside latent 1 — but the cause was the prompt
 
 `ep2-b17-shake-0818`, mean absolute RGB distance from the f000 plate:
 
