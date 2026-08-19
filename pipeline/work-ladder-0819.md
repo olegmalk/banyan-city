@@ -1706,3 +1706,20 @@ a bug the same night the guard landed.
 **Still unowned after this, and named rather than silently left:** the
 `box_enqueue` **idempotency** refusal (same rung, one section up — it re-ran a
 finished job and spent 264 s of GPU), and the derivation **allow-list** above.
+
+### RECONCILIATION with the b12/15/20 lane's seeds 4 and 5, filed after this section
+
+`ep2-b12-stillmotion-s20260872-0819` and `-s20260873-0819` landed in `336b9cb5`
+while this was being written, and **they are not the rung this lane refused.**
+"Seed depth stops at three" above is scoped to **the (seed × plate) darkening
+question**, which three seeds answered; that lane's own `why` asks a different one
+— *"what beat 12 lacks is a PASSING take"* — and its commit reports **one clause
+failing per take**, which is consistent with this lane's finding that the failing
+clause changes seed to seed. Read together, the two lanes now have **five takes on
+one plate and no take that fails nothing**, and that is the state to quote rather
+than either lane's headline. **Neither lane has made a pick.**
+
+Worth noting for the allow-list rung: both new specs carry the inherited parent
+blocks **with this lane's `_INHERITED_..._NOT_THIS_JOB` names already on them**. So
+the honest naming propagated, and the derivation still copies the blocks. Naming a
+leak is not closing it.
