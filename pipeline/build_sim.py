@@ -4528,6 +4528,15 @@ STRIP_CSS = """
 .rcpt .rq.more { border-left-color: transparent; color: var(--faint); }
 .rcpt .rk { font: 600 .68rem/1.5 var(--mono); color: var(--faint); }
 .rcpt .rsrc { margin: .3rem 0 0; font-size: .72rem; color: var(--faint); }
+/* The fortnight's deltas, sitting between the legend and the footer and reading
+   as part of the footer rather than as a section — which is the whole point of
+   it being one line. */
+.pledger { margin: 2.6rem 0 0; text-align: left;
+  font: 400 .74rem/1.7 var(--sans, inherit); color: var(--faint); }
+.pledger b { color: var(--muted); }
+.pledger a { color: var(--leaf); }
+.pledger code { font: 400 .7rem/1.5 var(--mono); background: var(--code-bg);
+  padding: .05rem .22rem; border-radius: 3px; }
 /* The same four dots inside the table view, so a reader who opened the fold to
    avoid the colours still gets the words and a reader who wants the colours
    still has them. */
