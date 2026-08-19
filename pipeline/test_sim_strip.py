@@ -335,6 +335,49 @@ slate = S._receipt_html({"n": 9, "slug": "THE PAUSE", "slate": True,
                         "waiting on a decision")
 check("a slate is shown as a slate, not as an empty take",
       "There is none." in slate and "title card" in slate, True)
+# THE COPY BUG THIS PINS WAS LIVE FOR ONE BUILD. The no-verdict sentence said
+# "it is in the cut because it is the beat's best footage", which is true of
+# eighteen rows and false of the three slates — a sentence that is confident and
+# wrong is precisely what these receipts exist to replace.
+check("...and is never told it is in the cut as best-available footage",
+      "best footage" in slate, False)
+check("...and its absent date is 'nothing to date', not 'not measured'",
+      "Nothing to date" in slate and "Not measured" not in slate, True)
+# A slate CAN carry a verdict — beat 19's motion job failed — and then the label
+# must not claim the verdict licensed anything into the cut.
+s19 = S._receipt_html({"n": 19, "slug": "THE DROP", "slate": True, "why": "slate",
+                       "spec": "pipeline/jobs/j.yaml", "spec_gh": "https://x/j",
+                       "verdicts": [("verdict_0819.verdict", "FAIL, decisively")],
+                       "call": "FAIL"}, "mach", "the card’s to do")
+check("a slate with a verdict says 'the verdict on file', not 'licensed it'",
+      "the verdict on file" in s19 and "licensed it" not in s19, True)
+check("...and carries the FAIL chip", 'class="rcall bad">FAIL' in s19, True)
+# A spec whose verdict this build could not read still gets the hollow chip: a
+# silent summary row over an unjudged beat is the neutral render again.
+unread = S._receipt_html({**one, "verdicts": [], "call": ""}, "mach", "x")
+check("a spec with no readable verdict still shows a chip",
+      'class="rcall none"' in unread, True)
+
+print("\nnested verdict blocks are followed one level, because one spec writes them")
+import tempfile as _tf, pathlib as _pl  # noqa: E402
+with _tf.TemporaryDirectory() as _td:
+    _r = _pl.Path(_td)
+    (_r / "pipeline" / "jobs").mkdir(parents=True)
+    # Beat 19's real shape: `verdict_0819:` is a MAPPING whose own `verdict:` key
+    # holds the sentence. The first build of this printed "carries no verdict
+    # string this build could read" over a spec that says FAIL in plain words —
+    # reporting a real FAIL as unreadable is the same class of wrong as inventing
+    # a PASS.
+    (_r / "pipeline/jobs/n.yaml").write_text(
+        "id: n\nverdict_0819:\n  verdict: 'FAIL, decisively'\n"
+        "  measured: {a: 1}\nverdict_INHERITED_from_parent: PASS everything\n")
+    got = P.spec_verdicts(_r, "pipeline/jobs/n.yaml")
+    check("a nested verdict is found and named by its path",
+          got, [("verdict_0819.verdict", "FAIL, decisively")])
+    # The INHERITED skip is load-bearing: three crf-10 specs were derived from
+    # parents whose PASS belonged to a different clip.
+    check("...and an INHERITED key is never quoted as this file's result",
+          any("INHERITED" in k for k, _v in got), False)
 
 print("\nthe fortnight line — a delta measurement that admits what it counted")
 led = {"verdict_lines_added": 125, "cuts_shipped": 6, "resolved_blocks_added": 84,

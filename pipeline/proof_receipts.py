@@ -234,12 +234,26 @@ def spec_verdicts(repo: Path, rel: str) -> list:
         return []
     if not isinstance(doc, dict):
         return []
-    keys = [k for k in doc
-            if isinstance(k, str) and k.startswith("verdict")
-            and "INHERITED" not in k and isinstance(doc[k], str) and doc[k].strip()]
-    ordered = ([k for k in VERDICT_ORDER if k in keys]
-               + sorted(k for k in keys if k not in VERDICT_ORDER))
-    return [(k, " ".join(str(doc[k]).split())) for k in ordered]
+    # ONE LEVEL OF NESTING IS FOLLOWED, and it is not a nicety: beat 19's spec
+    # writes `verdict_0819:` as a MAPPING whose own `verdict:` key holds the
+    # sentence, and the first cut of this printed "carries no verdict string this
+    # build could read" over a spec that says FAIL in plain words. A page that
+    # reports a real FAIL as unreadable is the same class of wrong as one that
+    # invents a PASS. Only the inner `verdict:` is followed — anything deeper
+    # would be this reader deciding which of a lane's clauses is the headline.
+    flat = {}
+    for k, v in doc.items():
+        if not (isinstance(k, str) and k.startswith("verdict")
+                and "INHERITED" not in k):
+            continue
+        if isinstance(v, str) and v.strip():
+            flat[k] = v
+        elif isinstance(v, dict) and isinstance(v.get("verdict"), str) \
+                and v["verdict"].strip():
+            flat[f"{k}.verdict"] = v["verdict"]
+    ordered = ([k for k in VERDICT_ORDER if k in flat]
+               + sorted(k for k in flat if k not in VERDICT_ORDER))
+    return [(k, " ".join(str(flat[k]).split())) for k in ordered]
 
 
 def call_word(verdicts: list) -> str:

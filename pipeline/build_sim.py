@@ -2343,7 +2343,7 @@ def _receipt_html(rec: dict, css: str, state_label: str) -> str:
     if call:
         chip = (f'<span class="rcall {"ok" if call == "PASS" else "bad"}">'
                 f'{_e(call)}</span>')
-    elif not rec.get("spec"):
+    else:
         # NOT A NEUTRAL BLANK. Eight beats of this episode have never been judged
         # against a bar, and the hollow chip is the same mark the tree uses for a
         # beat nobody has scored — missing evidence, drawn as missing.
@@ -2380,6 +2380,13 @@ def _receipt_html(rec: dict, css: str, state_label: str) -> str:
     if rec.get("frame_why"):
         rows.append(f'<dt>frame</dt><dd>{_e(rec["frame_why"])}</dd>')
     verdicts = rec.get("verdicts") or []
+    # A SLATE'S VERDICT LINE IS A DIFFERENT SENTENCE, and the first cut of this
+    # got it wrong: it printed "it is in the cut because it is the beat's best
+    # footage" over beat 09, which has no footage at all. Copy that is true of
+    # eighteen rows and false of three is exactly the confident-and-wrong shape
+    # this whole feature exists to stop.
+    vlabel = ("the verdict on file" if rec.get("slate")
+              else "the verdict that licensed it")
     if verdicts:
         quoted = "".join(
             f'<p class="rq"><span class="rk">{_e(k)}:</span> {_e(text)}</p>'
@@ -2389,7 +2396,7 @@ def _receipt_html(rec: dict, css: str, state_label: str) -> str:
                 f'{"s" if len(verdicts) - 4 != 1 else ""} in the same file.</p>'
                 if len(verdicts) > 4 else "")
         rows.append(
-            '<dt>the verdict that licensed it</dt><dd>'
+            f'<dt>{vlabel}</dt><dd>'
             f'{quoted}{more}'
             f'<p class="rsrc">Quoted verbatim from <a href="{_e(rec["spec_gh"])}">'
             f'{_e(rec["spec"])}</a> &mdash; the bar in that file was written '
@@ -2397,13 +2404,19 @@ def _receipt_html(rec: dict, css: str, state_label: str) -> str:
             '</dd>')
     elif rec.get("spec"):
         rows.append(
-            '<dt>the verdict that licensed it</dt><dd>The cut cites '
+            f'<dt>{vlabel}</dt><dd>The cut cites '
             f'<a href="{_e(rec["spec_gh"])}">{_e(rec["spec"])}</a> and that file '
             'carries no <code>verdict*:</code> string this build could read. '
             'Printed as unread rather than guessed at.</dd>')
+    elif rec.get("slate"):
+        rows.append(
+            f'<dt>{vlabel}</dt><dd><b>None, and that is what a slate is.</b> '
+            'Nothing exists for this beat that a verdict lets into a cut. What it '
+            'is waiting for is written out in the cut’s own manifest, per beat, '
+            'under <code>blocked_on</code>.</dd>')
     else:
         rows.append(
-            '<dt>the verdict that licensed it</dt><dd><b>None exists.</b> No job '
+            f'<dt>{vlabel}</dt><dd><b>None exists.</b> No job '
             'spec anywhere answers a pre-registered bar for this file. It is in '
             'the cut because it is the beat’s best footage, which is not the '
             'same as having passed &mdash; riding five cuts unchanged is five '
@@ -2413,6 +2426,12 @@ def _receipt_html(rec: dict, css: str, state_label: str) -> str:
             f'<dt>landed</dt><dd>{_e(rec["landed_at"])} &middot; '
             f'<a href="{_e(rec["landed_url"])}">{_e(rec["landed_sha"])}</a> '
             f'&mdash; {_e(rec.get("landed_what") or "")}.</dd>')
+    elif rec.get("slate"):
+        # NOT "not measured" — there is nothing to date. A slate has no file and
+        # no spec, so an absent date is the correct answer rather than a gap in
+        # the measurement, and the two must not read the same.
+        rows.append('<dt>landed</dt><dd>Nothing to date: no file and no spec, so '
+                    'there is no commit that would be this beat’s.</dd>')
     else:
         rows.append('<dt>landed</dt><dd>Not measured. The date comes from a '
                     'committed git measurement (see the caption) and this row is '
