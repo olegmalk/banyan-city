@@ -341,3 +341,68 @@ frozen wardrobe came back complete and well drawn *on the goblin*. A contour
 cannot say which body an attribute belongs to. Per-figure IPAdapter is the
 candidate and it is its own probe. **Take the hint shape first**: an identity
 lever has nothing to attach to on a figure whose outline is not the model's own.
+
+---
+
+## 9. Stroke weight was the wrong dial, and it points the wrong way (2026-08-19)
+
+§8 named three instruments and called stroke weight one of them, on the xinsir
+card's authority. `ep2-b08-cnetplate-r4-0819` took it: the same hint re-drawn at
+`--stroke 3`, at the bracketed-best scale **0.45**, same seed, same fixed
+negative, driver byte-identical. Zero new code — the flag existed and its
+`--selftest` already asserted it as a dial.
+
+**The hint was one variable, and that is measured rather than intended:** every
+landmark unmoved (both cx, both statures, the shared foot line y=1149.1, the
+shoulder→elbow→wrist→fingertip chain, the 26.8px torso clearance, the board), and
+**24684 of 24685 lit pixels in the 3px hint lie inside the 7px hint's ink** — the
+same centrelines, 42% of the pixels. It was opened at full size and at 1:1 before
+filing (`EVIDENCE-b08-thinhint-0819.png`).
+
+| dial | value | staging | the figures |
+|---|---|---|---|
+| scale | 0.80 / 0.45 / 0.28 | HELD / HELD / **LOST** | traced / surface-only / drawn-but-uncontrolled |
+| **stroke** | **7px → 3px @ 0.45** | **HELD** | **still the authored polygons, and the hand got worse** |
+
+**THE THIN HINT IS TRACED MORE TIGHTLY THAN THE THICK ONE.** Share of authored
+ink with a strong render gradient within 3px, identical instrument on all four
+frames, nocontrol as the coincidence floor:
+
+| frame | ink traced | strongest gradients on ink |
+|---|---|---|
+| nocontrol | 26.1% | 7.8% |
+| rung1 0.80 / 7px | 97.7% | 22.7% |
+| rung2 0.45 / 7px | 94.4% | 35.1% |
+| **rung4 0.45 / 3px** | **98.3%** | **83.4%** |
+
+**So stroke weight is not a strength dial, it is a PRECISION dial, and its sign
+is the opposite of the assumption that listed it.** A 7px bar is an ambiguous
+ribbon — the model may put the edge anywhere inside the band, and rung 1 filling
+that band is exactly what "flat mannequin" meant. A 3px line is a single
+unambiguous edge locus, so the outline snaps onto it. Thinning does not hand
+authority back; **it sharpens the instruction.**
+
+Scored against the carried bar: **B1, B3, B4a, B4c, B5 PASS** — the pose and the
+guard's arm survive a 58% ink cut, which is the fourth confirmation of rung 1's
+one durable finding. **B2 FAILS a fourth time** as pre-registered. **B6 fails its
+negative test again with no movement at all.** And **B4b REGRESSES against its
+own parent rung**: at 1:1 the arm ends in a fingerless wedge where rung 2 drew a
+hand with an extended index finger — the 1px finger stroke was named as the
+faintest mark in the drawing before the render, and it did not carry.
+
+**What is now settled, by two bracketed dials rather than by argument: the
+TRACING IS CAUSED BY THE ENCLOSURE.** A closed contour around a body is an
+instruction about where that body's edge goes, and there is no strength or weight
+at which it stops being one. **Two of §8's three candidates are therefore no
+longer equals.** A **sparse skeleton** — joint dots and single-line limbs plus
+the board, no closed contour anywhere — is the ruled next instrument, because it
+is the only candidate that attacks the property just shown to be causal, and
+because `author_b08_pose_hint.py` already solves the pose geometry and would need
+a draw mode rather than new maths. An **early `control_guidance_end`** is the
+fallback and needs code first: `controlnet_plate.py` hardcodes it to 1.0 at lines
+167 and 277 and exposes no flag. One sample, same bar, and **whatever the class,
+B4b needs a hand-sized mark at the end of the arm** — a 1px finger has now failed
+once. **No fifth stroke value**; the dial is measured and points the wrong way.
+
+Identity is unchanged: four rungs, two dials, four pairs of green figures. Take
+the hint shape first.

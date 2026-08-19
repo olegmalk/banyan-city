@@ -1,0 +1,386 @@
+# BEAT 08, RUNG 4 -- THE FIRST RUNG THAT MOVES THE HINT INSTEAD OF THE STRENGTH.
+# ONE SAMPLE. ONE ARM. ONE VARIABLE: stroke 7px -> 3px, at the bracketed-best
+# scale 0.45. The scale is now HELD, not swept -- it is a settled constant.
+#
+# ============================================================================
+# WHY THIS AND NOT A FOURTH SCALE VALUE
+# ============================================================================
+# ep2-b08-cnetplate-{,r2-,r3-}0819 closed the conditioning-scale axis by
+# bracketing it on both sides with pixels, and pipeline/b08-arm-route-0819.md §8
+# records the result as a three-point curve on one axis:
+#
+#   0.80  staging HELD    | figures TRACED -- flat mannequins in the authored
+#                         |   polygons, no hand, no face, no cloth
+#   0.45  staging HELD    | SURFACE returned (a hand with an index finger, two
+#                         |   faces, cloth with folds, shading), OUTLINE did not
+#   0.28  staging LOST    | drawn beautifully, because the condition is no
+#                         |   longer shaping anything
+#
+# There is no value that yields both, and the 0.45 -> 0.28 failure is not a
+# gradual softening -- it is a collapse back to the uncontrolled composition
+# (colossus, point on the goblin, the guard's frozen wardrobe on the goblin, the
+# board on a background figure). r3's own verdict named the consequence and
+# pre-committed to it as branch 3: "THE NEXT INSTRUMENT IS A CHANGE OF HINT
+# SHAPE, NOT OF STRENGTH", and listed exactly three candidates -- a sparse
+# skeleton, a MUCH THINNER STROKE (the xinsir card's second dial; that hint is
+# 7px), or an early control_guidance_end.
+#
+# THIS IS THAT PRE-COMMITTED INSTRUMENT, AND IT IS THE ONE OF THE THREE THAT
+# NEEDS NO NEW CODE. `author_b08_pose_hint.py --stroke` already exists and is
+# already asserted as a real dial by its own --selftest ("stroke is a control
+# dial (0.0244 -> 0.1045)"), which ran clean before this hint was drawn. The
+# other two both need code that nobody has run: a sparse skeleton needs a new
+# drawing mode, and control_guidance_end is HARDCODED to 1.0 at
+# controlnet_plate.py:167,277 and is not exposed as a flag. Filing either today
+# would mean shipping an unproven mechanism inside a sample -- a guess with a
+# GPU attached. This rung ships zero new code.
+#
+# ============================================================================
+# THE HINT WAS DRAWN AND OPENED BEFORE THIS SPEC WAS WRITTEN
+# ============================================================================
+# pipeline/control/b08-pose-thin3-0819.png, sha f48bcb37..., 832x1216, and it is
+# ONE VARIABLE, asserted by measurement rather than by intent:
+#
+#   * EVERY LANDMARK IS UNMOVED. Same guard cx 565.8 / stature 802.6, same
+#     goblin cx 170.6 / stature 729.6 / navel 711.4, same shared foot line
+#     y=1149.1, same stature_ratio 1.1, same shoulder (512.4,491.0) -> elbow
+#     (359.9,491.2) -> wrist (275.2,673.1) -> fingertip (246.5,695.1), same
+#     26.8px clearance outside the goblin's torso, same extension 0.847, same
+#     board cx 653.1 / top 177.4px below the shoulder.
+#   * THE THIN INK IS A SUBSET OF THE THICK INK: 24684 of 24685 lit pixels in
+#     the 3px hint also lie inside the 7px hint's ink. The centrelines are
+#     literally the same lines; only their weight changed.
+#   * ink_fraction 0.0581 -> 0.0244, i.e. the condition now occupies 42% of the
+#     pixels it did.
+#
+# AND IT WAS LOOKED AT, at full size and in a 1:1 crop of the arm, side by side
+# with the 7px hint: EVIDENCE-b08-thinhint-0819.png. What the eye adds to the
+# numbers, and it is the reason branch 2 below is written as the likely one: at
+# 7px the limbs read as filled black BARS, at 3px as pen lines -- but they are
+# pen lines around THE SAME CLOSED POLYGONS. Thinning changes how much of the
+# frame the contour occupies; it does not stop the contour from ENCLOSING the
+# bodies. That is a real limitation of this lever and it is stated here, before
+# the pixels, so that a branch-2 result is read as a finding and not as a
+# disappointment.
+#
+# NO SPEND, NO PROVIDER, NO CANON FILENAME, NO PICK, NO PUBLISH TO THE SITE, NO
+# POST, NO ASSEMBLY, NO VIDEO. This renders one still.
+
+id: ep2-b08-cnetplate-r4-0819
+task: ep2-b08-cnetplate-r4-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 34
+max_attempts: 1
+owner: beat 08 staging lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate, for its cut slot in the episode 2 assembly. Three rungs proved
+  a hand-authored hint is the only mechanism that has ever put this beat's
+  pointing arm on the guard, and left one thing unsolved that blocks everything
+  downstream: the silhouettes are the author's polygons rather than the
+  checkpoint's drawing. Identity (per-figure IPAdapter) is the beat's other
+  blocker and it has nothing to attach to on a figure whose outline is not the
+  model's own -- so this rung is upstream of that one.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-cnetplate-r4-0819 with a sha256
+  manifest, and read at full size against rung 2 (same scale, 7px) and the
+  nocontrol frame. See verdict_rule -- all three branches are informative and two
+  of the three retire stroke weight as a lever.
+
+why: >-
+  r3's verdict named this instrument, pre-committed to it as branch 3's
+  consequence, and deliberately did not take it. It is now ruled, needs no new
+  code, and has no dependency: the driver and the thin hint are already staged
+  and hash-verified on both ends. Two minutes, $0, no provider, no download. The
+  card is HUNGRY -- ready holds 11.4 min against a 45 min floor and the backlog
+  is empty.
+
+est_minutes: 2   # ONE process; r3 measured 6.4s load + 13.8s render
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Driver and hint staged at C:\banyan-farm\b08cnetplate-r4-0819\src and
+# hash-verified on BOTH ends before this spec was written:
+#   pipeline\controlnet_plate.py               2a1bd19ecebe1b4c779c07e70f4632731c9d21fdd96d6bda6e233f74274fa67f
+#   pipeline\control\b08-pose-thin3-0819.png   f48bcb37e95403b003b79d39f818a961e96cc76dfb643b9b51c217b0f4b1dbb4
+# The driver is BYTE-IDENTICAL to the one all three earlier rungs ran, so the
+# hint file is the only thing that differs from rung 2 anywhere in this job.
+
+payload:
+  # Byte-identical to rung 2 and rung 3, word for word. The negative INCLUDES
+  # the `dark, night` fix that rung 2 proved out (mean luma 22.9 -> 151.6); it is
+  # the settled state here, not a variable.
+  C:\banyan-farm\b08cnetplate-r4-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08cnetplate-r4-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+steps:
+  - name: hint3px
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08cnetplate-r4-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08cnetplate-r4-0819\src
+      - --repo-commit
+      - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+      - --task
+      - ep2-b08-cnetplate-r4-0819
+      - --arm
+      - hint3px
+      - --control
+      - pipeline/control/b08-pose-thin3-0819.png
+      - --control-sha256
+      - f48bcb37e95403b003b79d39f818a961e96cc76dfb643b9b51c217b0f4b1dbb4
+      - --scale
+      - '0.45'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08cnetplate-r4-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08cnetplate-r4-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08cnetplate-r4-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Required by box_enqueue.courier_problems (2026-08-19): a job whose
+        # artifacts live outside courier-box\farm-out must have a step that
+        # carries them there, because the courier pushes from farm-out and from
+        # nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible
+        # for two days for want of exactly this.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08cnetplate-r4-0819/out"
+        pay_dir = "C:/banyan-farm/b08cnetplate-r4-0819"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetplate-r4-0819"
+        os.makedirs(dst, exist_ok=True)
+        files = sorted(glob.glob(out_dir + "/ep2-b08-cnetplate-r4-0819-hint3px.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-cnetplate-r4-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08cnetplate-r4-0819\out\ep2-b08-cnetplate-r4-0819-hint3px.png
+
+# ============================================================================
+# THE BAR. CARRIED FROM RUNGS 1-3 UNCHANGED. Not edited after the pixels.
+# ============================================================================
+bar:
+  b1_the_pair: >-
+    TWO figures and only two -- one guard and one goblin, both whole in frame.
+  b2_the_adults_read: >-
+    EXPECTED FAIL FOR THE FOURTH TIME, PRE-REGISTERED, AND NOT THIS RUNG'S
+    VARIABLE. Three rungs at three scales almost three times apart all returned
+    two green figures with pointed ears, because a contour cannot say which body
+    an attribute belongs to: `green skin` enters the pooled embedding and lands
+    on both. Nothing about stroke weight creates a per-figure identity channel.
+    A PASS here would be a genuine surprise and would mean the amount of INK, not
+    the wording, had been suppressing identity -- which would itself be worth
+    knowing and would redirect the identity probe.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The thin hint pins both
+    foot lines at y=1149.1, unchanged.
+  b4a_board_down: >-
+    The clipboard is DOWN at the guard's hip, in ONE hand, not raised at his
+    chest and not in both hands.
+  b4b_legible_point: >-
+    The gesture ends in a HAND aimed at the goblin's belly. FAILED at 0.80 (arm
+    ended in nothing), PASSED at 0.45/7px (a modelled hand with an extended index
+    finger), FAILED at 0.28 (a clean hand on the wrong figure aiming at nothing).
+    At risk again: the thin hint's finger stroke is 1px (stroke-2), which is the
+    faintest mark in the drawing.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE CLAUSE THAT MUST SURVIVE. The pointing arm grows from THE GUARD's
+    shoulder. Rung 1 bought it, rung 2 kept it, rung 3 spent it. It is the single
+    thing this whole route has ever produced that nothing else has, and if 42% of
+    the ink cannot hold it then stroke weight is not a free lever.
+  b5_no_colossus: >-
+    Neither figure towers over the other. The uncontrolled frame at this seed is
+    an extreme colossus, so this clause is entirely the condition's doing and is
+    the most sensitive read on how much authority the thinner ink retains.
+  b6_drawn_not_traced: >-
+    THIS RUNG'S OWN QUESTION AND THE REASON IT EXISTS. Rung 2 (same scale, 7px)
+    passed B6's three POSITIVE tests -- cloth with folds, shaded limbs, faces
+    with features -- and failed its NEGATIVE test, because the SILHOUETTES were
+    still the authored polygons: rectangular columnar legs, a boxy torso,
+    straight shoulders, cloth that never leaves the outline. B6 passes here only
+    if the OUTLINE becomes the checkpoint's: limbs that taper, a torso with a
+    waist, shoulders that slope, cloth that crosses the polygon edge. Score the
+    positive and negative halves separately -- rung 2's PARTIAL was informative
+    precisely because it split.
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS. Note that TWO of these three branches retire stroke
+  weight, which is the honest prior given the hint I opened: thinning the ink
+  does not stop the contour enclosing the bodies. (1) If B1, B3, B4a, B4b, B4c
+  and B5 hold AND B6 finally passes both halves AND B2 fails as pre-registered,
+  the verdict is PASS-ON-PURPOSE: stroke weight WAS the dial, the composition
+  lever is finished as a piece of engineering, the usable recipe is
+  0.45 + 3px, and beat 08's only remaining blocker is identity. (2) If the pose
+  holds AND the silhouettes are STILL the authored polygons, then it is the
+  ENCLOSURE and not the ink weight that traces -- stroke weight is retired as a
+  lever and the next instrument is a hint that DOES NOT ENCLOSE BODIES: a sparse
+  skeleton marking joints and the board. This is the branch I expect. (3) If the
+  pose DEGRADES toward rung 3's failure -- arm on the goblin, colossus, plane
+  split -- then thinning acted as a STRENGTH REDUCTION IN DISGUISE rather than a
+  change of shape: 3px at 0.45 would be behaving like 7px at some lower scale,
+  which collapses stroke weight INTO the already-closed scale axis and says the
+  same thing branch 2 says by a different route. Branch 3 is the one that makes
+  this a two-parameter family with one degree of freedom, and it is written here
+  so it cannot be argued away afterwards. UNDER BRANCH 2 OR 3, DO NOT FILE A
+  FIFTH STROKE VALUE -- that is the wording-ladder shape. File the skeleton.
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE variable. No stroke sweep, no second seed, no scale
+  change (0.45 is held as the settled constant), no re-posed hint, no
+  control_guidance_end change (it is hardcoded and exposing it is a code change
+  with its own sample), no sparse-skeleton hint, no identity mechanism, no
+  ControlNet-plus-mask, no pick, no plate_ack waiver, no canon filename. The
+  nocontrol control is rung 1's already-published frame at this same seed and is
+  not re-rendered.
+licence_note: >-
+  Clean and identical to rungs 1-3. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M), control net xinsir/controlnet-scribble-sdxl-1.0
+  (apache-2.0, no attribution condition). The hint is drawn by
+  pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
+  annotator, so the lllyasviel/Annotators landmine is not touched.
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size beside
+# rung 2, rung 1 and the nocontrol frame, and cropping the hand and both
+# silhouettes at 1:1. Scored against the bar and verdict_rule THIS SPEC
+# PRE-REGISTERED; neither is edited. Ran clean: 2 steps rc=0, 06:49:46Z,
+# load 10.9s / render 14.8s, 4 files published and pulled with every sha
+# verified against the manifest. $0.
+# Evidence: EVIDENCE-b08-thinhint-0819.png (the hint, before the render),
+#           EVIDENCE-b08-hintshape-0819.png (four-way + the hint),
+#           EVIDENCE-b08-r4-silhouette-0819.png (hand and legs at 1:1).
+# ============================================================================
+verdict: >-
+  BRANCH 2 FIRES, AND IT FIRES WITH A MECHANISM NOBODY HAD PREDICTED: THE POSE
+  HELD AND THE SILHOUETTES ARE STILL THE AUTHORED POLYGONS, so it is the
+  ENCLOSURE and not the ink weight that traces. STROKE WEIGHT IS RETIRED AS A
+  LEVER. But branch 2 understated it -- see stroke_is_not_a_strength_dial below.
+  The thin hint is traced MORE TIGHTLY than the thick one, not less, so this axis
+  does not merely fail to help, IT POINTS THE WRONG WAY. B4b also regressed.
+verdict_measured:
+  b1_the_pair: 'PASS. Two figures, only two, both whole in frame.'
+  b2_the_adults_read: 'FAIL, the fourth time, exactly as pre-registered. Both figures
+    are green with pointed ears. No surprise and no new information: the ink was cut by
+    58% and identity did not budge, which is one more independent confirmation that a
+    contour has no per-figure channel to carry it.'
+  b3_one_ground_plane: 'PASS. Both stand on the same grass with feet at the same depth,
+    on the hint''s single foot line.'
+  b4a_board_down: 'PASS. The clipboard is at the guard''s hip in ONE hand, lowered, not
+    raised and not in both hands.'
+  b4b_legible_point: 'FAIL, AND THE FAILURE WAS NAMED IN THIS SPEC BEFORE THE RENDER --
+    "the thin hint''s finger stroke is 1px (stroke-2), which is the faintest mark in the
+    drawing." At 1:1 the arm ends in a fingerless WEDGE: a tapered green paddle with two
+    incidental marks, no fingers, no thumb, no knuckles. Rung 2 at this same scale drew a
+    modelled hand with an extended index finger. THIS IS A REGRESSION AGAINST THE PARENT
+    RUNG, and it is the second clause the thin stroke costs.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, and it is the one thing this rung banks. The
+    pointing arm grows from the GUARD''s shoulder, aimed across at the goblin. The route''s
+    single durable finding survives a 58% ink cut.'
+  b5_no_colossus: 'PASS. Neither figure towers; the goblin reads slightly shorter, near
+    the hint''s authored 1.1 stature ratio.'
+  b6_drawn_not_traced: 'FAIL on the negative test, PASS on the positive three -- the SAME
+    SPLIT AS RUNG 2, with no movement in the direction this rung existed to test. Positive:
+    faces with features, cloth, shading are all present. Negative: the silhouettes are
+    still the authored polygons -- boxy torsos, straight horizontal shoulders, columnar
+    legs with no taper, a rectangular bar for the arm. If anything the cloth is FLATTER
+    than rung 2''s: rung 2''s trousers carry fold shading, rung 4''s are a plain fill.'
+stroke_is_not_a_strength_dial_IT_IS_A_PRECISION_DIAL: 'THE FINDING OF THIS RUNG, and it
+  inverts the assumption that put stroke weight on the list. Measured as the share of
+  authored ink that has a strong render gradient within 3px (the strongest 3% of
+  gradients, identical instrument on all four frames, nocontrol as the coincidence
+  floor): nocontrol 26.1%, rung1 0.80/7px 97.7%, rung2 0.45/7px 94.4%, RUNG4 0.45/3px
+  98.3%. THE THIN HINT IS THE MOST FAITHFULLY TRACED OF ALL FOUR -- tighter than 0.80.
+  The converse measure moves the same way: the share of the strongest render gradients
+  sitting on authored ink goes 35.1% (rung2) -> 83.4% (rung4). The mechanism is
+  geometric and obvious in hindsight: a 7px bar is an AMBIGUOUS RIBBON and the model may
+  put its edge anywhere in that band (rung 1 filled the band, which is what "flat
+  mannequin" meant), while a 3px line is a SINGLE UNAMBIGUOUS EDGE LOCUS that the
+  outline snaps onto. Thinning the stroke does not hand authority back, IT SHARPENS THE
+  INSTRUCTION. So the xinsir card''s "second dial" is real but its sign is the opposite
+  of what this rung assumed, and branch 3 could never have fired: a thinner stroke was
+  never going to behave like a lower scale.'
+what_this_settles: 'THE HINT-SHAPE AXIS IS NOT OPENED BY STROKE WEIGHT, AND THE TRACING
+  IS CAUSED BY THE ENCLOSURE. Two dials have now been bracketed by measurement rather
+  than argument -- conditioning scale across 0.80/0.45/0.28, and stroke weight across
+  7px/3px at the best scale -- and neither yields a figure the checkpoint drew. Every
+  variant that holds the staging traces the outline, because on this hint class THE INK
+  IS THE DRAWING: a closed contour around a body is an instruction about where that
+  body''s edge goes, and there is no strength or weight at which it stops being one.
+  What survives untouched, for the fourth time, is rung 1''s finding: a hand-authored
+  hint AIMS THE GESTURE, and it is still the only mechanism that has ever put this
+  beat''s pointing arm on the guard.'
+what_this_does_not_license: 'NO FIFTH STROKE VALUE -- this spec pre-registered "UNDER
+  BRANCH 2 OR 3, DO NOT FILE A FIFTH STROKE VALUE", and 13px or 1px would be a fifth
+  sample on a dial now measured to point the wrong way. No pick, no plate_ack, no cut,
+  no canon filename, no interpolated scale, no identity mechanism. And it does not
+  license abandoning the route.'
+the_next_instrument_is_a_hint_THAT_DOES_NOT_ENCLOSE: 'Named and deliberately not filed.
+  Of §8''s three candidates, this rung spent one and the remaining two are no longer
+  equals. A SPARSE SKELETON -- joint dots and single-line limbs plus the board, with no
+  closed contour anywhere -- is now the ruled next instrument, because it is the only
+  candidate that attacks the property just shown to be causal, and because
+  author_b08_pose_hint.py already solves the pose geometry (the two-link arm, the
+  shared foot line, the stature ratio) and would need a draw mode, not new maths. An
+  EARLY control_guidance_end is the fallback and needs a code change first:
+  controlnet_plate.py hardcodes 1.0 at lines 167 and 277 and exposes no flag, so
+  exposing it is its own one-sample question. ONE sample, this same bar, and B4b needs a
+  hand-sized mark at the end of the arm whatever the class -- a 1px finger has now
+  failed once.'
+identity_is_still_the_other_blocker: 'Unchanged and untouched: four rungs, two dials,
+  four pairs of green figures. Per-figure IPAdapter remains the candidate and remains
+  its own probe. The order from r3 stands and this rung reinforces it -- take the hint
+  shape first, because an identity lever has nothing to attach to on a figure whose
+  outline is not the model''s own.'
+daylight_held_and_is_not_a_variable: 'Recorded so the constant is auditable: mean luma
+  149.3 against rung 2''s 149.5. The `dark, night` negative fix rung 2 proved out
+  (22.9 -> 151.6) is still doing its job at a different stroke weight.'
+instrument_note_the_probe_metric_is_VOID_on_this_hint: >-
+  RECORDED IN ADVANCE SO NOBODY QUOTES IT. controlnet_probe.py's bind_ratio is
+  void on this hint class by the probe's OWN pre-registered rule, exactly as r3
+  recorded: the nocontrol frame at this seed scores 1.498, outside the probe's
+  [0.85, 1.15] kill-switch band for an unconditioned arm, and that rule says when
+  arm A lands off-centre every number in the run is void. The cause is
+  structural, not a bug: the metric assumes a SPARSE, OFF-CENTRE hint whose
+  strokes sit where the model would not otherwise put structure, and this hint's
+  strokes enclose two standing figures in the middle of the frame -- exactly
+  where any two-figure image has its edges. THE VERDICT WILL REST ENTIRELY ON THE
+  PIXELS. A metric agreeing with me is not a sample.
