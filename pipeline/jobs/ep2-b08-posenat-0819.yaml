@@ -283,3 +283,115 @@ licence_note: >-
   pipeline/research/openpose-controlnet-sdxl-0819.md 2 -- no preprocessor, no
   annotator, no photo-derived pose estimate -- so lllyasviel/Annotators is not
   touched.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19. B0 read first, then the frame opened at full
+# size with the authored elbow, the authored wrist and the PREDICTED MIRROR POINT
+# overlaid at identical coordinates, then the wrist neighbourhood at 2x beside the
+# parent's. Scored against the bar and verdict_rule PRE-REGISTERED above; neither
+# is edited here.
+#
+# Ran clean: 2 steps rc=0, 2026-08-19T08:40Z, 5 files published to
+# courier-box\farm-out, frame sha 5b97e89c... verified against the manifest. $0.
+# Evidence: farm-out/ep2-b08-posenat-0819/EVIDENCE-b08-posenat-0819.png
+# ============================================================================
+verdict: >-
+  BRANCH (3), AND IT SPLITS CLEANLY IN TWO. THE HYPOTHESIS WAS RIGHT AND THE
+  MIRROR IS GONE: branch (2) is excluded by 229 px, so the forearm flip was OUR
+  ANATOMY and not the net's prior. THE GESTURE IS STILL NOT A POINT, and the
+  obstruction has changed identity rather than persisting -- the guard's hand stops
+  in the middle of the gap and THE GOBLIN LIFTS HIS OWN ARM 186 PX OUT OF ITS
+  AUTHORED SKELETON to meet it. The two hands clasp. B4b fails a fourth time, on
+  a fourth distinct cause, and for the first time the failing part is POSE
+  ADHERENCE -- which is the one thing the variant this route has been deferring
+  claims to improve.
+verdict_measured:
+  b0_the_net_is_the_pose_net: 'PASS. Sidecar records
+    `controlnet: xinsir/controlnet-openpose-sdxl-1.0`,
+    `controlnet_conditioning_scale: 1.0`, no ip_adapter lines. Not void.'
+  b4b_the_forearm_points_where_it_was_authored: 'SPLIT, AND BOTH HALVES ARE
+    FINDINGS. (i) THE MIRROR DID NOT HAPPEN. The predicted branch-(2) point
+    (665,581) is empty background; the guard''s pale hand measures a centroid of
+    (436,656), which is 229 px away from it and on the correct side of the elbow.
+    The forearm runs DOWN-AND-LEFT from the authored elbow (472.9,638.3) in the
+    authored direction. At 2x, the parent frame''s authored-wrist neighbourhood is
+    empty sky and water; this frame''s has two hands in it. The elbow hang was the
+    fix and the parent verdict''s cheaper hypothesis was the right one.
+    (ii) IT IS STILL NOT A POINT, AND IT IS NOT A DIRECTION PROBLEM ANY MORE. The
+    guard''s hand reaches only about 60% of the way to the authored wrist
+    (280.5,695.1), and the GOBLIN''S OWN LEFT ARM -- authored hanging at his side
+    with its wrist at (221,857) -- came UP 186 px and ACROSS 129 px to a green fist
+    at (350,671). The two hands meet and clasp in the middle of the gap. Both
+    figures'' arms deviated TOWARD EACH OTHER.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS. The reaching arm is unambiguously the
+    guard''s, from his shoulder, over his own low elbow. Four mechanisms have now
+    held this clause and the uncontrolled tally is still 4 of 4 on the goblin.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b3_one_ground_plane: 'PASS by eye, unmeasurable precisely: the guard''s feet are
+    under a long skirt and lit grass. Both figures stand in the same grass with no
+    split horizon. Not this rung''s variable and the ankles were not moved.'
+  b5_no_colossus: 'PASS. Neither figure towers; the goblin''s green skin spans
+    y 408-907 and the guard''s lit extent y 330-758 under a floor-length skirt, and
+    by eye the stature relationship is the parent''s.'
+  b6_drawn_not_traced: 'PASS. Both figures are fully drawn characters -- cloth with
+    folds, hair, faces, modelled hands, and hands with individually drawn fingers at
+    2x. A skeleton still has no outline to trace.'
+  b2_the_identities_separate: 'PASS AGAIN, AND STRONGER -- A SECOND FREE DATA POINT
+    ON THE ENCLOSURE HYPOTHESIS. Guard head G-R = -32.6 and goblin +50.4, separation
+    +83.0, against the parent''s +55.5 and rung A''s +43.0 (which used two masked
+    references and a ViT-H encoder). STILL NO ADAPTER. Two skeleton frames, two
+    passes; five contour frames, five failures. That is now a pattern rather than a
+    single observation, though it is still not a controlled test -- the honest
+    statement is that the enclosure hypothesis has survived its first chance to die.'
+  b4a_board_down: 'FAIL, PRE-REGISTERED, AND WORSE THAN THE PARENT''S: no board or
+    book is visible at all this time. Both of the guard''s hands are otherwise
+    occupied -- one reaching, one at his chest. No object is in a pose hint, on
+    purpose, and the remedy remains multi-ControlNet.'
+observed_not_scored: >-
+  THREE, AND THE SECOND IS NEW AND UNCOMFORTABLE. (1) NIGHT PERSISTS, exactly as
+  pre-registered: mean luma 40.4 against the parent's 32.5, with `dark, night` in
+  the negative. Not counted here; it is the next named sample. (2) `plump` LANDED ON
+  THE GOBLIN THIS TIME, correctly -- where the parent put it on the guard. Two
+  frames differing ONLY in the guard's elbow assigned a body-shape attribute to
+  DIFFERENT FIGURES, which means the residual pooled-embedding broadcast is not
+  merely reduced but UNSTABLE, and no wording change caused the difference. Anyone
+  reading a single frame's attribute assignment as evidence about wording should
+  stop. (3) The guard still reads female, and a white artifact recurs at the
+  goblin's crotch in both skeleton frames.
+what_this_settles: >-
+  THE FOREARM FLIP WAS OUR STAGING. A chicken-wing elbow at shoulder height offered
+  the net a mirror that read as a plausible raised-finger point; a low hanging elbow
+  does not, and the mirror stopped happening. The selftest's mirror arithmetic
+  predicted exactly this and it is the cheapest useful assertion written on this
+  route. It also settles that the pose net's binding is NOT rigid: an authored limb
+  can be OVERRIDDEN when the checkpoint prefers a different reading of the scene,
+  which nothing before this frame had shown.
+what_this_did_not_settle: >-
+  THE POINT, which has now failed four times on four distinct causes: the arm ended
+  in nothing (0.80 contour), the aim was wide by construction (0.45 contour and rung
+  A), the forearm mirrored (solved skeleton), and now the two figures reach for each
+  other. Nor the night. Nor the board. Nor whether the enclosure hypothesis about
+  B2 is true -- two passes are a pattern, not a controlled test.
+what_this_does_not_license: >-
+  No pick, no plate_ack, no cut, no canon filename. It does NOT license widening
+  the figures to put contact out of reach: author_b08_openpose_hint refuses past
+  0.99 extension and this staging is already at 0.847, so there is very little room
+  and buying it would re-open B1 and B5. It does not license a hang_deg sweep -- the
+  dial did its job on the first value and the residual failure is not its shape.
+  And it does not license reading frame-level attribute assignment as evidence about
+  wording, per observation (2).
+next_rung_named_not_taken: >-
+  THE `twins` VARIANT IS NOW GENUINELY LICENSED, AND THIS IS THE FIRST TIME IT HAS
+  BEEN. xinsir describes it in his own discussion #3 as "similar performance and
+  different style" -- MORE PRECISE POSE ADHERENCE, LOWER AESTHETIC SCORE -- and
+  every previous rung declined it on the grounds that pose adherence was never the
+  failure. IT IS NOW: the goblin's arm left its own skeleton by 186 px and the
+  guard's forearm reached 60% of its authored length. That is precisely and only
+  what twins claims to fix. Cost: one 2,386 MiB download of
+  `diffusion_pytorch_model_twins.safetensors` from a repo already cached, needing an
+  explicit filename load, $0, apache-2.0. ONE sample, this exact hint, this exact
+  seed, and the bar is B4b's two halves as measured here -- does the guard's hand
+  reach (280.5,695.1) and does the goblin's arm STAY at (221,857).
+  AFTER that, and unchanged in order: the night (scale 0.6-0.7), the board
+  (multi-ControlNet pose+scribble), and whether rung A's masked references are
+  needed at all.

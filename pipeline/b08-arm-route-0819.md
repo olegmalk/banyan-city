@@ -725,3 +725,101 @@ at all** given B2's surprise here.
 weight, another contour hint, the `_twins` variant (pose *adherence* was never the
 failure — forearm *direction* was), or any further argument about whether pose
 conditioning works on this checkpoint.
+
+---
+
+## 14. The flip was ours, and the arms now reach for each other (2026-08-19)
+
+§13 ruled one hypothesis testable first. `ep2-b08-posenat-0819` took it with one
+variable — the guard's elbow, `solved` → `natural` — and everything else held,
+including the **driver byte-identical** to the parent's, so the net, the scale
+and the pipeline are provably the same. Evidence:
+`farm-out/ep2-b08-posenat-0819/EVIDENCE-b08-posenat-0819.png`.
+
+**THE MIRROR IS GONE, AND BRANCH (2) IS EXCLUDED BY 229 PX.** The predicted
+mirror point (665, 581) is empty background. The guard's pale hand measures a
+centroid of **(436, 656)** — on the correct side of the elbow, with the forearm
+running down-and-left in the authored direction. At 2× the parent's authored-wrist
+neighbourhood is empty sky; this frame's has two hands in it. **The forearm flip
+was our anatomy, not the net's prior.**
+
+The reason it worked was asserted in code before the render, and it is the
+cheapest useful assertion on this route: reflect each forearm about its own elbow
+and ask where the hand lands. `solved` mirrored puts it at y=312, **above** the
+shoulder — a plausible raised-finger point, which is what the net drew. `natural`
+mirrored puts it at y=581, **below** the shoulder, where it reads as nothing. The
+fix was not asking harder for the right pose; it was **removing the attractive
+wrong answer.**
+
+### And it is still not a point — the obstruction changed identity
+
+The guard's hand reaches only ~60% of the way to the authored wrist, and **the
+goblin lifts his own left arm 186 px up and 129 px across, out of its authored
+hanging pose** (wrist authored at (221, 857), green fist rendered at (350, 671)),
+to meet it. **The two hands clasp in the middle of the gap. Both figures' arms
+deviated toward each other.**
+
+This is §9b's *"the path is occupied"* blocker returning at the skeleton level. It
+killed the composite route because "the goblin's own green fist sat dead centre of
+the gap"; here the net *put it there*, against its own conditioning.
+
+**So the pose net's binding is not rigid.** An authored limb can be overridden when
+the checkpoint prefers a different reading of the scene. Nothing before this frame
+had shown that, and it is the finding that licenses what comes next.
+
+### B4b's four causes, all distinct
+
+| rung | mechanism | why the point failed |
+|---|---|---|
+| 1 | contour @ 0.80 | the arm ended in nothing — fingertip sampled background |
+| 2 / A | contour @ 0.45 | a good hand, aimed wide **by construction** (forearm ray 29.1 px off the navel) |
+| B | skeleton, solved elbow | the forearm **mirrored** — hand 230 px above the authored wrist |
+| **B2** | skeleton, natural elbow | **both figures reached for each other and clasped** |
+
+### The enclosure hypothesis survived its first chance to die
+
+| frame | hint class | guard `G−R` | separation | adapter |
+|---|---|---|---|---|
+| rungs 1, 2, 3, 4, 5 | contour | +34.0 … +44.3 | −4.6 … +5.5 | none |
+| rung A | contour | −14.5 | +43.0 | **two masked refs** |
+| rung B | skeleton | −27.5 | +55.5 | none |
+| **rung B2** | skeleton | **−32.6** | **+83.0** | none |
+
+Two skeleton frames, two passes; five contour frames, five failures — and the
+best separation on this beat now belongs to a frame with **no identity mechanism
+at all.** That is a pattern rather than a single observation. It is still **not a
+controlled test**, and the honest statement is only that the hypothesis has not
+died yet.
+
+*And a caution against over-reading any single frame:* **`plump` landed on the
+GOBLIN here and on the GUARD in the parent** — two frames differing only in the
+guard's elbow, no wording change at all. The residual pooled-embedding broadcast
+is not merely reduced, it is **unstable**. Nobody should read one frame's
+attribute assignment as evidence about wording.
+
+## 15. `twins` is licensed for the first time, and the order after it is unchanged
+
+Every rung so far declined `diffusion_pytorch_model_twins.safetensors` on one
+consistent ground: xinsir describes it as *"similar performance and different
+style"* — **more precise pose adherence, lower aesthetic score** — and pose
+adherence was never what was failing.
+
+**It is now.** The goblin's arm left its own skeleton by 186 px and the guard's
+forearm reached 60% of its authored length. That is precisely and only what twins
+claims to fix. One 2,386 MiB download from a repo already cached, an explicit
+filename load, apache-2.0, $0.
+
+**One sample**, this exact hint, this exact seed, and its bar is B4b's two halves
+as measured here: does the guard's hand reach **(280.5, 695.1)**, and does the
+goblin's arm **stay** at (221, 857).
+
+Then, unchanged: **the night** (luma 40.4 with `dark, night` in the negative —
+same hint at scale 0.6–0.7), **the board** (multi-ControlNet pose+scribble; the
+holding *hand* already binds, only the object is missing), and **whether rung A's
+masked references are needed at all** given two adapter-free B2 passes.
+
+**What this route no longer needs:** a scribble-net rung, a stroke weight, a
+contour hint, a conditioning-scale bracket on the scribble net, a `hang_deg`
+sweep, wider figure separation (the staging is already at 0.847 extension against
+a 0.99 ceiling, and buying room re-opens B1 and B5), or any further argument about
+whether pose conditioning works on this checkpoint.
