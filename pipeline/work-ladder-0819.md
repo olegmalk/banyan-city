@@ -1846,3 +1846,59 @@ filename, three directories. Sidecar, bench row and `.sha256` all carry the corr
 seed on each, so provenance is recoverable and nothing is mis-attributed. **The
 repair belongs in the generator, not in these files:** renaming a published artifact
 invalidates the `.sha256` that proves it arrived intact.
+
+> **Correction to the section above, same night, 20:40.** It says "the card is
+> empty (`ready` 0, `running` 0, `backlog` 0)". That was read off
+> `box_autofill --status` at 16:24Z and it is no longer true: the beat-19 lane
+> filed `ep2-b19-sapmid-0819` at ~16:39Z and it went to `running` at 20:40 local.
+> Read directly, the card now holds **0 ready / 1 running / 0 backlog**, with
+> `ready/` containing only the eight parked `.HOLD` / `.DUP` files. **The GPU is
+> not idle.** The no-idle argument for filing `ep2-b12-noscav-0819` tonight is
+> therefore weaker than the section above implies — the rung is still the right
+> next one, but it is queued behind live work rather than rescuing a dead card.
+> Recorded rather than edited in place: a status snapshot is a timestamp, not a
+> state, which is the standing lesson about inferring lane liveness.
+
+### CORRECTION TO THE RUNG ABOVE — the approved line DOES contain the scavenger, and the argument is better for it
+
+The section above justifies `ep2-b12-noscav-0819` as non-R4 by saying it "deletes text
+describing something the founder's approved line does not contain." **That is wrong, and
+checking it before publishing is what turned a weak argument into a sound one.**
+`genomes/sapling/nodes/002b-first-citizen/node.md:83` — the approved shot description —
+reads, in full:
+
+> Tight on the sapling's two leaves, perfectly still — **the scavenger is still crouched
+> in the grass behind them, out of frame.**
+
+The prompt is a near-verbatim transcription of it. So the clause is canon, and deleting
+it from the *script* would be R4.
+
+**But the render is what violates canon, not the deletion.** The same node states the
+staging explicitly at line 189: *"12 RELATED — he is crouched in the grass behind the
+leaves and out of frame, not below them. **Off-screen only; the picture did not change.**"*
+Canon says the scavenger must NOT be in the picture. Four of five renders put him in it.
+**Deleting the clause from the prompt is what makes the render obey the approved staging** —
+it moves the output toward canon, not away from it. The script is untouched and needs no
+R4. What *would* be R4 is changing the line itself, or widening the framing.
+
+### THE GENERALISABLE LAW: A SHOT DESCRIPTION IS NOT A PROMPT
+
+This is the real finding and it outranks beat 12. A script's staging prose describes what
+is true of the **scene**, including what is deliberately **off-screen** — that is normal,
+useful screenwriting. A diffusion positive can only describe **what is in the frame.**
+Transcribing an off-screen clause verbatim into a positive therefore asks for precisely
+the thing the script says to exclude, and the negative cannot claw it back: beat 12's
+negative bans `goblin, creature, person, face, hands, figure entering frame` and lost four
+times out of five.
+
+**Whoever writes the next prompt from a script line: strip every clause about what the
+camera does not see.** "Out of frame", "off-screen", "behind the camera", "just outside
+the shot" are instructions to a human reader and requests to a sampler.
+
+**Scoped honestly, because 315 specs match `out of frame` and that number is misleading.**
+Sampled, the overwhelming majority are **negatives** banning subject exits — `walking out
+of frame, leaving the frame`, `running out of frame, exiting frame` — which is a correct
+and unrelated use. The defect is an off-screen clause inside a **positive**, and beat 12 is
+the only confirmed instance. **The audit that would settle it has not been run**: it must
+read positives only, and a grep across whole spec files cannot distinguish the two. Named
+as unowned rather than claimed as measured.
