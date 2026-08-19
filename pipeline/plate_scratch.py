@@ -5113,6 +5113,144 @@ REVS[(15, 2)] = {
 # smaller, differently-shaped problem with a route and a passing asset attached.
 # --------------------------------------------------------------------------
 
+REVS[(9, 3)] = {
+    # --------------------------------------------------------------------------
+    # BEAT 09, r3. THE ONE VARIABLE: ONE WORD OF HAIR COLOUR, `dark` -> `black`.
+    #
+    # THIS RUNG WAS NAMED, MEASURED AND DELIBERATELY LEFT UNFIRED BY THE LANE
+    # THAT FOUND IT, and this is that lane's sentence being honoured rather than
+    # a new idea: REVS[(9,2)]'s seed-batch result reads "F1 THE HAIR IS THE
+    # WORDING, 7 OF 7 ... so per the rule as written, the next thing beat 09
+    # tries is `black hair`, which is this checkpoint's own tag, instead of
+    # `dark`. THAT IS THE ONE CHANGE THIS BEAT NEEDS AND THIS LANE DOES NOT
+    # SPEND A FIFTH SEED ON IT -- it is named, measured and left for the next
+    # lane rather than guessed at now." The F1 rule was written BEFORE the four
+    # seeds rendered, and it fired at 7 of 7: mid-to-dark brown and shaggy at
+    # every render beat 09 has ever had, with `dark cropped hair` in the
+    # positive every single time. Guard A's hair is near-black and CROPPED.
+    #
+    # WHY `cropped` IS NOT TOUCHED. The named change is the COLOUR word and only
+    # the colour word -- "`black hair` ... instead of `dark`" -- so the edit is
+    # the single substitution `dark` -> `black` inside the same noun phrase.
+    # `cropped` -> `short hair` (the checkpoint's own length tag) is a SECOND
+    # axis and is named at the bottom of this block, not fired here. A rung that
+    # moved both words could not say which one moved the picture.
+    #
+    # AND A MECHANISM FOR THE 7-OF-7 THAT NOBODY HAS WRITTEN DOWN, FOUND BY
+    # READING THE TWO STRINGS SIDE BY SIDE RATHER THAN BY RENDERING ANYTHING.
+    # THIS PROMPT PAIR HAS ASKED FOR `dark` HAIR AND FORBIDDEN `dark` AT THE
+    # SAME TIME, AT ALL SEVEN RENDERS. The negative's last clause is
+    # `photorealism, 3d render, dark, night` -- `dark` is in there as a LIGHTING
+    # term, aimed at the night-scene prior, and it has been sitting beside a
+    # positive that says `dark cropped hair` since r1. SDXL's text encoder has no
+    # scoping: there is no mechanism by which a negative `dark` subtracts
+    # darkness from the LIGHT and not from the HAIR. So the one condition this
+    # beat has never once met is the one condition its own negative was
+    # cancelling, which is a far better explanation of 7 of 7 than "the model
+    # will not draw black hair" -- and it is a prediction, not a story, because
+    # `black` appears NOWHERE in the negative. If H1 lands, that is the reading
+    # confirmed; if H2 lands, this mechanism is wrong and it says so in advance.
+    # WHY THE EXISTING GUARD DID NOT CATCH IT, which is the reusable part:
+    # plate_scratch's clash check at line 5184 splits both strings on commas and
+    # intersects whole chunks, so it sees `a guard man with dark cropped hair and
+    # wire-rim glasses` against `dark` and finds no collision. A TOKEN-level
+    # check over the same two strings would have fired on day one. Named as a
+    # guard worth adding, and not built here -- one lane, one variable.
+    #
+    # WHY SEED 20260820 AND NOT THE PARENT'S 20260817, WHICH LOOKS LIKE A SECOND
+    # VARIABLE AND IS NOT. It makes the A/B EXACT rather than approximate: there
+    # is a committed, scored picture at this exact seed and wording --
+    # farm-out/ep2-b09-mac-plate-0817/09-the-pause-mac-plate-r2s4.png,
+    # sha256 in its sidecar -- so this render differs from a picture already on
+    # disk by one token and nothing else. The seed also carries the ONE
+    # measurement beat 09 cannot buy with words: r2s4 is the only render of the
+    # seven whose head clears P3, read off a 50px ruler at >=56% of frame height
+    # where the other six posted 48-53%. REVS[(9,2)]'s F3 result is explicit --
+    # "THE HEAD SIZE IS A SEED VARIABLE, NOT A WORDING LIMIT ... `face filling
+    # the frame` CAN reach the bar and the framing needs seeds, not new words."
+    # Testing the colour word at the one seed known to satisfy the framing
+    # clause is therefore the cheapest place the answer can be worth anything.
+    #
+    # WHAT THIS RUNG CANNOT DO, STATED FIRST SO NOBODY READS A PASS INTO IT.
+    # IT CANNOT PRODUCE A USABLE PLATE, and beat 09's slate does not close
+    # tonight on the strength of it. Two of the beat's three open faults are
+    # untouched here and both are recorded:
+    #   * THE EYES. P7 needs them OPEN. At this seed they are SHUT (r2s4), and
+    #     the tag is a 1-in-4 RATE and not a lever -- REVS[(9,2)]'s F2 retracted
+    #     its own eye rule at four seeds: open once, a wink once, open-but-blank
+    #     white with no irises once, shut once. So P7 is an EXPECTED FAIL at
+    #     this seed and is NOT this rung's business.
+    #   * THE ADULT READ. The face reads adolescent here and at 7 of 12 of the
+    #     box cast batch (`cast-0817-scores.yaml` c7: 5 of 12). No age tag is in
+    #     this prompt at all; `1boy` is the only person tag. Named below.
+    # NO SEED IN THE HISTORY OF THIS BEAT HAS EVER PRODUCED THE FRAMING AND OPEN
+    # EYES TOGETHER -- s1 has the eyes and a 48% head, s4 has a 56% head and shut
+    # eyes -- so the plate that beat 09 ships off is a render-N-and-pick on a
+    # SETTLED wording, and the wording is what this rung is for.
+    #
+    # THE BAR IS P1-P7 UNCHANGED, exactly as committed in 7b193483 and carried
+    # by r2, and the outcome on ONE clause is what this rung claims:
+    #   H1 HAIR NEAR-BLACK AND STILL CROPPED-ISH -> the colour word IS the lever,
+    #      the record's F1 rule is discharged, and beat 09's remaining faults are
+    #      the eyes (a rate, needs N-and-pick) and the age (one unfired tag).
+    #   H2 HAIR STILL MID-BROWN AND SHAGGY -> the colour is NOT reachable by
+    #      wording on this checkpoint at 8 of 8, the wording ladder on hair
+    #      CLOSES at that count by this repo's own three-rung rule, and the next
+    #      instrument is compositional: the box cast rung already MEASURED that
+    #      IP-Adapter reference conditioning does move hair (near-black at 3 of
+    #      12) and pays for it in framing (25-35% against 55%, its own
+    #      pre-registered fail mode firing 12 of 12). Those two facts together
+    #      make beat 09's plate a REFERENCE-PLUS-CROP job, not a prompt job, and
+    #      that is a build with a consumer rather than a mystery.
+    #   H3 THE HEAD DROPS OFF 56% -> one token reshuffled the draw, F3's
+    #      seed evidence does not transfer across wordings, and the framing has
+    #      to be re-won at whatever wording survives. Report the ruler reading
+    #      either way, measured and not estimated.
+    #   H4 ANY OF P1/P2/P4/P5/P6 REGRESSES -> report it by name. P1's glasses
+    #      half and P4 have now passed 7 of 7 each and a regression on either
+    #      from a hair token would be a finding about attribute bleed, not noise.
+    # NOT SCORED HERE: whether this plate is castable, promoted or ack'd. No
+    # plate_ack, no pick, no leaf, nothing enters any cut from this rung.
+    #
+    # NAMED AND NOT FIRED, so the next lane inherits a route:
+    #   (a) `cropped` -> `short hair`, the length half of the same fault, one
+    #       token, only worth firing if H1 comes back black-but-shaggy.
+    #   (b) AN AGE TAG. There is none in this prompt; `mature male` is this
+    #       checkpoint's own adult tag and the positive-placement law this repo
+    #       has now watched fire five times says the vacancy is why every frame
+    #       decides his age afresh. One token, one rung, unfired.
+    #   (c) render-N-and-pick for the eyes ONCE (a) and (b) are settled -- a
+    #       judged wording at four fresh seeds, which is what F2's retraction
+    #       leaves as the only honest route to an open pair.
+    # --------------------------------------------------------------------------
+    "slug": "the-pause",
+    # r2's positive with ONE substitution: `dark cropped hair` -> `black cropped
+    # hair`. Every other token is byte-identical to REVS[(9,2)].
+    "prompt": (
+        "1boy, solo, close-up, face filling the frame, a guard man with "
+        "black cropped hair and wire-rim glasses, eyes open, thoughtful, "
+        "mouth closed, a tan wrap tunic collar and a white sash on his "
+        "shoulder, tall grass and a green hedgerow behind him, sunny "
+        "day, masterpiece, best quality"
+    ),
+    # Restated BYTE FOR BYTE from REVS[(9,2)], which restated it byte for byte
+    # from r1. It is unchanged, and it is written out here because the merge site
+    # merges over DRAFTS[9] and not over r2 -- a rev that named only a prompt
+    # would inherit the base draft's negative silently, which is the landmine
+    # plate_scratch.py guards at line 5166 and refuses on.
+    "negative": (
+        "text, 2boys, 3boys, crowd, bald, closed eyes, hands, holding "
+        "object, clipboard, armor, helmet, knight, child, girl, white "
+        "background, simple background, grey background, blank "
+        "background, plain background, sky, indoors, full body, wide "
+        "shot, distant, photorealism, 3d render, dark, night"
+    ),
+    # The r2 SEED BATCH's s4. See the seed note above: this is the only seed of
+    # the seven whose head clears P3, and there is a committed scored picture at
+    # this seed and the parent wording to A/B against.
+    "seed": 20260820,
+}
+
 
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer
