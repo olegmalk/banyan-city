@@ -3006,3 +3006,5 @@
 20:14:56Z box-runner idle ready=0 failed=43
 20:16:58Z STARTED task=ep2-b04-headlock-0820-1787170612 attempt=1 on box-runner
 20:23:10Z DONE task=ep2-b04-headlock-0820-1787170612 rc=0 artifacts=2
+20:24:12Z STARTED task=ep2-b08-twinsipa-0819-1787170853 attempt=1 on box-runner
+20:24:48Z DONE task=ep2-b08-twinsipa-0819-1787170853 rc=0 artifacts=1
