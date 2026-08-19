@@ -278,3 +278,128 @@ derivation:
     yet. Their numbers appear here only inside `why` and the bar, as the reason this rung exists.'
 what_this_licenses: One clip. No third rung, no crf change, no plate change, no negative change, no cut swap.
   Beat 12's crf-33 take stays in the cut with its fault named until something clears this bar.
+verdict_this_job: 'FAIL, and the most important thing it returns is that THE PREMISE OF THIS RUNG
+  WAS WRONG. 73 frames at the same seed is not the first 73 frames of the 121-frame parent -- it
+  is a different video, and "stop before the collapse" is not a move that exists. The parent held
+  125.33 at f024 and fell late; this take is already at 108.84 by f024 and flat from f042. What
+  it does return is a new fault the parent did not have: a large dark leaf mass enters at the LEFT
+  EDGE around f004 and grows across the mid-ground until about f048, turning ~15% of the frame black.
+  Three clauses fail (M1b on its number, M2, M5), two pass cleanly (M3, M4), and M1 passes on hue.
+  THE CUT DOES NOT SWAP: beat 12 keeps the crf-33 take with its colour fault named.'
+verdict_this_job_measured:
+  instrument: 'All 73 frames extracted and opened -- a 10x8 contact sheet of the whole clip, a full-width
+    top-band strip (rows 0-430, every 4th frame), a bottom-band strip (rows 1000-1280, every 6th),
+    and a gamma-lifted 2x crop of the mass at f048. Numbers from the SAME script the 121-frame parent
+    and the shipped crf-33 take were measured on (saturation-weighted circular-mean hue, BT.601 luminance,
+    interframe median absolute difference on the same geometric bands), extended with a three-band
+    luminance table because the whole-frame mean turned out to be hiding the fault. 73 unique frame
+    files, no duplicate run anywhere -- this is not the frozen-frames defect.'
+  container: 704x1280, 24 fps, 73 frames, 3.041667 s (ffprobe). Exactly the rung that was ordered.
+    All six published files verified against ep2-b12-shortstill-0819.sha256.
+  THE_PREMISE_WAS_WRONG: 'THE HEADLINE, and it is not about beat 12. Frame count is an input to the
+    denoiser''s temporal grid, not a crop of a longer render. Same seed 20260819, same init, same
+    prompts, same sampler numbers, only --frames 121 -> 73, and the two clips agree ONLY at f000
+    (both 125.47, both conditioned on the same plate) and diverge immediately. Mean luminance, parent
+    then this take: f000 125.47 / 125.47, f024 125.33 / 108.84, f060 113.63 / 104.03, f072 98.91 /
+    104.04. The parent is flat to f048 and then falls off a cliff; this one falls for 42 frames and
+    then sits still. THIS INVALIDATES FRAME-COUNT-AS-A-TRIM REASONING FOR EVERY LTX LANE, not just
+    this one: a shorter rung is a re-render, so it cannot inherit the longer rung''s early frames,
+    and any prediction of the form "it will not reach the part that broke" has no basis.'
+  M1_PALETTE_PASS_ON_HUE: 'Hue reproduces the parent decisively. init hue 59.98 / lum 127.07 against
+    f000 hue 59.14 / lum 125.47, so init->f000 is 0.84 deg and -1.61 levels
+    -- the plate is held. f000->f024 hue swing 0.09 deg (parent 0.46 deg, SHIPPED crf 33 40.24 deg);
+    f000->f072 hue swing 1.15 deg. The warm-to-cool shift that done-definitions.yaml records against
+    beat 12 is the crf-33 flag''s and it stays absent at crf 10 at this length too. THE LUMINANCE
+    HALF OF THIS CLAUSE DOES NOT REPRODUCE -- f000->f024 is -16.63 against the parent''s -0.14 --
+    and it is charged to FAIL-PLANT-CHANGE, not to the palette, because the loss is confined to one
+    horizontal band while the other two hold. See the band table under M1b.'
+  M1b_THE_FRAME_DOES_NOT_WALK_TO_DUSK_FAIL_ON_THE_NUMBER: 'The pre-registered clause was |lum(f072)
+    - lum(f000)| <= 12. Measured: 125.47 -> 104.04, delta -21.43. THE CLAUSE FAILS. Min 103.92 at
+    f052, max 125.65 at f002, peak-to-peak 21.73, worst deviation from f000 over all 73 frames 21.55.
+    BUT THE MECHANISM IS NOT DUSK AND THE CLAUSE MIS-ATTRIBUTES ITS OWN NUMBER. Three-band mean luminance,
+    f000 -> f072: rows 0-560 (sky and the big lit leaf) 134.84 -> 133.29, a loss of 1.55; rows 560-1120
+    (the mid-ground) 130.48 -> 83.55, a loss of 46.93; rows 1120-1280 75.13 -> 73.41, a loss of 1.72.
+    Two thirds of the frame do not move. THE PARENT, ON THE SAME BANDS, IS THE OPPOSITE: 134.73 ->
+    35.77, 130.60 -> 36.50, 75.09 -> 21.99, all three falling together -- that is a real dusk fade,
+    and this take does not have one. The 21.43 is a growing black object averaged over the whole
+    frame. Recorded as a fail because a pre-registered number is a pre-registered number, and recorded
+    with its cause because filing it as "dusk again" would be false.'
+  M2_NEAR_STILL_BUT_NOT_DEAD_FAIL: 'FAIL-DEAD, exactly as the spec predicted it would. On the parent''s
+    instrument: whole-frame interframe median 0.0000, LEAF band (rows 0-793) 0.0000, GRASS band (rows
+    1024-1280) 0.0000 (parent: leaf 1.0000, which was its global ramp, grass 0.0110). Ramp-subtracted
+    interframe MEANS, median over the 72 steps: leaf 0.130 levels/frame, grass 0.146. Over the plateau
+    window f053->f072: whole 0.057, leaf 0.053, grass 0.054, grass p99 1.356. At f060->f061 only
+    8.7% of pixels change at all. Nothing in the plant or the grass moves; the only thing in the
+    clip that moves is the defect, which is the same structural result the parent returned.'
+  M2_INSTRUMENT_NOTE_WORTH_NOT_RE_DERIVING: 'THE "GRASS BAND" CONTAINS NO GRASS. Rows 1024-1280 at
+    this framing are a second large leaf and a strip of sky -- opened and looked at, not inferred.
+    The parent''s 0.011 and this take''s 0.0000 both measured a leaf. "Only the grass stirs, very
+    slightly" cannot be scored on this plate at all, because the plate is too tight to contain grass.
+    Any future rung that wants the grass clause needs a wider plate, not a different prompt.'
+  M3_NOBODY_ENTERS_FRAME_PASS: 'CLEAN. No goblin, hand, face, figure or creature at any edge in any
+    of the 73 frames -- whole-clip sheet plus a dedicated top-band strip and a dedicated bottom-band
+    strip, because the parent''s bird lived at the top edge. NO BIRD. The white speck near the top
+    of frame is a PLATE feature and not an arrival: peak luminance in that window is 200.6 in the
+    init, 183.5 at f000 and 187.0 at f036 -- it is in the image the render was conditioned on.'
+  M3_WHAT_THIS_DOES_NOT_SETTLE: 'The rung was built so that the bird''s absence would mean one of
+    two things -- "the bird needed frames it no longer has" or "the negative''s ''creature'' does
+    not hold". BECAUSE 73f IS A DIFFERENT RENDER AND NOT A PREFIX, NEITHER ANSWER IS AVAILABLE. The
+    only honest statement is "no creature in this render". The parent''s bird is still unexplained
+    and the question of whether "creature" holds is still open. That is a cost of the wrong premise,
+    and it is recorded rather than resolved in the flattering direction.'
+  M4_CAMERA_LOCKED_PASS: 'ESTABLISHED FOR THE FIRST TIME ON THIS BEAT, because the instrument survives
+    this clip. Level-normalised SAD, f000->f072, +-8 integer search. High-contrast window at (600,0),
+    gradient 6.81: best shift dy=+1 dx=-1 at sad 43.038 against sad 43.098 at (0,0) -- an improvement
+    of 0.06 levels, which is no move. The low-contrast window at (200,200) is bare sky (gradient
+    1.11) and lands on the search limit at dy=+2 dx=-8, so by the beat-19 region-consistency rule
+    nothing is filed from it. The affirmative evidence is the band table: rows 0-560 move 1.55 levels
+    across the whole clip while rows 560-1120 move 46.93. A camera move moves the whole frame. This
+    did not.'
+  M5_THE_PLANT_DOES_NOT_CHANGE_FAIL: 'THE FAULT OF THIS TAKE, and it is new -- the parent passed
+    this clause. A large dark leaf mass enters at the LEFT EDGE at about f004, grows rightward across
+    the mid-ground, reaches full extent about f048 and then holds to f072. Measured as the fraction
+    of pixels below luminance 40: 5.09% at f000, 9.09% at f006, 15.45% at f018, 19.04% at f030, 19.97%
+    at f048, 19.84% at f072 -- about 15% of the frame turns black and stays black. Gamma-lifted 2x
+    at f048 it is unambiguously foliage: visible midribs, a lobed contour, a warm rim light along
+    its top edge. IT IS A LEAF MASS AND NOT A CREATURE, which is why it is scored here and not under
+    M3, and the read was made on the lifted crop rather than guessed from a silhouette. The negative
+    already carried "new leaf", "extra leaf" and "growing leaf" and it arrived anyway -- the same
+    class of result as the parent''s bird against "creature".'
+pre_registered_fail_modes_as_fired:
+  FAIL-DUSK: FIRED ON ITS NUMBER, NOT ON ITS MECHANISM. -21.43 against a 12-level bound, produced
+    by a growing black object in one band and not by the frame walking to dusk. Two of the three
+    bands lose under 2 levels across the whole clip.
+  FAIL-DEAD: FIRED, as pre-registered and as predicted in the bar. Grass band interframe median 0.0000;
+    ramp-subtracted 0.146 levels/frame falling to 0.054 on the plateau.
+  FAIL-INTRUDER: DID NOT FIRE. No creature, no figure, no bird, at any edge, in any of the 73 frames.
+  FAIL-PALETTE: DID NOT FIRE. Hue swing 0.09 deg across the first second and 1.15 deg across the
+    clip, against the shipped crf-33 take's 40.24. The luminance half of M1 did not reproduce and
+    is charged to FAIL-PLANT-CHANGE.
+  FAIL-PLANT-CHANGE: FIRED. A leaf mass appears and grows. It is the fault of this take.
+  FAIL-CAMERA: DID NOT FIRE, and unlike the parent the measurement is meaningful -- see M4.
+fail_mode_I_DID_NOT_PRE_REGISTER: 'No new fail MODE -- FAIL-PLANT-CHANGE was on the list and it is
+  what fired. What was not pre-registered, and is worse than a missing mode, is that THE RUNG''S
+  DERIVATION ARGUMENT WAS FALSE. 70cd3b98 reasoned that because the parent''s decay was "progressive
+  and back-loaded", stopping at 73 frames would "never render the part of the ramp that collapsed".
+  That treats --frames as a trim. It is not: the two renders share only f000. Every sentence in this
+  spec of the form "the parent had lost 11.8 by f060, so 12 at f072 is the bound the measured curve
+  already implies" was reasoning about a curve that this render was never going to have. The bar
+  it produced still fired correctly, by luck rather than by design, and that is recorded here rather
+  than folded away.'
+what_the_next_rung_should_be: 'NOT LICENSED BY THIS SPEC AND NOT FILED. `what_this_licenses` above
+  says one clip, no third rung, and it is honoured -- no follow-up job was enqueued off this verdict.
+  Recorded for whoever holds the beat-12 lane next, as a recommendation and not an order: (1) the
+  frame-count lever is spent as a way of dodging a late defect, because it does not dodge, it re-rolls;
+  (2) both rungs now show the same shape of failure -- the negative names the thing that arrives
+  ("creature" then "new leaf") and does not hold it -- so the honest next lever is the POSITIVE prompt,
+  which spends its entire first sentence asking for stillness and gets total stillness plus one uninvited
+  object, not the negative, which has now failed twice; (3) the grass clause cannot be scored on
+  this plate at any length and needs a wider one if anybody still wants it. Beat 12 has no goblin
+  on screen, so none of this is blocked on the design answer.'
+cut_preference: 'NO SWAP. Beat 12 keeps review/ep2-demo-0819/sources/12-related-b12-tightB-untrimmed.mp4,
+  status best-available with its warm-to-cool first-second fault named in review/ep2-picks/cut-readiness-0819.yaml.
+  This take would trade a one-second colour shift for 15% of the frame going black under a growing
+  leaf that nobody asked for, and it is dead still on top of that. The cut-readiness row for beat
+  12 is deliberately NOT edited by this verdict: a FAIL changes nothing about which file ships, and
+  the upgrade that row already names (the TRIMMED crf-33 take, which the record says removes the
+  fault by edit) is untouched by anything measured here.'
