@@ -2217,3 +2217,70 @@ fault named; **beat 20 stays a slate** because `ep2-b20-motion-0819`'s own
 `verdict_cut` reads "NOT PROPOSED FOR THE CUT" — a steward call, not a courier's;
 beat 15 stays a slate because publishing an init is not footage and
 **STEWARDSHIP.md §6 is undischarged**. A courier job's pass is a pass on bytes.
+
+### The growmotion five — measured, NOT scored, and the reason is b13's own warning
+
+`ep2-b01-growmotion-b10/b11/b12-0818` and `b15/b16-0819` are the remaining five
+unjudged jobs. This lane pulled all five, ran the committed instruments, and
+built 121-frame sheets — then **declined to write clause verdicts**, because the
+detector it built reproduces the exact artifact `ep2-b01-growmotion-b13-0819`
+already warns about:
+
+> "a green-OR-purple colour-predicate mask reported a one-frame colour pop and a
+> 2.0x-2.5x single-frame area step on this clip, and BOTH ARE ARTEFACTS OF THE
+> MASK — the fig passes through teal and desaturated slate on it"
+
+A luma-normalised green-magenta mask (`gmn = (G-(R+B)/2)/luma`, correct in that
+it survives these clips' +67-level exposure jump) still **drops the fig entirely
+during its desaturated slate phase**, which manufactures a fake area collapse
+and a fake balloon on either side of the transition. On `b15` it read area 2917
+at f084 and 11302 at f096 — an apparent 3.9x step that is the mask losing and
+re-acquiring the object, not the fig. **Scoring G1/G4/H4 off that would be
+scoring the instrument.** `b13` also settles the reading of G4 that any scorer
+must use — *maximum single-frame ratio under 2.0x*, not total growth, which is
+how `b13` passed G4 while growing x10.30.
+
+**What IS measured and holds regardless of the mask:**
+
+| seed | job | whole-frame luma f000→f120 | cumulative dy | interframe mean | pairs <0.5 |
+|---|---|---|---|---|---|
+| 20260835 | b10 | 87.09 → **154.79 (+67.70)** | **0 px** | 1.589 | 0/120 |
+| 20260836 | b11 | 87.19 → 144.25 (+57.06) | −202 px | 3.220 | 11/120 |
+| 20260837 | b12 | 87.29 → 130.84 (+43.56) | −90 px | 3.121 | 0/120 |
+| 20260840 | b15 | 87.55 → 98.23 (**+10.68**) | −141 px | 2.318 | 0/120 |
+| 20260841 | b16 | 87.35 → 109.76 (+22.42) | −109 px | 1.234 | 25/120 |
+
+**The blowout is the recipe, not a seed.** All five open at luma ~87.1–87.6 —
+the init plate measures **89.63**, so every clip does start on the plate — and
+all five have already jumped to 100–156 by **f024**. `b13`'s verdict called its
+own +39.60 "the *blooms to pale amber* fault … this seed is four times worse on
+it than its sibling"; **b10 is +67.70, worse than b13, and b15 at +10.68 is six
+times better than b13**. That is a 6x spread across seeds of one recipe, and it
+says the fault is seed-sensitive rather than fixed — which is the useful thing
+here and it needs no fig mask to say.
+
+**Do not read the dy column as camera moves.** The drift instrument's own test
+is region-consistency across its 3×2 blocks, and **not one of the five is
+region-consistent** (b15's blocks span −167 to +137 px). By that test these are
+field re-inking, not translation. H4/G5 need eyes, not this number.
+
+**So the rung is: build a fig detector that survives the slate phase** — anchor
+on the f000 nub locus (measured on the shared init: area 373 px, dia 24 px, at
+y789/x341, gmn +0.347) and track by region continuity rather than by a colour
+predicate, so the object is never lost between hues. Until that exists these
+five stay unscored, and **"unscored" is written here rather than left as an
+absent key**, which is how they went unnoticed in the first place.
+
+### One integrity defect found in passing: `ep2-b01-growmotion-b13-0819`'s manifest is stale
+
+Its `.sha256` lists `01-cold-open-LTX-nubgrow-b-s20260826.mp4` and the matching
+`.meta.yaml`; the directory actually holds **`…-s20260838.mp4`**. The files were
+renamed to the true seed *after* the manifest was written, so **a `sha256 -c`
+against that manifest fails to find 2 of its 6 entries.** The bytes are fine —
+the renamed mp4 hashes to `92e67c20…8057`, exactly what the manifest claims — so
+this is a naming defect, not corruption. It is worth fixing because a manifest
+that cannot be checked by name is a manifest nobody will check. **b13 is the only
+sibling that retokened its output filename at all**; the other six publish as
+`s20260826.mp4` regardless of their real seed, which is the derive step failing
+to retoken `artifacts` and is why the five above are indistinguishable by
+filename.
