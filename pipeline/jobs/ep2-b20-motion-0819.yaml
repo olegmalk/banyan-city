@@ -311,3 +311,120 @@ derivation:
 what_this_licenses: One clip on one seed on one plate. NOT a second arm, not a crf sweep, not a cut swap,
   not a plate promotion, and specifically not a pick between the 25 seeds beyond the one this job crops --
   the other 24 remain unpublished and unscored on macbook1.
+verdict_this_job: 'PASS ON THE CLAUSE IT EXISTS FOR, and beat 20 has footage for the first time in
+  the history of this repo. The pick-up completes by a continuous path: he closes both hands on a
+  fig lying in the grass and lifts it to chest height, still crouched, and the fruit is in every one
+  of the 121 frames. M3 and M5 pass. FAIL-FROZEN -- named in this spec as the most likely outcome
+  -- DID NOT FIRE, and that is the finding worth more than the clip. M2 is NOT ESTABLISHED and the
+  reason is the plate. One mode fired that this bar did not pre-register: the frame darkens by 25
+  levels over the five seconds. IT IS NOT A CUT SWAP YET: the two plate faults this spec pre-declared
+  are both still on screen, and one of them is the founder''s own recorded fault.'
+verdict_this_job_measured:
+  instrument: 'All 121 frames extracted and opened -- an 11x11 whole-clip sheet, a 7-up full-frame
+    strip, a 13-up head crop at 2x for the character read, and a gamma-free 2x eye crop. 121 unique
+    frame files, no duplicate run. Fruit tracked by a purple mask (R>G+18 and B>G+8, G<130) with
+    NEAREST-TO-PREVIOUS component association, because a largest-component tracker jumps to the cloak''s
+    red patches in the early frames and manufactures a 77px teleport that is not there. Camera measured
+    by a scale+shift fit on the whole frame AND a background-only ring, plus three background windows
+    for the beat-19 region-consistency check.'
+  container: 704x1280, 24 fps, 121 frames, 5.041667 s (ffprobe). 268.3 s of GPU, peak 12.0 GB torch,
+    $0. Six published files verified against ep2-b20-motion-0819.sha256.
+  M1_THE_PICK_UP_COMPLETES_BY_A_CONTINUOUS_PATH_PASS: 'THE CLAUSE THIS RUNG EXISTS FOR, AND IT PASSES.
+    Fruit centroid y over the clip: 921 at f000, DOWN to 980 by f024 (both hands closing on it, he
+    presses down before he lifts -- reported because it is not monotone and the bar said monotone-ish),
+    then up through 734 at f032, 598 at f040, 559 at f048, 530 at f064, to a minimum of 514 at f088,
+    settling at 525 by f120. Net rise 466 px from the low point, 396 px from frame one, on a 1280-tall
+    frame. CONTINUOUS: median frame-to-frame |dy| 1.07 px, largest 51.6 px at f026, against a median
+    fruit width of 53 px -- under the pre-registered no-teleport bound, and the three largest steps
+    (51.6, 49.3, 47.3) are all inside the fast lift f024-f040 where a large step is the action rather
+    than a defect. Fruit present in 121 of 121 frames; no frame lost it and none showed a second fig.'
+  M2_THE_GAZE_SHIFT_IS_READABLE_NOT_ESTABLISHED: 'NOT SCORED AS A FAIL OF THE TAKE, because this spec''s
+    own bar says M2 "can only ask whether the look GOES somewhere" on a plate with no sapling in it.
+    What the pixels show: his eye direction barely changes across the 121 frames -- down-left at f000
+    through f030, level-left from f080 on -- and what actually moves is the FRUIT, which rises into
+    his eye line. A cold reader shown only this clip can name one thing he looks at (the fig) and
+    cannot name a second. So the look does not demonstrably GO anywhere; it is arrived at. NOT ESTABLISHED
+    rather than FAIL, and the lever is the plate, not the prompt.'
+  M3_ADULT_THROUGHOUT_PASS: 'CLEAN, and this is the clause with the worst history on this beat. Head
+    opened at 2x at f000/010/020/.../120 and every frame checked on the whole-clip sheet: angular
+    skull with a pronounced crown, heavy brow ridge, deep-set eyes, lean jaw, adult proportions. No
+    chibi and no child collapse in any of the 121 frames, not even for one. The character read is
+    also stable -- it is the same face at f120 as at f000.'
+  M4_CAMERA_LOCKED_NO_FAULT_FILED: 'NOTHING IS FILED, and this time for the right reason rather than
+    because the instrument broke. Whole-frame scale+shift fit f000->f120 lands EXACTLY on identity:
+    best (scale 1.00, dy 0, dx 0) at SAD 60.79, and every larger scale tested to 1.40 is strictly
+    worse. A background-only ring fit agrees -- SAD 68.29 at s=1.00 rising monotonically to 76.85
+    at s=1.30 -- so there is no zoom or push-in, which is what the growing head in a fixed crop looks
+    like until it is measured. The three background windows disagree in direction at the +-24 search
+    limit (sky-top-left dy+24 dx-20, grass-bot-right dy0 dx+24, tree-top-right dy+24 dx+24) with SAD
+    gains of only 1.96, 2.67 and 8.17 levels -- region-INCONSISTENT by the beat-19 rule, so no camera
+    fault. WHAT DOES MOVE in the background is the tree''s branch structure re-inking frame to frame.
+    That is the field re-drawing itself and it is named here so nobody re-derives it as a camera move.'
+  M5_HE_DOES_NOT_STAND_PASS: He is crouched at f000 and crouched at f120, knees in frame below the
+    fruit throughout, and no frame in the 121 shows a rise to his feet. The word the 2026-08-17 rewrite
+    struck stayed struck.
+  THE_PLATE_FAULTS_NOT_SCORED_AGAINST_THE_TAKE_ARE_STILL_ON_SCREEN: 'Both of them, exactly as pre-declared,
+    and neither is charged to this render. (1) The MATURE bare limb crosses the top-right corner in
+    every frame -- the founder''s own recorded fault, "THE BRANCH IS THE WRONG TREE". (2) There is
+    no sapling and therefore no empty stem, which is what done_when calls the evidence and requires
+    in frame. They are why this take is not proposed for the cut on the strength of its motion.'
+  OBSERVED_NOT_SCORED_the_fig_reads_purple: 'The fig reads deep purple/aubergine in all 121 frames.
+    Recorded because the plate under it is, by its own sidecar, the CONTROL arm for the founder''s
+    2026-08-16 purple ruling -- `scored: false`, `founder_verdict: null`, and a positive prompt with
+    no colour word in it at all. THIS IS NOT A PASS OF THAT BAR: the colour bar requires a blind cold
+    reader asked before being told anything, and no such reader has been run on this frame. It is
+    an observation handed to the colour lane, and it is interesting precisely because the control
+    was expected to come back red.'
+pre_registered_fail_modes_as_fired:
+  FAIL-FROZEN: 'DID NOT FIRE, and it was named as the most likely outcome. Interframe absolute difference
+    across the 120 steps: median 1.239 levels, mean 6.085, largest step 13.71. For scale, the beat-12
+    crf-10 take on the identical recipe measures 0.0000 interframe median and 0.15 levels/frame ramp-subtracted.
+    This clip moves, a lot, and it is a two-handed pick-up rather than a gesture or a tremble.'
+  FAIL-TELEPORT: DID NOT FIRE. Largest frame-to-frame fruit displacement 51.6 px against a 53 px fruit
+    width, median 1.07 px.
+  FAIL-FRUIT-DOUBLE: DID NOT FIRE. One fig, present in 121 of 121 frames, never vanishing and never
+    doubling.
+  FAIL-CHILD: DID NOT FIRE in any frame.
+  FAIL-STANDS: DID NOT FIRE.
+  FAIL-CAMERA: DID NOT FIRE, and the measurement is region-consistent enough to say so rather than
+    to abstain -- see M4.
+  FAIL-LIMB-READ: 'DID NOT FIRE, which is the second-best result here. His head never tilts up: the
+    gaze is level or downward for all 121 frames, so the clip does not read as "he looks up at the
+    big tree" even though that tree is in the corner of every frame. The plate fault stayed a plate
+    fault and did not become a take fault.'
+fail_mode_I_DID_NOT_PRE_REGISTER: 'PROGRESSIVE DARKENING. Whole-frame mean luminance walks 141.89
+  (f000) -> 135.27 (f024) -> 125.04 (f048) -> 118.39 (f072) -> 115.57 (f096) -> 116.86 (f120): -25.03
+  levels over five seconds, in every band (rows 0-427 190.79 -> 168.75, rows 427-853 97.53 -> 92.42,
+  rows 853-1280 137.24 -> 89.35). This bar has no brightness clause at all, so it is a mode found
+  after the fact and it is written as one. Plate fidelity is NOT the cause -- init 143.78 against
+  f000 141.89, a hold of 1.89 levels, which is crf 10 doing its job -- so the drift happens during
+  sampling. IT IS A RECIPE PROPERTY AND NOT A BEAT PROPERTY: the beat-12 121-frame take on the same
+  crf 10 / two-stage / distilled-sigmas / 121-frame recipe lost 91 levels the same way, on a different
+  plate, a different prompt and a different subject. Two beats, same drift, same recipe. Whoever owns
+  the recipe should carry a brightness clause on every rung from here rather than discovering it per
+  beat.'
+what_this_settles_and_what_it_does_not: 'SETTLED: --image-crf 10 does not kill a large action. The
+  spec predicted FAIL-FROZEN as most likely on the strength of -23% on beat 07''s gesture and -90%
+  on beat 18''s tremble, and a two-handed pick-up came back with 6.1 levels of mean interframe motion.
+  The honest reading is that the crf-10 motion cost is not a property of the flag alone -- a plate
+  staged mid-action gets its action. Beat 12''s plate is a static two-leaf close-up whose prompt spends
+  its first sentence asking for stillness, and it got total stillness; this plate has both hands already
+  closing on a fruit, and it got the pick-up. NOT SETTLED: whether beat 20 can come off slate, because
+  that is a plate question now and not a motion one.'
+verdict_cut: 'NOT PROPOSED FOR THE CUT, and beat 20 stays a slate for now. This is a steward call
+  on a tradeoff and the reasoning is written out rather than asserted: footage normally beats a slate,
+  and the cut-readiness ledger has a `best-available` row type for exactly this. But this clip cannot
+  satisfy beat 20''s own done_when -- "the empty stem is the evidence and must be in frame" -- because
+  there is no sapling in the plate, and it puts the founder''s recorded fault ("THE BRANCH IS THE
+  WRONG TREE") on screen for all five seconds. Shipping it would show a beat whose evidence is missing
+  and whose wrong tree is the only tree. THE MOTION IS NOT THE BLOCKER AND IS NOW PROVEN ON THIS ACTION:
+  the route is a plate drawn at the 2026-08-17 knee-height staging with the sapling''s own bare stem
+  beside him at face height, then this exact recipe on it. Nothing here is a taste call on the character
+  and no design change is proposed -- the goblin-identity question is untouched by this verdict.'
+assembler_note: 121 frames at 24 fps = 5.0417 s. render_t3.py:616 reverses a clip whose slot outruns
+  it, and a reversed pick-up puts the fig back in the grass. If this take is ever assembled, beat 20's
+  slot must be checked against 5.0417 s rather than assumed.
+what_this_licenses_after_the_verdict: Nothing new. `what_this_licenses` above still holds -- one clip
+  on one seed on one plate, no second arm, no crf sweep, no plate promotion, and the other 24 seeds
+  of the 2026-08-19 macbook1 wave remain unpublished and unscored. No follow-up job was filed off this
+  verdict.
