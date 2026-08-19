@@ -2997,3 +2997,4 @@
 19:47:02Z FAIL task=ep2-b08-twins-sample-0819-1787168798 rc=12 step=twins
 19:52:34Z STARTED task=ep2-b08-twins-sample-0819-1787169144 attempt=1 on box-runner
 19:53:00Z DONE task=ep2-b08-twins-sample-0819-1787169144 rc=0 artifacts=1
+19:54:00Z box-runner idle ready=0 failed=43
