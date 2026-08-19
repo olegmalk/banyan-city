@@ -9907,8 +9907,55 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
           "02's sprint as its own success bar", not stale_bar)
 
 
+def test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer():
+    """mac_enqueue refuses a beat it cannot see, so what it cannot see cannot run.
+
+    plate_scratch.py spells a beat entry TWO ways -- inside the DRAFTS literal
+    (`    15: {`) and as an assignment after it (`DRAFTS[15] = {`) -- and
+    `known_beats` read only the first. Beat 15 is written the second way, so the
+    filer refused every beat-15 job with "plate_scratch.py has no inline prompt
+    for beat(s) [15]" while plate_scratch was perfectly able to draw it. That
+    blocked beat 15's cut slate on a guard, not on a defect.
+
+    Asserted against BOTH the real file and a synthetic one, because the real
+    file is the thing that regressed and the synthetic one is what keeps this
+    test meaningful after beat 15 is eventually folded into the literal.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import mac_enqueue as me
+
+    real = REPO / "pipeline" / "plate_scratch.py"
+    src = real.read_text(encoding="utf-8")
+    have = me.known_beats(str(real))
+    check("the filer sees beat 15, which is written as DRAFTS[15] = {",
+          15 in have)
+    check("and still sees the beats inside the DRAFTS literal",
+          {3, 13}.issubset(have))
+    # THE REAL INVARIANT, not a hand-listed one: every beat plate_scratch spells
+    # either way must be visible. If a third spelling is ever introduced this
+    # fails on the file itself rather than on a list somebody forgot to update.
+    import re
+    literal = {int(x) for x in re.findall(r"^\s{4}(\d+): \{", src, re.M)}
+    assigned = {int(x) for x in re.findall(r"^DRAFTS\[(\d+)\]\s*=", src, re.M)}
+    check("no beat plate_scratch can draw is invisible to the filer",
+          (literal | assigned) - have == set())
+    check("and the assignment spelling really is in use (else this test is a tautology)",
+          len(assigned) > 0)
+
+    import tempfile as _tf
+    with _tf.TemporaryDirectory() as td:
+        fake = Path(td) / "plate_scratch.py"
+        fake.write_text("DRAFTS = {\n    7: {\n        'slug': 'x',\n    },\n}\n"
+                        "DRAFTS[21] = {\n    'slug': 'y',\n}\n", encoding="utf-8")
+        got = me.known_beats(str(fake))
+        check("synthetic: both spellings are read", got == {7, 21})
+    check("a missing file is still an empty set and not a crash",
+          me.known_beats(str(Path(td) / "gone.py")) == set())
+
+
 def main():
     import tempfile
+    test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer()
     test_a_derived_spec_carries_structure_and_never_a_verdict()
     test_a_stale_harness_cannot_render_a_killed_wording()
     test_a_job_cannot_be_filed_with_outputs_nobody_can_find()

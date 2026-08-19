@@ -57,12 +57,35 @@ def ssh(host, cmd, timeout=45):
 
 
 def known_beats(repo_script="pipeline/plate_scratch.py"):
+    """Beats plate_scratch.py can actually draw.
+
+    BOTH SPELLINGS THE FILE USES ARE MATCHED, and the second one is the bug this
+    docstring exists for. `known_revs` below already handled its two spellings and
+    said so; this function did not, and read only the entries INSIDE the DRAFTS
+    literal (`    15: {`). plate_scratch.py also grows beats by ASSIGNMENT after
+    that literal closes -- `DRAFTS[15] = {` at line 5526 is beat 15's whole entry,
+    written that way on 2026-08-19 -- and the four-space regex cannot see an
+    assignment at column 0.
+
+    THE COST WAS A BLOCKED CUT SLATE, not a crash. `main` refuses any beat not in
+    this set before it files anything ("plate_scratch.py has no inline prompt for
+    beat(s) ..."), so beat 15 was unfileable from this tool while plate_scratch
+    was perfectly able to draw it. A guard that is wrong in the REFUSING direction
+    is quiet: nothing errors, work simply never gets queued.
+
+    Parsed rather than imported ON PURPOSE. Importing plate_scratch would give the
+    dict exactly, but that module loads torch and the diffusers pipeline at import
+    time on the machines this runs on, and this guard has to be cheap enough to run
+    before every filing on a Mac that may have no venv active at all.
+    """
     import re
     try:
         src = open(repo_script, encoding="utf-8").read()
     except OSError:
         return set()
-    return {int(x) for x in re.findall(r"^\s{4}(\d+): \{", src, re.M)}
+    beats = {int(x) for x in re.findall(r"^\s{4}(\d+): \{", src, re.M)}
+    beats |= {int(x) for x in re.findall(r"^DRAFTS\[(\d+)\]\s*=", src, re.M)}
+    return beats
 
 
 def known_revs(repo_script="pipeline/plate_scratch.py"):
