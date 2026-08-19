@@ -28,24 +28,27 @@ THE FIVE THINGS THAT ARE ACTUALLY HARD HERE, AND WHAT EACH ONE COSTS
    is a violet oval inside a ~3px near-black cel rim, and a mask cut on the
    violet rule alone leaves that rim hanging in the air at the origin for the
    whole clip. So the sprite region is `fill_holes(dilate(violet_component, 4))`
-   -- wide enough to contain the rim -- and the ALPHA inside that region is not
-   the mask, it is a measured departure from the reconstructed background, so the
-   antialiased boundary comes out as partial alpha instead of a staircase.
+   -- wide enough to contain the rim -- and inside it the fig's BODY AND RIM ARE
+   OPAQUE BY CLASSIFICATION (violet component, or luminance under 100, which is
+   the cel rim), with only the antialiased boundary ring taking a partial alpha
+   off its departure from the reconstructed background. A pure threshold ramp made
+   the fruit TRANSLUCENT; that rejection is recorded at the alpha computation.
 2. THE HOLE BEHIND IT IS FILLED WITH THE PLATE'S OWN PIXELS, on the vacancy law
-   of `pipeline/composite-init-pattern.md` 6 and the same horizontal clone
-   `beat19_drop_composite.py` used: every removed pixel takes the nearest clean
-   pixel in its own row at least `--fill-min-dist` away. Measured on this plate:
-   the field at x 662..702 across the fig's rows is mean (210,207,78) std
-   (20,12,3) -- flat -- while the field at x 550..590 is std (52,54,32), because
-   his cast SHADOW ends at x~597. So the source is taken from the RIGHT, and
-   pixels that fail the thin-structure test are excluded so a blade stroke is
-   never cloned into the patch.
+   of `pipeline/composite-init-pattern.md` 6: a four-way nearest-FIELD seed, then
+   a harmonic (Laplace) solve anchored on the surrounding grass, which is the
+   smoothest surface that matches the boundary exactly -- so there is no seam to
+   see. `beat19_drop_composite.py`'s horizontal clone was tried first and failed
+   here, as did row interpolation; both rejections are recorded at
+   `four_way_fill`, and both were caught by eye at 6-9x with a green bar.
 3. THE SPRITE IS COMPOSITED PREMULTIPLIED. Rotating and downsampling a
    straight-alpha RGBA sprite interpolates colour across the alpha edge and rings
    the fig with a pale halo -- the "visible cut edge" fail mode by another route.
-   Premultiplied is the form that is correct to interpolate: the sprite is stored
-   as (R*a, G*a, B*a, a), upsampled 4x ONCE, rotated per frame, downsampled, and
-   laid down as out = bg*(1-a) + rgb_premultiplied.
+   Premultiplied is the form that is correct to interpolate, and the premultiplied
+   colour is NOT the plate's pixel: an antialiased edge pixel already contains
+   grass, so the stored value is P - (1-a)*BG -- the background subtracted back
+   out. That form recomposites over the same background to the plate EXACTLY, for
+   any alpha, right or wrong. Upsampled 4x once, rotated per frame, downsampled to
+   quarter-pixel placement, laid down as out = bg*(1-a) + rgb_premultiplied.
 4. IT MUST NOT LOOK LIKE IT IS FLOATING. Two things do that work and both are
    physical rather than decorative: a CONTACT SHADOW that only exists inside the
    last 24px of approach (k = 0.22 at touch, widening and vanishing with height),
@@ -54,10 +57,13 @@ THE FIVE THINGS THAT ARE ACTUALLY HARD HERE, AND WHAT EACH ONE COSTS
    in front of it and it settles INTO the grass instead of onto it. The occluder's
    pixels and its alpha both come from the fig-REMOVED background, which is what
    makes it impossible for it to re-paint a ghost at the origin.
-5. THE ROTATION CHANGES THE CONTACT POINT. A 33x44 oval turned 46 degrees is
-   26.8px tall from its own centre, not 21.5, so holding the centre fixed sinks
-   it 5px into the ground. The path is therefore written in terms of the fig's
-   BOTTOM EDGE, and the centre is solved per frame from the current angle.
+5. THE ROTATION CHANGES THE CONTACT POINT. A 33x44 oval turned 46 degrees stands
+   20.5px above its own centre, not 21.5, so a fixed centre sinks it into the
+   ground. The path is therefore written on the fig's BOTTOM EDGE and the centre
+   is solved per frame from the current angle -- with the ELLIPSE's half-extent,
+   sqrt((hw sin)^2 + (hh cos)^2). Using the rectangle's hh cos + hw sin instead
+   overstates it by 8.4px at 46 degrees and floats the landed fig above its own
+   shadow; see `half_height`, and see B5b, which exists so that cannot recur.
 
 THE PATH, AND WHY IT IS SHAPED LIKE THIS
 ----------------------------------------
