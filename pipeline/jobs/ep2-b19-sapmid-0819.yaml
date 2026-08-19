@@ -391,3 +391,37 @@ derivation_bug_caught_by_a_guard: 'RECORDED RATHER THAN QUIETLY FIXED, because t
   mismatch surfaced before the job ran instead of as an rc=1 on the fetch step. Same species as the b08 filename
   that survived a substitution in this rung''s parent: a programmatic derivation is only as good as the set of places
   you remembered to substitute, and the fix is a guard that says out loud what it is about to do.'
+outcome_0819:
+  headline: 'NO VERDICT IS POSSIBLE AND NONE IS WRITTEN -- this job never rendered. rc=1 at its FIRST
+    step (`fetch`), 2026-08-19T16:43:12Z, roughly three minutes after start. No GPU ran, no sampler
+    was loaded, no pixels exist. Scoring it against its bar would be scoring an empty directory, so
+    the bar below is UNTOUCHED and still pre-registered for whoever re-runs this.'
+  what_actually_happened: 'socket.gaierror [Errno 11001] getaddrinfo failed, raised out of
+    fetch_init.py''s urllib.request.urlopen. DNS did not resolve on the box at 16:43Z. It resolves
+    now -- checked directly at ~17:15Z, raw.githubusercontent.com answers and 8.8.8.8 replies in
+    99 ms -- so this was a TRANSIENT network blip on rtx5090 and not a defect in this spec''s logic,
+    its shas, its argv or its payload.'
+  why_a_blink_killed_it: '`max_attempts: 1`. A three-second DNS outage permanently failed a job whose
+    only network need was to re-download bytes that are already committed to this repo. The job went
+    straight to C:\banyan-queue\failed and the card went idle behind it.'
+  THE_REAL_DEFECT_AND_ITS_FIX_ALREADY_EXISTS: 'This is the THIRD network-fetch failure on the box
+    today and the SECOND lane to hit it. pipeline/measured/failed-acknowledged.yaml already carries
+    a `fetch-404` group for ep2-b12-plateship-0819, whose two failures were diagnosed the same hour
+    and fixed by REPLACING THE FETCH WITH A LOCAL COPY STEP (commit 0f799ddd), after which the
+    successor ran rc=0. That fix was never carried across to this lane. The init this job fetches is
+    farm-out/ep2-b19-sapcomp-0819/19-the-drop-sapcomp-0819.png -- already on origin/main, already
+    sha-asserted in init_provenance, and already carryable onto the box as a box_enqueue payload with
+    no DNS involved at all. `fetch_note` argues the re-fetch is what makes "one variable" true of the
+    artifacts; a payloaded copy under the same sha256 assertion proves exactly the same thing without
+    making a GPU job depend on name resolution.'
+  what_the_next_lane_should_do: 'Re-run it. Nothing about the spec needs to change for it to work
+    today, and the bar is still pre-registered and unedited. But do the durable thing while you are
+    there: swap the `fetch` step for a payloaded init the way 0f799ddd did, and raise max_attempts,
+    so the next blink costs nothing. NOT re-queued by the night-close lane: this rung belongs to the
+    beat-19 composite lane, and box_enqueue''s idempotency refusal is a known-open gap that has
+    already re-run a finished job and spent 264 s of GPU -- two lanes re-filing the same job is the
+    exact failure that gap produces. The owner has been told.'
+  what_is_NOT_claimed: 'Nothing about the 0.26 midpoint, the gloss band, the fruit, the sapling or
+    any clause in `bar`. Beat 19 keeps the sapgloss plate (strength 0.22) as its picked plate on the
+    derivation recorded in ep2-b19-sapgloss-0819.yaml, and matte-vs-gloss remains where it was. No
+    pick, no promotion, no plate_ack, no cut change.'

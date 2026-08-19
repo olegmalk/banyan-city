@@ -392,7 +392,27 @@ to the render: a thick **mature-tree** limb crosses the top-right corner of ever
 own recorded fault), and there is no sapling in frame at all, so the empty stem that `done_when` calls
 "the evidence" is absent. Neither is fixable by i2v, because the init is frame one.
 
-**The one job that would fix its darkening is a re-roll on a different seed** (its −25.03 ran on
+### Beat 19's midpoint plate did not run — and the fix for it was already written today
+
+`ep2-b19-sapmid-0819` (the 0.26 midpoint between the two passing strengths) **failed at its first
+step and never rendered**: `socket.gaierror [Errno 11001] getaddrinfo failed` out of `fetch_init.py`,
+rc=1 at 16:43:12Z. **No verdict is written and its bar is untouched** — scoring it would be scoring an
+empty directory.
+
+**This is the third network-fetch failure on the box today and the second lane to hit it**, and the
+cure is already in the tree: `failed-acknowledged.yaml` carries a `fetch-404` group for
+`ep2-b12-plateship-0819` whose two failures were fixed the same hour by **replacing the fetch with a
+local copy step** (`0f799ddd`), after which the successor ran rc=0. That fix never crossed to this
+lane. The init it fetches is already on origin/main at an asserted sha and could ride as a
+`box_enqueue` payload with no DNS involved. Combined with `max_attempts: 1`, a three-second blink
+permanently killed a GPU job and idled the card behind it.
+
+**Re-runnable unchanged today** — but do the durable thing while you are there: payload the init and
+raise `max_attempts`. Not re-queued by me: it is the beat-19 lane's rung, and `box_enqueue`'s
+idempotency gap has already re-run a finished job and burned 264 s of GPU, which is exactly what two
+lanes re-filing produces.
+
+**The one job that would fix beat 20's darkening is a re-roll on a different seed** (its −25.03 ran on
 20260819, the measured outlier). **It is not filed because b20's plate is the scavenger, and re-rolling
 it is a goblin-identity render under the freeze.** That is a rule, not a doubt — and it is the single
 most actionable thing waiting behind the letter in §1.
@@ -419,9 +439,16 @@ assuming the gate passes.
 
 ## 6. Machines, CI and the site
 
-- **rtx5090 — not idle.** `ep2-b19-sapmid-0819` went to `running` at 20:40 local; `ready` holds only
-  the eight parked `.HOLD`/`.DUP` files, backlog 0. Read the box directly (`ssh rtx5090 dir /b
-  C:\banyan-queue\...`), not `box_autofill --status`, which I caught being 16 minutes stale tonight.
+- **rtx5090 — idle, and the last job on it failed.** `ep2-b19-sapmid-0819` went to `running` at 20:40
+  and was in `C:\banyan-queue\failed` three minutes later — **rc=1 at its first step**, DNS blip
+  (`getaddrinfo failed`) fetching its init. No GPU ran. DNS resolves again now, so **it is re-runnable
+  unchanged** (§5). `ready` holds only the eight parked `.HOLD`/`.DUP` files; `running` and `backlog`
+  are empty. Read the box directly (`ssh rtx5090 dir /b C:\banyan-queue\...`), not
+  `box_autofill --status`, which I caught being 16 minutes stale tonight — and note it reports
+  `running` from a snapshot, so **a job can fail between two clean-looking statuses.**
+- **So the card is genuinely empty as of ~17:15Z**, and there are two named, costed, unfrozen rungs to
+  put on it: `ep2-b19-sapmid-0819` (re-run, owner's call) and `ep2-b12-noscav-0819` (hand-write the
+  spec, §3).
 - **CI is backed up on `lint-genome`, and it is not our code.** Runs at 15:05 and 15:23 finished in
   2:33 and 3:40; runs at **15:12 and 15:38 have been `in_progress` for over an hour**, stuck on the
   `sudo apt-get update && apt-get install fonts-dejavu-core` step. Mine (`42dcf0f8`) is stuck on
@@ -484,6 +511,8 @@ dirty at the start of the night and have since been committed by their owner.
    copy step** (§4).
 3. **File `ep2-b12-noscav-0819` by hand** — §3. One deletion, ~8 min, $0, and it is a real shot at beat
    12's first take that fails nothing.
-4. **Named, not built:** the derivation **allow-list** (§4), the `box_enqueue` **idempotency** refusal
+4. **Re-run `ep2-b19-sapmid-0819`** (owner: the b19 lane) and payload its init instead of fetching it —
+   §5. The card is empty behind it.
+5. **Named, not built:** the derivation **allow-list** (§4), the `box_enqueue` **idempotency** refusal
    (it re-ran a finished job and spent 264 s of GPU), and the **positives-only** audit for off-screen
    clauses (§3).

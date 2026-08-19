@@ -175,3 +175,18 @@ acknowledged:
     origin/main); the plate was already ON the box in three places at the asserted sha. Fixed same hour: fetch replaced
     with a local copy step (commit 0f799ddd) and the successor ran rc=0. Retried-and-superseded, not a live defect.'
   doc: pipeline/jobs/ep2-b12-plateship-0819.yaml + commit 0f799ddd
+- id: ep2-b19-sapmid-0819-1787157251
+  group: fetch-dns
+  why: 'rc=1 at the FIRST step (fetch), 16:43:12Z: socket.gaierror [Errno 11001] getaddrinfo failed out of
+    fetch_init.py. DNS did not resolve on the box for a moment; it resolves again (checked ~17:15Z). No GPU
+    ran and no pixels exist, so the spec carries an outcome block and NO verdict -- its bar is untouched and
+    still pre-registered. Live defect, and the fix is already written down: same species as the two
+    ep2-b12-plateship-0819 fetch-404 rows above, which were cured by replacing the fetch with a local copy
+    step (0f799ddd). This lane never got that fix, and max_attempts:1 let a blink kill a GPU job whose init
+    is already committed at an asserted sha. RE-RUNNABLE UNCHANGED; not re-queued by the night-close lane
+    because the rung belongs to the beat-19 composite lane and box_enqueue idempotency is a known-open gap.'
+  doc: pipeline/jobs/ep2-b19-sapmid-0819.yaml -> outcome_0819
+count_note_0819: 'The `count: 39` field at the top of this file is STALE and was already stale before this
+  entry: `acknowledged` held 41 rows against it. Left as measured rather than silently corrected, because the
+  number is written by a measuring pass with its own `measured_at` (2026-08-18T17:29Z) and hand-editing it
+  would forge a measurement nobody took. Whoever re-runs that pass will set both.'
