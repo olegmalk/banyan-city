@@ -295,3 +295,109 @@ instrument_note_the_probe_metric_is_VOID_on_this_hint: >-
   structure; this hint's strokes run down the middle of two standing figures. THE
   VERDICT WILL REST ENTIRELY ON THE PIXELS, plus the ink-adherence measure rung 4
   introduced, which is comparable across rungs because it is computed identically.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size beside
+# rung 2 and the nocontrol frame, and cropping the render against the hint at
+# IDENTICAL coordinates. Scored against the bar and verdict_rule THIS SPEC
+# PRE-REGISTERED; neither is edited. Ran clean: 2 steps rc=0, 07:15:31Z,
+# load 6.2s / render 13.7s, 4 files published and pulled with every sha
+# verified. $0.
+# Evidence: EVIDENCE-b08-skelhint-0819.png (the hint, before the render),
+#           EVIDENCE-b08-r5-class-0819.png (nocontrol / rung2 / rung5 / hint),
+#           EVIDENCE-b08-r5-inkaslight-0819.png (render vs hint, same columns).
+# ============================================================================
+verdict: >-
+  BRANCH 2 FIRES: THE STAGING IS GONE. Every composition clause fails and the
+  frame is the uncontrolled composition -- an extreme colossus. But the branch
+  understated what happened, and the actual result is more useful than the one it
+  predicted: THE CONDITION DID NOT MERELY FAIL TO BIND, IT WAS DRAWN. The
+  skeleton's shoulder bar, spine, joint dots and leg bones appear IN THE PICTURE
+  as luminous objects -- a glowing cross on each figure's chest with glowing orbs
+  at the shoulder joints, and a glowing slab down each pair of legs. See
+  why_this_happened: it is a property of the NET, not of the hint, and it
+  retroactively explains all four earlier rungs.
+verdict_measured:
+  b1_the_pair: 'FAIL. Not a pair: one goblin fills the frame and a second stands at
+    roughly a third his height. This is the uncontrolled composition.'
+  b2_the_adults_read: 'FAIL, the fifth time, as pre-registered. Both figures green
+    with pointed ears. Removing the enclosure did not create a per-figure identity
+    channel, which is one more independent confirmation and the last one this route
+    needed.'
+  b3_one_ground_plane: 'FAIL. Two different scales and depths; the plane split.'
+  b4a_board_down: 'FAIL. No clipboard lowered in a guard hand at his hip. There is a
+    dark slab at the large figure''s side that is not a held board.'
+  b4b_legible_point: 'FAIL. No point at all. The small figure makes a THUMBS-UP.'
+  b4c_the_arm_belongs_to_the_guard: 'FAIL -- and this is the clause the whole route
+    was built on. There is no pointing arm and no guard. Rungs 1, 2 and 4 all kept
+    it; the skeleton class spends it outright.'
+  b5_no_colossus: 'FAIL. An extreme colossus, of the same class and severity as the
+    uncontrolled frame at this seed.'
+  b6_drawn_not_traced: 'PASSES AND THE PASS IS WORTHLESS, exactly as at 0.28 in rung
+    3. The large goblin is beautifully drawn -- because the condition is not shaping
+    him. B6 only carries information while the pose clauses hold, and here none do.'
+the_condition_was_DRAWN_not_obeyed: 'THE FINDING, and it is visible before it is
+  measured. Cropping the render and the hint at IDENTICAL pixel columns puts the
+  authored strokes on top of glowing scene objects: the guard''s shoulder bar with
+  its two joint dots is a glowing cross with two orbs, and the leg bones are a
+  glowing slab. Measured on the columns rather than globally -- the guard''s spine
+  column (x 565.8 +/- 4, y 500-1140) reads luma 212.3 against a 165.4 surround,
+  +47.0; the goblin''s spine column reads 218.2 against 186.0, +32.2. Ink adherence
+  sits at 64.9% against a 26.4% nocontrol floor and the contour class''s 94.4%: the
+  condition had real but partial influence, and it spent it drawing its own strokes
+  rather than placing bodies.'
+a_measurement_that_did_NOT_support_the_claim_and_is_reported_anyway: 'HONESTY ABOUT
+  THE INSTRUMENT. Averaged over ALL the skeleton''s ink, brightness enrichment is
+  1.4-1.7x at thresholds 180/200/220 -- indistinguishable from the nocontrol
+  coincidence floor of 1.4-1.7x, and a brightest-2% test returned 0.0%. So the
+  blanket claim "the skeleton was rendered as light" is NOT supported and is not
+  made. The effect is LOCALISED: only the strokes that landed inside a figure
+  became luminous, while the arms, the pointing arm, the board arm and the ears
+  were simply ignored, and the composition collapse moved the figures away from the
+  rest of the ink. The verdict rests on the aligned crops and the column
+  measurements, both of which are unambiguous.'
+why_this_happened_and_it_reframes_ALL_FIVE_RUNGS: 'THE NET IS A SCRIBBLE NET.
+  xinsir/controlnet-scribble-sdxl-1.0 was trained on scribbles, and a scribble
+  conditioning means one thing: THESE LINES ARE LINES IN THE PICTURE. A closed
+  contour around a body is interpretable that way -- it is an object boundary --
+  which is precisely why rungs 1, 2 and 4 held the staging and traced the
+  silhouette, and why a thinner stroke bound TIGHTER rather than looser. A
+  medial-axis skeleton is NOT a boundary and means nothing to this net, so it did
+  the only thing a scribble net can do with ink: it drew it. The enclosure was
+  never a quirk to be tuned away -- IT WAS THE ONLY THING THIS NET COULD READ. Four
+  rungs of scale and stroke were asking a scribble net to do pose conditioning.'
+what_this_settles: 'HAND-AUTHORED GEOMETRY IS CLOSED AS A COMPOSITION LEVER FOR BEAT
+  08 ON THIS NET, which is branch 2''s pre-registered consequence. Three axes are
+  now bracketed by measurement rather than argument -- conditioning scale
+  (0.80/0.45/0.28), stroke weight (7px/3px) and hint CLASS (contour/skeleton) -- and
+  the space is fully characterised: any hint this net can read is a hint it traces,
+  and any hint it cannot read it either ignores or draws. There is no setting that
+  yields a model-drawn figure in an authored composition. The route''s one durable
+  finding still stands and is not retracted: a hand-authored CONTOUR aims the
+  gesture, and rung 2 (0.45, 7px) remains the best frame this beat has produced.'
+the_next_instrument_is_a_DIFFERENT_NET_and_it_is_a_RESEARCH_question_first: 'NAMED,
+  NOT FILED, and deliberately not guessed at. A pose skeleton is the right
+  INSTRUCTION and the wrong NET: what reads a skeleton is an OpenPose/DWPose
+  ControlNet, which is trained on exactly this input and treats joints as pose
+  rather than as ink. Before any spec is written that must be RESEARCHED OUTSIDE
+  THIS REPO per the 2026-08-04 directive -- whether an SDXL-compatible openpose
+  controlnet exists, whether its weights can be fetched to a box that runs
+  HF_HUB_OFFLINE, its licence, and critically whether its preprocessor is the
+  lllyasviel/Annotators landmine this route has so far avoided by drawing hints
+  with PIL. A hand-authored skeleton needs no annotator, which is the one thing
+  this rung leaves genuinely valuable. NOTHING IS FILED ON THAT UNTIL THE RESEARCH
+  IS IN.'
+what_this_does_not_license: 'No sixth hint variant -- this spec pre-registered "UNDER
+  ANY BRANCH, DO NOT FILE A SIXTH HINT VARIANT WITHOUT READING ALL THREE ABOVE
+  FIRST", and all three axes are now closed. No scale sweep on the skeleton, no
+  stroke sweep on the skeleton, no re-posed skeleton, no pick, no plate_ack, no cut,
+  no canon filename. It does NOT license spending on a plate campaign either; that
+  remains Route A and unchanged.'
+identity_stays_parked_and_the_reason_has_now_changed: 'Five rungs, three axes, five
+  pairs of green figures. The parking order was "hint shape first, because an
+  identity lever has nothing to attach to on a figure whose outline is not the
+  model''s own". That reason is now spent: the hint-shape axis is closed and no
+  outline was freed. So identity is no longer BLOCKED by hint shape -- it is simply
+  the next open question on this beat, alongside Route A''s plate campaign, and
+  whichever the next lane takes it should take knowing that geometric conditioning
+  on this net will not help it.'

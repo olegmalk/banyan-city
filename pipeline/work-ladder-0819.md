@@ -314,6 +314,50 @@ spec-derivation step should refuse to carry a parent's verdict/pick/sweep keys i
 a child, or should rename them on the way through.** Cheaper than the third
 occurrence.
 
+### Rung 5 ran, and it CLOSES the rung this ladder added an hour ago
+
+The sparse skeleton was filed, rendered and scored the same night. **It failed
+every composition clause and the frame drew the condition**: the shoulder bar and
+its joint dots came back as a luminous cross with orbs on each figure's chest,
+the leg bones as a glowing slab (guard spine column luma 212.3 against a 165.4
+surround). *Against myself:* averaged over all the ink the brightness enrichment
+matches the nocontrol floor, so the blanket version of that claim is not made —
+the effect is localised to strokes that landed inside a figure.
+
+**The reason reframes the whole four-rung ladder above it:
+`xinsir/controlnet-scribble-sdxl-1.0` is a SCRIBBLE net.** Scribble conditioning
+means *these lines are lines in the picture*. A closed contour is readable as an
+object boundary — which is why the contour rungs held the staging and traced the
+silhouette, and why a thinner stroke bound *tighter*. A medial-axis skeleton is
+not a boundary, so the net drew it. **The enclosure was not a quirk to tune away;
+it was the only thing this net could read.**
+
+**So the top rung this file added is REMOVED, having been run.** Three axes are
+bracketed by measurement — scale, stroke weight, hint class — and the space is
+characterised: *any hint this net can read is a hint it traces; any hint it cannot
+read it ignores or draws.* No setting yields a model-drawn figure inside an
+authored composition. **Do not file a sixth hint variant.**
+
+**ADDED in its place, as RESEARCH and not as a render:** does an SDXL-compatible
+**OpenPose/DWPose** ControlNet exist, can its weights reach a box running
+`HF_HUB_OFFLINE`, what is its licence, and **is its preprocessor the
+`lllyasviel/Annotators` landmine this route has avoided by drawing hints with
+PIL?** A pose skeleton is the right instruction and the wrong net. Per the
+research-before-solving directive this is answered outside the repo before any
+spec exists — and a hand-authored skeleton needing no annotator is the one
+genuinely reusable thing rung 5 leaves behind.
+
+**Beat 08's identity blocker is UNPARKED as a question, though nothing is filed.**
+The parking order was "hint shape first, because an identity lever has nothing to
+attach to on a figure whose outline is not the model's own." That reason is spent:
+the axis is closed and no outline was freed. Identity now sits beside Route A's
+plate campaign as the beat's two open routes, and whoever takes either should know
+geometric conditioning on this net will not help.
+
+**Unchanged and worth keeping visible:** rung 2 (0.45, 7px, contour) is still the
+best frame beat 08 has produced, and a hand-authored contour is still the only
+mechanism that has ever put this beat's pointing arm on the guard.
+
 ---
 
 ## Standing rules this ladder runs on

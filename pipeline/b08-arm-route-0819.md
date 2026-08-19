@@ -406,3 +406,76 @@ once. **No fifth stroke value**; the dial is measured and points the wrong way.
 
 Identity is unchanged: four rungs, two dials, four pairs of green figures. Take
 the hint shape first.
+
+---
+
+## 10. The net was a scribble net all along — the hint-authoring line is closed (2026-08-19)
+
+§9 ruled the sparse skeleton the next instrument. `ep2-b08-cnetplate-r5-0819`
+took it: `--skeleton`, joint dots and single-line bones, **no closed contour on
+either body**, at rung 2's own scale and stroke (0.45 / 7px) so the hint's
+**class is the only variable in the job.**
+
+The claim was asserted in code before any pixels: geometry compares equal key for
+key against the contour hint, and non-enclosure is proved by flood fill from a
+mid-torso seed checked off-ink in both classes — the contour traps it (guard
+18007 px, goblin 11247 px, single closed cells), the skeleton lets it reach the
+frame border on both figures. The board stays a closed rectangle on purpose.
+
+**Every composition clause failed.** B1, B3, B4a, B4b, **B4c**, B5 — an extreme
+colossus, no guard, no board, no point, and a thumbs-up where the gesture should
+be. B2 failed a fifth time. B6 "passes" and the pass is worthless, exactly as at
+0.28.
+
+**But the frame did something branch 2 did not predict: it DREW THE CONDITION.**
+Cropping render and hint at identical pixel columns puts the authored strokes on
+top of glowing scene objects — the shoulder bar and its two joint dots became a
+luminous cross with two orbs on each figure's chest, and the leg bones became a
+glowing slab. Guard spine column: luma **212.3 against a 165.4 surround (+47.0)**;
+goblin spine column **218.2 against 186.0 (+32.2)**.
+
+*Reported against myself:* averaged over **all** the ink, brightness enrichment is
+1.4–1.7x — indistinguishable from the nocontrol floor — so the blanket claim "the
+skeleton was rendered as light" is not supported and is not made. The effect is
+localised to the strokes that landed inside a figure; the rest were ignored.
+
+**Why, and it reframes all five rungs: `xinsir/controlnet-scribble-sdxl-1.0` is a
+SCRIBBLE net.** Scribble conditioning means one thing — *these lines are lines in
+the picture*. A closed contour is interpretable that way, because it is an object
+boundary; that is why rungs 1, 2 and 4 held the staging and traced the silhouette,
+and why a **thinner** stroke bound **tighter**. A medial-axis skeleton is not a
+boundary and means nothing to this net, so it did the only thing a scribble net
+can do with ink: it drew it. **The enclosure was never a quirk to tune away — it
+was the only thing this net could read.** Four rungs of scale and stroke were
+asking a scribble net to do pose conditioning.
+
+| axis | values bracketed | result |
+|---|---|---|
+| conditioning scale | 0.80 / 0.45 / 0.28 | staging HELD / HELD / LOST |
+| stroke weight | 7px / 3px @ 0.45 | staging HELD both; thin traced **tighter** |
+| **hint class** | **contour / skeleton** | **contour traces, skeleton is drawn** |
+
+**Three axes, fully characterised: any hint this net can read is a hint it traces,
+and any hint it cannot read it ignores or draws. There is no setting that yields a
+model-drawn figure inside an authored composition.** Hand-authored geometry is
+closed as a composition lever for beat 08 **on this net**.
+
+**What survives, and it is not retracted:** a hand-authored *contour* aims the
+gesture, and **rung 2 (0.45, 7px) remains the best frame this beat has produced.**
+
+**The next instrument is a different NET, and it is a research question first.** A
+pose skeleton is the right *instruction* and the wrong *net*; what reads one is an
+OpenPose/DWPose ControlNet. Before any spec, and per the research-before-solving
+directive, that needs answering **outside this repo**: does an SDXL-compatible
+openpose controlnet exist, can its weights reach a box running `HF_HUB_OFFLINE`,
+what is its licence, and — critically — **is its preprocessor the
+`lllyasviel/Annotators` landmine this route has avoided by drawing hints with
+PIL?** A hand-authored skeleton needs no annotator, which is the one genuinely
+valuable thing rung 5 leaves behind. Nothing is filed until that research is in.
+
+**Identity stays parked, but its reason has changed.** The order was "hint shape
+first, because an identity lever has nothing to attach to on a figure whose
+outline is not the model's own." That reason is now spent — the axis is closed and
+no outline was freed. Identity is no longer *blocked*; it is simply the next open
+question, beside Route A's plate campaign, and whoever takes it should know that
+geometric conditioning on this net will not help.
