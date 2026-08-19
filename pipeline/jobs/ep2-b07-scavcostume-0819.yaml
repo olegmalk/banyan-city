@@ -220,3 +220,110 @@ frame_count_inherited_0819:
     a correction to a denominator, not a verdict: same refs directory, same sampler, same 3-distinct-refs
     x 4-seeds grid, so this child also draws 12 frames and never 16. Reporting N of 16 here would count
     byte-duplicates as independent evidence.'
+# ===========================================================================
+# VERDICT -- appended 2026-08-19 by the beat-07 judging lane, having opened all
+# TWELVE frames INDIVIDUALLY at native 832x1216, as this spec's own bar
+# requires. rc=0, 12 pngs published, the appended verify step counted them.
+# ===========================================================================
+verdict: FAIL
+verdict_headline: 'C1 IS 0 OF 12 AND THE RUNG FAILS -- BUT NOT IN THE WAY IT WAS
+  EXPECTED TO. P1 was pre-registered as the failure to beat: "he still wears the
+  guard''s tunic". What actually happened is P2, and much harder than P2 was
+  written: THE GARMENT TOKENS DID NOT DRESS THE SCAVENGER, THEY DE-CAST THE
+  GUARD. `bald` came back -- the exact defect authored_b07_nobald_0817 exists to
+  remove -- his tan wrap tunic went red or orange in six frames, and his wire-rims
+  migrated onto the goblin''s face, while the goblin went on wearing the guard''s
+  pale tunic and white sash in every legible two-shot. Four tokens moved the wrong
+  man.'
+verdict_clauses:
+  C1_the_scavengers_garment_is_his_own: 'FAIL, 0 of 12. Not one frame puts a
+    PATCHED garment on the scavenger. Two of the five legible two-shots
+    differentiate the two costumes at all (r2-s2, a dark top; r2-s3, a pale wrap
+    with a brown leather strap) and in BOTH the differentiation comes from the
+    GUARD''s costume changing, not the goblin''s. No patches anywhere on any
+    figure in any frame.'
+  C2_the_guard_is_still_cast_correctly: 'FAIL, 1 of 12 -- r2-s3 alone holds dark
+    cropped hair, legible wire-rims, a tan-family wrap tunic and the white sash.
+    THIS IS A REGRESSION AND THIS SPEC PRE-REGISTERED THAT IT MUST BE REPORTED AS
+    THE ADDED TOKENS'' FAULT, so it is: the guard is BALD in 7 of 12 (r1-s0,
+    r1-s1, r1-s3, r2-s0, r2-s1, r2-s2, r0-s1, and both men in r0-s2), and his
+    tunic is red or orange in 6 (r0-s1, r0-s2, r0-s3, r2-s0, r2-s1, r2-s2). The
+    parent''s r1-s3, byte-identical but for these four tokens and on the SAME
+    seed, drew him with hair and glasses.'
+  C3_two_whole_figures_one_depth_plane: 'FAIL, 1 of 12 (r1-s3). r2-s2 and r2-s3
+    are tight two-shots cropped at chest or waist; r2-s0, r2-s1, r0-s0 and r0-s1
+    are from-above or foreground-blocked; r1-s2 holds two whole HUMANS and five
+    goblin creatures in the grass.'
+  C4_the_goblin_is_still_a_goblin: 'PARTIAL, 5 of 12 (r1-s0, r1-s1, r1-s3, r2-s2,
+    r2-s3). In r1-s2 and r2-s1 the second figure is a HUMAN -- the species
+    assertion lost entirely -- and in the four r0 frames the only green things in
+    frame are small background creatures.'
+  overall: 'PASS requires all four. 0 of 12 frames clear all four. There is no
+    candidate frame and none is proposed.'
+verdict_fail_modes_all_reported:
+  P1_costume_merge_unmoved: 'FIRED, 3 of the 5 legible two-shots (r1-s0, r1-s1,
+    r1-s3) -- the goblin in the guard''s own pale wrap tunic AND white sash.'
+  P2_the_tunic_lands_on_the_wrong_man: 'FIRED, and it is the finding. 7 of 12
+    carry the garment change on the HUMAN instead of the goblin: the brown patched
+    garment on the human boy in r0-s0 and on the bald man in r2-s0, and the
+    guard''s tunic pushed off tan to red or orange in r0-s1, r0-s2, r0-s3, r2-s1,
+    r2-s2. `in` did not scope the garment; it re-dressed the nearest wardrobe.'
+  P3_the_patches_climb_onto_skin_or_skull: 'DID NOT FIRE. Zero stitches, seams,
+    grafts or scars on any head or face in any of the 12. This is the one thing
+    the rung got right and it is exactly why `patched tunic` was chosen over
+    `patchwork cloak`, which is measured at 4 of 4 for that defect on this
+    checkpoint. The choice was correct; the channel was not.'
+  P4_the_white_sash_still_bleeds: 'MEASURED, not scored: 5 of 5 legible goblins
+    keep the guard''s white sash (r1-s0, r1-s1, r1-s3, r2-s2, r2-s3). No term in
+    the prompt places or denies a sash on him, and nothing about giving him a
+    tunic displaced it.'
+  P5_the_eyewear_still_bleeds: 'MEASURED, not scored, and WORSE than the parent''s
+    5 of 12: round glasses on the goblin in 5 of 5 legible frames -- and in three
+    of those the GUARD has none, so the eyewear did not duplicate, it MOVED.'
+  P6_a_third_figure: 'FIRED 8 of 12 (all four r0, r1-s0, r1-s1, r1-s2, r2-s0),
+    against the parent sibling rung''s 10 of 12. Not improved by this rung and not
+    addressed by it.'
+  P7_framing_regression: 'FIRED 6 of 12 (r2-s0, r2-s1, r2-s2, r2-s3, r0-s0,
+    r0-s1). Concentrated in the r0 and r2 reference cells, consistent with the
+    parent verdict''s finding that framing regressions are a reference cell and
+    not a wording effect.'
+verdict_the_finding: 'A GARMENT TERM IS BROADCAST-CLASS ON THIS CHECKPOINT, AND
+  `in` DOES NOT SCOPE IT. Rung B''s grammar law is not refuted, it is BOUNDED. It
+  bound `green skin` because skin had no competitor in the sentence: nobody else
+  was claiming a skin colour. A garment has a competitor -- the guard''s tan wrap
+  tunic and white sash are already in the prompt -- and a second garment does not
+  create a second wardrobe, IT DILUTES THE FIRST ONE. The evidence is that the
+  four tokens landed almost entirely on the man they were not written for, and
+  took his hair and his glasses with them.
+  THIS IS THE SAME CONCLUSION THE BEAT-08 LANE REACHED TONIGHT THROUGH A
+  DIFFERENT CHANNEL. There: "a contour cannot say which body an attribute belongs
+  to, so `green skin` enters the pooled embedding and lands on both", after four
+  conditioning rungs closed the geometric axis by measurement. Here the same thing
+  is shown in the WORDING channel on a different beat. Two independent channels,
+  one answer: ATTRIBUTE-TO-FIGURE BINDING IS NOT REACHABLE BY GRAMMAR OR BY
+  GEOMETRY ON THIS CHECKPOINT. That is worth more than this rung cost.'
+verdict_what_is_closed_and_what_is_named: 'CLOSED, at ONE rung and not three. The
+  wording ladder rule stops an axis at three rungs because three failures are what
+  it takes to show a wording is not reachable. This is a stronger result than a
+  third failure would be: the rung did not miss, it moved the wrong figure, and it
+  degraded a clause that was passing. A second wording would be spending a rung on
+  a mechanism now understood. NO RUNG D IS FILED, and the one this spec named
+  ("a one-word edit if the glasses still bleed") is WITHDRAWN by its own result --
+  the glasses bleed for the same reason the tunic does.
+  NAMED, NOT FIRED, per the ladder''s rule that the next instrument after a closed
+  axis is compositional: PER-FIGURE CONDITIONING -- regional prompting or a
+  per-figure IPAdapter, one text or image condition per spatial region so the two
+  wardrobes never share an embedding. It is the SAME instrument beat 08 named for
+  the same reason, it is its own probe, and it should be built once for both beats
+  rather than twice.'
+verdict_the_production_call: 'BEAT 07 DOES NOT WAIT FOR THAT, AND THIS IS THE
+  POINT OF THE WHOLE PASS. Its crf-10 motion take already meets the beat''s
+  `done_when` clause by clause (ep2-b07-point-crf10-0819, verdict_the_slate). What
+  this rung was trying to remove is a CAST defect on an ALREADY-PASSING shot, and
+  three plate rungs have now failed to remove it while the shot itself has been
+  sitting ready. STEWARD''S CALL, within bars/tradeoffs/routes: STOP SPENDING
+  PLATE RUNGS ON BEAT 07. The remaining question is not an engineering one -- it is
+  whether the scavenger wearing the guard''s uniform blocks a cut, which is TASTE
+  and belongs to the author, with the pixels in front of him. Beat 07 goes forward
+  as one open taste question with a clip attached, not as a fifth wording.
+  The plate rung is not re-filed and the card is not held for it.'
