@@ -2469,3 +2469,40 @@ below, already handled **both** of its spellings and said so in its docstring; t
 asymmetry was the whole bug. The selftest asserts beat 15 specifically **and** the
 general invariant — every beat plate_scratch spells either way is visible — so a
 third spelling fails on the file itself rather than on a hand-kept list.
+
+## Appended 2026-08-20 by the beat 08 staging lane — the second rung, and the number is now closed
+
+**`ep2-b08-scale50-0820`, FAIL, and it ends the tuning.** One variable,
+`--scale2` 0.3 → 0.5, the grip prompt held byte-identical. **The board came all
+the way back** (authored quad 0.757 of pixels below luma 80, against 0.235 at
+0.3 and 0.758 on the boardless-prompt frame) **and the cream shirt and white
+sash merged into the brown wrap on the way** — sleeve RGB (161.6,115.4,80.3)
+against (217.9,193.4,165.0) at 0.3, i.e. the 1.0+0.8 collapse arriving at
+1.0+0.5. Frame luma 114.4, monotone in the second net's strength.
+
+**The reusable form of it, for any lane composing two ControlNets: one knob buys
+the object AND the garments, and they move in opposite directions.** The usable
+window on this beat is narrower than 0.3–0.5, not the 0.3–0.8 the route had
+assumed. Do not read "a stronger object net just draws the object better" —
+past some value it is also redrawing everything else, and garment BOUNDARIES go
+before limbs do (both arms survived here; the shirt did not).
+
+**Two clean separations, each worth more than the frame.** (1) **The hair is a
+prompt-budget problem, not a conditioning problem** — conditioning rose by two
+thirds and the guard stayed bald, so at 73 tokens crowding alone loses `light
+sandy hair`. The B8 instrument's two inputs are now individually calibrated.
+(2) **Where a hand goes is not the object net's to decide** — strengthening the
+board moved the far hand by nothing; it sat at the chest on the strap at 0.3 and
+sits there at 0.5. Position belongs to the pose hint and the prompt.
+
+**Route status: every free lever on beat 08's grip is now spent, and the next
+one is argued rather than guessed.** Wording summons a grip and binds it to the
+wrong object while costing the board; strength restores the board and moves no
+hand while costing the wardrobe; the guidance window was excluded two rungs ago.
+What remains is a short stroke for the gripping hand in the board hint at the
+authored L-wrist, at `--scale2` 0.3 with the prompt back to 64 tokens. That
+would be the first figure ink ever placed in that hint and it is **still owed
+the five tracing losses in writing before anyone authors it** — the point here
+is only that it now has the evidence it was waiting for. **Not taken by this
+lane. `ep2-b08-scale30-0820` remains the best frame on beat 08; no pick, no
+plate_ack, no cut.**
