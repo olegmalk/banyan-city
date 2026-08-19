@@ -599,3 +599,128 @@ is_this_a_pick: 'NO. This is ONE SAMPLE against a pre-registered bar. No plate_a
   no lineage entry, nothing in any cut and nothing published. Beat 19 stays a slate until the frames are
   opened and, if they pass, until the author says otherwise. The plate PICK this is conditioned on is a steward
   route decision recorded in ep2-b19-sapgloss-0819.yaml `pick_0819` and is vetoable in one line for $0.'
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 by the same lane, after the render.
+# Scored against the bar THIS SPEC PRE-REGISTERED ABOVE, which is not edited.
+# READ HOW: all 121 frames extracted and the fruit tracked per frame against
+# the geometry filed before the render; then the frames OPENED, which is what
+# overturned the tracker on two clauses. $0, CPU, nothing re-rendered.
+# Evidence: farm-out/ep2-b19-dropmotion-0819/.
+# ============================================================================
+verdict_0819:
+  verdict: 'FAIL, decisively, and MY PRE-REGISTERED PREDICTION WAS WRONG IN THE MOST USEFUL DIRECTION.
+    I predicted F-FROZEN or F-IMPERCEPTIBLE -- that the engine would not move a 32x43px object by less than
+    its own height -- and that the notice would land while the fall did not. The engine produced PLENTY of
+    motion. It animated the WRONG SUBJECT. crf 10 did not freeze this beat and amplitude was never the problem.'
+  what_actually_happens_in_the_clip: 'THE PLANT GROWS AND THEN LIES DOWN, AND HE REACHES FOR IT. Frame by
+    frame: f000-f020 the plate, fruit aloft, nothing moves. From ~f025 the sapling THICKENS AND ELONGATES.
+    At f030 his right hand leaves his knee. f039-f065 HIS HAND DESCENDS ONTO THE PLANT and rests on its leaves.
+    By f088 the sapling is a SPRAWLING PROSTRATE plant -- four or more large oval leaves lying nearly flat,
+    the upright stem replaced by a long horizontal runner, and TWO figs instead of one -- and it holds that
+    state to f120. The figs reach grass level BECAUSE THE PLANT LIES DOWN. There is no detachment event
+    anywhere in the clip: nothing ever separates from anything.'
+  the_finding_that_outlives_this_clip: 'THE ENGINE RENDERED BEAT 20''S ACTION INSIDE BEAT 19. Beat 20''s
+    own line is "The scavenger picks the fig up with both hands and looks up at the bare branch." This clip
+    is him reaching for the fig. The prompt named no hand action, the plate has both hands on his knees, and
+    `fruit touching him, fruit on his body, fruit in his hands` were the FIRST tokens of the negative. It
+    arrived anyway -- the positive-placement law firing again, on a sixth beat. Given a human, a plant and
+    a sentence about fruit reaching the ground, i2v assigned the agency to the human. The fix for subject
+    attribution in this repo has never been a negative and has never been a fifth wording.'
+  measured:
+    M1_DETACH_AND_FALL: 'FAIL. The tracked blob is stationary for 20 frames, then jumps 13px (f021), 30px
+      (f027), 29px (f033), 40px (f036) and 113px (f039) -- twelve jumps over the 12px continuity cap, and
+      four BACKWARD steps (f027 -30.0px, f030 -20.5px, f077 -10.0px, f080 -10.5px). A 113px single-frame
+      jump is not a fall, and the backward steps break monotonicity outright.'
+    M2_LANDS_IN_THE_GRASS: 'READS PASS ON THE NUMBERS AND IS AN ARTIFACT -- reported as FAIL. Centroid descent
+      114.0px against the 20px required, bottom edge y1059 against y965 required, and the last 12 frames move
+      0.0px, so all three clauses of M2 are satisfied. They are satisfied by THE PLANT MIGRATING, not by a
+      fruit falling. This is exactly the shape of result the repo''s own rule was written for: a metric agreeing
+      with me is not a sample. The frames overrule the number.'
+    M3_NEVER_TOUCHES_HIS_BODY: 'FAIL as written -- 81 frames (f039-f120) put fruit pixels inside Z-BODY, min
+      gap -212px. BUT THE CAUSE IS NOT WHAT THE CLAUSE WAS WRITTEN FOR, and this must not be quoted as "the
+      fig hit him". From f039 the migrated fig sits BELOW HIS BOOT in the foreground grass; by f088 its overlap
+      with Z-BODY is at the zone''s bottom edge (fig top y1014 against the zone''s y1015). The zone was drawn
+      generous on purpose and this is the technicality that a generous zone buys.'
+    M4_HE_STAYS_HIMSELF: 'SPLIT, and the split is worth keeping. IDENTITY HELD -- same goblin, green skin,
+      bald, patchwork cloak, no morph, no second figure, he never stands up. That is a real positive about
+      this recipe and it is the half beats 08 and 14 keep failing. THE POSE CLAUSE FAILED: "both hands on
+      his knees" does not survive f030.'
+    M5_CAMERA_LOCKED: 'PASS ON THE READ, AND THE INSTRUMENT''S NUMBER IS NOT TRUSTWORTHY HERE -- both are
+      reported because quoting only the number would file a camera fault that does not exist. Raw output was
+      max horizon shift [4, 4]. Checked: dx = 0 everywhere, so there is no pan. The vertical component is
+      REGION-INCONSISTENT -- best fit +3px on the low-contrast horizon band, -1px on the high-contrast fence
+      posts at x100-170. A camera move is rigid; this is not. It is the field being RE-INKED between frames,
+      which is the same re-inking that gave beat 06 a depth of 0.516 with zero human motion. Framing is stable
+      across all seven sampled frames by eye.'
+    M6_PLANT_KEEPS_EXACTLY_TWO_LEAVES: 'FAIL, HARDEST OF ALL, and it is F-PLANT-REVERT firing. Two wide oval
+      cotyledons become four or more large leaves; ONE fig becomes TWO (the tracker sees a second compact violet
+      component from f042 and it never goes away); the thin upright stem becomes a prostrate horizontal runner.
+      This plant took four rounds of drawing and a closed three-rung wording ladder to get to two leaves and
+      one fruit. MOTION UNDID ALL OF IT IN 90 FRAMES, and no beat-19 job had ever checked the count under motion
+      before -- which is why the clause was added.'
+    M7_NOT_SECRETLY_FROZEN: 'FAIL as written (94 of 120 pairs under 0.5 against the cap of 90; longest run
+      over 0.5 is 2 against the 8 required; interframe median 0.197, max 6.707) AND THE CLAUSE IS THE WRONG
+      INSTRUMENT FOR THIS BEAT. Found by self-testing the tracker on a synthetic 32px fruit translation BEFORE
+      the clip existed: a pure fruit drop over a frozen background moves whole-frame interframe by 0.056, i.e.
+      a perfect execution of this beat would fail M7''s floor. M7 measures whole-frame churn and cannot see
+      whether the RIGHT thing moved. The threshold is NOT retuned to fit -- it stays as filed and its FAIL
+      is recorded as uninformative. The load-bearing measurement on this beat is the fruit track, and the
+      generalisation for the next motion bar is that a near-still beat needs its floor on the TRACKED SUBJECT,
+      never on the frame.'
+    M8_HE_NOTICES: 'FAIL, ENTANGLED. His head does tilt down and stay down, so a downward look exists -- but
+      it arrives with the reach and is inseparable from it. A notice that is the first half of a grab is not
+      the beat''s notice; beat 19 ends with him seeing it and beat 20 is where he takes it.'
+  fail_modes_all_reported_by_name:
+    F-FROZEN: DID NOT FIRE. The opposite fired. This is the mode I called most likely.
+    F-IMPERCEPTIBLE: DID NOT FIRE, and its whole premise is dead. 114px of blob travel in a beat I argued
+      was capped at ~32px, because the mover was the plant and not the fruit.
+    F-CONTACT: FIRED, and from the direction my bar could not see -- see `the_hole_this_found_in_my_own_bar`.
+    F-DETACHED-FLOAT: FIRED, in its second shape. Not a fruit materialising in mid-air, but a SECOND fruit
+      appearing (f042 onward) and never resolving. The 08-12 fault's real content survives - the engine will
+      invent fruit rather than move the one it has.
+    F-REWIND: DID NOT FIRE in the clip - the four backward steps are 10-30px jitter, not an unwind. The
+      ASSEMBLER half is untouched and still latent, and the 0.09s margin recorded above is unchanged
+      (clip 5.0417s measured by ffprobe against beat 19's 5.000s slot).
+    F-PLANT-REVERT: FIRED, hardest. See M6.
+    F-HEAD-ONLY: DID NOT FIRE. He moves his arm and torso, not only his head.
+    F-CAMERA: DID NOT FIRE. See M5.
+    F-MORPH: DID NOT FIRE. Identity held for 121 frames.
+    F-SCENE-BREAK: DID NOT FIRE. One location, one continuous take.
+  the_hole_this_found_in_my_own_bar: 'M3 IS ASYMMETRIC AND THE FOUNDER''S RULING IS NOT. I wrote it as "no
+    FRUIT pixel inside a static Z-BODY box measured at f000". His ARM left that box, so the bar was structurally
+    unable to see BODY-ONTO-FRUIT contact -- only fruit-onto-body. The clip contains the first kind and my
+    instrument scored it by accident, through the plant''s migration, rather than by design. The clause the
+    ruling actually needs is SYMMETRIC and needs a PER-FRAME body mask, not an f000 rectangle: no contact
+    between his body and the fruit in either direction, in any frame. Written down for the next lane rather
+    than patched into a bar this clip was already scored against.'
+  what_this_does_NOT_impeach: 'THE PLATE, AND THEREFORE THE PICK. The framing gate passed on the real file,
+    the init was correct, the fruit was aloft at exactly the filed bbox (measured 612..639 x 906..941 against
+    610..642 x 903..946 pre-registered -- a 2-3px difference and it is the libx264 crf-10 round trip, not a
+    different picture), and it had 110px of clearance. Nothing in this clip is evidence against strength 0.22
+    or against the drawn plant. What failed is an i2v motion recipe applied to this staging. `pick_0819` stands.'
+  next_rung_named_and_the_one_it_cancels:
+    cancelled_by_its_own_condition: 'THE crf-33 A/B IS OFF. This spec pre-registered it as the designated
+      follow-up IF F-FROZEN or F-IMPERCEPTIBLE fired. Neither fired, so the rung does not fire either. Recorded
+      because a pre-registered follow-up that gets run unconditionally is how a lane burns a card on a question
+      its own evidence closed.'
+    not_a_fifth_wording: 'The failure is SUBJECT ATTRIBUTION, not amplitude or phrasing, and this repo has
+      five rungs of evidence that words do not fix attribution -- most recently tonight''s b08 finding, "five
+      rungs of geometry could not say which body an attribute belongs to; a reference image behind a mask can".
+      A sixth wording of who-does-what would be the closed-axis mistake.'
+    the_rung_this_lane_recommends: 'COMPOSITE THE FALL, $0, CPU, NO GPU AND NO ENGINE. Every condition this
+      beat needs is already met for it: the camera is LOCKED, the fig is a 32x43px RIGID object, the plate
+      is picked and passing, and this lane already owns pipeline/beat19_drop_composite.py which DREW that
+      plant. A sprite translated down a parabola over the static plate produces a physically exact 32px fall,
+      lands it in the grass beside him, and CANNOT produce any of the three faults that killed this take --
+      the plant cannot revert because it is not being re-generated, he cannot reach because he is not being
+      re-generated, and a second fig cannot appear. It also satisfies the founder''s ruling exactly. The open
+      question it leaves is a taste one and belongs to him: whether a composited fall reads as animation next
+      to i2v beats, which is one look at one sample.'
+    the_authors_card_underneath_all_of_it: 'Whether beat 19 is filmable WIDE at all. His knee-height canon
+      caps the fall at ~30cm and the board requires the sapling and the scavenger in one frame, so the drop
+      is ~32px of a 1280-tall frame however it is produced. That is a story/framing question, not an engine
+      one, and this clip is the first evidence for it.'
+  is_this_a_pick: 'NO, and there is nothing to pick. FAIL. Nothing published, nothing cut, no plate_ack, no
+    leaf, no lineage entry. Beat 19 remains a SLATE and its blocker has moved: no longer "no plate exists"
+    -- the plate exists and is picked -- but "no motion recipe has produced a fall".'
