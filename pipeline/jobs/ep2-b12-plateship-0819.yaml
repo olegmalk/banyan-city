@@ -200,3 +200,18 @@ steps:
 artifacts:
 - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
 - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png.meta.yaml
+outcome_this_job: 'PASS. rc=0, queue record ep2-b12-plateship-0819-1787134092. Two files on
+  farm-out/ep2-b12-plateship-0819 -- 12-related-r4-s2.png and its .meta.yaml -- plus the sha256
+  manifest the job writes itself. VERIFIED HERE, not taken on trust: the published PNG hashes
+  cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074, which is byte-for-byte the
+  copy on main at genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png, and
+  is the same sha both downstream jobs re-asserted in their own cover_crop step before cropping.
+  A copy job has exactly one bar and it is identity; it met it.'
+outcome_the_consumer_was_served: 'Both of them, which is more than the spec claimed. This plate
+  unblocked ep2-b12-stillmotion-0819 (121f) as written, and then ep2-b12-shortstill-0819 (73f)
+  used the identical file at the identical sha, which is the only reason the two rungs are
+  comparable at all -- their measured curves agree exactly at f000 (125.47 both) and diverge
+  after, and that agreement is evidence the plate was constant. Neither downstream take passed;
+  that is charged to the renders and not to this job. See ep2-b12-shortstill-0819 verdict_this_job.'
+outcome_no_further_work: This job is a courier and it is finished. It licenses nothing, picks nothing
+  (`this_is_not_a_pick` above still holds) and needs no rerun.
