@@ -933,3 +933,48 @@ gets bent to fit the clip — which is exactly what `done-definitions`' repeated
 cut file is the `-untrimmed` one whose colour-shift fault its own `trim_0815`
 record already resolved by edit — not swapped because 1.38s against a 5s slot with
 5s of VO over it is a duration decision, and beat 12 is another lane's tonight.
+
+### TOOLING RUNG — every spec in this repo counted its 77-token budget in WORDS, and one was at 85
+
+**Filed 2026-08-19 from `3f3f139a`, in the lane's own words: "the negative I was
+about to file measured 85 of 77, and nothing would have told me."** Recorded here
+because the tool half is fixed and the *habit* half is not, and the habit is
+spread across ~30 filed specs.
+
+**The mechanism, which is silent by design and therefore invisible in a spec
+review.** animagine's prompt budget is **77 CLIP tokens including the two
+specials**, and a prompt over it is not refused — CLIPTokenizer **truncates the
+TAIL**. Every negative in this tree front-loads its defect terms *precisely
+because* of that, which is a correct habit that only works if the count is known.
+Nothing in the pipeline printed the count, so nothing ever was.
+
+**Words are not tokens, and the gap is not small.**
+`ep2-b15-sapcomp-0819`'s first negative was **29 comma-terms** — the kind of
+figure specs have been quoting as "26 terms / 38 words, comfortably under" — and
+it measured **85 of 77**. Eight tokens would have been dropped in silence, off the
+tail, which is where a filer puts the terms it cares least about *and* where a
+long negative's last defect terms actually sit. It was trimmed to **71** before
+the spec was filed.
+
+**The tool exists and is $0:** `pipeline/clip_token_count.py`. It implements CLIP
+BPE directly over `vocab.json` / `merges.txt` from the model already in the
+machine's HF cache — no transformers, no torch, no network — takes `--spec`,
+`--text` or `--file`, and **exits 1 when anything measured is over the ceiling, so
+it can gate a filer**. Its control is the parent job whose negative it measures at
+71 against that spec's own recorded claim of comfortable headroom: the claim was
+right by luck, and the instrument says so rather than agreeing with the prose.
+
+**THE RUNG, and it is the same shape as the two above it — refuse the thing that
+cannot be right, at the one place that can see it.** `box_enqueue.py` should
+measure every positive and negative in a spec it is about to queue and **REFUSE a
+prompt over 77**, the way it already refuses a job whose output path is
+unresolvable. Filing-time is the only moment the fix is free: after the render,
+the eight dropped tokens are indistinguishable from a recipe that simply did not
+work, and the whole run is a rung spent on a question the prompt never asked.
+
+**What is NOT claimed here.** No render in this repo is known to have been
+degraded by truncation — the one measurement over the ceiling was caught before it
+ran. What is established is that **the count was never checked**, and ~30 specs
+were filed on a word count standing in for a token count. Re-measuring the
+already-run specs is its own unit and would be worth doing before any of their
+negatives is reused as a parent.
