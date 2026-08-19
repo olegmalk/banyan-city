@@ -412,3 +412,98 @@ mechanism that has ever put this beat's pointing arm on the guard.
   it vague.
 - **Taste is R4.** Bars, tradeoffs, routes and staging that applies a ruling are
   the steward's. Picks, promotion and `plate_ack` are not made in a job spec.
+
+---
+
+## Appended 2026-08-19 by the beat-07 judging lane
+
+### BEAT 07 IS THE FIRST SLATE WITH FOOTAGE A VERDICT LETS INTO A CUT
+
+**Both takes PASS.** The rung this ladder set — judge them against
+`ep2-b07-point-motion-0819`'s pre-registered bar — ran: all 97 frames of each,
+opened consecutively, plus native 704x1280 reads. M1–M4 all pass on both, first
+attempt, and **F2 (the goblin points), the pre-registered most-likely failure,
+never fired.** The guard raises his own arm at f050, the index finger lands on the
+goblin's collar by f055, held to f096, measured at his own shoulder so no camera
+move scores as the action.
+
+**So the engine question open since 08-15 is answered YES:** a gesture binds to
+the GUARD once both figures are fixed by an init. Text-to-image put the arm on the
+goblin 3 of 3 and could not aim a point in 12 of 12 stills. i2v did both in one
+seed. `FAIL-FROZEN` mattered more here than on beat 09 and did not fire either.
+
+**crf 10 is the cut-preferred take, and it is this flag's first clean win.**
+Background strip drift 5.43 against 36.41 — the crf-33 field visibly boils —
+f001→f002 steps 4.78→1.05 (guard face) and 5.74→0.84 (goblin), and f021 renders a
+hand where the parent draws a mitten. It cost **23%** of whole-frame motion and
+kept **100%** of the gesture: the arm lifts *earlier* (f045 vs f050). That
+sharpens the ladder's per-beat rule with a mechanism rather than overturning it —
+**a gross whole-body gesture on a locked camera has enough authored motion that a
+cleaner init does not starve it**, where beat 18's fine high-frequency tremble
+did. The near-duplicate clause this ladder asked the next motion bar to carry was
+pre-registered and reported: **0 of 96 pairs under 0.5 interframe in both takes.**
+
+**Named, not made:** beat 07 → its crf-10 take in the next assembly.
+
+### The slate's blocker MOVED, and the new rung is filed and running
+
+Beat 07's `done_when` is met clause by clause by the crf-10 take. What is left is
+**the plate: it dresses the SCAVENGER in the guard's own pale wrap tunic and white
+sash.** Two men in one uniform read as two officials, and a CONFISCATE beat has to
+read as an authority pointing at a scavenger. This lane does not overturn the
+earlier lane's recorded judgement that the plate's three faults block a cut; it
+**narrows the blocker from three to one** and leaves promotion where it belongs.
+
+The cause is this repo's own positive-placement law for the **fifth** time: rung B
+sends `a crouching goblin with green skin` — a noun phrase with one attribute and
+**no garment at all** — so the only clothing terms in the prompt are the guard's
+and they land on both men. **`ep2-b07-scavcostume-0819` is filed and running on
+the card** (which measured 0/0/0 when this lane started): one variable, the
+scavenger gets a garment bound inside his own noun phrase by the same grammar law
+rung B used on `green skin`. `patched tunic`, **not** the canon `patchwork cloak`
+— that em-dash costume list is gone from the goblin beats by r8's inherited
+decision and is another lane's to re-add, and `patchwork cloak` climbs onto his
+head 4 of 4 on this checkpoint. Measured on the real CLIP before the spec existed:
+70/77 pos, 58/77 neg, zero faults, nothing dropped, parent at its recorded 65/77
+as the control.
+
+**The derivation guard this ladder asked for an hour ago now exists and fired.**
+`pipeline/derive_b07_scavcostume_0819.py` refuses to carry a parent's
+`verdict`/`pick`/`sweep` keys and names what it dropped — the parent's
+`verdict_0819` block, recorded only as `keys_refused`. It also holds the argv to
+**36 of 42 tokens byte-identical** to the parent, so "one variable" is a fact
+about the file rather than a claim.
+
+### BEAT 15 IS NOT A PLATE RUNG THIS LADDER CAN SPEND — §6, and it is already owned
+
+Two findings, and either one is enough to stop a plate sample:
+
+1. **STEWARDSHIP.md §6 is LIVE on beat 15.** Its staging was rewritten on
+   2026-08-17 with four other beats (12, 13, 15, 19, 20) and
+   `leaves/002b-t0-c.yaml` records `approval_status: NOT YET READ BY HIM` —
+   "§6 therefore forbids voice synthesis, footage render and episode assembly
+   FROM THESE FIVE BEATS until he does", repeated at node.md:204. Rendering the
+   **old** staging instead is not the way round it: that is asking him to bless an
+   inference his own next-day ruling replaced.
+2. **The rung was already run tonight by the b15 lane** (`ce4ba822`): 24 judged
+   artifacts, the blocker found to have never been the acting, **two** MPS draws,
+   r1 at 6 of 7 with all seven fail modes silent, the wording ladder closed at two
+   rungs, and the next route named as a composite (r1's frame + `ep2-b12-tightB`'s
+   leaves). It filed a plate *publish* and no footage, for the §6 reason above.
+
+**Defect worth one line:** `review/ep2-picks/b15-0819-verdict.yaml` does not parse
+— line 59 carries `` `beats: [12, 13, 15, 19, 20]` `` unquoted inside a plain
+scalar, so `yaml.safe_load` dies at column 35. Nothing globs that directory, so no
+builder is broken, but the file cannot be machine-read. It is that lane's file.
+
+### Owner map as this lane found it
+
+| rung | state |
+|---|---|
+| beat 07 judge both takes | **DONE** — both PASS, verdicts appended, cut-preferred named |
+| beat 07 next rung | **FILED AND RUNNING** — `ep2-b07-scavcostume-0819`, this lane |
+| beat 15 plate | owned (b15 lane, run tonight) **and** §6-blocked for footage |
+| beat 19 composite | owned (b19 composite lane) — and §6 applies to beat 19 too |
+| beat 08 hint / identity | owned; hint axis closed by measurement, next step is research |
+| beat 09 plate | the b09 plate lane's own `blocked_on`; judging owned elsewhere |
+| beat 14 | PARKED by steward ruling until the slates close |
