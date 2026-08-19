@@ -9909,6 +9909,7 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
 
 def main():
     import tempfile
+    test_a_derived_spec_carries_structure_and_never_a_verdict()
     test_a_stale_harness_cannot_render_a_killed_wording()
     test_a_job_cannot_be_filed_with_outputs_nobody_can_find()
     test_a_finished_job_cannot_be_filed_with_nothing_to_carry_it_home()
@@ -11641,6 +11642,119 @@ def test_a_newer_mirror_alone_is_not_a_stuck_deploy():
     check("lag is measured against origin/main, not HEAD",
           "origin/main" in (REPO / "pipeline" / "qa_local.py")
           .read_text(encoding="utf-8").split("def origin_commit_epoch")[1][:400])
+
+
+def test_a_derived_spec_carries_structure_and_never_a_verdict():
+    """The allow-list guard, run against the REAL spec that leaked.
+
+    ep2-b12-stillmotion-s20260871-0819.yaml is the file the deny-list produced:
+    six keys the `verdict|pick|sweep|plate_ack` regex does not match came through
+    it, including beat 01's `cut_preference` with this job's id substituted in.
+    Deriving off that same file is the only test that proves the inversion works
+    on the shapes that actually arrived, rather than on shapes I invented.
+    """
+    import io
+    import contextlib
+    import yaml
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import derive_spec as ds
+
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = ds.selftest()
+    check("derive_spec's own selftest passes (12 assert groups)", rc == 0)
+
+    src = REPO / "pipeline" / "jobs" / "ep2-b12-stillmotion-s20260871-0819.yaml"
+    check("the spec the deny-list leaked into is still on disk", src.is_file())
+    parent = ds.load(str(src))
+    # The six that came through, in the names they came through under.
+    leaked = ["cut_preference", "verdict_this_job", "verdict_this_job_measured",
+              "pre_registered_fail_modes_as_fired",
+              "fail_mode_I_DID_NOT_PRE_REGISTER", "the_duplicate_run",
+              "what_the_next_rung_should_be",
+              "what_this_licenses_after_this_verdict"]
+    check("the parent really does carry the leaked keys",
+          all(k in parent for k in leaked))
+
+    child = ds.derive(
+        str(src), "ep2-bxx-allowlist-selfcheck",
+        fresh={"why": "a test's why", "consumer": "a test's consumer",
+               "success": "a test's success", "owner": "test_pipeline.py"},
+        overrides={"seed": 20260999})
+    check("not one leaked key crosses the allow-list",
+          not [k for k in leaked if k in child])
+    check("nor does anything else outside ALLOW",
+          not [k for k in child if k not in ds.ALLOW and k != "derivation"])
+    body = yaml.safe_dump({k: v for k, v in child.items() if k != "derivation"},
+                          sort_keys=False, allow_unicode=False)
+    check("no verdict TEXT survives either, under any key",
+          "PASS-HOLD" not in body and "CUT-PREFERRED" not in body
+          and "DUSK COLLAPSE" not in body)
+    check("the parent's id does not survive in the job body",
+          "ep2-b12-stillmotion-s20260871-0819" not in body)
+    # And the part the id retoken does NOT reach on its own, which is the
+    # duplicate-filename trap: three distinct b12 takes published one basename
+    # because the seed lives in the FILENAME, not in the job id. The tool takes
+    # caller retokens for exactly this and they must reach the publish program.
+    check("a seed-bearing published filename survives an id-only retoken",
+          "12-related-LTX-stillmotion-crf10-s20260871.mp4" in body)
+    renamed = ds.derive(
+        str(src), "ep2-bxx-allowlist-selfcheck",
+        fresh={"why": "w", "consumer": "c", "success": "s", "owner": "o"},
+        retoken=[("12-related-LTX-stillmotion-crf10-s20260871",
+                  "12-related-LTX-renamed-s20260999")])
+    rbody = yaml.safe_dump({k: v for k, v in renamed.items() if k != "derivation"},
+                           sort_keys=False, allow_unicode=False)
+    check("and a caller retoken reaches argv, artifacts and the publish glob",
+          "s20260871" not in rbody
+          and renamed["artifacts"][0].endswith("12-related-LTX-renamed-s20260999.mp4"))
+    check("the structure a runner reads did cross",
+          all(k in child for k in ("node", "beat", "runner", "env", "needs",
+                                   "payload", "steps", "artifacts")))
+    rj = [v for k, v in child["payload"].items()
+          if k.endswith("b12-jobs-render.json")]
+    check("the seed is patched inside jobs-render.json and re-parsed",
+          len(rj) == 1 and json.loads(rj[0])[0]["seed"] == 20260999)
+    check("and derivation.seed reads the seed the payload reads",
+          child["derivation"]["seed"] == 20260999)
+    check("the dropped keys are listed, not silently vanished",
+          all(k in child["derivation"]["keys_the_parent_had_that_did_NOT_cross"]
+              for k in leaked))
+
+    def refuses(fn):
+        try:
+            fn()
+        except ds.DeriveError:
+            return True
+        return False
+    check("an inherited `why` is refused",
+          refuses(lambda: ds.derive(
+              str(src), "ep2-bxx-allowlist-selfcheck",
+              fresh={"why": parent["why"], "consumer": "c", "success": "s",
+                     "owner": "o"})))
+    check("an override that matches nothing is refused",
+          refuses(lambda: ds.derive(
+              str(src), "ep2-bxx-allowlist-selfcheck",
+              fresh={"why": "w", "consumer": "c", "success": "s", "owner": "o"},
+              overrides={"argv:--nosuchflag": "1"})))
+    check("a findings-shaped key cannot be smuggled in as `extra`",
+          refuses(lambda: ds.derive(
+              str(src), "ep2-bxx-allowlist-selfcheck",
+              fresh={"why": "w", "consumer": "c", "success": "s", "owner": "o"},
+              extra={"verdict_tomorrow": "PASS"})))
+
+    # The two specs this tool filed, checked as filed rather than as derived.
+    for name in ("ep2-b12-noscav-0819", "ep2-b19-sapmid-b-0819"):
+        path = REPO / "pipeline" / "jobs" / (name + ".yaml")
+        if not path.is_file():
+            continue
+        filed = ds.load(str(path))
+        check("%s carries no key outside ALLOW but its own authored ones" % name,
+              not [k for k in filed
+                   if k not in ds.ALLOW and k != "derivation"
+                   and ds.FINDINGS_NAME.search(k)])
+        check("%s was derived by this tool and says so" % name,
+              filed.get("derivation", {}).get("by", "").endswith(".py"))
 
 
 if __name__ == "__main__":
