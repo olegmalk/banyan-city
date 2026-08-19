@@ -191,3 +191,143 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b04-refire-0814\13-remake-LTX-0813.mp4
 - C:\banyan-farm\ep2-b04-refire-0814\b13-init-704x1280.png
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# Bar taken verbatim from done-definitions beats.04.done_when and from
+# nothing else. No bar was invented and none was widened.
+# ==================================================================
+verdict: >-
+  FAIL on the clause the whole beat rests on. done_when is "stillness with LIVE EYES:
+  held breath readable in the body, eyes moving side to side. This is the one beat where
+  a near-motionless body is correct and only the eyes carry it." THE EYES NEVER MOVE. The
+  irises sit in the same position in the same sockets from f005 to f096 — read
+  consecutively across the whole clip and on a 6x crop of the eye band through the tail,
+  there is not one lateral saccade, not one dart, not one blink. And the body cannot
+  carry the breath either, because there is no body in frame: this clip THROWS ITS OWN
+  PLATE AWAY IN TEN FRAMES. f000 is the init, a small full-body figure standing in grass.
+  By f004 the crown of the skull is outside the top edge; by f006 the face fills the
+  frame and the ears are gone; the crop never returns for the remaining 91 frames. What
+  the record calls "a clean close-up on his face" is a wide shot that inflates into a
+  cropped extreme close-up in a quarter of a second and then holds.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/04-the-footnote-b04-refire-0814.mp4
+  sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[4] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  method: >-
+    pipeline/coldread_frames.py --pad 60 (73 consecutive frames over four strips plus the
+    16-frame overview), then a 6x ffmpeg crop of the eye band across frames 73-96 because
+    the clause is specifically about eyes and full-frame sheets cannot settle a saccade,
+    then review/ep2-picks/exact_freeze_index.py, then a parity-collapsed lag-4 series.
+    Read before measured, in that order.
+verdict_clauses:
+  D1_eyes_moving_side_to_side: >-
+    FAIL, and this is the beat. The red irises hold the same position within the same eye
+    shapes for 92 consecutive frames. Verified twice: on the consecutive strips at full
+    frame, and on a dedicated 6x crop of the eye band over f073-f096 where a one-pixel
+    iris shift would be four pixels and visible. Nothing moves. The only change anywhere
+    near the eyes is at roughly f091-f093, where the pale eye field and the red iris go
+    briefly DARK and muddy and then recover — that is the eye art breaking down for two
+    or three frames, not a look. Reported as an artifact, and specifically NOT credited
+    as eye movement, because crediting a rendering breakdown as performance is how a bar
+    gets bent to fit a clip.
+  D2_held_breath_readable_in_the_body: >-
+    FAIL, and unshowable rather than merely absent. From f006 the frame contains a face
+    and a collar. There is no chest, no shoulders in full, no hands, no posture — nothing
+    a held breath could be read off. A clause about the body cannot pass on a shot with
+    no body in it.
+  D3_stillness_near_motionless_body_is_correct: >-
+    PASSES ONLY BY ACCIDENT AND IS NOT CREDITED. The body is indeed near-motionless after
+    f010 — because it is out of frame and because the picture has largely stopped:
+    exact_freeze_index reports dup_pairs=47 of 96 with identical runs at (12,2) (14,2)
+    (16,3) (26,10) (36,4) (54,11) (68,21) (94,2), so forty-two of ninety-seven frames sit
+    inside runs of pictures identical at ncc 1.0000. The clause was written to license a
+    quiet performance, not to license a still. Scoring it PASS here would be reading the
+    bar backwards.
+  staging_law_standard_0815: >-
+    FAIL, and this is the mechanism under D1 and D2 both. The law is "CHECK THE ACTION
+    AGAINST THE PLATE CAMERA BEFORE RENDERING." This beat's action is an eye performance,
+    which needs the eyes LARGE and STABLE; its plate is a full-body wide shot in which the
+    eyes are a few pixels across. The prompt asked for the performance anyway and the
+    sampler resolved the conflict the only way it could — by inventing a close-up. The
+    beat did not lose its eyes to a bad seed; it was staged where the eyes were never
+    legible.
+  identity_drift_bar_standard_0815: >-
+    MIXED, AND THE DRIFT IS TOWARD CANON, WHICH THE RECORD HAS BEEN CAUGHT MISREADING
+    BEFORE. Face morphology holds from f006 to f096 — same cranium, same brow line, same
+    mouth — so within the close-up there is no drift. Across the f000-f006 ramp the
+    drawing changes wholesale, but that is the same event as the balloon and is charged
+    there once rather than twice. One observation offered at low confidence and flagged as
+    such: at f000, where the figure is small, the eyes read pale/light and from about f003
+    they are unambiguously RED. Red eyes are canon for the goblin (this spec's own family
+    of headers lists "green skin, bald, pointed ears, red eyes" among the frozen facts),
+    so if that reading is right it is the render moving TOWARD the cast, which is exactly
+    the trap done-definitions guard_plates_are_miscast_0816 caught on beat 11 — "WE
+    RECORDED THE RENDER DRIFTING TOWARD THE APPROVED CAST AS THE DEFECT." It is therefore
+    NOT filed as a defect. At f000's scale the claim is not safely readable and it is left
+    at that.
+  prop_identity_bar_standard_0815: NOT APPLICABLE — nothing carried or worn as a prop in the init.
+verdict_measured:
+  init_is_abandoned_in_ten_frames: >-
+    Mean-abs distance from f000 climbs 0.0 -> 39.4 (f001) -> 63.6 (f005) -> 68.5 (f010)
+    and then FLATLINES at 68.5-68.8 for the remaining 86 frames. The ten largest interframe
+    steps in the whole clip are the ten EARLIEST, largest first, decaying monotonically:
+    39.41 37.74 32.73 29.51 22.41 19.33 16.55 13.66 9.25 1.47. Interframe median over
+    pairs 6..95 is 0.075.
+  what_that_signature_means_and_where_it_is_already_written_down: >-
+    IT IS THE SAME SIGNATURE ep2-b09-faceturn-crf10-0819's header describes in as many
+    words: "the ten largest mean-abs interframe steps in the whole 121-frame clip are the
+    ten EARLIEST, largest first ... so this is not an identity that drifts, it is an init
+    that is abandoned at the first denoising step and a scene the sampler then invents and
+    holds." Beat 04 has it too, on a 0814 render, which puts a SECOND beat and an earlier
+    date under that finding. Worth the b09 lane's attention: whatever the crf-10
+    experiment was testing, this take shows the abandonment predates that spec's
+    lineage and is not unique to beat 09's plate.
+  monotonic_ramp_not_a_cut: >-
+    Said explicitly because the sampling defect coldread_frames.py exists to prevent would
+    read it the other way: the f000->f006 inflation is CONTINUOUS. Read consecutively the
+    figure grows frame by frame with no adjacent-frame step and no jump. It is a fast
+    smooth scale ramp, not a cut, and filing it as a cut would be the exact error that
+    docstring documents. It is a fault because of what it lands on, not because of how it
+    travels.
+  no_scale_number_is_claimed: >-
+    Deliberately, and following the precedent done-definitions beats.03.judged_0817_st_wave
+    set: that lane wrote "no camera-scale claim is made anywhere above ... because this lane
+    built no scale instrument with an internal control and will not railroad a global fit."
+    Same here. "The crown of the skull is outside the top edge from f004 to f096" and "the
+    ears are not in frame after f006" are statements about frame CONTENT that anyone can
+    check by opening two frames, and they are all that is asserted.
+verdict_disagrees_with_the_records_attribution:
+  the_record_says: >-
+    beats.04.shipping_fault and .refire_result both read "purple gone; a clean close-up on
+    his face holding his breath. It reads young, but that is the s0 reference he chose, not
+    a prompt fault."
+  what_this_file_shows: >-
+    TWO PARTS OF THAT ARE NOT SUPPORTED BY THE FILE, and it is left standing unedited
+    because the disagreement is the record. (1) "a clean close-up" — it is not a close-up
+    the plate composed, it is a close-up the clip manufactured by inflating a wide shot
+    past its own top edge, and a crop that loses the crown of the head and both ears is
+    not clean. (2) "It reads young, but that is the s0 reference he chose" — the
+    youthfulness is AMPLIFIED BY THE BALLOON and cannot be charged wholly to the
+    reference. After f006 the cranium dominates the frame and the features are crammed
+    into the lower third, which is an infant head-to-face ratio; at f000, the frame that
+    IS the s0 reference, the figure reads as a small adult in a wrap tunic. Whatever the
+    reference contributes, the clip makes it worse, so "not a prompt fault" concedes too
+    much to the plate and too little to the staging. (3) STILL TRUE and confirmed: purple
+    is gone. No aubergine, no stray fruit — the eggplant fix held on this beat.
+verdict_next_instrument: >-
+  A PLATE THAT IS ALREADY THE CLOSE-UP. This beat needs the eyes big enough to act at
+  f000 so that nothing has to grow, plus a still-air staging where the only licensed
+  motion is the eyes. Named, not fired — this lane files no GPU work. The one thing NOT to
+  spend a rung on is another wording of the eye instruction on this plate: done-definitions
+  beats.09 already records the eye tag measuring as a 1-IN-4 RATE rather than a lever, and
+  this beat's plate cannot show the result at any rate.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED. The clip is not confusing and it is not empty — a viewer sees
+  the scavenger's face in tense close-up under a VO line, which is most of what the beat
+  is for. It is in the cut because a slate is worse. What it is not, and has never been,
+  is a pass.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, never widened.
