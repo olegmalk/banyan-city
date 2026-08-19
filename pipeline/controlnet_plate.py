@@ -73,6 +73,26 @@ CONTROLNETS = {
     "xinsir/controlnet-openpose-sdxl-1.0":
         "apache-2.0 (D15 SAFE, no attribution condition; front matter and body "
         "both, and no annotator is used -- the hint is authored in PIL)",
+    # A PATH, IN A TABLE OF REPO IDS, AND THAT NEEDS ITS REASON STATED.
+    # xinsir ships the `twins` variant as a SECOND blob inside the openpose repo,
+    # `diffusion_pytorch_model_twins.safetensors`. from_pretrained cannot load a
+    # weight by filename, so ep2-b08-twins-fetch-0819 renamed our own copy into a
+    # loadable directory -- which means the only name this driver ever sees for
+    # those weights is a local path, and a path carries no terms. Rather than
+    # weaken the guard (the guard is right: thibaud's SDXL openpose inherits CMU
+    # OpenPose's non-commercial licence at the weights level), the path is
+    # allowlisted with a licence string that NAMES ITS UPSTREAM, its variant
+    # filename and its digest -- so the sidecar it writes is self-describing even
+    # though the net's name is a directory. Same repo, same apache-2.0, verified
+    # by the fetch on both front matter and body.
+    r"C:\banyan-farm\cnet-openpose-twins":
+        "apache-2.0 (D15 SAFE, no attribution condition) -- the `twins` variant "
+        "of xinsir/controlnet-openpose-sdxl-1.0, blob "
+        "diffusion_pytorch_model_twins.safetensors sha256 "
+        "54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4, "
+        "2502139104 bytes, renamed into a loadable directory by "
+        "ep2-b08-twins-fetch-0819. Identical terms to the default weight in that "
+        "same repo; no annotator is used -- the hint is authored in PIL",
 }
 
 # THE VARIANT TRAP, carried verbatim because it is why a naive constant-swap
@@ -670,6 +690,16 @@ def selftest():
     check("every allowlisted net is apache-2.0 -- no attribution condition and "
           "no inherited non-commercial terms",
           all(v.startswith("apache-2.0") for v in CONTROLNETS.values()))
+    # The twins entry is a PATH, so its licence string is the only place a reader
+    # can learn what it is. Assert it says so, or the guard passes a net whose
+    # provenance block names a directory on one machine and nothing else.
+    _twins = r"C:\banyan-farm\cnet-openpose-twins"
+    check("the twins variant dir is allowlisted", _twins in CONTROLNETS)
+    check("the twins entry names its upstream repo, variant blob and digest",
+          all(s in CONTROLNETS[_twins] for s in
+              ("xinsir/controlnet-openpose-sdxl-1.0",
+               "diffusion_pytorch_model_twins.safetensors",
+               "54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4")))
     for hazard in ("thibaud/controlnet-openpose-sdxl-1.0",
                    "TheMistoAI/MistoLine",
                    "xinsir/controlnet-union-sdxl-1.0",
