@@ -1,0 +1,247 @@
+# BEAT 08 RUNG B, STEP 1 OF 2 -- FETCH THE POSE-CLASS CONTROLNET. NO RENDER.
+#
+# ============================================================================
+# WHY THIS IS ITS OWN JOB AND NOT THE FIRST STEP OF THE SAMPLE
+# ============================================================================
+# `b08-arm-route-0819.md` §10 closed hand-authored geometry as a composition
+# lever ON THE NET WE HAVE, and it closed it for a reason that names its own
+# remedy: `xinsir/controlnet-scribble-sdxl-1.0` is a SCRIBBLE net, and scribble
+# conditioning means one thing -- THESE LINES ARE LINES IN THE PICTURE. A closed
+# contour is interpretable that way, which is why rungs 1, 2 and 4 held the
+# staging and traced the silhouette, and why a THINNER stroke bound TIGHTER. A
+# medial-axis skeleton is not a boundary, so rung 5's frame DREW the skeleton as
+# glowing scene objects (guard spine column luma 212.3 against a 165.4 surround)
+# and lost every composition clause. Three axes are fully bracketed: any hint
+# this net can read is a hint it traces, and any hint it cannot read it ignores
+# or draws.
+#
+# A pose skeleton is the right INSTRUCTION and the wrong NET. §10 therefore
+# ruled the next instrument a different net, and ruled it a research question
+# first, per the research-before-solving directive. THAT RESEARCH IS IN:
+# `pipeline/research/openpose-controlnet-sdxl-0819.md`, graded DEMONSTRATED /
+# MAINTAINER / FOLKLORE line by line, and it answers all four of §10's
+# questions:
+#
+#   - Does an SDXL-compatible openpose ControlNet exist? YES --
+#     xinsir/controlnet-openpose-sdxl-1.0, apache-2.0 on both the front matter
+#     and the body, config.json field-for-field identical to the scribble net's
+#     (cross_attention_dim 2048, block_out_channels [320,640,1280],
+#     addition_embed_type text_time) and therefore loadable against
+#     animagine-xl-3.1 for the same reason scribble is.
+#   - Licence? apache-2.0 with NO attribution condition. thibaud's openpose SDXL
+#     was REJECTED on licence, not size: its card reads, in full, "License:
+#     refers to the OpenPose's one", and CMU OpenPose upstream is
+#     academic/non-commercial -- the same defect B01-R9-PLAN.md §9 already flags
+#     on lllyasviel/Annotators, except at the WEIGHTS level where it would
+#     attach to every frame ever rendered. xinsir/controlnet-union-sdxl-1.0 was
+#     rejected on a version wall: it needs ControlNetUnionModel and the box runs
+#     diffusers 0.29.2.
+#   - Is the preprocessor the Annotators landmine? NOT NEEDED AT ALL. §2 of that
+#     file fetched and read controlnet_aux/open_pose/util.py::draw_bodypose and
+#     transcribed the whole hint spec -- COCO-18 keypoint order, the shared
+#     18-colour ramp, the 17-entry limbSeq. The hint is colored lines and dots on
+#     a black canvas and we can author it in PIL, exactly as every hint on this
+#     route already is. No annotator, no controlnet_aux, no model.
+#   - Can it reach a box running HF_HUB_OFFLINE? Only by being fetched once,
+#     which is what this job is.
+#
+# SO THIS JOB IS SPLIT OFF BECAUSE IT IS THE ONLY PHYSICAL DEPENDENCY IN THE
+# PLAN, and under the no-artificial-delay rule a physical dependency fires the
+# moment someone is at a prompt rather than waiting for the code that will
+# consume it. 2,386 MiB over the box's own network link is the clock this route
+# runs on; the hint author and the sample spec are written while it lands.
+# Rung A (masked IP-Adapter, $0, zero download) is unblocked by this and does
+# not wait for it.
+#
+# ============================================================================
+# THE TWO KWARGS THAT ARE THE WHOLE JOB, AND WHAT EACH COSTS TO GET WRONG
+# ============================================================================
+# allow_patterns=["config.json", "diffusion_pytorch_model.safetensors"]
+#   A naive snapshot_download of this repo pulls ~5,014 MB: the 22 other files
+#   are .webp showcase art, README.md, .gitattributes and a SECOND 2,502,139,104
+#   byte weight file (`diffusion_pytorch_model_twins.safetensors`, a different
+#   variant that needs an explicit filename load and is NOT this rung). With the
+#   patterns it is 2,502,140,339 bytes. That is a 2.5 GB difference for one
+#   kwarg, over a link this route is already waiting on.
+#
+# HF_HUB_OFFLINE cleared -- AND THAT IS WHY THIS JOB HAS EXACTLY ONE STEP.
+#   Every other spec on this route sets HF_HUB_OFFLINE=1, deliberately, because
+#   an offline box cannot silently re-fetch a weight somebody swapped. The env
+#   block is per-JOB, not per-step, so the only honest way to clear it "for that
+#   step only" is for the job to BE that step. Nothing here loads a model, runs
+#   a pipeline or touches the GPU, so there is no render in this process whose
+#   provenance an open network could contaminate.
+#
+# variant: NOT PASSED ANYWHERE. xinsir ships only the plain filename, so
+#   passing variant="fp16" RAISES. The r3gm "fp16" mirror is byte-identical in
+#   size to xinsir's file -- a rename, not a quantisation -- and its only effect
+#   is to flip that trap the other way. `controlnet_plate.py` already holds
+#   CONTROLNET_VARIANT = None and this job changes nothing about it. There is no
+#   fp16 saving to chase: 2,502,139,104 / 2 = 1,251,069,552, which is already the
+#   ~1,251,014,160 params the cache crosswalk measured for the scribble net, so
+#   the shipped file IS half precision.
+#
+# NO SPEND. Public apache-2.0 weights over the box's own link: $0, no provider,
+# no key, no ledger row. NO GPU: needs_gpu is false and this job must not hold
+# the card away from a lane that can use it.
+# NO RENDER, NO PICK, NO CANON FILENAME, NO PUBLISH TO THE SITE, NO POST.
+
+id: ep2-b08-posenet-fetch-0819
+task: ep2-b08-posenet-fetch-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: false
+sample: false
+priority: 30
+max_attempts: 2
+owner: beat 08 arm-route lane, 2026-08-19
+
+consumer: >-
+  ep2-b08-posenet-sample-0819, the ONE sample that asks whether a COCO-18 pose
+  skeleton binds on animagine-xl-3.1 -- the instrument b08-arm-route-0819.md §10
+  ruled after bracketing conditioning scale, stroke weight and hint class on the
+  scribble net and finding no setting that yields a model-drawn figure inside an
+  authored composition. That sample cannot be filed against weights that are not
+  on the box, and no other job in this repo needs these bytes, so this fetch has
+  exactly one consumer and it is named.
+
+success: >-
+  C:\Users\artvn\.cache\huggingface\hub\models--xinsir--controlnet-openpose-sdxl-1.0
+  holds config.json (1,235 bytes) and diffusion_pytorch_model.safetensors
+  (2,502,139,104 bytes) with ZERO .incomplete files, and a manifest naming both
+  files with their sizes and sha256 is in
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-posenet-fetch-0819. The step
+  asserts the byte counts itself and exits nonzero if either is wrong, so a
+  truncated download fails here rather than at the sample.
+
+why: >-
+  It is the only physical dependency on the whole route and the card is free. The
+  research that licenses it is filed and graded; the licence is clean; the size is
+  measured from the HF blob API rather than from prose; and $0 leaves the ledger
+  untouched. Under the no-artificial-delay rule a download that can start now
+  starts now, and the sample's hint author is written while it runs.
+
+est_minutes: 25   # 2,386 MiB over the box's link; the assertion step is seconds
+
+needs: [network]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  # CLEARED ON PURPOSE, AND THIS IS THE ONE-STEP JOB THAT MAKES IT SAFE. See the
+  # header: every rendering spec on this route keeps it at "1".
+  HF_HUB_OFFLINE: "0"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+
+steps:
+  - name: fetch-and-verify-and-publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # ONE step, on purpose: it fetches, it ASSERTS THE BYTES, and it writes
+        # its manifest straight into courier-box\farm-out. That last part is not
+        # decoration -- ep2-cnet-probe-0817 rendered perfectly on 2026-08-17 and
+        # was invisible for two days because nothing carried its output to the
+        # only directory the courier pushes from, and box_enqueue.courier_problems
+        # now refuses a spec that repeats it.
+        import hashlib, os, sys
+        from huggingface_hub import snapshot_download
+        REPO = "xinsir/controlnet-openpose-sdxl-1.0"
+        # EXACTLY these two. Without the patterns this pull is ~5,014 MB because
+        # the repo also ships a second 2.5 GB `_twins` weight file plus ~10 MB of
+        # .webp showcase art, and none of it is load-bearing for diffusers.
+        WANT = {"config.json": 1235,
+                "diffusion_pytorch_model.safetensors": 2502139104}
+        d = snapshot_download(REPO, allow_patterns=sorted(WANT))
+        print("snapshot:", d, flush=True)
+        bad, lines = [], []
+        for name, size in sorted(WANT.items()):
+            p = os.path.join(d, name)
+            if not os.path.exists(p):
+                bad.append("MISSING " + name); continue
+            n = os.path.getsize(p)
+            h = hashlib.sha256()
+            with open(p, "rb") as fh:
+                for c in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(c)
+            lines.append("%s  %d  %s" % (h.hexdigest(), n, name))
+            print("  %-40s %13d bytes (want %13d)" % (name, n, size), flush=True)
+            if n != size:
+                bad.append("SIZE %s: %d != %d" % (name, n, size))
+        # A half-finished download must fail HERE. huggingface_hub leaves
+        # .incomplete blobs behind on an interrupted transfer and a later offline
+        # load of a truncated safetensors is a confusing failure a long way from
+        # its cause -- macbook1/macbook3 rendered SDXL as pure noise for days on a
+        # UNet that was the exact right length.
+        hub = os.environ.get("HF_HOME", "") + r"\hub"
+        inc = []
+        for root, _, files in os.walk(hub):
+            if "openpose" in root.lower():
+                inc += [os.path.join(root, f) for f in files
+                        if f.endswith(".incomplete")]
+        if inc:
+            bad.append("%d .incomplete file(s) left behind" % len(inc))
+        dst = r"C:\banyan-farm\courier-box\farm-out\ep2-b08-posenet-fetch-0819"
+        os.makedirs(dst, exist_ok=True)
+        with open(os.path.join(dst, "ep2-b08-posenet-fetch-0819.sha256"), "w",
+                  newline="\n", encoding="utf-8") as fh:
+            fh.write("# %s, allow_patterns=%s, variant NOT passed\n"
+                     % (REPO, sorted(WANT)))
+            fh.write("# snapshot: %s\n" % d)
+            fh.write("\n".join(lines) + "\n")
+            fh.write("# incomplete_files: %d\n" % len(inc))
+        if bad:
+            print("!! " + "; ".join(bad), file=sys.stderr)
+            raise SystemExit(1)
+        print("rc=0", flush=True)
+
+artifacts:
+  - C:\banyan-farm\courier-box\farm-out\ep2-b08-posenet-fetch-0819\ep2-b08-posenet-fetch-0819.sha256
+
+bar:
+  b_bytes: >-
+    config.json is exactly 1,235 bytes and
+    diffusion_pytorch_model.safetensors is exactly 2,502,139,104 bytes. Both
+    figures come from the HF blob API (`?blobs=true`), not from prose, and the
+    step refuses on either mismatch.
+  b_no_incomplete: >-
+    Zero .incomplete files anywhere under the openpose cache directory.
+  b_no_twins: >-
+    The `_twins` weight file is NOT fetched. It is a second 2,502,139,104 bytes
+    for "similar performance and different style" -- more precise pose adherence,
+    lower aesthetic score, per xinsir in his own discussion #3 -- and it is a
+    LATER A/B, not this rung.
+  b_no_spend: >-
+    ledger/render-spend.csv is untouched. Public apache-2.0 weights, $0.
+
+verdict_rule: >-
+  Mechanical, and there is nothing to score by eye. Both byte counts match and no
+  .incomplete remains -> PASS, and ep2-b08-posenet-sample-0819 is unblocked. Any
+  mismatch -> the sample is NOT filed against these bytes; re-run once
+  (max_attempts 2) and if it fails again the finding is that this repo cannot be
+  reached from the box, which retires rung B rather than being retried a third
+  time.
+
+not_done_on_purpose: >-
+  No render. No pipeline load. No hint. No GPU. No `_twins` variant. No
+  `controlnet-union` (it needs ControlNetUnionModel; the box runs diffusers
+  0.29.2). No thibaud mirror (licence). No r3gm mirror (a rename that flips the
+  variant trap). No edit to controlnet_plate.py's CONTROLNET constant -- the
+  sample passes the net as an argument rather than mutating the driver that four
+  filed verdicts were measured on.
+
+licence_note: >-
+  xinsir/controlnet-openpose-sdxl-1.0 is apache-2.0 on both its front matter and
+  its body, with no attribution condition -- the same clean footing that made the
+  scribble net the default over MistoLine, whose README puts a standing visible
+  attribution obligation on anything it renders. thibaud's SDXL openpose was
+  rejected precisely here: "License: refers to the OpenPose's one", inheriting
+  CMU's non-commercial terms at the weights level. No preprocessor is fetched, so
+  lllyasviel/Annotators is not touched on this route either -- the hint is
+  authored in PIL from the COCO-18 spec transcribed in
+  pipeline/research/openpose-controlnet-sdxl-0819.md §2.
