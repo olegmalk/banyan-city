@@ -70,7 +70,7 @@ steps:
     )]\nif bad:\n    print(\"!! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\n# The staged\
     \ tree, same discipline: a fresh payload dir was scp'd into, and\n# \"the file is there\" is not \"\
     the file is the one I sent\". Both ends were\n# compared at filing time; this re-reads them at RUN\
-    \ time.\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"d6df250d36c05794e2a57a6b1bb5009d08e3899b2265dc85920bce31e9d702a6\"\
+    \ time.\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"9478e1225d22b0e7b81c0e9db8cff885fd145be05157a490b906b217eb426e7c\"\
     ), (\"pipeline/control/b08-openpose-nat-0819.png\", \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"\
     )):\n    p = os.path.join(r\"C:\\banyan-farm\\b08twins-0819\\src\", rel.replace(\"/\", os.sep))\n\
     \    if not os.path.exists(p):\n        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n \
@@ -84,7 +84,7 @@ steps:
   - --root
   - C:\banyan-farm\b08twins-0819\src
   - --repo-commit
-  - 60d99753e6633a8a5cb8c0748f1ab66e1f231646
+  - 7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e
   - --task
   - ep2-b08-twins-sample-0819
   - --arm
@@ -263,6 +263,6 @@ derivation:
     argv:--controlnet:
     - step twins --controlnet (xinsir/controlnet-openpose-sdxl-1.0 -> C:\banyan-farm\cnet-openpose-twins)
     argv:--repo-commit:
-    - step twins --repo-commit (e8bae927c0b54c5fc5775f7312e726a2d3cec6f7 -> 60d99753e6633a8a5cb8c0748f1ab66e1f231646)
+    - step twins --repo-commit (e8bae927c0b54c5fc5775f7312e726a2d3cec6f7 -> 7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e)
     key:est_minutes:
     - key est_minutes = 6

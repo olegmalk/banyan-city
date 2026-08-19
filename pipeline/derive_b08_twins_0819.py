@@ -82,8 +82,8 @@ HINT_SHA = "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0"
 # describe bytes that were staged into a different directory on a different day,
 # and a sidecar that names the wrong commit is a provenance defect (7.2).
 DRIVER = "pipeline/controlnet_plate.py"
-DRIVER_SHA = "d6df250d36c05794e2a57a6b1bb5009d08e3899b2265dc85920bce31e9d702a6"
-REPO_COMMIT = "60d99753e6633a8a5cb8c0748f1ab66e1f231646"
+DRIVER_SHA = "9478e1225d22b0e7b81c0e9db8cff885fd145be05157a490b906b217eb426e7c"
+REPO_COMMIT = "7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e"
 STAGE = r"C:\banyan-farm\b08twins-0819\src"
 
 # Authored keypoints this rung is scored against, read off the parent's verdict.
