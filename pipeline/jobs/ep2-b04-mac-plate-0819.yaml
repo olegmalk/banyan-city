@@ -162,3 +162,83 @@ plate_provenance: >-
   control, being the only one of four beats with no plant in it and the only one
   that landed. NO PICK AND NO plate_ack IS CLAIMED BY THIS SPEC: publishing a
   plate so a guard can read it is not promoting it.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 by the judging lane, after pulling the three
+# published files off the box, hashing all three copies independently, opening
+# the PNG at full size, and reading the consumer job's own resolved argv.
+# Scored against the `success` clause ABOVE, which is not edited here.
+#
+# Ran clean: 1 step, 1 attempt, rc=0, STARTED and FINISHED 2026-08-19T20:00:31Z
+# (under one second), runner_host MSI, 2 declared artifacts + 1 manifest.
+# $0, no GPU, no model, no network -- as filed.
+# ============================================================================
+verdict: >-
+  PASS ON ALL THREE CLAUSES, INCLUDING THE ONE THAT IS NOT ABOUT THIS JOB'S OWN
+  FILES. The bytes published, they survived the copy at the asserted hash, and
+  the thing the job exists for actually happened: ep2-b04-eyes-crf10-0819
+  enqueued and ran with box_enqueue's plate and refs guards ON, resolving this
+  plate as its --src, with NO plate_ack anywhere in its spec. The waiver the
+  spec refused to take was not needed. ONE QUALIFICATION, recorded because the
+  spec's own prose promised a route it did not get: "let the courier push it"
+  did NOT happen -- the courier was 45 commits diverged and committed the plate
+  locally as e8f21b95 without it ever leaving the box. The bytes reached
+  origin/farm-results-rtx5090 by hand-carry. That is outside the `success`
+  clause, which names files, a hash and a guard outcome and never names the
+  courier, so it is not a clause failure; it is the reason the pass took an
+  extra manual step and it is already logged in work-ladder-0819.md.
+verdict_measured:
+  c1_two_files_and_a_manifest: >-
+    PASS. C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819 holds
+    exactly three files and no more: 04-the-footnote-mac-plate-r1s1.png
+    (1,301,379 bytes), 04-the-footnote-mac-plate-r1s1.yaml (1,885 bytes) and
+    ep2-b04-mac-plate-0819.sha256 (203 bytes). The manifest lists BOTH named
+    files, sorted, LF-terminated, as the step wrote it. Nothing was globbed --
+    the log shows both names printed individually, then "published 2 file(s) +
+    manifest", which is the b14 scar this spec was written around.
+  c2_png_sha_after_the_copy: >-
+    PASS, asserted three times on three machines rather than once. certutil on
+    the box reads the DESTINATION file as
+    5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350 -- the
+    value the spec pre-registered. shasum on the Mac copy under main's
+    farm-out/ep2-b04-mac-plate-0819/ reads the same. `git cat-file -p
+    origin/farm-results-rtx5090:farm-out/ep2-b04-mac-plate-0819/04-the-footnote-mac-plate-r1s1.png`
+    piped to shasum reads the same. Three-way hash identity, so the "two
+    branches can be diffed by hash" claim in the header is now measured and not
+    asserted. The sidecar matches its staged hash too,
+    5f602f486243078a2f2f0acbcb64df4e4eb015d21bb872dec26a246a7de003e5.
+  c3_the_motion_job_resolves_with_no_plate_ack: >-
+    PASS, AND THIS IS THE CLAUSE THAT MATTERED. ep2-b04-eyes-crf10-0819's
+    recorded derivation carries the two overrides that prove the guards ran on
+    THIS plate: argv:--src moved from
+    C:\banyan-farm\courier-box\farm-out\ep2-b09-cast-0817\04-the-footnote-ipa-r2-w015-s2.png
+    to C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png,
+    and argv:--sha256 moved from 55a56b8f... to 5dd35da5...4350. A grep for a
+    plate_ack KEY in that spec returns 0 -- the only occurrences of the string
+    are two prose lines disclaiming one. The guards passed on their own numbers:
+    plate flatness 0.134 against the 0.62 refuse line, refs resolved to producer
+    ep2-b04-mac-plate-0819. The job then ran rc=0, 20:05:43Z -> 20:11:56Z
+    (6m13s), 121 frames at 704x1280/24fps, 2 artifacts. Both refusals quoted at
+    the top of this spec are gone, and neither was switched off.
+  c4_it_is_the_right_beat_and_not_corrupt: >-
+    NOT A PRE-REGISTERED CLAUSE -- checked anyway, because this spec's own
+    header names "one of them cropped THE WRONG BEAT'S PLATE" as the hole it is
+    climbing out of, and a hash proves integrity while proving nothing about
+    subject. Opened at full size: 832x1216 RGB, a lean adult goblin in
+    close-up on face and shoulders, green skin, bald domed head, long pointed
+    ears, patchwork plaid cloak, summer grass behind in daylight. Eyes off-axis
+    to frame left, jaw set, mouth shut. That is beat 04's plate as
+    plate_provenance describes it, at the size and seed the sidecar records
+    (seed 20260819, 40 steps, cfg 7.5, 137.3 s on MPS, cost_usd 0.0). No child
+    build, no blush, no second figure. The sidecar carries approved: false,
+    provisional: true, founder_verdict: null, scored: false -- correct for a
+    plate that was published rather than promoted.
+what_this_licenses: >-
+  NOTHING ABOUT THE PICTURE. This is a courier job and its pass is a pass on
+  bytes and provenance plumbing, not on the plate. No pick, no promotion, no
+  cut swap and no plate_ack is created by this verdict -- the plate is still
+  provisional and beat 04's cut slate is still R4's. What IS settled: the
+  publish-through-a-farm-out-directory-one-spec-owns route works end to end,
+  ep2-b14-mac-plate-0818 was not a one-off, and a lane with a Mac plate and a
+  motion job downstream has a legal way through box_enqueue that does not
+  require it to waive a check on its own work.

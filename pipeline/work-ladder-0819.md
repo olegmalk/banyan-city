@@ -2114,3 +2114,70 @@ Nothing wording-only has come close to any of it.
 **So:** a b08 plate job that has no ControlNet hint has no consumer. If a lane
 believes it needs one, the thing to file is a rung on the skeleton route with a
 pre-registered bar, not another sample of a question closed three times.
+
+## Appended 2026-08-20 by the judging lane — THREE DONE JOBS SWEPT, ONE WAS ACTUALLY UNJUDGED
+
+**The sweep, and the false alarm inside it.** Three jobs sat in the box's
+`done/` reported as having no verdict: `ep2-b04-mac-plate-0819`,
+`ep2-b19-sapmid-b-0819`, `ep2-b12-noscav-0819`. Read directly, **two of the
+three were already fully judged** — `ep2-b19-sapmid-b-0819` at commit `95be8d0e`
+and `ep2-b12-noscav-0819` at `3ecb8a34`, both carrying real measured numbers and
+a `pre_registered_fail_modes_as_fired` roll-call. They were invisible to a
+`^verdict:` grep because both write the key as **`verdict_measured:`**.
+
+**Named because it will misfire again.** This repo has two verdict key
+conventions in live use — `verdict:` + `verdict_measured:` (the b04 lane) and
+`verdict_measured:` alone (the derived-spec lanes). Any lane auditing for
+unjudged work must match `^verdict`, not `^verdict:`, or it re-judges settled
+rungs. **Counted, not estimated:** of the 928 jobs in `done/` that have a local
+spec, **886 lack `^verdict:` but only 840 lack `^verdict`** — so **46 specs are
+judged in a form a `^verdict:` grep calls unjudged**, and two of tonight's three
+were among them.
+
+**The other 840 are not a backlog.** Appending the verdict to the spec is a
+recent convention; most of those jobs were judged in a loop cycle, a contact
+sheet or this ladder. **The set that actually matters is jobs finished in the
+last two days**: of the **58** distinct jobs in `done/` dated 08-19 or 08-20,
+**8 have a spec with no verdict in any form** —
+`ep2-b01-growmotion-b10/b11/b12-0818`, `ep2-b01-growmotion-b15/b16-0819`,
+`ep2-b12-plateship-0819`, `ep2-b15-macplate-publish-0819`,
+`ep2-b20-plateship-0819`. (`probe-heartbeat-latency-0819` has no spec at all.)
+The growmotion five are **gaps inside a sweep whose b13, b14 and b17 siblings
+are judged**, which is the kind of hole that reads as "nothing there" rather
+than "not looked at".
+
+### `ep2-b04-mac-plate-0819` — PASS on all three clauses, verdict now in the spec
+
+The one genuinely unjudged job. Measured and appended to the spec:
+
+| clause | result | number |
+|---|---|---|
+| two files + `.sha256` manifest in farm-out | **PASS** | 3 files, 1,301,379 / 1,885 / 203 bytes; manifest lists both, sorted |
+| PNG sha256 unchanged after the copy | **PASS** | `5dd35da5…4350` on the box (certutil), on `main`, and in `origin/farm-results-rtx5090` — **three-way identity** |
+| motion job resolves it with **no `plate_ack`** | **PASS** | `ep2-b04-eyes-crf10-0819` `--src` → this plate, `--sha256` `5dd35da5…`, plate_ack key count **0**, flatness **0.134** vs the 0.62 refuse line, refs producer `ep2-b04-mac-plate-0819`; job rc=0, 121 frames |
+| *(unregistered, checked anyway)* right beat, not corrupt | **PASS** | opened at 832×1216: lean **adult** goblin, bald domed head, long pointed ears, eyes off-axis frame left, jaw set — beat 04, no child build, no blush |
+
+Job itself: 1 step, rc=0, start **and** finish `2026-08-19T20:00:31Z`, $0, no GPU.
+
+**Rung this CLOSES.** "THE COURIER CANNOT PUSH, AND IT BLOCKS EVERY BOX PLATE"
+above recorded the hand-carry and the guards passing; it is now scored against
+the spec's own pre-registered bar and the spec carries the verdict. **The b04
+plate-publication rung is closed.** The route — publish through a farm-out
+directory one spec owns — is proven a second time after
+`ep2-b14-mac-plate-0818`, and is the legal way past `box_enqueue` for any lane
+holding a Mac plate with a motion job downstream.
+
+**Rung this does NOT open.** No cut consequence. The plate is
+`approved: false / provisional: true / founder_verdict: null`, and the clip made
+from it (`ep2-b04-eyes-crf10-0819`) failed its own beat clause — the gaze moves
+by a **head rotation of 64.7 px**, which its verdict explicitly refuses to
+license as a cut swap. **Beat 04's slate keeps `b04-refire-0814`.** The
+follow-on rung, `ep2-b04-headlock-0820`, is already filed, run and judged.
+
+**Qualification, recorded because the spec promised a route it did not get.**
+The spec's prose said "let the courier push it". The courier did not: 45 commits
+diverged, the plate committed locally as `e8f21b95` and never left the box. The
+bytes reached the branch by hand-carry. The `success` clause names files, a hash
+and a guard outcome — never the courier — so this is not a clause failure, but
+**every lane publishing a box plate should still expect to carry it across by
+hand** until the runner-surgery lane fixes the divergence.
