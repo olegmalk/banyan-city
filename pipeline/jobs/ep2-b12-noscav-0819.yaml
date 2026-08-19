@@ -349,3 +349,116 @@ derivation:
     seed:
     - payload b12-jobs-render.json (20260871 -> 20260871, re-parsed)
   seed: 20260871
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the derivation lane, the same cycle it landed. rc=0 at
+# 18:16Z, sample_s 269.8 (the parent's two runs were 265.5 and 263.8). All six
+# published files verified against ep2-b12-noscav-0819.sha256; the init hashes
+# c6575d0d8042792e... which is the byte-identical plate all five sibling takes
+# conditioned on, so this take reads against them as one plate.
+verdict_0819: 'THE CLAUSE WAS THE CAUSE. B1 -- the decisive clause, the whole reason this rung
+  exists -- PASSES on the first sample: no scavenger, no goblin, no person, no hand, no face,
+  and no bird anywhere in the 121 frames. Four of five seeds on this plate drew a crouching
+  figure and the fifth (this one''s own parent, same seed, same everything but a 50-character
+  span of text) put up a black bird with a white eye at f030. Delete the span and the frame is
+  empty of subjects. B2, B3 and B4 pass with it: the leaf count never changes, the camera moves
+  +5px over 121 frames with all six blocks region-consistent, and matched-content luma drifts
+  -0.38 levels against a bar of 20. FAIL-DEAD, which this spec named as MORE LIKELY than the
+  figure returning, DID NOT FIRE. AND THE TAKE IS STILL NOT CUTTABLE, on a defect nobody
+  predicted: the motion arrives in a hard 3:1 cadence -- see FAIL-JUDDER below. So the rung''s
+  question is answered YES and beat 12 does not yet have its clean take. Those are two different
+  results and collapsing them into one verdict would lose the useful half.'
+verdict_measured:
+  B1_NO_FIGURE_ANYWHERE: 'PASS, and it is the finding. Scored three ways because "no figure" is
+    a claim about every frame and a sampled sheet cannot make it. (1) 21-frame visual scan every
+    6 frames -- nothing. (2) ALL 121 FRAMES tiled at 11x11 and opened -- nothing. (3) an
+    all-frames filter: worst 32x32 block deviation from f000, computed for each of the 121
+    frames. Its top ten hits are ALL the same block, row 800 col 672, at 122.3-123.0 levels --
+    and cropping that block at f000/f024/f080 shows a dark-green leaf edge sweeping across bright
+    pink sky, i.e. the filter was measuring a high-contrast boundary crossing a fixed grid, not
+    an arrival. Reported because the number looks alarming and is not: a 160-level leaf/sky edge
+    shifting a few px inside a 32px block produces exactly this. No dark humanoid form, and no
+    bird, at any edge or behind either leaf, in any frame.'
+  B2_THE_PLANT_DOES_NOT_CHANGE: 'PASS. No leaf appears, vanishes, wilts or grows across 121
+    frames. The ABSOLUTE count is still wrong and is still the PLATE''s: four blade-sized
+    components against a canon two, measured on the init and declared in this spec before the
+    render. Not charged to this take, exactly as pre-registered -- an i2v render cannot add or
+    remove a cotyledon, because the init is frame one.'
+  B3_CAMERA_LOCKED: 'PASS. b12_camera_drift.py: cumulative dy f000->f120 +5px, per-frame dy
+    median 0.0 (min -3, max +4), dx 0. The 3x2 block read is [(1,0),(2,0),(1,0),(1,-1),(1,-1),
+    (1,-1)] -- every block inside 2px of every other, which is region-consistency and therefore
+    a real (and tiny) global shift rather than field re-inking. The parent measured +7px on the
+    same instrument. For scale, the take this beat''s ladder rejected for camera, s20260818,
+    tilted -387px. The instrument''s fade caveat does not apply here because B4 did not collapse,
+    so the block numbers are readable rather than noise.'
+  B4_MATCHED_CONTENT_LUMA: 'PASS, decisively, and the bar was 20. Whole-frame drift f000->f120
+    is -0.38 levels; overlap-compensated is also -0.38 (there was no shift worth compensating).
+    Equal thirds: rows 0-427 116.46 -> 115.51 (-0.96), rows 427-853 160.09 -> 159.71 (-0.38),
+    rows 853-1280 100.29 -> 100.48 (+0.19) -- SIGNS DISAGREE and every magnitude is under one
+    level, which is the band clause''s definition of not-a-collapse. Mean luma by quarter 125.95
+    / 125.56 / 125.93 / 125.47. The tracked 400-row patch sits between -1.45 and -4.03 of f000
+    all the way through. No dusk collapse (the -91.05 this plate produced on 20260819), no bloom.'
+  B5_FOUR_QUARTERS_MOTION: 'PARTIAL, and the two halves of the clause split. NOT DEAD: interframe
+    mean by quarter is 1.231 / 1.227 / 1.219 / 1.212 -- non-zero in all four and about as evenly
+    spread as four numbers can be, so nothing in this clip is a frozen passage. FAIL-DEAD did not
+    fire. But the clause also asked for the LEAF band near zero while the grass stirs, and the
+    ordering is inverted: by vertical zone the whole-clip interframe means are sky/upper leaf
+    0.978, mid leaf 1.291, LOWER LEAF 1.536, bottom/grass 1.085. The leaves are the largest
+    movers and the grass is not. Scored as a MISS on the letter of B5, not as a beat-killer:
+    "only the grass stirs" is the prompt''s wording, the founder-approved line says "perfectly
+    still", and whether a gentle leaf sway is better or worse than a still leaf is R4, not mine.'
+fail_mode_I_DID_NOT_PRE_REGISTER: 'FAIL-JUDDER -- A HARD 3:1 CADENCE, AND IT IS THE ONE THING
+  KEEPING THIS TAKE OUT OF THE CUT. Motion arrives on every THIRD frame pair and the other two
+  are near-static, unbroken for the full 120 pairs: the low/high pattern reads M..M..M..M.. from
+  f000 to f120 with two brief stumbles. 78 of 120 pairs sit under 0.5 while 39 exceed 2.0, giving
+  an interframe MEAN of 1.222 against a MEDIAN of 0.185. That is roughly 8 fps of real movement
+  inside a 24 fps clip. It is not a mux-level frame repeat: there are ZERO byte-identical
+  consecutive frames and no pair under 0.05, so the held frames are re-denoised near-copies, not
+  duplicates. Measured as a period-3 ratio (mean of the moving phase over the mean of the other
+  two), THIS TAKE READS 6.3x AND NO SIBLING ON THIS PLATE EXCEEDS 1.5x: s20260818 1.0x,
+  s20260871 1.3x, s20260872 1.0x, s20260873 1.5x. The parent -- same seed, same plate, same
+  argv, one span of text different -- has a median pair of 1.214 against this take''s 0.185 and
+  only 12 of 120 pairs under 0.5. So the cadence is specific to this take among the six, and the
+  only variable separating it from the one take it is directly comparable to is the deletion.
+  RECORDED AS UNPREDICTED RATHER THAN FOLDED INTO FAIL-DEAD, which is a different animal: dead is
+  no motion, this is the right amount of motion delivered in lurches.'
+pre_registered_fail_modes_as_fired:
+  FAIL-FIGURE-ANYWAY: DID NOT FIRE. This is the result.
+  FAIL-BIRD: DID NOT FIRE. The parent's black bird with the white eye did not return.
+  FAIL-DEAD: 'DID NOT FIRE, against this spec''s own prediction that it was MORE LIKELY than the
+    figure returning. Every quarter carries motion.'
+  FAIL-COLLAPSE: DID NOT FIRE. -0.38 levels against a bar of 20.
+  FAIL-CAMERA: DID NOT FIRE. +5px, region-consistent.
+  FAIL-PLANT-CHANGE: DID NOT FIRE.
+  unpredicted: FAIL-JUDDER fired. See above.
+against_my_own_prediction: 'Said plainly because it was pre-registered. This spec named FAIL-DEAD
+  as more likely than the figure returning and gave a mechanism -- remove the only subject clause
+  from a positive whose first sentence asks for stillness, on a recipe measured to over-deliver
+  stillness, and expect a still. The pixels went the other way on BOTH counts: the figure did not
+  return AND the clip is not dead. What the prediction missed is that "how much motion" and "how
+  the motion is distributed in time" are separate axes, and every clause in this bar measured the
+  first. B5 was quartered specifically so a single number could not hide a dead passage, and a
+  quartered number still could not see a defect with a period of three frames. The instrument was
+  one level too coarse in exactly the dimension the defect lives in.'
+what_this_licenses: 'ONE CLIP, ONE SEED, AND A NAMED CAUSE FOR THE INTRUDER. What is settled: the
+  off-screen clause in the positive is what put a figure on this plate, and deleting it removes
+  the figure without costing the camera lock or the palette. That is the generalisable half, and
+  it is the law this spec was filed under -- a shot description is not a prompt; strip every
+  clause about what the camera does not see. What is NOT settled: whether the deletion caused the
+  judder. That is one clip against one comparable sibling, and a period-3 cadence has no
+  mechanism I can name, so it is reported as measured and unexplained. NO PICK, NO PROMOTION, NO
+  CUT SWAP. Beat 12 keeps 12-related-b12-tightB-untrimmed.mp4 as best-available with its colour
+  fault named. THE PICK IS R4 AND THIS TAKE HAS NOT EARNED ONE -- it would put a stutter in the
+  cut to remove a figure nobody has seen in the cut, because the shipped take is a different
+  render entirely.'
+what_the_next_rung_should_be: 'NAMED, NOT FILED -- the judder needs a cause before it needs a
+  fix, and guessing at one would be scaling an unapproved result. Two candidates, in order. (1)
+  RE-ROLL THE DELETION ON A SECOND SEED. If the 3:1 cadence follows the prompt it will reappear;
+  if it does not, it was this (seed x prompt) pair and the deletion is clean, which is the same
+  interaction shape the darkening diagnostic already found on this exact plate. One sample, ~8
+  min, $0, and it is the cheapest thing that could settle it. (2) If it does follow the prompt,
+  the lever is the recipe rather than the wording: the sidecar records an 11-step distilled
+  schedule (8@352x640 + 3@704x1280), and a cadence with a period of three frames on a two-stage
+  schedule is worth asking the LTX community about BEFORE another render -- external research,
+  not another clip. The positives-only `out of frame` audit named in this spec is still unowned
+  and is still not this job''s.'

@@ -11743,18 +11743,31 @@ def test_a_derived_spec_carries_structure_and_never_a_verdict():
               fresh={"why": "w", "consumer": "c", "success": "s", "owner": "o"},
               extra={"verdict_tomorrow": "PASS"})))
 
-    # The two specs this tool filed, checked as filed rather than as derived.
+    # The specs this tool filed, checked as they live on disk. NOTE WHAT IS AND
+    # IS NOT ASSERTED: a filed spec may absolutely carry verdict keys -- it earns
+    # them the moment its pixels exist, and ep2-b12-noscav-0819 was judged the
+    # same day it was filed. The invariant is not "no verdicts", it is "no
+    # INHERITED verdicts": every findings-shaped key on a derived spec must be
+    # absent from the list of keys the derivation carried across. (This check
+    # asserted the wrong thing first and failed on the real verdict, which is
+    # the version of this mistake that costs three minutes instead of a lane.)
     for name in ("ep2-b12-noscav-0819", "ep2-b19-sapmid-b-0819"):
         path = REPO / "pipeline" / "jobs" / (name + ".yaml")
         if not path.is_file():
             continue
         filed = ds.load(str(path))
-        check("%s carries no key outside ALLOW but its own authored ones" % name,
-              not [k for k in filed
-                   if k not in ds.ALLOW and k != "derivation"
-                   and ds.FINDINGS_NAME.search(k)])
+        deriv = filed.get("derivation", {})
         check("%s was derived by this tool and says so" % name,
-              filed.get("derivation", {}).get("by", "").endswith(".py"))
+              deriv.get("by", "").endswith(".py"))
+        carried = deriv.get("carried_structural_keys") or []
+        check("%s carried only allow-listed keys from its parent" % name,
+              carried and not [k for k in carried if k not in ds.ALLOW])
+        check("%s inherited no findings key" % name,
+              not [k for k in carried if ds.FINDINGS_NAME.search(k)])
+        findings = [k for k in filed if ds.FINDINGS_NAME.search(k)
+                    and k != "derivation"]
+        check("%s's own findings keys were authored here, not carried" % name,
+              not [k for k in findings if k in carried])
 
 
 if __name__ == "__main__":
