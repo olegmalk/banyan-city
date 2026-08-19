@@ -596,3 +596,42 @@ verdict_0819:
     Which of those, or neither, is a route call for whoever owns the recipe next. It is NOT fired off
     the back of this sample, and beat 19''s motion is a separate decision that wants the crf-10 finding
     applied to it -- this plate would be conditioned at --image-crf 10, not 33, on the evidence of ep2-b09-faceturn-crf10-0819.'
+  CORRECTION_2026_08_19_the_hue_half_of_what_this_settles_is_RETRACTED: "RETRACTED, SAME DAY, BY THE NEXT\
+    \ SAMPLE IN THIS LANE (ep2-b19-sapgloss-0819). The original text is left standing verbatim below under\
+    \ what_this_settles so the mistake is legible; this key is the correction and it is dated because\
+    \ a silent edit would leave anyone who read the first version carrying a wrong fact.\n\nWHAT WAS CLAIMED:\
+    \ 'the fig was composited at hue 272 deg, MATTE, and came back at 309 deg, GLOSSY... 309 is where\
+    \ beat 18's own passing plate landed (305)... two beats, two completely different instruments, and\
+    \ the same two deviations. So gloss and the magenta lean are properties of animagine-xl-3.1's fig,\
+    \ not of either beat's recipe.'\n\nWHAT IS TRUE: THE HUE HALF IS AN ARTEFACT OF MY OWN MEASUREMENT\
+    \ AND THERE IS NO MAGENTA LEAN. The 309 deg figure was a circular mean over a BOX around the fruit\
+    \ rather than over the fruit, and the box is crossed by HIS CLOAK'S SHADOW ON THE GRASS. Taken apart\
+    \ on the same pixels:\n  what the verdict measured (box, saturated px)  1349 px  hue 308.5 deg\n \
+    \ the FRUIT BODY only                             817 px  hue 276.9 deg\n  the box's non-fruit saturated\
+    \ px -- the leak     532 px  hue  11.1 deg\n39 percent of the pixels I averaged were warm shadow at\
+    \ 11 deg, and they dragged a 277 deg body to a '308.5 deg' mean. Measured on the body across all three\
+    \ images the hue hardly moves at all: composite 271, 0.30 = 277, 0.22 = 279. THE COMPOSITE DID CARRY\
+    \ THE HUE.\n\nSO THE CONVERGENCE WITH BEAT 18'S 305 WAS A COINCIDENCE BETWEEN A CONTAMINATED NUMBER\
+    \ AND A REAL ONE, and the 'two beats, two instruments, same deviations' claim is void. Beat 18's own\
+    \ gloss and hue findings are untouched by this -- that lane measured its own plate and this retraction\
+    \ says nothing about it; what is withdrawn is MY claim to have independently reproduced them.\n\n\
+    WHAT SURVIVES, AND IT IS THE HALF THAT MATTERED: THE GLOSS. Measured properly -- p99 minus p50 of\
+    \ luminance over the violet-segmented body, so a small bright spot on a dark body shows up as a wide\
+    \ spread -- the composite's matte fill is 4.3 and this sample is 71.8. The specular is real, it fired\
+    \ FAIL-CRYSTAL correctly, and the composite did NOT carry matteness.\n\nAND THE GENERAL CLAIM IS NARROWER\
+    \ AND BETTER THAN THE ONE I MADE: at 0.30 the composite carries geometry AND hue, and does not carry\
+    \ MATTENESS. It is also not a dead end, which is what the wrong version implied by pinning gloss on\
+    \ the checkpoint: ep2-b19-sapgloss-0819 dropped the spread from 71.8 to 23.9 -- an ordinary cel terminator\
+    \ -- by changing strength to 0.22 and nothing else. Gloss here is a MID-SIGMA effect and the knob\
+    \ reaches it.\n\nHOW IT HAPPENED, since the same trap is one line of code away in any of these lanes:\
+    \ the verdict's own P1 note already recorded that a violet-blob count in this region had handed me\
+    \ his cloak's SHADOW as a second fruit. I caught that one, fixed it, wrote it down -- and then took\
+    \ the hue average over a box in the same contaminated region without segmenting. The lesson the first\
+    \ catch should have taught was 'segment the object in this region before averaging anything over it',\
+    \ and I applied it to the count and not to the colour."
+  note_the_five_clause_passes_are_unaffected: P1-P7 and C8 all stand. P5 is 'the fruit reads purple to
+    a naive eye' and the body measures 277 deg, which is more squarely violet than the retracted 309 was
+    -- the correction moves that clause further inside its bar, not toward its edge. Nothing in the pass/fail
+    scoring depended on the retracted number; it was a finding stated alongside the verdict, which is
+    exactly the kind of claim that gets read and reused, so it gets a dated retraction rather than a quiet
+    fix.

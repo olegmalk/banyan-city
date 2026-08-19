@@ -142,27 +142,54 @@ is a better lever than a codec round-trip and this result does not preclude it.
   output so the A/B can be made by anyone:
   `farm-out/ep2-b19-sapcomp-0819/`.
 - **What that sample settles beyond beat 19 — read this before any composite
-  rung:** **at 0.30 the composite carries GEOMETRY and does NOT carry MATERIAL.**
-  The fig was composited at hue **272°, matte**, and came back at **309°,
-  glossy**. 309 is where **beat 18's own plate landed (305)**, and that verdict's
-  `honest_caveat` names the identical two deviations — "toward magenta rather than
-  deep violet" and "heavily GLOSSY with a hard specular highlight". Two beats, two
-  completely different instruments, same two deviations: **gloss and the magenta
-  lean are animagine-xl-3.1's fig, not either beat's recipe.** `glossy` was in the
-  negative, at the front of it, and arrived anyway — the positive-placement law
-  firing a fifth time. Matte-vs-gloss is **R4 and already a founder card** (raised
-  by b18's verdict, still open); this only turns it into one checkpoint fact to
-  rule on once instead of a per-beat surprise.
+  rung.** *This bullet was written wrong an hour earlier and is corrected here,
+  dated 08-19, by the next sample in the same lane. The retracted version claimed
+  the fig went from a composited 272° to 309° and that this reproduced beat 18's
+  305° — "gloss and the magenta lean are animagine's fig, not either beat's
+  recipe". **The hue half of that was my own measurement error** and the full
+  retraction with the numbers is in `ep2-b19-sapcomp-0819.yaml`. In short: the 309°
+  was a circular mean over a **box**, not over the fruit, and 39% of the pixels in
+  it were **his cloak's shadow on the grass** at 11°, which dragged a 277° body to
+  a "308.5°" mean. On the body the hue barely moves — composite 271°, 0.30 = 277°,
+  0.22 = 279°. The convergence with beat 18's 305° was a coincidence between a
+  contaminated number and a real one; **beat 18's own findings are untouched**, what
+  is withdrawn is my claim to have reproduced them.*
+  **The corrected statement, which is narrower and more useful:** at 0.30 the
+  composite carries **geometry AND hue**, and does **not** carry **matteness**.
+  Measured properly — p99−p50 of luminance over the *segmented body*, so a small
+  bright spot on a dark body reads as a wide spread — the composite's matte fill is
+  **4.3** and the 0.30 output is **71.8**: a real specular, correctly caught by
+  `FAIL-CRYSTAL`. `glossy` was in the negative, at the front of it, and arrived
+  anyway — the positive-placement law firing a fifth time.
+- **And the specular is REACHABLE, which the wrong version implied it was not.**
+  `ep2-b19-sapgloss-0819` changed **one key — strength 0.30 → 0.22** (12 → 8 of 40
+  steps), same seed, same init sha, same words, and the spread fell **71.8 → 23.9**
+  — an ordinary **cel shadow terminator**, i.e. the house dialect. The drawing
+  survived (no `FAIL-PASTE` even at 8 steps) and the 0.30 sample's one partial, the
+  extra leaflets at the leaf junction, **resolved**. So **gloss here is a mid-sigma
+  effect and strength reaches it** — the first mechanism anyone has attached to
+  §9's material half. Two samples, 6.7 s of GPU total. *Predicted outcome was
+  "unchanged", on the argument that a specular is fine high-frequency detail that
+  the low-sigma tail adds in both renders. Wrong: in this dialect the highlight is
+  a large hard-edged lobe over a third of the fruit — a low-frequency shape
+  decision.* Evidence at 3× and 8×: `farm-out/ep2-b19-sapgloss-0819/`.
+- **Matte-vs-gloss is still R4 and still open** (raised by b18's verdict). Nothing
+  above closes it. **Which of the two plates ships is a taste call, not a defect
+  call** — 0.22 is matte and simpler, 0.30 is glossier with more incident at the
+  junction, and the canon line says "matte violet fig". Both are committed side by
+  side so it can be settled on pixels in one look.
 - **Also killed, from the other side:** §9's "material half fails in the wide
   whole-body register" hypothesis. `FAIL-MATERIAL` was pre-registered here as the
   **most likely** outcome on exactly that argument, and it did not fire on a
   whole-body wide shot. §9's plate dependence is still unexplained, and shot
   register is now ruled out from both directions.
-- **NOT A PICK.** No `plate_ack`, no promotion, no leaf, nothing in any cut. The
-  slate stays a slate until the author says otherwise. Named, not fired: if matte
-  is wanted the levers left are **strength 0.20–0.25** (8–10 of 40 steps instead
-  of 12) or a **post-pass**; and this plate's motion wants `--image-crf 10`, not
-  33.
+- **NOT A PICK.** No `plate_ack`, no promotion, no leaf, nothing in any cut. Beat
+  19 now has **two passing plate samples and zero picks**, and the slate stays a
+  slate until the author says otherwise. The "named, not fired" lever from the
+  first version — strength 0.20–0.25 — **was fired and is the bullet above**; the
+  post-pass is no longer needed for gloss. Still named, not fired: this plate's
+  motion wants `--image-crf 10`, not 33, on the evidence of
+  `ep2-b09-faceturn-crf10-0819`.
 - **Still open for the author:** `body_position`. Tonight's plates derive a low
   pose from beat 20's opening (both hands to a fig on the ground) and beat 14
   (which renders this character crouching). Written down so it can be overturned
