@@ -1,0 +1,103 @@
+# VOICE PROVENANCE (§7.2) — the two guards re-voiced, 2026-08-19
+#
+# WHY. The founder watched ep2-demo-0819c and said: "guard 2 has the same voice
+# as the sapling..." Measured on that cut's own takes he was right to within
+# 1.7 Hz — GUARD 2 109.1 Hz against the sapling's 107.4, the only confusable
+# pair in the episode. Cause was a casting GAP, not a mis-wire: both guards were
+# cast after build_refs.py's 2026-07-25 shaping pass, so neither had a
+# VOICE_SHAPING entry and both cloned from the same shared REF_TEXT at speed 1.0
+# / pitch 0.0. Three candidates were built and measured; he picked B.
+#
+# §6. The approved script text is UNCHANGED — this is a re-synthesis of lines
+# the founder has already read and approved, the ruled-legal class (003b
+# precedent). No line was rewritten to suit a voice.
+
+ruling:
+  date: '2026-08-19'
+  by: founder
+  verbatim: "B"
+  where: review/ep2-guard2-voice-0819 (candidates.yaml `picked:`)
+
+platform: local-mps (pipeline/synth_vo.py, synth_vo v3)
+model: chatterbox-0.5B
+model_licence: MIT
+refs_built_by: pipeline/build_refs.py (kokoro-82M, Apache-2.0) -> ~/.cache/banyan-tts/cb-refs/
+cast: genomes/sapling/voices.yaml
+source_script: genomes/sapling/nodes/002b-first-citizen/node.md (approved, text unchanged)
+recorded: '2026-08-19'
+cost_usd: 0
+
+recipes:
+  GUARD 2:
+    base_voice: am_michael      # was am_echo — changed BY the ruling
+    pitch_semitones: +4.0
+    speed: 1.05
+    ref_measured: { f0: 142.0, centroid: 3067 }
+    note: >-
+      Candidate B exactly. The rebuilt am_michael.wav measures identical to the
+      guard2sw-M2.wav he auditioned, so what shipped is what he heard.
+  GUARD 1:
+    base_voice: am_adam         # UNCHANGED — this is a band move, not a recast
+    pitch_semitones: +9.0
+    speed: 1.08
+    ref_measured: { f0: 192.0, centroid: 2681 }
+    note: >-
+      Not asked for by the founder; taken because his ref sat 1.1 Hz from
+      bm_fable's and he cleared 0819c only by MPS luck. +9st chosen off sixteen
+      rendered takes across seven offsets — the sweep table is in
+      pipeline/build_refs.py beside the entry.
+
+# EVERY take measured on the RENDERED audio (qa_voices.py estimators: median F0
+# by autocorrelation, spectral centroid). Refs predict nothing here — the engine
+# pulls pitch toward ~110 Hz by a noisy +4..+20 and refuses extremes — and MPS
+# is unseeded, so a sibling take is not evidence for this one.
+takes:
+  - { beat: 5,  who: GUARD 1, f0: 192.0, centroid: 2155, seconds: 3.8 }
+  - { beat: 6,  who: GUARD 2, f0: 135.6, centroid: 2319, seconds: 6.0 }
+  - { beat: 7,  who: GUARD 1, f0: 181.8, centroid: 2543, seconds: 2.6 }
+  - { beat: 8,  who: GUARD 2, f0: 134.1, centroid: 3044, seconds: 2.1 }
+  - { beat: 9,  who: GUARD 1, f0: 212.4, centroid: 2346, seconds: 1.9 }
+  - { beat: 10, who: GUARD 2, f0: 135.6, centroid: 1562, seconds: 3.7 }
+
+# Character medians across the whole episode, on the takes now on disk.
+separation_after:
+  medians: { VO: 109.6, GUARD 2: 135.6, SCAVENGER: 167.8, GUARD 1: 192.0 }
+  pairs_hz:
+    GUARD 2/VO: 26.0          # was 1.7 — the defect he heard, fixed
+    GUARD 1/VO: 82.4          # was 22.8 by luck, now by construction
+    GUARD 1/GUARD 2: 56.4
+    GUARD 2/SCAVENGER: 32.2
+    GUARD 1/SCAVENGER: 24.2
+    SCAVENGER/VO: 58.2
+  verdict: all six character pairs clear the 20 Hz bar; worst is 24.2
+
+known_and_not_hidden:
+  short_lines_undershoot: >-
+    Beat 07 ("So we confiscate the apple.", 5 words) rendered 177.8, 174.5,
+    170.2 and 181.8 across four attempts — consistently below the same voice's
+    long lines (192.0, 212.4). Short lines do not give the clone enough voiced
+    material to reach the ref's pitch. The best of the four is the take on disk.
+    This is a property of the engine, not of this recipe, and it is the first
+    time it has been measured here.
+  guard1_scavenger_per_take_overlap: >-
+    On MEDIANS the pair is 24.2 Hz apart and qa_voices does not flag it. On
+    individual takes it does overlap: GUARD 1 b07 at 181.8 sits 14.0 Hz from the
+    scavenger's median, and the scavenger's own takes range 155.8-192.0 — a
+    36 Hz spread that predates this pass — so his b15 (175.2) and b20 (192.0)
+    land inside GUARD 1's band. NOT fixed here, for two reasons worth stating:
+    the scavenger is outside this ruling's scope, and re-rolling him is a
+    lottery against his own spread rather than a fix. The mitigating fact is
+    that the two never alternate — the guards speak beats 05-10, the scavenger
+    13-20 — whereas the pair the founder actually caught (GUARD 2 against the
+    tree) alternates line by line. Filed for the VO lane, not silently dropped.
+
+r6: >-
+  Every take this pass replaced is in clips/vo-archive/ (05-vo.v6, 06-vo.v3,
+  07-vo.v3 through v6, 08-vo.v3, 09-vo.v3, 10-vo.v3). Nothing was deleted.
+
+next_assembly: >-
+  These are the takes render_t3 will pick up. It reads clips/NN-vo.mp3 and the
+  measured chunk timings in clips/NN-vo.json straight from this directory, so
+  the next assembly inherits them with no flag and no copy step. The published
+  cut (review/ep2-demo-0819c/) still holds the OLD takes in its sources/ and was
+  deliberately not rebuilt by this lane.

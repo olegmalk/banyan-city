@@ -7,16 +7,16 @@
    "who": "GUARD 2",
    "text": "The apple is inside him, Dren.",
    "start": 0.0,
-   "end": 1.855,
+   "end": 1.825,
    "chunks": [
     {
      "text": "The apple is inside him, Dren.",
      "start": 0.0,
-     "end": 1.855
+     "end": 1.825
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.155
+ "total_s": 2.125
 }

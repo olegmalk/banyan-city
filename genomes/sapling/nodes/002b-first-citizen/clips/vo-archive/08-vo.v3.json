@@ -4,19 +4,19 @@
  "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "GUARD 1",
-   "text": "So we confiscate the apple.",
+   "who": "GUARD 2",
+   "text": "The apple is inside him, Dren.",
    "start": 0.0,
-   "end": 2.633,
+   "end": 1.855,
    "chunks": [
     {
-     "text": "So we confiscate the apple.",
+     "text": "The apple is inside him, Dren.",
      "start": 0.0,
-     "end": 2.633
+     "end": 1.855
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.933
+ "total_s": 2.155
 }

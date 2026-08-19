@@ -1234,6 +1234,56 @@ ruling on the character's voice and the steward does not re-tune it. Recorded on
 the picker page, in `candidates.yaml` (`picked:`), and as a resolved card in
 `review/inbox.yaml`.
 
+**ENACTED THE SAME PASS, AND BOTH GUARDS ARE RE-VOICED.** `VOICE_SHAPING` now
+carries `am_michael` (+4.0st, B's ref passage, speed 1.05) and `am_adam`
+(+9.0st, speed 1.08); `voices.yaml` points GUARD 2 at `am_michael`. The rebuilt
+`am_michael.wav` measures **142.0 Hz / centroid 3067 — identical to the
+`guard2sw-M2.wav` he auditioned**, so what ships is what he heard rather than a
+near-miss of it. Beats 05-10 re-synthesized, approved text untouched, old takes
+in `clips/vo-archive/` (R6). Full provenance:
+`genomes/sapling/nodes/002b-first-citizen/clips/guards-revoice-0819.yaml`. $0.
+
+**THE DEFECT HE HEARD IS GONE, MEASURED ON THE NEW TAKES.** Character medians
+across the episode, and every one of the six pairs clears the 20 Hz bar:
+
+| character | F0 | vs the tree |
+|---|---|---|
+| SAPLING (VO, `bm_fable`) | 109.6 Hz | — |
+| GUARD 2 (`am_michael` +4st) | 135.6 Hz | **26.0 Hz — was 1.7** |
+| SCAVENGER (`am_puck` +7.5st) | 167.8 Hz | 58.2 Hz |
+| GUARD 1 (`am_adam` +9st) | 192.0 Hz | 82.4 Hz — was 22.8 *by luck* |
+
+Worst pair in the whole episode is now GUARD 1/SCAVENGER at 24.2 Hz; the guards
+are 56.4 apart. Per-take: 192.0 / 181.8 / 212.4 (G1) and 135.6 / 134.1 / 135.6
+(G2) — `am_michael` is the steadiest voice in the cast at a 1.5 Hz spread.
+
+**GUARD 1 WAS THE LOADED GUN AND IS NOW DISARMED BY CONSTRUCTION.** His ref went
+from 1.1 Hz off `bm_fable` to 75.5 Hz off it. The reason he went UP and not down,
+which is the reusable finding: **the engine's attractor sits at ~110 Hz, which is
+exactly where the tree is.** Sixteen rendered takes across seven offsets — deep
+refs do not stay deep, they get pulled onto the sapling (−8st spans 77.7-126.0
+over seven takes; −9st threw 117.1 once, straight onto the tree). +9st was the
+tightest distribution measured, 7.9 Hz across three takes. Down is not a quieter
+version of the same choice; down is the defect.
+
+**TWO THINGS MEASURED HERE THAT NOBODY SHOULD RE-DERIVE.** (1) *Short lines
+undershoot.* Beat 07 is five words and rendered 177.8 / 174.5 / 170.2 / 181.8
+across four attempts, always below the same voice's long lines — the clone needs
+voiced material to reach the ref's pitch. Best of the four is on disk. (2) *The
+GUARD 1/SCAVENGER pair overlaps per-take even though it passes on medians* — the
+scavenger's own takes span 155.8-192.0, a 36 Hz spread that predates this pass.
+They never alternate (guards 05-10, scavenger 13-20), unlike the pair the founder
+caught, so it is filed for the VO lane rather than fixed by re-rolling a
+character this ruling does not cover.
+
+**WHAT THE NEXT ASSEMBLY INHERITS — no flag, no copy step.** `render_t3` reads
+`clips/NN-vo.mp3` and the measured chunk timings in `clips/NN-vo.json` straight
+out of the node directory, so **the next cut picks these six takes up
+automatically.** This lane deliberately did NOT rebuild the published cut:
+`review/ep2-demo-0819c/sources/` still holds the old takes, and the guard voices
+in the live cut stay wrong until somebody assembles. That is the one thing left
+on this item.
+
 ---
 
 ## BEAT 12 — the second rung, and a finding that is not about beat 12

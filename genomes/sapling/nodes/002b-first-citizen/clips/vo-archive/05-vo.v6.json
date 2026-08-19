@@ -7,26 +7,26 @@
    "who": "GUARD 1",
    "text": "He went this way. I saw him. Apple thief.",
    "start": 0.0,
-   "end": 3.469,
+   "end": 2.611,
    "chunks": [
     {
      "text": "He went this way.",
      "start": 0.0,
-     "end": 1.336
+     "end": 1.008
     },
     {
      "text": "I saw him.",
-     "start": 1.336,
-     "end": 2.108
+     "start": 1.008,
+     "end": 1.82
     },
     {
      "text": "Apple thief.",
-     "start": 2.108,
-     "end": 3.469
+     "start": 1.82,
+     "end": 2.611
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 3.769
+ "total_s": 2.911
 }
