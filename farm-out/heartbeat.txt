@@ -3045,3 +3045,4 @@
 23:37:39Z DONE task=ep2-b13-shademotion-0820-1787181681 rc=0 artifacts=2
 23:38:41Z STARTED task=ep2-b15-listenmotion-0820-1787181670 attempt=1 on box-runner
 23:44:52Z DONE task=ep2-b15-listenmotion-0820-1787181670 rc=0 artifacts=2
+23:45:53Z box-runner idle ready=0 failed=43
