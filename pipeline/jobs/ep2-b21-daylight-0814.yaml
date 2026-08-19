@@ -120,3 +120,167 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b21-daylight-0814\21-the-answer-LTX-poolD-0812.mp4
 - C:\banyan-farm\ep2-b21-daylight-0814\b13-init-704x1280.png
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# Bar taken verbatim from done-definitions beats.21.done_when, which
+# is NOT one of the ten retroactive definitions (definition_audit_0815
+# lists 02, 03, 04, 08, 13, 14, 15, 17, 19, 20) — it pre-existed this
+# file and drove all four of this beat's rounds. No bar was invented.
+# ==================================================================
+verdict: >-
+  ***THE ONLY BEAT OF THE EIGHT WHOSE DEFINITION IS FULLY MET — ALL FOUR CLAUSES, AND THE HARD
+  ONE IS MEASURED.*** `done_when` is "the leaf tilts slowly and deliberately in still air and
+  HOLDS; it reads as a deliberate movement, not a wind wobble; outdoors, scene at frame one."
+  The leaf tilts, monotonically, over about ninety frames, in one direction with no oscillation
+  and no reversal — which is what makes it read deliberate rather than as wind. AND IT STOPS:
+  tracked by the topmost leaf pixel, the tip descends from row 29 at f000 to row 125 by f090 and
+  then sits at row 125 for the final THIRTY-ONE FRAMES. The record claimed this ("tilts over and
+  STOPS") and the claim is now measured rather than asserted. AGAINST THAT, ONE LARGE FAULT THE
+  RECORD UNDERSTATES: the clip CROSS-DISSOLVES OFF ITS OWN INIT PLATE IN SEVEN FRAMES. f000 is a
+  warm sunset with THREE broad rounded leaves against pink cloud; f001-f006 that picture fades
+  out while a completely different one fades in beneath it; from f007 there is a single narrow
+  LANCE-SHAPED leaf in a hard-banded poster landscape. Different leaf, different count, different
+  palette, different style. So: PASS on this beat's own definition, FAIL on standard_0815's plate
+  and identity clauses, and those are two different bars — neither is allowed to erase the other
+  below.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/21-the-answer-b21-daylight-0814.mp4
+  sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[21] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  method: >-
+    pipeline/coldread_frames.py --pad 60, 121 consecutive frames over seven strips plus a
+    16-frame overview, read consecutively per standard_0815.scoring_method. Then
+    review/ep2-picks/exact_freeze_index.py, a parity-collapsed lag-4 series, and finally a
+    leaf-tip tracker written for the one clause a contact sheet cannot settle — see
+    `verdict_measured.the_hold_is_real_and_here_is_the_instrument`.
+  the_bar_is_pre_registered_for_this_file: >-
+    Stated because the ledger's PASS definition turns on it and because `the_unscored_middle`
+    warns that "inventing bars for footage that already exists is how a bar gets bent to fit the
+    clip". Beat 21's `done_when` is NOT retroactive: definition_audit_0815 names the ten beats
+    whose definitions were written after the fact and 21 is not among them. It governed rounds 1
+    through 4 as a live bar, and round 4's own lever — "the two-held-positions lever FIXED THE
+    MOVEMENT - the leaf tilts and holds instead of wandering" — is a direct answer to the HOLDS
+    clause. The bar predates the take and was not adjusted to fit it.
+verdict_clauses:
+  A1_the_leaf_tilts_slowly: >-
+    PASS. A continuous descent of the leaf tip across roughly ninety frames on a locked camera.
+    Read consecutively there is no step and no jump anywhere in the arc; frame to frame the change
+    is small and even. "Slowly" is not in dispute — this is one gesture spread over 3.75 seconds.
+  A2_deliberately_not_a_wind_wobble: >-
+    PASS, and this is the clause three earlier rounds missed. The motion is MONOTONIC: one
+    direction, no oscillation, no return, no flutter. The tip row series never reverses — 29, 32,
+    31, 36, 41, 56, 71, 91, 109, 124, 125 — so there is nothing in it a viewer could read as wind.
+    A wobble would show as alternation and there is none.
+  A3_and_HOLDS: >-
+    PASS, MEASURED, and it is the clause this beat failed for three rounds. See
+    `verdict_measured` below for the instrument and its limits. The leaf tip is stationary for the
+    final 31 frames.
+  A4_outdoors_scene_at_frame_one: >-
+    PASS as written, and the clause is thinner than it looks. f000 is outdoors and is a complete
+    scene — sunset sky, cloud, foliage — so the clause is literally satisfied and the round-1
+    founder verdict it was written against ("none of them have a good background, doesnt look
+    like the sapling is outside") is answered. What the clause does not say, and therefore cannot
+    fail on, is that the scene at frame one must be the scene for the rest of the clip. It is not.
+    That is charged below against a different bar rather than bent into this one.
+  clause_summary: FOUR OF FOUR MET. The only such row in this sweep.
+verdict_measured:
+  the_hold_is_real_and_here_is_the_instrument: >-
+    The question "does it HOLD" cannot be answered off a contact sheet and cannot be answered off
+    a whole-frame difference number either, because this picture's banded sky and grass re-ink
+    every frame and keep the global difference well above zero forever. So the LEAF was tracked
+    instead of the frame: a green mask (G-R > 18 and G-B > 10) restricted to the upper 200 rows of
+    a 176x320 decode, taking the topmost masked row per frame as the leaf tip. Result — tip row by
+    frame: f000:29 f010:32 f020:31 f030:36 f040:41 f050:56 f060:71 f070:91 f080:109 f090:124
+    f100:125 f110:125 f120:125, AND THE LAST FIFTEEN FRAMES ARE ALL 125. So the tilt decelerates
+    and stops around f090 and the leaf is then still for the remaining 31 frames.
+  the_limit_of_that_instrument_stated_plainly: >-
+    At a 176x320 decode one row is about four source pixels, so the strict claim is "the tip does
+    not move by more than roughly one row at this sampling resolution", NOT "the leaf is
+    pixel-frozen". It is a hold, not a freeze — and that distinction is the right one here, because
+    exact_freeze_index.py confirms there is no freeze: `frames=121 terminal_freeze_index=None
+    terminal_freeze_len=0 dup_pairs=3 runs=[(10, 2), (13, 3)]`. Three identical pairs in 120, none
+    at the end. THAT COMBINATION IS EXACTLY WHAT THIS BEAT WANTS and it is worth naming as a
+    pattern: a held pose that is not dead air. Compare beat 03 (59-frame identical trailing run),
+    beat 13 (34) and beat 16 (63), where the "hold" is a duplicated frame and reads as the picture
+    having stopped. done-definitions beats.03.hold_is_not_freeze draws this exact line; beat 21 is
+    the episode's clean example of the good side of it.
+  why_the_tail_lag4_of_4_4_is_not_the_leaf: >-
+    Parity-collapsed lag-4 mean-abs runs 3.23 early (f008-028), 8.03 mid (f040-060), 7.64 late
+    (f070-090) and 4.50 in the tail (f096-116), never reaching zero. Read naively that says the
+    clip never settles. It is not the leaf: the leaf tip is provably stationary over that window,
+    so the residual is the banded sky, the cloud edges and the grass re-inking frame to frame.
+    Recorded because the b19 lane hit the identical trap from the other side and wrote it down —
+    "M5's raw [4,4] horizon shift is the field re-inking and not a rigid pan ... because filing a
+    camera fault that does not exist is its own defect." Same shape, same conclusion, second beat.
+verdict_fault_the_record_understates:
+  the_record_says: >-
+    beats.21.shipping_fault: "stylised banded sky and a palette jump in the first frames", and
+    beats.21.round_4_result adds "its outline still narrows between the two poses and the render
+    came back a banded poster look rather than our cel style".
+  what_this_file_shows: >-
+    IT IS NOT A PALETTE JUMP AND IT IS NOT ONLY THE SKY — IT IS A CROSS-DISSOLVE TO A DIFFERENT
+    PICTURE. Read consecutively: f000 is the init, a soft painterly sunset with THREE broad
+    rounded dark-green leaves, a glowing sun and pink cloud. Over f001-f006 both pictures are
+    visible superimposed — the three broad leaves fading down while a hard-edged banded landscape
+    fades up beneath them. From f007 the init is entirely gone and what remains is a striped
+    yellow-and-orange sky with hard cloud bands, a dark hedge band, a green band, a yellow band,
+    grass, and ONE NARROW LANCE-SHAPED leaf on a bare stem. Changed: the leaf's SHAPE, the leaf
+    COUNT (three to one), the palette, the rendering style, the sky and the ground. The recorded
+    fault names the two most visible symptoms; the event is a whole-frame substitution.
+  which_bar_that_breaks: >-
+    standard_0815.a_beat_is_DONE_when requires "the same character is recognisably present
+    throughout" and "every noun in the prompt exists in the plate". On a beat whose subject IS a
+    leaf, the leaf is the character, and the leaf that performs the tilt is not the leaf the plate
+    drew. So this file FAILS the identity bar while PASSING its own done_when — which is possible
+    only because done_when says nothing about WHICH leaf. Both results stand; neither is used to
+    cancel the other.
+  and_the_negative_again: >-
+    `wipe, dissolve` are in this spec family's negative and the clip opens with a six-frame
+    cross-dissolve. Third instance in this sweep of the scene-forming negatives failing to hold
+    (beat 03 grew a trunk, beat 16 washed through white, beat 21 dissolves), which is now enough
+    instances in one night to say the group of terms is not doing any work on this checkpoint.
+verdict_fourth_wrong_plant_and_the_only_one_that_starts_right: >-
+  THE MOST USEFUL THING THIS READ ADDS TO THE SAPLING-DEFINITION QUESTION. Canon is "two broad
+  round cotyledons". This clip's f000 has BROAD ROUNDED leaves — the plate is close to canon, and
+  it is the only plate in this sweep that is. The CLIP then replaces them with a narrow lance,
+  which is nothing like a cotyledon. Beat 03 grew an eight-leaf woody twig from a plate with no
+  plant; beat 13 grew a mature forked tree from a plate with no plant; beat 16 filled the frame
+  with a nine-lobed palmate leaf the founder has rejected. BEAT 21 IS THE CASE THAT PROVES THE
+  PROBLEM IS NOT ONLY PLATE AUTHORING — hand the engine a correct broad leaf and it reshapes it
+  into a lance anyway. That matters for how the card named in
+  done-definitions beats.16.both_legs_rejected_0816 gets answered: a canonical sapling description
+  is necessary but this file says it will not be sufficient, because the motion stage rewrites leaf
+  geometry it was conditioned on. Reported for that card; not resolved here, because defining the
+  plant is R4.
+verdict_the_one_open_question_and_it_is_R4: >-
+  THE STYLE, AND IT IS THE ONLY REASON THIS VERDICT DOES NOT SIMPLY RECOMMEND `PASS`. From f007
+  this beat renders in a hard-banded poster style — flat colour bands, hard cloud edges, no
+  gradients — which is not the standing look. CLAUDE.md records that "v2 low-detail was KILLED by
+  the founder 2026-07-27 (unreadable on screening)" and that the current look is detailed
+  cinematic anime. This lane makes NO taste claim about whether the banded look is acceptable
+  here: nobody has shown the founder this clip's style and asked, the kill was aimed at a
+  different style generation, and a steward deciding that a look the author never ruled on is fine
+  would be exactly the overreach the taste boundary forbids. It is flagged as the beat's one open
+  R4 question, with pixels available — this beat is the episode's closing image, which is the
+  argument for asking.
+verdict_next_instrument: >-
+  NONE, AND THAT IS THE FINDING. This is the one beat of the eight where no render is named,
+  because its definition is met. If the founder accepts the banded style, beat 21 is finished. If
+  he does not, the instrument is a style-conditioning question and not a motion one — the movement
+  is solved and should not be re-rolled, because the two-held-positions wording is the only thing
+  in four rounds that produced a deliberate tilt that stops. Whatever is tried next, DO NOT
+  RE-ROLL THE MOTION.
+verdict_status_recommendation: >-
+  UPGRADE CANDIDATE — from `best-available` to `PASS`, with two honest caveats and the decision
+  left where it belongs. FOR: all four clauses of a pre-registered, non-retroactive bar are met,
+  the hard clause is measured, and there is no freeze. AGAINST: the file fails standard_0815's
+  identity clause on the leaf substitution, and the style has never been put to the author. The
+  ledger's PASS means "a written verdict against a pre-registered bar says PASS for THIS EXACT
+  FILE", which this verdict now is — so the row is eligible. This lane does not flip it, because
+  a status change alters that ledger's summary counts and because the R4 style question is open
+  above it. Recommended, argued both ways, and handed over.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, never widened; the one clause that needed an instrument got one, with its resolution limit stated.
