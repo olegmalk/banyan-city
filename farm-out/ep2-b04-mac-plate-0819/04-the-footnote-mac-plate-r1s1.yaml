@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 4
+beat_slug: "the-footnote"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260819
+render_seconds: 137.3
+png_sha256: "5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, lean wiry adult goblin man, green skin, bald head, patchwork cloak, solo, close-up on his face and shoulders, holding his breath, mouth shut tight, eyes darting to one side, tense stillness, green summer grass behind, bright daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, full body, wide shot, distant, holding object, spear, staff, stick, 2boys, baby, child, chibi, stitches, scars, tree, forest, house, indoors, photorealism, 3d render, dark, night"
+done_when: "stillness with LIVE EYES: held breath readable in the body, eyes moving side to side. This is the one beat where a near-motionless body is correct and only the eyes carry it."
+why_this_plate: "Beat 04 is the beat the founder named by hand on 2026-08-13 -- `beat 04 has the cute goblin, needs to be changed` -- and the 08-19 forensic trace established that what he was pointing at was CUTENESS MARKERS on that take, whose four tiles all carry blush, rather than the round build. Both readings order the same thing now, from opposite directions: the take is replaced. wave-drafts calls this beat a FACE CLOSE-UP, and `done_when` wants the held breath readable IN THE BODY, so the framing is face AND shoulders rather than a head crop - a pure head crop would put half the definition out of frame."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

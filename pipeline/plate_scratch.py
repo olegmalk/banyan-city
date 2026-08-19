@@ -1689,6 +1689,28 @@ DRAFTS = {
             "3d render, dark, night"
         ),
         "seed": 20260819,
+        # VERDICT -- r1s1, 2026-08-19T23:41 on macbook2, read at full size.
+        # THE BEST FRAME OF THE FOUR AND THE CLOSEST THING TO A PASS THIS WAVE
+        # PRODUCED. Face-and-shoulders close-up of the lean adult: long pointed
+        # ears, lined adult face, green skin, bald crown, patchwork collar --
+        # the sharpest character read in the wave. `done_when` wants LIVE EYES
+        # and they are live: the eyes are turned off-axis to frame left, a
+        # sideways glance rather than a stare down the lens, which is the
+        # clause. The jaw is set and the brows drawn, so the held breath reads.
+        # Tall grass front and back, which suits a beat about not being seen.
+        # SCORED HONESTLY: `held breath readable in the BODY` is only partly
+        # served, because at this crop there is almost no body -- but the same
+        # definition says a near-motionless body is correct and only the eyes
+        # carry it, and wave-drafts calls this beat a face close-up. As a PLATE
+        # this is what the motion stage wants: identity locked, eyes already
+        # placed off-axis, nothing to undo.
+        #
+        # AND IT IS THIS WAVE'S CONTROL, WHICH IS WORTH MORE THAN THE FRAME.
+        # Beat 04 is the only one of the four with NO PLANT IN IT, and it is
+        # the only one that lands. Three plant beats failed on the plant and
+        # the one plantless beat passed. That is the cleanest available
+        # evidence that the wave's failure is the sapling wording and not the
+        # cast, the recipe, the seed or the checkpoint.
     },
     13: {
         "slug": "the-shade",
