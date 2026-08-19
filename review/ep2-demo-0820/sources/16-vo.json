@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "He talks to me because I'm the only thing here that won't file a report. Buddy, I wish I could. I can't even wave.",
+   "start": 0.0,
+   "end": 7.902,
+   "chunks": [
+    {
+     "text": "He talks to me because I'm the",
+     "start": 0.0,
+     "end": 2.099
+    },
+    {
+     "text": "only thing here that won't file a report.",
+     "start": 2.099,
+     "end": 4.739
+    },
+    {
+     "text": "Buddy, I wish I could.",
+     "start": 4.739,
+     "end": 6.662
+    },
+    {
+     "text": "I can't even wave.",
+     "start": 6.662,
+     "end": 7.902
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 8.202
+}

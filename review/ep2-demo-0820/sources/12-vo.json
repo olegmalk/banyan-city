@@ -1,0 +1,22 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "I have never related to a fantasy world more.",
+   "start": 0.0,
+   "end": 2.381,
+   "chunks": [
+    {
+     "text": "I have never related to a fantasy world more.",
+     "start": 0.0,
+     "end": 2.381
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.681
+}

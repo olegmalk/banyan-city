@@ -1,0 +1,694 @@
+# Per-beat source manifest for review/ep2-demo-0820/ep2-demo-0820.mp4
+#
+# ONE ROW PER BEAT: which take is in the cut, and WHY it is the one in the cut.
+# `why` is exactly one of:
+#   new              — footage that was not in the 2026-08-19c cut
+#   carry-forward    — the 0819c pick, kept because nothing newer earned the slot
+#   slate            — no footage that a verdict lets into a cut
+#
+# THIS CUT CHANGES NO PICK. Every one of the eighteen footage beats is the same
+# file at the same sha as 0819c — verified, not asserted: all 18 mp4 and all 18
+# sidecars were hashed against review/ep2-demo-0819c/sources/ and 36 of 36 match.
+# Beat 16 stays a slate per the founder's 2026-08-16 ruling; beat 19's fall stays
+# best-available on a steward ruling. No verdict has landed since 0819c that
+# moves any slot.
+#
+# WHAT IS DIFFERENT IS THE TWO THINGS THAT WERE FINISHED AND NEVER SHIPPED:
+#
+#   1. THE VOICES. Six re-voiced guard takes (beats 05-10) enacting the founder's
+#      2026-08-19 "B" ruling. GUARD 2 was 1.7 Hz from the sapling in 0819c — the
+#      defect he heard while watching it. Provenance: sources/guards-revoice-0819.yaml.
+#   2. THE PALINDROME FIX. render_t3's fill branch (af863c0b) now HOLDS the last
+#      frame instead of playing the clip forwards-then-backwards. 0819c played
+#      eight of its eighteen footage beats partly in reverse and printed nothing
+#      while doing it. This is that commit's first published use.
+#
+# Both were on disk and unpublished at the close of 08-19. Neither needed a
+# founder gate, a GPU or a dollar.
+
+cut: review/ep2-demo-0820/ep2-demo-0820.mp4
+sha256: b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486
+duration_s: 113.33
+size: 720x1280
+footage_beats: 18
+slate_beats: 3
+which_slates: [9, 15, 16]
+supersedes: review/ep2-demo-0819c/ep2-demo-0819c.mp4
+readiness_ledger: review/ep2-picks/cut-readiness-0819.yaml
+cost_usd: 0.0
+gpu_seconds: 0
+what_it_cost: >-
+  one ffmpeg assembly and twelve local file copies. No render, no voice
+  synthesis, no GPU, no network, no spend. Every clip in it was made by another
+  lane and judged by another lane; every VO take in it was synthesised by another
+  lane against a ruling the founder had already given.
+
+the_honest_counts:
+  footage: 18
+  slates: 3
+  # These three add to 18 and are meant to be checked.
+  footage_with_a_written_PASS: 6          # beats 1, 7, 17, 18, 19, 21
+  footage_with_a_verdict_that_is_not_a_pass: 8   # beats 3, 4, 5, 6, 10, 11, 13, 14
+  footage_never_judged_at_all: 4          # beats 2, 8, 12, 20
+  what_moved_since_0819c: >-
+    NOT THE COUNTS. They are identical to 0819c's, and that is the honest report:
+    no beat was judged, re-rendered, promoted or demoted between the two cuts.
+    What moved is that five footage beats and one slate stopped carrying the
+    wrong voice, and eight beats stopped playing partly backwards. Both are
+    defects in HOW THE CUT WAS ASSEMBLED rather than in what it is assembled
+    from, which is exactly why they were fixable for $0.
+
+# ---------------------------------------------------------------------------
+# CHANGE 1 — THE VOICES
+# ---------------------------------------------------------------------------
+the_revoice:
+  the_ruling: >-
+    2026-08-19, founder, verbatim "B", recorded at
+    genomes/sapling/nodes/002b-first-citizen/clips/guards-revoice-0819.yaml.
+    Three GUARD 2 candidates were built and measured and he picked B. GUARD 1 was
+    moved in the same pass and was NOT asked for — see `guard_1_was_not_asked_for`.
+  what_he_heard: >-
+    Watching 0819c: "guard 2 has the same voice as the sapling." He was right to
+    within 1.7 Hz. Measured on that cut's own takes, GUARD 2 sat at 109.1 Hz
+    against the sapling's 107.4 — the only confusable pair in the episode.
+  the_cause_was_a_casting_GAP_not_a_miswire: >-
+    genomes/sapling/voices.yaml casts the tree as bm_fable and GUARD 2 as
+    am_echo: two different voices, correct on paper. Both guards were cast AFTER
+    build_refs.py's 2026-07-25 VOICE_SHAPING pass, so neither had an entry and
+    both cloned from the same shared REF_TEXT at speed 1.0 / pitch 0.0. GUARD 1
+    drifted clear by MPS luck; GUARD 2 landed on the tree.
+  guard_1_was_not_asked_for: >-
+    Taken by the VO lane, not by the founder, and named as such: his reference
+    sat 1.1 Hz from bm_fable's and he cleared 0819c only because MPS
+    non-determinism happened to push him +14 Hz. A base voice was NOT changed —
+    am_adam throughout — so this is a band move, not a recast. One line to veto.
+  takes_replaced: [5, 6, 7, 8, 9, 10]
+  takes_replaced_scope: >-
+    FIVE FOOTAGE BEATS AND ONE SLATE. Beats 5, 6, 7, 8 and 10 carry the new take
+    over real footage; beat 9 is a slate and its new take plays over the card.
+  separation_measured_on_the_bare_takes:
+    # from guards-revoice-0819.yaml, measured by qa_voices' estimators on the
+    # rendered audio — refs predict nothing, the engine pulls toward ~110 Hz.
+    medians_hz: { VO: 109.6, GUARD 2: 135.6, SCAVENGER: 167.8, GUARD 1: 192.0 }
+    GUARD 2/VO: 26.0          # was 1.7 — the defect he heard
+    GUARD 1/VO: 82.4          # was 22.8 by luck, now by construction
+    worst_pair_in_the_episode: 24.2   # GUARD 1 / SCAVENGER
+  verified_in_the_muxed_output_not_just_in_the_directory:
+    why_this_check_exists: >-
+      BECAUSE THE DOCUMENTED PATH WOULD HAVE SHIPPED THE OLD VOICES AGAIN.
+      guards-revoice-0819.yaml's own `next_assembly` note and
+      work-ladder-0819.md:1279 both say render_t3 reads clips/NN-vo.mp3 straight
+      out of the node directory, "no flag, no copy step". THE CODE DISAGREES:
+      find_audio() (render_t3.py:249, called at 1088) and vo_manifest() (:347,
+      called at 1094) both resolve against args.clips ONLY, with no fallback to
+      the node dir — and pointing --clips at the node's own clips/ fails
+      check_clips_dir() (:209) because that directory holds no NN-*.mp4. So the
+      copy is mandatory, and a hash of the copied file only proves what went INTO
+      the directory. These two checks prove what came OUT of ffmpeg.
+    check_1_waveform: >-
+      The beat's audio was decoded back OUT of the finished mp4 and
+      normalised-cross-correlated against the decoded new take and the decoded
+      old take. NCC is scale-invariant, so the master's loudnorm pass does not
+      confound it, and the two takes are different performances, so the winner is
+      unambiguous. ALL SIX BEATS: 0.9749 / 0.9861 / 0.9830 / 0.9935 / 0.9934 /
+      0.9869 against the NEW take, versus 0.0622 / 0.0466 / 0.0733 / 0.0714 /
+      0.0841 / 0.1488 against the OLD one.
+    check_2_pitch_through_the_master: >-
+      Median F0 measured on audio pulled back out of each episode, same estimator
+      and same window on both. GUARD 2's three beats read 111.4 / 108.9 / 111.1 Hz
+      in 0819c and 143.2 / 150.5 / 145.1 Hz in 0820. Against beat 01's sapling
+      line in the same cut: SEPARATION GOES FROM 2.0 Hz TO 32.3 Hz.
+    why_32_3_and_not_26_0: >-
+      Named rather than smoothed over. 26.0 Hz is measured on the bare mp3 takes;
+      32.3 Hz is measured through the finished master, over the whole beat slot,
+      including the wind bed and after loudnorm. Different windows, so different
+      numbers. Both clear the 20 Hz bar and both were taken the same way on both
+      cuts, which is what makes the comparison mean anything.
+  the_scavenger_overlap_is_carried_forward_unfixed: >-
+    From the re-voice record, not re-derived: on medians GUARD 1 and the
+    SCAVENGER are 24.2 Hz apart, but per take they overlap — GUARD 1's b07 take
+    is 181.8 and the scavenger's own takes range 155.8-192.0, a 36 Hz spread that
+    predates this pass. NOT fixed: the scavenger is outside the ruling's scope
+    and re-rolling him is a lottery against his own spread. The mitigating fact
+    is that the two never alternate (guards speak 05-10, scavenger 13-20),
+    whereas the pair the founder caught alternates line by line.
+  short_lines_undershoot: >-
+    Also from the record. Beat 07 ("So we confiscate the apple.", five words)
+    rendered 177.8, 174.5, 170.2 and 181.8 across four attempts, consistently
+    below the same voice's long lines. Short lines do not give the clone enough
+    voiced material to reach the reference. The best of the four is what is here.
+  r6: >-
+    Every take this pass replaced is in
+    genomes/sapling/nodes/002b-first-citizen/clips/vo-archive/ (05-vo.v6,
+    06-vo.v3, 07-vo.v3 through v6, 08-vo.v3, 09-vo.v3, 10-vo.v3), and the
+    superseded copies are also still in review/ep2-demo-0819c/sources/. Nothing
+    was deleted.
+  the_other_twelve_takes_are_byte_identical_to_0819c: >-
+    VERIFIED, NOT ASSUMED. Beats 1, 3, 4, 11, 12, 13, 14, 15, 16, 17, 18 and 20 —
+    all twelve mp3 and all twelve json — hash identical to 0819c's. Only the six
+    the ruling covers moved.
+
+# ---------------------------------------------------------------------------
+# CHANGE 2 — THE PALINDROME FIX, FIRST PUBLISHED USE
+# ---------------------------------------------------------------------------
+the_hold_fix:
+  the_commit: af863c0b — pipeline/render_t3.py, committed 2026-08-19, applied to no cut until this one.
+  what_it_replaced: >-
+    render_t3.render_beat filled any slot that outran its clip by playing the
+    footage FORWARD THEN REVERSED and looping that palindrome, and it printed
+    nothing while doing it. In 0819c it fired on 8 of the 18 footage beats — 1,
+    3, 4, 6, 10, 11, 17, 18.
+  what_it_does_now: >-
+    The clip plays once, forward, and its final frame is held for the remainder
+    (tpad=stop_mode=clone), padded 0.2s past the slot so the -stream_loop cannot
+    wrap back to frame 1. The tool now PRINTS the substitution on every beat it
+    fires on. The palindrome survives only as opt-in `loop_fill: pingpong`, which
+    nothing in this tree writes.
+  it_fires_on_7_beats_in_this_cut: [1, 3, 4, 6, 11, 17, 18]
+  why_seven_and_not_eight: >-
+    BEAT 10 DROPPED OFF, and it is the re-voice that did it. Its slot is
+    max(script, VO) and its new take is 0.10s shorter, so the slot went 4.17s ->
+    4.08s against a 4.04s clip — a 0.04s margin, inside the branch's 0.05s
+    epsilon. Beat 10 now plays its clip once and stops. Nothing was tuned to
+    achieve that; it is a side effect of the voice change and is recorded so
+    nobody reads the 8 -> 7 as a second fix.
+  verified_on_two_beats_by_frame_comparison:
+    method: >-
+      The fill window is the span of a beat's slot AFTER its clip has played
+      once. Frames were pulled from the ASSEMBLED cuts (not the sources, because
+      the claim is about the cut) at 24fps across that window, cropped to rows
+      0-800 — the picture strictly above the caption strip, because caption text
+      changes on VO chunk boundaries and that is motion which is not the footage.
+      Adjacent pairs whose mean absolute luma difference exceeds 0.30 levels
+      count as moving.
+    beat_01:
+      slot: 0.00-9.46s in BOTH cuts, clip 5.04s, fill window 5.04-9.46s
+      moving_pairs_0819c: 105 of 105
+      moving_pairs_0820: 0 of 105
+      bit_identical_pairs_0820: 70 of 105
+      max_pixel_delta_0820: 4        # h264 ringing; 197 in 0819c
+      what_the_fill_actually_contains: >-
+        Each fill frame was matched against every frame of the forward clip. In
+        0819c the best match walks BACKWARDS — 120, 119, 118, 117, 116 ... down to
+        68 — which is the reversal, visible. In 0820 it is frame 120 for all 105
+        fill frames. Distance from the clip's own last frame: 0.029 mean levels.
+    beat_06:
+      slot: 28.96-35.67s in 0819c (6.71s), 29.00-35.46s in 0820 (6.46s), clip 1.92s
+      moving_pairs_0819c: 100 of 114
+      moving_pairs_0820: 0 of 108
+      bit_identical_pairs_0820: 80 of 108
+      max_pixel_delta_0820: 11
+      what_the_fill_actually_contains: >-
+        THE TEXTBOOK CASE. In 0819c the best-matching clip frame runs 45 -> 0 ->
+        45 -> 25 with two direction changes inside the fill window: the board turn
+        plays backwards, forwards, then backwards again. In 0820 it is frame 45
+        for all 109 fill frames, 0.092 mean levels from the clip's last frame.
+      the_picture: review/ep2-demo-0820/b06-hold-vs-palindrome.jpg
+    the_other_five_were_not_frame_checked: >-
+      Beats 3, 4, 11, 17 and 18 take the same code path and print the same line,
+      and they were NOT independently frame-compared. Named rather than implied:
+      two beats were verified and five are inferred from the branch they took.
+  a_claim_from_0819c_that_the_pixels_DO_NOT_support: >-
+    picks-0819c.yaml and 0819c's page both said beat 01's fig "goes green, ripens
+    to purple, and un-ripens to green again". Opening the frames, the fig is
+    already purple by 1.2s and stays purple; what actually reverses is the
+    growth detail at the fig's crown and all the ambient motion. The reversal is
+    real and measured at 105 of 105 pairs — the colour story around it was
+    overstated. Corrected here rather than repeated.
+
+runtime:
+  duration_s: 113.33
+  previous_cut_actual_s: 113.46
+  delta_s: -0.13
+  a_correction_to_the_0819c_manifest: >-
+    picks-0819c.yaml records `duration_s: 113.29` for a file that measures
+    113.46s. The number was wrong in that manifest; ffmpeg reads 00:01:53.46 off
+    the published mp4. Recorded here because the delta above is meaningless
+    against a figure nobody checked.
+  why_it_barely_moved_when_the_VO_grew_1_77s: >-
+    THE VO GOT LONGER AND THE EPISODE GOT SHORTER, which looks wrong and is not.
+    Slots fit to the LONGER of the script length and the VO length, so VO growth
+    below the script floor buys no runtime. Per beat: 05 +0.86s of voice bought
+    +0.04s of slot; 07 +1.11s of voice bought +0.21s; 09 +0.18s bought 0.00s.
+    Meanwhile 06 -0.25s, 08 -0.03s and 10 -0.10s of voice gave slot back:
+    -0.25s, -0.05s, -0.09s. Net slot change -0.14s, which is the -0.13s measured
+    to within rounding. No clip was stretched, looped, trimmed or reversed.
+
+# ---------------------------------------------------------------------------
+
+beats:
+
+  - beat: 1
+    slug: COLD OPEN
+    take: 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+    sha256: 535a2e350ad5bebee17cc8cfc0f4bafebb91ee6029d7e664f7601597ebd9a319
+    why: carry-forward
+    verdict_quoted: PASS on all five pre-registered clauses (G1-G5), CUT-PREFERRED.
+    verdict: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml verdict_this_job / verdict_this_job_measured
+    detail: >-
+      Same file, same sha as 0819c. WHAT CHANGED IS THE CUT, NOT THE TAKE: this
+      is one of the two beats where the hold fix was frame-verified. Its verdict
+      passed G1 on "growth monotone, 0 shrinks" — true of the file, and until
+      tonight false of the cut. Now both.
+
+  - beat: 2
+    slug: THE SPRINT
+    take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
+    sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
+    why: carry-forward
+    verdict_quoted: NONE. No bar has ever been answered for this file.
+    detail: >-
+      Carried since 0817. ONE OF THE FOUR BEATS IN THIS CUT THAT HAS NEVER BEEN
+      JUDGED — the full list is 2, 8, 12, 20. Silent by design (no spoken line in
+      the script).
+
+  - beat: 3
+    slug: BAD COVER
+    take: 03-bad-cover-b03-refire-0814.mp4
+    sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
+    why: carry-forward
+    verdict_quoted: >-
+      FAIL — "THE COVER ARRIVES MID-CLIP." Frames 000-014 hold him standing in
+      an open field with nothing he could be behind; at f015 a dark rod
+      materialises unattached to the ground and becomes the sapling he is
+      supposed to already be hiding behind.
+    verdict: pipeline/jobs/ep2-b03-refire-0814.yaml verdict / verdict_clauses / verdict_addendum_terminal_freeze_measured_after_the_read
+    detail: >-
+      Unchanged from 0819c. In the cut as best-available with the fault named.
+      Its 0.34s tail is now a hold rather than a reversal.
+
+  - beat: 4
+    slug: THE FOOTNOTE
+    take: 04-the-footnote-b04-refire-0814.mp4
+    sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
+    why: carry-forward
+    verdict_quoted: >-
+      FAIL on the clause the whole beat rests on. done_when is "stillness with
+      LIVE EYES ... This is the one beat where a near-motionless body is correct
+      and only the eyes carry it." THE EYES NEVER MOVE — same iris position in
+      the same sockets from f005 to f096, no saccade, no dart, no blink.
+    verdict: pipeline/jobs/ep2-b04-refire-0814.yaml verdict / verdict_measured
+    detail: Unchanged from 0819c. Best-available with the fault named.
+
+  - beat: 5
+    slug: THE PATROL
+    take: 05-the-patrol-b05-standB-trim.mp4
+    sha256: 909688bce9c48a872b102cd6a02f26e2e9a80e6e83734c8c6541c3cc040fa93a
+    why: carry-forward
+    verdict_quoted: >-
+      FAIL on four of seven clauses AND it contradicts a frozen founder ruling
+      on the cast — neither man wears the sash the founder froze. What it
+      genuinely won, stated plainly: TWO figures in a field from f001 to f117,
+      never one and never three, which four rounds of wording never achieved.
+    verdict: pipeline/jobs/ep2-b05-standB-0814.yaml verdict / verdict_contradicts_a_founder_ruling / verdict_measured
+    detail: >-
+      PICTURE UNCHANGED, VOICE NEW. GUARD 1's line is the re-voiced take at
+      192.0 Hz (was 140.9 measured through 0819c's master). The four failed
+      clauses and the sash contradiction are untouched — a voice does not fix a
+      picture, and nothing here should be read as an upgrade to the footage.
+
+  - beat: 6
+    slug: THE CLIPBOARD
+    take: 06-the-clipboard-b06-scene-0814r-trim.mp4
+    sha256: 6e1d49324cc7b74ad21cd2910827ac88b15135dc3c9168ddc161425ab3fd4f8d
+    why: carry-forward
+    verdict_quoted: >-
+      "THE BEST OF THE EIGHT UNSCORED BEATS, AND STILL NOT A PASS": three of
+      four clauses met, one failed on the board's SIZE. The action is really
+      performed — he turns the bark board over and reads off it, on a locked
+      camera, with zero identical adjacent pairs.
+    verdict: pipeline/jobs/ep2-b06-scene-0814r.yaml verdict / verdict_finds_a_gap_in_the_prop_identity_bar
+    detail: >-
+      THE BEAT THAT GAINED BOTH FIXES AT ONCE, and the one to watch first. Its
+      GUARD 2 line is the re-voiced take (135.6 Hz, was 1.7 Hz from the tree),
+      and it was the worst palindrome in 0819c — the board turned over, un-turned
+      and turned again. Frame-verified: 100 of 114 moving pairs in the old fill
+      window, 0 of 108 in the new. The board's SIZE is still wrong; that clause
+      still fails.
+
+  - beat: 7
+    slug: CONFISCATE
+    take: 07-confiscate-b07-point-crf10-0819.mp4
+    sha256: fae0f40834209e781fb57b3a803384ae4003e9aad3ec243d447ed84a2bceb138
+    why: carry-forward
+    verdict_quoted: >-
+      PASS on M1-M4, CUT-PREFERRED of two takes, `done_when` met clause by
+      clause. The guard raises his OWN arm at f045 and the point holds to f096.
+    verdict: pipeline/jobs/ep2-b07-point-crf10-0819.yaml verdict / verdict_clauses / plate_faults
+    detail: >-
+      Picture unchanged, voice new (GUARD 1, 181.8 Hz — the take the record names
+      as the best of four attempts at a five-word line). ONE FAULT STILL TRAVELS
+      WITH IT, all the plate's: the init dresses the SCAVENGER in the guard's own
+      pale wrap tunic and white sash, so a beat that must read as an authority
+      pointing at a scavenger reads as two officials in matching kit. The plate is
+      recorded UNAPPROVED AND PROVISIONAL by its own spec.
+
+  - beat: 8
+    slug: INSIDE HIM
+    take: 08-inside-him-b08-twohander.mp4
+    sha256: ac992bcb335cd9dd5825b3b08485ccb662d3002916b3e561349bd52abe2b1eba
+    why: carry-forward
+    verdict_quoted: NONE for the clip in the cut.
+    detail: >-
+      One of the four never-judged. Voice new (GUARD 2). The slot is FILLED; what
+      is open is identity — every geometric-conditioning rung returns two GREEN
+      figures with pointed ears, because `green skin` enters the pooled embedding
+      and lands on both bodies. Live routes are per-figure IPAdapter masking and
+      an SDXL OpenPose net; both are the b08 lane's and neither has landed.
+
+  - beat: 9
+    slug: THE PAUSE
+    take: null
+    why: slate
+    verdict_quoted: >-
+      NO FOOTAGE ANY VERDICT LETS INTO A CUT. Two motion clips exist and BOTH
+      declare `is_show_content: false` in their own headers — barred by their
+      own specs, not by a judgement made after the fact.
+    verdict: pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml is_show_content_why / verdict
+    detail: >-
+      Still a slate, and the one slate whose VOICE changed: its GUARD 1 take is
+      re-voiced at 212.4 Hz and plays over the card. THAT LINE IS THE EPISODE'S
+      PUNCHLINE ("...We confiscate the goblin?"), so the joke now lands in the
+      right voice even with the picture slated. The plate still cannot cast the
+      man — head ~35% against a 55% bar — and the hair axis was closed by
+      measurement on 08-19: eight renders, two wordings, `brown hair` in the
+      negative throughout, brown arrived all eight times. Next route is
+      reference-plus-crop, a build rather than a wording rev.
+
+  - beat: 10
+    slug: NO FORM
+    take: 10-no-form-b10-pairB-trim.mp4
+    sha256: b35f42eb181f63f263277010e2fd1f47172ee18a00f567c20468860b7bdc3811
+    why: carry-forward
+    verdict_quoted: >-
+      FAIL on the clause that IS the beat. `done_when` requires the near one to
+      hold the blank back of the board TOWARD HIS PARTNER; from f065 to f096 it
+      is held essentially parallel to the picture plane — presented to the lens
+      — while the partner would see it nearly edge-on.
+    verdict: pipeline/jobs/ep2-b10-pairB-0814.yaml verdict / verdict_disagrees_with_the_record_and_leaves_it_standing
+    detail: >-
+      Picture unchanged, voice new (GUARD 2, 135.6 Hz). ALSO THE BEAT THAT
+      DROPPED OFF THE FILL LIST — see `the_hold_fix.why_seven_and_not_eight`. Its
+      shorter new take pulled the slot to 4.08s against a 4.04s clip, so it now
+      plays once and stops instead of reversing 0.13s. Side effect, not a fix.
+      The board still faces the camera and that clause still fails.
+
+  - beat: 11
+    slug: THEY LEAVE
+    take: 11-they-leave-b11-w4-s20260903-0817.mp4
+    sha256: a99a0874c2b77c76c12c877044d9cbd176996e58d325111dcb9078504702433e
+    why: carry-forward
+    verdict_quoted: >-
+      NONE for this file that stands. Its `status_override_0815` RETIRED an
+      earlier passing verdict over "total identity collapse away from the plate
+      across f16-f21", and its crf-10 sibling fired FAIL-COLLAPSE-UNCHANGED and
+      FAIL-EXIT.
+    verdict: pipeline/jobs/ep2-b11-crf10-0819.yaml verdict / is_show_content_why
+    detail: >-
+      Unchanged from 0819c. Blocked on guard B turning his face to camera in a
+      backs-turned beat — measured, not a codec problem. Its 0.54s tail is now a
+      hold. Note for the veto window: r1s1 sits under "Picks — veto only" on the
+      board and silence accepts.
+
+  - beat: 12
+    slug: RELATED
+    take: 12-related-b12-tightB-untrimmed.mp4
+    sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
+    why: carry-forward
+    verdict_quoted: >-
+      No spec verdict block. The beat's RECORD says SHIP WITH FAULT NAMED: the
+      geometry lever worked (exactly two oval leaves on one stem against sky at
+      both seeds, after two failures of counting in words) and the recorded
+      shipping fault is that the colour shifts warm-to-cool across the first
+      second.
+    verdict: review/ep2-picks/done-definitions.yaml beats.'12' (pick, shipping_fault, trim_0815)
+    detail: >-
+      ONE OF THE FOUR NEVER-JUDGED, unchanged. Its seed axis closed 0 for 5 on
+      08-19 and the close found the cause of the recurring intruder: a clause in
+      the POSITIVE prompt, "the scavenger crouched behind them, out of frame",
+      which a diffusion positive cannot render as an absence. The next rung
+      (ep2-b12-noscav-0819) deletes that span on the one seed that is locked and
+      flat. NO PICK HAS BEEN EARNED and none is written here.
+    the_trim_that_is_available_and_was_NOT_taken: >-
+      Carried from 0819c with ONE OF ITS TWO REASONS NOW DEAD. done-definitions
+      beats.'12'.trim_0815 records that trimming to 1.38s removes the colour
+      fault. 0819c declined it partly on arithmetic (1.38s under a 4.71s slot with
+      4.7s of speech over it) and partly because THE PALINDROME WOULD FIRE and
+      replay the degraded head frames backwards. The second reason no longer
+      holds: a 1.38s clip in a 4.71s slot would now HOLD its last frame for 3.33s.
+      The first reason stands and is enough — 3.3s of freeze on a five-second beat
+      is an edit decision with a duration consequence, not a free swap. Recorded
+      because a fix that retires someone's stated reasoning should say so.
+
+  - beat: 13
+    slug: THE SHADE
+    take: 13-the-shade-b13-refire-0814.mp4
+    sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
+    why: carry-forward
+    verdict_quoted: >-
+      "THE END STATE PASSES AND THE CLIP CONTRADICTS A FOUNDER RULING TO REACH
+      IT." Scored on the end state as done_when demands, two of three terms are
+      met — he ends folded small with knees drawn up at the base of the trunk.
+      The third is not: it grows a whole mature forked tree and he climbs it,
+      where the founder ruled the sapling is tiny.
+    verdict: pipeline/jobs/ep2-b13-refire-0814.yaml verdict / verdict_contradicts_a_founder_ruling
+    detail: >-
+      Unchanged from 0819c. Best-available with the contradiction named. One of
+      the beats behind `the_cheapest_unblocking_item`.
+
+  - beat: 14
+    slug: THE DEFENSE
+    take: 14-the-defense-b14-macplate-r1s1-0818.mp4
+    sha256: 1529920cd6ea204bf4b1d1098ed5237aadc62fcbae36ab3a0a96f906d1c2e253
+    why: carry-forward
+    verdict_quoted: FAIL on M2 and M3, and still the beat's best footage — which is exactly what best-available means.
+    verdict: pipeline/jobs/ep2-b14-mac-motion-0818.yaml
+    detail: >-
+      Unchanged from 0819c. PARKED by steward ruling until the slates close.
+      Three independent measurements say the remaining gap is taste and not
+      mechanism.
+
+  - beat: 15
+    slug: GOOD LISTENER
+    take: null
+    why: slate
+    verdict_quoted: NO FOOTAGE. No ep2-b15 motion job dated 0817 or later that any verdict lets into a cut.
+    verdict: pipeline/plate_scratch.py REVS[(15,2)] verdict; pipeline/work-ladder-0819.md
+    detail: >-
+      Unchanged, and still the ONLY slate in this cut where nothing whatever
+      exists to consider. What is left is THE LEAF COUNT: done_when needs him and
+      the sapling in one frame and the growth ladder allows exactly two
+      cotyledons; the wording ladder is CLOSED at two rungs with the count still
+      wrong. Named route is a composite init — the same instrument beat 19 used,
+      which worked.
+    a_defect_carried_forward_unfixed: >-
+      review/ep2-picks/b15-0819-verdict.yaml DOES NOT PARSE — line 59 carries an
+      unquoted mapping-shaped fragment inside a plain scalar, so yaml.safe_load
+      dies at column 35. Nothing globs that directory so no builder is broken,
+      but that lane's verdict cannot be machine-read. Recorded for the fourth
+      time; it is the b15 lane's file and not this assembly's to edit.
+
+  - beat: 16
+    slug: WHY
+    take: null
+    why: slate
+    replaces: 16-why-b16-anim-0814.mp4 (sha dcdfd26e483cb82c1f8ad92c3035da478a9bbe4a93cb907e24b6599f77192303)
+    verdict_quoted: >-
+      FAIL. "THIS FILE IS FOOTAGE THE FOUNDER RULED NOT SHIPPABLE, AND IT HAS
+      SHIPPED IN FOUR CUTS ASSEMBLED AFTER HE RULED." Three of three done_when
+      clauses are MET and the beat still fails, because the object the ruling
+      rejected is not a detail in the corner — from f010 to f096 a nine-to-
+      eleven-lobed palmate leaf fills the entire frame. The rejected thing IS
+      the picture, for 87 of 97 frames.
+    verdict: pipeline/jobs/ep2-b16-anim-0814.yaml verdict / verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg / verdict_status_contested_against_the_ledgers_own_definitions
+    detail: >-
+      STAYS A SLATE. This assembly took no new judgement — 0819c applied the
+      founder's 2026-08-16 ruling ("both of them are wrong though and do not
+      resemble the sapling") and nothing has reversed it, so it carries forward
+      unchanged. Its VO take is unchanged and still plays over the card, so the
+      line ("the only thing here that won't file a report") lands.
+    how_to_reverse_it_in_one_line: >-
+      `cp review/ep2-demo-0819b/sources/16-why-b16-anim-0814.mp4*
+      review/ep2-demo-0820/sources/` then re-run the command in `assembled_by`.
+      The clip was never deleted.
+    a_wording_mismatch_on_the_card_itself_STILL_UNFIXED: >-
+      render_t3 prints "[ footage pending ]" on every slate card. True for beat
+      15. NOT true for beat 16, where footage exists and is barred by a ruling,
+      and not true for beat 9, where two clips exist and bar themselves. The card
+      understates two of this cut's three slates. It is one string in a shared
+      tool; carried forward rather than changed inside an assembly.
+
+  - beat: 17
+    slug: GOODBYE
+    take: 17-goodbye-b17-navy-crf10-0819.mp4
+    sha256: 9f2023314e55e5b3376c66442bdfcc7c49708fa7752ee0e7a2045751a33c753a
+    why: carry-forward
+    verdict_quoted: PASS on all five clauses — S1, S2, S3, P1 and P2. Naming the colour held the colour; the cloak is navy and stays navy.
+    verdict: pipeline/jobs/ep2-b17-navy-crf10-0819.yaml verdict_this_job / verdict_this_job_measured / pick
+    detail: >-
+      Unchanged from 0819c. TWO HONEST COSTS NO CLAUSE COVERS, carried forward
+      verbatim: P2 passes on a THIN margin where its parent passed comfortably,
+      and overall motion falls 30% on an already-still take. Its 0.67s tail is now
+      a hold.
+    approval_note: >-
+      §6 — beat 17's restaged script line has never been read by the founder.
+      "The scavenger pushes himself up, gives his cloak a shake, and turns to go."
+      The node's 002b-t0-c.yaml says so in its approval_status. The beat is
+      meanwhile PASS and shipping in this review cut, exactly as it did in 0819c.
+
+  - beat: 18
+    slug: THE DECISION
+    take: 18-the-decision-b18-tremble-s20260871.mp4
+    sha256: d950537a89dfd33a4fdd3ed786590ff7b19a4ccea11d801626d472a5df9ac6cc
+    why: carry-forward
+    verdict_quoted: PASS — motion in all four quarters, zero specular pumping; the named pick of three seeds (1 pass, 1 strobe, 1 decay).
+    verdict: pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml verdict
+    detail: >-
+      Unchanged for the third cut running. It has the largest fill margin in the
+      episode — a 5.04s clip in a 10.96s slot — so it is the beat where the hold
+      is most visible as a hold: 5.9s of held frame. That is an honest cost of the
+      fix and it is stated rather than buried. It replaces 5.9s of a tremble
+      running backwards, which reads as a tremble, so this is the one beat where
+      the old behaviour was arguably less noticeable than the new one. Matte vs
+      gloss on the fig is still open and still R4.
+
+  - beat: 19
+    slug: THE DROP
+    take: 19-the-drop-dropcomp-0819.mp4
+    sha256: 0fd9118cbe192278bc8ed6929fdb647dc02dd798186681c1d81acb5bdfce2eed
+    why: carry-forward
+    verdict_quoted: >-
+      "8 of 8, plus B5b. BAR: PASS -- every clause." Eight clauses written
+      before the first line of the tool and not edited afterwards.
+    verdict: farm-out/ep2-b19-dropcomp-0819/19-the-drop-dropcomp-0819.yaml bar_pre_registered_before_building / score / measured
+    status_in_this_cut: >-
+      BEST-AVAILABLE ON A STEWARD RULING, NOT A PICK — unchanged from 0819c. The
+      clip's own record still says "beat 19 stays a SLATE until the author says
+      otherwise." This assembly writes no pick and no plate_ack.
+    THE_MISSING_THIRD_CLAUSE_VERBATIM: >-
+      "HE DOES NOT NOTICE. done_when asks for the fall, the landing AND him
+      noticing, in that order; this clip delivers the first two exactly and the
+      third not at all. A composite can move the fig and nothing else, and
+      animating his head would destroy the one property that makes this clip
+      trustworthy — that every pixel outside the fig's corridor is bit-identical
+      to the plate the author picked."
+    two_further_limits_verbatim: >-
+      "(b) THE LAST 2.792s IS A STILL FRAME. An honest hold, not a disguised
+      one." "(c) THE EVENT IS SMALL: 48px of travel on a 33px fig in a 1280-tall
+      frame" — the author's own knee-height canon caps the fall at ~30cm.
+    palindrome: >-
+      THE BEAT THE OLD BEHAVIOUR WOULD HAVE DESTROYED, and it is worth restating
+      now that the branch is gone. Reversed, this clip shows a fig flying back UP
+      onto a stem. It cleared the old branch on a 0.0000s margin — 120 frames / 24
+      = 5.0000s against a 5.000s slot — which the tool's author achieved on purpose
+      with a module constant. Under the hold fix that defence is no longer load-
+      bearing: had the margin been 0.1s, the worst case is now 0.1s of held fig in
+      the grass instead of a fig flying upward.
+
+  - beat: 20
+    slug: EVIDENCE
+    take: 20-evidence-b20-shape-headtrim.mp4
+    sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
+    why: carry-forward
+    verdict_quoted: >-
+      NO VERDICT YET on the beat, and the recorded pick carries TWO faults this
+      beat's own done_when names as disqualifying. In the cut as best-available
+      with both named, not as a pass.
+    verdict: review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
+    detail: >-
+      One of the four never-judged, unchanged. (1) THE BRANCH IS THE WRONG TREE —
+      a thick gnarled MATURE-TREE limb where done_when needs the sapling's own
+      now-empty stem. (2) HE NEVER LOOKS UP, and "then the look UP" is the second
+      half of done_when. Beat 20 DID get footage on 08-19
+      (ep2-b20-motion-0819, PASS on the clause it exists for, FAIL-FROZEN did not
+      fire) and it is NOT in this cut, for two pre-declared plate faults charged
+      to the plate and not the render. Its one-job darkening fix is frozen behind
+      the goblin-identity letter.
+
+  - beat: 21
+    slug: THE ANSWER
+    take: 21-the-answer-b21-daylight-0814.mp4
+    sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
+    why: carry-forward
+    verdict_quoted: >-
+      "THE ONLY BEAT OF THE EIGHT WHOSE DEFINITION IS FULLY MET — ALL FOUR
+      CLAUSES, AND THE HARD ONE IS MEASURED." The leaf tilts monotonically over
+      ~90 frames in one direction with no oscillation and no reversal, which is
+      what makes it read deliberate rather than as wind, AND IT STOPS.
+    verdict: pipeline/jobs/ep2-b21-daylight-0814.yaml verdict / verdict_clauses / verdict_measured / verdict_the_one_open_question_and_it_is_R4
+    detail: >-
+      Unchanged from 0819c. Silent by design. ONE OPEN QUESTION AND IT IS R4: the
+      leaf that tilts is not the leaf in the plate.
+
+vo:
+  takes_in_this_cut: 18
+  replaced_since_0819c: 6      # beats 5, 6, 7, 8, 9, 10 — mp3 AND json
+  byte_identical_to_0819c: 12  # beats 1, 3, 4, 11, 12, 13, 14, 15, 16, 17, 18, 20
+  absent_by_design: [2, 19, 21]
+  absent_by_design_why: >-
+    Those three carry no spoken line in
+    genomes/sapling/nodes/002b-first-citizen/node.md — 2 and 21 are pure action
+    and 19's text is stage direction only. So the VO column has no holes and
+    nothing in this episode is waiting on voice synthesis.
+  engine: chatterbox-0.5B on MPS, muxed in sync by render_t3 from the measured
+    lines[].chunks in each manifest.
+  the_json_sidecars_moved_too: >-
+    Worth stating because it is a way to half-do this. Each NN-vo.json carries
+    the measured chunk timings that drive caption sync, so copying the mp3 alone
+    would put the new audio under the old cue points. All twelve files moved
+    together and the captions were checked on the two frame-compared beats: the
+    only non-footage motion in either fill window is caption text changing, and
+    it changes at the new manifest's chunk boundaries (beat 01 at 6.46s and
+    8.75s against chunk ends 6.48 and 8.77; beat 06 at 2.67s and 5.71s into the
+    beat against chunk ends 2.67 and 5.75).
+
+known_issues_carried_forward:
+  the_goblin_letter_is_still_the_key: >-
+    UNCHANGED AND STILL WAITING. The founder watched 0819c and asked why some
+    goblin scenes show an adult. Nine beats show two different characters and the
+    split falls on the render date — round/young on everything rendered on or
+    before 08-16, lean adult on 08-18/19 — and the trace concludes NOBODY
+    AUTHORISED THE ADULT. The letter is at /review/ep2-goblin-design-0819 and the
+    answer is one letter: A (the round young one), B (the adult), or a third
+    named design. Every goblin-identity render in the project is frozen behind
+    it, including beat 20's one-job darkening fix. NOTHING IN THIS CUT TOUCHES
+    IT: no goblin render was queued, attempted or picked by this assembly.
+  the_guards_look_is_still_open: >-
+    UNCHANGED. Do they read as grown men, and does it matter? Recast / Accept /
+    Stage around it, at /review/ep2-guards-0818. It gates beats 05, 06, 10, 11
+    (all best-available) and beat 09's plate. THE VOICES ARE NOW FIXED AND THE
+    LOOK IS NOT — those are separate axes and this cut only moved the first one.
+    Sequencing note carried from the handover: the guards page illustrates the
+    goblin with b14-seeds.jpg captioned "the current adult goblin", which is the
+    very adult the goblin letter says nobody authorised. Ask the goblin letter
+    first.
+  the_cheapest_unblocking_item: >-
+    THERE IS NO CANONICAL SAPLING DESCRIPTION. Beat 03 grows an eight-leaf woody
+    twig that does not exist until f015; beat 13 grows a mature forked tree and
+    climbs it; beat 16 filled the screen with a rejected palmate leaf; beat 21's
+    leaf is not the leaf in the plate; beat 20's branch is a mature-tree limb.
+    Beat 12's two oval cotyledons are the only ones anybody got on purpose, and
+    they came from a geometry lever rather than a description. ONE description
+    would govern eight of twenty-one beats. It is R4, it needs no GPU, and the
+    2026-08-16 ruling already filed the question. Named, not answered; nothing is
+    queued against it.
+  d23_awaits_a_signature: >-
+    DECISIONS.md:1532, the automation charter. Governance, so it cannot be taken
+    steward-side. Silence is explicitly not acceptance. Nothing in this cut
+    depends on it.
+
+what_this_assembly_did_not_do:
+  - No pick was written, changed or promoted. Bench assembly via --out: no leaf, nothing in lineage.yaml, no plate_ack.
+  - No render, no voice synthesis, no GPU, no network, no spend. $0.
+  - No script text was touched. The re-voice is a re-synthesis of lines the founder had already read and approved (the ruled-legal class, 003b precedent); §6 is satisfied and render_t3's gate was passed, not bypassed.
+  - No verdict was authored, edited or reinterpreted. Every verdict_quoted above is 0819c's, carried forward verbatim.
+  - review/inbox.yaml was not touched.
+
+assembled_by: >-
+  pipeline/render_t3.py in bench mode on 2026-08-19, invoked as:
+  `python3 pipeline/render_t3.py sapling 002b --clips review/ep2-demo-0820/sources
+  --out review/ep2-demo-0820/ep2-demo-0820.mp4` — the identical invocation 0819c
+  used with one directory name changed. THE DIRECTORY IS THE WHOLE TRICK: the six
+  new VO takes had to be COPIED into it first, because find_audio() and
+  vo_manifest() resolve against --clips and nowhere else. Bench mode means --out:
+  no leaf, nothing in lineage.yaml, not canon.
