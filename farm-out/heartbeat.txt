@@ -2980,3 +2980,4 @@
 17:59:07Z STARTED task=ep2-b12-noscav-0819-1787161582 attempt=1 on box-runner
 18:13:01Z DONE task=ep2-b12-noscav-0819-1787161582 rc=0 artifacts=2
 18:16:03Z box-runner up pid=26828 host=MSI
+18:24:10Z STARTED task=ep2-b19-sapmid-b-0819-1787161867 attempt=1 on box-runner
