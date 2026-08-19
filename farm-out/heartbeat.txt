@@ -2875,3 +2875,4 @@
 08:02:46Z box-runner idle ready=0 failed=39
 08:08:11Z STARTED task=ep2-b08-ipamask-0819-1787126880 attempt=1 on box-runner
 08:08:44Z DONE task=ep2-b08-ipamask-0819-1787126880 rc=0 artifacts=1
+08:12:49Z box-runner idle ready=0 failed=39
