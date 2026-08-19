@@ -2284,3 +2284,64 @@ sibling that retokened its output filename at all**; the other six publish as
 `s20260826.mp4` regardless of their real seed, which is the derive step failing
 to retoken `artifacts` and is why the five above are indistinguishable by
 filename.
+
+## Appended 2026-08-20 by the beat 08 staging lane — the grip rung, and beat 08's canon filing
+
+**Rung: `ep2-b08-grip-0820`, FAIL, and the two findings are worth more than the
+frame.** One variable, the positive prompt, +9 words asserting the grip
+positively (`fingers and thumb gripping the clipboard edge`), everything else
+byte-identical and verified in the sidecar. Two pre-registered branches fired
+together: the guard came back **bald** against canon at unchanged conditioning
+(prompt crowding is real at 73 of 77 tokens), and **the clipboard disappeared
+entirely** — authored quad 23.5 % of pixels under luma 80 against the parent's
+75.8 %. The grip clause bound to the right *hand* and the wrong *object*:
+fingers and thumb are drawn, articulated, closed around the **sash strap**.
+Full numbers in the spec's `verdict_measured` and route log
+`pipeline/b08-arm-route-0819.md` §18.
+
+**The standing lesson for any lane touching a prompt on a ControlNet route:
+`--scale2 0.3` was never measured as robust, only as untested.** It carried the
+object for exactly the one text it was measured with. A conditioning strength is
+a property of the *pair* (hint strength, prompt), and nine words at fixed
+strength is enough to lose the object. Re-verify the object after any prompt
+edit; do not inherit "0.3 works" across a wording change.
+
+**And an extension of §17's probe rule, which this frame forced.** §17 said
+publish the **material**, not just the luma. §18 says **a colour predicate
+cannot decide that material on a figure whose clothes are skin-coloured**: the
+guard's cream shirt reads R−B 34.7 against his skin's 42.6–49.7, and the first
+probe placed here by colour landed on a **sleeve** at 100 % "pale" — it would
+have passed a naive material test and produced a clean, wrong number. Guard
+boxes are placed by eye at 5x and published with their R−B alongside the luma.
+
+**Canon filing, apply-not-invent (a).** `pipeline/canon.yaml` `ep2-guard-hair`
+scoped itself to beats 5, 6, 7, 9, 10, 11 — **beat 08 was missing and it is a
+guard beat**, the two-hander itself. Added as an application with a dated note;
+nothing re-ruled. The gap was not free: putting beat 08 in scope immediately
+surfaced two specs written **2026-08-18, six days after the canon**, both asking
+for "a tall bald guard in a brown cloak" —
+`ep2-b08-boardcomp-0818` and `ep2-b08-twofig-gesture-0818`. Both have already
+run and carry an `outcome`, so both are acknowledged as history rather than
+edited (rewriting a scored spec's prompt falsifies what its frame came from).
+The same six-beat list appears in `review/ep2-picks/done-definitions.yaml`
+`what_this_releases` and `guard_plates_are_miscast_0816`, so the record that
+backs the suppression list carries the dated note.
+`check_canon_drift.py` 1 → 0 fail; `lint_genome`, `test_pipeline` rc=0.
+
+**Canon filing (b): the goblin's trousers are GENUINELY UNRULED, and are NOT
+ruled here.** Both the parent and this frame put him in full teal trousers to
+the ankle; twinsipa had him bare-legged with a tan loincloth. Checked against
+what is actually ruled: `ep2-goblin-design-adult` ratifies the identity wording
+`lean wiry adult goblin man, green skin, bald head, patchwork cloak` — a cloak
+and nothing below the waist — and the founder's words on
+`/review/ep2-goblin-design-0819` (*"well b definitely and the damn goblin"*)
+chose a **build**, not a wardrobe. **The B evidence does not settle it, and the
+pixels are why:** the four adult-B tiles he approved show four different lower
+halves — b07 a long tunic over dark leggings, b14 loose pale trousers, b19 bare
+green legs and bare feet under a cloak, b17 wrapped greaves and boots. Nor does
+any input to beat 08 assert legwear: `b08-ref-goblin-0819.png` is a
+head-and-shoulders crop that shows nothing below the collar, and the prompt says
+nothing. So the trousers are an **unasserted attribute the model is inventing
+per frame**, which is the standing shape of every attribute this beat has lost.
+Filed as one taste card for his next batch, with pixels; **no conformity verdict
+is recorded either way.**
