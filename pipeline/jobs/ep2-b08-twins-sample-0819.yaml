@@ -266,3 +266,156 @@ derivation:
     - step twins --repo-commit (e8bae927c0b54c5fc5775f7312e726a2d3cec6f7 -> 7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e)
     key:est_minutes:
     - key est_minutes = 6
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size and at 3x
+# beside its parent's. Scored against the bar and the scoring rule THIS SPEC
+# PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 3 steps rc=0, 2026-08-19T19:52:34Z -> 19:53:00Z, load 6.2s /
+# render 13.8s. 5 files published to courier-box\farm-out and pulled with every
+# sha verified against the manifest. $0.
+#
+# ONE EARLIER ATTEMPT FAILED AND IT IS PART OF THE RECORD: rc=12 at 19:47:02Z,
+# refused by controlnet_plate's ControlNet allowlist because a local directory
+# carries no licence. The guard was right and was not weakened -- the path was
+# allowlisted with a licence string naming its upstream repo, variant blob and
+# digest (7a7e6c4b), and the sidecar this frame carries is self-describing as a
+# result. No pixels were produced by the failed attempt.
+# ============================================================================
+verdict: >-
+  PASS -- BRANCH (1), AND IT IS THE FIRST TIME IN FIVE MECHANISMS THAT B4b HAS
+  MOVED. Pose adherence WAS the fourth cause and the twins variant is its fix,
+  measured on both pre-registered positions: the guard's hand closed 67% of the
+  distance to its authored wrist, and the goblin's arm STAYED on its own skeleton
+  instead of coming 186 px up to meet it. The two hands do not clasp. The gesture
+  reads as a point at the goblin's midsection -- marginally, and the aim is scored
+  honestly below.
+  THE FRAME IS NOT A USABLE PLATE, AND THE REASON IS A DEFECT NOTHING ON THIS BEAT
+  HAS SEEN BEFORE: identity has stopped broadcasting BETWEEN the figures and
+  started fragmenting WITHIN each of them. The guard has a human face and GREEN
+  FOREARMS; the goblin has a green head and PALE HUMAN LEGS. Beat 08's blocker
+  moves off the gesture and onto per-limb identity -- a different question from the
+  one the masked IP-Adapter already answered, and a harder one.
+verdict_measured:
+  b0_the_net_is_the_twins_net: 'PASS, and read where this spec said to read it. The
+    preflight step printed `twins net verified: 2502139104 bytes, sha 54a2afb1bd21
+    349e475566e5428884bc937a4caecf863b29dea08acc40612fa4` and `staged driver and
+    hint verified` at rc=0 before the render started. The sidecar confirms scale 1.0
+    and carries NO ip_adapter lines. Not void, and the weights are provably the
+    twins blob rather than a directory that merely had the right filenames.'
+  b4b_both_arms_stay_on_their_skeletons: 'PASS ON BOTH MEASURED HALVES, MARGINAL ON
+    THE GESTURE.
+    B4b-i THE GUARD''S HAND ARRIVES -- PASS. Hand centroid (238,726) against the
+    authored wrist (280.5,695.1): 52.5 px. The parent measured (436,656), which is
+    160.3 px from the same target. The gap closed by 67%, and the bar asked only
+    that this frame close materially more of it. The extended index fingertip is at
+    (204,657).
+    B4b-ii THE GOBLIN''S ARM STAYS -- PASS, AND CLEANLY. Both his arms hang at his
+    sides with his hands at y~900 against an authored wrist of (221,857); 2902
+    green-skin px sit inside the authored-wrist zone. The parent brought that arm UP
+    186 px and ACROSS 129 px to a fist at (350,671). It did not move this time.
+    THE GESTURE -- MARGINAL PASS. At 3x the hand is a closed fist with one index
+    finger extended, arriving at the goblin''s flank at belly height, and the two
+    hands DO NOT CLASP -- the failure condition this clause named did not fire. It
+    is the closest thing to a legible point this beat has produced. Against it: the
+    finger tips slightly UP rather than level, it lands on his side rather than his
+    navel, and because the arm came back GREEN the whole gesture reads at a glance
+    as the goblin folding his own arm across himself. Scored a pass because the
+    clause asks for a hand aimed at the belly and there is one; scored MARGINAL
+    because a viewer has to look twice to see whose arm it is.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS on ownership, and the fifth mechanism to
+    hold it -- at 3x the green forearm emerges unambiguously from the guard''s WHITE
+    SLEEVE CUFF, and both of the goblin''s own arms are accounted for hanging at his
+    sides. The uncontrolled tally at this seed is still 4 of 4 on the goblin.
+    BUT THE ARM IS THE WRONG COLOUR, which is not an ownership failure and is
+    recorded under b2 where it belongs: the forearm measures G-R +48.6 against the
+    same figure''s face at -58.2.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two. Four arms, two per figure,
+    no extras despite three green hands being visible at once.'
+  b3_one_ground_plane: 'MARGINAL, AND UNCHANGED FROM THE PARENT -- so not a
+    regression, exactly as pre-registered. The guard''s lowest bare skin (she is
+    barefoot) is y=1143 and the goblin''s is y=1109: 34 px apart, against the
+    parent''s 35 px. Measurable here only because of the defect -- his legs came back
+    pale, so there was skin to find.'
+  b5_no_colossus: 'PASS. Neither figure towers. The goblin measures 715 px from his
+    ear tips (y=394) to the bottom of his legs (y=1109) -- the same 715 the parent
+    measured -- and the guard is roughly 838 px, a ratio near 1.17 against the
+    parent''s 1.161 and the authored 1.100. The guard''s number is an eye estimate
+    off her hairline rather than a skin measurement, and is reported as one.'
+  b6_drawn_not_traced: 'PASS, WITH THE PRE-REGISTERED COST ARRIVING EXACTLY AS
+    xinsir DESCRIBES IT. Both figures are drawn characters -- cloth with folds, hair,
+    modelled hands with separated fingers, a skirt that hangs. The aesthetic loss is
+    real and visible: the linework is looser and sketchier than the base net''s, and
+    the goblin''s face is crude at 1:1 with blank white eyes and a malformed mouth.
+    The bar said a mild loss is accepted if B4b flips and mannequins are not. B4b
+    flipped and these are not mannequins, so the trade is PRICED and taken.'
+  b2_the_identities_separate: 'THE HEAD INSTRUMENT REPORTS THE BEST NUMBER THIS BEAT
+    HAS EVER PRODUCED AND THE FRAME IS THE WORST IDENTITY FAILURE ON THE ROUTE. Both
+    statements are true and the contradiction IS the finding.
+    ON THE STANDING INSTRUMENT: guard head G-R -53.6, goblin +67.7, separation
+    +121.4 -- against +83.0 (parent), +55.5 (grandparent) and +43.0 for the masked
+    IP-Adapter on the contour.
+    AND IT IS MEASURING HEADS ONLY, WHICH THIS FRAME IS THE FIRST TO PUNISH. Within
+    the GUARD: face -58.2, pointing forearm +48.6 -- a 106.8-level split inside one
+    figure. Within the GOBLIN: head +67.7, legs -23.7 -- a 91.4-level split. Both of
+    her hands are green; his legs are human.
+    SO THE THIRD DATA POINT ON THE ENCLOSURE HYPOTHESIS IS CONFOUNDED AND MUST NOT
+    BE COUNTED AS A THIRD PASS. Skeleton hints do separate HEADS better than the
+    contour did. They also let skin tone fragment per LIMB, which the contour never
+    did -- every contour frame was at least internally consistent. This is a new
+    failure mode, not a better score.'
+  b4a_board_down: 'FAIL, PRE-REGISTERED, AND WORSE THAN THE PARENT''S IN A NEW WAY.
+    No board and no book anywhere in frame. Her free hand is closed at her chest
+    around something small and green that reads as nothing identifiable. No object is
+    in a pose hint, on purpose; the remedy remains multi-ControlNet pose+scribble.'
+observed_not_scored: >-
+  THREE, AND THE FIRST WAS PRE-REGISTERED TO PERSIST AND DID NOT. (1) THE NIGHT IS
+  GONE. Mean luma 135.1 against the parent's 40.4, at the same seed, the same
+  prompt and the same negative, with the CONTROLNET WEIGHTS as the only difference.
+  This spec said the night was not its variable and expected it to persist, so this
+  is an unpredicted result and it settles something the next lane would otherwise
+  have spent a rung on: the darkness on this route was the BASE openpose net's
+  doing, not the wording and not the hint. The frame is a bright purple dusk, which
+  is its own colour problem, but it is not night. (2) THE GUARD READS
+  UNAMBIGUOUSLY FEMALE -- blonde bob, blouse, long maroon skirt, barefoot -- where
+  the parent only noted she "still reads female". The prompt says `Two men`. (3)
+  ONE WARDROBE TOKEN LANDED: a white tie at her waist is a fair reading of the
+  frozen `white sash`, and it is the only frozen garment anywhere in the frame.
+what_this_settles: >-
+  POSE ADHERENCE WAS THE FOURTH CAUSE OF B4b, AND TWINS FIXES IT. One variable, same
+  hint, same seed, same words, and both authored positions moved in the predicted
+  direction on the first sample -- the guard's hand 67% closer to its target and the
+  goblin's arm no longer leaving its own skeleton. xinsir's "more precise pose
+  adherence, lower aesthetic score" is now measured on our base rather than taken
+  from a discussion thread, and BOTH halves of it are confirmed, including the cost.
+  It also settles the night, for free and against this spec's own prediction.
+what_this_did_not_settle: >-
+  A USABLE PLATE, AND THE DISTANCE TO ONE IS NOT SHORTER THAN IT WAS -- it is
+  differently shaped. Per-limb identity fragmentation is a defect no rung on this
+  beat has faced: the masked IP-Adapter solved WHICH FIGURE an attribute lands on,
+  and this frame shows that solving it does not solve WHICH PART OF A FIGURE. Nor
+  the board, which has now failed on every skeleton frame because no object is in a
+  pose hint. Nor the guard's sex. Nor the third figure beat 08's done_when wants.
+what_this_does_not_license: >-
+  No pick, no plate_ack, no cut, no canon filename; this frame is PROVISIONAL and is
+  not a candidate. It does not license retiring the base openpose net -- twins costs
+  real drawing quality and only the gesture clause justified it. It does not license
+  an --ip-scale or conditioning sweep. And it does NOT license reading B2's +121.4
+  as a third confirmation of the enclosure hypothesis: the instrument samples heads,
+  and this frame's heads and limbs disagree by over 90 levels.
+next_rung_named_not_taken: >-
+  ONE sample: THIS EXACT JOB PLUS THE TWO MASKED REFERENCES, at this hint, this seed
+  and this net. Both mechanisms are now individually proven on this beat -- the masks
+  moved B2 by 48.5 levels on the contour (ep2-b08-ipamask-0819) and twins moved B4b
+  here -- and per-limb fragmentation is precisely the kind of defect a per-region
+  image condition is shaped to fix. ONE DESIGN CHANGE IS REQUIRED AND IT IS THE
+  WHOLE POINT: the masks used on the contour were head-and-torso rectangles
+  (guard 498,336-640,668) and the guard's pointing forearm here lies at roughly
+  x 200-470, y 640-700, entirely OUTSIDE hers. A mask that does not cover the limb
+  cannot colour it. So the guard's mask must be widened to enclose the extended arm,
+  the two masks must be re-asserted non-overlapping against the goblin's, and the
+  bar is this frame's own within-figure split: guard face-to-forearm 106.8 levels
+  and goblin head-to-legs 91.4 must both collapse, with B4b's two positions holding.
+  AFTER that, and unchanged in order: the board via multi-ControlNet pose+scribble,
+  then the purple cast.
