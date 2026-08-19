@@ -65,6 +65,50 @@ VOICE_SHAPING = {
         "It concerns itself with which category the thing belongs to. Bring "
         "me the correct form, and the correct form will be considered, in "
         "the correct order, at the correct time. That is how a kingdom works.")},
+    # GUARD 1 — dogged, literal, chases first and reasons second. NOT a taste
+    # recast: his voice stays am_adam, this only moves his BAND. He was cast
+    # after the 2026-07-25 shaping pass too, so his ref was the shared REF_TEXT
+    # at pitch 0.0 — measured 117.6 Hz against bm_fable's 116.5, i.e. 1.1 Hz
+    # from the tree. He passed 0819c at 131.9 Hz purely because chatterbox
+    # happened to push that take up; takes are unseeded on MPS, so the next
+    # re-voice could have landed him on the sapling with nothing changed.
+    #
+    # +9st is MEASURED, not chosen for tidiness. Sixteen rendered takes of his
+    # beat-05 line across seven offsets (the ref number predicts nothing —
+    # engine finding 2 on the picker page):
+    #   -9st (ref  77.2) -> 117.1, 91.6, 73.7          erratic; 117 is ON the tree
+    #   -8st (ref  81.1) -> 77.7-126.0 over 7 takes    43% inside the bar
+    #   -7st (ref  83.9) -> 77.9, 90.1, 103.4, 110.1   erratic
+    #   -6st (ref  87.9) -> 92.7                       14.7 Hz from the tree
+    #   +6st (ref 160.0) -> 145.9                      lands on GUARD 2
+    #   +7st (ref 170.8) -> 175.2                      10.7 Hz from the scavenger
+    #   +8st (ref 181.8) -> 157.9, 167.2, 187.5, 193.5 spread 35.6
+    #   +9st (ref 192.0) -> 181.1, 183.2, 189.0        spread 7.9, all clear
+    # Down is unusable BECAUSE the engine's attractor sits at ~110 Hz, which is
+    # exactly where the tree is: every deep ref that slips gets pulled onto the
+    # sapling, which is the defect being fixed. Up is the only direction where
+    # a slip lands nowhere. Episode 2's occupied bands are tree 107, GUARD 2
+    # 147, scavenger 164 — so >20 Hz from the tree AND from GUARD 2 leaves
+    # exactly two windows, <87 and >167, and only one of them holds still.
+    "am_adam":     {"speed": 1.08, "pitch": +9.0, "text": (
+        "He went this way. I saw him do it. I know what I saw. If it is not "
+        "theft then what is it, because he took the apple and now the apple is "
+        "gone. We can go back and look at the cart again. I do not mind "
+        "looking twice.")},
+    # GUARD 2 — the rules-lawyer. FOUNDER'S PICK, 2026-08-19, verbatim "B" on
+    # the picker at review/ep2-guard2-voice-0819 (candidates.yaml `picked:`).
+    # He heard the defect first — "guard 2 has the same voice as the sapling"
+    # — and he was right to within 1.7 Hz: GUARD 2 was cast (am_echo) AFTER
+    # the 2026-07-25 shaping pass, so he had no entry here and cloned from the
+    # shared REF_TEXT at speed 1.0 / pitch 0.0, straight onto the tree.
+    # Candidate B's exact recipe, measured 146.8 Hz on the RENDERED take
+    # (39.4 Hz clear of the tree). Base voice changed am_echo -> am_michael in
+    # voices.yaml by the same ruling; taste, so do not re-tune it (R4).
+    "am_michael":  {"speed": 1.05, "pitch": +4.0, "text": (
+        "Technically that is a different violation. Check the schedule: "
+        "unlicensed consumption is section four, not section two. I am not "
+        "saying we let him go. I am saying the form we would need does not "
+        "exist, and I am not going to invent one standing in a field.")},
 }
 
 
