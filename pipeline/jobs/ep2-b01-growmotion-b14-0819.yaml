@@ -313,3 +313,16 @@ what_this_licenses_after_the_verdict: 'Nothing new, and specifically NOT a ninth
   -- "a seventh seed is a lottery ticket, not an experiment" -- is unchanged, and these two rolls are what it
   looks like when it is ignored: two more clips, two more H4s, no new axis. The one piece of work these clips
   DO justify is the $0 re-measure named above, which needs no card and no founder.'
+THE_PUBLISHED_FILENAME_IS_WRONG_ON_BOTH_JOBS_REPAIRED: 'REPAIRED 2026-08-19 by the queue-keeper
+  lane, as this key said it should be -- a rename plus a manifest rewrite, no re-render. b13''s
+  clip and sidecar are now 01-cold-open-LTX-nubgrow-b-s20260838.*, b14''s are s20260839.*,
+  taken from the sidecars which were correct all along. The two name rows in each .sha256
+  were rewritten and every hash in both manifests verifies against the new names; contents
+  are byte-untouched. Done on the BOX first (C:\banyan-farm\courier-box\farm-out) and then
+  on origin/farm-results-rtx5090 in commit e67e752d, in that order, so a later courier push
+  cannot restore the old name beside the new one. Nothing on main referenced either path.
+  NOT repaired: the other twelve growmotion jobs still share the plate-seed name -- b, b2-b8,
+  b15, b16, b17 -- and the sweep_summary still labels its pick ''20260826 PASS'' when that
+  clip''s sidecar reads seed 20260818. Both are the same defect and both are left for whoever
+  takes the b01 lane, because renaming a clip the cut may reference is a bigger move than
+  renaming two nobody does.'
