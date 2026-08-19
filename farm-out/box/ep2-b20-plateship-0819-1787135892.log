@@ -1,0 +1,14 @@
+#### job ep2-b20-plateship-0819-1787135892 attempt 1 start 2026-08-19T10:38:15Z
+
+==== step fetch START 2026-08-19T10:38:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b20-plateship-0819\\fetch_plate.py"]
+fetched 20-evidence-mac-plate-r1s1.png      1417409 bytes  sha 4b87cf4f40772af7942077e9a1c30198aa78aaeac70b9a26dda5808d9a04d119  OK
+fetched 20-evidence-mac-plate-r1s1.yaml        4159 bytes  sha 3d9465a4f231b132ad84f78c0ff4b36f6cf1bb4b5ee35c4b86cadccb230ce6f4  OK
+both files match their asserted sha256.
+==== step fetch END rc=0 2026-08-19T10:38:20Z ====
+
+==== step publish START 2026-08-19T10:38:20Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, no glob. A glob that misses publishes nothing\n# while returning a code that reads like a fetch failure, and\n# box_enqueue.output_path_problems refuses a spec whose declared artifacts are\n# never named by any step -- which a wildcard defeats. Missing ONE file is a\n# FAIL of this job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/ep2-b20-plateship-0819-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b20-plateship-0819\"\nNAMES = [\n    \"20-evidence-mac-plate-r1s1.png\",\n    \"20-evidence-mac-plate-r1s1.yaml\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    src = os.path.join(from_dir, name)\n    if not os.path.isfile(src):\n        raise SystemExit(\"!! missing %s -- publishing nothing.\" % name)\n    shutil.copy2(src, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b20-plateship-0819.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(NAMES), \"file(s) + manifest ->\", dst)\nraise SystemExit(0)\n"]
+published 2 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b20-plateship-0819
+==== step publish END rc=0 2026-08-19T10:38:20Z ====
+#### job ep2-b20-plateship-0819-1787135892 finished rc=0 2026-08-19T10:38:20Z
