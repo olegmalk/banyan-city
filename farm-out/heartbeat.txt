@@ -2908,3 +2908,4 @@
 10:20:56Z box-runner idle ready=0 failed=41
 10:23:01Z STARTED task=ep2-b12-stillmotion-0819-1787134971 attempt=1 on box-runner
 10:29:18Z DONE task=ep2-b12-stillmotion-0819-1787134971 rc=0 artifacts=2
+10:31:22Z box-runner idle ready=0 failed=41
