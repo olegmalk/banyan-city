@@ -1587,13 +1587,32 @@ in all of this?"*:
 > but ideally we want to start automating as much as possible. we talked about
 > this in the previous chat.
 
-Those five quotes are the whole authority for what follows. Nothing here is
+The founder, 2026-08-19, on this draft's reserved list — **the quote that shaped
+§4 and is itself a decision with its reasoning attached:**
+
+> spend and credentials is likely not gonna be required for you anyway. and
+> publish you could potentially automate as well.. buuuttt i'd rather review the
+> final result, that wont take much time and its really useful.
+
+Those six quotes are the whole authority for what follows. Nothing here is
 derived from the steward's convenience, and where a proposal goes past the words
 it says so.
 
+**The last one is the load-bearing one, and it is why this charter has a centre
+instead of a ragged edge.** He looked at the reserved list, judged two of its
+five items to be dormant in practice, considered automating the third — *"publish
+you could potentially automate as well"* — and **chose not to**, for a stated
+reason: the review is cheap and the review is useful. That is not a restriction
+the steward talked him into and not a leftover nobody got round to removing. It
+is a founder decision, made with the alternative in front of him, and §4 item 5
+records it as such.
+
 **The shape, in one line, so the five sections below can be checked against it:**
 *his recorded words become the machine's law; his live attention is spent only on
-what his recorded words cannot answer.*
+what his recorded words cannot answer* — and by his own 2026-08-19 choice, one
+thing his recorded words will never answer is whether the finished episode is
+good, so **watching the final cut is the checkpoint everything else automates
+around.**
 
 ---
 
@@ -1704,15 +1723,31 @@ section 1 from decaying into asking him twice.
 ### 4. What is NOT delegated — numbered, and not amendable by the steward under any reading of any quote above
 
 Per PROMISE.md, STEWARDSHIP.md §4/§5, and the founder-reserved list in
-`CLAUDE.md`. None of the five quotes touches any of these, and none of them will
-be treated as touching them:
+`CLAUDE.md`. None of the six quotes touches any of these, and none of them will
+be treated as touching them. **He reviewed this list himself on 2026-08-19 and
+sorted it**, which changes how three of the five items should be read — see the
+annotations:
 
 1. **Money and spend.** Any provider, any amount, and the specificity rule holds
    — engine and amount as pitched; a substitution stops and re-asks (the $0.40
    wan breach, 2026-07-28). Policy about money may be resolved by the steward
-   (D5); rails that move it never are.
+   (D5); rails that move it never are. **Expected dormant, in his words:**
+   *"spend and credentials is likely not gonna be required for you anyway."* He
+   is right, and it is by construction — the whole pipeline is the $0 path
+   (local MPS, the rtx5090 box, Kaggle's free floor), free provider quota is
+   spent, and D12 parked the money rail indefinitely. **Dormant is not
+   relaxed.** A reservation that never fires costs nothing; the one time it did
+   fire it was a breach, and the guard that catches the next one is code
+   (`pipeline/budget.yaml`, `generate_shots.py --yes`,
+   `ledger/render-spend.csv`), not attention. If a paid path ever becomes the
+   right answer, this item wakes up unchanged.
 2. **Credentials and accounts.** Keys, logins, transfers, ownership. The presence
-   of a key is not permission to use it.
+   of a key is not permission to use it. **Also expected dormant** under the same
+   sentence of his, and for the same reason: nothing in the automation this
+   charter proposes needs a credential it does not already have. Note the one
+   asymmetry — dormancy here is a statement about the *steward's* needs, not
+   about the accounts' safety; the 2026-08-08/08-10 account moves are exactly
+   the kind of event that is rare, irreversible and his.
 3. **Governance changes — including this entry.** Amending this charter,
    widening it, or reading it more generously than written is his act alone.
    STEWARDSHIP §5's citizen-reserved items (Guideline 6 amendments, D6's rename,
@@ -1723,14 +1758,40 @@ be treated as touching them:
    08-18 widening moved bars, tradeoffs, routes, defect rates and which-frame
    picks to the steward; it moved no axis score and no trunk call, and it said so
    in the same breath: *"just leave me the taste questions."*
-5. **Publication of a new EPISODE requires his explicit pass.** Not a window, not
+5. **Publication of a new EPISODE requires his explicit pass — and this is the
+   design centre of the whole charter, by his own decision.** Not a window, not
    silence, not an inference from a passed bar. Review cuts are the D17 exception
    and stay inside it — unlisted, stamped, noindex. Distribution surfaces
    (TikTok, anywhere with an audience) are publication in the full sense.
 
-**He may later grant standing publication authorization by amending this entry —
-and here is what that would take**, written now so the ask is one decision and
-not a negotiation:
+   **He considered automating this and declined, with a reason, 2026-08-19:**
+   *"and publish you could potentially automate as well.. buuuttt i'd rather
+   review the final result, that wont take much time and its really useful."*
+
+   **Read the shape that leaves, because it is the point of the entry rather than
+   an exception to it.** Everything upstream of the finished episode automates:
+   the pre-screen (§1) keeps his own past rulings off his board, picks and
+   assembled cuts stand by silence (§2), his rulings become enforceable law
+   within a day (§3), and in the long run the crowd does the narrowing (§5).
+   Downstream of all of that sits **one standing human checkpoint: he watches the
+   finished episode before it ships.** One artifact, one look, at the moment when
+   his judgement is worth the most and costs him the least — *"that wont take
+   much time and its really useful"* is a cost/benefit call, and it is the
+   correct one. A machine that has spent a week deriving his taste from his old
+   words has no way to discover that the assembled thing is boring, and that
+   discovery is the one output of this project nobody else can produce.
+
+   Two consequences worth stating so no lane has to guess. **This gate never
+   blocks production** — D19's *"human feedback should never be a blocker, by
+   design"* stands; the cut gets built, published to review, and waits at the
+   last inch, not in the middle. And **the checkpoint is on the FINAL RESULT, not
+   on the pieces**: handing him five beat-level questions on the way to a cut is
+   the failure mode this charter exists to end, not a way of honouring this item.
+
+**He may still later grant standing publication authorization by amending this
+entry — and here is what that would take**, written now so that if he changes his
+mind it is one decision and not a negotiation. (As of 2026-08-19 he has weighed
+it and kept the review, so this paragraph is a door, not a plan.)
 
 - **His words, in this file or in a commit of his own.** An entry the steward
   types on his behalf is what D22 already flagged as wanting a countersignature.
@@ -1742,7 +1803,10 @@ not a negotiation:
   §7.2 provenance, and D21's gates 2 and 3 — *"promoted to canon"* and *"ready to
   be published"* are already mechanical. D21's gate 1, *"polished"*, is taste and
   cannot be pre-cleared by any machine; a standing authorization must either
-  accept that or exclude it.
+  accept that or exclude it. **His 2026-08-19 sentence is that gate seen from his
+  side** — reviewing the final result *is* closing gate 1, which is why keeping
+  it costs him minutes and automating it would cost the show its only judge of
+  whether the finished thing is any good.
 - **A one-line revocation.** STEWARDSHIP §2: his override is one commit, and this
   must be no harder to withdraw than it was to give.
 
