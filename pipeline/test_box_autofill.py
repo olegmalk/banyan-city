@@ -488,6 +488,64 @@ def test_a_plate_ack_waiver_cannot_be_backlogged(tmp):
           be.backlog_problems({"id": "x"}) == [])
 
 
+def _raises_systemexit(fn, *a):
+    try:
+        fn(*a)
+    except SystemExit:
+        return True
+    return False
+
+
+def test_a_windows_root_on_posix_is_refused_before_anything_is_created(tmp):
+    """The junk-directory bug: four false `backlog_empty` reports on three dates.
+
+    On POSIX `os.path.join(r"C:\\banyan-queue", "ready")` is ONE filename with
+    backslashes in it, so the old code made a local tree, listed it, found it
+    empty and reported the BOX empty. The refusal must land before the makedirs,
+    and it must not be exit code 2 -- 2 means "the card wants work and nobody
+    filed any", which is the reading this bug used to forge.
+    """
+    if os.name == "nt":
+        return
+    cwd = os.getcwd()
+    os.chdir(tmp)
+    try:
+        rc = af.main(["--root", r"C:\banyan-queue", "--dry-run"])
+        check("a Windows root on POSIX exits 4, not 2", rc == 4)
+        check("and no junk directory was created",
+              not os.path.exists(os.path.join(tmp, r"C:\banyan-queue")))
+        check("and tick() refuses the same root when imported directly",
+              _raises_systemexit(af.tick, r"C:\banyan-queue"))
+        rc = af.main(["--root", os.path.join(tmp, "realq"), "--dry-run"])
+        check("while a POSIX root still ticks normally", rc in (0, 2))
+    finally:
+        os.chdir(cwd)
+    why = af.fill_platform_problem(r"C:\banyan-queue")
+    check("the refusal names the correct door instead of just saying no",
+          "--backlog" in why and "box-autofill.cmd" in why)
+
+
+def test_the_ssh_paths_refuse_to_run_on_the_worker_they_would_dial():
+    """`--status` on the box ssh'd to itself and hung for 60 s (2026-08-19).
+
+    The test is os.name and not a hostname compare, on purpose: the ssh alias is
+    `rtx5090` while the box's own hostname is `MSI`, so a name match would
+    silently never fire. Simulated here rather than run on Windows.
+    """
+    real = os.name
+    try:
+        os.name = "nt"
+        for flag in ("--status", "--verify-deployed", "--deploy"):
+            why = af.remote_call_problem(flag)
+            check("%s refuses when it is already the worker" % flag, bool(why))
+            check("and %s says what to read instead" % flag, "dir /b" in why)
+        check("the fill path is the one that IS allowed there",
+              af.fill_platform_problem(r"C:\banyan-queue") == "")
+    finally:
+        os.name = real
+    check("and off-box nothing is refused", af.remote_call_problem("--status") == "")
+
+
 def test_a_clean_spec_is_stamped_with_its_filing_time():
     j = be.with_backlog_meta({"id": "x"}, "pipeline/jobs/x.yaml", 12.0)
     check("the entry carries when it was filed", j["backlog"]["filed_at"] > 0)
@@ -524,7 +582,8 @@ def main():
              test_a_fill_that_moved_nothing_does_not_report_filled,
              test_every_number_in_the_payload_describes_one_instant,
              test_a_no_op_tick_still_agrees_with_the_directories,
-             test_a_blocked_fill_reports_the_queue_that_actually_exists]
+             test_a_blocked_fill_reports_the_queue_that_actually_exists,
+             test_a_windows_root_on_posix_is_refused_before_anything_is_created]
     for fn in cases:
         with tempfile.TemporaryDirectory() as td:
             fn(td)
@@ -536,7 +595,8 @@ def main():
                test_an_expired_entry_is_not_fired,
                test_a_clean_spec_is_stamped_with_its_filing_time,
                test_a_backlogged_job_still_owns_its_payload_paths,
-               test_status_reconciles_the_snapshot_against_the_live_listing):
+               test_status_reconciles_the_snapshot_against_the_live_listing,
+               test_the_ssh_paths_refuse_to_run_on_the_worker_they_would_dial):
         fn()
     for fn in (test_a_gate_refusal_is_propagated_not_swallowed,
                test_a_plate_ack_waiver_cannot_be_backlogged):

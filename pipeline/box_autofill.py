@@ -141,6 +141,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -570,6 +571,12 @@ def tick(root: str, floor: float = FLOOR_MINUTES, dry_run: bool = False,
          max_files: int = MAX_FILES_PER_TICK, max_ready: int = MAX_READY_JOBS,
          now: float = None) -> dict:
     now = time.time() if now is None else now
+    # Belt and braces. The same guard is in main(), but THIS is the function that
+    # creates the directories, and an importer -- a test, another tool, a resumed
+    # agent -- reaches it without passing through main().
+    problem = fill_platform_problem(root)
+    if problem:
+        raise SystemExit(problem)
     for sub in (READY, RUNNING, DONE, FAILED, BACKLOG):
         try:
             os.makedirs(os.path.join(root, sub), exist_ok=True)
@@ -917,6 +924,75 @@ def status() -> int:
     return 0
 
 
+def windows_style_root(root: str) -> bool:
+    """A path only Windows can resolve: a drive letter, or any backslash."""
+    return bool(re.match(r"^[A-Za-z]:[\\/]", root)) or "\\" in root
+
+
+def fill_platform_problem(root: str) -> str:
+    """Why this machine must not run the FILL path. "" when it may.
+
+    THE DEFECT THIS REFUSES, and it is not hypothetical -- it fired four times
+    on three dates with the card hungry. `os.makedirs(os.path.join(root, sub))`
+    with root = r"C:\\banyan-queue" is, on POSIX, ONE FILENAME CONTAINING
+    BACKSLASHES: it creates a literal directory named `C:\\banyan-queue` in the
+    CWD, with real backlog/ ready/ running/ done/ failed/ inside it. `json_names`
+    then lists that empty local tree and the tool reports
+
+        status: backlog_empty
+        why: "HUNGRY: ready holds 0.0 min ... NOTHING WAS INVENTED"
+
+    -- every word of which is false about the box, with nothing in the output to
+    say it never talked to it. The `except OSError` net cannot catch it, because
+    after the first run the junk directory genuinely exists. A false
+    `backlog_empty` is exactly how a runnable job sits while the card idles, so
+    this is a no-artificial-delay defect and not a cosmetic one.
+
+    The check is on the SHAPE OF THE ROOT rather than on the platform alone, so a
+    POSIX root (a test's tmpdir, or BANYAN_QUEUE_ROOT pointed somewhere real)
+    still fills normally on a Mac.
+    """
+    if os.name == "nt" or not windows_style_root(root):
+        return ""
+    return (
+        "!! REFUSING TO FILL: --root %r is a Windows path and this is %s.\n"
+        "   os.path.join would make ONE directory whose NAME contains backslashes,\n"
+        "   here in %s, and every count taken from it would be a count of that junk\n"
+        "   directory -- the tool would report `backlog_empty` about a card it never\n"
+        "   contacted. Nothing was created and nothing was filed.\n"
+        "   The fill path is BOX-ONLY. To leave work for the card from here:\n"
+        "     python3 pipeline/box_enqueue.py <spec>.yaml --backlog   (this ssh's, correctly)\n"
+        "   and to fire a tick now:\n"
+        "     ssh %s C:\\banyan-farm\\box-autofill.cmd\n"
+        "   To fill a real local queue instead, pass a POSIX --root."
+        % (root, "POSIX (os.name=%r)" % os.name, os.getcwd(), HOST))
+
+
+def remote_call_problem(action: str) -> str:
+    """Why this machine must not run the ssh paths. "" when it may.
+
+    The mirror image of the guard above, and the other half of the same bug:
+    `status()`, `verify_deployed()` and `deploy()` all go through `ssh(HOST, ...)`,
+    so they are correct only OFF the box. Run `--status` ON the box and it ssh's
+    to itself and dies after 60 s on `subprocess.TimeoutExpired` -- verified
+    2026-08-19. So neither invocation of this file is fully correct, and both
+    directions now say so instead of failing obscurely.
+
+    The test is `os.name`, deliberately NOT a hostname compare: the ssh alias is
+    `rtx5090` while the box's own hostname is `MSI` (it is in every job record it
+    writes), so a name match would silently never fire. The only Windows machine
+    this file is ever deployed to is the box.
+    """
+    if os.name != "nt":
+        return ""
+    return (
+        "!! REFUSING %s: it ssh's to %r, and this machine IS the worker (os.name='nt').\n"
+        "   On the box that call dials itself and hangs until the 60 s timeout.\n"
+        "   Read the local queue directly instead:  dir /b %s\\ready\n"
+        "   and tick the fill with:  C:\\banyan-farm\\box-autofill.cmd\n"
+        "   Run %s from the Mac." % (action, HOST, DEFAULT_ROOT, action))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -934,12 +1010,29 @@ def main(argv=None) -> int:
                     help="(from the Mac) print the box's last tick")
     args = ap.parse_args(argv)
 
+    # Both guards return 4, which is a REFUSAL and is deliberately not 2. A
+    # scheduled task's `Last Result` is one number, and 2 already means "the card
+    # wants work and nobody filed any" -- the very reading this file's junk-root
+    # bug used to forge. A refusal must never be legible as a state of the queue.
+    for flag, name in ((args.deploy, "--deploy"), (args.verify_deployed, "--verify-deployed"),
+                       (args.status, "--status")):
+        if flag:
+            why = remote_call_problem(name)
+            if why:
+                print(why, file=sys.stderr)
+                return 4
+
     if args.deploy:
         return deploy()
     if args.verify_deployed:
         return verify_deployed()
     if args.status:
         return status()
+
+    why = fill_platform_problem(args.root)
+    if why:
+        print(why, file=sys.stderr)
+        return 4
 
     state = tick(args.root, floor=args.floor_minutes, dry_run=args.dry_run,
                  max_files=args.max_files, max_ready=args.max_ready)

@@ -1544,3 +1544,165 @@ courier tick.
 check, never inherited from a passing sibling — this family can move 90 levels on
 a seed that behaves perfectly on two other beats. Two-sided bound, attached to the
 (seed, plate) pair, instrument already committed.
+
+---
+
+## Appended 2026-08-19 by the beat-12 third-seed judging lane
+
+### THE THIRD SEED HELD ITS BRIGHTNESS AND MOVED THE CAMERA 387px INSTEAD
+
+`ep2-b12-stillmotion-s20260818-0819` — **FAIL-CAMERA**, and the luminance question
+it was filed to answer **PASSES**. Two verdicts in one clip and they must not be
+blended. Verdict, every number and three evidence sheets:
+`pipeline/jobs/ep2-b12-stillmotion-s20260818-0819.yaml` `verdict_0819` and
+`farm-out/ep2-b12-stillmotion-s20260818-0819/`.
+
+- **The clause:** cumulative vertical drift **−387px** (30% of frame height),
+  **dx = 0** on every frame, dy 0 for seven frames then a monotone ramp to
+  −5px/frame, and **region-consistent** — all six blocks of a 3×2 grid inside 1px
+  at f060, the beat-19 lane's own test for a real move versus field re-inking.
+  Shift-compensation collapses raw mean |diff| f000→f120 from 59.66 to 17.47:
+  **almost everything that happens in this clip is the camera.** By f100 the frame
+  has descended into a bank of grass that is not in the plate.
+- **The luma answer, repaired.** `luma_drift.py` read whole-frame **−15.45** — a
+  PASS on the spec's two-sided ≥20 bar — with **bands violently disagreeing**
+  (+37.91 / −50.95 / −33.41). Eyes said the disagreement is not an object, it is
+  the whole picture sliding. Measured on **matched content** (f000 rows [387:] vs
+  f120 rows [:893]) the drift is **−1.35**, and a tracked 400-row patch moves
+  −5.32. So the honest figure for the ladder's table is **−1.35, not −15.45**.
+- **Against myself, and it is the interesting half.** If a descent into a dark
+  lower field can forge −15, it could forge −91, and the parent's "DUSK COLLAPSE"
+  would have been a framing artefact all along. **Tested on all three clips and
+  killed:** s20260819 drifts **+0px** with a genuine −91.05, s20260871 **+7px** /
+  −0.04, s20260818 **−387px** / −1.35. The parent's fade is a real fade on a
+  locked frame, and the **(seed × plate) interaction reading stands.**
+
+| seed | camera drift | luma (matched content) | how it fails |
+|---|---|---|---|
+| 20260819 | +0px | **−91.05** | real dusk fade, plus a bird |
+| 20260871 | +7px | −0.04 | clean on both — the flat one |
+| **20260818** | **−387px** | **−1.35** | **camera tilt** |
+
+**Three seeds, one plate, one 42-token argv, three different failure modes, none
+of them shared.** What that settles: two of three hold luminance, 20260819 is the
+outlier, **a collapse on this plate is fixable by a re-roll** — which is the answer
+beat 20 was waiting on (its own re-roll stays unfiled: scavenger plate, under the
+goblin-identity freeze). What it does not settle: **no seed has yet produced a
+usable 121-frame take on this plate.** The clean-luminance seed is the one that
+moved the camera.
+
+### CAMERA LOCK IS NOT PROMPTABLE ON THIS RECIPE — IT IS A PER-SEED LOTTERY
+
+This is the first defect on this ladder that the positive-placement law does **not**
+explain, because **the ban is in both places**: the positive opens *"Static locked
+framing, the frame never moves and nothing enters it"* and the negative's first six
+tokens are *"camera pan, camera tilt, zoom, dolly, push in, pull back"*. It tilted
+387px anyway, on a seed with form on beat 01 twice. So the consequence is the same
+shape as this page's standing luminance note: **framing is a PER-RENDER check,
+never inherited from a passing sibling and never argued from the prompt.**
+
+Three lanes have now measured camera lock three different ways ad hoc —
+level-normalised SAD (b12-shortstill), a two-region horizon fit (b19), phase
+correlation (here). `farm-out/ep2-b12-stillmotion-s20260818-0819/b12_camera_drift.py`
+is committed beside the artifacts so a fourth lane does not invent a fourth
+convention: per-frame phase correlation, 3×2 block consistency, **and** luminance
+measured on the overlap region so a fade cannot hide behind a pan or a pan forge a
+fade. **Its own limit, recorded:** a hard fade destroys the correlation peak in a
+low-contrast block (s20260819's bottom-right block reads (183,39) while
+whole-frame and the other five read 0) — the same effect the shortstill lane hit
+from the other side when the fade invalidated its camera instrument.
+
+### SEED DEPTH ON BEAT 12 STOPS AT THREE — a refusal, not an omission
+
+The question three seeds were filed to answer **is answered**. A fourth seed would
+measure the **lottery** rather than a mechanism: the three takes fail three
+different ways, so the next seed's outcome is uninformative about every hypothesis
+on the table. This also honours the spec's own `what_this_licenses`, the
+three-rungs-closes-an-axis rule, and the b01/b18 seed-depth verdicts that both
+said no re-roll. **No pick, no plate_ack, no cut swap** — beat 12 keeps
+`12-related-b12-tightB-untrimmed.mp4`, `best-available`, colour fault named.
+
+### THE DERIVATION GUARD IS A DENY-LIST WHERE IT NEEDS TO BE AN ALLOW-LIST
+
+`derive_b12_stillmotion_0819.py`'s `keys_refused` names five parent keys it
+stripped. **Five more came through under names its filter does not match**, and
+this judging found them by reading the file it was about to score:
+`cut_preference` (beat 01's — a fig growing from idx8, a calyx — with this job's
+id substituted through it, so **two generations** of inheritance),
+`pre_registered_fail_modes_as_fired`, `fail_mode_I_DID_NOT_PRE_REGISTER`,
+`what_the_next_rung_should_be`, `the_duplicate_run` (all four the s20260819
+parent's, describing a −91.1 collapse and a bird that are **not in this clip**),
+plus `derivation.seed` reading **20260819** while the render manifest and the
+rendered sidecar both read **20260818**. All six **renamed, not deleted**, per this
+page's convention. The generalisable half: **a verdict can arrive under any key
+name**, so the guard three lanes have now asked for should be an ALLOW-list of
+keys a child may carry, not a deny-list of five it may not.
+
+### CARD STATE AND THE OWNER MAP AS THIS LANE FOUND IT
+
+**The card is EMPTY and this lane is not filling it, which needs saying out loud
+rather than leaving a zero on the page.** Read directly (`ssh rtx5090 dir /b`, not
+`box_autofill --status`, for the reason two rungs above): `ready/` holds only six
+deliberately parked `.HOLD` / `.DUP` files, `running/` 0, `backlog/` 0.
+
+| rung | state |
+|---|---|
+| beat 12 third seed | **DONE** — FAIL-CAMERA, luma question answered, verdict committed |
+| beat 12 fourth seed | **REFUSED by this lane's own verdict** (see above) |
+| beat 12 next lever (the positive prompt) | **NOT FILABLE AS WRITTEN.** The only motion his approved line permits is the grass, `shortstill` established there is no grass in frame at this framing, and this clip confirms it — the grass only arrives *because the camera left the plate*. "A wider plate, not a different prompt" is what that clause needs, and **beat 12 has no `DRAFTS`/`REVS` entry in `plate_scratch.py` at all** (checked: keys are 9, 14, 15, 19, 20), so there is no one-variable plate rung to file; `12-related-r4-s2` came from elsewhere and its wording depth is unestablished. Widening a framing he approved as **"tight on two leaves"** is R4 either way. |
+| beats 07 / 09 / 15 / 19 | owned by their own lanes; 15 and 19 also §6-blocked for footage |
+| beat 08 hint / identity | axis closed by measurement; next step is research, owned |
+| beat 14 | PARKED by steward ruling until the slates close |
+| beat 20 re-roll (now known to be a one-job fix) | **FROZEN** — scavenger plate, goblin-identity freeze |
+| beat 21 plate provenance | BLOCKED — a beat-12 plate under a beat-21 PASS, needs someone with authority over beat 21 |
+
+**So no unfrozen, unowned, runnable RENDER exists for this lane tonight, and
+inventing one is what `box_autofill` is written never to do.** What this lane did
+with the free hands instead is the tooling rung below.
+
+### TOOLING RUNG TAKEN — `box_autofill.py` can no longer report `backlog_empty` from a junk directory
+
+The rung this page filed twice and nobody owned is **done, tested and committed**,
+in both directions it named:
+
+- **The fill path refuses off-box.** `fill_platform_problem()` refuses when the
+  root is a Windows-shaped path (drive letter, or any backslash) and `os.name !=
+  "nt"`, **before** the `os.makedirs` that used to create a local directory whose
+  *name* contains backslashes. The refusal names the correct door rather than just
+  saying no — `box_enqueue.py --backlog` to file, `ssh rtx5090 box-autofill.cmd`
+  to fire a tick — and it exits **4**, deliberately **not 2**: `Last Result` is one
+  number to a scheduled task, 2 already means *"the card wants work and nobody
+  filed any"*, and that is precisely the reading this bug used to forge. The guard
+  is keyed on the **shape of the root**, not the platform alone, so a POSIX root
+  (a test tmpdir, `BANYAN_QUEUE_ROOT` pointed somewhere real) still fills normally
+  on a Mac — verified both ways.
+- **The ssh paths refuse on-box.** `--status`, `--verify-deployed` and `--deploy`
+  all dial `ssh rtx5090`; run on the box they dial the box and hang until the 60 s
+  timeout. They now refuse there and print `dir /b C:\banyan-queue\ready` instead.
+  **The test is `os.name` and NOT a hostname compare, on purpose:** the ssh alias
+  is `rtx5090` while the box's own hostname is **`MSI`** — it says so in every job
+  record it writes — so a name match would silently never fire.
+- **Belt and braces:** the same check also sits at the top of `tick()`, because
+  that is the function that creates the directories and an importer (a test,
+  another tool, a **resumed** agent) reaches it without passing through `main()`.
+
+Verified: `test_box_autofill.py` grew 14 assertions across two cases (a Windows
+root on POSIX exits 4, creates **no** junk directory, and `tick()` raises when
+imported directly; all three ssh flags refuse under a simulated `os.name = "nt"`
+while the fill path is the one that *is* allowed there). **All three gates read by
+exit code, not by eye:** `test_box_autofill.py` 0, `test_pipeline.py` 0,
+`lint_genome.py` 0.
+
+**Deliberately NOT deployed, and that is the whole point of where the bug lives.**
+`--deploy` would ship this file to the box and re-register the scheduled task; the
+guard changes **nothing** on the box, because there `os.name == "nt"` and the fill
+path is legal. The false `backlog_empty` was always a **Mac-side** report. So no
+scheduled-task churn, no restart, no drift for `--verify-deployed` to find beyond
+the one it already documents. **The junk `C:\banyan-queue/` directory at the repo
+root is left in place on purpose:** it is the dated evidence this page cites
+(`autofill.log`, 08-17 ×2 and 08-19 ×2) and deleting it would remove the record of
+a bug the same night the guard landed.
+
+**Still unowned after this, and named rather than silently left:** the
+`box_enqueue` **idempotency** refusal (same rung, one section up — it re-ran a
+finished job and spent 264 s of GPU), and the derivation **allow-list** above.
