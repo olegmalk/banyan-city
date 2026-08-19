@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260819
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b19sapcomp-0819/19-the-drop-sapcomp-0819.png
+init_sha256: b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903
+mask_png: b19-sapcomp-s20260819-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b19sapcomp-0819/19-the-drop-sapcomp-mask-0819.png
+mask_png_sha256: ce1e5ba2f89e9cabd0f90a3316a1436605bfd152a23b7add994995e255bcf266
+mask_white_px: 172847
+mask_bbox_px: [113, 251, 789, 945]
+mask_width_frac: 0.8125
+mask_height_frac: 0.5707
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-19T07:33:22Z
+render_seconds: 3.8
+wall_seconds: 9.7
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT: beat 19's plant is composited instead of prompted. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed at three wordings.
+prompt: |-
+  1boy, solo, lean wiry adult goblin man, green skin, bald head, patchwork cloak, kneeling in a sunny grassy field, both hands on his knees, a tiny two-leaf sapling rooted in the grass beside him, one round purple fig hanging from its thin side-branch, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  crystal, gem, faceted, glossy, bead, vine, many fruits, extra fruit, fruit on the ground, holding fruit, three leaves, four leaves, many leaves, large tree, thick branch, trunk, forest, 2boys, child, chibi, standing, close-up, text, photorealism, 3d render, low quality

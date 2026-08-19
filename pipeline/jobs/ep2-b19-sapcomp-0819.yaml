@@ -464,3 +464,135 @@ negative_ordering: 'THE DEFECT CLASS IS FIRST ON PURPOSE. animagine''s negative 
   what you want and the negative does not -- four times on this checkpoint a defect the negative forbade
   arrived because the positive left it vague -- and here the structure is placed by the INIT, which is
   stronger than either.'
+verdict_0819:
+  verdict: PASSES ALL EIGHT CLAUSES, and the outcome pre-registered as MOST LIKELY did not fire. THE COMPOSITE-THEN-INPAINT
+    PATTERN REACHES BEAT 19'S PLANT. Three wordings could not put one fig on a two-leaf sapling; one composited
+    init and 12 of 40 denoising steps did, on the first GPU fire, in 3.8 seconds.
+  rc_and_hashes: 'rc=0 on all four steps, published 7 files + manifest into C:/banyan-farm/courier-box/farm-out/ep2-b19-sapcomp-0819.
+    Pulled and RECOMPUTED locally against the box''s own manifest: output 18b7e07b..., init b6dbd53b...,
+    mask ce1e5ba2... all MATCH, so the one-variable claim is verified on the artifacts and not only on
+    the spec. The box''s fetch step re-asserted both source sha256s off origin/main before the model loaded.'
+  the_pass_tell_is_the_A_B: 'composite-init-pattern.md 7: ''the soft procedural relief comes back as crisp
+    cel line work in the same weight and colour as the line art elsewhere in the frame... If you cannot
+    see a difference between your composite and the output, the pass is a paste.'' The difference is not
+    subtle. The composite had two flat green ovals with a uniform outline, a rigid stick, a flat violet
+    capsule and an arrowhead of root blades. The output has cel-shaded cotyledons carrying DRAWN VEIN
+    LINE WORK and a highlight on the upper blade, an outline of varying weight, a curved organic stem
+    with a drawn junction knot, real grass blades at the root, and the side-branch redrawn as a curving
+    stalk the fruit hangs from. The model CONTRIBUTED and the contribution is visible at 3x against the
+    committed composite, which is why the composite is in the repo beside the output.'
+  pass_clauses:
+    P1_one_fig_attached_and_clear_of_the_ground: 'PASS. Exactly ONE fruit, 30x42 px, hanging from a drawn
+      stalk off the side-branch, bottom edge at y=896 against the sapling''s root at y=932 -- 36 px of
+      air under it. NOTE ON THE MEASUREMENT: the first violet-blob pass of this lane returned TWO blobs
+      and the larger one (1865 px at x 620-678) is HIS CLOAK''S SHADOW on the grass, not a fruit. Corrected
+      before it reached this verdict; recorded because a violet-blob count is exactly the kind of filter
+      that can hand you a wrong number with a straight face.'
+    P2_whole_sapling_and_whole_of_him_in_frame: PASS. Both entirely inside 832x1216.
+    P3_no_contact_and_both_hands_empty: PASS. The sapling's nearest pixel is ~200 px from his nearest
+      boot and nothing bridges. Across the whole hands box, TWO pixels differ from the parent plate by
+      more than 20.
+    P4_his_face_visible: 'PASS, and verified by an A/B rather than asserted. Parent and output heads side
+      by side at 3x are the same drawing: same skull, same goggles, same eye shapes, same nose dot, same
+      mouth line, same hood. The 222 px inside the face BOX that changed by >20 are the removed twig-thread
+      that used to cross that box plus a small pale nick in the hood''s left edge -- not his face.'
+    P5_the_fruit_reads_purple_to_a_naive_eye: 'PASS. Circular-mean hue 309 deg on 1349 saturated pixels
+      -- violet/magenta. See what_this_settles: 309 is NOT the 272 that was composited, and that is the
+      finding.'
+    P6_the_plant_is_the_tiny_sapling: 'PASS. ~176 px tall against his ~650 px seated height. No trunk,
+      no thick limb, no canopy, and nothing arcing: the two bare twigs the parent had are gone.'
+    P7_one_adult_figure: PASS. One figure, no second body anywhere in frame.
+    C8_canon_two_leaf_sapling_AND_drawn_cel_art: 'PASS on both halves, with one honest partial inside
+      it. TWO green blades, 2749 px and 2741 px -- 0.3 percent apart in area, which is what a matched
+      cotyledon pair looks like as a number -- both wide ovals with soft round tips, no lance shapes,
+      on one rooted stem with one thin side-branch. THE PARTIAL: the sampler ADDED two or three small
+      dark leaflets at the leaf junction. They are leaf-like and they are visible at 3x. Scored as written
+      the clause is about the plant READING as the canon two-leaf sapling and it does -- the two cotyledons
+      dominate completely -- but ''exactly two'' is not literally true of every green shape in the drawing,
+      and it is reported rather than rounded.'
+  pre_registered_fail_modes:
+    FAIL-PASTE: DID NOT FIRE. The conversion is the strongest thing in the sample.
+    FAIL-MATERIAL: 'DID NOT FIRE, AND IT WAS NAMED AS THE MOST LIKELY OUTCOME. The prediction was built
+      on composite-init-pattern.md 9 -- the material half has an unexplained plate dependence -- plus
+      a register argument that looked strong: the plate where the material half died was ''a whole-body
+      two-shot the model renders with flat soft shading'', and this is a whole-body wide shot. It converted
+      anyway. So 9''s plate dependence is NOT explained by shot register either; that hypothesis is now
+      dead from this side too, and 9''s list of what is ruled out on beat 08 can be extended rather than
+      reopened.'
+    FAIL-DECAL: 'DID NOT FIRE. None of the five tells: the leaf shading follows the blades'' own tilt,
+      the highlight sits on the lit side matching the plate''s measured straight-down light, the drawing''s
+      edges are the object''s edges, there is no repeat, and the scale reads correctly against his hands
+      and boots as in-frame rulers. Thirty-one samples now with no FAIL-DECAL below 0.45.'
+    FAIL-SHAPE: 'DID NOT FIRE on the structures that were composited -- two blades intact, stem intact,
+      fruit intact, nothing split along an internal line. Deleting the petiole bar before the render is
+      why: that was the one internal line stronger than the outline, and beat 10 split its slab on exactly
+      that at 0.45. PARTIAL only in that the sampler added the junction leaflets described under C8.'
+    FAIL-COUNT: DID NOT FIRE on the fruit -- exactly one, which is the axis the whole rung exists for
+      and the axis three wordings failed at 4, ~8 and 3. PARTIAL on leaves, per C8.
+    FAIL-CRYSTAL: 'FIRED, ON THE GLOSS HALF ONLY. The fruit is NOT faceted -- it is a smooth ovoid, and
+      the diamond-cut gem the parent drew four times is gone. But it carries a HARD SPECULAR: luminance
+      min 11, mean 126, max 220, brightest 2 percent averaging 211 on a dark body. The composite''s own
+      fig was matte (min 44, max 213 over a flat fill). And ''glossy'' was in the negative, AT THE FRONT
+      of it, and arrived anyway.'
+    FAIL-VACANCY: DID NOT FIRE. Nothing grew in either cleared arc. 76533 px were clone-filled from the
+      plate's own field with 0 pixels left without a source, and the field came back as field.
+    FAIL-SECOND-PLANT: 'DID NOT FIRE -- no twig regrew. But TWO RESIDUAL STUBS SURVIVE, one at each shoulder
+      (~(302,430) and ~(537,427)), a few px each and visible at 2x as small dark hairs. They are not regrowth:
+      they are where the removal STOPPED at the protect boundary, because the twigs pass behind him and
+      his silhouette is where the mask has to end. The composite reported 15952 residual px under a 20000
+      limit, so this was permitted knowingly and is named rather than discovered.'
+    FAIL-FIGURE: 'DID NOT FIRE. Hood, cloak, patches, stitching, hands, knees and boots all read correctly;
+      the 30x240 px smear that killed an earlier composite round is absent. 661 px outside the mask changed
+      by >20, all inside the padded crop the inpaint pastes back (bbox x 129-788 y 362-884 against the
+      mask''s own 113-789 / 251-945), which is the pipeline''s documented behaviour and not leakage into
+      an unrelated region. Boots: 0 px changed. Hands: 2.'
+    FAIL-CONTACT: 'DID NOT FIRE. The founder''s ruling holds: nothing touches him.'
+  numeric_filters_reported_as_filters: 'Highpass sigma-3 std inside the drawn region 22.10 -> 20.59, and
+    mean |delta| against the init inside that region 13.4 -- the same band as beat 06''s PASS (15.9) and
+    beat 08''s FAILURES (13.1-16.8). THAT IS THE POINT OF QUOTING THEM: both numbers are consistent with
+    a pass and with a failure, so neither decided anything here. 7 says it outright -- ''engagement is
+    not evidence of success'' -- and the verdict is the A/B read at 3x.'
+  what_this_settles: 'TWO THINGS, and the second is bigger than this beat.
+
+    (a) BEAT 19''S PLANT IS REACHABLE, and by geometry rather than by words. The blocker recorded since
+    08-15 (''not renderable until the plate exists'') and the bead-vine blocker that replaced it are both
+    now answered by one 3.8-second sample. This does not promote anything: see is_this_plate_a_pick.
+
+    (b) AT 0.30 THE COMPOSITE CARRIES GEOMETRY AND DOES NOT CARRY MATERIAL PROPERTIES -- the sampler supplies
+    those from its own prior, and it will override the composite to do it. The evidence is one number:
+    the fig was composited at hue 272 deg, MATTE, and came back at 309 deg, GLOSSY. 309 is where beat
+    18''s own passing plate landed (305, measured by the beat-01/18/21 lane on 2026-08-17), and that verdict''s
+    honest_caveat recorded the SAME TWO deviations in the same words: ''toward magenta rather than deep
+    violet'' and ''heavily GLOSSY with a hard specular highlight''. TWO BEATS, TWO COMPLETELY DIFFERENT
+    INSTRUMENTS -- a wording on b18, a composited init here -- AND THE SAME TWO DEVIATIONS. So gloss and
+    the magenta lean are properties of animagine-xl-3.1''s fig, not of either beat''s recipe, and no amount
+    of either wording or compositing has moved them. This also fires the standing law a fifth time on
+    this checkpoint: ''glossy'' was in the negative, at the front of it, and gloss arrived anyway. The
+    positive places what you want; the negative does not.'
+  what_this_does_NOT_settle: 'MATTE VERSUS GLOSS IS R4 AND IS ALREADY A FOUNDER CARD. ep2-b18-canon-0817''s
+    verdict raised it and explicitly left it open: ''Whether this plate''s gloss and near-aubergine read
+    are shippable is R4 and belongs to the founder.'' Nothing here settles it, and this lane does not
+    reopen it -- it only adds that the gloss is now measured on a second beat through a second instrument,
+    which makes it a checkpoint fact the author can rule on once instead of a recurring per-beat surprise.
+
+    Nor does this establish 0.30 as optimal, or measure a rate. ONE CLIP, ONE SEED, ONE STRENGTH, ONE
+    WORDING. It cannot say what a different seed would draw.'
+  is_this_plate_a_pick: 'NO. NOT A PICK, no plate_ack, no promotion, no leaf, no lineage entry, nothing
+    written to done-definitions.yaml and nothing added to any cut. It is one sample that clears a pre-registered
+    plate bar, which is the evidence a pick would be made ON and is not the pick. Beat 19 stays a slate
+    until the author says otherwise (R4). The sidecar the box wrote carries approved: false and a provisional:
+    block for the same reason.'
+  the_next_rung_named_not_fired: 'IF MATTE IS REQUIRED -- an R4 question, not decided here -- two levers
+    are left and neither is a wording, because the wording lever is spent: ''glossy'' was already banned
+    and lost.
+
+    (1) A LOWER STRENGTH. 0.20-0.25 runs int(40*s) = 8-10 of 40 steps instead of 12, so less of the sampler''s
+    prior is spent on the region. It is the cheapest test of whether gloss arrives in the last few steps
+    or the first few, and it is ONE SAMPLE.
+
+    (2) A POST-PASS that flattens the specular after the fact, which keeps the geometry this sample bought
+    and does not risk it.
+
+    Which of those, or neither, is a route call for whoever owns the recipe next. It is NOT fired off
+    the back of this sample, and beat 19''s motion is a separate decision that wants the crf-10 finding
+    applied to it -- this plate would be conditioned at --image-crf 10, not 33, on the evidence of ep2-b09-faceturn-crf10-0819.'
