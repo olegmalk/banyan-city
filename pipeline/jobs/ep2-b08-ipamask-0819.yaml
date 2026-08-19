@@ -1,0 +1,396 @@
+# BEAT 08, RUNG A -- MASKED IP-ADAPTER ON THE BEST FRAME THIS BEAT HAS PRODUCED.
+# ONE SAMPLE. ONE ARM. ONE NEW MECHANISM, AND NOTHING ELSE MOVES.
+#
+# ============================================================================
+# THE ONE VARIABLE
+# ============================================================================
+# Rung 2 (ep2-b08-cnetplate-r2-0819) is the best frame beat 08 has: B1, B3, B4a,
+# B4b, B4c and B5 all PASS at conditioning scale 0.45 with the 7px contour hint.
+# THIS JOB IS RUNG 2, EXACTLY, PLUS TWO MASKED IDENTITY REFERENCES.
+#
+#   held byte-for-byte: the hint (b08-pose-0819.png, sha 19cfad48...), the seed
+#   (20260819), the conditioning scale (0.45), the positive prompt word for word,
+#   the negative word for word, size 832x1216, 40 steps, cfg 7.5, the base
+#   (animagine-xl-3.1), the ControlNet (xinsir scribble), the driver.
+#   added: --ip-ref x2, --ip-mask x2, --ip-scale 0.7.
+#
+# Rung 2's own `next_rung_named_not_taken` ordered a scale drop to 0.25-0.30
+# first. RUNG 3 TOOK IT AND IT FAILED: at 0.28 the staging collapsed -- colossus
+# back, point on the goblin, guard's wardrobe on the goblin, board on a
+# background figure. Sections 8-10 of b08-arm-route-0819.md then closed all three
+# geometric axes. So the scale question is answered, 0.45 is the bracketed best,
+# and identity is what is left. Section 10's closing paragraph says exactly that:
+# "Identity is no longer blocked; it is simply the next open question... whoever
+# takes it should know that geometric conditioning on this net will not help."
+#
+# ============================================================================
+# WHY THIS MECHANISM, AND WHY IT IS NOT A GUESS WITH A GPU ATTACHED
+# ============================================================================
+# FIVE rungs, three scales, two stroke weights, two hint classes -> five pairs of
+# green figures. The cause is not tuning and was named in advance every time: a
+# contour says how tall, not WHICH BODY an attribute belongs to, so `green skin`
+# enters CLIP's pooled embedding and lands on both. At 0.28 the guard's frozen
+# wardrobe came back complete, well drawn, and ON THE GOBLIN.
+#
+# `pipeline/research/openpose-controlnet-sdxl-0819.md` §5 answers this OUTSIDE
+# the repo and then verifies the answer INSIDE it, read-only:
+#
+#   - diffusers' own IP-Adapter guide has a Masking section whose worked example
+#     is literally our case: prompt "2 girls", two reference images, two binary
+#     masks, one per figure, `set_ip_adapter_scale([[0.7, 0.7]])`. Its own
+#     Structural control section states IP-Adapter composes with ControlNet in
+#     one pipeline. (MAINTAINER -- HF's docs, their with-mask/without-mask
+#     figure is the evidence.)
+#   - On OUR box, probed rather than assumed: diffusers 0.29.2,
+#     `IPAdapterMaskProcessor` imports, and
+#     `StableDiffusionXLControlNetPipeline.__call__` ACCEPTS `ip_adapter_image`.
+#     One pipeline, pose control and per-region image conditioning, no community
+#     pipeline and no version bump. (DEMONSTRATED.)
+#   - `models--h94--IP-Adapter` is complete in the box cache: 0 .incomplete
+#     files, 4 blobs, 4,074,282,584 bytes, including the ViT-H image encoder and
+#     `ip-adapter-plus_sdxl_vit-h.safetensors`. (DEMONSTRATED.)
+#
+# So this is $0 with ZERO DOWNLOAD and it does not wait on
+# ep2-b08-posenet-fetch-0819, which is queued alongside it and is a different
+# question (does a POSE net read a skeleton) about a different blocker.
+# The rejected alternatives are graded in that file's §5 and are not re-argued
+# here: regional prompting via attention-coupling is SD1.5-only in diffusers,
+# `mixture_tiling_sdxl` takes no ControlNet, Forge Couple and Regional Prompter
+# are webui extensions and porting one is a project rather than a rung, and
+# two-pass per-figure inpaint is a legitimate FALLBACK that costs two extra
+# denoise passes and can break the pose it just established.
+#
+# ============================================================================
+# THE THREE THINGS THAT WOULD HAVE MADE THIS WASTE AN HOUR, AND ARE ALREADY DONE
+# ============================================================================
+# 1. THE IMAGE ENCODER FOLDER. diffusers defaults
+#    `image_encoder_folder="image_encoder"` and, when the name has no slash,
+#    resolves it as Path(subfolder, name) -- `sdxl_models/image_encoder`, the
+#    ViT-bigG encoder. `dir /s /b` on the box's snapshot lists FOUR files and the
+#    only encoder among them is `models/image_encoder`, the ViT-H one every
+#    `_vit-h` adapter requires. Under HF_HUB_OFFLINE=1 the default is a HARD MISS,
+#    not a worse picture. A name WITH a slash is read as a full path, so
+#    `models/image_encoder` is passed explicitly. Verified by reading 0.29.2's own
+#    `IPAdapterMixin.load_ip_adapter` source on the box.
+# 2. THE TENSOR SHAPES. The attn processor asserts
+#    len(ip_adapter_masks) == len(self.scale) == len(ip_hidden_states), where
+#    len(self.scale) counts ADAPTERS (one here) and each entry may be a per-image
+#    list. So: one adapter, two images, scale [[0.7, 0.7]], and masks folded to a
+#    ONE-element list holding a [1, 2, h, w] tensor -- which is exactly what the
+#    docs' `masks.reshape(1, masks.shape[0], masks.shape[2], masks.shape[3])`
+#    line does and why it is not cosmetic. Read from the 0.29.2 source, not
+#    recalled.
+# 3. THE CROPS ARE SQUARE. CLIPImageProcessor resizes the short side to 224 and
+#    then CENTRE-CROPS. Feed it a 370x750 figure and the encoder throws away the
+#    head and keeps the midriff, silently, with no sign in any sidecar. Both
+#    references are 370x370 and `author_b08_ip_refs.py --selftest` asserts it.
+#
+# ============================================================================
+# THE REFERENCES: ONE PLATE, TWO IDENTITIES, AND TWO CANDIDATES REJECTED ON PIXELS
+# ============================================================================
+# Both crops come from `farm-out/ep2-b08-boardcomp-0818/08-boardlowered-comp-0818.png`
+# (sha 487ef4e8..., 832x1216) -- beat 08's OWN signed board-lowered composite,
+# on which B1, B2, B3 and B5 all PASSED. It holds both characters, standing,
+# adjacent, at one exposure, in one line weight, under one sky, so THE ONLY
+# DIFFERENCE BETWEEN THE TWO REFERENCES IS THE IDENTITY ITSELF -- which is the
+# variable. Two crops from two plates would also differ in lighting and palette,
+# and any separation could be that instead.
+#
+#   guard  crop (430,120)-(800,490): bald human head, pale skin, brown cloak,
+#          cream under-robe collar -- the frozen wardrobe, represented.
+#   goblin crop  (60, 30)-(430,400): green head, long pointed ears, adult face,
+#          teal robe collar.
+#
+# HEAD AND SHOULDERS, not full figures, for two reasons. B2 is scored on head hue,
+# so the head is the payload; and `ip-adapter-plus` is the fine-grained variant
+# that carries STRUCTURE, so a full-figure reference would be a third structural
+# instruction competing with the contour hint and the prompt.
+#
+# REJECTED, having opened both: the b14 adult goblin plate
+# (`farm-out/ep2-b14-mac-plate-0819/...r8s1.png`) is CROUCHING with the skull
+# bowed to camera -- as a `plus` reference it fights the standing contour -- and
+# its bowed crown catches a specular highlight that measures PALE PINK, so it
+# would push the goblin's head AWAY from green, the opposite direction from the
+# clause it was fetched to fix. And `review/ep2-picks/goblin-reference-0814/
+# s{1,2}-head*.png` read CHILD (large eyes, small chin, chibi proportions) while
+# `chibi` and `child` are both in this beat's own negative and B2's own wording is
+# "an ADULT goblin".
+#
+# NO SPEND, NO PROVIDER, NO DOWNLOAD, NO CANON FILENAME, NO PICK, NO PUBLISH TO
+# THE SITE, NO POST, NO ASSEMBLY. No video is encoded on this path, so no motion
+# recipe's --image-crf reaches it.
+
+id: ep2-b08-ipamask-0819
+task: ep2-b08-ipamask-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 33
+max_attempts: 1
+owner: beat 08 arm-route lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate, for its cut slot in the episode 2 assembly. Rungs 1-5 proved a
+  hand-authored contour AIMS the gesture and cannot say whose body is whose;
+  identity is the last blocker between this route and a usable beat-08 plate, and
+  b08-arm-route-0819.md §10 named it the next open question. This sample's answer
+  decides which of two things beat 08 needs next: if per-figure IP-Adapter binds,
+  the route has a complete recipe and the remaining work is the third figure the
+  beat's done_when wants; if it does not, the beat falls back to the two-pass
+  per-figure inpaint that research §5 grades as the legitimate fallback, and that
+  is a different job with a different bar.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-ipamask-0819 with a sha256
+  manifest, and read at full size beside rung 2's frame. See verdict_rule -- all
+  three of its branches are informative and none of them is "try another scale".
+
+why: >-
+  $0, no download, no provider, ~2 minutes: every weight is already in the box
+  cache (0 .incomplete files), the references were cut on a Mac with PIL from a
+  plate this beat already signed off, and the driver, hint and both references are
+  staged on the box and hash-verified on BOTH ends before this spec was written.
+  It is the last unanswered question on a route whose other three axes are closed.
+
+est_minutes: 4   # rung 2 measured 6.0s load + 13.7s render; the adapter and the
+                 # ViT-H encoder add one 2.5 GB read and one image encode
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Driver, hint and both references staged at C:\banyan-farm\b08ipa-0819\src and
+# hash-verified on BOTH ends before this spec was written, and the staged driver's
+# own --selftest was run ON THE BOX and passed:
+#   pipeline\controlnet_plate.py           06bd95bda2997db7a1c24e77e6d6ed49d5da2ec17e65cc03474b896c2708e6ba
+#   pipeline\control\b08-pose-0819.png     19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+#   pipeline\control\b08-ref-guard-0819.png   61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c
+#   pipeline\control\b08-ref-goblin-0819.png  13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c
+# The hint's sha is byte-identical to rungs 1 and 2's. The driver has GAINED the
+# IP-Adapter flags since rung 2 ran, and its --selftest asserts the no-reference
+# sidecar BYTE-IDENTICAL to the pre-feature file on a sha256 -- so the paths four
+# filed verdicts rest on have provably not moved.
+
+payload:
+  C:\banyan-farm\b08ipa-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08ipa-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+# BOTH FILES ARE RUNG 2'S, WORD FOR WORD, INCLUDING THE BROADCASTING `green skin`
+# AND THE FROZEN WARDROBE CLAUSE. Deliberately not rewritten: the whole claim is
+# that a MASK can aim an attribute a WORDING cannot, and changing the wording in
+# the same job would make the result unattributable. Rung 2 measured this pair at
+# 64/77 and 69/77 on the box's real tokenizer.
+
+steps:
+  - name: ipamask
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08ipa-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08ipa-0819\src
+      - --repo-commit
+      - 00ffb9842b4d40cfd454e9649c11506f69e20ccf
+      - --task
+      - ep2-b08-ipamask-0819
+      - --arm
+      - ipamask
+      - --control
+      - pipeline/control/b08-pose-0819.png
+      - --control-sha256
+      - 19cfad48b45e32451952f65803c868855d76600db43e47a26997390aae431443
+      - --scale
+      - '0.45'
+      - --seed
+      - '20260819'
+      # THE GOBLIN FIRST, and the order is load-bearing: --ip-ref and --ip-mask
+      # are zipped positionally, so swapping one line would hand each figure the
+      # other's identity and the frame would look like the mechanism inverting.
+      - --ip-ref
+      - pipeline/control/b08-ref-goblin-0819.png
+      - --ip-mask
+      - 108,410,240,770
+      - --ip-ref-sha256
+      - 13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c
+      - --ip-ref
+      - pipeline/control/b08-ref-guard-0819.png
+      - --ip-mask
+      - 498,336,640,668
+      - --ip-ref-sha256
+      - 61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c
+      - --ip-scale
+      - '0.7'
+      - --prompt-file
+      - C:\banyan-farm\b08ipa-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08ipa-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08ipa-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Required by box_enqueue.courier_problems: a job whose artifacts live
+        # outside courier-box\farm-out must have a step that carries them there,
+        # because the courier pushes from farm-out and from nowhere else.
+        # ep2-cnet-probe-0817 rendered perfectly and was invisible for two days
+        # for want of exactly this.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08ipa-0819/out"
+        pay_dir = "C:/banyan-farm/b08ipa-0819"
+        ref_dir = "C:/banyan-farm/b08ipa-0819/src/pipeline/control"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-ipamask-0819"
+        os.makedirs(dst, exist_ok=True)
+        # The two references travel WITH the frame. They are the frame's
+        # conditioning, so a reader scoring identity needs them beside it, and
+        # their sha lines in the manifest are what prove the bytes that
+        # conditioned this render are the bytes in the repo.
+        files = sorted(glob.glob(out_dir + "/ep2-b08-ipamask-0819-ipamask.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt")
+                       + glob.glob(ref_dir + "/b08-ref-*-0819.png"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-ipamask-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 6 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08ipa-0819\out\ep2-b08-ipamask-0819-ipamask.png
+
+# ============================================================================
+# THE BAR. B1, B3, B4a, B4b, B4c, B5 CARRIED FROM RUNG 2 WORD FOR WORD -- they
+# all PASSED there and this rung's job is not to lose them. B2 IS RESTATED
+# NUMERICALLY, WITH ITS INSTRUMENT AND ITS BAND WRITTEN OUT BEFORE ANY PIXELS.
+# ============================================================================
+bar:
+  b1_the_pair: >-
+    TWO figures and only two -- one guard and one goblin, both whole in frame.
+  b2_the_identities_separate: >-
+    THIS RUNG'S OWN QUESTION, AND IT IS SCORED ON NUMBERS FIXED BEFORE THE RENDER.
+    INSTRUMENT: mean RGB over the central-50% box of each head as the hint places
+    it -- guard (547,372)-(584,425), goblin (148,448)-(193,504) -- and the
+    statistic is `G - R`. Those are the same boxes and the same statistic every
+    verdict on this beat has used since rung 1, so the numbers below are
+    comparable to six existing frames rather than to nothing.
+    THE GREEN BAND WAS MEASURED, NOT CHOSEN. Every head this beat has ever judged
+    "green with pointed ears" scored G-R >= +20.1 (r1 guard +44.3, r1 goblin
+    +38.8, r2 guard +34.0, r2 goblin +29.4, r4 guard +38.9, r4 goblin +38.3, r5
+    goblin +20.1). Every head judged human-skinned scored G-R <= -21.1 (r3 guard
+    -21.1, r5 guard -25.1). Two classes, 41 levels of empty gap, over every frame
+    the beat has produced. So the band floor is +20.0 and the human ceiling is 0.0.
+    B2 PASSES IF AND ONLY IF BOTH:
+      B2a THE GUARD LEAVES THE GREEN BAND -- guard head G-R <= 0.0. His reference
+          carries -19.1; every green guard so far measured >= +34.0.
+      B2b THE TWO HEADS SEPARATE -- (goblin G-R) minus (guard G-R) >= +20.0. All
+          four green pairs measured a separation of <= 5.5 (r1 5.5, r2 4.6, r4
+          0.6): indistinguishable. The two references carry +32.3, asserted by
+          author_b08_ip_refs.py --selftest before any GPU ran.
+    AND IT IS SCORED ON PIXELS AS WELL AS ON THE NUMBER. A metric agreeing with me
+    is not a sample: the frame is opened at full size beside rung 2's, and the
+    guard must READ as a human man -- skin, not a desaturated green -- and the
+    goblin as an adult goblin. If the numbers pass and the eye disagrees, the EYE
+    IS THE VERDICT and the disagreement is reported.
+  b2c_wardrobe_separates: >-
+    SECONDARY, AND STATED SEPARATELY SO IT CANNOT BE USED TO CLAIM B2. Rung 2
+    returned the frozen cream shirt / white sash / brown wrap skirt as white drapes
+    and tan trousers ON BOTH FIGURES. The guard's reference carries his brown cloak
+    and cream collar, so a partial recovery is plausible; a full one is not
+    expected, because the masks stop at each figure's hip and neither reference
+    shows a sash. Scored by eye, and a FAIL here does not fail B2.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The hint pins both foot
+    lines at y=1149.1 and rung 2 held it at 0.45.
+  b4a_board_down: >-
+    The clipboard is DOWN at the guard's hip, in ONE hand. GENUINELY AT RISK AND
+    NAMED AS SUCH: the guard's mask stops at y=668, one pixel above the hint's
+    board top edge (668.4), specifically so no reference conditions the board -- but
+    the adapter changes the whole attention path, not only the masked pixels.
+  b4b_legible_point: >-
+    The gesture ends in a HAND aimed at the goblin's belly. It FLIPPED to PASS at
+    0.45 in rung 2 (a modelled hand with an extended index finger) after failing at
+    0.8, and the fingertip at (246.5,695.1) sits 6.5 px OUTSIDE the goblin's mask
+    (right edge x=240) on purpose, so the guard's finger is not handed the goblin's
+    identity.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE CLAUSE THAT MUST SURVIVE, and the only thing five rungs bought. The
+    pointing arm grows from THE GUARD's shoulder. The uncontrolled tally at this
+    seed is 4 of 4 on the goblin, so this clause is entirely the hint's doing and
+    losing it would mean the adapter is fighting the ControlNet.
+  b5_no_colossus: >-
+    Neither figure towers over the other. The uncontrolled frame at this seed is an
+    extreme colossus.
+  b6_drawn_not_traced: >-
+    CARRIED AS A PARTIAL, NOT AS A PASS. Rung 2 scored PARTIAL: cloth with folds,
+    shaded limbs and faces with features all returned, but the SILHOUETTES were
+    still the authored polygons. It must not get WORSE. It is not this rung's
+    variable and b08-arm-route-0819.md §8-§10 already established that no scale or
+    stroke fixes it, so an improvement here would be a finding about the adapter
+    rather than a win.
+
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS, and all three branches close something. (1) If B2a
+  AND B2b hold on the numbers AND the eye agrees, AND B1, B3, B4a, B4b, B4c and B5
+  are all still PASS, the verdict is PASS: per-figure identity binding works on
+  this stack, beat 08 has a complete recipe for the first time, and the next
+  question is the THIRD FIGURE its done_when wants -- not another conditioning
+  value. (2) If B2 holds but a carried clause breaks, the verdict is that IP-Adapter
+  and ControlNet COMPETE at these settings, and the next rung is one sample at a
+  LOWER --ip-scale (0.4-0.5) rather than a new mechanism; which clause broke names
+  what the adapter overrode. (3) If B2 fails -- both heads still inside the green
+  band, or separated by less than 20 levels -- the verdict is that MASKED
+  IP-ADAPTER DOES NOT BIND IDENTITY ON THIS STACK, and that retires the mechanism
+  rather than tuning it: the fallback is the two-pass per-figure inpaint graded in
+  research §5, which is a separate job with its own bar. In branch (3) the sidecar
+  is read first to confirm the adapter actually loaded, because "no effect" and
+  "never applied" are different findings and the sidecar distinguishes them.
+
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE new mechanism. No conditioning-scale change (the axis is
+  closed: 0.80/0.45/0.28 bracketed). No stroke change (closed: 7px/3px, and thin
+  traced tighter). No hint-class change (closed: contour/skeleton). No re-authored
+  hint. No prompt or negative edit -- the broadcasting `green skin` stays in on
+  purpose, because a mask beating a wording is the claim. No second seed. No
+  --ip-scale sweep. No ip-adapter-plus-FACE variant (847.5 MB, NOT cached, and this
+  beat needs costume and palette separation rather than face identity). No base
+  `ip-adapter_sdxl_vit-h` A/B. No pose net -- that is
+  ep2-b08-posenet-fetch-0819/sample, a different blocker, queued in parallel and
+  NOT a dependency of this job. No nocontrol arm: rung 1's is published and does
+  not depend on anything this job changes. No pick, no plate_ack waiver, no canon
+  filename, no third figure.
+
+licence_note: >-
+  Clean on all three components. Base cagliostrolab/animagine-xl-3.1 (CreativeML
+  Open RAIL++-M, use restrictions travel; D15). ControlNet
+  xinsir/controlnet-scribble-sdxl-1.0 (apache-2.0, no attribution condition).
+  IP-Adapter h94/IP-Adapter (apache-2.0). The hint is drawn by
+  author_b08_pose_hint.py with PIL and the references are CROPS OF OUR OWN
+  RENDER -- no photo-derived edge map, no annotator, no third-party image, so the
+  lllyasviel/Annotators landmine is not touched and no external image's terms
+  attach to the output.
