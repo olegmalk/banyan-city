@@ -1845,3 +1845,32 @@
   resolved:
     date: '2026-08-19'
     verdict: B
+- what: 'WHAT IS THE GOBLIN WEARING BELOW THE WAIST? One line, batch it with your next
+    look - nothing is blocked on it. Beat 08 keeps drawing him in full teal trousers to
+    the ankle; an earlier frame of the same beat had him bare-legged with a tan
+    loincloth. Neither is wrong yet, because nothing has ever said. You ruled the BUILD
+    on 2026-08-19 ("well b definitely and the damn goblin") and canon carries that as
+    `lean wiry adult goblin man, green skin, bald head, patchwork cloak` - a cloak, and
+    nothing below it. THE FOUR ADULT-B TILES YOU APPROVED SHOW FOUR DIFFERENT LOWER
+    HALVES: b07 a long tunic over dark leggings, b14 loose pale trousers, b19 bare green
+    legs and bare feet under a cloak, b17 wrapped greaves and boots. So B settles the
+    creature and not his legs, and no lane is going to invent an answer. The b08
+    reference crop stops at his collar and no prompt says a word, so every frame is
+    currently guessing.'
+  url: /review/ep2-goblin-design-0819
+  group: taste
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  verdict_hint: 'trousers / bare legs and a loincloth / name it and I write it into canon
+    - or "you pick, it is not a taste question" and I rule it and log it'
+  note_for_lanes: 'NOT BLOCKING and NOT urgent - it batches. Raised by the beat 08
+    staging lane 2026-08-20 off ep2-b08-grip-0820 and ep2-b08-scale30-0820 (both teal
+    trousers) against ep2-b08-twinsipa-0819 (bare-legged, tan loincloth); all three are
+    in farm-out/ under those ids. Checked against ruled canon first:
+    pipeline/canon.yaml `ep2-goblin-design-adult` names the cloak and nothing below the
+    waist, and the picker evidence is inconsistent across the four tiles, so this is
+    GENUINELY UNRULED rather than a drift off something already decided - which is why
+    it is a card and not a fix. NO CONFORMITY VERDICT WAS RECORDED EITHER WAY. Until it
+    is answered the attribute is unasserted in the prompt, the reference and the hint,
+    and unasserted attributes on this beat are invented fresh per frame.'
