@@ -193,3 +193,144 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b13-refire-0814\13-remake-LTX-0813.mp4
 - C:\banyan-farm\ep2-b13-refire-0814\b13-init-704x1280.png
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# Bar taken verbatim from done-definitions beats.13.done_when,
+# INCLUDING its own instruction about what a steward may not score.
+# No bar was invented and none was widened.
+# ==================================================================
+verdict: >-
+  THE END STATE PASSES AND THE CLIP CONTRADICTS A FOUNDER RULING TO REACH IT. beats.13.done_when
+  is unusually explicit about scope: "he ends FOLDED SMALL in the sapling's shade, knees up ...
+  The END STATE is what the beat needs; how he gets there is an author call, not a steward one."
+  Scored that way and only that way: from f064 to f096 he IS folded small with his knees drawn
+  up and his arms wrapped round his shins at the base of the trunk. Two of the three end-state
+  terms are met. THE THIRD IS NOT, AND IT IS NOT A NEAR MISS: the thing he is sitting under is a
+  MATURE TREE — a thick bark-textured trunk with a fork, running off the top of the frame at
+  roughly four times his standing height — and the founder has ruled, in words this very
+  `done_when` quotes, "thats ridiculous, lmao. the sapling is tiny". There is no sapling in this
+  clip, so there is no sapling's shade for him to end in. Worse, the clip performs the exact
+  action that ruling made unshootable: from f007 he stands, from f010 he rises astride the
+  trunk, by f016 he is reduced to a single boot at the top edge, and he then climbs back DOWN
+  it. `done_when` forbids a steward from scoring that journey and this verdict does not score
+  it — but the tree it needs in order to happen is a canon object, and that is scored.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/13-the-shade-b13-refire-0814.mp4
+  sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[13] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  method: >-
+    pipeline/coldread_frames.py --pad 60, 75 consecutive frames over four strips plus a
+    16-frame overview, read consecutively per standard_0815.scoring_method. Then a 4x ffmpeg
+    crop of the TOP 30% of frames f012-f023, because the question "is the subject still in the
+    picture" cannot be answered off a full-frame thumbnail when the subject is one shoe. Then
+    review/ep2-picks/exact_freeze_index.py and a parity-collapsed lag-4 series.
+verdict_clauses:
+  E1_he_ends_folded_small: >-
+    PASS. f064 through f096: seated on the ground at the trunk's foot, knees drawn up to his
+    chest, both arms wrapped round his shins, head tipped slightly down, occupying a small part
+    of the lower-left frame. This is the pose the script describes and it is unmistakable.
+  E2_knees_up: >-
+    PASS. Both knees are up against his chest and held there for the whole final third.
+  E3_in_the_saplings_shade: >-
+    FAIL, and not on the shade's thinness — on the plant. There is no sapling in this clip at
+    all. The trunk is mature: bark texture, a fork, a diameter comparable to his torso, and it
+    exits the top of the frame so its canopy is never seen. What he sits in is the broad
+    diagonal field shadow that crosses the whole picture from f000 onward, which is the same
+    shadow that is there before any tree exists. The record's own beats.13.shipping_fault
+    concedes "The shade is thin"; the reading here is stronger than that — it is not the
+    sapling's shade, because there is no sapling.
+  the_journey_clause_NOT_SCORED_and_why: >-
+    DELIBERATELY UNSCORED. `done_when` says how he gets there "is an author call, not a steward
+    one", so this lane does not fail the beat for the climb, does not fail it for the ascent
+    order, and takes no position on whether a scavenger levitating up a trunk is acceptable
+    staging. That is R4-adjacent and it is left alone. What IS scored below is different in
+    kind: standing bars that apply to every beat regardless of staging, and one founder ruling
+    about an object.
+verdict_contradicts_a_founder_ruling:
+  the_ruling: >-
+    Quoted inside this beat's own done_when, and therefore known to every lane that has read
+    it: "the founder has ruled the sapling is tiny — 'thats ridiculous, lmao. the sapling is
+    tiny' — so there is no trunk to slide down."
+  what_is_in_the_cut: >-
+    A FULL MATURE TREE, and the slide down it. The trunk is absent at f000-f004; a thin stem
+    appears at f005; by f010-f012 it has thickened into a bark-textured mature trunk with a
+    fork, taller than the 1280px frame; the goblin rides it up and out of shot and then comes
+    back down it. FIVE CONSECUTIVE CUTS HAVE SHIPPED THE SHOT THAT RULING SAYS CANNOT EXIST.
+  why_this_is_the_loudest_of_the_three_ruling_contradictions_in_this_sweep: >-
+    Beats 05 and 10 contradict the frozen guard wardrobe, which is a costume matter on two
+    characters. This one is THE PLANT, and the plant is what episode 2 is about. It is also the
+    third beat in this sweep whose plant is wrong in a way a founder has already ruled on: beat
+    03's clip grew an eight-leaf woody twig, beat 16 was rejected outright by the founder for a
+    lobed palmate leaf that "do[es] not resemble the sapling", and beat 13 grows a whole tree.
+    done-definitions beats.16.both_legs_rejected_0816 already names the general shape of this —
+    "whether a canonical sapling description exists at all is the open question filed with this
+    ruling; if it does not, defining the plant is the founder's (R4) and gets its own card" —
+    and this verdict is a third data point for that card rather than a new question.
+  what_this_lane_does_about_it: >-
+    NAMES IT. It does not define the plant (R4), does not amend the ruling, and does not pull
+    the clip from a cut. The escalation is that the sapling-definition card named in
+    beats.16.both_legs_rejected_0816 now has three beats' worth of evidence behind it and is
+    the cheapest unblocking item in this sweep, because one description would govern beats 03,
+    12, 13, 15, 16, 19, 20 and 21 at once.
+verdict_faults_against_standing_bars:
+  the_subject_leaves_the_picture: >-
+    HIS FACE IS OUT OF THE FRAME FOR TWENTY-THREE FRAMES, about one second, from roughly f012
+    to f034. Read from the top-band crop, which is why it was made: at f012-f015 his head and
+    torso are already above the top edge and only trousers and boots remain; AT f016-f019 THE
+    ENTIRE FIGURE IN FRAME IS ONE DARK BOOT, with a small pale wisp beside it; f020-f028 legs
+    return; his head re-enters at about f032 and is fully in frame by f035. He never vanishes
+    completely — the strict statement is "reduced to a single shoe" — but there is no face in
+    this shot for a quarter of its length.
+  which_bar_that_breaks: >-
+    standard_0815.a_beat_is_DONE_when requires "the FACE is the same face at the end as at the
+    start" and the staging_law says "actions that raise the head or open the eyes keep the face
+    in shot; actions that bend, crouch or turn away lose it." THIS IS A NEW MODE FOR THAT LAW
+    AND IS REPORTED FORWARD AS ONE: the action did not bend him away from the lens, it TRANSLATED
+    HIM VERTICALLY OUT OF THE FRAME. The law's list of face-losing actions has three entries and
+    none of them covers "the subject is carried up past the top edge by the thing he is supposed
+    to be sitting under". Whoever owns standard_0815 may want a fourth.
+  the_negative_was_asked_and_refused_again: >-
+    The wave negative this spec family carries includes "walking out of frame, leaving the
+    frame" and he left the frame anyway — upward, which the phrasing did not anticipate.
+    Positive placement beating negation once more; counted here as an instance rather than
+    argued as a new law.
+  terminal_freeze: >-
+    exact_freeze_index.py on this file: `frames=97 terminal_freeze_index=63 terminal_freeze_len=34
+    dup_pairs=33 runs=[(63, 34)]`. THIRTY-FIVE PERCENT OF THE CLIP IS ONE PICTURE, one unbroken
+    trailing run, the only run in the clip. Parity-collapsed lag-4 agrees independently: 31
+    consecutive frames from f62 under 1.0 level. So the beat's correct end state is also its
+    dead air — the last 1.4 seconds of a 4.04-second slot are a still.
+  identity_within_the_clip: >-
+    PASS on what is visible. Whenever his face IS in frame — f000-f011 and f035-f096 — it is the
+    same face: bald dome, wide pointed ears, the same dark eyes and thin mouth, the same pale
+    sage shirt, dark trousers and brown boots. No morphology change and no costume swap. The
+    continuity break here is absence, not drift.
+verdict_the_most_useful_thing_this_read_found: >-
+  THE BEAT'S REQUIRED END STATE IS ALREADY IN FRAME ZERO. At f000-f004, before any motion and
+  before any tree exists, he is sitting on the grass with his knees drawn up and his arms wrapped
+  round his shins — folded small, knees up. That is E1 and E2, satisfied by the INIT PLATE. The
+  97 frames that follow are a round trip: away from the answer, up a mature tree that should not
+  exist, out of the top of the frame, back down, and into the same pose he started in, followed
+  by 34 frames of freeze. SO THE MOTION JOB ADDED NOTHING THIS BEAT'S DEFINITION ASKS FOR AND
+  ADDED ONE THING A FOUNDER RULING FORBIDS. The consequence is practical and cheap: beat 13 may
+  be the one beat in this episode whose honest next step is LESS motion rather than more — its
+  plate already meets two of three end-state terms, and what it needs is a tiny plant beside
+  that pose, not a journey into one.
+verdict_next_instrument: >-
+  A PLATE WITH A TINY SAPLING AND HIM ALREADY FOLDED BESIDE IT, and then either a near-still or
+  no motion job at all. Named, not fired — this lane files no GPU work and takes no view on
+  whether a beat may ship as a held frame, which is a taste call. The thing NOT to spend a rung
+  on is another motion wording on this plate: the plate has no plant, so the prompt will summon
+  one every time, and it has summoned a tree twice the height of the frame once already.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED, with the ruling contradiction named. It stays cuttable because the
+  final third genuinely shows the scavenger folded small under a plant, which is what a viewer
+  needs from THE SHADE, and because the VO carries the beat. An assembly with a trim budget
+  should know the shape precisely: f000-f011 is usable, f012-f034 has no face in it, f035-f062
+  is the descent, and f063-f096 is one frozen picture of the correct pose. The cheapest edit in
+  this beat is to drop the middle.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, including the half that forbids scoring the journey.
