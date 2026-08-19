@@ -147,3 +147,198 @@ steps:
     , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
 artifacts:
 - C:\banyan-farm\ep2-b05-standB-0814\05-the-patrol-LTX-jog-b-0812.mp4
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# The file judged is the TRIMMED derivative of this job's output, which
+# is what is actually in the cut. Bar taken verbatim from
+# done-definitions beats.05.done_when; cast checked against the FROZEN
+# wardrobe canon in guards_CORRECTION_0816. No bar was invented.
+# ==================================================================
+verdict: >-
+  FAIL, on four of seven clauses, AND IT CONTRADICTS A FROZEN FOUNDER RULING ON THE CAST —
+  see `verdict_contradicts_a_founder_ruling` below, which is the reason this sweep exists.
+  What this take genuinely won is worth saying first and saying plainly: TWO FIGURES, IN A
+  FIELD, FROM FRAME ONE TO FRAME 117, never one and never three. That is the clause four
+  rounds of words produced 1, 3 and 3-plus on, the plate supplied it, and it holds for
+  every one of the 118 frames. Zero identical adjacent pairs in the whole clip
+  (exact_freeze_index dup_pairs=0), so nothing here is dead air either. Everything else
+  fails. Neither man wears a sash; both read adolescent rather than adult; the jog is gone
+  by the record's own choice and nobody amended the definition; and the right-hand guard is
+  REDRAWN MID-CLIP — he bows double from f045, loses his face entirely f049-f054, snaps
+  upright at f055 with a different head, and bows again f057-f059.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/05-the-patrol-b05-standB-trim.mp4
+  sha256: 909688bce9c48a872b102cd6a02f26e2e9a80e6e83734c8c6541c3cc040fa93a
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[5] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  relation_to_this_job: >-
+    NOT byte-identical to this job's artifact and that is deliberate, not an error. The cut
+    carries the trim_pass_0815 derivative — its own sidecar says "trim_pass_0815 output: 3
+    degraded head frames removed, 5.04s -> 4.92s" — so 118 frames, not 121. The trim removed
+    only head frames, so every clause below is scored on the same pictures this job rendered
+    minus its first three. Frame indices in this verdict are indices into the TRIMMED file.
+  method: >-
+    pipeline/coldread_frames.py --pad 60: 118 CONSECUTIVE source frames over six strips plus
+    a 16-frame overview, read consecutively per standard_0815.scoring_method so no smooth
+    move can score as a cut. Then review/ep2-picks/exact_freeze_index.py and a
+    parity-collapsed lag-4 mean-abs series.
+verdict_clauses:
+  P1_two_guards_from_frame_one: >-
+    PASS, unambiguously, and it is the strongest thing this beat owns. Two figures are in
+    frame at f000 and at f117 and at every frame between. No third guard appears, no figure
+    drops out, nobody walks off an edge. Against the recorded history — round 1 one guard,
+    round 2 three guards at both seeds, round 3 three at seedA and "four-ish" at seedB —
+    this is the clause the two-guard scene plate was fetched for and it delivered it.
+  P2_jog_in_together: >-
+    FAIL, AND FAIL BY DESIGN, WHICH IS WORTH SEPARATING FROM A DEFECT. Nobody jogs. Both men
+    are standing at f000 and there is no run-in, no approach, no travel toward camera at any
+    point. That is exactly what the record chose: beats.05.lever reads "stage them ALREADY
+    STANDING and scanning rather than jogging in - motion toward camera is what breaks it",
+    and beats.05.park_reason reads "even with count supplied by the plate, the jog pulls the
+    camera and loses the pair". THE LEVER TRADED THIS CLAUSE AWAY TO WIN P1 AND NOBODY WROTE
+    THAT DOWN. `done_when` still says "jog in together FROM FRAME ONE" and the pick is named
+    `standB`. So the definition and the pick have been in contradiction since 2026-08-14 and
+    five cuts have shipped over it. This lane does NOT amend the definition — whether the
+    scavenger-spotting patrol may arrive already standing is a staging call about how the
+    beat reads, and it belongs to whoever owns the beat's staging, not to a judging lane.
+    It is escalated, not decided.
+  P3_stop_and_scan: >-
+    PARTIAL AND WEAK, and it is not the reason for the FAIL. There is real head movement:
+    the right-hand guard's head turns to his right through f000-f044 and both heads make
+    small turns through the tail f100-f117, on a locked camera, with zero duplicate frames.
+    A viewer would accept "two people standing in a field looking about". What is NOT a scan
+    is the middle: f045-f070 is the right guard pitching forward and doubling over, twice,
+    which no reading of "stop, and scan" covers. Scored PARTIAL because the clause is met at
+    the head and the tail and contradicted in the middle.
+  P4_both_adult_men: >-
+    FAIL. Both figures read as adolescent boys — smooth round cheeks, small soft chins, large
+    eyes, no jaw mass, slight shoulders. This is not a new observation and it should not be
+    presented as one: beats.05.shipping_fault already records "the two guards read younger
+    and softer-drawn than the guards in beats 06 and 11", and the blind reader in
+    blind_read_0815_b05_b06_b10 scored this pick 5/10 and marked the de-aging as MORPHOLOGY
+    and "the single biggest change in the set". What this read adds is that it is true of
+    BOTH figures and true from f000 — it is not a drift away from an adult plate, the plate
+    is adolescent too, so no identity-holding lever can reach it.
+  P5_in_tunic_and_sash: >-
+    FAIL, and on the sash specifically. Both men wear a tan-brown shirt over a brown wrap
+    skirt, so "tunic" is arguably met. NEITHER WEARS A SASH. The dark-haired guard has a
+    narrow DARK diagonal strap across his chest that reads as a satchel or bandolier strap,
+    not a sash; the light-haired guard has a DARK band at the waist that reads as a belt.
+    There is no white sash, of either the waist or the over-shoulder kind, anywhere in 118
+    frames. Checked at f000, f055, f100 and f117 so it cannot be a transient.
+  P6_field_present_at_frame_one: >-
+    PASS. f000 has grass edge to edge, a dark hedgerow band across the upper third and blue
+    sky with cloud above it. No white burst, no iris, no scene forming. The world is a
+    property of the plate here and the plate delivered it.
+  P7_neither_redrawn_mid_clip: >-
+    FAIL, DECISIVELY, AND THIS IS THE HARDEST OF THE FOUR. Read consecutively: f040-f044 the
+    right guard stands with a dark teal board in his hands; f045-f046 he pitches sharply
+    forward, head dropping, arms swinging back; f049-f054 he is doubled fully over with only
+    the back of his skull and his back visible and HIS FACE IS OUT OF THE PICTURE; f055-f056
+    he is bolt upright facing camera AND HIS HEAD IS A DIFFERENT HEAD — auburn rather than
+    mid-brown, a longer face, a different hairline and a different fringe; f057-f059 he bows
+    over again. The left guard is redrawn more quietly over the same stretch: a cowlick
+    (ahoge) appears on his crown around f048 and is still there at f117, where f000 has a
+    flat fringe. NOT A CUT, and that distinction is load-bearing here — every one of those
+    transitions is smooth frame to frame, so this is genuine motion into a wrong pose and a
+    genuine redraw, which is worse than a sampling artifact and cannot be dismissed as one.
+  prop_identity_bar_standard_0815: >-
+    FAIL, and this read CONFIRMS THE BLIND READER ON THE WHOLE CLIP rather than on ten tail
+    frames. blind_read_0815_b05_b06_b10.verdicts.'05'.prop_fault says "THE PROPS SWAPPED
+    HANDS. In the reference the boy holds the teal clipboard and the man carries a grey-blue
+    slab. In the frames the man holds both and the boy's hands are empty." At f000 of this
+    file each man holds one object. From roughly f053 to f117 THE DARK-HAIRED GUARD HOLDS
+    BOTH — the grey-blue slab tucked under his left arm and the dark teal board in his right
+    hand — and THE LIGHT-HAIRED GUARD'S HANDS HANG EMPTY at his sides. So the reassignment
+    is not a property of the tail sample the blind reader happened to get; it happens
+    on-screen, in the middle of the clip, during the same f045-f070 window in which he is
+    redrawn. The two faults are one event.
+  identity_drift_bar_standard_0815: FAIL — see P7. Face and hair both change on the right-hand figure; costume holds. "Roughly the same costume, drifting face", the reader's own phrase for it.
+verdict_contradicts_a_founder_ruling:
+  the_ruling: >-
+    done-definitions guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816,
+    2026-08-16, R4, verbatim: "the cast stands as drawn". Recorded on the card
+    /review/ep2-picks/sheets/guard-cast-0816.jpg and in review/inbox.yaml the same day. It
+    froze the wardrobe: "guard A: dark-haired, tan wrap tunic, wide white waist sash,
+    WIRE-RIM GLASSES; guard B: blond, cream short-sleeve shirt, white sash worn diagonally
+    over the shoulder, broad dark-brown wrap skirt." The same entry adds that "Every prompt
+    for a guard beat that shows guard A's face must now NAME the wire-rims."
+  what_is_actually_in_the_cut: >-
+    Two adolescent boys, one dark-brown-haired and one light-brown-to-auburn. NEITHER IS
+    BLOND. NEITHER WEARS A WHITE SASH of any kind. NEITHER WEARS GLASSES. Both wear the
+    same tan-brown shirt, so they are not distinguishable as A and B by garment at all —
+    the one visible difference between them is hair colour, and one of the two colours is
+    wrong. Five consecutive cuts have shipped this.
+  honest_scoping_this_is_not_a_new_discovery: >-
+    THE CLASS WAS ALREADY KNOWN AND SAYING OTHERWISE WOULD BE THEFT.
+    guard_plates_are_miscast_0816 states the headline in capitals — "EVERY GUARD PLATE WE
+    OWN IS MIS-CAST, AND IT IS ONE CAUSE ACROSS SIX BEATS ... NO MOTION WORK ON BEATS 05,
+    06, 07, 09, 10 OR 11 CAN PAY OFF UNTIL THOSE PLATES ARE REDRAWN." What is new here is
+    only that it has now been CHECKED AGAINST THE FILE IN THE CUT, attribute by attribute,
+    rather than against the prompts that produced it. That sweep was a text sweep of what
+    was ASKED FOR, by its own description; this is the pixels.
+  and_one_thing_that_is_genuinely_new_and_cuts_the_other_way: >-
+    THE PLATES ASKED FOR BALD AND THIS CLIP'S GUARDS BOTH HAVE HAIR. guard_plates_are_miscast_0816
+    counts 14 of 17 guard-beat prompts containing `bald` or `bare heads` and calls that
+    decisive because "NEITHER APPROVED GUARD IS BALD". Both men in this file have full heads
+    of hair in all 118 frames. That is the beat-11 pattern again, from
+    what_it_re_explains: "WE RECORDED THE RENDER DRIFTING TOWARD THE APPROVED CAST AS THE
+    DEFECT." On the hair AXIS this render is closer to canon than its own prompt was. It is
+    still wrong — wrong colour on one man, wrong age on both, no sash and no glasses — but a
+    redraw lane should know that `bald` was not what came back, because a plan built on
+    "the plates are bald so the clips are bald" would be planning against the wrong picture.
+  who_this_is_for: >-
+    NOT a taste question and not escalated as one. The ruling is already made and already
+    frozen; this is a defect against it, which per the taste/picks boundary is the steward's
+    to name and the plate lanes' to fix. It is flagged loudly because a founder ruling being
+    silently contradicted by footage in five cuts is precisely what an unjudged middle
+    hides.
+verdict_measured:
+  no_freeze_at_all: >-
+    exact_freeze_index.py: `frames=118 terminal_freeze_index=None terminal_freeze_len=0
+    dup_pairs=0 runs=[]`. Not one identical adjacent pair in the whole clip. Parity-collapsed
+    lag-4 mean-abs confirms it from the other side: median 10.94, MINIMUM 5.62, so there is
+    no four-frame window anywhere in this clip that is one picture. Beat 05 is the liveliest
+    of the eight beats in this sweep by a wide margin and the sampling caveat in
+    blind_read_0815_b05_b06_b10.reconciliation.sampling_caveat_do_not_read_as_a_defect is
+    hereby corroborated: the reader found set N "completely static" at f110-f119 and it is
+    not static, it is a decel. Nothing in this file is frozen.
+  the_thrash_window: >-
+    The five largest interframe steps in the clip fall at pairs 65, 67, 61, 63 and 56 — all
+    inside the f045-f070 bow-and-redraw window, none of them at the head. So the clip's
+    peak motion is the defect, not the action. Recorded because a bare "this clip moves a
+    lot" number would read as praise.
+verdict_disagrees_with_the_record_and_leaves_it_standing:
+  the_record_says: >-
+    beats.05.round_4_result: "seedB holds TWO guards for the whole clip in a field present at
+    frame one, looking around - the scan reads. seedA still drops to one man by f70. The
+    camera lurch is gone at both."
+  what_this_file_shows: >-
+    THE FIRST HALF OF THAT SENTENCE IS CONFIRMED AND THE SECOND HALF IS NOT. Two guards for
+    the whole clip: confirmed, 118 of 118 frames. Field at frame one: confirmed. Camera lurch
+    gone: confirmed, the framing is locked and nothing pans. "Looking around - the scan
+    reads": NOT CONFIRMED for the middle third, where the right guard bows double twice and
+    is redrawn between the bows. Left standing unedited, because beats.05.correction is a
+    confession by that same lane that it once "recorded this beat as PARKED with 'the lurch
+    is gone' WITHOUT LOOKING at the clips", and the shape of this disagreement — a claim
+    about what a fix DID rather than about what the frames SHOW — is the same shape. Not
+    charged as the same error; noted as the same shape.
+verdict_next_instrument: >-
+  A CAST-CORRECT PLATE, WHICH IS ALREADY THE NAMED ROUTE AND ALREADY ANOTHER LANE'S. Two
+  further constraints this read adds for whoever draws it. (1) The plate must DISTINGUISH the
+  two men by garment, not only by hair — identical tan shirts make A and B unidentifiable
+  even when the hair is right, and it is also what lets a prop wander between them. (2) The
+  redraw window is f045-f070 and it coincides exactly with the prop reassignment, so an
+  identity-holding instrument tested on the head or the tail of this clip will report success
+  on the two thirds where nothing was wrong. Named, not fired — this lane files no GPU work.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED, with four failed clauses and a founder-ruling contradiction now
+  named rather than blank. It stays cuttable: two guards do stand in a field, the VO plays
+  over them, and a slate is worse. But the middle 25 frames are the weakest quarter-second
+  stretch in this sweep and an assembly with a trim budget should spend it here — f045-f070
+  is a bounded, nameable, removable window, and losing it costs about one second of a beat
+  whose head and tail both hold.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, never widened.
