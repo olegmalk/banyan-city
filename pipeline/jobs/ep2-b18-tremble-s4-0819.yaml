@@ -159,9 +159,9 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b18-tremble-s4-0819\18-the-decision-LTX-ep2-b18-tremble-s4-0819.mp4
 - C:\banyan-farm\ep2-b18-tremble-s4-0819\b18-init-704x1280.png
-verdict: PASS. Every PASS clause met, every pre-registered FAIL mode measured and absent. This is the only one of
+verdict_INHERITED_from_the_s20260871_parent_NOT_THIS_JOB: PASS. Every PASS clause met, every pre-registered FAIL mode measured and absent. This is the only one of
   the three seeds whose tremble runs the whole clip.
-verdict_measured:
+verdict_measured_INHERITED_from_the_s20260871_parent_NOT_THIS_JOB:
   read_how: '121 frames decoded at full length (704x1280, 24fps, 121 frames -- format confirmed by ffprobe), measured
     downscaled to 176x320, and LOOKED at: a 9-panel sheet at f000/015/030/045/060/ 075/090/105/120 plus a 12-frame
     consecutive strip at f040-f051 to catch anything that only shows frame-to-frame.'
@@ -182,7 +182,7 @@ verdict_measured:
   count_attach_person: PASS on all three. One fruit in every frame looked at, never two, and it never turns leafward
     -- it stays a round fig. It stays joined to the thin stem at the neck the whole way and never leaves frame.
     No face, figure, chibi or mascot appears.
-caveats_not_scored:
+caveats_not_scored_INHERITED_from_the_s20260871_parent:
   background_light_band: STATED, NOT SCORED. A diagonal shadow band across the backdrop drifts over the clip (leftmost-column
     luminance HF std 10.85). It drifts smoothly -- it does not flicker -- so it is not FAIL-STROBE, which names
     "flickers, pulses or blinks". It is also not a camera clause, because this bar pre-registered no camera clause
@@ -190,18 +190,60 @@ caveats_not_scored:
   gloss_and_aubergine: 'Explicitly excluded by this spec: the plate is glossy with a hard specular and reads near-aubergine.
     The bar says that is R4 and the founder''s alone. Untouched here.'
   leaf_count_and_height: Excluded by the bar -- a macro has no yardstick. Untested, not defective.
-pick_candidate: 'ep2-b18-tremble-s20260871 is the pick candidate of the three. Reasons, one line each: it is the
+pick_candidate_INHERITED_from_the_s20260871_parent_NOT_THIS_JOB: 'ep2-b18-tremble-s20260871 is the pick candidate of the three. Reasons, one line each: it is the
   ONLY seed with motion in all four quarters (s20260873 decays to med 0.45 by the last third and reads visually
   frozen from f045 on); it is the ONLY seed with zero specular pumping (s20260872 pumps >25% on 28 of 120 adjacent
   pairs, which is FAIL-STROBE); and its colour and count are as stable as either sibling. On the two clauses that
   separate the three, it wins both outright.'
-pick_authority_note: 'This spec pre-registered "NOT a pick: which of the three seeds ships is R4''s call and this
+pick_authority_note_INHERITED_from_the_s20260871_parent: 'This spec pre-registered "NOT a pick: which of the three seeds ships is R4''s call and this
   job does not make it." That was written 2026-08-17. On 2026-08-18 the founder widened the boundary explicitly
   -- which-of-N picks, route choices and quality tradeoffs became steward decisions, recorded with reasons and veto-able
   by one line, with only taste left to him. So the pick above is made under the newer ruling and is stated with
   its reasons rather than deferred. It is a CANDIDATE: the swap into the episode cut belongs to the assembly lane,
   not to this judging lane, and nothing here promotes anything.'
-what_this_licenses: 'The assembly lane may consider s20260871 for the beat 18 slot. It licenses NO new render: the
+what_this_licenses_INHERITED_from_the_s20260871_parent: 'The assembly lane may consider s20260871 for the beat 18 slot. It licenses NO new render: the
   recipe is proven on this beat and no variable is named for change. It does not license a fourth seed -- three
   were filed precisely to separate "recipe is dead" from "one unlucky seed", and the answer came back 1 pass / 1
   strobe / 1 decay, which is the show''s normal 2-3-renders-per-usable rate and needs no further sampling.'
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the queue-keeper lane, one cycle after it landed.
+# The six INHERITED_* keys above were RENAMED, not deleted: they are the
+# s20260871 parent's findings, cloned in by a derivation that stripped nothing,
+# and anyone grepping `verdict:` on this file would have read a PASS belonging
+# to a clip nobody had opened. Kept because they are this seed's baseline.
+verdict_this_job: FAIL. Seed 20260878 loses its third quarter. The parent's bar pre-registered
+  motion in all four quarters as the clause that separates a live tremble from one that reads
+  frozen partway, and it named the number -- s20260873 was rejected for decaying to a 0.45
+  interframe median and reading visually frozen from f045 on. This seed measures 0.44 in Q3.
+  Same clause, same value, same verdict.
+verdict_this_job_measured:
+  instrument: pipeline/hold_period.pair_differences interframe medians split into quarters
+    -- the parent's own convention -- plus pipeline/judge_clip.py and pipeline/luma_drift.py.
+    121 frames pulled from origin/farm-results-rtx5090.
+  interframe_median_by_quarter: '7.33 / 7.25 / 0.44 / 4.02, overall median 5.023. The parent
+    s20260871 on the same measurement: 5.60 / 6.69 / 6.05 / 5.13, overall 5.785. Q1 and Q2
+    are LIVELIER than the parent''s; Q3 is 14x deader.'
+  the_failing_clause: 'Motion in all four quarters. Q3 at 0.44 against the parent''s 6.05.
+    Not a marginal call: the bar recorded 0.45 as the value at which a seed ''reads visually
+    frozen'', so this is the rejected seed''s number reproduced on a new seed.'
+  periodic_hold: judge_clip reports period 8 at strength 0.826, about 15 distinct pictures
+    across 120 frames, effective 3.0 fps, ncc 0.671 to 0.99997. No terminal freeze -- the
+    clip does not die and stay dead, it stalls in the middle and partly recovers, which is
+    what a 0.44 Q3 beside a 4.02 Q4 means.
+  looked_at: 20-cell overview plus the full strips. The fig wobbles and its specular highlight
+    shifts across the clip; the stall is not visible as a frozen picture at 6-frame spacing,
+    which is exactly why the quarter measurement is the clause and the eye is not.
+  luminance: 'whole-frame drift f000->f120 -5.52 (116.16 -> 110.63), all three bands falling
+    together (-5.44 / -5.13 / -5.99). Well inside any bound: this seed does NOT darken. Recorded
+    because it is a data point in pipeline/loop/darkening-crf-diagnostic-0819.md, which is
+    why the clip was measured for brightness at all.'
+  not_scored: Leaf count and plant height, excluded by the parent's bar as unmeasurable on
+    a macro with no yardstick. Purple-plate fidelity not re-litigated. No taste judgement
+    offered on the fig's shape or the light.
+what_this_licenses_after_this_verdict: 'Nothing renders off it. Specifically NOT a fifth tremble
+  seed: four have now run and the third-quarter stall has appeared twice, on 20260873 and
+  20260878, which makes it a property of the recipe''s luck rather than a bad draw to be re-rolled.
+  If beat 18 needs a second usable take the next lever is the prompt or the frame count, and
+  neither is filed here. s20260871 remains the only passing take and this verdict does not
+  touch its standing -- picks are R4.'

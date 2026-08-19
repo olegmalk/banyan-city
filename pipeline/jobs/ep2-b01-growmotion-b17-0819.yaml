@@ -232,3 +232,55 @@ sweep_summary_correction:
     a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
     and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
     on R4 alone.
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the queue-keeper lane, one cycle after it landed.
+# The pick / sweep_summary / sweep_summary_correction blocks above are the
+# b-0818 parent's and were cloned in by a derivation that did not strip them.
+# They describe six seeds this job is not one of. Read them as the parent's.
+verdict_this_job: 'FAIL on H3, leaf count breaks. An uninvited green leaf drifts through the
+  upper third from about f040 to f051 -- a third leaf in roughly twelve of the 121 frames
+  -- against a bar that reads ''G3 exactly two leaves in every frame'' and names H3 as a FAIL
+  mode. The bar also says a partial is a FAIL, and this is otherwise a strong take: growth
+  is continuous, the end state is deep purple-violet, nothing freezes and luminance holds.
+  It fails on one clause and the clause is unambiguous.'
+verdict_this_job_measured:
+  instrument: pipeline/coldread_frames.py 20-cell overview plus all seven full strips at native
+    resolution, pipeline/hold_period.pair_differences for interframe medians, pipeline/judge_clip.py,
+    pipeline/luma_drift.py. 121 frames pulled from origin/farm-results-rtx5090. Depth is retired
+    and no number from it is quoted, as the bar instructs.
+  H3_leaf_count_breaks_FIRED: A green leaf, distinct in shape and colour from the sprout's
+    two pale-yellow leaves, enters at the top left around f040 as a few pixels, is unmistakable
+    from f042 through f049 as it drifts right and up, shrinks at f050-f051 and is gone by
+    f052. It is airborne and unattached, so the frame carries three leaves while it is present.
+    Read off strip-03 frame by frame, not inferred from the overview.
+  the_family_this_belongs_to: 'This is the THIRD instance of one pattern: a negative that
+    names the thing that arrives and does not hold it. Beat 12''s 121-frame parent grew an
+    uninvited leaf mass, beat 12''s 73-frame rung scored FAIL-PLANT-CHANGE for the same thing,
+    and this is beat 01 doing it. The b01 negative carries leaf terms and the leaf still came.
+    Filed as a cross-beat observation, not a beat-01 finding.'
+  G1_growth_continuous: HELD. The nub swells monotonically across the overview with no shrink
+    step visible at 6-frame spacing and no balloon. Interframe medians by quarter 0.66 / 0.67
+    / 0.73 / 0.81, overall 0.708 -- a slow, slightly accelerating ramp, which is the shape
+    this clause asks for.
+  G2_end_state: HELD. f120 is a deep purple-violet sphere. H2 (stays green) did not fire.
+  the_colour_transition_NOT_scored: The nub reads teal-green at f000-f019 and purple from
+    f025 on. Whether that is a continuous ramp or a pop in one to four frames is the axis
+    the parent's sweep_summary bracketed, it is NOT a clause in this job's bar, and the overview's
+    6-frame spacing cannot resolve it. Named as unmeasured rather than guessed either way.
+  H1_frozen: DID NOT FIRE. judge_clip finds no terminal freeze, no periodic hold (best lag
+    4 at 0.30, under threshold), ncc 0.98985 to 0.99892.
+  H4_H5_H6: H4 balloon or camera push, H5 the fig detaches or teleports, H6 scene break --
+    none fired. The fig stays on its stem in every frame and the framing does not travel.
+  G4_G5_not_fully_measured: 'G4 (no size doubling, stays below the grass) and G5 (only the
+    fig moves, camera locked by whole-frame registration) were checked by eye and look held,
+    but neither was measured to a number and neither is claimed as scored. They do not change
+    the verdict: H3 already fired and a partial is a FAIL.'
+  luminance: whole-frame drift f000->f120 -1.93 (87.68 -> 85.75), bands -1.46 / -5.04 / +0.70,
+    disagreeing in sign so not a fade. This seed does NOT darken. Recorded as a data point
+    for pipeline/loop/darkening-crf-diagnostic-0819.md.
+what_this_licenses_after_this_verdict: 'Nothing renders off it, and specifically not a re-roll:
+  the leaf is the third sighting of a defect the negative already forbids, so another seed
+  is the wording ladder this project''s own rules close. The useful next lever is the positive
+  prompt or the plate, and neither is filed here. No pick, no promotion, no cut candidacy
+  -- and the published clip still carries the wrong filename, which is a separate repair.'
