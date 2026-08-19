@@ -16,8 +16,8 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.019
-compute_s_per_video_s: 52.7
+throughput_s_video_per_s_wall: 0.0191
+compute_s_per_video_s: 52.3
 # --- appended by ep2-b12-stillmotion-0819 after the render.
 approved: false
 provisional: true
