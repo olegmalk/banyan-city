@@ -243,7 +243,9 @@ init_provenance: >-
   and re-asserted at that sha by cover_crop.py before a pixel is written. It is the SHIPPED beat-12 take's
   own init (ep2-b12-tightB-0813 crops the same file at the same sha), which is what makes the palette
   comparison a comparison. THIS SPEC'S OWN FETCH STEP IS GONE, and what it claimed was wrong twice over:
-  it pulled the plate from raw.githubusercontent.com, which 404s because the repo is private, and it said
+  it pulled the plate from a raw.githubusercontent.com path under genomes/ that main has never carried --
+  .gitignore:40 ignores every png under takes/, and the repo is public, so the 404 was a missing file and
+  not a permission -- and it said
   C:\banyan-farm\plates-local "no longer exists on the box -- checked, not assumed" when three copies of
   the plate sat on the card at this exact sha. The plate now arrives the way the guards ask for: through
   a farm-out directory one spec owns, fetchable from origin/farm-results-rtx5090 (blob verified at

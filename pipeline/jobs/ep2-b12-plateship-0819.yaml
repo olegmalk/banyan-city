@@ -31,8 +31,15 @@
 # REVISED 2026-08-19 AFTER TWO FAILED RUNS, and the revision is a correction of
 # this header, not only of a step. Both runs died in `fetch` with HTTP 404
 # (failed/ep2-b12-plateship-0819-1787132409.log, -1787133492.log) because they
-# read the plate off raw.githubusercontent.com and THIS REPO IS PRIVATE -- raw
-# 404s every path in it regardless of the asserted sha. And the sentence this
+# read the plate off raw.githubusercontent.com/olegmalk/banyan-city/main/genomes/
+# ... and THE PLATE IS NOT ON MAIN AND CANNOT BE. `.gitignore:40` is
+# `genomes/*/nodes/*/takes/**/*.png`: every plate under takes/ is ignored by
+# design, only the .meta.yaml sidecars are tracked, and 12-related-r4-s2.png is
+# untracked on disk. Raw serves README.md from this repo with a 200, so the repo
+# is public and the fetch was not blocked -- it asked for a file the branch has
+# never carried. (The route DOES work when the bytes are committed somewhere not
+# ignored: ep2-b14-mac-plate-0818 fetches main/farm-out/... and succeeded on
+# 08-18.) And the sentence this
 # header used to carry, that C:\banyan-farm\plates-local "NO LONGER EXISTS on the
 # box (checked, not assumed)", was WRONG: `dir /s /b C:\banyan-farm\12-related-r4
 # -s2.png` returns three copies and certutil hashes all three to cc6bd5f0...c074,
@@ -84,9 +91,12 @@ payload:
     attempts at this job both died in their fetch step with `HTTP Error 404: Not
     Found` (C:\banyan-queue\failed\ep2-b12-plateship-0819-1787132409.log and
     -1787133492.log). They read the plate from
-    raw.githubusercontent.com/olegmalk/banyan-city/main/... and that repo is
-    PRIVATE, so raw answers 404 for every path in it whatever sha the caller
-    asserts. A private repo does not become readable because a spec knows the hash.
+    raw.githubusercontent.com/olegmalk/banyan-city/main/genomes/... and THAT FILE IS
+    NOT ON MAIN. `.gitignore:40` ignores `genomes/*/nodes/*/takes/**/*.png`, so every
+    plate under takes/ is untracked by design and only the sidecars are committed.
+    The repo is public -- raw serves its README with a 200 -- so nothing was denied:
+    the fetch asked for a path the branch has never carried, and a sha assertion
+    cannot conjure a blob that was never pushed.
 
     AND THE PREMISE UNDER THAT FETCH WAS FALSE. The first version of this spec said
     C:\banyan-farm\plates-local "NO LONGER EXISTS on the box (checked, not
