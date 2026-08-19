@@ -9318,3 +9318,43 @@ all, and whether the branch needs a rewrite), not something a daemon fix should 
 Also seen and NOT touched: `box_autofill.py` on the box is drifted from the repo, which its
 own `--verify-deployed` calls fatal. Unrelated to this fix; re-deploying it re-registers the
 autofill scheduled task, so it wants its own window.
+
+## 2026-08-20 — beats 15, 03 and 13 have motion candidates for the first time, and all three are FAIL
+
+The composite-then-inpaint route converted three plates on 08-19/08-20 (beats 15,
+19, 03, 13 — 4 for 4). Three of those plates now have a first motion take:
+`ep2-b15-listenmotion-0820`, `ep2-b03-covermotion-0820`,
+`ep2-b13-shademotion-0820` — the b14 crf-10 LTX recipe as cloned for beat 19,
+one seed (20260820) across all three, only the init and the words changed. rc=0
+on all seven steps of each, 121 frames, ~265 s each, **$0**.
+
+**All three FAIL and nothing is proposed for the cut.** Beats 03, 13 and 15 stay
+slates. Shared defect: he stands up and walks out of frame in the last quarter
+(f090/f084/f100), against negatives that all three named `standing up` and
+`walking out of frame` — the seventh/eighth/ninth sighting of *positive
+placement beats negatives*. Beat 15 additionally **picked the sapling up**,
+because its action clause said `talks to them from a hand's width away` and the
+sampler read the idiom's `hand` as a placement.
+
+What held, and it is the reason the route is still right: **the composited
+two-leaf sapling survived 121 frames on beats 03 and 13**, including a full
+stand-up and, on 13, green-on-green at the lowest object-to-ground contrast any
+composite here has had. Beat 19's motion take lost exactly that clause. Beat
+03's acting clause also moved for the first time (a real duck, f036–f084) from
+one positive placement.
+
+Full record, with the two instruments of mine that broke and were retracted, in
+`pipeline/work-ladder-0819.md` (2026-08-20 entry, composite-plate motion lane);
+per-clause verdicts in each spec's `verdict_measured`; clips and sheets in
+`farm-out/ep2-b{15,03,13}-*motion-0820/`.
+
+**Rung 2 filed and running:** `ep2-b15-listenlast-0820`,
+`ep2-b03-coverlast-0820`, `ep2-b13-shadelast-0820` — one variable, the action
+clause becomes a placement of the last frame, negative deliberately unchanged,
+same init and same seed so rung 1 is a true control.
+
+**Courier note, confirming the entry above:** the three plates for beats 03 and
+13 had to be hand-carried onto `origin/farm-results-rtx5090` before
+`box_enqueue`'s `--src` guard could fetch them, and all six output clips were
+scp'd off `rtx5090:C:/banyan-farm/courier-box/farm-out/`. The 3.18 GB push
+backlog is still there and still the reason.
