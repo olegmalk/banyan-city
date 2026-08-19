@@ -185,9 +185,38 @@ def figure_keypoints(cx, stature, ground_y, head_frac, torso_half,
     }
 
 
+# WHERE THE ELBOW GOES, AND WHY THERE ARE NOW TWO ANSWERS.
+#
+# "solved" is the original: the two-link triangle picks the elbow, which for this
+# separation puts it at SHOULDER HEIGHT and laterally out -- a chicken-wing -- with
+# the forearm then dropping steeply to the belly. `ep2-b08-posenet-sample-0819`
+# rendered that and the net BOUND THE UPPER ARM EXACTLY AND THEN MIRRORED THE
+# FOREARM ABOUT THE ELBOW: a raised index finger about 230 px ABOVE the authored
+# wrist, nothing at all at the wrist. Length and attachment bound; DIRECTION did
+# not.
+#
+# That verdict named two candidate causes and ruled the cheaper one testable
+# first: our own anatomy. A person pointing at someone's belly beside them does
+# not hold the elbow out at shoulder height -- the elbow hangs LOW AND NEAR THE
+# RIBS and the forearm reaches forward and down. "natural" builds that instead:
+# the elbow is placed by anatomy (one upper-arm length from the shoulder, at
+# `hang_deg` off straight-down, opening toward the target) and the wrist is then
+# one forearm along elbow->belly, so the forearm still aims.
+#
+# It is also STRUCTURALLY HARDER TO FLIP, which is the point. With the elbow at
+# y~638 rather than y~491, the mirror image of the forearm still lands below the
+# shoulder and reads as nothing in particular, where the mirror of a chicken-wing
+# reads as a perfectly plausible raised-finger point. The staging stops offering
+# the net an attractive wrong answer.
+#
+# "solved" REMAINS THE DEFAULT so the filed hint stays byte-identical.
+POINT_SOLVED, POINT_NATURAL = "solved", "natural"
+HANG_DEG = 15.0           # off straight-down, opening toward the target
+
+
 def stage(width=W, height=H, guard_x=GUARD_X, goblin_x=GOBLIN_X,
           guard_h=GUARD_H, goblin_h=GOBLIN_H, ground_y=GROUND_Y,
-          clearance=CLEARANCE):
+          clearance=CLEARANCE, point_style=POINT_SOLVED, hang_deg=HANG_DEG):
     """Both figures' keypoints plus the metadata the bar is scored off.
 
     The arm is SOLVED, not drawn by eye, by the same two-link triangle
@@ -256,12 +285,35 @@ def stage(width=W, height=H, guard_x=GUARD_X, goblin_x=GOBLIN_X,
             "the wrist would sit at %.2f extension (min %.2f): the figures are so "
             "close the elbow folds, and a folded arm reads as a jab, not a point."
             % (ext, EXT_MIN))
-    # Second link lengthened by the hand, so that the WRIST -- one forearm along
-    # elbow->belly -- ends up a hand short of the target rather than on it.
-    elbow = solve_elbow(near_sx, near_sy, target[0], target[1],
-                        upper, fore + hand, sign=1.0)
+    if point_style == POINT_NATURAL:
+        # ELBOW BY ANATOMY, not by the triangle: one upper-arm from the shoulder,
+        # `hang_deg` off straight-down, opening toward the target side.
+        if not 0.0 <= hang_deg < 80.0:
+            raise ValueError("hang_deg must be in [0,80), got %r" % (hang_deg,))
+        th = math.radians(hang_deg)
+        side = -1.0 if target[0] < near_sx else 1.0
+        elbow = (near_sx + side * upper * math.sin(th),
+                 near_sy + upper * math.cos(th))
+    elif point_style == POINT_SOLVED:
+        # Second link lengthened by the hand, so that the WRIST -- one forearm
+        # along elbow->belly -- ends up a hand short of the target rather than on
+        # it.
+        elbow = solve_elbow(near_sx, near_sy, target[0], target[1],
+                            upper, fore + hand, sign=1.0)
+    else:
+        raise ValueError("point_style must be %r or %r, got %r"
+                         % (POINT_SOLVED, POINT_NATURAL, point_style))
     edx, edy = target[0] - elbow[0], target[1] - elbow[1]
     ed = math.hypot(edx, edy)
+    # THE FOREARM MUST NOT OVERSHOOT THE BELLY. With the elbow placed by anatomy
+    # rather than solved, elbow->belly is whatever it is, and if it is shorter
+    # than a forearm the wrist would land INSIDE the goblin -- a prod, not a
+    # point, and it would merge the two silhouettes exactly where B1 is scored.
+    if ed <= fore:
+        raise ValueError(
+            "the elbow sits %.1f px from the belly but the forearm is %.1f px: "
+            "the wrist would land inside the goblin. Reduce hang_deg or move the "
+            "figures apart." % (ed, fore))
     wrist = (elbow[0] + edx / ed * fore, elbow[1] + edy / ed * fore)
     guard["Relb"], guard["Rwri"] = elbow, wrist
 
@@ -304,13 +356,17 @@ def stage(width=W, height=H, guard_x=GUARD_X, goblin_x=GOBLIN_X,
                    "feet_y": round(gy, 1)},
         "stature_ratio": round(gu_h / go_h, 3),
         "point": {"limb": "R-elbow -> R-wrist, COLORS[3] = (255, 255, 0)",
+                  "style": point_style,
                   "shoulder": tuple(round(v, 1) for v in guard["Rsho"]),
                   "elbow": tuple(round(v, 1) for v in elbow),
                   "wrist": tuple(round(v, 1) for v in wrist),
                   "target_belly": tuple(round(v, 1) for v in target),
                   "shoulder_to_belly_px": round(full, 1),
                   "arm_px": round(arm, 1),
-                  "extension": round(ext, 3)},
+                  "extension": round(ext, 3),
+                  "elbow_below_shoulder_px": round(elbow[1] - near_sy, 1),
+                  "gap_to_torso_px": round(math.hypot(target[0] - wrist[0],
+                                                      target[1] - wrist[1]), 1)},
         "board_drawn": False,
         "ground_ticks_drawn": False,
         "ink_fraction": None,
@@ -526,6 +582,70 @@ def selftest():
     check("this hint's forearm ray hits it (%.1f px) with no finger keypoint "
           "anywhere" % ray_miss(m["point"]), ray_miss(m["point"]) < 20.0)
 
+    # ---- THE NATURAL POINT (the rung ruled by posenet-sample's verdict) ----
+    # The filed hint must not move: ep2-b08-posenet-sample-0819's verdict is
+    # measured against sha 3fe4eacc..., so `solved` stays the default and is
+    # asserted byte-identical here.
+    FILED = "3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662"
+    import io as _io
+    _b = _io.BytesIO()
+    build()[0].save(_b, "PNG")
+    check("the FILED hint is byte-identical -- `solved` is still the default",
+          hashlib.sha256(_b.getvalue()).hexdigest() == FILED)
+    check("the default style is recorded as solved",
+          m["point"]["style"] == POINT_SOLVED)
+
+    nat, nm = build(point_style=POINT_NATURAL)
+    npt, spt = nm["point"], m["point"]
+    check("natural records its own style", npt["style"] == POINT_NATURAL)
+    check("natural moves NO other landmark: the goblin is untouched",
+          nm["goblin"] == m["goblin"])
+    for k in ("cx", "stature_px", "feet_y", "shoulder_y"):
+        check("natural moves no guard landmark: %s" % k,
+              nm["guard"][k] == m["guard"][k])
+    for k in ("shoulder", "target_belly", "arm_px", "shoulder_to_belly_px"):
+        check("natural keeps the same shoulder and target: %s" % k,
+              npt[k] == spt[k])
+
+    # THE WHOLE POINT OF THE STYLE: the elbow must HANG, where solved put it at
+    # shoulder height. That is the property the render is being asked about.
+    check("solved's elbow sits at SHOULDER HEIGHT -- the chicken-wing the net "
+          "mirrored (%.1f px below)" % spt["elbow_below_shoulder_px"],
+          abs(spt["elbow_below_shoulder_px"]) < 20)
+    check("natural's elbow HANGS well below the shoulder (%.1f px)"
+          % npt["elbow_below_shoulder_px"],
+          npt["elbow_below_shoulder_px"] > 0.10 * H)
+
+    # And the forearm must still aim, or the change is a regression.
+    check("natural's forearm ray still hits the belly (%.1f px)"
+          % ray_miss(npt), ray_miss(npt) < 20.0)
+    check("natural's wrist stops OUTSIDE the goblin's torso (%.1f px clear)"
+          % npt["gap_to_torso_px"], npt["gap_to_torso_px"] > 20.0)
+    check("natural's wrist is between the two figures",
+          nm["goblin"]["cx"] < npt["wrist"][0] < nm["guard"]["cx"])
+    # A MIRROR OF THE NATURAL FOREARM MUST NOT READ AS A RAISED POINT, which is
+    # the failure it exists to remove: reflect the wrist about the elbow and the
+    # hand must still land BELOW the shoulder.
+    mx = 2 * npt["elbow"][0] - npt["wrist"][0]
+    my = 2 * npt["elbow"][1] - npt["wrist"][1]
+    check("mirroring natural's forearm keeps the hand BELOW the shoulder "
+          "(y %.1f vs shoulder %.1f) -- no attractive wrong answer"
+          % (my, npt["shoulder"][1]), my > npt["shoulder"][1])
+    smx_y = 2 * spt["elbow"][1] - spt["wrist"][1]
+    check("mirroring SOLVED's forearm puts the hand ABOVE the shoulder "
+          "(y %.1f) -- which is exactly what the net drew" % smx_y,
+          smx_y < spt["shoulder"][1])
+
+    for bad in ({"point_style": "sideways"}, {"point_style": POINT_NATURAL,
+                                              "hang_deg": 95.0}):
+        try:
+            stage(**bad)
+            check("refuses %s" % bad, False)
+        except ValueError:
+            check("refuses %s" % bad, True)
+    check("natural authoring is deterministic",
+          build(point_style=POINT_NATURAL)[0].tobytes() == nat.tobytes())
+
     # ---- WHAT MUST NOT BE DRAWN, asserted so nobody "fixes" it -----------
     check("NO board rectangle is drawn (a rectangle is not a pose; rung 5 "
           "proved unreadable ink gets DRAWN)", m["board_drawn"] is False)
@@ -581,6 +701,13 @@ def main():
     ap.add_argument("--goblin-h", type=float, default=GOBLIN_H)
     ap.add_argument("--ground-y", type=float, default=GROUND_Y)
     ap.add_argument("--clearance", type=float, default=CLEARANCE)
+    ap.add_argument("--point-style", default=POINT_SOLVED,
+                    choices=[POINT_SOLVED, POINT_NATURAL],
+                    help="solved = the two-link triangle (the filed hint, "
+                         "chicken-wing elbow at shoulder height); natural = "
+                         "elbow hanging low near the ribs, forearm reaching")
+    ap.add_argument("--hang-deg", type=float, default=HANG_DEG,
+                    help="natural style only: elbow angle off straight-down")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
 
@@ -592,7 +719,8 @@ def main():
     img, meta = build(width=a.width, height=a.height, guard_x=a.guard_x,
                       goblin_x=a.goblin_x, guard_h=a.guard_h,
                       goblin_h=a.goblin_h, ground_y=a.ground_y,
-                      clearance=a.clearance)
+                      clearance=a.clearance, point_style=a.point_style,
+                      hang_deg=a.hang_deg)
     meta["ink_fraction"] = round(ink_fraction(img), 5)
     img.save(a.out, "PNG")
     print("wrote %s" % a.out)
