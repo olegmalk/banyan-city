@@ -1041,3 +1041,136 @@ ran. What is established is that **the count was never checked**, and ~30 specs
 were filed on a word count standing in for a token count. Re-measuring the
 already-run specs is its own unit and would be worth doing before any of their
 negatives is reused as a parent.
+
+---
+
+## HOLD appended 2026-08-19 by the goblin-identity forensic lane
+
+**NO GOBLIN-IDENTITY RENDER FIRES UNTIL `/review/ep2-goblin-design-0819` IS
+ANSWERED.** Not a plate, not a motion job, not a re-render of either design
+group, and not one further edit to the goblin's identity wording in
+`pipeline/plate_scratch.py` or `pipeline/wave-drafts.yaml`. Work that does not
+touch the goblin's face or build carries on normally — this hold is scoped to one
+character's design, not to episode 2.
+
+**WHY, in one paragraph.** The founder watched `ep2-demo-0819c` and asked *"some
+scenes including the goblin has him as an adult??"* — as a **surprise**. He was
+right on both counts: nine beats in that cut show the goblin and they show two
+characters. Five read round and young (03, 04, 08, 13, 20), four read lean adult
+(07, 14, 17, 19), and **the split falls exactly on the render date** — everything
+drawn on or before 08-16 is round, everything drawn 08-18/08-19 is the adult.
+Tracing the authority for the adult found none. His two picks are both round
+(`goblin-picker-0814.jpg`, ruled *"seed s0 is the goblin"* 08-14, is 25 round
+tiles; `goblin-design-0815.jpg` design 1, ruled *"ill take 1 for the goblin"*
+08-15, is labelled *squat, round-bellied* and is the roundest of six). His age
+words are *"not old.."* and *"actually a young dumb goblin, but not cute"* — the
+axis he named is **cute → not cute**, and the pipeline moved on **child → adult**,
+which is a different axis. The one card that ever asked him to bless an adult read
+came back *"these generations arent very good"*.
+
+**THE PROPAGATION, so a lane can find it rather than re-derive it.**
+
+| When | What | Where |
+|---|---|---|
+| 08-13 | steward-authored rule *"He is SHORT, not YOUNG: an adult in miniature, never a child"* — a defensible diagnosis, and it **kept "short"** | `taste/steward-model.ledger.yaml`, `ep2-b13-adult` |
+| 08-15 13:28 | rewritten into the prompt as **`a lean wiry adult goblin man`**, replacing `a small goblin boy`; the "short" half dropped; authority cited is an inference (*"The founder's complaint is that he reads as a baby"*) with no quote beside it; `no child` in the same negative | commit `91a35fe1` — `insert_b04_crouch_plate_0815.py`, `wave-drafts.yaml`, `ep2-b04-crouchplate-0815.yaml`, `refs-goblin-d1std-0815.yaml` |
+| 08-15 | **the founder's own approved reference blacklisted**: `refs-goblin-approved-0814` (frozen from his "seed s0" ruling) listed under `not_these:` as `# ~4 heads, oversized cranium, toddler stance` | `pipeline/refs/refs-goblin-d1std-0815.yaml` |
+| 08-16 | becomes the identity string — `lean wiry adult goblin man, green skin, bald head, patchwork cloak` — now at ~14 sites | commit `9eb7bd15`, `pipeline/plate_scratch.py` |
+| 08-18 | board asserts *"Beat 14 is the adult you chose"* on a silence-accepts card. **He never chose it.** b14's plate was drawn 08-18 off the adult wording and shipped on the steward's ruling — `5d872ac3`'s own body says *"the 2026-08-18 board asked about and the steward shipped"* | `review/inbox.yaml`, `5d872ac3` |
+| 08-18 | that claim hard-coded as *"beat 14 is the one the founder chose and it is the one that renders"*, and every later beat inherits it | `pipeline/plate_scratch.py:376-381` |
+
+**THE FIX THAT MAY HAVE BEEN BACKWARDS.** The 08-18 result *"b20 FIXED: the adult
+goblin draws … the chibi child is gone"* was filed as a win. If the founder
+answers **A**, b20's **round** frame is the correct one and that fix was a
+regression queued for shipping. It is therefore **not** applied to the cut, and
+the round b20 frame is on the card as evidence rather than being replaced.
+
+**NOT CROSS-APPLIED — checked, so nobody widens this further than the facts.** The
+*"reads adolescent"* complaint is about the **guards** (beats 05, 06, 10, 11 and
+beat 09's plate); every `THE ADULT READ` block in the pipeline is scoped to beat
+09. No goblin spec inherited it. What did bleed is **vocabulary**: this repo
+writes *"reads adolescent rather than adult"* as a defect by default, and inside
+that habit an adult goblin read as a fix instead of a change of character. `mature
+male` on beat 09's guard plate remains a legitimate named-and-unfired build and is
+**not** covered by this hold.
+
+**WHAT LIFTS IT.** One letter on `/review/ep2-goblin-design-0819`: **A** (the
+picked card — the four adult beats get re-rendered), **B** (the adult is canon —
+the five round beats get re-rendered), or a third design named, in which case the
+next instrument is a reference image, a LoRA or a drawn design, **not** a seventh
+wording — that wall was already measured on 08-15 (`squat, round-bellied` rendered
+0 of 4, all slim, on a pure text-to-image path where nothing outranks the prompt).
+
+---
+
+## Guard 2's voice — appended 2026-08-19 by the VO lane
+
+**AWAITING ONE LETTER on `/review/ep2-guard2-voice-0819`: A, B or C.** No Guard 2
+re-synthesis fires until then, because voice is a taste axis (R4) and the steward
+does not cast. Everything else in VO carries on; this is scoped to one character.
+
+**THE BOUNCE.** Watching `ep2-demo-0819c`: *"guard 2 has the same voice as the
+sapling..."* He was right, and measurement says he was right to within 2 Hz.
+Per-character medians off that cut's own takes (`qa_voices.py` estimators — median
+F0 by autocorrelation, spectral centroid):
+
+| character | F0 | centroid | vs the tree |
+|---|---|---|---|
+| SAPLING (VO, `bm_fable`) | 107.4 Hz | 1182 Hz | — |
+| **GUARD 2 (`am_echo`)** | **109.1 Hz** | **1283 Hz** | **dF0 1.7, dCent 101 — CONFUSABLE** |
+| GUARD 1 (`am_adam`) | 131.9 Hz | 1906 Hz | dF0 22.8 — clear |
+| SCAVENGER (`am_puck`) | 164.4 Hz | 1865 Hz | dF0 57.0 — clear |
+
+It is the **only** confusable pair in the cut. One defect, exactly where he said.
+
+**CAUSE: CASTING GAP, NOT A MIS-WIRE — so do not go looking for a bug.**
+`voices.yaml` assigns `GUARD 2: am_echo`, `am_echo.wav` exists, and
+`synth_vo.py:130` clones from it. That chain is correct end to end. What is
+missing is the *shaping*: `build_refs.py`'s `VOICE_SHAPING` hands a per-character
+ref passage + speed + semitone offset to `am_puck`, `bm_george`, `bm_daniel`,
+`bf_isabella` — **and to nobody else**. Both guards were cast after that
+2026-07-25 pass and have no entry, so both cloned from the same shared `REF_TEXT`
+at speed 1.0 / pitch 0.0. That file's own comment already names this as *"the
+acoustic cause of the founder's 'voices are mixed up'"*; the guards were simply
+never swept up by the fix. Measured ref distances from `bm_fable`: `am_adam`
+**1.1 Hz**, `am_echo` **8.4 Hz**. Guard 1 drifted clear in synthesis by luck.
+
+**GUARD 1 IS A LOADED GUN.** His ref is 1.1 Hz from the tree's and he passes only
+because chatterbox happened to push him up 14 Hz on these three takes. Takes are
+non-deterministic on MPS (no seeding — see `ChatterboxEngine.synth`), so a
+re-voice could land him on the tree with nothing changed. He gets a
+`VOICE_SHAPING` entry in the same pass as the pick.
+
+**TWO ENGINE FACTS WORTH NOT RE-DERIVING** (measured across 9 candidate synths):
+
+1. **Chatterbox does not preserve the ref's timbre.** A first candidate set built
+   to differ in *brightness* came back flattened onto one timbre — `am_michael`
+   went in at centroid 2183 and out at 1325. **Pitch is the only separator that
+   survives cloning.** Designing voices by timbre is wasted effort here.
+2. **It pulls pitch toward the middle by a noisy +4..+20 Hz and refuses
+   extremes.** `am_onyx` at −6st (ref 63.7 Hz) rendered *back up* to 110.1 Hz —
+   straight onto the sapling. So a ref number predicts nothing: every candidate
+   must be measured on the **rendered take**, which is what `build_refs.py`'s
+   comment has said all along and is now quantified.
+
+**THE THREE CANDIDATES**, all clear of both the sapling and Guard 1 by the
+`qa_voices` bar (confusable iff dF0 < 12 Hz **and** dCent < 400 Hz), all mutually
+distinct (A–B 63.7 Hz, A–C 96.7 Hz, B–C 33.0 Hz), each speaking beat 10 verbatim:
+
+| | base | pitch | rendered | clear of tree | soft collision |
+|---|---|---|---|---|---|
+| A | `am_onyx` | −4st | 83.0 Hz | 24.4 Hz | FARMER dF0 8.6 (other thread) |
+| B | `am_michael` | +4st | 146.8 Hz | 39.4 Hz | ASSESSOR dF0 10.8 (other thread) |
+| C | `am_fenrir` | +5st | 179.8 Hz | 72.4 Hz | none |
+
+Rejected variants, with the numbers, are in
+`review/ep2-guard2-voice-0819/candidates.yaml` so nobody re-runs them: `am_onyx`
+−6st and −2st, `am_eric` −1st and natural, `am_santa` +3st.
+
+**WHAT THE PICK COSTS.** Add the winner to `VOICE_SHAPING`, point `GUARD 2` at
+that base voice in `voices.yaml`, rebuild refs, re-synth **beats 06/08/10 only**
+(approved text unchanged — the ruled-legal re-synthesis class, 003b precedent;
+old takes archived to `clips/vo-archive/` per R6), re-measure against the whole
+cast on the fresh takes, rebuild the cut. Candidate refs are parked as
+`~/.cache/banyan-tts/cb-refs/guard2sw-{D1,M2,H2}.wav` (A/B/C) — **the live cast
+refs were not touched.** $0.

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which one is the goblin?</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 620; color: var(--accent); }
+  p, ul { max-width: 78ch; }
+  li { margin: 5px 0; }
+  .muted { color: var(--muted); font-size: 14.5px; }
+  .ask { background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
+         padding: 18px 20px; margin: 26px 0; }
+  .ask h2 { margin-top: 0; color: var(--accent); }
+  .mine { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--warn);
+          border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
+  .hold { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--fail);
+          border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
+  figure { margin: 14px 0 6px; }
+  img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  .fail { color: var(--fail); } .pass { color: var(--pass); } .warn { color: var(--warn); }
+  code { background: #101113; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  blockquote { margin: 10px 0 10px 0; padding: 2px 0 2px 14px; border-left: 2px solid var(--accent);
+               color: var(--ink); max-width: 78ch; }
+  .three { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 18px 0 4px; }
+  .three figure { margin: 0; }
+  .three figcaption strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Which one is the goblin?</h1>
+  <p class="sub">2026-08-19. You watched <code>ep2-demo-0819c</code> and asked: <em>&ldquo;some scenes
+  including the goblin has him as an adult??&rdquo;</em> &mdash; and you were right to be surprised. Nine
+  beats in that cut show the goblin and they show <strong>two different characters</strong>. Five are the
+  round young one; four are a lean adult. I traced who authorised the adult, and the honest answer is
+  <strong>nobody did</strong>. This page is the trace and one question.</p>
+</header>
+
+<h2>The three pictures</h2>
+<p>Left is the design you picked. Middle and right are both from the cut you just watched.</p>
+
+<div class="three">
+  <figure>
+    <img src="/review/ep2-goblin-design-0819/picked-design-1-0815.png"
+         alt="Design 1 from the six-design sheet: a round-domed, soft-faced green goblin with small pointed ears, drawn in nine expressions.">
+    <figcaption><strong>A &mdash; THE PICKED CARD.</strong> Design 1 off the 2026-08-15 sheet.
+    Your words: <em>&ldquo;ill take 1 for the goblin&rdquo;</em>. Its own label on that sheet reads
+    <em>squat, round-bellied, lumpy nose</em>.</figcaption>
+  </figure>
+  <figure>
+    <img src="/review/ep2-goblin-design-0819/adult-b19-0819.png"
+         alt="Beat 19 from the cut: a lean, long-limbed adult goblin with an angular skull and sharp features, seated on grass in a ragged patchwork cloak and tall boots.">
+    <figcaption><strong>B &mdash; THE ADULT.</strong> Beat 19 of the cut, rendered 2026-08-19.
+    Also beats 07, 14 and 17.</figcaption>
+  </figure>
+  <figure>
+    <img src="/review/ep2-goblin-design-0819/round-b20-0816.png"
+         alt="Beat 20 from the cut: a small round-headed goblin with large eyes and a soft face, in a pale coat, holding a dark fig beside a young tree.">
+    <figcaption><strong>C &mdash; THE ROUND ONE.</strong> Beat 20 of the cut.
+    Also beats 03, 04, 08 and 13.</figcaption>
+  </figure>
+</div>
+
+<div class="ask">
+  <h2>The one question</h2>
+  <p style="font-size:17px;margin-top:0"><strong>Which one is the goblin?</strong></p>
+  <p class="muted" style="margin-bottom:0">Answer with a letter: <strong>A</strong> (the picked card &mdash;
+  the round young one, and B gets re-rendered) &middot; <strong>B</strong> (the adult &mdash; he is canon
+  now, and C gets re-rendered) &middot; or <strong>name a third</strong>, in which case say what is wrong
+  with both and I go get a reference or a drawn design rather than write a seventh wording.
+  Nothing about the goblin renders until you answer &mdash; see the hold at the bottom.</p>
+</div>
+
+<h2>The split in the cut you watched</h2>
+<figure>
+  <img src="/review/ep2-goblin-design-0819/the-split-0819c.png"
+       alt="Nine frames from the cut. Top row, labelled ROUND: beats 03, 04, 08, 13 and 20, all showing a small round-headed goblin. Bottom row, labelled ADULT: beats 07, 14, 17 and 19, all showing a lean adult figure.">
+  <figcaption>Every goblin beat in <code>ep2-demo-0819c</code>, one frame each, in the cut&rsquo;s own order
+  within each group. The line falls exactly on the render date: everything drawn on or before 2026-08-16 is
+  round; everything drawn on 08-18 or 08-19 is the adult. Beats 09, 15 and 16 are slates. Beats 12, 18 and 21
+  have no goblin on screen (leaves, the fig, the sprout).</figcaption>
+</figure>
+
+<table>
+  <tr><th>Beat</th><th>Take in the cut</th><th>Drawn</th><th>Reads</th></tr>
+  <tr><td>03</td><td><code>b03-refire-0814</code></td><td>08-14</td><td class="pass">round / young</td></tr>
+  <tr><td>04</td><td><code>b04-refire-0814</code></td><td>08-14</td><td class="pass">round / young &mdash; and blushing, which is the take you called cute</td></tr>
+  <tr><td>08</td><td><code>b08-twohander</code></td><td>08-13</td><td class="pass">round / young</td></tr>
+  <tr><td>13</td><td><code>b13-refire-0814</code></td><td>08-14</td><td class="pass">round / young</td></tr>
+  <tr><td>20</td><td><code>b20-shape-headtrim</code></td><td>08-16</td><td class="pass">round / young</td></tr>
+  <tr><td>07</td><td><code>b07-point-crf10-0819</code></td><td>08-19</td><td class="fail">lean adult &mdash; and he has <strong>white hair and spectacles</strong>; canon says bald</td></tr>
+  <tr><td>14</td><td><code>b14-macplate-r1s1-0818</code></td><td>08-18</td><td class="fail">lean adult</td></tr>
+  <tr><td>17</td><td><code>b17-navy-crf10-0819</code></td><td>08-19</td><td class="fail">lean adult</td></tr>
+  <tr><td>19</td><td><code>b19-dropcomp-0819</code></td><td>08-19</td><td class="fail">lean adult</td></tr>
+</table>
+
+<h2>The authority chain, with dates</h2>
+
+<h3>What you actually said about his age</h3>
+<p>Five quotes, and none of them contains the word <em>adult</em>:</p>
+<blockquote>
+  <p>2026-08-13 &mdash; &ldquo;you&rsquo;re making the goblin look like a cute little kid&hellip; lets remake him&rdquo;</p>
+  <p>2026-08-13 &mdash; &ldquo;beat 04 has the cute goblin, needs to be changed&rdquo;</p>
+  <p>2026-08-15 &mdash; &ldquo;i just want him to be a dumb ol goblin&rdquo; &middot; &ldquo;not old..&rdquo;
+     &middot; &ldquo;actually a young dumb goblin, but not cute&rdquo;</p>
+  <p>2026-08-15 &mdash; &ldquo;thats the cute goblin again.. i&rsquo;d rather him not be cute&rdquo;</p>
+  <p>2026-08-15 &mdash; &ldquo;ill take 1 for the goblin, although some of the heads in the reference are
+     dismorphed or something, so just, beware&rdquo;</p>
+</blockquote>
+<p>Your axis is <strong>cute &rarr; not cute</strong>, and you fenced the other one off twice by hand:
+<em>&ldquo;not old&rdquo;</em> and <em>&ldquo;a <strong>young</strong> dumb goblin&rdquo;</em>. The design you
+then picked, number 1 of six, is labelled <em>squat, round-bellied</em> and is the roundest and softest on
+that sheet &mdash; you skipped 3, 4, 5 and 6, which are the lean angular ones.</p>
+
+<h3>And what you picked the day before that</h3>
+<p>On 2026-08-14 you answered the 25-tile picker with <em>&ldquo;seed s0 is the goblin&rdquo;</em>. Every
+tile on that sheet &mdash; including all six <code>s0</code> tiles and tile 1, the frame you pointed at on
+08-13 &mdash; is a small, round-domed, child-proportioned goblin. There is no lean adult anywhere on the
+sheet you chose from.</p>
+<figure>
+  <img src="/review/ep2-picks/sheets/goblin-picker-0814.jpg"
+       alt="The 25-tile picker sheet from 2026-08-14. All twenty-five tiles show a small round-domed goblin with a large cranium and child proportions.">
+  <figcaption>The sheet your &ldquo;seed s0&rdquo; ruling was made on
+  (<code>/review/ep2-picks/sheets/goblin-picker-0814.jpg</code>). The six-design sheet you picked 1 from is at
+  <code>/review/ep2-picks/sheets/goblin-design-0815.jpg</code>.</figcaption>
+</figure>
+
+<h3>And the one time I showed you an adult on purpose, you turned it down</h3>
+<p>On 2026-08-13 I put up a card headed <em>&ldquo;The goblin remake works &mdash; he reads as a small
+ADULT now, not a child&rdquo;</em>. Your verdict, 2026-08-14: <em>&ldquo;these generations arent very
+good&rdquo;</em>. That is the only card in the whole board that ever asked you to bless an adult read, and
+it came back a no.</p>
+
+<div class="mine">
+<h3 style="margin-top:0">So where did &ldquo;adult&rdquo; come from? Me. Three steps, all mine.</h3>
+<ol>
+  <li><strong>2026-08-13</strong> &mdash; I diagnosed the cute-kid read as coming from two words,
+  <code>a small goblin</code> and <code>a bald domed head</code>, on the theory that the model resolves
+  <em>small</em> as <em>young</em> rather than <em>short</em>. That diagnosis is probably still right. The fix
+  I wrote for it was a sentence of mine, not a quote of yours:
+  <em>&ldquo;He is SHORT, not YOUNG: an adult in miniature, never a child.&rdquo;</em>
+  (<code>taste/steward-model.ledger.yaml</code>, entry <code>ep2-b13-adult</code>.) Note it kept
+  <strong>short</strong>.</li>
+
+  <li><strong>2026-08-15 13:28</strong>, commit <code>91a35fe1</code> &mdash; that rule was rewritten into the
+  prompt as <code>a lean wiry adult goblin man</code>, replacing <code>a small goblin boy</code>. The
+  <em>short</em> half was dropped and <code>lean wiry</code> put in its place. The authority the commit cites,
+  verbatim from its own file: <em>&ldquo;The founder&rsquo;s complaint is that he reads as a baby; &lsquo;boy&rsquo;
+  and &lsquo;small&rsquo; are the words asking for one.&rdquo;</em> That is an inference of mine, and no quote
+  of yours sits next to it. The same prompt&rsquo;s negative list contains <code>no child</code> &mdash; which
+  negates your own word <em>young</em> &mdash; and the reference file that shipped it recorded the win as
+  <em>&ldquo;~5.5 to 6 heads, lean and wiry. BEST ROW &hellip; It is the brief.&rdquo;</em> A five-and-a-half-head
+  figure is a full-grown man, not an adult in miniature, and <em>lean wiry</em> is the direct opposite of the
+  <em>squat, round-bellied</em> build you picked two hours earlier that same day.</li>
+
+  <li><strong>2026-08-15, same file</strong> &mdash; and this is the step that mattered most:
+  <code>refs-goblin-approved-0814</code>, the reference set frozen from your own
+  <em>&ldquo;seed s0 is the goblin&rdquo;</em> ruling, was put on a <code>not_these:</code> blacklist in
+  <code>pipeline/refs/refs-goblin-d1std-0815.yaml</code> with the comment
+  <code># ~4 heads, oversized cranium, toddler stance</code>. Your approved reference was filed as a defect
+  and stopped being used.</li>
+</ol>
+<p style="margin-bottom:0">From there it spread on its own.
+<code>lean wiry adult goblin man, green skin, bald head, patchwork cloak</code> became the character&rsquo;s
+identity string and now sits at roughly fourteen places in <code>pipeline/plate_scratch.py</code> (first landed
+08-16, <code>9eb7bd15</code>) &mdash; which is why every plate the Mac farm drew on 08-18 and 08-19 came out
+adult, and the four adult beats in your cut are exactly those.</p>
+</div>
+
+<h3>Two corrections I owe you</h3>
+<p><strong>The 08-18 board told you something that is not true.</strong> That card said <em>&ldquo;Beat 14
+is the adult you chose; beat 20 is a round-headed chibi child &hellip; the cute goblin you rejected on beat
+04&rdquo;</em>, and it was a silence-accepts card, so it carried. You never chose beat 14. Beat 14&rsquo;s
+plate was drawn on 08-18 off the <em>lean wiry adult</em> wording and shipped on my ruling &mdash; commit
+<code>5d872ac3</code> says so in its own body (<em>&ldquo;the 2026-08-18 board asked about and the steward
+shipped&rdquo;</em>). A comment in <code>plate_scratch.py</code> then hard-coded the claim as
+<em>&ldquo;beat 14 is the one the founder chose and it is the one that renders&rdquo;</em>, and every later
+beat inherited it from there.</p>
+<p><strong>So the b20 &ldquo;chibi defect&rdquo; fix was pointing the wrong way.</strong> On 08-18 I recorded
+<em>&ldquo;b20 FIXED: the adult goblin draws &hellip; the chibi child is gone&rdquo;</em> as a win. If A is the
+goblin, then the round b20 frame in your cut is the <strong>correct</strong> one and that fix was a regression
+about to be shipped. That is why the beat-20 frame is on this page as picture C rather than being quietly
+replaced.</p>
+
+<h3>One thing that did <em>not</em> happen, so you are not told a worse story than the true one</h3>
+<p>Your <em>&ldquo;reads adolescent&rdquo;</em> note is about the <strong>guards</strong> &mdash; beats 05,
+06, 10 and 11, plus beat 09&rsquo;s plate &mdash; and it is still an open question on the board, not a ruling.
+I checked whether it had been cross-applied to the goblin&rsquo;s specs and it has not: every
+<em>&ldquo;the adult read&rdquo;</em> block in the pipeline is scoped to beat 09, a guard. What did bleed is
+the vocabulary. This repo now writes <em>&ldquo;reads adolescent rather than adult&rdquo;</em> as if it were
+always a defect, and inside that habit an adult goblin looked like a fix instead of a change of character.</p>
+
+<h2>My read, so you are not guessing at it</h2>
+<p>I think <strong>A</strong> is the answer and the four adult beats are mine to re-render, because A is the
+only one of the three with a quote attached to it and the other one has an inference. But which creature is on
+screen is a taste call and it is yours, and if the adult is the better character now that you have seen him
+move, say <strong>B</strong> and I will re-render the five round beats instead and retire the round reference
+for good. Either answer costs the same; what is not affordable is shipping both.</p>
+
+<div class="hold">
+<h3 style="margin-top:0">PROPAGATION IS FROZEN UNTIL YOU ANSWER</h3>
+<p style="margin-bottom:0">No goblin-identity render fires on either design until this card is answered
+&mdash; no plate, no motion job, no re-render of either group, and no further edit to the identity wording in
+<code>plate_scratch.py</code> or <code>wave-drafts.yaml</code>. Recorded as a HOLD on
+<code>pipeline/work-ladder-0819.md</code>. Work that does not touch the goblin&rsquo;s face or build carries on
+normally.</p>
+</div>
+
+<p class="muted" style="margin-top:36px">Provenance: all nine frames are frame 8 of the exact source clips in
+<code>review/ep2-demo-0819c/sources/</code>, extracted with ffmpeg, no re-render, no model loaded, $0. Picture A
+is a crop of the published <code>goblin-design-0815.jpg</code>. Nothing on this page was generated for it.</p>
+
+</div>
+</body>
+</html>

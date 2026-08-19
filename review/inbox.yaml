@@ -1618,6 +1618,65 @@
       the hold cost real time: the review board, the corrected status page and a night of findings
       were invisible to him while the board that would have told him sat unpublished behind the same
       push. A card asking permission to publish cannot be read until it is published.'
+- what: 'WHICH ONE IS THE GOBLIN? You watched 0819c and asked "some scenes including the goblin has him
+    as an adult??" - you were right, and the surprise was the tell. Nine beats in that cut show the goblin
+    and they show TWO characters: five round and young (03, 04, 08, 13, 20), four a lean adult (07, 14,
+    17, 19), and the line falls exactly on the render date - everything drawn on or before 08-16 is round,
+    everything drawn 08-18/08-19 is the adult. I traced who authorised the adult and the answer is NOBODY
+    DID: it is my inference, not your ruling, and your approved reference was blacklisted as a defect
+    to make room for it. Three pictures on the page - the design you picked, one adult frame from the
+    cut, one round frame from the cut - and one letter to answer. ALL GOBLIN-IDENTITY RENDERS ARE FROZEN
+    until you do.'
+  url: /review/ep2-goblin-design-0819
+  group: taste
+  since: '2026-08-19'
+  kind: pick
+  episode: 2
+  verdict_hint: 'A (the picked card - the round young one; the four adult beats get re-rendered) / B (the
+    adult is canon now; the five round beats get re-rendered) / name a third, and I go get a reference
+    or a drawn design instead of writing a seventh wording'
+  note_for_lanes: 'THE TRACE, so no lane re-litigates it from prose. (a) HIS PICKS ARE BOTH ROUND, with
+    pixels: every tile on goblin-picker-0814.jpg - all six s0 tiles and tile 1, the 08-13 frame - is a
+    small round-domed child-proportioned goblin, and that is the sheet "seed s0 is the goblin" (2026-08-14)
+    was ruled on; design 1 of goblin-design-0815.jpg, his 08-15 pick "ill take 1 for the goblin", is
+    labelled "squat, round-bellied, lumpy nose" and is the roundest and softest of the six - he skipped
+    3, 4, 5 and 6, which are the lean angular ones. (b) HIS AGE WORDS NEVER SAY ADULT and twice say the
+    opposite: "not old..", "actually a young dumb goblin, but not cute", "i just want him to be a dumb
+    ol goblin". His axis is CUTE->NOT CUTE; the steward moved on CHILD->ADULT, a different axis. "beat
+    04 has the cute goblin, needs to be changed" (2026-08-13, entered on the e-b02-remake card) tracks
+    CUTENESS MARKERS on one beat''s take - beat 04''s frame is a blushing kawaii close-up and all four
+    beat-04 tiles on the picker carry blush - not the round build and not the character design; his 08-15
+    re-pick of the roundest build while saying "not cute" confirms that reading. (c) The ONE card that
+    ever asked him to bless an adult read - 2026-08-13, "The goblin remake works - he reads as a small
+    ADULT now, not a child" - came back "these generations arent very good" (2026-08-14). (d) WHERE ADULT
+    ENTERED, three steps, all steward: 2026-08-13 the ledger entry ep2-b13-adult wrote the steward-authored
+    line "He is SHORT, not YOUNG: an adult in miniature, never a child" (a defensible diagnosis - the
+    model resolves "small" as "young" - and it KEPT "short"); 2026-08-15 13:28 commit 91a35fe1 rewrote
+    it into the prompt as "a lean wiry adult goblin man" replacing "a small goblin boy", DROPPING the
+    "short" half, citing only "The founder''s complaint is that he reads as a baby" with no quote beside
+    it, with `no child` in the same negative and the win recorded as "~5.5 to 6 heads, lean and wiry.
+    BEST ROW ... It is the brief" - a 5.5-head figure is a grown man, and "lean wiry" is the direct opposite
+    of the "squat, round-bellied" build he had picked hours earlier that day; and the same commit put
+    refs-goblin-approved-0814, the set frozen from his own "seed s0" ruling, on the not_these: blacklist
+    in pipeline/refs/refs-goblin-d1std-0815.yaml as "# ~4 heads, oversized cranium, toddler stance".
+    (e) PROPAGATION: "lean wiry adult goblin man, green skin, bald head, patchwork cloak" became the
+    identity string at ~14 sites in pipeline/plate_scratch.py (first landed 08-16, 9eb7bd15) and 2 sites
+    in pipeline/wave-drafts.yaml, which is why every 08-18/08-19 Mac plate drew adult. (f) TWO FALSE PREMISES
+    TO RETIRE: the 08-18 board told him "Beat 14 is the adult you chose" - he never chose it; b14''s plate
+    was drawn 08-18 off the adult wording and shipped on the steward''s ruling, as commit 5d872ac3''s
+    own body says ("the 2026-08-18 board asked about and the steward shipped"), and plate_scratch.py:376-381
+    then hard-coded "beat 14 is the one the founder chose and it is the one that renders"; and the 08-18
+    "b20 FIXED: the adult goblin draws ... the chibi child is gone" was BACKWARDS if A wins - b20''s round
+    frame is the one that matches design 1, which is why it is picture C on the page rather than quietly
+    replaced. (g) NOT CROSS-APPLIED, checked: the "reads adolescent" complaint is about the GUARDS (beats
+    05, 06, 10, 11 and beat 09''s plate) and every "the adult read" block in the pipeline is scoped to
+    beat 09; no goblin spec inherited it. What bled is vocabulary - the repo writes "reads adolescent
+    rather than adult" as a defect by default, and inside that habit an adult goblin looked like a fix
+    rather than a change of character. STEWARD READ: A, on the grounds that A has a quote and B has an
+    inference - but which creature is on screen is R4 and it is his. HOLD recorded on pipeline/work-ladder-0819.md:
+    no goblin-identity plate, motion job, re-render or identity-wording edit on either design until this
+    is answered. $0 investigation, no render, no prompt edit; all nine frames are frame 8 of the shipped
+    0819c sources via ffmpeg.'
 - what: 'THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four. Five casting
     rounds have not moved it. Second half of the same question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?
     Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.'
