@@ -1,0 +1,131 @@
+# ep2-b20-plateship-0819 -- 2026-08-19, beat 12/20 lane.
+#
+# One minute, no GPU: it carries beat 20's picked plate from main into the box's
+# courier so ep2-b20-motion-0819's --src becomes checkable instead of asserted.
+# Derived from ep2-b14-mac-plate-0818, the only mac-plate route that has ever
+# delivered (08-18, rc=0). Do not "simplify" the fetch to a path under
+# genomes/.../takes/: .gitignore:40 ignores those pngs and that fetch 404s, which
+# is exactly how beat 12 lost two runs tonight.
+id: ep2-b20-plateship-0819
+task: ep2-b20-plateship-0819
+node: 002b-first-citizen
+beat: 20
+runner: box
+priority: 20
+needs_gpu: false
+max_attempts: 1
+sample: false
+owner: beat 12/20 lane, 2026-08-19
+consumer: 'ep2-b20-motion-0819, which box_enqueue will refuse until its --src is a plate the guards can BOTH
+  fetch from origin/farm-results-rtx5090 and attribute to one spec. That job in turn serves the EP2 CUT: beat
+  20 has no footage at all and is a slate on every cut we have made.'
+success: Two files on farm-out/ep2-b20-plateship-0819 -- the picked plate and its provenance yaml -- each
+  byte-identical to the copy committed on main in farm-out/ep2-b20-mac-plate-0819, plus a sha256 manifest
+  this job writes itself. The fetch REFUSES on any mismatch rather than continuing.
+why: The plate exists and it is on the wrong machine. macbook1 drew 25 seeds of beat 20 today and they live
+  only there; the 5090 renders the motion. This costs one minute and no GPU, so it cannot displace anything
+  that needs the card, and it turns the two refusals beat 12 collected tonight into two passes before they
+  are collected again.
+est_minutes: 1
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+script_authority: 'Node 002b-first-citizen, approved_by: founder. THIS JOB RENDERS NOTHING AND SYNTHESISES
+  NOTHING -- it copies two committed files into the courier so a later job''s source can be checked instead
+  of asserted. STEWARDSHIP.md 6 gates voice, footage and assembly; a file copy is none of those.'
+this_is_not_a_pick: Publishing a plate makes it CHECKABLE, which is the opposite of waiving the check, and
+  no plate_ack is used anywhere in this pair. WHICH of the 25 seeds is published is a steward's choice between
+  takes and it is recorded where a person reads it -- the commit that added the png, and the derivation block
+  of ep2-b20-motion-0819. Whether any of them is good enough is R4 and stays the founder's.
+the_plates_own_faults: Named here so the next reader does not rediscover them as a surprise. (1) A MATURE
+  bare tree limb crosses the top-right corner. That is the founder's own recorded fault on this beat -- 'THE
+  BRANCH IS THE WRONG TREE' -- and the 08-17 rewrite asks for the sapling's own thinnest branch beside him
+  at face height. (2) There is no sapling in frame at all, so the empty stem that done_when calls 'the evidence'
+  is absent. NEITHER is fixable by i2v, because the init is frame one. Both are charged to the plate with
+  a plate route (a plate drawn at the 08-17 staging), not to the take.
+payload:
+  C:\banyan-farm\ep2-b20-plateship-0819\fetch_plate.py: |
+    #!/usr/bin/env python3
+    """Fetch beat 20's picked plate and its sidecar, refusing on any sha mismatch.
+
+    No model, no GPU, no spend. Modelled on ep2-b14-mac-plate-0818's fetch step,
+    which is the ONE route in this repo that has actually carried a Mac-drawn plate
+    to this card (08-18, rc=0), with the same refusal semantics: both files named in
+    full, a sha256 asserted per file BEFORE anything is written, a mismatch is a
+    nonzero exit rather than a partial success.
+
+    THE URL IS UNDER farm-out/ AND THAT IS THE WHOLE TRICK. Beat 12's job failed
+    twice tonight with HTTP 404 fetching a plate from under genomes/.../takes/,
+    because .gitignore:40 is `genomes/*/nodes/*/takes/**/*.png` -- those pngs are
+    untracked by design and main has never carried one. farm-out/ is not ignored, the
+    plate was committed there, and raw serves it at the sha asserted below.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b20-plateship-0819-out"
+    RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b20-mac-plate-0819/")
+    UA = {"User-Agent": "banyan-city-b20-motion/1.0 (albert.numbro@gmail.com)"}
+    WANT = [
+        ("20-evidence-mac-plate-r1s1.png",
+         "4b87cf4f40772af7942077e9a1c30198aa78aaeac70b9a26dda5808d9a04d119"),
+        ("20-evidence-mac-plate-r1s1.yaml",
+         "3d9465a4f231b132ad84f78c0ff4b36f6cf1bb4b5ee35c4b86cadccb230ce6f4"),
+    ]
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %-34s %8d bytes  sha %s  OK" % (name, len(raw), have), flush=True)
+    print("both files match their asserted sha256.", flush=True)
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b20-plateship-0819\fetch_plate.py
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    # EVERY FILE IS NAMED IN FULL, no glob. A glob that misses publishes nothing
+    # while returning a code that reads like a fetch failure, and
+    # box_enqueue.output_path_problems refuses a spec whose declared artifacts are
+    # never named by any step -- which a wildcard defeats. Missing ONE file is a
+    # FAIL of this job. No allow_fail anywhere in this spec.
+    import hashlib, os, shutil
+    from_dir = "C:/banyan-farm/ep2-b20-plateship-0819-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b20-plateship-0819"
+    NAMES = [
+        "20-evidence-mac-plate-r1s1.png",
+        "20-evidence-mac-plate-r1s1.yaml",
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for name in NAMES:
+        src = os.path.join(from_dir, name)
+        if not os.path.isfile(src):
+            raise SystemExit("!! missing %s -- publishing nothing." % name)
+        shutil.copy2(src, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+    with open(os.path.join(dst, "ep2-b20-plateship-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(NAMES), "file(s) + manifest ->", dst)
+    raise SystemExit(0)
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\ep2-b20-plateship-0819\20-evidence-mac-plate-r1s1.png
+- C:\banyan-farm\courier-box\farm-out\ep2-b20-plateship-0819\20-evidence-mac-plate-r1s1.yaml
+derivation:
+  parent: pipeline/jobs/ep2-b14-mac-plate-0818.yaml
+  by: pipeline/derive_b20_motion_0819.py
+  what_changed: the two filenames and their shas, the repo directory fetched from, the output and publish
+    directories, and the id. The refusal semantics, the named-in-full publish and the manifest are the parent's.

@@ -1,0 +1,313 @@
+# ep2-b20-motion-0819 -- 2026-08-19, beat 12/20 lane.
+#
+# BEAT 20 HAS NEVER HAD A FRAME OF FOOTAGE. This is one sample, on the beat-14
+# recipe unchanged, on the one plate of 25 whose frame one is still pre-pickup.
+# The bar below was written before the render existed; the plate's own two faults
+# are declared in it and are not charged to the take.
+#
+# Needs ep2-b20-plateship-0819 to have run first -- its --src is that job's published plate.
+id: ep2-b20-motion-0819
+task: ep2-b20-motion-0819
+node: 002b-first-citizen
+beat: 20
+runner: box
+priority: 36
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 12/20 lane, 2026-08-19 -- derived by pipeline/derive_b20_motion_0819.py
+consumer: THE EP2 CUT. Beat 20 is a SLATE on every cut this repo has assembled -- it has never had a single
+  frame of footage -- and its R5 hook ('...Did you just answer me?') is what the published child node 003b-one-leaf-for-yes
+  hangs off. One clip decides whether the slate can come out.
+success: ONE 121-frame 704x1280 mp4 with its sidecar and the 704x1280 init it was conditioned on, published
+  into courier-box. The bar is below and it was written before the pixels existed.
+why: This beat's action is a PICK-UP, and r1s1 is the one plate of 25 whose frame one is still pre-pickup
+  -- both hands closing on a fig that is sitting in the grass. Every other seed has the fruit already lifted,
+  where the action would be over before frame one. The recipe is beat 14's, unchanged, because the only honest
+  way to find out what crf 10 does to a large hand action is to change the init and nothing else.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b20-motion-0819\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+  C:\banyan-farm\ep2-b20-motion-0819\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. This lane's
+    standing requirement is that anything it publishes says so on its face, so
+    the keys are appended here rather than asserted in a commit message nobody
+    downstream reads. REFUSES if the sidecar is missing -- a clip whose
+    provenance file did not get written must not pass silently.
+
+    UNLIKE the beat-17 probe lane this clip IS a candidate for the cut, so it is
+    stamped `is_show_content: true`. It is still `approved: false` and
+    `provisional: true`: nothing is cut until the frames are opened against the
+    bar this spec pre-registered, and R4 taste calls are the founder's.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b20-motion-0819 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: true\n"
+            "note: |\n"
+            "  A CANDIDATE TAKE FOR BEAT 20'S CUT SLOT, not an engine probe. Beat 20\n"
+            "  has NO footage: it is a slate on every cut this repo has made. It\n"
+            "  animates 20-evidence-mac-plate-r1s1, picked off the pixels from the 25\n"
+            "  seeds macbook1 drew on 2026-08-19 as the only one where the fig is\n"
+            "  still in the grass, and it is judged against the bar pre-registered in\n"
+            "  pipeline/jobs/ep2-b20-motion-0819.yaml BEFORE this render existed.\n"
+            "  Not approved and not cut until all 121 frames have been opened. The\n"
+            "  plate's own faults -- a mature limb top-right, and no sapling in frame\n"
+            "  -- are declared in that spec as PLATE faults and are not the take's.\n")
+    print("stamped %s" % META, flush=True)
+  C:\banyan-farm\ep2-b20-motion-0819\b20-motion-prompt.txt: |
+    Still crouched low in the grass, he picks the fig up with both hands, then looks from it across to the thin bare stem of the small sapling beside him, level with his face. 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b20-motion-0819\b20-negative.txt: |
+    camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame, standing up, straightening, rising to his feet, child, chibi, girl, baby, second fruit, extra fruit
+  C:\banyan-farm\ep2-b20-motion-0819\b20-jobs-encode.json: |
+    [
+     {
+      "beat": 20,
+      "embeds": "C:\\banyan-farm\\ep2-b20-motion-0819-out\\b20-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b20-motion-0819\\b20-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b20-motion-0819\\b20-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b20-motion-0819\b20-jobs-render.json: |
+    [
+     {
+      "beat": 20,
+      "seed": 20260819,
+      "embeds": "C:\\banyan-farm\\ep2-b20-motion-0819-out\\b20-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b20-motion-0819-out\\b20-mac-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b20-motion-0819-out\\20-evidence-LTX-macplate-r1s1.mp4"
+     }
+    ]
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b20-motion-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b20-plateship-0819\20-evidence-mac-plate-r1s1.png
+  - --sha256
+  - 4b87cf4f40772af7942077e9a1c30198aa78aaeac70b9a26dda5808d9a04d119
+  - --out
+  - C:\banyan-farm\ep2-b20-motion-0819-out\b20-mac-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b20-motion-0819\b20-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b20-motion-0819\b20-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b20-motion-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b20-motion-0819-out\bench-b20-macplate.jsonl
+  - --bench-label
+  - ep2-b20-motion-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b20-motion-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b20-motion-0819-out\20-evidence-LTX-macplate-r1s1.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # THE GLOB CARRIES THE BEAT SLUG (20-evidence). Without it the glob
+    # matches nothing and the step publishes nothing while returning a code
+    # that reads like a render failure. No allow_fail: a publish that cannot
+    # find its files is a FAIL of the job, not a footnote.
+    import glob, hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b20-motion-0819-out"
+    pay_dir = "C:/banyan-farm/ep2-b20-motion-0819"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b20-motion-0819"
+    os.makedirs(dst, exist_ok=True)
+    files = sorted(glob.glob(out_dir + "/20-evidence-LTX-macplate-r1s1.mp4*")
+                   + glob.glob(out_dir + "/b20-mac-init-704x1280.png")
+                   + glob.glob(out_dir + "/bench-b20-macplate.jsonl")
+                   + glob.glob(pay_dir + "/b20-motion-prompt.txt")
+                   + glob.glob(pay_dir + "/b20-negative.txt"))
+    lines = []
+    for f in files:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b20-motion-0819.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(files), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(files) >= 6 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b20-motion-0819-out\20-evidence-LTX-macplate-r1s1.mp4
+- C:\banyan-farm\ep2-b20-motion-0819-out\b20-mac-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, approved_by: founder, and beat 20''s line is the KNEE-HEIGHT REWRITE
+  the founder ordered on 2026-08-17 (''rewrite the beats to work at knee height. change the story.''), recorded
+  in shots.md and node.md:132: ''The scavenger crouches back down, picks the fig up with both hands, and looks
+  from it to the sapling''s thinnest branch beside him -- level with his face now, and bare.'' The motion
+  prompt animates THAT line and not the superseded one it replaced; rendering the old staging, whose own ''straightens''
+  is what put a mature limb over this beat, would have been the wrong way round it.'
+bar:
+  the_approved_line_this_is_staged_TO: 'shots.md, Beat 20 EVIDENCE, 2026-08-17: ''The scavenger crouches back
+    down, picks the fig up with both hands, and looks from it to the sapling''s thinnest branch beside him
+    -- level with his face now, and bare.'' done_when''s central requirement is preserved word for word in
+    that rewrite: BOTH HANDS to the fruit, and ''the empty stem is the evidence and must be in frame''.'
+  M1_THE_PICK_UP_COMPLETES_BY_A_CONTINUOUS_PATH: 'THE CLAUSE THIS RUNG EXISTS FOR. The fig leaves the grass
+    and ends held in both hands. Tracked frame by frame across all 121: PASS needs a monotone-ish rise with
+    no frame-to-frame jump larger than the fruit''s own width (a teleport is not a pick-up), the fruit present
+    in every frame, and exactly one fruit throughout. Reported as the fruit centroid''s y over frame index,
+    not as an impression.'
+  M2_THE_GAZE_SHIFT_IS_READABLE: The head and eye direction move from the fruit to the side, and a reader
+    who is shown only the clip can say which two things he looked at. Report the frame indices where the shift
+    starts and ends. A blink or a jitter is not a shift.
+  M3_ADULT_THROUGHOUT: No chibi or child collapse in any of the 121 frames. The plate reads adult without
+    argument -- angular skull, lean frame -- and this beat's whole 08-12 history is a child read the founder
+    rejected, so a single frame that goes soft and round is a FAIL of the clip, not a blemish.
+  M4_CAMERA_LOCKED: 'No pan, tilt, dolly or zoom. Measured as a global fit on a high-contrast edge, with the
+    region-consistency check the beat-19 lane added: a shift on a low-contrast band but not on a high-contrast
+    one is the field re-inking, not a camera move, and filing a camera fault that does not exist is its own
+    defect.'
+  M5_HE_DOES_NOT_STAND: He stays down. 'Straightens' is the exact word the 08-17 rewrite struck, because standing
+    is what puts the sapling below him and invites a mature limb overhead, so any rise to his feet is a FAIL
+    against the staging even if it is well drawn.
+  THE_PLATE_FAULTS_ARE_NOT_SCORED_AGAINST_THIS_TAKE: 'Two of them, both structural and neither reachable by
+    i2v, because the init is frame one. (1) A MATURE bare limb crosses the top-right corner -- the founder''s
+    own recorded fault, ''THE BRANCH IS THE WRONG TREE''. (2) There is no sapling in frame, so done_when''s
+    empty stem is absent and M2 can only ask whether the look GOES somewhere, not whether the thing it lands
+    on is the right branch. Both are charged to the plate, with a route: a plate drawn at the 08-17 staging
+    with the sapling''s own bare stem beside him at face height. Scoring them here would bury a real motion
+    result under a fault the render could not have avoided.'
+  how_scored: Every one of the 121 frames opened, not sampled -- the beat-07 lane's standard tonight. Numbers
+    are FILTERS; the verdict is the read.
+failure_predicted_in_advance: 'FAIL-FROZEN IS THE MOST LIKELY OUTCOME AND IT IS NAMED SO A PASS MEANS SOMETHING.
+  --image-crf 10 buys init fidelity and it has been MEASURED to cost motion on this card: -23% on beat 07''s
+  gesture, -90% on beat 18''s tremble, and beat 01''s take at 10 held its plate where crf 33 bloomed it. A
+  two-handed pick-up is a far larger action than either, so if this comes back as a near-still image with
+  a file extension, the finding is about the flag and the lever is NOT another crf value -- it is either the
+  crf-33 arm on this same init or a plate whose staging starts the action earlier.'
+pre_registered_fail_modes:
+  FAIL-FROZEN: the fruit never leaves the grass. Named as most likely.
+  FAIL-TELEPORT: the fruit changes position between frames without a path between.
+  FAIL-FRUIT-DOUBLE: a second fig appears, or the fig vanishes and returns.
+  FAIL-CHILD: the face or proportions collapse toward a child or chibi read.
+  FAIL-STANDS: he rises to his feet -- the staging the founder struck.
+  FAIL-CAMERA: a real, region-consistent camera move.
+  FAIL-LIMB-READ: 'the look lands on the MATURE limb in the top-right corner. This is the one plate fault
+    that can become a take fault: if the clip reads as ''he looks up at the big tree'', it fails the staging
+    even though the limb is the plate''s, because the beat is about the sapling''s own empty stem.'
+  reporting_rule: every mode above is reported BY NAME whether or not it fired.
+duration_and_the_assembler_trap: 121 frames at 24 fps = 5.0417 s. render_t3.py:616 REVERSES any clip whose
+  slot outruns it (dur > cdur + 0.05, cdur <= 16.0). On THIS beat a palindrome would play the pick-up backwards
+  -- he would put the fig back in the grass -- so whoever assembles must check beat 20's slot against 5.0417
+  s rather than assume.
+derivation:
+  parent: pipeline/jobs/ep2-b14-motion-crf10-0819.yaml
+  by: pipeline/derive_b20_motion_0819.py
+  carried_byte_for_byte:
+  - cover_crop.py BYTE-FOR-BYTE from the parent payload
+  - the negative's first thirteen clauses, character for character
+  - the style tail of the motion prompt, character for character
+  sampler_numbers_unchanged: 121 frames, 704x1280, 24 fps, guidance 2.0, --distilled-sigmas, --two-stage,
+    --image-crf 10, --offload sequential, --mode production
+  seed: 20260819
+  what_is_NOT_the_same: the init and its source, the action sentence of the prompt, four added negative clauses,
+    the seed, the bar, the fail modes, and the note inside stamp_sidecar.py
+  the_plate_pick: '20-evidence-mac-plate-r1s1, seed 20263739, drawn on macbook1 at 832x1216 / 40 steps / animagine-xl-3.1
+    in 70.9 s, png sha256 4b87cf4f...119 which is what its own sidecar''s png_sha256 field records. Chosen
+    by opening all 25 of the 2026-08-19 wave as a contact sheet: it is the only frame where both hands are
+    still closing on a fig that is in the grass, which is the only frame one from which a pick-up can be shown
+    at all.'
+  keys_refused: 'REFUSED, not carried, from the parent: verdict, verdict_measured, the_crf_question_answered,
+    the_crf_ruling_is_SOUND_and_beat_14_was_never_one_of_its_cases, what_this_settles, prior_verdicts_needing_re_litigation,
+    not_done_on_purpose. Those are beat 14''s findings about beat 14''s clip; carrying them would file a verdict
+    on a render that does not exist yet.'
+what_this_licenses: One clip on one seed on one plate. NOT a second arm, not a crf sweep, not a cut swap,
+  not a plate promotion, and specifically not a pick between the 25 seeds beyond the one this job crops --
+  the other 24 remain unpublished and unscored on macbook1.
