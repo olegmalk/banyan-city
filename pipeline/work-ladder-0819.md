@@ -2053,3 +2053,35 @@ re-stage) is the honest next GPU job.
    nothing and passes. It correctly refused macbook1 for the same staleness
    minutes earlier. b04's first attempt died `rc=4 no inline draft for beat 4`.
    Both code roots are now synced from their farm checkouts.
+
+### THE COURIER CANNOT PUSH, AND IT BLOCKS EVERY BOX PLATE — found 2026-08-19 23:5x
+
+**Measured, not inferred.** `C:\banyan-farm\courier-box` is **45 commits ahead of
+`origin/farm-results-rtx5090` and 1 behind it** — diverged, with the true remote
+head hours old. `ep2-b04-mac-plate-0819` ran clean (rc=0, 2 artifacts,
+20:00:31Z), the courier committed it locally as `e8f21b95 "hb: DONE
+ep2-b04-mac-plate-0819"`, and **it never left the box.**
+
+**Why this is bigger than one plate.** `box_enqueue`'s plate and refs guards read
+`origin/farm-results-rtx5090` at enqueue time. While the backlog stands, **no
+newly published box plate can ever resolve as a motion init** — every such job
+gets *"could not fetch this job's --src"* and the only way past is a
+`plate_ack:` waiver, which the standing rules forbid a lane from granting itself.
+So a stuck courier does not merely delay artifacts; **it silently pushes every
+downstream lane toward waiving a provenance guard.** That is the shape of failure
+this repo keeps writing rules against.
+
+**What was done and what deliberately was not.** The plate was carried across by
+hand — the box's own published bytes pulled back off `courier-box\farm-out\` and
+pushed from a machine whose push works, in an isolated worktree, adding three
+files and removing none. Hash-identical in all three places
+(`5dd35da5…4350`). Both guards then RAN and PASSED with **no plate_ack**: plate
+flatness **0.134** against the 0.62 refuse line, refs resolved to producer
+`ep2-b04-mac-plate-0819`. `ep2-b04-eyes-crf10-0819` is queued.
+
+**The divergence itself is NOT resolved and is the runner-surgery lane's call.**
+A force-push would discard the one commit this branch has that the box does not;
+rebasing 45 artifact commits on a 5.5 GiB repo is that lane's work, and its push
+logic was changed tonight (`PUSH_TIMEOUT_SECONDS` 300 → 60, deferred events).
+**Hand-carrying is a workaround for one plate, not a fix.** Until it is fixed,
+any lane publishing a box plate must expect to carry it across the same way.
