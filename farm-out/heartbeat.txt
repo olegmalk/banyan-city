@@ -2993,3 +2993,5 @@
 19:23:26Z box-runner idle ready=0 failed=42
 19:33:37Z box-runner idle ready=0 failed=42
 19:43:48Z box-runner idle ready=0 failed=42
+19:47:00Z STARTED task=ep2-b08-twins-sample-0819-1787168798 attempt=1 on box-runner
+19:47:02Z FAIL task=ep2-b08-twins-sample-0819-1787168798 rc=12 step=twins
