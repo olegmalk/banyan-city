@@ -645,7 +645,12 @@ Evidence, both sheets committed: `farm-out/ep2-b19-dropmotion-0819/`.
 - **Nothing to cut.** No pick, no plate_ack, no leaf, no lineage entry. The
   beat's blocker **moved** rather than cleared: no longer *"no plate exists"* —
   the plate exists and is picked — but ***"no motion recipe has produced a
-  fall"***.
+  fall"***. **Superseded later the same day, and only in its second half:
+  `ep2-b19-dropcomp-0819` is a fall** — 5.0000s, $0, composited, bar 8 of 8 (see
+  the rung below). Still nothing to cut: **no pick, no plate_ack, no leaf, no
+  lineage entry**, and the clip contains **no notice**, which `done_when`
+  requires. The blocker is now *"the beat's third action is not in any clip, and
+  whether a 48px drop is the beat is R4."*
 - **NEVER LET AN ASSEMBLER PALINDROME BEAT 19.** `render_t3.py:616` reverses any
   clip whose slot outruns it (`dur > cdur + 0.05`, `cdur <= 16.0`). Beat 19's
   slot is 1:34–1:39 = **5.000s**; a 121f/24 clip is **5.0417s** (ffprobe). So it
@@ -655,7 +660,62 @@ Evidence, both sheets committed: `farm-out/ep2-b19-dropmotion-0819/`.
   silently. Beat 19 is the first beat in the show whose action a viewer can see
   run backwards, and the assembler has no notion of that.
 
-### The rung this lane recommends — composite the fall, $0, no engine
+### The rung this lane recommends — composite the fall, $0, no engine — **FIRED, 2026-08-19, and it passed**
+
+> **`ep2-b19-dropcomp-0819` — the rung below is no longer a recommendation, it is a
+> clip.** 704×1280, **120 frames = 5.0000s**, crf 18, **$0, no GPU, 44s of CPU**,
+> deterministic. Tool: `pipeline/beat19_drop_animate.py`. Evidence, six images plus
+> the mp4 and a sha manifest: `farm-out/ep2-b19-dropcomp-0819/`.
+>
+> **The bar was written before the tool and scored 8 of 8**, plus one clause the
+> build itself added. The numbers that matter:
+> - **max |frame − plate| OUTSIDE the fig's path corridor, across all 120 frames: 0**,
+>   and **f000 IS the cropped picked plate byte for byte**. That is the whole point of
+>   the instrument: his pose, his hands, his face, both cotyledons, the stem, the
+>   side-branch and the horizon are *structurally incapable* of changing, and the fig's
+>   **stalk stays on the branch**, which is what a picked fruit leaves behind.
+> - fall descent per frame `0.32 0.96 1.60 2.24 2.88 3.53 4.17 4.82 5.46 6.11` —
+>   strictly increasing (constant acceleration), no jump >12px, no reversal.
+> - **48px of descent, 29px RIGHT, 46° of rotation**, so it ends lying on its side with
+>   its stalk end up. The rotation is doing more work than the travel.
+> - **leftmost fig pixel over the whole clip x 609 against a Z-BODY edge of x 500 —
+>   109px of margin on EVERY frame.** It only ever travels right, so the founder's
+>   no-contact ruling is satisfied *structurally*, not luckily.
+> - **exactly one violet blob in all 120 frames** — the clause the i2v take failed
+>   hardest, here impossible to fail.
+> - **5.0000s against a 5.000s slot**: the palindrome branch cannot be reached.
+>
+> **What it does NOT contain, said plainly: he does not notice.** `done_when` asks for
+> the fall, the landing *and* the notice, in that order; this has the first two, exactly,
+> and the third not at all. A composite can move the fig and nothing else, and animating
+> his head would destroy the one property that makes the clip trustworthy. The last
+> **2.792s is an honest still**. **Still a SLATE** — no `plate_ack`, no leaf, no lineage
+> entry, nothing in any cut. **What changed is the blocker:** it was *"no motion recipe
+> has produced a fall"*, and a fall now exists at $0 with every founder ruling met.
+>
+> **FOUR ROUNDS WERE REJECTED BY EYE FIRST AND THREE OF THEM HAD A FULLY GREEN BAR.**
+> Read this before any composite rung, because it is the generalisable half:
+> 1. a **horizontal clone** for the hole behind the fig — this lane's own instrument
+>    from `beat19_drop_composite.py` — sat up to **29 levels off the true background**
+>    and covered a ring the fig never occupied; the moment the sprite moved half a pixel
+>    a **ragged bright fringe** appeared down its left side on f024 *and nowhere else*.
+> 2. **row-wise interpolation** replaced it and produced an **olive rectangle of bands**,
+>    because its endpoint test was "not thin structure" and the pixels 4px to the fig's
+>    upper left are **his cast shadow** — broad, and therefore not thin.
+> 3. the **harmonic solve** that fixed the bands came out **dead flat** (interior std 0.1
+>    against the field's 4.3, a fig-shaped blob 9 levels off its surroundings) because a
+>    2px safety gap left the solve **with no boundary to be anchored to at all**. *A
+>    Dirichlet condition has to touch the thing it conditions.*
+> 4. the centre was solved from the bottom edge with a **rectangle's** bound,
+>    `hh·cos + hw·sin`, instead of the **ellipse's** `√((hw·sin)² + (hh·cos)²)` — which
+>    overstates the extent by **8.4px at 46°**, so the landed fig **hovered over its own
+>    contact shadow** with clear grass between them. **Every bar clause was green on that
+>    frame.** B5b — *read the fig's own alpha footprint against the measured grass line* —
+>    was added afterwards so the next one cannot be.
+>
+> The lesson is the same one three times: **a bar written on the target cannot see the
+> code missing the target**, and a metric on the *background* cannot see a defect in the
+> *object*. Open the pixels at 6–9x, and open two consecutive frames, not one.
 
 Every precondition is already met: **the camera is locked**, the fig is a
 **32×43px rigid object**, the plate is picked and passing, and this lane already
@@ -673,7 +733,10 @@ to; a reference image behind a mask can"*).
 at all. His knee-height canon caps the fall at ~30cm and the board requires the
 sapling and the scavenger in one frame, so the drop is **~32px of a 1280-tall
 frame however it is produced**. Story question, not an engine one, and this clip
-is the first evidence for it.
+is the first evidence for it. **`ep2-b19-dropcomp-0819` is now the best evidence
+for it**, because it is the version with *every engine defect removed*: if a 48px
+drop does not read as the beat there, the framing is the reason and nothing else
+is left to blame.
 
 ### TOOLING RUNG — `box_autofill.py` reports `backlog_empty` from a junk directory when run on a Mac
 
