@@ -493,3 +493,80 @@ derivation:
     seed:
     - payload b15-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'FAIL, AND THE MECHANISM IS FOUR WORDS OF MY OWN PROMPT. From about f020 to
+  f090 the sapling is NOT ROOTED: he has PICKED IT UP and is holding the two leaves beside
+  his face in a raised hand, with his forearm where the stem used to be. It goes back into
+  the ground by f100, and then he stands up and the beat ends on a standing figure. Everything
+  the clause asked for is happening -- his head is turned to the leaves, they are a hand''s
+  width from his face, his mouth is open and he is talking to them -- and it is happening
+  to a plant he is holding, which is not the beat and is not the canon sapling. THE FOUR WORDS
+  ARE ''FROM A HAND''S WIDTH AWAY''. This is the only one of the three siblings whose A1 failed,
+  and it failed on the plate whose composite was the easiest of the three.'
+verdict_measured:
+  A1_the_plant_holds: 'FAIL, AND NOT ON CARDINALITY -- ON ROOTEDNESS. The leaf count never
+    moves: two leaves, one stem, at f000, f060 and f120 alike, so F-PLANT-REVERT in its beat-19
+    form (two leaves becoming four, an upright stem becoming a runner) did NOT fire. What
+    fired is an object binding. At f000 the sapling stands rooted at frame left with its base
+    in the grass. By f060, at 2x, THE STEM IS GONE AND HIS FOREARM IS WHERE IT WAS: a raised
+    green hand holds the leaf pair level with his eyes. By f100 the plant is rooted at frame
+    left again and his hands are back down. The prompt''s own plant clause -- ''stays exactly
+    as it is and does not grow: ONE thin stem, TWO leaves, ROOTED IN THE GRASS'' -- was in
+    the positive, first-class and unambiguous, and it lost.'
+  A1_why_it_lost_which_is_the_transferable_part: 'THE ACTION CLAUSE CONTAINED THE WORD ''HAND''
+    AND THE SAMPLER SPENT IT ON THE PLANT. The sentence was ''talks to them from a hand''s
+    width away'' -- an IDIOM, in which ''hand'' is a unit of measurement and not a body part.
+    The engine read it as a placement. This is the b08 grip rung''s finding arriving on a
+    new route: there, nine words asserting ''fingers and thumb gripping the clipboard edge''
+    produced fingers and thumb correctly articulated around THE SASH STRAP -- ''the grip clause
+    bound to the right hand and the wrong object''. Here a hand nobody asked for bound to
+    the right object. Same law: A NOUN IN THE PROMPT IS A PLACEMENT WHEREVER IT APPEARS, INCLUDING
+    INSIDE AN IDIOM THAT DOES NOT MEAN IT. Note also that the counter-placement was already
+    present and did not save it -- ''He stays sitting in the grass with his hands on his knees''
+    is in the same prompt, four words later. A competing placement does not beat an incidental
+    noun; the noun has to go.'
+  A2_the_ratified_adult_holds: 'PASS THROUGH f080, MEASURED, and void after for the mechanical
+    reason its two siblings share. Pre-registered box (302,408,356,448), tracked: f000 R 65.1
+    G 112.1 B 47.3, R-B 17.8, luma 90.7 -- f020 luma 93.4 -- f040 87.0 -- f060 87.2 -- f080
+    R 75.7 G 99.7 B 52.4, R-B 23.3, luma 87.1. That is -3.6 luma and +5.5 R-B over eighty
+    frames, the tightest identity hold of the three. At f100 and f120 the box reads luma 52.3
+    and 71.8 with std 40.0 and 50.2 -- he has stood up and the box is no longer on his face.
+    At 1:1 on f060 he is the ratified lean adult with the unprompted spectacles beat 15''s
+    plate already recorded: green skin, bald dome, long pointed ears, plaid patchwork cloak.'
+  A3_camera_locked: PASS. The horizon band and the grass tufts hold their rows for all 121
+    frames; only the figure moves.
+  A4_it_is_not_frozen: PASS. Continuous motion from f010 -- an arm raise, a head turn and
+    a mouth -- with no terminal freeze.
+  A5_no_exposure_blowout: 'PASS ON THE NUMBER AND CONFOUNDED IN THE SAME WAY AS ITS SIBLINGS,
+    so it is reported with the track rather than as a delta. Whole-frame mean luma f000 158.6
+    -> f120 136.1 is -22.5, inside the +25 bar, but the useful reading is the flat part: 158.6
+    / 154.2 / 153.9 / 153.7 / 153.8 from f000 to f080, i.e. -4.8 over every frame he is seated.
+    The drop to 147.6 and 136.1 arrives with the stand-up, when his dark cloak takes more
+    of the frame. No seed re-roll: the exposure never moved.'
+  B1_eyes_level_with_the_two_leaves_at_the_end: FAIL, and it fails at the END rather than
+    in the middle. From f020 to f090 his eye line and the leaves are level and a hand's width
+    apart, which is what the approved line asks for -- but he is holding them there. By f120
+    he is standing and the rooted plant is on the ground far below him, so the clause is false
+    in the frame that has to carry it. F-HEAD-RISES, this spec's pre-registered risk, fired
+    in its whole-body form.
+  B2_both_in_one_frame_for_all_121_frames: PASS, the one clause that is clean. He and the
+    sapling are both in shot in every frame sampled, including f120 where he is standing at
+    frame right and the plant is rooted at frame left. This is the whole of beats.'15'.done_when
+    and twenty-four artifacts could not manage it with a real plant.
+  B3_his_mouth_moves: PASS. Shut at f000, open and speaking at f060, shut again at f100. Beat
+    15 has a spoken line, so a moving mouth is correct here and would be a fail on beat 04.
+    No lip-sync is claimed.
+what_the_next_rung_is: 'ONE VARIABLE: DELETE THE IDIOM. ''talks to them from a hand''s width
+  away'' becomes a measure with no body-part noun in it -- ''his face is a few centimetres
+  from the two leaves and he is talking to them'' -- and the plant clause gains the one word
+  the failure names: ''the plant stays ROOTED IN THE GROUND and nobody touches it, its stem
+  rising out of the grass in every frame''. Nothing else changes: same init, same seed, same
+  negative, same flags, same recipe. THE SCRIPT IS NOT TOUCHED AND CANNOT BE -- node.md:98
+  is the founder''s approved line and ''from a hand''s width away'' is HIS sentence; what
+  changes is the steward''s PROMPT, which is a rendering of that line and not the line itself.
+  Expected second rung after that, because this clip also stands up at f100 like both its
+  siblings: the shared terminal placement described in ep2-b03-covermotion-0820''s and ep2-b13-shademotion-0820''s
+  verdicts.'
+cost: $0. One GPU fire, one seed, no retries. 263s of render, 121 frames, rc=0 on all seven
+  steps.
