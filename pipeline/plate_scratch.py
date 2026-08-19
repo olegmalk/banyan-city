@@ -2044,6 +2044,125 @@ REVS = {
             "ornament, leaf hair ornament, plant hair, female goblin, elf"
         ),
     },
+    (20, 4): {
+        # ====================================================================
+        # THE PLATE THE 2026-08-19 RULING ORDERS. ONE VARIABLE: THE PLANT.
+        # ====================================================================
+        # THE RULING, verbatim, answering /review/ep2-goblin-design-0819:
+        # "well b definitely and the damn goblin. c kinda is but still pretty
+        # bad so change it". B is the LEAN ADULT and he is the goblin; C is the
+        # round young one -- beats 03, 04, 08, 13 and 20 -- and "change it" is
+        # an instruction. Beat 20 is the C-group beat this file can act on
+        # directly, because DRAFTS[20] ALREADY CARRIES THE ADULT.
+        #
+        # WHICH MEANS THE CAST HALF OF THIS BEAT IS ALREADY DONE AND IS NOT THE
+        # VARIABLE. The 08-18 cast correction in DRAFTS[20] above swapped
+        # `a small goblin boy` for beat 14's identity wording character for
+        # character, and the founder has now ratified exactly that wording. So
+        # the note in that correction reading "beat 14 is the adult the founder
+        # chose" -- which the 08-19 forensic trace correctly flagged as an
+        # unbacked claim at the time it was written -- HAS SINCE BECOME TRUE,
+        # by a different route than its author thought. It was an inference
+        # when written and it is a founder ruling now. Recorded plainly because
+        # a lane reading the trace alone would conclude this draft needs
+        # unwinding, and it does not.
+        #
+        # WHAT IS ACTUALLY LEFT, AND IT IS THE PLANT. DRAFTS[20]'s positive
+        # ends "eyes widening as he looks up at a bare branch above" and its
+        # negative -- unlike beat 14's, which bans `tree, forest` -- bans
+        # neither. `a bare branch above` names no plant and no scale, so the
+        # checkpoint supplies both, and what it supplies is a full-grown tree
+        # overhead. THAT IS THE WRONG PLANT, and it is wrong against the
+        # founder rather than against taste:
+        #   * "thats ridiculous, lmao. the sapling is tiny" -- his ruling on
+        #     the plant's scale.
+        #   * "make sure it has 2 leafs and has a set height" (2026-08-16),
+        #     registered in pipeline/canon.yaml as `sapling-two-leaves` and
+        #     `sapling-height`, whose scope lists beat 20.
+        #   * genomes/sapling/THE-SAPLING.md: every prompt that puts the plant
+        #     in frame asks for exactly two leaves.
+        # A tree above his head is not a big sapling, it is a different plant,
+        # and beat 19 -- the beat immediately before this one -- drops the fig
+        # from the canon sapling. Two adjacent beats cannot disagree about
+        # which plant the fruit came off.
+        #
+        # THE WORDING IS NOT INVENTED HERE, WHICH IS THE WHOLE POINT TODAY.
+        # `a tiny sapling with two leaves and one thin side-branch` is the
+        # canon shape from style.md's node table row 002a/b/c and is already
+        # the proven phrasing in this file's beat-19 work. This rev does not
+        # write a sixth description of the plant; it uses the one that exists.
+        #
+        # done_when IS SATISFIED, NOT BENT: "BOTH HANDS to the fruit, then the
+        # look UP to a branch that is visibly BARE -- the empty stem is the
+        # evidence and must be in frame." The empty stem is still the evidence
+        # and is still what he looks at. It now belongs to the canon plant, and
+        # `looks up` survives because he is CROUCHED to the fruit he has just
+        # picked up -- from a crouch a 40 cm sapling's bare side-branch is
+        # above his eyeline. That is why `crouching` is added: it is what makes
+        # the look UP and a tiny plant consistent, and without it the two
+        # clauses genuinely do fight.
+        #
+        # ONE VARIABLE, AND WHAT IS DELIBERATELY NOT CHANGED. The identity
+        # clause is byte-identical to DRAFTS[20]'s and so to beat 14's. The
+        # fruit stays `a ripe fig` -- the founder's purple ruling is live and
+        # is NOT bought here, because backend_divergence_probe.py measured this
+        # exact recipe returning PURPLE on MPS and RED on CUDA, so a Mac plate
+        # gets purple without asking and adding the colour word in the same
+        # draw as the plant would make neither attributable. The purple canon
+        # still has to be enforced in words on the BOX path; this is not that
+        # path. Lighting, framing and the whole style tail are untouched.
+        #
+        # NEGATIVE: see the note above it. `bare tree` and `large tree` were in
+        # the first draft and were CUT for tokens, not because they are wrong;
+        # `tree, forest, trunk` is what the budget bought and it is the same
+        # ban beat 14 ships with.
+        # THE TOKEN BUDGET IS WHY THIS IS NOT WORDED THE OBVIOUS WAY, and it is
+        # recorded because the obvious wording was WRITTEN FIRST AND MEASURED
+        # OVER. DRAFTS[20]'s positive sits at 74/77 with three tokens spare, so
+        # the natural clause -- `a tiny sapling with two leaves and one thin
+        # side-branch, the side-branch bare and empty above him`, the canon
+        # phrase in full -- measured 95/77, and its negative 88/77. Eighteen
+        # tokens over would have silently amputated the style tail, which is
+        # exactly the failure this file's guard exists for and exactly what a
+        # `looks right in the editor` draft costs. Measured on the real CLIP
+        # tokenizer (cagliostrolab/animagine-xl-3.1), not estimated:
+        #   positive 75/77, negative 73/77.
+        # WHAT WAS PAID TO GET THERE, so nobody reads a compression as a
+        # decision: `in a sunny grassy field` -> `in sunny grass`; `as he looks
+        # up at` -> `looking up at`; and `in front of him like evidence` ->
+        # dropped. That last is the only one worth arguing and it is safe --
+        # done_when asks for BOTH HANDS and a visibly BARE stem, neither of
+        # which `like evidence` carries, and both hands raising the fruit IS
+        # the evidence gesture in the picture. `Warm amber afternoon light` is
+        # kept byte-for-byte in preference, because this plate is the init for
+        # a box motion job and its lighting is what that job inherits.
+        # THE PLANT PHRASE IS STILL A CANON ONE, not a shortened invention:
+        # THE-SAPLING.md lists `two big leaves` as a wording already in the
+        # repo that satisfies the two-leaf rule.
+        "prompt": (
+            "1boy, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, solo, crouching in sunny grass, raises a ripe "
+            "fig in both hands, eyes widening, looking up at a tiny sapling "
+            "with two big leaves and one bare stem. Warm amber afternoon "
+            "light, cinematic lighting, detailed, newest, masterpiece, best "
+            "quality, very aesthetic"
+        ),
+        # `tree, forest` are beat 14's words, not composed here. `trunk` is
+        # added because it is the specific object the founder has already
+        # ruled out of this plant -- beat 13's own done_when records "there is
+        # no trunk to slide down". Paid for by dropping `moody lighting, low
+        # key, shadows dominant` from the parent's anti-dark block: `dark,
+        # night, dusk, sunset, dim lighting` all survive, so the block is
+        # thinned rather than removed, and the parent's negative had one token
+        # of headroom so something had to go.
+        "negative": (
+            "text, girl, baby, child, chibi, glowing eyes, glowing orb, "
+            "dark, night, dusk, sunset, dim lighting, photorealism, tree, "
+            "forest, trunk, leaf on head, plant girl, alraune, monster girl, "
+            "flower on head, head wreath, hair ornament, leaf hair ornament, "
+            "plant hair, female goblin, elf"
+        ),
+    },
     (8, 2): {
         # r1 came back UNUSABLE and in an instructive way: a colossal
         # two-headed goblin filling the upper half as a piece of SCENERY, and
