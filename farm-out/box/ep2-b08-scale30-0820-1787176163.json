@@ -1,0 +1,111 @@
+{
+  "id": "ep2-b08-scale30-0820-1787176163",
+  "task": "ep2-b08-scale30-0820",
+  "node": "002b-first-citizen",
+  "beat": 8,
+  "worker": "box-runner",
+  "priority": 33,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "preflight",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# GUARD, NOT A VARIABLE. Carried from the parent and EXTENDED to the\n# SECOND NET and the SECOND HINT. Every input that conditions this frame is\n# re-read here before a GPU second is spent.\n#\n# THE NEW TRAP, AND IT IS THE REASON THE TWO SHAS ARE COMPARED TO EACH OTHER\n# RATHER THAN ONLY TO CONSTANTS: the scribble blob and the twins blob are\n# THE SAME SIZE (2502139104 bytes) and ship the BYTE-IDENTICAL config.json.\n# Same architecture, different weights. Size, file count and config pass\n# whichever net sits in whichever directory, so only the weight sha can tell\n# the POSE net from the OBJECT net -- and swapping them would condition the\n# skeleton on the board hint and the board on the skeleton.\nimport glob, hashlib, os, sys\n\ndef sha(p):\n    h = hashlib.sha256()\n    with open(p, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 22), b\"\"):\n            h.update(chunk)\n    return h.hexdigest()\n\nd = r\"C:\\banyan-farm\\cnet-openpose-twins\"\nblob = os.path.join(d, \"diffusion_pytorch_model.safetensors\")\nn = os.path.getsize(blob)\nif n != 2502139104:\n    print(\"!! twins blob is %d bytes, expected 2502139104\" % n); sys.exit(1)\ngot = sha(blob)\nif got != \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\":\n    print(\"!! twins blob sha %s, expected 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\" % got); sys.exit(1)\nch = hashlib.sha256(open(os.path.join(d, \"config.json\"), \"rb\").read()).hexdigest()\nif ch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! twins config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % ch); sys.exit(1)\nbad = [r for r, _, fs in os.walk(d) for f in fs if f.endswith(\".incomplete\")]\nif bad:\n    print(\"!! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\nprint(\"twins net verified: %d bytes, sha %s\" % (n, got))\n\n# ---- THE SECOND NET, resolved out of the offline HF cache by repo id.\nsd = r\"C:\\Users\\artvn\\.cache\\huggingface\\hub\\models--xinsir--controlnet-scribble-sdxl-1.0\"\nsnaps = glob.glob(os.path.join(sd, \"snapshots\", \"*\"))\nif len(snaps) != 1:\n    print(\"!! expected exactly 1 scribble snapshot, found %r\" % snaps); sys.exit(1)\nsblob = os.path.realpath(os.path.join(snaps[0], \"diffusion_pytorch_model.safetensors\"))\nsn = os.path.getsize(sblob)\nif sn != 2502139104:\n    print(\"!! scribble blob is %d bytes, expected 2502139104\" % sn); sys.exit(1)\nsgot = sha(sblob)\nif sgot != \"b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\":\n    print(\"!! scribble blob sha %s, expected b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\" % sgot); sys.exit(1)\nsch = hashlib.sha256(open(os.path.join(snaps[0], \"config.json\"), \"rb\").read()).hexdigest()\nif sch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! scribble config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % sch); sys.exit(1)\nsbad = [r for r, _, fs in os.walk(sd) for f in fs if f.endswith(\".incomplete\")]\nif sbad:\n    print(\"!! .incomplete under the scribble dir: %r\" % sbad); sys.exit(1)\nif glob.glob(os.path.join(snaps[0], \"*fp16*\")):\n    print(\"!! a fp16 variant appeared; the driver passes variant=None\"); sys.exit(1)\nprint(\"scribble net verified: %d bytes, sha %s\" % (sn, sgot))\n\n# ---- AND THE TWO ARE NOT THE SAME WEIGHTS, asserted rather than assumed.\nif got == sgot:\n    print(\"!! THE TWO NETS ARE THE SAME WEIGHTS. One of the two directories \"\n          \"holds a copy of the other and this render would condition the \"\n          \"skeleton and the board on one net.\"); sys.exit(1)\nif n != sn or ch != sch:\n    print(\"!! the two nets no longer share size and config, so the premise of \"\n          \"this guard has changed and it must be re-read, not relaxed.\"); sys.exit(1)\nprint(\"the two nets share size %d and config %s and DIFFER in weights -- \"\n      \"only the sha separates them\" % (n, ch))\n\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n                  (\"pipeline/control/b08-openpose-nat-0819.png\", \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"),\n                  (\"pipeline/control/b08-board-0820.png\", \"38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6\"),\n                  (\"pipeline/control/b08-ref-goblin-0819.png\", \"13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c\"),\n                  (\"pipeline/control/b08-ref-guard-0819.png\", \"61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c\")):\n    p = os.path.join(r\"C:\\banyan-farm\\b08scale30-0820\\src\", rel.replace(\"/\", os.sep))\n    if not os.path.exists(p):\n        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n    hh = sha(p)\n    if hh != want:\n        print(\"!! %s sha %s, expected %s\" % (p, hh, want)); sys.exit(1)\nprint(\"staged driver, BOTH hints and BOTH references verified\")"
+      ]
+    },
+    {
+      "name": "scale30",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08scale30-0820\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\b08scale30-0820\\src",
+        "--repo-commit",
+        "ee74ac0e3eaf920fc7637fa7e4f2727af7684628",
+        "--task",
+        "ep2-b08-scale30-0820",
+        "--arm",
+        "scale30",
+        "--controlnet",
+        "C:\\banyan-farm\\cnet-openpose-twins",
+        "--control",
+        "pipeline/control/b08-openpose-nat-0819.png",
+        "--control-sha256",
+        "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0",
+        "--scale",
+        "1.0",
+        "--seed",
+        "20260819",
+        "--ip-ref",
+        "pipeline/control/b08-ref-goblin-0819.png",
+        "--ip-mask-capsules",
+        "170.6,550.8,118.6,550.8,30;170.6,550.8,222.5,550.8,30;118.6,550.8,104,762.4,12;104,762.4,111.3,857.3,12;222.5,550.8,237.1,762.4,12;237.1,762.4,229.8,857.3,12;170.6,550.8,137.7,762.4,30;137.7,762.4,140.5,941.2,12;140.5,941.2,143.2,1123.6,12;170.6,550.8,203.4,762.4,30;203.4,762.4,200.7,941.2,12;200.7,941.2,197.9,1123.6,12;170.6,550.8,170.6,481.7,34;170.6,481.7,152.5,465.9,34;152.5,465.9,128.9,470.4,34;170.6,481.7,188.7,465.9,34;188.7,465.9,212.2,470.4,34",
+        "--ip-ref-sha256",
+        "13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c",
+        "--ip-ref",
+        "pipeline/control/b08-ref-guard-0819.png",
+        "--ip-mask-capsules",
+        "565.8,491,512.4,491,30;565.8,491,619.1,491,30;512.4,491,360,484.9,12;360,484.9,257.4,657.3,12;619.1,491,627.2,579.7,12;627.2,579.7,621.7,668.4,12;565.8,491,532.1,723.8,30;532.1,723.8,534.9,920.4,12;534.9,920.4,537.7,1121,12;565.8,491,599.5,723.8,30;599.5,723.8,596.7,920.4,12;596.7,920.4,593.8,1121,12;565.8,491,565.8,403.9,34;565.8,403.9,550.7,389.3,34;550.7,389.3,531.2,393.5,34;565.8,403.9,580.8,389.3,34;580.8,389.3,600.3,393.5,34",
+        "--ip-ref-sha256",
+        "61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c",
+        "--ip-scale",
+        "0.7",
+        "--controlnet2",
+        "xinsir/controlnet-scribble-sdxl-1.0",
+        "--control2",
+        "pipeline/control/b08-board-0820.png",
+        "--control2-sha256",
+        "38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6",
+        "--scale2",
+        "0.3",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08scale30-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08scale30-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b08scale30-0820\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# box_enqueue.courier_problems: the courier pushes from farm-out and\n# nowhere else, and ep2-cnet-probe-0817 was invisible for two days for\n# want of exactly this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b08scale30-0820/out\"\npay_dir = \"C:/banyan-farm/b08scale30-0820\"\nctl_dir = \"C:/banyan-farm/b08scale30-0820/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-scale30-0820\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b08-scale30-0820-scale30.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"/b08-openpose-nat-0819.png\")\n               + glob.glob(ctl_dir + \"/b08-board-0820.png\")\n               + glob.glob(ctl_dir + \"/b08-ref-*-0819.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b08-scale30-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 8 else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b08scale30-0820\\out\\ep2-b08-scale30-0820-scale30.png"
+  ],
+  "backlog": {
+    "filed_at": 1787176163,
+    "filed_at_iso": "2026-08-19T21:49:23Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b08-scale30-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-19T21:51:06Z",
+  "attempts": 1,
+  "runner_pid": 21356,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T21:51:44Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b08scale30-0820\\out\\ep2-b08-scale30-0820-scale30.png"
+  ]
+}
