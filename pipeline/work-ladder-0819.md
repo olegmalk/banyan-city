@@ -534,3 +534,184 @@ builder is broken, but the file cannot be machine-read. It is that lane's file.
 | beat 08 hint / identity | owned; hint axis closed by measurement, next step is research |
 | beat 09 plate | the b09 plate lane's own `blocked_on`; judging owned elsewhere |
 | beat 14 | PARKED by steward ruling until the slates close |
+
+---
+
+## Appended 2026-08-19 by the beat-19 drop lane
+
+Two rungs fired here: the plate PICK the composite lane left open, and the first
+motion take off it. Both are committed with their pixels.
+
+### BEAT 19'S PLATE IS PICKED — 0.22, by derivation, not by taste
+
+The composite lane left beat 19 with **two passing plates and zero picks** and
+filed the choice as R4, on the reading that "matte-vs-gloss is still open".
+**It is not open — it is written down, and in three places that all predate both
+samples:**
+
+1. **`matte` is in the fig clause itself**, and the clause travels with the
+   subject rather than the beat: `authored_b01_scale_0816` and both 08-17 rungs
+   carry *"one small deep purple-violet fig, green at its neck, **matte**,
+   growing on its thin stem"* (`wave-drafts.yaml:518`, `:573`). Live wording, not
+   an archived round.
+2. **Gloss on this exact fruit has been a DEFECT here for five days.**
+   `wave-drafts.yaml:225` — *"the fruit came back GLOSSY … where the canon is
+   matte with no shine at all"*; `:242` — *"TOO GLOSSY … nothing about it reads
+   matte"*, after which gloss was banned by name and a whole reference set was
+   built so *"the fruit tells it the colour AND THE MATTE SURFACE"*.
+3. **`canon.yaml`'s fig subject reaches beat 19 explicitly** — `ep2-fig-purple`,
+   `scope.beats: [19, 20]`. It rules colour and is **silent on finish**, and
+   silence is not contradiction. Nothing anywhere prefers a specular.
+
+**Picked on the pixels, not the label** — "sapgloss" names *the job that went
+after gloss*, not the glossy output, and getting that backwards was a live risk.
+At 8×: 0.30 carries a hard-edged bright lobe over a third of the fruit and reads
+**wet**; 0.22 carries one soft terminator, i.e. an ordinary cel shadow. The
+instrument agrees (p99−p50 over the segmented body: 71.8 → 23.9) and is the
+filter, not the decision. **Cost of the pick:** 0.30's extra incident at the leaf
+junction, which canon does not ask for — and 0.22 also loses the parent's one
+PARTIAL, the junction leaflets. **Veto is one word for $0:** the other plate is
+already rendered, committed and passing, so "glossier" re-picks it with no GPU.
+Recorded in `ep2-b19-sapgloss-0819.yaml` `pick_0819`.
+
+### THE MOTION TAKE OFF IT FAILS, AND IT FAILS BY ANIMATING BEAT 20
+
+`ep2-b19-dropmotion-0819` — the b14 crf-10 LTX recipe cloned whole, 121f
+704x1280, 264s of GPU, $0. **My prediction was pre-registered and wrong in the
+useful direction:** I argued the engine would not move a 32×43px object by less
+than its own height (F-FROZEN / F-IMPERCEPTIBLE). It produced plenty of motion
+and **pointed it at the wrong subject.**
+
+- From ~f025 the sapling **thickens and elongates**. At f030 **his right hand
+  leaves his knee**. f039–f065 that hand **rests on the plant's leaves**. By f088
+  the sapling is a **sprawling prostrate plant — four or more large leaves, a
+  horizontal runner, and TWO figs** — held to f120.
+- **The figs reach grass level because the plant lies down.** There is no
+  detachment event anywhere in the clip.
+- **So the engine rendered beat 20's line inside beat 19** (*"picks the fig up
+  with both hands"*), with no hand action in the prompt, both hands on knees in
+  the plate, and `fruit in his hands` as the FIRST tokens of the negative.
+  **Positive placement beats negatives for a sixth time.**
+- `F-PLANT-REVERT` fired hardest: two leaves → four+, one fig → two, upright stem
+  → runner. That plant cost four drawing rounds and a closed three-rung wording
+  ladder, and **motion undid all of it in 90 frames.** No beat-19 job had ever
+  checked the count under motion, which is why the clause existed.
+- **crf 10 did not freeze this beat.** Amplitude was never the problem, so the
+  crf-33 A/B this spec pre-registered is **CANCELLED by its own condition** — it
+  was named only if a freeze fired. Worth stating: a pre-registered follow-up run
+  unconditionally is how a lane burns a card on a closed question.
+
+Evidence, both sheets committed: `farm-out/ep2-b19-dropmotion-0819/`.
+
+### Three instrument findings, because two of them overturned the numbers
+
+- **A framing bug caught BEFORE the GPU, by measuring the plate against the
+  recipe.** 832x1216 → 704x1280 cover-crop discards 81.7 original px **per
+  side**, and beat 19's fruit lives at original x 743..773. **A centred crop
+  keeps 8 of its 32 columns** — the subject of the beat, cropped out. Fixed with
+  `--anchor right` (default `center`, so every earlier copy reproduces byte for
+  byte) and hard-guarded by a pre-render `assert_framing.py` that refuses if the
+  fruit is not aloft, in frame and clear of the body zone. Both were run against
+  the real plate here: PASS right-anchored, **REFUSE centred**.
+- **M2 read PASS on all three thresholds and is an artifact** — 114px of descent,
+  bottom edge y1059, 0.0px of movement over the last 12 frames, every clause
+  satisfied **by the plant migrating**. Reported FAIL. This is the rule's own
+  case: *a metric agreeing with me is not a sample.*
+- **M5's raw [4,4] horizon shift is not a camera move.** dx = 0 everywhere, and
+  the vertical fit is **+3px on the low-contrast horizon band but −1px on the
+  high-contrast fence posts** — region-inconsistent, so it is the field
+  **re-inking**, the same thing that gave beat 06 depth 0.516 with zero human
+  motion. Reported PASS with both numbers: filing a camera fault that does not
+  exist is its own defect.
+
+### A bar clause the ladder should carry forward, and one it should narrow
+
+- **`M3` was ASYMMETRIC and the founder's ruling is not.** It was written as *no
+  FRUIT pixel inside a static body box measured at f000*. **His arm left the
+  box**, so the clause was structurally unable to see **body-onto-fruit**
+  contact — which is the contact this clip contains. The next motion bar on this
+  beat needs a **per-frame body mask** and a symmetric clause: no contact in
+  either direction, in any frame.
+- **The "share of pairs under 0.5 interframe" clause this ladder asked for is the
+  wrong instrument on a near-still beat**, and the tracker's self-test said so
+  *before* the clip existed: a **perfect** 32px fruit drop over a frozen
+  background moves whole-frame interframe by **0.056** and would fail the floor.
+  Threshold left as filed and its FAIL recorded as uninformative. **Generalise
+  it: a near-still beat puts its floor on the TRACKED SUBJECT, never on the
+  frame.**
+
+### FOR THE ASSEMBLY LANE — beat 19 is still a SLATE, and it carries a trap
+
+- **Nothing to cut.** No pick, no plate_ack, no leaf, no lineage entry. The
+  beat's blocker **moved** rather than cleared: no longer *"no plate exists"* —
+  the plate exists and is picked — but ***"no motion recipe has produced a
+  fall"***.
+- **NEVER LET AN ASSEMBLER PALINDROME BEAT 19.** `render_t3.py:616` reverses any
+  clip whose slot outruns it (`dur > cdur + 0.05`, `cdur <= 16.0`). Beat 19's
+  slot is 1:34–1:39 = **5.000s**; a 121f/24 clip is **5.0417s** (ffprobe). So it
+  does **not** fire — **by 0.09s**. That margin is the entire safety of an
+  **irreversible** action: reversed, this beat shows a fig **flying back up onto
+  a stem**. Any retime, trim or shorter re-render past 5.09s turns it on
+  silently. Beat 19 is the first beat in the show whose action a viewer can see
+  run backwards, and the assembler has no notion of that.
+
+### The rung this lane recommends — composite the fall, $0, no engine
+
+Every precondition is already met: **the camera is locked**, the fig is a
+**32×43px rigid object**, the plate is picked and passing, and this lane already
+owns `pipeline/beat19_drop_composite.py`, which **drew** that plant. A sprite
+translated down a parabola over the static plate produces a physically exact
+32px fall into the grass beside him and **cannot produce any of the three faults
+that killed this take** — the plant cannot revert, he cannot reach, and a second
+fig cannot appear, because nothing is being re-generated. It satisfies his ruling
+exactly. **Not a fifth wording:** the failure is *subject attribution*, and this
+repo now has five rungs saying words do not fix that (tonight's b08 finding
+included — *"five rungs of geometry could not say which body an attribute belongs
+to; a reference image behind a mask can"*).
+
+**The author's card underneath all of it:** whether beat 19 is filmable **wide**
+at all. His knee-height canon caps the fall at ~30cm and the board requires the
+sapling and the scavenger in one frame, so the drop is **~32px of a 1280-tall
+frame however it is produced**. Story question, not an engine one, and this clip
+is the first evidence for it.
+
+### TOOLING RUNG — `box_autofill.py` reports `backlog_empty` from a junk directory when run on a Mac
+
+**Not hypothetical: it has done it four times, on three dates, and the card was
+hungry each time.** `pipeline/box_autofill.py` and `box_runner.py` both do
+`os.makedirs(os.path.join(root, sub))` with `root = r"C:\banyan-queue"`. On
+POSIX that path is **one filename containing backslashes**, so the call creates a
+literal directory named `C:\banyan-queue` **in the CWD** with real `backlog/`,
+`ready/`, `running/`, `done/`, `failed/` inside it. `json_names()` then does
+`os.listdir` on that local tree, finds nothing, and the tool reports:
+
+```
+status: backlog_empty
+why: "HUNGRY: ready holds 0.0 min, under the 45 min floor, and the backlog has
+      nothing eligible to file … NOTHING WAS INVENTED"
+```
+
+**Every word of which is false about the box, and nothing in the output says it
+never talked to it.** The `except OSError` net cannot fire, because the junk
+directory genuinely exists after the first run. Evidence is still on disk at the
+repo root — `C:\banyan-queue/autofill.log` carries 2026-08-17 ×2 and 2026-08-19
+×2 (`07:32:32Z`, `07:32:50Z`), and it shows up in `git status` as an untracked
+`C:\banyan-queue/`.
+
+**It is worse than one-directional, and this lane hit the other half too.** The
+same file's `status()` and `verify_deployed()` paths use `ssh()`, so they are
+correct only **off**-box. Run `--status` **on** the box and it tries to ssh to
+`rtx5090` from `rtx5090` and dies after 60s (`subprocess.TimeoutExpired`,
+verified today). **So neither invocation is fully correct:** the fill path is
+box-only and silently lies off-box; the status path is Mac-only and hangs
+on-box.
+
+**The guard this wants is small and has two directions:** the fill path refuses
+unless `os.name == "nt"` (or the root resolves to a real absolute path on this
+platform); `--status` / `--verify-deployed` refuse when they are already on the
+worker they would ssh to. Cheaper than the fifth occurrence, and this is a
+**no-artificial-delay** defect, not a cosmetic one — a false `backlog_empty` is
+exactly how a runnable job sits while the card idles. *(How this lane worked
+around it: file with `box_enqueue.py --backlog` — which correctly ssh's for
+everything — then run the fill **on the box over ssh**. Promotion was immediate
+and the render started with no wait.)*
