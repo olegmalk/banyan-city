@@ -98,6 +98,25 @@ CARRIERS = {
             "b12-stillmotion lost 91.05 levels with all three bands falling "
             "together -- the largest collapse on record."),
     },
+    "b12b": {
+        # CONFIRMATION, n=2 on the clean side. The converse rung came back
+        # -0.04 on 20260871 where 20260819 lost 91.05 on the identical plate,
+        # prompt and argv -- so the collapse is a (seed x plate) interaction and
+        # NOT the plate alone. One clean seed could still be luck; a second on a
+        # different integer tells us whether 20260819 is the unusual one or
+        # whether this plate is a coin flip.
+        "parent_id": "ep2-b12-stillmotion-0819",
+        "child_id": "ep2-b12-stillmotion-s20260818-0819",
+        "parent_seed": 20260819,
+        "child_seed": 20260818,
+        "mode": "reseed2",
+        "parent_clip": "12-related-LTX-stillmotion-crf10-s20260819.mp4",
+        "child_clip": "12-related-LTX-stillmotion-crf10-s20260818.mp4",
+        "crf": "10",
+        "carrier_note": (
+            "20260818 held on b01 at crf 10 (+1.37) and bloomed on b01 at crf 33 "
+            "(+73.24), so it is a seed with form on both sides."),
+    },
     "b18": {
         "parent_id": "ep2-b18-tremble-s4-0819",
         "child_id": "ep2-b18-tremble-s20260819-0819",
@@ -168,7 +187,48 @@ def main() -> int:
         del spec[k]
     print("stripped inherited keys: %s" % (", ".join(refused) or "(none)"))
 
-    if mode == "reseed":
+    if mode == "reseed2":
+        spec["why"] = (
+            "SEED %d on %s. THIRD seed on this plate. 20260819 lost 91.05 levels "
+            "here; 20260871 held at -0.04 on a byte-identical spec, which makes the "
+            "collapse a (seed x plate) interaction rather than the plate. One clean "
+            "seed can be luck. %s"
+            % (CHILD_SEED, PARENT_ID, c["carrier_note"]))
+        spec["consumer"] = (
+            "The darkening finding, hardened. If this also holds, 20260819 is the "
+            "unusual seed on this plate and a collapse is a re-roll away from being "
+            "fixed -- which is what beat 12 and beat 20 both need to know. If it "
+            "collapses, this plate is a coin flip and every 121-frame rung on it "
+            "needs its luminance checked before use. Not a pick: which beat-12 take "
+            "ships is R4.")
+        spec["bar"] = {
+            "instrument": ("pipeline/luma_drift.py, equal thirds, whole-frame "
+                           "BT.601 luma, frames 0/24/48/72/96/120."),
+            "the_number_that_decides": (
+                "Whole-frame drift f000->f120, TWO-SIDED, |drift| >= 20 levels is "
+                "a collapse. On this plate: 20260819 measured -91.05, 20260871 "
+                "measured -0.04."),
+            "PASS-HOLD": (
+                "|drift| < 20, or bands disagreeing. Two of three seeds hold, "
+                "20260819 is the outlier, and a collapsed take on this plate is "
+                "fixable by re-rolling. Named as MORE likely -- but the last "
+                "prediction on this axis was wrong, which is noted rather than "
+                "hidden."),
+            "FAIL-COLLAPSE": (
+                "|drift| >= 20 with bands agreeing. Then this plate collapses on "
+                "some seeds and not others at roughly even odds, and luminance "
+                "becomes a mandatory check on every rung that uses it."),
+            "band_clause": (
+                "A single band moving alone is an OBJECT until eyes say "
+                "otherwise -- this beat's 73-frame sibling had a -46.93 mid-band "
+                "that was a leaf, not a fade."),
+            "not_scored_here": (
+                "The stillness clauses, the bird, the leaf and the grass band are "
+                "the parent's bar and are NOT re-litigated here."),
+            "what_this_licenses": (
+                "One clip on one seed. No pick, no promotion, no cut swap."),
+        }
+    elif mode == "reseed":
         spec["why"] = (
             "SEED %d on %s, the take that COLLAPSED (-91.05 levels, all three "
             "bands together). ONE VARIABLE off it: seed %d -> %d. 20260871 is the "
