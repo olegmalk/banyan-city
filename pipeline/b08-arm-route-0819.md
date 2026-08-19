@@ -1020,3 +1020,47 @@ second net cannot hold an object against a crowded prompt at any strength that
 leaves the drawing alone, and figure ink in the board hint becomes the argued
 lever instead of the speculative one. **§17's frame remains the best on this
 beat** and this one does not displace it.
+
+## 19. The board and the wardrobe are bought with the same knob (2026-08-20)
+
+One number, `--scale2` 0.3 → 0.5, the 73-token prompt held byte-identical (the
+deriver asserts the payload matches the parent's; diffed again at pull).
+
+| clause | scale30 (0.3, 64 tok) | grip (0.3, 73 tok) | scale50 (0.5, 73 tok) | boardnet (0.8) |
+|---|---|---|---|---|
+| board: quad px < luma 80 | 0.758 | **0.235** | **0.757** | present |
+| grip on the board | mitten | fingers, **on the sash** | **none, board untouched** | absent |
+| B6 wardrobe | shirt + sash + wrap | shirt + sash + wrap | **ONE BROWN ROBE** | one flat robe |
+| sleeve RGB | (217.9,193.4,165.0) | — | **(161.6,115.4,80.3)** | — |
+| B8 hair (canon) | sandy | **bald** | **bald** | bald |
+| B4b hand→wrist | 48.5 px | 41.2 px | **4.0 px** | 10.2 px |
+| both arms | yes | yes | **yes** | far arm gone |
+| frame mean luma | 134.2 | 127.3 | **114.4** | 86.9 |
+
+**The window is narrower than 0.3–0.5, not 0.3–0.8.** At 0.3 the drawing is
+intact and the object is so marginal that nine words remove it. At 0.5 the
+object is as solid as it has ever been and the cream shirt and white sash have
+already merged into the brown wrap — the same collapse 0.8 produced, measured on
+three patches rather than judged by eye. **So the route stops tuning this
+number:** one knob buys the object and the garments, and they move in opposite
+directions.
+
+**Two separations this frame bought that no other frame could.** (1) **The hair
+is not a conditioning problem.** Conditioning rose by two thirds and the hair did
+not move — at 73 tokens the crowding alone is sufficient to lose `light sandy
+hair`, so §18's failure and the object failure are independent and the hair is a
+prompt-budget item. (2) **Where a hand GOES is not the object net's to decide.**
+Strengthening the board moved the far hand by nothing: it sat at the chest on
+the strap at 0.3 and sits there at 0.5.
+
+**Next, and it is now ARGUED rather than speculative: figure ink in the board
+hint.** Three rungs have spent every free lever — wording summons a grip and
+binds it to the wrong object while costing the board (§18), strength restores
+the board and moves no hand while costing the wardrobe (§19), and the guidance
+window was excluded at §17. A short stroke for the gripping hand at the authored
+L-wrist, with `--scale2` back at 0.3 where the drawing survives and the prompt
+back to §17's 64 tokens so the crowding that costs the hair goes with it, is the
+only remaining input that addresses **position**. It would be the first figure
+ink ever placed in that hint and it is still owed the five tracing losses in
+writing before it is authored — but §19 is the evidence those losses were
+waiting for. **§17's frame remains the best on this beat.**
