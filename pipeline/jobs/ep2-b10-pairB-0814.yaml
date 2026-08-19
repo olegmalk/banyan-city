@@ -130,3 +130,161 @@ steps:
     \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
 artifacts:
 - C:\banyan-farm\ep2-b10-pairB-0814\10-no-form-LTX-world-0813.mp4
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# Bar taken verbatim from done-definitions beats.10.done_when. Cast
+# checked against the FROZEN wardrobe in guards_CORRECTION_0816.
+# No bar was invented and none was widened.
+# ==================================================================
+verdict: >-
+  FAIL on the clause that IS the beat, and the failure is the one the record already charged
+  to the OTHER seed. `done_when` requires "the near one flips the bark board and holds its
+  blank back TOWARD HIS PARTNER". From f065 to f096 the blank board is held with its face
+  essentially PARALLEL TO THE PICTURE PLANE — presented to the lens — while the partner
+  stands to its right and would see it nearly edge-on. That is verbatim the defect
+  beats.10.round_3_result charges to seedA ("the board faces camera not the partner"), and it
+  is present in pairB as well. What DOES land, and it is the beat's punchline, is the BLANK:
+  from f055 the board is a completely featureless orange-tan rectangle, and NO FORM reads.
+  Two guards hold for all 97 frames, the field is there at frame one, and there are zero
+  identical adjacent pairs in the clip.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/10-no-form-b10-pairB-trim.mp4
+  sha256: b35f42eb181f63f263277010e2fd1f47172ee18a00f567c20468860b7bdc3811
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[10] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  relation_to_this_job: >-
+    The cut carries the trim_pass_0815 derivative, not this job's raw artifact: sidecar reads
+    "3 head + 21 dead tail frames removed, 5.04s -> 4.04s". 97 frames. All frame indices below
+    are indices into the TRIMMED file.
+  method: >-
+    pipeline/coldread_frames.py --pad 60, 97 consecutive frames over five strips plus a
+    16-frame overview, read consecutively per standard_0815.scoring_method. Then
+    review/ep2-picks/exact_freeze_index.py and a parity-collapsed lag-4 series.
+  shares_its_init_with_beat_05: >-
+    CONFIRMED FROM THE SPECS, not inferred. This job's crop step and
+    ep2-b05-standB-0814's crop step assert the SAME source file,
+    C:\banyan-farm\courier-box\farm-out\ep2-b05-scene-0814\05-the-patrol-ipa-r0-w015-s0.png.
+    That is the third independent confirmation of a fact the record already holds twice — an
+    md5 finding, and a blind reader who spotted it with no filenames
+    (blind_read_0815_b05_b06_b10.corroboration_shared_plate_n_and_v). It matters for this
+    verdict because every cast fault below is beat 05's cast fault, one plate, not two beats'
+    worth of separate problems.
+verdict_clauses:
+  P1_two_guards_in_frame: >-
+    PASS. Two figures at f000, at f096 and at every frame between. No third man, nobody drops
+    out. Like beat 05, this is the clause the shared two-guard plate exists to supply and it
+    supplies it.
+  P2_the_near_one_flips_the_bark_board: >-
+    PARTIAL, AND THE MECHANISM IS NOT A FLIP. Read consecutively: f040-f044 the nearer
+    (dark-haired, drawn larger and lower) figure holds a pale grey-blue slab angled with his
+    partner's hands steadying its lower edge; f045-f049 he raises and tilts it; f050-f054 the
+    presented face changes from pale grey-blue to orange-tan while the object also changes size
+    and outline; f055-f059 it is a blank tan board in both his hands. TO A VIEWER THAT READS AS
+    A FLIP — a face goes away and a blank face arrives — and it is fair to say the beat's
+    gesture is legible. What is on screen is not a rigid body rotating: it is one object
+    morphing into a different object mid-turn. Scored PARTIAL rather than PASS because the
+    clause names an action performed on a board, and half of what sells it here is the prop
+    changing identity. "The near one" is satisfied: the nearer man is the one holding it.
+  P3_holds_its_blank_back_TOWARD_HIS_PARTNER: >-
+    FAIL, and it is the load-bearing failure. Checked at f065, f070, f074, f079 and f096: the
+    board's blank face lies almost flat to the picture plane, squared to the LENS. The partner
+    is to its right and slightly behind; from where he stands the board is close to edge-on. He
+    is looking down at it — his head is turned toward it from f050 on, so the STAGING intent
+    is visible — but the definition is about where the blank face points, and it points at the
+    audience. The reason this clause is written that way is in the record: figure_count_ruled_from_the_script_0817
+    reasons that "the target of beat 10's gesture IS the partner: Guard 1 has just asked
+    '...We confiscate the goblin?' in beat 09 and the blank back is the answer shown to him."
+    Shown to the camera instead, the answer has no addressee.
+  P4_board_hand_sized: >-
+    FAIL. From f055 the tan board spans roughly from the near guard's collarbone to his belt
+    and close to the width of his torso. Same failure and same magnitude as beat 06's, on a
+    different plate and a different prompt — which is worth pairing, because two beats failing
+    the same dimension clause independently says the size of a held prop is not currently
+    controlled anywhere in this pipeline.
+  P5_field_present_at_frame_one: >-
+    PASS. f000 has grass to the bottom edge, a green hedge band across the middle distance and
+    blue sky with cloud above. No burst, no iris, no scene forming.
+  prop_identity_bar_standard_0815: >-
+    FAIL, AND THIS READ DATES THE EVENT THE BLIND READER COULD ONLY INFER.
+    blind_read_0815_b05_b06_b10.verdicts.'10'.prop_fault says "Both reference props are
+    replaced by a SINGLE BLANK ORANGE-TAN BOARD held jointly by the two figures", from ten tail
+    frames. The whole clip shows the merge happening: at f000 there are TWO distinct objects —
+    a grey-blue slab with the dark-haired guard and a dark teal board with the light-haired one
+    — they are handled together across f032-f051, the colour and outline change over f050-f054,
+    and from f055 there is ONE blank orange-tan board with the light-haired guard's hands
+    hanging empty for the rest of the clip. So: two props in, one prop out, and the second
+    guard is disarmed on screen at about f055.
+  identity_drift_bar_standard_0815: >-
+    FAIL, mildly, and the blind reader's 7/10 "LEAST CHANGED of the three" is confirmed as the
+    right severity. The nearer dark-haired guard is close to a direct match on face and jaw
+    throughout. Two changes are real: his hair grows from a flatter fringe at f000 into a large
+    spiky wind-blown mane by f040 that persists to f096 — which is the exact drift
+    standard_0815.identity_drift_bar describes in its own words, "short, neat dark spikes"
+    becoming "a large wind-blown spiky mane" — and the light-haired guard's face lengthens
+    slightly, the reader's "aged up several years". Neither is a beat-11-class replacement.
+verdict_contradicts_a_founder_ruling: >-
+  THIRD INSTANCE IN THIS SWEEP, AND IT IS THE SAME PLATE AS BEAT 05's, SO IT IS ONE DEFECT
+  APPEARING TWICE IN THE CUT rather than two. Against the frozen wardrobe
+  (guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816, R4, "the cast stands as
+  drawn"): guard A dark-haired, tan wrap tunic, wide WHITE waist sash, WIRE-RIM GLASSES; guard
+  B BLOND, cream short-sleeve shirt, white sash over the shoulder, broad dark-brown wrap skirt.
+  In this file: two adolescent boys, one dark-brown-haired and one light-brown, NEITHER BLOND,
+  in matching tan-brown shirts and brown wrap skirts, NEITHER WEARING A WHITE SASH, NEITHER
+  WEARING GLASSES, and not distinguishable as A and B by garment at all. The class is already
+  on the record (guard_plates_are_miscast_0816); the attribute-by-attribute check against the
+  shipped pixels is what this sweep adds. Named for the plate lanes; not a taste question,
+  because the ruling is already made.
+verdict_measured:
+  no_freeze: >-
+    exact_freeze_index.py: `frames=97 terminal_freeze_index=None terminal_freeze_len=0
+    dup_pairs=0 runs=[]`. Parity-collapsed lag-4 median 11.11, minimum 1.20 — no four-frame
+    window is one picture. With beat 05 and beat 06 these are the three clean-motion takes of
+    the eight, and all three run off scene plates rather than costume cards.
+  the_action_is_where_the_motion_is: >-
+    Unlike beat 05, whose peak interframe steps all fall inside its defect window, beat 10's
+    largest steps cluster in the early pairs and again around pairs 31-37, which is the
+    handling window. The clip's motion is mostly the intended gesture. Recorded because it is
+    the honest counterpart of the beat-05 note and would otherwise look like a double standard.
+verdict_disagrees_with_the_record_and_leaves_it_standing:
+  the_record_says: >-
+    beats.10.round_4_result: "off the two-guard scene plate: both men present from frame one
+    and throughout, board raised with its blank face showing, field at frame one. Meets its own
+    definition."
+  what_this_file_shows: >-
+    THREE OF THE FOUR STATEMENTS ARE CONFIRMED AND THE CONCLUSION IS NOT. Both men present
+    throughout: confirmed, 97 of 97. Blank face showing: confirmed, and it is the best thing in
+    the clip. Field at frame one: confirmed. "Meets its own definition": NOT SUPPORTED. The
+    definition does not say the blank face is SHOWING, it says it is held TOWARD HIS PARTNER,
+    and it is held toward the lens. Note the wording of round_4_result itself — it says
+    "showing" where the definition says "toward his partner", which is the substitution that
+    let the conclusion through. Left standing unedited; this is the reading that disagrees.
+verdict_reported_forward_for_the_lane_that_owns_the_in_hand_statistic: >-
+  beats.10.plate_lane_0817 closes with "this beat's action is a small in-hand manipulation,
+  which measures 0 of 8 in-hand against 12 of 12 whole-body, and the composition fix for it
+  reproduced 0 of 4. A passing plate here would NOT imply a passing beat." THIS TAKE CONTAINS
+  ABOUT TWENTY FRAMES OF IN-HAND HANDLING — f040-f059, a board raised, tilted and turned
+  between two pairs of hands, continuous frame to frame. That does not refute the 0-of-8, which
+  was measured on a different population and for all this lane knows on stills; it does mean
+  an i2v motion job off this scene plate produced in-hand movement, so the pessimism in that
+  last sentence may be aimed one notch too low. Handed to that lane with the frame range
+  attached rather than argued about here.
+verdict_next_instrument: >-
+  NOT A SEED AND NOT A WORDING. Two things have to come from staging, and the record already
+  names the harder one. (1) THE ADDRESSEE: the board's blank face must point at the partner,
+  which means the partner has to be standing where the camera can see the face he is being
+  shown — i.e. the two men need to be angled to each other, not shoulder to shoulder facing
+  the lens. This plate stands them in parallel, so no seed can aim the board at both the
+  partner and the audience. (2) THE PROP: two props merging into one is what happens when both
+  men are dressed alike and drawn adjacent, which is beats.10.plate_lane_0817's own finding
+  that "A PROP DOES NOT [bind to a person clause], it attaches to whichever figure is drawn
+  nearest" — and that entry already lists dressing the men differently among the remaining
+  options. Named, not fired — this lane files no GPU work.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED. It stays cuttable and the reason is specific rather than
+  charitable: the blank board IS the joke of NO FORM and the blank board is on screen, big and
+  unmistakable, for the last forty frames. A viewer gets the gag. What they do not get is who
+  it is aimed at, and that is now written down instead of blank.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, never widened.
