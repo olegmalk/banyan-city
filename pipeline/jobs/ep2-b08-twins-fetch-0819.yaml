@@ -1,0 +1,277 @@
+# BEAT 08 -- FETCH THE `twins` POSE WEIGHT AND MAKE IT LOADABLE. NO RENDER.
+#
+# ============================================================================
+# WHY THIS IS FILED NOW, WHEN FOUR PREVIOUS RUNGS DECLINED IT
+# ============================================================================
+# `diffusion_pytorch_model_twins.safetensors` has been named and refused three
+# times on this route, always on the same ground and always correctly. xinsir
+# describes it in his own discussion #3 on his own repo as "a model with similar
+# performance and different style" -- MORE PRECISE POSE ADHERENCE, LOWER AESTHETIC
+# SCORE. Every rung that mentioned it said the same thing: pose adherence was
+# never what was failing, so a second 2,386 MiB for tighter adherence would be
+# spending a download on a problem we did not have.
+#
+# `ep2-b08-posenat-0819` CHANGED THAT, and its verdict says so in the clause that
+# licenses this job:
+#
+#   THE GOBLIN LIFTED HIS OWN LEFT ARM 186 PX UP AND 129 PX ACROSS, out of the
+#   hanging pose his own skeleton authored (wrist at (221,857), green fist
+#   rendered at (350,671)), to meet the guard's hand -- and the guard's forearm
+#   reached only about 60% of its authored length, hand centroid (436,656) against
+#   an authored wrist at (280.5,695.1). The two hands clasp in the middle of the
+#   gap.
+#
+# That is POSE ADHERENCE FAILING, precisely and only. It is the first time on this
+# route that the thing going wrong is the thing twins claims to improve. The frame
+# also established the general fact that makes it plausible: THE POSE NET'S
+# BINDING IS NOT RIGID -- an authored limb can be overridden when the checkpoint
+# prefers a different reading of the scene. Nothing before that frame had shown
+# it.
+#
+# The trade is understood and accepted in advance: twins is the LESS pretty of the
+# two, by its author's own description. For a sample whose bar is two measured
+# hand positions, aesthetic score is not what is being read.
+#
+# ============================================================================
+# WHY THIS IS A SEPARATE JOB FROM THE SAMPLE, AGAIN
+# ============================================================================
+# Same reason ep2-b08-posenet-fetch-0819 was: it is the only physical dependency,
+# HF_HUB_OFFLINE has to be cleared to fetch, and the env block is per-JOB rather
+# than per-step -- so the only honest way to scope that clearance to one step is
+# for the job to BE that step. Nothing here loads a model, runs a pipeline or
+# touches the GPU. And under the no-artificial-delay rule a download that can
+# start now starts now: the card is idle with an empty backlog as this is filed.
+#
+# ============================================================================
+# THE PART THAT IS NOT JUST A DOWNLOAD, AND WHY IT BELONGS HERE
+# ============================================================================
+# diffusers CANNOT LOAD THIS FILE FROM THE REPO AS IT IS NAMED, and finding that
+# out inside a render would waste the render. `ControlNetModel.from_pretrained`
+# takes no `weight_name`; the only filename lever it has is `variant`, which
+# composes as `diffusion_pytorch_model.<variant>.safetensors` -- with a DOT. The
+# twins file uses an UNDERSCORE (`..._twins.safetensors`), so no value of
+# `variant` reaches it, and `variant="twins"` would raise while looking for a file
+# that does not exist.
+#
+# So this job also MATERIALISES A LOADABLE DIRECTORY: it copies the repo's
+# `config.json` and the twins weight into
+# `C:\banyan-farm\cnet-openpose-twins`, naming the weight
+# `diffusion_pytorch_model.safetensors` -- the name `from_pretrained` looks for --
+# and asserts the result. That is a RENAME OF OUR OWN COPY, not a modification:
+# the bytes are asserted by sha256 both before and after, and the manifest records
+# the same digest under both names so nobody can later mistake this directory for
+# the default net.
+#
+# WHY A COPY AND NOT A SYMLINK: the box runs Windows, symlink creation needs
+# elevation there by default, and HF_HUB_DISABLE_SYMLINKS_WARNING is already set
+# across this route because of exactly that. A copy costs 2.4 GB of disk and
+# cannot half-work.
+#
+# THE SAMPLE THAT CONSUMES THIS IS NOT FILED YET, ON PURPOSE. It needs one small
+# driver change -- the CONTROLNETS allowlist is keyed by repo id and will have to
+# carry this local directory with its licence, because an unlisted net is refused
+# before any weight loads. That change is written against VERIFIED bytes rather
+# than against an assumption about what this download produced.
+#
+# NO SPEND: public apache-2.0 weights over the box's own link, $0, no provider, no
+# key, no ledger row. NO GPU: needs_gpu is false and this must not hold the card
+# from a lane that can use it. NO RENDER, NO PICK, NO CANON FILENAME.
+
+id: ep2-b08-twins-fetch-0819
+task: ep2-b08-twins-fetch-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: false
+sample: false
+priority: 30
+max_attempts: 2
+owner: beat 08 arm-route lane, 2026-08-19
+
+consumer: >-
+  The `twins` A/B sample ruled by ep2-b08-posenat-0819's verdict: same hint
+  (b08-openpose-nat-0819.png, 562911c8...), same seed 20260819, same scale, and a
+  bar of two measured hand positions -- does the guard's hand reach (280.5,695.1)
+  and does the goblin's arm STAY at its authored (221,857). No other job in this
+  repo needs these bytes, so this fetch has exactly one consumer and it is named.
+
+success: >-
+  C:\banyan-farm\cnet-openpose-twins holds config.json and
+  diffusion_pytorch_model.safetensors (2,502,139,104 bytes, sha256 equal to the
+  twins blob as downloaded), zero .incomplete files anywhere under the openpose
+  cache, and a manifest recording both digests under both names is in
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-twins-fetch-0819. The step asserts
+  the byte count and the config's _class_name itself and exits nonzero on either,
+  so a truncated download or a wrong-shaped config fails HERE and not inside a
+  render.
+
+why: >-
+  It is the only physical dependency of the ruled next rung, the card is idle with
+  an empty backlog, the licence is apache-2.0, the size is measured from the HF
+  blob API rather than from prose, and it is $0. And it is licensed by a
+  measurement rather than by curiosity: pose adherence is failing for the first
+  time on this route, which is the one thing this weight claims to improve.
+
+est_minutes: 25   # 2,386 MiB over the box's link (the sibling weight took 3m25s),
+                  # plus a 2.4 GB local copy and two sha256 passes
+
+needs: [network]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  # CLEARED, AND THIS ONE-STEP JOB IS WHAT SCOPES IT. Every rendering spec on this
+  # route keeps it at "1"; see the header.
+  HF_HUB_OFFLINE: "0"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+
+steps:
+  - name: fetch-rename-verify-publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Fetches, materialises a loadable directory, ASSERTS THE BYTES ON BOTH
+        # SIDES OF THE RENAME, and writes its manifest straight into
+        # courier-box\farm-out -- because the courier pushes from there and
+        # nowhere else, and ep2-cnet-probe-0817 rendered perfectly and stayed
+        # invisible for two days for want of exactly that.
+        import hashlib, json, os, shutil, sys
+        from huggingface_hub import snapshot_download
+        REPO = "xinsir/controlnet-openpose-sdxl-1.0"
+        TWINS = "diffusion_pytorch_model_twins.safetensors"
+        SIZE = 2502139104
+        DEST = r"C:\banyan-farm\cnet-openpose-twins"
+
+        def sha(p):
+            h = hashlib.sha256()
+            with open(p, "rb") as fh:
+                for c in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(c)
+            return h.hexdigest()
+
+        # ONLY the twins weight and the config. config.json is already cached from
+        # the sibling fetch, so this is one file over the wire; naming it anyway
+        # keeps the assertion complete. WITHOUT allow_patterns this pull is
+        # ~5,014 MB because it would re-take the default weight and the showcase
+        # webp.
+        d = snapshot_download(REPO, allow_patterns=[TWINS, "config.json"])
+        print("snapshot:", d, flush=True)
+        bad = []
+        src = os.path.join(d, TWINS)
+        cfg = os.path.join(d, "config.json")
+        if not os.path.exists(src):
+            print("!! MISSING " + TWINS, file=sys.stderr)
+            raise SystemExit(1)
+        n = os.path.getsize(src)
+        print("  %-46s %13d bytes (want %13d)" % (TWINS, n, SIZE), flush=True)
+        if n != SIZE:
+            bad.append("SIZE %s: %d != %d" % (TWINS, n, SIZE))
+        src_sha = sha(src)
+        print("  downloaded sha256:", src_sha, flush=True)
+
+        # THE RENAME. diffusers' from_pretrained has no weight_name and its
+        # `variant` lever composes with a DOT, so `..._twins.safetensors` is
+        # unreachable by any variant value. Our own copy carries the name
+        # from_pretrained looks for.
+        os.makedirs(DEST, exist_ok=True)
+        dst_w = os.path.join(DEST, "diffusion_pytorch_model.safetensors")
+        dst_c = os.path.join(DEST, "config.json")
+        shutil.copy2(src, dst_w)
+        shutil.copy2(cfg, dst_c)
+        dst_sha = sha(dst_w)
+        print("  copied     sha256:", dst_sha, flush=True)
+        if dst_sha != src_sha:
+            bad.append("THE COPY IS NOT THE FILE: %s != %s" % (dst_sha, src_sha))
+        if os.path.getsize(dst_w) != SIZE:
+            bad.append("copy size %d != %d" % (os.path.getsize(dst_w), SIZE))
+
+        # The config must actually be a ControlNet config, or the directory is
+        # loadable-looking and wrong -- which is how macbook1 rendered noise for
+        # days off a UNet that was the exact right length.
+        with open(dst_c, "r", encoding="utf-8") as fh:
+            c = json.load(fh)
+        print("  config _class_name:", c.get("_class_name"),
+              "cross_attention_dim:", c.get("cross_attention_dim"), flush=True)
+        if c.get("_class_name") != "ControlNetModel":
+            bad.append("config _class_name is %r" % c.get("_class_name"))
+        if c.get("cross_attention_dim") != 2048:
+            bad.append("cross_attention_dim %r is not SDXL's 2048"
+                       % c.get("cross_attention_dim"))
+
+        hub = os.environ.get("HF_HOME", "") + r"\hub"
+        inc = []
+        for root, _, files in os.walk(hub):
+            if "openpose" in root.lower():
+                inc += [f for f in files if f.endswith(".incomplete")]
+        if inc:
+            bad.append("%d .incomplete file(s) left behind" % len(inc))
+
+        out = r"C:\banyan-farm\courier-box\farm-out\ep2-b08-twins-fetch-0819"
+        os.makedirs(out, exist_ok=True)
+        with open(os.path.join(out, "ep2-b08-twins-fetch-0819.sha256"), "w",
+                  newline="\n", encoding="utf-8") as fh:
+            fh.write("# %s, allow_patterns=[%r, 'config.json'], variant NOT "
+                     "passed anywhere\n" % (REPO, TWINS))
+            fh.write("# snapshot: %s\n" % d)
+            fh.write("# loadable dir: %s\n" % DEST)
+            fh.write("# THE SAME BYTES UNDER BOTH NAMES -- the second line is our\n")
+            fh.write("# own renamed copy, not a different weight:\n")
+            fh.write("%s  %d  %s\n" % (src_sha, n, TWINS))
+            fh.write("%s  %d  %s\n" % (dst_sha, SIZE,
+                                       "cnet-openpose-twins/diffusion_pytorch_model.safetensors"))
+            fh.write("%s  %d  %s\n" % (sha(dst_c), os.path.getsize(dst_c),
+                                       "cnet-openpose-twins/config.json"))
+            fh.write("# incomplete_files: %d\n" % len(inc))
+        if bad:
+            print("!! " + "; ".join(bad), file=sys.stderr)
+            raise SystemExit(1)
+        print("rc=0", flush=True)
+
+artifacts:
+  - C:\banyan-farm\courier-box\farm-out\ep2-b08-twins-fetch-0819\ep2-b08-twins-fetch-0819.sha256
+
+bar:
+  b_bytes: >-
+    The downloaded twins weight is exactly 2,502,139,104 bytes -- the figure the
+    research took from the HF blob API with ?blobs=true, and byte-for-byte the same
+    size as the default weight it is an alternative to.
+  b_the_copy_is_the_file: >-
+    sha256 of the renamed copy EQUALS sha256 of the download. This is the clause
+    that makes the rename honest, and the manifest records the digest under both
+    names so this directory can never be mistaken for the default net.
+  b_it_is_a_controlnet_config: >-
+    config.json parses, _class_name is ControlNetModel and cross_attention_dim is
+    2048 (SDXL). A directory that merely has the right filenames is how a machine
+    renders noise for days.
+  b_no_incomplete: >-
+    Zero .incomplete files anywhere under the openpose cache.
+  b_no_spend: >-
+    ledger/render-spend.csv untouched. Public apache-2.0 weights, $0.
+
+verdict_rule: >-
+  Mechanical; nothing to score by eye. All four assertions pass -> PASS, and the
+  twins A/B sample may be filed against these exact digests. Any failure -> the
+  sample is NOT filed; re-run once (max_attempts 2), and a second failure means
+  this variant cannot be reached from the box, which retires the twins A/B rather
+  than being retried a third time. A PASS is NOT a result about pose adherence:
+  this job only proves the weight is present, whole and loadable.
+
+not_done_on_purpose: >-
+  No render. No pipeline load. No GPU. No sample -- it needs one small driver
+  change to the CONTROLNETS allowlist and that will be written against verified
+  bytes rather than against an assumption. No edit to controlnet_plate.py's
+  CONTROLNET constant. No re-download of the default weight (already cached and
+  verified at 08:00Z). No symlink (Windows elevation; a copy cannot half-work). No
+  deletion of the default net -- the A/B needs both.
+
+licence_note: >-
+  Identical to the default weight's, from the same repo: apache-2.0 on both front
+  matter and body, no attribution condition. The rename is of OUR OWN COPY under
+  our own path and changes no term; the manifest records the source repo, the
+  source filename and the identical digest so provenance survives the rename. No
+  preprocessor and no annotator is fetched, so lllyasviel/Annotators stays
+  untouched on this route -- the hint is authored in PIL.
