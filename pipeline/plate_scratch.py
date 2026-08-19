@@ -1523,6 +1523,156 @@ DRAFTS = {
         #      resting, and beat 09 is "Guard 1's face works through it".
         # ------------------------------------------------------------------
     },
+    # ======================================================================
+    # BEATS 03, 04 and 13 -- ADDED 2026-08-19, ORDERED BY THE FOUNDER'S RULING
+    # ======================================================================
+    # "well b definitely and the damn goblin. c kinda is but still pretty bad
+    # so change it" (/review/ep2-goblin-design-0819). B is the LEAN ADULT and
+    # he is the goblin; the C group -- beats 03, 04, 08, 13 and 20 -- reads as
+    # him but is "pretty bad", and "change it" is an instruction. Beat 20
+    # already had a draft here and needed only REVS[(20,4)]. THESE THREE HAD NO
+    # ENTRY IN THIS FILE AT ALL, which is why every plate the Mac farm drew on
+    # 08-18/08-19 was for some other beat: the wave could not reach them.
+    #
+    # WHERE THE WORDING COMES FROM, because inventing identity wording with no
+    # authority behind it is the exact failure the ruling was called to repair
+    # and repeating it here would be unforgivable. Three sources, no fourth:
+    #   1. THE IDENTITY CLAUSE IS COPIED, NOT COMPOSED. `lean wiry adult goblin
+    #      man, green skin, bald head, patchwork cloak` is byte-identical to
+    #      DRAFTS[14]'s and so to DRAFTS[20]'s, and it is the string the
+    #      founder ratified on 08-19. It is registered in pipeline/canon.yaml
+    #      as `ep2-goblin-design-adult`. Not one word of it is authored here.
+    #   2. THE STAGING IS EACH BEAT'S OWN `done_when`, quoted verbatim in the
+    #      entry below it, from review/ep2-picks/done-definitions.yaml. That is
+    #      the definition this repo already scores these beats against.
+    #   3. THE PLANT, where one is in frame, is the canon sapling -- `two big
+    #      leaves` is a wording THE-SAPLING.md already lists as satisfying the
+    #      founder's 08-16 two-leaf ruling, and `tiny` is his own word for it
+    #      ("thats ridiculous, lmao. the sapling is tiny").
+    # What is NOT here: no age word, no build word, no cuteness word, no
+    # seventh description of the character. The 08-15 wall is why -- `squat,
+    # round-bellied` rendered 0 of 4 on this exact text-to-image path -- and
+    # the ruling makes it moot: the wording that draws the adult is the wording
+    # we already have.
+    #
+    # ONE SAMPLE EACH. These are three NEW recipes, not clones of a proven one,
+    # so each gets one seed looked at before anything scales. Measured on the
+    # real CLIP tokenizer (cagliostrolab/animagine-xl-3.1), not estimated:
+    # beat 03 74/77 and 67/77, beat 04 73/77 and 58/77, beat 13 69/77 and
+    # 67/77; exit-7 clash NONE on all three.
+    3: {
+        "slug": "bad-cover",
+        "done_when": (
+            "he crouches and the COVER IS COMICALLY INADEQUATE - the trunk "
+            "hides a fraction of him and the joke is visible without "
+            "dialogue. A crouch that actually conceals him fails the beat."
+        ),
+        "why": (
+            "Beat 03 is in the cut on b03-refire-0814, drawn 08-14, and it is "
+            "the round young goblin the founder ruled against on 08-19. There "
+            "has never been an entry for this beat in this file. THE JOKE IS "
+            "THE BAR and it is a SIZE RELATION, not a pose: the plant must be "
+            "too small to hide him and he must be plainly visible behind it. "
+            "`done_when` says `the trunk`, which the founder's `the sapling is "
+            "tiny` ruling has since contradicted -- so the cover here is the "
+            "canon sapling's own stem, and that is not a softening of the "
+            "beat, it is what makes the cover comically inadequate."
+        ),
+        "prompt": (
+            "1boy, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, solo, crouching behind a tiny sapling with two "
+            "big leaves, far too small to hide him, most of his body plainly "
+            "visible, green summer grass, pale sky, bright daylight, "
+            "cinematic lighting, detailed, newest, masterpiece, best quality, "
+            "very aesthetic"
+        ),
+        # The plant-girl block is carried from DRAFTS[20]'s: naming a plant
+        # beside a figure summons alraune and monster-girl on this checkpoint,
+        # and this beat names one. Beat 14's weapon list (`spear, staff, sword,
+        # stick, basket, broom`) is dropped to pay for it -- that list guards
+        # beat 14's hands-at-the-dirt clause, which this beat does not have.
+        "negative": (
+            "text, standing, walking, full body, wide shot, distant, holding "
+            "object, 2boys, baby, child, chibi, stitches, scars, tree, "
+            "forest, indoors, photorealism, 3d render, dark, night, leaf on "
+            "head, plant girl, alraune, monster girl, female goblin, elf"
+        ),
+        "seed": 20260819,
+    },
+    4: {
+        "slug": "the-footnote",
+        "done_when": (
+            "stillness with LIVE EYES: held breath readable in the body, eyes "
+            "moving side to side. This is the one beat where a near-motionless "
+            "body is correct and only the eyes carry it."
+        ),
+        "why": (
+            "Beat 04 is the beat the founder named by hand on 2026-08-13 -- "
+            "`beat 04 has the cute goblin, needs to be changed` -- and the "
+            "08-19 forensic trace established that what he was pointing at "
+            "was CUTENESS MARKERS on that take, whose four tiles all carry "
+            "blush, rather than the round build. Both readings order the same "
+            "thing now, from opposite directions: the take is replaced. "
+            "wave-drafts calls this beat a FACE CLOSE-UP, and `done_when` "
+            "wants the held breath readable IN THE BODY, so the framing is "
+            "face AND shoulders rather than a head crop - a pure head crop "
+            "would put half the definition out of frame."
+        ),
+        "prompt": (
+            "1boy, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, solo, close-up on his face and shoulders, "
+            "holding his breath, mouth shut tight, eyes darting to one side, "
+            "tense stillness, green summer grass behind, bright daylight, "
+            "cinematic lighting, detailed, newest, masterpiece, best quality, "
+            "very aesthetic"
+        ),
+        # No plant-girl block: this beat names no plant, and the block costs
+        # nineteen tokens to insure against a risk that is not present. Beat
+        # 14's weapon list is kept instead -- a close-up with idle hands is
+        # where `holding object` actually bites.
+        "negative": (
+            "text, standing, walking, running, full body, wide shot, distant, "
+            "holding object, spear, staff, stick, 2boys, baby, child, chibi, "
+            "stitches, scars, tree, forest, house, indoors, photorealism, "
+            "3d render, dark, night"
+        ),
+        "seed": 20260819,
+    },
+    13: {
+        "slug": "the-shade",
+        "done_when": (
+            "he ends FOLDED SMALL in the sapling's shade, knees up. SCRIPT "
+            "CONFLICT, flagged not solved: the script says `slides down the "
+            "trunk`, and the founder has ruled the sapling is tiny - `thats "
+            "ridiculous, lmao. the sapling is tiny` - so there is no trunk to "
+            "slide down. The END STATE is what the beat needs; how he gets "
+            "there is an author call, not a steward one."
+        ),
+        "why": (
+            "Beat 13 is in the cut on b13-refire-0814 and is C-group. This "
+            "plate takes `done_when` at its word and draws THE END STATE ONLY "
+            "- folded small, knees up, in the sapling's shade - because the "
+            "definition itself says the getting-there is an author call and "
+            "not a steward one. A PLATE THAT DREW THE SLIDE WOULD BE MAKING "
+            "THAT CALL SILENTLY, which is exactly the class of thing that put "
+            "an unratified goblin on screen for four days. The script "
+            "conflict is left open, not resolved here."
+        ),
+        "prompt": (
+            "1boy, lean wiry adult goblin man, green skin, bald head, "
+            "patchwork cloak, solo, sitting folded small on the grass, knees "
+            "drawn up to his chest, in the thin shade of a tiny sapling with "
+            "two big leaves, warm afternoon light, cinematic lighting, "
+            "detailed, newest, masterpiece, best quality, very aesthetic"
+        ),
+        "negative": (
+            "text, standing, walking, full body, wide shot, distant, holding "
+            "object, 2boys, baby, child, chibi, stitches, scars, tree, "
+            "forest, indoors, photorealism, 3d render, dark, night, leaf on "
+            "head, plant girl, alraune, monster girl, female goblin, elf"
+        ),
+        "seed": 20260819,
+    },
     14: {
         "slug": "the-defense",
         "done_when": (
