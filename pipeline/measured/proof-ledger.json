@@ -1,7 +1,7 @@
 {
- "commits_in_window": 1481,
+ "commits_in_window": 1523,
  "covers_window": true,
- "cut": "ep2-demo-0819c",
+ "cut": "ep2-demo-0820",
  "cut_files": [
   "review/ep2-demo-0815/ep2-demo-0815.mp4",
   "review/ep2-demo-0816/ep2-demo-0816.mp4",
@@ -14,7 +14,7 @@
  "cuts_shipped": 7,
  "generated": "2026-08-19",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "f1bf048df",
+ "head": "5d7dd9267",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -117,9 +117,9 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "0b2d9047",
- "resolved_blocks_added": 84,
+ "range_base": "fc9f0529",
+ "resolved_blocks_added": 85,
  "shallow": true,
- "verdict_lines_added": 204,
+ "verdict_lines_added": 231,
  "window_days": 14
 }
