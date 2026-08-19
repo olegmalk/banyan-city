@@ -82,7 +82,10 @@ CAPTION_SIZE = 44
 # the same class of mistake as the cycle-001 defect it was written for.
 CAPTION_MARGIN = int(HEIGHT * 0.22) + 2
 CAPTION_MAX_W = WIDTH - 160
-PINGPONG_MAX_S = 16.0  # reverse buffers raw frames; skip palindrome past this
+# Caps the OPT-IN palindrome branch only (`wants_pingpong`) — reverse buffers
+# every raw frame, so a long source would eat memory. Since 2026-08-19 the
+# default fill for footage is a last-frame hold, which streams and needs no cap.
+PINGPONG_MAX_S = 16.0
 
 # speaker attribution (cycle 006): the tree's inner voice is tinted its own
 # green and carries no label; every other speaker gets a colored name tag.
@@ -545,7 +548,9 @@ def held_still(clips: list) -> bool:
         # the INVERSE of the clip_provenance bug, and worth widening for the
         # same reason: this located `<full name>.mp4.meta.yaml` only, which is
         # what hold_still writes today, so a held clip filed under the stem
-        # shape reads as footage and gets ping-ponged.
+        # shape read as footage and got ping-ponged. Since 2026-08-19 that
+        # misread costs less — footage holds rather than reverses — but it still
+        # costs the stretch, and a computed push has no true frame rate to loop.
         meta = lg.sidecar_for(c, lg.META_EXT)
         if not (meta
                 and "model: none" in meta.read_text(encoding="utf-8",
@@ -554,12 +559,38 @@ def held_still(clips: list) -> bool:
     return True
 
 
+def wants_pingpong(clips: list) -> bool:
+    """Does this beat's OWN record ask to be played forwards and then backwards?
+
+    `loop_fill: pingpong` in every one of the beat's clip sidecars — the same
+    tolerant lookup `held_still` uses, and ALL of them for the same reason: the
+    palindrome is applied to the concatenated sequence, so one clip cannot opt
+    the others in.
+
+    IT HAS NO CALLERS IN THIS TREE, on purpose. Nothing in `genomes/`, no
+    shots.md, no leaf and no sidecar under `review/` or `clips/` carries the key
+    (grepped, 2026-08-19): the palindrome went from the DEFAULT fill for footage
+    to an opt-in nobody has taken. It stays reachable because loop cycle 005 was
+    right about the one shape it suits — a genuinely cyclic move (a sway, a
+    flicker, leaves in wind) where forwards-and-back IS the motion and a plain
+    loop restart is the only visible seam. It is wrong for footage that performs
+    an ACTION once, which is what every take in this show is."""
+    if not clips:
+        return False
+    for c in clips:
+        if str(clip_provenance(c).get("loop_fill") or "").strip() != "pingpong":
+            return False
+    return True
+
+
 def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 manifest: dict | None = None, extra_layers: list | None = None,
                 tag_speakers: bool = True) -> Path:
     """Encode one beat: fitted footage (or slate) + overlays + captions.
-    Multiple clips per beat are sequenced (concat) to fill the slot; only the
-    full sequence loops (anime-idiomatic hold) — never a freeze. Captions
+    Multiple clips per beat are sequenced (concat) to fill the slot, and a slot
+    the sequence cannot fill ends on a HOLD of its last frame — the action
+    completes, then lands. (It used to loop a palindrome; see the fill comment
+    below and the 0819c audit for why a freeze beats a reversal.) Captions
     follow the VO manifest's measured line timings when one exists, chunked
     to short phrase units within each line's window. extra_layers appends
     caller-supplied (png, x, y, enable) overlays — e.g. the episode title
@@ -580,11 +611,30 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
             raise SystemExit(f"beat {num} sequence concat failed:\n{r.stderr[-800:]}")
         clip = seq
     if clip:
-        # looping footage restarts as a hard jump-cut mid-shot (verified,
-        # loop cycle 005): when the slot outruns the material, loop a
-        # PALINDROME (clip + itself reversed) so every seam is
-        # motion-continuous. First pass still plays forward from frame 1.
-        # reverse buffers raw frames — cap the source length it applies to.
+        # WHEN THE SLOT OUTRUNS THE MATERIAL, THE FOOTAGE HOLDS ITS LAST FRAME.
+        # It used to loop a PALINDROME (clip + itself reversed), because loop
+        # cycle 005 measured that a plain loop restarts as a hard jump-cut
+        # mid-shot and a palindrome keeps every seam motion-continuous. That is
+        # still true about SEAMS and it was the wrong thing to optimise: a
+        # reversal has no seam because it runs time backwards, and an action
+        # played back to front is not a continuity artefact, it is a different
+        # and impossible event. The 0819c assembly audited all 21 beats and
+        # found the branch firing on 8 of the 18 footage beats (1, 3, 4, 6, 10,
+        # 11, 17, 18) with nothing printed: beat 06's guard turned the bark
+        # board over, un-turned it and turned it again in a 6.71s slot fed by a
+        # 1.92s clip; beat 01's fig ripened green→purple and un-ripened, under a
+        # verdict that had passed the SOURCE for "0 shrinks".
+        #   A HOLD READS AS THE BEAT LANDING. A REVERSAL READS AS TIME FLOWING
+        # BACKWARDS. So the fill plays the clip once, forward, and freezes its
+        # final frame for the remainder — the action completes and then sits,
+        # which is what the voice running longer than the picture actually means.
+        # The palindrome survives as opt-in (`wants_pingpong`) for cyclic motion
+        # that genuinely is forwards-and-back; reverse also buffers raw frames,
+        # so that branch keeps its PINGPONG_MAX_S cap on the source length.
+        #   NOT IN TENSION WITH `frozen frame` IN THE NEGATIVE PROMPTS (video_task,
+        # beats 9 and 11, pinned by test). That forbids the MODEL from returning a
+        # clip with no motion in it — a dead take. This freezes the tail of a clip
+        # that already performed its action, after it has performed it.
         cdur = video_duration(clip) or 0
         # NO EPSILON ON THE HELD BRANCH, unlike the palindrome's +0.05. A held
         # still that falls even 0.005s short still wraps ONE frame of the loop
@@ -613,7 +663,8 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
             print(f"    beat {num:02d} held still {cdur:.2f}s stretched to fill "
                   f"{dur:.2f}s — not reversed (founder, 2026-08-07)")
             clip = st
-        elif cdur and dur > cdur + 0.05 and cdur <= PINGPONG_MAX_S:
+        elif (cdur and dur > cdur + 0.05 and cdur <= PINGPONG_MAX_S
+              and wants_pingpong(clips)):
             pp = workdir / f"pp-{num:02d}.mp4"
             r = subprocess.run(
                 [FFMPEG, "-y", "-i", str(clip), "-filter_complex",
@@ -623,7 +674,34 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode:
                 raise SystemExit(f"beat {num} ping-pong failed:\n{r.stderr[-800:]}")
+            print(f"    beat {num:02d} footage {cdur:.2f}s PALINDROMED into "
+                  f"{dur:.2f}s — its record asks for it (loop_fill: pingpong)")
             clip = pp
+        elif cdur and dur > cdur + 0.05:
+            # HOLD THE LAST FRAME. tpad's stop_mode=clone repeats the final
+            # decoded frame, so this is the same picture the clip ended on, not a
+            # re-encode of a still. Padded 0.2s PAST the slot for the reason the
+            # held branch overshoots too: the `-stream_loop -1` below still wraps
+            # if trim finds the source even a frame short, and the frame it would
+            # wrap to is frame 1 — the very jump-cut this is meant to remove.
+            # KEEPS THE +0.05 EPSILON that the palindrome branch had. Under a
+            # frame of shortfall is inside ffprobe's own measurement noise; the
+            # loop wraps at most one frame there, and re-encoding every beat to
+            # append zero frames of freeze buys nothing.
+            hd = workdir / f"hd-{num:02d}.mp4"
+            r = subprocess.run(
+                [FFMPEG, "-y", "-i", str(clip), "-filter_complex",
+                 f"[0:v]tpad=stop_mode=clone:stop_duration="
+                 f"{dur - cdur + 0.2:.3f},fps={FPS}[out]",
+                 "-map", "[out]", "-an", "-c:v", "libx264",
+                 "-preset", "veryfast", "-crf", "23", str(hd)],
+                capture_output=True, text=True, encoding="utf-8", errors="replace")
+            if r.returncode:
+                raise SystemExit(f"beat {num} last-frame hold failed:\n{r.stderr[-800:]}")
+            print(f"    beat {num:02d} footage {cdur:.2f}s plays once then HOLDS "
+                  f"its last frame to fill {dur:.2f}s — not reversed "
+                  f"(0819c palindrome audit, 8 of 18 beats)")
+            clip = hd
         inputs += ["-stream_loop", "-1", "-i", str(clip)]
         chains.append(
             f"[0:v]scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"

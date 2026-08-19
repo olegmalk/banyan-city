@@ -892,9 +892,24 @@ def test_t3_check_clips_dir(tmp: Path):
 
 
 def test_pingpong_loop_seams(tmp: Path):
-    """Loop cycle 005: when the slot outruns the footage, render_beat loops
-    a palindrome (clip+reversed) so restarts are motion-continuous; footage
-    that covers its slot is never touched."""
+    """A slot the footage cannot fill ends on a HOLD, and the palindrome is
+    opt-in — THIS TEST ASSERTED THE OPPOSITE UNTIL 2026-08-19.
+
+    It used to check "looping beat gets a palindrome", after loop cycle 005
+    measured that a plain loop restarts as a hard jump-cut mid-shot while a
+    palindrome keeps every seam motion-continuous. Cycle 005 was right about
+    seams and that was the wrong thing to optimise. The 0819c assembly audited
+    all 21 beats of the ep2 cut and found the branch firing SILENTLY on 8 of the
+    18 footage beats (1, 3, 4, 6, 10, 11, 17, 18): beat 06's guard turned the
+    bark board over, un-turned it and turned it again; beat 01's fig ripened and
+    un-ripened under a verdict that had passed the source file for "0 shrinks".
+    A reversal has no seam precisely because it runs time backwards.
+
+    So the assertion flipped, deliberately: unmarked footage gets a last-frame
+    hold (`tpad=stop_mode=clone`) and never a `reverse`, footage that covers its
+    slot is still untouched, and the palindrome fires only for a clip whose OWN
+    record asks — `loop_fill: pingpong`, which nothing in this tree writes yet.
+    """
     calls = []
 
     def fake_run(cmd, **kw):
@@ -915,14 +930,30 @@ def test_pingpong_loop_seams(tmp: Path):
     t3.video_duration = lambda f: 3.0
     try:
         t3.render_beat(beat, 1, 8.0, [clip], tmp)
-        looped = any("reverse" in " ".join(c) for c in calls)
+        outrun = " ".join(" ".join(c) for c in calls)
         calls.clear()
         t3.render_beat(beat, 2, 2.5, [clip], tmp)
-        covered = any("reverse" in " ".join(c) for c in calls)
+        covered = " ".join(" ".join(c) for c in calls)
+        calls.clear()
+        # the opt-in, on the clip's own sidecar — same tolerant lookup held_still
+        # reads, so the key lands in `<full name>.mp4.meta.yaml`
+        Path(str(clip) + ".meta.yaml").write_text(
+            "platform: local-gpu\nmodel: some-i2v\nloop_fill: pingpong\n")
+        t3.render_beat(beat, 3, 8.0, [clip], tmp)
+        asked = " ".join(" ".join(c) for c in calls)
     finally:
         t3.subprocess.run, t3.video_duration = orig_run, orig_vd
-    check("looping beat gets a palindrome", looped)
-    check("covered beat is never ping-ponged", not covered)
+    check("an outrun slot is NOT filled by reversing the footage",
+          "reverse" not in outrun)
+    check("an outrun slot holds the clip's last frame",
+          "tpad=stop_mode=clone" in outrun)
+    # 3.0s of clip, 8.0s of slot, +0.2s past the end so -stream_loop never wraps
+    check("the freeze is exactly the shortfall (plus the anti-wrap margin)",
+          "stop_duration=5.200" in outrun)
+    check("covered footage is neither reversed nor padded",
+          "reverse" not in covered and "tpad" not in covered)
+    check("a clip whose record asks for pingpong still gets the palindrome",
+          "reverse" in asked and "tpad" not in asked)
 
 
 def test_held_still_is_never_reversed(tmp: Path):
@@ -931,8 +962,14 @@ def test_held_still_is_never_reversed(tmp: Path):
     this path — v30 and v31 sized their held clips to their slots — so the test
     guards a latent one: a held clip left at the 2.5s default lands in beat 14's
     13s slot, and the palindrome would answer it by reversing the push. It is
-    stretched instead; real footage still gets the palindrome, which is what
-    keeps ITS loop seams motion-continuous."""
+    stretched instead.
+
+    WHAT THE OTHER HALF NOW ASSERTS: real footage in the same position gets a
+    last-frame HOLD, not the palindrome (0819c audit — see
+    test_pingpong_loop_seams). The two fills are still different and the
+    distinction this test guards is still load-bearing: footage freezes on a
+    frame it really ended on, a computed push is slowed so it still lands on the
+    approved frame at the end of the slot rather than parking early."""
     calls = []
 
     def fake_run(cmd, **kw):
@@ -960,9 +997,11 @@ def test_held_still_is_never_reversed(tmp: Path):
         as_held = " ".join(" ".join(c) for c in calls)
     finally:
         t3.subprocess.run, t3.video_duration = orig_run, orig_vd
-    check("unmarked footage still gets the palindrome", "reverse" in as_footage)
+    check("unmarked footage holds its last frame, and is not reversed either",
+          "tpad=stop_mode=clone" in as_footage and "reverse" not in as_footage)
     check("a held still is never reversed", "reverse" not in as_held)
     check("a held still is stretched to its slot", "setpts" in as_held)
+    check("a held still is stretched, not frozen", "tpad" not in as_held)
 
 
 def test_held_zoom_is_monotonic_and_moderate():
@@ -5285,7 +5324,8 @@ def test_a_held_pick_the_founder_has_not_seen_says_so_in_its_own_record(tmp: Pat
     # THE BANNER IS A COMMENT AND THE CLASSIFIER LINES ARE UNMOVED. Putting six
     # lines above `platform:` is exactly the sort of edit that takes licence_gate
     # down with it — SENTINELS matches `model:` on the whole value, render_t3
-    # substring-matches "model: none" to decide whether to ping-pong the clip.
+    # substring-matches "model: none" to decide whether an outrun slot is filled
+    # by STRETCHING the push (held still) or by holding the last frame (footage).
     check("the three classifier lines survive the banner",
           data["platform"] == "local-deterministic (pipeline/hold_still.py, ffmpeg)"
           and data["model"] == "none"

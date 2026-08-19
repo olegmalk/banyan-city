@@ -659,6 +659,56 @@ Evidence, both sheets committed: `farm-out/ep2-b19-dropmotion-0819/`.
   a stem**. Any retime, trim or shorter re-render past 5.09s turns it on
   silently. Beat 19 is the first beat in the show whose action a viewer can see
   run backwards, and the assembler has no notion of that.
+  **CLOSED IN THE TOOL, 2026-08-19 (commit below): the assembler has a notion of
+  it now.** The default fill for footage is a **last-frame HOLD**, not a
+  palindrome, so beat 19's safety no longer rests on 0.09s of frame-count luck —
+  a retime past the threshold now freezes the fig where it landed instead of
+  flying it back up onto the stem. The palindrome survives only as opt-in
+  (`loop_fill: pingpong` in a clip's own sidecar), which **no clip, spec or leaf
+  in this tree writes**. The warning stays on this page because it is the reason
+  the fix exists, and because it is still true of the **published 0819c cut**.
+
+### FOR THE NEXT ASSEMBLY — the palindrome fix is in the tool and **READY**, nothing is republished
+
+> **What changed.** `render_t3.render_beat` used to fill a slot that outran its
+> clip by playing the footage forward and then **reversed** (loop cycle 005 —
+> right that a plain loop restart is a hard jump-cut, wrong that a reversal is
+> the cure: a reversal has no seam because it runs time backwards). It now plays
+> the clip **once** and freezes its final frame for the remainder
+> (`tpad=stop_mode=clone`, padded 0.2s past the slot so `-stream_loop` can never
+> wrap to frame 1). A hold reads as the beat **landing**; a reversal reads as
+> **time flowing backwards**. Held stills are unaffected — they are still
+> *stretched*, per the founder's 2026-08-07 ruling.
+>
+> **Measured on a bench rebuild of 0819c** (same `--clips
+> review/ep2-demo-0819c/sources`, scratch `--out`, published cut untouched). The
+> branch fired on exactly the 8 beats the audit named — **1, 3, 4, 6, 10, 11,
+> 17, 18** — and prints a line now instead of nothing. Picture-region
+> frame-to-frame change **inside the fill window**, before → after:
+>
+> | beat | fill | OLD moving pairs | NEW moving pairs |
+> |---|---|---|---|
+> | 01 | 4.31s | 103 / 104 | **0 / 104** |
+> | 04 | 2.03s | 16 / 49 | **0 / 49** |
+> | 06 | 4.69s | 105 / 113 | **0 / 113** |
+> | 11 | 0.44s | 9 / 11 | **0 / 11** |
+> | 17 | 0.57s | 12 / 14 | **0 / 14** |
+> | 18 | 5.82s | 137 / 140 | **0 / 140** |
+> | 03, 10 | 0.24s, 0.09s | 0 / 6, 0 / 2 | **0 / 6, 0 / 2** |
+>
+> Beat 06 by eye: the board goes up and **stays** up, where the published cut has
+> it go up, down, up. Beat 01: the fig ripens to purple and **stays** purple,
+> where the published cut un-ripens it to green. Beats 3 and 10 were already
+> invisible in both (0.1–0.3s of fill) — the audit said as much.
+>
+> **What is NOT done, and is not this lane's call.** No cut is republished and no
+> page is edited: 0819c on the review surface still contains all 8 palindromes,
+> and its own page documents them. The first assembly run after this commit gets
+> the holds for free. Three comments elsewhere now describe the old behaviour and
+> belong to their own lanes: `beat19_drop_animate.py:137-139`,
+> `derive_b20_motion_0819.py:465`, `derive_b12_stillmotion_0819.py:368` — each
+> argues a frame count from the palindrome threshold, and each argument is now
+> moot rather than wrong.
 
 ### The rung this lane recommends — composite the fall, $0, no engine — **FIRED, 2026-08-19, and it passed**
 
