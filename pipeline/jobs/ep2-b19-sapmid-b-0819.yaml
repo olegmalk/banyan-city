@@ -547,3 +547,109 @@ derivation:
     same name. Recorded rather than implied: a pre-registered bar carried unchanged is legitimate, and
     it should say so.'
   seed: 20260819
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the derivation lane, the same cycle it landed. rc=0, in
+# C:\banyan-queue\done. All seven published files verified against
+# ep2-b19-sapmid-b-0819.sha256.
+verdict_0819: 'IT RAN, AND THE MOST LIKELY OUTCOME DID NOT FIRE -- WHICH KILLS THE MECHANISM THIS
+  SPEC ARGUED FOR. Two results. FIRST, the fix works: the `copy` step finished rc=0 in under a
+  second at 18:32:28Z, copying both files out of C:\banyan-farm\courier-box\farm-out\ep2-b19-sapcomp-0819
+  at their asserted sha256s, and printing "no network was used." The parent of this job died at
+  exactly this step on a DNS blink and never reached a sampler. SECOND, Q1 PASSES and Q2 answers
+  the opposite of what was predicted: the gloss is NOT fixed at 0.26, and it is not unchanged
+  either -- it moves MONOTONICALLY with strength across three samples. So the strength lever DOES
+  reach the specular, the midpoint does not buy "gloss fix plus harder shading", and 0.22 remains
+  the gloss-correct end of the axis.'
+verdict_measured:
+  the_step_that_killed_the_parent: 'copy START 18:32:28Z, END rc=0 18:32:28Z. Both files taken
+    from courier-box\farm-out\ep2-b19-sapcomp-0819 -- the FIRST directory in copy_init.py''s
+    ordered list -- at b6dbd53bffd0 and ce1e5ba2f89e. inpaint_fruit.py then re-asserted the init
+    sha itself before loading a model. No urlopen anywhere in the job. Whole job rc=0.'
+  Q1_THE_GEOMETRY_SURVIVED: 'PASS, all eight clauses. One fig attached to the side-branch and
+    clear of the ground; exactly two wide oval cotyledons on one rooted stem with one thin
+    side-branch; no contact with the figure; face visible; purple reads purple; one adult figure;
+    whole sapling and whole of him in frame. AND THE FLAT FILL CAME BACK AS CEL LINE WORK, which
+    is the half of Q1 that a paste would fail: the composite''s fig is two flat tones meeting at a
+    hard horizontal seam, and the output''s is a shaded ovoid with a graded terminator and a drawn
+    outline. FAIL-PASTE, named as the main risk of a shorter schedule, did not fire at 10 of 40
+    steps.'
+  the_plate_outside_the_mask_is_preserved: 'Mask is 172847 px, 17.08% of frame. Outside it, mean
+    |diff| against the composite is 0.122 levels with 1267 px (0.151%) over 8 levels -- the
+    padding_mask_crop paste-back seam that HF''s own docs describe ("you can see the mask
+    outline"), not a redraw. Inside the mask, mean 8.418, max 202.7. The founder''s pixels outside
+    the mask are his.'
+  Q2_THE_SPECULAR_AND_THE_INSTRUMENT_IT_IS_MEASURED_ON: 'ONE instrument applied identically to all
+    four images: the fig mask taken from the COMPOSITE''s own flat purple fig (B > G+30 and R > G)
+    inside rows 830-930, cols 720-820, eroded 3px to drop the black outline -- 650 pixels, the
+    same 650 in every image, no per-image segmentation and therefore no per-image judgement call.
+
+      image                brightest2%   mean    max   mean-sat   hue
+      composite (matte)        86.3      79.9    86.6    0.659    270.8
+      0.22 sapgloss            88.2      67.5    94.3    0.450    278.1
+      0.26 THIS TAKE           99.1      67.8    99.8    0.324    291.9
+      0.30 sapcomp            110.5      70.0   112.1    0.269    290.2
+
+    MONOTONE IN STRENGTH ON BOTH AXES, three points, perfectly ordered: brightest-2% 88.2 -> 99.1
+    -> 110.5 and saturation 0.450 -> 0.324 -> 0.269. 0.26 sits about 60% of the way from 0.22 to
+    0.30. Scored against this spec''s carried band, which asked for under 170 as a clear reduction
+    on the PARENT''s instrument: that band is not transferable to this instrument and is not
+    claimed to be -- see the caveat below. On the numbers that ARE comparable, the reduction
+    against 0.30 is real and partial, and the fix present at 0.22 is substantially undone.'
+  Q3_the_hue_reported_not_scored: 'The fig was COMPOSITED at 270.8 deg on this instrument -- the
+    parent spec records the composite at 272 deg on its own, which is a useful cross-check that
+    the two instruments agree about the one image neither of them rendered. Returns: 278.1 (0.22),
+    291.9 (0.26), 290.2 (0.30). The checkpoint''s hue prior pulls further from the composited
+    value as strength rises and then flattens -- 0.26 and 0.30 land within 2 deg of each other.
+    No hue is "correct" until R4 says so, and none is claimed here.'
+  the_number_in_the_parent_spec_is_NOT_reproducible_and_that_is_reported: 'The carried bar quotes
+    the 0.30 sample at "brightest 2 percent = 211" and asks for this take to be measured "exactly
+    as the parent measured it, on the same box, so the two numbers are comparable line for line."
+    IT DOES NOT SAY HOW THE FRUIT BODY WAS SEGMENTED, and that is the whole measurement. Two
+    honest attempts here -- a purple-saturation threshold and a fixed inner box -- DISAGREED WITH
+    EACH OTHER about whether 0.30 or 0.22 was the glossier image, and one of them silently
+    included the pale background band so all four images read within 2 levels of one another.
+    Both are discarded and named rather than dropped, because a number that flips with the
+    segmentation is a number that looks like evidence. The masked instrument above is stated in
+    full so anyone can re-run it; its absolute values are NOT comparable to the parent''s 211.'
+pre_registered_fail_modes_as_fired:
+  FAIL-PASTE: DID NOT FIRE. The drawn shapes came back as cel line work at 10 of 40 steps.
+  FAIL-GEOMETRY-LOST: DID NOT FIRE. All eight clauses hold.
+  FAIL-GLOSS-UNCHANGED: 'DID NOT FIRE, and it was named as the MOST LIKELY outcome. The gloss
+    moved, monotonically, and this is the finding.'
+  FAIL-COUNT: DID NOT FIRE. One fig, two leaves.
+  FAIL-CRYSTAL: DID NOT FIRE. Smooth ovoid, no faceting.
+  FAIL-VACANCY: 'DID NOT FIRE, and better than that: the composite leaves a small dark whip stub
+    floating in the sky above his shoulder, and all three renders -- 0.22, 0.26 and this one --
+    erase it and close the sky over it.'
+  FAIL-FIGURE: DID NOT FIRE. Hood, cloak edge and the patch panels are intact.
+against_the_mechanism_this_spec_argued: 'This spec did not merely predict FAIL-GLOSS-UNCHANGED, it
+  gave a mechanism and said the prediction would be the USEFUL result: "STRENGTH SETS WHERE THE
+  SCHEDULE STARTS, NOT WHERE IT STOPS... the final low-sigma steps run in BOTH renders. A specular
+  highlight is fine, high-frequency detail -- exactly what low-sigma steps add. If gloss is
+  written in those last steps, cutting the schedule removes the EARLY ones and leaves the gloss
+  untouched. THAT WOULD... kill the strength lever for gloss outright." THE PIXELS SAY THE
+  OPPOSITE. Three strengths, three gloss values, perfectly ordered, no plateau. The low-sigma
+  steps do run in all three renders and the gloss still tracks the starting sigma, so the specular
+  is not written in the last steps -- it is the COMPETING hypothesis the spec named in the same
+  paragraph, that gloss is a mid-sigma structural decision. The strength lever is alive and the
+  cheaper conclusion this spec hoped for is not available.'
+what_this_licenses: 'ONE SAMPLE ON ONE SEED, and a shape for an axis rather than a pick. Settled:
+  (1) a box-local copy under a sha assertion is a working substitute for the fetch that killed the
+  parent, and the pattern is now proven on a second lane -- the cure from 0f799ddd generalises;
+  (2) gloss on this checkpoint is monotone in inpaint strength over 0.22-0.30, so it trades
+  against shading strength rather than being independent of it. NOT settled and NOT claimed:
+  anything outside 0.22-0.30, anything on another seed, and whether 0.22''s weaker shading or
+  0.26''s harder shading is the better picture -- THAT IS R4 AND MATTE-VS-GLOSS IS ALREADY ON THE
+  steward-side list, not a number this job can decide. NO PICK, NO PROMOTION, NO plate_ack, NO cut
+  change. Beat 19 keeps the sapgloss plate (0.22) as its picked plate exactly as before, and beat
+  19 already has a passing sample -- this rung was always about the recipe, not the beat.'
+a_defect_in_the_provenance_prose_inherited_from_the_parent: 'NAMED BECAUSE IT SHIPS IN A SIDECAR.
+  The render step''s --note, carried verbatim from the parent, reads "--strength, which goes 0.30
+  -> 0.22, i.e. int(40*s) goes 12 -> 8 denoising steps" while --strength is 0.26 (int(40*0.26) =
+  10 steps). The parent carried the same mismatch. No render variable is affected -- the sampler
+  reads --strength and the sidecar''s STRUCTURED field is correct at `strength: 0.26` -- but the
+  sidecar also carries the prose, so a reader of 7.2 provenance is told the wrong number by the
+  human-readable half of the same file. The repair belongs in whatever authors that note, not in
+  the published sidecar: rewriting a published artifact would invalidate the .sha256 beside it.
+  This is the same class as the duplicate filename this spec''s derivation already fixed.'
