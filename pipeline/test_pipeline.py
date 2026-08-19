@@ -8140,6 +8140,185 @@ def test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read():
           "Measured" in work)
 
 
+def _fake_cut(prev_takes=("b1-old.mp4",), why_lies=False):
+    """A two-beat cut manifest: beat 1 has footage, beat 2 is a slate."""
+    return {"dir": "ep2-demo-0999", "manifest": "picks-0999.yaml",
+            "prev": "ep2-demo-0998", "prev_takes": set(prev_takes),
+            "said_footage": 1, "said_slates": 1,
+            "beats": [
+                {"n": 1, "slug": "COLD OPEN", "take": "b1-new.mp4",
+                 "why": "carry-forward" if why_lies else "new"},
+                {"n": 2, "slug": "THE SPRINT", "take": "", "why": "slate"}]}
+
+
+def test_the_episode_now_strip_counts_the_cut_and_never_its_own_source():
+    """Every number on the strip is a join of two files, computed at build.
+
+    Roman, 2026-08-19: *"hows the progress with episode 2? ... its not projected
+    very well."* The strip that answers him is one line per fact, and the whole
+    design constraint is that no fact is typed into build_sim.py: five ep2 demo
+    cuts were assembled in five days, so a hand-written "17 of 21" is correct
+    until the next assembly and wrong for as long as nobody notices.
+
+    THE FOUR THINGS PINNED HERE, each of which was a real defect or a near one:
+
+    1. THE COUNTS FOLLOW THE FILES. Change the fixture, the sentence changes.
+    2. `why: new` IS NOT TRUSTED FOR WHAT IS NEW. picks-0819.yaml defines `new`
+       as "not in the 2026-08-18 cut" and also copies every unre-read row from
+       picks-0818 verbatim — so beats 01 and 14 carried `new` from the cut before
+       the one they were new in, and the first draft of this strip published "4
+       of them new" about a cut whose own header says two clips were swapped.
+       Newness is a diff of take FILENAMES against the previous manifest, which
+       cannot be stale in that way.
+    3. A SLATE THAT HOLDS A PASSING TAKE IS ITS OWN FACT. It is the one thing
+       neither file knows alone: the tree says beat 07 is amber, the manifest
+       says beat 07 is a hole, and the join says the two are the same beat and
+       the gap between them is a SWAP, not a render.
+    4. IT FAILS TO NOTHING. It sits under a heading about progress, so a strip
+       drawn off a failed read would read as an episode with no footage.
+    """
+    import re as _re
+
+    import build_sim as bs
+
+    # Beat 2 is the SLATE in the fixture cut and is deliberately `fix-known`
+    # here, so the swap line below has a negative case to be silent in.
+    prog = [{"number": 2, "title": "Two", "total_beats": 3, "beats": [
+        {"n": 1, "state": "candidate-awaiting-founder", "note": ""},
+        {"n": 2, "state": "fix-known", "note": ""},
+        {"n": 3, "state": "blocked-decision", "note": ""}]}]
+    out = bs.ep2_now_html(_fake_cut(), prog)
+    check("the footage count is the manifest's rows, over the episode's beats",
+          "<b>1 of 3 beats</b>" in out)
+    check("the slate is named, not just counted",
+          "<b>1 still a slate</b>" in out and "02 THE SPRINT" in out)
+    check("the takes-waiting count is the measured states, not the cut",
+          "<b>1 beat holds a take waiting for your look</b>" in out)
+    check("...and it agrees with itself in the plural too",
+          "<b>2 beats hold takes waiting for your look</b>" in bs.ep2_now_html(
+              _fake_cut(), [{**prog[0], "beats": [
+                  {"n": 1, "state": "candidate-awaiting-founder", "note": ""},
+                  {"n": 2, "state": "candidate-awaiting-founder", "note": ""}]}]))
+    check("a call only he can make is counted apart from a take he can look at",
+          "waiting on a call only you can make</b> (03)" in out)
+    check("nothing is claimed passed until a beat says done",
+          "<b>0 beats passed.</b>" in out)
+    check("the newest cut is a link the reader can open",
+          'href="review/ep2-demo-0999"' in out)
+
+    # (1) the numbers move with the file, which is the whole claim
+    two = bs.ep2_now_html(_fake_cut(), [{**prog[0], "total_beats": 9}])
+    check("changing the episode's beat count changes the printed denominator",
+          "<b>1 of 9 beats</b>" in two)
+
+    # (2) newness is measured, and a lying label cannot move it
+    check("a take absent from the previous manifest reads as new",
+          "not in ep2-demo-0998" in out and "01 COLD OPEN" in out)
+    check("...and it still reads as new when the row's own `why` says otherwise",
+          "not in ep2-demo-0998" in bs.ep2_now_html(
+              _fake_cut(why_lies=True), prog))
+    check("...and a take the previous cut already had is not called new",
+          "not in ep2-demo-0998" not in bs.ep2_now_html(
+              _fake_cut(prev_takes=("b1-new.mp4",)), prog))
+    check("a first-ever cut claims nothing about a predecessor it has none of",
+          "the cut before it" not in bs.ep2_now_html(
+              {**_fake_cut(), "prev": "", "prev_takes": set()}, prog))
+
+    # (3) the join's own finding
+    swap = bs.ep2_now_html(_fake_cut(), [{**prog[0], "beats": [
+        {"n": 1, "state": "fix-known", "note": ""},
+        {"n": 2, "state": "candidate-awaiting-founder", "note": ""}]}])
+    check("a slate holding a passing take is called a swap, not a render",
+          "is a slate in that cut" in swap and "not a render" in swap)
+    check("...and a slate with no passing take makes no such claim",
+          "is a slate in that cut" not in out)
+
+    # (4) fails to nothing, both ways round
+    check("no cut manifest, no strip", bs.ep2_now_html({}, prog) == "")
+    check("no measured states, no strip", bs.ep2_now_html(_fake_cut(), []) == "")
+    check("an episode absent from the states file draws nothing",
+          bs.ep2_now_html(_fake_cut(), [{"number": 7, "beats": [
+              {"n": 1, "state": "done", "note": ""}]}]) == "")
+
+    # The manifest's own totals are a cross-check and never the source, and a
+    # disagreement is printed rather than resolved silently in our favour.
+    lying = {**_fake_cut(), "said_footage": 19}
+    check("a manifest that disagrees with its own rows says so on the page",
+          "manifest disagrees with itself" in bs.ep2_now_html(lying, prog)
+          and "states 19 footage beats and lists 1" in bs.ep2_now_html(lying, prog))
+    check("...and stays quiet when the header and the rows agree",
+          "disagrees with itself" not in out)
+
+    # Same three guarantees every chart on this page carries.
+    check("the strip carries a table view of the same join",
+          "<table" in out and "In the newest cut" in out)
+    check("...and an aria-label a screen reader gets the finding from",
+          'aria-label="Episode 2 right now' in out)
+    # Whichever CSS block holds it — the strip's rules live beside the ETA
+    # card's, and which constant that is has moved once already.
+    css = next((c for c in (bs.STRIP_CSS, bs.SIM_CSS) if ".ep2now" in c), "")
+    check("the strip's CSS is actually shipped in the page's style tag",
+          bool(css) and ".fk.f-unk" in css)
+    check("...and its colours are theme tokens, never hex literals",
+          not _re.search(r"#[0-9a-fA-F]{3,8}\b",
+                         css[css.index(".ep2now"):css.index(".fk.f-unk")]))
+    check("...and it uses the palette charts.py defines, not a private one",
+          all(("var(--%s)" % t) in css for t in
+              ("leaf", "leaf-deep", "sap", "sap-deep")))
+    check("...and it reads the same states file the tree and the cards do",
+          "episode-progress.yaml" in out)
+
+
+def test_the_latest_cut_manifest_is_found_by_name_and_shape_checked():
+    """Newest by DIRECTORY NAME, and nothing trusted about what is inside it.
+
+    Mtime would pick a cut at random on the machine that builds the site: a
+    deploy checkout's mtimes are all "whenever git wrote them", in whatever
+    order the clone happened to walk. The names are `ep2-demo-MMDD` and sorting
+    them is the only ordering that survives a fresh clone.
+    """
+    import pathlib as _pl
+    import shutil as _sh
+    import tempfile as _tf
+
+    import build_sim as bs
+
+    root = _tf.mkdtemp()
+    rev = _pl.Path(root) / "review"
+    def write(name, body):
+        d = rev / name / "sources"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / ("picks-%s.yaml" % name.rsplit("-", 1)[-1])).write_text(
+            body, encoding="utf-8")
+
+    write("ep2-demo-0801", "beats:\n- beat: 1\n  slug: A\n  take: old.mp4\n"
+                           "  why: new\n")
+    write("ep2-demo-0902", "beats:\n- beat: 1\n  slug: A\n  take: new.mp4\n"
+                           "  why: new\n- beat: 2\n  take: null\n  why: slate\n")
+    # Touched LAST and named FIRST — mtime order and name order disagree.
+    (rev / "ep2-demo-0801" / "sources" / "picks-0801.yaml").touch()
+
+    cut = bs.read_latest_cut(repo=_pl.Path(root))
+    check("the newest cut is the highest-numbered name, not the newest file",
+          cut.get("dir") == "ep2-demo-0902")
+    check("...and the one before it is the previous name",
+          cut.get("prev") == "ep2-demo-0801"
+          and cut.get("prev_takes") == {"old.mp4"})
+    check("a null take is carried as a slate rather than dropped",
+          [b["take"] for b in cut["beats"]] == ["new.mp4", ""])
+
+    write("ep2-demo-0903", "beats: not a list\n")
+    check("a manifest of the wrong shape is skipped, not half-read",
+          bs.read_latest_cut(repo=_pl.Path(root)).get("dir") == "ep2-demo-0902")
+    write("ep2-demo-0904", "beats:\n- beat: not a number\n  take: x.mp4\n")
+    check("a row with no readable beat number is dropped, and an empty "
+          "manifest falls through to the last good one",
+          bs.read_latest_cut(repo=_pl.Path(root)).get("dir") == "ep2-demo-0902")
+    check("no review directory at all is {} and never a half-built dict",
+          bs.read_latest_cut(repo=_pl.Path(_tf.mkdtemp())) == {})
+    _sh.rmtree(root, ignore_errors=True)
+
+
 def test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure():
     """The sparkline's four refusals, each pinned because each is invisible.
 
@@ -9889,6 +10068,8 @@ def main():
     test_a_kind_keeps_its_shade_on_a_day_the_other_kinds_are_missing()
     test_a_bar_is_as_tall_as_its_minutes_and_a_part_day_says_so()
     test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read()
+    test_the_episode_now_strip_counts_the_cut_and_never_its_own_source()
+    test_the_latest_cut_manifest_is_found_by_name_and_shape_checked()
     test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure()
 
     # AND WORK HE WAS NEVER SHOWN MUST BE A NUMBER SOMEBODY READS.

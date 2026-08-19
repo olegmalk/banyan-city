@@ -2098,6 +2098,260 @@ def _eta_card(r: dict, approx) -> str:
             f'<div class="epstats">{stats}</div>{clarify}{gated}{nxt}</div>')
 
 
+# =============================================================================
+#  EPISODE 2, RIGHT NOW — the cut's own manifest, joined to the measured states
+# =============================================================================
+#
+# Roman, 2026-08-19: *"hows the progress with episode 2? i should be able to see
+# it on the website but y'know.. its not projected very well."* He was right, and
+# in two different ways. The states file behind the tree was five days stale, and
+# the tree answers a question one step to the side of the one he asked: it says
+# how many beats are in which state, and he wanted to know how far the EPISODE
+# has got — which is a fact about the CUT. A beat can be amber and still be in
+# the episode; a beat can be green and be a hole in it. The two are not the same
+# picture and the page only had one of them.
+#
+# So this strip is the other one, and it joins the two files that between them
+# already know the answer:
+#
+#   review/ep2-demo-<date>/sources/picks-<date>.yaml — the cut's own manifest,
+#       one row per beat: which take is in it, and `why` (new / carry-forward /
+#       slate). This is what he would actually watch.
+#   pipeline/measured/episode-progress.yaml — the state of each beat, which is
+#       the same read the tree and the ETA cards use, so the three cannot drift.
+#
+# EVERY NUMBER AND EVERY BEAT NAME HERE IS COMPUTED AT BUILD FROM THOSE TWO
+# FILES. Not one is typed into this source, and that is the whole design
+# constraint: a hand-typed "17 of 21" is correct for exactly as long as nobody
+# assembles another cut, and this repo has assembled five ep2 demo cuts in five
+# days. The one cross-check worth having is spelled out rather than assumed — the
+# manifest states its own `footage_beats`/`slate_beats` totals, and if those
+# disagree with the rows underneath them the strip SAYS SO instead of quietly
+# preferring one of the two.
+#
+# Fails to "" on any unreadable input, like every chart on this page: a strip
+# that published "0 beats have footage" off a failed read would be a picture of
+# our own bug, and this one sits directly under a heading about progress.
+
+CUT_DIR_GLOB = "ep2-demo-*"
+
+
+def read_latest_cut(repo=REPO, glob=CUT_DIR_GLOB) -> dict:
+    """The newest ep2 demo cut's manifest, shape-checked, or {}.
+
+    NEWEST BY DIRECTORY NAME, not by mtime. The names are `ep2-demo-MMDD` and a
+    deploy checkout's mtimes are all "whenever git wrote them", so mtime would
+    pick a cut at random on the machine that actually builds the site. Sorting
+    the names is the only ordering that survives a fresh clone.
+    """
+    try:
+        import yaml as _yaml
+        dirs = sorted(p for p in (repo / "review").glob(glob) if p.is_dir())
+        read = []                      # newest last, only the ones that parse
+        for d in dirs:
+            picks = sorted(d.glob("sources/picks-*.yaml"))
+            if not picks:
+                continue
+            with open(picks[-1], encoding="utf-8") as fh:
+                doc = _yaml.safe_load(fh)
+            if not isinstance(doc, dict) or not isinstance(doc.get("beats"), list):
+                continue
+            rows = []
+            for b in doc["beats"]:
+                if not isinstance(b, dict):
+                    continue
+                try:
+                    n = int(b.get("beat"))
+                except (TypeError, ValueError):
+                    continue
+                take = b.get("take")
+                rows.append({"n": n, "slug": str(b.get("slug") or "").strip(),
+                             "take": str(take).strip() if take else "",
+                             # The manifest's OWN word for why this take is in
+                             # the slot. Printed in the table as its word, and
+                             # deliberately not used to compute anything — see
+                             # `prev_takes` below for why.
+                             "why": str(b.get("why") or "").strip()})
+            if not rows:
+                continue
+            read.append({"dir": d.name, "manifest": picks[-1].name, "beats": rows,
+                         # The manifest's own totals, kept as the CROSS-CHECK and
+                         # never as the source. None when it does not state them.
+                         "said_footage": doc.get("footage_beats"),
+                         "said_slates": doc.get("slate_beats")})
+        if not read:
+            return {}
+        cut = read[-1]
+        # WHAT IS NEW IS MEASURED, NOT READ OFF A LABEL, and that is a bug fix
+        # rather than fussiness. picks-0819.yaml defines its own `why: new` as
+        # "footage that was not in the 2026-08-18 cut" and then says, in the same
+        # file, that every line it did not re-read was "copied from picks-0818
+        # unchanged" — so beats 01 and 14 carry `new` from the cut BEFORE the one
+        # they were new in, and four beats claim to be new in a cut whose own
+        # header says two clips were swapped. Diffing the take FILENAMES against
+        # the previous manifest cannot be wrong in that way: the answer comes out
+        # of the two files being different, not out of anyone remembering to
+        # relabel a row.
+        cut["prev"] = read[-2]["dir"] if len(read) > 1 else ""
+        cut["prev_takes"] = ({r["take"] for r in read[-2]["beats"] if r["take"]}
+                             if len(read) > 1 else set())
+        return cut
+    except Exception:
+        return {}
+
+
+def _cut_state_rows(cut: dict, prog: list, number: int = 2) -> list:
+    """One row per beat of the episode: what is in the cut, and its state.
+
+    Joined on the beat number, outer from the CUT side and filled from the
+    states side, so a beat the manifest lists and the measurement does not shows
+    an empty state rather than vanishing off a table about completeness.
+    """
+    ep = next((e for e in prog if e.get("number") == number), None)
+    states = {b["n"]: b for b in (ep or {}).get("beats") or []}
+    out = []
+    for b in sorted(cut["beats"], key=lambda r: r["n"]):
+        st = states.get(b["n"]) or {}
+        out.append({**b, "state": str(st.get("state") or ""),
+                    "css": charts.STATE_CLASS.get(str(st.get("state") or ""), "")})
+    return out
+
+
+def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
+    """The strip: one line per fact, every one of them computed. "" when unread.
+
+    ONE LINE PER FACT AND NO PARAGRAPHS. The page's own history is the argument
+    for that shape — the founder threw out the six-badge strip and the wall of
+    ETA prose, both of which said true things in too many words to reach him.
+    """
+    if not cut or not prog:
+        return ""
+    rows = _cut_state_rows(cut, prog, number)
+    if not rows:
+        return ""
+    ep = next((e for e in prog if e.get("number") == number), None)
+    if not ep:
+        return ""
+    total = int(ep.get("total_beats") or len(rows))
+    footage = [r for r in rows if r["take"]]
+    slates = [r for r in rows if not r["take"]]
+    looking = [b for b in ep["beats"]
+               if b["state"] == "candidate-awaiting-founder"]
+    gated = [b for b in ep["beats"] if b["state"] == "blocked-decision"]
+    prev_takes = cut.get("prev_takes") or set()
+    fresh = ([r for r in footage if r["take"] not in prev_takes]
+             if cut.get("prev") else [])
+    # The join's own finding, and the reason the two files are worth joining at
+    # all: a beat can be a hole in the cut and hold passing footage at the same
+    # time, which is a swap somebody has to make and not a render anybody has to
+    # run. Beat 07 was exactly that on the day this was written.
+    look = {b["n"] for b in looking}
+    swap = [r for r in slates if r["n"] in look]
+    url = f"review/{cut['dir']}"
+
+    def beats(rs, sep=", "):
+        return sep.join("%02d %s" % (r["n"], r["slug"] or "?") for r in rs)
+
+    def nums(bs):
+        # "%02d" and not an f-string with a nested subscript: PEP 701 quote
+        # reuse inside a format spec is 3.12+, and this file has to build on
+        # whatever python the deploy box hands it.
+        return ", ".join("%02d" % b["n"] for b in bs)
+
+    facts = []
+    facts.append(
+        f'<li class="f-look"><b>{len(footage)} of {total} beats</b> have footage '
+        f'in the newest cut &mdash; <a href="{_e(url)}">{_e(cut["dir"])}</a>'
+        + (f', {len(fresh)} of them ({_e(beats(fresh))}) not in '
+           f'{_e(cut["prev"])}, the cut before it' if fresh else "")
+        + '.</li>')
+    if slates:
+        facts.append(
+            f'<li class="f-mach"><b>{len(slates)} still a slate</b> &mdash; a '
+            f'title card where the shot goes: {_e(beats(slates))}.</li>')
+    else:
+        facts.append('<li class="f-done"><b>No slates left</b> — every beat of '
+                     'the episode has footage in the cut.</li>')
+    if swap:
+        facts.append(
+            f'<li class="f-swap"><b>{_e(beats(swap))}</b> is a slate in that cut '
+            'and <i>already has a take that passes its bar</i> — that one is a '
+            'swap in the next assembly, not a render.</li>'
+            if len(swap) == 1 else
+            f'<li class="f-swap"><b>{len(swap)} of those slates</b> already have '
+            f'takes that pass their bar ({_e(beats(swap))}) — swaps for the next '
+            'assembly, not renders.</li>')
+    facts.append(
+        f'<li class="f-look"><b>'
+        + (f'{len(looking)} beats hold takes waiting for your look</b>'
+           if len(looking) != 1 else
+           '1 beat holds a take waiting for your look</b>')
+        + f' &mdash; passing takes nobody has ruled on: {_e(nums(looking))}.</li>'
+        if looking else
+        '<li class="f-look"><b>Nothing is waiting for your look</b> &mdash; no '
+        'beat holds a passing take you have not ruled on.</li>')
+    if gated:
+        facts.append(
+            f'<li class="f-gate"><b>{len(gated)} beat'
+            f'{"s are" if len(gated) != 1 else " is"} waiting on a call only you '
+            f'can make</b> ({_e(nums(gated))}) '
+            '&mdash; <a href="review">the open questions &rarr;</a></li>')
+    facts.append(
+        '<li class="f-done"><b>0 beats passed.</b> No beat of episode 2 carries '
+        'your verdict yet, and the cuts above are bench assemblies — they have '
+        'no leaf and nothing in the tree.</li>'
+        if not [b for b in ep["beats"] if b["state"] == "done"] else
+        f'<li class="f-done"><b>'
+        f'{len([b for b in ep["beats"] if b["state"] == "done"])} beats passed'
+        '.</b></li>')
+
+    # The disagreement guard. Silent when the manifest's own totals match the
+    # rows under them, which is the common case and says nothing worth a line.
+    mismatch = []
+    for said, got, what in ((cut.get("said_footage"), len(footage), "footage"),
+                            (cut.get("said_slates"), len(slates), "slate")):
+        try:
+            if said is not None and int(said) != got:
+                mismatch.append(f"it states {int(said)} {what} beats and lists {got}")
+        except (TypeError, ValueError):
+            continue
+    note = (f'Counted at build time off <code>{_e(cut["dir"])}/sources/'
+            f'{_e(cut["manifest"])}</code> and '
+            '<code>pipeline/measured/episode-progress.yaml</code> — the same two '
+            'files the tree above and the estimate below read, so none of the '
+            'three can drift from the others.')
+    if mismatch:
+        note += (' <b>The manifest disagrees with itself:</b> '
+                 + _e("; ".join(mismatch))
+                 + '. The rows are what is counted here; its header totals are '
+                 'not, and the difference is printed rather than hidden.')
+
+    head = "".join('<tr><th scope="row">%02d %s</th>' % (r["n"], _e(r["slug"]))
+                   + f'<td>{_e(r["take"]) if r["take"] else "&mdash; slate"}</td>'
+                   f'<td>{_e(r["why"])}</td>'
+                   f'<td><span class="fk f-{r["css"] or "unk"}">'
+                   f'{_e(charts.STATE_LABEL.get(r["css"], "no state on file"))}'
+                   '</span></td></tr>' for r in rows)
+    table = ('<details class="drawer"><summary>Every beat of episode 2 — what is '
+             'in the cut, and where it stands</summary><div class="drawer-body">'
+             '<div class="scroll"><table class="ctab"><thead><tr>'
+             '<th scope="col">Beat</th><th scope="col">In the newest cut</th>'
+             '<th scope="col">Why</th><th scope="col">State</th></tr></thead>'
+             f'<tbody>{head}</tbody></table></div>'
+             '<p class="cnote">Left two columns off the cut manifest, right one '
+             'off the measured states. A beat can hold a passing take and still '
+             'be a slate in the cut: the take has to be assembled in, and that '
+             'is a separate pass.</p></div></details>')
+
+    return (f'<div class="ep2now" role="group" aria-label="Episode {number} right '
+            f'now: {len(footage)} of {total} beats have footage in the newest '
+            f'cut, {len(slates)} are still slates, {len(looking)} hold takes '
+            f'waiting for the author’s look">'
+            f'<div class="e2h">Episode {number}, right now</div>'
+            f'<ul class="e2l">{"".join(facts)}</ul>'
+            f'<p class="cnote">{note}</p></div>{table}')
+
+
 # ---- files the reader's browser re-reads ------------------------------------
 # The render box's minute-by-minute charts LEFT this page in the 2026-08-11
 # revamp — the long history lives on /pulse, and telemetry_head() still reads
@@ -3799,6 +4053,50 @@ STRIP_CSS = """
 .eta > details { margin: .6rem 0 0; }
 .eta > details > summary { cursor: pointer; color: var(--faint);
   font: 500 .72rem/1.7 var(--sans, inherit); }
+/* ---- EPISODE 2, RIGHT NOW ---------------------------------------------------
+   One line per fact, each with a state dot on its left, and the dot colours are
+   charts.STATE_STYLE's own tokens — the same four the tree above it and the bar
+   below it use. THE COLOUR LAW HOLDS HERE TOO (SITE.md): green is the machine's
+   clock, amber is the author's, and every value is a var() so both survive a
+   reader's light/dark setting. A hex literal in this block would be a colour
+   that does not know which theme it is in.
+   The rule on the left edge is the amber of his own clock on purpose: the strip
+   exists because he asked what state the episode is in, and it is his panel. */
+.ep2now { border: 1px solid var(--line); border-left: 3px solid var(--sap);
+  border-radius: 12px; padding: .7rem .85rem; margin: .8rem 0 .2rem;
+  background: var(--panel); text-align: left; }
+.ep2now .e2h { font: 600 .74rem/1.5 var(--mono); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--muted); margin: 0 0 .5rem; }
+.ep2now .e2l { list-style: none; margin: 0; padding: 0;
+  font: 400 .82rem/1.6 var(--sans, inherit); color: var(--muted); }
+.ep2now .e2l li { position: relative; padding: 0 0 0 1.1rem;
+  margin: 0 0 .42rem; }
+.ep2now .e2l li:last-child { margin-bottom: 0; }
+.ep2now .e2l li::before { content: ""; position: absolute; left: 0; top: .48rem;
+  width: .55rem; height: .55rem; border-radius: 2px; background: var(--line); }
+.ep2now .e2l b { color: var(--ink); font-weight: 700; }
+.ep2now .e2l a { color: var(--ink); }
+.ep2now .e2l .f-done::before { background: var(--leaf); }
+.ep2now .e2l .f-mach::before { background: var(--leaf-deep); }
+.ep2now .e2l .f-look::before { background: var(--sap); }
+.ep2now .e2l .f-gate::before { background: var(--sap-deep); }
+/* The join's own finding gets the hollow mark, because it is the one line that
+   is about a MISMATCH between two files rather than about either file's state. */
+.ep2now .e2l .f-swap::before { background: transparent;
+  box-shadow: inset 0 0 0 1px var(--sap); }
+.ep2now .cnote { text-align: left; }
+/* The same four dots inside the table view, so a reader who opened the fold to
+   avoid the colours still gets the words and a reader who wants the colours
+   still has them. */
+.fk { display: inline-flex; align-items: center; gap: .34rem; }
+.fk::before { content: ""; width: .5rem; height: .5rem; flex: none;
+  border-radius: 2px; background: var(--line); }
+.fk.f-done::before { background: var(--leaf); }
+.fk.f-mach::before { background: var(--leaf-deep); }
+.fk.f-look::before { background: var(--sap); }
+.fk.f-gate::before { background: var(--sap-deep); }
+.fk.f-unk::before { background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line); }
 .bw { border: 1px solid var(--line); border-radius: 14px; padding: .9rem 1rem;
   margin: .6rem 0 .5rem; text-align: center; }
 .bw .bwn { font: 700 1.7rem/1.2 var(--mono); color: var(--sap); }
@@ -4070,13 +4368,21 @@ def build(out_dir: Path):
     nxt = data.next_episode()
     if nxt and nxt.get("board"):
         ep_boards[int(nxt["number"])] = nxt["board"]
+    # ONE read of the per-beat states, shared by the tree and the "right now"
+    # strip under it — same rule as the box snapshot and the inbox above: the
+    # strip's standing promise is that it cannot contradict the picture it sits
+    # beneath, and two reads of one file eventually do.
     try:
         import episode_eta as _eta
-        sapling = charts.sapling_html(_eta.read_progress(), ep_boards)
+        progress = _eta.read_progress()
+        sapling = charts.sapling_html(progress, ep_boards)
     except Exception:
         # Fails to nothing, like the ETA section it reads with. A tree drawn
         # from a read that failed would be a picture of our own bug.
-        sapling = ""
+        progress, sapling = [], ""
+    # The cut manifest is read here and nowhere else, and the strip is "" when
+    # either half is missing rather than half-drawn off one of them.
+    ep2_now = ep2_now_html(read_latest_cut(), progress)
     done = tot["final"] == tot["total"]
     pct = round(100 * grow["done"] / grow["total"]) if grow["total"] else 0
     grove_caption = (f'Episode {hero["number"]} — '
@@ -4576,6 +4882,7 @@ everything else runs on the family's own machines for free</p>
   {growbar}
   <div class="label">{grove_caption}</div>
 </div>
+{ep2_now}
 {milestones_line}
 <p class="summary" style="text-align:center"><b>{tot["final"]} of {tot["total"]} scene frames approved</b> · {waiting}</p>
 <details class="drawer"><summary>Every scene, and what it is waiting for</summary>
