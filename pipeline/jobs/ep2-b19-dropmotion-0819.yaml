@@ -1,0 +1,588 @@
+# ============================================================================
+# ep2-b19-dropmotion-0819 -- BEAT 19'S FIRST MOTION SAMPLE, on the plate this
+# lane picked an hour earlier (see ep2-b19-sapgloss-0819.yaml `pick_0819`).
+#
+# ONE SAMPLE, ONE SEED. The recipe is ep2-b14-motion-crf10-0819's, cloned, with
+# exactly two departures and both are recorded in `recipe_derivation` below:
+# a right-anchored cover-crop (without it the fruit is CROPPED OUT OF FRAME --
+# measured, not feared) and this beat's own prompt/negative.
+#
+# THE STAGING IS THE FOUNDER'S OWN RULING, TWICE. The fig falls to the GROUND
+# beside him and NEVER touches his body. `script_authority` carries the whole
+# S6 derivation including which parts of the 08-17 rewrite this job does and
+# does NOT lean on.
+# ============================================================================
+id: ep2-b19-dropmotion-0819
+task: ep2-b19-dropmotion-0819
+node: 002b-first-citizen
+beat: 19
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 19 lane, 2026-08-19 (same lane that made the plate pick)
+consumer: 'BEAT 19''S CUT SLOT IN THE EPISODE 2 ASSEMBLY -- one of the four slates. The beat has been blocked
+  since 08-15 on "not renderable until the plate exists"; the plate now exists, passes, and is picked, so
+  this is the first take that can answer whether the beat is filmable at all. A FAIL is consumed too: it
+  separates "the plate is right and the engine will not move a 30px object" from "the staging is wrong",
+  which are different production decisions and only one of them costs another plate.'
+success: 'A 704x1280 mp4, 121 frames at 24 fps, opening on the picked plate right-anchored to 704 wide.
+  PASS is M1+M2+M3+M4+M5+M6+M7 exactly as pre-registered in `bar` below, judged by opening all 121 frames
+  consecutively (pipeline/coldread_frames.py) plus the per-frame fruit-track measurement the bar declares
+  IN ADVANCE in output pixel coordinates. M3 IS DISQUALIFYING ON ITS OWN -- the founder ruled twice that
+  the fruit must not touch him, and a take where it does fails this beat however well it moves. A partial
+  is a FAIL and a changed picture is not a pass.'
+why: 'THE BEAT''S FIRST MOTION TAKE, on the first plate that ever put the fruit ON THE STEM. Every earlier
+  beat-19 plate showed the fig already lying in the grass, which is exactly why `plate_requirement_0815.fruit_must_be_on_the_stem`
+  blocked the beat and why the 08-12 attempts made fruit materialise in mid-air. This tests whether a fruit
+  that starts aloft on a drawn two-leaf sapling will DETACH AND FALL on this engine, and whether the noticing
+  lands with it.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  C:\banyan-farm\ep2-b19-dropmotion-0819\fetch_init.py: |-
+    #!/usr/bin/env python3
+    """Fetch beat 19's PICKED plate from origin/main and refuse on any sha mismatch.
+
+    No model, no GPU, no spend. The plate was rendered on this box by
+    ep2-b19-sapgloss-0819 and then published to the repo, but the box's own
+    courier worktree has since been cleaned -- verified 2026-08-19, the
+    directory is gone -- so it is re-fetched from origin/main under the sha the
+    manifest recorded. Anyone who clones the repo can verify this number.
+    """
+    import hashlib, os, sys, urllib.request
+
+    OUT = r"C:\banyan-farm\ep2-b19-dropmotion-0819"
+    RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
+           "farm-out/ep2-b19-sapgloss-0819/")
+    UA = {"User-Agent": "banyan-city-b19-dropmotion/1.0 (albert.numbro@gmail.com)"}
+    WANT = {
+        "b19-sapgloss-s20260819.png":
+            "5a62ff900df2e22c45df8d5b8c0a22c85f374a53cd7fa9b64483e7716d77c11c",
+    }
+
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT.items():
+        raw = urllib.request.urlopen(
+            urllib.request.Request(RAW + name, headers=UA), timeout=120).read()
+        have = hashlib.sha256(raw).hexdigest()
+        if have != want:
+            sys.exit("!! SHA MISMATCH for %s -- refusing.\n   want %s\n   have %s"
+                     % (name, want, have))
+        with open(os.path.join(OUT, name), "wb") as fh:
+            fh.write(raw)
+        print("fetched %s %d bytes sha %s OK" % (name, len(raw), have), flush=True)
+
+  C:\banyan-farm\ep2-b19-dropmotion-0819\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network.
+
+    ep2-b14-motion-crf10-0819's copy, with ONE addition: --anchor. The default
+    is `center`, which is what every earlier copy of this file did, so passing
+    nothing reproduces those jobs byte for byte.
+
+    WHY THE ANCHOR EXISTS, measured before this job was filed. The picked plate
+    is 832x1216 and the target is 704x1280, so the cover-crop scales by 1.0526
+    and then discards 81.7 ORIGINAL pixels off each side. Beat 19's fruit lives
+    at original x 743..773 -- the right 4% of the plate -- so a CENTRED crop
+    keeps 8 of its 32 columns and throws the subject of the beat out of frame.
+    Right-anchored, the fruit lands at output x 610..642 with 62px of air to the
+    frame edge, and the goblin is still whole (his silhouette ends at output
+    x ~500). Right-anchored is not a preference here, it is the only offset that
+    holds both bodies: even at the maximum the fruit has only 62px to spare.
+    """
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    ap.add_argument("--anchor", default="center", choices=["center", "left", "right"])
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    if a.anchor == "center":
+        left = (nw - W) // 2
+    elif a.anchor == "left":
+        left = 0
+    else:
+        left = nw - W
+    top = (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, anchor=%s box (%d,%d)"
+          % (scale, nw, nh, a.anchor, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+
+  C:\banyan-farm\ep2-b19-dropmotion-0819\assert_framing.py: |-
+    #!/usr/bin/env python3
+    """REFUSE TO RENDER IF THE FRUIT IS NOT IN THE CROPPED INIT.
+
+    The whole beat is a fruit falling. A framing bug that clips the fruit costs
+    12 GPU-minutes and produces a clip that cannot be judged, and the centred
+    crop this job had to override does exactly that. So the geometry is asserted
+    on the actual cropped file, before the model loads, and the numbers are the
+    ones this spec pre-registered -- they cannot be moved afterwards to fit.
+
+    No model, no network, no GPU. Reads one PNG.
+    """
+    import colorsys, sys
+    from PIL import Image
+
+    PATH = sys.argv[1]
+    im = Image.open(PATH).convert("RGB")
+    W, H = im.size
+    if (W, H) != (704, 1280):
+        sys.exit("!! wrong size %dx%d -- refusing." % (W, H))
+    px = im.load()
+
+    # The fruit: violet, hue 255-305, mid saturation, not the pale field.
+    # Searched ONLY in the pre-registered start window so his purple cloak and
+    # its cast shadow (the exact contamination that produced a retracted hue
+    # measurement in this lane on 2026-08-19) cannot be counted as fruit.
+    XS, XE, YS, YE = 560, 704, 860, 1000
+    pts = [(x, y) for y in range(YS, YE) for x in range(XS, XE)
+           if (lambda c: 255 <= c[0] * 360 <= 305 and c[1] > 0.28 and 0.15 < c[2] < 0.75)
+              (colorsys.rgb_to_hsv(*[v / 255.0 for v in px[x, y]]))]
+    if len(pts) < 300:
+        sys.exit("!! only %d violet px in the fruit window -- the fruit is not "
+                 "in frame or is not violet. REFUSING." % len(pts))
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    print("fruit bbox x %d..%d y %d..%d  n=%d" % (x0, x1, y0, y1, len(pts)), flush=True)
+    # PRE-REGISTERED: fruit fully inside, clear of the frame edge, and clear of
+    # the declared body zone (x <= 500). Contact would need 110px of drift.
+    if x1 > 690:
+        sys.exit("!! fruit within 14px of the right edge (x1=%d) -- REFUSING." % x1)
+    if x0 <= 500:
+        sys.exit("!! fruit overlaps the declared body zone (x0=%d) -- REFUSING." % x0)
+    if y1 > 970:
+        sys.exit("!! fruit is already at grass level (y1=%d) -- nothing to fall. "
+                 "REFUSING." % y1)
+    print("FRAMING OK -- fruit aloft, clear of both the frame edge and the body "
+          "zone. gap to body zone %dpx, fall clearance to grass ~%dpx"
+          % (x0 - 500, 978 - y1), flush=True)
+
+  C:\banyan-farm\ep2-b19-dropmotion-0819\stamp_sidecar.py: |-
+    #!/usr/bin/env python3
+    """Stamp the clip's provenance sidecar.
+
+    video_task.write_sidecar records model, prompt, negative, init sha and
+    cost_usd 0, and it does not record whether the clip may ship. Appended here
+    rather than asserted in a commit message nobody downstream reads. REFUSES if
+    the sidecar is missing -- a clip whose provenance file did not get written
+    must not pass silently.
+    """
+    import os, sys
+
+    META = sys.argv[1]
+    if not os.path.isfile(META):
+        sys.exit("!! no sidecar at %s -- refusing to call the job clean." % META)
+    with open(META, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(
+            "# --- appended by ep2-b19-dropmotion-0819 after the render.\n"
+            "approved: false\n"
+            "provisional: true\n"
+            "is_show_content: true\n"
+            "note: |\n"
+            "  BEAT 19'S FIRST MOTION SAMPLE, a candidate for the beat's cut slot\n"
+            "  and not an engine probe. Conditioned on b19-sapgloss-s20260819.png,\n"
+            "  the plate this lane picked on 2026-08-19 by canon derivation (see\n"
+            "  pipeline/jobs/ep2-b19-sapgloss-0819.yaml pick_0819). Judged against\n"
+            "  the bar pre-registered in pipeline/jobs/ep2-b19-dropmotion-0819.yaml\n"
+            "  BEFORE this render existed. NOT approved and NOT cut until all 121\n"
+            "  frames have been opened consecutively.\n"
+            "  M3 OVERRIDES EVERY OTHER CLAUSE: if the fruit touches his body in\n"
+            "  ANY frame this clip is a FAIL. That is the founder's ruling of\n"
+            "  2026-08-15, re-confirmed in done-definitions' done_when, and it is\n"
+            "  disqualifying however well the clip moves.\n"
+            "  DO NOT LET AN ASSEMBLER PALINDROME THIS CLIP. The fall is\n"
+            "  irreversible; reversed, the fig flies back up onto the stem.\n")
+    print("stamped %s" % META, flush=True)
+
+  C:\banyan-farm\ep2-b19-dropmotion-0819\b19-motion-prompt.txt: 'the stem lets go, the fig falls, and lands
+    in the grass at his feet. He notices. 2D anime, hand-drawn cel animation, flat cel shading, clean ink
+    linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b19-dropmotion-0819\b19-negative.txt: fruit touching him, fruit on his body, fruit
+    in his hands, fruit rising, fruit floating in the air, a second fruit, camera pan, camera tilt, zoom,
+    dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen,
+    still image, freeze frame
+  C:\banyan-farm\ep2-b19-dropmotion-0819\b19-jobs-encode.json: |-
+    [
+     {
+      "beat": 19,
+      "embeds": "C:\\banyan-farm\\ep2-b19-dropmotion-0819-out\\b19-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b19-dropmotion-0819\\b19-motion-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b19-dropmotion-0819\\b19-negative.txt"
+     }
+    ]
+  C:\banyan-farm\ep2-b19-dropmotion-0819\b19-jobs-render.json: |-
+    [
+     {
+      "beat": 19,
+      "seed": 20260819,
+      "embeds": "C:\\banyan-farm\\ep2-b19-dropmotion-0819-out\\b19-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b19-dropmotion-0819-out\\b19-init-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b19-dropmotion-0819-out\\19-the-drop-LTX-sapgloss-0819.mp4"
+     }
+    ]
+
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\fetch_init.py
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\b19-sapgloss-s20260819.png
+  - --sha256
+  - 5a62ff900df2e22c45df8d5b8c0a22c85f374a53cd7fa9b64483e7716d77c11c
+  - --out
+  - C:\banyan-farm\ep2-b19-dropmotion-0819-out\b19-init-704x1280.png
+  - --size
+  - 704x1280
+  - --anchor
+  - right
+- name: framing
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\assert_framing.py
+  - C:\banyan-farm\ep2-b19-dropmotion-0819-out\b19-init-704x1280.png
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\b19-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\b19-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b19-dropmotion-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b19-dropmotion-0819-out\bench-b19-dropmotion.jsonl
+  - --bench-label
+  - ep2-b19-dropmotion-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-dropmotion-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b19-dropmotion-0819-out\19-the-drop-LTX-sapgloss-0819.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses
+    # publishes nothing while returning a code that reads like a render
+    # failure, and box_enqueue.output_path_problems refuses a spec whose
+    # declared artifacts are never named by any step -- which a wildcard
+    # defeats. Missing ONE file is a FAIL of the job. No allow_fail anywhere.
+    import hashlib, os, shutil
+    out_dir = "C:/banyan-farm/ep2-b19-dropmotion-0819-out"
+    pay_dir = "C:/banyan-farm/ep2-b19-dropmotion-0819"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b19-dropmotion-0819"
+    PAIRS = [
+        (out_dir, "19-the-drop-LTX-sapgloss-0819.mp4"),
+        (out_dir, "19-the-drop-LTX-sapgloss-0819.mp4.meta.yaml"),
+        (out_dir, "b19-init-704x1280.png"),
+        (out_dir, "bench-b19-dropmotion.jsonl"),
+        (pay_dir, "b19-motion-prompt.txt"),
+        (pay_dir, "b19-negative.txt"),
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for d, name in PAIRS:
+        f = os.path.join(d, name)
+        if not os.path.isfile(f):
+            raise SystemExit("!! missing %s -- refusing to call the job clean." % f)
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            lines.append(hashlib.sha256(fh.read()).hexdigest() + "  " + name)
+    with open(os.path.join(dst, "ep2-b19-dropmotion-0819.sha256"), "w",
+              newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(lines), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(lines) == len(PAIRS) else 1)
+
+artifacts:
+- C:\banyan-farm\ep2-b19-dropmotion-0819-out\19-the-drop-LTX-sapgloss-0819.mp4
+- C:\banyan-farm\ep2-b19-dropmotion-0819-out\b19-init-704x1280.png
+
+# ---------------------------------------------------------------------------
+bar:
+  read_how: 'ALL 121 FRAMES OPENED CONSECUTIVELY via pipeline/coldread_frames.py, plus a per-frame violet-blob
+    track computed on the Mac ($0, CPU, nothing re-rendered). THE NUMBERS BELOW ARE FILTERS AND THE FRAMES
+    ARE THE VERDICT -- "a metric agreeing with me is not a sample". Every coordinate is in the 704x1280 OUTPUT
+    frame and every one of them was measured on the cropped init BEFORE this job was filed, so none of them
+    can be moved afterwards to fit a clip.'
+  pre_registered_geometry: 'MEASURED 2026-08-19 on the right-anchored crop of b19-sapgloss-s20260819.png,
+    which is the exact file the render opens on:
+
+    FRUIT AT f000: x 610..642, y 903..946 (32 x 43 px). Centroid (626, 924).
+
+    Z-BODY, the declared body zone: x 0..500, y 285..1015. Deliberately GENEROUS -- his cloak fabric thins
+    out by x~470 and everything from there to x~575 is his cast SHADOW on the grass, not him. A generous
+    zone makes M3 stricter, which is the safe direction for a clause the founder made disqualifying.
+
+    GAP from Z-BODY''s right edge to the fruit''s left edge: 110px. Contact therefore requires 110px of
+    leftward travel, which is a gross failure and not a marginal one -- worth stating plainly so a PASS on
+    M3 is not mistaken for a hard-won result.
+
+    GRASS LINE under the fruit: y ~978 (the sapling''s own stem base, measured). FALL CLEARANCE from the
+    fruit''s bottom edge to it: ~32px.'
+  M1_DETACH_AND_FALL: The fruit separates from the side-branch and descends by a CONTINUOUS path. Measured
+    - the violet blob is present in all 121 frames, its centroid y is non-decreasing across the fall window
+    to within 2px of jitter, and there is no frame pair in which the blob disappears and reappears more than
+    12px away. A fruit that vanishes and re-materialises fails this even if the end state looks right.
+  M2_LANDS_IN_THE_GRASS_BESIDE_HIM: It comes to REST on the ground. Measured - the blob's bottom edge reaches
+    y >= 965, its centroid descends >= 20px from f000, and over the final 12 frames the centroid moves <=
+    3px. Rest matters as much as fall - done_when asks for the fall, the landing and the noticing IN THAT
+    ORDER, so a fruit still moving at f120 has not landed.
+  M3_NEVER_TOUCHES_HIS_BODY: 'DISQUALIFYING ON ITS OWN, and it is the founder''s ruling and not this lane''s
+    bar. NO violet-blob pixel may fall inside Z-BODY (x 0..500, y 285..1015) in ANY of the 121 frames. One
+    frame is enough to fail the take. Rule: "NO CONTACT WITH HIS BODY -- a take where the fruit touches him
+    fails this beat now, however well it moves" (done-definitions beat 19 done_when, carrying ruling_0815).'
+  M4_HE_STAYS_HIMSELF: Same goblin - green skin, bald head, patchwork cloak, seated with both hands on his
+    knees. No second figure, no morph, no costume change, no standing up. Read on the frames, not measured.
+  M5_CAMERA_LOCKED: No pan, tilt, zoom or dolly. Measured on the static field and horizon - median absolute
+    frame-to-frame displacement of the horizon row < 1px across the clip.
+  M6_THE_PLANT_KEEPS_EXACTLY_TWO_LEAVES: Two leaves in every one of the 121 frames, and one fruit. This beat's
+    plant took four rounds of drawing and three closed wordings to get to two leaves and one fruit; motion
+    is the first thing that can undo it, and no beat-19 job has ever checked it under motion.
+  M7_NOT_SECRETLY_FROZEN: 'The clause the ladder asked for on 2026-08-19 after beats 17 and 18 were both
+    scored on action with near-duplicate frame pairs unmeasured. Pre-registered here in the form this beat
+    needs, which is NOT beat 18''s: this shot is a small event in a wide static frame, so MOST pairs should
+    be near-identical and a low share would mean the whole frame is churning. So the cap is loose and the
+    floor is where the work is done -- share of the 120 frame pairs under 0.5 interframe <= 90 of 120 (75%),
+    AND the fall window must contain >= 8 CONSECUTIVE pairs above 0.5. The second half is the one that catches
+    a clip that is frozen except for a flicker.'
+  M8_HE_NOTICES: 'done_when''s THIRD requirement, and it is in this bar because done_when puts it there:
+    "WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls, and LANDS
+    ON THE GROUND; and he NOTICES it. Three things, in that order." His head or gaze must turn toward the
+    fruit AFTER the landing. RECORDED DEPARTURE FROM THE BRIEF I WAS GIVEN: the six clauses handed to this
+    lane did not include the noticing. It is added rather than dropped because done_when governs, and it
+    is scored SEPARATELY so a clip that nails the fall and misses the notice reports as exactly that.'
+  what_pass_means: M1-M8 all clean. A partial is a FAIL. M3 failing fails the take on its own regardless
+    of the other seven.
+
+prediction_pre_registered: 'F-IMPERCEPTIBLE OR F-FROZEN ON THE FRUIT IS THE MOST LIKELY OUTCOME, and the
+  reasoning is arithmetic rather than pessimism. The founder''s knee-height canon puts the sapling at 40cm
+  and the drop at about 30cm; the board requires this beat WIDE (the gate flagged a scale jump from the previous
+  macro), so 30cm of world maps onto ~32px of a 1280-tall frame. The engine is being asked to move a 32x43px
+  rigid object by less than its own height. Against that: this engine measures 12 of 12 on whole-body motion
+  and 0 of 8 on in-hand actions, and a small falling object is neither of those classes -- there is no prior
+  on it in this repo, which is the honest position and is why this is a sample.
+
+  I ALSO PREDICT THE NOTICE LANDS AND THE FALL DOES NOT -- i.e. M8 passes while M1/M2 fail. A head turn is
+  a large-amplitude motion of the kind the engine does (ep2-b09-faceturn-crf10-0819), so the most likely
+  single clip is a goblin who looks down at a fruit that never moved. That is a specific, falsifiable shape
+  and it is written before the render so it can be wrong.
+
+  IF I AM WRONG in the other direction and the fruit moves too much, the mode to watch is F-CONTACT, because
+  the engine has no notion of his body as an obstacle.'
+
+crf_choice:
+  chosen: --image-crf 10
+  guided_not_defaulted: 'THE LADDER ALREADY NAMED IT FOR THIS EXACT PLATE. pipeline/work-ladder-0819.md,
+    beat 19: "Still named, not fired: this plate''s motion wants --image-crf 10, not 33, on the evidence
+    of ep2-b09-faceturn-crf10-0819." So this is a filed decision being executed, not a fallback. The generic
+    fallback offered to this lane was "use 10 and say why if the class is unguided" -- the class is guided,
+    and citing the guidance is stronger than citing the fallback.'
+  the_per_beat_argument: 'The ladder''s crf finding is explicitly NOT a global win: crf 10 helps beats 01
+    and 17 and FROZE beat 18, because on a macro plate whose whole content is fine high-frequency movement
+    a cleaner init gives i2v less to push off from. Beat 19 is the opposite register -- a wide whole-body
+    plate whose single moving element is a hard-edged 32x43px object. What must survive the encode here is
+    that object''s EDGE, and crf 33 puts 29.4% of a comparable plate''s pixels off by more than 8 levels
+    against crf 10''s 7.1%. A 32px object is exactly the thing that measurement destroys.'
+  the_risk_of_the_choice_named_out_loud: 'CRF 10 COULD BE A CAUSE OF MY OWN PREDICTED FAILURE. The beat-18
+    mechanism -- cleaner init, less to push off from, motion stops -- is a real mechanism and this beat''s
+    motion is small, so it is exposed to it. That is not a reason to pick 33 blind; it is a reason to
+    pre-register the follow-up: IF F-FROZEN OR F-IMPERCEPTIBLE FIRES, the designated next rung is this same
+    spec at --image-crf 33, one variable, same seed, same plate, same words -- NOT a wording change and NOT
+    a new plate. Named here so the next lane does not have to re-derive it, and so nobody answers a freeze
+    with a fifth prompt.'
+
+pre_registered_fail_modes:
+  reporting_rule: EVERY mode below is reported BY NAME in the verdict whether or not it fired. A mode that
+    did not fire is evidence about the recipe and is not a footnote.
+  F-FROZEN: 'Nothing moves in 121 frames. Beat 14 produced exactly this and beat 18''s crf-10 take produced
+    a near-freeze (interframe median 0.570 against 5.956). Caught by M7''s floor: fewer than 8 consecutive
+    pairs above 0.5 in the fall window.'
+  F-IMPERCEPTIBLE: 'The fruit moves, but by less than its own height, so the beat does not read as a fall.
+    THIS IS A FRAMING QUESTION AS MUCH AS AN ENGINE ONE and it belongs to the author if it fires: the wide
+    framing is a board requirement, the 30cm drop is his own knee-height canon, and the two together cap
+    the fall at ~32px whatever the engine does. If this is the outcome, the finding to report is not "the
+    engine failed" but "this beat may not be filmable wide", which is a story decision and not ours.'
+  F-CONTACT: 'The fruit touches him. DISQUALIFYING -- his ruling, twice given. Requires 110px of leftward
+    drift from the measured start position, so if it fires it will be unmistakable rather than borderline.'
+  F-DETACHED-FLOAT: 'THE 2026-08-12 FAULT, named because this plate is the fix for it and the fix is what
+    is under test. done-definitions records the mechanism: "Asking a plate with the fruit already down for
+    a fall is what made fruit materialise in mid-air." Every earlier beat-19 plate had the fruit already
+    in the grass, so the engine invented a second one aloft. The shape to watch here is the inverse: the
+    fruit stays on the branch while a copy appears mid-air, or it vanishes from the branch and reappears
+    on the ground with no path between. Caught by M1''s continuity clause and by M6''s one-fruit count.'
+  F-REWIND: 'THE PALINDROME TAIL, and it has two halves that fail in different places.
+
+    IN THE CLIP: i2v engines will happily run an action and then unwind it. If the fruit falls and then rises
+    back toward the branch, the clip fails M1''s monotonicity even though a still from the middle looks perfect.
+
+    IN THE ASSEMBLER, which is the half nobody has written down for this beat: pipeline/render_t3.py:616
+    palindromes any clip whose slot outruns it -- `dur > cdur + 0.05 and cdur <= 16.0` -- and beat 19''s
+    slot is 1:34-1:39, i.e. 5.000s, against this clip''s 121/24 = 5.0417s. So the palindrome does NOT fire,
+    BY 0.09 SECONDS. That margin is the entire safety of an IRREVERSIBLE action: reversed, this beat shows
+    a fig flying back up onto a stem, which is the most obviously broken thing the show could put on screen.
+    PRE-REGISTERED CONSEQUENCE: if beat 19''s slot ever exceeds 5.09s -- a VO-led retime, a trim, a shorter
+    re-render -- the clip must be LENGTHENED or held, never palindromed. Beat 19 is the first beat in this
+    show whose action a viewer can see run backwards, and the assembler currently has no notion of that.'
+  F-PLANT-REVERT: The drawn plant reverts under motion to the bead-strung vine three wordings produced before
+    it was drawn, or the leaves multiply. Caught by M6. Never checked under motion on this beat by anyone.
+  F-HEAD-ONLY: He turns his head and nothing else in the frame changes -- which is a FAIL of the beat and
+    also, per the prediction above, the single most likely clip. Reported as M8 pass + M1/M2 fail rather
+    than as one undifferentiated FAIL, because those two halves cost different things to fix.
+  F-CAMERA: Pan, tilt, zoom or dolly. Caught by M5.
+  F-MORPH: He changes, a second figure appears, or he stands up. Caught by M4.
+  F-SCENE-BREAK: A cut to another location mid-clip. Caught on the frames.
+
+recipe_derivation:
+  parent: 'ep2-b14-motion-crf10-0819 -- the proven LTX i2v shape on this box. Cloned: 704x1280, 121 frames,
+    24 fps, guidance 2.0, --distilled-sigmas, --two-stage, --image-crf 10, --offload sequential, --mode production,
+    the two-stage encode/render split, the sidecar stamp and the named-files publish.'
+  departure_1_the_crop_anchor: 'cover_crop.py gains --anchor, defaulting to center so every earlier job it
+    was copied into is reproduced byte for byte. Passed `right` here BECAUSE THE CENTRED CROP THROWS THE
+    SUBJECT OF THE BEAT OUT OF FRAME -- measured, not feared: 832x1216 -> 704x1280 discards 81.7 original
+    px per side, the fruit lives at original x 743..773, and a centred crop keeps 8 of its 32 columns. This
+    was caught by measuring the picked plate against the recipe before filing, and it is the reason the job
+    also carries assert_framing.py: the same class of bug would otherwise cost 12 GPU-minutes and return
+    an unjudgeable clip.'
+  departure_2_this_beats_words: The prompt is beat 19's own script line and the negative front-loads this
+    beat's defect class ahead of the parent's camera block, per the negative-ordering finding the plate specs
+    in this lane recorded. Nothing else in the argv differs.
+  a_guard_the_parent_lacked: 'assert_framing.py, which REFUSES BEFORE THE MODEL LOADS if the fruit is not
+    aloft, in frame, clear of the frame edge and clear of Z-BODY. Its thresholds are this spec''s pre-registered
+    numbers, so it cannot be relaxed after the fact to bless a bad crop.'
+  a_parent_key_deliberately_not_inherited: 'NO `verdict`, `verdict_measured`, `pick` or `sweep_summary` block
+    is carried in from ep2-b14-motion-crf10-0819. The ladder recorded on 2026-08-19 that three crf-10 specs
+    were derived from their parents INCLUDING those keys, so a filed job advertised a PASS belonging to a
+    different clip. This spec starts with none of them, and its verdict will be appended after the render
+    by the lane that opens the frames.'
+  prompt_is_verbatim: 'The action clause is the founder''s own sentence with nothing added: "the stem lets
+    go, the fig falls, and lands in the grass at his feet. He notices." Lower-case opening kept because that
+    is how it reads in node.md:118. Only the house style tail is appended, exactly as beat 14 does it.
+
+    WHAT I DELIBERATELY DID NOT ADD, and it is a real choice: no positive hand-placement clause ("both hands
+    stay on his knees") to guard M3, even though the positive-placement law has now fired five times in this
+    repo and negatives are known to be weak. Two reasons. The instruction was a verbatim script line, and
+    smuggling staging words into it would make a PASS unattributable. And the plate''s own geometry is the
+    guard: 110px of clearance for a fruit that has to fall 32px. IF F-CONTACT FIRES ANYWAY, the designated
+    next lever is exactly that positive clause -- named here so it is a filed rung and not an improvisation.'
+  text_encoder_note: LTX here encodes with Gemma3 (pipeline/ltx_i2v.py), not CLIP, so the 77-token budget
+    that governs the animagine plate prompts in this lane does not bind on these two files. Not measured
+    on the real tokenizer, and no truncation is claimed - only that the CLIP constraint is the wrong one
+    to cite here.
+
+script_authority: 'S6 DERIVATION, WRITTEN OUT BECAUSE THIS BEAT SITS INSIDE THE 08-17 REWRITE THAT THE FOUNDER
+  HAS NOT READ. Node 002b-first-citizen carries `approved_by: founder`, and beats 12/13/15/19/20 were rewritten
+  on 2026-08-17 with `approval_status` NOT YET READ BY HIM. S6 says no footage render from a script the founder
+  has not read and approved, so the question is whether THIS render depends on unread text. It does not,
+  and here is the chain:
+
+  1. THE ACTION THIS CLIP ANIMATES IS HIS OWN SENTENCE, WHICH HE TYPED HIMSELF. On 2026-08-15 he edited node.md:118
+  in commit a483eb52 ("the fig falls on the ground now, so the board entry that foreclosed that has to say
+  so"), and it reads: "the stem lets go, the fig falls, and lands in the grass at his feet. He notices."
+  That is the prompt, verbatim. It is not a steward rewrite of his text; it is his text.
+
+  2. THE STAGING IS HIS RULING, GIVEN ONCE AND RE-CONFIRMED TWICE. ruling_0815, verbatim: "ok then just make
+  the fig fall on the ground and the goblin will notice it" -- superseding his own earlier "lets make it
+  drop on his head". Re-confirmed in done_when ("NO CONTACT WITH HIS BODY -- a take where the fruit touches
+  him fails this beat now, however well it moves") and again by his own node.md edit above. Same class as
+  beat 13''s verbal ratification: the substance is the author''s, only the transcription is the steward''s.
+
+  3. AND HERE THE BRIEF THIS LANE WAS HANDED IS NOT QUITE RIGHT, SO IT IS CORRECTED RATHER THAN REPEATED.
+  The brief said the 08-17 rewrite''s "only substantive delta is the founder''s OWN 08-15 ruling". On beat
+  19 that is not the whole delta. The 08-17 knee-height rewrite ALSO answered `plate_requirement_0815.body_position`
+  -- it put him "standing beside it, mid-stride away", the fig landing "by his heel", and it did so on the
+  steward''s authority over a question done-definitions still records as an OPEN AUTHOR CALL. That is a second
+  substantive change and it is unread.
+
+  4. WHICH IS WHY THIS JOB DOES NOT USE IT. The plate this clip opens on has him SEATED, hands on his knees
+  -- a pose the plate lane derived from beat 20''s opening and from beat 14 (which renders this character
+  crouching) and recorded as overturnable in one word. So the unread half of the rewrite is NOT load-bearing
+  here: this render leans only on (1) and (2), both his own words, and it would be unaffected if the standing/mid-stride
+  sentence were struck tomorrow. The tension is NAMED rather than resolved: the board and the plate disagree
+  about his body, done-definitions still calls body_position open, and that is an author card this job does
+  not spend.
+
+  5. BEATS 12, 15 AND 20 REMAIN UNREAD AND ARE NOT TOUCHED BY THIS JOB. Nothing here renders, re-words, re-plates
+  or assembles any of them, and beat 13 is not touched either.
+
+  WHAT THIS JOB IS NOT: no voice synthesis, no episode assembly, no publication. Silent, $0, one clip. The
+  sidecar ships `approved: false`, `provisional: true`. shots.md, node.md and pipeline/wave-drafts.yaml are
+  UNTOUCHED by this job.'
+
+is_this_a_pick: 'NO. This is ONE SAMPLE against a pre-registered bar. No plate_ack, no promotion, no leaf,
+  no lineage entry, nothing in any cut and nothing published. Beat 19 stays a slate until the frames are
+  opened and, if they pass, until the author says otherwise. The plate PICK this is conditioned on is a steward
+  route decision recorded in ep2-b19-sapgloss-0819.yaml `pick_0819` and is vetoable in one line for $0.'
