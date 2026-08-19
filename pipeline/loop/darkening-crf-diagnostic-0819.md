@@ -237,3 +237,44 @@ and attached to **the plate and seed**, not to the crf flag.
 
 Beats 01, 12, 18 and 20 are all goblin-free on screen, so none of this touches
 the identity freeze.
+
+---
+
+## SEED ARM — appended 2026-08-19, both probes landed and judged
+
+The lead named seed 20260819 as the only thing the two collapses shared. **It is
+cleared on both carriers.** Two rungs filed, run and judged within the hour, each
+one variable off a passed goblin-free recipe:
+
+| rung | carrier | seed | drift f000→f120 | bands | branch |
+|---|---|---|---|---|---|
+| `ep2-b01-growmotion-s20260819-0819` | b01 nub | 20260819 | **+16.59** | disagree (−0.17 / +14.40 / +35.54) | **PASS-HOLD** |
+| `ep2-b18-tremble-s20260819-0819` | b18 macro | 20260819 | **−4.28** | agree (−1.66 / −2.20 / −8.98) | **PASS-HOLD** |
+
+Neither reaches the two-sided 20-level bound; the collapses they were compared
+against measured −91.05 and −25.03. `PASS-HOLD` was pre-registered as the more
+likely outcome on both and fired on both.
+
+*Against the flattering reading:* the b18 arm's three bands **do** all fall, so it
+has the collapse's shape at 1/6th of the bound and 1/21st of b12's size. Worth one
+sentence rather than none — but beat 18 now sits inside ±11 levels on every seed
+and every crf value ever measured on it (−0.22, +10.14, −5.52, −4.28), so a −4.28
+is that beat's noise floor and not a small collapse.
+
+### Where the darkening question now stands
+
+Three of the four candidate causes are measured out:
+
+| candidate | status | evidence |
+|---|---|---|
+| `--image-crf 10` | **exonerated** | on four clips with opposite outcomes |
+| every other sampler flag | **excluded** | argv identical across all six specs |
+| seed 20260819 | **exonerated** | holds on two independent carriers |
+| **the plate or the prompt** | **what is left** | not yet tested |
+
+`ep2-b12-stillmotion-s20260871-0819` is the converse and the closer: the take that
+lost 91.05 levels, re-rolled on 20260871 — the flattest seed on record —
+everything else byte-identical. `FAIL-COLLAPSE-AGAIN` is pre-registered as the
+more likely outcome, and if it fires the seed is exonerated from the other
+direction too and the cause is the plate or the prompt. It was queued at
+17:50 and is the only rung this question still needs.

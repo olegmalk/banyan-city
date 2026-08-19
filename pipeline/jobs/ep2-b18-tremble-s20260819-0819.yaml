@@ -188,3 +188,37 @@ bar:
     bar and are NOT re-litigated. This job asks one question about luminance.
   what_this_licenses: One clip on one seed. No pick, no promotion, no cut swap, no second seed, and no
     claim about any beat other than through the luminance number.
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the queue-keeper lane, same cycle it landed.
+verdict_this_job: 'PASS-HOLD. Seed 20260819 does not collapse on the b18 carrier either: whole-frame
+  drift f000->f120 is -4.28 against a two-sided 20-level bound. The three bands DO agree in
+  sign here, all falling, so unlike the b01 arm this is a real if tiny global dip -- and 4.28
+  levels over five seconds is 21x under the bound and 21x under the parent beat''s own collapse
+  figures. With b01 also holding, the seed is cleared on both carriers.'
+verdict_this_job_measured:
+  instrument: pipeline/luma_drift.py, equal thirds, whole-frame BT.601 luma. 121 frames pulled
+    from origin/farm-results-rtx5090.
+  whole_frame: f000 116.24, f024 109.93, f048 117.02, f072 107.44, f096 111.77, f120 111.96.
+    Drift -4.28, min 107.17, max 124.07.
+  bands: rows 0-427 177.49 -> 175.82 (-1.66), rows 427-853 77.68 -> 75.48 (-2.20), rows 853-1280
+    93.48 -> 84.50 (-8.98). All three fall, so the band clause does not excuse this one as
+    an object -- it is a genuine global dip, just a very small one.
+  the_branch_that_fired: PASS-HOLD on the magnitude condition. FAIL-COLLAPSE needed |drift|
+    >= 20 AND agreeing bands; the bands agree but the magnitude is 4.28. Stated plainly because
+    this is the closest any clean carrier has come to the collapse SHAPE while being nowhere
+    near its SIZE.
+  comparison: 'On this same instrument: b18''s crf-33 parent -0.22, b18''s crf-10 sibling
+    +10.14, b18 s4 (seed 20260878) -5.52, and this seed -4.28. Beat 18 sits inside +/-11 levels
+    on every seed and every crf value ever measured on it. The two collapsing takes on other
+    beats measured -91.05 and -25.03.'
+  not_scored: The beat-18 tremble clauses were NOT judged here -- not the four-quarter motion
+    clause, not specular pumping, not plate fidelity. This job asked one question about luminance.
+    Whether this seed trembles well is unassessed and unclaimed, and it is NOT a candidate
+    for the beat-18 slot on the strength of this verdict.
+what_this_licenses_after_this_verdict: Together with ep2-b01-growmotion-s20260819-0819 (PASS-HOLD,
+  +16.59) this clears seed 20260819 on two independent carriers and removes the seed from
+  the darkening suspect list. With crf already exonerated on four clips, the plate and the
+  prompt are what remain. The converse rung ep2-b12-stillmotion-s20260871-0819 is running
+  and is the one that closes it. Nothing here is a pick or a promotion, and no third seed
+  is licensed.
