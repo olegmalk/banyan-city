@@ -1,0 +1,151 @@
+# Beat 19's FALL, composited. Provenance (§7.2) + the pre-registered bar + the
+# verdict, written by the beat-19 composite lane on the Mac, 2026-08-19.
+#
+# NO MODEL RAN TO MAKE THIS CLIP. There is no seed, no sampler, no prompt and no
+# negative to record, because nothing was sampled: a rigid sprite cut out of the
+# picked plate is translated and rotated over that same plate's own pixels. The
+# seed and sampler that matter belong to the PLATE this consumes
+# (pipeline/jobs/ep2-b19-sapgloss-0819.yaml, `pick_0819`).
+id: ep2-b19-dropcomp-0819
+platform: "local-deterministic (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)"
+tool: "pipeline/beat19_drop_animate.py"
+model: "none -- no model was loaded"
+cost_usd: 0.0
+gpu_seconds: 0.0
+wall_seconds: 44
+shot_beat: 19
+beat_slug: "the-drop"
+size: "704x1280"
+frames: 120
+fps: 24
+duration_s: 5.0000
+encode: "libx264, yuv420p, crf 18 -- post_motion.py's settings for a source clip"
+mp4: "19-the-drop-dropcomp-0819.mp4"
+mp4_sha256: "0fd9118cbe192278bc8ed6929fdb647dc02dd798186681c1d81acb5bdfce2eed"
+
+source_plate: "farm-out/ep2-b19-sapgloss-0819/b19-sapgloss-s20260819.png"
+source_plate_sha256: "5a62ff900df2e22c45df8d5b8c0a22c85f374a53cd7fa9b64483e7716d77c11c"
+source_plate_provenance: >-
+  animagine-xl-3.1 inpaint at strength 0.22 over pipeline/beat19_drop_composite.py's
+  drawn sapling, seed 20260819, 40 steps, cfg 7.5, 832x1216, rtx5090, $0. This is the
+  plate ep2-b19-sapgloss-0819's `pick_0819` picked, and this clip conditions on it and
+  on nothing else.
+framing: >-
+  cover_crop.py --anchor right, 832x1216 -> 704x1280, reproduced inside the tool and
+  ASSERTED: the fig lands at x 610..642, y 903..946, centroid (626.3, 924.0), 1133
+  violet px -- ep2-b19-dropmotion-0819's pre-registered geometry, to the pixel. The
+  tool refuses to animate anything if that assertion fails, so "the frame the bar was
+  written on" is a checked fact rather than a claim.
+
+what_this_is: >-
+  THE RUNG pipeline/work-ladder-0819.md RECOMMENDED, FIRED. ep2-b19-dropmotion-0819 put
+  this plate through the proven LTX i2v recipe and failed decisively -- the engine
+  rendered BEAT 20's action inside beat 19: he reached, the plant reverted to the
+  parent's twig-and-crystal, a second fruit appeared, and 81 of 121 frames put fruit
+  pixels inside the declared body zone, which is the founder's disqualifying clause.
+  Its verdict named the cause as SUBJECT ATTRIBUTION, and this repo has five rungs
+  saying a further wording does not fix attribution. So the fall is COMPOSITED: the
+  camera is locked, the fig is a 33x44px rigid object, and a sprite moved over a static
+  plate cannot revert the plant, cannot make him reach and cannot grow a second fig,
+  because nothing is re-generated.
+
+what_moves: >-
+  ONE THING. The fig, and the small contact shadow that appears under it in the last
+  24px of its approach. Everything else in all 120 frames is bit-identical to the
+  picked plate -- measured, not asserted: max |frame - plate| outside the fig's path
+  corridor is 0 across all 120 frames, and f000 IS the cropped plate byte for byte.
+  His pose, his hands, his face, both cotyledons, the stem, the side-branch, the
+  horizon and the grass cannot change, and the fig's own STALK stays on the branch,
+  which is what a picked fruit leaves behind.
+
+the_path: >-
+  f000-f023 (1.000s) at rest on the branch, the plate itself. f024-f033 (0.417s) the
+  fall: bottom = 946 + 32*u^2, i.e. constant acceleration, touching down at y 978, the
+  grass line measured at the sapling's own stem base. f034-f040 a 9px bounce landing 8px
+  lower and 12px right; f041-f045 a 3.5px second bounce; f046-f052 an ease-out roll to
+  rest. f053-f119 (2.792s) at rest, nothing in the frame moving. Over the whole event
+  it descends 48px, travels 29px RIGHT (never left -- the body zone is left) and turns
+  46 degrees, so it ends lying on its side with its stalk end up, which is what a
+  fallen fruit looks like and is a stronger cue than the travel.
+
+bar_pre_registered_before_building: >-
+  Eight clauses, written before the first line of the tool and not edited afterwards:
+  B1 everything outside the fig's path corridor bit-identical, per frame; B2 f000 is
+  the picked plate; B3 the fig detaches with no ghost and no cel-rim residue at the
+  origin; B4 present in every frame, continuous (no jump >12px), monotone through the
+  fall, and ACCELERATING; B5 it lands and comes to rest (bottom edge past y 965,
+  centroid descent >=20px, <=3px of motion over the final 12 frames); B5b it is
+  actually ON the ground, read off the sprite's own alpha; B6 ZERO fig pixel inside
+  Z-BODY (x 0..500, y 285..1015) in ANY frame -- the founder's ruling, disqualifying on
+  its own; B7 exactly one violet blob in every frame; B8 <= the 5.000s slot.
+score: "8 of 8, plus B5b. BAR: PASS -- every clause."
+measured:
+  B1_background_untouched: "max |frame - plate| outside the corridor, over all 120 frames: 0. The corridor is 9448 px, 1.05% of the frame, and it is a union of BOXES -- the patch, every sprite tile, every shadow ellipse -- so it cannot be argued smaller."
+  B2_opens_on_the_plate: "f000 vs the cropped picked plate: max diff 0. The first 24 frames are the plate itself."
+  B3_clean_detach: "origin box (y 900..925, the band the fig occupied at f000 and never occupies again) read after the landing: 0 violet px, 0 px below luminance 140 in the body band, and max departure from the reconstruction 0.0."
+  B4_continuous_and_accelerating: "blob present in all 120 frames (1058..1135 px). Per-frame descent through the fall: 0.32 0.96 1.60 2.24 2.88 3.53 4.17 4.82 5.46 6.11 px -- strictly increasing. No frame-to-frame jump over 12px; no reversal over 2px."
+  B5_lands_and_rests: "total centroid descent 48.0px; bottom edge y 946 -> 991; motion over the final 12 frames 0.00px."
+  B5b_actually_on_the_ground: "the fig's own alpha footprint bottom at rest is y 993 against a ground line of y 994 -- 1px of contact, no hover."
+  B6_no_body_contact: "leftmost fig pixel over the whole clip x 609, against a Z-BODY right edge of x 500: 109px of margin, on every frame. Corridor n Z-BODY = 0 px. The fig only ever travels RIGHT, so this is structural, not lucky."
+  B7_exactly_one_fruit: "one violet blob >=200px in every one of the 120 frames. The clause the i2v take failed hardest is here true by construction and measured anyway."
+  B8_duration: "120 frames / 24 = 5.0000s against a 5.000s slot. Palindrome margin 0.0000s."
+
+palindrome: >-
+  render_t3.py:616 reverses any clip whose slot outruns it by more than 0.05s, and
+  REVERSED, THIS BEAT SHOWS A FIG FLYING BACK UP ONTO A STEM. The i2v take survived that
+  on 0.09s of luck (121 frames = 5.0417s against a 5.000s slot). This clip is 120 frames
+  = 5.0000s exactly, so dur - cdur is 0.000 and the branch cannot be reached. N_FRAMES is
+  a module constant with that reasoning written beside it; there is no argument that
+  emits a different length.
+
+verdict_by_eye: >-
+  IT READS AS A FALL. Read at 4x across ten frames (CHECK-b19-fall-strip-4x.png), at 3x
+  before-and-after (CHECK-b19-before-after-3x.png), at 7x on the landing
+  (CHECK-b19-landing-7x.png), as one still of the whole path
+  (CHECK-b19-path-trails-4x.png), and as WHOLE FRAMES at half scale
+  (CHECK-b19-wholeframe-half.png), which is roughly how it gets watched. At half scale
+  the two frames differ unmistakably and in exactly one way: the fig hangs, then the
+  stalk is empty and the fig lies tilted in the grass beside him with a shadow under it
+  and a blade crossing its lower edge. None of the three fail modes this lane
+  pre-registered fired: no visible cut edge (four rejected rounds got that there, see
+  below), no floating shadowless landing (B5b, and it took the fourth rejection to fix),
+  no uncanny linear motion -- the descent is quadratic and the tilt sells it.
+
+four_rejected_rounds_before_anything_shipped: >-
+  ALL FOUR WERE CAUGHT BY OPENING PIXELS, AND THE BAR WAS GREEN FOR THREE OF THEM. This
+  is the record, because "verify each stage visually" is the only reason this clip is not
+  uncanny. (1) A HORIZONTAL CLONE for the hole behind the fig -- beat19_drop_composite's
+  own instrument -- sat up to 29 levels off the true background and covered a ring the
+  fig never occupied; the moment the sprite moved half a pixel, a ragged bright fringe
+  appeared down the fig's left side on f024 and nowhere else. (2) ROW-WISE LINEAR
+  INTERPOLATION replaced it and produced an OLIVE RECTANGLE OF BANDS, because the
+  endpoint test was "not thin structure" and the pixels 4px to the fig's upper left are
+  HIS CAST SHADOW, a broad grey-purple mass that is not thin. (3) A HARMONIC SOLVE fixed
+  the bands and came out DEAD FLAT -- interior std 0.1 against the field's 4.3, a
+  fig-shaped blob 9 levels off its surroundings -- because a 2px safety gap between the
+  region and its sources left the solve with no boundary to be anchored to at all. (4)
+  THE CENTRE WAS SOLVED FROM THE BOTTOM EDGE USING A RECTANGLE'S BOUND, hh*cos + hw*sin
+  instead of the ellipse's sqrt((hw sin)^2 + (hh cos)^2), which overstates the extent by
+  8.4px at 46 degrees -- so the landed fig HOVERED over its own contact shadow with clear
+  grass between them. Every bar clause was green on that frame; B5b was added afterwards
+  so the next one cannot be.
+
+honest_limits: >-
+  THREE, AND NONE OF THEM IS HIDDEN. (a) HE DOES NOT NOTICE. done_when asks for the fall,
+  the landing AND him noticing, in that order; this clip delivers the first two exactly
+  and the third not at all. A composite can move the fig and nothing else, and animating
+  his head would destroy the one property that makes this clip trustworthy -- that every
+  pixel outside the fig's corridor is bit-identical to the plate the author picked. (b)
+  THE LAST 2.792s IS A STILL FRAME. An honest hold, not a disguised one. (c) THE EVENT IS
+  SMALL: 48px of travel on a 33px fig in a 1280-tall frame, which is the author's own
+  standing card -- his knee-height canon caps the fall at ~30cm and the board wants the
+  sapling and the scavenger in one frame, so the drop is ~32px however it is produced.
+  This clip is now the best available evidence for THAT question, and it is a story
+  question, not an engine one.
+
+is_this_a_pick: >-
+  NO. No plate_ack, no leaf, no lineage entry, nothing in any cut, and beat 19 stays a
+  SLATE until the author says otherwise. What changed is the blocker: it was "no motion
+  recipe has produced a fall", and a fall now exists, at $0, with every founder ruling
+  satisfied by construction. Whether it SHIPS -- whether a 48px drop with no notice in it
+  is the beat -- is R4 and belongs to him, on the pixels above, in one look.
