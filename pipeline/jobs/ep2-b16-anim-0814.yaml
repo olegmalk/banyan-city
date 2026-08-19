@@ -151,3 +151,178 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b16-anim-0814\13-remake-LTX-0813.mp4
 - C:\banyan-farm\ep2-b16-anim-0814\b13-init-704x1280.png
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+#
+# READ `success_CORRECTION_0816` ABOVE FIRST. It already points here:
+# "done-definitions.yaml `both_legs_rejected_0816` records the founder
+# rejecting BOTH legs of this beat, so its `status: SHIP WITH FAULT
+# NAMED` is itself superseded. Read that key before scoring anything
+# here." This verdict is what happens when someone finally does.
+# ==================================================================
+verdict: >-
+  ***THIS FILE IS FOOTAGE THE FOUNDER RULED NOT SHIPPABLE, AND IT HAS SHIPPED IN FOUR CUTS
+  ASSEMBLED AFTER HE RULED.*** That is the verdict and everything else is secondary to it. Beat
+  16's `done_when` — "close on one leaf with the scavenger blurred behind it; the leaf is the
+  subject and he is depth" — is MET, cleanly, on all three terms, and the record has said so
+  since 2026-08-14 ("round_1_result: WORKS"). It does not matter. On 2026-08-16 the founder was
+  shown this beat's two legs and answered, verbatim: "the difference between leg b and a is just
+  how this big leaf looks, both of them are wrong though and do not resemble the sapling." That
+  is an R4 taste ruling that the LEAF is wrong in both legs, and done-definitions records its
+  consequence in capitals — "IT IS NOT SHIPPABLE AND NEITHER LEG SHIPS." THE FILE IN
+  ep2-demo-0819b IS LEG A. Its own provenance sidecar says so in as many words. And the object
+  the ruling rejected is not a detail in the corner of this shot: from f010 to f096 a
+  nine-to-eleven-lobed PALMATE leaf fills the entire 704x1280 frame. The rejected thing IS the
+  picture, for 87 of 97 frames.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/16-why-b16-anim-0814.mp4
+  sha256: dcdfd26e483cb82c1f8ad92c3035da478a9bbe4a93cb907e24b6599f77192303
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[16] records
+  in_cut: >-
+    review/ep2-demo-0819b/ep2-demo-0819b.mp4, and per cut-readiness-0819.yaml's own
+    `the_unscored_middle` it has been "carried forward through 0815, 0816, 0817, 0818 and 0819
+    unchanged". The ruling is dated 2026-08-16. So FOUR of those cuts — 0817, 0818, 0819 and
+    0819b — were assembled after it.
+  method: >-
+    pipeline/coldread_frames.py --pad 60, 79 consecutive frames over four strips plus a 16-frame
+    overview, read consecutively per standard_0815.scoring_method. Then
+    review/ep2-picks/exact_freeze_index.py, a parity-collapsed lag-4 series, and this spec's own
+    payload prompt and negative.
+verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg:
+  the_ruling_verbatim: >-
+    done-definitions.yaml beats.16.both_legs_rejected_0816, 2026-08-16, R4, shown on the card
+    /review/ep2-picks/sheets/b16-leg-b-0815.jpg: "the difference between leg b and a is just how
+    this big leaf looks, both of them are wrong though and do not resemble the sapling." The
+    record's own gloss: "That is not a pick between the two takes - it is a taste ruling (R4)
+    that the LEAF is wrong in both, and the two legs differ only in the thing that is broken in
+    both, so the A-or-B question was the wrong question. Beat 16 goes back to needing a plate,
+    not a pick." Recorded in review/inbox.yaml the same day.
+  proof_the_cut_carries_leg_A: >-
+    NOT INFERRED. review/ep2-demo-0819b/sources/16-why-b16-anim-0814.mp4.meta.yaml, the
+    provenance sidecar written at render time, carries `demo_note: 'used as-is; leg A - the
+    record says the verdict was written about leg A, and leg B is the better-looking plate'`.
+    So the assembly knew which leg it was taking, wrote it down, and took it. `task:
+    ep2-b16-anim-0814` on the same sidecar matches this spec's id.
+  proof_the_rejected_object_is_on_screen: >-
+    Read off the frames, not assumed from the wording. The leaf that fills the frame from f010 to
+    f096 is PALMATE with NINE to ELEVEN narrow pointed lobes radiating from a single central
+    junction on one stem. That is precisely the object done-definitions
+    beats.16.unexpected_finding flagged a day before the ruling — "THE LEAF CAME OUT LOBED - a
+    five-to-seven lobed palmate leaf ... It contradicts the canon 'two broad round cotyledons'.
+    That collision is already a question with him and I am not resolving it by accident:
+    recorded, not adopted" — and the founder then ruled on. If anything the lobe count in this
+    file is HIGHER than that entry estimated, which makes the contradiction with two round
+    cotyledons wider, not narrower.
+  why_done_when_being_met_does_not_save_it: >-
+    Because this beat's `done_when` makes the leaf the SUBJECT, and both_legs_rejected_0816 says
+    exactly that about the cost: "this beat's own `done_when` makes the leaf the subject ('close
+    on one leaf... the leaf is the subject and he is depth'), and beat 12's does the same, so a
+    wrong leaf is not a background blemish in either beat - it is the shot." A definition that
+    says "make the leaf the subject" is fully satisfied by a shot that makes the WRONG leaf the
+    subject. That is not a loophole to be argued around; it is the reason a taste ruling outranks
+    a structural definition here, and the reason this verdict is FAIL despite three clean clauses.
+  what_this_lane_does_and_does_not_do: >-
+    NAMES IT LOUDLY AND CHANGES NOTHING ELSE. It does not pull the beat from the cut, does not
+    re-cut, does not define the sapling, does not re-ask the founder, and does not treat his
+    2026-08-16 answer as reopenable. Removing footage from an episode is an assembly action and
+    defining the plant is R4; this is the escalation, not the fix. The one thing it does assert,
+    because it is arithmetic rather than taste, is in
+    `verdict_status_contested_against_the_ledgers_own_definitions` below.
+verdict_clauses:
+  C1_close_on_one_leaf: >-
+    MET AS TO FRAMING, WITH THE SPEC'S OWN BAN VIOLATED. One palmate leaf dominates the frame from
+    f010, centred, its junction near the middle of the picture, close enough that individual veins
+    are the largest lines in the shot. But there is a SECOND leaf: a dark green blade enters at the
+    bottom-left edge from about f013 and stays for the rest of the clip. This spec's negative
+    contains `second leaf` as its sixth term. So the clause reads as met to a viewer and the
+    negative that was written to guarantee it did not hold.
+  C2_the_scavenger_blurred_behind_it: >-
+    MET. From f010 he is a soft unreadable mass behind and below the leaf — the pale dome of his
+    head and two pale knees are discernible as shapes and nothing about him is legible. This is
+    exactly what the plate was written for, and this spec's header predicted the failure mode that
+    did NOT happen: "The failure plate-drafts told me to watch for (the goblin pulling focus) did
+    not happen."
+  C3_the_leaf_is_the_subject_and_he_is_depth: >-
+    MET, unambiguously, and it is the one thing about this beat that has always worked.
+  C_overall: >-
+    THREE OF THREE MET AND THE BEAT STILL FAILS. Said plainly so that nobody reading only the
+    clause list concludes this is a pass.
+verdict_faults_the_record_did_not_have:
+  a_white_wash_at_the_head_of_the_clip: >-
+    NEW, AND NOT IN ANY RECORD OF THIS BEAT. f000 is the init: the goblin seated in grass, sharp,
+    in a sage crossed-wrap tunic, no leaf anywhere. Over f001-f002 THE WHOLE FRAME BLOWS OUT
+    TOWARD WHITE and he dissolves into the haze. f003-f005 a small green leaf sprouts out of that
+    whiteout in what is effectively a white void. f006-f009 the leaf inflates to fill the frame
+    and the field and sky resolve back in. So the first quarter-second of this beat is a
+    dissolve-through-white — the identical defect that BLOCKED BEAT 06 through two whole rounds
+    ("noscale - prop fixed, but a 40-frame white dissolve", "STILL opens on a white burst to
+    ~f40"). It is shorter here, about five frames rather than forty, which is presumably why five
+    cuts have passed over it. This spec's negative contains `background appearing, scene forming,
+    iris, wipe, dissolve, white background` — five terms aimed at this exact event — and it
+    happened anyway.
+  the_recorded_shipping_fault_is_understated_and_mistimed: >-
+    beats.16.shipping_fault reads "the opening frame is goblin-forward and sharp, then the
+    composition jumps to leaf-forward by f40 - a change of subject in the first second." TWO
+    CORRECTIONS, and the entry is left standing unedited because the disagreement is the record.
+    (1) THE TIMING: the composition is already leaf-forward by f010, not f40 — the leaf fills the
+    frame two thirds of a second earlier than recorded. (2) THE MECHANISM: it is not a "jump",
+    and it is not only a change of subject. It is a wash to white with the subject dissolving
+    inside it and a new subject growing out of the blank. Naming it a compositional jump makes it
+    sound like an editing choice; it is a rendering failure.
+  the_leaf_never_turns_and_the_clip_is_two_thirds_one_picture: >-
+    exact_freeze_index.py on this file: `frames=97 terminal_freeze_index=34 terminal_freeze_len=63
+    dup_pairs=72 runs=[(22, 4), (26, 8), (34, 63)]`. SIXTY-FIVE PERCENT OF THIS CLIP IS ONE
+    PICTURE — frames 34 to 96 identical at ncc 1.0000 — and 72 of 96 adjacent pairs are identical
+    overall, so from f022 onward the whole remaining clip is essentially THREE still pictures.
+    Parity-collapsed lag-4 agrees independently: 75 consecutive frames from f018 under 1.0 level,
+    series median 0.139. THIS IS A DIRECT FAILURE OF WHAT THIS SPEC ASKED FOR. Its prompt says
+    "IT TURNS VERY SLIGHTLY in still air - a slow small rotation on its stem and nothing more -
+    and it keeps its exact outline the whole time: the same leaf, the same shape, the same size,
+    only its angle changing." The outline is kept, because nothing moves at all. There is no
+    rotation. The beat is a still with a ten-frame whiteout in front of it.
+  init_abandonment_signature_again: >-
+    Mean-abs distance from f000 goes 0 -> 50.6 (f001) -> 91.5 (f005) -> 59.1 (f010) and sits at
+    58.9 at the end; the ten largest interframe steps in the whole clip are the ten EARLIEST. Same
+    signature as beat 04 in this sweep and as ep2-b09-faceturn-crf10-0819's header describes: the
+    init is abandoned in the first frames and the sampler invents a scene and holds it. THIRD beat
+    now carrying it. Note the distinctive extra here — the distance PEAKS at f005 (91.5, the
+    whiteout) and then comes partway BACK to 59, which is the wash going out again; on beat 04 it
+    climbed monotonically and flatlined. Reported for whichever lane owns that signature.
+verdict_status_contested_against_the_ledgers_own_definitions:
+  the_arithmetic: >-
+    cut-readiness-0819.yaml defines its three status values precisely. `best-available` is
+    "footage that a verdict lets into a cut but which no verdict calls a pass". `slate` is
+    "nothing exists that a verdict lets into a cut". Beat 16's row currently reads
+    `status: best-available`. A FOUNDER RULING THAT FOOTAGE IS NOT SHIPPABLE IS NOT A VERDICT
+    THAT LETS IT INTO A CUT — it is the opposite — so on the ledger's own definitions this row
+    cannot be `best-available`, and the value its definitions select is `slate`.
+  what_is_changed_and_what_is_not: >-
+    This lane does NOT flip the value, because flipping it changes the cut's slate count and
+    implies an assembly action, and because that ledger says of itself "It makes no pick, promotes
+    nothing, writes no plate_ack and approves nothing." What is added to the row instead is a
+    loud contested field pointing at this verdict. THE DECISION IS AN ASSEMBLY'S AND IT IS ONE
+    LINE EITHER WAY: slate beat 16 and lose a picture that a viewer would otherwise accept, or
+    keep it and record explicitly that the episode ships a leaf the author rejected. Both are
+    defensible; neither is a judging lane's to take.
+verdict_next_instrument: >-
+  NOT A RENDER. both_legs_rejected_0816 forbids the obvious one in capitals — "DO NOT RE-RENDER
+  BEAT 16 OFF EITHER LEG'S WORDING. The plant description itself is what failed" — and this read
+  gives no reason to test that. The named blocker is the same one beat 13 and beat 03 hit in this
+  sweep: THERE IS NO CANONICAL SAPLING DESCRIPTION. That entry filed the question already
+  ("whether a canonical sapling description exists at all is the open question filed with this
+  ruling; if it does not, defining the plant is the founder's (R4) and gets its own card"). This
+  sweep has now put THREE independent beats behind that card in one night — beat 03 grew an
+  eight-leaf woody twig, beat 13 grew a mature forked tree taller than the frame, and beat 16
+  fills the screen with a nine-lobed palmate leaf the founder has already rejected — and one
+  description would govern beats 03, 12, 13, 15, 16, 19, 20 and 21. It is the cheapest unblocking
+  item this sweep found. Named and escalated; this lane files no GPU work and does not write the
+  card.
+verdict_status_recommendation: >-
+  CONTESTED, not `best-available`. See the field above. The narrow recommendation this lane will
+  make, because it applies an existing ruling rather than making a new one: no beat-16 render
+  should be queued, and no assembly should treat this beat's clean `done_when` as licence — the
+  clauses pass and the shot is still the rejected object.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim; the founder's words quoted verbatim from the record and not paraphrased.
