@@ -2181,3 +2181,39 @@ bytes reached the branch by hand-carry. The `success` clause names files, a hash
 and a guard outcome — never the courier — so this is not a clause failure, but
 **every lane publishing a box plate should still expect to carry it across by
 hand** until the runner-surgery lane fixes the divergence.
+
+### The three courier jobs in that set of 8 — all PASS, verdicts now in the specs
+
+Same shape, same bar: copy named files to a farm-out directory one spec owns,
+prove byte-identity by hash, write a manifest. All three ran rc=0 and **every
+file is hash-identical in three places** — the manifest the job wrote on the
+box, the copy on `main`, and the blob on `origin/farm-results-rtx5090`.
+
+| job | files | key hash | guard consequence |
+|---|---|---|---|
+| `ep2-b12-plateship-0819` | 2 + manifest, 5 s | PNG `cc6bd5f0…c074` = the sha `ep2-b12-tightB-0813` cropped | `ep2-b12-stillmotion-0819` `--src` → this path, **plate_ack count 0**, ran |
+| `ep2-b20-plateship-0819` | 2 + manifest, 5 s | PNG `4b87cf4f…d119` | `ep2-b20-motion-0819` ran off it, **plate_ack count 0** — **beat 20 got footage for the first time** |
+| `ep2-b15-macplate-publish-0819` | 4 + manifest, 12 s | r1s1 `8a9bd14b…4ebe`, r2s1 `b4b28ab5…a103` | **guard not yet exercised** — no beat-15 motion job exists to fetch it |
+
+**Unregistered check run on all three anyway.** A hash proves integrity and
+proves nothing about subject, and this ladder has a b04 entry about cropping the
+wrong beat's plate. Opened at full size: b12 is layered leaves on a pink sunset
+with **no figure** (the same picture `ep2-b12-noscav-0819` scored across 121
+frames); b20 is the goblin cupping a **purple fig** — r1s1, the seed this ladder
+picked, not the fig-less r4s1 it scored FAIL; b15 is the goblin sitting turned
+toward a **two-leaf seedling**, one of the few plates in that wave whose plant
+landed. All three are the right beat.
+
+**Rungs these close.** Beat 12's and beat 20's plate-delivery rungs are closed —
+both consumers ran with the guards **on**. **Beat 15's is only half closed:** the
+bytes resolve on the branch, but no beat-15 motion job has been filed against
+them, so the `--src` guard has never actually fetched this plate. That is proof
+by construction, weaker than beat 12's and beat 20's, and it is recorded as such
+in the spec rather than rounded up to a pass.
+
+**No cut consequence from any of the three.** All three specs say so themselves
+and this lane confirms it: beat 12 keeps its take with the warm-to-cool colour
+fault named; **beat 20 stays a slate** because `ep2-b20-motion-0819`'s own
+`verdict_cut` reads "NOT PROPOSED FOR THE CUT" — a steward call, not a courier's;
+beat 15 stays a slate because publishing an init is not footage and
+**STEWARDSHIP.md §6 is undischarged**. A courier job's pass is a pass on bytes.

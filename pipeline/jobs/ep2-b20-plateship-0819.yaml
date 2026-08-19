@@ -151,3 +151,49 @@ outcome_WHAT_TRAVELLED_WITH_IT_AND_MUST_NOT_BE_LOST: 'THE SIDECAR THIS JOB FAITH
 outcome_no_further_work: A courier, finished. It licenses nothing and picks nothing --
   `this_is_not_a_pick` above still holds, and the other 24 seeds of the 2026-08-19 macbook1 wave
   remain unpublished and unscored.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 by the judging lane. Scored against the
+# `success` clause above, which is not edited here. Ran clean: rc=0, 1 attempt,
+# 2026-08-19T10:38:15Z -> 10:38:20Z (5 s), $0, no GPU.
+# ============================================================================
+verdict: >-
+  PASS, AND IT IS THE ONE OF TONIGHT'S COURIER JOBS WITH A REAL DOWNSTREAM
+  RESULT. Both files published byte-identical to main with a manifest, and the
+  consumer did not merely enqueue: ep2-b20-motion-0819 ran off this plate with
+  no plate_ack and gave beat 20 footage for the first time. The plate reached
+  the 5090 from macbook1 exactly as filed.
+verdict_measured:
+  c1_two_files_plus_a_manifest_this_job_wrote: >-
+    PASS. farm-out/ep2-b20-plateship-0819 holds exactly three files:
+    20-evidence-mac-plate-r1s1.png, 20-evidence-mac-plate-r1s1.yaml, and
+    ep2-b20-plateship-0819.sha256 listing both.
+  c2_byte_identity_with_the_main_copy: >-
+    PASS, three-way. PNG
+    4b87cf4f40772af7942077e9a1c30198aa78aaeac70b9a26dda5808d9a04d119
+    (1,417,409 bytes) and sidecar
+    3d9465a4f231b132ad84f78c0ff4b36f6cf1bb4b5ee35c4b86cadccb230ce6f4 read
+    identically in the manifest the job wrote on the box, in main's
+    farm-out/ep2-b20-mac-plate-0819/, and as blobs on
+    origin/farm-results-rtx5090. The named comparison in the success clause is
+    satisfied against the exact directory it names.
+  c3_the_two_refusals_turned_into_two_passes: >-
+    PASS. ep2-b20-motion-0819 names
+    C:\banyan-farm\courier-box\farm-out\ep2-b20-plateship-0819\20-evidence-mac-plate-r1s1.png
+    as its --src, its header records the dependency on this job, and a grep for
+    a plate_ack KEY returns 0. It then RAN and is judged PASS on its own clause:
+    "beat 20 has footage for the first time".
+  c4_right_seed_right_beat_not_corrupt: >-
+    NOT PRE-REGISTERED -- checked anyway. Opened at full size: 832x1216, the
+    goblin crouched in grass under a bare branch, both hands cupped around a
+    dark purple fig. Beat 20 is EVIDENCE and the fig IS the evidence, so this is
+    the right frame -- and specifically it is r1s1 rather than r4s1, which
+    work-ladder-0819.md scored FAIL for having no fig at all. The job shipped
+    the seed the ladder picked.
+what_this_licenses: >-
+  NOTHING BEYOND DELIVERY, and the cut position is explicitly unchanged.
+  `this_is_not_a_pick` above still holds and the other 24 seeds of the
+  2026-08-19 macbook1 wave remain unpublished and unscored. BEAT 20 STAYS A
+  SLATE: the clip made from this plate passed its own clause but its own
+  `verdict_cut` reads "NOT PROPOSED FOR THE CUT", which is a steward call this
+  courier job cannot and does not touch.

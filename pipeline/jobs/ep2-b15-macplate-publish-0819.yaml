@@ -209,3 +209,48 @@ steps:
 artifacts:
 - C:\banyan-farm\courier-box\farm-out\ep2-b15-macplate-publish-0819\15-good-listener-mac-plate-r1s1.png
 - C:\banyan-farm\courier-box\farm-out\ep2-b15-macplate-publish-0819\15-good-listener-mac-plate-r2s1.png
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 by the judging lane. Scored against the
+# `success` clause above, which is not edited here. Ran clean: rc=0, 1 attempt,
+# 2026-08-18T22:11:49Z -> 22:12:01Z (12 s), $0, no GPU, no provider.
+# ============================================================================
+verdict: >-
+  PASS ON THE COPY, WHICH IS THE WHOLE BAR -- and the beat is still blocked, on
+  the thing this job correctly did not try to unblock. Four files and a manifest
+  published, all four byte-identical to main, no mismatch anywhere. The success
+  clause says "the only interesting failure is a mismatch"; there was none.
+verdict_measured:
+  c1_four_files_plus_a_manifest_this_job_wrote: >-
+    PASS. farm-out/ep2-b15-macplate-publish-0819 holds exactly five files: the
+    two PNGs (r1s1, r2s1), their two provenance yamls, and
+    ep2-b15-macplate-publish-0819.sha256 listing all four. Nothing partial, and
+    no file published without its sidecar.
+  c2_byte_identity_with_origin_main: >-
+    PASS, three-way on all four files. r1s1.png
+    8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe
+    (1,176,194 bytes), r1s1.yaml
+    58a19d731f0c29744c0c905e607e665940ac1e47c4adb489b85dd22109ed5c87,
+    r2s1.png b4b28ab54f0ca7dace0b50f302a101fd085cc2f4fcdbfc45f13bd92446d9a103
+    (1,176,017 bytes), r2s1.yaml
+    6a7c60e79fb212a3a1449a6ee16a6ee1ddc88c458ac22b7ae38d929f3b30bf57. Each
+    matches main's farm-out/ep2-b15-mac-plate-0819/ copy and each matches its
+    blob on origin/farm-results-rtx5090. Zero mismatches, so the refusal path
+    was never exercised -- which is a pass and not evidence the guard works.
+  c3_right_beat_and_not_corrupt: >-
+    NOT PRE-REGISTERED -- checked anyway. r1s1 opened at full size: 832x1216,
+    the goblin sitting small in tall yellow-green grass, knees drawn up, turned
+    toward a thin seedling with two leaves at frame left. Beat 15 is GOOD
+    LISTENER and the plant is in frame and is what he is turned toward. Right
+    beat, and it is one of the few plates in this wave whose plant landed.
+what_this_licenses: >-
+  A PLATE ON THE CARD AND NOTHING ELSE. The named consumer -- the beat-15 slate
+  in review/ep2-demo-0818/sources/picks-0818.yaml -- IS NOT CLEARED BY THIS JOB
+  and the slate entry stands: publishing an init is not footage. No pick, no
+  promotion, no approval. STEWARDSHIP.md §6 is the remaining gate and it is
+  undischarged; this job was filed precisely as the only beat-15 step §6
+  permits, and it stayed inside that. As of this verdict NO beat-15 motion job
+  has been filed against this plate, so the box_enqueue --src guard this
+  unblocked has not yet been exercised on beat 15 -- the unblocking is proven
+  by construction (the bytes resolve on the branch) rather than by a guard pass,
+  which is weaker evidence than beat 12's and beat 20's and is said plainly.

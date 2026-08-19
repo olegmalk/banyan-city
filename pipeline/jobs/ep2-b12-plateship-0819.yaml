@@ -215,3 +215,47 @@ outcome_the_consumer_was_served: 'Both of them, which is more than the spec clai
   that is charged to the renders and not to this job. See ep2-b12-shortstill-0819 verdict_this_job.'
 outcome_no_further_work: This job is a courier and it is finished. It licenses nothing, picks nothing
   (`this_is_not_a_pick` above still holds) and needs no rerun.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 by the judging lane. Scored against the
+# `success` clause above, which is not edited here. Ran clean: rc=0, 1 attempt,
+# 2026-08-19T10:08:15Z -> 10:08:20Z (5 s), $0, no GPU.
+# ============================================================================
+verdict: >-
+  PASS. Both files published, both byte-identical to main, the manifest written,
+  and the two guard refusals this job existed to clear are cleared:
+  ep2-b12-stillmotion-0819 names this job's farm-out path as its --src and
+  carries NO plate_ack, so the guards ran rather than being waived.
+verdict_measured:
+  c1_two_files_plus_a_manifest_this_job_wrote: >-
+    PASS. farm-out/ep2-b12-plateship-0819 holds exactly three files:
+    12-related-r4-s2.png, 12-related-r4-s2.png.meta.yaml, and
+    ep2-b12-plateship-0819.sha256 listing both.
+  c2_byte_identity_with_origin_main: >-
+    PASS, and asserted three ways rather than one, because the success clause
+    says identity is established BY THE HASH and not by provenance of the copy.
+    PNG cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074 and
+    meta ee8765db88e85d88502fa30679f34ce0a24fc63302bcd5bf1626fd594a68fee7 read
+    the same in all three places: the manifest the job wrote on the box, main's
+    genomes/sapling/nodes/002b-first-citizen/takes/stills/ copies, and the blobs
+    on origin/farm-results-rtx5090. The PNG's own sha is the one
+    ep2-b12-tightB-0813 cropped, so the shipped take's init and the published
+    plate are provably the same 1,455,845 bytes.
+  c3_the_refusal_it_was_filed_to_clear: >-
+    PASS. ep2-b12-stillmotion-0819 step argv names
+    C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
+    as --src and a grep for a plate_ack KEY in that spec returns 0. Its own
+    notes record the prior route 404'ing and this path replacing it. The job ran
+    and is judged (FAIL on its own clause, which is a finding about the recipe
+    and not about this plate's delivery).
+  c4_right_beat_and_not_corrupt: >-
+    NOT PRE-REGISTERED -- checked anyway, because a hash proves integrity and
+    says nothing about subject. Opened at full size: 832x1216, layered green
+    leaves against a pink sunset sky, no figure. That is beat 12's plate, and it
+    is the same picture ep2-b12-noscav-0819's B1_NO_FIGURE_ANYWHERE scored
+    across all 121 frames.
+what_this_licenses: >-
+  NOTHING BEYOND DELIVERY. `this_is_not_a_pick` above still holds; no promotion,
+  no cut swap. Beat 12's slate is unaffected by this job -- the beat ships its
+  existing take with the warm-to-cool colour fault still named in
+  done-definitions.yaml, and nothing here proposes a replacement.
