@@ -369,3 +369,177 @@ derivation:
     to the parent''s value under the same name. Recorded rather than implied: a pre-registered bar carried
     unchanged is legitimate, and it should say so.'
   seed: 20260819
+
+# ---------------------------------------------------------------------------
+# APPENDED AFTER THE PIXELS, 2026-08-20, by the beat 08 staging lane.
+verdict: >-
+  FAIL, AND IT IS THE MOST INFORMATIVE FAIL ON THIS ROUTE. Nine words of
+  positive grip language, with EVERY conditioning input byte-identical to the
+  parent, ERASED THE CLIPBOARD AND TOOK THE GUARD'S HAIR WITH IT. Two branches
+  of the pre-registered rule fired at once -- (4) prompt crowding is real, and
+  (5) the second net's product is prompt-sensitive at fixed strength -- and (5)
+  fired harder than it was written: it was written for a board that DEGRADES and
+  what happened is a board that is GONE. The authored quad holds 23.5% of pixels
+  below luma 80 against the parent's 75.8%, region mean luma 108.2 against 66.2,
+  and at 3x the quad contains the wrap skirt, the grass and the belt clasp with
+  no board edge anywhere in the frame. The guard is BALD -- smooth scalp, no
+  hairline, no strands -- where the parent, at the same 1.0 + 0.3 conditioning,
+  came back with light sandy hair. THE GRIP ITSELF PARTLY WORKED, WHICH IS THE
+  DIAGNOSTIC: fingers and thumb ARE drawn, articulated, on the correct far hand
+  -- and they are closed around the SASH STRAP at his chest, the nearest
+  graspable object, exactly where that hand already was in the parent. The
+  clause summoned a grip and the render found something else for it to hold.
+  Everything else survived: B7 passes on both figures, B2 at +54.4, the pointing
+  hand 41.2 px from its authored wrist, the drawing at twinsipa's level, frame
+  mean luma 127.3 against the parent's 134.2 and twinsipa's 141.6. NO PICK, NO
+  plate_ack, NO CUT. THE PARENT ep2-b08-scale30-0820 REMAINS THE BEST FRAME ON
+  THIS BEAT and this one does not displace it.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: >-
+    PASS. All nine published files verified against the job's own sha256
+    manifest, byte for byte. The sidecar reads
+    `controlnet_conditioning_scale: 1.0`, `controlnet_2_conditioning_scale: 0.3`,
+    `seed: 20260819`, `control_image_sha256: 562911c8...`,
+    `control_2_image_sha256: 38cd39da...`, `ip_adapter_scale: [[0.7, 0.7]]`,
+    both capsule mask sets unchanged, `repo_commit: ee74ac0e`, `arm: grip`,
+    832x1216, 40 steps, guidance 7.5, render 22.0 s, cost_usd 0. The published
+    prompt.txt carries `fingers and thumb gripping the clipboard edge` and the
+    negative is byte-identical to the parent's. This IS a one-variable
+    comparison and the variable is the words.
+  b4a_the_grip: >-
+    FAIL, AND WORSE THAN FAIL -- THE BOARD IS NOT THERE TO GRIP. Measured in the
+    authored quad (bbox x 583-723, y 657-820): fraction of pixels below luma 80
+    is 0.235 here against 0.758 on the parent; region mean luma 108.2 against
+    66.2. Read at 3x with the quad drawn on both frames side by side, the parent
+    shows a clean dark rectangle filling it and this frame shows brown wrap
+    skirt, background grass and the gold belt clasp. No board or clipboard
+    appears anywhere else in the frame either. The clause this rung existed to
+    close cannot be scored, because its object was removed by the attempt.
+  b4a_ii_still_one_board: >-
+    NOT FIRED, AND THE OPPOSITE FIRED. The pre-registered risk of naming
+    `clipboard` twice was a DUPLICATED object. Boards in frame: ZERO. Repeating
+    the noun did not split the object, it lost it.
+  b4b_the_grip_is_on_the_RIGHT_hand: >-
+    THE HAND CLAUSE PASSES AND THE OBJECT CLAUSE IS WHAT FAILED, and separating
+    those two is the whole value of this frame. Fingers and a thumb ARE drawn,
+    separated and articulated, at 4x, on the FAR hand -- the board-side one --
+    and NOT on the pointing hand, which keeps its single extended index finger.
+    The wording bound to the correct referent. What it is gripping is the
+    diagonal sash strap at his chest. So `fingers and thumb gripping ...` is a
+    working summons for a grip and a failing summons for WHICH OBJECT, and the
+    render resolved the ambiguity toward an object that was already under that
+    hand in the parent frame.
+  b4b_i_pointing_hand: >-
+    PASS. Warm-skin centroid in the pointing region (321.4, 690.5), 41.2 px from
+    the authored wrist (280.5, 695.1) against a ~60 px bar. History: twinsipa
+    40.3, boardnet 10.2, scale30 48.5. Nine mechanisms, never failed.
+  b4c_the_arm_belongs_to_the_guard: >-
+    PASS on the pointing arm -- it grows from the guard's shoulder, is
+    human-skinned and ends in a drawn hand with a dark cuff. THE FAR ARM IS ALSO
+    PRESENT AND ITS HAND IS DRAWN, which is the half the parent won and this
+    frame keeps; it simply has nothing to hold.
+  b6_drawn_not_traced: >-
+    PASS, at twinsipa's level. Pupils and a set jaw on both faces, folds in the
+    cream shirt and the brown wrap skirt, a legible gold clasp on the sash, a
+    drawn dark cuff at the pointing wrist, separated digits on both hands. The
+    nine words did not cost the drawing.
+  b8_the_guard_has_hair: >-
+    FAIL, AND THIS IS THE INSTRUMENT READING THE RUNG WAS WORTH RUNNING FOR. The
+    guard is BALD: smooth pale scalp, no hairline, no strands, at 4x. The parent
+    -- same seed, same nets, same hints, same masks, same references, same
+    scales, `light sandy hair` in both prompts -- came back correctly haired.
+    The prior finding was that this attribute tracks CONDITIONING LOAD (bald at
+    1.0+0.8, sandy at 1.0+0.3). Conditioning did not move here. So the
+    instrument reads a SECOND input: PROMPT CROWDING. At 73 of 77 tokens the
+    unasserted-adjacent attributes start falling over, and `light sandy hair`
+    is one of them. canon.yaml ep2-guard-hair is violated by this frame.
+  b7_no_limb_fragmentation: >-
+    PASS ON BOTH FIGURES, with every box placed fresh on this frame and its
+    material published. GUARD (G-R must be <= 0.0): G1 cheek box
+    (547,406,565,424) luma 239.8 G-R -12.9; G2 far hand on the sash
+    (591,556,609,574) luma 228.4 G-R -16.6; G3 pointing hand
+    (321,681,339,699) luma 208.3 G-R -16.7. Within-figure spread 3.8 against a
+    25.0 bar. GOBLIN (G-R must be >= +20.0): B1 cheek (157,421,175,439) luma
+    237.6 G-R +41.5; B2 left forearm (87,754,105,772) luma 236.7 G-R +44.5; B3
+    right forearm (237,772,255,790) luma 239.3 G-R +33.4. Spread 11.1, luma
+    spread 2.6. MATERIAL, published as the parent's rule requires: the three
+    goblin boxes are 100.0% green-skin pixels. The three guard boxes are 98.8%,
+    63.9% and 76.9% warm-skin pixels; the shortfall on the two HANDS is the
+    character's own ink linework and shading inside an 18 px window, not another
+    material, and both were confirmed on skin by eye at 5x.
+  b2_the_identities_separate: >-
+    PASS. Guard cheek -12.9 (bar <= 0.0), goblin cheek +41.5 (bar >= +20.0),
+    separation +54.4 against a +20.0 bar. History: twinsipa +42.0, scale30
+    +60.6. Both boxes luma-matched at 237.6 / 239.8.
+  b1_the_pair: PASS. Two figures, both whole, no third.
+  b3_one_ground_plane: PASS by eye -- both stand in the same grass at the same depth.
+  b5_no_colossus: PASS by eye -- the stature relation is unchanged from the parent.
+  frame_luma: >-
+    127.3, against scale30 134.2, twinsipa 141.6 and boardnet 86.9. The purple
+    cast persists and is not new.
+observed_not_scored: >-
+  THREE. (1) THE GOBLIN IS IN FULL TEAL TROUSERS TO THE ANKLE AGAIN, as he was
+  in the parent and as he was NOT in twinsipa (bare-legged, tan loincloth). The
+  IP reference b08-ref-goblin-0819.png is a head-and-shoulders crop that shows
+  nothing below the collar, so no input asserts his legwear at all. Not ruled
+  here -- see the taste card filed 2026-08-20. (2) THE BELT HARDWARE GREW. The
+  gold clasp at the quad's top edge is larger and there is a second gold fitting
+  on the belt; the region the board hint conditions produced METAL FURNITURE
+  instead of a board, which is a more specific failure than "nothing rendered".
+  (3) THE FAR HAND WAS ALREADY ON THE SASH IN THE PARENT. This frame did not
+  move the hand, it gave the hand fingers. That is why the grip reads as bound
+  to the wrong object rather than misplaced.
+what_this_settles: >-
+  WORDING IS ELIMINATED AS THE LEVER FOR THE GRIP ON THIS ROUTE, AND IT IS WORSE
+  THAN NEUTRAL -- IT IS A NEGATIVE LEVER, because the tokens that buy a grip cost
+  the object and the canon hair. That is branch (2) of the pre-registered rule
+  answered, plus two branches nobody could have collected separately.
+  SECOND, AND IT REVISES RUNG 17: --scale2 0.3 IS NOT A ROBUST SETTING, IT IS A
+  PROMPT-COUPLED ONE. The board at 0.3 survived exactly one prompt -- the 64-token
+  one it was measured with -- and did not survive nine words added to that same
+  prompt at the same strength. "0.3 delivers the board" must now be read as "0.3
+  delivered the board for that text", and any future beat-08 prompt edit has to
+  re-verify the board rather than assume it.
+  THIRD, THE B8 INSTRUMENT HAS TWO INPUTS, NOT ONE. It was calibrated on
+  conditioning load; it moved here with conditioning fixed and only the token
+  count changed. A bald guard on this beat now means "over-conditioned OR
+  over-crowded", and the two are told apart by which of them moved.
+  FOURTH, AN ADMISSIBILITY EXTENSION THE PARENT'S RULE DOES NOT COVER AND THIS
+  FRAME FORCED: ON THE GUARD, COLOUR ALONE CANNOT CERTIFY SKIN. His cream shirt
+  measures R-B 34.7 against his skin's 42.6-49.7 -- an 8-level gap, closer than
+  the goblin's skin is to anything he wears. The first probe placed on this frame
+  by a colour predicate landed on a SLEEVE at 100% "pale", and it would have
+  passed a naive material test. Guard probes are placed by eye and published with
+  their R-B; the parent's rule said publish the material, and this says the
+  material of a cream-clad figure is not a colour test's to decide.
+what_this_did_not_settle: >-
+  WHETHER THE BOARD AND THE GRIP CAN COEXIST AT ALL. They have never been asked
+  for at a strength that could carry both: the board was measured at 0.3 with no
+  grip language, and the grip language has only been tried at 0.3. Nor whether
+  the loss is the token COUNT or the token CONTENT -- nine words about a hand
+  might crowd differently from nine words about anything else. Nor the goblin's
+  trousers. Nor whether any of this holds at a second seed; every frame on this
+  route is seed 20260819.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME. It does not license a wording
+  sweep -- one wording sample cost the board and the hair, and a second wording
+  variant is the same bet at the same odds. It does not license editing the
+  parent's spec or re-reading its verdict as wrong: scale30's frame is unchanged
+  and still the best on this beat. It does not license putting figure ink in the
+  board hint on the strength of this frame alone; that argument is still owed the
+  five tracing losses.
+next_rung_named_not_taken: >-
+  ONE sample, and the variable is --scale2, WITH THIS FRAME'S WORDING HELD. The
+  question this frame raises and cannot answer is whether the board and the grip
+  compete for one conditioning budget. Holding the 73-token prompt byte-identical
+  and raising --scale2 from 0.3 toward ~0.5 asks exactly that in one number: if
+  the board returns AND the fingers stay, beat 08 has its recipe and the earlier
+  0.8 damage was the far end of a usable range rather than a verdict on two nets.
+  If the board returns and the hair stays bald, the two failures are independent
+  and the wording has to come back out. If neither returns, the second net cannot
+  hold an object against a crowded prompt at any strength that leaves the drawing
+  alone, and the board hint carrying a stroke for the gripping hand becomes the
+  argued next lever rather than the speculative one. Its bar is B4a plus B8, with
+  every clause that passed here pre-registered to survive. Zero dependency: every
+  weight is on the card, both hints exist, the stage is already at
+  C:\banyan-farm\b08grip-0820\src.
