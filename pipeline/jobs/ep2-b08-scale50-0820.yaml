@@ -333,3 +333,130 @@ derivation:
     seed:
     - step grip --seed (20260819 -> 20260819)
   seed: 20260819
+
+# ---------------------------------------------------------------------------
+# APPENDED AFTER THE PIXELS, 2026-08-20, by the beat 08 staging lane.
+verdict: >-
+  FAIL, BRANCH (5) AND BRANCH (3) TOGETHER, AND IT CLOSES THE TUNING QUESTION
+  FOR GOOD. Raising the second net 0.3 -> 0.5, with the 73-token prompt
+  byte-identical, BROUGHT THE BOARD ALL THE WAY BACK -- the authored quad reads
+  0.757 of its pixels below luma 80 against 0.235 at 0.3 and 0.758 on
+  ep2-b08-scale30-0820, so the object is as solid as it has ever been -- AND
+  COLLAPSED THE WARDROBE INTO A SINGLE BROWN ROBE, which is the exact damage
+  1.0+0.8 did. Measured, not eyeballed: the sleeve/upper-arm patch reads RGB
+  (161.6,115.4,80.3) here against (217.9,193.4,165.0) at 0.3, and it is now
+  indistinguishable from the brown wrap at (162.4,117.2,77.9). The cream shirt
+  and the white sash are gone. THE GRIP DID NOT MOVE TO THE BOARD: the far hand
+  is still up at the chest closed around the strap end, and the board hangs at
+  the belt with no hand on it. The guard is STILL BALD. So the two failures the
+  parent left are INDEPENDENT -- the object is a conditioning-strength problem
+  and the hair is a token-budget problem, and raising the strength fixed exactly
+  the first one. NO PICK, NO plate_ack, NO CUT. ep2-b08-scale30-0820 REMAINS THE
+  BEST FRAME ON THIS BEAT.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: >-
+    PASS. All eight published files verified against the job's own sha256
+    manifest. Sidecar reads `controlnet_2_conditioning_scale: 0.5` -- the
+    override took -- with `controlnet_conditioning_scale: 1.0`, `seed:
+    20260819`, `arm: scale50`, both hint shas unchanged, render 22.2 s, cost 0.
+    The published prompt.txt is byte-identical to the parent's, grip clause
+    included, diffed at pull time. This IS a one-number comparison.
+  b4a_the_board_AND_the_grip: >-
+    HALF, AND THE HALF THAT ARRIVED IS THE ONE THAT WAS NOT IN DOUBT. (i) BOARD:
+    PRESENT AND SOLID. Authored-quad fraction below luma 80 = 0.757, against
+    0.235 on the parent and 0.758 on scale30. It is drawn at the authored place
+    and tilt with its top edge below the shoulder line. (ii) GRIP ON THE BOARD:
+    NO. The far hand stayed where the parent put it -- at the chest, fingers
+    closed on the strap end -- and the board hangs off the belt untouched.
+    Raising the object net's strength restored the object and did nothing to
+    where the hand goes, which is consistent: the hand is the pose net's and the
+    prompt's business, not the scribble net's.
+  b6_drawn_not_traced: >-
+    FAIL, AND THIS IS THE FINDING. The cream shirt and white sash have merged
+    into one brown robe -- the 1.0+0.8 failure mode, arriving at 1.0+0.5.
+    Measured on the same three patches in both frames: sleeve/upper arm
+    (161.6,115.4,80.3) here vs (217.9,193.4,165.0) at 0.3; shoulder
+    (168.5,123.0,87.0) vs (215.5,193.9,164.4); chest panel (162.4,117.2,77.9) vs
+    (159.8,114.2,84.7). At 0.3 the sleeve and the wrap are two garments in two
+    colours; at 0.5 they are one colour and one garment. Frame mean luma 114.4
+    against 127.3 (parent), 134.2 (scale30), 141.6 (twinsipa) and 86.9
+    (boardnet) -- the darkening is monotone in the second net's strength.
+  b8_the_guard_has_hair: >-
+    FAIL. Still bald, at 4x -- smooth scalp, no hairline. canon.yaml
+    `ep2-guard-hair` violated, and beat 08 is in that entry's scope as of
+    2026-08-20. THE INSTRUMENT'S TWO INPUTS ARE NOW SEPARATED: conditioning went
+    UP and the hair did not change, so at 73 tokens the crowding alone is
+    sufficient to lose it and the conditioning term is not what is holding it
+    down here. That is branch (3) of the pre-registered rule, fired.
+  b4b_both_arms_stay_on_their_skeletons: >-
+    PASS. B4b-i: pointing-hand centroid (283.6, 697.7), 4.0 px from the authored
+    wrist (280.5, 695.1) -- the closest any frame on this route has come
+    (twinsipa 40.3, boardnet 10.2, scale30 48.5, grip 41.2). B4b-ii: both arms
+    present, both ending in drawn hands; the far arm did NOT vanish the way it
+    did at 0.8, so 0.5 is below the strength that erases a limb even though it
+    is above the strength that erases a garment boundary.
+  b7_no_limb_fragmentation: >-
+    PASS ON BOTH FIGURES, boxes placed fresh on this frame, material published.
+    GUARD (bar <= 0.0): G1 cheek (538,346,556,364) luma 248.4 G-R -3.1 material
+    100.0%; G2 far hand (591,576,609,594) luma 199.5 G-R -21.8 material 63.0%;
+    G3 pointing hand (304,680,322,698) luma 243.9 G-R -5.4 material 98.5%.
+    Spread 18.7 against a 25.0 bar. GOBLIN (bar >= +20.0): B1 cheek
+    (156,404,174,422) luma 205.4 G-R +52.8; B2 left forearm (82,711,100,729)
+    luma 201.9 G-R +59.7; B3 right forearm (236,734,254,752) luma 222.1 G-R
+    +50.4, all 99.1-100.0% green skin. Spread 9.3. The two guard boxes below 97%
+    are hands whose windows contain the character's own ink and shadow, both
+    confirmed on skin by eye; per the standing rule from ep2-b08-grip-0820 the
+    guard's material is settled by eye and published with its R-B (47.0, 64.3,
+    47.7) because a colour predicate cannot separate his skin from his cloth.
+  b2_the_identities_separate: >-
+    PASS. Guard cheek -3.1, goblin cheek +52.8, separation +55.8 against a +20.0
+    bar. History: twinsipa +42.0, scale30 +60.6, grip +54.4.
+  b1_the_pair: >-
+    PASS. Two figures, both whole, and EXACTLY ONE BOARD -- the duplication risk
+    from naming `clipboard` twice did not fire even with the object net stronger.
+  b3_one_ground_plane: PASS by eye -- both stand in the same grass.
+  b5_no_colossus: PASS by eye -- the stature relation is unchanged.
+what_this_settles: >-
+  THE BOARD AND THE DRAWING COMPETE, AND THE WINDOW BETWEEN THEM IS NARROWER
+  THAN 0.3-0.8 -- IT IS NARROWER THAN 0.3-0.5. Three frames at one prompt-length
+  now bracket it: at 0.3 the drawing is intact and the object is so marginal
+  that nine words remove it; at 0.5 the object is solid and the wardrobe has
+  already collapsed; at 0.8 the wardrobe, an arm and the hair are all gone. THE
+  ROUTE STOPS TUNING THIS NUMBER. There is no value of --scale2 that gives a
+  crowded prompt both a reliable board and guard B's two garments, because the
+  same knob buys both and they move in opposite directions.
+  SECOND, THE TWO FAILURES ARE INDEPENDENT AND THE HAIR IS NOT A CONDITIONING
+  PROBLEM. Conditioning rose by two thirds and the hair did not move. At 73
+  tokens the crowding alone is sufficient to lose `light sandy hair`. Whatever
+  fixes the hair is a prompt-budget change, not a strength change.
+  THIRD, THE HAND IS NOT THE OBJECT NET'S TO PLACE. Strengthening the board did
+  not pull the hand toward it by a pixel; the far hand sat at the chest at 0.3
+  and sits at the chest at 0.5. Where a hand GOES is the pose hint's and the
+  prompt's; what is in the frame is the scribble hint's. That is the argument
+  the next lever needed.
+what_this_did_not_settle: >-
+  Whether a SHORTER prompt would hold both -- every frame at 0.5 is a 73-token
+  frame, and the only 0.3 frame that kept its wardrobe was 64 tokens. So
+  "0.5 collapses the wardrobe" is measured at one prompt length, exactly the
+  coupling this route just learned to stop assuming away. Nor whether any of it
+  holds at a second seed; every frame is seed 20260819.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME. It does not license a sweep
+  between 0.3 and 0.5 -- the wardrobe is already gone at 0.5 and the object is
+  already marginal at 0.3, so the interval is where both are mediocre, not where
+  both are good. It does not license reading scale30's verdict as wrong: that
+  frame is unchanged and still the best on this beat.
+next_rung_named_not_taken: >-
+  THE HINT, AND IT IS NOW ARGUED RATHER THAN SPECULATIVE. Three rungs have
+  spent every free lever: wording summons a grip and binds it to the wrong
+  object while costing the board (grip), strength restores the board and moves
+  no hand while costing the wardrobe (this frame), and a guidance window was
+  excluded at rung 17. What is left is the board hint carrying a SHORT STROKE
+  FOR THE GRIPPING HAND at the authored L-wrist, at --scale2 back down to 0.3
+  where the drawing survives, with the prompt returned to scale30's 64 tokens so
+  the crowding that costs the hair goes away too. That would be the first figure
+  ink ever placed in that hint and it is owed the five tracing losses in
+  writing before it is authored -- but this frame supplies the argument those
+  losses were waiting for: the hand's POSITION is demonstrably not reachable
+  through the object net's strength or through the prompt, and a hint is the
+  only remaining input that addresses position.
