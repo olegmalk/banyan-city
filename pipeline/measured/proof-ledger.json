@@ -1,51 +1,27 @@
 {
- "commits_in_window": 1446,
+ "commits_in_window": 1475,
  "covers_window": true,
- "cut": "ep2-demo-0819b",
+ "cut": "ep2-demo-0819c",
  "cut_files": [
   "review/ep2-demo-0815/ep2-demo-0815.mp4",
   "review/ep2-demo-0816/ep2-demo-0816.mp4",
   "review/ep2-demo-0817/ep2-demo-0817.mp4",
   "review/ep2-demo-0818/ep2-demo-0818.mp4",
   "review/ep2-demo-0819/ep2-demo-0819.mp4",
-  "review/ep2-demo-0819b/ep2-demo-0819b.mp4"
+  "review/ep2-demo-0819b/ep2-demo-0819b.mp4",
+  "review/ep2-demo-0819c/ep2-demo-0819c.mp4"
  ],
- "cuts_shipped": 6,
+ "cuts_shipped": 7,
  "generated": "2026-08-19",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "060c0b9d9",
+ "head": "848902fe3",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
    "sha": "2034710d",
    "what": "first commit that added this take"
   },
-  "03-bad-cover-b03-refire-0814.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "04-the-footnote-b04-refire-0814.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "05-the-patrol-b05-standB-trim.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "06-the-clipboard-b06-scene-0814r-trim.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
   "08-inside-him-b08-twohander.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "10-no-form-b10-pairB-trim.mp4": {
    "date": "2026-08-15",
    "sha": "36ca0734",
    "what": "first commit that added this take"
@@ -55,27 +31,12 @@
    "sha": "36ca0734",
    "what": "first commit that added this take"
   },
-  "13-the-shade-b13-refire-0814.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "14-the-defense-b14-macplate-r1s1-0818.mp4": {
-   "date": "2026-08-18",
-   "sha": "b8a81d9b",
-   "what": "first commit that added this take"
-  },
-  "16-why-b16-anim-0814.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
+  "19-the-drop-dropcomp-0819.mp4": {
+   "date": "2026-08-19",
+   "sha": "26581735",
    "what": "first commit that added this take"
   },
   "20-evidence-b20-shape-headtrim.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
-  "21-the-answer-b21-daylight-0814.mp4": {
    "date": "2026-08-15",
    "sha": "36ca0734",
    "what": "first commit that added this take"
@@ -85,14 +46,59 @@
    "sha": "da953466",
    "what": "last commit that touched the spec"
   },
+  "pipeline/jobs/ep2-b03-refire-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "f190b5ae",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b04-refire-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "61772721",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b05-standB-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "c4660cde",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b06-scene-0814r.yaml": {
+   "date": "2026-08-19",
+   "sha": "017d437d",
+   "what": "last commit that touched the spec"
+  },
   "pipeline/jobs/ep2-b07-point-crf10-0819.yaml": {
    "date": "2026-08-19",
    "sha": "5b4e6b8a",
    "what": "last commit that touched the spec"
   },
+  "pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml": {
+   "date": "2026-08-19",
+   "sha": "7dd53049",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b10-pairB-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "f24599a8",
+   "what": "last commit that touched the spec"
+  },
   "pipeline/jobs/ep2-b11-crf10-0819.yaml": {
    "date": "2026-08-19",
    "sha": "08b46211",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b13-refire-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "5756b279",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b14-mac-motion-0818.yaml": {
+   "date": "2026-08-18",
+   "sha": "fea977d9",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b16-anim-0814.yaml": {
+   "date": "2026-08-19",
+   "sha": "f2790402",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b17-navy-crf10-0819.yaml": {
@@ -105,15 +111,15 @@
    "sha": "f11ba736",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b19-dropmotion-0819.yaml": {
+  "pipeline/jobs/ep2-b21-daylight-0814.yaml": {
    "date": "2026-08-19",
-   "sha": "66e6eedd",
+   "sha": "4599cb46",
    "what": "last commit that touched the spec"
   }
  },
  "range_base": "0b2d9047",
  "resolved_blocks_added": 84,
  "shallow": true,
- "verdict_lines_added": 125,
+ "verdict_lines_added": 204,
  "window_days": 14
 }

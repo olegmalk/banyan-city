@@ -81,6 +81,41 @@ the_honest_counts:
     the fault named is what a bench cut is for — but nobody should now read
     their presence as anybody's approval.
 
+the_receipts_and_why_five_beats_still_read_no_verdict_block:
+  what_happened: >-
+    THE FIRST DRAFT OF THIS FILE PUT THE SPEC PATH IN `verdict_at:` AND THE PROSE
+    IN `verdict:`, AND pipeline/proof_receipts.py THEREFORE RESOLVED NOTHING —
+    all 21 beats printed `no-verdict-block`. That is the wrong way round. The
+    contract, documented in proof_receipts.spec_path, is that a picks row's
+    `verdict:` field carries the `pipeline/jobs/*.yaml` citation and the tool
+    reads the verdict text OUT OF THE SPEC ITSELF, discarding whatever prose the
+    row wrapped it in — "because a paraphrase written by the lane that wanted the
+    take in the cut is exactly the claim a reader has no way to check." Fixed:
+    `verdict:` is now the citation and this lane's summary moved to
+    `verdict_quoted:`, which nothing machine-readable consumes. Thirteen beats
+    now resolve a verdict read from the spec.
+  the_five_that_do_not_resolve_and_the_reason_for_each:
+    2: no spec verdict block exists. Genuinely never judged.
+    8: no spec verdict block exists. Genuinely never judged.
+    12: >-
+      its warrant is a RECORD (done-definitions beats.'12'), not a job spec, so
+      there is no pipeline/jobs path to cite and the receipt correctly declines
+      to invent one.
+    14: >-
+      the spec cited is real but carries no `verdict*:` key, so the tool reports
+      no block rather than paraphrasing the FAIL from elsewhere. Left as the
+      tool found it.
+    19: >-
+      ITS BAR IS REAL AND IS NOT IN pipeline/jobs. The eight pre-registered
+      clauses live in farm-out/ep2-b19-dropcomp-0819/19-the-drop-dropcomp-0819.yaml
+      (`bar_pre_registered_before_building`, `score`, `measured`), because the
+      clip was built by a tool on the Mac rather than queued as a box job. So the
+      receipt says `no-verdict-block` for the one beat in this cut with the
+      cleanest bar in it. That is a gap in where receipts look, not a gap in the
+      evidence, and it is named here rather than papered over by filing a
+      decorative job spec.
+  receipts_state: 18 frames written, sha recheck 18 of 18 match, 0 differs, 0 missing.
+
 the_one_judgement_this_assembly_took:
   what: >-
     BEAT 16 IS A SLATE IN THIS CUT AND IT WAS FOOTAGE IN THE LAST FOUR. That is
@@ -143,8 +178,8 @@ beats:
     take: 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
     sha256: 535a2e350ad5bebee17cc8cfc0f4bafebb91ee6029d7e664f7601597ebd9a319
     why: carry-forward
-    verdict: PASS on all five pre-registered clauses (G1-G5), CUT-PREFERRED.
-    verdict_at: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml verdict_this_job / verdict_this_job_measured
+    verdict_quoted: PASS on all five pre-registered clauses (G1-G5), CUT-PREFERRED.
+    verdict: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml verdict_this_job / verdict_this_job_measured
     detail: >-
       New in 0819b and unchanged here. Fixes the bloom the previous incumbent's
       own verdict admitted against itself: luminance ends at 84.8 against a
@@ -155,7 +190,7 @@ beats:
     take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
     sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
     why: carry-forward
-    verdict: NONE. No bar has ever been answered for this file.
+    verdict_quoted: NONE. No bar has ever been answered for this file.
     detail: >-
       Carried since 0817. Flagged `provisional: true` in the cut's own
       ingredients. ONE OF THE FOUR BEATS IN THIS CUT THAT HAS NEVER BEEN JUDGED
@@ -167,12 +202,12 @@ beats:
     take: 03-bad-cover-b03-refire-0814.mp4
     sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       FAIL — "THE COVER ARRIVES MID-CLIP." Frames 000-014 hold him standing in
       an open field with nothing he could be behind; at f015 a dark rod
       materialises unattached to the ground and becomes the sapling he is
       supposed to already be hiding behind.
-    verdict_at: pipeline/jobs/ep2-b03-refire-0814.yaml verdict / verdict_clauses / verdict_addendum_terminal_freeze_measured_after_the_read
+    verdict: pipeline/jobs/ep2-b03-refire-0814.yaml verdict / verdict_clauses / verdict_addendum_terminal_freeze_measured_after_the_read
     detail: >-
       FIRST verdict, 2026-08-19, after five cuts. In the cut as best-available
       with the fault named. 61% of the clip is one picture.
@@ -182,12 +217,12 @@ beats:
     take: 04-the-footnote-b04-refire-0814.mp4
     sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       FAIL on the clause the whole beat rests on. done_when is "stillness with
       LIVE EYES ... This is the one beat where a near-motionless body is correct
       and only the eyes carry it." THE EYES NEVER MOVE — same iris position in
       the same sockets from f005 to f096, no saccade, no dart, no blink.
-    verdict_at: pipeline/jobs/ep2-b04-refire-0814.yaml verdict / verdict_measured
+    verdict: pipeline/jobs/ep2-b04-refire-0814.yaml verdict / verdict_measured
     detail: FIRST verdict, 2026-08-19. Best-available with the fault named.
 
   - beat: 5
@@ -195,12 +230,12 @@ beats:
     take: 05-the-patrol-b05-standB-trim.mp4
     sha256: 909688bce9c48a872b102cd6a02f26e2e9a80e6e83734c8c6541c3cc040fa93a
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       FAIL on four of seven clauses AND it contradicts a frozen founder ruling
       on the cast — neither man wears the sash the founder froze. What it
       genuinely won, stated plainly: TWO figures in a field from f001 to f117,
       never one and never three, which four rounds of wording never achieved.
-    verdict_at: pipeline/jobs/ep2-b05-standB-0814.yaml verdict / verdict_contradicts_a_founder_ruling / verdict_measured
+    verdict: pipeline/jobs/ep2-b05-standB-0814.yaml verdict / verdict_contradicts_a_founder_ruling / verdict_measured
     detail: >-
       FIRST verdict, 2026-08-19. The `-trim` suffix is an edit pass, not a
       verdict. Best-available with the faults named.
@@ -210,12 +245,12 @@ beats:
     take: 06-the-clipboard-b06-scene-0814r-trim.mp4
     sha256: 6e1d49324cc7b74ad21cd2910827ac88b15135dc3c9168ddc161425ab3fd4f8d
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       "THE BEST OF THE EIGHT UNSCORED BEATS, AND STILL NOT A PASS": three of
       four clauses met, one failed on the board's SIZE. The action is really
       performed — he turns the bark board over and reads off it, on a locked
       camera, with zero identical adjacent pairs.
-    verdict_at: pipeline/jobs/ep2-b06-scene-0814r.yaml verdict / verdict_finds_a_gap_in_the_prop_identity_bar
+    verdict: pipeline/jobs/ep2-b06-scene-0814r.yaml verdict / verdict_finds_a_gap_in_the_prop_identity_bar
     detail: >-
       FIRST verdict, 2026-08-19. It also closed the figure-count question that
       had been open since 08-15. Best-available.
@@ -225,10 +260,10 @@ beats:
     take: 07-confiscate-b07-point-crf10-0819.mp4
     sha256: fae0f40834209e781fb57b3a803384ae4003e9aad3ec243d447ed84a2bceb138
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       PASS on M1-M4, CUT-PREFERRED of two takes, `done_when` met clause by
       clause. The guard raises his OWN arm at f045 and the point holds to f096.
-    verdict_at: pipeline/jobs/ep2-b07-point-crf10-0819.yaml verdict / verdict_clauses / plate_faults
+    verdict: pipeline/jobs/ep2-b07-point-crf10-0819.yaml verdict / verdict_clauses / plate_faults
     detail: >-
       New in 0819b (it ended beat 07's run as a slate) and unchanged here.
       ONE FAULT TRAVELS WITH IT, all the plate's and still unfixed: the init
@@ -242,7 +277,7 @@ beats:
     take: 08-inside-him-b08-twohander.mp4
     sha256: ac992bcb335cd9dd5825b3b08485ccb662d3002916b3e561349bd52abe2b1eba
     why: carry-forward
-    verdict: NONE for the clip in the cut.
+    verdict_quoted: NONE for the clip in the cut.
     detail: >-
       One of the four never-judged. The slot is FILLED; what is open is
       identity — every geometric-conditioning rung returns two GREEN figures
@@ -257,11 +292,11 @@ beats:
     slug: THE PAUSE
     take: null
     why: slate
-    verdict: >-
+    verdict_quoted: >-
       NO FOOTAGE ANY VERDICT LETS INTO A CUT. Two motion clips exist and BOTH
       declare `is_show_content: false` in their own headers — barred by their
       own specs, not by a judgement made after the fact.
-    verdict_at: pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml is_show_content_why / verdict
+    verdict: pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml is_show_content_why / verdict
     detail: >-
       Unchanged from 0819b. The engine CAN move a face now (measured: the eyes
       go from downcast to narrowed at f021 to fully closed at f121 while the
@@ -279,12 +314,12 @@ beats:
     take: 10-no-form-b10-pairB-trim.mp4
     sha256: b35f42eb181f63f263277010e2fd1f47172ee18a00f567c20468860b7bdc3811
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       FAIL on the clause that IS the beat. `done_when` requires the near one to
       hold the blank back of the board TOWARD HIS PARTNER; from f065 to f096 it
       is held essentially parallel to the picture plane — presented to the lens
       — while the partner would see it nearly edge-on.
-    verdict_at: pipeline/jobs/ep2-b10-pairB-0814.yaml verdict / verdict_disagrees_with_the_record_and_leaves_it_standing
+    verdict: pipeline/jobs/ep2-b10-pairB-0814.yaml verdict / verdict_disagrees_with_the_record_and_leaves_it_standing
     detail: >-
       FIRST verdict, 2026-08-19, and it moves the defect: the record charged
       this exact fault to the OTHER seed. Best-available with the fault named.
@@ -294,12 +329,12 @@ beats:
     take: 11-they-leave-b11-w4-s20260903-0817.mp4
     sha256: a99a0874c2b77c76c12c877044d9cbd176996e58d325111dcb9078504702433e
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       NONE for this file that stands. Its `status_override_0815` RETIRED an
       earlier passing verdict over "total identity collapse away from the plate
       across f16-f21", and its crf-10 sibling fired FAIL-COLLAPSE-UNCHANGED and
       FAIL-EXIT.
-    verdict_at: pipeline/jobs/ep2-b11-crf10-0819.yaml verdict / is_show_content_why
+    verdict: pipeline/jobs/ep2-b11-crf10-0819.yaml verdict / is_show_content_why
     detail: >-
       Blocked on guard B turning his face to camera in a backs-turned beat —
       measured, not a codec problem. The crf-10 attempt produced the bigger
@@ -310,13 +345,13 @@ beats:
     take: 12-related-b12-tightB-untrimmed.mp4
     sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       No spec verdict block. The beat's RECORD says SHIP WITH FAULT NAMED: the
       geometry lever worked (exactly two oval leaves on one stem against sky at
       both seeds, after two failures of counting in words) and the recorded
       shipping fault is that the colour shifts warm-to-cool across the first
       second.
-    verdict_at: review/ep2-picks/done-definitions.yaml beats.'12' (pick, shipping_fault, trim_0815)
+    verdict: review/ep2-picks/done-definitions.yaml beats.'12' (pick, shipping_fault, trim_0815)
     detail: >-
       ONE OF THE FOUR NEVER-JUDGED, and the beat with work in flight that did
       not land in time: its motion job was fixed tonight to point at a published
@@ -343,13 +378,13 @@ beats:
     take: 13-the-shade-b13-refire-0814.mp4
     sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       "THE END STATE PASSES AND THE CLIP CONTRADICTS A FOUNDER RULING TO REACH
       IT." Scored on the end state as done_when demands, two of three terms are
       met — he ends folded small with knees drawn up at the base of the trunk.
       The third is not: it grows a whole mature forked tree and he climbs it,
       where the founder ruled the sapling is tiny.
-    verdict_at: pipeline/jobs/ep2-b13-refire-0814.yaml verdict / verdict_contradicts_a_founder_ruling
+    verdict: pipeline/jobs/ep2-b13-refire-0814.yaml verdict / verdict_contradicts_a_founder_ruling
     detail: >-
       FIRST verdict, 2026-08-19. Best-available with the contradiction named.
       One of the three beats this sweep put behind the same card — see
@@ -360,8 +395,8 @@ beats:
     take: 14-the-defense-b14-macplate-r1s1-0818.mp4
     sha256: 1529920cd6ea204bf4b1d1098ed5237aadc62fcbae36ab3a0a96f906d1c2e253
     why: carry-forward
-    verdict: FAIL on M2 and M3, and still the beat's best footage — which is exactly what best-available means.
-    verdict_at: pipeline/jobs/ep2-b14-mac-motion-0818.yaml
+    verdict_quoted: FAIL on M2 and M3, and still the beat's best footage — which is exactly what best-available means.
+    verdict: pipeline/jobs/ep2-b14-mac-motion-0818.yaml
     detail: >-
       PARKED by steward ruling until the slates close. Three independent
       measurements now say the remaining gap is taste and not mechanism: r8's
@@ -372,8 +407,8 @@ beats:
     slug: GOOD LISTENER
     take: null
     why: slate
-    verdict: NO FOOTAGE. No ep2-b15 motion job dated 0817 or later that any verdict lets into a cut.
-    verdict_at: pipeline/plate_scratch.py REVS[(15,2)] verdict; pipeline/work-ladder-0819.md
+    verdict_quoted: NO FOOTAGE. No ep2-b15 motion job dated 0817 or later that any verdict lets into a cut.
+    verdict: pipeline/plate_scratch.py REVS[(15,2)] verdict; pipeline/work-ladder-0819.md
     detail: >-
       Unchanged from 0819b, and it is the ONLY slate in this cut where nothing
       whatever exists to consider. Unblocked twice today — §6 came off it and
@@ -398,14 +433,14 @@ beats:
     take: null
     why: slate
     replaces: 16-why-b16-anim-0814.mp4 (sha dcdfd26e483cb82c1f8ad92c3035da478a9bbe4a93cb907e24b6599f77192303)
-    verdict: >-
+    verdict_quoted: >-
       FAIL. "THIS FILE IS FOOTAGE THE FOUNDER RULED NOT SHIPPABLE, AND IT HAS
       SHIPPED IN FOUR CUTS ASSEMBLED AFTER HE RULED." Three of three done_when
       clauses are MET and the beat still fails, because the object the ruling
       rejected is not a detail in the corner — from f010 to f096 a nine-to-
       eleven-lobed palmate leaf fills the entire frame. The rejected thing IS
       the picture, for 87 of 97 frames.
-    verdict_at: pipeline/jobs/ep2-b16-anim-0814.yaml verdict / verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg / verdict_status_contested_against_the_ledgers_own_definitions
+    verdict: pipeline/jobs/ep2-b16-anim-0814.yaml verdict / verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg / verdict_status_contested_against_the_ledgers_own_definitions
     detail: >-
       THE ONE JUDGEMENT THIS ASSEMBLY TOOK — full reasoning, the ruling verbatim,
       what it costs and the one-line reversal are in
@@ -427,8 +462,8 @@ beats:
     take: 17-goodbye-b17-navy-crf10-0819.mp4
     sha256: 9f2023314e55e5b3376c66442bdfcc7c49708fa7752ee0e7a2045751a33c753a
     why: carry-forward
-    verdict: PASS on all five clauses — S1, S2, S3, P1 and P2. Naming the colour held the colour; the cloak is navy and stays navy.
-    verdict_at: pipeline/jobs/ep2-b17-navy-crf10-0819.yaml verdict_this_job / verdict_this_job_measured / pick
+    verdict_quoted: PASS on all five clauses — S1, S2, S3, P1 and P2. Naming the colour held the colour; the cloak is navy and stays navy.
+    verdict: pipeline/jobs/ep2-b17-navy-crf10-0819.yaml verdict_this_job / verdict_this_job_measured / pick
     detail: >-
       New in 0819b, unchanged here. TWO HONEST COSTS NO CLAUSE COVERS, carried
       forward verbatim: P2 passes on a THIN margin where its parent passed
@@ -439,8 +474,8 @@ beats:
     take: 18-the-decision-b18-tremble-s20260871.mp4
     sha256: d950537a89dfd33a4fdd3ed786590ff7b19a4ccea11d801626d472a5df9ac6cc
     why: carry-forward
-    verdict: PASS — motion in all four quarters, zero specular pumping; the named pick of three seeds (1 pass, 1 strobe, 1 decay).
-    verdict_at: pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml verdict
+    verdict_quoted: PASS — motion in all four quarters, zero specular pumping; the named pick of three seeds (1 pass, 1 strobe, 1 decay).
+    verdict: pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml verdict
     detail: >-
       Unchanged on purpose, for the second cut running. Offered the crf-10
       upgrade and REFUSED it on measurement: interframe median 0.570 against
@@ -454,10 +489,10 @@ beats:
     sha256: 0fd9118cbe192278bc8ed6929fdb647dc02dd798186681c1d81acb5bdfce2eed
     why: new
     replaces: slate (every previous cut this episode has had)
-    verdict: >-
+    verdict_quoted: >-
       "8 of 8, plus B5b. BAR: PASS -- every clause." Eight clauses written
       before the first line of the tool and not edited afterwards.
-    verdict_at: farm-out/ep2-b19-dropcomp-0819/19-the-drop-dropcomp-0819.yaml bar_pre_registered_before_building / score / measured
+    verdict: farm-out/ep2-b19-dropcomp-0819/19-the-drop-dropcomp-0819.yaml bar_pre_registered_before_building / score / measured
     status_in_this_cut: >-
       BEST-AVAILABLE ON A STEWARD RULING, NOT A PICK. The clip's own record is
       explicit: "NO. No plate_ack, no leaf, no lineage entry, nothing in any
@@ -533,11 +568,11 @@ beats:
     take: 20-evidence-b20-shape-headtrim.mp4
     sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       NO VERDICT YET on the beat, and the recorded pick carries TWO faults this
       beat's own done_when names as disqualifying. In the cut as best-available
       with both named, not as a pass.
-    verdict_at: review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
+    verdict: review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
     detail: >-
       One of the four never-judged. (1) THE BRANCH IS THE WRONG TREE — a thick
       gnarled MATURE-TREE limb enters from the top corner where done_when needs
@@ -559,12 +594,12 @@ beats:
     take: 21-the-answer-b21-daylight-0814.mp4
     sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
     why: carry-forward
-    verdict: >-
+    verdict_quoted: >-
       "THE ONLY BEAT OF THE EIGHT WHOSE DEFINITION IS FULLY MET — ALL FOUR
       CLAUSES, AND THE HARD ONE IS MEASURED." The leaf tilts monotonically over
       ~90 frames in one direction with no oscillation and no reversal, which is
       what makes it read deliberate rather than as wind, AND IT STOPS.
-    verdict_at: pipeline/jobs/ep2-b21-daylight-0814.yaml verdict / verdict_clauses / verdict_measured / verdict_the_one_open_question_and_it_is_R4
+    verdict: pipeline/jobs/ep2-b21-daylight-0814.yaml verdict / verdict_clauses / verdict_measured / verdict_the_one_open_question_and_it_is_R4
     detail: >-
       FIRST verdict, 2026-08-19, and it is a PROMOTION in status: this row was
       `best-available, never judged` in every previous cut and is now one of six
