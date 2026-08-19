@@ -161,6 +161,13 @@ SITE_INPUTS=(
   # is coloured, which build_sim's ETA bars read too. Change it and the page's
   # pictures change with no other file touched, exactly like site_theme.py.
   pipeline/charts.py
+  # the per-beat receipts behind /status's episode strip: which take is in the
+  # cut, its sha256 recomputed at build time, the verdict quoted out of its job
+  # spec, and the mid-frame beside it. build_sim imports it at column 0, so this
+  # would have been demanded anyway — listed with a reason because change it and
+  # twenty-one folds on the founder's own progress panel change with no other
+  # file touched, which is the same argument site_theme.py and charts.py carry.
+  pipeline/proof_receipts.py
   pipeline/licence_gate.py
   # every github.com / raw.githubusercontent link the site emits is built from
   # the slug this resolves. It is a build input in the strictest sense: change

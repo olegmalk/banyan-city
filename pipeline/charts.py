@@ -171,12 +171,16 @@ def _counts(beats: list, total: int) -> dict:
     return out
 
 
-def _beat_title(ep: dict, n: int, css: str, note: str) -> str:
+def _beat_title(ep: dict, n: int, css: str, note: str, extra: str = "") -> str:
     """The tooltip: which beat, what state, and the reason on file for it.
 
     The note is the same sentence the states file carries, trimmed — it is the
     most useful string in this whole picture and the only place on the page a
     reader can get a per-beat "why" without opening a yaml on GitHub.
+
+    `extra` is the caller's per-beat receipt line (the take's filename and the
+    head of its sha256) and it goes LAST, unclamped, because the whole value of
+    it is being the exact string a reader can check the leaf against.
     """
     words = STATE_LABEL.get(css, "no state on file")
     t = f'Episode {ep.get("number")} · beat {n:02d} — {words}'
@@ -185,10 +189,14 @@ def _beat_title(ep: dict, n: int, css: str, note: str) -> str:
         if len(note) > 150:
             note = note[:150].rsplit(" ", 1)[0] + "…"
         t += f'\n{note}'
+    extra = " ".join(str(extra or "").split())
+    if extra:
+        t += f'\n{extra}'
     return t
 
 
-def _sapling_canopy(ep: dict, cx: float, cy: float, side: int, board: str) -> tuple:
+def _sapling_canopy(ep: dict, cx: float, cy: float, side: int, board: str,
+                    links: dict = None) -> tuple:
     """One episode's leaves, plus the geometry the branch has to reach.
 
     Returns (svg, anchor_x, anchor_y, width, height). The anchor is the point on
@@ -230,8 +238,16 @@ def _sapling_canopy(ep: dict, cx: float, cy: float, side: int, board: str) -> tu
             # two builds of the same data produce byte-identical HTML and a
             # diff of the page is a diff of the facts.
             tilt = -26 + ((i * 37) % 53)
-            href = f'{board}#beat-{n:02d}' if (board and n) else board
-            title = _beat_title(ep, n, css, note)
+            # A LEAF THAT IS A RENDERED TAKE OPENS THAT TAKE. `links` is the
+            # caller's per-beat receipt map (build_sim.leaf_links) and it only
+            # ever holds beats whose artifact is a real published file, so a
+            # slate keeps the shot-board link rather than being pointed at a
+            # 404. Absent `links`, every leaf behaves exactly as it always has —
+            # this module stays a renderer and decides no destinations of its own.
+            got = (links or {}).get((int(ep.get("number") or 0), n)) or {}
+            href = (got.get("href")
+                    or (f'{board}#beat-{n:02d}' if (board and n) else board))
+            title = _beat_title(ep, n, css, note, got.get("note", ""))
             # AN INVISIBLE HIT RECT OVER THE WHOLE CELL. Measured on a 320px
             # phone the leaf itself is 17 × 7 CSS pixels — a fine mark and a
             # hopeless finger target. The rect takes the full cell, which
@@ -259,7 +275,7 @@ def _sapling_canopy(ep: dict, cx: float, cy: float, side: int, board: str) -> tu
     return "".join(marks), anchor_x, cy, w, h
 
 
-def sapling_svg(eps: list, boards: dict) -> tuple:
+def sapling_svg(eps: list, boards: dict, links: dict = None) -> tuple:
     """The whole tree. Returns (svg, per-episode summary rows).
 
     `eps` is `episode_eta.read_progress()` — the same rows the ETA cards use,
@@ -299,7 +315,7 @@ def sapling_svg(eps: list, boards: dict) -> tuple:
         cy = ground - 44.0 - TIER_H * i
         c_cx = cx + side * (gap + half)
         svg, ax, ay, w, h = _sapling_canopy(ep, c_cx, cy, side, boards.get(
-            int(ep.get("number") or 0), ""))
+            int(ep.get("number") or 0), ""), links)
         canopies.append(svg)
         # The limb: out of the trunk and up into the foliage. One quadratic —
         # its control point below the canopy and out from the trunk is what
@@ -392,13 +408,13 @@ def _sapling_table(summary: list) -> str:
             '</div></details>')
 
 
-def sapling_html(eps: list, boards: dict) -> str:
+def sapling_html(eps: list, boards: dict, links: dict = None) -> str:
     """The tree, its key, its caption and its table. "" when there is nothing.
 
     Fails to nothing, like the ETA section it sits with: a picture of a series
     with no beats on file would be a picture of our own broken read.
     """
-    svg, summary = sapling_svg(eps, boards)
+    svg, summary = sapling_svg(eps, boards, links)
     if not svg:
         return ""
     total = sum(s["total"] for s in summary)
@@ -409,6 +425,18 @@ def sapling_html(eps: list, boards: dict) -> str:
                f'take{"s" if looking != 1 else ""} sitting in front of him), '
                'green is the card’s to render. Hover any leaf for that beat’s '
                'state and the reason on file; click it to open the beat.')
+    # WHAT A CLICK ACTUALLY DOES, said only when it is true of some leaf. The
+    # sentence above is the standing behaviour and stays; this adds the receipt
+    # the caller supplied, and the count is measured off `links` so the caption
+    # cannot claim playable leaves a build did not draw.
+    if links:
+        playable = len(links)
+        caption += (f' <b>{playable} of them open the actual clip</b> — the mp4 '
+                    'in the newest cut, with its filename and the head of its '
+                    'sha256 in the tooltip, so the leaf and the receipt further '
+                    'down the page are checkably the same object. A beat with no '
+                    'footage keeps its shot board, because a slate has no clip '
+                    'to open.')
     # A HOLLOW LEAF IS NOT A SETBACK AND THE PAGE HAS TO SAY WHY. Twelve of
     # these went hollow the day the character gate was found already open: their
     # rows still read `blocked-decision` from a measurement taken ninety minutes

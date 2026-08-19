@@ -316,6 +316,12 @@ def receipts(cut: dict, repo: Path = REPO, ledger: dict | None = None) -> list:
                 else:
                     rec["frame"] = f"review/{cut_dir}/{FRAMES_DIR}/{fname}"
                     rec["frame_at"] = fr.get("at_seconds")
+                    # Shipped as width/height attributes so 18 thumbnails cannot
+                    # reflow the strip as they load. 0 when the manifest predates
+                    # the pair, in which case the page omits the attributes
+                    # rather than guessing an aspect ratio.
+                    rec["frame_w"] = int(fr.get("width") or 0)
+                    rec["frame_h"] = int(fr.get("height") or 0)
             else:
                 rec["frame_why"] = "no frame committed for this take"
         spec = spec_path(r.get("verdict"))
@@ -582,6 +588,17 @@ def main(argv: list) -> int:
         got = extract_frames(repo, cut)
         if got.get("ok"):
             print(f"✓ {got['made']} frames + {FRAMES_FILE} → {got['dir']}")
+            # THE STEP THAT IS EASY TO MISS AND SILENTLY BREAKS THE PAGE.
+            # `.gitignore` carries `review/**/*.jpg` on purpose (render media
+            # pulled off the farm boxes must not ride in on a `git add -A`), so
+            # these frames need `-f` exactly like every mp4 in the cut beside
+            # them. Without it the manifest commits, the pictures do not, and
+            # /status ships eighteen broken images — which is how this was found:
+            # qa_local's link sweep failed the build, before anyone saw the page.
+            print(f"  next: git add -f review/{cut['dir']}/{FRAMES_DIR}/*.jpg "
+                  f"review/{cut['dir']}/{FRAMES_DIR}/{FRAMES_FILE}\n"
+                  f"  (review/**/*.jpg is gitignored — an unforced add commits "
+                  f"the manifest and none of the pictures)")
         else:
             print(f"! frames not written — {got.get('why')}")
 

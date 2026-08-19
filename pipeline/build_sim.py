@@ -102,6 +102,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 import build_commit  # noqa: E402  one source for "which commit built this"
 import charts  # noqa: E402  the page's pictures, and the one beat-state palette
+import proof_receipts  # noqa: E402  the bytes behind every per-beat claim
 import repo_slug  # noqa: E402  one source for "which repo is this"
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
@@ -2173,6 +2174,10 @@ def _eta_card(r: dict, approx) -> str:
 # our own bug, and this one sits directly under a heading about progress.
 
 CUT_DIR_GLOB = "ep2-demo-*"
+# Which episode the cut directories above belong to. One definition, because the
+# strip, the receipts and the tree's leaf links all have to agree about it and
+# three separate `2`s is how they eventually would not.
+CUT_EPISODE = 2
 
 
 def read_latest_cut(repo=REPO, glob=CUT_DIR_GLOB) -> dict:
@@ -2265,7 +2270,254 @@ def _cut_state_rows(cut: dict, prog: list, number: int = 2) -> list:
     return out
 
 
-def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
+# =============================================================================
+#  THE RECEIPTS — the founder's ask of 2026-08-19, in one sentence of his own:
+#  "since you are an ai, you can hallucinate and say something completely wrong
+#  with complete confidence, so i need concrete proof we are making progress.
+#  banyan.city/status isn't shaped very well to show that."
+#
+#  So the rule for this whole block: EVERY CLAIM IS A LINK TO THE BYTES BEHIND
+#  IT. Not a sentence about a render — the frame out of the render, the render
+#  itself at a URL, its sha256 recomputed while this page was being built, and
+#  the verdict quoted out of the job spec with a link to that file on GitHub. A
+#  reader who clicks a link that 404s, or runs `shasum -a 256` and gets a
+#  different answer, has caught the page lying. That is the point: a claim that
+#  cannot be falsified is not evidence, it is just confident prose, which is
+#  exactly what he said he cannot use.
+#
+#  It goes INSIDE the strip that already exists rather than on a page of its own
+#  (his second word on it, the same day: "do you really need a different page for
+#  every small thing? cant you build it into /status?"). The strip's fact lines
+#  and its table are untouched; each beat gains a fold under it holding its
+#  receipt, and the caption gains the falsification sentence.
+# =============================================================================
+
+# `<img>` on a per-beat fold: the frame is decoration until the fold is open, so
+# it is lazy and it never blocks the page. Committed at this width by
+# proof_receipts.py --frames; the attribute pair comes off the manifest so 18
+# thumbnails cannot reflow the strip as they arrive on a phone.
+RECEIPT_THUMB_W = 54
+
+
+def _sha_words(rec: dict) -> str:
+    """The sha line, in the words the check actually earns and no stronger.
+
+    Five outcomes and each one is a different sentence. "match" is the only one
+    that is evidence; the other four are all, in their own way, the page telling
+    on itself, which is worth more than a green tick it has not earned.
+    """
+    short = (rec.get("sha") or "")[:12]
+    check = rec.get("sha_check")
+    path = rec.get("artifact") or ""
+    how = (f' Check it yourself: <code>shasum -a 256 {_e(path)}</code>.'
+           if path else "")
+    if check == "match":
+        return (f'<code>{_e(short)}…</code> — <b>recomputed at build time off the '
+                f'bytes in this checkout and equal to the hash the cut\'s own '
+                f'<code>ingredients:</code> block recorded when it was muxed.</b>'
+                + how)
+    if check == "differs":
+        return (f'<b class="bad">THE BYTES DO NOT MATCH THE MANIFEST.</b> The cut '
+                f'records <code>{_e(short)}…</code>; this checkout hashes '
+                f'<code>{_e((rec.get("sha_recomputed") or "")[:12])}…</code>. One '
+                f'of the two is wrong and this row is not evidence of anything '
+                f'until someone says which.' + how)
+    if check == "missing":
+        return ('<b class="bad">The take is named by the manifest and is not in '
+                'this checkout</b>, so nothing could be hashed. The link above '
+                'will 404 — that is the defect, not a rendering fault.')
+    if check == "unrecorded":
+        return (f'<code>{_e((rec.get("sha_recomputed") or "")[:12])}…</code>, '
+                'computed here. The assembly recorded no hash for this beat, so '
+                'there is nothing to compare it against — an unrecorded '
+                'ingredient, which is neither a match nor a mismatch.')
+    return ('No hash on file and none computed — this row proves nothing about '
+            'its bytes and says so.')
+
+
+def _receipt_html(rec: dict, css: str, state_label: str) -> str:
+    """One beat's fold: the frame, the file, the hash, the verdict, the date."""
+    n, slug = rec["n"], rec.get("slug") or "?"
+    call = rec.get("call") or ""
+    chip = ""
+    if call:
+        chip = (f'<span class="rcall {"ok" if call == "PASS" else "bad"}">'
+                f'{_e(call)}</span>')
+    elif not rec.get("spec"):
+        # NOT A NEUTRAL BLANK. Eight beats of this episode have never been judged
+        # against a bar, and the hollow chip is the same mark the tree uses for a
+        # beat nobody has scored — missing evidence, drawn as missing.
+        chip = '<span class="rcall none">no verdict</span>'
+    if rec.get("frame"):
+        fr = rec["frame"]
+        w = int(rec.get("frame_w") or 0) or RECEIPT_THUMB_W
+        h = int(rec.get("frame_h") or 0)
+        dims = f' width="{w}" height="{h}"' if h else ""
+        thumb = (f'<img class="rth" src="{_e(fr)}"{dims} loading="lazy" '
+                 f'decoding="async" alt="A frame from the middle of beat '
+                 f'{n:02d}’s take in the newest cut">')
+    else:
+        thumb = (f'<span class="rth none" aria-hidden="true">'
+                 f'{"slate" if rec.get("slate") else "&mdash;"}</span>')
+
+    rows = []
+    if rec.get("artifact"):
+        size = bytes_words(int(rec.get("bytes") or 0)) if rec.get("bytes") else ""
+        rows.append(
+            ('<dt>the file in the cut</dt><dd>'
+             f'<a href="{_e(rec["artifact"])}">{_e(rec["take"])}</a>'
+             + (f' &middot; {_e(size)}' if size else "")
+             + (f' &middot; <a href="{_e(rec["artifact_gh"])}">the same bytes on '
+                'GitHub</a>' if rec.get("artifact_gh") else "")
+             + f' &middot; in the cut because: {_e(rec.get("why") or "unstated")}'
+             '</dd>'))
+        rows.append(f'<dt>sha256</dt><dd>{_sha_words(rec)}</dd>')
+    else:
+        rows.append(
+            '<dt>the file in the cut</dt><dd><b>There is none.</b> render_t3 '
+            'draws a title card in this slot and the voice take plays over it. '
+            'Shown as a slate here because it is one.</dd>')
+    if rec.get("frame_why"):
+        rows.append(f'<dt>frame</dt><dd>{_e(rec["frame_why"])}</dd>')
+    verdicts = rec.get("verdicts") or []
+    if verdicts:
+        quoted = "".join(
+            f'<p class="rq"><span class="rk">{_e(k)}:</span> {_e(text)}</p>'
+            for k, text in verdicts[:4])
+        more = (f'<p class="rq more">{len(verdicts) - 4} further '
+                f'<code>verdict*</code> key'
+                f'{"s" if len(verdicts) - 4 != 1 else ""} in the same file.</p>'
+                if len(verdicts) > 4 else "")
+        rows.append(
+            '<dt>the verdict that licensed it</dt><dd>'
+            f'{quoted}{more}'
+            f'<p class="rsrc">Quoted verbatim from <a href="{_e(rec["spec_gh"])}">'
+            f'{_e(rec["spec"])}</a> &mdash; the bar in that file was written '
+            'before the pixels existed, and this page does not summarise it.</p>'
+            '</dd>')
+    elif rec.get("spec"):
+        rows.append(
+            '<dt>the verdict that licensed it</dt><dd>The cut cites '
+            f'<a href="{_e(rec["spec_gh"])}">{_e(rec["spec"])}</a> and that file '
+            'carries no <code>verdict*:</code> string this build could read. '
+            'Printed as unread rather than guessed at.</dd>')
+    else:
+        rows.append(
+            '<dt>the verdict that licensed it</dt><dd><b>None exists.</b> No job '
+            'spec anywhere answers a pre-registered bar for this file. It is in '
+            'the cut because it is the beat’s best footage, which is not the '
+            'same as having passed &mdash; riding five cuts unchanged is five '
+            'appearances, not five passes.</dd>')
+    if rec.get("landed_at"):
+        rows.append(
+            f'<dt>landed</dt><dd>{_e(rec["landed_at"])} &middot; '
+            f'<a href="{_e(rec["landed_url"])}">{_e(rec["landed_sha"])}</a> '
+            f'&mdash; {_e(rec.get("landed_what") or "")}.</dd>')
+    else:
+        rows.append('<dt>landed</dt><dd>Not measured. The date comes from a '
+                    'committed git measurement (see the caption) and this row is '
+                    'not in it.</dd>')
+
+    return (f'<details class="rcpt" id="e2b{n:02d}">'
+            f'<summary>{thumb}<span class="rn">{n:02d}</span>'
+            f'<span class="rs">{_e(slug)}</span>'
+            f'<span class="fk f-{css or "unk"}">{_e(state_label)}</span>'
+            f'{chip}</summary>'
+            f'<div class="rb"><dl>{"".join(rows)}</dl></div></details>')
+
+
+def leaf_links(recs: list, number: int = CUT_EPISODE) -> dict:
+    """{(episode, beat) -> {href, note}} so a leaf on the tree opens the CLIP.
+
+    The founder's second note on the receipts, 2026-08-19: the tree already links
+    every leaf, and it linked all of them to the beat's shot board — the same
+    destination whatever state the leaf was in. So a leaf that IS a rendered take
+    now opens that take: click the leaf, the mp4 plays. A leaf with no footage
+    keeps the board link, because a slate has no clip to open and sending him to
+    a 404 to prove a point would be worse than the state word he already had.
+
+    The tooltip gains the take's filename and the first twelve of its sha256.
+    That is not decoration either: it is what makes the leaf and the receipt
+    below it checkably the same object, and it is the only per-beat identity the
+    picture can carry without a reader opening anything.
+    """
+    out = {}
+    for r in recs or []:
+        if not r.get("artifact"):
+            continue
+        note = f'take {r["take"]}'
+        if r.get("sha"):
+            note += f' · sha {r["sha"][:12]}…'
+        if r.get("call"):
+            note += f' · {r["call"]}'
+        out[(int(number), int(r["n"]))] = {"href": r["artifact"], "note": note}
+    return out
+
+
+def proof_ledger_line(led: dict = None) -> str:
+    """The fortnight as three deltas and one link to the raw diffs. "" when unread.
+
+    ONE LINE IN THE FOOTER AND NOT A TABLE. A table of daily counts was the first
+    shape of this and it was the wrong one twice over: it would have been the
+    fourth section on a page the founder has twice asked to simplify, and a
+    per-day breakdown invites reading a quiet Tuesday as a slow week when the
+    same fortnight also shipped six cuts.
+
+    EVERY WORD OF THE LABEL IS THE QUERY. These are counts of ADDED DIFF LINES,
+    not of things that are true now: a `verdict*:` line added and later edited
+    counts once here and the edit counts again, and a `resolved:` block may carry
+    a steward's answer as easily as the founder's. So the line says "recorded"
+    and "added", names the file each count came from, and hands over the compare
+    range so a reader can disagree with the count by reading the diffs. A number
+    whose definition is hidden is the kind of confident claim this whole feature
+    exists to replace.
+    """
+    led = proof_receipts.read_ledger() if led is None else led
+    v = led.get("verdict_lines_added")
+    c = led.get("cuts_shipped")
+    r = led.get("resolved_blocks_added")
+    if v is None or c is None or r is None:
+        return ""
+    base, head = str(led.get("range_base") or ""), str(led.get("head") or "")
+    days = int(led.get("window_days") or 14)
+    link = (f' &mdash; <a href="{_e(proof_receipts.compare_url(base, head))}">audit '
+            f'the {int(led.get("commits_in_window") or 0)} commits behind these '
+            'numbers &rarr;</a>' if base and head else "")
+    floor = ("" if led.get("covers_window") else
+             ' These are a FLOOR, not a count: the history they were taken from '
+             'does not reach past the window.')
+    return (f'<p class="pledger">Last {days} days, computed from this '
+            f'repository’s own history by <code>{_e(proof_receipts.LEDGER_CMD)}'
+            f'</code> and committed as '
+            f'<code>pipeline/measured/proof-ledger.json</code>: <b>{v}</b> '
+            f'<code>verdict*:</code> lines recorded under '
+            f'<code>pipeline/jobs/</code>, <b>{c}</b> cut'
+            f'{"s" if c != 1 else ""} assembled, <b>{r}</b> '
+            f'<code>resolved:</code> block{"s" if r != 1 else ""} added to the '
+            f'review board. Counts of added diff lines, not of what is true '
+            f'today.{floor}{link}</p>')
+
+
+def receipts_html(rows: list, recs: list) -> str:
+    """The per-beat folds, in beat order. "" when there are no receipts to show.
+
+    Fails to nothing on purpose, like every other section here: a receipt list
+    with no receipts in it would be a picture of our own failed read dressed up
+    as an episode with no evidence behind it.
+    """
+    by_n = {r["n"]: r for r in recs}
+    out = []
+    for r in rows:
+        rec = by_n.get(r["n"])
+        if not rec:
+            continue
+        out.append(_receipt_html(
+            rec, r.get("css") or "",
+            charts.STATE_LABEL.get(r.get("css") or "", "no state on file")))
+    return f'<div class="rcpts">{"".join(out)}</div>' if out else ""
+
+
+def ep2_now_html(cut: dict, prog: list, number: int = 2, recs: list = None) -> str:
     """The strip: one line per fact, every one of them computed. "" when unread.
 
     ONE LINE PER FACT AND NO PARAGRAPHS. The page's own history is the argument
@@ -2296,6 +2548,20 @@ def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
     look = {b["n"] for b in looking}
     swap = [r for r in slates if r["n"] in look]
     url = f"review/{cut['dir']}"
+    # THE RECEIPTS. Read here rather than passed in from build(), for the same
+    # reason the cut manifest is: one read, in the one function that renders it.
+    # `recs` is injectable so a test can hand in a fixture without a checkout.
+    if recs is None:
+        try:
+            recs = proof_receipts.receipts(cut)
+        except Exception:
+            # Fails to nothing, exactly like the tree above. A receipt list built
+            # from a read that half-failed is worse than no receipts: it would
+            # publish "no verdict block exists" over beats that have one.
+            recs = []
+    tally = proof_receipts.sha_tally(recs) if recs else {}
+    judged = [r for r in recs if r.get("verdicts")]
+    unjudged = [r for r in recs if not r.get("slate") and not r.get("spec")]
 
     def beats(rs, sep=", "):
         return sep.join("%02d %s" % (r["n"], r["slug"] or "?") for r in rs)
@@ -2352,6 +2618,32 @@ def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
         f'<li class="f-done"><b>'
         f'{len([b for b in ep["beats"] if b["state"] == "done"])} beats passed'
         '.</b></li>')
+    # THE TWO LINES THE RECEIPTS ADD, and they are the two he asked for: one that
+    # can be falsified with a shell command, and one that admits how much of the
+    # episode has never been judged at all. Both are silent when there are no
+    # receipts to count — a build that could not read them says nothing here
+    # rather than printing a zero it cannot back up.
+    if tally.get("takes"):
+        clean = tally.get("match", 0)
+        bad = tally["takes"] - clean
+        facts.append(
+            f'<li class="f-done"><b>{clean} of {tally["takes"]} takes in that cut '
+            f'hash exactly as the cut says they do</b> &mdash; every one '
+            f're-hashed while this page was built, against the sha256 '
+            f'<code>render_t3</code> recorded when it muxed them'
+            + (f'. <b class="bad">{bad} did not</b>, and the beat says which '
+               'below' if bad else '. Run <code>shasum -a 256</code> on any of '
+               'them and you can catch this page lying')
+            + '.</li>')
+    if recs:
+        facts.append(
+            f'<li class="f-swap"><b>{len(judged)} beat'
+            f'{"s" if len(judged) != 1 else ""} carr'
+            f'{"y" if len(judged) != 1 else "ies"} a written verdict against a bar '
+            f'set before the pixels existed</b>; <b>{len(unjudged)}</b> hold '
+            'footage no bar has ever been answered for. Both are per-beat links '
+            'below — the second number is the honest one, and it is the quiet '
+            'half of the episode.</li>')
 
     # The disagreement guard. Silent when the manifest's own totals match the
     # rows under them, which is the common case and says nothing worth a line.
@@ -2373,6 +2665,15 @@ def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
                  + _e("; ".join(mismatch))
                  + '. The rows are what is counted here; its header totals are '
                  'not, and the difference is printed rather than hidden.')
+    # THE FALSIFICATION SENTENCE, one line, in the caption where the reader is
+    # already being told where the numbers came from. His ask was for proof he
+    # can check rather than prose he has to trust, and the only honest form that
+    # takes is an invitation to catch it out.
+    if recs:
+        note += (' <b>Every claim in the folds below is a link to the bytes '
+                 'behind it: if one 404s or a sha does not match, this page is '
+                 'lying and that is a bug worth filing.</b> Nothing in them is '
+                 'hand-written.')
 
     head = "".join('<tr><th scope="row">%02d %s</th>' % (r["n"], _e(r["slug"]))
                    + f'<td>{_e(r["take"]) if r["take"] else "&mdash; slate"}</td>'
@@ -2380,16 +2681,43 @@ def ep2_now_html(cut: dict, prog: list, number: int = 2) -> str:
                    f'<td><span class="fk f-{r["css"] or "unk"}">'
                    f'{_e(charts.STATE_LABEL.get(r["css"], "no state on file"))}'
                    '</span></td></tr>' for r in rows)
-    table = ('<details class="drawer"><summary>Every beat of episode 2 — what is '
-             'in the cut, and where it stands</summary><div class="drawer-body">'
+    # THE RECEIPTS GO IN THE DRAWER THAT WAS ALREADY THERE, above the table, and
+    # the table stays exactly as it was. The table is the scan view — twenty-one
+    # rows, one screen, nothing to open — and it is what a screen reader and a
+    # reader who wants only the shape of it get. The folds are the evidence under
+    # each row. Neither is a substitute for the other, which is why this is one
+    # drawer with two views and not two sections.
+    rcpt = receipts_html(rows, recs)
+    stamp = ""
+    if recs:
+        led = proof_receipts.read_ledger()
+        when = str(led.get("generated") or "")
+        stamp = ('<p class="cnote">The frame beside each beat is a mid-frame of '
+                 'that take, cut by <code>ffmpeg</code> and committed with the '
+                 'sha256 of the clip it came out of, so a swapped take cannot '
+                 'keep last week’s picture — the canonical host has no '
+                 '<code>ffmpeg</code>, which is why they are committed rather '
+                 'than extracted here. The dates come from '
+                 '<code>pipeline/measured/proof-ledger.json</code>'
+                 + (f', measured {_e(when)}' if when else "")
+                 + ' by <code>' + _e(proof_receipts.LEDGER_CMD) + '</code> off '
+                 'this repository’s own history; a deploy checkout is one commit '
+                 'deep and could not compute them. Run it yourself and diff the '
+                 'file.</p>')
+    table = ('<details class="drawer"><summary>Every beat of episode 2 — the take '
+             'in the cut, the bytes behind it, and the verdict that let it in'
+             '</summary><div class="drawer-body">'
+             f'{rcpt}{stamp}'
              '<div class="scroll"><table class="ctab"><thead><tr>'
              '<th scope="col">Beat</th><th scope="col">In the newest cut</th>'
              '<th scope="col">Why</th><th scope="col">State</th></tr></thead>'
              f'<tbody>{head}</tbody></table></div>'
-             '<p class="cnote">Left two columns off the cut manifest, right one '
-             'off the measured states. A beat can hold a passing take and still '
-             'be a slate in the cut: the take has to be assembled in, and that '
-             'is a separate pass.</p></div></details>')
+             '<p class="cnote">The same twenty-one beats as a table, for a reader '
+             'who wants the shape without opening anything. Left two columns off '
+             'the cut manifest, right one off the measured states. A beat can '
+             'hold a passing take and still be a slate in the cut: the take has '
+             'to be assembled in, and that is a separate pass.</p>'
+             '</div></details>')
 
     return (f'<div class="ep2now" role="group" aria-label="Episode {number} right '
             f'now: {len(footage)} of {total} beats have footage in the newest '
@@ -4133,6 +4461,54 @@ STRIP_CSS = """
 .ep2now .e2l .f-swap::before { background: transparent;
   box-shadow: inset 0 0 0 1px var(--sap); }
 .ep2now .cnote { text-align: left; }
+/* ---- THE RECEIPTS: one fold per beat, inside the drawer that already held the
+   table. Mobile-first, on the review pages' widths — he reads this on a phone,
+   so the summary row is a 54px frame plus two short strings plus two chips, and
+   it wraps rather than scrolls. AMBER IS THE ALARM HERE and that is the colour
+   law rather than an exception to it: a sha that does not match, a file that is
+   missing, a beat nobody has judged are all things needing a person, and this
+   page's amber has meant "the author's clock" since the day it was drawn. There
+   is no red token in site_theme.py and inventing one as a hex literal in this
+   block would be a colour that does not know which theme it is in. */
+.rcpts { margin: .2rem 0 .8rem; }
+.rcpt { border-top: 1px solid var(--line-soft); }
+.rcpt:first-child { border-top: 0; }
+.rcpt > summary { cursor: pointer; list-style: none; display: flex;
+  align-items: center; flex-wrap: wrap; gap: .45rem; padding: .4rem 0; }
+.rcpt > summary::-webkit-details-marker { display: none; }
+.rcpt > summary::after { content: "▸"; margin-left: auto; color: var(--faint);
+  font-size: .7rem; }
+.rcpt[open] > summary::after { content: "▾"; }
+.rcpt > summary:hover .rs { color: var(--ink); }
+.rcpt .rth { width: 54px; height: auto; flex: none; border-radius: 4px;
+  background: var(--code-bg); display: block; }
+.rcpt .rth.none { width: 54px; height: 30px; display: inline-flex;
+  align-items: center; justify-content: center; border-radius: 4px;
+  border: 1px dashed var(--line); color: var(--faint);
+  font: 500 .62rem/1 var(--mono); }
+.rcpt .rn { font: 700 .74rem/1 var(--mono); color: var(--faint); }
+.rcpt .rs { font: 600 .8rem/1.3 var(--sans, inherit); color: var(--muted); }
+.rcpt .fk { font: 500 .68rem/1.4 var(--mono); color: var(--faint); }
+.rcall { font: 700 .64rem/1 var(--mono); letter-spacing: .05em;
+  padding: .2rem .34rem; border-radius: 3px; border: 1px solid var(--line); }
+.rcall.ok { color: var(--leaf); border-color: var(--leaf); }
+.rcall.bad { color: var(--sap); border-color: var(--sap); }
+.rcall.none { color: var(--faint); }
+.rcpt .rb { padding: .1rem 0 .7rem; }
+.rcpt dl { margin: 0; }
+.rcpt dt { font: 600 .66rem/1.5 var(--mono); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--faint); margin: .5rem 0 .15rem; }
+.rcpt dd { margin: 0; font: 400 .78rem/1.65 var(--sans, inherit);
+  color: var(--muted); overflow-wrap: anywhere; }
+.rcpt dd a { color: var(--ink); }
+.rcpt dd code { font: 400 .72rem/1.5 var(--mono); background: var(--code-bg);
+  padding: .05rem .22rem; border-radius: 3px; }
+.rcpt dd b.bad { color: var(--sap); }
+.rcpt .rq { margin: .25rem 0; padding-left: .6rem;
+  border-left: 2px solid var(--line); }
+.rcpt .rq.more { border-left-color: transparent; color: var(--faint); }
+.rcpt .rk { font: 600 .68rem/1.5 var(--mono); color: var(--faint); }
+.rcpt .rsrc { margin: .3rem 0 0; font-size: .72rem; color: var(--faint); }
 /* The same four dots inside the table view, so a reader who opened the fold to
    avoid the colours still gets the words and a reader who wants the colours
    still has them. */
@@ -4420,17 +4796,29 @@ def build(out_dir: Path):
     # strip under it — same rule as the box snapshot and the inbox above: the
     # strip's standing promise is that it cannot contradict the picture it sits
     # beneath, and two reads of one file eventually do.
+    # The cut manifest is read here and nowhere else, and the strip is "" when
+    # either half is missing rather than half-drawn off one of them.
+    # ONE read of the cut manifest and ONE read of the receipts, shared by the
+    # strip and by the tree's leaf links above it — same rule as the box snapshot
+    # and the inbox: two reads of one file eventually disagree, and a leaf
+    # pointing at a take the strip below it does not list would be exactly that.
+    cut = read_latest_cut()
+    try:
+        cut_recs = proof_receipts.receipts(cut) if cut else []
+    except Exception:
+        cut_recs = []
     try:
         import episode_eta as _eta
         progress = _eta.read_progress()
-        sapling = charts.sapling_html(progress, ep_boards)
+        sapling = charts.sapling_html(progress, ep_boards,
+                                      leaf_links(cut_recs, CUT_EPISODE))
     except Exception:
         # Fails to nothing, like the ETA section it reads with. A tree drawn
         # from a read that failed would be a picture of our own bug.
         progress, sapling = [], ""
-    # The cut manifest is read here and nowhere else, and the strip is "" when
-    # either half is missing rather than half-drawn off one of them.
-    ep2_now = ep2_now_html(read_latest_cut(), progress)
+    ep2_now = ep2_now_html(cut, progress, recs=cut_recs)
+    # The fortnight's deltas, one line, above the footer.
+    pledger = proof_ledger_line()
     done = tot["final"] == tot["total"]
     pct = round(100 * grow["done"] / grow["total"]) if grow["total"] else 0
     grove_caption = (f'Episode {hero["number"]} — '
@@ -4958,6 +5346,7 @@ show's public record.</p>
 {thread_line}
 
 <p class="legend">{data.LEGEND}</p>
+{pledger}
 <footer>This copy was built {now.strftime('%Y-%m-%d %H:%M')}Z. No claim on this page is dated
 by that stamp: every age counts from the moment its own datum was recorded, and your browser
 re-reads the machines' check-in logs and the work queue for itself while the tab is open.

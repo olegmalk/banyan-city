@@ -244,6 +244,161 @@ with tempfile.TemporaryDirectory() as td:
 check_true("the real inbox yaml is readable by this build",
            isinstance(S.review_inbox_open(), int))
 
+# ============================================================================
+#  THE RECEIPTS — the founder's ask of 2026-08-19: "since you are an ai, you can
+#  hallucinate and say something completely wrong with complete confidence, so i
+#  need concrete proof we are making progress."
+#
+#  Every one of these pins a way the receipts could go back to being prose while
+#  still rendering, which is the failure mode that matters here. A row that
+#  quietly stops printing its sha, or prints a green "match" it did not compute,
+#  or paraphrases a verdict, looks exactly like a working row on the page.
+# ============================================================================
+print("\nproof_receipts — the sha check earns its words, one outcome at a time")
+import proof_receipts as P  # noqa: E402
+
+check("a match says it was recomputed at build time",
+      "recomputed at build time" in S._sha_words(
+          {"sha": "a" * 64, "sha_recomputed": "a" * 64, "sha_check": "match",
+           "artifact": "review/x/sources/y.mp4"}), True)
+check("...and hands over the command that would falsify it",
+      "shasum -a 256 review/x/sources/y.mp4" in S._sha_words(
+          {"sha": "a" * 64, "sha_recomputed": "a" * 64, "sha_check": "match",
+           "artifact": "review/x/sources/y.mp4"}), True)
+# THE ONE THAT MATTERS. A mismatch must not be softened into a caveat: the whole
+# feature is worthless if a row can disagree with the manifest and still read as
+# evidence.
+bad = S._sha_words({"sha": "a" * 64, "sha_recomputed": "b" * 64,
+                    "sha_check": "differs", "artifact": "review/x/y.mp4"})
+check("a mismatch says the bytes do not match, in those words",
+      "THE BYTES DO NOT MATCH THE MANIFEST" in bad, True)
+check("...and refuses to be read as evidence",
+      "not evidence of anything" in bad, True)
+check("a missing file is a 404 the page predicts, not a rendering fault",
+      "will 404" in S._sha_words({"sha": "a" * 64, "sha_check": "missing"}), True)
+check("an unrecorded ingredient is neither a match nor a mismatch",
+      "neither a match nor a mismatch" in S._sha_words(
+          {"sha_recomputed": "c" * 64, "sha_check": "unrecorded"}), True)
+check("no hash at all proves nothing and says so",
+      "proves nothing" in S._sha_words({"sha_check": "absent"}), True)
+
+print("\nPASS/FAIL is read off the start of the spec's own sentence, never inferred")
+check("a sentence opening PASS is a PASS", P.call_word([("verdict", "PASS. all five")]), "PASS")
+check("a sentence opening FAIL is a FAIL",
+      P.call_word([("verdict", "FAILS ITS CENTRAL CLAUSE, and usefully")]), "FAIL")
+# The refusal is the point: a verdict that describes a result without opening
+# with the word gets no chip, because deciding what a lane's paragraph amounts to
+# is not this page's job.
+check("a verdict that opens some other way gets no chip",
+      P.call_word([("verdict", "The take is better than its parent on fidelity")]), "")
+check("no verdict at all gets no chip", P.call_word([]), "")
+
+print("\nthe receipt fold — every claim, or the honest absence of it")
+one = {"n": 7, "slug": "CONFISCATE", "take": "t.mp4", "why": "new",
+       "slate": False, "artifact": "review/c/sources/t.mp4",
+       "artifact_gh": "https://github.com/o/r/blob/main/review/c/sources/t.mp4",
+       "bytes": 364000, "sha": "f" * 64, "sha_recomputed": "f" * 64,
+       "sha_check": "match", "frame": "review/c/proof/b07.jpg",
+       "frame_w": 240, "frame_h": 436, "spec": "pipeline/jobs/j.yaml",
+       "spec_gh": "https://github.com/o/r/blob/main/pipeline/jobs/j.yaml",
+       "verdicts": [("verdict", "PASS"), ("verdict_cut", "CUT-PREFERRED because")],
+       "call": "PASS", "landed_at": "2026-08-19", "landed_sha": "abc1234",
+       "landed_url": "https://github.com/o/r/commit/abc1234",
+       "landed_what": "last commit that touched the spec"}
+h = S._receipt_html(one, "look", "waiting for your look")
+check("the fold is anchored on its own beat", 'id="e2b07"' in h, True)
+check("the artifact is a link the reader can open",
+      'href="review/c/sources/t.mp4"' in h, True)
+check("the frame ships width and height so 18 thumbs cannot reflow the strip",
+      'width="240" height="436"' in h, True)
+# EVERY verdict key, not the first: beat 07's spec answers its bar across three
+# keys and quoting one would print the word PASS and drop what passed.
+check("every verdict key the spec carries is quoted, not just the first",
+      "CUT-PREFERRED because" in h and ">verdict:</span> PASS" in h, True)
+check("...and the quote names the file it was taken from",
+      "pipeline/jobs/j.yaml" in h and "does not summarise it" in h, True)
+check("the landed date links the commit it came from",
+      "abc1234" in h and "2026-08-19" in h, True)
+
+# A beat nobody has ever judged must SAY so. Eight beats of episode 2 are in this
+# state and the temptation to render them as neutral is exactly the hallucination
+# the founder is guarding against.
+nov = S._receipt_html({**one, "verdicts": [], "call": "", "spec": "",
+                       "spec_gh": ""}, "mach", "the card’s to do")
+check("a beat with no verdict block says none exists", "<b>None exists.</b>" in nov, True)
+check("...and says five cuts is not five passes",
+      "five appearances, not five passes" in nov, True)
+check("...and carries the hollow chip rather than a neutral blank",
+      'class="rcall none"' in nov, True)
+slate = S._receipt_html({"n": 9, "slug": "THE PAUSE", "slate": True,
+                         "verdicts": [], "why": "slate"}, "gate",
+                        "waiting on a decision")
+check("a slate is shown as a slate, not as an empty take",
+      "There is none." in slate and "title card" in slate, True)
+
+print("\nthe fortnight line — a delta measurement that admits what it counted")
+led = {"verdict_lines_added": 125, "cuts_shipped": 6, "resolved_blocks_added": 84,
+       "range_base": "aaa1111", "head": "bbb2222", "window_days": 14,
+       "commits_in_window": 1446, "covers_window": True}
+line = S.proof_ledger_line(led)
+check("the three counts are printed", all(str(n) in line for n in (125, 6, 84)), True)
+check("...labelled as added diff lines and not as what is true today",
+      "not of what is true today" in line, True)
+check("...with one compare link over the raw diffs",
+      "/compare/aaa1111...bbb2222" in line, True)
+check("a history that cannot see the window says the counts are a floor",
+      "FLOOR" in S.proof_ledger_line({**led, "covers_window": False}), True)
+# Fails to nothing rather than to zeros: an unread ledger printing "0 verdicts"
+# would read as a fortnight of no work, which is the same lie in the other
+# direction.
+check("an unread ledger prints no line at all", S.proof_ledger_line({}), "")
+
+print("\nleaf_links — a leaf opens the clip, and only when there IS a clip")
+lk = S.leaf_links([one, {"n": 9, "slug": "x", "slate": True, "artifact": ""}], 2)
+check("a beat with footage gets a link", lk[(2, 7)]["href"], "review/c/sources/t.mp4")
+check("...whose tooltip names the take and the head of its sha",
+      "take t.mp4" in lk[(2, 7)]["note"] and "sha ffffffffffff" in lk[(2, 7)]["note"],
+      True)
+check("a slate is NOT linked at an mp4 that does not exist", (2, 9) in lk, False)
+# The renderer must keep working with no links at all, or every other page that
+# draws this tree changes behaviour the day this feature lands.
+import charts as _c  # noqa: E402
+plain = _c.sapling_html([{"number": 2, "title": "Two", "total_beats": 2, "beats": [
+    {"n": 1, "state": "done", "note": ""}, {"n": 2, "state": "done", "note": ""}]}],
+    {2: "b.html"})
+check("with no links the tree still points every leaf at its shot board",
+      'href="b.html#beat-01"' in plain, True)
+check("...and claims nothing about playable leaves",
+      "open the actual clip" not in plain, True)
+withl = _c.sapling_html([{"number": 2, "title": "Two", "total_beats": 2, "beats": [
+    {"n": 1, "state": "done", "note": ""}, {"n": 2, "state": "done", "note": ""}]}],
+    {2: "b.html"}, {(2, 1): {"href": "review/c/sources/t.mp4", "note": "take t.mp4"}})
+check("a supplied link wins for that beat and only that beat",
+      'href="review/c/sources/t.mp4"' in withl and 'href="b.html#beat-02"' in withl,
+      True)
+check("...and the caption counts the playable leaves it actually drew",
+      "<b>1 of them open the actual clip</b>" in withl, True)
+
+# The live read, against the real checkout. Not a duplicate of the unit tests
+# above: it is the only thing here that would notice the cut directory moving,
+# the manifest changing shape, or a take being committed without its hash.
+print("\nthe real cut in this checkout")
+_cut = S.read_latest_cut()
+if _cut:
+    _recs = P.receipts(_cut)
+    _t = P.sha_tally(_recs)
+    check_true("every beat of the newest cut has a receipt",
+               len(_recs) == len(_cut["beats"]))
+    check("every take in the newest cut re-hashes as the cut says it does",
+          _t.get("differs", 0) + _t.get("missing", 0), 0)
+    check_true("...and there is at least one take to have checked", _t["takes"] > 0)
+    check_true("the picks manifest's verdict citations resolve to real spec files",
+               all((S.REPO / r["spec"]).is_file() for r in _recs if r.get("spec")))
+    check_true("a cited spec that has a verdict block gets it quoted",
+               any(r.get("verdicts") for r in _recs))
+else:
+    check_true("a cut manifest exists to read", False)
+
 print()
 if FAILS:
     print(f"✗ {len(FAILS)} failure(s)")
