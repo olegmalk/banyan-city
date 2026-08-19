@@ -1,0 +1,28 @@
+#### job ep2-b12-plateship-0819-1787132409 attempt 1 start 2026-08-19T09:40:13Z
+
+==== step fetch START 2026-08-19T09:40:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b12-plateship-0819\\fetch_plate.py"]
+Traceback (most recent call last):
+  File "C:\banyan-farm\ep2-b12-plateship-0819\fetch_plate.py", line 24, in <module>
+    raw = urllib.request.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+==== step fetch END rc=1 2026-08-19T09:40:17Z ====
+#### job ep2-b12-plateship-0819-1787132409 finished rc=1 2026-08-19T09:40:17Z
