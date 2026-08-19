@@ -1506,3 +1506,41 @@ the nearest template is `farm-out/ep2-b19-dropmotion-0819/b19_fruit_track.py` �
 keep its windowed nearest-centroid track, discard its hue predicate, which is the
 artefact. Writing that instrument is part of the repair, not a prerequisite to
 find.
+
+### CORRECTION to the handover above — the converse rung landed and changed its conclusion
+
+The handover said "the plate or the prompt is what is left". **It is not.** The
+converse rung came back **−0.04** on seed 20260871, against **−91.05** on the same
+plate, same prompt, same argv, seed 20260819. `FAIL-COLLAPSE-AGAIN` was
+pre-registered as more likely and did not fire.
+
+**Every factor is innocent on its own. The cause is a (seed × plate) INTERACTION**
+— 20260819 collapses on beat 12's plate, holds on b01 (+16.59) and b18 (−4.28);
+beat 12's plate holds on 20260871. Full table and my own reasoning error in
+`pipeline/loop/darkening-crf-diagnostic-0819.md`. Short version of the error:
+eliminating four candidates one at a time is sound only if a single cause exists,
+and every branch of every bar I wrote was a single cause, so the result had
+nowhere to land.
+
+**The actionable consequence, and the one thing to read if nothing else:** a
+collapse on this plate is **fixable by a re-roll**. `ep2-b20-motion-0819` also ran
+20260819 and also collapsed (−25.03), so beat 20's darkening is very likely the
+same interaction and very likely re-rollable in one job — **and that rung is
+deliberately NOT filed, because b20's plate is the scavenger and re-rolling it
+would be a goblin-identity render under the freeze.** Whoever holds the design
+answer should know a one-job fix is waiting behind it.
+
+**Card as this lane stops: ONE running** —
+`ep2-b12-stillmotion-s20260818-0819-1787147942`, a third seed on beat 12's plate,
+because one clean seed can be luck and two make 20260819 the outlier. Judge with
+`python3 pipeline/luma_drift.py <clip>`, two-sided, `|drift| >= 20` with bands
+agreeing; `PASS-HOLD` named as more likely **with the caveat that the last two
+predictions on this axis were both wrong.** If the runner has not pushed to
+`farm-results` yet, scp from
+`rtx5090:C:/banyan-farm/courier-box/farm-out/<job-id>/` rather than waiting for a
+courier tick.
+
+**Standing note for every 121-frame rung from here:** luminance is a **per-render**
+check, never inherited from a passing sibling — this family can move 90 levels on
+a seed that behaves perfectly on two other beats. Two-sided bound, attached to the
+(seed, plate) pair, instrument already committed.
