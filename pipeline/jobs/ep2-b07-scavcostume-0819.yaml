@@ -1,0 +1,222 @@
+# 2026-08-19, BEAT 07 PLATE RUNG C: THE SCAVENGER GETS A GARMENT OF HIS
+# OWN. ONE VARIABLE against ep2-b07-twofig-0817 -- the --draft-key, and
+# nothing else. DERIVED programmatically by
+# pipeline/derive_b07_scavcostume_0819.py, which prints every
+# substitution it makes and REFUSES to carry a parent's verdict/pick/
+# sweep keys (the parent has a verdict_0819 block; it was dropped).
+#
+# THIS IS NOT ANOTHER ATTEMPT AT THE POINT. The point was settled
+# tonight in MOTION: ep2-b07-point-motion-0819 and its crf-10 child both
+# PASSED beat 07's pre-registered bar, all four clauses, first attempt.
+# What those verdicts left standing is the plate, and they narrowed its
+# blocker to one thing -- the scavenger wears the guard's own pale wrap
+# tunic and white sash, so a confiscation reads as two officials.
+#
+# THE WORDING WAS MEASURED BEFORE THIS SPEC EXISTED, offline and $0, on
+# the real CLIP through the same render_wave_goblin.check() the dry step
+# below calls: 70/77 positive, 58/77 negative (byte-identical recipe),
+# count 1boy == declared 1boy, style anchor PRESENT, ZERO faults,
+# nothing dropped. The parent measured its recorded 65/77 in the same
+# run, which is the control. See pipeline/insert_b07_scavcostume_0819.py
+# for why `patched tunic` and not the canon `patchwork cloak`.
+#
+# $0. Local card, no provider, no paid engine. Stills only: no voice
+# synthesis, no episode assembly, nothing published as footage.
+id: ep2-b07-scavcostume-0819
+task: ep2-b07-scavcostume-0819
+node: 002b-first-citizen
+beat: 7
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+sample: true
+owner: beat 07 judging lane, 2026-08-19 -- filed off its own verdict in the same pass, because the verdict
+  licensed exactly one next job, the card measured 0 ready / 0 running / 0 backlog, and the backlog does
+  not author work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. This is a STILL
+  PLATE on an approved node: no voice synthesis, no motion, no episode assembly, no publication.'
+script_line: 'Beat 07 CONFISCATE (0:34-0:37), node.md verbatim: "Guard 1 points at the scavenger, decisive."'
+consumer: 'BEAT 07''S CUT SLOT, directly and at one remove. The chain is short and every link exists:
+  this plate -> re-run the exact recipe of ep2-b07-point-crf10-0819 off the new plate (that spec is a
+  byte-level template, and its verdict makes crf 10 the per-beat choice for THIS beat with the motion
+  measurement attached) -> a beat-07 clip whose only recorded faults are gone. Beat 07 is one of the four
+  slates in review/ep2-demo-0818. A FAIL IS ALSO CONSUMED: P1 unmoved would say a garment cannot be scoped
+  by `in` on this checkpoint, which retires the wording channel for costume and names the next instrument
+  (per-figure conditioning, already characterised on beat 08) instead of spending a second wording rung
+  on it.'
+success: "THE BAR, PRE-REGISTERED BEFORE THESE PIXELS EXIST. Twelve frames (3 distinct reference cells\
+  \ x 4 seeds -- see frame_count_inherited_0819; the denominator is 12 and never 16), each opened INDIVIDUALLY\
+  \ at native 832x1216 and scored by eye. Report every term and every fail mode, fired or not.\nTHIS RUNG\
+  \ IS NOT ABOUT THE POINT AND DOES NOT SCORE IT. The point was settled in MOTION tonight -- ep2-b07-point-motion-0819\
+  \ PASS and ep2-b07-point-crf10-0819 PASS, all four clauses, the guard's own arm aimed at the goblin.\
+  \ A plate for this beat no longer has to contain a gesture, and a frame that happens to draw one earns\
+  \ nothing here.\nPASS requires ALL FOUR:\n  C1 THE SCAVENGER'S GARMENT IS HIS OWN. He wears a patched\
+  \ tunic that is NOT the guard's pale wrap tunic -- distinguishable at a glance by patches, seams or\
+  \ colour. This is the one variable and the whole reason for the rung.\n  C2 THE GUARD IS STILL CAST\
+  \ CORRECTLY. Dark cropped hair, legible wire-rim glasses, tan-family wrap tunic, wide white sash. Carried\
+  \ from the parent's bar unchanged; the guard's cast run in the prompt is byte-identical, so any regression\
+  \ here is the added tokens' fault and must be reported as one.\n  C3 TWO WHOLE FIGURES, ONE DEPTH PLANE.\
+  \ One adult human guard and one goblin, both wholly in frame, shoulder to shoulder. Carried from the\
+  \ parent's bar unchanged.\n  C4 THE GOBLIN IS STILL A GOBLIN. Green skin and pointed ears, not a human\
+  \ child, and not green paint on a second guard.\nFAIL MODES, NAMED IN ADVANCE AND ALL REPORTED WHETHER\
+  \ OR NOT THEY FIRE:\n  P1 COSTUME MERGE UNMOVED -- he still wears the guard's tunic. The measured baseline\
+  \ is r1-s3 and this is the failure the rung exists to move.\n  P2 THE TUNIC LANDS ON THE WRONG MAN --\
+  \ the GUARD arrives in a patched tunic. The same broadcast bleed in the other direction, and it would\
+  \ say `in`-binding does not scope a garment on this checkpoint.\n  P3 THE PATCHES CLIMB ONTO SKIN OR\
+  \ SKULL -- stitches, seams or grafts on his head or face. MEASURED 4 of 4 on this checkpoint with `patchwork\
+  \ cloak` (authored_b02_idfix_r2). `patched tunic` was chosen because beat 08 sends it with clean skulls\
+  \ 4/4, so this is the specific risk the choice was made to avoid and it is reported either way.\n  P4\
+  \ THE WHITE SASH STILL BLEEDS -- he keeps the guard's sash over his own tunic. NOT a pass/fail clause:\
+  \ it is a MEASUREMENT this rung takes, because no term in the prompt places or denies a sash on him.\
+  \ Report the count out of 12.\n  P5 THE EYEWEAR STILL BLEEDS -- round wire-rims on the goblin, measured\
+  \ 5 of 12 on the parent. Also NOT a pass/fail clause and also not addressed by this rung; report the\
+  \ count so rung D has a baseline.\n  P6 A THIRD FIGURE -- fired 10 of 12 on the parent's sibling rung.\
+  \ Fails the frame it fires on.\n  P7 FRAMING REGRESSION -- a crop that loses either figure's whole body.\n\
+  A PARTIAL IS A FAIL PER FRAME. The rung's own question is answered by the C1 count out of 12 whether\
+  \ or not any single frame clears all four."
+why: 'Beat 07''s motion PASSED tonight, both takes, on the first attempt -- so this beat''s blocker is
+  no longer ''can it be animated''. It is that the PLATE dresses the scavenger in the guard''s uniform,
+  which makes a confiscation read as two officials standing together. That is the last thing between beat
+  07 and a cut, and it is a still-plate question with one variable in it. The cause is named: the parent
+  prompt gives the goblin a noun phrase with ONE attribute and no garment at all, so the only clothing
+  terms in the sentence are the guard''s and they land on both men -- the positive-placement law this
+  repo has now hit five times. Five minutes of local GPU, $0, one draft key, twelve frames.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-scavcostume-0819
+  - --draft-key
+  - authored_b07_scavcostume_0819
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '7'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b07-scavcostume-0819
+  - --draft-key
+  - authored_b07_scavcostume_0819
+  - --arm
+  - window4
+  - --task
+  - ep2-b07-scavcostume-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b07-scavcostume-0819\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-scavcostume-0819\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(srcdir + \"/07-confiscate-*\"))\npngs = [f for f in src if f.lower().endswith(\"\
+    .png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-scavcostume-0819.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s),\", len(pngs), \"png + manifest ->\", dst)\n# frame count is 12, not 16: 4 seeds\
+    \ x 3 DISTINCT reference sha256s. refs-guards-twoinfield-nos2-0815 holds 3 distinct images in 4 slots\
+    \ (s0 and s3 are the same bytes; hashed on the box 2026-08-17), and dedup_cells drops the cell that\
+    \ would redraw s0, so the grid is 3 cells x 4 seeds. Hardcoded rather than derived from seeds x distinct-ref-sha256\
+    \ because deriving it means mirroring the sampler slot enumeration while another lane is editing the\
+    \ sampler; derive it when that settles.\nraise SystemExit(0 if len(pngs) >= 12 else 1)\n"
+- name: verify
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, sys\nd = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-scavcostume-0819\"\np = sorted(glob.glob(d\
+    \ + \"/07-confiscate-*.png\"))\nprint(\"published pngs:\", len(p))\nfor f in p:\n    print(\"   \"\
+    , f.rsplit(\"/\", 1)[-1])\nif len(p) < 12:\n    sys.exit(\"FAILED: %d published png(s), expected 12\
+    \ (3 distinct reference cells x 4 seeds). A short grid is not a sample, and the manifest alone cannot\
+    \ tell the difference.\" % len(p))\n"
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\ep2-b07-scavcostume-0819\ep2-b07-scavcostume-0819.sha256
+parent_bar_not_inherited: 'The parent''s `success` is NOT carried, and that is a narrowing rather than
+  a loosening -- see derive_b07_scavcostume_0819.py''s docstring. Its eight-term bar turns on term 5,
+  the POINT, which motion answered tonight and which this rung does not score. Quoted here in full so
+  the swap is visible and nobody has to diff two files to find it:
+
+
+  THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported
+  as N of 16 plus a per-condition rate across the four seeds so no claim rests on a single draw. A frame
+  PASSES only by clearing every term: (1) EXACTLY TWO whole figures, one adult human guard and one goblin,
+  adjacent in the same depth plane -- not three, not one, neither cropped to a fragment; (2) the guard
+  has DARK CROPPED hair -- not blond, not sandy, not shaggy, and NOT BALD; (3) WIRE-RIM GLASSES legible
+  as round wire frames on his face, not sunglasses and not absent; (4) tan wrap tunic and a white sash
+  on him; (5) one arm extended toward the goblin and legible as a POINT, with his other hand visible and
+  empty; (6) NO board, clipboard, slab or paper anywhere in frame, in any hand or on the ground; (7) the
+  background carries all three bands with real content -- tall grass at ground level, a treeline, and
+  sky ABOVE the treeline -- with no white or plain field and no downward plan view; (8) neither figure
+  infantile and no blush. PRE-REGISTERED FAIL MODES, each recorded by name whether or not it fires: eyewear
+  reaching the GOBLIN; the goblin drawn as a human child; a third figure appearing; the traded words''
+  framing and light regression (a tighter or flatter frame than this beat''s older plates). If a term
+  turns out loose it is said so and TIGHTENED FORWARD for the next round, never rewritten after seeing
+  the picture.'
+derived_from:
+  parent: ep2-b07-twofig-0817.yaml
+  by: pipeline/derive_b07_scavcostume_0819.py
+  one_variable: --draft-key authored_b07_twofig_0817 -> authored_b07_scavcostume_0819
+  also_changed: 'id/task, the three output paths that must be distinct, priority, and the authoring prose
+    (owner, consumer, success, why). Nothing else: every remaining argv token, the env block, needs, refs,
+    harness and model path are the parent''s own bytes.'
+  keys_refused:
+  - verdict_0819
+frame_count_inherited_0819:
+  true_frame_count: 12
+  grid: 3 cells x 4 seeds -- 3 DISTINCT reference sha256s in 4 slots
+  denominator_to_report: N of 12
+  denominator_superseded: 'N of 16 (see the success: key above, left standing verbatim)'
+  reason: 'refs-guards-twoinfield-nos2-0815 is 3 distinct images in 4 slots -- s0 and s3 are byte-identical
+    (26062B66DFCF9B22..., hashed on the box 2026-08-17). dedup_cells drops the cell that would redraw
+    s0, so 12 frames are drawn, never 16. 12 WAS ALWAYS THE TRUE COUNT: the pre-sync renders of this beat
+    wrote 16 files of which 4 were byte-copies of the other 12, so a scorer reporting N of 16 was counting
+    duplicates as independent evidence.'
+  what_is_scored: 'UNCHANGED. Not one term of the bar is altered, loosened or removed -- only the denominator
+    it is divided by, which was miscounted. Every condition in success: still applies per frame.'
+  also_corrected_in_this_spec: 'copy-out threshold >= 16 -> >= 12, and the declared artifact NN-*-ipa-r3-w015-s0.png
+    removed: r3 is the deduplicated cell and is never written, which made box_runner retire the job rc
+    92 artifact-check after a full render. The threshold alone could not fail it -- that step is allow_fail:
+    True.'
+  inherited_note: 'Carried from the parent and RENAMED on the way through, not silently reused. It is
+    a correction to a denominator, not a verdict: same refs directory, same sampler, same 3-distinct-refs
+    x 4-seeds grid, so this child also draws 12 frames and never 16. Reporting N of 16 here would count
+    byte-duplicates as independent evidence.'
