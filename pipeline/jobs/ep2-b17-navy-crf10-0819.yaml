@@ -153,9 +153,18 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b17-navy-crf10-0819\17-goodbye-LTX-shake-navy-0819.mp4
 - C:\banyan-farm\ep2-b17-navy-crf10-0819\b17-init-704x1280.png
-verdict: PASS on all five clauses -- S1, S2, S3, P1 and the new P2. Naming the colour held the colour. Beat 17 now
+# !! THE NEXT TWO BLOCKS ARE NOT THIS JOB'S RESULT. They were inherited verbatim
+# when this spec was derived from ep2-b17-shake-navy-0819.yaml (the crf-33 parent)
+# and its ids were renamed through the file -- which is why the "pick" block below
+# names this crf10 id for a decision made before this job existed. Renamed on
+# 2026-08-19 by the judging lane rather than deleted, because the numbers in them
+# ARE the crf-33 baseline this job is judged against, and they were independently
+# reproduced here to within rounding (f008 12.5, f096 24.6, f036 hue 223.8 / sat
+# 0.58, f060 hue 231.1 / sat 0.47), which is what confirms both the provenance and
+# the instrument. THIS JOB'S VERDICT IS AT THE END OF THE FILE.
+verdict_INHERITED_from_the_crf33_parent_NOT_this_job: PASS on all five clauses -- S1, S2, S3, P1 and the new P2. Naming the colour held the colour. Beat 17 now
   has a take that keeps the action, the world AND the garment.
-verdict_measured:
+verdict_measured_INHERITED_from_the_crf33_parent_NOT_this_job:
   p2_garment_colour: 'PASS, the clause this sample existed for. Median hue/saturation of the pre-registered torso
     box: f036 = RGB 35,48,83, hue 223.8 deg, sat 0.58; f060 = RGB 52,59,99, hue 231.1 deg, sat 0.47. Both inside
     the required 180-260 deg at sat >= 0.40. For comparison on the identical measurement: the plate cloak is 220
@@ -175,7 +184,7 @@ verdict_measured:
     and flaring behind him. A departure, face away by design.
   fail_modes: F1 no. F2 STAND-ONLY no -- the cloak is gripped and worked. F3 no cut, no second figure, no extra
     face, nothing grown in the sky. F4 no teleport. F6 no -- cel style holds.
-caveats_recorded_not_scored:
+caveats_recorded_not_scored_INHERITED_from_the_crf33_parent:
   overall_motion_is_the_lowest_of_the_three: THE HONEST COST, and no clause covers it. Interframe median is 0.50
     with 48 of 96 pairs under 0.5, against 3.18 and 41 of 96 on the 0819 take and 3.18- class motion on 0818. So
     while the CLOAK moves more, the CLIP moves less -- he stands very still between cloak movements, and half the
@@ -185,18 +194,105 @@ caveats_recorded_not_scored:
     the prompt (name the garment colour) and overall motion fell. That is the direction the 0818 sampler research
     predicts for heavier conditioning. It is ONE observation across ONE pair of clips with a shared seed, which
     is not evidence, and it is written here so nobody mistakes it for the measured claim it is not.'
-pick_of_the_three_beat_17_takes: 'ep2-b17-navy-crf10-0819. Reasons, one line each: it is the only take that holds
+pick_INHERITED_from_the_crf33_parent_NOT_this_job: 'ep2-b17-navy-crf10-0819. Reasons, one line each: it is the only take that holds
   the plate''s WORLD and its GARMENT at once (0818 lost both, 0819 lost the garment); its cloak action is the largest
   of the three by measurement, 68 px of hem swing against 0819''s 46; and it clears every clause any beat-17 bar
   has pre-registered. Against it: it is the stillest of the three between cloak movements, and if the cut needs
   a livelier body, 0819 is the alternative and its only defect is a pink cloak. That is a taste call and it is stated
   as one -- the pick here is the steward''s technical pick under the 2026-08-18 widening, veto-able in one line,
   and promotion into the episode belongs to the assembly lane.'
-what_this_licenses: Nothing further on beat 17 from this lane. The beat now has a take that matches the restaged
+what_this_licenses_INHERITED_from_the_crf33_parent: Nothing further on beat 17 from this lane. The beat now has a take that matches the restaged
   canon line and holds its plate; what remains is a taste look and an assembly decision, neither of which is a render.
   It does NOT license a fourth take, a reseed, or the ltx_i2v.py conditioning-strength change withdrawn in the 0819
   verdict.
-follow_ups_named:
+follow_ups_named_INHERITED_from_the_crf33_parent:
 - Every beat-17 bar so far -- 0818, 0819 and this one -- has scored the action and left near-duplicate frame pairs
   unmeasured. Three specs, same blind spot. The next one should pre-register a cap on the share of frame pairs under
   0.5 interframe, the same clause beat 18 needs.
+
+# ============================================================================
+# THIS JOB'S VERDICT -- appended 2026-08-19 by the crf-10 judging lane.
+# Ran clean rc=0, 3 steps, 10:36Z; 4 files pulled and every sha verified against
+# the job's own manifest. Init sha 74e8eccf... identical to the parent's, so the
+# ONE VARIABLE (image-crf 33 -> 10, seed 20260941 both) is asserted, not assumed.
+# Judged side by side against the crf-33 original still in the cut, on the bar
+# THIS SPEC CARRIES (S1/S2/S3 + P1 + P2), and LOOKED at: 9-panel A/B contact
+# sheet EVIDENCE-b17-crf10-AB-0819.png. $0, CPU.
+# ============================================================================
+verdict_this_job: >-
+  PASS on all five clauses -- S1, S2, S3, P1 and P2 -- and BETTER THAN THE
+  ORIGINAL ON FIDELITY, which is the question this re-run was filed to answer.
+  MARKED CUT-PREFERRED for beat 17. Two honest costs are recorded below and
+  neither is covered by any clause: P2 passes with a thin margin where the parent
+  passed comfortably, and overall motion falls 30% on an already-still take.
+verdict_this_job_measured:
+  the_crf_ruling_is_confirmed_AT_ITS_SOURCE: 'THE STRONGEST NUMBER IN THIS
+    JUDGEMENT, and it needed no render at all. Both takes write the conditioning
+    image they actually feed the model (cond-crf-17.png); measured against the true
+    init, crf 33 puts 29.40% of the plate''s pixels off by more than 8 levels
+    (mean 5.28, p99 40, max 166) while crf 10 puts 7.13% (mean 2.16, p99 15, max
+    65). The corruption the 2026-08-19 ruling was made on is real, is 2.4x worse in
+    the mean, and affects 4x as many pixels. Independent of any bar.'
+  fidelity_first_frame: 'BETTER, which is the clause this job exists for. Mean |RGB|
+    of the decoded first frame from the init: 5.54 against the original''s 6.42, a
+    14% reduction. Worth stating plainly for calibration: a 2.4x cleaner
+    conditioning image buys only a 14% closer first frame, because the diffusion
+    process, not the encode, dominates what f000 becomes.'
+  p1_plate_fidelity: 'PASS, both ceilings cleared with room. f008 = 12.21 (ceiling
+    40), f096 = 25.32 (ceiling 55). The original reads 12.54 and 24.61 on the same
+    instrument -- so f008 is slightly better and f096 slightly worse, both far
+    inside. Blue sky and green meadow intact end to end.'
+  p2_garment_colour: 'PASS, AND NARROWLY, WHICH THE BAR REQUIRES BE SAID SEPARATELY.
+    Median hue/sat of the pre-registered torso box (rows 30-55%, cols 35-65%, frames
+    decoded at full size): f036 = RGB 57,47,81, hue 257.6 deg, sat 0.420; f060 = RGB
+    51,59,106, hue 231.3 deg, sat 0.519. Both inside 180-260 deg at sat >= 0.40, so
+    the clause passes. But f036 clears BOTH axes by a hair -- 2.4 deg from the hue
+    edge and 0.020 above the saturation floor -- where the parent measured a
+    comfortable 223.8 / 0.578 at the same frame. Looked at: the cloak is navy and
+    patterned in both takes and does not go pink. The margin is a POSE difference,
+    not a colour drift: at f036 this take has the cloak spread much wider, so the
+    fixed box catches more of the dark open interior and its shadow. Recorded rather
+    than explained away, because a clause that passes at 0.420 would fail on a
+    slightly different frame choice.'
+  s1_stand: 'PASS. Seated at idx0, crouched at idx8, upright from idx24.'
+  s2_shake: 'PASS, and the cloak action is LARGER than the original''s. On one
+    instrument applied identically to both (horizontal extent of the dark mass in the
+    mid-frame band across idx24-71): swing 178 px against the original''s 166, with 5
+    direction reversals against 8. The clause asks for one reversal of at least a
+    fold-width and gets five at many fold-widths. NOTE: these absolute figures are
+    NOT comparable to the parent verdict''s 68 px / 17 reversals, which used a
+    narrower measurement frame; only the new-vs-old comparison is meaningful.'
+  s3_turn: 'PASS. Turned away by idx60-72 and standing with his back to the lens
+    through idx84-96, cloak hanging and flaring behind him.'
+  fail_modes: 'F1 no. F2 STAND-ONLY no -- the cloak is gripped, opened and worked.
+    F3 no cut, no second figure, no extra face. F4 no teleport. F6 no, cel style
+    holds.'
+the_regression_b14_warned_about_IS_PRESENT_but_uncovered: 'STATED, NOT SCORED,
+  because no beat-17 bar has ever had a clause for it -- a blind spot this spec''s
+  own inherited follow_ups block already named. Interframe median falls to 0.659 from
+  the original''s 0.939, a 30% drop, while interframe MEAN rises to 5.841 from 5.518.
+  Median down with mean up means the motion is redistributed rather than removed:
+  fewer, larger movements with stiller frames between them, which is the parent
+  verdict''s own "stillest of the three between cloak movements" made slightly worse.
+  Near-duplicate pairs are unchanged at 35 of 96 against 36. This is beat 14''s lesson
+  -- fixing conditioning can cost movement -- firing a second time, mildly.'
+cut_preference: 'CUT-PREFERRED: ep2-b17-navy-crf10-0819. It passes every clause the
+  beat has ever pre-registered, it is closer to its own plate at f000 and at f008, its
+  cloak action measures larger, and it is the only take conditioned on a plate that
+  was not 29% corrupted before the model saw it. THE ACTUAL CUT SWAP IS NOT MADE HERE
+  -- it belongs to the next demo assembly, and this is a technical preference under the
+  2026-08-18 widening, veto-able in one line. Against it, so the founder has it before
+  he blesses anything: the take is stiller between cloak movements than the original,
+  and its P2 margin at f036 is thin. If a livelier body matters more than plate
+  fidelity, the crf-33 original stands.'
+what_this_licenses: 'Nothing further on beat 17 from this lane. No fourth take, no
+  reseed, no bar change, no conditioning-strength change, no pick of the three earlier
+  takes, no publication. The one follow-up worth filing is not beat-17-specific and is
+  logged on the ladder instead: every beat-17 and beat-18 bar so far scores the action
+  and leaves near-duplicate frame pairs unmeasured.'
+filename_collision_warning: 'PRACTICAL, AND IT WILL BITE THE ASSEMBLY LANE. This take
+  and the crf-33 original are both named 17-goodbye-LTX-shake-navy-0819.mp4 -- the
+  derived spec kept the parent''s output filename. They differ only by directory
+  (farm-out/ep2-b17-navy-crf10-0819 vs farm-out/ep2-b17-shake-navy-0819) and by size
+  (626,222 vs 578,081 bytes). Anything that collects clips by basename will silently
+  take one for the other.'

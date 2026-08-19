@@ -159,7 +159,15 @@ script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on
   IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
   stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
   bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
-pick:
+# !! THE pick / sweep_summary / sweep_summary_correction BLOCKS BELOW ARE NOT THIS
+# JOB'S RESULT. They were inherited verbatim when this spec was derived from
+# ep2-b01-growmotion-b-0818.yaml (the crf-33 parent) -- which is why `pick.chosen`
+# describes a clip already on the review page, and why the sweep tallies six seeds
+# this job never rendered. Renamed on 2026-08-19 by the judging lane rather than
+# deleted, because the parent's admissions in `pick.not_hidden` ("the pick has
+# bloomed to pale amber") are exactly what this job is judged against, and that
+# bloom is now measured. THIS JOB'S VERDICT IS AT THE END OF THE FILE.
+pick_INHERITED_from_the_crf33_parent_NOT_this_job:
   chosen: seed 20260826 (this spec) -- the clip already on review/ep2-cold-open-0818/ as cold-open-candidate.mp4.
   pool: 'Four seeds of one recipe, all read tonight against this identical bar: 20260826 PASS, 20260827 FAIL (fig
     replaced in a single frame f37->f38; measured 1.30x push-in), 20260828 FAIL (best growth arc of all four, but
@@ -178,7 +186,7 @@ pick:
   taste_note: This is a screening pick among candidates that met a pre-registered technical bar, not a taste verdict.
     Whether the cold open is GOOD, and whether it is the one that opens the episode, is the founder's under R4.
     Nothing is promoted, cut or published on the strength of this pick.
-sweep_summary:
+sweep_summary_INHERITED_from_the_crf33_parent:
   tally: SIX seeds of one recipe, one plate, one bar. 20260826 PASS. 20260827, 20260828, 20260829, 20260830, 20260831
     all FAIL. One in six.
   the_pick_is_unchanged: 'Neither late seed displaces it, but 20260830 came close enough that saying so matters:
@@ -206,7 +214,7 @@ sweep_summary:
     engineering variable.'
   where_the_evidence_is: Per-seed verdicts with the measurements are appended to each of pipeline/jobs/ep2-b01-growmotion-b{2,3,4,5,6}-0818.yaml.
     The six last frames are on review/ep2-cold-open-0818/ as seed-sweep-f120.jpg, pick first with a gold border.
-sweep_summary_correction:
+sweep_summary_correction_INHERITED_from_the_crf33_parent:
   the_claim: '"No two failures share a cause." (sweep_summary.three_independent_axes, last line.)'
   why_it_is_wrong: 'The same block measures COLOUR PATH as "4 of 6 pop in 1 to 4 frames". A fault present in four
     of six seeds is by definition a shared cause, and it is the SAME clause that kills them: of the five rejects,
@@ -235,3 +243,90 @@ sweep_summary_correction:
     a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
     and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
     on R4 alone.
+
+# ============================================================================
+# THIS JOB'S VERDICT -- appended 2026-08-19 by the crf-10 judging lane.
+# Ran clean rc=0; pulled with every sha verified against the job's own manifest.
+# Init sha 1a7ff3d0... identical to the parent's, so the ONE VARIABLE (image-crf
+# 33 -> 10, seed 20260826 both) is asserted, not assumed. Judged against the
+# crf-33 original that is the current cold-open candidate, on the bar this spec
+# carries (G1-G5 / H1-H6, conjunctive, a partial is a FAIL), all 121 frames
+# decoded and LOOKED at: EVIDENCE-b01-crf10-AB-0819.png (9-panel A/B) and
+# EVIDENCE-b01-figleaves-0819.png (fig and leaves, 1:1 crop). $0, CPU.
+# ============================================================================
+verdict_this_job: >-
+  PASS on all five clauses, AND IT FIXES THE ONE DEFECT THE PARENT'S OWN VERDICT
+  ADMITTED AGAINST ITSELF. The parent conceded under pick.not_hidden that the pick
+  "has bloomed to pale amber"; that bloom is now measured, and this take does not
+  have it. MARKED CUT-PREFERRED for the cold open. This is the clearest win of the
+  three crf-10 re-runs and the only one with no countervailing cost.
+verdict_this_job_measured:
+  the_bloom_is_gone_and_here_is_the_number: 'THE HEADLINE. Whole-frame mean
+    luminance across the clip: this take runs 83.3 -> 84.8 against a plate at 85.1,
+    i.e. it ends within 0.3 levels of the picture it was conditioned on. The original
+    runs 82.5 -> 148.4 -- it nearly doubles in brightness and washes the dawn out to
+    pale cream. Distance from the init at the LAST frame: 15.22 against 65.67, a 4.3x
+    improvement. The dark sky wedge, the saturated orange and the drawn grass blades
+    are all still there at f120, which is precisely what the parent said its pick
+    lost.'
+  fidelity_first_frame: 'Better too: mean |RGB| of the first frame from the init 2.375
+    against 3.543, a 33% reduction. So this take is closer to the plate at both ends
+    of the clip, and the end is where it matters -- the bloom is a cumulative failure,
+    not a first-frame one.'
+  g1_growth_by_a_continuous_path: 'PASS, and better than the original on every part of
+    the clause. The fig grows monotonically over 85 frames from first appearance at
+    idx8, with ZERO frames in which it shrinks and a largest single-frame area step of
+    1.48x -- nowhere near the 2.1x-2.9x pops the parent identified as this recipe''s
+    dominant systematic failure. The original starts at idx34, ramps over 76 frames,
+    and contains 2 shrink events. Colour path: first purple frame idx10 against the
+    original''s idx34, ending at hue 282.6 deg. Looked at, the crop also shows this
+    take drawing a GREEN CALYX at the join from idx45 on, which the original never
+    draws -- the parent verdict listed that calyx as something only the rejected seed
+    20260828 achieved.'
+  g2_end_state_deep_purple_violet: 'PASS. The fig is deep purple-violet at f120 with a
+    specular highlight, hue 282.6 deg.'
+  g3_exactly_two_leaves_in_every_frame: 'PASS. Two golden leaves in every frame looked
+    at, in both takes. The green calyx sepals at the fig''s neck are a calyx, not a
+    third leaf.'
+  g4_no_size_doubling_and_below_the_grass: 'PASS, and this is the one clause where the
+    two takes differ materially, so it is scored with the number rather than an
+    adjective. The fig at f120 occupies 292 px of a 176x320 measurement frame -- 0.518%
+    of the picture -- with its bounding box at y 185-203 of 320, low in the frame and
+    below the grass tops. It does not balloon: growth is monotone and final area equals
+    peak area exactly. It is however 2.7x the original''s final area (0.518% against
+    0.190%). At half a percent of frame that is a fig, not a balloon, and the clause as
+    written is about ballooning -- but if the founder reads G4 as a cap on how large
+    the fig may end up relative to the take already on the review page, that is a taste
+    read and it is R4''s, so the number is put here rather than argued away.'
+  g5_only_the_fig_moves_camera_locked: 'PASS, and equal. Best-fit registration scale
+    against f000 measures 1.00 at both f060 and f120 for BOTH takes on one instrument
+    (a scale search minimising mean |RGB| about the frame centre). No push-in, no
+    dolly, in either. Note this instrument reads 1.00 where the parent spec quoted 1.05
+    for the same original clip, so it is coarser than theirs; it is used only for the
+    A/B, where it separates nothing.'
+  fail_modes: 'H1 frozen -- no, and neither take is: 0 of 120 pairs under 0.5
+    interframe in both. H2 stays green -- no, purple by idx10. H3 leaf count -- holds.
+    H4 balloon or camera push -- neither. H5 detach or teleport -- no, the fig stays on
+    the stem the whole way. H6 scene break -- none.'
+  a_motion_number_that_needs_its_caveat: 'Interframe median 0.877 against the
+    original''s 1.444. Read naively that is the b14 regression again, and here it is
+    largely NOT: a whole-frame luminance ramp from 82.5 to 148.4 inflates every
+    interframe difference in the original, so much of its apparent motion IS the bloom.
+    The depicted subject moves MORE in this take, not less -- the fig grows 2.7x
+    further, over 85 frames instead of 76, monotonically instead of with two shrinks.
+    Neither take is frozen.'
+cut_preference: 'CUT-PREFERRED: ep2-b01-growmotion-crf10-0819. It clears the same
+  conjunctive bar the current candidate cleared, it holds the dawn plate the current
+  candidate blooms away, it grows the fig continuously from idx8 with no shrink events,
+  and it draws the calyx. THE ACTUAL CUT SWAP IS NOT MADE HERE -- it belongs to the next
+  demo assembly, and this is a technical preference under the 2026-08-18 widening,
+  veto-able in one line. One thing the founder should have before blessing it: the fig
+  ends 2.7x larger than in the clip he has already seen on the review page, and whether
+  that reads better or worse is R4.'
+what_this_licenses: 'Nothing further on beat 01 from this lane. No new seed, no bar
+  change, no recipe change, no publication, and specifically NOT the G1
+  temporal-distribution experiment the inherited sweep_summary_correction names -- that
+  block belongs to the parent job and its finding is untouched by this one. Note for
+  whoever picks that up: G1 was not the failure here, so the temporal-distribution
+  attack should be re-derived on the crf-10 recipe before it is filed, since this take
+  ramps over 85 frames with a 1.48x maximum step.'

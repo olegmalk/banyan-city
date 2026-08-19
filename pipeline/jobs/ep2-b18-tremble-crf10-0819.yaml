@@ -159,9 +159,17 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b18-tremble-crf10-0819\18-the-decision-LTX-ep2-b18-tremble-crf10-0819.mp4
 - C:\banyan-farm\ep2-b18-tremble-crf10-0819\b18-init-704x1280.png
-verdict: PASS. Every PASS clause met, every pre-registered FAIL mode measured and absent. This is the only one of
+# !! THE BLOCKS FROM HERE TO what_this_licenses ARE NOT THIS JOB'S RESULT. They
+# were inherited verbatim when this spec was derived from
+# ep2-b18-tremble-s20260871-0817.yaml (the crf-33 parent). Renamed on 2026-08-19 by
+# the judging lane rather than deleted, because their numbers ARE the crf-33
+# baseline this job is judged against and were independently reproduced here to
+# within rounding (interframe by quarters 5.69/6.81/6.20/5.31 against the parent's
+# 5.56/6.67/6.05/5.16; 3 pairs under 0.5 against its 4; longest still run 1).
+# THIS JOB'S VERDICT IS AT THE END OF THE FILE.
+verdict_INHERITED_from_the_crf33_parent_NOT_this_job: PASS. Every PASS clause met, every pre-registered FAIL mode measured and absent. This is the only one of
   the three seeds whose tremble runs the whole clip.
-verdict_measured:
+verdict_measured_INHERITED_from_the_crf33_parent_NOT_this_job:
   read_how: '121 frames decoded at full length (704x1280, 24fps, 121 frames -- format confirmed by ffprobe), measured
     downscaled to 176x320, and LOOKED at: a 9-panel sheet at f000/015/030/045/060/ 075/090/105/120 plus a 12-frame
     consecutive strip at f040-f051 to catch anything that only shows frame-to-frame.'
@@ -182,7 +190,7 @@ verdict_measured:
   count_attach_person: PASS on all three. One fruit in every frame looked at, never two, and it never turns leafward
     -- it stays a round fig. It stays joined to the thin stem at the neck the whole way and never leaves frame.
     No face, figure, chibi or mascot appears.
-caveats_not_scored:
+caveats_not_scored_INHERITED_from_the_crf33_parent:
   background_light_band: STATED, NOT SCORED. A diagonal shadow band across the backdrop drifts over the clip (leftmost-column
     luminance HF std 10.85). It drifts smoothly -- it does not flicker -- so it is not FAIL-STROBE, which names
     "flickers, pulses or blinks". It is also not a camera clause, because this bar pre-registered no camera clause
@@ -190,18 +198,106 @@ caveats_not_scored:
   gloss_and_aubergine: 'Explicitly excluded by this spec: the plate is glossy with a hard specular and reads near-aubergine.
     The bar says that is R4 and the founder''s alone. Untouched here.'
   leaf_count_and_height: Excluded by the bar -- a macro has no yardstick. Untested, not defective.
-pick_candidate: 'ep2-b18-tremble-s20260871 is the pick candidate of the three. Reasons, one line each: it is the
+pick_candidate_INHERITED_from_the_crf33_parent_NOT_this_job: 'ep2-b18-tremble-s20260871 is the pick candidate of the three. Reasons, one line each: it is the
   ONLY seed with motion in all four quarters (s20260873 decays to med 0.45 by the last third and reads visually
   frozen from f045 on); it is the ONLY seed with zero specular pumping (s20260872 pumps >25% on 28 of 120 adjacent
   pairs, which is FAIL-STROBE); and its colour and count are as stable as either sibling. On the two clauses that
   separate the three, it wins both outright.'
-pick_authority_note: 'This spec pre-registered "NOT a pick: which of the three seeds ships is R4''s call and this
+pick_authority_note_INHERITED_from_the_crf33_parent: 'This spec pre-registered "NOT a pick: which of the three seeds ships is R4''s call and this
   job does not make it." That was written 2026-08-17. On 2026-08-18 the founder widened the boundary explicitly
   -- which-of-N picks, route choices and quality tradeoffs became steward decisions, recorded with reasons and veto-able
   by one line, with only taste left to him. So the pick above is made under the newer ruling and is stated with
   its reasons rather than deferred. It is a CANDIDATE: the swap into the episode cut belongs to the assembly lane,
   not to this judging lane, and nothing here promotes anything.'
-what_this_licenses: 'The assembly lane may consider s20260871 for the beat 18 slot. It licenses NO new render: the
+what_this_licenses_INHERITED_from_the_crf33_parent: 'The assembly lane may consider s20260871 for the beat 18 slot. It licenses NO new render: the
   recipe is proven on this beat and no variable is named for change. It does not license a fourth seed -- three
   were filed precisely to separate "recipe is dead" from "one unlucky seed", and the answer came back 1 pass / 1
   strobe / 1 decay, which is the show''s normal 2-3-renders-per-usable rate and needs no further sampling.'
+
+# ============================================================================
+# THIS JOB'S VERDICT -- appended 2026-08-19 by the crf-10 judging lane.
+# Ran clean rc=0; pulled with every sha verified against the job's own manifest.
+# Init sha b6cf610a... identical to the parent's, so the ONE VARIABLE (image-crf
+# 33 -> 10, same seed) is asserted, not assumed. Judged against the crf-33
+# original still in the cut, on THIS SPEC'S OWN BAR, by the parent's stated
+# method (121 frames, measured downscaled to 176x320) and LOOKED at: 9-panel A/B
+# sheet EVIDENCE-b18-crf10-AB-0819.png, 12-frame consecutive strip
+# EVIDENCE-b18-crf10-strip-0819.png, top-edge sheet
+# EVIDENCE-b18-topedge-0819.png. $0, CPU.
+# ============================================================================
+verdict_this_job: >-
+  FAIL, AND THE ORIGINAL STANDS. The crf-10 take is marginally more faithful to
+  the plate and dramatically more stable in time, and it spends the beat to get
+  there: FAIL-FROZEN on a beat whose entire script line is "stem trembling", plus
+  a round yellow form that enters frame in the last quarter and is in neither the
+  plate nor the original. This is beat 14's lesson firing a third time and by far
+  the hardest -- here the conditioning fix costs the content of the shot.
+verdict_this_job_measured:
+  motion_FAIL_FROZEN: 'THE VERDICT. Interframe median collapses to 0.570 from the
+    original''s 5.956 -- a 10.4x reduction -- and it is even across the clip
+    (quarters 0.52 / 0.55 / 0.59 / 0.62 against 5.69 / 6.81 / 6.20 / 5.31), so
+    nothing is redistributed, it is simply gone. Pairs under 0.5 rise to 18 of 120
+    from 3; the longest consecutive still run goes to 3 frames from 1; drift from
+    f000 reaches only 29.73 against 52.81. The mp4 is half the size (254,864 bytes
+    against 480,467) which is the codec saying the same thing.'
+  and_it_is_NOT_codec_shimmer_which_was_tested: 'THE OBVIOUS OBJECTION, MEASURED AND
+    REJECTED, because a crf-33 take could plausibly win an interframe comparison on
+    injected noise alone. Real motion survives a spatial low-pass and per-pixel noise
+    does not: at Gaussian blur 3 the gap is unchanged, 4.966 against 0.347. And on
+    depicted motion, which no amount of noise can fake -- the centroid of the fig
+    mass, measured on blurred frames -- the original swings 40.84 px horizontally
+    against this take''s 17.73 on a 176 px-wide frame, with a median frame-to-frame
+    centroid shift of 3.160 px against 0.154, a factor of 20. The original genuinely
+    trembles. This take genuinely does not.'
+  looked_at_and_it_confirms_the_numbers: 'The 12-frame consecutive strip at idx40-51
+    is the decisive picture. In this take the specular diamond holds a crisp,
+    near-identical shape and position across all twelve frames and the stem tip barely
+    changes -- near-duplicates with a slow background gradient drift over the top. In
+    the original the highlight visibly changes shape and position frame to frame and
+    the stem edge shifts. The bar says "measure it, do not eyeball it"; measured and
+    eyeballed agree.'
+  something_enters_frame: 'FAIL against the PASS clause "Nothing else enters frame".
+    A soft round YELLOW form appears at the top-right, absent at idx60 and growing
+    through idx90 / idx105 / idx120. Checked at source before calling it: the init
+    plate''s top-right corner is clean, and so are BOTH conditioning images and BOTH
+    first frames (corner mean RGB 228.7,194.4,194.8 on the plate against
+    227.4,192.7,193.2 and 228.3,192.4,193.7 on the two cond files) -- so it is
+    generated during the clip, not preserved from the plate. Whether it is
+    specifically FAIL-COUNT is arguable: it is soft-focus and could be read as a
+    background bokeh highlight rather than a second fruit. It is not arguable that it
+    is new, that the plate does not contain it, and that the original stays clean
+    there for all 121 frames.'
+  lighting_steady_no_strobe: 'PASS, and much better than the original -- the one axis
+    where the fix delivers exactly what it promised. Adjacent-frame specular pumping
+    over 25%: 0 of 120, as in the original. Whole-frame luminance high-frequency
+    residual std 0.052 against the original''s 0.968, an 18x improvement in temporal
+    stability. Peak luminance 246.2-250.3.'
+  colour_holds_purple: 'PASS. Median hue of the saturated subject pixels 311.7 deg
+    with a total spread of 2.5 deg across all 121 frames, against the original''s
+    311.2 and 4.2. Mean subject RGB f000 49,22,45 -> f060 50,24,45 -> f120 51,24,46.
+    Deep purple-violet end to end, no drift toward green, red or brown, and tighter
+    than the original.'
+  count_attach_person: 'PASS on attach and person -- one fig, joined at the neck, never
+    leaves frame, no face or figure. Count is scored under something_enters_frame
+    above rather than banked here.'
+  fidelity_first_frame: 'Marginally better: mean |RGB| of the first frame from the init
+    2.528 against 2.774, a 9% reduction. At source the conditioning image is cleaner
+    as expected -- crf 33 puts 5.23% of pixels off by more than 8 levels (mean 2.37)
+    against crf 10''s 0.31% (mean 1.49). So even a 17x reduction in visibly corrupted
+    conditioning pixels moves f000 by 9%, and on this beat it moves the motion by
+    -90%.'
+why_the_original_stands_in_one_line: 'Beat 18 is an extreme close-up of a trembling
+  stem, and the crf-10 take does not tremble.'
+what_this_settles_beyond_this_beat: 'The crf ruling buys real fidelity and real
+  temporal stability, and on a MACRO plate with a single subject it buys them by
+  removing the motion. The mechanism is plausible and consistent with beats 14 and 17:
+  a cleaner conditioning image gives i2v less to push off from, so a shot whose entire
+  content is fine high-frequency movement has nothing left to move. That is a
+  BEAT-SHAPE-DEPENDENT tradeoff, not a global win, and it is the calibration the three
+  re-runs were filed to produce.'
+what_this_licenses: 'Nothing on beat 18. No fourth seed, no reseed, no crf value
+  between 10 and 33, no bar change, no publication. The original take
+  ep2-b18-tremble-s20260871-0817 remains the beat-18 candidate exactly as it was, on
+  its own unmodified verdict, and nothing about the cut changes. The one general
+  follow-up is on the ladder: a bar clause capping the share of frame pairs under 0.5
+  interframe, which beats 17 and 18 have both now needed and neither has ever had.'
