@@ -2929,3 +2929,4 @@
 12:09:38Z box-runner idle ready=0 failed=41
 12:19:42Z box-runner idle ready=0 failed=41
 12:29:46Z box-runner idle ready=0 failed=41
+12:36:41Z STARTED task=ep2-b18-tremble-s2-0819-1787142971 attempt=1 on box-runner
