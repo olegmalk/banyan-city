@@ -522,5 +522,74 @@ verdict_0819:
     surface. ep2-b18-canon-0817''s verdict raised gloss as a founder card and left it open; this lane
     does not close it. Both plates are committed side by side so the choice can be made on pixels in one
     look.'
+  what_this_does_NOT_settle_NARROWED_0819: 'THE PARAGRAPH ABOVE IS LEFT STANDING AND IS NARROWED, NOT
+    DELETED, because its reasoning is what the narrowing has to answer. It was written as though the fig''s
+    finish were an OPEN taste axis. It is not open: it is DERIVED, and the derivation is in the repo and
+    predates both of these samples. See `pick_0819` below. What survives from the paragraph is the part
+    that really is R4 -- how glossy a fruit the author would WANT if he chose to overturn his own written
+    canon -- and that stays his in one word. What does not survive is treating an already-canon attribute
+    as unanswered and parking the beat on it.'
   is_this_plate_a_pick: 'NO. Same as the parent: no plate_ack, no promotion, no leaf, no lineage entry,
     nothing in any cut. Beat 19 has TWO passing plate samples now and zero picks.'
+  is_this_plate_a_pick_SUPERSEDED_0819: 'IT IS NOW, in the only sense a steward can pick: see `pick_0819`.
+    The sentence above was true when it was written -- both samples had passed and neither had been chosen
+    -- and it is kept verbatim so the change is visible. Still literally true in it: no plate_ack, no promotion,
+    no leaf, no lineage entry, nothing in any published cut. Those are the author''s.'
+
+pick_0819:
+  date: '2026-08-19'
+  decided_by: steward (beat 19 motion lane), derivation not taste
+  picked: ep2-b19-sapgloss-0819 -- strength 0.22, b19-sapgloss-s20260819.png
+  not_picked: ep2-b19-sapcomp-0819 -- strength 0.30. It PASSES and stays committed beside the winner; it
+    is the control that makes the winner readable, and it is not withdrawn or deprecated.
+  what_this_pick_is: 'THE PLATE THE MOTION RUNG CONDITIONS ON, and the recipe this lane recommends carry
+    forward. Steward-side under the 2026-08-18 boundary: bars, tradeoffs and routes are the steward''s;
+    taste is the author''s. This is a route decision between two passing samples where the repo''s own canon
+    already names the attribute they differ on. It is NOT a plate_ack and NOT a publication.'
+  the_derivation_this_rests_on: 'THE FIG''S FINISH IS ALREADY WRITTEN DOWN, and it says matte. Three independent
+    places, none of them authored for this decision:
+
+    1. THE FIG CLAUSE ITSELF, in every current beat-01 authored draft -- the attribute travels with the
+    subject, not with the beat. `authored_b01_scale_0816` and the two newest 08-17 rungs
+    (`authored_b01_nodecount_0817`, `authored_b01_stage_0817`) all carry: "one small deep purple-violet
+    fig, green at its neck, MATTE, growing on its thin stem". pipeline/wave-drafts.yaml, lines 518 and 573.
+    This is the live wording, not an archived round.
+
+    2. AN EXPLICIT PRIOR REJECTION OF GLOSS ON THIS EXACT FRUIT, twice, on beat 01.
+    wave-drafts.yaml:225-227 -- "the fruit came back GLOSSY, with hard specular highlights and a wet look,
+    WHERE THE CANON IS MATTE WITH NO SHINE AT ALL"; and the cold-read fault list at :242 -- "TOO GLOSSY -
+    a hard star/sparkle flare, nothing about it reads matte", after which "gloss is banned explicitly".
+    A whole reference set was then built for it (:270) -- "the fruit tells it the colour AND THE MATTE
+    SURFACE". Gloss on this fruit has been treated as a DEFECT in this repo for five days.
+
+    3. canon.yaml SCOPES THE FIG SUBJECT ONTO BEAT 19 EXPLICITLY. `ep2-fig-purple`, scope
+    beats [19, 20], prompt_mentions figs?|fruit -- so the fig subject''s canon reaches this beat by name.
+    That subject rules the COLOUR (purple, and 0.22 is purple: body hue 279 deg). It names no finish, which
+    is the point below.'
+  counter_evidence_i_looked_for_and_did_not_find: 'I looked for a canon clause that MANDATES gloss or that
+    exempts beat 19 from the fig''s finish, because the instruction said to pick differently if canon contradicted.
+    There is none. What exists is the reverse asymmetry, and it is worth stating precisely so nobody over-reads
+    this: `ep2-fig-purple` constrains colour and is SILENT on finish -- so matte is not enforced by a checker
+    on beats 19/20 the way purple is. Silence is not contradiction. The finish is carried by the authored
+    fig clause (1) and by a documented defect history (2), and nothing anywhere prefers a specular. There
+    is no tension to name.'
+  decided_on_the_pixels_not_the_label: 'REQUIRED, because "sapgloss" is a JOB NAME and could have been
+    the glossier one -- the id means "the job that went after gloss", not "the glossy output".
+    farm-out/ep2-b19-sapgloss-0819/EVIDENCE-fruit-composite-vs-030-vs-022-8x.png, read left to right at
+    8x: panel 1 the drawn composite, a flat two-tone matte fill; panel 2 the 0.30 output, a large hard-edged
+    bright lobe covering roughly a third of the fruit with its own crisp boundary -- a specular, and it
+    reads WET; panel 3 the 0.22 output, one soft terminator across the body, lighter above and dark below,
+    no bounded highlight -- an ordinary cel shadow, i.e. the house dialect. The 0.22 panel is the matte-consistent
+    one. The instrument agrees (p99-p50 luminance over the segmented body: composite 4.3, 0.30 = 71.8,
+    0.22 = 23.9) but the read above is the decision and the number is the filter -- "a metric agreeing with
+    me is not a sample".'
+  one_thing_the_pick_costs: '0.30''s glossier fruit came with slightly more incident at the leaf junction.
+    0.22 loses that AND loses the parent''s extra junction leaflets, which were the parent''s one PARTIAL --
+    so the same key that removed the specular also removed a defect. Net cost of the pick is the incident
+    only, and canon does not ask for it.'
+  veto_note: 'ONE LINE OVERTURNS THIS, for $0: say "glossier fruit" and ep2-b19-sapcomp-0819''s plate is
+    already rendered, committed and passing -- it becomes the pick with no GPU and no re-render, and only
+    the motion rung re-runs. Overturning it also overturns the beat-01 fig clause, which is why it is worth
+    one line of yours rather than a parked beat.'
+  what_fires_off_this_pick: ep2-b19-dropmotion-0819 -- the motion sample, conditioned on b19-sapgloss-s20260819.png.
+    Filed by the same lane on the same day; see that spec for the staging derivation and its own bar.
