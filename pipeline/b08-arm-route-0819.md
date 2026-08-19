@@ -955,3 +955,68 @@ wording rung whose risk is the token budget (64 of 77 used). Only if that fails
 does the board hint get a stroke for the gripping hand, and that would be the
 first figure ink ever placed in it and must be argued against the five tracing
 losses rather than slipped in.
+
+## 18. Nine words bought a grip and paid for it with the clipboard (2026-08-20)
+
+One variable, the positive prompt, +9 words: `clipboard lowered in one hand,`
+gained `fingers and thumb gripping the clipboard edge,`. Every conditioning
+input byte-identical and verified in the sidecar — both nets, both hints, both
+capsule masks, both references, `--scale` 1.0, `--scale2` 0.3, seed 20260819,
+negative unchanged. Budget measured on animagine's own vocab: 64 → **73 of 77**.
+
+| clause | twinsipa | §16 at 0.8 | §17 at 0.3 | §18 at 0.3 + 9 words |
+|---|---|---|---|---|
+| B4a board | absent | drawn, no arm | **drawn, arm reaches it** | **ABSENT** |
+| quad px < luma 80 | — | — | 0.758 | **0.235** |
+| B4b grip | — | — | mitten, no digits | **fingers + thumb, on the SASH** |
+| B8 hair (canon) | sandy | bald | sandy | **BALD** |
+| B7 guard / goblin | 10.6 / 0.7 | unmeasurable | 21.7 / 8.1 | **3.8 / 11.1 spread, PASS** |
+| B2 separation | +42.0 | +77.7 | +60.6 | **+54.4** |
+| B4b hand→wrist | 41.5 px | 10.2 px | 48.5 px | **41.2 px** |
+| frame mean luma | 141.6 | 86.9 | 135.4 | **127.3** |
+
+**Two pre-registered branches fired at once, and one fired harder than it was
+written.** Branch (5) was written for a board that *degrades*; what arrived is a
+board that is *gone* — the authored quad holds the wrap skirt, the grass and the
+gold belt clasp, and no board appears anywhere else in the frame. Branch (4) —
+prompt crowding — is confirmed by the hair: at identical conditioning, with
+`light sandy hair` in both prompts, the parent came back sandy and this frame
+came back bald.
+
+**The diagnostic half, and it is why the frame was worth rendering: the grip
+clause worked as a SUMMONS and failed as a BINDING.** Fingers and a thumb are
+drawn, separated and articulated at 4x, on the correct far hand — and closed
+around the diagonal **sash strap** at his chest, which is where that hand
+already was in §17. The words reached the right hand and the wrong object.
+Repeating the noun `clipboard` was chosen to bind the digits to the object and
+instead the render resolved the ambiguity toward the object already under the
+hand. The pre-registered duplication risk did not fire: boards in frame, zero.
+
+**§17's headline needs one word changed.** `--scale2` 0.3 is not *robust*, it is
+**prompt-coupled**: it carried the board for exactly the 64-token text it was
+measured against and did not carry it for nine more words at the same strength.
+Every future beat-08 prompt edit re-verifies the board rather than assuming it.
+
+**The B8 instrument has two inputs, not one.** It was calibrated on conditioning
+load (bald at 1.0+0.8, sandy at 1.0+0.3). It moved here with conditioning fixed
+and only the token count changed. A bald guard on this beat now reads
+"over-conditioned **or** over-crowded", told apart by which one moved.
+
+**An admissibility extension §17's rule does not cover.** §17 established that a
+probe box must publish its *material*. This frame establishes that **on the
+guard, colour alone cannot decide that material**: his cream shirt measures
+R−B 34.7 against his skin's 42.6–49.7, and the first probe placed here by a
+colour predicate landed on a **sleeve** at 100 % "pale". Guard probes are placed
+by eye at 5x and published with their R−B; the goblin's green needs no such care
+(100 % on all three boxes).
+
+**Next: ONE sample, and the variable is `--scale2`, with this frame's wording
+held byte-identical.** The open question is whether the board and the grip
+compete for one conditioning budget — they have never been asked for together at
+a strength that could carry both. 0.3 → ~0.5: board back **and** fingers kept
+means beat 08 has its recipe; board back and hair still bald means the two
+failures are independent and the wording comes out; neither back means the
+second net cannot hold an object against a crowded prompt at any strength that
+leaves the drawing alone, and figure ink in the board hint becomes the argued
+lever instead of the speculative one. **§17's frame remains the best on this
+beat** and this one does not displace it.
