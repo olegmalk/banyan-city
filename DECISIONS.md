@@ -1526,3 +1526,269 @@ job was authored.
 **How to revisit:** his sentence, so he amends it with a different one. The
 countersignature is the first thing to ask for; if it does not come, this entry
 stands as what was said and by whom, and the five approvals are traceable to it.
+
+---
+
+## D23 — The automation charter: the steward runs on the founder's recorded words, and his board holds only what is new (OPEN — awaiting the founder's signature. Drafted by the steward 2026-08-19 at his own instruction; it enacts nothing until he signs, because automating his role is a governance change and governance is not the steward's)
+
+**Question:** in six days three separate directives moved whole classes of
+decision off the founder's board — his own on 2026-08-13, his father's on
+2026-08-14, his widening on 2026-08-18 — and on 2026-08-19 he asked for the
+principle instead of another instance. Every one of those rulings lives in chat
+memory and a memory file; none of them is in this file, which is the only place
+this project treats as binding. So: **what exactly is automated, what is never
+automated, and how does the automated part stay answerable to him?** The
+question is asked here rather than in a commit because the answer changes who
+decides, and that is the one class of change STEWARDSHIP §5 and the
+founder-reserved list in `CLAUDE.md` keep out of the steward's hands. The
+steward may draft it. It may not sign it, and it would be a self-serving
+absurdity if it could.
+
+**Status:** **open, awaiting the founder's signature.** Nothing below is in
+force. Until he signs, the boundary that governs is exactly what 08-13, 08-14
+and 08-18 already gave and no wider — this entry does not quietly extend them by
+writing them down. What it does do is make them *citable*: a lane that resolves a
+card today has to reconstruct the delegation from three quotes in a memory file,
+and that reconstruction has already been done inconsistently.
+
+**The record — their words, verbatim and unedited, with dates.**
+
+The founder, 2026-08-13, offered a four-take pool to choose from:
+
+> this doesn't seem like something i should decide, i am not a software engineer
+> or some mastermind, you need to do more heavylifting using your intelligence,
+> why rely on me for things like this? i am more here to decide taste.
+
+The founder, later the same day — the sentence that made it a standing rule
+rather than one refusal:
+
+> also i think you can filter some of the decisions for yourself, decisions
+> which you can answer yourself.
+
+Dad (Oleg), 2026-08-14, relayed by the founder in session:
+
+> i should slowly start trying to minimize the amount of work i do with banyan
+> city so i can focus on other things, like trying to make you handle more
+> things by yourself and stuff, and maybe giving dan some job if its about taste.
+
+The founder, 2026-08-18, asked whether beat 01's quality bar should hold:
+
+> do you really need me to decide this? you should be much more intelligent than
+> me and you should know what is the best to choice, the trades over time and
+> quality, all of this. it just seems illogical to make me decide this, you
+> should know best afterall. just leave me the taste questions for now, remember,
+> we are trying to slowly automate more things, and unblock time for me to work
+> on other projects. ... try to select which decisions I should make, more
+> strategically from now on.
+
+The founder, 2026-08-19, minutes after asking *"honestly what really is my role
+in all of this?"*:
+
+> but ideally we want to start automating as much as possible. we talked about
+> this in the previous chat.
+
+Those five quotes are the whole authority for what follows. Nothing here is
+derived from the steward's convenience, and where a proposal goes past the words
+it says so.
+
+**The shape, in one line, so the five sections below can be checked against it:**
+*his recorded words become the machine's law; his live attention is spent only on
+what his recorded words cannot answer.*
+
+---
+
+### 1. Ledger pre-screening — a take that contradicts a recorded ruling never reaches his board
+
+**Proposal.** No card reaches the founder's board carrying a candidate that
+contradicts a subject already registered in `pipeline/canon.yaml`. Such a
+candidate is **auto-vetoed at board-build time**, and the auto-veto must quote
+the founder's own registered sentence and name the subject id. He sees what is
+left: genuinely novel questions.
+
+**This extends machinery that already exists and already makes this exact
+judgement.** It is not a new faculty:
+
+- `pipeline/canon.yaml` is the register — 8 founder subjects today
+  (`ep2-guard-cast`, `ep2-guard-hair`, `ep2-fig-purple`, `sapling-two-leaves`,
+  `sapling-cotyledon-shape`, `sapling-fig-not-green`, `sapling-height`,
+  `ep2-goblin-character-gate`), each with `evidence:` pinning a file and a
+  literal string so the register cannot go stale quietly.
+- `pipeline/check_canon_drift.py` already does the subject × artifact
+  cross-product. Its **R2 `prompt_contradicts_canon`** is precisely this rule
+  aimed at prompts instead of at candidates, and its module docstring records
+  why a *heuristic* was rejected in favour of a declared subject: `bald` is canon
+  in 272 goblin prompts and the defect in 84 guard ones, and no word-level rule
+  can tell those apart.
+- `taste/steward-model.v1.md` **Stage 0** already carries the conclusion in the
+  founder's interest: *"admissibility gates (binary; a fail means DO NOT SHOW IT
+  TO HIM)"* — a gate failure is not a low score, it means the candidate is
+  unjudgeable. Pre-screening adds one gate source to that stage: his own past
+  words.
+
+**The hard boundary, and it is the reason this is safe.** The pre-screener may
+cite **only a registered founder ruling**. It may not score beauty, rank takes,
+or hold anything back for being weak — `taste/steward-model.v1.md`'s own header
+says a disagreement between the model and the founder means the model is wrong.
+A take that is merely *bad* and violates nothing still goes to him. If the check
+cannot name the sentence it is enforcing, the card passes through — his 2026-08-03
+rule, *"A metric agreeing with me is not a sample"*, is the same warning one level
+over: a number the steward chose is never a stand-in for a word the founder said.
+
+**What has to be built before this is real** — stated so signing it is not
+mistaken for having it: `check_canon_drift.py` runs on demand and is **not in
+CI** (`lint.yml` and `pages.yml` run `lint_genome.py` only), and the board build
+`review/inbox/regen.py` has **no canon consumer at all**. Pre-screening is one
+new call site plus the CI wiring, not a new model.
+
+### 2. Silence-accepts as the default — a 48-hour veto window on picks and on cuts
+
+**Proposal.** Every steward pick and every assembled cut is published to him with
+a stated deadline. **48 hours** after he has been handed a link that is verified
+live, it stands. Veto is one line at any time, before or after the window, and a
+veto is a revert — R6, nothing is deleted, nothing is lost by it.
+
+**His pattern, already in the record, which this only makes into a number.**
+
+- The board already prints it as policy: the `pick` group's own text reads *"I
+  chose the take. You do not need to pick; say nothing and it stands."*
+- 2026-08-13: *"03 and 17 accepted by silence; 21 vetoed on its background"* —
+  the mechanism working in both directions on the same sheet.
+- 2026-08-15, the guard pair: *"ill take the guard b you chose"*, recorded as
+  **"the veto window is closed"**. The phrase is his outcome, not our coinage.
+- 2026-08-17, **beat 11 r1s1** — the pattern named and used deliberately: *"I AM
+  PROMOTING IT AND YOU CAN VETO … Picking takes is mine under your own boundary,
+  so I am picking this one rather than asking you to. Say nothing and it stands."*
+- And the reason a late veto costs nothing: 2026-08-07 on the same beat — *"beat
+  11 actually became worse when we wrongly fixed 'mitosis' which was never there,
+  so you should revert it."* One sentence, a revert, and the pre-fix
+  `motion.yaml` came back. That is what the window is underwritten by.
+
+**Two things are new and only two.** (a) The window is a stated interval instead
+of an unstated mood, so a lane can tell "accepted" from "unread" without asking
+him. (b) It extends from picks to **assembled cuts** — a whole cut may stand by
+silence, which today it does not.
+
+**The clock starts on a verified handover, not on a commit.** The artifact must
+be live and opened before the timer runs (`qa_local.py` / the founder-handover
+rule). A window that expires on a page he could not load is a fiction, and on
+2026-08-19 the review page he was pointed at was still serving pre-correction
+text behind a cache HIT. If he has had no session in the interval, the window has
+not started.
+
+**What acceptance by silence does NOT mean.** An accepted cut is canon-eligible
+and publishable to the unlisted review area under D17 — *WORKING CUT, NOT THE
+EPISODE*, noindex. It is **not** an episode and not a publication. That is §4
+item 5, and §2 does not reach it.
+
+### 3. Taste-file evolution — every ruling of his is codified within 24 hours
+
+**Proposal.** Current practice becomes a duty with a deadline: **every founder
+taste ruling is registered as a `canon.yaml` subject within 24 hours**, carrying
+his verbatim sentence, its date, and `evidence:` pinning the artifact that must
+still agree with it. `taste/steward-model.ledger.yaml` continues to record a
+predicted verdict *before* he speaks and his words beside it, and only misses
+drive a model revision (D19).
+
+**Why a deadline and not an intention.** `canon.yaml`'s own header is five
+instances of the same loss, and the first is the argument: on 2026-08-14/15 the
+founder cast both guards, the approval reached `review/inbox.yaml` and **nowhere
+else**, and four beats stayed blocked for a day on a decision that already
+existed. The register's stated contract is *"register a subject WHEN YOU WRITE
+THE BLOCK, not when it clears."*
+
+**And it is the price of §1.** Pre-screening is exactly as wide as the register:
+a ruling not codified is a ruling the machine cannot enforce, which means the
+same question is handed back to him a second time. Section 3 is what keeps
+section 1 from decaying into asking him twice.
+
+### 4. What is NOT delegated — numbered, and not amendable by the steward under any reading of any quote above
+
+Per PROMISE.md, STEWARDSHIP.md §4/§5, and the founder-reserved list in
+`CLAUDE.md`. None of the five quotes touches any of these, and none of them will
+be treated as touching them:
+
+1. **Money and spend.** Any provider, any amount, and the specificity rule holds
+   — engine and amount as pitched; a substitution stops and re-asks (the $0.40
+   wan breach, 2026-07-28). Policy about money may be resolved by the steward
+   (D5); rails that move it never are.
+2. **Credentials and accounts.** Keys, logins, transfers, ownership. The presence
+   of a key is not permission to use it.
+3. **Governance changes — including this entry.** Amending this charter,
+   widening it, or reading it more generously than written is his act alone.
+   STEWARDSHIP §5's citizen-reserved items (Guideline 6 amendments, D6's rename,
+   D7's stewarding entity) are not his either — those belong to citizens, and the
+   right to branch in PROMISE.md may never be removed by anyone.
+4. **Taste-axis scores, trunk calls and graft calls — R4, untouched.** What a
+   character or a thing *is*, what it should feel like, what the show keeps. The
+   08-18 widening moved bars, tradeoffs, routes, defect rates and which-frame
+   picks to the steward; it moved no axis score and no trunk call, and it said so
+   in the same breath: *"just leave me the taste questions."*
+5. **Publication of a new EPISODE requires his explicit pass.** Not a window, not
+   silence, not an inference from a passed bar. Review cuts are the D17 exception
+   and stay inside it — unlisted, stamped, noindex. Distribution surfaces
+   (TikTok, anywhere with an audience) are publication in the full sense.
+
+**He may later grant standing publication authorization by amending this entry —
+and here is what that would take**, written now so the ask is one decision and
+not a negotiation:
+
+- **His words, in this file or in a commit of his own.** An entry the steward
+  types on his behalf is what D22 already flagged as wanting a countersignature.
+- **A named scope.** Which surface (review area / banyan.city / a distribution
+  account), and which class of artifact (a re-cut of an approved episode is not a
+  new episode).
+- **A pre-registered mechanical clearance, so "standing" means auto-clearance of
+  a checked list rather than absence of objection:** `pipeline/licence_gate.py`,
+  §7.2 provenance, and D21's gates 2 and 3 — *"promoted to canon"* and *"ready to
+  be published"* are already mechanical. D21's gate 1, *"polished"*, is taste and
+  cannot be pre-cleared by any machine; a standing authorization must either
+  accept that or exclude it.
+- **A one-line revocation.** STEWARDSHIP §2: his override is one commit, and this
+  must be no harder to withdraw than it was to give.
+
+### 5. The crowd clause — the long-run automation is the narrowing, not the taste
+
+**Restated from D11 and the 2026-07-27 directive** (*"This is the main artifact
+you should be building. Not trying to mindlessly for the first week to generate
+stupid videos."*): the endgame was never a steward that replaces his eye. It is a
+pipeline where **the crowd narrows, the taste file decides, and the founder
+overrides** — his role automated *by design*, in the shape the repo was founded
+in, rather than eroded by neglect. D11 item 3 stands unchanged: the crowd widens
+the option pool; taste picks what the show keeps.
+
+**What has to exist before this clause is anything but design:**
+
+1. **The board publishing a complete recipe per beat** — exists (D11 item 1: still, exact positive and negative as sent, model, seed, steps, cfg, resolution, fps).
+2. **Provenance-normalising intake** — exists (`pipeline/t3-trials/intake.py`), and **the crowd is zero**: no submission has ever arrived from outside this family. That number, not our enthusiasm, is what makes this clause live.
+3. **Screening volume that makes narrowing mean something** — D3's one-citizen-one-vote was chosen for a stage that barely runs yet, and D3 itself says revisit when manipulation becomes a real cost.
+4. **Section 1, first.** A crowd multiplies precisely the candidate class the pre-screener exists to filter; without it, opening the gates moves the bottleneck straight back onto his eye, which is the opposite of the point.
+5. **D12's shape held** — contributors are people with tasks, their own compute, no money custody. Automating narrowing must not smuggle in a money rail.
+
+Until item 2 is greater than zero, the honest statement is: **the automation in
+force today is the steward, not the crowd**, and this clause is a design
+commitment, not a live mechanism.
+
+---
+
+**What this entry does NOT do.** It approves nothing, opens no window, screens no
+card, and does not make today's practice one inch wider than the three directives
+already made it. It is a proposal, in the file where proposals are binding once
+signed. Its own §4 item 3 is the reason it must sit here unsigned rather than be
+enacted by the party it empowers.
+
+**Signature block — one line, and it is recorded the way he already signs
+things.** Reply **"D23 approved"** in session (or by any channel this repo
+already treats as authoritative — D19's corollary), and the steward converts this
+heading to `resolved (date, the founder, in chat)` with his words quoted verbatim
+and unedited, exactly as his *"all approved"* of 2026-08-19 08:10Z was recorded
+in `review/inbox.yaml` rather than paraphrased. **A partial signature is
+expected and welcome:** *"D23 approved except 2"* is a complete answer, and any
+section he does not sign simply does not exist. Silence is **not** acceptance
+here — §2 does not apply to §2's own charter.
+
+**How to revisit:** it is his, so he amends it with a different sentence, as an
+ordinary commit (STEWARDSHIP §2). The steward's standing duty in the meantime is
+narrower than the charter: keep §3 (codify his rulings within 24h) as practice
+because that is already required, keep his board at roughly one open question
+with pixels attached, and bring this entry back for signature rather than
+gradually behaving as though it were signed.
