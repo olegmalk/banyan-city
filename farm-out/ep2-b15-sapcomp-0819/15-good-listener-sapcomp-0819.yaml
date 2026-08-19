@@ -1,0 +1,137 @@
+# Composited-init provenance (§7.2), written by the beat-15 lane on the Mac.
+# NO MODEL RAN TO MAKE THIS FILE. It is plain image processing over a rendered
+# plate -- no seed, no sampler, no cost of its own. The seed and sampler that
+# matter belong to the INPAINT that consumes it
+# (pipeline/jobs/ep2-b15-sapcomp-0819.yaml).
+platform: "local (Apple Silicon, CPU only -- PIL/numpy, no GPU)"
+tool: "pipeline/beat15_listener_composite.py"
+model: "none -- no model was loaded"
+cost_usd: 0.0
+shot_beat: 15
+beat_slug: "good-listener"
+size: "832x1216"
+png_sha256: "109abc613ff5c6d6a334c9964abaabe121b2e20a10ca1d91d06ff4d79d29e91c"
+mask_png: "15-good-listener-sapcomp-mask-0819.png"
+mask_sha256: "f7933427bba319044058d8712a1574b35ad084768e5807b4f3e060a6ea810fdb"
+
+parent_plate: "farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png"
+parent_plate_sha256: "8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe"
+parent_plate_provenance: "animagine-xl-3.1, seed 20260819, 832x1216, Apple MPS, 141.1s, $0 -- scored 6 OF 7 in plate_scratch.py with all seven Q-modes silent"
+
+reproduced_byte_for_byte_before_it_was_committed: >-
+  This artifact was found on disk from a crashed peer's session and was NOT taken
+  on trust. The committed script was re-run against the committed parent plate on
+  a second machine session and produced sha256 109abc61... and mask f7933427...,
+  identical to the bytes committed here. So "deterministic: same arguments, same
+  bytes" is a checked fact rather than a docstring claim, and the exact command is:
+  python3 pipeline/beat15_listener_composite.py
+  --init farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png
+  --init-sha256 8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe
+  --out 15-good-listener-sapcomp-0819.png
+  --mask-out 15-good-listener-sapcomp-mask-0819.png
+  (every other knob at its default: thin-k 61, thin-tol 16.0, protect-grow 6,
+  remove-grow 3, fill-min-dist 26, mask-grow 12, feather 3)
+
+what_changed: >-
+  The PLANT, and nothing else. The parent's one multi-node weed -- five pointed
+  blades on three nodes, x 140-268 y 300-568 -- was removed and clone-filled from
+  the plate's own field, and one canon sapling was drawn in its place: a curved
+  tapered stem rooted at (222,592) into the plate's OWN surviving grass tufts, and
+  EXACTLY TWO wide oval leaves with soft round tips at (175,374) and (257,374),
+  43x25 px, aspect 1.72. No side-branch and no fig were drawn, deliberately: see
+  the_gap_flagged_not_fixed. Measured: max change OUTSIDE the inpaint mask is 0.0,
+  so every pixel of the six clauses the parent already PASSES is byte-identical.
+
+why_the_leaves_sit_where_they_do_and_it_is_the_APPROVED_LINE_not_taste: >-
+  The founder approved beat 15's rewritten staging on 2026-08-19 ("all approved",
+  recorded in 5d6eb792), and node.md:98 as rewritten reads "He tips his head down
+  and sideways until his EYES ARE LEVEL WITH THE TWO LEAVES, and talks to them from
+  a hand's width away; both of them share the frame." His eye level in this plate is
+  y 370, measured at 4x on the pupils behind his spectacles. The blades are centred
+  at y 374 and span y ~348-400, so HIS EYE LINE FALLS INSIDE THE BLADES -- staging no
+  beat-15 artefact out of twenty-four has ever depicted. That is also why the apex
+  moved down from the weed's y 336 to y 392: the plant is 200 px tall against the
+  weed's 256, its apex sits 135 px BELOW his head top at y 257, so P4 SCALE (the
+  first beat-15 clause ever to pass on scale) is untouched.
+
+why_drawn_and_not_pasted: >-
+  The route the b15 verdict named was "r1's frame with ep2-b12-tightB's leaves
+  composited in". Opening beat 12's pixels killed the paste on three measurements,
+  all taken before any drawing code existed: SCALE -- its blade components have major
+  axes 619/772/607/591 px where beat 15 needs ~80, a 7.4x-9.7x downsample and decal
+  tell #5; SHAPE -- those blades measure aspect 2.85/3.11/3.38 against
+  composite-init-pattern.md §8's pre-registered acceptable band of 1.6-2.6, so they
+  are LANCE-shaped by our own standing number; LIGHT -- beat 12 is backlit at sunset
+  with pink rim and near-black shadow sides, this plate is lit from straight above
+  (measured dx -0.072 dy -0.997), which is decal tell #2. Beat 12 is therefore the
+  ARCHITECTURE authority (smooth entire margin, no lobe, no serration, one strong
+  midrib) and not the pixel source. Same conclusion the beat-19 lane reached hours
+  earlier from the other side with beat 18's fig.
+
+measured_off_the_parent_before_any_code:
+  leaf_rgb: "(85.5, 111.8, 58.5), hue 90 deg -- mean of the parent's OWN top blades"
+  stem_rgb: "(76.0, 99.0, 68.0), hue 103 deg -- mean of its own stem"
+  rim_rgb: "(36.5, 50.4, 40.0), luminance 45.1 -- its own darkest 3% in the plant bbox"
+  outline_step: "213.9 -> 45.1 in luminance, which is what caps the drawn cel shadow and the midrib ridge (pattern §5: never composite an internal line stronger than the object's own outline)"
+  light: "dx -0.072 dy -0.997 from the sigma-40 low-pass luminance gradient of the whole plate -- lit from straight above"
+  clone_source: "the measured clean field at x 55-150 over the region's rows: luminance 212.1, std 4.7, 0.02% of px below 150"
+  his_silhouette_left_edge_per_row: "x 325 at y 300-380, 346 at 380-420, 370 at 420-460, in to 291 at y 500-540 and 264 at y 540-620 -- why the removal box stops at x 268 and y 565"
+
+run_measurements:
+  thin_structure_share_of_frame: "31.98%"
+  figure_silhouette_px: 208552
+  protect_mask_extent: "23.33% of frame, x 111..728 y 229..980 (no measured head box needed: fill_holes reaches the pale scalp because his own dark outline encloses it)"
+  removal_footprint_px: "21377 (2.11% of frame)"
+  clone_fill: "21377 px filled, 0 px left without a source, from 85630 eligible px in the restricted source window"
+  residual_thin_structure_in_footprint: "1290 px = 6.03% of the footprint, against the SAME test on an untouched window of this plate's own field at 1018 px = 4.12%. The removal is 1.46x the test's own floor here, which is what a clean clone looks like on a field with faint horizontal banding -- not 0."
+  drawn_footprint_px: "8540, extent x 133..298 y 343..592"
+  inpaint_mask_px: "42792 (4.23% of frame), extent x 121..310 y 285..604"
+  mask_px_on_him: "589 inside the dilated protect halo, 278 inside his silhouette proper (target 0). NAMED, not discovered: those 278 px are what makes FAIL-FIGURE a real clause in the job spec that consumes this init."
+  max_change_outside_the_mask: "0.0"
+  green_blobs_over_250px_in_the_plant_zone: "3 [3343, 3342, 414] -- the two blades and the stem read as ONE component where they touch at the joint, so 1 or 3 are both expected; the BLADE count is 2 by construction"
+  leaves_drawn: 2
+  nodes_drawn: 1
+  side_branches_drawn: 0
+  figs_drawn: 0
+
+two_rounds_REJECTED_BY_EYE_before_this_one:
+  the_straight_stem: >-
+    A dead-straight 256 px stem with a two-blade crown read as a TELEVISION AERIAL
+    or a lollipop, not a seedling -- the same class of rejection beat 19's own
+    geometry() records, arriving here through a different door. The parent's own weed
+    bows gently right through its middle, so the drawn stem is sampled along a
+    quadratic Bezier carrying that bow, tapering 7.0 px at the root to 2.1 px at the joint.
+  the_unrestricted_clone_source: >-
+    With the fill source left free, the nearest acceptable pixel for rows y 493-557 was
+    found out past his cloak, and the composite came back with a row of grey dashes at
+    x 233-257 and a vertical seam down the box's own right edge at x 262 -- both visible
+    at 3x, both rejected. composite-init-pattern.md §12's SOURCE LAW is the general form;
+    the specific fix is that this plate HAS a measured clean field and the fill is made
+    to use it (SOURCE_COLUMNS 55-150). Restricting the source removed both artefacts.
+
+the_rooting_cue_is_KEPT_on_purpose: >-
+  composite-init-pattern.md §13 in the POSITIVE: "a masked vacancy is filled with
+  whatever the surviving cue suggests ... an attachment point is a structural cue and it
+  is as strong as an outline." On beat 01 that law cost a rung. Here the removal stops at
+  y 565, ABOVE the plate's own grass tufts at y 563-607, so the tufts and the last 25 px
+  of the original stem base survive untouched and the drawn stem is rooted INTO them. The
+  plate does the rooting; the sampler is asked to finish a join that is already physically
+  there.
+
+the_gap_flagged_not_fixed: >-
+  NO SIDE-BRANCH AND NO FIG WERE DRAWN, and that leaves a real continuity gap reported
+  rather than smuggled. THE-SAPLING.md's growth ladder gives 002a/b/c "two leaves + one
+  thin side-branch", and the fig does not leave the plant until beat 19 -- so at beat 15
+  the episode's own continuity puts a fig on this plant, and neither r1's prompt nor r2's
+  ever asked for one. The bar this rung is scored against is beat 15's own P3, "Exactly
+  ONE plant, TWO leaves, ONE thin stem. Extra stalks, extra leaves ... or a bud/ball at
+  the tip all FAIL" -- a drawn side-branch scores as an extra stalk and a drawn fig as a
+  bud at the tip. ONE VARIABLE PER RUNG: this rung is the LEAF COUNT. The fig is a second
+  variable and is separately frozen canon belonging to the fig lane (ep2-fig-purple in
+  pipeline/canon.yaml, scope.beats [19, 20]).
+
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-built composite INIT, not a plate, not a pick and not canon.
+  It takes no canon filename, is not published, not posted and not assembled into an
+  episode. Ground truth is the founder (R4).
