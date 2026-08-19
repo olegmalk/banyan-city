@@ -129,3 +129,25 @@ derivation:
   by: pipeline/derive_b20_motion_0819.py
   what_changed: the two filenames and their shas, the repo directory fetched from, the output and publish
     directories, and the id. The refusal semantics, the named-in-full publish and the manifest are the parent's.
+outcome_this_job: 'PASS on its only bar, which is identity. rc=0, queue record
+  ep2-b20-plateship-0819-1787135892. Two files on farm-out/ep2-b20-plateship-0819 plus the manifest
+  the job writes itself. VERIFIED AGAINST THE REPO COPY, not against the job''s own manifest:
+  20-evidence-mac-plate-r1s1.png hashes 4b87cf4f40772af7942077e9a1c30198aa78aaeac70b9a26dda5808d9a04d119
+  and 20-evidence-mac-plate-r1s1.yaml hashes 3d9465a4f231b132ad84f78c0ff4b36f6cf1bb4b5ee35c4b86cadccb230ce6f4,
+  both byte-for-byte the files committed on main at farm-out/ep2-b20-mac-plate-0819/. The png_sha256
+  field inside the sidecar agrees with the PNG it travels with. The plate crossed machines intact.'
+outcome_the_consumer_was_served: ep2-b20-motion-0819 fired on this plate at this sha and produced beat
+  20's first frame of footage in the history of the repo. Whether that footage is cuttable is that
+  job's verdict, not this one's.
+outcome_WHAT_TRAVELLED_WITH_IT_AND_MUST_NOT_BE_LOST: 'THE SIDECAR THIS JOB FAITHFULLY COPIED SAYS THE
+  PLATE IS AN UNSCORED CONTROL. Read out of 20-evidence-mac-plate-r1s1.yaml itself: `scored: false`,
+  `founder_verdict: null`, and `why_this_plate` describes r1 as "the CONTROL -- the failing prompt,
+  byte for byte" for the founder''s 2026-08-16 purple ruling ("the fruit should be purple. it should
+  not be that hard to make it purple."). Its positive prompt carries no colour word at all, which
+  is the whole point of a control. So this courier moved a deliberately-unfixed plate, correctly,
+  and anything rendered on it inherits an open colour question that no verdict on the MOTION can
+  close. Named here so a later reader does not mistake "the plate shipped clean" for "the plate
+  passed".'
+outcome_no_further_work: A courier, finished. It licenses nothing and picks nothing --
+  `this_is_not_a_pick` above still holds, and the other 24 seeds of the 2026-08-19 macbook1 wave
+  remain unpublished and unscored.
