@@ -55,8 +55,33 @@ its sha is still 562911c8..., the byte-identical hint the passing job used. The
 IP-Adapter capsule masks are not modified either -- board ink lives in a CONTROL
 image, masks live in argv, and they do not interact.
 
+THE GRIP LOOP (`--grip`, added 2026-08-20, OFF BY DEFAULT). One closed,
+hand-sized loop centred on the authored L-wrist and straddling the board's top
+edge -- the FIRST figure ink ever placed in this hint. It is authorised by the
+written argument in `pipeline/work-ladder-0819.md` ("the grip mark, argued
+against the five tracing losses"), and three of that argument's load-bearing
+claims are asserted here AS PIXELS rather than as prose:
+
+  * ENCLOSURE, not a stroke. The mark is a closed polygon and `--selftest`
+    proves it the way route-log section 10 proved the contour/skeleton
+    distinction -- a flood fill seeded at its centre, off-ink, must be TRAPPED.
+    The named proposal three rungs kept repeating was "a short stroke", which is
+    tracing loss 4 exactly (r4's 1 px finger, which did not carry); a stroke is
+    refused here and a closed loop is what gets drawn.
+  * NO NEW LIMB. The loop lives inside the SAME three-limb carve-out the board
+    already occupies -- {gripping forearm, torso, L thigh} -- and the limb-set
+    assertion below is run against the grip hint too, unchanged. The nearest
+    limb it does NOT already touch is 81.6 px away and its own reach is 36.3 px.
+  * ONE VARIABLE, PROVABLY. `build()` keeps its old default, so the parent's
+    filed hint stays byte-identical at 38cd39da...; `--selftest` re-derives it
+    in memory and checks that sha, and separately checks that the grip hint is a
+    strict SUPERSET of it. The two hints therefore differ by the loop and by
+    nothing else, as a measurement rather than an intention.
+
     python3 pipeline/author_b08_board_hint.py --selftest        # no GPU, no net
     python3 pipeline/author_b08_board_hint.py pipeline/control/b08-board-0820.png
+    python3 pipeline/author_b08_board_hint.py --grip \
+        pipeline/control/b08-board-grip-0820.png
 """
 import argparse
 import hashlib
@@ -83,8 +108,37 @@ BOARD_CY_OFF = 0.012      # frame heights below his hip -- at the hip, not the c
 TILT_DEG = 9.0            # a held board is never axis-aligned
 GRIP_FRAC = 0.28          # in from the left end of the top edge
 STROKE = 7                # author_b08_pose_hint's default, and the weight the
-                          # four passing B4a frames were conditioned at
+                          # four passing B4a frames were conditioned at.
+                          # ALSO THE WEIGHT THE GRIP LOOP IS DRAWN AT, and that
+                          # is the argument's choice rather than convenience:
+                          # route-log section 9 measured stroke as a PRECISION
+                          # dial, not a strength dial. 3 px is a single
+                          # unambiguous edge locus and the outline snaps to it
+                          # (r4's fingerless wedge); 7 px is an ambiguous ribbon
+                          # the model fills with its own drawing, which is why
+                          # r2 -- the one positive in the five losses -- came
+                          # back with an articulated hand at an enclosed arm
+                          # terminus. Do not thin this to "be gentler".
 CLIP_INSET = 0.25         # the clip spans the middle half of the top edge
+
+# ---------------------------------------------------------------------------
+# THE GRIP LOOP. Sized as a fraction of the guard's STATURE, like every other
+# number in this staging, so it cannot drift out of scale if he is re-staged.
+# 0.065 x 0.050 of stature is 52.2 x 40.1 px at the filed staging -- a closed
+# fist, measured against the one this frame already draws (the render's fist on
+# the harness strap spans roughly 50 x 55 px at 8x).
+#
+# THE SHAPE IS DELIBERATELY DUMB, AND THAT IS THE r2 LESSON. r2's hand was good
+# and "aimed wide BY CONSTRUCTION" -- hand-authored geometry fails by being
+# confidently wrong, so this asserts the least it can: a symmetric rounded form
+# at the arm's terminus, tilted with the board, with NO knuckles, NO thumb and
+# NO finger divisions authored. Digits are the model's job and the parent frame
+# proves it still does that job at 0.3 (its B6 verdict reads "a well-drawn fist
+# gripping the harness strap with individual fingers").
+# ---------------------------------------------------------------------------
+GRIP_W_STATURE = 0.065    # fist width, along the board's top edge
+GRIP_H_STATURE = 0.050    # fist depth, across it
+GRIP_CORNER = 0.55        # octagon corner cut -- a rounded rect, not a box
 
 
 def board_geometry(width=W, height=H, guard_x=GUARD_X, guard_h=GUARD_H,
@@ -141,19 +195,40 @@ def board_geometry(width=W, height=H, guard_x=GUARD_X, guard_h=GUARD_H,
     if btop < 0 or bcy + bh / 2.0 > height:
         raise ValueError("the board falls outside the %dx%d frame" % (width, height))
 
+    # THE GRIP LOOP, centred on that same point. Rotated by the board's own
+    # tilt so its long axis lies ALONG the top edge -- a fist wrapping an edge
+    # is wider across the edge than along the forearm -- and straddling the
+    # edge, half above and half below, which is the occlusion the beat asks for
+    # ("in one hand", not "under a sleeve").
+    ga, gb = GRIP_W_STATURE * gu_h / 2.0, GRIP_H_STATURE * gu_h / 2.0
+    c = GRIP_CORNER
+    grip_poly = []
+    for ox, oy in ((-1.0, -c), (-c, -1.0), (c, -1.0), (1.0, -c),
+                   (1.0, c), (c, 1.0), (-c, 1.0), (-1.0, c)):
+        px, py = ox * ga, oy * gb
+        grip_poly.append((grip[0] + px * ct - py * st,
+                          grip[1] + px * st + py * ct))
+
     return {"cx": bcx, "cy": bcy, "w": bw, "h": bh, "top_y": btop,
             "corners": corners, "clip": clip, "grip": grip,
+            "grip_poly": grip_poly, "grip_w": 2.0 * ga, "grip_h": 2.0 * gb,
             "guard_cx": gu_cx, "guard_hip_y": gu_hip_y,
             "guard_stature_px": gu_h, "ground_y_px": gy}
 
 
 def build(width=W, height=H, stroke=STROKE, guard_x=GUARD_X, guard_h=GUARD_H,
-          ground_y=GROUND_Y):
-    """The board-only hint. Returns (PIL RGB image, metadata dict).
+          ground_y=GROUND_Y, grip=False):
+    """The board hint. Returns (PIL RGB image, metadata dict).
 
     White on black -- the scribble convention, and the polarity the driver
-    records as `control_polarity: white-on-black`. NOTHING is drawn but the
-    quad and its clip.
+    records as `control_polarity: white-on-black`.
+
+    `grip=False` (THE DEFAULT, AND IT MUST STAY THE DEFAULT) draws the quad and
+    its clip and NOTHING else -- byte-identical to the hint every rung from
+    ep2-b08-boardnet-0820 to ep2-b08-scale50-0820 was conditioned on, sha
+    38cd39da..., which `--selftest` re-derives and checks. `grip=True` adds ONE
+    closed loop at the authored L-wrist and changes nothing else, so the two
+    hints differ by exactly that loop.
     """
     from PIL import Image, ImageDraw
 
@@ -183,6 +258,26 @@ def build(width=W, height=H, stroke=STROKE, guard_x=GUARD_X, guard_h=GUARD_H,
         "figure_pixels": 0,
         "ink_fraction": None,
     }
+
+    if grip:
+        gp = g["grip_poly"]
+        # SAME stroke as the board, and drawn CLOSED -- the last vertex is
+        # repeated. An unclosed polyline here would be a stroke, which is the
+        # class that has already lost once (r4's 1 px finger).
+        d.line(list(gp) + [gp[0]], fill=ink, width=stroke, joint="curve")
+        meta["hint_class"] = ("closed quad (the board) PLUS one closed "
+                              "hand-sized loop at the authored L-wrist -- "
+                              "enclosure class, not a stroke")
+        meta["figures_drawn"] = 0   # still no figure: one body part's contact
+        meta["grip_loop"] = {
+            "centre": tuple(round(v, 4) for v in g["grip"]),
+            "w": round(g["grip_w"], 1), "h": round(g["grip_h"], 1),
+            "tilt_deg": TILT_DEG,
+            "vertices": [tuple(round(v, 1) for v in p) for p in gp],
+            "class": "closed loop (flood-fill-trapped); NOT an open stroke",
+            "argued_in": "pipeline/work-ladder-0819.md -- the grip mark, "
+                         "argued against the five tracing losses",
+        }
     return img, meta
 
 
@@ -208,6 +303,12 @@ def sha256_file(path):
 # --selftest and compared, so this module can never be the reason that sha moves.
 OPENPOSE_HINT = "pipeline/control/b08-openpose-nat-0819.png"
 OPENPOSE_SHA = "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0"
+
+# The BOARD-ONLY hint, as conditioned by every rung from ep2-b08-boardnet-0820
+# through ep2-b08-scale50-0820. Adding the grip loop must not move it: this is
+# the assertion that keeps "one variable" a measurement instead of a promise.
+BOARD_HINT = "pipeline/control/b08-board-0820.png"
+BOARD_SHA = "38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6"
 
 
 def selftest():
@@ -261,6 +362,21 @@ def selftest():
               sha256_file(filed) == OPENPOSE_SHA)
     check("the board hint is NOT the openpose hint (two nets, two conditions)",
           img.tobytes() != op_img.tobytes())
+
+    # ---- AND THE DEFAULT BOARD HINT HAS NOT MOVED ------------------------
+    # The grip loop is opt-in for exactly this reason. Four rungs were
+    # conditioned on 38cd39da...; if adding a flag changed the default, the
+    # grip rung would silently be a TWO-variable job.
+    dbuf = io.BytesIO()
+    img.save(dbuf, "PNG")
+    default_sha = hashlib.sha256(dbuf.getvalue()).hexdigest()
+    check("the DEFAULT hint (grip=False) is still byte-identical to the one "
+          "four rungs rendered from, sha 38cd39da... (got %s...)"
+          % default_sha[:8], default_sha == BOARD_SHA)
+    dfiled = Path(__file__).resolve().parent.parent / BOARD_HINT
+    if dfiled.exists():
+        check("and the FILED board hint on disk still carries that sha",
+              sha256_file(dfiled) == BOARD_SHA)
 
     # ---- ZERO FIGURE PIXELS, ASSERTED AS PIXELS --------------------------
     # (a) POSITIVE CONTAINMENT: everything lit is inside the board quad grown
@@ -324,20 +440,28 @@ def selftest():
                  (14, 16): "Reye-Rear", (0, 15): "nose-Leye",
                  (15, 17): "Leye-Lear"}
     EXPECTED_OVERLAP = {"gripping forearm", "torso (neck-Lhip)", "L thigh"}
-    hit = set()
-    for i, j in oph.LIMBS:
-        a, b = gk.get(oph.KP[i]), gk.get(oph.KP[j])
-        if a is None or b is None:
-            continue
-        if (i, j) in oph.HEAD_LIMBS:
-            r = oph.R_HEAD
-        elif (i, j) in oph.TORSO_LIMBS:
-            r = oph.R_TORSO
-        else:
-            r = oph.R_ARM
-        one = cp.capsule_mask([(a[0], a[1], b[0], b[1], r)], W, H)
-        if ImageChops.multiply(ink, one).getbbox() is not None:
-            hit.add(LIMB_NAME[(i, j)])
+
+    def limbs_hit(mask):
+        """Which of the guard's capsules this ink lands in. Used TWICE now --
+        once for the board-only hint and once for the grip hint -- because the
+        grip loop's whole claim is that it adds no NEW limb to this set."""
+        got = set()
+        for i, j in oph.LIMBS:
+            a, b = gk.get(oph.KP[i]), gk.get(oph.KP[j])
+            if a is None or b is None:
+                continue
+            if (i, j) in oph.HEAD_LIMBS:
+                r = oph.R_HEAD
+            elif (i, j) in oph.TORSO_LIMBS:
+                r = oph.R_TORSO
+            else:
+                r = oph.R_ARM
+            one = cp.capsule_mask([(a[0], a[1], b[0], b[1], r)], W, H)
+            if ImageChops.multiply(mask, one).getbbox() is not None:
+                got.add(LIMB_NAME[(i, j)])
+        return got
+
+    hit = limbs_hit(ink)
     print("     the board's ink meets exactly these limbs: %s"
           % ", ".join(sorted(hit)))
     check("THE BOARD MEETS EXACTLY THE THREE LIMBS A HELD CLIPBOARD OCCLUDES -- "
@@ -401,6 +525,116 @@ def selftest():
           "hint conditions nothing and a fill conditions everything"
           % frac, 0.002 <= frac <= 0.02)
 
+    # =====================================================================
+    # THE GRIP HINT. Every claim the ladder argument makes about this mark is
+    # re-stated here as a pixel test, because "it is enclosure-class, not a
+    # stroke" and "it adds no new limb" are exactly the sentences a later edit
+    # would keep in the prose while breaking in the drawing.
+    # =====================================================================
+    print("  -- the GRIP variant (build(grip=True)) --")
+    gimg, gm = build(grip=True)
+    gink = ink_mask(gimg)
+    gp = g["grip_poly"]
+
+    # (1) ONE VARIABLE, AS A SUPERSET. Nothing the board hint lit is dark here,
+    # and nothing moved: the difference is additive and it is the loop.
+    check("the grip hint is a strict SUPERSET of the default hint -- not one "
+          "board pixel was moved, removed or redrawn",
+          ImageChops.subtract(ink, gink).getbbox() is None
+          and gimg.tobytes() != img.tobytes())
+    added = ImageChops.subtract(gink, ink)
+    loop_edges = [(gp[i][0], gp[i][1], gp[(i + 1) % len(gp)][0],
+                   gp[(i + 1) % len(gp)][1], pad) for i in range(len(gp))]
+    loop_allowed = cp.capsule_mask(loop_edges, W, H)
+    check("EVERY ADDED PIXEL IS INSIDE THE GRIP LOOP DILATED BY THE STROKE -- "
+          "the loop is the ONLY thing this flag adds",
+          ImageChops.subtract(added, loop_allowed).getbbox() is None)
+    check("and every lit pixel in the grip hint is inside the board quad OR "
+          "the loop, both dilated by the stroke",
+          ImageChops.subtract(
+              gink, ImageChops.lighter(allowed, loop_allowed)).getbbox() is None)
+
+    # (2) THE MARK IS PINNED TO THE SKELETON'S WRIST, TO THE FLOAT. Same drift
+    # guard the board already has: re-stage the guard and this fails rather
+    # than the hand quietly sliding off the board.
+    cxs = sum(p[0] for p in gp) / len(gp)
+    cys = sum(p[1] for p in gp) / len(gp)
+    check("THE LOOP'S CENTROID IS THE OPENPOSE SKELETON'S GUARD L-WRIST TO "
+          "1e-9 (%r vs %r)" % ((round(cxs, 4), round(cys, 4)), gk["Lwri"]),
+          abs(cxs - gk["Lwri"][0]) < 1e-9 and abs(cys - gk["Lwri"][1]) < 1e-9)
+
+    # (3) ENCLOSURE, PROVED THE WAY SECTION 10 PROVED IT. A flood fill seeded
+    # at the loop's centre, off ink, must be TRAPPED -- it may not reach the
+    # frame border. This is the whole argument: r4's 1 px finger was an OPEN
+    # stroke and was ignored; r5's skeleton was non-enclosure and was drawn as
+    # light; the one class this net reads is a closed contour.
+    flood = gimg.convert("L").point(lambda v: 0 if v >= 128 else 255)
+    seed = (int(round(cxs)), int(round(cys)))
+    check("the seed pixel for the enclosure proof is OFF ink (a seed on the "
+          "line would prove nothing)", flood.getpixel(seed) == 255)
+    ImageDraw.floodfill(flood, seed, 128)
+    filled = flood.point(lambda v: 255 if v == 128 else 0)
+    border = [filled.getpixel((x, 0)) for x in range(0, W, 7)] + \
+             [filled.getpixel((x, H - 1)) for x in range(0, W, 7)] + \
+             [filled.getpixel((0, y)) for y in range(0, H, 7)] + \
+             [filled.getpixel((W - 1, y)) for y in range(0, H, 7)]
+    n_trapped = sum(filled.histogram()[128:])
+    print("     flood from the loop's centre fills %d px" % n_trapped)
+    check("THE LOOP IS A CLOSED CELL -- the flood is TRAPPED and never reaches "
+          "the frame border, so this is ENCLOSURE class and not a stroke",
+          max(border) == 0 and 0 < n_trapped < 0.01 * W * H)
+
+    # (4) IT STRADDLES THE BOARD'S TOP EDGE, which is the occlusion the beat
+    # asks for. A loop entirely above the edge is a hand hovering; entirely
+    # below is a hand behind the board.
+    above = [p for p in gp if ((p[0] - c0[0]) * ey - (p[1] - c0[1]) * ex) > 0]
+    below = [p for p in gp if ((p[0] - c0[0]) * ey - (p[1] - c0[1]) * ex) < 0]
+    check("the loop STRADDLES the board's top edge -- %d vertices one side, %d "
+          "the other" % (len(above), len(below)), above and below)
+
+    # (5) NO NEW LIMB, AND THE GOBLIN IS STILL NEVER SHOWN. The claim the
+    # argument rests hardest on, run through the identical instrument.
+    check("NOT ONE LIT PIXEL OF THE GRIP HINT FALLS ON THE GOBLIN",
+          ImageChops.multiply(gink, goblin_mask).getbbox() is None)
+    ghit = limbs_hit(gink)
+    print("     the grip hint's ink meets exactly these limbs: %s"
+          % ", ".join(sorted(ghit)))
+    check("THE GRIP LOOP ADDS NO NEW LIMB -- the hint still meets exactly "
+          "{gripping forearm, torso, L thigh} (got %s)" % (sorted(ghit),),
+          ghit == EXPECTED_OVERLAP)
+    check("the guard's FACE is still untouched in the grip hint",
+          not (ghit & HEAD_NAMES))
+    check("and his POINTING ARM is still untouched in the grip hint",
+          not (ghit & POINT_NAMES))
+
+    # (6) SCOPE, PRINTED. The four contour losses conditioned two whole bodies;
+    # this conditions 0.1% of the frame. The number goes on the record so
+    # nobody has to take "small" on trust.
+    ab = added.getbbox()
+    scope = ((ab[2] - ab[0]) * (ab[3] - ab[1])) / float(W * H)
+    print("     the loop is %.1f x %.1f px, bbox %r, %.3f%% of the frame"
+          % (g["grip_w"], g["grip_h"], ab, 100.0 * scope))
+    check("the loop is hand-sized, not a stroke and not a body: %.1f x %.1f px "
+          "(section 9 ruled a 1 px finger insufficient) and under 0.5%% of the "
+          "frame" % (g["grip_w"], g["grip_h"]),
+          30.0 <= g["grip_w"] <= 80.0 and 24.0 <= g["grip_h"] <= 64.0
+          and scope < 0.005)
+
+    gfrac = ink_fraction(gimg)
+    print("     grip hint ink fraction %.5f (board-only %.5f)" % (gfrac, frac))
+    check("the grip hint is still sparse (%.5f in [0.002, 0.02])" % gfrac,
+          0.002 <= gfrac <= 0.02)
+    check("the grip hint's metadata names the loop and its class",
+          gm.get("grip_loop", {}).get("class", "").startswith("closed loop")
+          and "not a stroke" in gm["hint_class"])
+    check("the grip hint is NOT the openpose hint either",
+          gimg.tobytes() != op_img.tobytes())
+
+    g1, g2 = io.BytesIO(), io.BytesIO()
+    build(grip=True)[0].save(g1, "PNG")
+    build(grip=True)[0].save(g2, "PNG")
+    check("authoring the grip hint is deterministic", g1.getvalue() == g2.getvalue())
+
     # ---- determinism and refusals ----------------------------------------
     b1, b2 = io.BytesIO(), io.BytesIO()
     build()[0].save(b1, "PNG")
@@ -435,6 +669,11 @@ def main():
     ap.add_argument("--guard-x", type=float, default=GUARD_X)
     ap.add_argument("--guard-h", type=float, default=GUARD_H)
     ap.add_argument("--ground-y", type=float, default=GROUND_Y)
+    ap.add_argument("--grip", action="store_true",
+                    help="add the closed hand-sized loop at the authored "
+                         "L-wrist (the first figure ink in this hint; argued "
+                         "in pipeline/work-ladder-0819.md against the five "
+                         "scribble-net tracing losses)")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
 
@@ -445,7 +684,7 @@ def main():
 
     img, meta = build(width=a.width, height=a.height, stroke=a.stroke,
                       guard_x=a.guard_x, guard_h=a.guard_h,
-                      ground_y=a.ground_y)
+                      ground_y=a.ground_y, grip=a.grip)
     meta["ink_fraction"] = round(ink_fraction(img), 5)
     img.save(a.out, "PNG")
     print("wrote %s" % a.out)
