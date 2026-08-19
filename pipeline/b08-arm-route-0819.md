@@ -823,3 +823,83 @@ contour hint, a conditioning-scale bracket on the scribble net, a `hang_deg`
 sweep, wider figure separation (the staging is already at 0.847 extension against
 a 0.99 ceiling, and buying room re-opens B1 and B5), or any further argument about
 whether pose conditioning works on this checkpoint.
+
+## 16. The board arrives and takes the drawing with it (2026-08-20)
+
+**Two rungs happened between §15 and this one and are filed in their own specs,
+not transcribed here.** `ep2-b08-twins-sample-0819` fired the twins net on the
+hint §15 licensed: B4b bound, and identity stopped smearing *between* the
+figures and started fragmenting *within* them — the guard's forearms green, the
+goblin's legs pale. `ep2-b08-twinsipa-0819` fixed that with per-limb capsule
+masks and **passed nine of ten pre-registered clauses**: within-figure spread
+10.6 (guard) and 0.7 (goblin) against a bar of 25.0, the hand 40.3 px from its
+authored wrist, one ground plane at 4 px, and a better drawing than its parent.
+The single failing clause was **B4a, the board**, pre-registered to fail because
+no object can be expressed in a pose hint. Its verdict named this rung.
+
+**What was asked.** Multi-ControlNet: the twins openpose net at 1.0 on the
+byte-identical hint (`562911c8`) that passed, **plus** `xinsir/controlnet-
+scribble-sdxl-1.0` at 0.8 on a hint carrying the clipboard and nothing else.
+Same capsule masks, same references, same ip-scale, same seed, same words. The
+new hint is `pipeline/author_b08_board_hint.py`, whose `--selftest` asserts as
+*pixels* that no figure is in it: every lit pixel inside the quad dilated by the
+stroke, zero pixels anywhere on the goblin, and the set of guard limbs the ink
+meets pinned to exactly `{gripping forearm, torso, left thigh}` — the three a
+clipboard at the hip occludes — with his face and pointing arm untouched by
+name. Its grip point equals `stage()`'s guard L-wrist **to the float**,
+`(621.6704, 668.4352)`.
+
+**The composition worked on the first try.** `multi-controlnet: 2 nets, scales
+[1.0, 0.8]`, no crash, no driver bug. Verified read-only against the box's
+installed diffusers 0.29.2 *before* the spec was written: `from_pipe` passes a
+list through unfiltered (`auto_pipeline.py:401`), `__init__` wraps it into a
+`MultiControlNetModel` (`pipeline_controlnet_sd_xl.py:266-267`), scalar guidance
+broadcasts across nets (`1222-1232`), and — the one question that could have
+crashed it — the ControlNet forward receives `added_cond_kwargs` but **not**
+`cross_attention_kwargs` (`1488-1495`), so the masked IP-Adapter reaches only
+the UNet and the two nets never see `ip_adapter_masks`.
+
+**Result: FAIL, and the board is the only thing that went right.**
+
+| clause | parent | this rung |
+|---|---|---|
+| B4a board | absent | **drawn**, authored place and 9° tilt — but **no hand holds it** |
+| B6 drawn | improved | **FAIL** — two garments became one flat robe, linework gone |
+| B8 hair (canon) | sandy | **FAIL — bald**, matching the bald *reference* |
+| B4b-i hand→wrist | 40.3 px | **10.2 px** (better) |
+| B4b-ii far arm | on sash | **absent** — swallowed by the robe |
+| B7 spread | 10.6 / 0.7 | **UNMEASURABLE** — no luma-matched probe set exists |
+| frame mean luma | 141.6 | 86.9, flat ambient → hard directional key |
+
+**The finding, and it is worth the render: a sparse hint is not a weak hint.**
+The board hint is 99.7 % black. The intuition that it therefore acts only where
+its ink is, is *wrong*. For a scribble net a black pixel is not an absence of
+instruction — it is the instruction *"no edge here"* — so a nearly-black hint
+asserts **"no edges anywhere"** across the whole frame, at 0.8, for the full
+denoise, and its residuals are **added** to the pose net's at 1.0. Everything
+observed follows from that one mechanism: detail flattened everywhere, garments
+simplified, an arm dropped, the light hardened, and the one place the hint said
+*"edge here"* is the one place an object appeared.
+
+**Two instrument notes, both reported rather than buried.** The pre-registered
+edge metric for B4a *did not work*: mean gradient in the board region **fell**
+(13.36 → 3.68) because the parent's region was full of fine linework and the
+child's is a flat board on a flat robe — it measures busyness, and the child is
+less busy everywhere. And B7 is UNMEASURABLE by the bar's own admissibility
+rule: sweeping for the brightest patch on each region still spans 120.2 luma
+levels on the guard, so reporting its raw spread as a fail would repeat exactly
+the error `twinsipa`'s verdict documented.
+
+**B8 inverts a parent finding.** `twinsipa` observed that a capsule mask "leaves
+attributes the reference does not assert to the prompt" — the wording won and
+the guard kept his canon hair. Adding a second net flipped it toward the bald
+reference. So that balance is **not** a stable property of capsule masks; it is
+a property of the conditioning load, and it moves.
+
+**Next: ONE sample, `--scale2` 0.8 → ~0.3, nothing else changed.** Its bar is
+B4a *plus* B6 and B8 restored to parent quality. If 0.3 still damages the frame,
+the second lever is a per-net guidance window — an object only needs
+establishing early, so net 2 runs `control_guidance` 0.0→~0.3 and stops;
+diffusers takes lists there, so it is the same small driver change `--scale2`
+was. **The parent remains the best frame on this beat**, and this one is not a
+plate candidate: off-canon hair, lost wardrobe, worse drawing.

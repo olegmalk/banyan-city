@@ -374,3 +374,185 @@ derivation:
     - step twinsipa --arm (twinsipa -> boardnet)
     argv:--repo-commit:
     - step twinsipa --repo-commit (89860969c2086526d9505a6a2eceeb1f769a29f7 -> ee74ac0e3eaf920fc7637fa7e4f2727af7684628)
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 after opening the frame at 1:1, at 2x and at 3x
+# beside its parent's. Scored against the bar and the scoring rule THIS SPEC
+# PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 3 steps rc=0, 2026-08-19T21:36:08Z -> 21:36:43Z. Multi-ControlNet
+# composed on the first attempt -- the log reads `multi-controlnet: 2 nets,
+# scales [1.0, 0.8]`. 8 files published to courier-box\farm-out and pulled with
+# every sha verified against the manifest. $0.
+# ============================================================================
+verdict: >-
+  FAIL -- BRANCH (2), AND MORE BROADLY THAN BRANCH (2) ANTICIPATED. THE BOARD
+  ARRIVED AND IT TOOK THE DRAWING WITH IT. A flat board is drawn at the
+  authored position and the authored 9-degree tilt, its top edge below the
+  guard's shoulder -- the first time an object has appeared on this beat at
+  all. Everything else got worse. The guard's cream shirt and brown wrap skirt
+  collapsed into one shapeless brown robe with almost no linework, his far arm
+  vanished into it so that NO HAND HOLDS THE BOARD, and HE CAME BACK BALD
+  against canon and against his own parent. The frame darkened from mean luma
+  141.6 to 86.9 and the flat ambient light became a hard directional key with
+  the whole lower body in shadow. This is not a plate and the recipe is not
+  ready; the mechanism is understood and the next rung is named.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: 'PASS, all four lines. Preflight printed `twins
+    net verified: 2502139104 bytes, sha 54a2afb1...`, `scribble net verified:
+    2502139104 bytes, sha b3e4ac47...`, the line asserting the two nets share
+    size and config and DIFFER in weights, and `staged driver, BOTH hints and
+    BOTH references verified`. The sidecar reads `controlnet_2:
+    xinsir/controlnet-scribble-sdxl-1.0`, `controlnet_2_conditioning_scale:
+    0.8`, `control_2_image_sha256: 38cd39da...`, and still reads
+    `ip_adapter_mask_geometry: capsules` with `ip_adapter_masks_overlap: false`.
+    Not void. The composition is real and the result is a result.'
+  b4a_board_down: 'HALF. THE OBJECT ARRIVED; THE CLAUSE DID NOT CLOSE.
+    PRESENT: at 3x a flat quadrilateral board is unmistakably drawn, dark brown,
+    at the authored place and tilt, top edge well below the shoulder line
+    (y=491). The parent has nothing there at all. On presence alone this is the
+    first object beat 08 has ever produced, and it proves a second net can put
+    one in the frame.
+    NOT SATISFIED: the beat asks that "the clipboard comes DOWN" as something
+    the guard is holding, and NO HAND HOLDS IT. The far arm is not lowered --
+    it is GONE, absorbed into the robe, with no wrist and no fingers anywhere
+    near the board. What is drawn reads as a flat pouch or satchel hanging at
+    the hip, with a strap running up to its top corner. A held clipboard and a
+    hung satchel are different pictures and only one of them is the beat.
+    AND THE EDGE INSTRUMENT THIS SPEC PRE-REGISTERED DID NOT WORK, WHICH IS
+    REPORTED RATHER THAN QUIETLY DROPPED: mean gradient in the authored region
+    FELL, 13.36 -> 3.68, normalised against the untouched control patch 7.89 ->
+    1.56 -- the opposite of what a new object should do. The reason is that the
+    parent''s region was full of fine linework (sash, folds, a drawn hand) and
+    the child''s is a flat board on a flat robe. The metric measures BUSYNESS
+    and the child is less busy everywhere, so it cannot separate "a board
+    arrived" from "the frame lost detail". The eye call is the one that stands
+    here, exactly as this spec said it would be.'
+  b6_drawn_not_traced: 'FAIL, DECISIVELY, AND IT IS THE HEADLINE. Pre-registered
+    as load-bearing on this rung and it did not survive. The failure is NOT the
+    tracing the parent''s verdict feared -- no figure came back as an outline.
+    It is FLATTENING. The guard''s two frozen garments became one enormous
+    untextured brown robe; the folds, the dark cuff, the visible hand on the
+    sash and nearly all interior linework are gone; the face is heavier and
+    cruder. The goblin gained a hood and a pale loincloth and his skin went
+    hard-saturated. The parent had improved markedly on ITS parent (pupils, a
+    set jaw, hair with strands, a legible clasp) and this gives all of that
+    back. A frame that delivers the board and returns this drawing fails, and
+    this spec pre-registered that in those words: the board is not worth the
+    drawing.'
+  b8_the_guard_has_hair: 'FAIL. THE GUARD IS BALD. canon.yaml `ep2-guard-hair`
+    says guard B has light sandy hair and FORBIDS \bbald\b; the prompt still
+    says `light sandy hair`, byte-identical to the parent''s; the parent came
+    back correctly sandy-haired with visible strands. Adding the second net
+    flipped it, and it flipped it TOWARD THE IP-ADAPTER REFERENCE, which is bald
+    by construction (author_b08_ip_refs.GUARD_BOX, "bald human head", cut from a
+    plate older than the ruling). This is the exact regression the clause was
+    pre-registered to catch and it is a real finding about multi-net
+    composition, not a cosmetic miss: on this route the balance between WORDING
+    and REFERENCE is not fixed, and adding conditioning pressure moved it. The
+    parent''s hair observation is therefore not a stable property of capsule
+    masks -- it was a property of that particular conditioning load.'
+  b7_no_limb_fragmentation: 'UNMEASURABLE, AND THAT IS A SCORED OUTCOME UNDER
+    THIS BAR RATHER THAN A DODGE. The bar required the six probes to be
+    luma-matched and to publish their luma, because the parent established that
+    G-R compresses with luma. On this frame NO LUMA-MATCHED SET EXISTS. Sweeping
+    30x30 windows for the BRIGHTEST available patch on each region: guard face
+    237.6, guard forearm 117.4, guard shin 122.4 -- a 120.2-level spread at the
+    best case; goblin face 218.3, forearm 188.7, shin 108.9 -- 109.4 levels. At
+    the parent''s own published boxes the luma spreads are 121.7 and 124.8
+    against the parent''s own 27.4 and 25.0. The cause is the lighting change:
+    flat ambient became a hard key from upper right with the lower body in deep
+    shadow. Reporting the raw spreads (guard 20.6, goblin 50.9) as a pass and a
+    fail would be repeating precisely the error the parent''s verdict
+    documented and this bar was written to prevent.
+    WHAT CAN HONESTLY BE SAID: the SIGNS are all correct -- every guard region
+    negative, every goblin region positive -- so there is no evidence of
+    identity smearing between the figures. The spread clause is not scored.'
+  b2_the_identities_separate: 'REPORTED, NOT CLEANLY SCORED. Face separation
+    +77.7 against a bar of >= +20.0 and the parent''s +42.0. The direction is
+    right and nothing dragged the identities together. But the face boxes sit on
+    the same non-luma-matched frame as B7''s, and the goblin''s saturation rose
+    sharply, so the magnitude is not comparable to the parent''s.'
+  b4b_both_arms_stay_on_their_skeletons: 'SPLIT, AND THE SPLIT IS INFORMATIVE.
+    B4b-i PASSES AND IMPROVES ON THE PARENT: the pointing hand''s centroid is
+    (270.6, 692.5), just 10.2 px from the authored wrist (280.5, 695.1),
+    against the parent''s 40.3 px and a bar of ~60. The measuring method was
+    validated first by re-deriving the parent''s own published figure from the
+    parent frame -- it returns (321.8, 691.1), 41.5 px, against the 40.3 px on
+    file.
+    B4b-ii FAILS: the guard has only ONE arm in this frame. The far arm, which
+    in the parent hung to his sash, is absent -- swallowed by the robe, with no
+    elbow, wrist or hand drawn. An arm that disappears has not stayed on its
+    skeleton. The goblin''s arms do hang and the two figures do not clasp.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, SEVENTH MECHANISM. The pointing arm
+    grows from the guard''s shoulder and is human-skinned; every guard probe
+    reads negative. It still points at the goblin''s midsection.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two -- which is the correct
+    count under figure_count_ruled_from_the_script_0817.'
+  b3_one_ground_plane: 'PASS by eye -- both stand in the same grass at the same
+    depth. Not given a number: the automated lowest-row detector is confounded
+    on this frame because the foreground grass is now brighter than the
+    goblin''s shadowed shins, and a number produced by a confounded detector is
+    worse than an honest eye call.'
+  b5_no_colossus: 'PASS. Neither figure towers; the height relationship is
+    close to the parent''s. The guard is markedly BULKIER -- the robe roughly
+    doubles his width -- but bulk is not stature and this clause is about
+    stature. The bulk is scored under B6, where it belongs.'
+observed_not_scored: >-
+  THREE. (1) THE FRAME DARKENED AND THE LIGHT CHANGED CHARACTER: mean luma 141.6
+  -> 86.9, and flat ambient became a hard directional key with a visible shaft
+  from the upper right. A board hint has no business changing the lighting, and
+  that it did is the clearest single sign that the second condition acted
+  globally rather than locally. (2) THE PURPLE CAST IS GONE, replaced by a
+  green-gold one. Pre-registered as not addressed, and it moved anyway --
+  another global effect. (3) THE BOARD HAS NO CLIP, as this spec predicted it
+  might: the clip line in both hint authors is collinear with the top edge and
+  adds no distinct mark, so nothing in the condition ever asked for one.
+what_this_settles: >-
+  A SPARSE HINT IS NOT A WEAK HINT, AND THAT IS THE FINDING THIS RUNG BUYS.
+  The board hint is 99.7% black (ink fraction 0.00324). The intuition that it
+  would therefore act only where its ink is, and barely at all elsewhere, is
+  WRONG. For a scribble ControlNet a black pixel is not an absence of
+  instruction -- it is the instruction "no edge here" -- so a nearly-black hint
+  asserts "no edges anywhere" across the WHOLE frame, at scale 0.8, for the
+  full denoise (control_guidance 0.0 -> 1.0). Its residuals are then ADDED to
+  the pose net's at 1.0, so total conditioning pressure is far above anything
+  this beat has rendered under. Everything observed follows from that one
+  mechanism: detail flattened everywhere, garments simplified, linework lost,
+  an arm dropped, the light hardened, and the one place the hint did say "edge
+  here" is the one place an object appeared. It also settles that
+  multi-ControlNet WORKS on this stack -- composed first try, no crash, no
+  driver bug, the IP-Adapter masks unaffected exactly as the read-only source
+  check predicted -- so the mechanism is available and only its strength is
+  wrong.
+what_this_did_not_settle: >-
+  Whether a weaker second net delivers the board WITHOUT the damage -- that is
+  the next rung and it is one sample away. Nor whether the board can be made to
+  read as HELD rather than HUNG, which may be a wording question
+  (`clipboard lowered in one hand` is already in the prompt and was not enough
+  against a robe that ate the arm) or may follow automatically once the arm
+  survives. Nor whether B8's bald regression is caused by conditioning pressure
+  in general or by this net specifically. Nor B7, on this frame, at all.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME. This frame is NOT a plate
+  candidate and must not be staged as one: it is off-canon on the guard's hair,
+  it has lost the frozen wardrobe, and it is a worse drawing than the parent
+  that already exists. THE PARENT REMAINS THE BEST FRAME ON THIS BEAT. It does
+  not license a scale2 sweep either -- ONE sample at one lower value, then look.
+  It does not license reverting the multi-ControlNet driver change, which is
+  proven correct and is what made this finding cheap.
+next_rung_named_not_taken: >-
+  ONE sample, and the variable is the SECOND NET'S STRENGTH, nothing else.
+  Everything here carries unchanged -- same hints, same masks, same references,
+  same seed, same words -- with --scale2 dropped from 0.8 to about 0.3. Its bar
+  is B4a AND the two clauses this rung broke, B6 and B8, restored to parent
+  quality; a board with a bald guard in a shapeless robe fails again at 0.3
+  just as it failed at 0.8.
+  IF 0.3 STILL DAMAGES THE FRAME, the second lever is a PER-NET GUIDANCE
+  WINDOW: an object only needs establishing in the early denoise, so net 2
+  would run control_guidance 0.0 -> ~0.3 and then stop, leaving the last 70% of
+  the steps to draw. diffusers accepts LISTS for control_guidance_start/end and
+  broadcasts scalars only when they are not lists
+  (pipeline_controlnet_sd_xl.py:1222-1232), so this is a small driver change of
+  the same shape as --scale2 and it is NOT taken here because this rung had one
+  variable and has now spent it.
