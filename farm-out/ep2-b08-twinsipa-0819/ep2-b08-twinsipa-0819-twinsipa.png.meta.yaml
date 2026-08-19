@@ -1,0 +1,47 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-b08-twinsipa-0819
+arm: twinsipa
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260819
+cost_usd: 0
+controlnet: C:\banyan-farm\cnet-openpose-twins
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition) -- the `twins` variant of xinsir/controlnet-openpose-sdxl-1.0, blob diffusion_pytorch_model_twins.safetensors sha256 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4, 2502139104 bytes, renamed into a loadable directory by ep2-b08-twins-fetch-0819. Identical terms to the default weight in that same repo; no annotator is used -- the hint is authored in PIL
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 1.0
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: pipeline/control/b08-openpose-nat-0819.png
+control_image_sha256: 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+ip_adapter: h94/IP-Adapter (apache-2.0)
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: models/image_encoder (ViT-H; the folder the _vit-h adapters require, and the only encoder in the box cache)
+ip_adapter_scale: [[0.7, 0.7]]
+ip_adapter_refs: ['C:\\banyan-farm\\b08twinsipa-0819\\src\\pipeline\\control\\b08-ref-goblin-0819.png', 'C:\\banyan-farm\\b08twinsipa-0819\\src\\pipeline\\control\\b08-ref-guard-0819.png']
+ip_adapter_ref_sha256: ['13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c', '61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c']
+ip_adapter_mask_geometry: capsules (union of dilated limb segments; the same geometry the openpose hint is drawn from, so a mask cannot disagree with the hint it accompanies)
+ip_adapter_masks: [[(170.6, 550.8, 118.6, 550.8, 30.0), (170.6, 550.8, 222.5, 550.8, 30.0), (118.6, 550.8, 104.0, 762.4, 12.0), (104.0, 762.4, 111.3, 857.3, 12.0), (222.5, 550.8, 237.1, 762.4, 12.0), (237.1, 762.4, 229.8, 857.3, 12.0), (170.6, 550.8, 137.7, 762.4, 30.0), (137.7, 762.4, 140.5, 941.2, 12.0), (140.5, 941.2, 143.2, 1123.6, 12.0), (170.6, 550.8, 203.4, 762.4, 30.0), (203.4, 762.4, 200.7, 941.2, 12.0), (200.7, 941.2, 197.9, 1123.6, 12.0), (170.6, 550.8, 170.6, 481.7, 34.0), (170.6, 481.7, 152.5, 465.9, 34.0), (152.5, 465.9, 128.9, 470.4, 34.0), (170.6, 481.7, 188.7, 465.9, 34.0), (188.7, 465.9, 212.2, 470.4, 34.0)], [(565.8, 491.0, 512.4, 491.0, 30.0), (565.8, 491.0, 619.1, 491.0, 30.0), (512.4, 491.0, 360.0, 484.9, 12.0), (360.0, 484.9, 257.4, 657.3, 12.0), (619.1, 491.0, 627.2, 579.7, 12.0), (627.2, 579.7, 621.7, 668.4, 12.0), (565.8, 491.0, 532.1, 723.8, 30.0), (532.1, 723.8, 534.9, 920.4, 12.0), (534.9, 920.4, 537.7, 1121.0, 12.0), (565.8, 491.0, 599.5, 723.8, 30.0), (599.5, 723.8, 596.7, 920.4, 12.0), (596.7, 920.4, 593.8, 1121.0, 12.0), (565.8, 491.0, 565.8, 403.9, 34.0), (565.8, 403.9, 550.7, 389.3, 34.0), (550.7, 389.3, 531.2, 393.5, 34.0), (565.8, 403.9, 580.8, 389.3, 34.0), (580.8, 389.3, 600.3, 393.5, 34.0)]] (x0,y0,x1,y1,r per capsule in RENDER pixels, drawn by controlnet_plate.capsule_mask -- no mask file exists to drift)
+ip_adapter_masks_overlap: false (asserted AS LIT PIXELS, not as bounding boxes; the figures interleave and their boxes do overlap, their ink does not)
+repo_commit: 89860969c2086526d9505a6a2eceeb1f769a29f7
+model_load_seconds: 12.1
+render_seconds: 18.4
+rendered_utc: 2026-08-19T20:24:47Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly, green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very aesthetic
+negative: |-
+  giant, colossus, towering figure, different scale, floating, raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality, deformed

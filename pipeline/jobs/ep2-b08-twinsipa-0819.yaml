@@ -282,3 +282,137 @@ derivation:
     - step twins --arm (twins -> twinsipa)
     argv:--repo-commit:
     - step twins --repo-commit (7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e -> 89860969c2086526d9505a6a2eceeb1f769a29f7)
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 after opening the frame at full size and at 3x
+# beside its parent's. Scored against the bar and the scoring rule THIS SPEC
+# PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 3 steps rc=0, 2026-08-19T20:24:12Z -> 20:24:48Z, load 12.1s /
+# render 18.4s. 8 files published to courier-box\farm-out and pulled with every
+# sha verified against the manifest. $0.
+# ============================================================================
+verdict: >-
+  PASS -- BRANCH (1). THE FRAGMENTATION IS GONE AND EVERY CLAUSE THE PARENT
+  BOUGHT SURVIVED. Each figure is now ONE BODY: the guard's three sampled regions
+  agree to 10.6 levels and the goblin's to 0.7, against 106.9 and 91.5 on the
+  parent. The guard's pointing arm is human-skinned, which is the exact defect
+  this rung existed to fix, and the goblin is green from head to shin. Staging,
+  gesture and identity are in one frame for the first time on this beat.
+  THE ONLY BAR CLAUSE STILL FAILING IS THE BOARD, which was pre-registered to
+  fail because no object is in a pose hint. Beat 08 has a plate recipe; whether
+  this frame is the plate is a taste call and is NOT made here.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: 'PASS, all three lines. Preflight printed `twins
+    net verified: 2502139104 bytes, sha 54a2afb1...` and `staged driver, hint and
+    BOTH references verified`. The sidecar reads `ip_adapter_mask_geometry:
+    capsules`, `ip_adapter_masks_overlap: false`, `ip_adapter_scale: [[0.7, 0.7]]`,
+    and names both reference shas IN THE AUTHORED ORDER -- goblin 13b0c69d first,
+    guard 61dc3f7f second. Not void, and branch (4) is excluded: the positional zip
+    is not inverted.'
+  b7_no_limb_fragmentation: 'PASS ON BOTH FIGURES, AND IT IS THE RESULT.
+    Probe boxes, placed on the DRAWN limb and published as this spec required:
+    guard face (548,378,600,430) -13.9; guard forearm (400,645,455,678) -3.3;
+    guard shin (520,1100,558,1130) -11.5. Goblin face (148,448,193,504) +28.1;
+    goblin forearm (212,800,242,858) +27.6; goblin shin (118,920,152,950) +28.3.
+    WITHIN-FIGURE SPREAD: guard 10.6 and goblin 0.7, against a bar of <= 25.0 and
+    against the parent''s 106.9 and 91.5 on its own drawn-limb boxes. The goblin''s
+    three regions agreeing to under one level is the sharpest number this beat has
+    produced.
+    SIGNS: every guard region <= 0.0 and every goblin region >= +20.0. Both hold.
+    AN INSTRUMENT CAVEAT THAT COST A CLAUSE AND IS REPORTED RATHER THAN BURIED:
+    G-R COMPRESSES WITH LUMA. A first pass put the goblin''s shin probe at
+    (118,960,152,1020) and read +19.0 -- a FAIL by one level. Sweeping the leg in
+    30px bands shows G-R falling 28.3 -> 13.7 from y920 to y1130 while luma falls
+    196.9 -> 105.1: the leg is going into grass shadow, and the statistic tracks
+    the darkness, not a hue change. The six final probes are placed at comparable
+    luma (196.9-250.1) and that is why their luma is published beside them. Any
+    future use of this instrument must match brightness or it will invent
+    fragmentation that is not there.'
+  b2_the_identities_separate: 'PASS. Face separation +42.0 against a bar of >=
+    +20.0, guard face -13.9 and goblin face +28.1. LOWER than the parent''s +126.0,
+    and that is correct rather than a regression: the parent''s enormous number came
+    from a frame whose guard was a washed-out extreme and whose limbs disagreed by
+    over 90 levels. This clause was scored to catch the adapter DRAGGING the two
+    faces together, and it did not -- they are 42 levels apart with every limb
+    agreeing with its own head.'
+  b4b_both_arms_stay_on_their_skeletons: 'PASS, AND IT IMPROVED ON THE PARENT.
+    B4b-i: the guard''s pale hand centroid is (320,689), 40.3 px from the authored
+    wrist (280.5,695.1), against the parent''s 52.5 px and a bar of ~60.
+    B4b-ii: 2642 green px sit in the goblin''s authored wrist zone and ZERO in the
+    parent-era off-skeleton zone (350,671)+-45. His arms hang. Nothing of his is in
+    the gap and the hands do not clasp.
+    THE GESTURE, at 3x: a well-drawn human hand in a white sleeve with a dark cuff,
+    index finger horizontal and unmistakably extended at the goblin, whose bare
+    green midriff and navel are directly in line. The aim is slightly HIGH -- the
+    fingertip sits at y~695 and the navel at y~760, so it reads as a point at the
+    lower ribs rather than squarely at the navel. Scored a pass: this is a legible
+    point at the midsection and it is the best gesture this beat has produced.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, SIXTH MECHANISM, AND THE SKIN NOW MATCHES
+    ITS OWNER. The arm grows from the guard''s shoulder out of his own sleeve, and
+    it reads -3.3 where the parent''s read +48.6. That is the whole reason his mask
+    was widened to enclose the limb, and it worked.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b3_one_ground_plane: 'PASS, and better than the parent by a factor of eight. The
+    guard''s lowest skin row is 1152 and the goblin''s 1156: 4 px, against the
+    parent''s 34 px.'
+  b5_no_colossus: 'PASS. Stature ratio about 1.13 against the authored 1.100, closer
+    than the parent''s ~1.17. Read off crown and lowest skin row; the crowns are an
+    eye estimate and are reported as one.'
+  b6_drawn_not_traced: 'IMPROVED, AND THIS SPEC PRE-REGISTERED THAT AN IMPROVEMENT
+    WOULD BE A FINDING AND NOT A WIN. It must not get worse and it got markedly
+    better: the parent''s crude goblin face with blank white eyes is replaced by a
+    drawn face with pupils and a set jaw, the guard has hair with strands, both
+    garments have folds and a metal clasp is legible. The plausible mechanism is the
+    one the earlier contour rung guessed at -- `plus` carries STRUCTURE from a clean
+    reference -- and it is still a hypothesis, not a result of this one sample.'
+  b4a_board_down: 'FAIL, PRE-REGISTERED, UNCHANGED. No board and no clipboard
+    anywhere; the guard''s free hand grips his own sash at his chest. No object is
+    in a pose hint. This is now the ONLY failing clause on the beat.'
+observed_not_scored: >-
+  THREE, AND THE FIRST INVERTS A FINDING FROM THE CONTOUR ROUTE. (1) THE GUARD HAS
+  SANDY HAIR AND READS MALE. His reference is BALD, and on the contour route
+  (ep2-b08-ipamask-0819) that bald reference BEAT the prompt's `light sandy hair`
+  and the frame came back bald. Here the mask supplied species, skin and wardrobe
+  while the WORDING got its hair back -- and the parent's unambiguous blonde woman
+  is gone. So a capsule mask over a skeleton does not override wording the way a
+  torso rectangle over a contour did; it appears to leave attributes the reference
+  does not assert to the prompt. That is a hypothesis from one frame and is worth
+  its own rung before anyone relies on it. (2) THE WARDROBE IS MOSTLY BACK: a
+  cream/white shirt and a brown wrap skirt, two of the three frozen garments, plus a
+  brown harness with a gold clasp. The sash is brown where the cast draft freezes it
+  white. (3) THE PURPLE CAST PERSISTS at mean luma 141.6 against the parent's 135.1.
+  Pre-registered as not addressed, and it is the next colour question.
+what_this_settles: >-
+  A PER-FIGURE IMAGE CONDITION GOVERNS SKIN TONE PER LIMB, AND CAPSULE MASKS ARE
+  WHAT MAKE IT REACHABLE ON THIS BEAT. Branch (3) is excluded: the fragmentation did
+  not survive inside the masks, so it was never a part-wise colour prior in the
+  checkpoint. Branch (2) is excluded: nothing the pose net bought was spent -- the
+  hand got CLOSER to its authored wrist, the ground plane got tighter and the
+  drawing got better. It also settles that the two mechanisms compose at ip-scale
+  0.7 with no tuning, on the first sample, exactly as they did on the contour route.
+  And it settles the shape of beat 08's remaining work: one clause, the board.
+what_this_did_not_settle: >-
+  THE BOARD, which needs an object in the conditioning and therefore multi-ControlNet
+  pose+scribble. Nor the purple cast. Nor whether B6's improvement is the adapter
+  carrying structure or this seed being kind -- one frame. Nor the hair finding in
+  (1), which inverts the contour route's result and rests on a single comparison.
+  Nor the third figure beat 08's done_when wants: this frame has two, as every frame
+  on this route has.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME. This frame is PROVISIONAL. It is
+  the first frame on this beat that could plausibly BE the plate, and that makes the
+  restraint matter more rather than less: choosing it is a taste call and belongs to
+  the founder (R4), not to the lane that rendered it. It does not license an
+  ip-scale or conditioning sweep -- 0.7 and 1.0 worked first try. It does not license
+  scaling this recipe to other beats: one sample, one beat, and the board is still
+  missing.
+next_rung_named_not_taken: >-
+  ONE sample: THE BOARD, via multi-ControlNet -- the openpose skeleton for the
+  figures plus a scribble hint carrying the clipboard rectangle at the guard's hip,
+  both nets composed on the same pipeline, with these two capsule masks and this
+  reference pair carried unchanged. Its bar is B4a alone, with every clause passing
+  here pre-registered to survive; its risk is that a second ControlNet re-opens the
+  tracing question the scribble net lost on five times, so its hint must carry the
+  BOARD ONLY and no figure contour. That is the last clause between beat 08 and a
+  complete plate.
