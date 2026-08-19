@@ -1,0 +1,38 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 19
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260819
+task: ep2-b19-dropmotion-0819
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0191
+compute_s_per_video_s: 52.4
+# --- appended by ep2-b19-dropmotion-0819 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  BEAT 19'S FIRST MOTION SAMPLE, a candidate for the beat's cut slot
+  and not an engine probe. Conditioned on b19-sapgloss-s20260819.png,
+  the plate this lane picked on 2026-08-19 by canon derivation (see
+  pipeline/jobs/ep2-b19-sapgloss-0819.yaml pick_0819). Judged against
+  the bar pre-registered in pipeline/jobs/ep2-b19-dropmotion-0819.yaml
+  BEFORE this render existed. NOT approved and NOT cut until all 121
+  frames have been opened consecutively.
+  M3 OVERRIDES EVERY OTHER CLAUSE: if the fruit touches his body in
+  ANY frame this clip is a FAIL. That is the founder's ruling of
+  2026-08-15, re-confirmed in done-definitions' done_when, and it is
+  disqualifying however well the clip moves.
+  DO NOT LET AN ASSEMBLER PALINDROME THIS CLIP. The fall is
+  irreversible; reversed, the fig flies back up onto the stem.
