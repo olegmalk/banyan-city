@@ -275,3 +275,41 @@ licence_note: >-
   source filename and the identical digest so provenance survives the rename. No
   preprocessor and no annotator is fetched, so lllyasviel/Annotators stays
   untouched on this route -- the hint is authored in PIL.
+
+# ============================================================================
+# OUTCOME -- appended 2026-08-19 by the beat 08 staging lane. The fetch RAN at
+# 13:07 today and was never scored; this closes it. Every clause below was
+# re-checked against the box just now, not read off the runner's own stdout.
+# ============================================================================
+verdict: >-
+  PASS, all five clauses, mechanically. The twins weight is present, whole,
+  loadable and provably distinct from the default net. Per this spec's own
+  verdict_rule that licenses the twins A/B sample against these exact digests,
+  and it has been filed: ep2-b08-twins-sample-0819.
+verdict_measured:
+  b_bytes: 'PASS. C:\banyan-farm\cnet-openpose-twins\diffusion_pytorch_model.safetensors
+    is 2,502,139,104 bytes, exactly the figure this spec pre-registered.'
+  b_the_copy_is_the_file: 'PASS. sha256 54a2afb1bd21349e475566e5428884bc937a4caec
+    f863b29dea08acc40612fa4 is recorded in the manifest under BOTH names --
+    diffusion_pytorch_model_twins.safetensors as downloaded, and
+    cnet-openpose-twins/diffusion_pytorch_model.safetensors as renamed -- so the
+    rename is honest and this directory cannot be mistaken for the default net.'
+  b_it_is_a_controlnet_config: 'PASS, and re-read off the box rather than trusted:
+    config.json parses, _class_name is ControlNetModel, cross_attention_dim is 2048.
+    sha b5b8f9a7...'
+  b_no_incomplete: 'PASS. A recursive sweep for *.incomplete under the
+    models--xinsir--controlnet-openpose-sdxl-1.0 cache returns nothing.'
+  b_no_spend: 'PASS. ledger/render-spend.csv is untouched in git. Public apache-2.0
+    weights, no provider, $0.'
+what_this_settles: >-
+  ONLY that the weight is on the card and loadable. This spec said so itself and it
+  is worth repeating where a reader will hit it: a PASS here is NOT a result about
+  pose adherence. The 2,502,139,104 bytes bought a question, not an answer.
+the_digests_are_now_a_run_time_guard: >-
+  The consumer sample does not merely cite these digests, it re-checks them. Because
+  `--controlnet` must point at a local DIRECTORY (from_pretrained cannot load a blob
+  named ..._twins.safetensors), the render's sidecar can only record a PATH, and a
+  path proves nothing about the 2.4 GB behind it. So ep2-b08-twins-sample-0819
+  prepends a `preflight` step that re-reads the blob and asserts this byte count and
+  this sha before a GPU second is spent, and its b0 void-check reads that step's
+  stdout rather than the sidecar. mac_preflight's rule, on Windows.

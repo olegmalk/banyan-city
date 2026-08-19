@@ -1,0 +1,268 @@
+id: ep2-b08-twins-sample-0819
+task: ep2-b08-twins-sample-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 33
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 08 staging lane, 2026-08-19 -- derived by pipeline/derive_b08_twins_0819.py from the beat's
+  most recent skeleton rung, whose verdict ruled this variable and is cited by id in who_ruled_this_rung.
+consumer: 'Beat 08''s plate, for its cut slot in the episode 2 assembly, and specifically the ONE clause
+  standing between this beat and a usable plate. B4b -- the point -- has now failed FOUR times on FOUR
+  distinct causes: the arm ended in nothing (0.80 contour), the aim was wide by construction (0.45 contour,
+  and again with the masked references), the forearm mirrored (first skeleton), and now both figures leave
+  their authored arms and clasp hands in the gap. The fourth cause is POSE ADHERENCE, which is the one
+  thing the twins variant claims to improve and the reason every earlier rung was right to decline it.
+  Its answer tells the next lane whether the openpose route can carry this gesture at all, or whether
+  the point has to be staged some other way entirely.'
+success: One 832x1216 png with its sidecar, published to C:\banyan-farm\courier-box\farm-out\ep2-b08-twins-sample-0819
+  with a sha256 manifest, and read at 1:1 beside the parent's frame with both hand centroids measured.
+  The preflight step must print `twins net verified` before the render step runs; if it does not, the
+  job has no result of any kind and the render is not scored. All three branches of verdict_rule are informative.
+why: Ruled by the beat's most recent verdict, cited by id in who_ruled_this_rung, which took its own next
+  variable and stopped rather than scaling an unapproved result. The weights are already on the card --
+  the twins fetch landed 2,502,139,104 bytes at 13:07 today, sha 54a2afb1..., zero .incomplete -- so this
+  needs no download, no provider and no spend. Two minutes of render on a card measuring ready=0, backlog=0,
+  running=0.
+est_minutes: 6
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b08twins-0819\prompt.txt: Two men, a guard, light sandy hair, cream shirt, white sash,
+    brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly,
+    green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\b08twins-0819\negative.txt: giant, colossus, towering figure, different scale, floating,
+    raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl,
+    child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality,
+    deformed
+steps:
+- name: preflight
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# GUARD, NOT A VARIABLE. Re-read the twins blob and assert its identity before\n# any GPU second\
+    \ is spent. `--controlnet` points at a local DIRECTORY here, so\n# the sidecar can only record a path,\
+    \ and a path proves nothing about the 2.4 GB\n# behind it. mac_preflight's rule on a Windows box:\
+    \ size and file count passed a\n# UNet that rendered pure noise for days.\nimport hashlib, os, sys\n\
+    d = r\"C:\\banyan-farm\\cnet-openpose-twins\"\nblob = os.path.join(d, \"diffusion_pytorch_model.safetensors\"\
+    )\ncfg = os.path.join(d, \"config.json\")\nn = os.path.getsize(blob)\nif n != 2502139104:\n    print(\"\
+    !! twins blob is %d bytes, expected 2502139104\" % n); sys.exit(1)\nh = hashlib.sha256()\nwith open(blob,\
+    \ \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 22), b\"\"):\n        h.update(chunk)\n\
+    got = h.hexdigest()\nif got != \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\"\
+    :\n    print(\"!! twins blob sha %s, expected 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\"\
+    \ % got); sys.exit(1)\nch = hashlib.sha256(open(cfg, \"rb\").read()).hexdigest()\nif ch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\"\
+    :\n    print(\"!! twins config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\"\
+    \ % ch); sys.exit(1)\nbad = [r for r, _, fs in os.walk(d) for f in fs if f.endswith(\".incomplete\"\
+    )]\nif bad:\n    print(\"!! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\n# The staged\
+    \ tree, same discipline: a fresh payload dir was scp'd into, and\n# \"the file is there\" is not \"\
+    the file is the one I sent\". Both ends were\n# compared at filing time; this re-reads them at RUN\
+    \ time.\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"d6df250d36c05794e2a57a6b1bb5009d08e3899b2265dc85920bce31e9d702a6\"\
+    ), (\"pipeline/control/b08-openpose-nat-0819.png\", \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"\
+    )):\n    p = os.path.join(r\"C:\\banyan-farm\\b08twins-0819\\src\", rel.replace(\"/\", os.sep))\n\
+    \    if not os.path.exists(p):\n        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n \
+    \   hh = hashlib.sha256(open(p, \"rb\").read()).hexdigest()\n    if hh != want:\n        print(\"\
+    !! %s sha %s, expected %s\" % (p, hh, want)); sys.exit(1)\nprint(\"twins net verified: %d bytes, sha\
+    \ %s\" % (n, got))\nprint(\"staged driver and hint verified\")"
+- name: twins
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08twins-0819\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b08twins-0819\src
+  - --repo-commit
+  - 60d99753e6633a8a5cb8c0748f1ab66e1f231646
+  - --task
+  - ep2-b08-twins-sample-0819
+  - --arm
+  - twins
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - pipeline/control/b08-openpose-nat-0819.png
+  - --control-sha256
+  - 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260819'
+  - --prompt-file
+  - C:\banyan-farm\b08twins-0819\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08twins-0819\negative.txt
+  - --out
+  - C:\banyan-farm\b08twins-0819\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# box_enqueue.courier_problems: the courier pushes from farm-out and\n# nowhere else, and ep2-cnet-probe-0817\
+    \ was invisible for two days for\n# want of exactly this step.\nimport glob, hashlib, os, shutil\n\
+    out_dir = \"C:/banyan-farm/b08twins-0819/out\"\npay_dir = \"C:/banyan-farm/b08twins-0819\"\nctl_dir\
+    \ = \"C:/banyan-farm/b08twins-0819/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-twins-sample-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b08-twins-sample-0819-twins.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/b08-openpose-nat-0819.png\"))\nlines = []\n\
+    for f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with\
+    \ open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h +\
+    \ \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b08-twins-sample-0819.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 5 else 1)"
+artifacts:
+- C:\banyan-farm\b08twins-0819\out\ep2-b08-twins-sample-0819-twins.png
+bar:
+  b0_the_net_is_the_twins_net: 'VOID-CHECK, READ FIRST, AND IT IS NOT READ OFF THE SIDECAR THIS TIME.
+    `--controlnet` points at a local directory, so the sidecar records a PATH and a path proves nothing.
+    The preflight step re-reads the blob and asserts sha256 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4
+    and 2502139104 bytes before the render step starts, so its stdout line `twins net verified` is the
+    void-check. NO LINE, NO VERDICT: without it, "the twins net did nothing" and "the twins net never
+    loaded" are indistinguishable, and that ambiguity is what this step exists to remove. The sidecar
+    must additionally show scale 1.0 and no ip_adapter lines.'
+  b4b_both_arms_stay_on_their_skeletons: "THIS RUNG'S WHOLE QUESTION, AND IT IS TWO MEASURED POSITIONS\
+    \ BEFORE IT IS A GESTURE. Both halves must hold.\n  B4b-i THE GUARD'S HAND ARRIVES. A hand centroid\
+    \ at or near the authored wrist (280.5, 695.1). The parent reached only (436, 656) -- about 60% of\
+    \ the way from the authored elbow (472.9, 638.3) -- so the bar is that this frame closes materially\
+    \ more of that gap.\n  B4b-ii THE GOBLIN'S ARM STAYS. His left arm is authored hanging at his side\
+    \ with its wrist at (221, 857). The parent brought it UP 186 px and ACROSS 129 px to a fist at (350,\
+    \ 671). It must stay down.\nAND THE GESTURE MUST READ AS A POINT AT THE BELLY, scored by eye at 1:1.\
+    \ If the two hands clasp again the clause fails however the numbers land, and that is the fifth distinct\
+    \ cause rather than a repeat of the fourth."
+  b4c_the_arm_belongs_to_the_guard: MUST SURVIVE. The pointing arm grows from THE GUARD's shoulder. Four
+    mechanisms have now held this clause and the uncontrolled tally at this seed is still 4 of 4 on the
+    goblin, so losing it would be a finding about twins and not noise.
+  b1_the_pair: TWO figures and only two, both whole in frame.
+  b3_one_ground_plane: Both stand on the same grass. The ankles are not touched by this rung, so the parent's
+    deviation is expected and is not a regression.
+  b5_no_colossus: Neither figure towers. The grandparent measured 1.161 against 1.100 authored and this
+    rung moves neither stature.
+  b6_drawn_not_traced: 'EXPECTED TO DEGRADE, PRE-REGISTERED, AND IT IS THE PRICE THIS RUNG IS KNOWINGLY
+    PAYING. xinsir''s own description of twins is MORE PRECISE POSE ADHERENCE AND A LOWER AESTHETIC SCORE.
+    The skeleton hints have produced this beat''s only clean passes on B6, so some loss of drawing quality
+    is the expected cost of the adherence being bought. It is scored so the trade is PRICED rather than
+    discovered later: a mild loss is accepted if B4b flips, and mannequins are not.'
+  b2_the_identities_separate: 'CARRIED AS AN OBSERVATION, NOT AS THIS RUNG''S CLAIM, and it is now the
+    THIRD free data point on the enclosure hypothesis. Same instrument as every rung on this beat: guard
+    (547,372)-(584,425), goblin (148,448)-(193,504), statistic G-R. Bare skeletons have measured +55.5
+    and +83.0 separation with NO adapter, against +43.0 for the masked IP-Adapter on the contour. A third
+    pass would make the masked references look redundant on this route -- which is already a named later
+    question and is NOT decided here on observational data.'
+  b4a_board_down: EXPECTED FAIL, PRE-REGISTERED, NOT THIS RUNG'S VARIABLE. No board is in the hint because
+    a rectangle is not a pose. The remedy is multi-ControlNet pose+scribble and it is a later sample.
+not_done_on_purpose: 'ONE sample, ONE arm, ONE variable. No scale sweep, no second seed, no re-authored
+  hint, no wording change, no IP-Adapter, no multi-ControlNet, no night fix, no pick, no plate_ack waiver
+  and no canon filename. The night (mean luma 40.4 on the parent) is NOT addressed here and is expected
+  to persist: it is the next named sample after this one and folding it in would make this rung''s result
+  unattributable.'
+rights_and_weights: THIS IS THE `licence_note`. Clean. Base cagliostrolab/animagine-xl-3.1 (CreativeML
+  Open RAIL++-M). ControlNet xinsir/controlnet-openpose-sdxl-1.0, twins variant weights from the same
+  repo, apache-2.0 with no attribution condition. The hint is drawn by pipeline/author_b08_openpose_hint.py
+  with PIL -- no photo-derived pose, no annotator, so the lllyasviel/Annotators landmine is not touched.
+scoring_rule_pre_registered: 'THIS IS THE `verdict_rule`, WRITTEN BEFORE THE PIXELS, and all three branches
+  close something. (1) If B4b-i and B4b-ii BOTH hold and the gesture reads as a point, the verdict is
+  PASS: pose adherence was the fourth cause, twins is the fix, and beat 08''s blocker moves from the gesture
+  to the board -- the multi-ControlNet rung. (2) If adherence measurably IMPROVES on both positions but
+  the gesture still does not read, the verdict is that adherence was necessary and not sufficient, and
+  the next question is the HINT''s own geometry rather than the net -- a hand cannot point at a belly
+  the skeleton never brings it to. (3) If both arms deviate as far as the parent''s, the verdict RETIRES
+  twins for this beat: adherence is not the cause, the two figures are being pulled together by something
+  in the wording or the checkpoint''s own compositional prior, and the next probe is a wording ablation
+  rather than another net. Branch (3) also spends the 2.4 GB fetch usefully, because a retired mechanism
+  is a closed question.'
+the_combined_rung_this_replaces: 'This lane was dispatched to file ep2-b08-cnetipa-0819: the 0.45 contour
+  hint plus the masked IP-Adapter in one render. IT WAS NOT FILED, BECAUSE IT ALREADY EXISTS AND HAS ALREADY
+  BEEN JUDGED. ep2-b08-ipamask-0819 is that combination exactly -- diffed key by key: same control file
+  and sha 19cfad48..., same scale 0.45, same seed 20260819, byte-identical prompt and negative, plus the
+  two masked references at ip-scale 0.7. It PASSED B2 (guard G-R -14.4 against a bar of <= 0.0, separation
+  +43.0 against >= +20.0, re-measured independently). Filing it again would have rendered a duplicate
+  of a frame already on disk. Recorded here rather than in a report because the next lane to be handed
+  that instruction should find the answer in the tree.'
+who_ruled_this_rung: 'ep2-b08-posenat-0819, whose verdict closed: "THE `twins` VARIANT IS NOW GENUINELY
+  LICENSED, AND THIS IS THE FIRST TIME IT HAS BEEN." Its parent is ep2-b08-posenet-sample-0819 and the
+  weights came from ep2-b08-twins-fetch-0819 (2,502,139,104 bytes, sha 54a2afb1..., zero .incomplete,
+  manifest in farm-out). Written in an `extra` key rather than in `why` on purpose: `fresh` prose is retokened,
+  so a parent id written there would be rewritten into this job''s own id and the spec would cite itself.'
+why_these_key_names: 'TWO KEYS BELOW ARE NOT CALLED WHAT EVERY OTHER SPEC ON THIS BEAT CALLS THEM, and
+  the reason is a guard rather than a preference. derive_spec.FINDINGS_NAME refuses any `extra` key matching
+  /verdict|licen[cs]|.../ on the grounds that a spec earns findings AFTER its pixels exist. That is right
+  for `verdict`, and it over-reaches on two house keys that must be written BEFORE the pixels: `verdict_rule`
+  (pre-registration is the whole point of it) and `licence_note` (a licensing fact, not a finding). Rather
+  than dodge the guard quietly or edit a shared tool other lanes are using tonight, they are filed here
+  as `scoring_rule_pre_registered` and `rights_and_weights`, and the rename is declared here so a reader
+  greping for the house names on this spec finds this paragraph instead of nothing. The guard is reported
+  upstream as over-broad; it is not worked around.'
+derivation:
+  parent: pipeline/jobs/ep2-b08-posenat-0819.yaml
+  by: pipeline/derive_b08_twins_0819.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - success
+  - the_combined_rung_this_replaces
+  - who_ruled_this_rung
+  - why
+  - why_these_key_names
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - licence_note
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - ep2-b08-posenat-0819-posenat -> ep2-b08-twins-sample-0819-twins
+  - b08posenat-0819 -> b08twins-0819
+  - ep2-b08-posenat-0819 -> ep2-b08-twins-sample-0819
+  - posenat -> twins
+  - ep2-b08-posenat-0819 -> ep2-b08-twins-sample-0819
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step twins --arm (twins -> twins)
+    argv:--controlnet:
+    - step twins --controlnet (xinsir/controlnet-openpose-sdxl-1.0 -> C:\banyan-farm\cnet-openpose-twins)
+    argv:--repo-commit:
+    - step twins --repo-commit (e8bae927c0b54c5fc5775f7312e726a2d3cec6f7 -> 60d99753e6633a8a5cb8c0748f1ab66e1f231646)
+    key:est_minutes:
+    - key est_minutes = 6
