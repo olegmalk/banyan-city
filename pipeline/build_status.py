@@ -13,6 +13,7 @@ House rule for anything a visitor reads: plain English. Internally a shot is a
 ("animated by: POST, LTX"). Repo files + the public GitHub API only — the
 deploy server has no local git refs and no `gh` CLI.
 """
+import re
 import sys
 from pathlib import Path
 
@@ -372,13 +373,93 @@ def infra_meter() -> dict:
     }
 
 
+def _inbox_id(e: dict) -> str:
+    """A stable id for a board entry, which writes none of its own.
+
+    `founder_gate_map` attaches parked queue work to a call by finding the
+    call's id inside a backlog entry's `gate_ref`, so the ids have to be
+    nameable in prose. Derived from the entry's own `url` — the one field the
+    board writes per entry — and from nothing else: an id invented from the
+    text would change every time the text is reworded, which is how a gate_ref
+    stops matching the thing it names.
+    """
+    u = str(e.get("url") or "").strip()
+    if u.lower().startswith("local:"):
+        u = u.split(":", 1)[1].strip()
+    slug = u.rstrip("/").rpartition("/")[2]
+    return slug.rpartition(".")[0] if "." in slug else slug
+
+
+def _inbox_halves(text) -> tuple:
+    """(headline, the rest) — a board entry's own words, split, never rewritten.
+
+    The board writes one paragraph per entry and the status page has a bold
+    line and a quiet one under it. The headline is the paragraph's first
+    sentence and the rest is the remainder verbatim; a run of dots is an
+    elision and not a full stop, the same rule `build_sim.first_sentence`
+    applies to every other sentence this site prints.
+    """
+    t = re.sub(r"\.{2,}", "…", " ".join(str(text or "").split()))
+    head, sep, rest = t.partition(". ")
+    return (head if sep else t.rstrip(". ")), rest.strip()
+
+
 def inbox() -> list:
-    """The author's decision queue — written for strangers in the yaml itself."""
+    """The author's decision queue — the OPEN entries of `review/inbox.yaml`.
+
+    THIS READ USED TO POINT AT `pipeline/pending-founder.yaml`, and that is the
+    defect the founder reported four times over. That file was RETIRED on
+    2026-08-14 — it says so in its own `retired:` block, naming
+    review/inbox.yaml as its successor — and all four of its entries carry a
+    `resolved:` disposition. This function filtered on nothing, so /status's
+    "Waiting on the author" kept printing all four as open and aging them off
+    their own `since:` dates: the guards call in wording superseded on 08-14, a
+    beat-04 length call superseded the same day, the episode-1 frame pick he
+    closed with "we have already published it dude, we are done" (08-13), and
+    the script read he abolished outright ("lets not waste time by having me
+    read the entire script", 08-13). The same build was already reading the live
+    board correctly in `build_sim.review_inbox_open()`, so the strip's own cell
+    said 2 waiting while the section under it listed 4 — the page disagreed
+    with itself, out of two files, in one build.
+
+    An entry is open until it carries `resolved:`. That is the one test
+    `review/inbox/regen.py` and `review_inbox_open()` apply, so the board, the
+    count on the tile and this section cannot drift apart about what is
+    waiting; there is now one file to answer, and answering it anywhere
+    answers it everywhere.
+
+    Returned in the shape `waiting_html` renders, with nothing invented: the
+    headline and the line under it are the entry's own `what`, split, and the
+    age is measured from the entry's own `since`. A `local:` url names a file on
+    a render machine rather than a page, so it is not offered as a link — its
+    `fallback_url` is, when the entry writes one.
+    """
     try:
-        return (yaml.safe_load((REPO / "pipeline/pending-founder.yaml").read_text())
-                or {}).get("pending") or []
+        doc = yaml.safe_load((REPO / "review/inbox.yaml").read_text(encoding="utf-8"))
     except Exception:
         return []
+    if not isinstance(doc, list):
+        return []
+    out = []
+    for e in doc:
+        if not isinstance(e, dict) or e.get("resolved"):
+            continue
+        head, rest = _inbox_halves(e.get("what"))
+        url = str(e.get("url") or "").strip()
+        if url.lower().startswith("local:"):
+            url = str(e.get("fallback_url") or "").strip()
+        out.append({
+            "id": _inbox_id(e),
+            "title": head,
+            # His own continuation when he wrote one; otherwise what answering
+            # this looks like, which is the only other line the board carries.
+            "detail": rest or str(e.get("verdict_hint") or ""),
+            "public": url or None,
+            "link_text": e.get("link_text"),
+            "since": e.get("since"),
+            "group": e.get("group"),
+        })
+    return out
 
 
 def build(out_dir: Path):

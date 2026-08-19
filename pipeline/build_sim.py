@@ -537,6 +537,20 @@ def first_sentence(s: str, limit: int = 190) -> str:
     return first
 
 
+def excerpt(s: str, limit: int = 260) -> str:
+    """A whole short paragraph, clamped to a width without cutting a word.
+
+    `first_sentence` is the wrong instrument for text that asks two things. The
+    review board writes about fifty words per entry, meant to be read at a
+    glance, and its second sentence is regularly half the question — so one
+    sentence of it is not a summary, it is an omission.
+    """
+    t = re.sub(r"\.{2,}", "…", " ".join(str(s or "").split()))
+    if len(t) <= limit:
+        return t
+    return t[:limit].rsplit(" ", 1)[0] + "…"
+
+
 def visitor_sentence(s: str, limit: int = 170) -> str:
     """One sentence, minus its parentheticals and backticks.
 
@@ -1683,30 +1697,49 @@ def founder_gate_map(backlog: list, pending_ids: list) -> dict:
 
 
 def review_pointer(n_open) -> str:
-    """One line handing the section below it over to the canonical list.
+    """One line naming what the section below it is, and where it gets answered.
 
-    Two lists of founder calls exist and only one is canonical. SITE.md gives
-    that title to `review/inbox.yaml`; this section renders
-    `pipeline/pending-founder.yaml`, which is the older, public, written-for-a-
-    stranger subset — the calls that have machine work parked behind them, with
-    the queue entries naming their ids in `gate_ref`. Neither can simply absorb
-    the other, so the page says which is complete instead of letting a reader
-    assume the first list he meets is all of it.
+    IT USED TO DESCRIBE A SUBSET, and that stopped being true. Two lists of
+    founder calls existed: `review/inbox.yaml`, which SITE.md makes canonical,
+    and `pipeline/pending-founder.yaml`, the older public one this section
+    rendered — so this line had to warn a reader that the first list he met was
+    not all of it. That file was retired on 2026-08-14 and the section now
+    renders the canonical board's open entries, so the warning would itself be
+    the stale claim on the page: there is one list, this is it.
+
+    The count comes from `review_inbox_open()` and the entries from
+    `build_status.inbox()` — one file, one `resolved:` test — so a number here
+    that disagreed with the number of items below it would mean one of the two
+    had stopped reading the board. That is not hypothetical: it is what the page
+    did until 2026-08-19, when this line said two things were waiting over a
+    list of four answered ones.
     """
     if n_open:
-        head = (f'<b>{n_open} thing{"s" if n_open != 1 else ""}</b> are waiting '
-                'in all' if n_open != 1 else '<b>1 thing</b> is waiting in all')
+        head = (f'<b>{n_open} thing{"s" if n_open != 1 else ""}</b> are waiting'
+                if n_open != 1 else '<b>1 thing</b> is waiting')
     else:
-        head = 'The full list of what is waiting'
-    return (f'{head} — this section shows only the calls with queued machine '
-            'work parked behind them. The complete list, and the one the author '
-            'answers from, is <a href="review">the review inbox &rarr;</a>')
+        head = 'What is waiting'
+    return (f'{head} — every open call on the author’s board, in full, and '
+            'nothing he has already answered. Answers land on '
+            '<a href="review">the review inbox &rarr;</a>, which carries this '
+            'same list with the verdicts already given underneath it')
 
 
 def waiting_html(inbox: list, backlog: list, now=None) -> str:
     """The author's decision queue, with the age of each wait and the work
     parked behind it. Read-only for everyone else — the old board offered five
-    identical gold 'look →' links for calls a visitor cannot make."""
+    identical gold 'look →' links for calls a visitor cannot make.
+
+    AN ANSWERED CALL CANNOT BE RENDERED HERE, whoever hands it in. The reader
+    (`build_status.inbox()`) already drops anything carrying `resolved:`, and
+    this refuses it a second time on the way out, because the four stale cards
+    the founder screenshotted on 2026-08-19 reached the page through a supplier
+    that did no filtering at all — a retired snapshot file, every entry of it
+    resolved. The invariant belongs to the section, not to one of its sources:
+    the day a third list feeds it, it inherits the guard for free.
+    """
+    inbox = [q for q in (inbox or [])
+             if isinstance(q, dict) and not q.get("resolved")]
     if not inbox:
         return '<p class="notice">Nothing waiting — the city runs itself today.</p>'
     now = now or utcnow()
@@ -1732,12 +1765,18 @@ def waiting_html(inbox: list, backlog: list, now=None) -> str:
                     f'{"s" if len(held) != 1 else ""} parked behind this call</b>'
                     + (f' · {_e(hours_words(mins))} of machine time' if mins else "")
                     + (f'<br>{_e(jobs)}' if jobs else "") + "</div>")
-        # The first sentence of the detail, not the whole paragraph: each
-        # `detail` is written for the author and runs to 150 words, and the
-        # 2026-08-11 audits both named these paragraphs as what buries the page.
+        # The whole of the board's own line, clamped to a width. This printed
+        # the FIRST SENTENCE ONLY, and the 2026-08-11 audits that asked for that
+        # were right about the source they audited: the retired
+        # pending-founder.yaml wrote 150-word paragraphs and one sentence was a
+        # mercy. The board writes fifty, and cutting them at the first full stop
+        # loses half of what he is being asked — on 2026-08-19 the one genuinely
+        # open taste call reached this page carrying "Second half of the same
+        # question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?" as its second
+        # sentence, and the page showed him only the first.
         out.append(f'<li><span class="waited">{_e(waiting_words(q.get("since"), now))}'
                    f'</span> <b>{_e(q.get("title", ""))}</b>{a}'
-                   f'<div class="mono">{_e(first_sentence(str(q.get("detail") or ""), 180))}'
+                   f'<div class="mono">{_e(excerpt(q.get("detail")))}'
                    f'</div>{tail}</li>')
     return f'<ol class="quests">{"".join(out)}</ol>'
 
@@ -2171,7 +2210,16 @@ def read_latest_cut(repo=REPO, glob=CUT_DIR_GLOB) -> dict:
                              # the slot. Printed in the table as its word, and
                              # deliberately not used to compute anything — see
                              # `prev_takes` below for why.
-                             "why": str(b.get("why") or "").strip()})
+                             "why": str(b.get("why") or "").strip(),
+                             # The row's citation of the job spec that licensed
+                             # the take. Carried through as the RAW string and
+                             # never printed: proof_receipts extracts the
+                             # `pipeline/jobs/*.yaml` path out of it and reads
+                             # the verdict out of the spec itself, because a
+                             # paraphrase written by the lane that wanted the
+                             # take in the cut is the one claim a reader has no
+                             # way to check.
+                             "verdict": str(b.get("verdict") or "").strip()})
             if not rows:
                 continue
             read.append({"dir": d.name, "manifest": picks[-1].name, "beats": rows,

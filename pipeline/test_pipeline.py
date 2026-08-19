@@ -9849,6 +9849,7 @@ def main():
     test_a_job_cannot_be_filed_with_outputs_nobody_can_find()
     test_a_finished_job_cannot_be_filed_with_nothing_to_carry_it_home()
     test_a_newer_mirror_alone_is_not_a_stuck_deploy()
+    test_a_resolved_call_can_never_render_as_waiting_on_the_author()
     test_beat_duration_from_timecode()
     test_beat_duration_fallback()
     with tempfile.TemporaryDirectory() as td:
@@ -11455,6 +11456,100 @@ def test_a_finished_job_cannot_be_filed_with_nothing_to_carry_it_home():
           "courier_problems" in
           (REPO / "pipeline" / "box_enqueue.py").read_text(encoding="utf-8")
           .split("def gate_checks")[1].split("\ndef ")[0])
+
+
+def test_a_resolved_call_can_never_render_as_waiting_on_the_author():
+    """The founder screenshotted /status four times over one defect.
+
+    "Waiting on the author" was fed by `pipeline/pending-founder.yaml` — retired
+    2026-08-14, in its own `retired:` block, every one of its four entries
+    carrying a `resolved:` verdict. The reader filtered on nothing, so the page
+    aged four answered calls off their own `since:` dates (7, 7, 12 and 20 days)
+    while the strip immediately above them, reading the live board, said 2. Among
+    the four: an episode-1 frame pick he closed with "we have already published
+    it dude, we are done", and a script read he abolished outright.
+
+    Both halves are asserted, because either alone would let it come back. The
+    READER (`build_status.inbox()`) must read the canonical board and drop what
+    carries `resolved:`. The RENDERER (`waiting_html`) must refuse a resolved
+    entry from ANY supplier — the stale four reached the page through a supplier
+    that did no filtering, so the invariant has to live in the section rather
+    than in one of its sources.
+
+    The last two checks are run against the REAL board, because a unit test on
+    synthetic data cannot see the drift that actually shipped: the page's own
+    count and the page's own list read from the same file, and if they ever
+    disagree again one of them has stopped reading it.
+    """
+    import datetime
+    import tempfile
+
+    import yaml
+
+    import build_sim as bs
+    import build_status as bd
+
+    now = datetime.datetime(2026, 8, 19, tzinfo=datetime.timezone.utc)
+    board = [
+        {"what": "AN OPEN TASTE CALL. Second half of the same question.",
+         "url": "/review/ep2-guards-0818", "since": "2026-08-17", "group": "taste"},
+        {"what": "Choose the last drawing in episode 1 - scene 6.",
+         "url": "/review/cuts.html#item-10", "since": "2026-08-07",
+         "resolved": {"date": "2026-08-13",
+                      "verdict": "we have already published it dude, we are done"}},
+    ]
+
+    with tempfile.TemporaryDirectory() as td:
+        real = bd.REPO
+        try:
+            bd.REPO = Path(td)
+            (Path(td) / "review").mkdir()
+            (Path(td) / "review/inbox.yaml").write_text(
+                yaml.safe_dump(board, sort_keys=False), encoding="utf-8")
+            cards = bd.inbox()
+            check("the reader takes its entries from review/inbox.yaml",
+                  len(cards) == 1)
+            check("an entry with a resolved: key is not handed to the page",
+                  all(not c.get("resolved") for c in cards)
+                  and "episode 1" not in repr(cards))
+            check("the age is measured from the card's own since:",
+                  bs.waiting_words(cards[0]["since"], now) == "waiting 2 days")
+            src = (REPO / "pipeline" / "build_status.py").read_text(encoding="utf-8")
+            # The path as a code literal, not as prose: the docstring above
+            # inbox() names the retired file on purpose, to say why it is gone.
+            check("the retired snapshot file is not read by any code path",
+                  'pending-founder.yaml"' not in src
+                  and 'review/inbox.yaml"' in src)
+        finally:
+            bd.REPO = real
+
+    # The renderer refuses it a second time, whoever hands it in. These are
+    # page-shaped rows carrying a `resolved:` key — the exact thing the retired
+    # reader handed over, title and all, and the page printed it.
+    rows = [
+        {"title": "AN OPEN TASTE CALL", "detail": "the guards read adolescent",
+         "since": "2026-08-17"},
+        {"title": "Choose the last drawing in episode 1 - scene 6",
+         "detail": "the one shot you have never passed", "since": "2026-08-07",
+         "resolved": {"date": "2026-08-13",
+                      "verdict": "we have already published it dude, we are done"}},
+    ]
+    html = bs.waiting_html(rows, [], now)
+    check("the section renders the open call", "AN OPEN TASTE CALL" in html)
+    check("the section cannot render a resolved call",
+          "last drawing in episode 1" not in html)
+    check("and it is dropped, not merely hidden — one row, not two",
+          html.count("<li>") == 1)
+    check("a list of nothing but resolved calls reads as nothing waiting",
+          "Nothing waiting" in bs.waiting_html([rows[1]], [], now))
+    check("a resolved call cannot age off its own since: either",
+          "waiting 12 days" not in html)
+
+    live = bd.inbox()
+    check("every call on the real page is open",
+          all(not c.get("resolved") for c in live))
+    check("the page's count and the page's list read the same file",
+          len(live) == bs.review_inbox_open())
 
 
 def test_a_newer_mirror_alone_is_not_a_stuck_deploy():

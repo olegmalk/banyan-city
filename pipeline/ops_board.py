@@ -156,10 +156,20 @@ def queue_now():
 
 
 def founder_inbox():
+    """What is waiting on the author — through the ONE reader, not a second copy.
+
+    This read its own copy out of `pipeline/pending-founder.yaml`, retired
+    2026-08-14, and filtered `resolved:` no more than /status's did — so the same
+    four answered calls the founder screenshotted on 2026-08-19 were also sitting
+    on this dashboard, aging off their own `since:` dates. Two builders reading
+    one dead file is not two bugs; it is one, and the fix is one reader.
+    `build_status.inbox()` returns the `title`/`detail`/`since` shape this list
+    already renders, so there is nothing here to keep in step by hand.
+    """
     try:
-        import yaml as _y
-        d = _y.safe_load((REPO / "pipeline/pending-founder.yaml").read_text()) or {}
-        return d.get("pending") or []
+        sys.path.insert(0, str(REPO / "pipeline"))
+        import build_status
+        return build_status.inbox()
     except Exception:
         return []
 

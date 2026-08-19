@@ -200,15 +200,21 @@ check_true("a log that could not be read never prints a zero",
 # inbox page had been live for hours; nothing on the page he lands on pointed at
 # it. The link is the fix, so the link is what these guard — a strip that builds
 # fine while carrying no route to the inbox is the exact regression.
+#
+# THE ROUTE IS `/review`, NOT `/review/inbox`. These asserted the older path and
+# had been failing red ever since the board took over /review on 2026-08-14
+# ("then how about you just move everything from /review/inbox to /review?") —
+# the code was right and the test was the stale thing. A red test beside this
+# section is worse than no test: it is where a real regression would hide.
 print("\nthe glance carries the author's own inbox, and the way into it")
 rev = S.summary_strip(dict(view, review_open=7), now)
-check_true("the strip links to the review inbox", 'href="review/inbox"' in rev)
+check_true("the strip links to the review board", 'href="review"' in rev)
 check_true("and prints how many are open", ">7<" in rev)
 check_true("in words a stranger can read", "waiting on the author" in rev)
 check_true("the author's cell comes before the visitor's questions",
-           rev.index('href="review/inbox"') < rev.index("the studio"))
+           rev.index('href="review"') < rev.index("the studio"))
 check_true("an empty inbox still offers the way in",
-           'href="review/inbox"' in S.summary_strip(dict(view, review_open=0), now))
+           'href="review"' in S.summary_strip(dict(view, review_open=0), now))
 check_true("an unreadable inbox prints no count, and never a zero",
            "not read" in S.summary_strip(dict(view, review_open=None), now))
 
