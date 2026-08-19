@@ -715,3 +715,57 @@ exactly how a runnable job sits while the card idles. *(How this lane worked
 around it: file with `box_enqueue.py --backlog` — which correctly ssh's for
 everything — then run the fill **on the box over ssh**. Promotion was immediate
 and the render started with no wait.)*
+
+### TOOLING RUNG — `box_enqueue.py` has no idempotency check, and it re-rendered a finished job
+
+**Same night, same lane, a second tooling hole — and this one spent GPU.**
+`ep2-b19-dropmotion-0819` **ran twice**: `…-1787128259` at 08:30 (the run the
+verdict is scored on) and `…-1787129173` at 08:46:22, **seven minutes after the
+first landed in `done/`**. 264s of GPU on a question the first run had already
+answered.
+
+**Mechanism, established from disk rather than inferred:**
+
+- The box's `autofill.log` reads `BACKLOG EMPTY` at **every** tick across the
+  window — 08:36, 08:39, 08:42, 08:45, 08:48, 08:51. **No fill event at 08:46**,
+  so the duplicate never came through `backlog/`.
+- **No `.SUPERSEDED` parked file.** `box_autofill.plan_fill` *does* dedupe —
+  line 418 skips any backlog entry whose id is already in
+  `ready/`/`running/`/`done/`/`failed/` and parks it — so it never saw this one.
+- Therefore the duplicate went **straight into `ready/`**, which is exactly what
+  `box_enqueue.py <spec>` does when `--backlog` is omitted, and the runner
+  claimed it.
+
+**The dedupe lives one layer downstream of the tool that needed it.**
+`box_enqueue`'s only collision guard is `output_path_problems` / payload-path
+claims, and that compares against **LIVE** jobs only (`ready/`, `running/`). The
+first run was already in `done/`, so nothing objected. Eleven reasons the queue
+can refuse a job, and *"this exact job already ran"* is not one of them.
+
+**Why a second call happened, stated plainly because the tool half is the part
+worth fixing:** this lane was interrupted and re-logged twice while the render
+was in flight, and a resumed copy re-ran the file-and-fire step. That is the
+**"resumed agents fork"** hazard — a resumed agent is a NEW copy — meeting a tool
+with no idempotency check. The agent-side mistake is ordinary and will recur;
+what turned it into wasted GPU is that nothing refused it.
+
+**THE RUNG:** an idempotency refusal in `box_enqueue`. **Same job id — or better,
+same spec sha — already present in `ready/`, `running/`, `done/` or `failed/` ⇒
+REFUSE**, with an explicit `--again` to override for a deliberate re-run. Spec
+sha is the stronger key: it also catches a re-file under a nudged id, and it
+lets a genuinely edited spec through, which an id check would block. Cheap, and
+it is the same shape as the guard the crf-10 wave wanted (a derivation step that
+refuses to carry a parent's `verdict`/`pick` keys) — both are *refuse the thing
+that cannot be right*, at the one place that can see it.
+
+**THE ONE THING SALVAGED, and it is worth having:** the two runs are
+**byte-identical**. Same mp4 sha (`333ea495…`), same init, same sidecar, same
+prompt and negative — two independent runs 16 minutes apart, each with its own
+model load and its own libx264 conditioning round trip. **LTX i2v is bit-exact
+reproducible on this box at a fixed seed**, which nobody had measured. Only
+`bench-…jsonl` differs, because it records wall-clock and peak memory. Narrowly:
+one spec, one seed, one machine, one weight set — it says nothing about
+reproducibility across machines or torch builds. Written up beside the artifacts
+in `farm-out/ep2-b19-dropmotion-0819/DUPLICATE-RUN-0819.md`, so a reader who
+finds two completed job records for one id does not have to work out which
+artifact they hold.
