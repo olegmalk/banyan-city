@@ -1,0 +1,126 @@
+{
+  "id": "ep2-b13-sapcomp-0820-1787178477",
+  "task": "ep2-b13-sapcomp-0820",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 33,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13sapcomp-0820\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13sapcomp-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-0820.png",
+        "--init-sha256",
+        "9ae127d1b6935f1224a22100a8390f0dc4e12db7385bea48c93da4f039864f07",
+        "--mask-png",
+        "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13sapcomp-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13sapcomp-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13sapcomp-0820\\b13-sapcomp-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "mask geometry check. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THIS COMPOSITE IS PURELY ADDITIVE -- there was no wrong plant near him to remove -- so the mask is the DRAWN SAPLING's footprint alone, dilated 12: 41497 px, 4.10 percent of the frame, extent x 13..252 y 647..1174. WHAT TO CHECK ON THE DRY PNG: that it does not reach his FACE (box x 250..570 y 60..500), his hands or his folded arms -- 0 drawn px sit above y=640 and the compositor asserts 0 px changed anywhere outside its own footprint, so PASS on cast and on pose is byte-identical to r1s1 going in. 192 drawn px fall inside his declared leg band; that is a foreground blade crossing his shin and is what tells a reader the plant is nearer to camera than his leg.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13sapcomp-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-0820.png",
+        "--init-sha256",
+        "9ae127d1b6935f1224a22100a8390f0dc4e12db7385bea48c93da4f039864f07",
+        "--mask-png",
+        "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13sapcomp-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13sapcomp-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13sapcomp-0820\\b13-sapcomp-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure. Beat 13's r1s1 is the only plate of last night's three whose ACTION clause landed -- folded small, knees up -- and its single fault is that 'in the thin shade of a tiny sapling' bought shade and lost the plant. Its own verdict names this route: 'If the plant is solved compositionally, this pose is worth keeping.'"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b13sapcomp-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-sapcomp-0820\"\nNAMES = [\n    \"b13-sapcomp-s20260820.png\",\n    \"b13-sapcomp-s20260820-mask.png\",\n    \"b13-sapcomp-s20260820.png.meta.yaml\",\n    \"13-the-shade-sapcomp-0820.png\",\n    \"13-the-shade-sapcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-sapcomp-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b13sapcomp-0820\\b13-sapcomp-s20260820.png",
+    "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-0820.png"
+  ],
+  "backlog": {
+    "filed_at": 1787178477,
+    "filed_at_iso": "2026-08-19T22:27:57Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b13-sapcomp-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-19T22:32:15Z",
+  "attempts": 1,
+  "runner_pid": 21356,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T22:32:29Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b13sapcomp-0820\\b13-sapcomp-s20260820.png",
+    "C:\\banyan-farm\\b13sapcomp-0820\\13-the-shade-sapcomp-0820.png"
+  ]
+}
