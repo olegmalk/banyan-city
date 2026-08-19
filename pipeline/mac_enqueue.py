@@ -31,7 +31,7 @@ import subprocess
 import sys
 import time
 
-HOSTS = ("macbook1", "macbook2", "macbook3")
+HOSTS = ("macbook1", "macbook2", "macbook3", "macbook4")
 # Beats plate_scratch.py carries an inline prompt for. Read from the file rather
 # than duplicated, so adding a beat there does not silently fail here.
 PLATE_SCRIPT = "~/banyan-city/pipeline/plate_scratch.py"
