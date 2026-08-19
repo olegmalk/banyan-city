@@ -1,0 +1,285 @@
+# BEAT 08 RUNG B2 -- WAS THE FOREARM FLIP OUR ANATOMY, OR THE NET'S PRIOR?
+# ONE SAMPLE. ONE ARM. ONE VARIABLE, AND IT IS THE GUARD'S ELBOW.
+#
+# ============================================================================
+# THE ONE VARIABLE
+# ============================================================================
+# ep2-b08-posenet-sample-0819 (verdict appended to its own spec, 2026-08-19)
+# answered all three of the research's questions YES -- pose binds on
+# animagine-xl-3.1, two skeletons give two distinct whole figures, and the stated
+# stature ratio survives (1.161 against 1.100 authored) -- and then failed the
+# beat's own gesture in a very specific way:
+#
+#   THE NET BOUND THE UPPER ARM TO THE PIXEL AND MIRRORED THE FOREARM ABOUT THE
+#   ELBOW. The hint authored Rsho (512,491) -> Relb (360,485) -> Rwri (257,657):
+#   out horizontally, then steeply DOWN toward the belly. The render put a hand
+#   with a raised index finger at about (320,420) -- roughly 230 px ABOVE the
+#   authored wrist -- and drew NOTHING at the authored wrist at all. The
+#   forearm's length and attachment bound; its DIRECTION did not.
+#
+# That verdict named two candidate causes and ruled the cheaper one testable
+# first. THIS JOB TESTS IT, and the variable is one number:
+#
+#   held: the net (xinsir openpose), the scale (1.0), the base, the seed
+#     (20260819), the size, the steps, the guidance, the prompt and negative word
+#     for word, the driver file BYTE-IDENTICAL (d6df250d...), both figures'
+#     positions, both statures, the shared foot line, the guard's shoulder, the
+#     belly target, the total reach and the 0.847 extension -- all asserted key
+#     for key in author_b08_openpose_hint.py --selftest against the filed hint's
+#     own metadata, and the FILED hint itself asserted byte-identical on sha
+#     3fe4eacc so that the parent verdict still rests on the bytes it measured.
+#   changed: the guard's ELBOW, from `solved` to `natural`.
+#
+# ============================================================================
+# WHY THE ELBOW, AND WHY THIS IS NOT A GUESS
+# ============================================================================
+# `solved` lets the two-link triangle pick the elbow, and at this separation the
+# triangle puts it 6 px from SHOULDER HEIGHT and laterally out -- a CHICKEN-WING.
+# Nobody points at somebody's belly that way. A person's elbow hangs LOW AND NEAR
+# THE RIBS and the forearm reaches forward and down. `natural` places the elbow by
+# anatomy instead -- one upper-arm length from the shoulder, 15 degrees off
+# straight-down, opening toward the target, so it hangs 147.3 px below the
+# shoulder -- and then puts the wrist one forearm along elbow->belly, so the
+# forearm still aims: ray miss 0.0 px, and the wrist stops 57.6 px clear of the
+# torso rather than prodding it.
+#
+# BUT THE REASON TO EXPECT THIS TO HELP IS ASSERTED IN CODE, NOT HOPED FOR, AND IT
+# IS THE WHOLE ARGUMENT OF THIS RUNG. Reflect each forearm about its own elbow --
+# the exact transformation the net applied -- and ask where the hand lands:
+#
+#   solved,  mirrored: hand at y=312.5, ABOVE the shoulder at y=491.0. That is a
+#     perfectly plausible raised-finger point, and it is what the net drew.
+#   natural, mirrored: hand at y=581.5, BELOW the shoulder. It reads as nothing
+#     in particular.
+#
+# So the new staging does not merely ask for the right pose -- IT STOPS OFFERING
+# THE NET AN ATTRACTIVE WRONG ANSWER. If the flip was our anatomy, this fixes it.
+# If the flip was the net's prior, it will flip this one too, and the hand will
+# appear near y=581 with nothing at the authored wrist -- WHICH IS A CLEAN,
+# READABLE NEGATIVE and is why this sample is worth 14 seconds either way.
+#
+# ============================================================================
+# WHAT IS STILL EXPECTED TO FAIL, PRE-REGISTERED SO IT IS NOT REDISCOVERED
+# ============================================================================
+# The parent's four costs are UNTOUCHED by this variable and are all expected to
+# recur: the frame will be NIGHT (parent mean luma 32.5, with `dark, night` in the
+# negative -- scale 1.0 is the suspect and it is not this rung's variable), the
+# board will be a prop at the wrong height (no rectangle is in a pose hint, on
+# purpose), the guard may read female, and `plump` may broadcast to the guard.
+# NONE OF THOSE COUNT AGAINST THIS RUNG. Each has its own named sample after this
+# one, in the order the parent's verdict set.
+#
+# NO SPEND, NO PROVIDER, NO DOWNLOAD, NO NEW WEIGHTS, NO CANON FILENAME, NO PICK,
+# NO PUBLISH TO THE SITE, NO POST, NO ASSEMBLY. No video is encoded on this path.
+
+id: ep2-b08-posenat-0819
+task: ep2-b08-posenat-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 33
+max_attempts: 1
+owner: beat 08 arm-route lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate. The aim is the beat's LAST remaining blocker -- it has now
+  failed on three mechanisms -- and every other clause has passed on one recipe or
+  another. This sample decides whether the failure is ours or the net's, which
+  decides whether beat 08's staging is finishable with the tools already proven or
+  needs a different lever entirely. Its answer is read by whoever takes the night
+  and the board next, because both of those are only worth doing on a frame whose
+  gesture is right.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-posenat-0819 with a sha256
+  manifest, read at full size beside the parent frame with the hint's own keypoints
+  overlaid at identical coordinates. Its sidecar must record
+  `controlnet: xinsir/controlnet-openpose-sdxl-1.0`; if it does not, the frame is
+  VOID rather than negative.
+
+why: >-
+  The card is free, the weights are local, the hint is drawn and was opened at full
+  size beside its parent, the driver is byte-identical to the one the parent ran,
+  and both are staged and hash-verified on both ends. $0, no download, ~14 seconds
+  of GPU. It is the cheaper of the two hypotheses the parent's verdict left, and
+  leaving the card idle while a ruled runnable job exists is the thing the standing
+  directive forbids.
+
+est_minutes: 4
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Staged at C:\banyan-farm\b08posenat-0819\src, hash-verified on BOTH ends:
+#   pipeline\controlnet_plate.py                 d6df250d36c05794e2a57a6b1bb5009d08e3899b2265dc85920bce31e9d702a6
+#   pipeline\control\b08-openpose-nat-0819.png  562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+# The driver is BYTE-IDENTICAL to the one the parent rung ran, so the net, the
+# scale and the pipeline are provably the same and only the hint differs.
+payload:
+  C:\banyan-farm\b08posenat-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08posenat-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+# Rung 2's and rung A's pair, word for word, measured at 64/77 and 69/77 on the
+# box's real tokenizer. Unchanged so that the NET is the only difference between
+# this frame and the two it will be read beside.
+
+steps:
+  - name: posenat
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08posenat-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08posenat-0819\src
+      - --repo-commit
+      - e8bae927c0b54c5fc5775f7312e726a2d3cec6f7
+      - --task
+      - ep2-b08-posenat-0819
+      - --arm
+      - posenat
+      - --controlnet
+      - xinsir/controlnet-openpose-sdxl-1.0
+      - --control
+      - pipeline/control/b08-openpose-nat-0819.png
+      - --control-sha256
+      - 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+      - --scale
+      - '1.0'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08posenat-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08posenat-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08posenat-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # box_enqueue.courier_problems: the courier pushes from farm-out and
+        # nowhere else, and ep2-cnet-probe-0817 was invisible for two days for
+        # want of exactly this step.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08posenat-0819/out"
+        pay_dir = "C:/banyan-farm/b08posenat-0819"
+        ctl_dir = "C:/banyan-farm/b08posenat-0819/src/pipeline/control"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-posenat-0819"
+        os.makedirs(dst, exist_ok=True)
+        files = sorted(glob.glob(out_dir + "/ep2-b08-posenat-0819-posenat.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt")
+                       + glob.glob(ctl_dir + "/b08-openpose-nat-0819.png"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-posenat-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 5 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08posenat-0819\out\ep2-b08-posenat-0819-posenat.png
+
+bar:
+  b0_the_net_is_the_pose_net: >-
+    VOID-CHECK, READ FIRST. The sidecar must say
+    `controlnet: xinsir/controlnet-openpose-sdxl-1.0` at scale 1.0 with no
+    ip_adapter lines. "The net did nothing" and "the net never loaded" are
+    different findings and only the provenance block tells them apart.
+  b4b_the_forearm_points_where_it_was_authored: >-
+    THIS RUNG'S WHOLE QUESTION, AND IT IS SCORED AS A POSITION BEFORE IT IS SCORED
+    AS A GESTURE. The authored wrist is (280.5, 695.1) and the authored elbow is
+    (472.9, 638.3). PASSES if a hand is drawn at or near the authored wrist and
+    the gesture reads as aimed AT the goblin's belly. FAILS SPECIFICALLY AND
+    USEFULLY if the hand appears instead near (665, 581) -- the mirror of the
+    authored wrist about the elbow -- because that would mean the net flips the
+    forearm whatever the anatomy, and the cause is the net's prior rather than our
+    staging. Any THIRD outcome is reported as itself.
+  b4c_the_arm_belongs_to_the_guard: >-
+    MUST SURVIVE. The arm grows from THE GUARD's shoulder. Three mechanisms have
+    now held this and the uncontrolled tally is 4 of 4 on the goblin.
+  b1_the_pair: 'TWO figures and only two, both whole in frame.'
+  b3_one_ground_plane: >-
+    Both stand on the same grass. The parent held this only marginally -- the
+    guard's feet 35 px below the goblin's -- and this rung does not touch the
+    ankles, so a similar deviation is expected and is not a regression.
+  b5_no_colossus: >-
+    Neither figure towers. The parent measured 1.161 against 1.100 authored and
+    this rung moves neither stature.
+  b6_drawn_not_traced: >-
+    Both figures read as drawn characters, not mannequins. The parent's cleanest
+    pass in six rungs, and a skeleton still has no outline to trace.
+  b2_the_identities_separate: >-
+    CARRIED AS AN OBSERVATION, NOT AS THIS RUNG'S CLAIM. The parent passed this at
+    +55.5 separation with NO adapter, which was pre-registered to fail and raised
+    the hypothesis that the CONTOUR was suppressing figure differentiation all
+    along. Measuring it again on the same instrument -- guard (547,372)-(584,425),
+    goblin (148,448)-(193,504), statistic G-R -- is the cheapest possible second
+    data point on that hypothesis, and it comes free with this render. A second
+    pass makes the hypothesis worth its own rung; it does not confirm it.
+  b4a_board_down: >-
+    EXPECTED FAIL, PRE-REGISTERED, NOT THIS RUNG'S VARIABLE. No board is in the
+    hint because a rectangle is not a pose. The parent bound the holding HAND and
+    drew a book at the chest. The remedy is multi-ControlNet, and it is a later
+    sample.
+
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS. B0 first; a sidecar that does not name the openpose
+  net makes the frame VOID. Then: (1) if a hand lands at or near the authored
+  wrist and the gesture reads as aimed at the goblin, THE FLIP WAS OUR ANATOMY,
+  B4b is finally solved after failing on three mechanisms, and beat 08's staging is
+  finishable with tools already proven -- the remaining work is the night, the
+  board and the third figure, each already named. (2) If the hand lands near the
+  MIRROR point (665, 581), the flip is the NET'S PRIOR and is independent of the
+  anatomy; hand-authored pose geometry cannot aim this gesture on this net, and the
+  next lever is either the `twins` variant (whose whole claim is tighter pose
+  adherence at a lower aesthetic score) or Route A's plate campaign. (3) Any other
+  outcome is reported as itself rather than forced into a branch. In every branch
+  the parent's four costs are expected to recur and do not count.
+
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE variable, and the variable is the elbow. No scale change
+  (the night is a separate named sample). No IP-Adapter (rung A proved it
+  separately; and the parent passed B2 without it). No board rectangle. No
+  multi-ControlNet. No `twins` variant -- it is branch (2)'s remedy and filing it
+  now would be scaling an unapproved result. No second seed. No hang_deg sweep: 15
+  degrees is one value chosen by anatomy and asserted to hang, and a second value
+  needs its own question. No re-render of the parent or of the nocontrol control.
+  No pick, no plate_ack waiver, no canon filename, no third figure.
+
+licence_note: >-
+  Identical to the parent's and clean. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M; D15). ControlNet
+  xinsir/controlnet-openpose-sdxl-1.0, apache-2.0 front matter and body, no
+  attribution condition, and reached through the driver's allowlist so
+  thibaud's non-commercial-inheriting mirror cannot be named by a typo. THE HINT IS
+  AUTHORED IN PIL from the COCO-18 spec transcribed in
+  pipeline/research/openpose-controlnet-sdxl-0819.md 2 -- no preprocessor, no
+  annotator, no photo-derived pose estimate -- so lllyasviel/Annotators is not
+  touched.
