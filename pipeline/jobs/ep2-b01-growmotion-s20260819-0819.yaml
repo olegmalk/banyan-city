@@ -1,0 +1,183 @@
+id: ep2-b01-growmotion-s20260819-0819
+task: ep2-b01-growmotion-s20260819-0819
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: cold-open lane, 2026-08-18 -- filed by the lead directly; the API-dropped agent lane never reached
+  it
+consumer: The darkening diagnostic. A PASS (no collapse) clears seed 20260819 and sends the question to
+  the plate or the prompt; a FAIL (collapse on a recipe that has never collapsed) identifies the seed
+  and makes every 121-frame rung's seed a thing to check. Either way it closes a question two verdicts
+  left open. Not a cut candidate and not a pick.
+success: A 704x1280 mp4, 121 frames at 24 fps, opening on the passed nub plate. PASS is G1 growth by a
+  continuous path + G2 end-state deep purple-violet + G3 exactly two leaves in every frame + G4 no size
+  doubling and below the grass + G5 only the fig moves with the camera locked (whole-frame registration).
+  FAIL is any of H1 frozen, H2 stays green, H3 leaf count breaks, H4 balloon or camera push, H5 the fig
+  detaches or teleports (the 2026-08-12 fault, named in advance), H6 scene break. A partial is a FAIL.
+  Judged by opening all 121 frames consecutively; depth is retired and no number from it will be quoted.
+why: 'SEED 20260819 on the passed goblin-free b01 growmotion recipe, ONE VARIABLE off ep2-b01-growmotion-b17-0819
+  (seed 20260843). Not a depth seed: 20260819 is the seed BOTH measured darkening takes ran on (b12-stillmotion
+  -91.05, b20-motion -25.03) and that neither clean take used. Every sampler flag across those six clips
+  is identical, so the seed is the live candidate. See pipeline/loop/darkening-crf-diagnostic-0819.md.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp\
+    \ the clip's provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for\
+    \ the cut (the cold open), so is_show_content is\ntrue. Still approved: false / provisional: true\
+    \ -- nothing is cut until the\n121 frames are opened against the pre-registered bar, and R4 is the\n\
+    founder's.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"\
+    !! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"\
+    utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b01-growmotion-s20260819-0819\
+    \ after the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n     \
+    \   \"is_show_content: true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR THE EPISODE\
+    \ 2 COLD OPEN. It animates the\\n\"\n        \"  founder's own 2026-08-13 route -- a small inpainted\
+    \ nub, grown by\\n\"\n        \"  the motion prompt -- on the frame-1 plate that passed its bar 7\
+    \ of\\n\"\n        \"  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered\\n\"\n  \
+    \      \"  in pipeline/jobs/ep2-b01-growmotion-s20260819-0819.yaml BEFORE this render\\n\"\n     \
+    \   \"  existed. Not approved and not cut until those frames are opened.\\n\")\nprint(\"stamped %s\"\
+    \ % META, flush=True)"
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-motion-prompt.txt: On the thinnest branch of the
+    tiny two-leaf sapling, the small green nub swells, darkens and rounds into a single deep purple fig
+    -- the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus
+    grassy field, soft glowing light, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-jobs-encode.json: "[\n {\n  \"beat\": 1,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819-out\\\\b01-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819\\\\b01-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819\\\\b01-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-jobs-render.json: "[\n {\n  \"beat\": 1,\n  \"\
+    seed\": 20260819,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819-out\\\\\
+    b01-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819-out\\\\b01-nub-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-s20260819-0819-out\\\\01-cold-open-LTX-nubgrow-s20260819.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-growmotion-s20260819-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-growmotion-s20260819-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-growmotion-s20260819-0819-out\01-cold-open-LTX-nubgrow-s20260819.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its\
+    \ files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-growmotion-s20260819-0819-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b01-growmotion-s20260819-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-growmotion-s20260819-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-nubgrow-s20260819.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b01-growmotion-s20260819-0819.sha256\"), \"w\", newline=\"\\n\"\
+    ) as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"\
+    file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b01-growmotion-s20260819-0819-out\01-cold-open-LTX-nubgrow-s20260819.mp4
+- C:\banyan-farm\ep2-b01-growmotion-s20260819-0819-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. The motion
+  prompt IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13
+  verdict. Sidecar stamped approved: false / provisional: true; nothing is cut until the frames are opened
+  against the pre-registered bar, and the taste call is the founder''s under R4. Silent, $0, no voice
+  synthesis, no episode assembly.'
+bar:
+  instrument: pipeline/luma_drift.py, equal thirds, whole-frame BT.601 luma, frames 0/24/48/72/96/120.
+  the_number_that_decides: 'Whole-frame drift f000->f120. TWO-SIDED, because this recipe family blooms
+    as readily as it fades and the last bar missed that: |drift| >= 20 levels is a collapse in either
+    direction.'
+  FAIL-COLLAPSE: '|drift| >= 20 AND all three bands agree in sign. This is the outcome that would implicate
+    the seed. Named as LESS likely: n=2 and the mechanism is unproven.'
+  PASS-HOLD: '|drift| < 20, or bands disagreeing in sign. Seed 20260819 is cleared on this carrier and
+    the darkening belongs to the plate or the prompt. Named as MORE likely.'
+  band_clause: A single band moving alone is an OBJECT until eyes say otherwise -- beat 12's -46.93 was
+    a leaf crossing the mid-ground, not a fade. Bands disagreeing in sign is never scored as a collapse.
+  not_scored_here: Growth quality, colour path, camera lock and plate fidelity are the parent recipe's
+    bar and are NOT re-litigated. This job asks one question about luminance.
+  what_this_licenses: One clip on one seed. No pick, no promotion, no cut swap, no second seed, and no
+    claim about any beat other than through the luminance number.
