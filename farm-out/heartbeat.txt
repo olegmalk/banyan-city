@@ -2977,3 +2977,4 @@
 17:34:18Z box-runner idle ready=0 failed=42
 17:45:13Z box-runner idle ready=0 failed=42
 17:51:03Z box-runner up pid=12032 host=MSI
+17:59:07Z STARTED task=ep2-b12-noscav-0819-1787161582 attempt=1 on box-runner
