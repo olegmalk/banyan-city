@@ -1,0 +1,245 @@
+id: ep2-b04-headlock-0820
+task: ep2-b04-headlock-0820
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+owner: enactment lane, 2026-08-20 (beat 04, rung 2)
+consumer: Beat 04's slot in the episode 2 cut, which rung 1 could not fill. Rung 1 established that the
+  adult survives animation and that the camera and mouth hold; the single thing standing between this
+  beat and a cuttable take is whether the eyes can move WITHOUT the head. This answers that, and its answer
+  decides between a wording route and a staging route -- there is no third wording after it.
+success: 'One 704x1280 121-frame mp4 in which the HEAD IS STILL and the EYES MOVE. The instrument is fixed
+  before the render and is rung 1''s, so the two numbers are comparable: head-band ink centroid over rows
+  100-520, which travelled 64.7 px in rung 1. PASS needs H1 head travel UNDER 20 px -- a third of rung
+  1''s, chosen because below that a rotation stops reading as a turn at this crop; H2 the eye-band mean
+  interframe difference AT OR ABOVE rung 1''s 0.356, so the eyes have not simply been frozen along with
+  the head; H3 the gaze visibly reaches a different place at 1:1, judged by eye and not by H2 alone; and
+  H4 rung 1''s passing clauses all survive -- mouth shut, camera locked, and the same adult goblin at
+  frame 121 as at frame 1. THE OBVIOUS DEGENERATE PASS IS NAMED SO IT CANNOT BE CLAIMED: a totally frozen
+  clip satisfies H1 perfectly and fails H2 and H3, and is a FAIL.'
+why: $0, ~7 minutes, one variable, on a recipe that has now run clean twice. The card was idle and this
+  rung was already named in rung 1's own verdict, so it is filed rather than left for someone to re-derive.
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-headlock-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-headlock-0820\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed ears,
+    patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face and shoulders.
+    HIS HEAD DOES NOT MOVE: his chin stays square to the camera and his skull is locked in place as if
+    held, the same three-quarter angle in every frame. ONLY HIS PUPILS MOVE -- they slide to the far corner
+    of his eyes, hold there, then slide back across to the other corner, the whites of his eyes showing
+    on the side he looks away from. HIS MOUTH STAYS SHUT the whole time and his jaw stays set -- he is
+    listening for something, not speaking, and no word is said. He stays THE SAME GOBLIN from the first
+    frame to the last: the same green skin, the same bald head, the same long pointed ears, one face and
+    one figure only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight,
+    cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-headlock-0820\b04-negative.txt: open mouth, talking, speaking, shouting, teeth,
+    tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl,
+    round head, big eyes, cute, different face, changing face, face changing, morphing, melting face,
+    skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down,
+    scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live
+    action, motion blur, text
+  C:\banyan-farm\ep2-b04-headlock-0820\b04-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b04-headlock-0820\\b04-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b04-headlock-0820\\b04-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b04-headlock-0820\\b04-negative.txt"}]'
+  C:\banyan-farm\ep2-b04-headlock-0820\b04-jobs-render.json: '[{"beat": 4, "seed": 20260819, "embeds":
+    "C:\\banyan-farm\\ep2-b04-headlock-0820\\b04-embeds.pt", "init": "C:\\banyan-farm\\ep2-b04-headlock-0820\\b04-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b04-headlock-0820\\04-the-footnote-LTX-ep2-b04-headlock-0820.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-headlock-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+  - --sha256
+  - 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350
+  - --out
+  - C:\banyan-farm\ep2-b04-headlock-0820\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-headlock-0820\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-headlock-0820\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-headlock-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-headlock-0820\bench-ep2-b04-headlock-0820.jsonl
+  - --bench-label
+  - ep2-b04-headlock-0820
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-headlock-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-headlock-0820/04-the-footnote-LTX-ep2-b04-headlock-0820.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b04-headlock-0820/b04-init-704x1280.png\")\n    \
+    \         + glob.glob(\"C:/banyan-farm/ep2-b04-headlock-0820/bench-ep2-b04-headlock-0820.jsonl\"))\n\
+    lines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-headlock-0820.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b04-headlock-0820\04-the-footnote-LTX-ep2-b04-headlock-0820.mp4
+- C:\banyan-farm\ep2-b04-headlock-0820\b04-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through
+  it, slowly." One man, one face, no second figure, no dialogue in this beat. This is a SILENT MOTION
+  CLIP on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+bar:
+  h1_head_still: Head-band ink centroid travel under 20 px, same instrument and same rows as rung 1's
+    64.7 px.
+  h2_eyes_not_frozen_too: Eye-band mean interframe at or above rung 1's 0.356. This clause exists because
+    H1 alone is trivially satisfied by a dead clip.
+  h3_the_gaze_arrives: At 1:1 the gaze visibly reaches a different place than it started. Eye call, and
+    it outranks H2 if they disagree.
+  h4_rung_1_clauses_hold: Mouth shut, camera locked, same adult goblin at frame 121 as at frame 1. All
+    three passed in rung 1 and losing one would mean the head clause bought its win somewhere else.
+failure_predicted_in_advance: G1. Rung 1 asked for a still head in plain words and got a 64.7 px rotation.
+  The bet here is only that a CONCRETE placement beats an abstract instruction, which is this ladder's
+  own repeatedly measured law -- but it is a bet, and if it loses, beat 04's eyes are not reachable by
+  wording on this engine and the honest next move is to crop tighter so a small rotation READS as a glance.
+init_provenance: 'Identical to rung 1''s: 04-the-footnote-mac-plate-r1s1.png, sha256 5dd35da5...4350,
+  published through ep2-b04-mac-plate-0819 and now resolvable on origin/farm-results-rtx5090, so both
+  the plate and the refs guards RUN and PASS with no plate_ack.'
+not_done_on_purpose: No negative edit. No seed change. No crf change. No recipe change of any kind. No
+  second seed. No staging change -- that is the route this rung exists to decide between, and taking it
+  now would answer nothing.
+pre_registered_fail_modes: G1 THE HEAD TURNS ANYWAY -- most likely, because rung 1's positive already
+  asked for stillness in weaker words and this engine moved the head regardless; if it fires, wording
+  is closed on this axis and the next move is staging, not a third sentence. G2 FROZEN -- the head lock
+  takes the whole clip with it, H1 passes and H2/H3 fail; this is a FAIL and is named so it cannot be
+  reported as a win. G3 the pupils render as a hard flat shape and read as a different character. G4 'the
+  whites of his eyes showing' comes back as all-white eyes with no pupil at all, which the b08 lane already
+  saw once under a different mechanism.
+the_one_variable: 'The positive''s head clause, and nothing else. Rung 1 said ''His head and shoulders
+  stay STILL'' inside the eye sentence; this says where the head is pointing and what the pupils do instead.
+  THE NEGATIVE IS UNTOUCHED, byte for byte, on purpose: adding ''head turn'' to it in the same job would
+  leave two candidate causes for any improvement. Init, seed, and every generative flag are rung 1''s.'
+derivation:
+  parent: pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - pre_registered_fail_modes_as_fired
+  - verdict
+  - verdict_measured
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - ep2-b04-eyes-crf10-0819 -> ep2-b04-headlock-0820
+  overrides_applied_and_asserted:
+    key:est_minutes:
+    - key est_minutes = 7
+    payload:b04-motion-prompt.txt:
+    - payload b04-motion-prompt.txt (971 -> 1138 chars)
