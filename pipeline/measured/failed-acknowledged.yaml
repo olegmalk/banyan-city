@@ -1,244 +1,177 @@
-# The box's `failed/` pile, entry by entry, with the reason each one is there.
-# Read by build_queue.py and build_sim.py so the public chip can tell a KNOWN
-# failure from a NEW one.
-#
-# WHY THIS FILE EXISTS. The box publishes `queue.failed` as a bare integer —
-# `len(os.listdir(failed/))`, telemetry.py:711-712 — and both pages rendered it
-# as a red chip reading "39 sitting failed". That number is true and the chip
-# was still dishonest, because a red count with no denominator says "39 things
-# are wrong and nobody has looked", and every one of the 39 had been looked at:
-# 33 in pipeline/queue-failure-triage-0817.md (six cause groups, 25 of them
-# never drew a pixel) and 6 in the compseed specs' own SUPERSEDED headers, whose
-# frames were recovered the same day. The founder screenshotted the chip on
-# 2026-08-18 and he was right to: the page was alarming him about work that was
-# already closed, which is the fastest way to teach someone to ignore a red
-# chip.
-#
-# WHAT IT IS NOT. It is not a fix and it does not retire anything. Nothing in
-# `failed/` was moved, re-fired or deleted to write this — the pile on the box is
-# byte-for-byte what it was. Acknowledged means "diagnosed and written down",
-# NOT "resolved": group 1's eight are fake failures whose frames are on disk,
-# group 5's five are real jobs blocked by a stale box clone and are worth
-# re-firing, and both facts live in the triage doc, not here. This file only
-# carries the count the pages subtract, so a 40th failure turns the chip red on
-# its own.
-#
-# THE LIMIT, STATED BECAUSE IT IS A REAL ONE. The pages compare COUNTS, not ids
-# — telemetry publishes no id list, and adding one is a box-side change that
-# would not reach a page until the box's clone pulls (which, per the triage doc,
-# is exactly the thing that has been two days stale). So if one acknowledged
-# entry were removed from `failed/` in the same window a new job failed, the
-# total would stay 39 and the chip would stay neutral. That is the one blind
-# spot, it is documented here rather than papered over, and it closes the moment
-# telemetry publishes `failed_ids`. The chip is still strictly more honest than
-# a permanent red number nobody can act on: any NET increase shows.
-#
-# HOW TO UPDATE IT. When a failure is triaged, add its id and its one line here
-# and the chip goes quiet again. When one is genuinely new and untriaged, LEAVE
-# IT OUT — the red chip is the point. `count` below must equal the length of
-# `acknowledged:`; the builders derive the number they subtract from the list,
-# never from `count`, so a stale `count` cannot mislead a page (it is here for a
-# human reading the file).
-
 measured_at: 2026-08-18T17:29Z
-source: >-
-  ssh rtx5090, `dir /b C:\banyan-queue\failed` filtered to *.json — the same
-  thing telemetry.py counts. 39 jsons; the directory also holds 41 logs, and the
-  two extra logs are not failures (see orphan_logs below).
+source: ssh rtx5090, `dir /b C:\banyan-queue\failed` filtered to *.json — the same thing telemetry.py counts. 39
+  jsons; the directory also holds 41 logs, and the two extra logs are not failures (see orphan_logs below).
 count: 39
-
-# NOT COUNTED AND CORRECTLY SO. `ep2-b04-balloon-pair-0813` and
-# `ep2-b19-overhead-0812` have a log in `failed/` and no json beside them. The
-# triage doc's recovery addendum settled what that means: the json went to
-# `done/` when attempt 2 succeeded and the killed attempt's log was never cleaned
-# up. An orphan log is proof of a retry that WORKED, so the heartbeat is right to
-# skip it and so is this file.
-orphan_logs: [ep2-b04-balloon-pair-0813, ep2-b19-overhead-0812]
-
+orphan_logs:
+- ep2-b04-balloon-pair-0813
+- ep2-b19-overhead-0812
 acknowledged:
-
-  # ---- group 1, rc=92 — declared-artifact name mismatch. FAKE FAILURES: the
-  # render step returned rc=0, the frames are on disk, and the job failed its own
-  # closing existence check because the declared filename omits the beat slug the
-  # renderer interpolates. 8 entries, full GPU spent, nothing lost.
-  - id: ep2-b01-final055-r2-0812
-    group: 1
-    why: rc=92, declared artifact name missing the beat slug; render was rc=0 and the frames exist.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b01-shape-0813
-    group: 1
-    why: rc=92, same declared-name mismatch; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b05-scene-0814
-    group: 1
-    why: rc=92, declared `05-ipa-r2-w015-s0.png` vs written `05-the-patrol-ipa-r2-w015-s0.png`.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b09-scene-0814
-    group: 1
-    why: rc=92, same missing-slug spelling; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b11-scene-0814
-    group: 1
-    why: rc=92, same missing-slug spelling; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b12-scene-0814
-    group: 1
-    why: rc=92, same missing-slug spelling; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b18-scene-0814
-    group: 1
-    why: rc=92, same missing-slug spelling; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b21-scene-0814
-    group: 1
-    why: rc=92, same missing-slug spelling; frames on disk.
-    doc: pipeline/queue-failure-triage-0817.md
-
-  # ---- group 3, rc=4/30 — the spec aimed at a beat that could not answer its
-  # own question. Preflight refusals, no pixel drawn, zero GPU. 9 entries that
-  # are really 3 authoring mistakes; six of them are one fan-out queued without a
-  # sample first, which is ONE SAMPLE BEFORE ANY BATCH in the negative.
-  - id: ep2-goblin-design-d1-0814
-    group: 3
-    why: rc=4, beat carries no {{GOBLIN}} marker so the render would test nothing. Arm 1 of 6.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-goblin-design-d2-0814
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the beat. Arm 2 of the same fan-out.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-goblin-design-d3-0814
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the beat. Arm 3 of the same fan-out.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-goblin-design-d4-0814
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the beat. Arm 4 of the same fan-out.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-goblin-design-d5-0814
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the beat. Arm 5 of the same fan-out.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-goblin-design-d6-0814
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the beat. Arm 6 of the same fan-out.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-charref-assessor-0812
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the target beat.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-charref-farmer-0812
-    group: 3
-    why: rc=4, no {{GOBLIN}} marker on the target beat.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b07-plate-0814
-    group: 3
-    why: rc=30, beat 7 is not a goblin beat, so nothing it drew could answer the question.
-    doc: pipeline/queue-failure-triage-0817.md
-
-  # ---- group 4, rc=1 — prompt/draft self-consistency refusals in the dry/measure
-  # step. Nothing rendered, nothing spent, the guard is right in all ten. Worth
-  # re-firing only after the PROMPT is fixed: the b20 pair is one entry re-fired
-  # unchanged, which is how a cause becomes two rows.
-  - id: ep2-b06-ipa-guardcast-0812
-    group: 4
-    why: rc=1, positive overran CLIP's 77 tokens and dropped the `very aesthetic` style anchor.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b08-refresh-0811
-    group: 4
-    why: rc=1, style anchor lost to CLIP truncation.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b20-canonword-0816-1786901331
-    group: 4
-    why: rc=1, style anchor lost to CLIP truncation. 17:33Z; re-fired unchanged as the row below.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b20-canonword-0816-1786902329
-    group: 4
-    why: rc=1, the 17:49Z re-fire of the row above with the prompt untouched — same truncation.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-charref-assessor-r2-0812
-    group: 4
-    why: rc=1, style anchor lost to CLIP truncation.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b06-plate-0815
-    group: 4
-    why: rc=1, count tag `2boys` against a draft declaring `1boy`.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b09-scene2-0815
-    group: 4
-    why: rc=1, count tag `2boys` against a draft declaring `1boy`.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-003b-b01-dialect-0812
-    group: 4
-    why: rc=1, count tag `2boys` against a draft declaring `1boy`.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-sapling-reference-0812
-    group: 4
-    why: rc=1, peopled beat negated its own subject — person-singulars belong on plant-only plates.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: motion-poscontrol-0816
-    group: 4
-    why: rc=1, verify-embeds refused — two arms shared a positive, so the experiment was not its claim.
-    doc: pipeline/queue-failure-triage-0817.md
-
-  # ---- group 5 — the box's own checkout was stale, not the spec. These are REAL
-  # jobs and the only group the triage doc says to re-fire as written, after
-  # `git -C C:\banyan-farm\banyan-city pull` and a fresh wave-drafts.yaml. Listed
-  # here because they are diagnosed, NOT because they are finished.
-  - id: ep2-guard-sheet-a-0814
-    group: 5
-    why: rc=4, the box's wave-drafts.yaml is older than the job queued against it. Re-fire after a pull.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-guard-sheet-b-0814
-    group: 5
-    why: rc=4, same stale wave-drafts.yaml on the box. Re-fire after a pull.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep3-charref-magistrate-0812
-    group: 5
-    why: rc=1, same divergence with no guard in front of it — KeyError 'kind' in render_wave_sample.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b04-goblin-ipa-content
-    group: 5
-    why: rc=1, same divergence as a traceback — NameError CELLS in goblin_ipa_sample.
-    doc: pipeline/queue-failure-triage-0817.md
-  - id: ep2-b10-attrbind-eyewear-0817
-    group: 5
-    why: >-
-      rc=2, "init not found" for a plate that IS committed and clean in the repo — the box's
-      clone had not pulled since 08-15. The triage's live proof that the stale checkout is a
-      systemic open fault, not a one-off.
-    doc: pipeline/queue-failure-triage-0817.md
-
-  # ---- group 6 — not a render at all.
-  - id: autofill-proof-0816
-    group: 6
-    why: rc=1, SyntaxError in a one-line `python -c` autofill smoke probe; the \n was eaten by quoting.
-    doc: pipeline/queue-failure-triage-0817.md
-
-  # ---- the compseed path bug, 2026-08-18. Not in the triage doc because it
-  # postdates it; each spec carries its own SUPERSEDED header instead, and the
-  # frames were recovered the same day. Six specs, one bug: g1-g3 of both seeds
-  # wrote to a path the publish step did not declare.
-  - id: ep2-b01-compseed-s1-g1-0818
-    group: compseed
-    why: g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED and left as provenance.
-    doc: pipeline/jobs/ep2-b01-compseed-s1-g1-0818.yaml
-  - id: ep2-b01-compseed-s1-g2-0818
-    group: compseed
-    why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
-    doc: pipeline/jobs/ep2-b01-compseed-s1-g2-0818.yaml
-  - id: ep2-b01-compseed-s1-g3-0818
-    group: compseed
-    why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
-    doc: pipeline/jobs/ep2-b01-compseed-s1-g3-0818.yaml
-  - id: ep2-b01-compseed-s3-g1-0818
-    group: compseed
-    why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
-    doc: pipeline/jobs/ep2-b01-compseed-s3-g1-0818.yaml
-  - id: ep2-b01-compseed-s3-g2-0818
-    group: compseed
-    why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
-    doc: pipeline/jobs/ep2-b01-compseed-s3-g2-0818.yaml
-  - id: ep2-b01-compseed-s3-g3-0818
-    group: compseed
-    why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
-    doc: pipeline/jobs/ep2-b01-compseed-s3-g3-0818.yaml
+- id: ep2-b01-final055-r2-0812
+  group: 1
+  why: rc=92, declared artifact name missing the beat slug; render was rc=0 and the frames exist.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b01-shape-0813
+  group: 1
+  why: rc=92, same declared-name mismatch; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b05-scene-0814
+  group: 1
+  why: rc=92, declared `05-ipa-r2-w015-s0.png` vs written `05-the-patrol-ipa-r2-w015-s0.png`.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b09-scene-0814
+  group: 1
+  why: rc=92, same missing-slug spelling; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b11-scene-0814
+  group: 1
+  why: rc=92, same missing-slug spelling; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b12-scene-0814
+  group: 1
+  why: rc=92, same missing-slug spelling; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b18-scene-0814
+  group: 1
+  why: rc=92, same missing-slug spelling; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b21-scene-0814
+  group: 1
+  why: rc=92, same missing-slug spelling; frames on disk.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d1-0814
+  group: 3
+  why: rc=4, beat carries no {{GOBLIN}} marker so the render would test nothing. Arm 1 of 6.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d2-0814
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the beat. Arm 2 of the same fan-out.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d3-0814
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the beat. Arm 3 of the same fan-out.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d4-0814
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the beat. Arm 4 of the same fan-out.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d5-0814
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the beat. Arm 5 of the same fan-out.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-goblin-design-d6-0814
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the beat. Arm 6 of the same fan-out.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-charref-assessor-0812
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the target beat.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-charref-farmer-0812
+  group: 3
+  why: rc=4, no {{GOBLIN}} marker on the target beat.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b07-plate-0814
+  group: 3
+  why: rc=30, beat 7 is not a goblin beat, so nothing it drew could answer the question.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b06-ipa-guardcast-0812
+  group: 4
+  why: rc=1, positive overran CLIP's 77 tokens and dropped the `very aesthetic` style anchor.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b08-refresh-0811
+  group: 4
+  why: rc=1, style anchor lost to CLIP truncation.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b20-canonword-0816-1786901331
+  group: 4
+  why: rc=1, style anchor lost to CLIP truncation. 17:33Z; re-fired unchanged as the row below.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b20-canonword-0816-1786902329
+  group: 4
+  why: rc=1, the 17:49Z re-fire of the row above with the prompt untouched — same truncation.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-charref-assessor-r2-0812
+  group: 4
+  why: rc=1, style anchor lost to CLIP truncation.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b06-plate-0815
+  group: 4
+  why: rc=1, count tag `2boys` against a draft declaring `1boy`.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b09-scene2-0815
+  group: 4
+  why: rc=1, count tag `2boys` against a draft declaring `1boy`.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-003b-b01-dialect-0812
+  group: 4
+  why: rc=1, count tag `2boys` against a draft declaring `1boy`.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-sapling-reference-0812
+  group: 4
+  why: rc=1, peopled beat negated its own subject — person-singulars belong on plant-only plates.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: motion-poscontrol-0816
+  group: 4
+  why: rc=1, verify-embeds refused — two arms shared a positive, so the experiment was not its claim.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-guard-sheet-a-0814
+  group: 5
+  why: rc=4, the box's wave-drafts.yaml is older than the job queued against it. Re-fire after a pull.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-guard-sheet-b-0814
+  group: 5
+  why: rc=4, same stale wave-drafts.yaml on the box. Re-fire after a pull.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep3-charref-magistrate-0812
+  group: 5
+  why: rc=1, same divergence with no guard in front of it — KeyError 'kind' in render_wave_sample.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b04-goblin-ipa-content
+  group: 5
+  why: rc=1, same divergence as a traceback — NameError CELLS in goblin_ipa_sample.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b10-attrbind-eyewear-0817
+  group: 5
+  why: rc=2, "init not found" for a plate that IS committed and clean in the repo — the box's clone had not pulled
+    since 08-15. The triage's live proof that the stale checkout is a systemic open fault, not a one-off.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: autofill-proof-0816
+  group: 6
+  why: rc=1, SyntaxError in a one-line `python -c` autofill smoke probe; the \n was eaten by quoting.
+  doc: pipeline/queue-failure-triage-0817.md
+- id: ep2-b01-compseed-s1-g1-0818
+  group: compseed
+  why: g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED and left as provenance.
+  doc: pipeline/jobs/ep2-b01-compseed-s1-g1-0818.yaml
+- id: ep2-b01-compseed-s1-g2-0818
+  group: compseed
+  why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
+  doc: pipeline/jobs/ep2-b01-compseed-s1-g2-0818.yaml
+- id: ep2-b01-compseed-s1-g3-0818
+  group: compseed
+  why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
+  doc: pipeline/jobs/ep2-b01-compseed-s1-g3-0818.yaml
+- id: ep2-b01-compseed-s3-g1-0818
+  group: compseed
+  why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
+  doc: pipeline/jobs/ep2-b01-compseed-s3-g1-0818.yaml
+- id: ep2-b01-compseed-s3-g2-0818
+  group: compseed
+  why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
+  doc: pipeline/jobs/ep2-b01-compseed-s3-g2-0818.yaml
+- id: ep2-b01-compseed-s3-g3-0818
+  group: compseed
+  why: same g1-g3 output-path bug; frames recovered, spec annotated SUPERSEDED.
+  doc: pipeline/jobs/ep2-b01-compseed-s3-g3-0818.yaml
+- id: ep2-b12-plateship-0819-1787132409
+  group: fetch-404
+  why: 'The publish-ship job fetched its plate from a raw.githubusercontent URL that 404s (the plate was never on
+    origin/main); the plate was already ON the box in three places at the asserted sha. Fixed same hour: fetch replaced
+    with a local copy step (commit 0f799ddd) and the successor ran rc=0. Retried-and-superseded, not a live defect.'
+  doc: pipeline/jobs/ep2-b12-plateship-0819.yaml + commit 0f799ddd
+- id: ep2-b12-plateship-0819-1787133492
+  group: fetch-404
+  why: 'The publish-ship job fetched its plate from a raw.githubusercontent URL that 404s (the plate was never on
+    origin/main); the plate was already ON the box in three places at the asserted sha. Fixed same hour: fetch replaced
+    with a local copy step (commit 0f799ddd) and the successor ran rc=0. Retried-and-superseded, not a live defect.'
+  doc: pipeline/jobs/ep2-b12-plateship-0819.yaml + commit 0f799ddd
