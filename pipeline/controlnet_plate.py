@@ -274,6 +274,94 @@ def mask_images(rects, width, height):
     return out
 
 
+# ---------------------------------------------------------------------------
+# CAPSULE MASKS -- ADDED 2026-08-19. RECTS REMAIN THE DEFAULT; THIS IS A FLAG.
+#
+# WHY. ep2-b08-twins-sample-0819 put the guard's pointing hand at x 204-270,
+# y 650-730 while the goblin's body and his own hanging arm occupy x 100-265 at
+# the same heights: HER FINGER IS DRAWN OVERLAPPING HIS ARM. Two axis-aligned
+# rectangles cannot separate that. Widen hers and her fingertip falls in HIS
+# mask, handing her finger his identity; narrow his and his own arm falls in
+# HERS. The rect path is not wrong, it is simply not expressive enough for two
+# figures whose limbs interleave, and that is now the normal case on this beat.
+#
+# WHAT A CAPSULE IS. One line segment dilated by a radius -- a thick line with
+# round caps. A figure's mask is the UNION of one capsule per limb, which is the
+# same geometry the openpose hint is drawn from, so a mask built this way cannot
+# disagree with the hint it accompanies. `author_b08_openpose_hint.figure_capsules`
+# emits them straight off `stage()`'s keypoints and LIMBS table.
+#
+# WHY IN ARGV AND NOT A PNG. Same reason the rects are: the numbers in the job's
+# argv ARE the mask. A mask FILE is a second artifact that can drift from the
+# hint, and the sidecar could then record a sha for a shape nobody can read.
+#
+# THE OVERLAP GUARD GENERALISES RATHER THAN RELAXES. Rects were compared as
+# intervals; arbitrary shapes are compared AS LIT PIXELS. Two capsule masks whose
+# BOUNDING BOXES overlap are fine, and that is the entire point -- what is
+# refused, exactly as before, is two references sharing a single pixel.
+# ---------------------------------------------------------------------------
+def parse_capsules(s, width, height):
+    """`x0,y0,x1,y1,r; x0,y0,x1,y1,r; ...` -> a validated list of capsules.
+
+    Render pixels, like parse_rect, and for the same reason: the hint these
+    masks accompany is authored in absolute pixels, and two coordinate systems
+    is how a 4% disagreement goes unnoticed.
+    """
+    caps = []
+    for chunk in str(s).split(";"):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        parts = [p.strip() for p in chunk.split(",")]
+        if len(parts) != 5:
+            raise ValueError("a capsule is x0,y0,x1,y1,r -- got %r" % (chunk,))
+        try:
+            x0, y0, x1, y1, r = (float(p) for p in parts)
+        except ValueError:
+            raise ValueError("a capsule must be five numbers -- got %r" % (chunk,))
+        if r <= 0:
+            raise ValueError("capsule radius must be > 0 -- got %r" % (chunk,))
+        for vx, vy in ((x0, y0), (x1, y1)):
+            if not (-r <= vx <= width + r and -r <= vy <= height + r):
+                raise ValueError("capsule %r falls outside the %dx%d render"
+                                 % (chunk, width, height))
+        caps.append((x0, y0, x1, y1, r))
+    if not caps:
+        raise ValueError("a capsule mask needs at least one capsule -- got %r" % (s,))
+    return caps
+
+
+def capsule_mask(caps, width, height):
+    """One white-on-black L mask: the union of every capsule.
+
+    Drawn with a wide line plus a disc at each end, which is exactly a capsule
+    (Minkowski sum of the segment and a disc of radius r). PIL's `width=` on a
+    line gives butt-ish ends, so the caps are drawn explicitly -- without them a
+    limb's mask stops square at the wrist and the hand falls outside it, which is
+    the very defect this path exists to fix.
+    """
+    from PIL import Image, ImageDraw
+    m = Image.new("L", (width, height), 0)
+    d = ImageDraw.Draw(m)
+    for x0, y0, x1, y1, r in caps:
+        d.line([(x0, y0), (x1, y1)], fill=255, width=max(1, int(round(2 * r))))
+        for cx, cy in ((x0, y0), (x1, y1)):
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=255)
+    return m
+
+
+def masks_overlap(a, b):
+    """Do two L masks share a single lit pixel?
+
+    The rect guard, generalised to arbitrary shapes. `rects_overlap` compares
+    intervals and so refuses any two figures whose BOUNDING BOXES touch; this
+    compares the masks themselves, which is what the guard always meant. The
+    rule it enforces is unchanged and is not relaxed: one pixel, one identity.
+    """
+    from PIL import ImageChops
+    return ImageChops.multiply(a, b).getbbox() is not None
+
+
 def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
                   stamp, torch_version, ip=None):
     """The 7.2 provenance block, written AT RENDER TIME, on the box."""
@@ -328,12 +416,28 @@ def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
             "ip_adapter_scale: %s" % (ip["scale"],),
             "ip_adapter_refs: %s" % (ip["refs"],),
             "ip_adapter_ref_sha256: %s" % (ip["ref_sha256"],),
-            "ip_adapter_masks: %s (x0,y0,x1,y1 in RENDER pixels, drawn by "
-            "controlnet_plate.mask_images -- no mask file exists to drift)"
-            % (ip["rects"],),
-            "ip_adapter_masks_overlap: false (asserted; two identities on one "
-            "pixel is refused, not warned about)",
         ]
+        if ip.get("capsule_mode"):
+            side += [
+                "ip_adapter_mask_geometry: capsules (union of dilated limb "
+                "segments; the same geometry the openpose hint is drawn from, so "
+                "a mask cannot disagree with the hint it accompanies)",
+                "ip_adapter_masks: %s (x0,y0,x1,y1,r per capsule in RENDER "
+                "pixels, drawn by controlnet_plate.capsule_mask -- no mask file "
+                "exists to drift)" % (ip["caps"],),
+                "ip_adapter_masks_overlap: false (asserted AS LIT PIXELS, not as "
+                "bounding boxes; the figures interleave and their boxes do "
+                "overlap, their ink does not)",
+            ]
+        else:
+            side += [
+                "ip_adapter_mask_geometry: rects",
+                "ip_adapter_masks: %s (x0,y0,x1,y1 in RENDER pixels, drawn by "
+                "controlnet_plate.mask_images -- no mask file exists to drift)"
+                % (ip["rects"],),
+                "ip_adapter_masks_overlap: false (asserted; two identities on one "
+                "pixel is refused, not warned about)",
+            ]
     side += [
         "repo_commit: %s" % rev,
         "model_load_seconds: %.1f" % load_s,
@@ -373,31 +477,71 @@ def render(a):
     # here and a whole model load plus a 40-step render if it is found later.
     ip = None
     if a.ip_ref:
-        if len(a.ip_ref) != len(a.ip_mask):
-            print("!! %d --ip-ref but %d --ip-mask. Each reference needs exactly "
+        # ONE MASK GEOMETRY PER JOB, NEVER BOTH. Mixing rect and capsule masks
+        # across references would mean the overlap guard compares intervals for
+        # one pair and pixels for another, so "no overlap" would mean two
+        # different things inside a single render.
+        capsule_mode = bool(a.ip_mask_capsules)
+        if capsule_mode and a.ip_mask:
+            print("!! both --ip-mask and --ip-mask-capsules were given. A job "
+                  "uses ONE mask geometry: rects (the default) or capsules. "
+                  "Mixing them would have the overlap guard comparing intervals "
+                  "for one pair of references and lit pixels for another.",
+                  file=sys.stderr)
+            return 10
+        masks_given = a.ip_mask_capsules if capsule_mode else a.ip_mask
+        if len(a.ip_ref) != len(masks_given):
+            print("!! %d --ip-ref but %d %s. Each reference needs exactly "
                   "one mask: the mask is what says WHICH FIGURE that reference is "
                   "for, and an unmasked reference applies to the whole frame -- "
                   "which is the broadcast failure this rung exists to fix."
-                  % (len(a.ip_ref), len(a.ip_mask)), file=sys.stderr)
+                  % (len(a.ip_ref), len(masks_given),
+                     "--ip-mask-capsules" if capsule_mode else "--ip-mask"),
+                  file=sys.stderr)
             return 10
         if a.ip_ref_sha256 and len(a.ip_ref_sha256) != len(a.ip_ref):
             print("!! %d --ip-ref-sha256 for %d --ip-ref"
                   % (len(a.ip_ref_sha256), len(a.ip_ref)), file=sys.stderr)
             return 10
         try:
-            rects = [parse_rect(s, a.width, a.height) for s in a.ip_mask]
+            if capsule_mode:
+                caps = [parse_capsules(s, a.width, a.height)
+                        for s in a.ip_mask_capsules]
+                rects = None
+            else:
+                rects = [parse_rect(s, a.width, a.height) for s in a.ip_mask]
+                caps = None
         except ValueError as e:
             print("!! %s" % e, file=sys.stderr)
             return 10
-        for i in range(len(rects)):
-            for j in range(i + 1, len(rects)):
-                if rects_overlap(rects[i], rects[j]):
-                    print("!! mask %d %s and mask %d %s OVERLAP. Two references "
-                          "on the same pixels is two identities on one body, and "
-                          "the blended result would look like the mechanism "
-                          "failing rather than like the masks being wrong."
-                          % (i, rects[i], j, rects[j]), file=sys.stderr)
-                    return 10
+        # THE SAME RULE, ENFORCED ON WHICHEVER GEOMETRY WAS GIVEN. Rects are
+        # compared as intervals (cheap, and identical to every prior run's
+        # behaviour); capsules are compared as lit pixels, which is the only
+        # comparison that lets two interleaved figures pass while still refusing
+        # a single shared pixel.
+        if capsule_mode:
+            imgs = [capsule_mask(c, a.width, a.height) for c in caps]
+            for i in range(len(imgs)):
+                for j in range(i + 1, len(imgs)):
+                    if masks_overlap(imgs[i], imgs[j]):
+                        print("!! capsule mask %d and capsule mask %d share lit "
+                              "pixels. Two references on the same pixels is two "
+                              "identities on one body, and the blended result "
+                              "would look like the mechanism failing rather than "
+                              "like the masks being wrong. Bounding boxes MAY "
+                              "overlap on this path -- actual ink may not."
+                              % (i, j), file=sys.stderr)
+                        return 10
+        else:
+            for i in range(len(rects)):
+                for j in range(i + 1, len(rects)):
+                    if rects_overlap(rects[i], rects[j]):
+                        print("!! mask %d %s and mask %d %s OVERLAP. Two references "
+                              "on the same pixels is two identities on one body, and "
+                              "the blended result would look like the mechanism "
+                              "failing rather than like the masks being wrong."
+                              % (i, rects[i], j, rects[j]), file=sys.stderr)
+                        return 10
         ref_paths, ref_shas = [], []
         for i, r in enumerate(a.ip_ref):
             rp = Path(r)
@@ -418,7 +562,9 @@ def render(a):
               "image_encoder_folder": a.ip_image_encoder_folder,
               "scale": [[float(a.ip_scale)] * len(ref_paths)],
               "refs": [str(p) for p in ref_paths], "ref_sha256": ref_shas,
-              "rects": rects, "paths": ref_paths}
+              "rects": rects, "caps": caps, "capsule_mode": capsule_mode,
+              "mask_imgs": imgs if capsule_mode else None,
+              "paths": ref_paths}
 
     ctrl_img = None
     ctrl_sha = None
@@ -519,8 +665,13 @@ def render(a):
         # a per-image list.
         pipe.set_ip_adapter_scale(ip["scale"])
         proc = IPAdapterMaskProcessor()
-        masks = proc.preprocess(mask_images(ip["rects"], a.width, a.height),
-                                height=a.height, width=a.width)
+        # The capsule masks were already rasterised during validation -- the very
+        # images the overlap guard checked are the images that condition the
+        # render, so there is no second rasterisation that could differ from the
+        # one that was proved disjoint.
+        raw_masks = (ip["mask_imgs"] if ip["capsule_mode"]
+                     else mask_images(ip["rects"], a.width, a.height))
+        masks = proc.preprocess(raw_masks, height=a.height, width=a.width)
         # The reshape is not cosmetic: each element of ip_adapter_masks must be
         # a tensor of [1, num_images_for_this_adapter, h, w]. preprocess returns
         # [N, 1, h, w], so it is folded into a single [1, N, h, w] and wrapped in
@@ -759,6 +910,56 @@ def selftest():
     check("the mask's lit area is exactly the rect's (%d px)" % lit,
           lit == (300 - 100) * (500 - 200))
 
+    # ---- CAPSULE MASKS ----------------------------------------------------
+    # The path that exists because ep2-b08-twins-sample-0819's two figures
+    # interleave. Every check below is either a refusal or the interleaving case
+    # itself, in that frame's own measured coordinates.
+    for bad in ("1,2,3,4", "1,2,3,4,5,6", "a,2,3,4,5", "1,2,3,4,0",
+                "1,2,3,4,-5", ""):
+        _bad = bad
+        try:
+            parse_capsules(_bad, W, H)
+            check("refuses capsule %r" % _bad, False)
+        except ValueError:
+            check("refuses capsule %r" % _bad, True)
+    cps = parse_capsules("10,10,100,10,5 ; 100,10,100,90,5", W, H)
+    check("a two-capsule chain parses", len(cps) == 2 and cps[1][4] == 5.0)
+    cm = capsule_mask([(50, 60, 250, 60, 12)], W, H)
+    check("a capsule is lit ON its segment", cm.getpixel((150, 60)) == 255)
+    check("a capsule is lit at its ROUND CAP beyond the endpoint",
+          cm.getpixel((258, 60)) == 255)
+    check("a capsule is dark well away from its segment",
+          cm.getpixel((150, 200)) == 0)
+
+    # THE TEST CASE, IN beat 08's OWN AUTHORED COORDINATES rather than in numbers
+    # invented here: the guard's forearm runs Relb (360.0,484.9) -> Rwri
+    # (257.4,657.3) and the goblin's near arm hangs Lsho (222.5,550.8) -> Lelb
+    # (237.1,762.4). Her wrist is 27.6 px from his arm at that height, so their
+    # BOUNDING BOXES overlap in x while their ink does not. Two rectangles cannot
+    # express that; two capsules at the measured r=12 can, and r=14 collides.
+    guard_arm = capsule_mask([(360.0, 484.9, 257.4, 657.3, 12)], W, H)
+    goblin_arm = capsule_mask([(222.5, 550.8, 237.1, 762.4, 12)], W, H)
+    gb_a, gb_b = guard_arm.getbbox(), goblin_arm.getbbox()
+    boxes_overlap = rects_overlap(gb_a, gb_b)
+    check("the interleaved limbs' BOUNDING BOXES do overlap (so rects would be "
+          "refused, which is the whole reason this path exists)", boxes_overlap)
+    check("the interleaved limbs' LIT PIXELS do not overlap, so capsules pass",
+          not masks_overlap(guard_arm, goblin_arm))
+    # and the guard rule is not merely loosened -- ink that really touches is
+    # still refused. Same two limbs, radius raised past the measured 13 px
+    # ceiling: 12 passes, 14 collides, and that is the clearance being real
+    # rather than lucky.
+    check("the same two limbs at r=14 DO share ink, so r=12 is a measured "
+          "clearance and not a lucky one",
+          masks_overlap(capsule_mask([(360.0, 484.9, 257.4, 657.3, 14)], W, H),
+                        capsule_mask([(222.5, 550.8, 237.1, 762.4, 14)], W, H)))
+    crossing = capsule_mask([(240, 660, 240, 900, 18)], W, H)
+    check("capsule masks that really share ink ARE refused",
+          masks_overlap(guard_arm, crossing))
+    check("a capsule mask does not light the whole frame",
+          sum(guard_arm.point(lambda v: 1 if v else 0)
+              .getdata()) < W * H // 4)
+
     # A peer lane measured --image-crf 33 destroying i2v conditioning on
     # 2026-08-19 (crf 10 holds identity). Nothing here encodes video, and this
     # asserts it as code rather than as a promise in the docstring: no flag and
@@ -809,6 +1010,13 @@ def main():
     ap.add_argument("--ip-mask", action="append", default=[],
                     help="x0,y0,x1,y1 in RENDER pixels for the matching "
                          "--ip-ref. Rects may not overlap")
+    ap.add_argument("--ip-mask-capsules", action="append", default=[],
+                    metavar="X0,Y0,X1,Y1,R;...",
+                    help="ALTERNATIVE to --ip-mask, one per --ip-ref: a mask "
+                         "built as the union of dilated limb segments. Use when "
+                         "the figures INTERLEAVE and no pair of rectangles can "
+                         "separate them. Bounding boxes may overlap; lit pixels "
+                         "may not. Rects remain the default path.")
     ap.add_argument("--ip-ref-sha256", action="append", default=[],
                     help="assert each reference's bytes, in --ip-ref order")
     ap.add_argument("--ip-scale", type=float, default=IP_SCALE)

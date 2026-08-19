@@ -407,6 +407,66 @@ def draw_bodypose(img, kps, ratio):
     return img
 
 
+# ---------------------------------------------------------------------------
+# IP-ADAPTER MASKS, EMITTED FROM THE SAME KEYPOINTS THE HINT IS DRAWN FROM.
+#
+# WHY THIS LIVES HERE AND NOT IN THE DRIVER. ep2-b08-twins-sample-0819 came back
+# with the guard's forearms GREEN and the goblin's legs PALE -- identity stopped
+# broadcasting between the figures and started fragmenting within them -- and the
+# fix is a per-figure image condition that covers the whole figure, LIMBS
+# INCLUDED. The masks that did that job on the contour route were head-and-torso
+# rectangles, and no pair of rectangles can separate these two: her pointing hand
+# reaches into his x-range. Capsules can.
+#
+# BUILDING THEM FROM `stage()` IS THE POINT, NOT A CONVENIENCE. A mask authored
+# by hand is a second description of the same pose, and two descriptions drift.
+# These ARE the hint's limbs, dilated -- so the mask cannot disagree with the
+# geometry the ControlNet is conditioned on, and re-staging the arm moves both at
+# once.
+#
+# THE RADII ARE MEASURED, NOT CHOSEN. The binding constraint is the guard's wrist
+# (257.4, 657.3) against the goblin's hanging left arm, which passes x=229.8 at
+# that height: 27.6 px apart. Two capsules stay disjoint while their radii sum
+# under that, so the arm radius ceiling is 13 px and `--selftest` asserts the
+# collision at 14. Head and torso capsules are fatter because the heads are 400 px
+# apart in x and the torsos never approach each other -- and a mask has to cover
+# the drawn HEAD, not the 1 px line between nose and neck, or it conditions
+# nothing that carries a face.
+# ---------------------------------------------------------------------------
+HEAD_LIMBS = {(1, 0), (0, 14), (14, 16), (0, 15), (15, 17)}
+TORSO_LIMBS = {(1, 2), (1, 5), (1, 8), (1, 11)}
+R_ARM = 12.0            # ceiling is 13; 12 leaves 3.6 px and is not a guess
+R_TORSO = 30.0
+R_HEAD = 34.0
+
+
+def figure_capsules(kps, r_arm=R_ARM, r_torso=R_TORSO, r_head=R_HEAD):
+    """One capsule per drawn limb: [(x0, y0, x1, y1, r), ...].
+
+    Same LIMBS table, same keypoints and same draw order as `draw_bodypose`, so
+    the lit region is the drawn skeleton dilated and nothing else.
+    """
+    caps = []
+    for i, j in LIMBS:
+        a, b = kps.get(KP[i]), kps.get(KP[j])
+        if a is None or b is None:
+            continue
+        if (i, j) in HEAD_LIMBS:
+            r = r_head
+        elif (i, j) in TORSO_LIMBS:
+            r = r_torso
+        else:
+            r = r_arm
+        caps.append((round(a[0], 1), round(a[1], 1),
+                     round(b[0], 1), round(b[1], 1), r))
+    return caps
+
+
+def capsule_arg(caps):
+    """The capsules as one `--ip-mask-capsules` token."""
+    return ";".join("%g,%g,%g,%g,%g" % c for c in caps)
+
+
 def build(**kw):
     """Draw the two-figure hint. Returns (PIL RGB image, metadata dict)."""
     from PIL import Image
@@ -684,6 +744,43 @@ def selftest():
     build()[0].save(b1, "PNG")
     build()[0].save(b2, "PNG")
     check("authoring is deterministic", b1.getvalue() == b2.getvalue())
+
+    # ---- THE IP-ADAPTER CAPSULE MASKS -------------------------------------
+    # These are the geometry a per-figure identity condition is applied through,
+    # and the reason they are asserted HERE is that they are built from the same
+    # keypoints the hint is drawn from. If a re-staging moves the arm, these move
+    # with it, and these checks are what notice if they ever stop agreeing.
+    import importlib
+    _cp = importlib.import_module("controlnet_plate")
+    gk, bk, gm = stage()
+    cg, cb = figure_capsules(gk), figure_capsules(bk)
+    check("every drawn limb gets exactly one capsule",
+          len(cg) == len([1 for i, j in LIMBS
+                          if KP[i] in gk and KP[j] in gk]))
+    mg = _cp.capsule_mask(cg, W, H)
+    mb = _cp.capsule_mask(cb, W, H)
+    check("THE TWO FIGURES' MASKS SHARE NO LIT PIXEL", not _cp.masks_overlap(mg, mb))
+    check("and their BOUNDING BOXES DO overlap -- which is why rectangles cannot "
+          "do this job", _cp.rects_overlap(mg.getbbox(), mb.getbbox()))
+    check("the guard's mask covers her authored pointing wrist",
+          mg.getpixel((int(gk["Rwri"][0]), int(gk["Rwri"][1]))) == 255)
+    check("the guard's mask covers her face, so it conditions an identity",
+          mg.getpixel((int(gk["nose"][0]), int(gk["nose"][1]))) == 255)
+    check("the goblin's mask covers his face",
+          mb.getpixel((int(bk["nose"][0]), int(bk["nose"][1]))) == 255)
+    check("the goblin's mask does NOT claim the guard's wrist -- her finger is "
+          "never handed his identity",
+          mb.getpixel((int(gk["Rwri"][0]), int(gk["Rwri"][1]))) == 0)
+    # the clearance is real: widen every capsule past the measured ceiling and
+    # the two figures collide.
+    check("at r=16 on every limb the two figures DO collide, so r=%g is a "
+          "measured clearance" % R_ARM,
+          _cp.masks_overlap(
+              _cp.capsule_mask(figure_capsules(gk, r_arm=16), W, H),
+              _cp.capsule_mask(figure_capsules(bk, r_arm=16), W, H)))
+    check("the capsule argv token round-trips through the driver's parser",
+          _cp.parse_capsules(capsule_arg(cg), W, H) ==
+          [tuple(float(v) for v in c) for c in cg])
 
     print(("SELFTEST FAIL: %d" % len(fails)) if fails else "SELFTEST PASS")
     return 1 if fails else 0
