@@ -118,7 +118,122 @@ sapling nub and a macro leaf with no character on screen.
 
 ---
 
-## RESULTS
+## RESULTS — measured 2026-08-19, `pipeline/luma_drift.py`, equal thirds
 
-Not yet measured. The instrument has not been run at the time this
-pre-registration was committed.
+**The flag is exonerated, and the verdict it came from should be reversed rather
+than narrowed: the darkening is not a recipe property at all.**
+
+### The instrument reproduces the numbers it was built to check
+
+Before trusting it on the clean pairs I ran it on the two takes that do darken.
+It lands on the beat-20 verdict's figure exactly and beat 12's to a rounding
+step, from a cold decode with no knowledge of either number:
+
+| clip | crf | seed | f000 → f120 | drift | bands |
+|---|---|---|---|---|---|
+| `ep2-b12-stillmotion-0819` | 10 | 20260819 | 125.86 → 34.80 | **−91.05** | all fall (−85.4 / −116.7 / −71.2) |
+| `ep2-b20-motion-0819` | 10 | 20260819 | 142.25 → 117.22 | **−25.03** | all fall (−22.0 / −5.1 / −47.9) |
+
+b20's per-band figures come back −22.02 / −5.11 / −47.91 against the verdict's
+−22.04 / −5.11 / −47.89. Same instrument, same convention, independently written.
+
+### The two one-variable pairs
+
+| pair | arm | crf | f000 → f120 | drift | bands agree |
+|---|---|---|---|---|---|
+| **b01** seed 20260818 | parent | 33 | 87.02 → 160.26 | **+73.24** | YES, all rise |
+| | child | 10 | 88.09 → 89.46 | **+1.37** | no |
+| **b18** seed 20260871 | parent | 33 | 116.13 → 115.91 | **−0.22** | no |
+| | child | 10 | 116.21 → 126.35 | **+10.14** | YES, all rise |
+
+**No crf-10 arm darkens. Not one.** `d10` is +1.37 and +10.14; the `CRF-CAUSED`
+branch required `d10 ≤ −10` and cannot fire on any reading. The largest drift
+anywhere in the experiment belongs to a **crf-33** arm — beat 01's parent climbs
+73 levels, all three bands together, and nearly all of it inside the first second
+(87.02 at f000, 154.17 by f024, then flat). That is the ladder's "original blooms
+to 148.4", confirmed by a second instrument.
+
+**Against my own pre-registration:** none of the four branches fits cleanly. The
+rule was written for a space where *something* darkens, and in the clean pairs
+nothing does — three of four clips brighten and the fourth is flat. `NOT-CRF` is
+the branch whose *conclusion* holds, but its stated test ("the crf-33 arm drifts
+down comparably") describes a world this data is not in. Recorded as a defect in
+the bar, not smoothed over: **a drift rule needs a two-sided threshold**, because
+the failure this recipe family actually produces is as often a bloom as a fade.
+
+Band-sign clause, as pre-registered: the two clips whose bands disagree
+(b01-crf10 at +0.66 / −3.70 / +7.13, b18-crf33 at +1.99 / +8.17 / −10.80) are
+**not** scored as fades in either direction. Both are small and neither is
+claimed as anything; no clip here needs eyes, because no clip here is called a
+fade.
+
+*One honest discrepancy.* On beat 01 the ladder records the crf-10 arm ending at
+84.8 against a plate of 85.1, and the parent blooming to 148.4; I measure 89.46
+and 160.26. Same direction, same magnitude class, ~5–12 levels apart. The b12/b20
+figures reproduce almost exactly, so the instrument is not the suspect — the
+beat-01 lane used a different, uncommitted convention (a crop, or an RGB mean
+rather than BT.601 luma). **This is the whole argument for one committed
+instrument**, and from here the beat-01 numbers should be re-cited from this file.
+
+### What this settles, and it is the opposite of what was believed
+
+The beat-20 verdict concluded *"IT IS A RECIPE PROPERTY AND NOT A BEAT
+PROPERTY."* **The render argv says it cannot be.** All six specs, diffed flag by
+flag:
+
+| flag | value across all six |
+|---|---|
+| `--size` / `--frames` / `--fps` | 704x1280 / 121 / 24 |
+| `--guidance` / `--two-stage` / `--distilled-sigmas` | 2.0 / set / set |
+| `--offload` / `--mode` | sequential / production |
+| `--image-crf` | **the only flag that differs** |
+
+Every sampler number is identical across the takes that darken and the takes that
+do not, and the one flag that varies is now measured on four clips: **two darken
+catastrophically, two do not darken at all.** `--image-crf 10` is therefore
+neither necessary nor sufficient for the effect, and no other sampler setting
+distinguishes the groups because no other sampler setting varies. **The cause
+lies in what is left: the init plate, the prompt, or the seed.** It is a beat
+property, and the recipe-property claim is withdrawn.
+
+### The lead, stated as a lead and not a mechanism
+
+**Both darkening takes were rendered on seed 20260819. Neither clean take was**
+(b01 on 20260818, b18 on 20260871).
+
+| take | seed | drift |
+|---|---|---|
+| b12-stillmotion | **20260819** | −91.05 |
+| b20-motion | **20260819** | −25.03 |
+| b01 parent / child | 20260818 | +73.24 / +1.37 |
+| b18 parent / child | 20260871 | −0.22 / +10.14 |
+
+Two different beats, two different plates, two different prompts, two different
+subjects — one shared seed, and the only two collapses on record. With `--size`
+and `--frames` fixed the initial noise tensor is a function of the seed alone,
+and this box was just shown to be **bit-exact reproducible at a fixed seed**, so
+"this seed's noise draw carries a luminance bias" is a coherent mechanism rather
+than a coincidence-shaped story. It is still only n=2 and it is **not** claimed
+as established.
+
+**It is also the cheapest possible test, and it is a legal one-variable rung:**
+take either clean goblin-free carrier and change **only** the seed to 20260819.
+b01 growmotion is the better carrier — its crf-33 arm blooms +73, so a seed that
+drags luminance down has room to show against a known-bright baseline, and beat
+01 is a sapling nub with no character on screen. Pre-register the bar as
+`luma_drift.py` whole-frame drift with the two-sided threshold this file just
+found missing. **Named here and filed as the next rung; nothing is claimed until
+it runs.**
+
+### What this licenses
+
+**No promotion, no cut swap, no seed pick.** Four existing clips were measured
+and one instrument was committed. Concretely it does three things: it removes
+`--image-crf` from the suspect list for the darkening; it replaces the beat-20
+verdict's recipe-property sentence with a beat-property one; and it retires the
+brightness clause that verdict asked for *in the form it asked for it* — the
+clause is still worth carrying on every 121-frame rung, but written **two-sided**
+and attached to **the plate and seed**, not to the crf flag.
+
+Beats 01, 12, 18 and 20 are all goblin-free on screen, so none of this touches
+the identity freeze.
