@@ -335,3 +335,176 @@ derivation:
     - step boardnet --repo-commit (ee74ac0e3eaf920fc7637fa7e4f2727af7684628 -> ee74ac0e3eaf920fc7637fa7e4f2727af7684628)
     argv:--scale2:
     - step boardnet --scale2 (0.8 -> 0.3)
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 after opening the frame at 1:1, 2x, 3x and 5x
+# beside BOTH predecessors. Scored against the bar and the scoring rule THIS
+# SPEC PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 3 steps rc=0. 8 files published to courier-box\farm-out and pulled
+# with every sha verified against the manifest. $0.
+# ============================================================================
+verdict: >-
+  PASS ON THE STRENGTH QUESTION -- BRANCH (2), AND IT IS THE BEST FRAME BEAT 08
+  HAS. Dropping the second net from 0.8 to 0.3 recovered EVERYTHING the parent
+  broke and KEPT THE BOARD. The guard has his light sandy hair back, his cream
+  shirt and brown wrap skirt back, both arms back, and the drawing is at
+  twinsipa's level; the frame is back to mean luma 135.4 from the parent's 86.9
+  against twinsipa's 141.6. B7 passes on BOTH figures, B2 at +60.6, the pointing
+  hand 48.5 px from its authored wrist. The board is drawn at the authored
+  position and the authored 9-degree tilt, top edge well below the shoulder, and
+  THIS TIME THE FAR ARM REACHES IT.
+  WHAT IS STILL SHORT, AND IT IS ONE THING: NO HAND IS DRAWN ON THE BOARD. At 5x
+  the sleeve ends in a rounded mitten-like form and the board's top edge tucks
+  under it -- no fingers, no thumb, no grip. The beat asks for a clipboard
+  "lowered in one hand" and what is drawn is a board carried at the end of a
+  sleeve. That is far better than the parent's satchel hanging off a vanished
+  arm, and it is not yet the picture. SO THIS IS NOT DECLARED A COMPLETE PLATE
+  CANDIDATE -- the gap is narrow and it is named, and overclaiming it would be
+  the one thing a lane must not do to a frame this close.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: 'PASS. Preflight printed all four lines. The
+    sidecar reads `controlnet_2_conditioning_scale: 0.3` -- the override took --
+    with `controlnet_conditioning_scale: 1.0`, `control_2_image_sha256:
+    38cd39da...`, `seed: 20260819` and both capsule masks unchanged. Not a
+    re-run of the parent; a real one-number comparison.'
+  b4a_board_down: 'SUBSTANTIALLY YES, ONE DETAIL SHORT, AND THE DETAIL IS THE
+    HAND.
+    PRESENT AND CORRECT: a board with a crisp black outline at the authored quad,
+    at the authored 9-degree tilt, top edge far below the shoulder line y=491.
+    It survived the drop from 0.8 to 0.3, which is the question this rung asked.
+    THE FAR ARM REACHES IT -- the parent lost that arm entirely and with it any
+    possibility of the board being held.
+    NOT CLOSED: at 5x there is NO HAND. The sleeve terminates in a rounded form
+    and the board begins; no fingers, no thumb, no grip is drawn. `the clipboard
+    comes DOWN` reads as an object carried at the hip rather than held.
+    AND THE EDGE METRIC IS AGAIN NOT USED, for the reason the parent''s verdict
+    established: mean gradient in the region reads 9.68 here against twinsipa''s
+    13.36 even though twinsipa HAS NO BOARD, because twinsipa''s region is full
+    of sash and hand linework. The metric measures busyness and cannot answer
+    this clause. The eye call stands, as both specs said it would.'
+  b6_drawn_not_traced: 'PASS, AND SCORED AGAINST twinsipa RATHER THAN AGAINST
+    THE PARENT, as this spec required. Hair with visible strands, folds in the
+    sleeves, the gold harness clasp and belt buckle both legible, a well-drawn
+    fist gripping the harness strap with individual fingers, a brown cuff. The
+    parent gave all of that back for one flat robe and this recovers it. The
+    linework is marginally SOFTER than twinsipa''s in places -- a slight loss of
+    crispness, not a change of kind -- and that is reported rather than rounded
+    up. Nothing is traced.'
+  b8_the_guard_has_hair: 'PASS. Light sandy hair, clearly drawn with strands.
+    Canon-correct under canon.yaml `ep2-guard-hair`, and the reversal of the
+    parent''s bald regression on a single-number change. THIS CONFIRMS THE
+    CLAUSE IS A USABLE INSTRUMENT: the guard''s hair tracks conditioning
+    pressure, going bald at 1.0+0.8 and returning at 1.0+0.3 with the wording
+    byte-identical throughout. It is the cheapest available read on whether the
+    load is sane.'
+  b7_no_limb_fragmentation: 'PASS ON BOTH FIGURES -- AND ONLY BECAUSE THE PROBES
+    WERE RE-PLACED. THIS IS THE INSTRUMENT FINDING OF THE RUNG AND IT IS REPORTED
+    FIRST BECAUSE IT NEARLY PRODUCED A FALSE FAIL.
+    THE PARENT''S PUBLISHED BOXES ARE NOT TRANSFERABLE BETWEEN FRAMES. Scored at
+    twinsipa''s six coordinates this frame reads guard 14.1 and goblin 41.5 -- a
+    fail on the goblin. Rendering the boxes onto the image shows why: the
+    goblin IS WEARING TROUSERS in this frame and his "shin" and "forearm" boxes
+    land on CLOTH, while the guard''s "forearm" box lands on his SLEEVE. The
+    statistic was comparing a garment to a face. Even luma-matching those boxes
+    to 0.3 levels still gave 50.6, so luma-matching alone does NOT rescue a probe
+    that is on the wrong material -- the bar''s "placed ON THE DRAWN LIMB"
+    requirement is doing separate work from its luma requirement, and this frame
+    is the proof.
+    RE-PLACED ON PURE SKIN (windows >=97% skin-coloured, coordinates published):
+    GOBLIN -- face (150,480,174,504) +41.7 luma 222.0; forearm (231,764,255,788)
+    +41.6 luma 222.1; shin (106,880,130,904) +49.7 luma 221.9. SPREAD 8.1
+    against a bar of 25.0, luma-matched to 0.1 levels. Every region >= +41.6
+    against a floor of +20.0.
+    GUARD -- face (541,363,565,387) -18.9 luma 228.4; forearm (387,668,411,692)
+    -10.6 luma 227.3; shin (535,1096,559,1120) -32.3 luma 189.4. SPREAD 21.7
+    against a bar of 25.0. Every region <= -10.6 against a ceiling of 0.0.
+    LUMA HONESTY ON THE GUARD: his triple spans 39.0 luma against twinsipa''s
+    27.4, because his shin sits in grass shadow at 189.4. Per the compression
+    relationship this beat established, a dimmer patch reads MORE negative, which
+    INFLATES the measured spread -- so 21.7 is an UPPER BOUND on his true spread
+    and the pass is conservative rather than lucky.'
+  b2_the_identities_separate: 'PASS. Face separation +60.6 on the re-placed
+    pure-skin boxes (guard -18.9, goblin +41.7), against a bar of +20.0 and
+    twinsipa''s +42.0. Nothing dragged the identities together.'
+  b4b_both_arms_stay_on_their_skeletons: 'PASS, BOTH HALVES, AND THE SECOND HALF
+    IS THE ONE THAT MATTERED.
+    B4b-i: pointing hand centroid (328.1, 686.1), 48.5 px from the authored wrist
+    (280.5, 695.1), against a bar of ~60. twinsipa measures 41.5 by the identical
+    method, so this is marginally wider and well inside.
+    B4b-ii: THE GUARD HAS TWO ARMS. The near arm points; the far arm comes off
+    the shoulder, its hand grips the harness strap at the chest exactly as
+    twinsipa''s does, and the forearm continues down to the board. The parent''s
+    missing arm is back. The goblin''s arms hang and the hands do not clasp.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, eighth mechanism. The pointing arm
+    grows from the guard''s shoulder, is human-skinned at -10.6, and still aims
+    at the goblin''s midsection.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b3_one_ground_plane: 'PASS by eye -- both stand in the same grass at the same
+    depth. NO NUMBER IS PUBLISHED: the automated span detector is confounded on
+    this frame, returning a guard crown at y=200 (warm sky matching the
+    pale-skin test) and a goblin foot at y=1214 (foreground grass). A number
+    from a confounded detector is worse than an honest eye call, and this is the
+    second frame running where that has been true.'
+  b5_no_colossus: 'PASS by eye -- neither figure towers and the proportions read
+    as an adult man beside a shorter goblin. Same detector caveat as B3, so the
+    1.170 ratio it computes is NOT published as a measurement; twinsipa scores
+    1.112 by the same confounded method against a filed ~1.13.'
+observed_not_scored: >-
+  THREE. (1) THE GOBLIN GAINED FULL TROUSERS. twinsipa has him bare-legged with a
+  tan loincloth; here he wears teal trousers to the ankle and a matching tunic.
+  Nothing in the prompt, the hint or the reference asked for that, and it is the
+  change that broke the transferability of the B7 probes. Whether a clothed
+  scavenger is acceptable is a canon/taste question and is NOT ruled on here --
+  flagged for whoever owns the scavenger's costume. (2) THE PURPLE CAST IS BACK,
+  mean luma 135.4 against twinsipa's 141.6 and the parent's 86.9, and the hard
+  directional key is gone. So the lighting damage tracked the second net's
+  STRENGTH, not its presence -- which retires the worry raised as branch (5) of
+  the parent's rule. (3) THE BOARD STILL HAS NO CLIP, as predicted: the clip line
+  in both hint authors is collinear with the top edge and asks for nothing.
+what_this_settles: >-
+  THE STRENGTH QUESTION IS SETTLED AND THE MECHANISM IS CONFIRMED. A second
+  ControlNet on a board-only hint delivers the object at 0.3 and destroys the
+  frame at 0.8, with every other input byte-identical across the two renders.
+  The parent's diagnosis was right: a nearly-black hint is not a weak hint, it
+  asserts "no edges anywhere" at whatever strength it is given, and the damage
+  is proportional to that strength rather than intrinsic to composing two nets.
+  It also settles that the per-net guidance window is NOT needed -- branch (4)
+  of the parent's rule is excluded, because scale WAS the lever. And it settles
+  that B8 is an instrument: the guard's hair tracks conditioning load with the
+  wording held constant.
+  SEPARATELY AND WORTH AS MUCH: PUBLISHED PROBE BOXES DO NOT TRANSFER BETWEEN
+  FRAMES ON THIS BEAT. Wardrobe moves, and a box that measured skin in one frame
+  measures cloth in the next. Every future B7 must re-place its probes on pure
+  skin and publish both the coordinates AND the material, not just the luma.
+what_this_did_not_settle: >-
+  THE HAND. The board is reached but not gripped, and whether that is a wording
+  problem, a hint problem (the board hint says nothing about a hand, and the
+  openpose hint's L-wrist is at the board's grip corner but carries no finger
+  keypoints -- COCO-18 has none) or simply this seed is unknown from one frame.
+  Nor whether 0.3 is optimal or merely sufficient; no value between 0.3 and 0.8
+  has been sampled and none needs to be unless something else wants tuning. Nor
+  the goblin's new trousers. Nor whether any of this holds at a second seed --
+  every frame on this route is seed 20260819.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME, AND NOT THE WORDS "COMPLETE
+  PLATE CANDIDATE". This is the closest frame beat 08 has produced and it is
+  still one clause short: the beat asks for a clipboard lowered IN ONE HAND and
+  no hand is drawn on it. Calling it complete because it is close is exactly the
+  failure mode a pre-registered bar exists to prevent. Choosing between this
+  frame and twinsipa is a taste call and belongs to the founder (R4). It does
+  not license a scale sweep, a second seed, or scaling this recipe to other
+  beats.
+next_rung_named_not_taken: >-
+  ONE sample: THE HAND ON THE BOARD, with --scale2 held at 0.3 and the board
+  hint held byte-identical. The cheapest lever first, because it is free and
+  because the wording is already half-right: the prompt says `clipboard lowered
+  in one hand` and the negative says `raised clipboard, second board`, so the
+  change is to make the GRIP explicit -- e.g. `one hand gripping the clipboard
+  at his hip` -- and nothing else. Its bar is B4a's grip clause alone, with every
+  clause passing here pre-registered to survive, and it is a WORDING rung so its
+  risk is the token budget (the prompt currently runs 64 of 77).
+  IF WORDING FAILS, the next lever is the board hint carrying a short stroke for
+  the gripping hand at the authored L-wrist -- which would be the first figure
+  ink ever put in that hint and must be argued for explicitly against the five
+  tracing losses, not slipped in.

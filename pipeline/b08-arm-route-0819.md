@@ -903,3 +903,55 @@ establishing early, so net 2 runs `control_guidance` 0.0→~0.3 and stops;
 diffusers takes lists there, so it is the same small driver change `--scale2`
 was. **The parent remains the best frame on this beat**, and this one is not a
 plate candidate: off-canon hair, lost wardrobe, worse drawing.
+
+## 17. Scale was the lever: the board survives at 0.3 and the frame comes back (2026-08-20)
+
+One number, `--scale2` 0.8 → 0.3, everything else byte-identical to §16 — same
+two nets, same two hints, same masks, same references, same seed, same words.
+
+**Everything §16 broke came back, and the board stayed.**
+
+| clause | twinsipa (no board) | §16 at 0.8 | §17 at 0.3 |
+|---|---|---|---|
+| B4a board | absent | drawn, **no arm** | **drawn, arm reaches it** |
+| B6 drawing | good | flat robe, **FAIL** | **PASS**, at twinsipa's level |
+| B8 hair (canon) | sandy | **bald, FAIL** | **sandy, PASS** |
+| B7 guard / goblin | 10.6 / 0.7 | UNMEASURABLE | **21.7 / 8.1, PASS** |
+| B2 separation | +42.0 | +77.7 (unscorable) | **+60.6** |
+| B4b hand→wrist | 41.5 px | 10.2 px | **48.5 px** |
+| B4b far arm | on sash | **absent** | **present, reaches board** |
+| frame mean luma | 141.6 | 86.9 | **135.4** |
+
+**What this settles.** The damage at 0.8 was *proportional to strength*, not
+intrinsic to composing two nets. The per-net guidance window — the second lever
+§16 named — is **not needed**; scale was the lever. And **B8 is now an
+instrument**: with the wording byte-identical across all three frames, the
+guard's hair goes bald at 1.0+0.8 and returns at 1.0+0.3, so it reads
+conditioning load for free.
+
+**The one clause still short is the HAND.** At 5x the sleeve ends in a rounded
+mitten-like form and the board's top edge tucks under it — no fingers, no thumb,
+no grip. The beat asks for a clipboard *lowered in one hand*; what is drawn is a
+board carried at the end of a sleeve. Much better than §16's satchel hanging off
+a vanished arm, and **not yet the picture** — so this frame is deliberately
+**not** called a complete plate candidate.
+
+**A second instrument finding, and it nearly produced a false FAIL: published
+probe boxes do not transfer between frames on this beat.** Scored at twinsipa's
+six coordinates this frame reads goblin spread 41.5 — a fail. Drawing the boxes
+onto the image shows why: **the goblin is wearing trousers in this frame**, so
+his "shin" and "forearm" boxes are on *cloth*, and the guard's "forearm" box is
+on his *sleeve*. Luma-matching those boxes to 0.3 levels still gave 50.6 —
+**luma-matching does not rescue a probe on the wrong material.** The bar's
+"placed ON THE DRAWN LIMB" requirement does separate work from its luma
+requirement, and this frame is the proof. Re-placed on pure skin (≥97 %
+skin-coloured windows, coordinates published in the verdict) both figures pass
+comfortably. Every future B7 must publish the **material** as well as the luma.
+
+**Next: ONE sample, the grip, by wording first.** `--scale2` stays at 0.3 and
+both hints stay byte-identical; the prompt already says `clipboard lowered in
+one hand`, so the change is to make the grip explicit and nothing else — a
+wording rung whose risk is the token budget (64 of 77 used). Only if that fails
+does the board hint get a stroke for the gripping hand, and that would be the
+first figure ink ever placed in it and must be argued against the five tracing
+losses rather than slipped in.
