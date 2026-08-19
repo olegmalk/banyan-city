@@ -147,14 +147,64 @@ revisions:
       plate_requirement_0815.body_position, which was flagged as an author call.
       20 EVIDENCE — "looks up at the bare branch" → stays crouched, the bare stem at
       his own face height, and the look goes across.
+    approved_by: founder
+    approved_on: '2026-08-19'
+    approved_quote: "all approved"
     approval_status: |-
-      NOT YET READ BY HIM. He authorised the rewrite; he has not read the result.
+      READ AND APPROVED BY HIM 2026-08-19. STEWARDSHIP.md §6 IS DISCHARGED ON ALL FIVE
+      BEATS OF THIS ENTRY. This is the per-beat gate the entry was opened to hold, and
+      it is now open.
+      HOW HE WAS SHOWN IT, so the approval can be audited rather than trusted. The three
+      beats still outstanding this morning — 12 RELATED, 15 GOOD LISTENER, 20 EVIDENCE —
+      were put to him IN SESSION as their rewritten node.md lines VERBATIM, not as a
+      summary and not as a diff to read elsewhere. He replied, verbatim and in full:
+      "all approved". That is the whole of his answer and it is quoted rather than
+      paraphrased.
+      THE OTHER TWO WERE ALREADY HIS, and neither is claimed by today's quote:
+        13 THE SHADE — RATIFIED 2026-08-18 by his own words on the beat-13 board card,
+          "the shipped version stands (no slide, he sits down beside it, thin shade)".
+          That card's `resolved` block (review/inbox.yaml, dated 2026-08-18) records
+          that it was answered AGAINST THE REWRITTEN LINE and says so in terms: "this
+          ruling is that read, for BEAT 13 ONLY."
+        19 THE DROP — its substance is HIS OWN 2026-08-15 ruling, "ok then just make the
+          fig fall on the ground and the goblin will notice it", recorded as the
+          2026-08-15 entry in this same list and written into node.md by him. What
+          2026-08-17 added on top of his ruling is knee-height positioning — "beside it,
+          standing mid-stride away", the fig falling ~30 cm — which is staging mechanics
+          applying his ruling, the class his 2026-08-18 delegation puts on the steward's
+          side ("just leave me the taste questions for now"). Recorded here; BEAT 19'S
+          ROUTE IS NOT ACTED ON BY THIS LANE, it belongs to the b19 composite lane.
+      WHAT THIS DOES NOT COVER, stated because "all approved" is three words and will be
+      over-read otherwise:
+        * It is NOT an approval of the 2026-08-18 beat-17 restage below. He was not
+          shown that line, its `approval_status` is untouched, and §6 still gates media
+          from beat 17's new staging.
+        * It is NOT approval of any prompt, plate, take or pick. §6 gates media from
+          UNREAD SCRIPT; it does not confer a verdict on pixels. Every beat-12/15/20
+          artifact keeps whatever verdict it already had, including the ALL-FAIL rulings.
+        * `approved_by: founder` at the top of this file is still the node-level gate and
+          is still 2026-08-03. It was deliberately not flipped when this entry was
+          opened; it does not need flipping now either, and this entry remains the
+          per-beat record.
+      WHAT IT UNBLOCKS, concretely: voice synthesis, footage render and episode assembly
+      are legal for beats 12, 13, 15, 19 and 20 as they are now written. No spoken line
+      moved in any of the five, so all 18 existing 002b VO takes stay valid and nothing
+      needs re-synthesising to collect this.
+    approval_status_superseded_by_the_0819_read: |-
+      Preserved verbatim (R6 — a closed gate is superseded, never edited away). This was
+      the per-beat gate's text from 2026-08-17 until he read the lines on 2026-08-19:
+      "NOT YET READ BY HIM. He authorised the rewrite; he has not read the result.
       STEWARDSHIP.md §6 therefore forbids voice synthesis, footage render and episode
       assembly FROM THESE FIVE BEATS until he does. `approved_by: founder` above is
       deliberately NOT changed: it gates the whole node, and flipping it would stop the
       beats other lanes are working tonight, none of which were rewritten. This entry
       is the per-beat gate. Nothing was rendered, voiced or enqueued for this pass —
-      $0, no GPU.
+      $0, no GPU."
+      IT WAS QUOTED ELSEWHERE WHILE IT WAS LIVE and those quotations are now historical,
+      not live prohibitions: review/ep2-picks/b15-0819-verdict.yaml
+      `stewardship_6_gate.verbatim`, and node.md's own line under the five-beat summary.
+      node.md is corrected in the same commit; the b15 verdict file carries a dated
+      resolution rather than an edit to its own findings.
     what_it_costs: |-
       TAKES AND PICKS INVALIDATED — the full list, so it is not a surprise later.
       NOTHING IS NEWLY STRANDED. Not one of the five rewrites invalidates a take or

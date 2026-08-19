@@ -54,9 +54,21 @@ definition_judged_against:
 # THE STANDING BLOCKER, FOUND BEFORE ANY PIXEL WAS PULLED. READ THIS FIRST.
 # ══════════════════════════════════════════════════════════════════════════
 stewardship_6_gate:
-  status: LIVE. Beat 15 may not be animated today, and lifting that is the founder's.
-  record: genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, revisions
-    entry dated 2026-08-17, `beats: [12, 13, 15, 19, 20]`
+  # ── PARSE FIX 2026-08-19, by the lane that became this file's consumer. ──────
+  # `record:` below was a plain multi-line scalar carrying "beats: [12, 13, 15,
+  # 19, 20]" inside it, so yaml.safe_load died at line 59 column 35 ("mapping
+  # values are not allowed here") and this file could not be machine-read at all.
+  # The work-ladder flagged it and left it, correctly, as this lane's file. It is
+  # now quoted and NOTHING ELSE ABOUT THE VALUE CHANGED — same words, same
+  # punctuation, single quotes added and the inner apostrophe left alone by
+  # switching the outer quotes to double. Fixed rather than reported because the
+  # 0819 discharge below has to be readable by a machine to be worth recording.
+  status: "DISCHARGED 2026-08-19 — see `resolved_0819` at the end of this block. The
+    text from `record:` to `what_would_lift_it:` below is preserved as this lane wrote
+    it hours earlier and is now HISTORY, not a live prohibition."
+  status_superseded_0819: LIVE. Beat 15 may not be animated today, and lifting that is the founder's.
+  record: "genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, revisions
+    entry dated 2026-08-17, `beats: [12, 13, 15, 19, 20]`"
   verbatim: >-
     "NOT YET READ BY HIM. He authorised the rewrite; he has not read the result.
     STEWARDSHIP.md §6 therefore forbids voice synthesis, footage render and episode
@@ -83,6 +95,45 @@ stewardship_6_gate:
     saying so. One sentence discharges it for all five at once. It is ONE TASTE-FREE
     READ, not a taste question, and it currently blocks beat 15, beat 19 and beat 20
     together.
+  resolved_0819:
+    date: '2026-08-19'
+    by: the founder, in session, on the three lines still outstanding
+    what_he_was_shown: >-
+      The rewritten node.md lines for 12 RELATED, 15 GOOD LISTENER and 20 EVIDENCE,
+      VERBATIM — not a summary, not a diff to go and read. Beat 15's was the sentence
+      this file quotes at definition_judged_against: "He tips his head down and
+      sideways until his eyes are level with the two leaves, and talks to them from a
+      hand's width away; both of them share the frame."
+    his_answer_verbatim: all approved
+    what_it_does_to_this_file: >-
+      `what_would_lift_it` above asked for exactly this and got it, so it happened as
+      predicted rather than by some other route: one read, three beats, no taste
+      question asked. §6 no longer blocks footage on beat 15 (nor on 19 or 20 — 13 was
+      ratified 2026-08-18 by his own board ruling and 19's substance was his own
+      2026-08-15 edit). `filed.why_this_and_not_a_motion_job` below is therefore
+      HISTORICALLY CORRECT AND NO LONGER BINDING: that job was right to be a plate
+      publish when it was filed, and a motion job on this beat is now fileable.
+    what_it_does_NOT_do: >-
+      It does not turn any take or plate in this file into a pass. All three verdicts
+      above stand exactly as scored: six motion takes FAIL, six 0815 mac plates FAIL,
+      r1 6-of-7 and r2 6-of-8. §6 gates media from unread SCRIPT; it confers no
+      verdict on pixels, and the beat's real blocker (`the_real_blocker`) is unmoved —
+      it is still the plant, and specifically the leaf count.
+    gaze_is_now_scoreable_and_this_file_still_does_not_score_it: >-
+      definition_judged_against.ONE_CLAUSE_OF_IT_IS_STALE refused to score head
+      direction because "the replacement is recorded `approval_status: NOT YET READ BY
+      HIM`" and neither version could be certified. That reason is spent: the
+      replacement is now certified, so the DOWN/LEVEL look is the scoreable clause and
+      done-definitions.yaml beats.'15'.done_when's "he LOOKS UP" is superseded text in
+      a file this lane still does not own. The six takes above are NOT re-scored on
+      gaze after the fact — a bar tightened onto pictures already judged certifies
+      nothing (this file's own rule, stated at verdict_0819_new_plate.what_was_done).
+      The level-eye look is pre-registered FORWARD, in the next rung's bar.
+    the_next_rung_fired_the_same_day: >-
+      `the_route_named_and_not_fired` below is no longer unfired. See
+      review/ep2-picks/b15-composite-0819-verdict.yaml — r1's frame with beat 12's
+      leaves composited onto a rooted stem, one sample, bar pre-registered from
+      done_when plus this approved line.
 
 # ══════════════════════════════════════════════════════════════════════════
 # WHAT EXISTS. INVENTORIED, NOT ESTIMATED.
@@ -205,7 +256,10 @@ verdict_0819_motion:
 # ══════════════════════════════════════════════════════════════════════════
 verdict_0819_mac_plates:
   where: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r1..r6.png
-  drawn: '2026-08-15', Apple MPS, animagine-xl-3.1, 832x1216, seed 20260734, $0
+  # PARSE FIX 2026-08-19 (second of two, same lane, same cause): a quoted date
+  # followed by more plain text is not a YAML scalar. Whole value quoted; the
+  # single quotes are kept as literal characters so the string is byte-unchanged.
+  drawn: "'2026-08-15', Apple MPS, animagine-xl-3.1, 832x1216, seed 20260734, $0"
   state_before_today: >-
     every sidecar `scored: false`, `founder_verdict: null`, and no reference to any
     of the six anywhere in the repo except THE-SAPLING.md §6.1, which cites r6's
@@ -216,7 +270,9 @@ verdict_0819_mac_plates:
     r1: FAIL — a tight close-up of his head and shoulders in tall grass. No stem, no rooted plant, nothing in frame but him and grass blades. done_when's named failure, in a still.
     r2: FAIL — a SCALE DOUBLE. One huge seated cloaked figure fills the frame and a tiny goblin sits at its base. Two figures where the beat has one, and the plants are thin weedy stalks.
     r3: FAIL — seated goblin in a field, and the plant GROWS OUT OF HIS SHOULDER. Nothing rooted in the ground.
-    r4: FAIL — closest on body and world: one seated cloaked goblin, a small leafy sprig to his left. Fails because the ground is a FLOATING DISC of grass in open sky, and the sprig is a many-leaved weed, not two leaves on a stem.
+    # PARSE FIX 2026-08-19 (third of three): "on body and world: one seated" — a
+    # colon-space inside a plain scalar. Quoted, text unchanged.
+    r4: "FAIL — closest on body and world: one seated cloaked goblin, a small leafy sprig to his left. Fails because the ground is a FLOATING DISC of grass in open sky, and the sprig is a many-leaved weed, not two leaves on a stem."
     r5: FAIL — head tipped far back looking at empty sky; the sprig again sits at his shoulder rather than in the soil; floating grass disc again.
     r6: FAIL, and the most instructive — a conical LEAF-MOUNTAIN the size of a hill fills the frame with a speck of a figure beneath it. Its prompt asked for "one thin bare stalk taller than he is" and it got one. THE-SAPLING.md §6.1 corrected that phrase by name on 2026-08-16.
   what_the_six_share: >-

@@ -201,12 +201,31 @@ move the story. What each beat now stages, in one line:
 **No spoken line changed in any of the five.** Every edit is a stage direction, so all
 18 existing 002b VO takes remain valid and nothing needs re-synthesising here.
 
-**NO MEDIA MAY BE MADE FROM THESE FIVE BEATS UNTIL HE READS THEM** (STEWARDSHIP.md §6).
-`approved_by: founder` in `leaves/002b-t0-c.yaml` is deliberately **left as it is** —
-changing it would block the beats his other lanes are working tonight, which were not
-rewritten — so the gate for these five is recorded per beat in that leaf's `revisions`
-list instead, together with the takes and picks this pass invalidates. Nothing was
-rendered, voiced or enqueued: $0, no GPU.
+**HE HAS READ ALL FIVE AND APPROVED THEM — 2026-08-19. STEWARDSHIP.md §6 IS
+DISCHARGED HERE.** The last three outstanding rewrites (12 RELATED, 15 GOOD LISTENER,
+20 EVIDENCE) were put to him in session as the rewritten lines **verbatim**, and his
+answer, verbatim and entire, was *"all approved"*. 13 THE SHADE was ratified on
+2026-08-18 by his own board ruling — *"the shipped version stands (no slide, he sits
+down beside it, thin shade)"* — answered against this rewritten line. 19 THE DROP's
+substance is his own 2026-08-15 edit (*"ok then just make the fig fall on the ground
+and the goblin will notice it"*); what 08-17 added is knee-height positioning, staging
+mechanics under his 2026-08-18 delegation. So voice synthesis, footage render and
+episode assembly are **legal for all five beats as now written**. Two things this does
+**not** cover: the 2026-08-18 beat-17 shake restage (he was not shown that line; §6
+still gates it), and any prompt, plate, take or pick — §6 gates media from unread
+*script* and confers no verdict on pixels. The full record, with what the approval does
+and does not reach, is the 2026-08-17 entry's `approval_status` in
+`leaves/002b-t0-c.yaml`. `approved_by: founder` at the top of that leaf stays
+2026-08-03: it is the node-level gate and was never the per-beat one.
+
+*Superseded 2026-08-19, kept because a prohibition that everyone steps over is worse
+than a live one or a retired one (R6):*
+~~**NO MEDIA MAY BE MADE FROM THESE FIVE BEATS UNTIL HE READS THEM** (STEWARDSHIP.md
+§6). `approved_by: founder` in `leaves/002b-t0-c.yaml` is deliberately **left as it
+is** — changing it would block the beats his other lanes are working tonight, which
+were not rewritten — so the gate for these five is recorded per beat in that leaf's
+`revisions` list instead, together with the takes and picks this pass invalidates.
+Nothing was rendered, voiced or enqueued: $0, no GPU.~~
 
 **Beat 16 is unchanged, and that too is his word** — *"for beat 16's line, lets
 keep 'I can't even wave.'"* It declines the replacement that was proposed to him
