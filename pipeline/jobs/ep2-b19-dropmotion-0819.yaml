@@ -56,17 +56,30 @@ env:
 payload:
   C:\banyan-farm\ep2-b19-dropmotion-0819\fetch_init.py: |-
     #!/usr/bin/env python3
-    """Fetch beat 19's PICKED plate from origin/main and refuse on any sha mismatch.
+    """RESTORE beat 19's PICKED plate to the courier path it was published from,
+    and refuse on any sha mismatch.
 
     No model, no GPU, no spend. The plate was rendered on this box by
-    ep2-b19-sapgloss-0819 and then published to the repo, but the box's own
-    courier worktree has since been cleaned -- verified 2026-08-19, the
-    directory is gone -- so it is re-fetched from origin/main under the sha the
-    manifest recorded. Anyone who clones the repo can verify this number.
+    ep2-b19-sapgloss-0819 and published into
+    courier-box\\farm-out\\ep2-b19-sapgloss-0819\\, but the box's courier
+    worktree has since been cleaned -- verified 2026-08-19, the directory is
+    gone -- so it is re-fetched from origin/main under the sha the manifest
+    recorded. Anyone who clones the repo can verify this number.
+
+    IT IS RESTORED TO ITS OWN PUBLISHED PATH RATHER THAN INTO THIS JOB'S PAYLOAD
+    DIRECTORY, and that is not cosmetic. box_enqueue refuses a --src it cannot
+    trace: it reads farm-out/<dir>/<file>, fetches that plate from
+    origin/farm-results-rtx5090 to CHECK THE PICTURE, and resolves <dir> to the
+    one spec whose publish step owns it. A payload-directory path defeats both
+    checks, and 'could not check' is not 'fine' -- two of the 2026-08-14 wave
+    blocked here and one was cropping the WRONG BEAT'S plate. Writing the file
+    back where it belongs satisfies the guard honestly instead of waiving it.
+    The sha assertion is what makes the restore safe: a different file cannot
+    take this name.
     """
     import hashlib, os, sys, urllib.request
 
-    OUT = r"C:\banyan-farm\ep2-b19-dropmotion-0819"
+    OUT = r"C:\banyan-farm\courier-box\farm-out\ep2-b19-sapgloss-0819"
     RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
            "farm-out/ep2-b19-sapgloss-0819/")
     UA = {"User-Agent": "banyan-city-b19-dropmotion/1.0 (albert.numbro@gmail.com)"}
@@ -271,7 +284,7 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b19-dropmotion-0819\cover_crop.py
   - --src
-  - C:\banyan-farm\ep2-b19-dropmotion-0819\b19-sapgloss-s20260819.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b19-sapgloss-0819\b19-sapgloss-s20260819.png
   - --sha256
   - 5a62ff900df2e22c45df8d5b8c0a22c85f374a53cd7fa9b64483e7716d77c11c
   - --out
