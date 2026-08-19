@@ -1,0 +1,47 @@
+{
+  "id": "ep2-b12-plateship-0819-1787134092",
+  "task": "ep2-b12-plateship-0819",
+  "node": "002b-first-citizen",
+  "beat": 12,
+  "worker": "box-runner",
+  "priority": 20,
+  "needs_gpu": false,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "steps": [
+    {
+      "name": "copy",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b12-plateship-0819\\copy_plate.py"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a fetch failure, and\n# box_enqueue.output_path_problems refuses a spec whose declared artifacts are\n# never named by any step -- which a wildcard defeats. Missing ONE file is a FAIL\n# of this job, not a partial success. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/ep2-b12-plateship-0819-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-plateship-0819\"\nNAMES = [\n    \"12-related-r4-s2.png\",\n    \"12-related-r4-s2.png.meta.yaml\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    src = os.path.join(from_dir, name)\n    if not os.path.isfile(src):\n        raise SystemExit(\"!! missing %s -- publishing nothing.\" % name)\n    shutil.copy2(src, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b12-plateship-0819.sha256\"),\n          \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(NAMES), \"file(s) + manifest ->\", dst)\nraise SystemExit(0)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b12-plateship-0819\\12-related-r4-s2.png",
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b12-plateship-0819\\12-related-r4-s2.png.meta.yaml"
+  ],
+  "started_at": "2026-08-19T10:08:15Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T10:08:20Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b12-plateship-0819\\12-related-r4-s2.png",
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b12-plateship-0819\\12-related-r4-s2.png.meta.yaml"
+  ]
+}

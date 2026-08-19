@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_redraw.py
+# on the rtx5090 (C:\banyan-farm\redraw-0809).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, trunk, ground, fruit, chibi, mascot, creature, face, other character, city, buildings, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 12
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262731
+seeds_in_batch: 4
+task: 002b-b12-r4-1786273408
+queue_entry: ep2-b12-related-r4-1786300000
+render_round: r4
+candidate_set: r4
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 9
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 4. r3 was rejected on all four (ledger record 19): every frame made a large pink RIPE FRUIT the subject of a beat whose own text says `no fruit`, s0 gave that fruit a face, s2 put a city skyline behind it. TWO FIXES, both already owned by this file. `mascot-simple` comes out — beat 01 recorded on 2026-08-06 that this word becomes the SUBJECT when it leads a plant clause and drew a chibi mascot creature in three of four, and it has been sitting in beat 12's prompt ever since; s0's fruit with a face is that same failure. Beat 01's negative block `no chibi, no mascot, no creature, no face` comes in, which is safe here for the reason 308c74e set out: lifting `creature` and `face` is safe only on the plant-only beats (01, 12, 16, 18, 21) and this is one of them — beat 13, whose subject IS a creature with a face, must never get this block. Plus `no city, no buildings` for the skyline. Register fix: beat 12 is on 308c74e's list of eleven tail-droppers, and the long em-dash clause was what cost the budget, so the prose is tight and the tail was measured intact before rendering. `sapling` gives way to `seedling` — the vocabulary the passing beats use, and a _SMALL trigger so the scale negatives keep firing. WHAT THIS ROUND DOES NOT CLAIM: `no fruit` was already lifting in r3 and the model drew fruit anyway, so the fig is not simply an un-negated word; the bet is that `mascot-simple` was pulling a whole mascot composition, face and fruit included, into a frame that asked for two leaves. If r4 returns fruit that hypothesis is dead and the next lever is the count tag, not more negations.
+prompt: |-
+  Extreme close-up of two oversized green cotyledon leaves of a tiny seedling filling the frame, utterly still, peach and gold morning sky and drifting blurred clouds behind them, very slow push-in, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, trunk, ground, fruit, chibi, mascot, creature, face, other character, city, buildings, photorealism
