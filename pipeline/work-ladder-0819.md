@@ -198,6 +198,124 @@ commit message.
 
 ---
 
+## Appended 2026-08-19 by the b08 / crf-10 judging lane
+
+### Beat 14 — PARKED by steward ruling
+
+**Status: parked, veto-able in one line.** The best available footage is already
+in the cut, and expression-staging polish is not the bottleneck — four slates are.
+Beat 14 has now absorbed a crf-10 pair (`ep2-b14-motion-crf10-0819` and its
+second seed) whose finding was that crf 10 *did not change* the beat and at the
+second seed *cost movement*; that is the third independent measurement telling us
+this beat's remaining gap is taste, not mechanism. **Revisit after the slates
+close.** Nothing about this ruling touches the footage in the cut or any bar.
+
+### Beat 08's identity blocker — PARKED until the hint-shape axis resolves
+
+**Green-on-both, four rungs running.** Every beat-08 conditioning rung —
+0.80/7px, 0.45/7px, 0.28/7px and now 0.45/**3px** — returned two green figures
+with pointed ears, at scales almost three times apart and at a 58% difference in
+ink. The cause is structural and not a matter of tuning: **a contour cannot say
+which body an attribute belongs to**, so `green skin` enters the pooled embedding
+and lands on both. Per-figure IPAdapter is the candidate and it is its own probe.
+
+**It stays parked because it has nothing to attach to.** An identity lever needs a
+figure whose outline is the model's own, and no rung has produced one yet. Order
+is not a preference here, it is a dependency: **hint shape first, identity second.**
+
+### What the two units just judged ADD and REMOVE
+
+**REMOVED — the beat-08 stroke-weight rung.** Filed, run, scored, closed. It was
+§8's pre-committed instrument and the only one of three needing no new code.
+Result: the pose held (B1/B3/B4a/B4c/B5), B2 failed a fourth time as
+pre-registered, **B4b regressed** — the arm ends in a fingerless wedge where rung
+2 drew a hand — and **B6's negative test failed again with no movement at all.**
+
+The finding is that the dial points the wrong way. Share of authored ink with a
+strong render gradient within 3px, one instrument, nocontrol as the floor:
+
+| frame | ink traced |
+|---|---|
+| nocontrol | 26.1% |
+| 0.80 / 7px | 97.7% |
+| 0.45 / 7px | 94.4% |
+| **0.45 / 3px** | **98.3%** |
+
+**Stroke weight is a PRECISION dial, not a strength dial.** A 7px bar is an
+ambiguous ribbon the model may fill anywhere; a 3px line is one edge locus the
+outline snaps onto. So **two dials are now bracketed by measurement and neither
+yields a figure the checkpoint drew — the tracing is caused by the ENCLOSURE.**
+
+**ADDED — the top rung on this ladder: a hint that does not enclose bodies.**
+Consumer: beat 08's cut slot. One variable: hint CLASS, from closed contour to
+**sparse skeleton** — joint dots and single-line limbs plus the board, no closed
+outline anywhere. Bar: carried unchanged from rungs 1–4, with B2 still an expected
+FAIL and **B4b needing a hand-sized mark at the end of the arm whatever the class**
+(a 1px finger has now failed once). `author_b08_pose_hint.py` already solves the
+pose geometry — the two-link arm from a fixed fingertip clearance, the shared foot
+line, the stature ratio — so this is a **draw mode, not new maths.** Fallback if
+it stalls: an early `control_guidance_end`, which needs code first
+(`controlnet_plate.py` hardcodes 1.0 at lines 167 and 277 and exposes no flag).
+
+**NOT added, explicitly: no fifth stroke value and no interpolated scale.** Both
+axes are closed by measurement, and a fifth sample on a closed axis is the wording
+ladder this file already forbids.
+
+### What the crf-10 re-runs change about the crf finding above
+
+The finding at the top of this page stands and is now confirmed **at its source**,
+which needed no render: measured against the true init, the conditioning image crf
+33 actually feeds the model has **29.4%** of its pixels off by more than 8 levels
+on beat 17 and 5.2% on beat 18, against crf 10's **7.1%** and 0.3%.
+
+**But it is not a global win, and the ladder should stop treating it as one.**
+
+| beat | fidelity | the bar | verdict |
+|---|---|---|---|
+| 01 cold open | f120 from init **15.2 vs 65.7**; luma ends 84.8 vs plate 85.1, original blooms to 148.4 | G1 better — monotone over 85 frames, 0 shrinks | **PASS, cut-preferred** |
+| 17 shake | f000 5.54 vs 6.42 | all five clauses; P2 narrow at 0.420 sat | **PASS, cut-preferred** |
+| 18 tremble | f000 2.53 vs 2.77 | **FAIL-FROZEN** — interframe median 0.570 vs 5.956 | **FAIL, original stands** |
+| 14 motion | — | unchanged; second seed cost movement | no change |
+
+**The calibration, which is the durable part:** a 2.4x cleaner conditioning image
+buys only a **14%** closer first frame, because diffusion and not the encode
+decides what f000 becomes — while the motion cost ranges from nil to **-90%**. The
+gain is small and bounded; the cost is large and **beat-shape-dependent**. On a
+macro plate whose whole content is fine high-frequency movement, a cleaner init
+gives i2v less to push off from and the shot stops moving. **So crf 10 is a
+per-beat decision with a motion measurement attached, never a blanket re-encode.**
+
+**Two cut swaps are named and NOT made** — they belong to the next demo assembly
+and are veto-able in one line: beat 01 and beat 17 to their crf-10 takes. Beat 18
+stays as it is.
+
+### A bar clause three beats have now needed and none has ever had
+
+Beats 17 and 18 have both been scored on action while **near-duplicate frame pairs
+went unmeasured**, and beat 17's own verdict flagged the same blind spot on 0818,
+0819 and again tonight. The next motion bar on any beat should pre-register **a cap
+on the share of frame pairs under 0.5 interframe** — beat 18's crf-10 take would
+have been caught by it at 18 of 120 against the original's 3, without needing a
+judgement call.
+
+### One process defect worth a guard, found three times tonight
+
+All three crf-10 specs were derived from their crf-33 parents **including the
+parent's `verdict`, `verdict_measured` and `pick` blocks**, with ids renamed
+through the file — so beat 17's inherited `pick` block recommended *the crf10 id*
+for a decision made before that job existed, and beat 01's inherited `sweep_summary`
+tallied six seeds the job never rendered. Anyone grepping `verdict:` on a filed job
+would have read a PASS that belonged to a different clip.
+
+They are renamed rather than deleted in all three, because those numbers are the
+crf-33 baseline and were reproduced here to within rounding — which is what
+confirms both the provenance and the instrument. **The guard this wants is small: a
+spec-derivation step should refuse to carry a parent's verdict/pick/sweep keys into
+a child, or should rename them on the way through.** Cheaper than the third
+occurrence.
+
+---
+
 ## Standing rules this ladder runs on
 
 - **Never leave the card empty while a runnable job exists.** If nothing is
