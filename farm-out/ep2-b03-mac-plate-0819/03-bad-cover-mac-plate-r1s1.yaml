@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 3
+beat_slug: "bad-cover"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260819
+render_seconds: 70.6
+png_sha256: "1c0d2edc950b8594c3a60ff8da7872b5f247b93b454bbf6a683df949f3c903a6"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, lean wiry adult goblin man, green skin, bald head, patchwork cloak, solo, crouching behind a tiny sapling with two big leaves, far too small to hide him, most of his body plainly visible, green summer grass, pale sky, bright daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, full body, wide shot, distant, holding object, 2boys, baby, child, chibi, stitches, scars, tree, forest, indoors, photorealism, 3d render, dark, night, leaf on head, plant girl, alraune, monster girl, female goblin, elf"
+done_when: "he crouches and the COVER IS COMICALLY INADEQUATE - the trunk hides a fraction of him and the joke is visible without dialogue. A crouch that actually conceals him fails the beat."
+why_this_plate: "Beat 03 is in the cut on b03-refire-0814, drawn 08-14, and it is the round young goblin the founder ruled against on 08-19. There has never been an entry for this beat in this file. THE JOKE IS THE BAR and it is a SIZE RELATION, not a pose: the plant must be too small to hide him and he must be plainly visible behind it. `done_when` says `the trunk`, which the founder's `the sapling is tiny` ruling has since contradicted -- so the cover here is the canon sapling's own stem, and that is not a softening of the beat, it is what makes the cover comically inadequate."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

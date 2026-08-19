@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 13
+beat_slug: "the-shade"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260819
+render_seconds: 137.6
+png_sha256: "20d36a3e92119a0c6795d6969cd6a083ddecda46a1c9bfffdc82d380e46e1c60"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, lean wiry adult goblin man, green skin, bald head, patchwork cloak, solo, sitting folded small on the grass, knees drawn up to his chest, in the thin shade of a tiny sapling with two big leaves, warm afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, full body, wide shot, distant, holding object, 2boys, baby, child, chibi, stitches, scars, tree, forest, indoors, photorealism, 3d render, dark, night, leaf on head, plant girl, alraune, monster girl, female goblin, elf"
+done_when: "he ends FOLDED SMALL in the sapling's shade, knees up. SCRIPT CONFLICT, flagged not solved: the script says `slides down the trunk`, and the founder has ruled the sapling is tiny - `thats ridiculous, lmao. the sapling is tiny` - so there is no trunk to slide down. The END STATE is what the beat needs; how he gets there is an author call, not a steward one."
+why_this_plate: "Beat 13 is in the cut on b13-refire-0814 and is C-group. This plate takes `done_when` at its word and draws THE END STATE ONLY - folded small, knees up, in the sapling's shade - because the definition itself says the getting-there is an author call and not a steward one. A PLATE THAT DREW THE SLIDE WOULD BE MAKING THAT CALL SILENTLY, which is exactly the class of thing that put an unratified goblin on screen for four days. The script conflict is left open, not resolved here."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

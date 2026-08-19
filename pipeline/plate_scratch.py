@@ -1560,6 +1560,47 @@ DRAFTS = {
     # real CLIP tokenizer (cagliostrolab/animagine-xl-3.1), not estimated:
     # beat 03 74/77 and 67/77, beat 04 73/77 and 58/77, beat 13 69/77 and
     # 67/77; exit-7 clash NONE on all three.
+    #
+    # ======================================================================
+    # WAVE RESULT, 2026-08-19, AFTER READING ALL OF THEM: THE CAST IS SOLVED
+    # AND THE CANON SAPLING IS NOT DRAWABLE BY WORDS ON THIS CHECKPOINT.
+    # ======================================================================
+    # THE HALF THAT WORKED, 3 OF 3 AND WITH NOTHING BUT TEXT. Every frame came
+    # back the lean adult -- long green skull, adult face, lean limbs, bald,
+    # patchwork garment -- from the ratified wording alone. No reference image,
+    # no IP-Adapter, no LoRA, no seed hunting, one seed each. The thing the
+    # 08-19 ruling actually ordered is a solved problem, and that is worth
+    # stating plainly because five earlier rounds fought this character.
+    #
+    # THE HALF THAT FAILED, ALSO 3 OF 3, AND IT IS ONE CAUSE AND NOT THREE.
+    # `a tiny sapling with two big leaves` -- a wording THE-SAPLING.md lists as
+    # already satisfying the founder's two-leaf ruling -- did not draw two
+    # leaves once:
+    #   beat 03  a branching stem, six to eight leaflets, on the ground beside
+    #            him instead of between him and the camera
+    #   beat 13  no identifiable plant at all; large out-of-focus foliage
+    #            supplying the shade from overhead
+    #   beat 20  a branching stem, six to eight leaflets, at ground level, and
+    #            not bare (REVS[(20,4)])
+    # Three beats, three seeds, three framings, one wording, zero two-leaf
+    # saplings. Add the b19 lane's three earlier wordings (bead-strung vine
+    # every time, fruit count 4 -> ~8 -> 3, never 1) and this is not a wording
+    # that needs a fourth attempt.
+    #
+    # SO THE WORDING LADDER FOR THE CANON SAPLING IS CLOSED, by this ladder's
+    # own standing rule -- three rungs on one axis closes it and the next
+    # instrument is COMPOSITIONAL AND GETS NAMED, NOT FIRED. It is named:
+    # beat 19's `ep2-b19-sapcomp-0819`, which put a fig on a plant with numpy
+    # in 3.8 s of GPU at $0 after three wordings could not, and passed all
+    # eight clauses of its pre-registered bar. A drawn or composited sapling
+    # asset, placed into these three plates, is the rung -- not a fourth
+    # sentence about leaves.
+    #
+    # WHAT THAT MEANS FOR THIS WAVE, so nobody reads a FAIL as a stop: the
+    # goblin half of all three beats is DONE and does not need re-drawing when
+    # the plant is solved. Beat 13's POSE is a pass on its own terms and is
+    # worth keeping. What is outstanding on each is a plant and, on 03, the
+    # cover RELATION -- which is a staging problem the same composite reaches.
     3: {
         "slug": "bad-cover",
         "done_when": (
@@ -1598,6 +1639,17 @@ DRAFTS = {
             "head, plant girl, alraune, monster girl, female goblin, elf"
         ),
         "seed": 20260819,
+        # VERDICT -- r1s1, 2026-08-19T23:33 on macbook1, read at full size.
+        # THE CAST PASSES AND THE JOKE DOES NOT. He is unmistakably the lean
+        # adult -- long green skull, adult face, patchwork poncho -- kneeling in
+        # tall grass under a wide pale sky, and the frame is genuinely
+        # handsome. But `done_when` is a RELATION and the relation is absent:
+        # the seedling sits to his LEFT, beside him, and he is not behind it,
+        # not using it, not attempting to hide. Nothing in the picture says
+        # COVER, so the joke -- which the definition requires to be visible
+        # WITHOUT DIALOGUE -- is not there. He reads resigned, not caught out.
+        # Plant: a branching stem with six to eight leaflets, not two leaves.
+        # FAIL on the beat, PASS on the character.
     },
     4: {
         "slug": "the-footnote",
@@ -1672,6 +1724,22 @@ DRAFTS = {
             "head, plant girl, alraune, monster girl, female goblin, elf"
         ),
         "seed": 20260819,
+        # VERDICT -- r1s1, 2026-08-19T23:36 on macbook3, read at full size.
+        # THE BEST OF THE THREE, AND THE ONLY ONE WHOSE ACTION CLAUSE LANDS.
+        # `done_when` asks for him FOLDED SMALL, knees up, and that is exactly
+        # what came back: seated, knees drawn to the chest, both arms wrapped
+        # over them, shoulders in. He is the lean adult, bald and green, and
+        # the whole frame is in green shade. Two faults, one of them this
+        # wave's standing one:
+        #   * NO IDENTIFIABLE SAPLING. The shade is cast by large out-of-focus
+        #     leaves crowding the foreground and top corners -- the scale reads
+        #     as big foliage overhead, not a 40 cm plant. `in the thin shade of
+        #     a tiny sapling` bought shade and lost the plant.
+        #   * DIM. A green gloom with `dark, night` sitting in the negative.
+        #     Not a night frame, but darker than a sunny field, and it is the
+        #     same override the b08 posenet rung measured.
+        # PASS on cast and on pose; FAIL on the plant. If the plant is solved
+        # compositionally (see the wave note), this pose is worth keeping.
     },
     14: {
         "slug": "the-defense",
@@ -2312,6 +2380,85 @@ REVS = {
             "flower on head, head wreath, hair ornament, leaf hair ornament, "
             "plant hair, female goblin, elf"
         ),
+        # ====================================================================
+        # VERDICT -- r4s1, rendered 2026-08-19T23:29 on macbook1, read at full
+        # size beside r1s1 (the same draft without this rev). Scored against
+        # beat 20's `done_when` as done-definitions.yaml states it, which was
+        # written long before this rev and is not edited here.
+        # ====================================================================
+        # THE VARIABLE WORKED AND THE BEAT GOT WORSE. Both halves are the
+        # finding and reporting only the first one would be the thing this
+        # repo keeps catching itself doing.
+        #
+        # WHAT PASSED:
+        #   * THE CAST. Unmistakably the lean adult -- long green skull, adult
+        #     face, lean limbs, patchwork garment. This is the creature the
+        #     founder picked on 08-19, drawn from the ratified wording with no
+        #     reference image and no LoRA. The half of this beat the ruling
+        #     actually ordered is DONE.
+        #   * THE TREE IS GONE. That was the rev's one declared variable and it
+        #     landed: r1's thick gnarled woody branch across the top-right
+        #     corner, plus a second fallen limb bottom-left, are both absent.
+        #     `tree, forest, trunk` in the negative plus naming the sapling in
+        #     the positive removed the wrong plant completely.
+        #
+        # WHAT FAILED, against `done_when` ("BOTH HANDS to the fruit, then the
+        # look UP to a branch that is visibly BARE"):
+        #   * NO FIG AT ALL. Both hands are empty and reaching down at the
+        #     grass. r1 has both hands cradling one whole fig. This is a
+        #     REGRESSION and it is the beat's first clause.
+        #   * NO LOOK UP. He looks down and slightly to camera; the camera is
+        #     high and looking down on him, which is the exact inverse of the
+        #     beat.
+        #   * THE PLANT IS NOT THE CANON PLANT EITHER. What arrived is a
+        #     branching stem with six-to-eight leaflets lying at ground level
+        #     to his right -- not two big leaves, and not bare. So the rev did
+        #     not replace the wrong plant with the right one; it replaced a
+        #     wrong big plant with a wrong small one.
+        #
+        # THE CAUSE, AND IT IS MINE RATHER THAN THE MODEL'S. This rev was sold
+        # as one variable and was not one: it swapped the plant AND added
+        # `crouching` AND compressed the fig clause from `raises a ripe fig in
+        # both hands in front of him like evidence` to `raises a ripe fig in
+        # both hands`. `crouching` was added to reconcile `look UP` with a
+        # 40 cm plant, and the reconciliation is what broke the shot -- a
+        # crouching figure and a knee-high plant resolve, very reasonably, as a
+        # man kneeling to look DOWN at a seedling. The fig lost its placement
+        # in the same edit. The token budget forced the compression and I chose
+        # which words to spend it on; that choice is the defect.
+        #
+        # THE LAW THIS IS THE NTH INSTANCE OF, and it is already on the ladder:
+        # THE POSITIVE PLACES WHAT YOU WANT. `raises a ripe fig in both hands`
+        # survived as words and not as pixels because everything around it
+        # moved; r1's longer clause, with the fig held out IN FRONT OF HIM LIKE
+        # EVIDENCE, put it in his hands 1 of 1.
+        #
+        # A FREE RESULT WORTH MORE THAN THIS REV. r1s1's fig is UNMISTAKABLY
+        # PURPLE -- a deep aubergine/plum fig -- from a prompt whose only
+        # colour word is nothing at all (`a ripe fig`). That is
+        # backend_divergence_probe.py's finding reproduced on a fresh draw:
+        # THE MAC GIVES THE FOUNDER'S PURPLE FOR FREE. His 2026-08-16 ruling
+        # ("the fruit should be purple") is satisfied on this path without
+        # spending a token on it, and the purple canon only has to be enforced
+        # in words on the BOX path. r1s1 is the frame to show him for that.
+        #
+        # THE NEXT RUNG, NAMED AND NOT FIRED, and it is genuinely one variable
+        # this time: take r1's positive BYTE FOR BYTE -- including `in front of
+        # him like evidence` and `as he looks up at`, and WITHOUT `crouching`
+        # -- and change only `a bare branch above` to the shortest canon
+        # sapling phrase that still says BARE. Keep this rev's negative, which
+        # is the part that worked. The token budget is the whole difficulty and
+        # it must be paid out of the LIGHTING tail, never out of the fig clause
+        # or the look-up clause: this rev is the measurement proving those two
+        # are load-bearing. If that rung also cannot hold fig, look-up and a
+        # two-leaf sapling in 77 tokens, the answer is NOT a sixth wording --
+        # it is beat 19's instrument, which put a fig on a plant with numpy
+        # after three wordings could not.
+        #
+        # NOT DONE: no pick, no plate_ack, no canon filename, no motion job off
+        # this frame. r4s1 is not a candidate and r1s1 is not promoted either
+        # -- it still has the wrong plant, which is what this rev existed to
+        # fix.
     },
     (8, 2): {
         # r1 came back UNUSABLE and in an instructive way: a colossal
