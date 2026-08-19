@@ -1,0 +1,79 @@
+# Composited-init provenance (7.2), written by the beat-19 composite lane on the
+# Mac. NO MODEL RAN TO MAKE THIS FILE. It is plain image processing over a
+# rendered plate, so there is no seed, no sampler and no cost to record for it --
+# the seed and sampler that matter belong to the INPAINT that consumes it
+# (pipeline/jobs/ep2-b19-sapcomp-0819.yaml).
+platform: "local (Apple Silicon, CPU only -- PIL/numpy, no GPU)"
+tool: "pipeline/beat19_drop_composite.py"
+model: "none -- no model was loaded"
+cost_usd: 0.0
+render_seconds: 4.5
+shot_beat: 19
+beat_slug: "the-drop"
+size: "832x1216"
+png_sha256: "b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903"
+mask_png: "19-the-drop-sapcomp-mask-0819.png"
+mask_sha256: "ce1e5ba2f89e9cabd0f90a3316a1436605bfd152a23b7add994995e255bcf266"
+
+parent_plate: "farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png"
+parent_plate_sha256: "de7a256c29b0a752b335e1e022c111e654c4c65cbe43b05fb98bd9573e1c6cbf"
+parent_plate_provenance: "animagine-xl-3.1, seed 20260819, 832x1216, 40 steps, cfg 7.5, Mac farm, $0"
+
+what_changed: >-
+  The PLANT, and nothing else. Both of the parent's arcing twig-plants were removed and
+  clone-filled from the plate's own pixels, and one canon sapling was drawn in their place:
+  a rooted tapered stem, EXACTLY TWO wide oval cotyledon leaves with soft round tips angled
+  up in a V, ONE thin side-branch, and hanging from that branch ONE matte violet fig clear
+  of the ground. Measured: max change OUTSIDE the inpaint mask is 0.0, so every pixel of the
+  five plate terms that already PASS (P2 framing, P3 hands empty and no contact, P4 face
+  visible, P5 purple reads purple, P7 one adult figure) is byte-identical to the parent.
+
+why_drawn_and_not_pasted: >-
+  The ladder's rung was written as "composite beat 18's fig in at scale". Opening the pixels
+  killed both halves of that and the tool's docstring records it in full: (a) beat 18's
+  passing plate (ep2-b18-canon-0817 r2-w015-s2) is an EXTREME CLOSE-UP MACRO whose fig spans
+  ~430px where beat 19's must span ~30px -- an 18x downsample imports a violet smudge, not a
+  fig, and "detail at the wrong scale" is decal tell 5; (b) subtraction cannot reach either
+  failing axis, because the parent's four "fruits" are VIOLET FACETED CRYSTALS on threads and
+  its "plants" are bare twigs, so deleting three leaves a crystal on a twig. Beat 18's plate
+  is used as the SHAPE AND COLOUR AUTHORITY (its verdict measured 305 deg, violet/magenta,
+  12 of 16 frames) rather than as pixels -- and its own honest_caveat, gloss plus a magenta
+  lean, is the second reason not to paste it.
+
+measured_off_the_parent_before_any_code:
+  leaf_rgb: "(105,139,85) -- mean of the parent's own leaf sprigs"
+  stem_rgb: "(113,100,71) -- mean of the parent's own twig"
+  fig_rgb: "(115,58,169) -- mean of the parent's own crystals, circular-mean hue 272 deg"
+  light_axis: "low-pass (sigma 40) luminance gradient of the whole parent: dx +0.029 dy -1.000, lit from straight above"
+  placement: "x 690-800, y 700-940 measured at luminance mean 197.8 std 15.5 with 0.7% below 120 -- open grass, no cloak, no boot, no shadow"
+  crown_collision: "his bald crown measures (216,227,62) at luminance 205 against field (210,215,89) at 200 -- 5 luminance and 6 degrees of hue apart, so NO colour rule can protect his head and it is protected by a measured box instead"
+
+verified_on_the_pixels:
+  violet_fruit_blobs_in_the_plant_zone: 1
+  leaves_drawn: 2
+  fruits_drawn: 1
+  fig_clearance_above_the_root: "33 px"
+  max_change_outside_the_mask: 0.0
+  clone_fill_pixels_without_a_source: 0
+
+rejected_rounds_before_this_one: >-
+  FOUR, all by eye, all pre-GPU, ~4.5 s each. v1: a per-row-median field model fired on the
+  field's own horizontal bands, the ribbons connected the figure to everything, and the
+  protect mask swallowed all four crystals (93-100% of every crystal box) so none were
+  removed. v2: fixed by a horizontal high-pass, but inside the figure that test is not a
+  plant detector -- his cloak's stitching and folds are thin too, and the column-clone
+  smeared a 30x240px streak down him. v3: per-region colour rules fixed the smear, but the
+  cloak-edge crystal's rule was too tight and selected ZERO, leaving a second violet object
+  in frame. v4: the leaves read as a television aerial and the fig as a capsule. v5, this
+  file: cotyledons angled up in a V from the joint, the fig's neck taper moved to the top
+  where the stalk enters, and the petiole line deleted -- it was a stem-coloured bar across
+  half the blade, the internal line composite-init-pattern.md 5 forbids by name.
+
+approved: false
+provisional: true
+scored: false
+founder_verdict: null
+note: >-
+  THIS IS AN INIT, NOT A RESULT. It is the input to one 0.30-strength inpaint sample and it
+  is not a plate, not a pick and not show content. Nothing here is scored against beat 19's
+  plate bar -- that bar is pre-registered in the job spec that consumes this file.
