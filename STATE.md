@@ -9223,3 +9223,63 @@ help: no driver in this tree pairs a ControlNet with a mask, and no hint tool ca
 an arm. The route is now a staging campaign rather than an arm patch —
 `pipeline/b08-arm-route-0819.md` writes up all three routes with what each still needs.
 Nothing queued by this lane. Spend $0.
+
+## 2026-08-19 night close — beat 12's seed axis shuts at 0 for 5, and the cause is a phrase
+
+Full handover in `HANDOVER-0820.md`; this is the running-log entry, because the log's
+last dated entry was 01:16 and 178 commits landed on 08-19 after it.
+
+**Judged seeds 4 and 5 on beat 12's plate, both FAIL, and closed the axis.**
+`s20260872` — the bar's own decisive number PASSES (−16.93 raw, −8.20 matched content)
+and the clip is still not footage: a rim-lit crouching mass grows from behind the lower
+leaf at f018 and never leaves, while the frame re-composes (−180px, but the six blocks of
+the 3×2 grid disagree by 150px, so re-inking and **not** a camera move). `s20260873` —
+FAIL-COLLAPSE, −43.48, bands agreeing, cumulative dy +0px so no framing move for the
+number to hide behind; the sky is replaced by a wall of reeds between f024 and f030 and
+never comes back. Both verified against their own `.sha256`; init byte-identical
+(`c6575d0d…`) across all five takes.
+
+**Re-opened `s20260871` rather than assert a failure nobody had measured.** It had been
+left "clean on luma, other clauses unjudged", so "every take failed something" would have
+been unearned. Measured: +7px with all six blocks agreeing at 1px, luma −0.04 — genuinely
+locked and flat — and then a black bird with a white eye rises from behind the lower leaf
+at f030 and is gone by f090.
+
+**THE FINDING: the intruder is not a lottery and not the plate — it is a phrase in the
+positive.** Four of five takes draw a dark figure in the same slot on four independent
+seeds; the one exception is the take whose camera had already left the plate by f008. The
+init contains no dark form. The positive's second clause is *"the scavenger crouched
+behind them, out of frame"* — and a diffusion positive has no negation operator and no way
+to place a named subject outside the canvas, so it encodes *scavenger, crouched, behind
+the leaves*. Positive-placement law, third instance. It also means beat 12's
+`why: goblin-free beat` was wrong on four of five renders; nothing was published, so
+nothing breached, but the goblin freeze is closer to this beat than the specs say.
+
+**Corrected myself before publishing, and the argument got better.** I first justified the
+fix as deleting text the approved line does not contain. `node.md:83` contains it almost
+verbatim. But `node.md:189` says of beat 12 *"Off-screen only; the picture did not
+change"* — canon requires the scavenger NOT be in the picture, and the renders violate it.
+So deleting the clause from the **prompt** is what makes the render obey the approved
+staging; the script is untouched and needs no R4. **Generalised: A SHOT DESCRIPTION IS NOT
+A PROMPT** — strip every clause about what the camera does not see. Scoped honestly: 315
+specs match `out of frame` and sampled they are overwhelmingly *negatives* banning subject
+exits, which is a correct unrelated use; beat 12 is the only confirmed instance and the
+positives-only audit is named as unowned rather than claimed as run.
+
+**Next rung named, costed and deliberately NOT filed:** `ep2-b12-noscav-0819` — delete the
+span, seed 20260871, everything else identical, ~8 min, $0. Held back because
+`derive_b12_stillmotion_0819.py`'s deny-list leak is still open and filing through it would
+propagate a third generation of another beat's verdict. Hand-write the spec.
+
+**No pick, no promotion, no cut swap.** Beat 12 keeps `12-related-b12-tightB-untrimmed.mp4`,
+best-available, colour fault named.
+
+**Verified rather than repeated, and it is the trap most likely to bite:** the ladder says
+`render_t3` picks the re-voiced guard takes up from the node directory with "no flag, no
+copy step". It does not — `find_audio()` and `vo_manifest()` both resolve against
+`args.clips` with no fallback, so the documented command would re-mux the OLD VO. Five
+footage beats plus the beat-9 slate carry wrong guard voices in the live cut until someone
+assembles **with** the copy step.
+
+Also corrected: I called the card empty off a 16:24Z `box_autofill --status`; a beat-19 job
+went to `running` at 20:40. A snapshot is a timestamp, not a state. Spend $0.
