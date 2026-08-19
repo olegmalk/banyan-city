@@ -3723,6 +3723,53 @@ beats:
       aesthetic No girl, no child, no armor, no helmet, no knight, no
       clipboard, no dark, no night. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # ── `authored_b07_scavcostume_0819` — 2026-08-19, the beat-07 judging lane.
+    # RUNG C: THE SCAVENGER GETS A GARMENT OF HIS OWN. One variable against rung B
+    # (`authored_b07_twofig_0817`), which is left standing and is the only thing this
+    # should be read against.
+    # THE POINT IS NOT WHAT THIS RUNG IS FOR. It was settled tonight in MOTION, not in
+    # a still: ep2-b07-point-motion-0819 and its crf-10 child both passed beat 07's
+    # pre-registered bar on the first attempt -- the guard raises his own arm and aims
+    # it at the goblin, and the predicted "the goblin points" failure never fired. No
+    # plate rung needs to carry a point any more, and this one does not try to.
+    # WHAT IT IS FOR is the one thing those verdicts left between beat 07 and a cut:
+    # r1-s3 dresses the SCAVENGER IN THE GUARD'S OWN pale wrap tunic and white sash.
+    # Two men in one uniform read as two officials; a CONFISCATE beat has to read as
+    # an authority pointing at a scavenger.
+    # THE CAUSE IS RUNG B'S OWN GRAMMAR LAW, one line up in this file. Rung B sends
+    # `a crouching goblin with green skin` -- a noun phrase with ONE attribute and NO
+    # GARMENT. The only clothing terms in the prompt are the guard's, so the goblin's
+    # garment slot was VACANT and the model filled it from the nearest wardrobe. That
+    # is the positive-placement law exactly: the positive places what you want. Rung B
+    # bound `green skin` inside his own noun phrase and the green mitt disappeared;
+    # this binds the garment the same way, with the same word class.
+    # `patched tunic` AND NOT THE CANON `patchwork cloak`, for two measured reasons:
+    #   * the em-dash list (`faded green patchwork cloak`) is GONE from the goblin
+    #     beats by r8's inherited decision -- this file's own header says re-adding it
+    #     is another lane's call, and this rung does not re-open it;
+    #   * `patchwork cloak` CLIMBS ONTO HIS HEAD on this checkpoint -- see
+    #     `authored_b02_idfix_r2` above, 4 of 4 frames stitching the cloak into the
+    #     skull -- and suppressing that costs two new negative terms, i.e. a second
+    #     variable. `patched tunic` is what beat 08 sends, and beat 08 is the only
+    #     goblin beat recorded with clean skulls 4/4.
+    # NOT ADDRESSED, ON PURPOSE: the goblin's round RED wire-rims (the guard's
+    # glasses reaching the wrong face, measured 5 of 12 on this beat) and the white
+    # sash. Same bleed, different attributes; fixing them here would be two more
+    # variables. If the garment binds and those persist, that is rung D.
+    # REAL CLIP via render_wave_goblin.check(), offline on the m1pro venv: 70/77 pos,
+    # 58/77 neg (byte-identical recipe), anchor PRESENT, count `1boy` == declared
+    # `1boy`, ZERO FAULTS, nothing dropped. The parent measured in the same run at its
+    # recorded 65/77, which is the control. +5 tokens, 7 under budget.
+    # TOKEN TRADE: NONE. No word was cut to pay for it and the style tail is intact,
+    # so there are no traded words to name as first suspects.
+    authored_b07_scavcostume_0819: >-
+      A guard man with dark cropped hair, wire-rim glasses, tan wrap tunic,
+      white sash, one hand open, the guard points his other arm at a
+      crouching goblin with green skin in a patched tunic, tall grass,
+      treeline behind, pale sky above, cinematic lighting, masterpiece, best
+      quality, very aesthetic No girl, no child, no armor, no helmet, no
+      knight, no clipboard, no dark, no night. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
   8:
     slug: inside-him
     kind: two-subject
