@@ -530,3 +530,53 @@ next_rung_named_not_taken: >-
   afterwards. This lane's reading: run it BARE, because the pose question is
   "does a skeleton bind at all on animagine" and identity is now a solved bolt-on
   whose own bar has been met once.
+
+# ============================================================================
+# INDEPENDENT VERIFICATION -- appended 2026-08-19 by the beat 08 staging lane,
+# which was dispatched to judge this job on the belief it had none. It has one,
+# and rather than write a second the frame was re-pulled and the verdict
+# re-scored from scratch against this spec's pre-registered instrument.
+# ============================================================================
+independently_verified: >-
+  CONFIRMED, AND THE FRAME IS NOW IN THE REPO -- WHICH IT WAS NOT WHEN THE VERDICT
+  WAS WRITTEN. Only EVIDENCE-b08-ipamask-0819.png had been committed; the frame,
+  its §7.2 provenance sidecar, the sha manifest and the two references were pulled
+  and never staged, so every number above rested on bytes no reader could open.
+  Re-scp'd from courier-box\farm-out (the courier branch push is still broken) and
+  committed with this note. ALL SIX MANIFEST LINES VERIFY with `shasum -a 256 -c`,
+  frame 96fb65a2..., and both reference shas are byte-identical to the tracked
+  pipeline/control/ copies -- so the bytes that conditioned the render provably are
+  the bytes in the repo.
+independently_verified_numbers: >-
+  RE-MEASURED WITH THIS SPEC'S OWN BOXES AND STATISTIC, not with the judging
+  lane's: guard (547,372)-(584,425) and goblin (148,448)-(193,504), G-R.
+  B2a guard G-R = -14.4 against a bar of <= 0.0 -- PASS (verdict said -14.5;
+  rounding). B2b separation = +43.0 against a bar of >= +20.0 -- PASS (verdict
+  said +43.0). Goblin +28.5, inside the green band, as claimed. The parent frame
+  measured on the SAME boxes gives guard +34.0 and separation -4.6, so the move is
+  48.4 levels (verdict said 48.5). ONE CORRECTION, and it is small and against the
+  verdict's own framing: the parent's mean luma is 149.5 by direct measurement, not
+  the 151.6 carried over from rung 2's verdict, so the darkening this job caused is
+  33.9 levels (115.6 -> from 149.5) rather than 36. The finding is unchanged.
+  B2 PASSES. It is beat 08's first identity win in six rungs and the numbers hold.
+independently_verified_pixels: >-
+  THE EYE AGREES, which is the clause that decides it. Opened at full size beside
+  the parent. Parent: two green figures, the guard a featureless green egg with
+  closed eyes. This frame: a pale-skinned bald human man in a brown cloak with a
+  gold clasp and a white sash, beside a green goblin with long pointed ears. He is
+  unmistakably a different species from the figure next to him.
+  THREE THINGS THE VERDICT UNDERSTATED OR OMITTED, none of which change the score:
+  (1) THE GUARD IS BALD BECAUSE HIS REFERENCE IS BALD -- the positive prompt still
+  says `light sandy hair` and the mask overrode it. That is the mechanism working
+  as designed and it is the sharpest available proof that the mask beat the wording,
+  but it also means this recipe CANNOT produce a haired guard while this reference
+  conditions him, and ep2-b08-nobald-0817 exists on this beat. Whether bald is the
+  wanted guard is a taste call, not a bar clause, and it is not made here.
+  (2) B4b's aim is worse than "marginal" reads: the finger hangs vertically in the
+  empty gap BETWEEN the figures, well clear of the goblin's silhouette, so the
+  gesture does not point at anything. Scoring it a fail on aim is right; calling the
+  clause overall MARGINAL is generous, and the posenet rung is the correct answer.
+  (3) The guard's pointed ears are attributed above to the checkpoint's own goblin
+  association. His reference's ears are near-human and much less pointed than what
+  came back, so that attribution is supported -- but it is an eye call on a 370px
+  crop, not a measurement, and it is recorded as such.
