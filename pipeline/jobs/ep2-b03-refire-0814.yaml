@@ -192,3 +192,110 @@ steps:
 artifacts:
 - C:\banyan-farm\ep2-b03-refire-0814\13-remake-LTX-0813.mp4
 - C:\banyan-farm\ep2-b03-refire-0814\b13-init-704x1280.png
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — the judging-lane sweep of
+# the eight beats cut-readiness-0819.yaml's `the_unscored_middle`
+# named as having ridden five consecutive cuts with no verdict block
+# anywhere. Bar taken verbatim from this spec's own
+# `success_CORRECTION_0816` (which quotes done-definitions
+# beats.03.done_when) and from nothing else. No bar was invented.
+# ==================================================================
+verdict: >-
+  FAIL, and NOT on the crouch — on the trunk, exactly as the 15-seed `st` wave was
+  already found to fail, from a DIFFERENT plate. THE COVER ARRIVES MID-CLIP. Frames
+  000-014 hold a bald adult goblin standing full-height in an open field with two
+  ankle-high sprouts at the lower corners and NOTHING he could be behind. At f015 a
+  dark rod materialises in the upper right, unattached to the ground and floating; by
+  f018 it has grown twigs and leaves into a thin sapling stem and his right hand rises
+  to grip it; f025-f096 he stands beside it, torso and head plainly visible to the left
+  of the stem, while the foreground grass grows up over his boots. He never folds. The
+  file is still the beat's best footage and `best-available` in the readiness ledger is
+  the honest status for it, but no clause of `done_when` is met and the reason is the
+  plate, not the seed.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/03-bad-cover-b03-refire-0814.mp4
+  sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[3] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  method: >-
+    pipeline/coldread_frames.py --pad 60, the house pattern. 97 frames at 24fps; motion
+    window pairs 1..33; 94 CONSECUTIVE source frames read across five strips plus the
+    16-frame overview. Consecutive, per standard_0815.scoring_method, so no smooth move
+    can score as a cut.
+verdict_clauses:
+  D1_he_crouches: >-
+    FAIL. He is standing at f000 and standing at f096. There is no fold: no knee bend,
+    no sink of the hips, no lowering of the head relative to the shoulders. What LOOKS
+    like a descent on a sparse sheet is the foreground grass growing upward over him
+    between f020 and f035 while his own pose is unchanged — read consecutively the body
+    silhouette above the grass line does not alter. The only limb action in the clip is
+    the right arm rising to the stem at f018-f024.
+  D2_the_trunk_hides_a_fraction_of_him: >-
+    FAIL, and structurally. There is no trunk at frame one to hide anything. The stem is
+    GENERATED at f015 as a floating dark rod with no root and no ground contact, and once
+    drawn it occludes his right hand and part of one forearm and nothing else. A clause
+    about how much of him a trunk hides cannot be scored PASS on a trunk the clip drew
+    for itself a fifth of the way in.
+  D3_the_joke_is_visible_without_dialogue: >-
+    FAIL. With the sound off this reads as a small bald figure standing in a field with
+    one hand on a sapling. There is no hiding ATTEMPT in the body — he faces camera
+    square, head up, expression neutral, no peek, no crouch, no shoulder tucked behind
+    anything. The comedy of inadequate cover needs someone visibly trying to hide, and
+    nobody in this clip is trying.
+  D4_a_crouch_that_conceals_him_fails: >-
+    NOT APPLICABLE — cannot fire, because there is no crouch. Recorded so the clause is
+    not later read as a pass by absence.
+  identity_drift_bar_standard_0815: >-
+    PASS, and it is the one bar this file clears cleanly. Across all 94 consecutive
+    frames the face is the same face: bald dome, the same wide pointed ears, the same
+    dark eyes and thin mouth, the same pale sage jacket with its centre placket and the
+    same dark shorts. No morphology change, no age slide, no costume swap. This is the
+    take's real strength and it should be said, because the failure above is entirely a
+    staging failure and not a drift failure.
+  prop_identity_bar_standard_0815: NOT APPLICABLE — the init plate has him carrying and wearing no prop.
+verdict_confirms_an_existing_finding_on_a_second_plate: >-
+  done-definitions beats.03.judged_0817_st_wave.done_when_failure_is_structural charged
+  the whole 15-seed `st` wave with "THE PLATE CONTAINS NO TRUNK ... this is now a PLATE
+  job -- a trunk in frame, thin enough to hide about one-sixth of him -- not a wording
+  or seed job." That reading was made on the st plate (one init, md5-identical across all
+  fifteen). THIS FILE IS A DIFFERENT LINEAGE — its init is
+  farm-out/ep2-b03-plate-0814/03-bad-cover-ipa-r0-w015-s0.png, asserted at sha256
+  0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7 by this spec's crop
+  step — AND IT HAS NO TRUNK EITHER. So the finding is now confirmed on two independent
+  plates and the plate job the st lane named is the right and only next instrument.
+verdict_resolves_the_records_own_contradiction: >-
+  done-definitions beats.03.judged_0817_st_wave.contradicts_the_record left an unresolved
+  conflict: the older `shipping_fault` says "he ends small at the frame edge beside the
+  sapling", and the st-wave read answered "Not one of the 15 does that: every take that
+  moves ends LARGER than frame 0 and low in frame." BOTH ARE RIGHT, ABOUT DIFFERENT
+  FILES, and this is the file the older fault was written about. In THIS clip he ends
+  left of centre beside the sapling and READS SMALLER than at f000 — the head occupies
+  visibly less of the frame at f096 than at f000 and the grass has taken his lower body
+  and boots. The st wave's "ends LARGER" is a true statement about the st plate's seeds
+  and a false one about this one. Neither entry needed overturning; they were never about
+  the same take. Recorded here rather than by editing either.
+verdict_reported_forward_unpre_registered: >-
+  THE SAPLING IT DREW IS NOT THE CANON PLANT. The stem that arrives at f018 is a woody
+  twig carrying eight-plus elongated pointed ovate leaves and side-branches. Canon is two
+  broad round cotyledons, and done-definitions beats.16.both_legs_rejected_0816 is a
+  founder ruling that a wrong-shaped leaf is the shot and not a blemish. Beat 03's own
+  `done_when` says nothing about the leaf so this is NOT scored as a clause here; it is
+  reported because it is the same defect, in a third beat, and because the plate job this
+  verdict calls for will have to draw the plant anyway.
+verdict_also_violated_this_specs_own_negative: >-
+  `background appearing, scene forming` are the first two terms of this job's negative
+  (see payload b13-negative.txt) and a whole sapling formed at f015 regardless. Sixth
+  recorded instance in this repo of positive placement beating negation: the positive
+  says "HE CROUCHES BEHIND THE THIN TRUNK", which names a trunk, and naming it summoned
+  it — mid-clip, because nothing in the plate had one to start from.
+verdict_next_instrument: >-
+  A PLATE, not a rev and not a seed. A beat-03 init that already contains a thin trunk
+  or stem, rooted and in frame at f000, narrow enough to hide about one-sixth of him,
+  with him staged BEHIND it. Named, not fired — this lane files no GPU work.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED, with the fault now named rather than blank. This verdict
+  does not remove the file from a cut: a slate is worse and the ledger's own definition
+  of `best-available` is footage a verdict lets in without calling it a pass. What it
+  removes is the possibility of reading five appearances as five passes.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted, never widened.
