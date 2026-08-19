@@ -320,3 +320,39 @@ next_rung_named_not_taken: >-
   report to the founder is that beat 04 as written ("only the eyes carry it") is
   not reachable on this engine, and the beat needs either a different action or a
   different tool -- which is his call and not this lane's.
+
+# ----------------------------------------------------------------------------
+# ADDENDUM, same session: THE STAGING RUNG I NAMED HAS LESS ROOM THAN I THOUGHT,
+# and I am recording that instead of firing a guessed crop.
+#
+# `next_rung_named_not_taken` above says: crop tight to the face so the ~65 px
+# rotation the engine WILL give subtends enough frame to read as a glance. I
+# went to derive the crop box and could not do it honestly. Two attempts, both
+# measured, both rejected:
+#   1. GREEN-SKIN MASK. Returned x 0-831 of an 832-wide plate -- the grass is
+#      green too, and on a beat staged in deep grass a chroma rule cannot
+#      separate the character from the field.
+#   2. INK-LINEWORK BBOX over the upper 62%. Returned a 730 px-wide box of 832,
+#      because the grass blades and the cloak are drawn in the same hard black
+#      line as the face. The crop it proposed was 669 px wide -- only 20%
+#      tighter than the plate, which would not change the read at all.
+#
+# AND THE SECOND FAILURE EXPLAINS THE FIRST AND THE RUNG. Both instruments
+# returned "nearly the whole frame" because THAT IS THE TRUTH: this plate is
+# ALREADY a face-and-shoulders close-up, with the head filling most of the
+# height. There is very little left to crop before the skull leaves the frame.
+# So the staging lever has a small fraction of the headroom I assumed when I
+# named it, and a crop that made a 65 px rotation read as a glance would have to
+# be tight enough to lose the shoulders -- which `done_when` wants, since the
+# held breath must be "readable in the BODY".
+#
+# WHAT THAT MEANS, STATED PLAINLY RATHER THAN FIRED AT. Beat 04 asks for a
+# performance -- a still body and travelling eyes -- that this engine has now
+# refused from both directions, on a plate that is already as close as the
+# definition allows. The remaining moves are not this lane's:
+#   * a different INSTRUMENT for the eyes (an eye-region inpaint or a two-pass
+#     composite, the same shape of answer that solved beat 19's fruit and beat
+#     08's identity after wording closed), or
+#   * a different ACTION for the beat, which is R4 and is the founder's.
+# Naming a rung and then finding it thinner than advertised is worth more on the
+# page than a crop chosen by eye and reported as measured.
