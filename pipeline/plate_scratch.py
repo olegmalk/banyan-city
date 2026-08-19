@@ -4691,6 +4691,159 @@ REVS[(19, 2)] = {
 # --------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------
+# THE COMPOSITE INIT r3's VERDICT NAMED. SCORED 2026-08-19, no sampler, $0.
+# pipeline/beat19_sapling_composite.py
+# farm-out/ep2-b19-composite-0819/19-the-drop-composite-0819.png
+# sha256 447ce070f1d6de626a3cda6602b07b64e0e24a6496d0e6ed8ebfa2d665efc03d
+# sources, both sha-asserted before a pixel was written:
+#   r3s1  de7a256c...  the man, the pose, the field, the framing, the light
+#   b18   ab70a4ad...  ep2-b18-canon-0817 r2-w015-s2, THE FIG (its own pixels)
+#
+# READ THE LAST SECTION FIRST IF YOU READ ONLY ONE: A SECOND COMPOSITE INIT FOR
+# THIS BEAT ALREADY EXISTED WHEN THIS ONE WAS BUILT.
+#
+# VERDICT: 7 OF 7, AND THE SCORE IS WORTH LESS THAN THE NUMBER LOOKS.
+#   P1 THE FIG IS ON THE PLANT ... PASS, first time in this beat's history.
+#      ONE fruit (one connected purple component in the whole frame outside
+#      him), attached at its neck to the side-branch, and 93 px of air between
+#      its underside and the root line.
+#      CAVEAT, RECORDED AND NOT SCORED, because P1 as written asks for one
+#      attached fruit and says nothing about material: the fig carries beat 18's
+#      SPECULAR HIGHLIGHT, a macro gloss in a flat cel frame. It is the one
+#      place the picture reads photographed rather than drawn.
+#   P2 WIDE ENOUGH .......... PASS. Whole plant y 657..902 inside the frame,
+#      and his framing is r3's, untouched.
+#   P3 NO CONTACT ........... PASS. Measured clearance plant-to-him 30 px, and
+#      his face, torso and both hands on his knees are BYTE-IDENTICAL to r3
+#      (maxdiff 0 over x 352..522, y 268..664). r2's win is carried, not
+#      re-tested and not risked.
+#   P4 HIS FACE IS VISIBLE .. PASS, byte-identically so. See P3.
+#   P5 THE FRUIT READS PURPLE PASS. Deep plum against a yellow-green field.
+#      RECORDED: it is a PLUM, not r3's VIOLET. r3's crystals measure B-R +43
+#      to +79; beat 18's fig body median is (43,21,41), R-B +2. Both are purple
+#      to a naive eye, and the beat-18 plate's own honest_caveat already names
+#      the magenta lean. The count check had to be rewritten from `B > R` to
+#      `red AND blue both above green` to see it at all -- a violet rule scores
+#      this fig as ABSENT, which is a fact worth having before anyone measures
+#      fruit on a frame that mixes the two.
+#   P6 THE PLANT IS THE SAPLING  PASS, first time. ONE plant, 41.4 cm by the
+#      plate's own ground plane against canon's ~40, one thin stem, two leaves,
+#      one thin side-branch, rooted with contact shading. Both whips are gone
+#      whole -- clusters, threads, all three crystals, the woody stems and the
+#      segment crossing his cloak -- with no stub and no attachment point left
+#      anywhere, which is the half of this the wording ladder could never do.
+#   P7 ONE FIGURE, ADULT .... PASS, byte-identically so.
+#
+# FAIL MODES, ALL NINE, AS PROMISED:
+#   Q1 fig already on the ground ..... DID NOT FIRE (93 px of air under it).
+#   Q2 crop loses the plant or his feet DID NOT FIRE.
+#   Q3 fruit in hand or against body .. DID NOT FIRE (30 px; hands untouched).
+#   Q4 back to the lens ............... DID NOT FIRE.
+#   Q5 red or brown fruit ............. DID NOT FIRE.
+#   Q6 mature tree or overhead limb ... DID NOT FIRE -- and on this rung that
+#      is EARNED rather than absent: r3's two woody whips both had to be
+#      removed for it, and a removal that left a stub would have fired it.
+#   Q7 chibi child .................... DID NOT FIRE.
+#   Q8 no fruit drawn ................. DID NOT FIRE.
+#   Q9 more than one fruit ............ DID NOT FIRE. One component.
+#
+# !! WHY 7 OF 7 IS NOT WHAT 7 OF 7 MEANT ON r1, r2 AND r3, AND SAYING SO IS THE
+# POINT. THE BAR WAS WRITTEN FOR A SAMPLED PLATE. It asks "can this checkpoint
+# be made to draw this?", and on a composite P1, P6 and Q9 are no longer
+# measurements of the model at all -- they measure the compositor, and the
+# compositor was told where to put the fruit. A pass there is a statement that
+# the tool did what it was told, which is worth having and is not worth
+# confusing with a wording result. THE AXIS THE BAR NEVER CONTAINED is the one
+# actually at risk here: whether the frame reads as ONE DRAWING or as a paste.
+# The pattern's five decal tells, checked because P1-P7 cannot see them:
+#   1 texture axes not following the object's tilt ... no.
+#   2 a pattern ignoring the frame's light .......... MILD. The fig's exposure
+#     was matched to the plate's own fruit by a measured gain (median luma
+#     29.5 -> 60.5, gain 2.046) so it sits in this light, but its specular
+#     points up-left where this frame's light is diffuse from above.
+#   3 a swatch stopping short of or overrunning the object's edge ... no. The
+#     fig is matted to its own silhouette with a 1 px rim in the plate's ink.
+#   4 visible tiling or a repeat .................... no. Nothing is cloned:
+#     the vacancies are filled from their own boundary and the plant is drawn.
+#   5 detail at the wrong scale against an in-frame ruler ... FIRES, mildly,
+#     and it is inherent to this rung. Beat 18's fig is a MACRO: its body is
+#     823 px and it is composited at 47, a 19.6x reduction. What survives that
+#     is silhouette, value and one highlight; what does not is any surface the
+#     rest of the frame could be read against. Its gradient is smoother and its
+#     highlight sharper than anything else this size in the picture.
+# AND THE HONEST WEAKNESS THE TELLS DO NOT NAME: the stem, the side-branch and
+# the two leaves are PROCEDURAL VECTOR SHAPES with a uniform 1 px outline,
+# where r3's own leaves carry varying line weight and a midrib. At 1x it holds;
+# at 3x it is a diagram of a sapling next to a painting of a man. That is
+# precisely the gap a 0.30 finishing pass exists to close, the mask for it is
+# published beside the init (57 899 px, 5.7% of frame, covering the drawn plant
+# AND both erased vacancies so the result stays falsifiable) -- AND IT WAS NOT
+# FIRED. See the last section for why not.
+#
+# WHAT THE COMPOSITOR GOT WRONG BEFORE IT GOT IT RIGHT, since a tool that only
+# records its successes teaches nothing. Six rejections, every one caught by
+# opening the pixels and none by a metric, at a cost of seconds each:
+#   * THREE OF SIX POINT SEEDS LANDED ON SKY and the palette came back with
+#     FOUR leaf pixels. Seeds are windows now, and each is a measured bbox.
+#   * A NARROW PURPLE RULE (`B > R`) left his pale COLLAR unenclosed, so the
+#     border flood walked into it, the derived body run stopped 60 px short at
+#     y 430-490, and the whip flood took 50x80 px of his shoulder and SMEARED
+#     IT. Fixed by defining purple as red AND blue above green -- the same
+#     widening P5 above turned out to need.
+#   * TWO ROUND DISCS INSTEAD OF LEAVES. The blade profile's normalisation
+#     constant was typed as 0.245 where the profile's own maximum is 0.436, so
+#     every blade came out 1.78x too fat and the pair read as a clover. The
+#     constant is computed from the exponents now.
+#   * A GHOST AT HALF ALPHA. A 6 px band at x 584-589 survived the erase at
+#     luminance 208 against a 249 sky -- the branch's antialiased edge, which
+#     no colour clause can reach because at half alpha it is neither ink nor
+#     foliage. §12 corollary 1, arriving exactly where that section says it
+#     will. Cured by growing the mask into whatever is darker than a radius-14
+#     blur of the plate.
+#   * THE PRESCRIBED DIFFUSION FILL WAS PURE DAMAGE ON THIS PLATE, and this is
+#     the finding most likely to be useful to another lane. §12 prescribes
+#     `--fill diffuse` and this tool shipped 90 relaxations at radius 2.
+#     Measured at 0 / 6 / 20 / 90 iterations on one mask: the pink hill band
+#     and the teal treeline survive intact at 0, are visibly washed at 6, and
+#     by 90 a 40x50 px vacancy off his right shoulder is a cream blob with both
+#     bands gone through it. A hole NARROW IN X that CROSSES BANDS IN Y is the
+#     case where averaging destroys the structure, because it averages along
+#     exactly the direction the structure runs. Per-row interpolation from the
+#     hole's own boundary reproduces this background exactly and diffusion adds
+#     nothing to it. The flag is kept and defaults OFF.
+#   * A DUPLICATED PREDICATE IS A BUG WITH A DELAY ON IT. The residual check
+#     restated the plant rule instead of calling it; when the rule was
+#     tightened the copy went stale and C2 reported 153 surviving whip pixels
+#     that were the distant TREELINE this tool never touched.
+#
+# !! AND THE THING THAT MATTERS MOST, WHICH IS NOT ABOUT THE PICTURE.
+# A COMPOSITE INIT FOR BEAT 19 ALREADY EXISTED BEFORE THIS ONE WAS BUILT:
+# pipeline/beat19_drop_composite.py -> farm-out/ep2-b19-sapcomp-0819/, from the
+# SAME parent plate at the SAME sha, removing the same two whips and drawing
+# the same canon sapling. It is also FURTHER DOWN THE ROAD: it has been through
+# the 0.30 inpaint on the box (b19-sapcomp-s20260819.png), through a gloss A/B
+# (ep2-b19-sapgloss-0819), and into a 120-frame fall (ep2-b19-dropcomp-0819).
+# This lane did not know that until the build was nearly done. Two lanes spent
+# an evening on one rung.
+# The pattern doc has a precedent and it is §8: a second compositor for the
+# sapling init was STOOD DOWN before any pixel existed, on the grounds that "a
+# duplicate tool in the tree is worse than none". That reasoning has not
+# changed, and this file does not claim to overturn it.
+# THE ONE PLACE THE TWO BUILDS GENUINELY DISAGREE, which is why this one is
+# recorded rather than deleted: the sibling DREW its fig, on the stated grounds
+# that "an 18x downsample imports a violet smudge, not a fig". This one PASTED
+# beat 18's actual pixels at 19.6x and the smudge did not arrive -- at 3x it
+# is a round fig with a neck and a highlight. Opened side by side, the sibling's
+# fruit is a small dark bead on a thread whose underside sits ~20 px off the
+# ground, and its plant measures ~26 cm against canon's 40; this one's fig has
+# 93 px of air under it on a 41.4 cm plant. Against that, the sibling has been
+# through the finishing pass and reads as drawn line work, and this one has not.
+# NEITHER OBSERVATION IS A PICK. Which init beat 19 travels on is R4 and the
+# lead's, not this lane's, and nothing here is promoted, ack'd or written into
+# a leaf or lineage.
+# --------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
 # r2 SCORED, 2026-08-19, macbook1, seed 20260819, rc 0.
 # farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png
 # sha256 7075a4e8d8906711dbbab16bff950a7a689574070444d52eb9041073167693be.
