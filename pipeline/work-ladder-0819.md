@@ -29,7 +29,7 @@ ladder.
 | rtx5090 ready/running/backlog | 0 / 0 / 0 | continuously fed since 01:06 |
 | ep2 cut slates | 07, 09, 15, 19 | same four — with routes attached to all four |
 | Mac farm | 3 idle | 5 plates drawn and scored |
-| beat 19 blocker | "no plate exists" since 08-15 | **dead** — fruit aloft on 3 of 3 draws |
+| beat 19 blocker | "no plate exists" since 08-15 | **dead twice** — fruit aloft on 3 of 3 draws, then the plant solved by a composite init |
 | i2v identity collapse | attributed to beat 11's plate | **attributed to one flag, measured** |
 | Mac render durability | none — hand-scp only | `--collect` implemented; 18 stranded files recovered |
 
@@ -122,13 +122,47 @@ is a better lever than a codec round-trip and this result does not preclude it.
 - **Still blocked on:** the plant. Three wordings produced a bead-strung vine
   every time, twice doubled; fruit count went 4 → ~8 → 3, never 1.
   **The wording ladder is closed at three rungs**, per this repo's own rule.
-- **Next rung — named, costed, not fired:** a **composite init**. The project
-  already owns the picture it cannot write: **beat 18's plate passes its bar as
-  ONE round deep-purple-violet fig on ONE very thin branch**. The route exists
-  in-repo (`composite-init-pattern.md`, `beat14_field_composite.py`,
-  `beat08_gesture_composite.py`). Take r3's man, pose, field and framing — 5 of 7
-  terms already passing — and composite beat 18's fig in at scale. That is a
-  build, bigger than a rev, and it is the honest next step.
+- **~~Next rung — named, costed, not fired:~~ FIRED, AND IT PASSES.**
+  `ep2-b19-sapcomp-0819`, 3.8 s of GPU, $0, all eight clauses of the bar the
+  parent plate had pre-registered. The rung as written above said "composite beat
+  18's fig in at scale" and **both halves of that were wrong once the pixels were
+  opened** — which is the value of the rung, not an objection to it:
+  - the parent's four "fruits" are **violet faceted crystals on threads**, hung
+    off two **bare twigs**. P1 and P6 fail by **class**, not by count, so
+    subtraction reaches neither axis (`composite-init-pattern.md` §8 finding 2 had
+    already recorded this from the other side: count and shape are one job).
+  - beat 18's passing plate is an **extreme close-up macro** whose fig spans
+    ~430px where beat 19's needs ~30px. An 18× downsample imports a smudge, and
+    "detail at the wrong scale" is decal tell #5. It served as the **shape and
+    colour authority** instead of as pixels.
+  So the plant was **drawn**: `pipeline/beat19_drop_composite.py` clears both
+  twigs into the plate's own field and draws one rooted stem, two wide oval
+  cotyledons, one thin side-branch and one fig. **Four rounds were rejected by eye
+  first, ~4.5 s each, no GPU.** Evidence, with the composite committed beside the
+  output so the A/B can be made by anyone:
+  `farm-out/ep2-b19-sapcomp-0819/`.
+- **What that sample settles beyond beat 19 — read this before any composite
+  rung:** **at 0.30 the composite carries GEOMETRY and does NOT carry MATERIAL.**
+  The fig was composited at hue **272°, matte**, and came back at **309°,
+  glossy**. 309 is where **beat 18's own plate landed (305)**, and that verdict's
+  `honest_caveat` names the identical two deviations — "toward magenta rather than
+  deep violet" and "heavily GLOSSY with a hard specular highlight". Two beats, two
+  completely different instruments, same two deviations: **gloss and the magenta
+  lean are animagine-xl-3.1's fig, not either beat's recipe.** `glossy` was in the
+  negative, at the front of it, and arrived anyway — the positive-placement law
+  firing a fifth time. Matte-vs-gloss is **R4 and already a founder card** (raised
+  by b18's verdict, still open); this only turns it into one checkpoint fact to
+  rule on once instead of a per-beat surprise.
+- **Also killed, from the other side:** §9's "material half fails in the wide
+  whole-body register" hypothesis. `FAIL-MATERIAL` was pre-registered here as the
+  **most likely** outcome on exactly that argument, and it did not fire on a
+  whole-body wide shot. §9's plate dependence is still unexplained, and shot
+  register is now ruled out from both directions.
+- **NOT A PICK.** No `plate_ack`, no promotion, no leaf, nothing in any cut. The
+  slate stays a slate until the author says otherwise. Named, not fired: if matte
+  is wanted the levers left are **strength 0.20–0.25** (8–10 of 40 steps instead
+  of 12) or a **post-pass**; and this plate's motion wants `--image-crf 10`, not
+  33.
 - **Still open for the author:** `body_position`. Tonight's plates derive a low
   pose from beat 20's opening (both hands to a fig on the ground) and beat 14
   (which renders this character crouching). Written down so it can be overturned
