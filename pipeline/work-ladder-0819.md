@@ -2345,3 +2345,127 @@ nothing. So the trousers are an **unasserted attribute the model is inventing
 per frame**, which is the standing shape of every attribute this beat has lost.
 Filed as one taste card for his next batch, with pixels; **no conformity verdict
 is recorded either way.**
+
+---
+
+## Beats 03 and 13: the composite route closes the re-render wave's last two plant misses (2026-08-20)
+
+Both beats had a plate drawn the night before whose **character passed and whose
+plant did not**, and both are now inits that a 0.30 pass converted on the first
+fire. One GPU fire each, one seed, no retries, **$0**.
+
+| beat | what r1s1's own verdict said | what was composited | outcome |
+|---|---|---|---|
+| 03 `bad-cover` | *"FAIL on the beat, PASS on the character"* — plant was "a branching stem with six to eight leaflets", and "he is not behind it, not using it, not attempting to hide" | weed removed whole; one canon two-leaf sapling drawn **between the camera and him** at 38.4 cm | **PASS** on the one variable |
+| 13 `the-shade` | *"THE BEST OF THE THREE… PASS on cast and on pose; FAIL on the plant"* — "NO IDENTIFIABLE SAPLING" | purely additive: one canon sapling drawn beside him, crown at his measured knee line | **PASS** on the one variable |
+
+**Beat 03 is the first rung in this family whose blocker was not only
+cardinality.** Beats 15 and 19 each closed a wording ladder on a COUNT. Beat 03's
+`done_when` is a **RELATION** — "the cover is comically inadequate" requires the
+plant to occlude him — and a relation between a figure the sampler has already
+placed and a plant it draws where it likes is no more a knob than a numeral is.
+So the relation was composited too, and it held.
+
+### The two findings worth stealing
+
+**A THIN-STRUCTURE SWEEP IS THE WRONG MATTE ON A TEXTURED FIELD, and there is a
+replacement.** `beat15_listener_composite.py` removes its weed with a row
+running-mean test because *its* field is flat (lum 212, std 4.7). Beat 03's field
+is hundreds of hard diagonal blade strokes; the same test flagged 33841 px, the
+grown footprint took **85% of the box**, and the clone-fill returned a smooth
+rectangle with straight edges — rejected at 1x. A **seeded colour flood** (4
+measured seed windows, a rule the field does not satisfy) takes **28.5%** and
+leaves every blade around it untouched. And then nothing can be cloned into the
+hole either: a nearest-in-row clone across a 40–80 px vacancy repeats the same
+few source pixels and came back as a ladder of horizontal dashes. **Per-row
+interpolation from the vacancy's own boundary** asserts no structure it cannot
+see, and the mask hands the texture back to the sampler.
+
+**That was the pre-registered risk (FAIL-SMEAR) and it did not fire.** The cleared
+region came back reading as field. So *flood + boundary-fill + 0.30* is now a
+demonstrated route for taking an object out of a hard-textured plate, which is
+the case the flat-field method could not reach.
+
+Beat 13's own named risk, **FAIL-PLANT-DISSOLVES**, also did not fire, and it was
+the harder bet: that plate is green foliage edge to edge and the plant's colours
+were sampled from it, so it is the **lowest object-to-ground contrast any
+composite in this house has been dropped onto**.
+
+### The pass tell is a POSITIVE one, and both show it
+
+`composite-init-pattern.md` §7: *"if you cannot see a difference between your
+composite and the output, the pass is a paste."* Beat 03's blades gained a lit
+internal highlight, its stem was re-drawn thinner, and **the sampler deleted the
+three root blades the compositor drew**. Beat 13's outline picked up the frame's
+line weight and its stem gained a taper and a rooted base the composite never
+had. Highpass sigma-3 std inside the mask: **10.25 → 9.17** and **17.05 → 15.84**
+— it *smoothed* the drawing rather than adding detail, which on a cel frame is
+the right direction.
+
+### One number a later lane would otherwise misread
+
+**`max change outside the mask is 0.0` is a claim about the COMPOSITE, not about
+the OUTPUT.** These two samples changed **40245 px** and **24822 px** outside
+their masks. That is not the sampler repainting the figure: the extents are the
+mask bbox plus a ~20 px halo — exactly what `padding_mask_crop=64` crops, resizes
+and pastes back — and only **587** and **239** of those pixels exceed a diff of 8.
+Both face boxes are **maxdiff 0**. Anyone reading the parent specs' 0.0 as an
+output invariant would score every job in this family a failure.
+
+### Four smaller corrections the pixels forced, each caught by a check rather than by luck
+
+- **An outline that is not in the alpha is half an outline.** Rim strokes straddle
+  the polygon edge, so with alpha = fill only, their outer half lands where
+  `al=0` and is masked away. Result: 1 px hairlines, and blades that read as flat
+  grey discs.
+- **A soft alpha edge over a black trouser leg is not a drawn line.** C9 read a
+  darkest drawn luma of **7** and it was the *plate* showing through alpha
+  0.02–0.2. Measured on the solid interior (al > 0.9) it is 44 against the plate's
+  16.
+- **LANCZOS rings, and an unclipped ring is a hole.** Where two outline strokes
+  cross, the downsampled rim overshot 1.0; `out*(1-r) + RIM*r` with r > 1 drives
+  the result negative and clips to black.
+- **A stem width is a fraction of plant height, not a constant.** 9 px is right on
+  beat 03 (head 232 px); on beat 13's close-up (head 435 px) the same 9 px read as
+  a bent wire. Both now sit near 3% of plant height, where beat 19's passing stem
+  also sits.
+
+C8 fired once for real on beat 03 — angling the blades up pushed 139 px of tip
+above y=700, the line below which nothing of his head, face or chest lives — and
+**the plant moved, not the threshold.**
+
+### What is still open, on the record rather than folded into the pass
+
+- **Beat 03's performance.** r1s1 said he *"reads RESIGNED, not caught out"*. This
+  rung declared that out of scope in advance and it is still true: the size and
+  position relation lands, the acting does not. That is the pose/motion lane's
+  variable and it is the next thing this beat needs.
+- **Beat 13 is still the DIM plate**, and its background sprig at x 660..832
+  y 80..270 is still in frame by choice. A 0.30 pass over 4.1% of the frame cannot
+  reach a plate-level exposure and did not pretend to.
+- **Beat 13 cannot be scored in centimetres and says so.** No horizon is in frame,
+  so no ground plane exists to build. Its scored clause is the RELATION (crown at
+  his measured knee line); the 25.9 cm figure is printed beside it with the
+  disagreement that produced it — a 40 cm plant at his exact depth would put its
+  crown at his brow, and his seated mass is 2.5 head-heights where a real one is
+  ~4.
+
+**The composite-then-inpaint route is now 4 for 4** (beats 15, 19, 03, 13) at
+getting a canon two-leaf sapling into a frame that four wording ladders could not.
+
+### A filer bug that was blocking beat 15's cut slate, fixed in passing
+
+`mac_enqueue.known_beats` matched one spelling of a beat entry — the four-space
+`    15: {` inside the `DRAFTS` literal — and `plate_scratch.py` also grows beats
+by **assignment** after that literal closes. `DRAFTS[15] = {` at line 5526 is beat
+15's whole entry and a column-0 assignment is invisible to a four-space regex.
+
+**The guard was wrong in the REFUSING direction, which is why it was quiet.**
+`main` checks the set before it files anything and exits 2 with *"plate_scratch.py
+has no inline prompt for beat(s) [15]"*; plate_scratch could draw beat 15
+perfectly well. Nothing errored — work simply never got queued, and beat 15's cut
+slate sat blocked on the filer rather than on a defect. `known_revs`, three lines
+below, already handled **both** of its spellings and said so in its docstring; the
+asymmetry was the whole bug. The selftest asserts beat 15 specifically **and** the
+general invariant — every beat plate_scratch spells either way is visible — so a
+third spelling fails on the file itself rather than on a hand-kept list.
