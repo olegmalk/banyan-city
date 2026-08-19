@@ -170,7 +170,8 @@ def solve_elbow(sx, sy, tx, ty, a, b, sign=1.0):
 
 def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
           guard_x=GUARD_X, goblin_x=GOBLIN_X, guard_h=GUARD_H,
-          goblin_h=GOBLIN_H, ground_y=GROUND_Y, clearance=CLEARANCE):
+          goblin_h=GOBLIN_H, ground_y=GROUND_Y, clearance=CLEARANCE,
+          skeleton=False):
     """Draw the hint. Returns (PIL RGB image, metadata dict).
 
     The metadata is not decoration: --selftest scores the BAR off it, and the
@@ -198,6 +199,23 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     def outline(poly):
         d.line(list(poly) + [poly[0]], fill=ink, width=stroke, joint="curve")
 
+    # ---- SKELETON PRIMITIVES (skeleton=True only) -------------------------
+    # Rung 4 measured stroke weight to be a PRECISION dial, not a strength one:
+    # the 3px hint was traced MORE tightly than the 7px (ink-on-edge 98.3% vs
+    # 94.4%). Two dials are therefore bracketed and neither frees the outline,
+    # which localises the cause on the ENCLOSURE: a closed contour around a body
+    # is an instruction about where that body's edge goes, at any weight. These
+    # primitives draw the same pose with NO CLOSED CONTOUR ON EITHER BODY --
+    # joint dots and single-line bones, the way a pose skeleton does it. The
+    # BOARD keeps its rectangle on purpose: it is an object we want traced, not
+    # a body we want redrawn, and B4a has passed on it four times.
+    def dot(p, r):
+        d.ellipse([p[0] - r, p[1] - r, p[0] + r, p[1] + r], fill=ink)
+
+    def bone(pts):
+        d.line([(float(x), float(y)) for x, y in pts], fill=ink,
+               width=stroke, joint="curve")
+
     gy = ground_y * height
     gu_h = guard_h * height
     go_h = goblin_h * height
@@ -214,9 +232,14 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     go_navel_y = gy - NAVEL_FRAC * go_h
     go_half = 0.075 * go_h          # torso half-width; he is the plump one
 
-    d.ellipse([go_cx - go_head_w / 2, go_head_cy - go_head_h / 2,
-               go_cx + go_head_w / 2, go_head_cy + go_head_h / 2],
-              outline=ink, width=stroke)
+    if skeleton:
+        # head as a JOINT, not an outline: its size stops being specified, which
+        # is exactly the freedom this rung is trying to hand back.
+        dot((go_cx, go_head_cy), 0.030 * go_h)
+    else:
+        d.ellipse([go_cx - go_head_w / 2, go_head_cy - go_head_h / 2,
+                   go_cx + go_head_w / 2, go_head_cy + go_head_h / 2],
+                  outline=ink, width=stroke)
     # POINTED EARS — identity as geometry rather than as a hopeful adjective.
     # SMALL AND SET LOW, and that is a correction made by looking: the first
     # version swept from above the crown out to 0.34 head-widths, and on the
@@ -231,32 +254,53 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     # A NECK. Without one the head ellipse floats above the shoulders with a
     # visible gap, and a detached head is a thing this checkpoint will happily
     # draw if the condition asks for it.
-    for s in (-1, 1):
-        nx = go_cx + s * go_head_w * 0.20
-        d.line([(nx, go_head_cy + go_head_h * 0.44),
-                (nx, go_shoulder_y)], fill=ink, width=stroke)
+    if skeleton:
+        bone([(go_cx, go_head_cy), (go_cx, go_shoulder_y)])
+    else:
+        for s in (-1, 1):
+            nx = go_cx + s * go_head_w * 0.20
+            d.line([(nx, go_head_cy + go_head_h * 0.44),
+                    (nx, go_shoulder_y)], fill=ink, width=stroke)
     # torso: shoulders in, belly out — a plump adult, not a chibi
-    outline([(go_cx - go_half * 0.80, go_shoulder_y),
-             (go_cx + go_half * 0.80, go_shoulder_y),
-             (go_cx + go_half, go_navel_y),
-             (go_cx + go_half * 0.86, go_hip_y),
-             (go_cx - go_half * 0.86, go_hip_y),
-             (go_cx - go_half, go_navel_y)])
+    if skeleton:
+        # NO HIP BAR. It was redundant with the leg-joint dots below, and it
+        # was the stroke that closed a cell against the spine and an arm --
+        # which is the residual silhouette specification this class exists to
+        # remove. Hip WIDTH still reaches the model, as two joints rather than
+        # as a line.
+        bone([(go_cx - go_half * 0.80, go_shoulder_y),
+              (go_cx + go_half * 0.80, go_shoulder_y)])
+        bone([(go_cx, go_shoulder_y), (go_cx, go_hip_y)])
+        for s in (-1, 1):
+            dot((go_cx + s * go_half * 0.80, go_shoulder_y), 0.014 * go_h)
+    else:
+        outline([(go_cx - go_half * 0.80, go_shoulder_y),
+                 (go_cx + go_half * 0.80, go_shoulder_y),
+                 (go_cx + go_half, go_navel_y),
+                 (go_cx + go_half * 0.86, go_hip_y),
+                 (go_cx - go_half * 0.86, go_hip_y),
+                 (go_cx - go_half, go_navel_y)])
     # ARMS DOWN AT HIS SIDES. This is the clause that clears §9b's third
     # blocker: the goblin's own fist occupied the gap in the composite route,
     # and here the lane between the fingertip and the belly is empty.
     for s in (-1, 1):
         sx = go_cx + s * go_half * 0.80
-        d.line(capsule([(sx, go_shoulder_y),
-                        (sx + s * 0.02 * go_h, go_hip_y),
-                        (sx + s * 0.01 * go_h, gy - 0.40 * go_h)],
-                       0.055 * go_h) + [(sx, go_shoulder_y)],
-               fill=ink, width=stroke, joint="curve")
+        pts = [(sx, go_shoulder_y),
+               (sx + s * 0.02 * go_h, go_hip_y),
+               (sx + s * 0.01 * go_h, gy - 0.40 * go_h)]
+        if skeleton:
+            bone(pts); dot(pts[-1], 0.018 * go_h)
+        else:
+            d.line(capsule(pts, 0.055 * go_h) + [(sx, go_shoulder_y)],
+                   fill=ink, width=stroke, joint="curve")
     for s in (-1, 1):
         hx = go_cx + s * go_half * 0.55
-        d.line(capsule([(hx, go_hip_y), (hx + s * 0.012 * go_h, gy)],
-                       0.075 * go_h) + [(hx, go_hip_y)],
-               fill=ink, width=stroke, joint="curve")
+        pts = [(hx, go_hip_y), (hx + s * 0.012 * go_h, gy)]
+        if skeleton:
+            bone(pts); dot(pts[0], 0.016 * go_h)
+        else:
+            d.line(capsule(pts, 0.075 * go_h) + [(hx, go_hip_y)],
+                   fill=ink, width=stroke, joint="curve")
 
     # ---- the guard, frame right ------------------------------------------
     gu_head_h = 0.130 * gu_h
@@ -267,22 +311,32 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     gu_hip_y = gy - HIP_FRAC * gu_h
     gu_half = 0.070 * gu_h
 
-    d.ellipse([gu_cx - gu_head_w / 2, gu_head_cy - gu_head_h / 2,
-               gu_cx + gu_head_w / 2, gu_head_cy + gu_head_h / 2],
-              outline=ink, width=stroke)
-    for s in (-1, 1):
-        nx = gu_cx + s * gu_head_w * 0.20
-        d.line([(nx, gu_head_cy + gu_head_h * 0.44),
-                (nx, gu_shoulder_y)], fill=ink, width=stroke)
-    outline([(gu_cx - gu_half * 0.95, gu_shoulder_y),
-             (gu_cx + gu_half * 0.95, gu_shoulder_y),
-             (gu_cx + gu_half * 0.82, gu_hip_y),
-             (gu_cx - gu_half * 0.82, gu_hip_y)])
+    if skeleton:
+        dot((gu_cx, gu_head_cy), 0.028 * gu_h)
+        bone([(gu_cx, gu_head_cy), (gu_cx, gu_shoulder_y)])
+        bone([(gu_cx - gu_half * 0.95, gu_shoulder_y),
+              (gu_cx + gu_half * 0.95, gu_shoulder_y)])
+        bone([(gu_cx, gu_shoulder_y), (gu_cx, gu_hip_y)])
+    else:
+        d.ellipse([gu_cx - gu_head_w / 2, gu_head_cy - gu_head_h / 2,
+                   gu_cx + gu_head_w / 2, gu_head_cy + gu_head_h / 2],
+                  outline=ink, width=stroke)
+        for s in (-1, 1):
+            nx = gu_cx + s * gu_head_w * 0.20
+            d.line([(nx, gu_head_cy + gu_head_h * 0.44),
+                    (nx, gu_shoulder_y)], fill=ink, width=stroke)
+        outline([(gu_cx - gu_half * 0.95, gu_shoulder_y),
+                 (gu_cx + gu_half * 0.95, gu_shoulder_y),
+                 (gu_cx + gu_half * 0.82, gu_hip_y),
+                 (gu_cx - gu_half * 0.82, gu_hip_y)])
     for s in (-1, 1):
         hx = gu_cx + s * gu_half * 0.50
-        d.line(capsule([(hx, gu_hip_y), (hx + s * 0.010 * gu_h, gy)],
-                       0.070 * gu_h) + [(hx, gu_hip_y)],
-               fill=ink, width=stroke, joint="curve")
+        pts = [(hx, gu_hip_y), (hx + s * 0.010 * gu_h, gy)]
+        if skeleton:
+            bone(pts); dot(pts[0], 0.015 * gu_h)
+        else:
+            d.line(capsule(pts, 0.070 * gu_h) + [(hx, gu_hip_y)],
+                   fill=ink, width=stroke, joint="curve")
 
     # ---- THE POINT — the whole reason this file exists -------------------
     near_sx = gu_cx - gu_half * 0.95
@@ -317,14 +371,30 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     wristx, wristy = near_sx + ux * wrist_d, near_sy + uy * wrist_d
     elbow = solve_elbow(near_sx, near_sy, wristx, wristy,
                         UPPER_ARM * gu_h, FOREARM * gu_h, sign=1.0)
-    d.line(capsule([(near_sx, near_sy), elbow, (wristx, wristy)], 0.055 * gu_h)
-           + [(near_sx, near_sy)], fill=ink, width=stroke, joint="curve")
+    if skeleton:
+        bone([(near_sx, near_sy), elbow, (wristx, wristy)])
+        dot((near_sx, near_sy), 0.018 * gu_h)      # shoulder
+        dot(elbow, 0.016 * gu_h)                   # elbow -- the bend is a joint
+    else:
+        d.line(capsule([(near_sx, near_sy), elbow, (wristx, wristy)],
+                       0.055 * gu_h)
+               + [(near_sx, near_sy)], fill=ink, width=stroke, joint="curve")
     # The extended index, drawn on toward the BELLY rather than along the
     # forearm: a pointing hand angles at the wrist, and this is the stroke that
     # says which figure the gesture is aimed at.
     fingerx, fingery = wristx + ux * finger_len, wristy + uy * finger_len
-    d.line([(wristx, wristy), (fingerx, fingery)], fill=ink,
-           width=max(1, stroke - 2), joint="curve")
+    if skeleton:
+        # A HAND-SIZED MARK, and it is here because rung 4 spent B4b on its
+        # absence: at --stroke 3 the 1px finger line came back as a fingerless
+        # wedge. My own verdict pre-registered that B4b needs a hand-sized mark
+        # at the end of the arm WHATEVER the hint class, so the wrist carries a
+        # filled hand blob and the index is drawn on from it toward the belly.
+        dot((wristx, wristy), 0.026 * gu_h)
+        d.line([(wristx, wristy), (fingerx, fingery)], fill=ink,
+               width=max(2, stroke - 3), joint="curve")
+    else:
+        d.line([(wristx, wristy), (fingerx, fingery)], fill=ink,
+               width=max(1, stroke - 2), joint="curve")
 
     # ---- THE LOWERED BOARD, in his other hand ----------------------------
     far_sx = gu_cx + gu_half * 0.95
@@ -335,10 +405,16 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
     board_top = board_cy - board_h / 2.0
     # far arm hangs straight down to grip the board's top edge
     wrist = (board_cx - board_w * 0.28, board_top)
-    d.line(capsule([(far_sx, gu_shoulder_y),
-                    (far_sx + 0.010 * gu_h, (gu_shoulder_y + wrist[1]) / 2.0),
-                    wrist], 0.052 * gu_h) + [(far_sx, gu_shoulder_y)],
-           fill=ink, width=stroke, joint="curve")
+    _far = [(far_sx, gu_shoulder_y),
+            (far_sx + 0.010 * gu_h, (gu_shoulder_y + wrist[1]) / 2.0),
+            wrist]
+    if skeleton:
+        bone(_far)
+        dot((far_sx, gu_shoulder_y), 0.018 * gu_h)
+        dot(wrist, 0.022 * gu_h)          # the gripping hand, B4a's clause
+    else:
+        d.line(capsule(_far, 0.052 * gu_h) + [(far_sx, gu_shoulder_y)],
+               fill=ink, width=stroke, joint="curve")
     tilt = math.radians(9.0)          # a held board is never axis-aligned
     ct, st = math.cos(tilt), math.sin(tilt)
     corners = []
@@ -369,6 +445,8 @@ def build(width=W, height=H, stroke=7, invert=False, ground_ticks=True,
 
     meta = {
         "size": f"{width}x{height}",
+        "hint_class": "sparse skeleton (no closed contour on either body)"
+                      if skeleton else "dense full-body contour",
         "stroke_px": stroke,
         "polarity": "black-on-white (INVERTED)" if invert
                     else "white-on-black (scribble convention)",
@@ -493,6 +571,111 @@ def selftest():
     thick = ink_fraction(build(stroke=13)[0])
     check(f"stroke is a control dial ({thin:.4f} -> {thick:.4f})", thick > thin * 1.4)
 
+    # ---- THE SKELETON CLASS (rung 5's instrument) -------------------------
+    # Rung 4 bracketed the second dial and localised the tracing on the
+    # ENCLOSURE, so the claim this mode has to make good is STRUCTURAL, not a
+    # matter of how much ink it uses. It is asserted by flood fill: in the
+    # contour class a point inside a torso cannot reach the frame border without
+    # crossing ink; in this class it must.
+    sk, msk = build(skeleton=True)
+    ct, mct = build()
+    check("skeleton keeps the hint class on the record",
+          msk["hint_class"].startswith("sparse skeleton")
+          and mct["hint_class"] == "dense full-body contour")
+    for k in ("ground_y_px", "guard", "goblin", "stature_ratio", "point",
+              "board", "size", "stroke_px"):
+        check("skeleton moves NO geometry: %s is identical" % k, msk[k] == mct[k])
+    f_sk, f_ct = ink_fraction(sk), ink_fraction(ct)
+    check(f"skeleton is sparser than the contour ({f_sk:.4f} < {f_ct:.4f})",
+          f_sk < f_ct)
+
+    def cell(img, seed):
+        # Flood fill the ink-free region containing `seed`. Returns
+        # (escapes_to_border, area_px), or (None, 0) if we seeded on ink -- in
+        # which case the test is void rather than passed.
+        px = img.convert("L").load()
+        w, h = img.size
+        if px[seed] > 128:
+            return None, 0
+        seen = {seed}
+        stack = [seed]
+        out = False
+        while stack:
+            x, y = stack.pop()
+            if x <= 0 or y <= 0 or x >= w - 1 or y >= h - 1:
+                out = True
+                continue
+            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if (nx, ny) not in seen and px[nx, ny] <= 128:
+                    seen.add((nx, ny))
+                    stack.append((nx, ny))
+        return out, len(seen)
+
+    def escapes(img, seed):
+        return cell(img, seed)[0]
+
+    # THE SEED HAS TO SIT INSIDE THE TORSO AND OFF EVERY LINE, and getting that
+    # wrong is how this test lies in both directions: seeded on the skeleton's
+    # own spine (which runs down cx) the fill starts on ink and the result is
+    # void, and seeded between the legs it is outside both bodies and escapes in
+    # either class. So it is placed halfway between the spine and the torso's
+    # side, at mid-torso height, and asserted to be off-ink in BOTH classes
+    # before the enclosure question is asked at all.
+    gu_h = msk["guard"]["stature_px"]
+    gu_half = 0.070 * gu_h
+    gu_hip_y = msk["ground_y_px"] - HIP_FRAC * gu_h
+    go_h = msk["goblin"]["stature_px"]
+    go_hip_y = msk["ground_y_px"] - HIP_FRAC * go_h
+    go_shoulder_y = msk["ground_y_px"] - SHOULDER_FRAC * go_h
+    seeds = {
+        "guard": (int(msk["guard"]["cx"] + 0.45 * gu_half),
+                  int((msk["guard"]["shoulder_y"] + gu_hip_y) / 2.0)),
+        "goblin": (int(msk["goblin"]["cx"] + 0.45 * msk["goblin"]["torso_half_px"]),
+                   int((go_shoulder_y + go_hip_y) / 2.0)),
+    }
+    # WHAT IS ACTUALLY BEING ASSERTED, and it is narrower than "nothing is
+    # closed" on purpose. A pose skeleton necessarily closes SOME cells -- the
+    # shoulder bar, the spine, the hip bar and an arm bound a quad, exactly as
+    # OpenPose's does -- and the first version of this test failed on the guard
+    # for that reason. But the hypothesis rung 4 localised is about the
+    # SILHOUETTE: the contour class inks the body's outer edge, so the whole
+    # torso interior is one enclosed cell and the checkpoint has nowhere to put
+    # an outline except on the authored line. The skeleton class inks the MEDIAL
+    # AXIS instead, so whatever cells remain are a small fraction of the body and
+    # the outer edge is nowhere specified. That difference is what is measured.
+    for who, seed in seeds.items():
+        e_ct, a_ct = cell(ct, seed)
+        e_sk, a_sk = cell(sk, seed)
+        check("the %s enclosure seed is off-ink in both classes" % who,
+              e_ct is not None and e_sk is not None)
+        check("CONTOUR class encloses the %s's torso interior as one cell "
+              "(%d px)" % (who, a_ct), e_ct is False and a_ct > 2000)
+        ratio = a_sk / float(max(a_ct, 1))
+        check("SKELETON leaves the %s's silhouette UNSPECIFIED: its cell is "
+              "%.2fx the contour's (%d px)" % (who, ratio, a_sk),
+              e_sk is True or ratio < 0.55)
+
+    # The board is deliberately still a closed rectangle -- it is an object we
+    # want traced, not a body we want redrawn, and B4a has passed on it four
+    # times. Asserted on purpose so nobody "fixes" it later.
+    bcx, bcy = int(msk["board"]["cx"]), int(msk["board"]["cy"])
+    check("SKELETON still encloses the BOARD (on purpose)",
+          escapes(sk, (bcx, bcy)) is False)
+
+    # B4b's lesson from rung 4: a 1px finger came back as a fingerless wedge, so
+    # the skeleton must put a HAND-SIZED mark at the end of the arm.
+    wx, wy = (int(v) for v in msk["point"]["wrist"])
+    pxs = sk.convert("L").load()
+    blob = sum(1 for dx in range(-9, 10) for dy in range(-9, 10)
+               if pxs[wx + dx, wy + dy] > 128)
+    check(f"B4b skeleton puts a hand-sized mark at the wrist ({blob} px)",
+          blob > 150)
+
+    check("skeleton authoring is deterministic",
+          build(skeleton=True)[0].tobytes() == sk.tobytes())
+    check("the contour class is UNTOUCHED by the skeleton mode",
+          build()[0].tobytes() == ct.tobytes())
+
     # Determinism, or the sha in a sidecar is a lie.
     import io
     b1, b2 = io.BytesIO(), io.BytesIO()
@@ -537,6 +720,9 @@ def main():
                     help="frame heights of air the fingertip stops short by")
     ap.add_argument("--no-ground-ticks", action="store_true")
     ap.add_argument("--invert", action="store_true")
+    ap.add_argument("--skeleton", action="store_true",
+                    help="sparse skeleton class: joint dots and single-line "
+                         "bones, NO closed contour on either body (rung 5)")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
 
@@ -547,7 +733,8 @@ def main():
 
     img, meta = build(a.width, a.height, a.stroke, a.invert,
                       not a.no_ground_ticks, a.guard_x, a.goblin_x,
-                      a.guard_h, a.goblin_h, a.ground_y, a.clearance)
+                      a.guard_h, a.goblin_h, a.ground_y, a.clearance,
+                      a.skeleton)
     meta["ink_fraction"] = round(ink_fraction(img, a.invert), 5)
     img.save(a.out, "PNG")
     print(f"wrote {a.out}")

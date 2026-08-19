@@ -1,0 +1,297 @@
+# BEAT 08, RUNG 5 -- THE FIRST RUNG THAT CHANGES THE HINT'S CLASS.
+# ONE SAMPLE. ONE ARM. ONE VARIABLE: dense full-body CONTOUR -> sparse SKELETON.
+#
+# ============================================================================
+# ITS PARENT IS RUNG 2, NOT RUNG 4, AND THAT IS WHAT MAKES THIS ONE VARIABLE
+# ============================================================================
+# Rung 2 is ep2-b08-cnetplate-r2-0819: scale 0.45, stroke 7px, dense contour.
+# This job is scale 0.45, stroke 7px, SKELETON. Same seed 20260819, same positive
+# word for word, same negative including the settled `dark, night` fix, same
+# size/steps/guidance/base/ControlNet, driver byte-identical at
+# 2a1bd19e. So the ONLY difference anywhere in this job against rung 2 is the
+# hint file, and the only difference in the hint file is its class.
+#
+# Rung 4 (0.45, 3px, contour) is the sibling that closed the stroke dial, and its
+# stroke value is deliberately NOT carried here: stacking a 3px stroke on a class
+# change would be two variables and would make a failure unattributable.
+#
+# ============================================================================
+# WHY THE CLASS, AND WHY IT IS THE RULED INSTRUMENT RATHER THAN A NEW IDEA
+# ============================================================================
+# Four rungs have now bracketed two dials by measurement:
+#
+#   scale   0.80 / 0.45 / 0.28   staging HELD / HELD / LOST
+#   stroke  7px / 3px @ 0.45     staging HELD / HELD -- and the outline never freed
+#
+# Rung 4's finding was that the second dial POINTS THE WRONG WAY. Share of
+# authored ink carrying a strong render gradient within 3px, one instrument,
+# nocontrol as the coincidence floor: nocontrol 26.1%, 0.80/7px 97.7%,
+# 0.45/7px 94.4%, 0.45/3px 98.3%. THE THIN HINT WAS TRACED MOST TIGHTLY OF ALL.
+# A 7px bar is an ambiguous ribbon the model may fill anywhere; a 3px line is a
+# single edge locus the outline snaps onto. Stroke weight is a PRECISION dial, not
+# a strength dial, so no weight frees the silhouette.
+#
+# That localises the cause on the ENCLOSURE, and it is the one property no rung
+# has yet varied. A closed contour around a body is an instruction about where
+# that body's EDGE goes, at any strength and at any weight. This rung removes it:
+# joint dots and single-line bones, the medial axis instead of the silhouette.
+#
+# ============================================================================
+# THE HINT EXISTS, ITS CLAIM IS ASSERTED IN CODE, AND IT WAS LOOKED AT
+# ============================================================================
+# pipeline/control/b08-pose-skel-0819.png, sha 09200bdf..., 832x1216, drawn by
+# author_b08_pose_hint.py --skeleton. Three things are asserted by --selftest
+# BEFORE any pixels, and all of them pass:
+#
+#   * THE GEOMETRY IS IDENTICAL, key by key, to the contour hint: ground_y_px,
+#     guard, goblin, stature_ratio, point, board, size and stroke_px all compare
+#     equal. Same cx for both figures, same statures, same shared foot line
+#     y=1149.1, same shoulder->elbow->wrist->fingertip chain, same 26.8px torso
+#     clearance, same extension 0.847, same board. The pose is not re-authored.
+#   * NEITHER BODY IS ENCLOSED, and this is a STRUCTURAL assertion by flood fill
+#     rather than a claim about ink. Seeded at mid-torso, off every line, and
+#     checked off-ink in both classes first: in the CONTOUR class the fill is
+#     trapped inside the torso (guard 18007 px, goblin 11247 px as single closed
+#     cells); in the SKELETON class the same seed reaches the frame border in both
+#     figures. THE BOARD IS STILL A CLOSED RECTANGLE ON PURPOSE -- it is an object
+#     we want traced, not a body we want redrawn, and B4a has passed on it four
+#     times -- and that too is asserted so nobody "fixes" it later.
+#   * A HAND-SIZED MARK SITS AT THE END OF THE ARM (361 px of ink within 9px of
+#     the wrist). This is not a second variable, it is rung 4's own ruling carried
+#     forward: rung 4 pre-registered that "B4b needs a hand-sized mark at the end
+#     of the arm whatever the class" after its 1px finger came back as a
+#     fingerless wedge.
+#
+# ONE THING THE SELFTEST FOUND AND THE DRAWING WAS CHANGED FOR, recorded because
+# it was a real defect and not a threshold to be tuned: the first skeleton drew a
+# HIP BAR, and shoulder-bar + spine + hip-bar + the board arm still closed a cell
+# holding 56% of the guard's torso -- i.e. it still partly specified his right
+# edge. The hip bar was redundant with the leg-joint dots, so it was removed
+# rather than the assertion weakened. Hip WIDTH still reaches the model, as two
+# joints instead of as a line.
+#
+# ink_fraction 0.0398 against the contour's 0.0581. NOTE THAT SPARSITY IS NOT THE
+# CLAIM -- the joint dots cost ink back, and non-enclosure is the variable.
+#
+# Opened at full size and at 1:1 beside the contour hint before this spec was
+# written: EVIDENCE-b08-skelhint-0819.png.
+#
+# NO SPEND, NO PROVIDER, NO CANON FILENAME, NO PICK, NO PUBLISH TO THE SITE, NO
+# POST, NO ASSEMBLY, NO VIDEO. This renders one still.
+
+id: ep2-b08-cnetplate-r5-0819
+task: ep2-b08-cnetplate-r5-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 34
+max_attempts: 1
+owner: beat 08 staging lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate, for its cut slot in the episode 2 assembly. Four rungs have
+  proved a hand-authored hint is the only mechanism that has ever put this beat's
+  pointing arm on the guard, and have left the same thing unsolved every time: the
+  figures come back as the author's polygons rather than as drawings. Identity --
+  the beat's other blocker -- is parked behind this, because a per-figure identity
+  lever has nothing to attach to on a figure whose outline is not the model's own.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-cnetplate-r5-0819 with a sha256
+  manifest, and read at full size against RUNG 2 (its one-variable parent) and the
+  nocontrol frame. See verdict_rule -- all three branches are informative, and one
+  of them retires hand-authored geometry as a composition lever for this beat.
+
+why: >-
+  It is the instrument rung 4's verdict ruled and pre-committed to, it attacks the
+  one property four rungs have never varied, and it has no dependency: the driver
+  and the hint are staged and hash-verified on both ends, and the hint's structural
+  claim is already asserted in --selftest. The card measured 0 ready / 0 running /
+  0 backlog when this was filed. Two minutes, $0, no provider, no download.
+
+est_minutes: 2   # ONE process; rung 4 measured 10.9s load + 14.8s render
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Driver and hint staged at C:\banyan-farm\b08cnetplate-r5-0819\src and
+# hash-verified on BOTH ends before this spec was written:
+#   pipeline\controlnet_plate.py              2a1bd19ecebe1b4c779c07e70f4632731c9d21fdd96d6bda6e233f74274fa67f
+#   pipeline\control\b08-pose-skel-0819.png   09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+# The driver is byte-identical to the one all four earlier rungs ran, so the hint
+# file is the only thing that differs from rung 2 anywhere in this job.
+
+payload:
+  # Byte-identical to rungs 2, 3 and 4, word for word.
+  C:\banyan-farm\b08cnetplate-r5-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08cnetplate-r5-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+steps:
+  - name: hintskel
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08cnetplate-r5-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08cnetplate-r5-0819\src
+      - --repo-commit
+      - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+      - --task
+      - ep2-b08-cnetplate-r5-0819
+      - --arm
+      - hintskel
+      - --control
+      - pipeline/control/b08-pose-skel-0819.png
+      - --control-sha256
+      - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+      - --scale
+      - '0.45'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08cnetplate-r5-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08cnetplate-r5-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08cnetplate-r5-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Required by box_enqueue.courier_problems (2026-08-19): a job whose
+        # artifacts live outside courier-box\farm-out must have a step that
+        # carries them there, because the courier pushes from farm-out and from
+        # nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible
+        # for two days for want of exactly this.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08cnetplate-r5-0819/out"
+        pay_dir = "C:/banyan-farm/b08cnetplate-r5-0819"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetplate-r5-0819"
+        os.makedirs(dst, exist_ok=True)
+        files = sorted(glob.glob(out_dir + "/ep2-b08-cnetplate-r5-0819-hintskel.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-cnetplate-r5-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08cnetplate-r5-0819\out\ep2-b08-cnetplate-r5-0819-hintskel.png
+
+# ============================================================================
+# THE BAR. CARRIED FROM RUNGS 1-4 UNCHANGED. Not edited after the pixels.
+# ============================================================================
+bar:
+  b1_the_pair: >-
+    TWO figures and only two -- one guard and one goblin, both whole in frame.
+    GENUINELY AT RISK for the first time on this axis: a skeleton does not enclose
+    a body, so nothing in the hint says how wide either figure is, and the
+    checkpoint may merge two nearby skeletons into one figure or grow a third.
+  b2_the_adults_read: >-
+    EXPECTED FAIL FOR THE FIFTH TIME, PRE-REGISTERED, AND NOT THIS RUNG'S
+    VARIABLE. Four rungs across two dials returned four pairs of green figures,
+    because a contour -- or a skeleton -- cannot say which body an attribute
+    belongs to: `green skin` enters the pooled embedding and lands on both.
+    Changing the hint's class does not create a per-figure identity channel. A
+    PASS here would be a real surprise and would mean the ENCLOSURE had been
+    suppressing the wording, which would redirect the identity probe.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The skeleton pins both
+    foot lines at y=1149.1, unchanged, and keeps the ground ticks.
+  b4a_board_down: >-
+    The clipboard is DOWN at the guard's hip, in ONE hand, not raised at his chest
+    and not in both hands. This is the clause the retained board rectangle and the
+    gripping-hand dot exist to protect.
+  b4b_legible_point: >-
+    The gesture ends in a HAND aimed at the goblin's belly. FAILED at 0.80 (ended
+    in nothing), PASSED at 0.45/7px (a modelled hand with an index finger), FAILED
+    at 0.28 (a clean hand on the wrong figure), FAILED at 0.45/3px (a fingerless
+    wedge). The hand-sized wrist mark is this rung's answer to the last of those.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE CLAUSE THAT MUST SURVIVE. The pointing arm grows from THE GUARD's
+    shoulder. It has held on every hint that held the staging, and it is the only
+    thing this route has ever produced that nothing else has. If a skeleton cannot
+    keep it, hand-authored geometry stops being a composition lever for this beat.
+  b5_no_colossus: >-
+    Neither figure towers over the other. The uncontrolled frame at this seed is
+    an extreme colossus, so this clause is entirely the condition's doing and is
+    the most sensitive read on how much authority a non-enclosing hint retains.
+  b6_drawn_not_traced: >-
+    THIS RUNG'S OWN QUESTION AND THE REASON IT EXISTS. Rungs 2 and 4 both passed
+    B6's three POSITIVE tests -- cloth with folds, shaded limbs, faces with
+    features -- and both failed its NEGATIVE test, because the SILHOUETTES were the
+    authored polygons: boxy torsos, straight shoulders, columnar legs, a
+    rectangular bar for an arm. B6 passes here only if the OUTLINE is the
+    checkpoint's: limbs that taper, a torso with a waist, shoulders that slope,
+    cloth that leaves the polygon. Score the positive and negative halves
+    separately.
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS. (1) If B1, B3, B4a, B4b, B4c and B5 hold AND B6
+  finally passes both halves AND B2 fails as pre-registered, the verdict is
+  PASS-ON-PURPOSE and the composition lever is FINISHED as a piece of engineering:
+  the recipe is 0.45 + sparse skeleton, and beat 08's only remaining blocker is
+  identity, which unparks immediately because it now has a model-drawn outline to
+  attach to. (2) If B6 passes AND the staging degrades -- the arm leaves the guard,
+  a colossus returns, the figures merge or a third appears -- then the ENCLOSURE
+  was load-bearing for composition and not merely for tracing, and the two
+  properties cannot be separated by this instrument. That closes hand-authored
+  geometry as the route and hands beat 08 to a plate campaign or to per-figure
+  IPAdapter, which is a real answer and not a failure. (3) If the staging holds AND
+  B6 still fails -- polygon silhouettes off a hint that draws no silhouette -- then
+  the tracing was never the enclosure either, and the flatness is a property of
+  this checkpoint under ANY geometric conditioning at a usable strength. That
+  retires the whole hint-authoring line for the look, keeps it for the staging, and
+  makes `control_guidance_end` the last untried lever. UNDER ANY BRANCH, DO NOT
+  FILE A SIXTH HINT VARIANT WITHOUT READING ALL THREE ABOVE FIRST.
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE variable. No stroke change (7px, rung 2's value, is
+  held), no scale change (0.45 is the settled constant), no re-posed hint, no
+  control_guidance_end change (still hardcoded, still its own question), no
+  identity mechanism, no ControlNet-plus-mask, no pick, no plate_ack waiver, no
+  canon filename, no second seed. The nocontrol control is rung 1's
+  already-published frame at this same seed and is not re-rendered.
+licence_note: >-
+  Clean and identical to rungs 1-4. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M), control net xinsir/controlnet-scribble-sdxl-1.0
+  (apache-2.0, no attribution condition). The hint is drawn by
+  pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
+  annotator, so the lllyasviel/Annotators landmine is not touched.
+instrument_note_the_probe_metric_is_VOID_on_this_hint: >-
+  RECORDED IN ADVANCE SO NOBODY QUOTES IT. controlnet_probe.py's bind_ratio is
+  void on this hint class by the probe's own pre-registered rule, exactly as
+  recorded for rungs 3 and 4: the nocontrol frame at this seed scores 1.498,
+  outside the probe's [0.85, 1.15] kill-switch band for an unconditioned arm, and
+  that rule says every number in such a run is void. The metric assumes a sparse,
+  OFF-CENTRE hint whose strokes sit where the model would not otherwise put
+  structure; this hint's strokes run down the middle of two standing figures. THE
+  VERDICT WILL REST ENTIRELY ON THE PIXELS, plus the ink-adherence measure rung 4
+  introduced, which is comparable across rungs because it is computed identically.
