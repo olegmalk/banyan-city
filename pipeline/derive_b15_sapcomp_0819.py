@@ -167,6 +167,20 @@ def main() -> int:
                   % (path, want, have))
             return 3
 
+    # THE SAME DEFECT FROM THE OPPOSITE DIRECTION. Downstream, this script refuses
+    # to CARRY a parent's verdict into a child. Upstream, a re-run would silently
+    # DELETE the child's own verdict once it has been scored -- and a scored verdict
+    # is the only record of what the pixels turned out to be. So: refuse.
+    if os.path.isfile(OUT) and not ("--force" in sys.argv):
+        existing = yaml.safe_load(open(OUT, "r", encoding="utf-8")) or {}
+        scored = sorted(k for k in existing if REFUSE.search(k))
+        if scored:
+            print("!! %s already carries %s -- refusing to overwrite a SCORED spec.\n"
+                  "   Re-deriving would delete the verdict, which is the only record "
+                  "of what the pixels were.\n   Pass --force if that is genuinely what "
+                  "you want." % (os.path.relpath(OUT, REPO), ", ".join(scored)))
+            return 5
+
     parent = yaml.safe_load(open(PARENT, "r", encoding="utf-8"))
 
     refused = sorted(k for k in parent if REFUSE.search(k))

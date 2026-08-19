@@ -500,3 +500,124 @@ derivation:
   what_is_NOT_the_same: 'the init and its mask, the two prompt files, the bar, the fail modes, the beat/id/owner/consumer
     keys, and the working directory. Nothing a sampler reads: steps, cfg, strength, seed, pad-crop, blur,
     dtype and the model are the parent''s.'
+verdict_0819:
+  verdict: 'PASSES THE AXIS THE RUNG EXISTS FOR -- EXACTLY TWO LEAVES ON ONE ROOTED STEM, AT HIS EYE LEVEL
+    -- WITH ONE HONEST PARTIAL: the dialect half of C8. Two wordings could not bring beat 15''s leaf count
+    down from five blades on three nodes; one composited init and 12 of 40 denoising steps did, on the
+    first GPU fire, in 4.7 seconds, $0. THE OUTCOME I PRE-REGISTERED AS MOST LIKELY -- FAIL-PASTE -- FIRED,
+    AS A PARTIAL, AND THAT IS THE FINDING: the drawing came back with cel behaviour at its EDGES and the
+    composite''s flat fill still in its INTERIOR.'
+  rc_and_hashes: 'rc=0 on all four steps (fetch, dry, render, publish), 7 files + manifest published to
+    C:/banyan-farm/courier-box/farm-out/ep2-b15-sapcomp-0819 and pushed by the runner on farm-results-rtx5090.
+    Pulled and RECOMPUTED locally against the box''s own manifest: output df399888..., init 109abc61...,
+    mask f7933427... all MATCH, so the one-variable claim is verified on the artifacts and not only on
+    the spec. The box''s fetch step re-asserted both source sha256s off origin/main before the model loaded,
+    and its dry step reported the mask bbox as [121, 285, 310, 604] -- the same numbers this spec declared
+    before the pixels existed.'
+  pass_clauses:
+    P1_both_in_one_frame: PASS. He and the sapling are both wholly inside 832x1216, neither cropped. This
+      is the whole of beats.'15'.done_when and twenty-four prior artifacts had not managed it with a real
+      plant.
+    P2_rooted_and_attached: 'PASS. One stem rises out of the plate''s OWN surviving grass tufts with its
+      base in shot, and both blades join it at one node. The rooting is the plate''s, not drawn: the removal
+      stopped at y 565, above the tufts at y 563-607, so the sampler was asked to finish a join that was
+      already physically there.'
+    P3_the_plant_is_the_sapling: 'PASS, AND IT IS THE CLAUSE r1 FAILED. Exactly TWO blades: one green
+      component of 7339 px spanning y 342..404 and x 134..298, which is the blade pair, and no third blade
+      anywhere. r1 had five blades on three nodes. No bead vine, no bush, no crown, one thin stem.'
+    P4_scale: 'PASS, carried from r1 by construction and CHECKED rather than assumed: the plant is 200
+      px tall with its apex 135 px below his head top at y 257, and the blade band did not move (composite
+      rows 343..419, output rows 342..419).'
+    P5_outdoors_in_an_open_field: PASS. Grass and open field, unchanged from r1 outside the mask.
+    P6_one_lean_adult_goblin: 'PASS. One figure, seated, lean, patchwork cloak, both hands on his knees.
+      Measured against the PARENT rather than asserted: 0 px of 64000 changed by more than 20 in the hands/knees
+      box, 0 of 40500 in the boots box.'
+    P7_not_a_close_up: PASS. Wide, whole body, and the plant reads.
+    P8_his_eyes_are_level_with_the_two_leaves: PASS, and this is the first beat-15 artifact ever scored
+      on it -- STEWARDSHIP.md 6 forbade scoring gaze here until his approval this morning. His pupils
+      are at y 370; the blade band spans y 342..419 with its centre at y 380.5 against the composite's
+      381.0. THE SAMPLER MOVED THE BLADES BY 0.5 px. Scored honestly as CARRIED BY CONSTRUCTION -- the
+      composite placed them at his measured eye level and the only thing this render could do was move
+      them, which it did not.
+    P9_spectacles: RECORDED, unchanged. 15 px of 16900 in the face box differ from the parent by more
+      than 20, and they lie in the box's leftmost columns where the mask's own right edge (x 310) crosses
+      it -- not on his face and not on the spectacles.
+    C8_canon_two_leaf_sapling_AND_drawn_cel_art: 'PASS ON THE FIRST HALF, PARTIAL ON THE SECOND, AND THE
+      SPLIT IS THE POINT. Geometry: two wide oval blades with soft round tips, aspect 1.72, one thin rooted
+      stem, one node, no side-branch, no fig -- exactly the canon plant. Dialect: the conversion happened
+      at the EDGES and not in the BODY. What came back that the composite did not have, all visible at
+      6x in EVIDENCE-leaves-composite-vs-output-6x.png: the uniform dark outline is now VARIABLE IN WEIGHT,
+      heavy along the upper-left margins and nearly absent along the lower ones; a warm rim highlight
+      appeared on the upper blade''s top edge, on the lit side of the plate''s measured straight-down
+      light; the ruled straight midrib became a soft curved luminance ridge following each blade''s own
+      tilt; and a small drawn knot appeared at the stem junction. What did NOT come back: the interior
+      is still the composite''s flat fill, where the line art elsewhere in this frame carries visible
+      brush structure. So it is not a paste and it is not the house dialect either.'
+  pre_registered_fail_modes:
+    FAIL-PASTE: 'FIRED AS A PARTIAL, AND IT WAS NAMED AS THE MOST LIKELY OUTCOME. The instrument agrees
+      with the eye and it is the one number that separates this sample from beat 19''s: mean |delta| against
+      the init inside the mask is 7.3 here against beat 19''s 13.4, and highpass sigma-3 std in the drawn
+      region moves 23.21 -> 21.40 (beat 19: 22.10 -> 20.59). Only 6589 of 42792 masked px changed by more
+      than 20. My pre-registered reason for expecting this was the SIZE of the drawing -- a 4.23% mask
+      against beat 19''s 17.08%, with structures 7.0 px and 2.1 px wide -- and that reason survives the
+      sample. THE LEVER IS ALREADY NAMED IN THIS SPEC: strength 0.30 -> 0.40, one variable, no new code,
+      ONE SAMPLE.'
+    FAIL-SHAPE: 'DID NOT FIRE. Both blades intact, stem intact, nothing split along an internal line.
+      Capping the midrib at the plate''s own outline step (213.9 -> 45.1) is why: pattern 5''s law, and
+      beat 10 split its slab at 0.45 on exactly this.'
+    FAIL-COUNT: 'DID NOT FIRE -- exactly two blades, which is the axis two wordings failed at five and
+      then at five again. NOTE ON THE INSTRUMENT, because it would mislead anyone re-running it: the green-blob
+      count went 5 components -> 7. NONE of the new ones is a leaf. The composite''s blades and stem were
+      ONE component of 8875 px because they touch; in the output the sampler darkened two stretches of
+      the stem enough to fall below the green test, so the same plant now reads as a blade pair (7339
+      px, y 342..404) plus two stem segments (457 px at y 409..504, 769 px at y 509..605). The other four
+      blobs are byte-identical to the composite''s and are the plate''s own grass tufts by his knees.
+      A blob count would have reported a FAIL here and it would have been wrong.'
+    FAIL-NODE: DID NOT FIRE. One node. The bare stem grew no second pair, which is precisely how r1 failed.
+    FAIL-TIP-BALL: DID NOT FIRE. No bud, no ball, no fruit at the tip or anywhere on the plant -- worth
+      stating because the init under all six of this beat's motion takes was a weed topped with a WHITE
+      SPHERE, so this is the checkpoint's demonstrated prior on this beat and it stayed away.
+    FAIL-VACANCY: DID NOT FIRE. Nothing grew where the five-blade weed was removed. 21377 px were clone-filled
+      from the plate's own measured field with 0 px left without a source, and the field came back as
+      field.
+    FAIL-FIGURE: DID NOT FIRE. Hands 0 px, boots 0 px, face 15 px at the mask's own edge. 60 px outside
+      the mask changed by more than 20, all of them inside the padded crop the inpaint pastes back (x
+      127..286, y 425..605 against the mask's own 121..310 / 285..604), which is the pipeline's documented
+      behaviour and not leakage into an unrelated region.
+    FAIL-EYE-LEVEL: DID NOT FIRE. 0.5 px of blade-band movement. See P8.
+    FAIL-SEAM: DID NOT FIRE, AND THIS IS THE RESULT I WOULD HAVE BET AGAINST. An earlier composite round
+      put a row of grey dashes at x 233-257 and a vertical seam at x 262 into the cloned field, and the
+      fix was to restrict the clone source to the plate's own measured clean window (x 55-150). The open
+      field left of the plant comes back continuous at 3x with its horizontal banding intact -- so the
+      fix held under the sampler and not merely in the composite.
+    FAIL-DECAL: 'DID NOT FIRE. None of the five tells: the new rim highlight sits on the side the plate''s
+      measured light comes from, the shading follows each blade''s own tilt, the drawing''s edges are
+      the object''s edges, there is no repeat, and the plant''s scale reads correctly against his hands
+      and the grass tufts as in-frame rulers.'
+  what_this_settles: 'BEAT 15''S LEAF COUNT IS REACHABLE, BY GEOMETRY RATHER THAN BY WORDS, and the beat''s
+    blocker moves from ''the thing sharing the frame with him is not the sapling'' to ''the plant is the
+    sapling and owes the house dialect''. That is a smaller and different problem. It also gives the composite-then-inpaint
+    pattern its second beat in one night, on a plate with none of beat 19''s advantages -- and the two
+    samples together say something neither says alone: CONVERSION SCALES WITH THE SIZE OF THE DRAWN REGION
+    AT A FIXED STRENGTH. 17.08% of frame at 0.30 converted fully; 4.23% at 0.30 converted only at its
+    edges. That is a mechanism a lane can act on, not a plate quirk.'
+  what_this_does_NOT_settle: 'It does not establish 0.30 as right for a small mask -- the whole point
+    of the partial is that it probably is not. It does not measure a rate: ONE CLIP, ONE SEED, ONE STRENGTH,
+    ONE WORDING. And it says nothing about beat 15''s MOTION, which is a separate decision that wants
+    the crf-10 finding applied to it (--image-crf 10, not 33, on the evidence of ep2-b09-faceturn-crf10-0819
+    and beat 07''s cut-preferred take).'
+  is_this_plate_a_pick: 'NO. NOT A PICK, no plate_ack, no promotion, no leaf, no lineage entry, nothing
+    written to done-definitions.yaml and nothing added to any cut. It is one sample that clears a pre-registered
+    bar on the axis that blocked the beat, which is the evidence a pick would be made ON. Beat 15 stays
+    a slate until the author says otherwise (R4). The sidecar the box wrote carries approved: false and
+    a provisional: block for the same reason.'
+  the_next_rung_named: STRENGTH 0.30 -> 0.40 ON THIS EXACT INIT, one variable, no new code, ONE SAMPLE,
+    about 5 s of GPU. 0.40 runs int(40*0.40) = 16 of 40 steps instead of 12. It is the cheapest test of
+    whether the flat interior is a strength effect or a scale effect, and the pair 0.30/0.40 on a 4.23%
+    mask is directly comparable to beat 19's 0.22/0.30 on a 17.08% one. The risk is FAIL-SHAPE at the
+    higher strength, which beat 10 hit at 0.45 -- so 0.40 and not 0.45. Both plates would then be committed
+    side by side, as beat 19's were, so the choice is made on pixels in one look.
+NOTE_this_spec_is_SCORED: A verdict block was appended after the render. pipeline/derive_b15_sapcomp_0819.py
+  REFUSES to overwrite this file while that block is present (pass --force to override), because a re-derivation
+  would silently delete a scored verdict -- the same class of defect as the parent-verdict inheritance
+  this repo hit three times on 2026-08-19, arriving from the opposite direction.
