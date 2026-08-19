@@ -93,6 +93,34 @@ vo_note: >-
   review/ep2-demo-0819/sources/, and each row carries its sha256 so a re-mux can
   be proved byte-identical rather than assumed to be.
 
+vo_guards_revoiced_0819: >-
+  THE SENTENCE ABOVE — "nothing in this episode is waiting on voice synthesis" —
+  WENT STALE AT COMMIT 4d89aafb AND THE SIGN OF THE STALENESS IS THE USEFUL KIND:
+  the takes on disk are now NEWER than the cut, not missing from it. The founder
+  heard GUARD 2 as the sapling's voice on ep2-demo-0819c and he was right to
+  within 1.7 Hz; he ruled candidate "B" and both guards were re-voiced the same
+  day. Numbers read out of the provenance file, not paraphrased from a summary —
+  genomes/sapling/nodes/002b-first-citizen/clips/guards-revoice-0819.yaml,
+  committed at 4d89aafb: GUARD 2 against the tree is now 26.0 Hz clear (was 1.7,
+  the defect he named); GUARD 1 is 82.4 Hz clear BY CONSTRUCTION rather than by
+  the MPS luck that carried him through 0819c at 22.8; all six character pairs
+  beat the 20 Hz bar with the worst at 24.2. Old takes are archived in
+  clips/vo-archive/ per R6 and nothing was deleted, and §6 is satisfied because
+  the approved script text is unchanged — this is re-synthesis of lines he has
+  already read, the ruled-legal class. WHAT THIS MEANS FOR THE LEDGER: the
+  `vo:` sha256 on every guard row (beats 5, 6, 7, 8, 9, 10) now names a file the
+  live cut does not contain, so those six hashes describe the PUBLISHED cut and
+  not the current disk. render_t3 reads clips/NN-vo.mp3 and the measured chunk
+  timings in clips/NN-vo.json straight out of the node directory, so the next
+  assembly picks the new takes up with no flag and no copy step. THE NEXT
+  ASSEMBLY IS NOW JUSTIFIED BY VOICE ALONE: $0, no founder gate to wait on, and
+  the taste ruling that licenses it is already recorded. Two things this does NOT
+  claim, both named in the provenance rather than dropped: short lines undershoot
+  their voice's pitch (beat 07 rendered 170-182 against the same voice's 192-212,
+  an engine property first measured here), and GUARD 1 overlaps the SCAVENGER on
+  individual takes though not on medians — out of this ruling's scope, filed for
+  the VO lane, and mitigated by the fact that the two never alternate.
+
 the_three_upgrades_judged_and_not_made: >-
   Beats 01, 07 and 17 each have a take that a written verdict calls
   CUT-PREFERRED over what is in the live cut, all three from the --image-crf
@@ -196,6 +224,18 @@ beats:
       file: review/ep2-demo-0819/sources/03-bad-cover-b03-refire-0814.mp4
       sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
     verdict: NONE — a 0814 carry-forward with no verdict block. Best available, unscored.
+    verdict_JUDGED_0819: >-
+      FAIL on all three clauses, and NOT on the crouch — on the trunk. Frames 000-014 hold him
+      standing in an open field with NOTHING to hide behind; at f015 a dark rod materialises in
+      the upper right unattached to the ground and by f018 it has grown leaves and his hand rises
+      to it. He never folds — what looks like a descent on a sparse sheet is the foreground grass
+      growing over him while his pose holds. Confirms done-definitions' st-wave structural finding
+      ("THE PLATE CONTAINS NO TRUNK") on a SECOND plate lineage, and resolves that entry's own
+      recorded contradiction: "ends small at the frame edge" is true of THIS file and false of the
+      st wave, so the two readings were always about different takes. ADDENDUM, measured after the
+      read: terminal_freeze_index 38, length 59 — 61% of the clip is one picture, so 2.46s of a
+      4.04s slot is dead air. Identity holds cleanly throughout; the failure is staging, not
+      drift.
     vo:
       file: review/ep2-demo-0819/sources/03-vo.mp3
       sha256: 805220bd21968b721d710362b7e18e7549ff12f8d81b24ce8ca3ec70cedc3663
@@ -205,6 +245,7 @@ beats:
       category in the episode — see `the_unscored_middle` at the foot of this
       file.
     cites:
+      - spec: pipeline/jobs/ep2-b03-refire-0814.yaml verdict / verdict_clauses / verdict_addendum_terminal_freeze_measured_after_the_read (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 3]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[3] why=carry-forward
 
@@ -215,11 +256,24 @@ beats:
       file: review/ep2-demo-0819/sources/04-the-footnote-b04-refire-0814.mp4
       sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
     verdict: NONE — 0814 carry-forward, no verdict block.
+    verdict_JUDGED_0819: >-
+      FAIL on the clause the whole beat rests on. done_when is "stillness with LIVE EYES ... eyes
+      moving side to side" and THE EYES NEVER MOVE — the irises hold one position from f005 to
+      f096, checked on consecutive strips and on a dedicated 6x crop of the eye band through the
+      tail where a one-pixel shift would be four pixels. No saccade, no blink; the only change is
+      the eye art going dark for ~3 frames at f091, filed as an artifact and explicitly not
+      credited as a look. The body clause cannot pass either, because there is no body: f000 is a
+      full-body wide shot and by f006 the face fills the frame with the crown outside the top
+      edge, for the remaining 91 frames. Distance from f000 runs 39.4 -> 68.5 by f010 then
+      flatlines and the ten largest interframe steps are the ten earliest — the init-abandonment
+      signature ep2-b09-faceturn-crf10-0819's header describes, now on a second beat and an
+      earlier date. The ramp is continuous, so a scale ramp and not a cut.
     vo:
       file: review/ep2-demo-0819/sources/04-vo.mp3
       sha256: 333cc20e6b7f6bfe10e6ac9a03ed3bf48b434471bf6b5591f4f4c655f20f9492
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b04-refire-0814.yaml verdict / verdict_clauses / verdict_measured / verdict_disagrees_with_the_records_attribution (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 4]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[4] why=carry-forward
 
@@ -230,11 +284,25 @@ beats:
       file: review/ep2-demo-0819/sources/05-the-patrol-b05-standB-trim.mp4
       sha256: 909688bce9c48a872b102cd6a02f26e2e9a80e6e83734c8c6541c3cc040fa93a
     verdict: NONE for the clip. The `-trim` suffix is an edit pass, not a verdict.
+    verdict_JUDGED_0819: >-
+      FAIL on four of seven clauses AND IT CONTRADICTS THE FROZEN CAST RULING — see
+      `ruling_contradictions_found_0819` at the foot of this file. Credited first: TWO FIGURES
+      from f000 to f117, never one and never three, which is the clause four rounds of words
+      produced 1, 3 and 3-plus on; and dup_pairs=0 with a lag-4 minimum of 5.62, the liveliest of
+      the eight. P7 fails hardest — f045-f070 the right guard pitches forward, is doubled over
+      with his face out of frame f049-f054, snaps upright at f055 WITH A DIFFERENT HEAD, and bows
+      again. Smooth frame to frame, so a real redraw and not a sampling artifact. The prop
+      reassignment the blind reader found in ten tail frames happens on screen in that same
+      window: from f053 the dark-haired guard holds BOTH objects and the other's hands are empty
+      for the rest of the clip. Also failed: no sash on either man, both read adolescent, and the
+      jog is gone by the record's own lever with `done_when` never amended — escalated, not
+      decided.
     vo:
       file: review/ep2-demo-0819/sources/05-vo.mp3
       sha256: 3db5749b7f8f6023cac68232ac3e172186f14a0f447350d356768064094d4078
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b05-standB-0814.yaml verdict / verdict_clauses / verdict_contradicts_a_founder_ruling / verdict_measured (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 5]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[5] why=carry-forward
 
@@ -245,11 +313,22 @@ beats:
       file: review/ep2-demo-0819/sources/06-the-clipboard-b06-scene-0814r-trim.mp4
       sha256: 6e1d49324cc7b74ad21cd2910827ac88b15135dc3c9168ddc161425ab3fd4f8d
     verdict: NONE for the clip.
+    verdict_JUDGED_0819: >-
+      THE CLOSEST OF THE EIGHT TO A PASS: three of four clauses met, FAIL on the board's SIZE. The
+      turn and the read are genuinely performed — f005 the prop is flat at waist height, f006-f011
+      his torso turns and it rotates through edge-on, f012-f045 it is face-out at chest height
+      with his eyes down on it — over a field present at frame one, no white burst, same man
+      throughout, dup_pairs=0. But from f012 the board runs from his chin to below his waist where
+      `done_when` requires it "hand-sized", and BOTH this job's positive ("the hand-sized bark
+      board") and its negative ("giant board, oversized board") failed to hold it. THIS ROW'S
+      VERDICT ALSO SETTLES THE OPEN QUESTION on this beat and finds a gap in the prop_identity_bar
+      — see the spec cite; both are too long for a ledger row.
     vo:
       file: review/ep2-demo-0819/sources/06-vo.mp3
       sha256: 31c6591e9d0b0233de3a66f59eda9ea93f637175eb0af0c26fa0f090b07fc391
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b06-scene-0814r.yaml verdict / verdict_clauses / verdict_settles_the_open_question_on_this_beat / verdict_finds_a_gap_in_the_prop_identity_bar (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 6]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[6] why=carry-forward
 
@@ -437,11 +516,23 @@ beats:
       file: review/ep2-demo-0819/sources/10-no-form-b10-pairB-trim.mp4
       sha256: b35f42eb181f63f263277010e2fd1f47172ee18a00f567c20468860b7bdc3811
     verdict: NONE for the clip.
+    verdict_JUDGED_0819: >-
+      FAIL on the clause that IS the beat. `done_when` requires the blank back held TOWARD HIS
+      PARTNER, and from f065 to f096 the board lies almost flat to the picture plane, squared to
+      the LENS, with the partner beside it seeing it nearly edge-on. That is verbatim the defect
+      `round_3_result` charges to seedA; it is in pairB too. Note the substitution that let the
+      record's conclusion through: round_4_result says "blank face showing" where the definition
+      says "toward his partner", and then concludes "Meets its own definition". WHAT LANDS is the
+      BLANK — from f055 the board is a featureless orange-tan rectangle and NO FORM reads, which
+      is why this stays cuttable. Board also fails hand-sized, same as beat 06. Prop merge now
+      dated: two distinct objects at f000, handled together f032-f051, one board from f055 with
+      the second guard's hands empty thereafter.
     vo:
       file: review/ep2-demo-0819/sources/10-vo.mp3
       sha256: 882126209ac3395cc1b70475c493cbd14ce08dd65553c374ff0d81390774f38d
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b10-pairB-0814.yaml verdict / verdict_clauses / verdict_disagrees_with_the_record_and_leaves_it_standing (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 10]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[10] why=carry-forward
 
@@ -517,11 +608,25 @@ beats:
       file: review/ep2-demo-0819/sources/13-the-shade-b13-refire-0814.mp4
       sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
     verdict: NONE for the clip.
+    verdict_JUDGED_0819: >-
+      THE END STATE PASSES AND THE CLIP CONTRADICTS A FOUNDER RULING TO REACH IT — see
+      `ruling_contradictions_found_0819`. `done_when` is explicit that "the END STATE is what the
+      beat needs; how he gets there is an author call, not a steward one", so the journey is
+      deliberately NOT scored. Scored: he DOES end folded small with knees up (f064-f096). He does
+      NOT end in the sapling's shade, because there is no sapling — the trunk is mature,
+      bark-textured, forked and taller than the frame at roughly 4x his height, and the clip
+      performs the very slide-down-the-trunk that "thats ridiculous, lmao. the sapling is tiny"
+      made unshootable. Against standing bars: no face in frame f012-f034, and at f016-f019 the
+      entire figure in shot is ONE BOOT. terminal_freeze_index 63, length 34 — 35% one picture.
+      MOST USEFUL FINDING: the required end state is already in FRAME ZERO, so the 97 frames are a
+      round trip away from the answer and back, and this may be the one beat whose next step is
+      LESS motion, not more.
     vo:
       file: review/ep2-demo-0819/sources/13-vo.mp3
       sha256: 4c7b6981cccbd548042f85e3d516f5228dddc65f79ba58ab4d22f17f1493a5f9
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b13-refire-0814.yaml verdict / verdict_clauses / verdict_contradicts_a_founder_ruling / verdict_the_most_useful_thing_this_read_found (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 13]
       - cut: review/ep2-demo-0819/sources/picks-0819.yaml beats[13] why=carry-forward
 
@@ -604,6 +709,32 @@ beats:
       file: review/ep2-demo-0819/sources/16-why-b16-anim-0814.mp4
       sha256: dcdfd26e483cb82c1f8ad92c3035da478a9bbe4a93cb907e24b6599f77192303
     verdict: NONE for the clip.
+    verdict_JUDGED_0819: >-
+      ***FOOTAGE THE FOUNDER RULED NOT SHIPPABLE, IN FOUR CUTS ASSEMBLED AFTER HE RULED.*** FAIL,
+      and NOT on its clauses — `done_when` is met on all three terms and the record has said
+      "WORKS" since 08-14. It does not matter. 2026-08-16, R4: "both of them are wrong though and
+      do not resemble the sapling"; done-definitions: "IT IS NOT SHIPPABLE AND NEITHER LEG SHIPS."
+      THE FILE IN THIS CUT IS LEG A — its own render-time sidecar says so — and the rejected
+      object is not a corner detail: a nine-to-eleven-lobed palmate leaf fills the ENTIRE frame
+      from f010 to f096. A definition that says "make the leaf the subject" is fully satisfied by
+      a shot that makes the WRONG leaf the subject, which is why a taste ruling outranks a clean
+      clause list here. New faults no record had: a WHITE WASH at f001-f005 (the subject dissolves
+      into a whiteout and a new subject grows out of the blank — the defect that blocked beat 06
+      for two rounds), and the leaf NEVER TURNS where the prompt asked for a slow rotation:
+      terminal_freeze_index 34, length 63, dup_pairs 72 of 96, so from f022 the clip is three
+      still pictures. The recorded shipping_fault is corrected on timing (f010, not f40) and
+      mechanism (a wash, not a jump).
+    status_CONTESTED_by_verdict_0819: >-
+      THE `status: best-available` ABOVE IS LEFT STANDING AND IS CONTESTED BY THIS FILE'S OWN
+      DEFINITIONS. `best-available` is defined at the head of this ledger as "footage that a
+      verdict lets into a cut but which no verdict calls a pass". A FOUNDER RULING THAT FOOTAGE IS
+      NOT SHIPPABLE IS NOT A VERDICT THAT LETS IT INTO A CUT — it is the opposite — so on these
+      definitions the value selected for this row is `slate`. IT IS NOT FLIPPED HERE, because
+      flipping it changes this ledger's slate count and implies an assembly action, and because
+      this ledger "makes no pick, promotes nothing ... and approves nothing". THE DECISION IS AN
+      ASSEMBLY'S AND IT IS ONE LINE EITHER WAY: slate beat 16 and lose a picture a viewer would
+      otherwise accept, or keep it and record explicitly that the episode ships a leaf the author
+      rejected. Both are defensible; neither is a judging lane's to take.
     vo:
       file: review/ep2-demo-0819/sources/16-vo.mp3
       sha256: d07dc2c7c0e14335adf11a6c208742ca76802c28672ca55129c29564a1f510aa
@@ -612,6 +743,7 @@ beats:
       leaf, which done-definitions names as the same failure as beat 20's wrong
       branch — the plant improvised per beat rather than described once.
     cites:
+      - spec: pipeline/jobs/ep2-b16-anim-0814.yaml verdict / verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg / verdict_status_contested_against_the_ledgers_own_definitions (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 16]
       - record: review/ep2-picks/done-definitions.yaml beats.'20'.colour_ruled_0816 (cross-reference to beats.16)
 
@@ -788,6 +920,29 @@ beats:
       file: review/ep2-demo-0819/sources/21-the-answer-b21-daylight-0814.mp4
       sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
     verdict: NONE for the clip.
+    verdict_JUDGED_0819: >-
+      ***THE ONLY BEAT OF THE EIGHT WHOSE DEFINITION IS FULLY MET — four of four clauses, and the
+      hard one MEASURED.*** The bar is not retroactive (definition_audit_0815 lists the ten that
+      are; 21 is not among them) and round 4's own lever was written against the HOLDS clause. A
+      whole-frame difference number cannot answer "does it hold" here because the banded sky and
+      grass re-ink every frame, so the LEAF was tracked: topmost green pixel, tip row 29 at f000
+      descending to 125 by f090 and then 125 FOR THE FINAL 31 FRAMES, monotonic throughout with no
+      reversal — which is also what makes it read deliberate rather than as wind. Limit stated:
+      one row is ~4 source pixels, so a HOLD and not a freeze, and exact_freeze_index agrees (3
+      dup pairs in 120, none at the end). AGAINST IT: the record's "palette jump in the first
+      frames" is a whole-picture CROSS-DISSOLVE — f000 is a sunset with THREE broad rounded
+      leaves, f001-f006 both pictures are superimposed, and from f007 there is ONE narrow
+      lance-shaped leaf in a banded poster landscape. done_when passes because it never says which
+      leaf; standard_0815's identity clause fails. Both stand.
+    status_UPGRADE_CANDIDATE_from_verdict_0819: >-
+      CANDIDATE FOR `PASS`, ARGUED BOTH WAYS AND NOT FLIPPED. FOR: all four clauses of a
+      pre-registered, non-retroactive bar are met, the hard clause is measured, and there is no
+      freeze — which is what this ledger's `PASS` requires ("a written verdict against a
+      pre-registered bar says PASS for THIS EXACT FILE"), so the row is eligible. AGAINST: the
+      file fails standard_0815's identity clause on the leaf substitution, and THE BANDED POSTER
+      STYLE HAS NEVER BEEN PUT TO THE AUTHOR — that is R4 and it sits above this verdict. Not
+      flipped, because a status change alters this ledger's summary counts and because the taste
+      question is open. Recommended and handed over.
     vo: absent-by-design
     vo_why: >-
       THE ANSWER has no spoken line — the beat is the leaf tilting and holding,
@@ -795,6 +950,7 @@ beats:
       is silent on purpose.
     blocked_on: null
     cites:
+      - spec: pipeline/jobs/ep2-b21-daylight-0814.yaml verdict / verdict_clauses / verdict_measured / verdict_the_one_open_question_and_it_is_R4 (FIRST verdict, 2026-08-19)
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 21]
       - record: genomes/sapling/nodes/002b-first-citizen/node.md, THE ANSWER (no dialogue)
 
