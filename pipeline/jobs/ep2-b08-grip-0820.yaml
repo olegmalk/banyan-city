@@ -1,0 +1,371 @@
+id: ep2-b08-grip-0820
+task: ep2-b08-grip-0820
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 33
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 08 staging lane, 2026-08-20 -- derived by pipeline/derive_b08_grip_0820.py, on the wording
+  rung its own parent's verdict named as the cheapest lever.
+consumer: Beat 08's plate, and this is the LAST clause between the beat and a complete plate candidate.
+  The parent put the board in the frame at a strength that leaves the drawing alone and got the far arm
+  to reach it; what it did not get is a hand ON it. The cut needs one frame where the clipboard is HELD,
+  because 'a board carried at the end of a sleeve' is not the picture the beat's line describes and a
+  plate that is close is still not a plate.
+success: 'One 832x1216 png with its sidecar, published to C:\banyan-farm\courier-box\farm-out\ep2-b08-grip-0820
+  with a sha256 manifest, and read at 1:1, 3x AND 5x beside its parent -- 5x because that is the magnification
+  at which the parent''s mitten was found, and a grip judged at 1:1 is a grip not judged. The preflight
+  must print its four verification lines, the sidecar must read `controlnet_2_conditioning_scale: 0.3`
+  and `seed: 20260819`, and its `prompt:` must contain `fingers and thumb gripping the clipboard edge`.'
+why: 'Nine words, one sample, and every outcome is informative. The mechanism is proven and the recipe
+  is fixed: every weight is on the card, both hints are byte-identical to two frames already rendered,
+  and the parent took 30 seconds of GPU end to end. If the grip arrives, beat 08 has a COMPLETE plate
+  candidate for the first time and the route stops. If it does not, wording has been eliminated as the
+  lever for a hand -- which is worth knowing before anyone argues for putting figure ink in a hint that
+  has never carried any.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b08grip-0820\prompt.txt: Two men, a guard, light sandy hair, cream shirt, white sash,
+    brown wrap skirt, clipboard lowered in one hand, fingers and thumb gripping the clipboard edge, other
+    arm pointing at the small goblin man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08grip-0820\negative.txt: giant, colossus, towering figure, different scale, floating,
+    raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl,
+    child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality,
+    deformed
+steps:
+- name: preflight
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# GUARD, NOT A VARIABLE. Carried from the parent and EXTENDED to the\n# SECOND NET and the SECOND\
+    \ HINT. Every input that conditions this frame is\n# re-read here before a GPU second is spent.\n\
+    #\n# THE NEW TRAP, AND IT IS THE REASON THE TWO SHAS ARE COMPARED TO EACH OTHER\n# RATHER THAN ONLY\
+    \ TO CONSTANTS: the scribble blob and the twins blob are\n# THE SAME SIZE (2502139104 bytes) and ship\
+    \ the BYTE-IDENTICAL config.json.\n# Same architecture, different weights. Size, file count and config\
+    \ pass\n# whichever net sits in whichever directory, so only the weight sha can tell\n# the POSE net\
+    \ from the OBJECT net -- and swapping them would condition the\n# skeleton on the board hint and the\
+    \ board on the skeleton.\nimport glob, hashlib, os, sys\n\ndef sha(p):\n    h = hashlib.sha256()\n\
+    \    with open(p, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 22), b\"\"):\n  \
+    \          h.update(chunk)\n    return h.hexdigest()\n\nd = r\"C:\\banyan-farm\\cnet-openpose-twins\"\
+    \nblob = os.path.join(d, \"diffusion_pytorch_model.safetensors\")\nn = os.path.getsize(blob)\nif n\
+    \ != 2502139104:\n    print(\"!! twins blob is %d bytes, expected 2502139104\" % n); sys.exit(1)\n\
+    got = sha(blob)\nif got != \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\":\n\
+    \    print(\"!! twins blob sha %s, expected 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\"\
+    \ % got); sys.exit(1)\nch = hashlib.sha256(open(os.path.join(d, \"config.json\"), \"rb\").read()).hexdigest()\n\
+    if ch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! twins\
+    \ config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % ch);\
+    \ sys.exit(1)\nbad = [r for r, _, fs in os.walk(d) for f in fs if f.endswith(\".incomplete\")]\nif\
+    \ bad:\n    print(\"!! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\nprint(\"twins net\
+    \ verified: %d bytes, sha %s\" % (n, got))\n\n# ---- THE SECOND NET, resolved out of the offline HF\
+    \ cache by repo id.\nsd = r\"C:\\Users\\artvn\\.cache\\huggingface\\hub\\models--xinsir--controlnet-scribble-sdxl-1.0\"\
+    \nsnaps = glob.glob(os.path.join(sd, \"snapshots\", \"*\"))\nif len(snaps) != 1:\n    print(\"!! expected\
+    \ exactly 1 scribble snapshot, found %r\" % snaps); sys.exit(1)\nsblob = os.path.realpath(os.path.join(snaps[0],\
+    \ \"diffusion_pytorch_model.safetensors\"))\nsn = os.path.getsize(sblob)\nif sn != 2502139104:\n \
+    \   print(\"!! scribble blob is %d bytes, expected 2502139104\" % sn); sys.exit(1)\nsgot = sha(sblob)\n\
+    if sgot != \"b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\":\n    print(\"!! scribble\
+    \ blob sha %s, expected b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\" % sgot);\
+    \ sys.exit(1)\nsch = hashlib.sha256(open(os.path.join(snaps[0], \"config.json\"), \"rb\").read()).hexdigest()\n\
+    if sch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! scribble\
+    \ config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % sch);\
+    \ sys.exit(1)\nsbad = [r for r, _, fs in os.walk(sd) for f in fs if f.endswith(\".incomplete\")]\n\
+    if sbad:\n    print(\"!! .incomplete under the scribble dir: %r\" % sbad); sys.exit(1)\nif glob.glob(os.path.join(snaps[0],\
+    \ \"*fp16*\")):\n    print(\"!! a fp16 variant appeared; the driver passes variant=None\"); sys.exit(1)\n\
+    print(\"scribble net verified: %d bytes, sha %s\" % (sn, sgot))\n\n# ---- AND THE TWO ARE NOT THE\
+    \ SAME WEIGHTS, asserted rather than assumed.\nif got == sgot:\n    print(\"!! THE TWO NETS ARE THE\
+    \ SAME WEIGHTS. One of the two directories \"\n          \"holds a copy of the other and this render\
+    \ would condition the \"\n          \"skeleton and the board on one net.\"); sys.exit(1)\nif n !=\
+    \ sn or ch != sch:\n    print(\"!! the two nets no longer share size and config, so the premise of\
+    \ \"\n          \"this guard has changed and it must be re-read, not relaxed.\"); sys.exit(1)\nprint(\"\
+    the two nets share size %d and config %s and DIFFER in weights -- \"\n      \"only the sha separates\
+    \ them\" % (n, ch))\n\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"\
+    ),\n                  (\"pipeline/control/b08-openpose-nat-0819.png\", \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"\
+    ),\n                  (\"pipeline/control/b08-board-0820.png\", \"38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6\"\
+    ),\n                  (\"pipeline/control/b08-ref-goblin-0819.png\", \"13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c\"\
+    ),\n                  (\"pipeline/control/b08-ref-guard-0819.png\", \"61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c\"\
+    )):\n    p = os.path.join(r\"C:\\banyan-farm\\b08grip-0820\\src\", rel.replace(\"/\", os.sep))\n \
+    \   if not os.path.exists(p):\n        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n  \
+    \  hh = sha(p)\n    if hh != want:\n        print(\"!! %s sha %s, expected %s\" % (p, hh, want));\
+    \ sys.exit(1)\nprint(\"staged driver, BOTH hints and BOTH references verified\")"
+- name: grip
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08grip-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b08grip-0820\src
+  - --repo-commit
+  - ee74ac0e3eaf920fc7637fa7e4f2727af7684628
+  - --task
+  - ep2-b08-grip-0820
+  - --arm
+  - grip
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - pipeline/control/b08-openpose-nat-0819.png
+  - --control-sha256
+  - 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260819'
+  - --ip-ref
+  - pipeline/control/b08-ref-goblin-0819.png
+  - --ip-mask-capsules
+  - 170.6,550.8,118.6,550.8,30;170.6,550.8,222.5,550.8,30;118.6,550.8,104,762.4,12;104,762.4,111.3,857.3,12;222.5,550.8,237.1,762.4,12;237.1,762.4,229.8,857.3,12;170.6,550.8,137.7,762.4,30;137.7,762.4,140.5,941.2,12;140.5,941.2,143.2,1123.6,12;170.6,550.8,203.4,762.4,30;203.4,762.4,200.7,941.2,12;200.7,941.2,197.9,1123.6,12;170.6,550.8,170.6,481.7,34;170.6,481.7,152.5,465.9,34;152.5,465.9,128.9,470.4,34;170.6,481.7,188.7,465.9,34;188.7,465.9,212.2,470.4,34
+  - --ip-ref-sha256
+  - 13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c
+  - --ip-ref
+  - pipeline/control/b08-ref-guard-0819.png
+  - --ip-mask-capsules
+  - 565.8,491,512.4,491,30;565.8,491,619.1,491,30;512.4,491,360,484.9,12;360,484.9,257.4,657.3,12;619.1,491,627.2,579.7,12;627.2,579.7,621.7,668.4,12;565.8,491,532.1,723.8,30;532.1,723.8,534.9,920.4,12;534.9,920.4,537.7,1121,12;565.8,491,599.5,723.8,30;599.5,723.8,596.7,920.4,12;596.7,920.4,593.8,1121,12;565.8,491,565.8,403.9,34;565.8,403.9,550.7,389.3,34;550.7,389.3,531.2,393.5,34;565.8,403.9,580.8,389.3,34;580.8,389.3,600.3,393.5,34
+  - --ip-ref-sha256
+  - 61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c
+  - --ip-scale
+  - '0.7'
+  - --controlnet2
+  - xinsir/controlnet-scribble-sdxl-1.0
+  - --control2
+  - pipeline/control/b08-board-0820.png
+  - --control2-sha256
+  - 38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6
+  - --scale2
+  - '0.3'
+  - --prompt-file
+  - C:\banyan-farm\b08grip-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08grip-0820\negative.txt
+  - --out
+  - C:\banyan-farm\b08grip-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# box_enqueue.courier_problems: the courier pushes from farm-out and\n# nowhere else, and ep2-cnet-probe-0817\
+    \ was invisible for two days for\n# want of exactly this step.\nimport glob, hashlib, os, shutil\n\
+    out_dir = \"C:/banyan-farm/b08grip-0820/out\"\npay_dir = \"C:/banyan-farm/b08grip-0820\"\nctl_dir\
+    \ = \"C:/banyan-farm/b08grip-0820/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-grip-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b08-grip-0820-grip.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/b08-openpose-nat-0819.png\")\n         \
+    \      + glob.glob(ctl_dir + \"/b08-board-0820.png\")\n               + glob.glob(ctl_dir + \"/b08-ref-*-0819.png\"\
+    ))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b08-grip-0820.sha256\"), \"w\"\
+    ,\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"\
+    published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 8 else\
+    \ 1)"
+artifacts:
+- C:\banyan-farm\b08grip-0820\out\ep2-b08-grip-0820-grip.png
+bar:
+  b0_the_stack_is_what_it_claims: 'VOID-CHECK, carried from the parent UNCHANGED and it must stay unchanged,
+    because this rung''s whole claim is that only the words moved. Preflight prints `twins net verified`,
+    `scribble net verified`, the line asserting the two nets share size and config and DIFFER in weights,
+    and `staged driver, BOTH hints and BOTH references verified`. The sidecar must read `controlnet_conditioning_scale:
+    1.0`, `controlnet_2_conditioning_scale: 0.3`, `control_image_sha256: 562911c8...`, `control_2_image_sha256:
+    38cd39da...`, `seed: 20260819` and both capsule masks unchanged. If any of those differs from the
+    parent''s sidecar this is not a wording comparison and the frame is not a result.'
+  b4a_the_grip: 'THE ONE CLAUSE THIS RUNG EXISTS FOR, AND IT IS SCORED AT 5x. The board is already established
+    -- the parent drew it at the authored quad, corners (608.6,660.5) (719.5,678.1) (697.7,816.2) (586.7,798.6),
+    bbox x 583-723 y 657-820, at the authored 9-degree tilt with its top edge below the shoulder line
+    y=491 -- and that MUST SURVIVE. What is being added: A DRAWN HAND ON THE BOARD. Passes if at 5x there
+    are separated digits at the board''s edge -- fingers reading as fingers, not a rounded terminal form
+    -- with the board''s edge passing BEHIND or BETWEEN them rather than tucking under a mitten. A thumb
+    is wanted and its absence alone is not a fail; the fail is no digits. Scored BY EYE at 1:1, 3x and
+    5x against the parent frame side by side. NO EDGE METRIC: the parent''s verdict established that mean
+    gradient in this region reads lower WITH the board than without it, so the number is known to point
+    the wrong way here.'
+  b4a_ii_still_one_board: THE RISK THE EDIT ITSELF CREATES, PRE-REGISTERED BECAUSE IT IS THE PRICE OF
+    NAMING THE OBJECT TWICE. `clipboard` now appears twice in the positive prompt, which is what binds
+    the digits to the right hand, and the standing counter-risk is a duplicated object. EXACTLY ONE board
+    or clipboard in the frame, at the hint's quad. A second board anywhere -- in the pointing hand, on
+    the ground, doubled at the same place -- FAILS this clause even if the grip arrives, and it would
+    mean the next wording must refer to the object once and bind by position instead.
+  b4b_the_grip_is_on_the_RIGHT_hand: 'THE OTHER RISK THE EDIT CREATES. The guard has two hands and the
+    other one is POINTING. The fingers must arrive on the board-side hand; fingers added to the pointing
+    hand, or a pointing gesture that turns into a second grip, is a FAIL of this clause and a specific,
+    useful finding about how the clause binds. The pointing hand''s centroid stays within ~60 px of the
+    authored wrist (280.5,695.1): twinsipa 40.3, boardnet 10.2, the parent 48.5, so this has never failed.'
+  b6_drawn_not_traced: 'CARRIED AND PRE-REGISTERED TO SURVIVE. Both figures read as DRAWN CHARACTERS at
+    ep2-b08-twinsipa-0819''s standard, which the parent met: a face with pupils and a set jaw, hair with
+    strands, folds in BOTH garments, a legible metal clasp, a drawn cuff. Words do not usually move this,
+    and if it moves on a nine-word change that is itself the finding.'
+  b8_the_guard_has_hair: 'CARRIED, AND IT IS NOW AN INSTRUMENT RATHER THAN JUST A CANON CHECK. canon.yaml
+    `ep2-guard-hair`: guard B has light sandy hair and \bbald\b is FORBIDDEN. The parent established that
+    with the wording held constant this attribute tracks conditioning load -- bald at 1.0+0.8, sandy at
+    1.0+0.3. Conditioning does not move on this rung, so hair is pre-registered to stay. If the guard
+    goes bald on a WORDING change, the instrument reads a second input -- prompt crowding -- and that
+    is worth as much as the grip.'
+  b7_no_limb_fragmentation: 'CARRIED WITH THE PARENT''S HARD-WON ADMISSIBILITY RULE, WHICH IS NOW A STANDING
+    REQUIREMENT ON THIS BEAT. G-R at six regions, three per figure. EVERY PROBE BOX IS PLACED FRESH ON
+    THIS FRAME AND PUBLISHES THREE THINGS: its coordinates, its luma, AND ITS MATERIAL (skin / cloth),
+    with skin verified as >=97% skin-coloured pixels in the window. Boxes from the parent are NOT reused:
+    the parent proved they do not transfer -- scored at twinsipa''s coordinates it read a false FAIL of
+    41.5 because the goblin''s wardrobe had changed under the box, and luma-matching a box on the wrong
+    material does not rescue it (50.6). Within-figure spread <= 25.0; every guard region <= 0.0, every
+    goblin region >= +20.0.'
+  b2_the_identities_separate: Guard face <= 0.0, goblin face >= +20.0, separation >= +20.0. twinsipa +42.0,
+    the parent +60.6. Same material-and-luma publication rule as B7.
+  b4c_the_arm_belongs_to_the_guard: 'MUST SURVIVE. The pointing arm grows from the guard''s shoulder and
+    is human-skinned. Nine mechanisms have held it. AND THE HALF THE PARENT WON: the far arm still REACHES
+    the board. An arm that goes back to vanishing takes the grip question with it and the frame is a regression,
+    not a result.'
+  b1_the_pair: TWO figures and only two, both whole. Two is correct under figure_count_ruled_from_the_script_0817.
+  b3_one_ground_plane: Both stand on the same grass. twinsipa measured 4 px between the two lowest skin
+    rows. Read by eye if the automated detector is confounded by foreground grass.
+  b5_no_colossus: Neither figure towers; twinsipa measured a stature ratio near 1.13 against the authored
+    1.100. BULK is scored under B6, not here.
+not_done_on_purpose: 'ONE sample, ONE arm, ONE edit, and the edit is words. THE NEGATIVE IS NOT TOUCHED
+  -- it carries `extra hands, extra fingers, deformed hands` and whether those suppress hands outright
+  is a real question and a SECOND variable; prompt-summons says the positive assertion is the stronger
+  lever, so this rung measures that one and the negative is the named next wording rung if it fails. NO
+  FIGURE INK IN THE BOARD HINT: that would be the first ever placed there and the parent ruled it must
+  be argued against the five tracing losses, not slipped in, and only after wording has been tried. No
+  scale change (both stay 1.0 and 0.3), no guidance window, no second seed, no mask change, no reference
+  change, no third figure, no colour-cast fix. No pick, no plate_ack, no canon filename, no canon.yaml
+  edit.'
+rights_and_weights: THIS IS THE `licence_note`. Unchanged from the parent and clean. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M). Net 1 xinsir/controlnet-openpose-sdxl-1.0 twins variant, apache-2.0. Net
+  2 xinsir/controlnet-scribble-sdxl-1.0, apache-2.0, no attribution condition. IP-Adapter h94/IP-Adapter,
+  apache-2.0. Both references are repo-internal crops. BOTH hints are authored in PIL from numbers --
+  no annotator, so the lllyasviel/Annotators landmine is untouched by either condition. MistoLine is not
+  used.
+scoring_rule_pre_registered: 'THIS IS THE `verdict_rule`, WRITTEN BEFORE THE PIXELS.
+
+  (1) DIGITS ON THE BOARD, ONE BOARD, ON THE BOARD-SIDE HAND, AND EVERY CARRIED CLAUSE SURVIVES -> PASS,
+  and beat 08 has a COMPLETE PLATE CANDIDATE for the first time: every clause the beat asks for in one
+  frame. The pixels get STAGED for cut assembly and said so plainly. It is STILL NOT A PICK and NOT a
+  plate_ack -- choosing between this frame and its predecessors is taste and belongs to R4.
+
+  (2) NO DIGITS, EVERYTHING ELSE HELD -> wording is ELIMINATED as the lever for a hand on this route,
+  cleanly, because nothing else moved. The next rung is the negative''s hand terms (`extra hands, extra
+  fingers, deformed hands`), and only after that the board hint carrying a stroke for the gripping hand.
+
+  (3) DIGITS ARRIVE ON THE POINTING HAND, OR A SECOND BOARD APPEARS -> the clause bound to the wrong referent.
+  Informative and cheap to fix: the next wording names the object once and binds by position (`at his
+  hip`) rather than repeating the noun.
+
+  (4) THE GRIP ARRIVES AND SOMETHING CARRIED BREAKS -- hair, wardrobe, the far arm, an identity -> PROMPT
+  CROWDING IS REAL ON THIS ROUTE AT 73 OF 77, which is a finding that outlives beat 08 and immediately
+  constrains every other beat''s prompt. Not a pass; the frame would be traded one clause for another.
+
+  (5) THE BOARD ITSELF DEGRADES -> the second net''s product is sensitive to prompt content at fixed strength,
+  which contradicts nothing measured so far but would mean the 0.3 result is less robust than one frame
+  suggested, and the route re-reads before it spends anything else.'
+the_words_and_the_budget:
+  the_only_edit: '`clipboard lowered in one hand,` -> `clipboard lowered in one hand, fingers and thumb
+    gripping the clipboard edge,`. Nine words inserted; NOT ONE token of the parent''s prompt removed,
+    because every one of them was in the frame that passed and this rung is not entitled to guess which
+    ones mattered.'
+  measured_not_estimated: 73 of 77 tokens, measured by pipeline/clip_token_count.py against animagine-xl-3.1's
+    own vocab.json and merges.txt -- not counted in words. The parent measures 64 of 77. Nine of the thirteen
+    free tokens are spent and four remain. The derivation ASSERTS both numbers and refuses to write the
+    spec if either moves, because SDXL drops the TAIL in silence and this prompt's tail is `masterpiece,
+    best quality, very aesthetic`.
+  why_these_nine_words: 'The parent''s verdict names three absences in one sentence -- `no fingers, no
+    thumb, no grip` -- so the clause asserts all three positively: two nouns, the verb, and the contact
+    geometry (`the clipboard edge`). PROMPT-SUMMONS: a positively placed assertion beats a negative, and
+    this frame''s negative already carries hand terms while its positive asserted no hand at all. `clipboard`
+    is repeated rather than pronominalised because CLIP has no coreference and the guard has TWO hands
+    -- a bare `fingers` clause can settle on the pointing one. Placed immediately after the object clause
+    and before the pointing clause, so the two arms stay described in separate spans.'
+  what_was_rejected: '`hand visible` (the wording the rung was sketched with) is a visibility predicate,
+    not a summoned object, and visibility is not the failure -- a hand-shaped form IS visible in the parent,
+    it is a mitten. Articulation is the failure, so the words name articulated parts. `fingers curled
+    around the clipboard edge` measured 74 and says less; the chosen clause measures 73 and names the
+    thumb and the verb as well.'
+who_ruled_this_rung: 'ep2-b08-scale30-0820''s own verdict, under `next_rung_named_not_taken`: "ONE sample:
+  THE HAND ON THE BOARD, with --scale2 held at 0.3 and the board hint held byte-identical. The cheapest
+  lever first, because it is free and because the wording is already half-right... the change is to make
+  the GRIP explicit and nothing else... it is a WORDING rung so its risk is the token budget (the prompt
+  currently runs 64 of 77)." Route log pipeline/b08-arm-route-0819.md section 17 says the same in the
+  same words. Fired immediately: the job has no dependency -- every weight is on the card and both hints
+  already exist -- so it goes to backlog now rather than waiting for anyone to be awake. Written in an
+  `extra` key because `fresh` prose is retokened and a parent id there would become this job''s own id.'
+why_these_key_names: '`scoring_rule_pre_registered` and `rights_and_weights` are this spec''s `verdict_rule`
+  and `licence_note`. derive_spec''s FINDINGS_NAME guard refuses any extra key matching /verdict|licen[cs]/,
+  which is right for findings and over-reaches on two house keys that must be written BEFORE the pixels.
+  Same declaration the last three rungs made.'
+derivation:
+  parent: pipeline/jobs/ep2-b08-scale30-0820.yaml
+  by: pipeline/derive_b08_grip_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - success
+  - the_words_and_the_budget
+  - who_ruled_this_rung
+  - why
+  - why_these_key_names
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - the_number_is_reasoned_not_measured
+  - verdict
+  - verdict_measured
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  - who_ruled_this_rung
+  - why_these_key_names
+  retokened:
+  - b08scale30-0820 -> b08grip-0820
+  - ep2-b08-scale30-0820-scale30 -> ep2-b08-grip-0820-grip
+  - ep2-b08-scale30-0820 -> ep2-b08-grip-0820
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step scale30 --arm (scale30 -> grip)
+    argv:--repo-commit:
+    - step scale30 --repo-commit (ee74ac0e3eaf920fc7637fa7e4f2727af7684628 -> ee74ac0e3eaf920fc7637fa7e4f2727af7684628)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 318 chars)
+    seed:
+    - step scale30 --seed (20260819 -> 20260819)
+  carried_verbatim_by_the_callers_own_hand: 'rights_and_weights -- authored as `extra` but byte-identical
+    to the parent''s value under the same name. Recorded rather than implied: a pre-registered bar carried
+    unchanged is legitimate, and it should say so.'
+  seed: 20260819
