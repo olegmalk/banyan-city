@@ -1377,3 +1377,132 @@ arrives and does not hold it** — "creature", then "new leaf"), so the next lev
 the *positive* prompt, which spends its whole first sentence asking for stillness
 and gets total stillness plus one uninvited object. Beat 12 has no goblin on
 screen, so none of this waits on the design answer.
+
+---
+
+## HANDOVER appended 2026-08-19 by the queue-keeper lane
+
+**THE DARKENING IS NOT THE CRF FLAG, AND IT IS NOT THE SEED. THREE OF FOUR
+CANDIDATES ARE MEASURED OUT AND THE FOURTH IS RUNNING.** Full working in
+`pipeline/loop/darkening-crf-diagnostic-0819.md`; the instrument is
+`pipeline/luma_drift.py`, which is new, committed, and is the brightness clause
+beat 20's verdict asked for and nobody had written.
+
+**The rung as ordered could not be built, and the reason was the finding.** The
+order was "vary only `--image-crf` back to 33 on b01 or b18". **Both of those
+carriers are already at crf 33** — they are the baselines. Their crf-10 siblings
+were already rendered this morning off identical init shas, so the question was
+answerable at **$0 on four existing clips**, with two beats instead of one and
+both arms instead of one, and with the card left free. That is what ran.
+
+| clip | crf | seed | drift f000→f120 | bands |
+|---|---|---|---|---|
+| b12-stillmotion | 10 | 20260819 | **−91.05** | all fall |
+| b20-motion | 10 | 20260819 | **−25.03** | all fall |
+| b01 parent | 33 | 20260818 | **+73.24** | all rise |
+| b01 crf10 child | 10 | 20260818 | +1.37 | disagree |
+| b18 parent | 33 | 20260871 | −0.22 | disagree |
+| b18 crf10 child | 10 | 20260871 | +10.14 | all rise |
+
+The instrument was validated against the collapses first and returns b20's
+**−25.03 exactly** and its bands to 0.02. **crf 10 sits on four clips: two
+collapse, two do not.** And the argv diff kills the rest of the recipe as a
+suspect — all six specs are **identical on size, frames, fps, guidance,
+two-stage, distilled-sigmas, offload and mode**, with `--image-crf` the only flag
+that varies. No sampler setting separates the darkeners from the clean takes
+because no sampler setting differs. **Beat 20's "IT IS A RECIPE PROPERTY AND NOT
+A BEAT PROPERTY" is withdrawn; it is the other way round.**
+
+**Two corrections to the evidence the question was built on.** Beat 12's
+`shortstill` **−46.93 is not darkening** — its own verdict scores it
+`FAIL-PLANT-CHANGE`, a leaf crossing the mid-ground while the other two bands move
+1.6 levels. The real second data point is the 121-frame parent's −91. And beat
+01's ladder figures (84.8 / 148.4) come back **89.46 / 160.26** on the committed
+instrument: same direction, 5–12 levels apart, because that lane measured with an
+uncommitted convention. Re-cite beat 01's luminance from the diagnostic file.
+
+**The seed lead was real, was tested, and is now closed too.** Both collapses ran
+on **20260819** and no clean take did. Two rungs filed, run and judged inside the
+hour — `ep2-b01-growmotion-s20260819-0819` **PASS-HOLD +16.59**,
+`ep2-b18-tremble-s20260819-0819` **PASS-HOLD −4.28**, `PASS-HOLD` pre-registered
+as more likely on both. *Against myself:* the b18 arm's three bands all fall, so it
+has the collapse's shape at a twenty-first of its size — but beat 18 sits inside
+±11 levels on every seed and crf value ever measured on it, so that is its floor.
+
+### CARD STATE AND THE ONE RUNG IN FLIGHT
+
+**Running: `ep2-b12-stillmotion-s20260871-0819`** (queued 17:50). The converse and
+the closer: the take that lost 91.05 levels, re-rolled on **20260871**, the
+flattest seed on record, everything else byte-identical.
+**`FAIL-COLLAPSE-AGAIN` is pre-registered as MORE likely** — if it fires, the seed
+is exonerated from the other direction too and **the cause is the plate or the
+prompt**, which is a route someone can then actually decide. Judge it with
+`python3 pipeline/luma_drift.py <clip>`; the bar is two-sided, `|drift| >= 20`
+with bands agreeing.
+
+**The card is at ONE, not the floor of two, and that is a refusal rather than an
+oversight.** Every other item on the legal list is now closed or blocked:
+
+- **b01 and b18 seed depth are closed by this lane's own verdicts.** Both bridge
+  seeds FAILED. **b17** (seed 20260843) fails **H3, leaf count** — an uninvited
+  green leaf drifts through the upper third f040→f051, on a bar that says exactly
+  two leaves in every frame and calls a partial a FAIL; everything else held.
+  **s4** (seed 20260878) fails the **four-quarters clause** — interframe medians
+  7.33 / 7.25 / **0.44** / 4.02 against the passing parent's 5.60 / 6.69 / 6.05 /
+  5.13. Q1 and Q2 are livelier than the passing seed's and **Q3 is 14x deader**,
+  at the same 0.45 the bar had already recorded as "reads visually frozen". Both
+  verdicts say no re-roll, so filing a further depth seed would contradict them.
+- **b21 is BLOCKED and was not waived.** `box_enqueue` refused
+  `ep2-b21-daylight-s20260903-0819` because the parent's `--src` is
+  `C:\banyan-farm\plates-local\12-related-r4-s2.png` — **a beat-12 plate**, on a
+  path no farm-out job owns, so its reference set cannot be checked. **The passing
+  beat-21 verdict rests on that plate.** A `plate_ack` here would push a
+  cross-beat plate through the one guard built to catch exactly that, so the spec
+  was deleted rather than filed. **Someone with authority over beat 21 should
+  establish which plate that verdict is actually about** — this may be a
+  provenance problem in a PASS, not just an enqueue problem.
+- **b20's converse rung is NOT filed on purpose:** its plate is the scavenger, so
+  re-rolling it risks a goblin-identity render under the freeze.
+
+**b01's growmotion leaf is the third sighting of one pattern** — the negative
+names the thing that arrives and does not hold it, after beat 12 twice
+("creature", then "new leaf"). Three beats, one mechanism. That is a prompt
+finding waiting for an owner.
+
+### REPAIRS DONE
+
+- **The b01 duplicate-filename defect is repaired for b13 and b14**, exactly as
+  their own spec said it should be — a rename plus a manifest rewrite, no
+  re-render. Clips and sidecars now read `s20260838` / `s20260839` instead of the
+  init plate's `20260826`; both `.sha256` name rows rewritten and **every hash
+  re-verified against the new names**, contents byte-untouched. Done on the **box
+  first**, then `origin/farm-results-rtx5090` (`e67e752d`), so a courier push
+  cannot restore the old name beside the new. **Still open:** twelve other
+  growmotion jobs share the plate-seed name, and `sweep_summary` still calls its
+  pick "20260826 PASS" when that clip's sidecar reads **20260818**.
+- **The derivation now refuses what the clones kept.** `pipeline/derive_seedprobe_0819.py`
+  strips `verdict|pick|sweep|plate_ack|caveats_not_scored|what_this_licenses`,
+  names every clip seed-true and job-unique, and asserts each substitution
+  matched. It caught two real things: an ordering bug where the id substitution
+  ate the clip name, and — on the b18 parent — **six inherited findings keys
+  including a full `verdict: PASS`**. Those are renamed on `s4` now, but
+  **`ep2-b18-tremble-s2-0819` and `-s3-0819` still carry a PASS belonging to
+  s20260871 on clips nobody has opened.**
+- **`box_autofill.py --status` lied to this lane on the first call** — reported
+  `backlog_empty` with an idle card, from the junk `C:\banyan-queue` directory,
+  exactly as the tooling rung above predicts. **Every card reading in this
+  handover was taken by `ssh rtx5090 dir /b` directly.** The guard that rung asks
+  for is still unwritten and it is still costing readings.
+
+### NOT DONE, and named rather than left silent
+
+The **$0 re-measure of the b01 six-seed sweep** on a colour-independent mask was
+not started. It is genuinely ready — all six clips are already in the local git
+object store on `origin/farm-results-rtx5090` (extract under distinct names, they
+share one basename) — but the colour-independent instrument **does not exist as
+code**: commit `2c157810` ran it ad hoc and landed only YAML. Its spec is prose in
+`ep2-b01-growmotion-b14-0819.yaml`'s `verdict_this_job_measured.instrument`, and
+the nearest template is `farm-out/ep2-b19-dropmotion-0819/b19_fruit_track.py` —
+keep its windowed nearest-centroid track, discard its hue predicate, which is the
+artefact. Writing that instrument is part of the repair, not a prerequisite to
+find.
