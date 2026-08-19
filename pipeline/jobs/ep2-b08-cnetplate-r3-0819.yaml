@@ -260,3 +260,85 @@ licence_note: >-
   (apache-2.0, no attribution condition). The hint is drawn by
   pipeline/author_b08_pose_hint.py with PIL -- no photo-derived edge map and no
   annotator, so the lllyasviel/Annotators landmine is not touched.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size beside the
+# other three. Scored against the bar and verdict_rule THIS SPEC PRE-REGISTERED;
+# neither is edited. Ran clean: 2 steps rc=0, 06:26:01Z, load 6.4s / render
+# 13.8s, 4 files published and pulled with every sha verified. $0.
+# Evidence: farm-out/ep2-b08-cnetplate-r3-0819/EVIDENCE-b08-scale-axis-0819.png
+# ============================================================================
+verdict: >-
+  BRANCH 2 FIRES: THE POSE IS LOST AT 0.28 and the usable band is bounded below.
+  Taken with rungs 1 and 2 it also delivers BRANCH 3's conclusion by a route
+  branch 3 did not anticipate -- not "still traced at a low scale", but "the only
+  direction that frees the outline is the direction that loses the staging". THE
+  SCALE AXIS IS CLOSED.
+verdict_measured:
+  b1_the_pair: 'Marginal, and not worth a pass. Two figures exist, but one fills the
+    frame and the other is a distant background figure -- this is the uncontrolled
+    composition, not a pair.'
+  b2_the_adults_read: 'FAIL, the third time, as pre-registered. And it failed in the
+    most instructive way available: THE GUARD''S FROZEN WARDROBE -- cream shirt, white
+    sash, brown wrap skirt -- is on the GOBLIN, complete and well drawn, while the
+    figure holding the clipboard is a tiny green man in the background.'
+  b3_one_ground_plane: 'FAIL. The plane split; the second figure is small and set
+    back, at a different scale entirely.'
+  b4a_board_down: 'FAIL. The board is not in the near figure''s hand at all -- it is
+    held by the background figure.'
+  b4b_legible_point: 'FAIL against the clause, though a hand is drawn. There is a
+    clean pointing hand with an extended index finger, and it belongs to the colossus
+    and aims up and away at nothing. Legibility without aim is what this clause was
+    written to exclude.'
+  b4c_the_arm_belongs_to_the_guard: 'FAIL -- G1, the pre-registered fail mode. The
+    pointing arm is the goblin''s own. This is the clause rung 1 bought and rung 2
+    kept, and 0.28 spends it.'
+  b5_no_colossus: 'FAIL -- G5. An extreme colossus, of the same kind and roughly the
+    same severity as the uncontrolled frame.'
+  b6_drawn_not_traced: 'PASSES, AND THE PASS IS WORTHLESS, which is worth saying
+    plainly rather than banking. The figure is beautifully drawn -- but it is drawn
+    because the condition is no longer shaping it. B6 only has content while the pose
+    clauses hold, and here they do not. A B6 pass bought by discarding B3, B4a, B4c
+    and B5 is not progress, it is the absence of a condition.'
+what_this_settles: 'THE CONDITIONING-SCALE AXIS IS CLOSED, with the band bracketed on
+  both sides by measurement rather than by argument: at 0.80 the pose holds and the
+  checkpoint draws NOTHING inside the outline; at 0.45 the pose holds and the SURFACE
+  comes back but the silhouette is still the authored polygon; at 0.28 the silhouette
+  is finally the checkpoint''s and THE STAGING IS GONE. There is no value that yields
+  both. 0.45 remains the best point on the axis and is unlikely to be beaten by
+  interpolation, because the failure between 0.45 and 0.28 is not a gradual softening
+  -- it is a collapse back to the uncontrolled composition.'
+the_hint_shape_is_what_goes_back: 'This is branch 3''s consequence and it was
+  pre-committed. A DENSE FULL-BODY CONTOUR cannot be tuned into a composition guide on
+  this checkpoint: its ink IS the drawing, so any strength that lets the model redraw
+  the outline also lets it redraw the staging. The next instrument is a change of HINT
+  SHAPE, not of strength -- a sparse skeleton that marks joints and the board rather
+  than enclosing bodies, a much thinner stroke (the xinsir card''s second dial; this
+  hint is 7px), or an early control_guidance_end that pins the composition in the first
+  denoising steps and releases it before the detail passes. Each is one sample with its
+  own bar and NONE IS FILED HERE.'
+instrument_note_the_probe_metric_is_VOID_on_this_hint: 'RECORDED SO NOBODY QUOTES IT.
+  controlnet_probe.py''s bind_ratio was run on all four frames and its numbers must NOT
+  be used: the NOCONTROL frame scores 1.498, which is outside the probe''s own
+  pre-registered kill-switch band of [0.85, 1.15] for an unconditioned arm, and that
+  rule says in terms that when arm A lands off-centre "every number in the run is
+  void". The cause is structural and is the probe''s design working correctly: its
+  metric assumes a SPARSE, OFF-CENTRE hint whose strokes sit where the model would not
+  otherwise put structure. This hint''s strokes enclose two standing figures in the
+  middle of the frame -- exactly where any two-figure image has its edges -- so the
+  mask cannot distinguish obedience from ordinary composition. For the record and
+  unused: 0.80 -> 1.950, 0.45 -> 2.315, 0.28 -> 1.612. THE VERDICTS ABOVE REST
+  ENTIRELY ON THE PIXELS.'
+what_this_does_not_license: 'No pick, no plate_ack, no cut, no canon filename. No
+  interpolated fourth scale rung -- the axis is closed and a value between 0.28 and
+  0.45 would be a fourth sample on an exhausted axis, which is the shape of a wording
+  ladder that will not stop. And it does not license abandoning the route: rung 1''s
+  finding stands, a hand-authored hint DOES aim the gesture, and that is still the only
+  mechanism that has ever put this beat''s pointing arm on the guard.'
+for_whoever_takes_this_next: 'Two things, in order. (1) THE HINT SHAPE, above -- one
+  sample, sparse skeleton or thin stroke or early release, judged against this same
+  bar. (2) IDENTITY, which is now the beat''s other blocker and is untouched by any of
+  this: three rungs at three scales all returned two green figures, because a contour
+  cannot say which body an attribute belongs to. Per-figure IPAdapter is the candidate
+  and it is its own probe. If a choice must be made, take the hint shape first -- the
+  identity lever has nothing to attach to on a figure whose outline is not the model''s.'

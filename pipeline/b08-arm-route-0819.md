@@ -295,3 +295,49 @@ and/or a thinner stroke — does the hint keep B3, B4a, B4c and B5 while giving 
 checkpoint back enough freedom to draw people instead of polygons? One sample,
 its own bar. **Route B (ControlNet + mask) is if anything less attractive now**:
 the tracing above is exactly what would appear inside a mask.
+
+---
+
+## 8. The conditioning-scale axis is closed — bracketed on both sides (2026-08-19)
+
+Three rungs, one hint file, one seed, one prompt; only the scale moved.
+
+| scale | staging (B1/B3/B4a/B4c/B5) | the figures themselves |
+|---|---|---|
+| **0.80** | HELD | **traced** — flat mannequins in the authored polygons, no hand, no face, no cloth |
+| **0.45** | HELD | **surface returned, outline not** — a hand with an index finger, two faces, cloth with folds, shading; silhouettes still the polygons |
+| **0.28** | **LOST** — colossus, point on the goblin, guard wardrobe on the goblin, board on a background figure | drawn beautifully, because the condition is no longer shaping anything |
+
+**There is no value that yields both, and the failure between 0.45 and 0.28 is
+not a gradual softening — it is a collapse back to the uncontrolled
+composition.** 0.45 is the best point on the axis and interpolating is not worth
+a rung.
+
+**What that means for the tool I wrote at the top of this document:** a DENSE
+FULL-BODY CONTOUR cannot be tuned into a composition guide on this checkpoint,
+because its ink *is* the drawing — any strength that lets the model redraw the
+outline also lets it redraw the staging. **The next instrument is a change of
+hint SHAPE, not of strength**: a sparse skeleton marking joints and the board
+rather than enclosing bodies, a much thinner stroke (this hint is 7px; the
+xinsir card calls stroke weight the second dial), or an early
+`control_guidance_end` that pins composition in the first denoising steps and
+releases before the detail passes. One sample each, same bar. None filed.
+
+**Do not quote `controlnet_probe.py --measure` on this hint.** Its `bind_ratio`
+is VOID here by the probe's own pre-registered rule: the *nocontrol* frame
+scores 1.498, outside the [0.85, 1.15] kill-switch band for an unconditioned
+arm. The metric assumes a sparse off-centre hint whose strokes sit where the
+model would not otherwise put structure; this hint's strokes enclose two
+standing figures in the middle of the frame, which is exactly where any
+two-figure image has its edges. Every verdict in §7 and §8 rests on pixels.
+
+**Rung 1's finding is untouched and still the reason to keep going:** a
+hand-authored hint DOES aim the gesture, and it remains the only mechanism that
+has ever put this beat's pointing arm on the guard.
+
+**And identity is now the beat's other blocker, untouched by any of the above.**
+Three rungs at three scales all returned two green figures — at 0.28 the guard's
+frozen wardrobe came back complete and well drawn *on the goblin*. A contour
+cannot say which body an attribute belongs to. Per-figure IPAdapter is the
+candidate and it is its own probe. **Take the hint shape first**: an identity
+lever has nothing to attach to on a figure whose outline is not the model's own.
