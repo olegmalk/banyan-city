@@ -1,0 +1,284 @@
+id: ep2-b08-twinsipa-0819
+task: ep2-b08-twinsipa-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 33
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 08 staging lane, 2026-08-20 -- derived by pipeline/derive_b08_twinsipa_0819.py, and licensed
+  by the steward ruling that approved non-rectangular masks.
+consumer: 'Beat 08''s plate, for its cut slot in the episode 2 assembly, and this is the first rung that
+  could plausibly BE that plate rather than answer a question about it. Staging is solved -- two whole
+  figures, one ground plane, no colossus, the arm on the guard in five mechanisms, and a hand that now
+  arrives 52.5 px from its authored wrist. Identity is the last blocker, and it has changed shape: it
+  no longer smears one attribute across both figures, it fragments WITHIN each of them. Whoever takes
+  the board rung next needs to know whether a per-figure image condition fixes that, because a plate with
+  a green-armed guard cannot be cut.'
+success: 'One 832x1216 png with its sidecar, published to C:\banyan-farm\courier-box\farm-out\ep2-b08-twinsipa-0819
+  with a sha256 manifest, and read at 1:1 beside the parent''s frame with the six per-region probes measured.
+  The preflight step must print `twins net verified` and `staged driver, hint and BOTH references verified`,
+  and the sidecar must read `ip_adapter_mask_geometry: capsules` with `ip_adapter_masks_overlap: false`;
+  without all three the job has no result and the render is not scored.'
+why: 'Both mechanisms are individually proven on this beat and the one thing that blocked composing them
+  -- rectangular masks cannot separate two figures whose limbs interleave -- was fixed in the driver today
+  with the interleaving case as its selftest. Two minutes, $0, no download, no provider: every weight
+  is on the card and the references are already in the repo.'
+est_minutes: 6
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b08twinsipa-0819\prompt.txt: Two men, a guard, light sandy hair, cream shirt, white sash,
+    brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly,
+    green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\b08twinsipa-0819\negative.txt: giant, colossus, towering figure, different scale, floating,
+    raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl,
+    child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality,
+    deformed
+steps:
+- name: preflight
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# GUARD, NOT A VARIABLE. Carried from the parent and EXTENDED to the two\n# references: --controlnet\
+    \ points at a local directory, so the sidecar can only\n# record a path, and every input that conditions\
+    \ this frame is re-read here\n# before a GPU second is spent.\nimport hashlib, os, sys\nd = r\"C:\\\
+    banyan-farm\\cnet-openpose-twins\"\nblob = os.path.join(d, \"diffusion_pytorch_model.safetensors\"\
+    )\nn = os.path.getsize(blob)\nif n != 2502139104:\n    print(\"!! twins blob is %d bytes, expected\
+    \ 2502139104\" % n); sys.exit(1)\nh = hashlib.sha256()\nwith open(blob, \"rb\") as fh:\n    for chunk\
+    \ in iter(lambda: fh.read(1 << 22), b\"\"):\n        h.update(chunk)\ngot = h.hexdigest()\nif got\
+    \ != \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\":\n    print(\"!! twins blob\
+    \ sha %s, expected 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\" % got); sys.exit(1)\n\
+    ch = hashlib.sha256(open(os.path.join(d, \"config.json\"), \"rb\").read()).hexdigest()\nif ch != \"\
+    b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! twins config sha\
+    \ %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % ch); sys.exit(1)\n\
+    bad = [r for r, _, fs in os.walk(d) for f in fs if f.endswith(\".incomplete\")]\nif bad:\n    print(\"\
+    !! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\nfor rel, want in ((\"pipeline/controlnet_plate.py\"\
+    , \"33c438163ce1314ff989f337e9472f08dcbabd5815cb096527e20e13631b7f7a\"), (\"pipeline/control/b08-openpose-nat-0819.png\"\
+    , \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"),\n                  (\"pipeline/control/b08-ref-goblin-0819.png\"\
+    , \"13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c\"), (\"pipeline/control/b08-ref-guard-0819.png\"\
+    , \"61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c\")):\n    p = os.path.join(r\"\
+    C:\\banyan-farm\\b08twinsipa-0819\\src\", rel.replace(\"/\", os.sep))\n    if not os.path.exists(p):\n\
+    \        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n    hh = hashlib.sha256(open(p, \"\
+    rb\").read()).hexdigest()\n    if hh != want:\n        print(\"!! %s sha %s, expected %s\" % (p, hh,\
+    \ want)); sys.exit(1)\nprint(\"twins net verified: %d bytes, sha %s\" % (n, got))\nprint(\"staged\
+    \ driver, hint and BOTH references verified\")"
+- name: twinsipa
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08twinsipa-0819\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b08twinsipa-0819\src
+  - --repo-commit
+  - 89860969c2086526d9505a6a2eceeb1f769a29f7
+  - --task
+  - ep2-b08-twinsipa-0819
+  - --arm
+  - twinsipa
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - pipeline/control/b08-openpose-nat-0819.png
+  - --control-sha256
+  - 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260819'
+  - --ip-ref
+  - pipeline/control/b08-ref-goblin-0819.png
+  - --ip-mask-capsules
+  - 170.6,550.8,118.6,550.8,30;170.6,550.8,222.5,550.8,30;118.6,550.8,104,762.4,12;104,762.4,111.3,857.3,12;222.5,550.8,237.1,762.4,12;237.1,762.4,229.8,857.3,12;170.6,550.8,137.7,762.4,30;137.7,762.4,140.5,941.2,12;140.5,941.2,143.2,1123.6,12;170.6,550.8,203.4,762.4,30;203.4,762.4,200.7,941.2,12;200.7,941.2,197.9,1123.6,12;170.6,550.8,170.6,481.7,34;170.6,481.7,152.5,465.9,34;152.5,465.9,128.9,470.4,34;170.6,481.7,188.7,465.9,34;188.7,465.9,212.2,470.4,34
+  - --ip-ref-sha256
+  - 13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c
+  - --ip-ref
+  - pipeline/control/b08-ref-guard-0819.png
+  - --ip-mask-capsules
+  - 565.8,491,512.4,491,30;565.8,491,619.1,491,30;512.4,491,360,484.9,12;360,484.9,257.4,657.3,12;619.1,491,627.2,579.7,12;627.2,579.7,621.7,668.4,12;565.8,491,532.1,723.8,30;532.1,723.8,534.9,920.4,12;534.9,920.4,537.7,1121,12;565.8,491,599.5,723.8,30;599.5,723.8,596.7,920.4,12;596.7,920.4,593.8,1121,12;565.8,491,565.8,403.9,34;565.8,403.9,550.7,389.3,34;550.7,389.3,531.2,393.5,34;565.8,403.9,580.8,389.3,34;580.8,389.3,600.3,393.5,34
+  - --ip-ref-sha256
+  - 61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c
+  - --ip-scale
+  - '0.7'
+  - --prompt-file
+  - C:\banyan-farm\b08twinsipa-0819\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08twinsipa-0819\negative.txt
+  - --out
+  - C:\banyan-farm\b08twinsipa-0819\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# box_enqueue.courier_problems: the courier pushes from farm-out and\n# nowhere else, and ep2-cnet-probe-0817\
+    \ was invisible for two days for\n# want of exactly this step.\nimport glob, hashlib, os, shutil\n\
+    out_dir = \"C:/banyan-farm/b08twinsipa-0819/out\"\npay_dir = \"C:/banyan-farm/b08twinsipa-0819\"\n\
+    ctl_dir = \"C:/banyan-farm/b08twinsipa-0819/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-twinsipa-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b08-twinsipa-0819-twinsipa.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/b08-openpose-nat-0819.png\")\n         \
+    \      + glob.glob(ctl_dir + \"/b08-ref-*-0819.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f,\
+    \ dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith\
+    \ open(os.path.join(dst, \"ep2-b08-twinsipa-0819.sha256\"), \"w\",\n          newline=\"\\n\") as\
+    \ fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 7 else 1)"
+artifacts:
+- C:\banyan-farm\b08twinsipa-0819\out\ep2-b08-twinsipa-0819-twinsipa.png
+bar:
+  b0_the_stack_is_what_it_claims: 'VOID-CHECK, READ FIRST, THREE LINES. (i) preflight prints `twins net
+    verified: 2502139104 bytes, sha 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4`;
+    (ii) preflight prints `staged driver, hint and BOTH references verified`; (iii) the sidecar reads
+    `ip_adapter_mask_geometry: capsules` and `ip_adapter_masks_overlap: false` and names both reference
+    shas. Missing any of the three and the frame is void -- "the adapter did nothing" and "the adapter
+    never loaded" are different findings.'
+  b7_no_limb_fragmentation: 'THIS RUNG''S OWN QUESTION, AND IT REPLACES THE HEAD-ONLY INSTRUMENT, WHICH
+    IS NOW A KNOWN TRAP.
+
+    INSTRUMENT: G-R sampled at SIX regions, three per figure -- face, forearm, shin. Each box is placed
+    ON THE DRAWN LIMB at 1:1 and its coordinates are published in the verdict, because a box pinned to
+    the authored keypoint measures whatever happens to be there and cannot tell a mis-coloured limb from
+    an absent one. If a limb cannot be located within ~40 px of its authored position, that is an adherence
+    failure and the region is reported UNMEASURABLE rather than scored.
+
+    PASSES IF each figure''s WITHIN-FIGURE SPREAD (max minus min across its three regions) is <= 25.0
+    levels. The parent measured 106.8 for the guard (face -58.2, forearm +48.6) and 91.4 for the goblin
+    (head +67.7, legs -23.7); both must collapse. A figure whose three regions agree is one body.
+
+    AND THE SIGNS MUST BE RIGHT, or a frame with two identical grey figures would pass: every guard region
+    <= 0.0 and every goblin region >= +20.0, the same two class boundaries this beat has used since rung
+    1.'
+  b2_the_identities_separate: CARRIED, AND NO LONGER THE HEADLINE. Guard face <= 0.0, goblin face >= +20.0,
+    separation >= +20.0. The parent already passes this at +117.4 on these boxes WITHOUT any adapter,
+    so a pass here is expected and proves little on its own -- it is scored to catch the adapter DRAGGING
+    the two faces together, which is the specific harm an unmasked reference would do.
+  b4b_both_arms_stay_on_their_skeletons: MUST SURVIVE -- this is what the parent bought and what an adapter
+    could plausibly spend. The guard's hand centroid within ~60 px of the authored wrist (280.5,695.1);
+    the parent measured 52.5 px. The goblin's arm stays down, hands near y~900 against an authored wrist
+    of (221,857). The two hands must not clasp.
+  b4c_the_arm_belongs_to_the_guard: MUST SURVIVE. The pointing arm grows from THE GUARD's shoulder. Five
+    mechanisms have held it; the uncontrolled tally at this seed is 4 of 4 on the goblin. AND ITS SKIN
+    MUST NOW MATCH ITS OWNER, which is b7's business and is the whole reason her mask was widened to enclose
+    the limb.
+  b1_the_pair: TWO figures and only two, both whole in frame.
+  b3_one_ground_plane: Both stand on the same grass. The parent measured 34 px between the two lowest
+    skin rows; the ankles are not touched by this rung, so a similar deviation is expected.
+  b5_no_colossus: Neither figure towers. The parent measured a ratio near 1.17 against the authored 1.100.
+  b6_drawn_not_traced: Both read as drawn characters. The parent passed with the pre-registered twins
+    aesthetic cost -- looser linework, a crude goblin face -- and it must not get WORSE. An adapter carrying
+    structure from a clean reference could plausibly IMPROVE it, which would be a finding and not a win.
+  b4a_board_down: EXPECTED FAIL, PRE-REGISTERED, NOT THIS RUNG'S VARIABLE. No object is in a pose hint.
+    The remedy is multi-ControlNet pose+scribble and it is the next rung after this one.
+not_done_on_purpose: ONE sample, ONE arm, ONE variable. No ip-scale sweep (0.7 is the value that worked
+  first try on the contour and a second value would need its own question), no second seed, no re-authored
+  hint, no re-staged arm, no conditioning-scale change, no multi-ControlNet, no board, no night or colour-cast
+  fix, no pick, no plate_ack waiver and no canon filename. The purple cast the parent returned is NOT
+  addressed and is expected to persist.
+rights_and_weights: THIS IS THE `licence_note`. Clean. Base cagliostrolab/animagine-xl-3.1 (CreativeML
+  Open RAIL++-M). ControlNet xinsir/controlnet-openpose-sdxl-1.0 twins variant, apache-2.0, no attribution
+  condition, allowlisted in the driver by its upstream repo, blob name and digest. IP-Adapter h94/IP-Adapter,
+  apache-2.0. Both references are repo-internal crops with no external image's terms attached. The hint
+  is authored in PIL -- no annotator, so the lllyasviel/Annotators landmine is untouched.
+scoring_rule_pre_registered: 'THIS IS THE `verdict_rule`, WRITTEN BEFORE THE PIXELS, and all four branches
+  close something. (1) If b7 passes on both figures AND B4b, B4c, B1, B3 and B5 all survive, the verdict
+  is PASS and BEAT 08 HAS ITS PLATE RECIPE: staging, gesture and identity in one render, and the only
+  clause left open is the board. (2) If b7 passes but a staging clause breaks, the adapter and the pose
+  net COMPETE at ip-scale 0.7 and the next rung is one sample at a lower scale -- which clause broke names
+  what the adapter overrode. (3) If the fragmentation SURVIVES inside the masks, then a per-region image
+  condition does not govern skin tone at all, the cause is the checkpoint''s own part-wise colour prior,
+  and the next probe is a wording ablation rather than a stronger mask. (4) If the two figures come back
+  matched but WRONG -- both human, or both green -- the masks are being applied in the wrong order or
+  the positional zip is inverted, which is a driver bug and not a result; the sidecar''s ref/mask pairing
+  is read first to tell (3) from (4).'
+the_masks_are_the_hint: 'THE ONE THING A READER SHOULD CHECK FIRST. The two --ip-mask-capsules tokens
+  were not typed: they are emitted by author_b08_openpose_hint.figure_capsules(stage()) -- one dilated
+  capsule per limb of the SAME COCO-18 skeletons the hint PNG is drawn from, through the same LIMBS table.
+  So the region each reference is applied to is, by construction, the region the ControlNet is steering,
+  and the two cannot drift. Radii: 12 px on arms and legs, 30 on torso, 34 on head. THE 12 IS MEASURED:
+  the guard''s authored wrist (257.4,657.3) sits 27.6 px from the goblin''s hanging arm, so two capsules
+  stay disjoint while their radii sum under that -- disjoint through r=13, colliding at r=14. The hint''s
+  --selftest asserts the two figures'' masks share no lit pixel while their bounding boxes DO overlap,
+  which is the fact that makes rectangles impossible and capsules necessary.'
+who_ruled_this_rung: ep2-b08-twins-sample-0819's verdict named it and deliberately did not file it, recording
+  the rectangle problem under `the_mask_geometry_problem_that_rung_must_solve_first` and reading option
+  (b), non-rectangular masks, as the honest fix. The steward approved (b) and ordered ONE sample after
+  it. Its sibling ep2-b08-ipamask-0819 is where the masked IP-Adapter was proven. Written in an `extra`
+  key because `fresh` prose is retokened and a parent id there would become this job's own id.
+why_these_key_names: '`scoring_rule_pre_registered` and `rights_and_weights` are this spec''s `verdict_rule`
+  and `licence_note`. derive_spec''s FINDINGS_NAME guard refuses any extra key matching /verdict|licen[cs]/,
+  which is right for findings and over-reaches on two house keys that must be written BEFORE the pixels.
+  Renamed rather than worked around, and declared here.'
+derivation:
+  parent: pipeline/jobs/ep2-b08-twins-sample-0819.yaml
+  by: pipeline/derive_b08_twinsipa_0819.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - success
+  - the_masks_are_the_hint
+  - who_ruled_this_rung
+  - why
+  - why_these_key_names
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - the_combined_rung_this_replaces
+  - the_mask_geometry_problem_that_rung_must_solve_first
+  - verdict
+  - verdict_measured
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  - who_ruled_this_rung
+  - why_these_key_names
+  retokened:
+  - ep2-b08-twins-sample-0819-twins -> ep2-b08-twinsipa-0819-twinsipa
+  - b08twins-0819 -> b08twinsipa-0819
+  - ep2-b08-twins-sample-0819 -> ep2-b08-twinsipa-0819
+  - ep2-b08-twins-sample-0819 -> ep2-b08-twinsipa-0819
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step twins --arm (twins -> twinsipa)
+    argv:--repo-commit:
+    - step twins --repo-commit (7a7e6c4b04c7b64e35eb09029aa5dfd3f4ea463e -> 89860969c2086526d9505a6a2eceeb1f769a29f7)
