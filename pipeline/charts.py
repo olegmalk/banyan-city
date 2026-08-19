@@ -59,7 +59,12 @@ import math
 # Same five colours, same argument, one reordering.
 STATE_STYLE = (
     # key,                          css,      label,                    whose
-    ("done",                        "done",   "passed",                 "machine"),
+    # "passed BY YOU", not "passed". The bare word made the count read as a
+    # quality score the machine had earned, and on 2026-08-19 the founder read
+    # "EP 2 · 0/21 passed" as zero progress on an episode holding eighteen
+    # rendered takes. Naming the actor is what makes a 0 here mean "you have not
+    # watched these yet" instead of "nothing works".
+    ("done",                        "done",   "passed by you",          "machine"),
     ("fix-known",                   "mach",   "the card’s to do",       "machine"),
     ("never-rendered",              "mach",   "the card’s to do",       "machine"),
     ("candidate-awaiting-founder",  "look",   "waiting for your look",  "author"),
@@ -77,7 +82,7 @@ STATE_STYLE = (
 # what to fix" are the same job from the card's side, and splitting them here
 # would put two identical greens next to each other for no reader's benefit.
 STATE_ORDER = ("done", "mach", "look", "gate")
-STATE_LABEL = {"done": "passed", "mach": "the card’s to do",
+STATE_LABEL = {"done": "passed by you", "mach": "the card’s to do",
                "look": "waiting for your look", "gate": "waiting on a decision",
                # "no CURRENT state": this bucket holds two populations and the
                # older wording was wrong about one of them. A beat nobody has
@@ -123,6 +128,36 @@ LEAF_W, LEAF_H = 11.4, 7.0
 # with a tree drawn behind it.
 CELL_W, CELL_H = 12.5, 8.8
 TIER_H = 58.0
+
+
+# One character of the episode label, in viewBox units. The label is 6px bold
+# mono with .04em tracking (CHART_CSS below), and a monospace advance is 0.6em
+# across every face in the theme's stack — 6 × 0.6 × 1.04 ≈ 3.75. Estimated
+# rather than measured because this build has no browser in it to measure with;
+# EPL_PAD absorbs the difference between one mono face and the next, and the
+# margin it feeds is a floor, so an underestimate crowds the label rather than
+# clipping it.
+EPL_CH, EPL_PAD = 3.75, 4.0
+
+
+def _epl_lines(number, look: int, passed: int) -> tuple:
+    """An episode's label: HIS TWO CLOCKS, on two lines, both always drawn.
+
+    Roman, 2026-08-19, reading "EP 2 · 0/21 passed": he took it for zero
+    progress. It was not — nine of those beats were finished takes waiting for
+    him to watch them — but "passed" counts only what HE has passed, and the
+    label showed one clock and hid the other. One number can only ever answer
+    one of his two questions, so this returns two.
+
+    BOTH LINES ARE DRAWN EVEN AT ZERO, including "0 for your look" on an episode
+    he has finished. Dropping a clock when it reads zero is the exact bug: a
+    label that hides the queue whenever the queue is the interesting fact. Two
+    lines rather than one long one because the label has to survive a 320px
+    phone — the one-line form of this wording needs a 40% wider viewBox, which
+    shrinks the type it was widened for to 6px on the same phone.
+    """
+    return (f'EP {number} · {look} for your look',
+            f'{passed} passed by you')
 
 
 def _canopy_grid(n: int):
@@ -290,17 +325,26 @@ def sapling_svg(eps: list, boards: dict, links: dict = None) -> tuple:
     # Room for the widest canopy on each side, plus the gap to the trunk, plus a
     # margin for the labels. Computed rather than fixed: an episode with forty
     # beats must not run off its own picture.
-    widths = []
+    widths, lab_w = [], []
     for e in eps:
         total = int(e.get("total_beats") or len(e["beats"]))
         cols, _r = _canopy_grid(total)
         widths.append(cols * CELL_W)
+        c = _counts(e["beats"], total)
+        lab_w.append(max(len(s) for s in
+                         _epl_lines(e.get("number"), c["look"], c["done"]))
+                     * EPL_CH + EPL_PAD)
     half = max(widths) / 2.0
     gap = 16.0
-    # 30 rather than 20: the episode labels are pinned to the inner canopy edge
-    # and flow outward, so the margin has to hold whatever overhangs a narrow
-    # canopy. Measured against the longest label the format can produce.
-    cx = 30.0 + gap + max(widths)
+    # THE MARGIN IS MEASURED, NOT PICKED. The labels are pinned to the inner
+    # canopy edge and flow outward, so the room one needs past the picture's edge
+    # is its own width less the half-canopy it starts inside of (its own) and the
+    # half-canopy the trunk is offset by (the widest). A hardcoded 30 was right
+    # for "EP 1 · 4/15 passed" and would silently clip the two-clock label the
+    # day an episode's counts went to two digits; deriving it means the format
+    # can be reworded without anyone re-doing this arithmetic by hand.
+    cx = max([30.0] + [lw - half - w / 2.0 for lw, w in zip(lab_w, widths)]
+             ) + gap + max(widths)
     W = cx * 2.0
     H = 46.0 + TIER_H * n_eps
     ground = H - 18.0
@@ -332,10 +376,19 @@ def sapling_svg(eps: list, boards: dict, links: dict = None) -> tuple:
         # limb — runs into the empty margin instead of through the trunk. Pinned
         # the other way it did exactly that, and the bigger type made it obvious.
         lx = (c_cx + w / 2.0) if side < 0 else (c_cx - w / 2.0)
+        # Two baselines, 7 units apart — one line above the other, both pinned to
+        # the same edge. The pair still clears the canopy below it: a label sits
+        # on the opposite side of the trunk from the limb beneath it, because
+        # `side` alternates, so the only thing the second line can reach into is
+        # empty margin.
+        ly = cy + h / 2 + 9.5
+        spans = "".join(
+            f'<tspan x="{lx:.1f}" y="{ly + i * 7.0:.1f}">{_e(t)}</tspan>'
+            for i, t in enumerate(_epl_lines(ep.get("number"), cnt["look"],
+                                            cnt["done"])))
         labels.append(
-            f'<text class="epl" x="{lx:.1f}" y="{cy + h / 2 + 11:.1f}" '
-            f'text-anchor="{"end" if side < 0 else "start"}">EP '
-            f'{_e(ep.get("number"))} · {cnt["done"]}/{total} passed</text>')
+            f'<text class="epl" x="{lx:.1f}" y="{ly:.1f}" '
+            f'text-anchor="{"end" if side < 0 else "start"}">{spans}</text>')
         summary.append({"number": ep.get("number"), "title": ep.get("title"),
                         "counts": cnt, "total": total,
                         "board": boards.get(int(ep.get("number") or 0), "")})
@@ -423,8 +476,13 @@ def sapling_html(eps: list, boards: dict, links: dict = None) -> str:
     caption = (f'<b>{total} leaves, one per beat — {passed} have greened.</b> '
                f'Amber is the author’s to answer ({looking} '
                f'take{"s" if looking != 1 else ""} sitting in front of him), '
-               'green is the card’s to render. Hover any leaf for that beat’s '
-               'state and the reason on file; click it to open the beat.')
+               'green is the card’s to render. Every episode’s label carries '
+               'both of your clocks — how many takes are waiting for your look, '
+               'then how many you have passed — so a 0 beside “passed by you” '
+               'means nobody has watched them yet, never an idle card: the '
+               'machine’s own work shows in the receipts below. Hover any leaf '
+               'for that beat’s state and the reason on file; click it to open '
+               'the beat.')
     # WHAT A CLICK ACTUALLY DOES, said only when it is true of some leaf. The
     # sentence above is the standing behaviour and stays; this adds the receipt
     # the caller supplied, and the count is measured off `links` so the caption

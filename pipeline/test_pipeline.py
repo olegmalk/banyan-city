@@ -7998,6 +7998,30 @@ def test_every_beat_gets_exactly_one_leaf_and_an_unscored_one_shows_as_missing()
     check("no episodes, no tree — never an empty picture of a healthy show",
           charts.sapling_html([], {}) == "" and charts.sapling_svg([], {})[0] == "")
 
+    # THE LABEL CARRIES BOTH OF HIS CLOCKS, ALWAYS. Roman read the old form —
+    # "EP 2 · 0/21 passed" — as zero progress on an episode holding eighteen
+    # rendered takes, nine of them scored as waiting on his look. "Passed"
+    # counts only what HE has passed, so one number could answer only one of
+    # his two questions and the label showed the emptier one. Dropping the look
+    # clock when it reads zero would put the bug straight back for the episode
+    # where the queue is the interesting fact, which is why both lines are
+    # asserted on the episode that has neither.
+    # Read out of the label ELEMENT, not out of the whole picture: every done
+    # beat's tooltip says "passed by you" too, and a substring search over the
+    # svg would pass on a tooltip while the label said nothing.
+    import re as _re
+
+    epl = _re.findall(r'<text class="epl".*?</text>', svg)
+    check("an episode's label carries the queue clock and the passed clock, "
+          "queue first",
+          len(epl) == 2 and "EP 1 · 1 for your look" in epl[0]
+          and "1 passed by you" in epl[0]
+          and epl[0].index("for your look") < epl[0].index("passed by you"))
+    check("...and both lines are drawn even at zero, so neither clock can hide",
+          "EP 2 · 0 for your look" in svg and "0 passed by you" in svg)
+    check("...and no episode label still reads as a bare N/M passed",
+          "/4 passed<" not in svg and "/2 passed<" not in svg)
+
 
 def test_the_beat_states_are_grouped_by_whose_clock_they_are_on():
     """The bar and the tree stack green-then-amber, and both read one table.
