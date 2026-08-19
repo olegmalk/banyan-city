@@ -1,0 +1,5 @@
+# xinsir/controlnet-openpose-sdxl-1.0, allow_patterns=['config.json', 'diffusion_pytorch_model.safetensors'], variant NOT passed
+# snapshot: C:\Users\artvn\.cache\huggingface\hub\models--xinsir--controlnet-openpose-sdxl-1.0\snapshots\23f966cd5cfdd3f7729c903e243d87152162d2b7
+b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801  1235  config.json
+b8524e557a7df60d081f5d4a0eb109967d107df217943bf88c2d99b9ebcc06c5  2502139104  diffusion_pytorch_model.safetensors
+# incomplete_files: 0
