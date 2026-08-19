@@ -2950,3 +2950,4 @@
 13:44:29Z STARTED task=ep2-b18-tremble-s20260819-0819-1787146832 attempt=1 on box-runner
 13:50:48Z DONE task=ep2-b18-tremble-s20260819-0819-1787146832 rc=0 artifacts=2
 13:50:54Z STARTED task=ep2-b12-stillmotion-s20260871-0819-1787147444 attempt=1 on box-runner
+13:57:19Z DONE task=ep2-b12-stillmotion-s20260871-0819-1787147444 rc=0 artifacts=2
