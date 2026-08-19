@@ -278,3 +278,64 @@ everything else byte-identical. `FAIL-COLLAPSE-AGAIN` is pre-registered as the
 more likely outcome, and if it fires the seed is exonerated from the other
 direction too and the cause is the plate or the prompt. It was queued at
 17:50 and is the only rung this question still needs.
+
+---
+
+## CLOSED — the converse rung landed and the answer is an INTERACTION
+
+`ep2-b12-stillmotion-s20260871-0819`: **drift −0.04.** The parent, byte-identical
+in plate, prompt and every sampler flag, measured **−91.05**. One integer of seed
+between them.
+
+| | seed | drift | bands |
+|---|---|---|---|
+| `ep2-b12-stillmotion-0819` | 20260819 | **−91.05** | all fall |
+| `ep2-b12-stillmotion-s20260871-0819` | **20260871** | **−0.04** | disagree, all under 1 level |
+
+**`FAIL-COLLAPSE-AGAIN` was pre-registered as more likely and did not fire.** The
+plate and the prompt are exonerated along with everything else, and the true shape
+of the answer is one no branch of any bar in this file described:
+
+| factor | alone | evidence |
+|---|---|---|
+| `--image-crf 10` | **not the cause** | four clips, opposite outcomes, identical argv |
+| every other sampler flag | **not the cause** | argv identical across all six specs |
+| seed 20260819 | **not sufficient** | holds on b01 +16.59, on b18 −4.28 |
+| b12's plate + prompt | **not sufficient** | holds on 20260871 at −0.04 |
+| **seed × plate together** | **this is it** | 20260819 on *this* plate, and only there |
+
+**My reasoning error, since it was pre-registered and therefore checkable:** I
+treated the four candidates as mutually exclusive single causes and eliminated
+them one at a time, which is a sound method only if a single cause exists. Each
+elimination was individually correct and the conclusion each one pointed at — "so
+it must be the next one on the list" — was wrong. A bar whose branches are all
+single causes cannot express an interaction, and both of my "more likely"
+predictions on this axis were wrong in the same way.
+
+### What this is worth, practically
+
+**A collapse on this plate is fixable by a re-roll**, because the plate and prompt
+are now demonstrably capable of a flat 121-frame render. Beat 12 has a take that
+holds luminance dead flat where the previous one lost 91 levels — *on luminance
+only*; its stillness, bird and leaf clauses are unjudged and the pick is R4.
+
+**Beat 20 is very likely the same and is deliberately left alone.**
+`ep2-b20-motion-0819` also ran seed 20260819 and also collapsed (−25.03), so its
+darkening is probably this interaction and probably re-rollable in one job. **That
+rung is NOT filed:** beat 20's plate is the scavenger, and re-rolling it risks a
+goblin-identity render under the freeze. It waits for the design answer or for
+someone with authority to call the plate clear. **This is the single most
+actionable thing in this file and the reason it is not acted on is a rule, not an
+oversight.**
+
+**Filed instead:** `ep2-b12-stillmotion-s20260818-0819`, a third seed on this
+plate, because one clean seed can be luck and two would make 20260819 the outlier.
+
+### The clause this leaves behind
+
+The brightness clause beat 20 asked for is still worth carrying on every
+121-frame rung, and `luma_drift.py` makes it cheap — but write it **two-sided**
+and attach it to **the (seed, plate) pair**, not to a flag and not to a beat. The
+honest generalisation from six clips is narrow: *this recipe family can lose or
+gain 90 levels on a seed that behaves perfectly elsewhere, so luminance is a
+per-render check and never a property you inherit from a passing sibling.*
