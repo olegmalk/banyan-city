@@ -129,8 +129,27 @@ subjects:
     file: pipeline/jobs/ep2-charref-guards-r4-0812.yaml
     contains: '`bald` comes out, `short hair` and `visible face` go in'
   scope:
-    beats: [5, 6, 7, 9, 10, 11]
+    beats: [5, 6, 7, 8, 9, 10, 11]
     prompt_mentions: \bguards?\b
+  # BEAT 8 WAS MISSING FROM THIS LIST AND IS ADDED 2026-08-20. Nothing is ruled
+  # here: beat 8's guard is the same guard, the ruling above already covers him,
+  # and this is the ruling being APPLIED to a beat the scope had simply skipped.
+  # It is not a paper fix either -- beat 8 is where the ruling was measured.
+  # Across three frames whose prompt text is byte-identical and carries
+  # `light sandy hair` (ep2-b08-twinsipa-0819, ep2-b08-boardnet-0820,
+  # ep2-b08-scale30-0820) the guard came back SANDY, then BALD at total
+  # conditioning 1.0+0.8, then SANDY again at 1.0+0.3. With the wording held
+  # constant the drift toward bald is conditioning pressure pulling the render
+  # toward an IP-Adapter reference that is bald by construction, not a prompt
+  # asking for it. So beat 8 both falls under this canon and is currently the
+  # cheapest instrument for reading when a render is being over-conditioned.
+  applied_to_beat_08_2026_08_20: >-
+    Scope application, not a new ruling. Evidence: pipeline/b08-arm-route-0819.md
+    sections 16 and 17, and the `b8_the_guard_has_hair` clause carried by
+    ep2-b08-boardnet-0820 (scored FAIL, bald) and ep2-b08-scale30-0820 (scored
+    PASS, sandy) with identical prompt bytes. The two beat-8 drafts below are
+    pre-08-12 history of exactly the class this entry's `acknowledged` list
+    already covers for beats 6, 7, 9, 10 and 11.
   forbids:
   - \bbald\b
   - \bbare heads?\b
@@ -155,6 +174,21 @@ subjects:
     - authored_charref_guards_r3
     - authored_b07_idfix
     - authored_b07_idfix_r2
+    # Beat 8, added 2026-08-20 with the beat itself. The first two are 08-12
+    # rounds, both superseded in place by authored_b08_nobald_0817, which
+    # exists for precisely this reason ("`bald` REMOVED, ONE VARIABLE").
+    - authored_b08_idfix
+    - authored_b08_idfix_r2
+    # THESE TWO ARE NOT PRE-RULING HISTORY AND SHOULD NOT BE READ AS IF THEY
+    # WERE: both were written 2026-08-18, SIX DAYS AFTER this canon, and both
+    # ask for "a tall bald guard in a brown cloak". Nothing caught them because
+    # beat 8 was not in scope until today -- they ARE the cost of the gap. Both
+    # have already run and carry an `outcome`, so they are history now and are
+    # acknowledged rather than edited; rewriting a scored spec's prompt would
+    # falsify what its frame was rendered from. Recorded in the file this list
+    # is backed by, under guards_CORRECTION_0816.beat_08_was_missing_from_every_list_0820.
+    - 'jobs/ep2-b08-boardcomp-0818:prompt.txt'
+    - 'jobs/ep2-b08-twofig-gesture-0818:prompt.txt'
     - authored_b09_idfix
     - authored_b09_scene4
     - authored_b09_idfix_r2

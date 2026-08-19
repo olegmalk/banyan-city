@@ -1117,6 +1117,23 @@ guards_CORRECTION_0816:
     and not corrected by this edit, named so the next lane fixes them rather than believes them: review/ep2-picks/steward-picks-0815.yaml
     (guards, note_on_09) and review/ep2-picks/gate-evidence.yaml (six rows reading "GATED - guard cast
     unapproved (his call)").'
+  beat_08_was_missing_from_every_list_0820: 'FILING GAP FOUND 2026-08-20, AND IT COST TWO SPECS. Nothing
+    here is re-ruled: the cast and the hair canon are exactly as this entry records them. What was wrong
+    is the SCOPE. `what_this_releases` above names beats 05, 06, 07, 09, 10 and 11, `guard_plates_are_miscast_0816`
+    below names the same six, and pipeline/canon.yaml `ep2-guard-hair` scoped itself to the same six -
+    and BEAT 08 IS A GUARD BEAT. It is the two-hander: the guard lowers his clipboard and points at the
+    goblin''s belly. Beat 08 fell through every one of those lists because it was being worked as a
+    goblin/composition problem, and the omission was not free - two beat-08 specs written on 2026-08-18,
+    `ep2-b08-boardcomp-0818` and `ep2-b08-twofig-gesture-0818`, both ask for "a tall bald guard in a brown
+    cloak", six days after the 08-12 hair canon, and no check could see it because beat 08 was not in
+    scope. Both have already run and are scored; they are history and are listed in canon.yaml''s
+    `acknowledged.variants` as such, not corrected in place. Beat 08''s live route has been conformant
+    on its own since: ep2-b08-twinsipa-0819, ep2-b08-boardnet-0820, ep2-b08-scale30-0820 and
+    ep2-b08-grip-0820 all say `light sandy hair` in byte-identical prompt text. AND BEAT 08 IS WHERE THE
+    CANON GOT ITS INSTRUMENT: with that wording held constant the guard rendered sandy, then BALD at
+    total ControlNet conditioning 1.0+0.8, then sandy again at 1.0+0.3, so a bald guard on this beat now
+    reads as over-conditioning pulling the frame toward a reference that is bald by construction, rather
+    than as a prompt asking for it. Evidence: pipeline/b08-arm-route-0819.md sections 16 and 17.'
   why_this_entry_exists: The approval was recorded in review/inbox.yaml when it was given and nowhere
     else. This file, STATE.md and review/ep2-picks/steward-picks-0815.yaml all still described the cast
     as unapproved, so lanes reading them kept beats 05, 09, 10 and 11 blocked for a day; the 2026-08-16
