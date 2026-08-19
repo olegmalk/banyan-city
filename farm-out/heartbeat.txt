@@ -2964,3 +2964,4 @@
 15:41:03Z box-runner up pid=26712 host=MSI
 15:49:15Z STARTED task=ep2-b12-stillmotion-s20260873-0819-1787153012 attempt=1 on box-runner
 16:02:59Z DONE task=ep2-b12-stillmotion-s20260873-0819-1787153012 rc=0 artifacts=2
+16:10:41Z box-runner idle ready=0 failed=41
