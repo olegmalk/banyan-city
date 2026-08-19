@@ -5249,6 +5249,79 @@ REVS[(9, 3)] = {
     # the seven whose head clears P3, and there is a committed scored picture at
     # this seed and the parent wording to A/B against.
     "seed": 20260820,
+    # ------------------------------------------------------------------------
+    # R3 VERDICT. macbook1, 2026-08-19, ~137s, $0.
+    # H2 FIRED. THE COLOUR WORD DOES NOT REACH THE HAIR, AND THE MECHANISM THIS
+    # RUNG PREDICTED IS FALSIFIED BY ITS OWN MEASUREMENT.
+    # farm-out/ep2-b09-mac-plate-0819/09-the-pause-mac-plate-r3s1.png
+    # ------------------------------------------------------------------------
+    #   P1 HAIR ... FAIL, 8 OF 8 NOW. Still mid-to-dark warm BROWN and still
+    #      shaggy, with the same pale swathe over the right side of the crown.
+    #      MEASURED, not eyeballed, because this file has watched an eyeballed
+    #      hue claim get retracted once already. Two independent masks over the
+    #      top 30% of frame, both agreeing:
+    #        * fixed central band, darker half of the pixels (so a bright sky or
+    #          highlight cannot dominate): r2s4 mean RGB 63.9,51.9,45.3 at luma
+    #          54.7 -> r3s1 67.6,59.8,50.4 at luma 61.1; share of the band under
+    #          luma 60 falls 41.1% -> 7.7%.
+    #        * warm-pixel mask (R>=G>=B, luma<120, which excludes the grass):
+    #          r2s4 mean luma 62.0, p25 58.6 -> r3s1 66.4, p25 65.3; mean RGB
+    #          75.4,57.7,48.8 -> 76.3,63.9,53.2.
+    #      Both say the same thing: NOT DARKER. The safe claim is "the word did
+    #      not darken it"; the honest reading of two agreeing masks is that at
+    #      this seed it came back very slightly LIGHTER. Near-black on this
+    #      checkpoint would be luma under ~40 and near-neutral; this is neither.
+    #   THE PREDICTION THIS RUNG FILED IN ADVANCE IS WRONG, AND THAT IS WHY IT
+    #      WAS WORTH FILING. The block above argued the 7-of-8 brown was caused
+    #      by the negative's lighting clause carrying a bare `dark` beside a
+    #      positive asking for `dark cropped hair`, with SDXL having no scoping
+    #      to separate them -- and said outright that `black` appears in no
+    #      negative, so H1/H2 was a prediction rather than a story. `black` in
+    #      the positive, with no `black` anywhere in the negative, still returned
+    #      brown. THE MECHANISM IS RETRACTED. It may still be a real interaction
+    #      on some other beat; it is not what was holding beat 09's hair.
+    #   AND THE NEGATIVE FAILED FROM THE OTHER SIDE IN THE SAME FRAME, which is
+    #      the finding that survives: `brown hair` HAS BEEN IN THIS NEGATIVE AT
+    #      ALL EIGHT RENDERS, and brown hair arrived at all eight. The positive
+    #      places what you want; the negative does not. That law now has its
+    #      seventh data point on this checkpoint.
+    #   P3 HEAD >=55% ... PASS, AND H3 DID NOT FIRE. The crown is cropped by the
+    #      top edge and the chin sits at ~y690 of 1216, so >=56% -- the framing
+    #      held across the wording change, which is a real (small) result: seed
+    #      20260820's framing is a property of the seed and not of the exact
+    #      words, as F3 claimed.
+    #   P7 EYES ... FAIL, EXACTLY AS PRE-REGISTERED. Shut, as they were at this
+    #      seed under the parent wording. Named in advance as an expected fail
+    #      and not this rung's business; it is the 1-in-4 rate, unchanged.
+    #   P2 PASS one face. P4 PASS, grass fills the frame -- 8 of 8 on the fault
+    #      this beat was originally blocked on. P5 PASS daylight. P6 PASS, no
+    #      hand in frame. GLASSES PASS for the fifth render running.
+    #   UNPRE-REGISTERED, REPORTED FORWARD ONLY: the garment got WORSE. The tan
+    #      wrap tunic and white shoulder sash render as a WHITE SLEEVELESS VEST
+    #      with a bare shoulder. c8 was already 1 of 12 on the box rung, so this
+    #      is not new in kind, but a bare shoulder on a uniformed guard is worth
+    #      naming before someone reads it as a costume choice. The face also
+    #      still reads adolescent.
+    # FIVE OF SEVEN, the same score as r2 with the same two clauses failing.
+    #
+    # WHAT THIS CLOSES, AND IT IS THE USEFUL PART. Eight renders, two wordings,
+    # `brown hair` negated throughout: THE HAIR COLOUR ON THIS BEAT IS NOT
+    # REACHABLE BY WORDING. By this repo's three-rungs rule the wording ladder on
+    # hair is CLOSED and the next instrument must be compositional -- and the
+    # instrument is already measured from both sides. The box IP-Adapter rung
+    # (review/ep2-picks/cast-0817-scores.yaml beats.'09') reached near-black
+    # cropped hair at 3 of 12 and paid for it in framing at 0 of 12, 25-35%
+    # against the 55% bar, because the reference set depicts two men at full
+    # length in a field. So the route is REFERENCE PLUS CROP: condition on the
+    # refs to get the hair, then recover the framing with a crop pass rather than
+    # with words. That is a build, it is named here rather than fired, and it is
+    # the same conclusion the work ladder reached from the plate lane's
+    # `blocked_on` before any of these numbers existed.
+    # NOT DONE HERE: `mature male` (the age tag, still unfired, still one token)
+    # and the four-seed eye pick. Both wait on a wording that is settled, and
+    # after this rung the honest statement is that WORDING WILL NOT SETTLE IT.
+    # NO plate_ack, no pick, no promotion, and beat 09 stays a slate.
+    # ------------------------------------------------------------------------
 }
 
 

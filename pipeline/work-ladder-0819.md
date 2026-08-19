@@ -769,3 +769,167 @@ reproducibility across machines or torch builds. Written up beside the artifacts
 in `farm-out/ep2-b19-dropmotion-0819/DUPLICATE-RUN-0819.md`, so a reader who
 finds two completed job records for one id does not have to work out which
 artifact they hold.
+
+---
+
+## Appended 2026-08-19 by the finish-line / assembly lane
+
+### BEAT 09 IS THE HONEST SLATE, AND HERE IS EXACTLY WHY IN ONE LINE
+
+**Both its clips are `is_show_content: false` because their init is a plate that
+fails its own pre-registered plate bar on three named terms — head ~35% of frame
+height against a 55% bar, a hand in frame at 12 of 12, the face reads adult at
+only 5 of 12 — and a clip inherits its plate's cast defects frame for frame,
+however well it moves.** That is not a judgement made after the fact; it is
+written in both specs' own headers.
+
+**The ladder's reading of this beat was right and is now sharper.** It said the
+next rung is *not* another motion clip, and that the plate lane's own
+`blocked_on` names the real one. It does — and the plate work is further along
+than "reference-weight or a crop pass" suggests, because the two plate rungs
+this beat has had **measured a direct conflict between the two instruments**:
+
+| instrument | hair (near-black, cropped) | framing (head ≥55%) |
+|---|---|---|
+| Mac wording rung, 7 renders | **0 of 7** — brown and shaggy every time | 48–53%, and **56% at seed 20260820** |
+| box IP-Adapter rung, 12 renders | **3 of 12** — reference conditioning reaches hair | **0 of 12**, 25–35%, *worse* than the rung it was correcting |
+
+Reference conditioning wins the hair and pays for it in framing — its own
+pre-registered fail mode, fired 12 of 12, "the refs depict two men at full length
+in a field, and they dragged a close-up out to a medium". So **the two things
+beat 09 needs are, on present evidence, bought with each other's money.**
+
+### THE ONE DERIVABLE RUNG, FILED — AND A MECHANISM FOUND BY READING, NOT RENDERING
+
+`plate_scratch.py REVS[(9,3)]`, filed on macbook1 as `mac-b09r3-0819-130617`.
+**One token: `dark` → `black` in the hair clause.** This is not a new idea — it is
+the sentence the b09 plate lane wrote and deliberately did not spend: *"the next
+thing beat 09 tries is `black hair`, which is this checkpoint's own tag, instead
+of `dark`. THAT IS THE ONE CHANGE THIS BEAT NEEDS AND THIS LANE DOES NOT SPEND A
+FIFTH SEED ON IT — it is named, measured and left for the next lane."* Fired at
+**seed 20260820**, which is not a second variable: it is the only one of the seven
+whose head clears P3, and there is a committed, scored picture at that exact seed
+and wording to A/B against, so the render differs from a file on disk by one token.
+
+**And the 7-of-7 brown has a mechanism nobody had written down.** This prompt pair
+has been **asking for `dark` hair and forbidding `dark` at the same time, at every
+render.** The negative's last clause is `photorealism, 3d render, dark, night` —
+`dark` is in there as a *lighting* term — and it has sat beside a positive saying
+`dark cropped hair` since r1. SDXL's text encoder has no scoping: nothing
+subtracts darkness from the light and not the hair. That is a far better
+explanation of 7 of 7 than "this checkpoint will not draw black hair", and it is a
+**prediction rather than a story**, because `black` appears in no negative.
+
+**Why the existing guard missed it, which is the reusable part.**
+`plate_scratch.py`'s clash check splits both strings on commas and intersects
+whole chunks, so it compares `a guard man with dark cropped hair and wire-rim
+glasses` against `dark` and finds nothing. **A token-level check over the same two
+strings would have fired on day one.** Named as a guard worth adding; not built
+here, one lane one variable.
+
+### THE RUNG RAN, IT FAILED, AND IT TOOK MY MECHANISM DOWN WITH IT
+
+**H2 fired.** `farm-out/ep2-b09-mac-plate-0819/09-the-pause-mac-plate-r3s1.png`,
+137 s on macbook1, $0. The hair came back **mid-to-dark warm brown and shaggy for
+the eighth time**, with the same pale swathe over the crown. Measured rather than
+eyeballed — this beat has already had one eyeballed hue claim retracted — with two
+independent masks over the top 30% of frame that agree:
+
+| mask | r2s4 (`dark`) | r3s1 (`black`) |
+|---|---|---|
+| central band, darker half of pixels | mean luma **54.7**, RGB 63.9/51.9/45.3 | **61.1**, RGB 67.6/59.8/50.4 |
+| share of that band under luma 60 | **41.1%** | **7.7%** |
+| warm-pixel mask (R≥G≥B, luma<120) | mean luma **62.0**, p25 58.6 | **66.4**, p25 65.3 |
+
+Not darker. Two agreeing masks say very slightly **lighter**. Near-black on this
+checkpoint would be luma under ~40 and near-neutral; this is neither.
+
+**So the mechanism I filed an hour ago is RETRACTED.** The prediction was that the
+negative's bare `dark` was cancelling the positive's `dark cropped hair`, and the
+block said in advance that `black` appears in no negative, which makes it a
+prediction and not a story. `black` in the positive, with `black` nowhere in the
+negative, still returned brown. It may be a real interaction somewhere; **it is not
+what was holding beat 09's hair.**
+
+**What survives, and it is the more useful half.** `brown hair` **has been in this
+negative at all eight renders and brown hair arrived at all eight.** The positive
+places what you want; the negative does not — seventh data point on this
+checkpoint. And P3 **held** across the wording change (crown cropped, chin ~y690
+of 1216, ≥56%), which confirms F3's claim that this seed's framing is a property of
+the seed rather than of the exact words. P7's eyes were shut, pre-registered as an
+expected fail at this seed. Five of seven, the same score as r2 with the same two
+clauses failing. Unpre-registered and reported forward: the garment got *worse* —
+the tan tunic and white sash render as a **white sleeveless vest with a bare
+shoulder**.
+
+**THE HAIR AXIS IS NOW CLOSED BY MEASUREMENT: eight renders, two wordings, the
+unwanted colour negated throughout.** Per this file's own three-rungs rule the next
+instrument is compositional, and it is already bracketed from both sides — the box
+IP-Adapter rung reached near-black cropped hair at **3 of 12** and paid for it in
+framing at **0 of 12** (25–35% against a 55% bar), its own pre-registered fail mode
+firing because the refs depict two men at full length. **So beat 09's plate is a
+REFERENCE-PLUS-CROP job: condition on the refs to get the hair, then recover the
+framing with a crop pass rather than with words.** That is a build, it is named and
+not fired, and it is where the plate lane's `blocked_on` pointed before any of
+these numbers existed. `mature male` and the four-seed eye pick both wait on a
+settled wording, and the honest statement after this rung is that **wording will
+not settle it.**
+
+### WHAT THIS RUNG DOES NOT DO, SAID BEFORE ANYONE READS A PASS INTO IT
+
+**It cannot close beat 09's slate and its own block says so.** Two of the three
+open faults are untouched:
+
+- **The eyes.** P7 needs them open; the eye tag is a **1-in-4 rate**, not a lever
+  (that lane retracted its own rule as pre-registered: open once, a wink once,
+  open-but-blank-white once, shut once). At seed 20260820 they are **shut**, so P7
+  is an expected FAIL at this seed.
+- **The adult read.** The face reads adolescent and **there is no age tag in the
+  prompt at all** — `1boy` is the only person tag. `mature male` is this
+  checkpoint's own adult tag and the vacancy law says that absence is why every
+  frame decides his age afresh. **Named, one token, unfired.**
+
+**And the two clauses have never co-occurred:** seed 20260817 has the eyes and a
+48% head; seed 20260820 has a 56% head and shut eyes. **So the plate beat 09
+ships off is a render-N-and-pick on a SETTLED wording** — hair first (running),
+then the age tag, then four fresh seeds to pick a pair of open eyes. Beat 09 stays
+a slate in tonight's cut, and the cut slates it gracefully with its VO over the
+card — which matters here, because beat 09's line is the episode's punchline.
+
+### THE CUT IS ASSEMBLED: `review/ep2-demo-0819b/`, 18 FOOTAGE BEATS AND 3 SLATES
+
+One slate fewer than any cut this episode has had. Three clips changed, all of
+them this page's own crf finding cashed in **per beat**, each on another lane's
+written verdict: **beat 07 slate → footage** (PASS M1–M4, cut-preferred,
+`done_when` met clause by clause, with the shared-uniform plate fault carried in
+the open and visible in a frame strip on the page), **beat 01** (PASS, fixes the
+bloom its incumbent's own verdict admitted), **beat 17** (PASS, cleaner
+conditioning, two costs no clause covers written down). **Beat 18 was offered the
+same upgrade and refused it** on FAIL-FROZEN. Three took the flag, one rejected
+it — the per-beat rule, actually applied per beat. $0, no GPU: one ffmpeg
+assembly, two copies and one scp. Bench (`--out`), no leaf, nothing promoted, and
+both replaced clips are still on disk so every swap is one line to undo.
+
+### THE THING THE SLATE COUNT HIDES, now in a file rather than in a paragraph
+
+`review/ep2-picks/cut-readiness-0819.yaml` — one row per beat 1–21: best take with
+its sha256, the verdict that licenses it, whether its VO exists, and `blocked_on`,
+each row citing the cut's own ingredient hashes, a `verdict*:` block, or the
+beat's `done_when`. Every hash in it was recomputed from bytes on disk; the check
+caught a one-character typo, and it caught the file making the *identical*
+unquoted-scalar mistake it was documenting in `b15-0819-verdict.yaml`.
+
+**FOUR beats have a written PASS (01, 07, 17, 18). THIRTEEN are best-available.
+EIGHT of those — 3, 4, 5, 6, 10, 13, 16, 21 — have no verdict block of any kind
+and have ridden five consecutive cuts unchanged.** They are not suspected of being
+bad; they have never been judged, and five appearances is not five passes. **The
+slates are the loud, tracked problem; the quiet middle is where the unknown
+actually lives.** Named here rather than fixed: judging eight beats is its own unit
+with its own bars, and inventing bars for footage that already exists is how a bar
+gets bent to fit the clip — which is exactly what `done-definitions`' repeated
+`definition_written: ... NOT from any existing take` fields exist to prevent.
+
+**Also recorded and not acted on** (each is one line to take or veto): beat 12's
+cut file is the `-untrimmed` one whose colour-shift fault its own `trim_0815`
+record already resolved by edit — not swapped because 1.38s against a 5s slot with
+5s of VO over it is a duration decision, and beat 12 is another lane's tonight.

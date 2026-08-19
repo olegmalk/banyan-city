@@ -52,6 +52,15 @@ generated_by: the finish-line / assembly lane
 cost_usd: 0.0
 live_cut: review/ep2-demo-0819/ep2-demo-0819.mp4
 live_cut_sha256: 2920c4192780394904b5b481e0913c39f40c4a83ff2c9991509e1fa14d8148c6
+cut_assembled_from_this_ledger: >-
+  review/ep2-demo-0819b/ep2-demo-0819b.mp4, sha256
+  617d0abc5c33bd1cde62c87bbbed95c5e9c0dcd095d902ff5487a71617833bca — the three
+  `upgrade_available:` rows below were taken (beats 01, 07 and 17), beat 18's was
+  deliberately refused on its FAIL-FROZEN measurement, and nothing else moved.
+  18 footage beats and 3 slates, one slate fewer than any cut this episode has
+  had. The `status:` values below are the state of the FOOTAGE and are unchanged
+  by that assembly; per-beat manifest at
+  review/ep2-demo-0819b/sources/picks-0819b.yaml.
 
 summary:
   beats: 21
@@ -63,10 +72,12 @@ summary:
   upgrades_available_and_judged: 3
   slates_that_can_close_tonight: 1
   slates_that_can_close_tonight_which: >-
-    Beat 07 only. Beat 09's plate needs two more wording rungs and a seed pick;
-    beat 15's leaf count needs a composite build; beat 19's first motion sample
-    landed tonight and FAILED on subject attribution. Three slates carry into
-    the next cut and each one's next step is named in its row.
+    Beat 07 only, and it did — see `cut_assembled_from_this_ledger`. The other
+    three each got a rung tonight and none of them closed: beat 09's hair rung ran
+    and FAILED, which closes the wording axis and hands the beat to a
+    reference-plus-crop build; beat 15's leaf count needs a composite build; beat
+    19's first motion sample FAILED on subject attribution. Three slates carry
+    into the next cut and each one's next step is named in its row.
   vo_takes_present: 18
   vo_absent_by_design: [2, 19, 21]
   vo_missing_that_should_exist: []
@@ -112,8 +123,10 @@ in_flight_at_the_time_of_writing:
     three axes by measurement. Beat 08 already HAS footage in the cut; these
     change how good it is, not whether the beat is filled.
   'plate_scratch REVS[(9,3)]': >-
-    Beat 09's hair-colour rung, filed by this lane tonight (see beats.9). It
-    cannot close beat 09's slate and the row says so.
+    RAN AND FAILED. Beat 09's hair-colour rung, filed AND judged by this lane
+    tonight: eight renders now say the colour is not reachable by wording, so the
+    axis is closed and the route is named. It never claimed it could close the
+    slate. Full reading in beats.9.
 
 beats:
 
@@ -357,7 +370,34 @@ beats:
       56% head and shut eyes. So the plate this beat ships off is a
       render-N-and-pick on a SETTLED wording, and the wording is not settled
       yet.
-    rung_filed_by_this_lane: >-
+    rung_filed_and_JUDGED_by_this_lane: >-
+      RAN AND FAILED, WHICH CLOSES AN AXIS. r3s1 came back with the hair still
+      mid-to-dark warm brown and shaggy — the EIGHTH consecutive render, across
+      two wordings, with `brown hair` in the negative every single time. Measured
+      with two independent masks over the top 30% of frame, both agreeing it is
+      NOT darker (central-band darker-half mean luma 54.7 -> 61.1, share under
+      luma 60 falling 41.1% -> 7.7%; warm-pixel mask 62.0 -> 66.4). P3 HELD at
+      >=56%, which confirms this seed's framing is a property of the seed and not
+      of the exact words. P7's eyes were shut, pre-registered as an expected fail
+      here. Five of seven, same score as the parent, same two clauses failing.
+      Reported forward and unpre-registered: the garment got worse — the tan
+      tunic and white sash render as a white sleeveless vest with a bare shoulder.
+      SO THE HAIR AXIS IS CLOSED BY MEASUREMENT and the route is now named:
+      REFERENCE PLUS CROP — the box IP-Adapter rung reaches near-black hair (3 of
+      12) and pays for it in framing (0 of 12, 25-35% against 55%), so condition
+      on the refs and recover the framing with a crop pass rather than with
+      words. A build, named and not fired.
+    my_own_prediction_RETRACTED: >-
+      The rung was filed with a mechanism attached: that the negative's bare
+      `dark` (in its lighting clause) had been cancelling the positive's `dark
+      cropped hair`, SDXL having no scoping to separate them. It was filed AS a
+      prediction, on the explicit ground that `black` appears in no negative.
+      `black` in the positive with `black` nowhere in the negative still returned
+      brown. THE MECHANISM IS WRONG and is withdrawn. What survives is the older
+      law from the other side: `brown hair` was negated at all eight renders and
+      brown arrived at all eight — the positive places what you want, the
+      negative does not.
+    rung_as_filed: >-
       plate_scratch.py REVS[(9,3)] — one token, `dark` -> `black` in the hair
       clause, at seed 20260820 (the only one of seven whose head clears P3, and
       the one with a committed scored picture to A/B against). It is the rung
