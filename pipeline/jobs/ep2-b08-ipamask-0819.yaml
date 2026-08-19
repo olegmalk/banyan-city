@@ -394,3 +394,139 @@ licence_note: >-
   RENDER -- no photo-derived edge map, no annotator, no third-party image, so the
   lllyasviel/Annotators landmine is not touched and no external image's terms
   attach to the output.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after opening the frame at full size and at 1:1
+# beside rung 2's. Scored against the bar and the verdict_rule THIS SPEC
+# PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 2 steps rc=0, 2026-08-19T08:08Z, load 7.5s / render 17.5s, prompt 64
+# and negative 69 of 77 on the box's real tokenizer, 6 files published to
+# courier-box\farm-out and pulled with every sha verified against the manifest
+# (frame 96fb65a2...). $0.
+# Evidence: farm-out/ep2-b08-ipamask-0819/EVIDENCE-b08-ipamask-0819.png
+# (hint | rung 2 | rung A | the two references, with the measured numbers on it).
+# ============================================================================
+verdict: >-
+  PASS -- BRANCH (1). PER-FIGURE IDENTITY BINDS, AND IT IS THE FIRST THING IN SIX
+  RUNGS TO MOVE B2 AT ALL. The guard came back a bald HUMAN man in his own brown
+  cloak with his own gold clasp and a WHITE SASH at his waist, standing beside a
+  green goblin with pointed ears. Every clause the parent rung passed is still
+  passing, and the ONE mechanism this job added is the only thing that changed.
+  Beat 08 has a recipe for the first time. ONE CLAUSE REGRESSED and it is named
+  below rather than folded into the win: the point's AIM is worse than its
+  parent's, which is a hint-geometry defect and not an adapter defect.
+verdict_measured:
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b2_the_identities_separate: 'PASS ON BOTH HALVES, AND THE EYE AGREES WITH THE
+    NUMBERS. B2a: guard head G-R = -14.5 against a bar of <= 0.0, where the same
+    box on the same statistic measured +34.0 on the parent frame -- a 48.5-level
+    move, out of a green band whose floor was set at +20.0 from six rendered
+    rungs. B2b: separation +43.0 against a bar of >= +20.0, where the four green
+    pairs measured -4.6, 5.5, 4.6 and 0.6. AND THE PIXELS: at 1:1 the parent''s
+    guard is a green featureless egg with pointed ears, closed eyes and no nose;
+    this guard has pale skin, drawn brows, open eyes, a nose, a mouth and a
+    cloak collar. He is unmistakably a human man. The goblin stayed green
+    (+28.5) with LONGER pointed ears, so the reference held his identity rather
+    than dragging both figures toward one average -- which is what a mask is for
+    and is the thing an unmasked adapter would have got wrong.'
+  b2c_wardrobe_separates: 'PARTIAL, AND BETTER THAN THIS SPEC PREDICTED. It said a
+    full recovery was not expected because the masks stop at each figure''s hip and
+    neither reference shows a sash. The guard came back with the brown cloak AND the
+    gold clasp AND A WHITE SASH AT HIS WAIST -- below his mask''s bottom edge
+    (y=668) and absent from his reference crop. Not recovered: the cream shirt (the
+    cloak covers it) and the brown WRAP SKIRT (he wears brown trousers). The
+    parent frame put white drapes and tan trousers on BOTH figures; here the white
+    open vest sits on the goblin only. So wardrobe bleed is reduced, not gone.'
+  b3_one_ground_plane: 'PASS, and held to ONE PIXEL. Row-wise edge energy inside
+    each figure''s x band puts the goblin''s foot line at y=1151 and the guard''s at
+    y=1152, against the hint''s authored y=1149.1.'
+  b4a_board_down: 'PASS. A brown board hangs at the guard''s hip with his sleeve and
+    hand at its top edge. It was named as genuinely at risk -- his mask stops at
+    y=668, one pixel above the hint''s board top (668.4), so no reference conditioned
+    it, but an adapter changes the whole attention path. It survived, and the board
+    is better drawn than the parent''s.'
+  b4b_legible_point: 'MARGINAL, AND IT REGRESSED ON AIM AGAINST ITS PARENT. THE
+    LEGIBILITY HALF IMPROVED: at 1:1 the arm ends in a properly modelled HUMAN hand
+    in a brown sleeve with a distinct index finger, where the parent drew a green
+    hand. THE AIM HALF GOT WORSE: that finger hangs almost straight DOWN, so the
+    gesture reads as an arm held out with the hand drooping rather than as a point
+    at the belly. The parent was already scored "a pass on legibility and a marginal
+    one on aim"; this is a pass on legibility and a FAIL on aim.
+    AND THE CAUSE IS NOT THE ADAPTER -- IT IS THE HINT, MEASURED: this contour
+    aims with a separate 1px FINGER stroke, which leaves its forearm free to bend,
+    and extending its elbow->wrist segment passes 29.1 px wide of the navel.
+    The arm the hint asks for genuinely is "horizontal upper arm, forearm down".
+    That is exactly the defect the openpose rung''s construction fixes by making
+    the FOREARM aim (author_b08_openpose_hint.py, forearm ray 0.1 px off the
+    navel), so this clause is now a licensed reason to fire that sample rather
+    than a reason to re-tune this one.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS. The pointing arm grows from THE GUARD''s
+    shoulder, and it is now visibly a HUMAN arm in a brown sleeve. The uncontrolled
+    tally at this seed is 4 of 4 on the goblin, so this remains entirely the hint''s
+    doing -- and the adapter did not fight it, which was branch (2)''s risk.'
+  b5_no_colossus: 'PASS, measured. Statures 816 px (guard) and 729 px (goblin),
+    ratio 1.119 against the hint''s authored 1.100 -- within 2%. The goblin''s
+    stature is 729 against 729.6 asked.'
+  b6_drawn_not_traced: 'IMPROVED ON ITS PARENT''S PARTIAL, AND THAT IS A FINDING
+    NOTHING PREDICTED. Sections 8-10 established that no conditioning scale and no
+    stroke weight frees the SILHOUETTE, because the tracing is caused by the
+    enclosure. This frame''s guard has a cloak that drapes, a collar, a clasp and a
+    sash, and his outline is a cloaked man rather than the authored polygon; the
+    goblin has a vest with lapels. The legs are still columnar in both. REPORTED
+    AGAINST MYSELF: I did not measure ink-on-edge here, so this is an eye call and
+    is NOT a claim that the adapter beat the enclosure. The plausible mechanism is
+    that `plus` carries STRUCTURE from a standing, cloaked reference and so supplied
+    an outline vocabulary the contour alone could not -- and that is a hypothesis
+    for a later rung, not a result of this one.'
+observed_not_scored: >-
+  THREE THINGS THE NEXT LANE SHOULD NOT HAVE TO REDISCOVER. (1) THE GUARD'S EARS
+  ARE STILL POINTED. His skin, face and wardrobe are human; his ears are not.
+  `pointed ears` is nowhere in the prompt, so this is the checkpoint's own goblin
+  association surviving a mask that fixed everything else about the head -- a
+  residual broadcast, and the sharpest remaining identity defect. (2) THE GOBLIN
+  HAS A GREEN HALO, a soft bloom around his head and shoulders inside his own mask,
+  and his eyes came back as blank white slits where the reference has visible
+  pupils. Both are mask-region artifacts, mild at this scale, and both are the
+  first thing a lower --ip-scale would be expected to reduce. (3) THE FRAME
+  DARKENED BY 36 LEVELS -- mean luma 115.7 against the parent's 151.6 at the same
+  seed, the same prompt and the same negative including `dark, night`. The adapter
+  is the only difference, so per-region image conditioning costs some exposure. It
+  is dusk-hazy, not night, and it did not fail any clause; but it is a cost to
+  price in and NOT an authoring error like rung 1's was.
+what_this_settles: >-
+  MASKED IP-ADAPTER BINDS IDENTITY PER FIGURE ON THIS STACK, at $0, with no
+  download, in one 17.5-second render, composed into the same pipeline as the
+  ControlNet. That was the open question b08-arm-route-0819.md §10 left standing
+  and it is answered affirmatively. It also settles the shape of what was wrong
+  for five rungs: identity was never a conditioning problem, so no amount of scale
+  or stroke could have reached it, and the four rungs that chased it were asking
+  geometry to carry a clause geometry cannot express. And it settles that the two
+  mechanisms COMPOSE rather than compete -- branch (2)'s risk did not fire: every
+  staging clause the hint bought (B1, B3, B4a, B4c, B5) survived the adapter
+  intact.
+what_this_did_not_settle: >-
+  THE AIM. B4b is the one clause still open on this beat and this frame made it
+  worse, for a reason measured in the hint rather than guessed at. Nor does it
+  settle whether the silhouette improvement in B6 is real -- that was an eye call
+  and would need the ink-on-edge instrument rung 4 used. Nor the third figure beat
+  08's done_when wants: this frame has two, as every frame on this route has.
+what_this_does_not_license: >-
+  No pick, no plate_ack, no cut, no canon filename; this frame is PROVISIONAL and
+  is not a candidate. It does not license an --ip-scale sweep -- 0.7 worked on the
+  first try and the next value would need its own question, not a bracket. It does
+  not license dropping the ControlNet: the hint is still the only thing that has
+  ever put the arm on the guard, and B4c passing here is not evidence the adapter
+  could do it alone. And it does not license scaling this recipe to fifteen beats:
+  one sample, one beat, and the aim clause is still failing.
+next_rung_named_not_taken: >-
+  ep2-b08-posenet-sample-0819, and it is now licensed by TWO independent findings
+  rather than one: §10's hint-class argument, and this frame's B4b regression whose
+  cause is the contour's inability to aim with its forearm. Its weights are already
+  on the box (ep2-b08-posenet-fetch-0819 PASSED 2026-08-19T08:00Z, both byte counts
+  exact, zero .incomplete). ONE sample, and the open design question it must answer
+  first is whether to carry the two masked references INTO it -- which would be two
+  variables in one job -- or to run the pose net bare and add identity back
+  afterwards. This lane's reading: run it BARE, because the pose question is
+  "does a skeleton bind at all on animagine" and identity is now a solved bolt-on
+  whose own bar has been met once.

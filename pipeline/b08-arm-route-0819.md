@@ -479,3 +479,127 @@ outline is not the model's own." That reason is now spent — the axis is closed
 no outline was freed. Identity is no longer *blocked*; it is simply the next open
 question, beside Route A's plate campaign, and whoever takes it should know that
 geometric conditioning on this net will not help.
+
+---
+
+## 11. Identity binds — the blocker five rungs could not reach fell to a mask (2026-08-19)
+
+§10 left identity as "no longer *blocked*; simply the next open question", and
+warned that geometric conditioning on this net would not help it. Both halves of
+that turned out to be right. `ep2-b08-ipamask-0819` took the question with the
+mechanism the external research had already verified, and it worked on the first
+sample (evidence:
+`farm-out/ep2-b08-ipamask-0819/EVIDENCE-b08-ipamask-0819.png`).
+
+**One variable.** Rung 2 — this beat's best frame — plus two masked identity
+references. Same hint bytes (`19cfad48…`), same seed 20260819, same conditioning
+scale 0.45, same prompt and negative *word for word* including the broadcasting
+`green skin`, same base, same net, same driver. Added: `--ip-ref` ×2,
+`--ip-mask` ×2, `--ip-scale 0.7`. Keeping the wording was the point — the claim
+was that a **mask can aim an attribute a wording cannot**, and rewriting the
+words would have made the result unattributable.
+
+**B2 was stated as a number before the pixels, and the band was measured rather
+than chosen.** Instrument: mean RGB over the central-50% box of each head as the
+hint places it, statistic `G − R`. Every head this beat ever judged green scored
+≥ +20.1 across six rungs; every head judged human-skinned scored ≤ −21.1; 41
+empty levels between the classes. So the bar was guard ≤ 0.0 and separation
+≥ +20.0.
+
+| | guard head `G−R` | goblin head `G−R` | separation |
+|---|---|---|---|
+| rung 2 (no adapter) | **+34.0** | +29.4 | **−4.6** |
+| **rung A (masked refs)** | **−14.5** | +28.5 | **+43.0** |
+
+**And the pixels agree, which is the actual verdict.** At 1:1 rung 2's guard is a
+green featureless egg with pointed ears, closed eyes and no nose. Rung A's guard
+is a bald **human** man — pale skin, brows, open eyes, nose, mouth — in his own
+brown cloak with his own gold clasp and **a white sash at his waist**, holding
+the board at his hip, beside a green goblin whose pointed ears got *longer*. The
+mask held each identity in place instead of averaging the two, which is the thing
+an unmasked adapter would have got wrong.
+
+**Every staging clause the hint bought survived.** B1, B3 (foot lines y=1151 and
+y=1152, one pixel apart, against the authored 1149.1), B4a (the board survived a
+mask whose bottom edge stops one pixel above it), B4c (the arm still grows from
+the guard, and is now visibly a human arm in a sleeve), B5 (statures 816/729,
+ratio 1.119 against 1.100 asked). **The two mechanisms compose; they do not
+compete** — that was the pre-registered risk and it did not fire.
+
+**What this reframes about rungs 1–5.** Identity was never a conditioning
+problem, so no value of scale or stroke could ever have reached it. Four rungs
+spent bracketing dials were asking geometry to carry a clause geometry cannot
+express, and the axes they closed are still closed — they were just not the axis
+B2 lived on.
+
+### The one clause that regressed, and it hands the next rung its reason
+
+**B4b — the aim — got worse, and the cause is the hint, measured.** The
+legibility half improved: the arm now ends in a properly modelled human hand with
+a distinct index finger where rung 2 drew a green one. The aim half failed: that
+finger hangs almost straight **down**, so the gesture reads as an arm held out
+with the hand drooping.
+
+That is not the adapter. **This contour aims with a separate 1 px finger stroke,
+which leaves its forearm free to bend — extend its own elbow→wrist segment and it
+passes 29.1 px wide of the navel.** The arm the hint actually asks for *is*
+"horizontal upper arm, forearm down". Rung A simply drew what was asked for,
+well.
+
+### Three costs to price in, observed and not scored
+
+1. **The guard's ears are still pointed.** Skin, face and wardrobe are human; the
+   ears are not, and `pointed ears` is nowhere in the prompt. A residual broadcast
+   from the checkpoint's own goblin association, and now the sharpest identity
+   defect left.
+2. **A green halo around the goblin**, inside his own mask, and his eyes came back
+   as blank white slits where the reference has pupils. Mask-region artifacts; the
+   first things a lower `--ip-scale` would be expected to reduce.
+3. **The frame darkened 36 levels** — mean luma 115.7 against rung 2's 151.6 at
+   the same seed and the same negative (which carries `dark, night`). Per-region
+   image conditioning costs some exposure. Dusk-hazy, not night, and it failed no
+   clause — but unlike rung 1's darkness this is a *cost*, not an authoring error.
+
+*Reported against myself:* B6 (drawn, not traced) looks **better** than rung 2's
+PARTIAL — the guard's cloak drapes and his outline is a cloaked man rather than
+the authored polygon. I did **not** run rung 4's ink-on-edge instrument on it, so
+that is an eye call and is **not** a claim that the adapter beat the enclosure.
+The plausible mechanism is that `plus` carries structure from a standing, cloaked
+reference; that is a hypothesis for a later rung.
+
+## 12. The pose net is on the box, and two independent findings now license its sample
+
+`ep2-b08-posenet-fetch-0819` **PASSED** at 08:00Z: `xinsir/controlnet-openpose-sdxl-1.0`,
+`config.json` 1,235 bytes and `diffusion_pytorch_model.safetensors`
+2,502,139,104 bytes, both exact, zero `.incomplete`, 3 m 25 s, apache-2.0, $0.
+`allow_patterns` kept it to 2,386 MiB where a naive pull is ~5,014 MB. It fired
+the moment the card was free rather than waiting on rung A, because it was the
+only physical dependency on the route.
+
+`pipeline/author_b08_openpose_hint.py` is written and its `--selftest` passes.
+It transcribes §2's COCO-18 spec — the 18-colour ramp, the 17-entry `limbSeq`,
+limbs at 60 % under full-intensity dots, ratio 3.0 (**24 px limbs, r=12 dots**,
+because a 4 px skeleton is a documented ignored-hint trap), missing keypoints
+dropping their limbs — and it asserts the trap that limb colours and dot colours
+index the **same** ramp **differently**. It draws **no board rectangle and no
+ground ticks**, asserted on purpose: a pose net's whole vocabulary is 18
+keypoints, and rung 5 already proved that unreadable ink gets *drawn*. **B4a
+therefore becomes a prompt-only clause in that sample and must be pre-registered
+as at risk.**
+
+The one thing it could not inherit is the arm, and §11's B4b regression is why:
+the elbow is solved against a target one **hand** short of the belly and the
+wrist placed one forearm along elbow→belly, so **the forearm ray passes 0.1 px
+from the navel with no finger keypoint anywhere.** Shoulder, target, total reach
+and extension stay identical to the contour hint's, so the sample remains a *net*
+comparison.
+
+**The next rung, named and its one design question answered rather than left
+open:** run the pose net **BARE** — no IP-Adapter in the same job. Two reasons.
+The pose question is "does a skeleton bind at all on animagine", and identity is
+now a **solved bolt-on** whose own bar has been met once, so carrying it in would
+make a two-variable job out of a one-variable question. If the skeleton binds,
+the recipe is skeleton + the two masked references and both halves have already
+been proven separately. **What this route no longer needs:** another conditioning
+scale, another stroke weight, another contour hint, or any further argument about
+identity.
