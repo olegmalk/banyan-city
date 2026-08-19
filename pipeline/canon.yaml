@@ -487,6 +487,94 @@ subjects:
   - unblocked
   - retires the
 
+# --- INSTANCE 6 ------------------------------------------------------------
+# THE HOLE THAT LET THE GOBLIN CHANGE SPECIES. Instance 5 registered WHICH SEED
+# and WHICH OF SIX DESIGN CARDS is the goblin. Neither of those is the attribute
+# that actually drifted. Between 2026-08-15 and 2026-08-19 the goblin's BUILD AND
+# AGE were rewritten — `a small goblin boy` -> `a lean wiry adult goblin man` —
+# and instance 5 stayed green the whole time, because the seed never changed and
+# the design card was never re-picked. Nine beats of one cut shipped two different
+# creatures and the founder found it himself, watching: *"some scenes including
+# the goblin has him as an adult??"*.
+#
+# So the missing subject is not "which card did he point at", it is WHAT THE
+# CHARACTER IS. It is registered here as its own subject rather than folded into
+# instance 5 for the reason instance 5 demonstrates: a register entry can only
+# catch the attribute it names, and `ep2-goblin-character-gate` names the pick,
+# not the build.
+#
+# WHY THIS IS A `founder_decision` AND NOT ALSO A `prompt_canon`, decided against
+# the temptation and stated so the next lane does not "fix" it. A forbid on the
+# child-build vocabulary (`goblin boy`, `round-bellied`, `chibi`, `squat`) would
+# be correct going forward and useless in practice here: those words are in the
+# hundreds of goblin prompts rendered BEFORE today's ruling, all of them history
+# rather than work, and the ack list needed to silence them would be longer than
+# the corpus it protects. That is the 8%-precision cry-wolf shape this file
+# refuses everywhere else (see `bars:`). The forward-looking guard that IS worth
+# having is the plate authoring path itself — `pipeline/plate_scratch.py` carries
+# the identity string at ~14 sites and every 08-18/08-19 Mac plate inherited it —
+# and that path now carries the ratified wording, so a new round-build plate would
+# have to be hand-written against it rather than drifting in.
+
+- id: ep2-goblin-design-adult
+  what: >-
+    WHAT THE GOBLIN IS: a LEAN WIRY ADULT, ruled by the founder 2026-08-19 on
+    /review/ep2-goblin-design-0819 with the two creatures side by side —
+    "well b definitely and the damn goblin. c kinda is but still pretty bad so
+    change it". B is the lean adult (beats 07, 14, 17, 19); C is the round young
+    one (beats 03, 04, 08, 13, 20) and is to be CHANGED, i.e. re-rendered to the
+    adult. The identity wording `lean wiry adult goblin man, green skin, bald
+    head, patchwork cloak` is therefore FOUNDER-RATIFIED canon from this date;
+    until this date it was a steward inference, first written 2026-08-13 as "He is
+    SHORT, not YOUNG: an adult in miniature, never a child", rewritten into the
+    prompt 2026-08-15 by commit 91a35fe1 (which dropped the "short" half), and
+    propagated 2026-08-16 by 9eb7bd15 to ~14 sites in pipeline/plate_scratch.py.
+    PROVENANCE OF THE SUPERSESSION, because two earlier founder picks point the
+    other way and a later lane will find them: "seed s0 is the goblin" (08-14, on
+    goblin-picker-0814.jpg) and "ill take 1 for the goblin" (08-15, design 1 of
+    goblin-design-0815.jpg, labelled `squat, round-bellied`) are both ROUND, and
+    both are superseded on the DESIGN axis by this ruling — not quietly retired by
+    a steward, superseded by the founder himself in a direct A/B against rendered
+    frames. Neither of those two sheets contained a lean adult anywhere, so
+    2026-08-19 is the first time the choice was actually put to him. They remain
+    live on their own axes: s0 is still the identity SEED (instance 5), and the
+    08-15 caveat about deformed skulls not being part of what was picked still
+    binds any reference build.
+  kind: founder_decision
+  registered: '2026-08-19'
+  resolved_by:
+    # Unique in the inbox: one card, one page, one letter.
+    card_url_contains: /review/ep2-goblin-design-0819
+    verdict_matches: well b definitely and the damn goblin
+  evidence:
+    file: review/inbox.yaml
+    contains: 'well b definitely and the damn goblin. c kinda is but still pretty bad so change it'
+  # NARROW ON PURPOSE, and narrower than instance 5's. Every phrase below is one a
+  # RECORD would use to assert that the design question is still open or that the
+  # freeze is still on — the freeze's own wording, and the two claims the forensic
+  # trace retired. Deliberately absent: any bare form of `adult`, `round`, `chibi`
+  # or `design`. Those are the working vocabulary of nine beats' verdicts and a
+  # rule built on them fires on every honest description of a frame.
+  open_phrases:
+  - goblin[- ]identity (?:plate|motion|render|job)s?[^.\n]{0,40}\b(?:are |is |remain )?(?:frozen|freeze)
+  - (?:ALL )?GOBLIN-IDENTITY RENDERS ARE FROZEN
+  - under the (?:goblin-identity )?freeze
+  - no goblin(?:-identity)? render fires
+  - which (?:one|design) is the goblin\?
+  - nobody (?:ever )?authoris\w+ the adult
+  - the adult is (?:my|the steward'?s) inference
+  negation_cues:
+  - CORRECTION
+  - no longer
+  - superseded
+  - stale
+  - discharged
+  - lifted
+  - was lifted
+  - ruled 2026-08-19
+  - retires the
+  - the hold this
+
 # ---------------------------------------------------------------------------
 # AXES — attributes the prompts describe INCONSISTENTLY WITH EACH OTHER.
 #

@@ -1094,14 +1094,64 @@ negatives is reused as a parent.
 
 ---
 
-## HOLD appended 2026-08-19 by the goblin-identity forensic lane
+## ~~HOLD~~ **LIFTED 2026-08-19 — B. THE LEAN ADULT IS THE GOBLIN.**
 
-**NO GOBLIN-IDENTITY RENDER FIRES UNTIL `/review/ep2-goblin-design-0819` IS
-ANSWERED.** Not a plate, not a motion job, not a re-render of either design
+**THE RULING, verbatim, 2026-08-19, answering `/review/ep2-goblin-design-0819`:**
+
+> well b definitely and the damn goblin. c kinda is but still pretty bad so change it
+
+**GOBLIN RENDERS ARE LEGAL AGAIN, on the adult design.** Plates, motion jobs and
+re-renders all fire; the identity wording `lean wiry adult goblin man, green skin,
+bald head, patchwork cloak` is now **founder-ratified canon** rather than steward
+inference, and is registered in `pipeline/canon.yaml` as subject
+`ep2-goblin-design-adult`. The founder's 08-14 *"seed s0 is the goblin"* and 08-15
+*"ill take 1 for the goblin"* are **superseded on the design axis** — by him, in a
+direct A/B against rendered frames, which neither earlier sheet could offer
+because neither contained a lean adult anywhere. s0 remains the identity **seed**
+and the 08-15 deformed-skull caveat still binds any reference build.
+
+**WHAT "c kinda is but still pretty bad so change it" OBLIGES.** The round takes
+are not a different character to him — they *"kinda"* read as the goblin — but
+*"change it"* is an instruction and not a shrug. **Beats 03, 04, 08, 13 and 20 are
+re-rendered to the adult design.** That is the wave; it is filed below.
+
+**TWO RECORDS THIS RULING VINDICATES rather than reverses**, both flagged as
+possibly-backwards by the forensic trace when the answer was unknown:
+
+- **today's b20 "chibi fix" was a real fix.** `DRAFTS[20]`'s adult wording and the
+  08-18 result *"the adult goblin draws … the chibi child is gone"* were pointing
+  the right way after all. b20 still needs its corrected plate (the tree), but the
+  build in it is right.
+- **the b07/b08 adult identity wording was right.** Both were authored off the
+  ratified string and neither needs unwinding.
+
+**THE STEWARD'S READ WAS A, AND IT WAS WRONG.** Recorded plainly because it is the
+whole argument for asking with pixels: the steward's case for A was that A had a
+quote and B had an inference, which is a sound *records* argument and a wrong
+*taste* argument. Nobody had ever put the two creatures next to each other and
+asked. The three-picture card cost 0 GPU-seconds and reversed the lane's own
+conclusion in one line.
+
+~~NO GOBLIN-IDENTITY RENDER FIRES UNTIL `/review/ep2-goblin-design-0819` IS
+ANSWERED. Not a plate, not a motion job, not a re-render of either design
 group, and not one further edit to the goblin's identity wording in
 `pipeline/plate_scratch.py` or `pipeline/wave-drafts.yaml`. Work that does not
 touch the goblin's face or build carries on normally — this hold is scoped to one
-character's design, not to episode 2.
+character's design, not to episode 2.~~ **Discharged by the ruling above. The
+trace below is kept because it is the record of how the drift happened, not
+because anything is still held.**
+
+**RUNGS THIS LIFT UNBLOCKS, named so nobody stops at a stale `FROZEN` row.** Three
+sections written earlier tonight, while the answer was unknown, declined work on
+freeze grounds and are all now open. They are left standing as written — this is
+an append-only log — and superseded here rather than edited in place:
+
+| Section, as written earlier tonight | Status now |
+|---|---|
+| *"b20's converse rung is NOT filed on purpose: its plate is the scavenger, so re-rolling it risks a goblin-identity render under the freeze"* | **OPEN.** And better than open: beat 20 is in the re-render wave regardless, so the plate is being redrawn anyway. |
+| *"a one-job fix is waiting behind it … whoever holds the design answer should know"* | **The design answer is B, and this lane holds it.** The b20 re-roll is a real one-job fix and is folded into the wave below. |
+| the summary row *"beat 20 re-roll — **FROZEN** — scavenger plate, goblin-identity freeze"* | **UNFROZEN.** |
+| *"beat 12's `why: goblin-free beat` has been wrong on four of five renders … the freeze is closer to this beat than the specs say"* | The **freeze** part is discharged; the **finding** is not. Beat 12 still draws an uninvited scavenger from an off-screen clause, and that is a prompt defect on its own merits, ruling or no ruling. |
 
 **WHY, in one paragraph.** The founder watched `ep2-demo-0819c` and asked *"some
 scenes including the goblin has him as an adult??"* — as a **surprise**. He was
@@ -1129,11 +1179,13 @@ came back *"these generations arent very good"*.
 | 08-18 | board asserts *"Beat 14 is the adult you chose"* on a silence-accepts card. **He never chose it.** b14's plate was drawn 08-18 off the adult wording and shipped on the steward's ruling — `5d872ac3`'s own body says *"the 2026-08-18 board asked about and the steward shipped"* | `review/inbox.yaml`, `5d872ac3` |
 | 08-18 | that claim hard-coded as *"beat 14 is the one the founder chose and it is the one that renders"*, and every later beat inherits it | `pipeline/plate_scratch.py:376-381` |
 
-**THE FIX THAT MAY HAVE BEEN BACKWARDS.** The 08-18 result *"b20 FIXED: the adult
-goblin draws … the chibi child is gone"* was filed as a win. If the founder
-answers **A**, b20's **round** frame is the correct one and that fix was a
-regression queued for shipping. It is therefore **not** applied to the cut, and
-the round b20 frame is on the card as evidence rather than being replaced.
+**~~THE FIX THAT MAY HAVE BEEN BACKWARDS.~~ RESOLVED 2026-08-19: IT WAS FORWARDS.**
+The 08-18 result *"b20 FIXED: the adult goblin draws … the chibi child is gone"*
+was filed as a win, and under **B** it is one. ~~If the founder answers **A**,
+b20's **round** frame is the correct one and that fix was a regression queued for
+shipping.~~ The round b20 frame served its purpose as picture **C** on the card —
+it is the frame he looked at and called *"still pretty bad"* — and beat 20 is now
+in the re-render wave.
 
 **NOT CROSS-APPLIED — checked, so nobody widens this further than the facts.** The
 *"reads adolescent"* complaint is about the **guards** (beats 05, 06, 10, 11 and
@@ -1144,12 +1196,16 @@ that habit an adult goblin read as a fix instead of a change of character. `matu
 male` on beat 09's guard plate remains a legitimate named-and-unfired build and is
 **not** covered by this hold.
 
-**WHAT LIFTS IT.** One letter on `/review/ep2-goblin-design-0819`: **A** (the
-picked card — the four adult beats get re-rendered), **B** (the adult is canon —
-the five round beats get re-rendered), or a third design named, in which case the
-next instrument is a reference image, a LoRA or a drawn design, **not** a seventh
-wording — that wall was already measured on 08-15 (`squat, round-bellied` rendered
-0 of 4, all slim, on a pure text-to-image path where nothing outranks the prompt).
+**~~WHAT LIFTS IT.~~ WHAT LIFTED IT.** One letter on
+`/review/ep2-goblin-design-0819`, answered 2026-08-19: **B** — the adult is canon,
+the five round beats get re-rendered. (The other two branches, kept for the
+record: **A** would have re-rendered the four adult beats; a third design would
+have sent the next instrument to a reference image, a LoRA or a drawn design,
+**not** a seventh wording — that wall was measured on 08-15, `squat,
+round-bellied` rendering 0 of 4, all slim, on a pure text-to-image path where
+nothing outranks the prompt. Worth keeping: that measurement is *why* B is cheap
+to execute and A would have been expensive — the model draws lean readily and
+resisted squat four times out of four.)
 
 ---
 

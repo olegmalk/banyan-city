@@ -31,6 +31,12 @@
           border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
   .hold { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--fail);
           border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
+  .ruled { background: #1c2a1e; border: 1px solid var(--pass); border-radius: 10px;
+           padding: 18px 20px; margin: 22px 0 6px; }
+  .ruled h2 { margin: 0 0 6px; color: var(--pass); font-size: 20px; }
+  .ruled blockquote { border-left-color: var(--pass); font-size: 17px; margin: 12px 0; }
+  .ruled p:last-child { margin-bottom: 0; }
+  s, .struck { color: var(--muted); }
   figure { margin: 14px 0 6px; }
   img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); }
   figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; }
@@ -57,6 +63,27 @@
   round young one; four are a lean adult. I traced who authorised the adult, and the honest answer is
   <strong>nobody did</strong>. This page is the trace and one question.</p>
 </header>
+
+<div class="ruled">
+  <h2>RULED: B, 2026-08-19</h2>
+  <blockquote style="margin-top:6px">well b definitely and the damn goblin. c kinda is but still
+  pretty bad so change it</blockquote>
+  <p><strong>B &mdash; the lean adult &mdash; is the goblin.</strong> The adult identity wording
+  (<code>lean wiry adult goblin man, green skin, bald head, patchwork cloak</code>) is founder-ratified
+  canon from today, registered in <code>pipeline/canon.yaml</code> as subject
+  <code>ep2-goblin-design-adult</code>. The 08-14 <em>&ldquo;seed s0&rdquo;</em> and 08-15
+  <em>&ldquo;ill take 1&rdquo;</em> picks are <strong>superseded on the design axis</strong> &mdash; by
+  him, on this A/B, which is the first time the two creatures were ever put side by side. <code>s0</code>
+  remains the identity <em>seed</em>.</p>
+  <p><strong>&ldquo;c kinda is but still pretty bad so change it&rdquo;</strong> is an instruction. The
+  round takes read as him, but beats <strong>03, 04, 08, 13 and 20</strong> are re-rendered to the adult
+  design. That wave is filed.</p>
+  <p><strong>The steward&rsquo;s read below was A, and it was wrong.</strong> It is left standing rather
+  than deleted, because it is the argument for asking with pixels instead of settling it in prose: the
+  case for A was that A had a quote and B had an inference &mdash; sound about the records, wrong about
+  the character. Nobody had ever put the two side by side and asked. <strong>The hold at the bottom of
+  this page is lifted;</strong> goblin renders are legal again on the adult design.</p>
+</div>
 
 <h2>The three pictures</h2>
 <p>Left is the design you picked. Middle and right are both from the cut you just watched.</p>
@@ -219,13 +246,18 @@ screen is a taste call and it is yours, and if the adult is the better character
 move, say <strong>B</strong> and I will re-render the five round beats instead and retire the round reference
 for good. Either answer costs the same; what is not affordable is shipping both.</p>
 
-<div class="hold">
-<h3 style="margin-top:0">PROPAGATION IS FROZEN UNTIL YOU ANSWER</h3>
-<p style="margin-bottom:0">No goblin-identity render fires on either design until this card is answered
+<div class="hold" style="border-left-color: var(--pass)">
+<h3 style="margin-top:0"><s>PROPAGATION IS FROZEN UNTIL YOU ANSWER</s> &mdash; LIFTED 2026-08-19</h3>
+<p class="muted"><s>No goblin-identity render fires on either design until this card is answered
 &mdash; no plate, no motion job, no re-render of either group, and no further edit to the identity wording in
 <code>plate_scratch.py</code> or <code>wave-drafts.yaml</code>. Recorded as a HOLD on
 <code>pipeline/work-ladder-0819.md</code>. Work that does not touch the goblin&rsquo;s face or build carries on
-normally.</p>
+normally.</s></p>
+<p style="margin-bottom:0">Discharged by the ruling at the top of this page, in the same commit that
+recorded the answer. And the hole the freeze was covering is closed rather than merely re-opened: the
+goblin&rsquo;s build is now a registered subject in <code>pipeline/canon.yaml</code>
+(<code>ep2-goblin-design-adult</code>), so changing what the character <em>is</em> has to contradict the
+register out loud instead of drifting in through fourteen copies of a prompt string.</p>
 </div>
 
 <p class="muted" style="margin-top:36px">Provenance: all nine frames are frame 8 of the exact source clips in
