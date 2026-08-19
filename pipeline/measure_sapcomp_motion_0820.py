@@ -70,7 +70,7 @@ def frame_count(clip):
     out = subprocess.run(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames",
          "-show_entries", "stream=nb_read_frames", "-of", "csv=p=0", clip],
-        capture_output=True, text=True, check=True)
+        capture_output=True, text=True, encoding="utf-8", check=True)
     return int(out.stdout.strip())
 
 
