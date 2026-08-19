@@ -2881,3 +2881,4 @@
 08:25:35Z DONE task=ep2-b08-posenet-sample-0819-1787127903 rc=0 artifacts=1
 08:32:43Z STARTED task=ep2-b19-dropmotion-0819-1787128259 attempt=1 on box-runner
 08:39:01Z DONE task=ep2-b19-dropmotion-0819-1787128259 rc=0 artifacts=2
+08:39:08Z box-runner idle ready=0 failed=39
