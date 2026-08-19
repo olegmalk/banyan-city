@@ -45,7 +45,7 @@ from pathlib import Path
 
 import yaml
 
-CHILD_SEED = 20260819
+DEFAULT_CHILD_SEED = 20260819
 
 CARRIERS = {
     "b01": {
@@ -58,6 +58,45 @@ CARRIERS = {
         "carrier_note": (
             "b01's crf-33 arm blooms +73.24, so a seed that drags luminance "
             "down has a known-bright baseline to show against."),
+    },
+    "b21": {
+        # DEPTH, not the darkening probe: beat 21's own passing take asks
+        # "solved or seed-luck?" in its consumer line and one seed cannot
+        # answer it. 20260903 is unused on beat 21 (its series has run 20260902).
+        "parent_id": "ep2-b21-daylight-0814",
+        "child_id": "ep2-b21-daylight-s20260903-0819",
+        "parent_seed": 20260902,
+        "child_seed": 20260903,
+        "mode": "depth",
+        "parent_clip": "21-the-answer-LTX-poolD-0812.mp4",
+        "child_clip": "21-the-answer-LTX-daylight-s20260903.mp4",
+        "crf": "33",
+        "carrier_note": (
+            "Beat 21 is the only beat of eight whose definition its verdict "
+            "records as fully met, on one seed. Its negative forbids goblin, "
+            "creature, person, face and hands, so it is clear of the identity "
+            "freeze by construction."),
+    },
+    "b12": {
+        # THE CONVERSE TEST, and the decisive one. b12-stillmotion is a take that
+        # DID collapse (-91.05). Every sampler flag is identical to the takes that
+        # did not, and seed 20260819 has now been cleared on b01, so the remaining
+        # suspects are the plate and the prompt. Re-roll this exact spec on
+        # 20260871 -- the flattest seed on record, -0.22 and +10.14 on b18's two
+        # arms. If it collapses again on a seed that has never moved luminance
+        # anywhere, the seed is exonerated too and the cause is the plate or the
+        # prompt. Beat 12 has no goblin on screen.
+        "parent_id": "ep2-b12-stillmotion-0819",
+        "child_id": "ep2-b12-stillmotion-s20260871-0819",
+        "parent_seed": 20260819,
+        "child_seed": 20260871,
+        "mode": "reseed",
+        "parent_clip": "12-related-LTX-stillmotion-crf10-s20260819.mp4",
+        "child_clip": "12-related-LTX-stillmotion-crf10-s20260871.mp4",
+        "crf": "10",
+        "carrier_note": (
+            "b12-stillmotion lost 91.05 levels with all three bands falling "
+            "together -- the largest collapse on record."),
     },
     "b18": {
         "parent_id": "ep2-b18-tremble-s4-0819",
@@ -97,6 +136,8 @@ def main() -> int:
         sys.exit("usage: derive_seedprobe_0819.py {%s}"
                  % "|".join(sorted(CARRIERS)))
     c = CARRIERS[which]
+    CHILD_SEED = c.get("child_seed", DEFAULT_CHILD_SEED)
+    mode = c.get("mode", "probe")
     PARENT_ID, CHILD_ID = c["parent_id"], c["child_id"]
     PARENT_SEED = c["parent_seed"]
     PARENT_CLIP, CHILD_CLIP = c["parent_clip"], c["child_clip"]
@@ -127,49 +168,132 @@ def main() -> int:
         del spec[k]
     print("stripped inherited keys: %s" % (", ".join(refused) or "(none)"))
 
-    spec["why"] = (
-        "SEED %d on the passed goblin-free %s recipe, ONE "
-        "VARIABLE off %s (seed %d). Not a depth seed: %d is the seed "
-        "BOTH measured darkening takes ran on (b12-stillmotion -91.05, "
-        "b20-motion -25.03) and that neither clean take used. Every sampler flag "
-        "across those six clips is identical, so the seed is the live candidate. "
-        "%s See pipeline/loop/darkening-crf-diagnostic-0819.md."
-        % (CHILD_SEED, which, PARENT_ID, PARENT_SEED, CHILD_SEED,
-           c["carrier_note"]))
-    spec["consumer"] = (
-        "The darkening diagnostic. A PASS (no collapse) clears seed 20260819 and "
-        "sends the question to the plate or the prompt; a FAIL (collapse on a "
-        "recipe that has never collapsed) identifies the seed and makes every "
-        "121-frame rung's seed a thing to check. Either way it closes a question "
-        "two verdicts left open. Not a cut candidate and not a pick.")
-    spec["bar"] = {
-        "instrument": "pipeline/luma_drift.py, equal thirds, whole-frame BT.601 "
-                      "luma, frames 0/24/48/72/96/120.",
-        "the_number_that_decides": (
-            "Whole-frame drift f000->f120. TWO-SIDED, because this recipe family "
-            "blooms as readily as it fades and the last bar missed that: "
-            "|drift| >= 20 levels is a collapse in either direction."),
-        "FAIL-COLLAPSE": (
-            "|drift| >= 20 AND all three bands agree in sign. This is the "
-            "outcome that would implicate the seed. Named as LESS likely: n=2 "
-            "and the mechanism is unproven."),
-        "PASS-HOLD": (
-            "|drift| < 20, or bands disagreeing in sign. Seed 20260819 is "
-            "cleared on this carrier and the darkening belongs to the plate or "
-            "the prompt. Named as MORE likely."),
-        "band_clause": (
-            "A single band moving alone is an OBJECT until eyes say otherwise -- "
-            "beat 12's -46.93 was a leaf crossing the mid-ground, not a fade. "
-            "Bands disagreeing in sign is never scored as a collapse."),
-        "not_scored_here": (
-            "Growth quality, colour path, camera lock and plate fidelity are the "
-            "parent recipe's bar and are NOT re-litigated. This job asks one "
-            "question about luminance."),
-        "what_this_licenses": (
-            "One clip on one seed. No pick, no promotion, no cut swap, no second "
-            "seed, and no claim about any beat other than through the "
-            "luminance number."),
-    }
+    if mode == "reseed":
+        spec["why"] = (
+            "SEED %d on %s, the take that COLLAPSED (-91.05 levels, all three "
+            "bands together). ONE VARIABLE off it: seed %d -> %d. 20260871 is the "
+            "flattest seed on record (-0.22 and +10.14 on beat 18's two arms). "
+            "%s See pipeline/loop/darkening-crf-diagnostic-0819.md."
+            % (CHILD_SEED, PARENT_ID, PARENT_SEED, CHILD_SEED, c["carrier_note"]))
+        spec["consumer"] = (
+            "The darkening diagnostic, and this is the rung that closes it. crf is "
+            "already exonerated (four clips, opposite outcomes, identical argv) and "
+            "seed 20260819 is already cleared on b01. If this collapses on a seed "
+            "that has never moved luminance anywhere, the seed is exonerated too "
+            "and the cause is the plate or the prompt -- which is a route decision "
+            "someone can then actually make. If it holds, the seed matters on this "
+            "plate and not on b01, which is a beat-plate interaction and a "
+            "different finding. Not a cut candidate: beat 12 keeps its shipped "
+            "take either way.")
+        spec["bar"] = {
+            "instrument": ("pipeline/luma_drift.py, equal thirds, whole-frame "
+                           "BT.601 luma, frames 0/24/48/72/96/120."),
+            "the_number_that_decides": (
+                "Whole-frame drift f000->f120, TWO-SIDED, |drift| >= 20 levels is "
+                "a collapse in either direction. The parent measured -91.05."),
+            "FAIL-COLLAPSE-AGAIN": (
+                "|drift| >= 20 with bands agreeing in sign. Named as MORE likely, "
+                "because crf and seed are both now measured out on other beats "
+                "and the plate/prompt is what is left. This is the outcome that "
+                "sends the question to the plate.",),
+            "PASS-HOLD": (
+                "|drift| < 20, or bands disagreeing in sign. Then seed 20260819 "
+                "DOES matter on this plate while not mattering on b01, and the "
+                "finding is an interaction rather than a single cause. Named as "
+                "LESS likely."),
+            "band_clause": (
+                "A single band moving alone is an OBJECT until eyes say "
+                "otherwise -- this beat's 73-frame sibling had a -46.93 mid-band "
+                "that was a leaf crossing the frame, not a fade. Bands "
+                "disagreeing in sign is never scored as a collapse."),
+            "not_scored_here": (
+                "The stillness clauses, the bird, the leaf and the grass band are "
+                "the parent's bar and are NOT re-litigated. This job asks one "
+                "question about luminance. A FAIL on any other axis is recorded "
+                "but does not change this verdict."),
+            "what_this_licenses": (
+                "One clip on one seed. No pick, no promotion, no cut swap, and no "
+                "plate or prompt rung filed off it without its own sample."),
+        }
+    elif mode == "depth":
+        spec["why"] = (
+            "SEED %d on the passed %s recipe, ONE VARIABLE off %s (seed %d). "
+            "Pick depth, not the darkening probe: that parent's own consumer line "
+            "asks whether beat 21 is \"solved or seed-luck\" and a single seed "
+            "cannot answer it. %s"
+            % (CHILD_SEED, which, PARENT_ID, PARENT_SEED, c["carrier_note"]))
+        spec["consumer"] = (
+            "The beat-21 slot, and the solved-or-seed-luck question its passing "
+            "take left open. A second seed holding the four clauses makes the "
+            "recipe the reason; a second seed dropping them makes the first take "
+            "luck and the beat unsolved. NOT a pick between the two -- which take "
+            "ships is R4.")
+        spec["bar"] = {
+            "carried_unchanged_from_the_parent": (
+                "The four clauses in this spec's own `success` key, which the "
+                "parent met 4 of 4. They are not restated or reinterpreted here: "
+                "a depth seed that changes the bar measures nothing."),
+            "the_question_this_answers": (
+                "Recipe or luck. One seed meeting a bar cannot distinguish them; "
+                "two can start to."),
+            "brightness_clause_added": (
+                "Whole-frame drift f000->f120 by pipeline/luma_drift.py, "
+                "TWO-SIDED, |drift| >= 20 levels in either direction is a "
+                "finding. Added on every 121-frame rung from here because two "
+                "beats collapsed unnoticed for want of it, and because THIS "
+                "beat's negative already forbids 'dark, dusk, dim lighting, low "
+                "key' -- so a fade here would also be a negative breach."),
+            "band_clause": (
+                "A single band moving alone is an OBJECT until eyes say "
+                "otherwise. Bands disagreeing in sign is never scored as a fade."),
+            "what_this_licenses": (
+                "One clip on one seed. No pick, no promotion, no cut swap, no "
+                "third seed filed off this one."),
+        }
+    else:
+        spec["why"] = (
+            "SEED %d on the passed goblin-free %s recipe, ONE "
+            "VARIABLE off %s (seed %d). Not a depth seed: %d is the seed "
+            "BOTH measured darkening takes ran on (b12-stillmotion -91.05, "
+            "b20-motion -25.03) and that neither clean take used. Every sampler flag "
+            "across those six clips is identical, so the seed is the live candidate. "
+            "%s See pipeline/loop/darkening-crf-diagnostic-0819.md."
+            % (CHILD_SEED, which, PARENT_ID, PARENT_SEED, CHILD_SEED,
+               c["carrier_note"]))
+        spec["consumer"] = (
+            "The darkening diagnostic. A PASS (no collapse) clears seed 20260819 and "
+            "sends the question to the plate or the prompt; a FAIL (collapse on a "
+            "recipe that has never collapsed) identifies the seed and makes every "
+            "121-frame rung's seed a thing to check. Either way it closes a question "
+            "two verdicts left open. Not a cut candidate and not a pick.")
+        spec["bar"] = {
+            "instrument": "pipeline/luma_drift.py, equal thirds, whole-frame BT.601 "
+                          "luma, frames 0/24/48/72/96/120.",
+            "the_number_that_decides": (
+                "Whole-frame drift f000->f120. TWO-SIDED, because this recipe family "
+                "blooms as readily as it fades and the last bar missed that: "
+                "|drift| >= 20 levels is a collapse in either direction."),
+            "FAIL-COLLAPSE": (
+                "|drift| >= 20 AND all three bands agree in sign. This is the "
+                "outcome that would implicate the seed. Named as LESS likely: n=2 "
+                "and the mechanism is unproven."),
+            "PASS-HOLD": (
+                "|drift| < 20, or bands disagreeing in sign. Seed 20260819 is "
+                "cleared on this carrier and the darkening belongs to the plate or "
+                "the prompt. Named as MORE likely."),
+            "band_clause": (
+                "A single band moving alone is an OBJECT until eyes say otherwise -- "
+                "beat 12's -46.93 was a leaf crossing the mid-ground, not a fade. "
+                "Bands disagreeing in sign is never scored as a collapse."),
+            "not_scored_here": (
+                "Growth quality, colour path, camera lock and plate fidelity are the "
+                "parent recipe's bar and are NOT re-litigated. This job asks one "
+                "question about luminance."),
+            "what_this_licenses": (
+                "One clip on one seed. No pick, no promotion, no cut swap, no second "
+                "seed, and no claim about any beat other than through the "
+                "luminance number."),
+        }
 
     dst.write_text(yaml.safe_dump(spec, sort_keys=False, width=100,
                                   allow_unicode=True), encoding="utf-8")
@@ -211,7 +335,7 @@ def main() -> int:
     print("  seed      %d -> %d" % (PARENT_SEED, CHILD_SEED))
     print("  clip      %s" % CHILD_CLIP)
     print("  sampler   unchanged (121f, 704x1280, g2.0, two-stage, "
-          "distilled-sigmas, image-crf 33)")
+          "distilled-sigmas, image-crf %s)" % c["crf"])
     return 0
 
 

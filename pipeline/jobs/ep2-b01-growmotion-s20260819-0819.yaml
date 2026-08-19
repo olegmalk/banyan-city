@@ -181,3 +181,35 @@ bar:
     bar and are NOT re-litigated. This job asks one question about luminance.
   what_this_licenses: One clip on one seed. No pick, no promotion, no cut swap, no second seed, and no
     claim about any beat other than through the luminance number.
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the queue-keeper lane, same cycle it landed.
+verdict_this_job: 'PASS-HOLD, on the branch this spec pre-registered. Seed 20260819 does NOT
+  collapse on the b01 carrier: whole-frame drift f000->f120 is +16.59, inside the two-sided
+  20-level bound, and the three bands disagree in sign, which this bar never scores as a fade.
+  The seed that both collapsing takes ran on does not carry a collapse onto a recipe that
+  has never produced one.'
+verdict_this_job_measured:
+  instrument: pipeline/luma_drift.py, equal thirds, whole-frame BT.601 luma. 121 frames pulled
+    from origin/farm-results-rtx5090.
+  whole_frame: f000 87.39, f024 103.00, f048 109.65, f072 99.59, f096 102.37, f120 103.98.
+    Drift +16.59, min 87.39, max 111.05.
+  bands: rows 0-427 78.74 -> 78.57 (-0.17), rows 427-853 103.24 -> 117.64 (+14.40), rows 853-1280
+    80.23 -> 115.77 (+35.54). Signs DISAGREE, so by the pre-registered band clause this is
+    not a fade in either direction. The +35.54 bottom band beside a flat top band is something
+    brightening low in the frame, which is an object or the light and not a global drift.
+  the_branch_that_fired: 'PASS-HOLD, on both of its conditions independently: |drift| < 20
+    AND bands disagreeing. FAIL-COLLAPSE required |drift| >= 20 with bands agreeing and fired
+    on neither count. PASS-HOLD was named in advance as the more likely outcome.'
+  provenance_check: 'The published sidecar reads seed: 20260819 and task: ep2-b01-growmotion-s20260819-0819,
+    and the clip published as 01-cold-open-LTX-nubgrow-s20260819.mp4 -- the first b01 growmotion
+    job whose filename states its own render seed rather than the plate''s. The seed-true
+    naming fix works end to end.'
+  not_scored: The b01 growth clauses G1-G5 and fail modes H1-H6 were NOT judged here. This
+    job asked one question about luminance and its bar says so. Whether this seed grows a
+    good nub is unassessed and unclaimed.
+what_this_licenses_after_this_verdict: 'It removes the seed from the darkening suspect list
+  ON THIS CARRIER, which together with the crf exoneration leaves the plate and the prompt.
+  It does NOT clear the seed everywhere: the converse rung, ep2-b12-stillmotion-s20260871-0819,
+  re-rolls the collapsing take on the flattest seed on record and is the one that closes it.
+  No pick, no promotion, no cut candidacy, no further b01 seed.'

@@ -1,0 +1,282 @@
+id: ep2-b12-stillmotion-s20260871-0819
+task: ep2-b12-stillmotion-s20260871-0819
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 12/15/20 lane, 2026-08-19 -- derived by pipeline/derive_b12_stillmotion_0819.py
+consumer: 'The darkening diagnostic, and this is the rung that closes it. crf is already exonerated (four
+  clips, opposite outcomes, identical argv) and seed 20260819 is already cleared on b01. If this collapses
+  on a seed that has never moved luminance anywhere, the seed is exonerated too and the cause is the plate
+  or the prompt -- which is a route decision someone can then actually make. If it holds, the seed matters
+  on this plate and not on b01, which is a beat-plate interaction and a different finding. Not a cut candidate:
+  beat 12 keeps its shipped take either way.'
+success: ONE 121-frame 704x1280 mp4 with its sidecar and the 704x1280 init it was conditioned on, published
+  into courier-box. The bar is below and it was written before the pixels existed. THE BAR'S OWN FIRST
+  CLAUSE IS THE PALETTE, because that is the fault this rung exists to test -- not the leaf count, which
+  belongs to the plate and is declared as a plate fault in this spec.
+why: 'SEED 20260871 on ep2-b12-stillmotion-0819, the take that COLLAPSED (-91.05 levels, all three bands
+  together). ONE VARIABLE off it: seed 20260819 -> 20260871. 20260871 is the flattest seed on record (-0.22
+  and +10.14 on beat 18''s two arms). b12-stillmotion lost 91.05 levels with all three bands falling together
+  -- the largest collapse on record. See pipeline/loop/darkening-crf-diagnostic-0819.md.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"\
+    Stamp the clip's provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate\
+    \ for the cut (beat 12), so is_show_content is\ntrue. Still approved: false / provisional: true --\
+    \ nothing is cut until the\n121 frames are opened against the pre-registered bar, and R4 is the\n\
+    founder's.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"\
+    !! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"\
+    utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b12-stillmotion-s20260871-0819\
+    \ after the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n     \
+    \   \"is_show_content: true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR BEAT 12,\
+    \ RELATED. It animates the\\n\"\n        \"  line he approved on 2026-08-19 -- tight on two leaves,\
+    \ perfectly\\n\"\n        \"  still -- on the plate under the take this beat already ships, at\\n\"\
+    \n        \"  --image-crf 10 instead of 33. Judged against the bar pre-registered\\n\"\n        \"\
+    \  in pipeline/jobs/ep2-b12-stillmotion-s20260871-0819.yaml BEFORE this render\\n\"\n        \"  existed.\
+    \ Not approved and not cut until those frames are opened.\\n\")\nprint(\"stamped %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-motion-prompt.txt: Tight on the sapling's two
+    leaves, perfectly still -- the scavenger crouched behind them, out of frame. Static locked framing,
+    the frame never moves and nothing enters it. The leaves hold their shape and their position; only
+    the grass stirs, very slightly, in the air. Detailed cinematic anime, warm amber backlight, hazy out-of-focus
+    grassy field, soft glowing light, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame, goblin, creature, person, face, hands, figure entering frame, new leaf, extra
+    leaf, growing leaf, wilting, leaves falling
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-jobs-encode.json: "[\n {\n  \"beat\": 12,\n  \"\
+    embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819-out\\\\b12-embeds.pt\",\n  \"\
+    prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819\\\\b12-motion-prompt.txt\"\
+    ,\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819\\\\b12-negative.txt\"\
+    \n }\n]"
+  C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-jobs-render.json: "[\n {\n  \"beat\": 12,\n  \"\
+    seed\": 20260871,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819-out\\\\\
+    b12-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819-out\\\\b12-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-s20260871-0819-out\\\\12-related-LTX-stillmotion-crf10-s20260871.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
+  - --sha256
+  - cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074
+  - --out
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819-out\b12-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\b12-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b12-stillmotion-s20260871-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819-out\bench-b12-stillmotion.jsonl
+  - --bench-label
+  - ep2-b12-stillmotion-s20260871-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819-out\12-related-LTX-stillmotion-crf10-s20260871.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (12-related). No allow_fail: a publish\n# that cannot find its files\
+    \ is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b12-stillmotion-s20260871-0819-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b12-stillmotion-s20260871-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-stillmotion-s20260871-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/12-related-LTX-stillmotion-crf10-s20260871.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b12-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b12-stillmotion.jsonl\")\n               + glob.glob(pay_dir + \"/b12-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b12-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b12-stillmotion-s20260871-0819.sha256\"), \"w\", newline=\"\\n\"\
+    ) as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"\
+    file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819-out\12-related-LTX-stillmotion-crf10-s20260871.mp4
+- C:\banyan-farm\ep2-b12-stillmotion-s20260871-0819-out\b12-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, approved_by: founder, and beat 12''s rewritten line approved
+  by name on 2026-08-19 (5d6eb792) -- which is what makes rendering it legal at all. STEWARDSHIP.md 6
+  blocked footage from this beat''s restaged line until he had read it; leaves/002b-t0-c.yaml carried
+  ''approval_status: NOT YET READ BY HIM'' for beats 12, 13, 15, 19 and 20, and that block is discharged.
+  Rendering the OLD staging instead would have been the wrong way round it.'
+cut_preference: 'CUT-PREFERRED: ep2-b12-stillmotion-s20260871-0819. It clears the same conjunctive bar
+  the current candidate cleared, it holds the dawn plate the current candidate blooms away, it grows the
+  fig continuously from idx8 with no shrink events, and it draws the calyx. THE ACTUAL CUT SWAP IS NOT
+  MADE HERE -- it belongs to the next demo assembly, and this is a technical preference under the 2026-08-18
+  widening, veto-able in one line. One thing the founder should have before blessing it: the fig ends
+  2.7x larger than in the clip he has already seen on the review page, and whether that reads better or
+  worse is R4.'
+bar:
+  instrument: pipeline/luma_drift.py, equal thirds, whole-frame BT.601 luma, frames 0/24/48/72/96/120.
+  the_number_that_decides: Whole-frame drift f000->f120, TWO-SIDED, |drift| >= 20 levels is a collapse
+    in either direction. The parent measured -91.05.
+  FAIL-COLLAPSE-AGAIN:
+  - '|drift| >= 20 with bands agreeing in sign. Named as MORE likely, because crf and seed are both now
+    measured out on other beats and the plate/prompt is what is left. This is the outcome that sends the
+    question to the plate.'
+  PASS-HOLD: '|drift| < 20, or bands disagreeing in sign. Then seed 20260819 DOES matter on this plate
+    while not mattering on b01, and the finding is an interaction rather than a single cause. Named as
+    LESS likely.'
+  band_clause: A single band moving alone is an OBJECT until eyes say otherwise -- this beat's 73-frame
+    sibling had a -46.93 mid-band that was a leaf crossing the frame, not a fade. Bands disagreeing in
+    sign is never scored as a collapse.
+  not_scored_here: The stillness clauses, the bird, the leaf and the grass band are the parent's bar and
+    are NOT re-litigated. This job asks one question about luminance. A FAIL on any other axis is recorded
+    but does not change this verdict.
+  what_this_licenses: One clip on one seed. No pick, no promotion, no cut swap, and no plate or prompt
+    rung filed off it without its own sample.
+failure_predicted_in_advance: 'FAIL-DEAD IS THE MOST LIKELY OUTCOME AND IT IS NAMED SO THAT A PASS MEANS
+  SOMETHING. Beat 18 is the closest beat in the repo to this one by shot class -- a macro whose content
+  is fine high-frequency movement -- and at crf 10 it went from an interframe median of 5.956 to 0.570
+  and was scored FAIL-FROZEN. If that happens here the clip is a still image with a file extension, and
+  ''perfectly still'' does not mean ''a still'': the line''s own ''only the grass stirs'' is what separates
+  the two, which is why M2 measures the grass band separately rather than measuring the frame. If FAIL-DEAD
+  fires, the lever is NOT another crf value -- it is this beat''s own prompt, which currently asks for
+  stillness with the whole of its first sentence, and the shipped take''s crf-33 clip remains in the cut
+  untouched meanwhile.'
+pre_registered_fail_modes:
+  FAIL-DEAD: no movement anywhere, grass included. Named as most likely.
+  FAIL-PALETTE: 'the warm-to-cool shift survives at crf 10, i.e. the shipped fault is not the flag''s.
+    A real and useful negative result: it would move the cause to the prompt or the plate.'
+  FAIL-INTRUDER: a goblin, hand, face or figure enters frame. His line forbids it.
+  FAIL-PLANT-CHANGE: a leaf appears, vanishes, wilts or grows.
+  FAIL-CAMERA: a real, region-consistent camera move.
+  FAIL-BLOOM: luminance climbs across the clip the way beat 01's crf-33 take did (85 -> 148.4). The flag
+    is supposed to prevent this; if it arrives anyway the finding is about the flag, not the beat.
+  reporting_rule: every mode above is reported BY NAME whether or not it fired, and the near-duplicate
+    share is reported on the TRACKED REGIONS rather than the frame, per the beat-19 finding.
+duration_and_the_assembler_trap: '121 frames at 24 fps = 5.0417 s. render_t3.py:616 REVERSES any clip
+  whose slot outruns it (dur > cdur + 0.05, cdur <= 16.0). The beat-19 lane found this with 0.09 s of
+  margin on a beat whose action is irreversible. Beat 12 is near-still, so a palindrome would be nearly
+  invisible here -- which is worse, not better: it means nobody would catch it. Whoever assembles should
+  check beat 12''s slot length against 5.0417 s rather than assume.'
+init_provenance: 'genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png, sha256 cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074,
+  published to farm-out/ep2-b12-plateship-0819 by ep2-b12-plateship-0819 (ran 2026-08-19T10:08:20Z, rc=0)
+  and re-asserted at that sha by cover_crop.py before a pixel is written. It is the SHIPPED beat-12 take''s
+  own init (ep2-b12-tightB-0813 crops the same file at the same sha), which is what makes the palette
+  comparison a comparison. THIS SPEC''S OWN FETCH STEP IS GONE, and what it claimed was wrong twice over:
+  it pulled the plate from a raw.githubusercontent.com path under genomes/ that main has never carried
+  -- .gitignore:40 ignores every png under takes/, and the repo is public, so the 404 was a missing file
+  and not a permission -- and it said C:\banyan-farm\plates-local "no longer exists on the box -- checked,
+  not assumed" when three copies of the plate sat on the card at this exact sha. The plate now arrives
+  the way the guards ask for: through a farm-out directory one spec owns, fetchable from origin/farm-results-rtx5090
+  (blob verified at cc6bd5f0...c074), so --src is checked rather than asserted.'
+derivation:
+  parent: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml
+  by: pipeline/derive_b12_stillmotion_0819.py
+  carried_byte_for_byte:
+  - cover_crop.py BYTE-FOR-BYTE, sha256 4eec009805ab
+  - stamp_sidecar.py carried with 5 line substitutions (the job id, the bar path and beat 01's description
+    -- a sidecar naming the wrong job is a provenance defect, not a cosmetic one)
+  keys_refused: 'REFUSED, not carried: pick_INHERITED_from_the_crf33_parent_NOT_this_job, sweep_summary_INHERITED_from_the_crf33_parent,
+    sweep_summary_correction_INHERITED_from_the_crf33_parent, verdict_this_job, verdict_this_job_measured.
+    The parent carries an INHERITED pick block that recommends a clip for a decision made before that
+    clip existed, plus two inherited sweep summaries -- exactly the defect the ladder asked for a guard
+    against.'
+  sampler_numbers_unchanged: 121 frames, 704x1280, 24 fps, guidance 2.0, --distilled-sigmas, --two-stage,
+    --image-crf 10, --offload sequential, --mode production
+  seed: 20260819
+  what_is_NOT_the_same: the init and its source, the two prompt files, the bar, the fail modes, and four
+    sentences inside stamp_sidecar.py's appended note. NO added fetch step -- the first version of this
+    spec had one, it 404'd, and the plate now comes from farm-out/ep2-b12-plateship-0819 instead, so this
+    job's step list is the parent's exactly -- crop, encode, render, stamp, publish.
+  why_no_CLIP_token_count_here: 'pipeline/clip_token_count.py measured the beat-15 SDXL job and caught
+    a negative at 85 of 77. It is NOT run on this job and that is deliberate: LTX conditions on a T5 encoder,
+    not CLIP, so a 77-token CLIP ceiling is the wrong instrument and quoting it here would be a number
+    that looks like evidence.'
+pre_registered_fail_modes_as_fired:
+  FAIL-DEAD: FIRED, in substance. Nothing in the plant or grass moves; the grass band sits at 0.011.
+  FAIL-PALETTE: DID NOT FIRE. The opposite happened -- see M1.
+  FAIL-INTRUDER: FIRED. A bird, not a goblin, but the clause says any figure and it is the only mover.
+  FAIL-PLANT-CHANGE: DID NOT FIRE.
+  FAIL-CAMERA: NOT ESTABLISHED -- the instrument was invalidated by the fade, so nothing is filed.
+  FAIL-BLOOM: DID NOT FIRE, and its mirror image did -- see the unpredicted mode below.
+fail_mode_I_DID_NOT_PRE_REGISTER: 'DUSK COLLAPSE. Mean luminance walks 125.47 (f000) -> 125.33 (f024)
+  -> 113.63 (f060) -> 34.37 (f120): -91.1 levels, a 73% drop, over five seconds, with hue almost unmoved
+  (58.56 -> 60.52 deg). The pre-registered list had FAIL-BLOOM, a luminance CLIMB, because that is what
+  beat 01''s crf-33 take did (85 -> 148.4). I wrote the fail modes as a list of the ways brightness had
+  already gone wrong rather than as the axis brightness moves on, and the sign flipped on me. It is recorded
+  here rather than quietly folded into ''FAIL-BLOOM fired'' -- a fail mode found after the fact is not
+  a fail mode predicted, and saying otherwise would make every future prediction cheaper than it looks.'
+what_the_next_rung_should_be: 'NOT another crf value: crf 10 already delivered the thing it was asked
+  for. The fade is progressive and roughly monotone -- it has lost only 12 levels by f060 and 91 by f120
+  -- so the honest next rung is the SAME recipe at a shorter frame count (49 or 73 frames), which may
+  never reach the collapse, and would also cut the bird''s arrival. Second lever, independent of that:
+  the beat''s own prompt still spends its whole first sentence asking for stillness and the render obliged
+  completely. A route decision, filed as one, and no plate change is implied -- the plate held its palette
+  perfectly.'
+the_duplicate_run: 'THIS SPEC RAN TWICE TONIGHT AND BOTH RUNS WERE CLEAN: 1787134461 finished rc=0 at
+  10:20:48Z and 1787134971 rc=0 at 10:29:18Z, same seed 20260819, same settings, both publishing into
+  the same farm-out directory, and bench-b12-stillmotion.jsonl carries both rows (265.5 s and 263.8 s
+  of sample time). It was filed once by this lane and once by the lead at the tick. No provenance harm
+  -- the seed is fixed and the second render is the same picture -- but it is about nine minutes of card
+  time spent twice, and it is recorded because ''the queue is empty'' and ''nobody else has filed this''
+  are different facts.'
