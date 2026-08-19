@@ -233,3 +233,80 @@ sweep_summary_correction:
     a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
     and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
     on R4 alone.
+verdict_this_job: 'FAIL on G5/H4, and it carries the most useful positive result of the cold-open lane tonight.
+  Seed 20260838 grows the fig continuously by a factor of 10.3 and ramps it the whole way from green through teal
+  and slate to deep purple-violet -- G1 and G2, the two clauses this spec''s own sweep_summary_correction calls
+  the recipe''s dominant systematic failure, BOTH PASS. It dies on G5: the whole sapling enlarges, not just the
+  fig. The bar is conjunctive and a partial is a FAIL.'
+verdict_this_job_measured:
+  instrument: 'All 121 frames extracted and opened -- an 11x11 whole-clip sheet, a 4-up at f000/040/080/120, and
+    a 2x zoom on the fig through the colour change. THE FIRST INSTRUMENT WAS WRONG AND IS REPORTED AS SUCH: a
+    green-OR-purple colour-predicate mask reported a one-frame colour pop and a 2.0x-2.5x single-frame area step
+    on this clip, and BOTH ARE ARTEFACTS OF THE MASK -- the fig passes through teal and desaturated slate on its
+    way to purple, which satisfies neither predicate, so the blob vanishes and reappears and the class flips in
+    one frame while the pixels ramp smoothly. Re-measured with a colour-INDEPENDENT windowed mask (not-warm, inside
+    a 220px box tracking the previous centroid), which is where every number below comes from.'
+  container: 704x1280, 24 fps, 121 frames, 5.041667 s (ffprobe). 264.2 s of GPU, peak 12.0 GB torch, $0. Six published
+    files verified against ep2-b01-growmotion-b13-0819.sha256.
+  G1_GROWTH_BY_A_CONTINUOUS_PATH_PASS: 'Fig area 456 px at f000 -> 4697 px at f120, x10.30. CONTINUOUS: the largest
+    single-frame area ratio anywhere in the clip is 1.11x, and no frame reaches 1.2x. The growth is spread across
+    the whole clip rather than delivered in a step: area passes 692 at f010, 1338 at f040, 2503 at f080 and 3456
+    at f100.'
+  G2_END_STATE_DEEP_PURPLE_VIOLET_PASS: Mean fig RGB walks (84,191,92) green at f010 -> (62,139,63) at f040 ->
+    (57,77,62) desaturated slate at f080 -> (74,50,79) violet at f090 -> (95,22,101) at f120. The end state is
+    deep purple-violet and the path to it is a continuous ramp through teal and desaturated slate, not a switch.
+  G3_EXACTLY_TWO_LEAVES_PASS: Two leaves in every one of the 121 frames, read on the whole-clip sheet and on the
+    4-up. None appears, none vanishes, none splits.
+  G4_NO_SIZE_DOUBLING_PASS: 'No frame doubles the fig: the maximum single-frame ratio is 1.11x against a 2.0x
+    bound. The fig also stays low -- its centroid rises only 69 px over 121 frames, from y789 to y720, so it never
+    towers out of the grass.'
+  G5_ONLY_THE_FIG_MOVES_FAIL: 'THE CLAUSE THAT KILLS IT. The whole sapling enlarges across the clip -- in the
+    4-up the two leaves at f120 are several times their f000 size and the grass blades are visibly larger too.
+    WHAT THE INSTRUMENT CAN AND CANNOT SAY, stated plainly rather than dressed up: a whole-frame scale fit about
+    the centre picks scale 1.22 at f120, but it beats no-scale by only 0.55 levels of SAD, which by the same region-consistency
+    discipline this repo applies elsewhere is TOO WEAK TO FILE AS A CAMERA MOVE on its own. So the measurement
+    cannot separate "the camera pushed in" from "the plant ballooned". IT DOES NOT NEED TO: H4 names both, and
+    G5 says only the FIG moves. Something other than the fig moved, it is visible at a glance in the 4-up, and
+    the bar is conjunctive.'
+  PLATE_FIDELITY_measured_not_a_clause: Whole-frame mean luminance 87.11 at f000 -> 126.71 at f120, +39.60. This
+    is the 'blooms to pale amber' fault the sweep already records against this recipe, and this seed is four times
+    worse on it than its sibling.
+pre_registered_fail_modes_as_fired:
+  H1-FROZEN: DID NOT FIRE. The fig grows by a factor of 10.30 and the colour ramps the whole way.
+  H2-STAYS-GREEN: DID NOT FIRE. It ends deep purple-violet.
+  H3-LEAF-COUNT: DID NOT FIRE. Two leaves, all 121 frames.
+  H4-BALLOON-OR-CAMERA-PUSH: FIRED. This is the fail. Which half of it fired is not separable by the instrument
+    -- see G5 -- and the clause does not require separating them.
+  H5-FIG-DETACHES-OR-TELEPORTS: DID NOT FIRE. The fig stays on the stem for all 121 frames -- checked at 2x through
+    the colour change, where the stalk to the main stem is visible in every frame.
+  H6-SCENE-BREAK: DID NOT FIRE. One continuous shot, no cut, no location change.
+THE_FINDING_THAT_OUTLIVES_BOTH_CLIPS: 'THESE TWO SEEDS ARE EVIDENCE AGAINST THIS SPEC''S OWN sweep_summary_correction.
+  That block calls G1 "the recipe''s dominant, systematic failure mode", on the strength of "4 of 6 pop in 1 to
+  4 frames" and rejects that "step 2.1x-2.9x in area across 1-4 frames". Seeds 20260838 and 20260839 BOTH pass
+  G1 and BOTH pass G2, with maximum single-frame area ratios of 1.11x each and colour ramps that are continuous
+  under a colour-independent mask. AND THERE IS A MECHANISM FOR HOW THE EARLIER NUMBERS COULD BE WRONG, reproduced
+  here on purpose: a green-or-purple colour-predicate mask reported a ONE-FRAME POP and a 2.47x AREA STEP on seed
+  20260838, and both evaporated when the mask stopped depending on colour. The fig''s path runs through teal and
+  desaturated slate, which satisfy neither predicate, so the blob shrinks to nothing and the class flips in a
+  single frame while the pixels ramp over forty. THIS DOES NOT OVERTURN THE SWEEP -- those six clips were not
+  re-measured here and this lane did not open them. It names a specific, checkable reason to re-measure them BEFORE
+  anyone builds the "temporal distribution of change" experiment the correction recommends, because that experiment
+  would otherwise be attacking a defect that may be an instrument artefact. One re-measure of the six on a colour-independent
+  mask settles it and costs no GPU.'
+THE_PUBLISHED_FILENAME_IS_WRONG_ON_BOTH_JOBS: 'BOTH ep2-b01-growmotion-b13-0819 AND ep2-b01-growmotion-b14-0819
+  published a file called `01-cold-open-LTX-nubgrow-b-s20260826.mp4`. That name asserts seed 20260826, which is
+  the PICK from the earlier sweep and is neither job''s seed. The renders are genuinely different (sha 92e67c20...
+  and f5093d5c...) and the sidecars are CORRECT -- seed 20260838 and 20260839, matching bench-b01-nubgrow.jsonl
+  -- so nothing was mis-rendered and no provenance was lost. What was lost is the filename''s usefulness: two
+  different takes carry one name, that name claims a third seed, and a consumer that globs by filename or copies
+  both into one directory gets a silent collision with the pick''s own name. The derivation cloned the parent''s
+  out path and substituted the seed everywhere except in the string it is written into. Not fixed by re-rendering
+  -- a rename plus a manifest rewrite is the whole repair, and it is not done here because this lane was asked
+  to judge, not to re-issue.'
+verdict_cut: NOT CUT-PREFERRED, and the cold open's pick does not move. Seed 20260826 remains the only clip that
+  has cleared this bar, and the tally is now ONE PASS IN EIGHT. Nothing is promoted, published or cut on the strength
+  of this verdict, and whether the cold open is GOOD remains the founder's under R4.
+what_this_licenses_after_the_verdict: 'Nothing new, and specifically NOT a ninth seed. The sweep''s own conclusion
+  -- "a seventh seed is a lottery ticket, not an experiment" -- is unchanged, and these two rolls are what it
+  looks like when it is ignored: two more clips, two more H4s, no new axis. The one piece of work these clips
+  DO justify is the $0 re-measure named above, which needs no card and no founder.'
