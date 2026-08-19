@@ -17,6 +17,7 @@ import os
 import shutil
 import sys
 import tempfile
+import time
 import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -575,7 +576,7 @@ def test_courier_emits_farm_worker_grammar():
         def __init__(self):
             br.Courier.__init__(self, "/nope", "b", "/nope")
 
-        def mark(self, line, message, files=None):
+        def mark(self, line, message, files=None, push=True):
             seen.append(line)
 
     c = FakeCourier()
@@ -612,6 +613,127 @@ def test_courier_is_off_when_asked():
     with TempRoot() as root:
         enqueue(root, job("j-nc", [py_step("s", "pass")]))
         eq(drain(root), 0, "no-courier: drains fine")
+
+
+# -- courier: what a heartbeat is allowed to cost a render -------------------
+#
+# All four pin the 2026-08-18 defect: heartbeat pushes were synchronous, 300 s,
+# fired on runner_up and job_start (both sitting directly in front of work), and
+# left orphaned git children behind. Measured cost: ~8 min claim-to-first-step
+# twice, 40 timeouts in a day, two runner deaths.
+
+class RecordingCourier(br.Courier):
+    """A courier whose worktree is real but whose push is a counter."""
+
+    def __init__(self, out_dir):
+        br.Courier.__init__(self, out_dir, "b", "/nope")
+        self.published = []
+        self.ready = True          # skip `git worktree add`
+
+    def _publish(self, message):
+        self.published.append(message)
+
+
+def test_the_two_events_that_sit_in_front_of_work_do_not_push():
+    with TempRoot() as root:
+        c = RecordingCourier(root)
+        c.emit({"event": "runner_up", "pid": 1, "host": "box"})
+        c.emit({"event": "job_start", "job": "j-1", "attempt": 1})
+        eq(c.published, [], "defer: runner_up and job_start push nothing")
+        c.emit({"event": "job_done", "job": "j-1", "artifacts": ["a.mp4"]})
+        eq(c.published, ["hb: DONE j-1"], "defer: job_done is what ships")
+
+        # ...and the deferred lines are IN the worktree, in order, so the DONE
+        # publish (`git add -A -- farm-out`) carries them out.
+        with open(os.path.join(root, "farm-out", "heartbeat.txt"), encoding="utf-8") as fh:
+            body = fh.read()
+        check("box-runner up" in body, "defer: runner_up line was still written")
+        check(body.index("STARTED task=j-1") < body.index("DONE task=j-1"),
+              "defer: STARTED is on disk, before DONE, for the next push")
+
+
+def test_liveness_and_verdict_events_still_push():
+    """The deny list must not go wider than the two measured offenders.
+
+    runner_idle is this box's only "still alive" signal (build_sim gives a
+    machine 45 min); Queue.quiet_push_due already thins it to one per
+    COURIER_IDLE_MINUTES before it reaches emit, so emit must not thin it again.
+    """
+    with TempRoot() as root:
+        c = RecordingCourier(root)
+        for rec in ({"event": "job_failed", "job": "j-2", "rc": 3},
+                    {"event": "job_requeued_after_interrupt", "job": "j-3"},
+                    {"event": "runner_down", "jobs_completed": 2},
+                    {"event": "runner_idle", "ready": 0},
+                    {"event": "runner_waiting_for_gpu", "reason": "vram"}):
+            c.emit(rec)
+        eq(len(c.published), 5, "deny list: every other event still ships")
+        eq(br.DEFERRED_EVENTS, ("job_start", "runner_up"),
+           "deny list: exactly the two measured offenders")
+
+
+def test_a_push_that_hangs_is_bounded_and_does_not_wedge():
+    """300 s of blocking per heartbeat was the whole latency bug."""
+    check(br.PUSH_TIMEOUT_SECONDS <= 60, "push: hard timeout is <= 60s")
+    with TempRoot() as root:
+        c = RecordingCourier(root)
+        t0 = time.time()
+        rc, out = c._push(argv=[sys.executable, "-c", "import time; time.sleep(30)"],
+                          timeout=2)
+        elapsed = time.time() - t0
+        eq(rc, br.PUSH_RC_TIMEOUT, "push: timeout has its own rc")
+        check(elapsed < 20, "push: returned in %.1fs, not after the child" % elapsed)
+        check("killed" in out, "push: says the tree was killed")
+
+
+def test_a_timed_out_push_takes_its_grandchildren_with_it():
+    """subprocess.run(timeout=) kills the direct child ONLY.
+
+    `git push` spawns git-pack-objects and ssh; they survive that kill holding
+    the stdout pipe they inherited, which is both the orphan pile seen in Task
+    Manager on the box and why the communicate() after the kill can block with
+    no timeout at all. The whole process tree has to go.
+    """
+    with TempRoot() as root:
+        c = RecordingCourier(root)
+        pidfile = os.path.join(root, "grandchild.pid").replace("\\", "\\\\")
+        code = (
+            "import subprocess, sys, time;"
+            "p = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)']);"
+            "open(%r, 'w').write(str(p.pid));"
+            "time.sleep(60)" % pidfile
+        )
+        rc, _ = c._push(argv=[sys.executable, "-c", code], timeout=3)
+        eq(rc, br.PUSH_RC_TIMEOUT, "tree: parent timed out")
+        gpid = int(open(os.path.join(root, "grandchild.pid")).read())
+        dead = False
+        for _ in range(50):                     # up to 5s for the group to go
+            if not br.pid_alive(gpid):
+                dead = True
+                break
+            time.sleep(0.1)
+        check(dead, "tree: the grandchild was killed too, not orphaned")
+
+
+def test_a_leftover_push_pid_is_swept_before_the_next_push():
+    """Requirement (c), scoped to pids we spawned -- never `taskkill /IM git.exe`.
+
+    taskkill's /FI filters have no working-directory or command-line predicate,
+    so an image-name kill cannot be narrowed to this repo and would reach the
+    hand lanes' git in C:\\banyan-farm\\banyan-city.
+    """
+    with TempRoot() as root:
+        c = RecordingCourier(root)
+        killed = []
+        real = br._kill_process_tree
+        br._kill_process_tree = lambda pid, log=print: killed.append(pid)
+        try:
+            c._push_pids.add(999999)
+            c._push(argv=[sys.executable, "-c", "pass"], timeout=20)
+        finally:
+            br._kill_process_tree = real
+        eq(killed, [999999], "sweep: the stale pid was killed before pushing")
+        eq(c._push_pids, set(), "sweep: a clean push leaves no tracked pid")
 
 
 # -- misc -------------------------------------------------------------------
@@ -664,7 +786,7 @@ def test_recurring_heartbeats_carry_the_failed_count():
         def __init__(self):
             br.Courier.__init__(self, "/nope", "b", "/nope")
 
-        def mark(self, line, message, files=None):
+        def mark(self, line, message, files=None, push=True):
             seen.append(line)
 
     c = FakeCourier()
@@ -748,7 +870,7 @@ def test_the_done_heartbeat_names_a_clip_that_arrived_with_no_record():
         def __init__(self):
             pass
 
-        def mark(self, line, message, files=None):
+        def mark(self, line, message, files=None, push=True):
             seen.append(line)
 
     c = FakeCourier()

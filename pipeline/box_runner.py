@@ -37,6 +37,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -127,6 +128,51 @@ CLAIM_HOLDER = "box-runner"
 # instead of as a machine nobody has heard of.
 COURIER_BRANCH = "farm-results-rtx5090"
 COURIER_IDLE_MINUTES = 10
+
+# --------------------------------------------------------------------------
+# WHAT A HEARTBEAT IS ALLOWED TO COST A RENDER (2026-08-18, measured)
+#
+# The box's runner.log for one day: 40 pushes hit the old 300 s timeout,
+# claim-to-first-step latency measured ~8 min TWICE, orphaned git.exe and
+# git-pack-objects processes left behind, and the runner died at ~17:51 and
+# ~18:16 (its scheduled task restarted it both times). Cause: every heartbeat
+# event ran a SYNCHRONOUS `git push -f` on this branch, whose history lives in a
+# 5.5 GiB repo, so every push repacks heavily. Two of those events sit directly
+# in front of work -- `runner_up` before the first ready_jobs() poll, `job_start`
+# before the first step of a job already claimed -- and 300 + 300 is the eight
+# minutes, to the second.
+#
+# 1. DEFERRED_EVENTS: the two that sit in front of work stop pushing. They still
+#    append to farm-out/heartbeat.txt with their true timestamp; the next publish
+#    commits them, because _publish does `git add -A -- farm-out` and picks up
+#    everything pending. No line is lost -- only its promptness, and the cost of
+#    that is named below. Stated as a DENY list, not an allow list, so a new
+#    event added later keeps the old behaviour instead of silently going dark;
+#    `runner_idle` and `runner_waiting_for_gpu` in particular MUST stay pushing
+#    (they are the box's liveness signal, already thinned to one per
+#    COURIER_IDLE_MINUTES by Queue.quiet_push_due before they ever reach emit).
+# 2. PUSH_TIMEOUT_SECONDS 60, was 300. A heartbeat that cannot be delivered in a
+#    minute is logged and dropped; the next push carries it. A missed heartbeat
+#    push must never block a render, and it must never kill the runner.
+# 3. the timed-out push's whole process TREE is killed. subprocess.run(timeout=)
+#    kills the DIRECT CHILD only -- but `git push` spawns git-pack-objects and
+#    ssh, which survive it holding the stdout pipe they inherited, so the
+#    communicate() that follows the kill can block with no timeout at all. That
+#    is both the orphan pile in Task Manager and the most likely mechanism of the
+#    two runner deaths: not a crash, a wedge.
+#
+# THE TRADEOFF, stated so the next person does not rediscover it as a bug:
+# build_sim calls a job live on a fresh STARTED with no DONE after it
+# (JOB_FRESH_MINUTES = 45). Deferring the STARTED push means the street does not
+# show this box mid-render until the job ends. It was already near-blind there --
+# the runner emits no beats at all between job_start and job_done, so any render
+# over 45 min already aged out of "live" -- and eight minutes of card time per
+# job, plus two daemon deaths, is the worse of the two.
+DEFERRED_EVENTS = ("job_start", "runner_up")
+PUSH_TIMEOUT_SECONDS = 60
+# Not in the RC table above: that table is job verdicts, and this number never
+# reaches a job -- it is internal to the courier. 124 is `timeout(1)`'s code.
+PUSH_RC_TIMEOUT = 124
 
 # The clone the courier borrows objects and the deploy key from, and a worktree
 # that is deliberately NOT inside it -- see Courier's docstring for why touching
@@ -582,6 +628,33 @@ class Queue:
 # courier -- getting the work back into the repo
 # --------------------------------------------------------------------------
 
+def _kill_process_tree(pid: int, log=print) -> None:
+    """Kill a process WE spawned, and everything it spawned, by pid.
+
+    Deliberately NOT `taskkill /IM git.exe`. The render checkout at
+    C:\\banyan-farm\\banyan-city has hand lanes running their own git, and
+    taskkill's /FI filters are IMAGENAME, PID, STATUS, MEMUSAGE, USERNAME,
+    CPUTIME, WINDOWTITLE, MODULES, SERVICES -- there is NO filter for working
+    directory or command line, so no image-name filter exists that can be
+    narrowed to this repo. A pid this process started, plus /T for its
+    descendants, is the only filter that provably cannot reach another lane's
+    git. Everything is swallowed: a failed cleanup is never a reason to stop
+    rendering.
+    """
+    try:
+        if os.name == "nt":
+            subprocess.run(["taskkill", "/T", "/F", "/PID", str(pid)],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=20)
+        else:
+            # POSIX side exists for the tests. Safe only because the push is
+            # spawned with start_new_session=True -- without it getpgid() would
+            # return the RUNNER's own group and this would kill the daemon.
+            os.killpg(os.getpgid(pid), signal.SIGKILL)
+    except Exception as exc:
+        log("courier: could not kill push tree %s: %s" % (pid, exc))
+
+
 class Courier:
     """Publish this runner's heartbeats and job records on `farm-results-*`.
 
@@ -618,6 +691,10 @@ class Courier:
         self.unpushed = 0
         self.ready = False
         self.disabled_reason = ""
+        # pids of pushes we started and have NOT confirmed dead. Non-empty means
+        # a previous timeout's cleanup did not finish; the next push sweeps them
+        # before adding load. Only ever holds pids this process spawned.
+        self._push_pids = set()
 
     # -- plumbing ----------------------------------------------------------
 
@@ -668,6 +745,53 @@ class Courier:
             self.log("courier off: " + self.disabled_reason)
             return False
 
+    def _push(self, argv=None, timeout: int = None) -> tuple:
+        """`git push -f`, hard-bounded, leaving no orphans. Returns (rc, output).
+
+        Popen + communicate rather than subprocess.run(timeout=) for one reason,
+        and it is the whole bug: run()'s timeout kills the direct child and then
+        calls communicate() with NO timeout, and git push's children --
+        git-pack-objects, ssh -- are still holding the stdout pipe they
+        inherited, so that call can block forever. A 300 s push turned into a
+        wedged runner exactly there.
+        """
+        argv = list(argv or ("git", "push", "-f", "origin", self.branch))
+        timeout = PUSH_TIMEOUT_SECONDS if timeout is None else timeout
+
+        # Requirement (c): sweep any push tree we started earlier and never saw
+        # die. Bounded to pids in our own set -- never a search by image name.
+        for stale in sorted(self._push_pids):
+            self.log("courier: killing leftover push tree pid=%s before pushing" % stale)
+            _kill_process_tree(stale, self.log)
+        self._push_pids.clear()
+
+        kw = {}
+        if os.name == "nt":
+            kw["creationflags"] = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+        else:
+            kw["start_new_session"] = True   # so _kill_process_tree's killpg is safe
+        p = subprocess.Popen(argv, cwd=self.worktree, stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT, text=True,
+                             encoding="utf-8", errors="replace", **kw)
+        self._push_pids.add(p.pid)
+        try:
+            out, _ = p.communicate(timeout=timeout)
+            self._push_pids.discard(p.pid)
+            return p.returncode, out or ""
+        except subprocess.TimeoutExpired:
+            _kill_process_tree(p.pid, self.log)
+            try:
+                out, _ = p.communicate(timeout=15)
+                self._push_pids.discard(p.pid)
+            except subprocess.TimeoutExpired:
+                # The tree kill did not free the pipe. Do NOT wait again -- that
+                # is the wedge. Leave the pid in the set so the next push sweeps
+                # it, and hand the runner back its thread.
+                out = ""
+            return PUSH_RC_TIMEOUT, (
+                "push exceeded %ds and its process tree was killed\n%s"
+                % (timeout, out or ""))
+
     def _publish(self, message: str) -> None:
         # -- <path>, never a bare commit. This worktree is the courier's alone
         # today, but farm_worker.Courier.mark carries the same scar for the same
@@ -679,21 +803,27 @@ class Courier:
             self.log("!! courier commit failed: %s"
                      % (c.stderr or c.stdout or "").strip()[-300:])
             return
-        p = self._git("push", "-f", "origin", self.branch, timeout=300)
-        if p.returncode:
+        rc, out = self._push()
+        if rc:
             self.unpushed += 1
             self.log("!! COURIER PUSH FAILED (%d in a row) -- results are on this "
                      "box only, in %s\n   %s"
-                     % (self.unpushed, self.out,
-                        (p.stderr or p.stdout or "").strip()[-300:]))
+                     % (self.unpushed, self.out, (out or "").strip()[-300:]))
         elif self.unpushed:
             self.log("courier push recovered after %d failure(s)" % self.unpushed)
             self.unpushed = 0
 
     # -- the public surface ------------------------------------------------
 
-    def mark(self, line: str, message: str, files: dict = None) -> None:
-        """Append one heartbeat line (+ optional small files) and push."""
+    def mark(self, line: str, message: str, files: dict = None,
+             push: bool = True) -> None:
+        """Append one heartbeat line (+ optional small files); push if it earns it.
+
+        `push=False` writes everything to the worktree and stops there. Nothing
+        is lost: _publish stages with `git add -A -- farm-out`, so the deferred
+        line rides out with the next real publish, carrying the timestamp it was
+        written at rather than the one it was pushed at.
+        """
         try:
             if not self.ensure():
                 return
@@ -706,17 +836,27 @@ class Courier:
                 dst = os.path.join(self.out, "box", name)
                 with open(dst, "w", encoding="utf-8", errors="replace") as fh:
                     fh.write(body)
-            self._publish(message)
+            if push:
+                self._publish(message)
         except Exception:
             self.log("!! courier raised, renders continue:\n" + traceback.format_exc())
 
     def emit(self, record: dict) -> None:
-        """Translate a queue heartbeat record into the shared grammar."""
+        """Translate a queue heartbeat record into the shared grammar.
+
+        Whether the line also PUSHES is decided in exactly one place -- the
+        DEFERRED_EVENTS tuple at the top of this file, where the measurements
+        that set it are written down.
+        """
         event = record.get("event", "")
         jid = record.get("job", "?")
+        push = event not in DEFERRED_EVENTS
         if event == "job_start":
+            # Deferred on purpose: this call used to sit between claiming a job
+            # and running its first step, and cost up to 300 s of card time.
             self.mark("STARTED task=%s attempt=%s on box-runner"
-                      % (jid, record.get("attempt", 1)), "hb: STARTED %s" % jid)
+                      % (jid, record.get("attempt", 1)), "hb: STARTED %s" % jid,
+                      push=push)
         elif event == "job_done":
             bare = record.get("unprovenanced") or []
             self.mark("DONE task=%s rc=0 artifacts=%d"
@@ -724,29 +864,33 @@ class Courier:
                       + (" NO-SIDECAR=%d (%s)"
                          % (len(bare), ", ".join(os.path.basename(b) for b in bare))
                          if bare else ""),
-                      "hb: DONE %s" % jid, files=record.get("files"))
+                      "hb: DONE %s" % jid, files=record.get("files"), push=push)
         elif event == "job_failed":
             self.mark("FAIL task=%s rc=%s step=%s"
                       % (jid, record.get("rc"), record.get("failed_step")),
-                      "hb: FAIL %s" % jid, files=record.get("files"))
+                      "hb: FAIL %s" % jid, files=record.get("files"), push=push)
         elif event == "job_requeued_after_interrupt":
             self.mark("INTERRUPTED task=%s requeued attempt %s/%s"
                       % (jid, record.get("attempts"), record.get("max_attempts")),
-                      "hb: INTERRUPTED %s" % jid)
+                      "hb: INTERRUPTED %s" % jid, push=push)
         elif event == "runner_up":
+            # Deferred: this was the first thing main() did, ahead of the first
+            # ready_jobs() poll, so a slow push delayed the whole daemon's start.
+            # The idle beat 60 s later publishes it.
             self.mark("box-runner up pid=%s host=%s"
-                      % (record.get("pid"), record.get("host")), "hb: runner up")
+                      % (record.get("pid"), record.get("host")), "hb: runner up",
+                      push=push)
         elif event == "runner_down":
             self.mark("box-runner down after %s job(s)"
-                      % record.get("jobs_completed"), "hb: runner down")
+                      % record.get("jobs_completed"), "hb: runner down", push=push)
         elif event == "runner_idle":
             self.mark("box-runner idle ready=%s failed=%s"
                       % (record.get("ready", 0), record.get("failed", 0)),
-                      "hb: idle")
+                      "hb: idle", push=push)
         elif event == "runner_waiting_for_gpu":
             self.mark("box-runner waiting for GPU: %s failed=%s"
                       % (record.get("reason"), record.get("failed", 0)),
-                      "hb: waiting for GPU")
+                      "hb: waiting for GPU", push=push)
 
 
 def write_json(path: str, data: dict) -> None:
