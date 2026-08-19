@@ -52,6 +52,29 @@ BASE_LICENCE = "CreativeML Open RAIL++-M (use restrictions travel; D15)"
 CONTROLNET = "xinsir/controlnet-scribble-sdxl-1.0"
 CONTROLNET_LICENCE = "apache-2.0 (D15 SAFE, no attribution condition)"
 
+# WHICH NETS MAY BE NAMED, AND WHY IT IS AN ALLOWLIST RATHER THAN A FREE STRING.
+# `--controlnet` exists so the openpose rung can run WITHOUT editing the constant
+# above, which four filed verdicts were measured against. But a driver that
+# accepts any repo id by string is one typo away from attaching somebody else's
+# terms to a canon frame, and two of the near neighbours are real hazards:
+#   thibaud/controlnet-openpose-sdxl-1.0 -- its card reads, in full, "License:
+#     refers to the OpenPose's one". CMU OpenPose upstream is academic /
+#     non-commercial. B01-R9-PLAN.md §9 already flags lllyasviel/Annotators DO
+#     NOT USE FOR CANON for inheriting exactly those terms; this inherits them at
+#     the WEIGHTS level, where they would attach to every frame it ever renders.
+#   MistoLine -- loads fine, but its README puts a standing VISIBLE ATTRIBUTION
+#     obligation on anything it renders. That is why the permissive net was the
+#     default in the first place.
+# So the licence travels WITH the name, in one table, and an unlisted net is
+# refused before any weight loads rather than silently recorded as apache-2.0.
+CONTROLNETS = {
+    "xinsir/controlnet-scribble-sdxl-1.0":
+        "apache-2.0 (D15 SAFE, no attribution condition)",
+    "xinsir/controlnet-openpose-sdxl-1.0":
+        "apache-2.0 (D15 SAFE, no attribution condition; front matter and body "
+        "both, and no annotator is used -- the hint is authored in PIL)",
+}
+
 # THE VARIANT TRAP, carried verbatim because it is why a naive constant-swap
 # crashes: the xinsir repos ship ONLY `diffusion_pytorch_model.safetensors`, so
 # passing variant="fp16" raises. diffusers/* and MistoLine ship ONLY
@@ -251,9 +274,12 @@ def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
         "cost_usd: 0",
     ]
     if use_cn:
+        # getattr with the constant as the default, so a caller that predates
+        # --controlnet produces the byte-identical block it always did.
+        net = getattr(a, "controlnet", None) or CONTROLNET
         side += [
-            "controlnet: %s" % CONTROLNET,
-            "controlnet_licence: %s" % CONTROLNET_LICENCE,
+            "controlnet: %s" % net,
+            "controlnet_licence: %s" % CONTROLNETS.get(net, CONTROLNET_LICENCE),
             "controlnet_variant: %r (xinsir ships no fp16 variant file; passing "
             "one raises)" % CONTROLNET_VARIANT,
             "controlnet_conditioning_scale: %s" % a.scale,
@@ -398,6 +424,18 @@ def render(a):
             print(str(e), file=sys.stderr)
             return 7
 
+    net = a.controlnet or CONTROLNET
+    if use_cn and net not in CONTROLNETS:
+        print("!! %r is not in this driver's ControlNet allowlist. The licence "
+              "travels with the name (see CONTROLNETS), and an unlisted net "
+              "would be recorded with the wrong terms -- thibaud's SDXL openpose "
+              "inherits CMU OpenPose's non-commercial licence AT THE WEIGHTS "
+              "LEVEL, and MistoLine puts a standing visible-attribution "
+              "obligation on anything it renders. Add it to the table with its "
+              "real licence, or use one of: %s"
+              % (net, ", ".join(sorted(CONTROLNETS))), file=sys.stderr)
+        return 12
+
     if not torch.cuda.is_available():
         print("no CUDA -- this is a box job", file=sys.stderr)
         return 5
@@ -432,7 +470,7 @@ def render(a):
     if use_cn:
         cn_kw = {} if CONTROLNET_VARIANT is None else {"variant": CONTROLNET_VARIANT}
         cn = ControlNetModel.from_pretrained(
-            CONTROLNET, torch_dtype=torch.bfloat16, **cn_kw)
+            net, torch_dtype=torch.bfloat16, **cn_kw)
         cn.to("cuda")
         # from_pipe swaps the class while REUSING the loaded modules, so one set
         # of base weights serves both arms -- r8/r9's discipline.
@@ -621,6 +659,36 @@ def selftest():
     check("the limit is read off the tokenizer, not hardcoded",
           token_overflow("x", _Tok88(80))[0] == 0)
 
+    # ---- THE CONTROLNET ALLOWLIST -----------------------------------------
+    # The licence has to travel WITH the name, or a net swap records the wrong
+    # terms on every frame it renders.
+    check("the default net is in the allowlist", CONTROLNET in CONTROLNETS)
+    check("the allowlist's entry for the default net IS the default licence",
+          CONTROLNETS[CONTROLNET] == CONTROLNET_LICENCE)
+    check("the openpose net is in the allowlist",
+          "xinsir/controlnet-openpose-sdxl-1.0" in CONTROLNETS)
+    check("every allowlisted net is apache-2.0 -- no attribution condition and "
+          "no inherited non-commercial terms",
+          all(v.startswith("apache-2.0") for v in CONTROLNETS.values()))
+    for hazard in ("thibaud/controlnet-openpose-sdxl-1.0",
+                   "TheMistoAI/MistoLine",
+                   "xinsir/controlnet-union-sdxl-1.0",
+                   "lllyasviel/Annotators"):
+        check("%s is NOT allowlisted" % hazard, hazard not in CONTROLNETS)
+    # The sidecar must name whatever net was passed, with THAT net's licence.
+    ap2 = argparse.Namespace(
+        task="t", arm="hint", width=W, height=H, steps=STEPS, cfg=CFG, seed=1,
+        scale=SCALE, control="c.png", control_sha256=None, root=None,
+        repo_commit="abc", out=".", prompt_file="p", negative_file="n",
+        controlnet="xinsir/controlnet-openpose-sdxl-1.0")
+    sp = "\n".join(sidecar_lines(ap2, True, "dead", "abc", "p", "n", 1.0, 2.0,
+                                 "now", "2.4"))
+    check("a pose-net sidecar names the POSE net and not the scribble one",
+          "controlnet: xinsir/controlnet-openpose-sdxl-1.0" in sp
+          and CONTROLNET not in sp)
+    check("a pose-net sidecar carries the pose net's own licence line",
+          "no annotator is used" in sp)
+
     # ---- THE MASK GRAMMAR -------------------------------------------------
     check("a rect parses to four ints in render pixels",
           parse_rect(" 10, 20 ,30,40 ", W, H) == (10, 20, 30, 40))
@@ -690,6 +758,9 @@ def main():
     ap.add_argument("--negative-file", default=None)
     ap.add_argument("--out", default=None, help="output DIRECTORY (absolute)")
     ap.add_argument("--root", default=None)
+    ap.add_argument("--controlnet", default=CONTROLNET,
+                    help="ControlNet repo id; must be in the CONTROLNETS "
+                         "allowlist, which carries each net's licence")
     ap.add_argument("--scale", type=float, default=SCALE)
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--steps", type=int, default=STEPS)
