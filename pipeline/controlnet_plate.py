@@ -65,6 +65,45 @@ CFG = 7.5
 SCALE = 0.8               # thick-line + high-scale: the condition-wins end, and
                           # the ONLY conditioning scale this repo has measured.
 
+# ---------------------------------------------------------------------------
+# MASKED IP-ADAPTER -- ADDED 2026-08-19, AND EVERY PATH ABOVE IS UNCHANGED.
+#
+# WHY IT IS HERE. `b08-arm-route-0819.md` §8-§10 bracketed conditioning scale,
+# stroke weight and hint class over five rungs and every single frame returned
+# TWO GREEN FIGURES. That is not a tuning failure: a contour says how tall, not
+# WHICH BODY an attribute belongs to, so `green skin` enters CLIP's pooled
+# embedding and lands on both. §10's closing line is that identity is no longer
+# blocked, it is simply the next open question, and that geometric conditioning
+# on this net will not help it. A reference image behind a MASK is a per-location
+# identity channel, which is the one thing the hint cannot be.
+#
+# WHY IT COSTS NOTHING AND NEEDS NO DOWNLOAD, verified read-only on the box by
+# `pipeline/research/openpose-controlnet-sdxl-0819.md` §3 and §5 rather than
+# assumed here: diffusers 0.29.2, `IPAdapterMaskProcessor` imports,
+# `StableDiffusionXLControlNetPipeline.__call__` accepts `ip_adapter_image`, and
+# `models--h94--IP-Adapter` is complete in the cache with 0 .incomplete files.
+# One pipeline, pose control AND per-region image conditioning; no community
+# pipeline, no fork, no version bump.
+#
+# THE ENCODER FOLDER IS THE TRAP THAT WOULD HAVE COST THE FIRST RUN. diffusers
+# defaults `image_encoder_folder="image_encoder"` and, when the name contains no
+# slash, resolves it as `Path(subfolder, image_encoder_folder)` -- i.e.
+# `sdxl_models/image_encoder`, which is the ViT-bigG encoder and IS NOT IN THE
+# BOX CACHE. `dir /s /b` on the snapshot lists exactly four blobs and the only
+# encoder among them is `models/image_encoder`, the ViT-H one that every
+# `_vit-h` adapter actually requires. A name WITH a slash is taken as a full
+# path, so `models/image_encoder` is both correct and the only offline-reachable
+# spelling. Getting this wrong is not a wrong picture, it is a hard miss under
+# HF_HUB_OFFLINE=1.
+# ---------------------------------------------------------------------------
+IP_REPO = "h94/IP-Adapter"
+IP_LICENCE = "apache-2.0"
+IP_SUBFOLDER = "sdxl_models"
+IP_WEIGHT = "ip-adapter-plus_sdxl_vit-h.safetensors"
+IP_IMAGE_ENCODER_FOLDER = "models/image_encoder"   # see the trap above
+IP_SCALE = 0.7            # the value diffusers' own masking example uses
+
+
 
 def sha256_file(path):
     h = hashlib.sha256()
@@ -138,8 +177,62 @@ def check_control(ctrl_img, want_w, want_h):
     return True
 
 
+def parse_rect(s, width, height):
+    """`x0,y0,x1,y1` in RENDER pixels -> a validated tuple.
+
+    In render pixels and not fractions on purpose: the hint that these masks
+    accompany is authored in absolute pixels by `author_b08_pose_hint.py`, whose
+    metadata reports the figures' cx, stature, head_cy and shoulder_y in exactly
+    those units. A fraction here would mean the mask and the geometry it is meant
+    to agree with are stated in two different coordinate systems, and nobody
+    would notice a 4% disagreement by eye.
+    """
+    parts = [p.strip() for p in str(s).split(",")]
+    if len(parts) != 4:
+        raise ValueError("a mask rect is x0,y0,x1,y1 -- got %r" % (s,))
+    try:
+        x0, y0, x1, y1 = (int(round(float(p))) for p in parts)
+    except ValueError:
+        raise ValueError("a mask rect must be four numbers -- got %r" % (s,))
+    if x1 <= x0 or y1 <= y0:
+        raise ValueError("mask rect %r is empty or inverted (need x1>x0, y1>y0)"
+                         % (s,))
+    if x0 < 0 or y0 < 0 or x1 > width or y1 > height:
+        raise ValueError("mask rect %r falls outside the %dx%d render" %
+                         (s, width, height))
+    return (x0, y0, x1, y1)
+
+
+def rects_overlap(a, b):
+    """Do two mask rects share any pixel?
+
+    REFUSED rather than warned about. Two IP-Adapter masks that overlap put two
+    identities on the same pixels, and the whole premise of this rung is that
+    each figure gets ONE reference. An overlap would produce exactly the blended
+    result the rung exists to disprove, and it would look like the mechanism
+    failing rather than like the masks being wrong.
+    """
+    return not (a[2] <= b[0] or b[2] <= a[0] or a[3] <= b[1] or b[3] <= a[1])
+
+
+def mask_images(rects, width, height):
+    """One white-on-black L mask per rect, at the render size.
+
+    Drawn here rather than taken as PNG files so the numbers in the job's argv
+    ARE the mask -- there is no second artifact that could drift from them, and
+    the sidecar records the same four integers the render was conditioned on.
+    """
+    from PIL import Image, ImageDraw
+    out = []
+    for r in rects:
+        m = Image.new("L", (width, height), 0)
+        ImageDraw.Draw(m).rectangle([r[0], r[1], r[2] - 1, r[3] - 1], fill=255)
+        out.append(m)
+    return out
+
+
 def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
-                  stamp, torch_version):
+                  stamp, torch_version, ip=None):
     """The 7.2 provenance block, written AT RENDER TIME, on the box."""
     side = [
         "# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on",
@@ -174,6 +267,27 @@ def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
         ]
     else:
         side.append("controlnet: none (the control arm; same seed, same prompt)")
+    # ONLY WHEN AN IP-ADAPTER WAS ACTUALLY USED. An arm that ran without one must
+    # produce the byte-identical sidecar it produced before this feature existed,
+    # and selftest() asserts that against a sha taken from the pre-change file --
+    # otherwise four filed verdicts would be resting on a provenance block whose
+    # wording had quietly moved under them.
+    if ip:
+        side += [
+            "ip_adapter: %s (%s)" % (ip["repo"], ip["licence"]),
+            "ip_adapter_weight: %s/%s" % (ip["subfolder"], ip["weight"]),
+            "ip_adapter_image_encoder: %s (ViT-H; the folder the _vit-h adapters "
+            "require, and the only encoder in the box cache)"
+            % ip["image_encoder_folder"],
+            "ip_adapter_scale: %s" % (ip["scale"],),
+            "ip_adapter_refs: %s" % (ip["refs"],),
+            "ip_adapter_ref_sha256: %s" % (ip["ref_sha256"],),
+            "ip_adapter_masks: %s (x0,y0,x1,y1 in RENDER pixels, drawn by "
+            "controlnet_plate.mask_images -- no mask file exists to drift)"
+            % (ip["rects"],),
+            "ip_adapter_masks_overlap: false (asserted; two identities on one "
+            "pixel is refused, not warned about)",
+        ]
     side += [
         "repo_commit: %s" % rev,
         "model_load_seconds: %.1f" % load_s,
@@ -207,6 +321,58 @@ def render(a):
 
     prompt = read_text(a.prompt_file)
     negative = read_text(a.negative_file)
+
+    # ---- the IP-Adapter references and their masks, RESOLVED BEFORE ANY WEIGHT
+    # LOADS. A missing reference, a bad rect or an overlap costs three seconds
+    # here and a whole model load plus a 40-step render if it is found later.
+    ip = None
+    if a.ip_ref:
+        if len(a.ip_ref) != len(a.ip_mask):
+            print("!! %d --ip-ref but %d --ip-mask. Each reference needs exactly "
+                  "one mask: the mask is what says WHICH FIGURE that reference is "
+                  "for, and an unmasked reference applies to the whole frame -- "
+                  "which is the broadcast failure this rung exists to fix."
+                  % (len(a.ip_ref), len(a.ip_mask)), file=sys.stderr)
+            return 10
+        if a.ip_ref_sha256 and len(a.ip_ref_sha256) != len(a.ip_ref):
+            print("!! %d --ip-ref-sha256 for %d --ip-ref"
+                  % (len(a.ip_ref_sha256), len(a.ip_ref)), file=sys.stderr)
+            return 10
+        try:
+            rects = [parse_rect(s, a.width, a.height) for s in a.ip_mask]
+        except ValueError as e:
+            print("!! %s" % e, file=sys.stderr)
+            return 10
+        for i in range(len(rects)):
+            for j in range(i + 1, len(rects)):
+                if rects_overlap(rects[i], rects[j]):
+                    print("!! mask %d %s and mask %d %s OVERLAP. Two references "
+                          "on the same pixels is two identities on one body, and "
+                          "the blended result would look like the mechanism "
+                          "failing rather than like the masks being wrong."
+                          % (i, rects[i], j, rects[j]), file=sys.stderr)
+                    return 10
+        ref_paths, ref_shas = [], []
+        for i, r in enumerate(a.ip_ref):
+            rp = Path(r)
+            if not rp.is_absolute():
+                rp = root / r
+            if not rp.exists():
+                print("ip reference missing: %s" % rp, file=sys.stderr)
+                return 10
+            sha = sha256_file(rp)
+            if a.ip_ref_sha256 and sha != a.ip_ref_sha256[i]:
+                print("!! ip reference %d sha mismatch\n   want %s\n   have %s"
+                      % (i, a.ip_ref_sha256[i], sha), file=sys.stderr)
+                return 11
+            ref_paths.append(rp)
+            ref_shas.append(sha)
+        ip = {"repo": a.ip_repo, "licence": IP_LICENCE,
+              "subfolder": a.ip_subfolder, "weight": a.ip_weight,
+              "image_encoder_folder": a.ip_image_encoder_folder,
+              "scale": [[float(a.ip_scale)] * len(ref_paths)],
+              "refs": [str(p) for p in ref_paths], "ref_sha256": ref_shas,
+              "rects": rects, "paths": ref_paths}
 
     ctrl_img = None
     ctrl_sha = None
@@ -276,6 +442,39 @@ def render(a):
               "control_guidance_start": 0.0,
               "control_guidance_end": 1.0}
 
+    # ---- MASKED IP-ADAPTER, LOADED ONTO THE FINAL PIPELINE ----------------
+    # AFTER the from_pipe swap, deliberately. from_pipe rebuilds the class around
+    # the same modules, and an adapter registered on the pre-swap object is
+    # registered on a pipeline nobody is about to call.
+    if ip:
+        from diffusers.image_processor import IPAdapterMaskProcessor
+        from PIL import Image as _Image
+
+        pipe.load_ip_adapter(
+            ip["repo"], subfolder=ip["subfolder"], weight_name=ip["weight"],
+            image_encoder_folder=ip["image_encoder_folder"])
+        # ONE adapter carrying N images, so the scale is ONE nested list of N --
+        # the shape diffusers' own masking example uses, and the shape the attn
+        # processor demands: it asserts
+        # len(ip_adapter_masks) == len(self.scale) == len(ip_hidden_states),
+        # where len(self.scale) counts ADAPTERS (1) and each entry may itself be
+        # a per-image list.
+        pipe.set_ip_adapter_scale(ip["scale"])
+        proc = IPAdapterMaskProcessor()
+        masks = proc.preprocess(mask_images(ip["rects"], a.width, a.height),
+                                height=a.height, width=a.width)
+        # The reshape is not cosmetic: each element of ip_adapter_masks must be
+        # a tensor of [1, num_images_for_this_adapter, h, w]. preprocess returns
+        # [N, 1, h, w], so it is folded into a single [1, N, h, w] and wrapped in
+        # a one-element list -- one entry for the one adapter.
+        masks = [masks.reshape(1, masks.shape[0], masks.shape[2], masks.shape[3])]
+        refs = [[_Image.open(p).convert("RGB") for p in ip["paths"]]]
+        kw["ip_adapter_image"] = refs
+        kw["cross_attention_kwargs"] = {"ip_adapter_masks": masks}
+        print("  ip-adapter: %s/%s, %d ref(s), scale %s, masks %s"
+              % (ip["subfolder"], ip["weight"], len(ip["paths"]), ip["scale"],
+                 ip["rects"]), flush=True)
+
     g = torch.Generator("cuda").manual_seed(a.seed)
     t1 = datetime.datetime.now(datetime.timezone.utc)
     img = pipe(prompt=prompt, negative_prompt=negative,
@@ -292,7 +491,8 @@ def render(a):
     rev = a.repo_commit or git_rev(root)
     side = sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative,
                          (t1 - t0).total_seconds(), (t2 - t1).total_seconds(),
-                         t2.strftime("%Y-%m-%dT%H:%M:%SZ"), torch.__version__)
+                         t2.strftime("%Y-%m-%dT%H:%M:%SZ"), torch.__version__,
+                         ip=ip)
     (out_dir / ("%s-%s.png.meta.yaml" % (a.task, a.arm))).write_text(
         "\n".join(side) + "\n", encoding="utf-8")
 
@@ -362,6 +562,42 @@ def selftest():
               and "approved: false" in s0)
         check("cost is recorded and is zero", "cost_usd: 0" in s0)
 
+        # ---- THE IP-ADAPTER FEATURE MAY NOT MOVE THE OLD PATHS -------------
+        # Rungs 1, 2, 4 and 5 have FILED VERDICTS resting on frames this file
+        # rendered, and their sidecars are the provenance those verdicts cite. So
+        # the no-IP sidecar is asserted BYTE-IDENTICAL to what it was before the
+        # feature landed, on a sha256 taken from the pre-change file at
+        # 80dc35dc -- not eyeballed, and not merely "contains no ip_ lines".
+        GOLDEN_CN = ("de46c2b340256a9e866e5d6d80a1cd18"
+                     "9f5830e71bae379b3d44875c0feb4e3d")
+        GOLDEN_NOCN = ("4f057ef052a7ebb7d2312cca1dc7ef41"
+                       "e114bb3981cc1656205dbb767cb7f59f")
+        check("a control arm's sidecar is BYTE-IDENTICAL to the pre-IP-Adapter "
+              "file's", hashlib.sha256(s.encode()).hexdigest() == GOLDEN_CN)
+        check("the nocontrol arm's sidecar is BYTE-IDENTICAL to the "
+              "pre-IP-Adapter file's",
+              hashlib.sha256(s0.encode()).hexdigest() == GOLDEN_NOCN)
+        check("no ip_adapter line appears when no reference was passed",
+              "ip_adapter" not in s and "ip_adapter" not in s0)
+
+        # And when one IS passed, the sidecar names every part of it, because a
+        # frame whose identity came from a reference and does not say so is a
+        # 7.2 provenance failure.
+        ipm = {"repo": IP_REPO, "licence": IP_LICENCE, "subfolder": IP_SUBFOLDER,
+               "weight": IP_WEIGHT,
+               "image_encoder_folder": IP_IMAGE_ENCODER_FOLDER,
+               "scale": [[0.7, 0.7]], "refs": ["g.png", "o.png"],
+               "ref_sha256": ["aa", "bb"],
+               "rects": [(1, 2, 3, 4), (5, 6, 7, 8)]}
+        ap.arm = "hint"
+        si = "\n".join(sidecar_lines(ap, True, "deadbeef", "abc", "pos", "neg",
+                                     1.0, 2.0, "now", "2.4", ip=ipm))
+        for needle in (IP_REPO, IP_WEIGHT, IP_IMAGE_ENCODER_FOLDER,
+                       "[[0.7, 0.7]]", "aa", "bb", "(1, 2, 3, 4)"):
+            check("the IP sidecar records %r" % needle, needle in si)
+        check("the IP sidecar still carries the ControlNet block too",
+              CONTROLNET in si and "controlnet_conditioning_scale" in si)
+
     # The token guard, against a stand-in with CLIP's shape. The real tokenizer
     # is only on the box; what is testable here is that the arithmetic refuses
     # an overflow and passes a fit, and that it reads the limit off the
@@ -384,6 +620,46 @@ def selftest():
         model_max_length = 88
     check("the limit is read off the tokenizer, not hardcoded",
           token_overflow("x", _Tok88(80))[0] == 0)
+
+    # ---- THE MASK GRAMMAR -------------------------------------------------
+    check("a rect parses to four ints in render pixels",
+          parse_rect(" 10, 20 ,30,40 ", W, H) == (10, 20, 30, 40))
+    check("a float rect rounds rather than truncating",
+          parse_rect("10.6,20,30,40", W, H) == (11, 20, 30, 40))
+    for bad in ("1,2,3", "1,2,3,4,5", "a,2,3,4", "30,20,10,40", "10,40,30,20",
+                "10,20,10,40", "-1,0,10,20", "0,0,%d,20" % (W + 1),
+                "0,0,20,%d" % (H + 1)):
+        try:
+            parse_rect(bad, W, H)
+            check("refuses rect %r" % bad, False)
+        except ValueError:
+            check("refuses rect %r" % bad, True)
+    check("a rect filling the frame exactly is accepted",
+          parse_rect("0,0,%d,%d" % (W, H), W, H) == (0, 0, W, H))
+
+    # Overlap is the failure that would look like the MECHANISM failing.
+    check("adjacent rects sharing an edge do NOT overlap",
+          not rects_overlap((0, 0, 10, 10), (10, 0, 20, 10)))
+    check("rects sharing one pixel DO overlap",
+          rects_overlap((0, 0, 11, 10), (10, 0, 20, 10)))
+    check("stacked rects sharing a row overlap",
+          rects_overlap((0, 0, 10, 11), (0, 10, 10, 20)))
+    check("disjoint rects do not overlap",
+          not rects_overlap((0, 0, 10, 10), (50, 50, 60, 60)))
+
+    # And the drawn mask has to be the rect, at the render size, or the region
+    # the model is conditioned on is not the region that was specified.
+    ms = mask_images([(100, 200, 300, 500)], W, H)
+    check("one mask per rect, at the render size",
+          len(ms) == 1 and ms[0].size == (W, H) and ms[0].mode == "L")
+    px = ms[0].load()
+    check("the mask is white INSIDE the rect", px[100, 200] == 255
+          and px[299, 499] == 255 and px[200, 350] == 255)
+    check("the mask is black OUTSIDE the rect", px[99, 200] == 0
+          and px[300, 499] == 0 and px[100, 199] == 0 and px[0, 0] == 0)
+    lit = sum(ms[0].histogram()[128:])
+    check("the mask's lit area is exactly the rect's (%d px)" % lit,
+          lit == (300 - 100) * (500 - 200))
 
     # A peer lane measured --image-crf 33 destroying i2v conditioning on
     # 2026-08-19 (crf 10 holds identity). Nothing here encodes video, and this
@@ -424,6 +700,24 @@ def main():
                     help="commit this driver was cut from; required when it runs "
                          "as a loose copy outside a checkout, or the sidecar "
                          "records repo_commit: unknown")
+    # ---- masked IP-Adapter (2026-08-19). Omit them all and every path above
+    # behaves exactly as it did for rungs 1-5; selftest asserts that on a sha.
+    ap.add_argument("--ip-ref", action="append", default=[],
+                    help="identity reference image, once per figure (abs, or "
+                         "repo-relative). Each one needs its own --ip-mask")
+    ap.add_argument("--ip-mask", action="append", default=[],
+                    help="x0,y0,x1,y1 in RENDER pixels for the matching "
+                         "--ip-ref. Rects may not overlap")
+    ap.add_argument("--ip-ref-sha256", action="append", default=[],
+                    help="assert each reference's bytes, in --ip-ref order")
+    ap.add_argument("--ip-scale", type=float, default=IP_SCALE)
+    ap.add_argument("--ip-repo", default=IP_REPO)
+    ap.add_argument("--ip-subfolder", default=IP_SUBFOLDER)
+    ap.add_argument("--ip-weight", default=IP_WEIGHT)
+    ap.add_argument("--ip-image-encoder-folder", default=IP_IMAGE_ENCODER_FOLDER,
+                    help="MUST contain a slash to be read as a full path; the "
+                         "slashless default resolves under --ip-subfolder, where "
+                         "the box cache has no encoder at all")
     ap.add_argument("--allow-truncation", action="store_true",
                     help="render even though CLIP will drop the tail; the tail is "
                          "the style anchor, so this is almost never what you want")
