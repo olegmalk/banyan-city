@@ -280,3 +280,49 @@ the_duplicate_run: 'THIS SPEC RAN TWICE TONIGHT AND BOTH RUNS WERE CLEAN: 178713
   -- the seed is fixed and the second render is the same picture -- but it is about nine minutes of card
   time spent twice, and it is recorded because ''the queue is empty'' and ''nobody else has filed this''
   are different facts.'
+
+# ---------------------------------------------------------------------------
+# Judged 2026-08-19 by the queue-keeper lane, same cycle it landed.
+verdict_this_job: 'PASS-HOLD, and it overturns the outcome this spec named as more likely.
+  FAIL-COLLAPSE-AGAIN was pre-registered as expected, on the reasoning that crf and seed were
+  both already measured out and the plate was what remained. It did not fire. Whole-frame
+  drift f000->f120 is -0.04 levels -- flat -- on a spec byte-identical to one that lost 91.05
+  except for the seed. THE PLATE AND THE PROMPT ARE EXONERATED, and the collapse is a (seed
+  x plate) INTERACTION: 20260819 collapses on this plate, the same seed holds on b01 (+16.59)
+  and b18 (-4.28), and this plate holds on 20260871. Neither factor is sufficient alone, so
+  there is no single cause to find.'
+verdict_this_job_measured:
+  instrument: pipeline/luma_drift.py, equal thirds, whole-frame BT.601 luma. 121 frames pulled
+    by scp from the box's courier dir -- the job was in done/ with artifacts staged but the
+    runner had not pushed to farm-results yet, and waiting for a courier tick is not a reason
+    to leave a landed result unjudged.
+  whole_frame: f000 125.68, f024 120.53, f048 117.41, f072 125.76, f096 125.68, f120 125.64.
+    Drift -0.04, min 117.32, max 126.33. There is a shallow dip to 117.3 near f048 that fully
+    recovers by f072 -- the clip breathes about 8 levels and comes back, which is not a drift.
+  bands: rows 0-427 116.61 -> 115.84 (-0.77), rows 427-853 160.25 -> 160.18 (-0.07), rows
+    853-1280 100.27 -> 101.00 (+0.73). Signs disagree and every magnitude is under one level.
+  the_one_variable: Seed 20260819 -> 20260871. Same init and sha, same both prompt files,
+    same 121 frames, 704x1280, 24 fps, guidance 2.0, --distilled-sigmas, --two-stage, --image-crf
+    10, --offload sequential, --mode production. Each substitution asserted it matched and
+    the read-back re-checked every sampler flag.
+  the_comparison_that_is_the_finding: Parent 125.86 -> 34.80, drift -91.05, all three bands
+    falling together. This job 125.68 -> 125.64, drift -0.04. Same plate, same prompt, same
+    argv -- a 91-level collapse and a flat line separated by one integer.
+  against_my_own_prediction: 'Said plainly because it was pre-registered: I named FAIL-COLLAPSE-AGAIN
+    as more likely and gave reasons, and the pixels said otherwise. The error was treating
+    the four candidates as mutually exclusive single causes -- crf, sampler, seed, plate --
+    when the answer is an interaction between two of them, which no branch of my own bar described.
+    A bar built only from single-cause branches cannot express the result it got.'
+  not_scored: The stillness clauses, the bird, the uninvited leaf and the grass band were
+    NOT judged, as this spec's bar says. This take is NOT claimed to be a good beat-12 clip,
+    only to hold its luminance. Whether it is usable rests on clauses nobody has measured
+    here, and the pick is R4.
+what_this_licenses_after_this_verdict: 'The practical consequence is the useful part: A COLLAPSE
+  ON THIS PLATE IS FIXABLE BY A RE-ROLL, because the plate and prompt are now shown capable
+  of a flat 121-frame render. That likely extends to beat 20 -- ep2-b20-motion-0819 also ran
+  20260819 and also collapsed (-25.03), so its darkening is probably the same interaction
+  and probably re-rollable. THAT RUNG IS NOT FILED: beat 20''s plate is the scavenger and
+  re-rolling it risks a goblin-identity render under the freeze, so it waits for the design
+  answer or for someone with authority to call the plate clear. Filed instead: ep2-b12-stillmotion-s20260818-0819,
+  a third seed on this plate, because one clean seed can be luck. No pick, no promotion, no
+  cut swap off this verdict.'
