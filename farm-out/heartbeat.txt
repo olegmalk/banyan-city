@@ -3035,3 +3035,4 @@
 22:40:29Z box-runner idle ready=0 failed=43
 22:42:11Z STARTED task=ep2-b08-scale50-0820-1787179295 attempt=1 on box-runner
 22:42:49Z DONE task=ep2-b08-scale50-0820-1787179295 rc=0 artifacts=1
+22:50:50Z box-runner idle ready=0 failed=43
