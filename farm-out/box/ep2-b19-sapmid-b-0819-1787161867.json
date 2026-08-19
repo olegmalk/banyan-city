@@ -1,0 +1,126 @@
+{
+  "id": "ep2-b19-sapmid-b-0819-1787161867",
+  "task": "ep2-b19-sapmid-b-0819",
+  "node": "002b-first-citizen",
+  "beat": 19,
+  "worker": "box-runner",
+  "priority": 35,
+  "needs_gpu": true,
+  "max_attempts": 2,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "copy",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\copy_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-0819.png",
+        "--init-sha256",
+        "b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903",
+        "--mask-png",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-mask-0819.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\b19-sapmid-b-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.26",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260819",
+        "--note",
+        "mask geometry check, unchanged from the parent -- same mask file, same sha. Writes the mask and exits before a model loads.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260819",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-0819.png",
+        "--init-sha256",
+        "b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903",
+        "--mask-png",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-mask-0819.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b19sapmid-b-0819\\b19-sapmid-b-s20260819.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.26",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260819",
+        "--note",
+        "ONE SAMPLE, ONE SEED, ONE VARIABLE. Every argument is ep2-b19-sapcomp-0819's except --strength, which goes 0.30 -> 0.22, i.e. int(40*s) goes 12 -> 8 denoising steps. Same init sha, same mask, same words, same seed 20260819. The parent PASSED its bar and fired one mode, FAIL-CRYSTAL on gloss; this measures whether that specular is an early-step or a late-step effect. Q1 is that the geometry must SURVIVE and it outranks the gloss question: a matte paste fails this job."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b19sapmid-b-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-sapmid-b-0819\"\nNAMES = [\n    \"b19-sapmid-b-s20260819.png\",\n    \"b19-sapmid-b-s20260819-mask.png\",\n    \"b19-sapmid-b-s20260819.png.meta.yaml\",\n    \"19-the-drop-sapcomp-0819.png\",\n    \"19-the-drop-sapcomp-mask-0819.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b19-sapmid-b-0819.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b19sapmid-b-0819\\b19-sapmid-b-s20260819.png",
+    "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-0819.png"
+  ],
+  "backlog": {
+    "filed_at": 1787161867,
+    "filed_at_iso": "2026-08-19T17:51:07Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b19-sapmid-b-0819.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-19T18:24:10Z",
+  "attempts": 1,
+  "runner_pid": 26828,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T18:32:47Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b19sapmid-b-0819\\b19-sapmid-b-s20260819.png",
+    "C:\\banyan-farm\\b19sapmid-b-0819\\19-the-drop-sapcomp-0819.png"
+  ]
+}
