@@ -391,3 +391,168 @@ licence_note: >-
   pipeline/research/openpose-controlnet-sdxl-0819.md §2 -- no preprocessor, no
   annotator, no photo-derived pose estimate -- so lllyasviel/Annotators is not
   touched on this route either, which was §10's explicit condition for opening it.
+
+# ============================================================================
+# VERDICT -- appended 2026-08-19 after reading the sidecar (B0) and then opening
+# the frame at full size, ruled at 100px intervals with the hint's own keypoints
+# overlaid, and brightened x2.6 because as rendered it is nearly unreadable.
+# Scored against the bar and the verdict_rule THIS SPEC PRE-REGISTERED ABOVE;
+# neither is edited here.
+#
+# Ran clean: 2 steps rc=0, 2026-08-19T08:25Z, load 6.2s / render 13.8s, prompt 64
+# and negative 69 of 77 on the box's real tokenizer, 5 files published to
+# courier-box\farm-out and pulled with the frame's sha verified against the
+# manifest (e681cf56...). $0.
+# Evidence: farm-out/ep2-b08-posenet-sample-0819/EVIDENCE-b08-posenet-0819.png
+# (hint | rung B as rendered | rung B x2.6 | rung A, with the numbers on it).
+# ============================================================================
+verdict: >-
+  BRANCH (2). POSE BINDS ON animagine-xl-3.1 -- ALL THREE OF THE RESEARCH'S
+  QUESTIONS ANSWERED YES IN ONE RENDER -- AND THE BEAT'S OWN GESTURE STILL FAILS,
+  FOR A NEW AND SPECIFIC REASON. Two distinct whole figures came back at their
+  stated scales, fully drawn rather than traced, with the shoulder and elbow bound
+  TO THE PIXEL. Then the FOREARM FLIPPED VERTICALLY: the hint puts the wrist at
+  (257,657), well BELOW the elbow, and the render puts a hand ABOVE the elbow with
+  the index finger raised. B4b fails a third time on a third mechanism. There is
+  also a SECOND, UNEXPECTED PASS -- B2 separated by +55.5 with NO IP-Adapter loaded
+  at all -- and one severe new defect: the frame is NIGHT at mean luma 32.5 with
+  `dark, night` sitting in the negative.
+verdict_measured:
+  b0_the_net_is_the_pose_net: 'PASS, read FIRST. The sidecar records
+    `controlnet: xinsir/controlnet-openpose-sdxl-1.0`, `controlnet_variant: None`,
+    `controlnet_conditioning_scale: 1.0`, and NO ip_adapter lines at all. The frame
+    is not void: this is the pose net, bare, as specified.'
+  b_pose_binds: 'PASS, AND THIS IS NOW DEMONSTRATED FOR OUR BASE RATHER THAN
+    MAINTAINER-GRADE. Two standing figures at the authored positions, the goblin at
+    frame left and the guard at frame right, the guard''s arm extended to frame
+    left. The uncontrolled frame at this exact seed and these exact words is an
+    extreme colossus with the point on the goblin, so the composition is the
+    skeleton''s doing. The binding is TIGHT where it bound: the guard''s rendered
+    shoulder sits on the authored Rsho (512,491) and his rendered elbow sits on the
+    authored Relb (360,485), both within a few pixels when the hint''s keypoints are
+    overlaid on the render at identical coordinates.'
+  b_two_skeletons_two_figures: 'PASS, AND IT CLOSES A QUESTION WITH NO UPSTREAM
+    EVIDENCE EITHER WAY. Every xinsir hint-to-result strip is a single figure and his
+    card makes no multi-person claim. Mikubill/sd-webui-controlnet#1791 documents
+    limbs connecting between characters. Neither happened: two whole separate
+    figures, no limb crossing, no fusion. Beat 08''s figures are ADJACENT rather
+    than overlapping, which is exactly the case that issue does not describe, and
+    that reasoning now has a frame behind it.'
+  b_scale_survives: 'PASS. Measured off the ruled frame: guard 830 px (head top ~325
+    to sandals ~1155) against 802.6 authored; goblin 715 px (crown ~405 to feet
+    ~1120) against 729.6 authored. Ratio 1.161 against 1.100 authored -- inside the
+    pre-registered 10% band. Both statures land within 4% of what was asked, which
+    is the header''s pre-registered nose-not-crown effect showing up smaller than
+    predicted rather than larger.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two.'
+  b2_the_identities_separate: 'PASS -- AND IT WAS PRE-REGISTERED TO FAIL, SO THIS IS
+    THE SURPRISE THIS SPEC SAID WOULD BE WORTH A RUNG. Guard head G-R = -27.5, the
+    MOST human reading any frame on this beat has produced; goblin +28.0, still
+    green; separation +55.5, larger than rung A managed WITH two masked references
+    and a ViT-H encoder. By eye: the goblin is green with long pointed ears, the
+    guard is pale-skinned and blonde. NO IP-ADAPTER WAS LOADED.
+    THE HYPOTHESIS THIS RAISES, STATED AS A HYPOTHESIS: the contour hint did not
+    only trace the silhouette, it also DESTROYED THE MODEL''S ABILITY TO
+    DIFFERENTIATE THE TWO FIGURES -- two enclosed polygons of near-identical shape
+    got near-identical fills, five times running. A skeleton leaves each body''s
+    surface to the checkpoint, which then drew the two DIFFERENT characters the
+    prompt describes. If that is right, four rungs of green pairs were an artifact
+    of the enclosure and not of CLIP''s pooled embedding at all. ONE SAMPLE IS NOT
+    ENOUGH TO PROMOTE THAT PAST A HYPOTHESIS and this verdict does not.'
+  b3_one_ground_plane: 'MARGINAL. It reads as one plane -- both figures stand in the
+    same lit grass with no split horizon -- but the guard''s feet sit at y~1155 and
+    the goblin''s at y~1120, 35 px apart, where the hint pins both ankle keypoints at
+    ~1122. Rung A held this to ONE pixel. With no ground ticks (a pose net cannot
+    read them) the clause now rests entirely on two ankle keypoints, and 35 px is
+    what that costs.'
+  b4a_board_down: 'FAIL, EXACTLY AS PRE-REGISTERED, AND THE DIAGNOSIS IS THE USEFUL
+    PART. The guard''s board-holding HAND bound: the authored L-wrist (622,668) lands
+    on his rendered hand. What he is holding is a small blue-grey BOOK clutched at
+    his CHEST (y~530-600), not a clipboard lowered at his hip. So the POSE of
+    holding something bound and the OBJECT did not -- which is precisely what a hint
+    containing no object should be expected to do. This confirms the pre-registered
+    remedy rather than a rectangle in a pose hint: multi-ControlNet, pose for the
+    bodies and scribble for the board, both nets already local, $0.'
+  b4b_legible_point: 'FAIL, THE THIRD TIME ON THIS BEAT AND THE FIRST TIME LIKE THIS.
+    The arm ends in a well-drawn hand with a clearly extended index finger -- and it
+    points UP AND AWAY. The hint authored Rsho (512,491) -> Relb (360,485) ->
+    Rwri (257,657): out horizontally, then steeply DOWN toward the belly at
+    (225,711). The render bound the first limb exactly and then MIRRORED THE SECOND
+    ABOUT THE ELBOW, putting the hand at roughly (320,420) -- about 230 px ABOVE
+    where the wrist was authored. Nothing is drawn at the authored wrist at all.
+    So the forearm''s LENGTH and ATTACHMENT bound while its DIRECTION did not.
+    TWO CANDIDATE CAUSES, AND THE CHEAPER ONE IS TESTABLE FIRST. (a) The authored
+    pose is anatomically odd: the elbow sits at SHOULDER HEIGHT and laterally out,
+    a chicken-wing, and the forearm then drops steeply -- not what a person does to
+    point at someone''s belly, which is elbow LOW and near the ribs with the forearm
+    reaching forward and down. (b) The net has a strong "pointing = index up" prior
+    and overrode the geometry. (a) is a staging fix in our own tool and costs one
+    render; (b) would be a property of the net. Test (a) first.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS. The arm unambiguously grows from THE
+    GUARD''s shoulder, and the colour code is the most explicit form this
+    instruction has ever taken. Three mechanisms have now put this arm on the guard
+    and the uncontrolled tally is still 4 of 4 on the goblin.'
+  b5_no_colossus: 'PASS. Ratio 1.161; neither figure towers.'
+  b6_drawn_not_traced: 'PASS, AND EMPHATICALLY -- THE CLEANEST PASS ON THIS CLAUSE
+    IN SIX RUNGS. Both figures are fully drawn characters: cloth with real folds,
+    hair, faces with features, modelled hands, and silhouettes that are the
+    checkpoint''s own rather than any authored polygon. This is exactly what the
+    mechanism argument predicted -- a skeleton has no outline to trace -- and it is
+    the first frame on this route where nothing looks like a mannequin.'
+observed_not_scored: >-
+  FOUR THINGS, AND THE FIRST IS SEVERE. (1) THE FRAME IS NIGHT. Mean luma 32.5,
+  against rung A's 115.7 and rung 2's 149.5 at the same seed with the SAME negative,
+  which carries `dark, night`. Rung 1's darkness was an authoring error (the clause
+  was missing); this one is not -- the clause is present and was overridden. A large
+  dark palm-frond silhouette dominates the left third and a second trunk crosses the
+  right, where the prompt asks for tall grass and pale sky. Conditioning scale 1.0 is
+  the obvious suspect and it is the card's recommended value, so this is a real
+  tension rather than a mistake. (2) THE GUARD READS AS A WOMAN -- blonde chin-length
+  hair, soft features, a feminine build -- against a prompt that opens "Two men" and
+  a negative carrying `girl`. Human and sandy-haired, which is what B2 asks; not a
+  man, which the beat needs. (3) `plump` BROADCAST ONTO THE GUARD while `green skin`
+  did NOT. The guard is heavy-set and the goblin is slight, which is the reverse of
+  the wording. So the pooled-embedding broadcast is REDUCED, not eliminated, and
+  which attributes escape it is not yet predictable. (4) BOTH FIGURES ARE IN MODERN
+  PLAINCLOTHES -- the goblin in a tan t-shirt and dark trousers, the guard in a white
+  tee and a brown wrap skirt. The wrap skirt is the one wardrobe clause that landed.
+what_this_settles: >-
+  POSE-CLASS CONDITIONING WORKS ON THIS CHECKPOINT, and all three of the research's
+  open questions are now DEMONSTRATED rather than argued: pose binds on
+  animagine-xl-3.1, two skeletons in one hint give two distinct figures with no
+  fusion, and a stated stature ratio survives into the render (1.161 against 1.100).
+  It also settles B6 for the first time in six rungs -- a hint with no enclosure
+  leaves the checkpoint to draw people, which is what §9's tracing-is-caused-by-the-
+  enclosure finding predicted and what no scale or stroke on the scribble net could
+  deliver. And it settles that hand-authored geometry is NOT closed on this
+  checkpoint: §10 raised that as branch (3)'s risk and branch (3) did not fire.
+what_this_did_not_settle: >-
+  THE AIM, which is now the beat's only remaining blocker and has failed on three
+  separate mechanisms. Nor whether the forearm flip is our staging or the net's
+  prior -- that is one render away and is the ruled next rung. Nor why the frame
+  went dark, nor whether a lower conditioning scale relaxes the night and the
+  foliage while keeping the pose. Nor B2's surprise: whether the enclosure was
+  suppressing figure differentiation all along is a hypothesis with one frame behind
+  it, and confirming it needs its own sample. Nor the third figure beat 08's
+  done_when wants.
+what_this_does_not_license: >-
+  No pick, no plate_ack, no cut, no canon filename; this frame is PROVISIONAL and a
+  night frame with the gesture pointing the wrong way is not a candidate. It does
+  NOT license dropping rung A's masked references on the strength of B2 passing
+  here: that is ONE sample against rung A's measured mechanism, and the honest
+  reading is that the references are now possibly redundant rather than proven so.
+  It does not license the `_twins` variant (a second 2,386 MiB for "more precise
+  pose, lower aesthetic score") -- pose adherence was not the failure; forearm
+  DIRECTION was. And it does not license a conditioning-scale sweep: the night
+  needs one sample with its own question, not a bracket.
+next_rung_named_not_taken: >-
+  ONE sample: RE-STAGE THE ARM and change nothing else. Elbow LOW and near the
+  ribs, forearm reaching forward and down to the belly -- the pose a person actually
+  makes -- instead of the current elbow-at-shoulder-height chicken-wing whose
+  forearm has to drop steeply. Its question is whether the flip was our anatomy or
+  the net's prior, and it is the cheaper of the two hypotheses to test, needs no new
+  weights, and is a change to author_b08_openpose_hint.py's staging with its
+  --selftest carried. AFTER that, in this order and each as one sample: the NIGHT
+  (same hint at scale 0.6-0.7 -- does the dark relax while the pose holds), then
+  B4a via multi-ControlNet pose+scribble for the board, then whether rung A's
+  masked references are still needed at all given B2's surprise here.
