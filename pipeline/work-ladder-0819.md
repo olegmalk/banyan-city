@@ -2693,3 +2693,165 @@ composite.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. No pick, no
 `plate_ack`, no cut, and the words "complete plate candidate" are not used.**
+
+## Appended 2026-08-20 by the composite-plate motion lane — the three converted plates get their first motion take, and two of this lane's own instruments broke on the same mechanism
+
+**One rung, three samples, one seed.** `ep2-b15-listenmotion-0820`,
+`ep2-b03-covermotion-0820`, `ep2-b13-shademotion-0820` — the b14 crf-10 LTX
+recipe as cloned for beat 19, fired once on each of the three plates the
+composite-then-inpaint route converted, at seed **20260820** on all three, so a
+difference between them is a difference between the **plates**. Only the init
+picture and the words change. rc=0 on all seven steps of all three, 121 frames
+each, 268/263/263 s, **$0**. All three FAIL. Nothing is proposed for the cut.
+
+### The shared defect, and it was named in advance on one of the three
+
+**HE STANDS UP AND WALKS OUT OF FRAME.** Beat 03 rises at f090 and is gone by
+f114; beat 13 rises at f084 and is gone by f114; beat 15 stands at f100. On a
+five-second beat that leaves the last quarter with no goblin in it.
+
+**Every one of those three prompts carried `standing up` and `walking out of
+frame, leaving the frame` in its NEGATIVE** — beat 13's had `sliding down a
+trunk, sliding, standing up, getting up` as its *first four terms*. None held.
+That is the **seventh, eighth and ninth sighting** of *positive placement beats
+negatives*, and the first time this lane had written the fail mode down in
+advance **with its remedy already named**: beat 03's spec pre-registered
+F-STANDS-UP and said the answer was a positive placement of the down attitude,
+"not an eighth wording of the prohibition".
+
+### THE FINDING WORTH STEALING: a noun in the prompt is a placement wherever it appears, including inside an idiom that does not mean it
+
+Beat 15 is the only one of the three whose **plant** clause failed, and it did
+not fail on cardinality. Two leaves and one stem throughout — beat 19's
+F-PLANT-REVERT did not fire. What fired is an **object binding**: at f000 the
+sapling is rooted at frame left; by f060, at 2x, **the stem is gone and his
+forearm is where it was**, holding the leaf pair level with his eyes; by f100
+it is back in the ground.
+
+The prompt's plant clause said `ONE thin stem, TWO leaves, ROOTED IN THE GRASS`
+— positive, first-class, unambiguous. It lost to four words in the action
+clause: **`talks to them FROM A HAND'S WIDTH AWAY`**. In English that `hand` is
+a unit of measurement. To the sampler it was a placement.
+
+**This is §18's b08 grip finding arriving from the other side.** There, nine
+words asserting `fingers and thumb gripping the clipboard edge` drew fingers and
+thumb, correctly articulated, **around the sash strap** — the right hand, the
+wrong object. Here a hand nobody asked for found the right object. Same law.
+And note what did *not* save it: `He stays sitting in the grass with his hands
+on his knees` is in the same prompt **four words later**. **A competing
+placement does not beat an incidental noun; the noun has to go.**
+
+The fix is a **prompt** change and cannot be a script change: `from a hand's
+width away` is the founder's own sentence in the approved node.md:98.
+
+### TWO INSTRUMENTS BROKE, BOTH ON THE SAME MECHANISM, AND BOTH WERE THIS LANE'S OWN
+
+Both bars were pre-registered by this lane before the pixels, and both are
+**confounded by the subject leaving the frame**. Neither remedy was invoked.
+
+- **A2, the skin probe, on beat 03: +131.8 luma, far outside its ±25 bar — and
+  it is neither an exposure fault nor an identity fault.** By f120 **he is not
+  in the box**; it is sitting on open sky. The tell is in the number the bar did
+  not read: `luma_std` collapses **18.5 → 3.0**, because a flat box is an empty
+  box. Re-placed by eye at 5x on f102 — cheek box (296,86,352,124) — it reads
+  luma 113.9 / R−B 37.2 against f000's 98.0 / 33.0, i.e. **+15.9 and +4.2, both
+  inside the bar**, and at 1:1 he is plainly the ratified lean adult. **A fixed
+  probe box is an identity instrument only while the subject stays under it.**
+- **A5, whole-frame luma, on beat 13: +44.4, which is growmotion-blowout
+  territory — and the exposure never moved.** The track is 97.7 / 97.3 / 96.6 /
+  96.5 / 96.5 / 96.5 / 96.4 **flat to f060**, then 91.4, 91.8, and only then
+  100.4 / 109.1 / 134.4 / 142.1 as he rises and exits. The rise is **his dark
+  mass leaving a bright field.** Beat 03's is the same shape with the sign
+  flipped mid-clip: 143.4 flat to f030, **155.7 at f040 when he ducks his dark
+  mass out of the upper frame**, 130.5 at f100 when he stands and fills it,
+  156.2 at f120 when he has gone. **A whole-frame luma delta is an exposure
+  reading only while the subject's footprint is constant.** Scoring beat 13 a
+  blowout and firing the pre-registered seed re-roll would have spent a GPU fire
+  on a fault that does not exist.
+
+**Generalised, because this is the third instrument family this ladder has
+retracted:** an instrument whose window is fixed in the frame measures the
+SUBJECT only while the subject stays in the window. The growmotion mask lost the
+fig to a hue change; these two lost him to a walk. In all three cases the number
+stayed clean and confident while its premise died — which is why the dispersion
+statistic (`luma_std` here) is worth publishing beside the mean, and why the
+frames get opened.
+
+### WHAT HELD, AND ON THE HARDER PLATE
+
+**The composited two-leaf sapling survived 121 frames on beats 03 and 13** —
+including, on beat 03, a full stand-up and exit, after which it stands alone in
+the middle of the frame still exactly one stem and two leaves. Beat 13's is the
+stronger of the two: that composite was dropped onto **green foliage edge to
+edge**, the lowest object-to-ground contrast any composite in this house has
+been given, and neither F-PLANT-REVERT nor F-PLANT-DISSOLVES fired across 121
+frames. Beat 19's motion take lost exactly this clause.
+
+**And beat 03's acting variable moved for the first time.** r1s1's plate verdict
+was *"he reads RESIGNED, not caught out"*, and the composite pass fixed the
+geometry without touching the acting. Here, from about f036 his head and
+shoulders drop until by f060 his head is near grass level behind the plant, and
+he holds it to f084. It reads as ducking. **One positive placement of the action
+did it.**
+
+Identity held on all three (beat 15's is the tightest: **−3.6 luma and +5.5 R−B
+over eighty frames** on its pre-registered box). Camera locked on all three. No
+freezes; beat 13's own pre-registered F-NOTHING-MOVES prediction was **wrong** —
+the head is in continuous motion from f004, it simply tips **forward into his own
+knees** instead of sideways into the shade, taking his face out of view for fifty
+frames.
+
+### Two things done before the GPU that are worth copying
+
+- **The anchor was measured against the recipe, not assumed.** 832x1216 →
+  704x1280 discards **81.7 original px per side**. Beat 13's composited sapling
+  begins at original **x=13**, so a centred crop would have cut **72 px off the
+  subject of the clause the whole composite route exists to satisfy** — on the
+  beat whose r1s1 verdict read *"NO IDENTIFIABLE SAPLING"*. Beat 03's mask
+  reaches x=67 and is also clipped. Both filed `--anchor left`; beat 15 clears a
+  centred crop with 41 px to spare and keeps the default.
+- **The framing assert is the MASK, not a colour predicate**, and it is the
+  reason this file differs from beat 19's `assert_framing.py`, which found its
+  fruit with a hue window. These are green plants on green fields. The composite
+  mask is the plant's own authored footprint; pushed through the identical
+  cover-crop it gives the exact output bbox with no predicate at all. **All three
+  reproduced the Mac's number exactly on the box** — `x 70..485 y 561..1235`,
+  `x 14..265 y 681..1236`, `x 41..240 y 300..636` — two machines, two Pillows,
+  zero drift.
+
+### One guard-adjacent act, said out loud
+
+`box_enqueue.plate_problems` reads a job's `--src` off
+`origin/farm-results-rtx5090` **and nowhere else**, and the courier has pushed
+nothing to that branch since **2026-08-19T17:54** — the tip before today was
+itself another lane's hand-carry of beat 04's plate for the same reason. Beats
+03's and 13's sapcomp plates were therefore **carried across by hand**,
+byte-identical, and re-hashed on the branch afterwards (`7d3ab86a…`,
+`bb0ad70c…`). **The alternative was `plate_ack: "unfetchable"` and it was not
+taken:** half that guard's demonstrated value is declining to wave through a
+picture it cannot see, and one of the two jobs that hit it in the 2026-08-14
+wave was cropping the wrong beat's plate. The remedy for an unfetchable plate is
+bytes.
+
+### Rung 2 is filed and running, and it is one variable on all three
+
+`ep2-b15-listenlast-0820`, `ep2-b03-coverlast-0820`, `ep2-b13-shadelast-0820`.
+The action clause stops describing a **movement** and places **the last frame**
+as a fact; the **negative is deliberately unchanged**, because it already named
+`standing up` and did not hold, and leaving it there is what makes this a test of
+the positive. Same init, same seed, same flags — rung 1 is a true control.
+Precedent with numbers: `ep2-b04-headlock-0820` moved one clause out of an
+instruction and into a placement and cut head-band travel **64.7 px → 4.7 px**.
+**Its cost is pre-registered here as G2 and is the likeliest failure:** that rung's
+lock took the eyes with it (eye-band interframe 0.356 → 0.126) and the clip went
+too calm. **A clip that holds the last frame by holding every frame is a FAIL of
+rung 2, not a pass.** Beat 15's rewrite carries the idiom fix for free.
+
+### One scar re-earned, recorded because it is in CLAUDE.md already
+
+`pipeline/measure_sapcomp_motion_0820.py` was committed with
+`subprocess.run(text=True)` and no `encoding=`. The suite has a test for exactly
+that and it went red the moment the file landed; the file was committed in
+between because lint and tests had been run **before** it was written and not
+after, and the suite's output was piped to `/dev/null`. *Run tests as their own
+step and read the exit code BEFORE committing* — third sighting.
