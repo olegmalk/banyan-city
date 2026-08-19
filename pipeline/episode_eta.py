@@ -299,9 +299,31 @@ def open_decisions(episode, path=INBOX_FILE) -> dict:
             # keys for it. There is no id in that file and none is invented: the
             # url is what a reader clicks and what identifies the call.
             entries.append({"what": str(e.get("what") or "").strip(),
-                            "url": str(e.get("url") or "").strip(),
+                            "url": _linkable(e.get("url")),
                             "since": str(e.get("since") or "").strip()})
     return {"ok": True, "entries": entries, "untagged": untagged}
+
+
+def _linkable(url) -> str:
+    """The entry's url if a browser can follow it, else "" — never a half-link.
+
+    `review/inbox.yaml` is a human-written file and one open entry's url reads
+    `local: review/ep2-picks/farm-recovered-0814-scores.yaml` — a note to a lane
+    about a file on someone's disk, not an address. Emitted as an href it becomes
+    a link to a path that does not exist on the site, and `build_site.py`'s
+    broken-link gate fails the whole build on it (it did, the moment the KeyError
+    above stopped swallowing this list). "" is the right answer rather than a
+    guess at the intended path: `_eta_card` already prints an unlinked call as
+    plain text, so the call is still NAMED and only the dead href is dropped.
+    Deliberately not fixed by editing the inbox: that file is the founder's, its
+    `local:` prefix is telling a lane something true, and a page must not fail
+    because a human wrote a note where a URL was optional anyway.
+    """
+    u = str(url or "").strip()
+    if not u or " " in u or ":" in u.split("/")[0]:
+        # A scheme is the one colon-before-slash that IS an address.
+        return u if u.split("://")[0] in ("http", "https") and "://" in u else ""
+    return u
 
 
 def per_beat_minutes(rounds: dict, kind_medians: dict):
@@ -323,9 +345,20 @@ def per_beat_minutes(rounds: dict, kind_medians: dict):
 
 def episode_row(ep: dict, rounds_doc: dict, kind_medians: dict, inbox_path=INBOX_FILE) -> dict:
     """One episode's whole answer: what is where, what is left, what it waits on."""
-    counts = {s: 0 for s in STATES}
+    # OVER `EMITTED_STATES`, NOT `STATES`, and that distinction is a live bug fix
+    # (2026-08-19). `read_progress()` may hand back `stale-gate-closed`, which is
+    # by design absent from `STATES` — and this dict was built from `STATES`, so
+    # the first stale row raised `KeyError: 'stale-gate-closed'` out of
+    # `episode_row`. `build_sim.episode_eta_rows()` catches every exception and
+    # returns `[]`, so the failure was SILENT and total: with twelve stale rows on
+    # file, /status published no ETA cards and no ETA glance cell for five days
+    # while the sapling tree beside them drew fine (it calls `read_progress()`
+    # direct). A count over what the reader may EMIT can never be surprised by
+    # what it emits; a count over what it may READ can, every time the two sets
+    # differ. `unk` in the card's own bar already carried this bucket.
+    counts = {s: 0 for s in EMITTED_STATES}
     for b in ep["beats"]:
-        counts[b["state"]] += 1
+        counts[b["state"]] = counts.get(b["state"], 0) + 1
 
     firm = sum(counts[s] for s in NEEDS_RENDER)
     cond = sum(counts[s] for s in CONDITIONAL)
@@ -510,8 +543,10 @@ def main() -> int:
         print(f"  {r['ready']} of {r['total']} beats founder-ready"
               + (f"  ({r['counted']} beats have a state on file)"
                  if r["counted"] != r["total"] else ""))
-        for s in STATES:
-            if r["counts"][s]:
+        # EMITTED_STATES, so a stale-gate row is printed rather than silently
+        # dropped from a listing that adds up to less than the beat count.
+        for s in EMITTED_STATES:
+            if r["counts"].get(s):
                 print(f"    {s:<27} {r['counts'][s]}")
         if r["per_beat_minutes"] is None:
             print("  machine work left: not claimed — no rounds median, or no "

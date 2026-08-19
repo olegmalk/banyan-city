@@ -9578,8 +9578,31 @@ def test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger():
              and not qh.correction_keys(b, "state")]
     check("no goblin beat is left asserting the character gate uncorrected",
           not stale)
-    check("all twelve of them carry a dated state correction",
-          len([b for b in ep2["beats"] if qh.correction_keys(b, "state")]) == 12)
+    # THE CENSUS OF THE TWELVE, REWRITTEN 2026-08-19 AND NOT DELETED. This asked
+    # for twelve `state_CORRECTION_*` siblings, which was the right check for as
+    # long as the twelve rows still held their 08-14 states. All 21 ep2 rows have
+    # since been REMEASURED, and a correction of a state that no longer exists
+    # has nothing to correct — worse, `carry_correction` would stamp the NEW
+    # state SUPERSEDED and republish the retracted reading into /queue, which is
+    # the exact failure this test was written to stop, running backwards. So the
+    # invariant is asserted one level up, where it survives a remeasure: each of
+    # the twelve is either corrected in place OR its old reading is preserved
+    # where the remeasure put it, and the twelve are still accounted for one by
+    # one. Silently dropping any of them still fails.
+    twelve = [2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20]
+    before = (ep.get("remeasured_0819") or {}).get("states_before") or {}
+    kept = [n for n in twelve
+            if any(b["n"] == n and (qh.correction_keys(b, "state")
+                                    or str(before.get(n) or "") == "blocked-decision")
+                   for b in ep2["beats"])]
+    check("all twelve of them are still accounted for — corrected in place, or "
+          "remeasured with the reading they replaced kept on the record",
+          sorted(kept) == twelve)
+    import episode_eta as _eta
+    check("...and no remeasured row pretends the old reading was never made",
+          len(before) == len(ep2["beats"])
+          and all(str((b.get("remeasured_0819") or {}).get("previous_state") or "")
+                  in set(_eta.STATES) for b in ep2["beats"]))
     # And the 28 wave specs: every one that is not beat 02 must carry its own
     # bar, and the four that ARE beat 02 must be left alone.
     # Select on the byte-identical header LINE, not on the phrase anywhere in
