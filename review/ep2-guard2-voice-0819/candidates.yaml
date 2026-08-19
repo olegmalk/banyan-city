@@ -1,0 +1,118 @@
+# Guard 2 voice candidates — founder taste pick (R4), 2026-08-19
+#
+# Bounce, verbatim, from watching ep2-demo-0819c:
+#   "guard 2 has the same voice as the sapling..."
+#
+# Diagnosis: CASTING GAP, not a mis-wire. voices.yaml already assigns
+# GUARD 2 its own voice (am_echo) and synth_vo.py clones from its own
+# cb-refs/am_echo.wav — the wiring is correct. But build_refs.py's
+# VOICE_SHAPING (per-character ref passage + speed + semitone offset, the
+# thing that makes clones sound like different PEOPLE) covers only
+# am_puck, bm_george, bm_daniel, bf_isabella. GUARD 1 (am_adam) and
+# GUARD 2 (am_echo) were cast after that 2026-07-25 shaping pass and
+# never got an entry, so both guards were cloned from the same shared
+# REF_TEXT at speed 1.0 / pitch 0.0 — the convergence build_refs.py's own
+# comment names as "the acoustic cause of the founder's 'voices are mixed
+# up'". Guard 1 drifted clear; Guard 2 landed on the tree.
+#
+# Measured on the RENDERED takes in ep2-demo-0819c (median per character,
+# qa_voices.py estimators — median F0 by autocorrelation + spectral
+# centroid). Only confusable pair in the whole cut:
+#   SAPLING (VO, bm_fable)  107.4 Hz / 1182 Hz
+#   GUARD 2  (am_echo)      109.1 Hz / 1283 Hz   -> dF0 1.7, dCent 101
+# For contrast, non-confusable in the same cut:
+#   GUARD 1  (am_adam)      131.9 Hz / 1906 Hz   -> dF0 22.8 from tree
+#   SCAVENGER(am_puck)      164.4 Hz / 1865 Hz   -> dF0 57.0 from tree
+
+method: |
+  Two findings drove the candidate design, both measured rather than assumed:
+  (1) Chatterbox does NOT preserve the reference timbre — a first candidate
+  set built to differ in brightness came back flattened to one timbre
+  (am_michael went in at centroid 2183, out at 1325). Pitch is the only
+  separator that survives cloning. (2) It pulls pitch toward the middle by
+  a noisy +4..+20 Hz and refuses extremes — am_onyx at -6st (ref 63.7 Hz)
+  snapped back UP to 110.1 Hz, i.e. straight onto the sapling. So refs
+  cannot be trusted as the answer; every number below is measured on the
+  rendered take, per build_refs.py's own standing instruction.
+
+sample_line:
+  beat: 10
+  slug: NO FORM
+  text: "There's no form for that. There's barely a form for the apple."
+  source: genomes/sapling/nodes/002b-first-citizen/node.md (approved script, verbatim)
+  direction: [0.40, 0.50]   # synth_vo EMOTION_DEFAULT — unmarked line, house deadpan
+  engine: chatterbox-0.5B on MPS
+  speed: 1.05               # voices.yaml GUARD 2 speed
+
+# Reference passage used to build all three candidate refs (ref material,
+# not script — same class as the four passages already in VOICE_SHAPING):
+ref_text: |
+  Technically that is a different violation. Check the schedule:
+  unlicensed consumption is section four, not section two. I am not
+  saying we let him go. I am saying the form we would need does not
+  exist, and I am not going to invent one standing in a field.
+
+candidates:
+  A:
+    file: guard2-A.mp3
+    character: the heavy — deep, dark, unhurried
+    base_voice: am_onyx
+    speed: 0.94
+    pitch_semitones: -4.0
+    ref_measured:      { f0: 69.0,  centroid: 670 }
+    rendered_measured: { f0: 83.0,  centroid: 744 }
+    clear_of_sapling_hz: 24.4
+    clear_of_guard1_hz: 48.9
+    soft_collision: "FARMER (bm_george) dF0 8.6, dCent 359 — different story thread"
+  B:
+    file: guard2-B.mp3
+    character: the rules-lawyer — mid-bright, brisk, prim
+    base_voice: am_michael
+    speed: 1.05
+    pitch_semitones: +4.0
+    ref_measured:      { f0: 142.0, centroid: 2236 }
+    rendered_measured: { f0: 146.8, centroid: 1429 }
+    clear_of_sapling_hz: 39.4
+    clear_of_guard1_hz: 14.9
+    soft_collision: "ASSESSOR (bm_daniel) dF0 10.8, dCent 267 — different story thread"
+  C:
+    file: guard2-C.mp3
+    character: the young one — higher, lighter, reedy
+    base_voice: am_fenrir
+    speed: 1.08
+    pitch_semitones: +5.0
+    ref_measured:      { f0: 167.8, centroid: 2075 }
+    rendered_measured: { f0: 179.8, centroid: 1816 }
+    clear_of_sapling_hz: 72.4
+    clear_of_guard1_hz: 47.9
+    soft_collision: none   # nearest is narrator af_sarah, dF0 13.7, other thread
+
+gates:
+  bar: "confusable iff dF0 < 12 Hz AND dCentroid < 400 Hz (qa_voices.py's own test)"
+  clear_of_sapling: [A, B, C]
+  clear_of_guard1: [A, B, C]
+  mutually_distinct: "A-B dF0 63.7 / A-C 96.7 / B-C 33.0 — a real three-way choice"
+
+rejected_variants:
+  - "am_onyx -6st: ref 63.7 Hz rendered UP to 110.1 — back onto the sapling"
+  - "am_onyx -2st: rendered 88.9, dF0 2.7 from the FARMER — confusable"
+  - "am_eric -1st: rendered 137.2, dF0 1.2 from the ASSESSOR — confusable"
+  - "am_santa +3st: rendered 171.4, dF0 7.0 from the SCAVENGER — confusable"
+  - "am_eric natural: rendered 158.9, dF0 5.5 from the SCAVENGER — too close"
+  - "brightness-differentiated set (pass 1): engine flattened all timbres"
+
+# Candidate refs live at ~/.cache/banyan-tts/cb-refs/guard2sw-{D1,M2,H2}.wav
+# (A=D1, B=M2, C=H2). The live cast refs were NOT touched.
+ref_files: { A: guard2sw-D1.wav, B: guard2sw-M2.wav, C: guard2sw-H2.wav }
+
+on_pick: |
+  Add the picked variant's base_voice/speed/pitch as a VOICE_SHAPING entry
+  in pipeline/build_refs.py, set GUARD 2's voice in genomes/sapling/voices.yaml
+  to that base voice, rebuild refs, re-synth beats 06/08/10 only (approved
+  text unchanged, old takes archived to clips/vo-archive/ per R6), re-run the
+  cast-wide separation measurement on the fresh takes, then rebuild the cut.
+  GUARD 1 should get a shaping entry in the same pass — his ref sits 1.1 Hz
+  from bm_fable and only escaped by luck in this cut.
+
+cost_usd: 0.00
+awaiting: founder pick — A, B or C

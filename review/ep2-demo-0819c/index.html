@@ -426,6 +426,37 @@ carry-forward, or footage that misses its bar · <span class="bad">red</span> = 
   <code>review/ep2-demo-0819b/sources/</code>.</li>
 </ul>
 
+<h2>Known issues from the founder's watch</h2>
+<p class="sub">Appended 2026-08-19, after he screened this cut. Each item is his words first, then what
+measurement found. Nothing here is fixed in <em>this</em> cut — it is the list the next one answers.</p>
+
+<div class="callout red">
+  <blockquote>“guard 2 has the same voice as the sapling…”</blockquote>
+  <p><strong>Confirmed, and it is the only one.</strong> Measured on this cut's own VO takes (median F0 by
+  autocorrelation + spectral centroid, <code>pipeline/qa_voices.py</code>'s estimators): the sapling sits at
+  <span class="n">107.4&nbsp;Hz / 1182&nbsp;Hz</span> and Guard 2 at <span class="n">109.1&nbsp;Hz /
+  1283&nbsp;Hz</span> — <span class="bad">1.7&nbsp;Hz apart in pitch, 101&nbsp;Hz in timbre</span>. Every
+  other speaking pair in the cut is cleanly separated (Guard 1 is 22.8&nbsp;Hz off the tree, the scavenger
+  57.0&nbsp;Hz). One defect, exactly where he said it was.</p>
+  <p><strong>Cause: a casting gap, not a mis-wire.</strong> <code>genomes/sapling/voices.yaml</code> does
+  give Guard 2 his own voice (<code>am_echo</code>) and <code>synth_vo.py</code> does clone from his own
+  <code>cb-refs/am_echo.wav</code> — that chain is correct end to end. What never happened is the shaping
+  that makes a clone sound like a different <em>person</em>: <code>build_refs.py</code>'s
+  <code>VOICE_SHAPING</code> gives a hand-written character passage and a semitone offset to
+  <code>am_puck</code>, <code>bm_george</code>, <code>bm_daniel</code> and <code>bf_isabella</code> only.
+  Both guards were cast after that 2026-07-25 pass and have <em>no entry</em>, so both were cloned from the
+  same shared paragraph at neutral pitch — the convergence that file's own comment calls “the acoustic cause
+  of the founder's 'voices are mixed up'”. Their refs land 1.1&nbsp;Hz (Guard 1) and 8.4&nbsp;Hz (Guard 2)
+  from <code>bm_fable</code>'s. Guard 1 drifted clear in synthesis by luck; Guard 2 did not.</p>
+  <p><strong>Waiting on him:</strong> voice is a taste axis (R4), so the fix is not the steward's to pick.
+  Three candidate voices, each speaking Guard 2's approved beat-10 line and each measured clear of both the
+  sapling and Guard 1, are on <a href="/review/ep2-guard2-voice-0819/">/review/ep2-guard2-voice-0819</a> —
+  A, B or C. His three lines (beats 06, 08, 10) are re-synthesized in the picked voice and nothing else in
+  the episode is touched. Guard 1 gets a shaping entry in the same pass, since his ref only escaped by
+  chance. Full measurements and the rejected variants:
+  <code>review/ep2-guard2-voice-0819/candidates.yaml</code>. $0.</p>
+</div>
+
 <footer>
   Per-beat source manifest with hashes, verdict pointers and the full palindrome audit:
   <a href="/review/ep2-demo-0819c/sources/picks-0819c.yaml"><code>sources/picks-0819c.yaml</code></a> ·

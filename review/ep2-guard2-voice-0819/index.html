@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which voice is Guard 2? — A / B / C</title>
+<style>
+  :root { --bg:#17181a; --panel:#1f2124; --line:#33363b; --ink:#eceef1; --muted:#9aa0a8; --accent:#c8b273; --fail:#d98b7c; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;padding:0 24px 96px}
+  .wrap{max-width:760px;margin:0 auto}
+  header.top{padding:40px 0 20px;border-bottom:1px solid var(--line)}
+  header.top h1{margin:0 0 6px;font-size:27px;font-weight:650}
+  header.top .sub{color:var(--muted);font-size:14.5px;margin:0;max-width:70ch}
+  p{max-width:70ch} .muted{color:var(--muted);font-size:14.5px}
+  blockquote{margin:18px 0;padding:10px 16px;border-left:3px solid var(--accent);color:var(--ink);background:var(--panel);border-radius:0 6px 6px 0}
+  blockquote p{margin:0;font-size:15px}
+  audio{width:100%;max-width:460px;display:block;margin:8px 0 2px}
+  .cand{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:16px 0}
+  .cand h3{margin:0 0 2px;font-size:17px}
+  .cand h3 .tag{color:var(--accent);font-weight:700;margin-right:8px}
+  .cand .spec{color:var(--muted);font-size:13px;margin:0 0 10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .cand p{margin:8px 0 0;font-size:14.5px;color:var(--muted)}
+  .refbox{border:1px dashed var(--line);border-radius:10px;padding:14px 18px;margin:18px 0}
+  .refbox h3{margin:0 0 10px;font-size:15px;color:var(--muted);font-weight:600}
+  .lab{font-size:13px;color:var(--muted);margin:10px 0 0}
+  .ask{border:1px solid var(--accent);border-radius:10px;padding:16px 18px;margin:26px 0 0}
+  .ask p{margin:0;font-size:15.5px}
+  code{background:#26282c;padding:1px 5px;border-radius:4px;font-size:13px}
+  h2{font-size:19px;margin:34px 0 4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>Which voice is Guard 2? — A / B / C</h1>
+  <p class="sub">2026-08-19. You were right, and it is a casting gap, not a bug. Three candidate voices
+  below, each speaking the same approved Guard 2 line. Voice is yours (R4) — I measured, I did not pick.
+  $0, local Chatterbox. Nothing goes into the episode until you say a letter.</p>
+</header>
+
+<blockquote><p>“guard 2 has the same voice as the sapling…”</p></blockquote>
+
+<p class="muted">Measured on the takes you actually heard in <code>ep2-demo-0819c</code>, and your ear was
+exact: Guard 2 and the sapling sit <strong>1.7&nbsp;Hz apart</strong> in pitch and 101&nbsp;Hz apart in
+timbre. Out of every pair of speaking characters in that cut, that is the <em>only</em> confusable one —
+Guard 1, the scavenger and the tree are all cleanly separated. So there was one defect, exactly where you
+said it was.</p>
+
+<p class="muted">The wiring was never wrong. <code>voices.yaml</code> does give Guard 2 his own voice
+(<code>am_echo</code>) and the pipeline does clone from his own reference file. What never happened is the
+part that makes a clone sound like a different <em>person</em>: four cast members got a hand-written
+character passage and a pitch offset to push them into their own band, and the guards were added to the
+cast afterwards and never got either. Both guards were cloned from the same shared paragraph at neutral
+pitch — which <code>build_refs.py</code>'s own comment calls “the acoustic cause of the founder's 'voices
+are mixed up'”. Guard 1 drifted clear by luck. Guard 2 landed on the tree.</p>
+
+<div class="refbox">
+  <h3>First, what you are separating from</h3>
+  <p class="lab">The sapling / the tree — beat 12, as shipped</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/sapling-b12.mp3"></audio>
+  <p class="lab">Guard 2 as shipped in 0819c — <span style="color:var(--fail)">the defect</span>, beat 10</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/current-guard2-b10.mp3"></audio>
+  <p class="lab">Guard 1 — beat 9, his partner. He stays as he is; only Guard 2 is being recast.</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/guard1-b09.mp3"></audio>
+</div>
+
+<h2>The three candidates</h2>
+<p class="muted">All three say the same line — beat 10, verbatim from the approved script:
+<em>“There's no form for that. There's barely a form for the apple.”</em> Same deadpan direction the real
+assembly uses, so what you hear is what the episode would get. Each is measurably clear of both the
+sapling and Guard 1, and the three are far apart from each other, so this is a real three-way choice.</p>
+
+<div class="cand">
+  <h3><span class="tag">A</span>The heavy</h3>
+  <p class="spec">am_onyx −4st · 83 Hz · 24 Hz clear of the sapling</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/guard2-A.mp3"></audio>
+  <p>Deep, dark, unhurried — a big man who has actually read the schedule. Furthest in character from
+  Guard 1's brighter, quicker read. Tradeoff, stated: he lands 8.6&nbsp;Hz from the farmer, who is in a
+  different story thread and has never shared a scene with him, but that is the tightest margin of the three.</p>
+</div>
+
+<div class="cand">
+  <h3><span class="tag">B</span>The rules-lawyer</h3>
+  <p class="spec">am_michael +4st · 147 Hz · 39 Hz clear of the sapling</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/guard2-B.mp3"></audio>
+  <p>Mid-bright, brisk, faintly prim — the one who enjoys being correct. Closest of the three to Guard 1's
+  own band (15&nbsp;Hz), which could read as two guards who match, or as two guards who blur. Tradeoff:
+  10.8&nbsp;Hz from the assessor, also a different thread.</p>
+</div>
+
+<div class="cand">
+  <h3><span class="tag">C</span>The young one</h3>
+  <p class="spec">am_fenrir +5st · 180 Hz · 72 Hz clear of the sapling</p>
+  <audio controls preload="none" src="/review/ep2-guard2-voice-0819/guard2-C.mp3"></audio>
+  <p>Higher, lighter, a bit reedy — reads younger than his partner, which makes the correcting funnier or
+  weaker depending on how you hear the pair. Widest acoustic margin of the three and no soft collision with
+  anyone in the cast; nearest neighbour is the narrator, 13.7&nbsp;Hz off and in another thread.</p>
+</div>
+
+<p class="muted">One thing worth knowing before you judge, because it cuts against the obvious way to do
+this: the clone does <em>not</em> preserve timbre. I first built three candidates that differed mainly in
+brightness, and the engine flattened all three to the same timbre — one went in at 2183&nbsp;Hz and came
+out at 1325. Pitch is the only separator that survives cloning, so these three differ in pitch, and the
+character difference you hear rides on that. It also means I could not simply aim at a number: a
+6-semitone drop snapped <em>back up</em> onto the sapling, so every candidate here is measured on the
+rendered take, never on its reference file.</p>
+
+<div class="ask">
+  <p><strong>Which voice is Guard 2 — A, B, or C?</strong> Say a letter and I re-synthesize his three
+  lines (beats 6, 8, 10) in that voice, re-measure against the whole cast, and rebuild the cut. His lines
+  do not change; nothing else in the episode is touched. If none of the three is him, say so and I will
+  bring three more.</p>
+</div>
+</div>
+</body>
+</html>
