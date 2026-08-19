@@ -262,3 +262,87 @@ derivation:
     seed:
     - payload b04-jobs-render.json (20260819 -> 20260819, re-parsed)
   seed: 20260819
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20 after pulling the clip and reading it at full
+# size plus a 5-frame strip (f0/30/60/90/120). Scored against the `success` line
+# and the `bar` THIS SPEC PRE-REGISTERED ABOVE; neither is edited here.
+#
+# Ran clean: 3 steps rc=0, STARTED 20:05:43Z DONE 20:11:56Z (6m13s), 121 frames
+# at 704x1280/24fps, 2 artifacts published and pulled with sha verified. $0.
+# ============================================================================
+verdict: >-
+  FAIL ON THE BEAT, PASS ON THE CHARACTER, AND IT REPRODUCES A KNOWN ENGINE
+  DEFECT ON FRESH GROUND. The clip is not cuttable for beat 04: `done_when` says
+  "only the eyes carry it" and the gaze is redirected by A HEAD ROTATION instead
+  -- the head-band ink centroid travels 64.7 px (f0 398.4 -> f60 422.6 -> f120
+  358.4), against a prompt that said in as many words "His head and shoulders
+  stay STILL". What the job was actually FOR is answered though, and answered
+  well: the founder-ratified adult goblin survives 121 frames of i2v without
+  drifting, which is the first time that has been shown.
+verdict_measured:
+  e1_the_eyes_travel: >-
+    FAIL ON MECHANISM, and the pre-registered prediction was half right. This
+    spec predicted the gaze would NOT shift, on the grounds that the parent
+    proved LIDS move and a lateral gaze is a different motion. The gaze DOES
+    shift -- but the model achieved it the way a person actually would and the
+    way the prompt forbade, by turning the head. The eye band itself is not
+    static (mean interframe 0.356, max 3.265, 21 of 120 pairs above 0.5), so
+    there is eye-region change; it is simply not separable from the head turn.
+    For a beat whose whole definition is a still body and moving eyes, that is a
+    FAIL and not a quibble.
+  e2_mouth_shut: 'PASS. Closed in every frame sampled; no speech cue.'
+  e3_identity_holds: >-
+    PASS, AND THIS IS THE RESULT WORTH KEEPING. Same green skin, same bald
+    domed head, same long pointed ears, same adult face at frame 121 as at frame
+    1. No drift toward a human and -- the clause that mattered tonight -- NO
+    DRIFT TOWARD A CHILD. Motion is spread evenly across thirds (1.224 / 1.475 /
+    0.963), so the init is not being abandoned early the way `--image-crf 33`
+    abandoned the parent's by frame 21. The crf-10 finding holds on a second
+    beat and a second init, and the character the founder ratified survives
+    animation.
+  e4_camera_locked: 'PASS. No pan, tilt, dolly or zoom; the head moves inside a
+    static frame and the background grass stays put.'
+pre_registered_fail_modes_as_fired: >-
+  F1 FAIL-FROZEN -- FIRED, in a precise and qualified sense that matters more
+  than the label. 95.8% of ADJACENT FRAME PAIRS are identical and the median
+  interframe difference is 0.000, which by this repo's own scale (rejected cut
+  0.13 median / 70% frozen) is worse than something already rejected. But the
+  clip is NOT static: mean interframe is 1.221 with a max of 11.628, and 25 of
+  120 pairs carry real change. F2 GAZE-DOES-NOT-SHIFT -- did NOT fire; it
+  shifted, by the wrong mechanism (see e1). F3 mouth opens -- did not fire.
+  F4 identity drift -- did not fire. F5 grass animates and face does not -- did
+  not fire; both move.
+what_this_settles: >-
+  THE LURCH OF THREE IS THE ENGINE, NOT ONE CLIP. The six highest-motion frame
+  pairs are indices 70, 73, 76, 79, 82 and 85 -- EXACTLY THREE APART. Two of
+  every three frames are duplicates, so a 24 fps container is carrying about
+  8 fps of real change, which is the whole explanation for a 95.8% frozen share
+  sitting next to visible movement. Commit 3ecb8a34 recorded "the motion arrives
+  in lurches of three" on a different beat, a different init and a different
+  prompt; this reproduces it independently and promotes it from an observation
+  about one clip to a property of this recipe. Anyone reading a frozen-frame
+  share on an LTX clip from this recipe should read the MEAN and the lurch
+  spacing beside it, because the median alone calls a moving clip frozen.
+what_this_did_not_settle: >-
+  Whether the eyes can move WITHOUT the head, which is beat 04's actual
+  requirement and is now the only thing between this beat and a cut slot. Nor
+  whether the lurch of three is fixable at all -- it was measured here, not
+  diagnosed, and nothing in this job varied anything that would explain it.
+what_this_does_not_license: >-
+  No pick, no cut, no canon filename, no plate_ack. This clip is PROVISIONAL and
+  a head-turn is not this beat. It does not license a second seed -- the failure
+  is mechanical and a reseed would re-roll the same head turn -- and it does not
+  license loosening beat 04's done_when to accept a head turn, which would be a
+  taste edit and is R4.
+next_rung_named_not_taken: >-
+  ONE sample, ONE variable: put the head in the NEGATIVE. `head turn, turning
+  head, head rotation, looking over his shoulder, profile view` added to the
+  negative and nothing else changed. Named honestly as the WEAKER of two
+  options, because this ladder's own law says the positive places what you want
+  and the negative does not -- so the stronger version is to say it positively
+  ("his head locked facing the camera, only the pupils sliding to the corner of
+  his eyes"), and the honest thing is that these are two rungs and the positive
+  one goes first. If both fail, the beat's eyes are not reachable on this engine
+  and the answer is a staging change -- crop tighter so a small head rotation
+  READS as an eye movement -- which is a route decision, not another wording.
