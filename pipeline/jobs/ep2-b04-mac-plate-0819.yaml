@@ -1,0 +1,164 @@
+# BEAT 04'S ADULT PLATE, PUBLISHED SO IT HAS PROVENANCE A GUARD CAN READ.
+#
+# ============================================================================
+# WHY THIS JOB EXISTS AT ALL
+# ============================================================================
+# The plate is already drawn. It came off macbook2 on 2026-08-19 from DRAFTS[4]
+# at seed 20260819, on the identity wording the founder ratified that day, and
+# it is judged: the best frame of the re-render wave and the wave's own control
+# (see pipeline/plate_scratch.py DRAFTS[4]'s verdict and
+# pipeline/work-ladder-0819.md).
+#
+# But `ep2-b04-eyes-crf10-0819`, the motion job that wants it as an init, was
+# REFUSED BY box_enqueue, twice and correctly:
+#
+#   !! BLOCKED: could not fetch this job's --src, so its picture was NOT
+#      checked -- and 'could not check' is not 'fine'.
+#   !! BLOCKED: could not work out which job produced this job's --src, so the
+#      reference set it was drawn with was NOT checked.
+#
+# Both guards read `origin/farm-results-rtx5090` and resolve a plate through the
+# spec that OWNS its farm-out directory. A Mac plate committed to `main` is
+# invisible to both. The refusal is right: two of the 2026-08-14 wave landed in
+# exactly this hole and one of them cropped THE WRONG BEAT'S PLATE.
+#
+# THE WAIVER WAS AVAILABLE AND IS NOT TAKEN. `plate_ack: "unfetchable: ..."`
+# would have cleared both messages in one line. It is not used, for a reason
+# that is written down rather than felt: work-ladder-0819.md's standing rules
+# say "Picks, promotion and `plate_ack` are not made in a job spec." A lane
+# waiving the check on its own plate is the lane marking its own homework, and
+# tonight is a bad night for that -- the whole re-render wave exists because an
+# unratified inference propagated for four days without anything reading it.
+#
+# So this takes the route ep2-b14-mac-plate-0818 established and
+# ep2-b14-mac-motion-0818 relied on: publish the plate through a farm-out
+# directory ONE spec owns, let the courier push it, and let both guards RUN and
+# PASS on the motion job rather than be switched off.
+#
+# ============================================================================
+# NOT DERIVED, AND WHY THAT IS NOT A HAND-CLONE
+# ============================================================================
+# derive_spec.py is the tool for deriving a spec FROM A PARENT RECIPE, and its
+# whole purpose is to stop a child inheriting a parent's verdicts and generative
+# parameters. This job has no recipe: no model, no seed, no sampler, no prompt,
+# no GPU. It copies two named files and writes a sha256 manifest. There is
+# nothing to inherit and nothing to leak, and deriving it from
+# ep2-b14-mac-plate-0818 would mean retokening a hard-coded three-seed NAMES
+# list down to one file, which is more error-prone than writing four lines.
+# `ep2-b04-eyes-crf10-0819`, which DOES have a recipe, IS derived --
+# pipeline/derive_b04_eyes_0819.py, off the proven crf-10 parent.
+#
+# ============================================================================
+# THE BYTES, ASSERTED ON BOTH ENDS BEFORE THIS FILE WAS WRITTEN
+# ============================================================================
+# Staged by scp into C:\banyan-farm\ep2-b04-mac-plate-0819-out\ and hashed on
+# the box with certutil, against shasum on the Mac:
+#   04-the-footnote-mac-plate-r1s1.png
+#     5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350
+#   04-the-footnote-mac-plate-r1s1.yaml
+#     5f602f486243078a2f2f0acbcb64df4e4eb015d21bb872dec26a246a7de003e5
+# The publish step re-asserts the PNG's hash after the copy, so a truncated
+# transfer fails the job instead of publishing a corrupt plate that a motion
+# job would then animate. The same PNG is committed on `main` under
+# farm-out/ep2-b04-mac-plate-0819/, so the two branches can be diffed by hash.
+#
+# $0. No GPU, no model, no network, no provider.
+
+id: ep2-b04-mac-plate-0819
+task: ep2-b04-mac-plate-0819
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: false
+priority: 20
+max_attempts: 1
+est_minutes: 1
+needs: []
+
+owner: enactment lane, 2026-08-19 (the goblin re-render wave)
+
+consumer: >-
+  ep2-b04-eyes-crf10-0819, which cannot be enqueued until this has run and the
+  courier has pushed -- box_enqueue's plate and refs guards read
+  origin/farm-results-rtx5090 at ENQUEUE time, so filing the motion job first is
+  refused, correctly. Beyond that, beat 04's slot in the episode 2 cut: the cut
+  currently carries b04-refire-0814, the round young goblin the founder ruled
+  against on 2026-08-19.
+
+success: >-
+  Two files and a manifest in
+  C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819 -- the plate PNG,
+  its render sidecar, and ep2-b04-mac-plate-0819.sha256 listing both. The PNG's
+  sha256 must still read
+  5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350 AFTER the
+  copy; the step exits nonzero if it does not. Landing is not "the files are
+  there" but "the motion job's --src now resolves": success is confirmed by
+  ep2-b04-eyes-crf10-0819 passing box_enqueue's plate and refs checks with no
+  plate_ack, which is the thing this job is for.
+
+why: >-
+  $0, no GPU, about a minute, and it is the one step between a judged plate and
+  the first motion job the 2026-08-19 ruling makes legal. It is filed instead of
+  a one-line plate_ack waiver because waiving a provenance check on one's own
+  plate is exactly the failure mode the ruling was called to repair.
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+
+steps:
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |-
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob -- the b14 lane's scar:
+    # a glob that misses publishes nothing while returning a code that reads
+    # like a fetch failure, and box_enqueue.output_path_problems refuses a spec
+    # whose declared artifacts are never named by any step, which a wildcard
+    # defeats. Missing ONE file is a FAIL of the job.
+    import hashlib, os, shutil
+    from_dir = "C:/banyan-farm/ep2-b04-mac-plate-0819-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-mac-plate-0819"
+    NAMES = [
+        "04-the-footnote-mac-plate-r1s1.png",
+        "04-the-footnote-mac-plate-r1s1.yaml",
+    ]
+    WANT_PNG = "5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350"
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for name in NAMES:
+        src = os.path.join(from_dir, name)
+        if not os.path.isfile(src):
+            raise SystemExit("!! missing staged file: " + src)
+        shutil.copy2(src, dst)
+        c = os.path.join(dst, name)
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+        print(h, name, flush=True)
+    got = [l.split("  ")[0] for l in lines if l.endswith(".png")][0]
+    if got != WANT_PNG:
+        raise SystemExit("!! PNG SHA MISMATCH AFTER COPY\n   want %s\n   have %s"
+                         % (WANT_PNG, got))
+    with open(os.path.join(dst, "ep2-b04-mac-plate-0819.sha256"), "w",
+              newline="\n") as fh:
+        fh.write("\n".join(sorted(lines)) + "\n")
+    print("published", len(NAMES), "file(s) + manifest ->", dst)
+
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+- C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.yaml
+
+plate_provenance: >-
+  Drawn on macbook2 2026-08-19T23:41 by pipeline/plate_scratch.py --beat 4, from
+  DRAFTS[4] at seed 20260819, 832x1216 on MPS, farm job mac-b04-0819-233811. The
+  positive's identity clause is byte-identical to DRAFTS[14]'s and so to the
+  string the founder ratified on 2026-08-19; measured 73/77 positive and 58/77
+  negative on the real CLIP tokenizer with exit-7 clash NONE. Judged at full
+  size before this spec existed: PASS on cast, near-pass on the beat -- eyes
+  off-axis to frame left, jaw set, held breath reading. It is also the wave's
+  control, being the only one of four beats with no plant in it and the only one
+  that landed. NO PICK AND NO plate_ack IS CLAIMED BY THIS SPEC: publishing a
+  plate so a guard can read it is not promoting it.

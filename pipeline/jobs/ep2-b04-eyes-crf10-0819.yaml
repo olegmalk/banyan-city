@@ -1,0 +1,264 @@
+id: ep2-b04-eyes-crf10-0819
+task: ep2-b04-eyes-crf10-0819
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+owner: enactment lane, 2026-08-19 (the goblin re-render wave)
+consumer: The episode 2 cut, beat 04. The cut currently carries b04-refire-0814, which is the ROUND young
+  goblin the founder ruled against on 2026-08-19 -- "c kinda is but still pretty bad so change it". This
+  clip is the replacement take. Its plate is the adult he picked, so the only question left on this beat
+  is whether the eyes carry it in motion.
+success: 'One 704x1280 121-frame mp4 in which the goblin''s EYES MOVE SIDE TO SIDE and almost nothing
+  else does. Scored against beat 04''s own done_when: LIVE EYES with the held breath readable, on a body
+  that is near-motionless -- this is the one beat where a still body is correct. PASS needs all four:
+  E1 the eyes visibly travel to one side and back, judged at 1:1 and not from a metric; E2 the mouth stays
+  SHUT for all 121 frames -- an open mouth reads as speech and this beat has no line; E3 he is the SAME
+  adult goblin at frame 121 as at frame 1, green, bald, long-eared, no drift toward a human or a child;
+  E4 the camera does not move. FAIL-FROZEN is a real outcome here and is NOT a pass: on a beat carried
+  entirely by the eyes, an init held so hard that nothing moves fails exactly as badly as a face that
+  morphs.'
+why: $0, ~7 minutes, no download, and it is the first motion job the 2026-08-19 ruling makes legal. Every
+  generative parameter is inherited from ep2-b04-eyes-crf10-0819, the one job that has demonstrated this
+  exact capability -- a face performing on a locked camera with the init surviving 121 frames at --image-crf
+  10. Only the init picture and the words change, so a bad result is attributable to this beat rather
+  than to the recipe.
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-eyes-crf10-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed ears,
+    patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face and shoulders.
+    HE IS HOLDING HIS BREATH AND ONLY HIS EYES MOVE: his eyes flick to one side, hold, then travel slowly
+    back across to the other side. HIS MOUTH STAYS SHUT the whole time and his jaw stays set -- he is
+    listening for something, not speaking, and no word is said. His head and shoulders stay STILL. He
+    stays THE SAME GOBLIN from the first frame to the last: the same green skin, the same bald head, the
+    same long pointed ears, one face and one figure only. The light on him is CONSTANT and does not flicker,
+    pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.'
+  C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-negative.txt: open mouth, talking, speaking, shouting, teeth,
+    tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl,
+    round head, big eyes, cute, different face, changing face, face changing, morphing, melting face,
+    skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down,
+    scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live
+    action, motion blur, text
+  C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\b04-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\b04-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\b04-negative.txt"}]'
+  C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-jobs-render.json: '[{"beat": 4, "seed": 20260819, "embeds":
+    "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\b04-embeds.pt", "init": "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\b04-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b04-eyes-crf10-0819\\04-the-footnote-LTX-ep2-b04-eyes-crf10-0819.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-eyes-crf10-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+  - --sha256
+  - 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350
+  - --out
+  - C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-eyes-crf10-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-eyes-crf10-0819\bench-ep2-b04-eyes-crf10-0819.jsonl
+  - --bench-label
+  - ep2-b04-eyes-crf10-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-eyes-crf10-0819\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-eyes-crf10-0819/04-the-footnote-LTX-ep2-b04-eyes-crf10-0819.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b04-eyes-crf10-0819/b04-init-704x1280.png\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/ep2-b04-eyes-crf10-0819/bench-ep2-b04-eyes-crf10-0819.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-eyes-crf10-0819.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b04-eyes-crf10-0819\04-the-footnote-LTX-ep2-b04-eyes-crf10-0819.mp4
+- C:\banyan-farm\ep2-b04-eyes-crf10-0819\b04-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through
+  it, slowly." One man, one face, no second figure, no dialogue in this beat. This is a SILENT MOTION
+  CLIP on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+bar:
+  e1_the_eyes_travel: 'The eyes visibly move to one side, hold, and come back. Read at 1:1 on the actual
+    frames. THE PRE-REGISTERED MOST LIKELY FAILURE IS THAT THEY DO NOT: the parent''s win was an eye close-and-reopen,
+    which is a LID movement, and a lateral GAZE shift is a different and smaller motion. If E1 fails while
+    E2, E3 and E4 pass, the finding is that this engine moves lids and not gaze, and the next rung is
+    a lid-based reading of the same beat -- a slow blink under held breath -- not a fifth wording.'
+  e2_mouth_shut: Closed for all 121 frames. Beat 04 has no line; an open mouth is a speech cue and would
+    have to be cut.
+  e3_identity_holds: 'Same adult goblin at frame 121 as at frame 1 -- green, bald, long pointed ears.
+    This is the clause --image-crf 10 exists to protect: at 33 the parent''s man was a different, younger
+    person by frame 21, and a drift toward a CHILD here would re-open the exact question the founder just
+    closed.'
+  e4_camera_locked: No pan, tilt, dolly or zoom. Inherited clause; the parent held it.
+failure_predicted_in_advance: The gaze shift (F2). The parent proved LIDS move; nothing in this repo has
+  yet shown a lateral GAZE travelling on this engine, and the two are not the same motion. Named here
+  so that if it comes back frozen-eyed the result is a finding about the engine rather than a disappointment
+  about the beat.
+init_provenance: 04-the-footnote-mac-plate-r1s1.png, drawn on macbook2 2026-08-19 from DRAFTS[4] at seed
+  20260819, on the founder-ratified adult wording. Judged the best frame of the re-render wave and the
+  wave's control -- the only one of four beats with no plant in it and the only one that landed. sha256
+  5dd35da5...4350, verified byte-for-byte on the Mac and on the box before this spec existed, and asserted
+  again by the crop step at run time.
+not_done_on_purpose: 'No recipe change of any kind -- size, frames, fps, guidance, sigmas, two-stage,
+  offload, mode and --image-crf 10 are the parent''s. No second seed. No crf sweep: 33 is established
+  wrong and 10 is established workable, and the optimum between them is not this beat''s question. No
+  pick, no plate_ack, no cut, no publish.'
+pre_registered_fail_modes: F1 FAIL-FROZEN -- nothing moves at all, and on this beat that is a failure
+  and not a safe outcome. F2 GAZE-DOES-NOT-SHIFT while the rest holds (see e1, the most likely). F3 the
+  mouth opens. F4 identity drifts toward a human or a child. F5 the grass animates and the face does not,
+  which would read as wind rather than as a performance.
+derivation:
+  parent: pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - is_show_content
+  - is_show_content_why
+  - pass_clauses
+  - pre_registered_fail_modes
+  - the_comparison
+  - the_performance_that_survived
+  - verdict
+  - what_this_does_NOT_settle
+  - what_this_licenses
+  - what_this_settles_AND_IT_IS_NOT_ONLY_BEAT_09
+  retokened:
+  - b09-motion-prompt -> b04-motion-prompt
+  - b09-negative -> b04-negative
+  - b09-jobs-encode -> b04-jobs-encode
+  - b09-jobs-render -> b04-jobs-render
+  - b09-embeds -> b04-embeds
+  - b09-init- -> b04-init-
+  - 09-the-pause -> 04-the-footnote
+  - '"beat": 9 -> "beat": 4'
+  - ep2-b09-faceturn-crf10-0819 -> ep2-b04-eyes-crf10-0819
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (55a56b8faa5c1c8abcd3cc7306800a616e91210a65995b498e0b9a5e191e0e8e -> 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b09-cast-0817\04-the-footnote-ipa-r2-w015-s2.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png)
+    key:beat:
+    - key beat = 4
+    key:est_minutes:
+    - key est_minutes = 7
+    payload:b04-motion-prompt.txt:
+    - payload b04-motion-prompt.txt (842 -> 971 chars)
+    payload:b04-negative.txt:
+    - payload b04-negative.txt (783 -> 775 chars)
+    seed:
+    - payload b04-jobs-render.json (20260819 -> 20260819, re-parsed)
+  seed: 20260819
