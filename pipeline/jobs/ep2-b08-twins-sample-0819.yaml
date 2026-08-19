@@ -419,3 +419,24 @@ next_rung_named_not_taken: >-
   and goblin head-to-legs 91.4 must both collapse, with B4b's two positions holding.
   AFTER that, and unchanged in order: the board via multi-ControlNet pose+scribble,
   then the purple cast.
+the_mask_geometry_problem_that_rung_must_solve_first: >-
+  AND IT IS NOT FILED YET BECAUSE OF THIS, WHICH IS A DESIGN QUESTION AND NOT A
+  VALUE TO TUNE. controlnet_plate takes masks as AXIS-ALIGNED RECTANGLES only --
+  mask_images draws them from x0,y0,x1,y1, there is no mask file -- and it REFUSES
+  two rects that overlap by even one pixel, because two identities on one pixel is
+  a defect rather than a warning. In this frame THE TWO FIGURES INTERLEAVE: the
+  guard's pointing hand and fingertip occupy roughly x 204-270 at y 650-730, while
+  the goblin's body and his own hanging left arm occupy roughly x 100-265 at the
+  same heights. Her finger is drawn OVERLAPPING his arm. No pair of non-overlapping
+  rectangles can put her hand in her mask and his arm in his:
+  widen hers to x>=250 and her fingertip (x=204) falls inside HIS mask, handing her
+  finger his identity -- the exact trap the contour rung avoided on purpose by
+  leaving the fingertip 6.5 px outside his box; narrow his to x<=200 and his own
+  hanging arm (x 215-265) falls inside HERS.
+  So the next rung must FIRST choose one of: (a) accept a stated mis-assignment and
+  pre-register WHICH limb is handed the wrong identity; (b) teach the driver
+  non-rectangular masks -- a real code change with its own selftests, and the honest
+  fix; (c) re-stage the hint so the arm stops short of overlapping him, which trades
+  away the gesture this rung just bought. This lane's reading is (b). It is written
+  down rather than guessed at because filing a sample whose masks are known to be
+  geometrically wrong would be a guess with a GPU attached.
