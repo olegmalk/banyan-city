@@ -210,6 +210,22 @@ the_crf_question_answered: 'CRF 10 REMOVED MOTION AT THIS SEED, and this is the 
   bought stillness -- which is consistent with the mechanism (a less-degraded init is
   a stronger anchor, and this engine''s drift was part of what read as movement) and
   is the opposite of what beat 14 needs.'
+the_crf_ruling_is_SOUND_and_this_seed_was_a_MILD_case: 'MEASURED ON THE WORK
+  LADDER''S OWN INSTRUMENT rather than on a substitute. pipeline/work-ladder-0819.md
+  scores the flag by the f001->f002 FACE-CROP STEP and reports 39.34 at crf 33 against
+  0.66 at crf 10, with the ten largest interframe steps being the ten EARLIEST -- the
+  init abandoned at the first denoising step. THAT MEASUREMENT IS FROM BEAT 09. Run on
+  this clip: the crf-33 version scores 8.39 and the crf-10 version 0.30. So this seed
+  DID have the defect, at about a fifth of beat 09''s severity, and crf 10 genuinely
+  fixed it. Its sibling at seed 20260818 scored 0.32 at crf 33 and never had it at all.
+  AND FIXING IT IS WHAT MADE THIS CLIP STILLER: the early face churn crf 33 was
+  producing here was itself part of what registered as movement, so removing it removed
+  motion this beat could not spare -- which is why a genuine conditioning fix shows up
+  in the scores as a loss. Neither b14 clip ever showed beat 09''s ten-earliest
+  signature; the largest steps sit at frames 85-112 in both, inside the action. THE
+  LADDER''S RULING IS NOT WEAKENED BY ANY OF THIS. The flag was wrong and did destroy
+  conditioning where it bit; beat 14 is a beat where it barely bit, and where fixing it
+  could not reach the clauses that fail.'
 what_this_settles: 'Read with its sibling, the pair closes crf as a suspect for beat
   14 from both directions: at seed 20260818 crf 10 changed nothing (82 frozen pairs
   against 86), and at seed 20260819 it made the clip stiller. Neither seed recovered
@@ -223,3 +239,46 @@ prior_verdicts_needing_re_litigation: 'NONE ON BEAT 14. ep2-b14-mac-motion-s2-08
   whether another beat''s crf-33 failure is crf-bound.'
 not_done_on_purpose: 'No re-render, no third seed, no trim, no pick, no cut, and no
   edit to any other lane''s recorded outcome.'
+
+# ============================================================================
+# 2026-08-19 -- DUPLICATE HYPOTHESIS RAISED, CHECKED ON DISK, AND REFUTED.
+# Recorded so it is not re-raised, and because the remedy proposed for it would
+# have destroyed a valid record.
+#
+# During judging it was suggested that this spec might be a DUPLICATE of
+# ep2-b14-motion-crf10-0819 -- filed fast from a generator that may have failed
+# to substitute seed B -- and that the remedy was to mark this spec superseded
+# and re-file a corrected s2. IT IS NOT A DUPLICATE. Four independent checks,
+# all run before touching anything:
+#
+#   what                        crf10-0819              crf10-s2-0819
+#   ------------------------    --------------------    --------------------
+#   seed in the render json     20260818                20260819
+#   seed in the BOX-WRITTEN     20260818                20260819
+#     sidecar (ground truth,
+#     stamped at render time)
+#   clip sha256                 c905e1a5564970cc...     267aefbf452d50cf...
+#   clip bytes                  522259                  463987
+#   mean |delta| per frame pair 2.48                    1.08
+#   frozen pairs (<0.5)         86                      88
+#   longest frozen run          49                      14
+#   f001->f002 face-crop step   0.24                    0.30
+#
+# Two different seeds were requested, two different seeds were rendered, and two
+# materially different clips came back. Superseding this spec would have thrown
+# away the more informative half of the pair -- it is the seed that carried a
+# real (if mild) crf-33 conditioning defect at 8.39, and the only evidence we
+# have that FIXING that defect can COST a beat its movement.
+#
+# WHAT WAS ACTUALLY BROKEN was this verdict's own prose, and it was mine: the
+# script that appended these verdict blocks built the s2 text from the seed-A
+# text with a string replace whose target did not match, so for one commit-cycle
+# both specs carried seed A's figures. Fixed above; each block now cites its own
+# measurements. The specs, the payloads, the renders and the published artifacts
+# were never affected.
+duplicate_check_0819: >-
+  NOT A DUPLICATE. Distinct seeds (20260818 vs 20260819) in both the render json
+  and the box-written sidecars, distinct clip sha256 and byte counts, and
+  materially different measurements on every instrument. No spec is superseded
+  and no corrected s2 is filed, because there is nothing to correct in the job.
+  The defect was in the appended verdict prose only and is fixed.

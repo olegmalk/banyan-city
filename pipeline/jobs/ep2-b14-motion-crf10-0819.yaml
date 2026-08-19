@@ -215,17 +215,21 @@ the_crf_question_answered: 'THE THREE NAMED CRF-33 DEFECTS ALL SURVIVE AT CRF 10
   2.48. The motion window moved about ten frames earlier (coldread: pairs 71..111
   against 69..105) and that is the whole of the difference. SULLEN FACE: unchanged.
   MONOTONIC HEAD LIFT: unchanged.'
-the_conditioning_claim_does_not_reproduce_at_this_size: 'STATED CAREFULLY, because it
-  is the premise this job was filed on and because two true numbers can measure two
-  different things. This spec''s `why` cites "measured face drift 39.34 vs 0.66 at crf
-  10". On the DELIVERED CLIPS that ratio is not there: mean |init - f000| is 7.32 at
-  crf 33 and 6.31 at crf 10 whole-frame, and 6.32 against 5.41 inside the face band --
-  an improvement of about 15%, not of sixty times. The 39.34/0.66 figure is most
-  plausibly the CONDITIONING IMAGE''S OWN round-trip measured in isolation, which is a
-  real and much larger effect; what this measurement says is that by the time the
-  frame has also been through the VAE and the output encode, that difference is
-  second-order and does not reach the picture. NOTHING HERE ACCUSES THAT MEASUREMENT
-  OF BEING WRONG -- it says it does not transfer to this beat''s output.'
+the_crf_ruling_is_SOUND_and_beat_14_was_never_one_of_its_cases: 'THIS REPLACES A
+  WEAKER PARAGRAPH AND IS THE SHARPER FINDING, measured on the work ladder''s OWN
+  INSTRUMENT rather than on a substitute. pipeline/work-ladder-0819.md scores the flag
+  by the f001->f002 FACE-CROP STEP, and reports 39.34 at crf 33 against 0.66 at crf 10
+  -- the init abandoned at the first denoising step, with the ten largest interframe
+  steps being the ten EARLIEST. That measurement is from BEAT 09. Run on beat 14: the
+  crf-33 clip at this seed scores 0.32, which is not merely healthy but LOWER THAN
+  BEAT 09''S CRF-10 FIGURE, and its ten largest steps sit at frames 80-98 -- in the
+  action, not at the head of the clip. BEAT 14 AT CRF 33 WAS NEVER LOSING ITS INIT.
+  So the ladder''s ruling is not weakened by this result at all: the flag really was
+  wrong and really did destroy conditioning where it bit, and this beat simply was not
+  one of the places it bit. Re-running it could not have helped, and now nobody has to
+  wonder. (An earlier draft of this verdict guessed the 39.34 figure was a codec
+  round-trip measured in isolation. That guess was wrong and is corrected here rather
+  than left standing.)'
 what_this_settles: 'Beat 14''s failures are not an encoder artefact. The 2026-08-18
   pair attributed them to STAGING and to this engine''s action repertoire, and holding
   everything constant but the conditioning crf reproduces both failing clauses exactly.
