@@ -2897,3 +2897,4 @@
 09:40:13Z STARTED task=ep2-b12-plateship-0819-1787132409 attempt=1 on box-runner
 09:40:17Z FAIL task=ep2-b12-plateship-0819-1787132409 rc=1 step=fetch
 09:48:20Z box-runner idle ready=0 failed=40
+09:58:14Z STARTED task=ep2-b12-plateship-0819-1787133492 attempt=1 on box-runner
