@@ -1,0 +1,40 @@
+#### job ep2-b19-sapcomp-0819-1787124740 attempt 1 start 2026-08-19T07:33:04Z
+
+==== step fetch START 2026-08-19T07:33:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19sapcomp-0819\\fetch_init.py"]
+fetched 19-the-drop-sapcomp-0819.png 977210 bytes sha b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903 OK
+fetched 19-the-drop-sapcomp-mask-0819.png 4538 bytes sha ce1e5ba2f89e9cabd0f90a3316a1436605bfd152a23b7add994995e255bcf266 OK
+==== step fetch END rc=0 2026-08-19T07:33:09Z ====
+
+==== step dry START 2026-08-19T07:33:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19sapcomp-0819\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b19sapcomp-0819\\19-the-drop-sapcomp-0819.png", "--init-sha256", "b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903", "--mask-png", "C:\\banyan-farm\\b19sapcomp-0819\\19-the-drop-sapcomp-mask-0819.png", "--prompt-file", "C:\\banyan-farm\\b19sapcomp-0819\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b19sapcomp-0819\\negative.txt", "--out", "C:\\banyan-farm\\b19sapcomp-0819\\b19-sapcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260819", "--note", "mask geometry check. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the two cleared twig arcs, two small on-figure patches (the hood the left twig crossed, and the cloak edge a crystal hung against) and the drawn sapling's own footprint, dilated 12 -- 17.08 percent of the frame. What to check on the DRY png: that the mask does NOT reach his face, his hands, his knees or his boots, because those carry four of the five plate terms that already pass.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903
+mask png corners=- bbox=[113, 251, 789, 945]  0.8125 x 0.5707 of 832x1216
+WROTE C:\banyan-farm\b19sapcomp-0819\b19-sapcomp-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-19T07:33:09Z ====
+
+==== step s20260819 START 2026-08-19T07:33:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19sapcomp-0819\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b19sapcomp-0819\\19-the-drop-sapcomp-0819.png", "--init-sha256", "b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903", "--mask-png", "C:\\banyan-farm\\b19sapcomp-0819\\19-the-drop-sapcomp-mask-0819.png", "--prompt-file", "C:\\banyan-farm\\b19sapcomp-0819\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b19sapcomp-0819\\negative.txt", "--out", "C:\\banyan-farm\\b19sapcomp-0819\\b19-sapcomp-s20260819.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260819", "--note", "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT: beat 19's plant is composited instead of prompted. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed at three wordings."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.16it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.72it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.74it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  3.18it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.67it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b19sapcomp-0819\b19-sapcomp-s20260819.png
+WROTE C:\banyan-farm\b19sapcomp-0819\b19-sapcomp-s20260819-mask.png
+WROTE C:\banyan-farm\b19sapcomp-0819\b19-sapcomp-s20260819.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260819 END rc=0 2026-08-19T07:33:23Z ====
+
+==== step publish START 2026-08-19T07:33:23Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b19sapcomp-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-sapcomp-0819\"\nNAMES = [\n    \"b19-sapcomp-s20260819.png\",\n    \"b19-sapcomp-s20260819-mask.png\",\n    \"b19-sapcomp-s20260819.png.meta.yaml\",\n    \"19-the-drop-sapcomp-0819.png\",\n    \"19-the-drop-sapcomp-mask-0819.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b19-sapcomp-0819.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b19-sapcomp-0819
+==== step publish END rc=0 2026-08-19T07:33:23Z ====
+#### job ep2-b19-sapcomp-0819-1787124740 finished rc=0 2026-08-19T07:33:23Z
