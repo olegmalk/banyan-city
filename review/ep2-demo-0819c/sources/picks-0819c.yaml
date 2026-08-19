@@ -81,6 +81,59 @@ the_honest_counts:
     the fault named is what a bench cut is for — but nobody should now read
     their presence as anybody's approval.
 
+founder_notes_while_watching_this_cut:
+  # Recorded by the assembly lane as relayed, during his live watch of 0819c.
+  # NEITHER IS FIXED IN THIS FILE'S CUT and neither is a reason to re-cut
+  # tonight; both are obligations on the NEXT assembly, written here so it
+  # cannot lose them.
+  1_guard_2_sounds_like_the_sapling:
+    his_call: Guard 2's voice reads as the sapling's voice.
+    scope_measured_not_guessed: >-
+      Guard 2 speaks in BEATS 6, 8 AND 10 — "Technically not theft. He ate it on
+      the spot...", "The apple is inside him, Dren.", "There's no form for that."
+      — and the tree speaks the opening line of beat 1 ("I used to be an
+      engineer. Now I'm a tree."). Three beats of dialogue collide with the
+      episode's narrating voice.
+    the_written_cast_is_not_the_fault: >-
+      genomes/sapling/voices.yaml casts the tree as `VO: bm_fable` (its own
+      comment reads "the tree — storyteller cadence") and `GUARD 2: am_echo`.
+      Two different voices, correctly distinct on paper. The collision is
+      downstream, in the Chatterbox 0.5B reference clips those parts were cloned
+      into from the kokoro cast via build_refs.py — so this is a cloning or
+      assignment defect, not a casting mistake, and that is where the fix goes.
+    already_being_worked_by_another_lane: >-
+      NOT THIS LANE'S TO FIX AND ALREADY IN HAND: three Guard 2 candidate
+      references (guard2cand-A/B/C.wav) and a six-file parameter sweep
+      (guard2sw-D1/D2/H1/H2/M1/M2.wav) were written into the Chatterbox
+      reference cache tonight while this page was being assembled. Recorded here
+      so the next assembly asks that lane for a verdict instead of re-deriving
+      the problem.
+    why_this_cut_still_carries_it: >-
+      Deliberate. This cut's whole VO is byte-identical to 0819b by design and
+      verified so; re-voicing three beats during his screening would change what
+      he is looking at while he looks at it. Named, not hot-patched.
+  2_the_goblin_reads_as_an_adult:
+    his_call: Surprise that the goblin reads as an adult. FROZEN pending his design pick.
+    what_frozen_means_here: >-
+      Nothing proceeds: no cast render, no plate rung, no wording attempt on this
+      axis until he chooses the design. This lane queues nothing against it.
+    it_is_a_measured_defect_nobody_had_shown_him: >-
+      Worth recording, because it is the second time tonight a founder call
+      landed on something the record already knew. cut-readiness-0819.yaml
+      beats.9.blocked_on lists as its third blocker "THE ADULT READ — the face
+      reads adolescent, and there is no age tag in the prompt at all", and
+      beat 09's cast gate names the adolescent read as one of three conditions
+      that have never co-occurred correctly. So the finding was measured, filed,
+      and never escalated to the person whose call it is. The freeze is the right
+      response — how old this character is is a design question and design is R4.
+    the_pattern_both_notes_share: >-
+      Both of tonight's bounces were things a record already contained and no
+      page had put in front of him. That is the same shape as beat 16, which rode
+      four cuts after he ruled against it. The lesson this assembly draws is not
+      "measure more" — it is that a measurement nobody surfaces is worth about as
+      much as no measurement, which is why this cut's page leads with what
+      changed and what is wrong rather than with what passed.
+
 the_receipts_and_why_five_beats_still_read_no_verdict_block:
   what_happened: >-
     THE FIRST DRAFT OF THIS FILE PUT THE SPEC PATH IN `verdict_at:` AND THE PROSE

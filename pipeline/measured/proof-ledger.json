@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1475,
+ "commits_in_window": 1481,
  "covers_window": true,
  "cut": "ep2-demo-0819c",
  "cut_files": [
@@ -14,7 +14,7 @@
  "cuts_shipped": 7,
  "generated": "2026-08-19",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "848902fe3",
+ "head": "f1bf048df",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
