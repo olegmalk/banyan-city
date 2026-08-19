@@ -4833,11 +4833,33 @@ REVS[(19, 2)] = {
 # recorded rather than deleted: the sibling DREW its fig, on the stated grounds
 # that "an 18x downsample imports a violet smudge, not a fig". This one PASTED
 # beat 18's actual pixels at 19.6x and the smudge did not arrive -- at 3x it
-# is a round fig with a neck and a highlight. Opened side by side, the sibling's
-# fruit is a small dark bead on a thread whose underside sits ~20 px off the
-# ground, and its plant measures ~26 cm against canon's 40; this one's fig has
-# 93 px of air under it on a 41.4 cm plant. Against that, the sibling has been
-# through the finishing pass and reads as drawn line work, and this one has not.
+# is a round fig with a neck and a highlight.
+#
+# ~~Opened side by side, the sibling's fruit is a small dark bead on a thread
+# whose underside sits ~20 px off the ground, and its plant measures ~26 cm
+# against canon's 40.~~ CORRECTED WITHIN THE HOUR, and the superseded sentence
+# stays because the mistake is the instructive part: THOSE NUMBERS WERE READ OFF
+# THE SIBLING'S 0.30 OUTPUT AND COMPARED AGAINST THIS LANE'S COMPOSITE. That is
+# not a comparison, it is two different stages of two different pipelines. The
+# sibling's fruit SHRINKS AND DARKENS through its finishing pass -- which is
+# itself the finding its own gloss A/B recorded -- so the "small dark bead" is
+# real in the output and false of the init. Measured like for like, both
+# COMPOSITES:
+#   fruit size ....... sibling 32x44 px | this one 33x47 px. Effectively equal;
+#                      the size claim was simply wrong.
+#   fruit colour ..... sibling median (109,55,161), a saturated VIOLET that
+#                      matches r3's own crystals and the 08-16 colour ruling
+#                      more squarely than this one's (85,43,81) PLUM. A point
+#                      to the sibling, and P5 above should be read next to it.
+#   fruit modelling .. per-channel std, sibling 8.2/3.9/12.6 against this one's
+#                      38.8/19.0/32.2. The sibling's fruit is a near-flat fill
+#                      with an outline; this one carries beat 18's shading, for
+#                      better (it reads as a fig) and for worse (decal tell 2,
+#                      the specular).
+#   ground clearance . sibling 36 px, this one 93 px.
+#   plant height ..... sibling 28.2 cm, this one 41.4 cm, canon ~40.
+# Against all of that, the sibling has been through the finishing pass and reads
+# as drawn line work, and this one has not.
 # NEITHER OBSERVATION IS A PICK. Which init beat 19 travels on is R4 and the
 # lead's, not this lane's, and nothing here is promoted, ack'd or written into
 # a leaf or lineage.
