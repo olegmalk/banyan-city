@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — episode 2 DEMO CUT, 2026-08-19b (beat 07 stops being a slate)</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 650; color: #dfe3e8; }
+  p { max-width: 78ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  .callout.red { border-left-color: #b06060; }
+  .callout.green { border-left-color: #5f9d6c; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  video { width: 100%; max-width: 420px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  img.strip { width: 100%; height: auto; border: 1px solid var(--line);
+              border-radius: 5px; display: block; margin: 14px 0 6px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  .warn { color: var(--warn); } .new { color: var(--new); }
+  tr.pick td { background: #1c2530; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  ul { max-width: 78ch; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Sapling — episode 2, DEMO CUT (2026-08-19b)</h1>
+  <p class="sub">The 2026-08-19 cut with three clips changed and nothing else touched. Same node,
+  same assembly command, same VO byte for byte (checked, not assumed), the same eighteen other
+  source files. 1:53, <strong>18 beats of footage and 3 slates</strong> — one slate fewer than any
+  cut this episode has ever had. No render, no voice synthesis, no GPU, no spend, $0.</p>
+</header>
+
+<p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF. PRIVATE REVIEW PAGE.</p>
+
+<div class="callout green">
+  <p><strong>WHAT CHANGED SINCE THE 2026-08-19 CUT — three clips, all of them the same one-integer
+  finding cashed in per beat.</strong></p>
+  <ul>
+    <li><strong>Beat 07 — CONFISCATE — A SLATE BECOMES FOOTAGE.</strong>
+        <code>ep2-b07-point-crf10-0819</code> replaces a title card that has been there in every cut
+        this episode has had. <span class="ok"><strong>PASS on M1–M4</strong></span>, cut-preferred of
+        two takes, and the beat's <code>done_when</code> met clause by clause. <strong>The guard
+        raises his own arm and points at the goblin.</strong> One fault travels with it and it is
+        below — the plate dresses both men in the same uniform.</li>
+    <li><strong>Beat 01 — COLD OPEN — the dawn stops washing out.</strong>
+        <code>ep2-b01-growmotion-crf10-0819</code> replaces its own crf-33 twin: same seed, same
+        recipe, one integer. <span class="ok"><strong>PASS on all five clauses</strong></span> and it
+        fixes the defect the incumbent's verdict admitted against itself.</li>
+    <li><strong>Beat 17 — GOODBYE — the same take, cleaner.</strong>
+        <code>ep2-b17-navy-crf10-0819</code> replaces its crf-33 parent.
+        <span class="ok"><strong>PASS on all five clauses</strong></span> and better on fidelity —
+        with <span class="warn">two honest costs no clause covers</span>, below.</li>
+  </ul>
+  <p><strong>Beat 18 was offered the same upgrade and refused it, on measurement.</strong> Its crf-10
+  re-run came back frozen (interframe median 0.570 against 5.956). Three beats took the flag and one
+  rejected it — that is the whole point of it being a per-beat call.</p>
+</div>
+
+<h2>The cut</h2>
+<video controls playsinline preload="metadata" src="/review/ep2-demo-0819b/ep2-demo-0819b.mp4"></video>
+<p class="sub">1:53 · 14.0 MB · 9:16 · captions burnt in · existing Chatterbox VO muxed in sync.
+<strong>Beat 07 runs 0:35–0:39.</strong> Beat 01 opens the cut. Beat 17 runs 1:22–1:27.
+sha256 <code>617d0abc5c33bd1cde62c87bbbed95c5e9c0dcd095d902ff5487a71617833bca</code>.</p>
+
+<h2 id="beat07">Beat 07 — the one that stopped being a slate</h2>
+<img class="strip" src="/review/ep2-demo-0819b/b07-in-cut.jpg" alt="Eight frames across beat 07. In each frame a tall man in a pale tan wrap tunic with a white waist sash stands at the left and a shorter green-skinned figure with large pointed ears, white hair and an identical pale tunic and white sash stands at the right, both in a grassy field under a pale sky. In the first three frames the tall man's arms hang at his sides. From the fourth frame on he raises his right arm across his body and extends it toward the green figure, his hand reaching the green figure's chest and collar, and holds it there for the remaining frames.">
+<p class="sub">Eight frames evenly spaced across all 97. Frames 1–3: plate pose. Frame 4 on: the arm
+is up and aimed.</p>
+
+<p><strong>What the verdict measured, and why the arm matters more than it sounds.</strong> No wording
+ever aimed this point. Text-to-image put the arm on the <em>goblin</em> 3 of 3, and across 12 of 12
+stills it could not aim a point at all. i2v did both in one seed: the guard's arm lifts at f045, the
+index finger lands at the goblin's throat and collar by f050, and the point holds to f096 — 47 of the
+97 frames. It was measured at <em>his own shoulder</em>, so a camera move could not be scored as the
+action. <strong>F2, "the goblin points", was the pre-registered most-likely failure and never
+fired</strong>; nor did F1 frozen-arms, which is the exact failure that killed beat 18's crf-10 take.
+0 of 96 frame pairs under 0.5 interframe.</p>
+
+<div class="callout red">
+  <p><strong>THE FAULT THAT TRAVELS WITH IT, AND YOU CAN SEE IT IN THE STRIP ABOVE: BOTH MEN ARE
+  WEARING THE SAME UNIFORM.</strong> The init dresses the <em>scavenger</em> in the guard's own pale
+  wrap tunic and white sash, so a beat that has to read as an authority pointing at a scavenger
+  currently reads as two officials in matching kit. The cause is this repo's own positive-placement
+  law for the fifth time: the scavenger's noun phrase carries no garment at all, so the only clothing
+  terms in the prompt are the guard's and they land on both men.</p>
+  <p>The plate is recorded <strong>UNAPPROVED AND PROVISIONAL</strong> by its own spec.
+  <code>ep2-b07-scavcostume-0819</code> is the rung that answers it. The earlier lane's judgement that
+  this plate's faults block <em>promotion</em> is not overturned here — it is narrowed from three
+  faults to one, and the clip is in a <em>bench</em> cut with the caveat attached. Nothing about beat
+  07 is promoted, picked or ack'd by this page.</p>
+</div>
+
+<h2>The three slates that are left, and what each is actually waiting for</h2>
+<div class="callout">
+  <p><strong>Beat 09 — THE PAUSE — the engine can act it; the plate cannot cast it yet.</strong> That
+  is a real change of state, because until tonight nobody knew whether this engine could move a face
+  at all. It can: holding the init at crf 10, the eyes go from downcast behind the lenses to narrowed
+  at f021 to fully closed with the brows drawn at f121, and the hand travels off the cheek — the face
+  working through a thought, performed by the picture rather than described by the prompt. The
+  conditioning numbers moved the way they had to (first-step face difference 39.34 → 0.66, background
+  drift 60.89 → 9.89: the subject moves and the world holds).
+  <strong>What is not there is the man.</strong> The plate's hair comes back brown and shaggy where
+  guard A's is near-black and cropped (7 of 7), the eyes open at a rate of 1 in 4 rather than on
+  command, and the face reads adolescent — and no seed has ever produced the tight framing and open
+  eyes at the same time. So both existing clips are barred from any cut <em>by their own headers</em>,
+  and the beat is a slate on purpose. Its VO is in the cut over the card, which matters here: beat
+  09's line is the episode's punchline.</p>
+  <p><strong>Beat 15 — GOOD LISTENER — unblocked twice today, still short one thing.</strong> §6 came
+  off it (the restaged lines were read and approved) and the "we cannot get him and a rooted plant
+  into one frame at canon scale" blocker is dead — its new plate does exactly that, twice running.
+  What is left is the leaf count: the beat needs two cotyledons and the wording ladder is closed at
+  two rungs with the count still wrong. The named route is a composite init, which is a build.</p>
+  <p><strong>Beat 19 — THE DROP — it missed this train by about an hour.</strong> Its plate blocker
+  died twice today: three draws put the fruit <em>aloft</em>, and the plant that three wordings could
+  not turn into a two-leaf sapling was <em>drawn</em> instead. Then the first motion sample came back
+  and failed in an instructive way — the plant grew and lay down, the fruit never detached, and the
+  clip rendered <em>beat 20's</em> line ("picks the fig up with both hands") inside beat 19, with no
+  hand action in the prompt. The failure is subject attribution, not amplitude, so a fifth wording is
+  the wrong move and that lane says so.</p>
+</div>
+
+<h2>Where the whole episode actually stands</h2>
+<p>Every beat's state was re-derived once today into
+<a href="/review/ep2-picks/cut-readiness-0819.yaml"><code>review/ep2-picks/cut-readiness-0819.yaml</code></a>
+— one row per beat with the take's sha256, the verdict that licenses it, whether its VO exists and
+what it is blocked on, each row citing the cut's own ingredient hashes, a verdict block in a job spec,
+or the beat's <code>done_when</code>. <strong>The honest headline is not the slate count.</strong></p>
+
+<div class="callout">
+  <p><strong>Four beats have a written PASS against a bar that was pre-registered before the pixels
+  existed: 01, 07, 17, 18. Thirteen are best-available. Eight of those thirteen — beats 3, 4, 5, 6,
+  10, 13, 16 and 21 — have no verdict block of any kind, and have ridden five consecutive cuts
+  unchanged.</strong></p>
+  <p>They are not suspected of being bad. They have never been judged, and five appearances in a cut
+  is not five passes. The slates are the loud, tracked problem; the quiet middle is where the unknown
+  in this episode actually lives. It is named rather than fixed, because judging eight beats is its
+  own unit of work with its own bars — and because inventing bars for footage that already exists is
+  exactly how a bar gets bent to fit the clip.</p>
+</div>
+
+<h2>Every beat in this cut</h2>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>beat</th><th>in the cut</th><th>state</th></tr>
+
+  <tr class="pick"><td class="n">1</td><td>COLD OPEN</td>
+      <td class="new"><code>ep2-b01-growmotion-crf10-0819</code><br>
+      <span style="color:var(--muted)">replaces its own crf-33 twin</span><br>
+      <span class="ok"><strong>PASS, cut-preferred</strong></span></td>
+      <td class="new">Same seed, one integer. Luminance ends at 84.8 against a plate at 85.1 where the
+      incumbent bloomed to 148.4; distance from the init at the last frame 15.22 against 65.67. Growth
+      monotone over 85 frames, 0 shrinks. <strong>Fixes the one defect the incumbent's own verdict
+      admitted.</strong></td></tr>
+
+  <tr><td class="n">2</td><td>THE SPRINT</td><td class="warn"><code>ep2-b02-anchor-s20260834</code></td>
+      <td>Carry-forward since 0817. <strong>No verdict block exists on its job</strong> — no bar has
+      ever been answered for this file. Flagged provisional in the cut's own ingredients.</td></tr>
+
+  <tr><td class="n">3</td><td>BAD COVER</td><td class="warn"><code>ep2-b03-refire-0814</code></td>
+      <td>Carry-forward, never judged. One of the eight.</td></tr>
+
+  <tr><td class="n">4</td><td>THE FOOTNOTE</td><td class="warn"><code>ep2-b04-refire-0814</code></td>
+      <td>Carry-forward, never judged. One of the eight.</td></tr>
+
+  <tr><td class="n">5</td><td>THE PATROL</td><td class="warn"><code>ep2-b05-standB</code> · trimmed</td>
+      <td>Carry-forward. The trim is an edit pass, not a verdict.</td></tr>
+
+  <tr><td class="n">6</td><td>THE CLIPBOARD</td><td class="warn"><code>ep2-b06-scene-0814r</code> · trimmed</td>
+      <td>Carry-forward, never judged. One of the eight.</td></tr>
+
+  <tr class="pick"><td class="n">7</td><td>CONFISCATE</td>
+      <td class="new"><code>ep2-b07-point-crf10-0819</code><br>
+      <span style="color:var(--muted)">replaces a SLATE</span><br>
+      <span class="ok"><strong>PASS M1–M4, cut-preferred</strong></span></td>
+      <td class="new">The arm lifts at f045, the fingertip is at the goblin's collar by f050 and holds
+      to f096. F2 "the goblin points" was the most-likely failure and never fired.
+      <strong class="bad">Unfixed and all the plate's: both men wear the guard's uniform.</strong>
+      <a href="#beat07">Frames and the fault above.</a></td></tr>
+
+  <tr><td class="n">8</td><td>INSIDE HIM</td><td class="warn"><code>ep2-b08-twohander</code></td>
+      <td>Carry-forward. The slot is filled; identity is open — both figures come back green, because
+      a contour cannot say which body an attribute belongs to. Three axes closed by measurement.</td></tr>
+
+  <tr><td class="n">9</td><td>THE PAUSE</td><td class="bad">SLATE</td>
+      <td>The engine can move the face now — measured tonight. The plate cannot cast the man: brown
+      shaggy hair at 7 of 7, eyes open at 1 in 4, an adolescent read. Both clips bar themselves from
+      any cut. <strong>Its VO plays over the card, and that line is the punchline.</strong></td></tr>
+
+  <tr><td class="n">10</td><td>NO FORM</td><td class="warn"><code>ep2-b10-pairB</code> · trimmed</td>
+      <td>Carry-forward, never judged. One of the eight.</td></tr>
+
+  <tr><td class="n">11</td><td>THEY LEAVE</td><td class="warn"><code>ep2-b11-w4-s20260903</code></td>
+      <td><strong>Its upgrade was tried tonight and failed.</strong> The crf-10 re-run fired
+      FAIL-COLLAPSE-UNCHANGED <em>and</em> FAIL-EXIT — guard A walks out of frame. The finding is
+      bigger than the fault: <strong>a lower crf does not clean a take up, it re-rolls it.</strong></td></tr>
+
+  <tr><td class="n">12</td><td>RELATED</td><td class="warn"><code>ep2-b12-tightB</code> · untrimmed</td>
+      <td>Two leaves, one bare side-branch, no bush — right after two failures of counting in words.
+      Named and not made: the beat's own record says the trim removes its colour-shift fault, but the
+      trim is 1.38s against a 5s slot with 5s of VO over it.</td></tr>
+
+  <tr><td class="n">13</td><td>THE SHADE</td><td class="warn"><code>ep2-b13-refire-0814</code></td>
+      <td>Carry-forward, never judged. One of the eight.</td></tr>
+
+  <tr><td class="n">14</td><td>THE DEFENSE</td><td class="warn"><code>ep2-b14-macplate-r1s1-0818</code></td>
+      <td>FAIL on M2/M3 and still the beat's best footage. <strong>Parked by steward ruling until the
+      slates close</strong> — three independent measurements now say the gap is taste, not
+      mechanism.</td></tr>
+
+  <tr><td class="n">15</td><td>GOOD LISTENER</td><td class="bad">SLATE</td>
+      <td>§6 came off it today and the "him and a plant in one frame" blocker is dead. Blocked on the
+      leaf count; the route is a composite build.</td></tr>
+
+  <tr><td class="n">16</td><td>WHY</td><td class="warn"><code>ep2-b16-anim-0814</code></td>
+      <td>Carry-forward with a canon fault named: the leaf is the wrong leaf — the same failure as
+      beat 20's wrong branch, the plant improvised per beat instead of described once.</td></tr>
+
+  <tr class="pick"><td class="n">17</td><td>GOODBYE</td>
+      <td class="new"><code>ep2-b17-navy-crf10-0819</code><br>
+      <span style="color:var(--muted)">replaces its crf-33 parent</span><br>
+      <span class="ok"><strong>PASS on all five clauses</strong></span></td>
+      <td class="new">Cleaner conditioning at the source: 7.13% of the plate's pixels off by more than
+      8 levels against crf 33's 29.40%; f000 distance 5.54 against 6.42. The cloak is navy and stays
+      navy. <strong class="warn">Two costs no clause covers: P2 passes on a thin margin, and overall
+      motion falls 30% on an already-still take. One line to go back.</strong></td></tr>
+
+  <tr><td class="n">18</td><td>THE DECISION</td><td class="ok"><code>ep2-b18-tremble-s20260871</code></td>
+      <td>Unchanged on purpose. <strong>Offered the same crf-10 upgrade and refused it</strong> —
+      interframe median 0.570 against 5.956, 18 of 120 pairs near-still against 3. On a macro of fine
+      movement, a cleaner init starves the motion. <span class="warn">Matte vs gloss on the fig is
+      still open and still yours.</span></td></tr>
+
+  <tr><td class="n">19</td><td>THE DROP</td><td class="bad">SLATE</td>
+      <td>Two passing plates now exist, and the first motion sample failed: the plant grew and lay
+      down, the fruit never detached, and it rendered beat 20's hands inside beat 19.</td></tr>
+
+  <tr><td class="n">20</td><td>EVIDENCE</td><td class="warn"><code>ep2-b20-shape</code> · head-trimmed</td>
+      <td>Best-available with two disqualifying faults named: the bare branch is a mature-tree limb
+      rather than the sapling's own empty stem, and he never looks up. The colour question is
+      closed — the fruit is purple.</td></tr>
+
+  <tr><td class="n">21</td><td>THE ANSWER</td><td class="warn"><code>ep2-b21-daylight-0814</code></td>
+      <td>Carry-forward, never judged. Silent by design — the leaf tilts and holds, then the card.</td></tr>
+</table>
+</div>
+<p class="sub"><span class="ok">green</span> = a lane judged this clip as doing its job, with the
+fault named · <span class="warn">amber</span> = best-available: a steward pick, an unjudged
+carry-forward, or footage that misses its bar · <span class="bad">red</span> = slate ·
+<span class="new">blue</span> = new since the 2026-08-19 cut. <strong>All three blue rows
+<span class="ok">pass their bars</span></strong>, and one of them was a slate.</p>
+
+<h2>What this cut cost and what it did not touch</h2>
+<ul>
+  <li><strong>$0, no GPU, no synthesis.</strong> One ffmpeg assembly, two local file copies and one
+  scp off the box. Every clip in it was rendered by another lane and judged by another lane before
+  this page existed.</li>
+  <li><strong>The VO is byte-identical to the 2026-08-19 cut.</strong> All 18 mp3 files and all 18
+  json manifests hash the same — verified rather than asserted, because "same VO byte for byte" is a
+  claim a checksum can refute.</li>
+  <li><strong>Eighteen of twenty-one beats have a VO take and the other three are silent in the
+  script</strong> (beats 2 and 21 are pure action; beat 19's text is stage direction). Nothing in this
+  episode is waiting on voice.</li>
+  <li><strong>Nothing is promoted.</strong> Bench assembly via <code>--out</code>: no leaf, not in
+  <code>lineage.yaml</code>, no <code>plate_ack</code>, no pick written by this page. Every swap here
+  is veto-able in one line, and the two clips that were replaced are still on disk in
+  <code>review/ep2-demo-0819/sources/</code>.</li>
+</ul>
+
+<footer>
+  Per-beat source manifest with hashes and verdict citations:
+  <a href="/review/ep2-demo-0819b/sources/picks-0819b.yaml"><code>sources/picks-0819b.yaml</code></a> ·
+  full readiness ledger:
+  <a href="/review/ep2-picks/cut-readiness-0819.yaml"><code>review/ep2-picks/cut-readiness-0819.yaml</code></a> ·
+  supersedes <a href="/review/ep2-demo-0819/">the 2026-08-19 cut</a>.
+  Assembled by <code>pipeline/render_t3.py</code> in bench mode on 2026-08-19. Model for every clip:
+  Lightricks LTX-2.3 distilled (bf16) on the rtx5090; voice: Chatterbox 0.5B on MPS. Cost $0.00.
+</footer>
+
+</div>
+</body>
+</html>
