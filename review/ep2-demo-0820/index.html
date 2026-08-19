@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — episode 2 DEMO CUT, 2026-08-20 (the guards get their voices; eight beats stop playing backwards)</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 650; color: #dfe3e8; }
+  p { max-width: 78ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  .callout.red { border-left-color: #b06060; }
+  .callout.green { border-left-color: #5f9d6c; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  video { width: 100%; max-width: 420px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  img.strip { width: 100%; height: auto; border: 1px solid var(--line);
+              border-radius: 5px; display: block; margin: 14px 0 6px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  .warn { color: var(--warn); } .new { color: var(--new); }
+  tr.pick td { background: #1c2530; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .counts { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .counts li { background: var(--panel); border: 1px solid var(--line); border-radius: 5px;
+               padding: 10px 14px; font-size: 14px; }
+  .counts b { display: block; font-size: 21px; font-variant-numeric: tabular-nums; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  ul { max-width: 78ch; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Sapling — episode 2, DEMO CUT (2026-08-20)</h1>
+  <p class="sub">The 0819c cut with <strong>no pick changed</strong> and two finished things finally
+  applied to it: <strong>the six re-voiced guard takes</strong>, and <strong>the fix that stops eight
+  beats playing partly backwards</strong>. Same eighteen clips at the same eighteen hashes — checked,
+  not assumed. 1:53, <strong>18 beats of footage and 3 slates</strong>. No render, no voice synthesis,
+  no GPU, no spend, $0.</p>
+</header>
+
+<p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF. PRIVATE REVIEW PAGE.</p>
+
+<div class="callout green">
+  <p><strong>WHAT CHANGED SINCE 0819c — nothing about what is in the cut, everything about how it was
+  assembled.</strong> Both of these were finished, measured and sitting on disk unpublished. Neither
+  needed a decision from you, a GPU, or a dollar.</p>
+  <ul>
+    <li><strong>1. THE VOICES — the thing you called while watching 0819c.</strong> You said Guard 2
+        sounds like the sapling. He did, by <span class="bad">1.7&nbsp;Hz</span>. Your pick — <strong>B</strong>
+        — is enacted here on six takes: <strong>beats 5, 6, 7, 8 and 10 over real footage, and beat 9
+        over its slate card.</strong> Measured through this finished master, Guard 2 now sits
+        <span class="ok"><strong>32.3&nbsp;Hz</strong></span> clear of the tree instead of 2.0.
+        <a href="#voices">The proof that it is actually in the file is below</a>, because a copied file
+        is not a muxed file.</li>
+    <li><strong>2. THE PALINDROME — a third of the episode was playing backwards and printing nothing
+        about it.</strong> When a beat's voice outran its footage, the tool played the clip forward and
+        then <em>reversed</em>. It was firing on <strong>8 of the 18 footage beats</strong>. It now
+        holds the last frame instead. <strong>This cut is that fix's first published use.</strong>
+        <a href="#hold">Two beats were frame-compared and both went to zero.</a></li>
+  </ul>
+  <p><strong>What did NOT change, stated plainly:</strong> every pick, every verdict, every count. Beat
+  16 stays a slate on your 2026-08-16 ruling. Beat 19's fall stays best-available. Six written passes,
+  eight verdicts that are not passes, four never judged — <em>identical to 0819c</em>, because no beat
+  was judged or re-rendered between the two cuts. Nothing here is an upgrade to any picture.</p>
+</div>
+
+<h2>Known issues — carried forward, not fixed, and one of them is still the key</h2>
+<div class="callout red">
+  <p><strong>1. THE GOBLIN LETTER IS STILL WAITING AND IT IS STILL ONE LETTER.</strong> You watched
+  0819c and asked why some goblin scenes show an adult. Nine beats show two different characters and
+  the split falls exactly on the render date — round and young on everything rendered on or before
+  08-16, lean adult on 08-18 and 08-19. The trace concludes <strong>nobody authorised the adult</strong>:
+  it entered through a model-written ledger entry, was rewritten as "a lean wiry adult goblin man", and
+  your own approved reference set was blacklisted under <code>not_these:</code> with the comment
+  "~4 heads, oversized cranium, toddler stance". <strong>Answer A</strong> (the round young one),
+  <strong>B</strong> (the adult), or name a third, at
+  <a href="/review/ep2-goblin-design-0819/">/review/ep2-goblin-design-0819</a>. Every goblin-identity
+  render in the project is frozen behind it, including a <em>one-job</em> fix for beat 20.
+  <strong>This cut touches none of it</strong> — no goblin render was queued, attempted or picked here.</p>
+  <p><strong>2. THE GUARDS' LOOK IS STILL OPEN, and it is a different axis from their voices.</strong>
+  Do they read as grown men, and does it matter? Recast / Accept / Stage around it, at
+  <a href="/review/ep2-guards-0818/">/review/ep2-guards-0818</a>. It gates beats 05, 06, 10 and 11 —
+  all best-available — and beat 09's plate. <strong>Fixing how they sound did nothing whatever about
+  how they look</strong>, and this page is not claiming otherwise. One sequencing note: that page
+  illustrates the goblin with a frame captioned "the current adult goblin", which is the very adult the
+  letter above says nobody authorised — so the letter comes first.</p>
+  <p><strong>3. Beat 17's restaged line has still never been read by you</strong> (§6): "The scavenger
+  pushes himself up, gives his cloak a shake, and turns to go." The beat is meanwhile a written PASS
+  and is shipping in this review cut, exactly as it did in 0819c. <strong>4. D23, the automation
+  charter, still wants your signature</strong> — <code>DECISIONS.md:1532</code>. Silence is explicitly
+  not acceptance there. Nothing in this cut depends on either.</p>
+</div>
+
+<h2>The cut</h2>
+<video controls playsinline preload="metadata" src="/review/ep2-demo-0820/ep2-demo-0820.mp4"></video>
+<p class="sub">1:53 · 11.8 MB · 9:16 · captions burnt in · Chatterbox VO muxed in sync.
+<strong>The re-voiced guards run 0:24–0:51</strong> (beats 5–10; beat 9 is the slate with the
+punchline). <strong>Beat 06 at 0:29 is the clearest single demonstration of both fixes at once.</strong>
+sha256 <code>b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486</code>.</p>
+
+<ul class="counts">
+  <li><b>18</b> beats of footage</li>
+  <li><b>3</b> slates <span class="sub">(9, 15, 16)</span></li>
+  <li><b>6</b> carry a written PASS <span class="sub">(unchanged)</span></li>
+  <li><b>4</b> never judged at all <span class="sub">(unchanged)</span></li>
+  <li><b>6</b> VO takes replaced</li>
+  <li><b>8</b> beats no longer reversed</li>
+  <li><b>$0</b> and no GPU</li>
+</ul>
+<p class="sub">The first four add up: 6 passes + 8 verdicts that are not passes + 4 never judged = the
+18 footage beats. They are meant to be checked, and they are the same four numbers 0819c published —
+that is the honest report, not an oversight.</p>
+
+<h2 id="voices">The voices — and the proof they are actually in the file</h2>
+
+<p>Your call, watching 0819c: <em>"guard 2 has the same voice as the sapling."</em> You were right to
+within <strong>1.7&nbsp;Hz</strong>. Guard 2 measured 109.1&nbsp;Hz against the sapling's 107.4 — the
+only confusable pair in the episode. <strong>The written cast was never the problem:</strong>
+<code>voices.yaml</code> casts the tree as <code>bm_fable</code> and Guard 2 as <code>am_echo</code>,
+two different voices. Both guards were cast <em>after</em> the 2026-07-25 voice-shaping pass, so
+neither had an entry and both cloned from the same shared paragraph at neutral pitch. Guard 1 drifted
+clear by luck. Guard 2 landed on the tree. Three candidates were built and measured, and
+<strong>you picked B</strong>.</p>
+
+<div class="callout">
+  <p><strong>Guard 1 moved too, and you did not ask for that.</strong> Named so you can veto it in a
+  line. His reference sat <strong>1.1&nbsp;Hz</strong> from the tree's and he only cleared 0819c
+  because the synthesiser is non-deterministic and happened to push him +14&nbsp;Hz that day — a
+  loaded gun, not a pass. He was moved up a band on measurement, <em>not recast</em>: same base voice
+  throughout. If you want him back where he was, say so.</p>
+</div>
+
+<div class="scroll">
+<table>
+  <tr><th>measured through the finished master</th><th>0819c</th><th>0820</th><th>what it means</th></tr>
+  <tr><td>Sapling (beat 01, the narrating voice)</td><td class="n">113.1 Hz</td><td class="n">112.8 Hz</td>
+      <td>Untouched — same take, same bytes. The reference point did not move.</td></tr>
+  <tr class="pick"><td><strong>Guard 2</strong> (beats 6, 8, 10)</td>
+      <td class="n bad">111.1 Hz</td><td class="n ok">145.1 Hz</td>
+      <td><strong>Separation from the tree goes 2.0&nbsp;Hz&nbsp;→&nbsp;32.3&nbsp;Hz.</strong> This is
+      the defect you heard.</td></tr>
+  <tr><td>Guard 1 (beats 5, 7, 9)</td><td class="n warn">140.9 / 165.9 / 136.1</td>
+      <td class="n ok">196.9 / 185.3 / 214.1</td>
+      <td>Clear of the tree by construction rather than by luck.</td></tr>
+</table>
+</div>
+
+<div class="callout green">
+  <p><strong>WHY THIS PAGE MEASURES THE FINISHED FILE INSTEAD OF THE TAKES — the trap that would have
+  shipped the old voices a second time.</strong></p>
+  <p>The re-voice record and the work ladder both say the assembler picks these takes up out of the
+  node directory automatically: <em>"no flag, no copy step."</em> <strong>The code disagrees.</strong>
+  <code>find_audio()</code> and <code>vo_manifest()</code> in <code>render_t3.py</code> resolve against
+  the <code>--clips</code> directory and nowhere else — there is no fallback to the node — so running
+  the documented command verbatim would have re-muxed the <em>old</em> VO into a page announcing new
+  voices. Pointing <code>--clips</code> at the node's own folder is not a way out either; that
+  directory holds no clips and the tool refuses it.</p>
+  <p>So the six mp3 and their six json sidecars were copied in explicitly. <strong>And because a hash
+  of a copied file only proves what went into the directory, the finished mp4 was measured two
+  independent ways:</strong></p>
+  <ul>
+    <li><strong>Waveform.</strong> Each beat's audio was decoded back <em>out</em> of the episode and
+        cross-correlated against the new take and the old take. Against the new take:
+        <span class="ok"><strong>0.975, 0.986, 0.983, 0.994, 0.993, 0.987</strong></span>. Against the
+        old take: <span class="muted">0.062, 0.047, 0.073, 0.071, 0.084, 0.149</span>. Six for six, and
+        not close.</li>
+    <li><strong>Pitch.</strong> The table above — measured on audio pulled out of each episode with the
+        same estimator over the same window, so the two cuts are comparable.</li>
+  </ul>
+  <p class="sub">Both numbers for Guard 2's separation are honest and they differ: <strong>26.0&nbsp;Hz</strong>
+  measured on the bare mp3 takes, <strong>32.3&nbsp;Hz</strong> measured through the master over the
+  whole beat including the wind bed. Different windows, different numbers, both well clear of the
+  20&nbsp;Hz bar.</p>
+</div>
+
+<p><strong>Two limits that travel with the re-voice</strong>, from its own record rather than
+discovered here. <strong>Short lines undershoot:</strong> beat 07 is five words and rendered 177.8,
+174.5, 170.2 and 181.8 across four attempts, consistently below the same voice's long lines — the
+clone does not get enough voiced material to reach its reference. The best of the four is what is in
+the cut. And <strong>Guard 1 and the scavenger overlap per take</strong> even though their medians are
+24.2&nbsp;Hz apart, because the scavenger's own takes span a 36&nbsp;Hz range that predates this pass.
+Not fixed: he is outside your ruling's scope, and the mitigating fact is that the two never alternate
+— the guards speak beats 05–10 and the scavenger 13–20 — whereas the pair you actually caught
+alternates line by line.</p>
+
+<h2 id="hold">The palindrome fix — its first published use</h2>
+
+<p>When a beat's slot outran its clip by more than 0.05s, <code>render_t3</code> filled the gap by
+playing the footage forward and then <strong>reversed</strong>, looping that palindrome — and it
+printed nothing while doing it. In 0819c it was firing on <strong>8 of the 18 footage beats: 1, 3, 4,
+6, 10, 11, 17 and 18.</strong> The clip now plays once and its <strong>final frame is held</strong> for
+the remainder, and the tool prints the substitution on every beat it fires on. The reversal survives
+only as an opt-in flag that nothing in this tree sets.</p>
+
+<img class="strip" src="/review/ep2-demo-0820/b06-hold-vs-palindrome.jpg" alt="A two-row comparison strip of six frames each from beat 6 of the episode, at matched timestamps from 29.6 to 34.7 seconds. Both rows show a dark-haired guard in a long brown belted coat standing in a green field under a pale blue sky, holding a rectangular bark board covered in writing. In the top row, labelled 0819c palindrome, the board is raised and facing the camera in the first three frames, then at 32.7 seconds it is turned flat and horizontal in his hands, then raised and facing the camera again in the last two frames. In the bottom row, labelled 0820 last-frame hold, the board is raised and facing the camera in all six frames, in an identical pose.">
+<p class="sub">Beat 06, the same six timestamps in both cuts. <strong>Top: the board goes up, back
+down, and up again.</strong> Bottom: he turns it up once and it stays up.</p>
+
+<div class="callout green">
+  <p><strong>MEASURED, ON TWO BEATS, NOT INFERRED FROM THE COMMIT.</strong> Frames were pulled from the
+  <em>assembled cuts</em> at 24fps across each beat's fill window — the span after its clip has already
+  played once — and cropped to the picture strictly above the caption strip, because caption text
+  changes on voice-chunk boundaries and that is motion which is not the footage.</p>
+  <ul>
+    <li><strong>Beat 01</strong> — a 5.04s clip in a 9.46s slot, identical in both cuts.
+        Moving frame-pairs in the fill window: <span class="bad">105 of 105</span> in 0819c →
+        <span class="ok"><strong>0 of 105</strong></span> here. 70 of those pairs are now bit-identical;
+        the largest single-pixel change anywhere is 4 levels, which is codec ringing.</li>
+    <li><strong>Beat 06</strong> — a 1.92s clip in a 6.46s slot.
+        <span class="bad">100 of 114</span> → <span class="ok"><strong>0 of 108</strong></span>, 80 pairs
+        bit-identical.</li>
+  </ul>
+  <p><strong>And what the fill now contains, rather than just that it is still:</strong> every fill
+  frame was matched against every frame of its own clip. In 0819c beat 01's best match walks
+  <em>backwards</em> — 120, 119, 118, 117, 116 … — and beat 06's runs <strong>45 → 0 → 45 → 25</strong>,
+  two direction changes inside one slot, which is the board turning backwards, forwards and backwards
+  again. In this cut it is the last frame, every time: frame 120 for all 105 of beat 01's fill frames
+  and frame 45 for all 109 of beat 06's.</p>
+  <p><strong>The other five were not frame-checked.</strong> Beats 3, 4, 11, 17 and 18 take the same
+  branch and print the same line, but two beats were verified and five are inferred. Said plainly
+  rather than implied.</p>
+</div>
+
+<img class="strip" src="/review/ep2-demo-0820/b01-hold-vs-palindrome.jpg" alt="A two-row comparison strip of six frames each from beat 1 of the episode, at matched timestamps from 1.2 to 9.2 seconds. Both rows show a close view of a small two-leaved seedling carrying a single round purple fig, lit by a warm orange shaft of light through tall grass, with drifting specks in the air. The first frame of each row carries the episode title card. In the top row, labelled 0819c palindrome, the final frame at 9.2 seconds shows green colour returning to the crown of the fig and the grass in a different position. In the bottom row, labelled 0820 last-frame hold, the last four frames are visually identical to one another.">
+<p class="sub">Beat 01 is the subtle one and it is included for honesty rather than for drama. The
+fig is <em>already</em> purple early on, so the reversal shows mainly at the fig's crown and in the
+drifting specks — which is why the numbers above, not this picture, are the evidence.</p>
+
+<div class="callout">
+  <p><strong>A claim from 0819c that the pixels do not support, corrected rather than repeated.</strong>
+  That page and its manifest both said beat 01's fig "goes green, ripens to purple, and un-ripens to
+  green again". Opening the frames, the fig is purple by 1.2s and stays purple. The reversal is real
+  and it is 105 pairs out of 105 — the colour story wrapped around it was overstated.</p>
+  <p><strong>An honest cost of the fix, on the beat with the biggest gap.</strong> Beat 18 is a 5.04s
+  clip in an 10.96s slot, so it now holds a still frame for 5.9 seconds. It previously ran a tremble
+  backwards — and a tremble reversed still reads as a tremble. <strong>This is the one beat where the
+  old behaviour was arguably less noticeable than the new one.</strong> The real cause is unchanged
+  either way: the voice is longer than the footage, and the fix for that is longer footage or shorter
+  lines, per beat.</p>
+  <p><strong>Beat 10 quietly dropped off the list, and it was the re-voice that did it</strong> — not a
+  second fix. Its new take is 0.10s shorter, which pulled the slot to 4.08s against a 4.04s clip, and
+  a 0.04s margin is inside the branch's own threshold. So the fill fires on seven beats here, not
+  eight. Side effect, recorded so nobody reads it as an achievement.</p>
+</div>
+
+<h2>The runtime moved by 0.13 seconds, and the voice got 1.77 seconds longer</h2>
+<div class="callout">
+  <p>Both are true and they look contradictory, so here is the arithmetic. <strong>Slots fit to the
+  longer of the script length and the voice length</strong>, so voice growth underneath the script
+  floor buys no runtime at all: beat 05 gained 0.86s of speech and 0.04s of slot; beat 07 gained 1.11s
+  of speech and 0.21s of slot; beat 09 gained 0.18s of speech and nothing. Meanwhile beats 06, 08 and
+  10 got <em>shorter</em> and gave slot back — −0.25s, −0.05s, −0.09s. Net −0.14s of slot, against
+  −0.13s measured. <strong>No clip was stretched, trimmed, looped or reversed.</strong></p>
+  <p class="sub"><strong>A correction while we are here:</strong> 0819c's own manifest records its
+  duration as 113.29s. The published file measures <strong>113.46s</strong>. The delta above is against
+  the measurement, not against that number.</p>
+</div>
+
+<h2>Every beat in this cut</h2>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>beat</th><th>in the cut</th><th>state</th></tr>
+
+  <tr class="pick"><td class="n">1</td><td>COLD OPEN</td>
+      <td class="ok"><code>ep2-b01-growmotion-crf10-0819</code><br>
+      <span class="ok"><strong>PASS, 5 clauses</strong></span></td>
+      <td class="new">Same take, same sha. <strong>Hold fix frame-verified: 105 of 105 moving pairs →
+      0.</strong> Its verdict passed "growth monotone, 0 shrinks" — true of the file, and until now
+      false of the cut. Now both.</td></tr>
+
+  <tr><td class="n">2</td><td>THE SPRINT</td><td class="warn"><code>ep2-b02-anchor-s20260834</code></td>
+      <td><strong>Never judged</strong> — one of four (2, 8, 12, 20). Silent by design.</td></tr>
+
+  <tr><td class="n">3</td><td>BAD COVER</td><td class="warn"><code>ep2-b03-refire-0814</code></td>
+      <td><strong class="bad">FAIL:</strong> the trunk he hides behind does not exist until f015.
+      Its 0.34s tail is now a hold.</td></tr>
+
+  <tr><td class="n">4</td><td>THE FOOTNOTE</td><td class="warn"><code>ep2-b04-refire-0814</code></td>
+      <td><strong class="bad">FAIL:</strong> the eyes never move, and only the eyes carry this beat.</td></tr>
+
+  <tr class="pick"><td class="n">5</td><td>THE PATROL</td><td class="warn"><code>ep2-b05-standB</code> · trimmed<br>
+      <span class="new">new VO</span></td>
+      <td class="new"><strong>Guard 1 re-voiced</strong> (196.9 Hz through the master, was 140.9).
+      <strong class="bad">Picture untouched and still FAIL on 4 of 7</strong>, and neither man wears the
+      sash you froze. A voice does not fix a picture.</td></tr>
+
+  <tr class="pick"><td class="n">6</td><td>THE CLIPBOARD</td><td class="warn"><code>ep2-b06-scene-0814r</code> · trimmed<br>
+      <span class="new">new VO</span></td>
+      <td class="new"><strong>Both fixes at once — watch this one first.</strong> Guard 2 re-voiced,
+      and the worst palindrome in the episode is gone (100 of 114 → 0 of 108).
+      <strong class="bad">Still not a pass:</strong> 3 of 4, the board is the wrong size.</td></tr>
+
+  <tr class="pick"><td class="n">7</td><td>CONFISCATE</td>
+      <td class="ok"><code>ep2-b07-point-crf10-0819</code><br>
+      <span class="ok"><strong>PASS M1–M4</strong></span><br><span class="new">new VO</span></td>
+      <td class="new">Guard 1 re-voiced. <strong class="bad">Unfixed, all the plate's: both men wear the
+      guard's uniform</strong>, so an authority pointing at a scavenger reads as two officials.</td></tr>
+
+  <tr class="pick"><td class="n">8</td><td>INSIDE HIM</td><td class="warn"><code>ep2-b08-twohander</code><br>
+      <span class="new">new VO</span></td>
+      <td class="new">Guard 2 re-voiced. <strong>Never judged</strong> — one of the four. Slot filled,
+      identity open: both figures come back green because a contour cannot say which body an attribute
+      belongs to.</td></tr>
+
+  <tr class="pick"><td class="n">9</td><td>THE PAUSE</td><td class="bad">SLATE<br>
+      <span class="new">new VO</span></td>
+      <td class="new">Still a slate, and <strong>the one slate whose voice changed</strong> — Guard 1's
+      re-voiced take plays over the card, and that line is the episode's punchline. The hair axis was
+      closed by measurement: eight renders, brown arrived all eight times. Next route is a build, not a
+      wording rev.</td></tr>
+
+  <tr class="pick"><td class="n">10</td><td>NO FORM</td><td class="warn"><code>ep2-b10-pairB</code> · trimmed<br>
+      <span class="new">new VO</span></td>
+      <td class="new">Guard 2 re-voiced. Also the beat that <strong>fell off the fill list</strong> as a
+      side effect of the shorter take. <strong class="bad">Still FAIL:</strong> the blank board faces the
+      camera, not the partner.</td></tr>
+
+  <tr><td class="n">11</td><td>THEY LEAVE</td><td class="warn"><code>ep2-b11-w4-s20260903</code></td>
+      <td>An earlier passing verdict was RETIRED over identity collapse across f16–f21. Its 0.54s tail
+      is now a hold. <span class="warn">On the board under "picks — veto only"; silence accepts.</span></td></tr>
+
+  <tr><td class="n">12</td><td>RELATED</td><td class="warn"><code>ep2-b12-tightB</code> · untrimmed</td>
+      <td><strong>Never judged</strong> — one of the four. Its seed axis closed 0 for 5, and the close
+      found the cause: a clause in the <em>positive</em> prompt asking for a figure "out of frame",
+      which a diffusion positive cannot render as an absence. <strong>No take has earned a pick.</strong></td></tr>
+
+  <tr><td class="n">13</td><td>THE SHADE</td><td class="warn"><code>ep2-b13-refire-0814</code></td>
+      <td>The end state passes, and it grows a mature forked tree and climbs it to get there —
+      <strong class="bad">against your ruling that the sapling is tiny.</strong></td></tr>
+
+  <tr><td class="n">14</td><td>THE DEFENSE</td><td class="warn"><code>ep2-b14-macplate-r1s1-0818</code></td>
+      <td>FAIL on M2/M3 and still the beat's best footage. <strong>Parked by steward ruling until the
+      slates close</strong> — three measurements say the gap is taste, not mechanism.</td></tr>
+
+  <tr><td class="n">15</td><td>GOOD LISTENER</td><td class="bad">SLATE</td>
+      <td><strong>The only slate where nothing whatever exists.</strong> Blocked on the leaf count; the
+      wording ladder is closed at two rungs. The route is a composite build — the instrument that
+      worked on beat 19.</td></tr>
+
+  <tr><td class="n">16</td><td>WHY</td><td class="bad">SLATE</td>
+      <td>Stays slated on your 2026-08-16 ruling — <em>"both of them are wrong though and do not
+      resemble the sapling."</em> <strong>This assembly took no new judgement here</strong>; 0819c
+      applied it and nothing has reversed it. One line puts the clip back. Its VO still plays.</td></tr>
+
+  <tr><td class="n">17</td><td>GOODBYE</td>
+      <td class="ok"><code>ep2-b17-navy-crf10-0819</code><br>
+      <span class="ok"><strong>PASS, 5 clauses</strong></span></td>
+      <td>Unchanged. <span class="warn">Two costs no clause covers: P2 passes on a thin margin, and
+      overall motion falls 30% on an already-still take.</span> <strong>§6: its restaged line is still
+      unread by you.</strong></td></tr>
+
+  <tr><td class="n">18</td><td>THE DECISION</td><td class="ok"><code>ep2-b18-tremble-s20260871</code><br>
+      <span class="ok"><strong>PASS</strong></span></td>
+      <td>Unchanged for the third cut running. <span class="warn">The biggest fill gap in the episode —
+      5.9s of held frame, and the one beat where the reversal was arguably less noticeable.</span>
+      Matte vs gloss on the fig is still open and still yours.</td></tr>
+
+  <tr><td class="n">19</td><td>THE DROP</td>
+      <td class="ok"><code>ep2-b19-dropcomp-0819</code><br>
+      <span class="ok"><strong>BAR: PASS, 8 of 8 + B5b</strong></span></td>
+      <td><strong>The fall exists.</strong> 48px down, 46&deg; over, everything else bit-identical to
+      your picked plate. <strong class="bad">He does not notice — the third clause of the definition is
+      absent.</strong> Best-available on a steward ruling, not a pick. It cleared the old reversal
+      branch on a 0.0000s margin; that defence is no longer load-bearing.</td></tr>
+
+  <tr><td class="n">20</td><td>EVIDENCE</td><td class="warn"><code>ep2-b20-shape</code> · head-trimmed</td>
+      <td><strong>Never judged</strong> — one of the four. Two faults its own definition calls
+      disqualifying: the branch is a mature-tree limb, and he never looks up. <strong>Beat 20 did get
+      real footage on 08-19 and it is deliberately not here</strong> — two plate faults, and its
+      one-job fix is frozen behind the goblin letter.</td></tr>
+
+  <tr><td class="n">21</td><td>THE ANSWER</td>
+      <td class="ok"><code>ep2-b21-daylight-0814</code><br>
+      <span class="ok"><strong>PASS, 4 clauses</strong></span></td>
+      <td>Unchanged. The tilt is monotone, deliberate, and it stops.
+      <span class="warn">One open question and it is yours: the leaf that tilts is not the leaf in the
+      plate.</span></td></tr>
+</table>
+</div>
+<p class="sub"><span class="ok">green</span> = a written pass against a bar registered before the
+pixels existed · <span class="warn">amber</span> = best-available: a steward pick, an unjudged
+carry-forward, or footage that misses its bar · <span class="bad">red</span> = slate ·
+<span class="new">blue</span> = changed since 0819c. <strong>No row's verdict changed</strong>; the
+blue is entirely voices and fills.</p>
+
+<h2>The cheapest unblocking item in the episode, and it still needs no GPU</h2>
+<div class="callout">
+  <p><strong>THERE IS NO CANONICAL SAPLING DESCRIPTION.</strong> Beat 03 grows an eight-leaf woody twig
+  that does not exist until f015. Beat 13 grows a mature forked tree and has him climb it. Beat 16
+  filled the screen with a nine-lobed palmate leaf you had already rejected. Beat 21's leaf is not the
+  leaf in the plate. Beat 20's branch is a mature-tree limb. Beat 12's two oval cotyledons are the only
+  ones anybody got on purpose, and they came from a geometry lever rather than from a description.</p>
+  <p><strong>One description would govern beats 03, 12, 13, 15, 16, 19, 20 and 21 — eight of
+  twenty-one.</strong> Every failure in that list is the plant being improvised per beat instead of
+  described once. Defining it is yours (R4), it costs no GPU, and your own 2026-08-16 ruling already
+  filed the question. Named here, not answered, and nothing is queued against it.</p>
+</div>
+
+<h2>What this cut cost and what it did not touch</h2>
+<ul>
+  <li><strong>$0, no GPU, no synthesis, no network.</strong> One ffmpeg assembly and twelve local file
+  copies. Every clip was made and judged by another lane; every voice take was synthesised by another
+  lane against a ruling you had already given.</li>
+  <li><strong>Eighteen clips at eighteen unchanged hashes, and twelve of the eighteen VO takes byte-identical
+  to 0819c</strong> — verified, not asserted. Only the six takes your ruling covers moved, and their
+  json sidecars moved with them, because copying the audio without its measured cue points would put
+  new speech under old caption timings.</li>
+  <li><strong>Nothing is promoted.</strong> Bench assembly via <code>--out</code>: no leaf, nothing in
+  <code>lineage.yaml</code>, no <code>plate_ack</code>, no pick written by this page. Every clip it
+  replaced is still on disk, and every superseded voice take is in the node's <code>vo-archive/</code>.</li>
+  <li><strong>No script text was touched.</strong> The re-voice is a re-synthesis of lines you have
+  already read and approved — the ruled-legal class — so §6 is satisfied and the assembler's approval
+  gate was passed, not bypassed.</li>
+  <li><strong>One wording defect is still on screen and is not this assembly's to change:</strong>
+  <code>render_t3</code> prints "[ footage pending ]" on every slate card. True for beat 15. Not true
+  for beat 16, where footage exists and is barred by your ruling, or beat 9, where two clips exist and
+  bar themselves. It is one string in a shared tool.</li>
+</ul>
+
+<footer>
+  Per-beat source manifest with hashes, the full verification method and the numbers behind every claim
+  on this page:
+  <a href="/review/ep2-demo-0820/sources/picks-0820.yaml"><code>sources/picks-0820.yaml</code></a> ·
+  voice provenance:
+  <a href="/review/ep2-demo-0820/sources/guards-revoice-0819.yaml"><code>sources/guards-revoice-0819.yaml</code></a> ·
+  readiness ledger:
+  <a href="/review/ep2-picks/cut-readiness-0819.yaml"><code>review/ep2-picks/cut-readiness-0819.yaml</code></a> ·
+  supersedes <a href="/review/ep2-demo-0819c/">the 0819c cut</a>.
+  Assembled by <code>python3 pipeline/render_t3.py sapling 002b --clips
+  review/ep2-demo-0820/sources --out review/ep2-demo-0820/ep2-demo-0820.mp4</code> — the identical
+  invocation 0819c used with one directory name changed, after the six new voice takes were copied into
+  that directory, which is the step the records said was unnecessary and the code says is mandatory.
+  Models: Lightricks LTX-2.3 distilled (bf16) on the rtx5090 for seventeen clips, no model at all for
+  beat 19; voice Chatterbox 0.5B on MPS. Cost $0.00.
+</footer>
+
+</div>
+</body>
+</html>
