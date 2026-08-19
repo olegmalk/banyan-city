@@ -299,3 +299,21 @@ verdict_status_recommendation: >-
   of `best-available` is footage a verdict lets in without calling it a pass. What it
   removes is the possibility of reading five appearances as five passes.
 verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted, never widened.
+verdict_addendum_terminal_freeze_measured_after_the_read: >-
+  ADDED THE SAME NIGHT, MINUTES AFTER THE VERDICT ABOVE, AND IT IS A SECOND
+  INDEPENDENT FAULT THE COLD READ DID NOT CATCH. review/ep2-picks/exact_freeze_index.py
+  on this exact file: `terminal_freeze_index=38  terminal_freeze_len=59  dup_pairs=58
+  runs=[(38, 59)]`. SIXTY-ONE PERCENT OF THIS CLIP IS ONE PICTURE — frames 38 to 96 are
+  identical adjacent pairs at ncc 1.0000, a single unbroken trailing run and the only run
+  in the clip. Parity-collapsed lag-4 mean-abs agrees independently (57 consecutive
+  frames from f36 under 1.0 level, series median 0.193). It is written as an addendum
+  rather than folded into the verdict because the sequence matters: the read was made
+  first and on the pictures, and this number was taken afterwards; had it been taken
+  first it would have coloured the read. THE VERDICT DOES NOT CHANGE — it was already
+  FAIL on three clauses — but the fault list does, and it matters for what the beat needs
+  next. done-definitions beats.03.hold_is_not_freeze draws exactly this distinction and
+  is worth quoting against this file: "A long held crouch is what this beat is; a frozen
+  tail is dead air." There is no crouch here to hold, so this is the second case and not
+  the first: 2.46 seconds of the 4.04-second slot are dead air. Beat 03's slot is
+  therefore carrying less live footage than its duration suggests, which an assembly
+  deciding trims should know.
