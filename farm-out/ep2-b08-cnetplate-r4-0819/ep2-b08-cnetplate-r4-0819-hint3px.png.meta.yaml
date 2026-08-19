@@ -1,0 +1,38 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-b08-cnetplate-r4-0819
+arm: hint3px
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260819
+cost_usd: 0
+controlnet: xinsir/controlnet-scribble-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition)
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 0.45
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: pipeline/control/b08-pose-thin3-0819.png
+control_image_sha256: f48bcb37e95403b003b79d39f818a961e96cc76dfb643b9b51c217b0f4b1dbb4
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+repo_commit: dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+model_load_seconds: 10.9
+render_seconds: 14.8
+rendered_utc: 2026-08-19T06:49:45Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly, green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very aesthetic
+negative: |-
+  giant, colossus, towering figure, different scale, floating, raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality, deformed
