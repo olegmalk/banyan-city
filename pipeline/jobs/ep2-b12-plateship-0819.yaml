@@ -3,10 +3,9 @@
 # WHY THIS ONE-MINUTE JOB EXISTS: BECAUSE A GUARD REFUSED, AND IT WAS RIGHT TO.
 # `ep2-b12-stillmotion-0819` needs beat 12's plate as its --src. That plate lives
 # in the repo at genomes/sapling/nodes/002b-first-citizen/takes/stills/, and the
-# 08-13 beat-12 jobs read it off C:\banyan-farm\plates-local -- a directory that
-# NO LONGER EXISTS on the box (checked, not assumed). So the first version of that
-# motion spec fetched the plate straight into its own working directory, and
-# box_enqueue.py refused it twice:
+# 08-13 beat-12 jobs read it off C:\banyan-farm\plates-local. So the first version
+# of that motion spec fetched the plate straight into its own working directory,
+# and box_enqueue.py refused it twice:
 #
 #   !! BLOCKED: could not fetch this job's --src, so its picture was NOT checked
 #      -- and 'could not check' is not 'fine'.
@@ -28,6 +27,19 @@
 # every file named IN FULL with no glob, a sha256 asserted per file before
 # anything is written, and a missing file is a FAIL of the job rather than a
 # partial success. No GPU, so it cannot displace anything that needs one.
+#
+# REVISED 2026-08-19 AFTER TWO FAILED RUNS, and the revision is a correction of
+# this header, not only of a step. Both runs died in `fetch` with HTTP 404
+# (failed/ep2-b12-plateship-0819-1787132409.log, -1787133492.log) because they
+# read the plate off raw.githubusercontent.com and THIS REPO IS PRIVATE -- raw
+# 404s every path in it regardless of the asserted sha. And the sentence this
+# header used to carry, that C:\banyan-farm\plates-local "NO LONGER EXISTS on the
+# box (checked, not assumed)", was WRONG: `dir /s /b C:\banyan-farm\12-related-r4
+# -s2.png` returns three copies and certutil hashes all three to cc6bd5f0...c074,
+# the sha the repo copy hashes to here. The plate never left the card. So the step
+# is now a box-local copy with the same per-file sha assertion -- offline, no
+# network dependency at all -- and the parenthetical claiming a check that had not
+# been run is gone rather than softened.
 id: ep2-b12-plateship-0819
 task: ep2-b12-plateship-0819
 node: 002b-first-citizen
@@ -43,9 +55,10 @@ consumer: 'ep2-b12-stillmotion-0819, which cannot be enqueued until its --src is
   in done-definitions.yaml -- "the colour shifts warm-to-cool across the first second" -- and this is the
   plate under the take that carries it.'
 success: 'Two files on farm-out/ep2-b12-plateship-0819 -- the PNG and its provenance yaml -- each byte-identical
-  to the file on origin/main, plus a sha256 manifest this job writes itself. The fetch step REFUSES on
+  to the file on origin/main, plus a sha256 manifest this job writes itself. The copy step REFUSES on
   any sha256 mismatch rather than continuing, so a partial or corrupted copy is a nonzero exit and not
-  a quiet half-publish.'
+  a quiet half-publish. Byte-identity is established by the hash and not by where the bytes came from:
+  the copy is taken off this box, and a file matching the committed sha IS the committed file.'
 why: 'The plate is the SHIPPED beat-12 take''s own init (ep2-b12-tightB-0813 crops this exact file at this
   exact sha), which is the only thing that makes the palette question a comparison rather than a new picture.
   Publishing it costs one minute and no GPU, and it turns two guard refusals into two guard passes.'
@@ -56,50 +69,124 @@ env:
   PYTHONIOENCODING: utf-8
   PYTHONUNBUFFERED: '1'
 script_authority: 'Node 002b-first-citizen, approved_by: founder. THIS JOB RENDERS NOTHING AND SYNTHESISES
-  NOTHING -- it copies two committed files from origin/main into the courier so a later job''s source can
-  be verified. STEWARDSHIP.md §6 gates voice, footage and assembly; a file copy is none of those.'
+  NOTHING -- it copies two files, each asserted at the sha256 of the copy committed on origin/main, into
+  the courier so a later job''s source can be verified. STEWARDSHIP.md §6 gates voice, footage and assembly; a file copy is none of those.'
 this_is_not_a_pick: 'NOT A PICK and NOT a plate_ack. Publishing a plate makes it CHECKABLE, which is the
   opposite of waiving the check. The plate''s own known fault -- it does not carry the canon two cotyledons
   (four blade-sized components, aspects 2.85/3.11/3.38 against the pre-registered 1.6-2.6 band) -- is recorded
   in ep2-b12-stillmotion-0819''s bar as a PLATE fault with its own route, and nothing here promotes it.'
 payload:
-  C:\banyan-farm\ep2-b12-plateship-0819\fetch_plate.py: "#!/usr/bin/env python3\nr\"\"\"Fetch beat 12's\
-    \ plate and its sidecar, and REFUSE on any sha mismatch.\n\nNo model, no GPU, no spend. Both sha256s\
-    \ below are hashes of files committed to\norigin/main, so anyone who clones the repo can verify these\
-    \ assertions without\nrunning this script. The plate is the init under the beat-12 take that is in\n\
-    the cut today: ep2-b12-tightB-0813's crop step names this same file at this\nsame sha.\n\"\"\"\nimport\
-    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\ep2-b12-plateship-0819-out\"\nRAW =\
-    \ (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\n       \"genomes/sapling/nodes/002b-first-citizen/takes/stills/\"\
-    )\nUA = {\"User-Agent\": \"banyan-city-b12-plateship/1.0 (albert.numbro@gmail.com)\"}\nWANT = [\n  \
-    \  (\"12-related-r4-s2.png\",\n     \"cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074\"\
-    ),\n    (\"12-related-r4-s2.png.meta.yaml\",\n     \"ee8765db88e85d88502fa30679f34ce0a24fc63302bcd5bf1626fd594a68fee7\"\
-    ),\n]\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT:\n    raw = urllib.request.urlopen(\n\
-    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
-    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
-    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as fh:\n\
-    \        fh.write(raw)\n    print(\"fetched %-32s %7d bytes  sha %s  OK\" % (name, len(raw), have),\n\
-    \          flush=True)\nprint(\"both files match their asserted sha256.\", flush=True)\n"
+  C:\banyan-farm\ep2-b12-plateship-0819\copy_plate.py: |
+    #!/usr/bin/env python3
+    r"""Copy beat 12's plate and its sidecar off THIS BOX, refusing on any sha mismatch.
+
+    No model, no GPU, no spend, and -- the change -- NO NETWORK. The first two
+    attempts at this job both died in their fetch step with `HTTP Error 404: Not
+    Found` (C:\banyan-queue\failed\ep2-b12-plateship-0819-1787132409.log and
+    -1787133492.log). They read the plate from
+    raw.githubusercontent.com/olegmalk/banyan-city/main/... and that repo is
+    PRIVATE, so raw answers 404 for every path in it whatever sha the caller
+    asserts. A private repo does not become readable because a spec knows the hash.
+
+    AND THE PREMISE UNDER THAT FETCH WAS FALSE. The first version of this spec said
+    C:\banyan-farm\plates-local "NO LONGER EXISTS on the box (checked, not
+    assumed)". It exists. On 2026-08-19 a recursive dir for 12-related-r4-s2.png
+    under C:\banyan-farm returned three copies and certutil hashed all three to
+    cc6bd5f0...c074 -- the same sha the repo copy hashes to on the Mac. The bytes
+    were on the card the whole time and the job went to the internet for them.
+
+    WHY A LOCAL COPY IS AS GOOD AS THE COMMITTED ONE, AND NOT A WEAKER CLAIM: the
+    two sha256s below are the hashes of the files committed to main, asserted before
+    anything is written. A file that matches one of them IS that committed file,
+    byte for byte, whichever directory on this box it came out of. Nothing matches,
+    nothing is copied, and the job exits nonzero.
+    """
+    import hashlib, os, shutil, sys
+
+    OUT = r"C:\banyan-farm\ep2-b12-plateship-0819-out"
+    # ORDERED, and all three were hashed by certutil before this list was written.
+    # take-archive leads because it is the only one of the three that carries BOTH
+    # files and is not some other job's output directory.
+    DIRS = [
+        r"C:\banyan-farm\take-archive\002b-first-citizen\stills",
+        r"C:\banyan-farm\plates-local",
+        r"C:\banyan-farm\redraw-0809\out",
+    ]
+    WANT = [
+        ("12-related-r4-s2.png",
+         "cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074"),
+        ("12-related-r4-s2.png.meta.yaml",
+         "ee8765db88e85d88502fa30679f34ce0a24fc63302bcd5bf1626fd594a68fee7"),
+    ]
+
+
+    def sha256(path):
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+    os.makedirs(OUT, exist_ok=True)
+    for name, want in WANT:
+        tried = []
+        for d in DIRS:
+            src = os.path.join(d, name)
+            if not os.path.isfile(src):
+                tried.append("%s -- absent" % src)
+                continue
+            have = sha256(src)
+            if have != want:
+                tried.append("%s -- sha %s" % (src, have))
+                continue
+            shutil.copy2(src, os.path.join(OUT, name))
+            print("copied %-32s %8d bytes  sha %s  OK  <- %s"
+                  % (name, os.path.getsize(src), have, d), flush=True)
+            break
+        else:
+            sys.exit("!! NO COPY OF %s ON THIS BOX MATCHES ITS ASSERTED SHA -- refusing.\n"
+                     "   want %s\n   tried:\n     %s"
+                     % (name, want, "\n     ".join(tried)))
+    print("both files match their asserted sha256, sourced from this box alone.",
+          flush=True)
 steps:
-- name: fetch
+- name: copy
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-b12-plateship-0819\fetch_plate.py
+  - C:\banyan-farm\ep2-b12-plateship-0819\copy_plate.py
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while\
-    \ returning a code that reads like a fetch failure, and\n# box_enqueue.output_path_problems refuses\
-    \ a spec whose declared artifacts are\n# never named by any step -- which a wildcard defeats. Missing\
-    \ ONE file is a FAIL\n# of this job, not a partial success. No allow_fail anywhere in this spec.\nimport\
-    \ hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/ep2-b12-plateship-0819-out\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-plateship-0819\"\
-    \nNAMES = [\n    \"12-related-r4-s2.png\",\n    \"12-related-r4-s2.png.meta.yaml\",\n]\nos.makedirs(dst,\
-    \ exist_ok=True)\nlines = []\nfor name in NAMES:\n    src = os.path.join(from_dir, name)\n    if not\
-    \ os.path.isfile(src):\n        raise SystemExit(\"!! missing %s -- publishing nothing.\" % name)\n\
-    \    shutil.copy2(src, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
-    \    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b12-plateship-0819.sha256\"\
-    ),\n          \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"\
-    published\", len(NAMES), \"file(s) + manifest ->\", dst)\nraise SystemExit(0)\n"
+  - |
+    # EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses
+    # publishes nothing while returning a code that reads like a fetch failure, and
+    # box_enqueue.output_path_problems refuses a spec whose declared artifacts are
+    # never named by any step -- which a wildcard defeats. Missing ONE file is a FAIL
+    # of this job, not a partial success. No allow_fail anywhere in this spec.
+    import hashlib, os, shutil
+    from_dir = "C:/banyan-farm/ep2-b12-plateship-0819-out"
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b12-plateship-0819"
+    NAMES = [
+        "12-related-r4-s2.png",
+        "12-related-r4-s2.png.meta.yaml",
+    ]
+    os.makedirs(dst, exist_ok=True)
+    lines = []
+    for name in NAMES:
+        src = os.path.join(from_dir, name)
+        if not os.path.isfile(src):
+            raise SystemExit("!! missing %s -- publishing nothing." % name)
+        shutil.copy2(src, dst)
+        with open(os.path.join(dst, name), "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + name)
+    with open(os.path.join(dst, "ep2-b12-plateship-0819.sha256"),
+              "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(NAMES), "file(s) + manifest ->", dst)
+    raise SystemExit(0)
 artifacts:
 - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
 - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png.meta.yaml
