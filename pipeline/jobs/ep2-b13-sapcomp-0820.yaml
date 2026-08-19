@@ -549,3 +549,39 @@ what_this_rung_does_NOT_fix: WHAT THIS RUNG DOES NOT FIX. r1s1's verdict names T
   override the b08 posenet rung measured' -- is a plate-level exposure problem that
   a 0.30 pass over 4 percent of the frame cannot touch. It is carried forward, not
   solved, and it is not this rung's to be scored on.
+verdict_0820:
+  read: r1 at s20260820, read at full size and at 3x against the committed composite
+    side by side, 2026-08-20.
+  outcome: PASS on the one variable, and the named top risk did not fire.
+  C8_THE_ONE_VARIABLE: 'PASS. FAIL-PLANT-DISSOLVES was pre-registered as the most
+    likely failure on this plate -- the drawn plant''s colours were sampled from a
+    frame that is green foliage edge to edge, the lowest object-to-ground contrast
+    any composite in this house has been dropped onto -- and it did not happen. The
+    plant survived and was converted: at 3x the outline picked up the frame''s line
+    weight, the blades gained a soft internal highlight and a cleaner petiole join,
+    and the stem got a taper and a rooted base the composite did not draw. Highpass
+    sigma-3 std inside the mask 17.05 -> 15.84 (0.93x).'
+  P1_count: 'PASS on the foreground sapling: two blades, one stem, one node.'
+  P2_the_plant_exists_and_is_identifiable: PASS. A reader can point at the sapling,
+    which is the whole of what r1s1 lacked.
+  P3_BESIDE_HIM_AT_KNEE_HEIGHT: PASS. Crown at y 659 against his knee line at y 595,
+    unchanged by the pass.
+  P5_FOLDED_SMALL_KNEES_UP_ONE_LEAN_ADULT_GOBLIN: PASS. Face box maxdiff 0. 24822
+    px changed outside the mask, extent x 0..272 y 627..1194 -- the padding_mask_crop
+    round trip, of which only 239 exceed a diff of 8 and 11 exceed 20.
+  P6_thin_shade: CARRIED, NOT FIXED, exactly as this rung declared in advance. The
+    frame is still the green gloom r1s1's verdict recorded. A 0.30 pass over 4.1 percent
+    of the frame cannot reach a plate-level exposure, and it did not.
+  the_general_finding: TWO PLATES, TWO CONTRAST REGIMES, ONE RECIPE, BOTH CONVERTED.
+    Beat 03's plant sits on a bright field over a dark figure; beat 13's sits on mid-green
+    over mid-green. 0.30 held on both. Combined with beats 15 and 19, the composite-then-inpaint
+    route is now 4 for 4 on getting a canon two-leaf sapling into a frame that four
+    wording ladders could not.
+  what_is_still_open: The DIM plate, and the background sprig at x 660..832 y 80..270
+    which was left in frame on purpose. Neither is this rung's; both are named so
+    a later lane does not rediscover them as surprises.
+  cost: $0. One GPU fire, one seed, no retries.
+NOTE_this_spec_is_SCORED: A verdict block was appended after the render. pipeline/derive_b03_b13_sapcomp_0820.py
+  REFUSES to overwrite this file while that block is present, because re-deriving
+  would delete the only record of what the pixels turned out to be. Pass --force only
+  if that is genuinely what you want.

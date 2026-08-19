@@ -546,3 +546,52 @@ what_this_rung_does_NOT_fix: WHAT THIS RUNG DOES NOT FIX, so nobody scores it as
   and his POSE and no composite reaches either. This rung supplies the size-and-position
   relation only; whether a resigned kneel sells `dives` is a second variable belonging
   to the pose/motion lane.
+verdict_0820:
+  read: r1 at s20260820, read at full size and at 3x against the committed composite
+    side by side, 2026-08-20.
+  outcome: PASS on the one variable, and the removal half is the bigger result.
+  C8_THE_ONE_VARIABLE: 'PASS. The sampler CONVERTED the drawn plant rather than pasting
+    or deleting it. At 3x against the init: exactly two blades and one stem survive,
+    the blades gained a lit internal highlight and a crisper outline in the frame''s
+    own weight, the stem was re-drawn thinner and better integrated, and the three
+    little root blades the compositor drew were REMOVED by the sampler -- which is
+    the pass tell composite-init-pattern.md 7 pre-registers as a POSITIVE one (''if
+    you cannot see a difference between your composite and the output, the pass is
+    a paste''). Highpass sigma-3 std inside the mask 10.25 -> 9.17 (0.89x): it smoothed
+    the drawing rather than adding decal detail, which on a cel frame is the right
+    direction.'
+  P1_count: PASS. Two blades, one stem, one node. No leaflets returned.
+  P2_the_cover_relation: PASS. The plant stands between the camera and him and crosses
+    his forearm and thigh; his head and chest are wholly clear.
+  P3_comically_inadequate: PASS. He is plainly visible; the plant hides a strip of
+    him and nothing more.
+  P4_scale: PASS. 38.4 cm through the plate's own ground plane, unchanged by the pass.
+  P5_ONE_LEAN_ADULT_GOBLIN: PASS, and measured rather than eyeballed. Face box maxdiff
+    0 -- byte-identical to the composite. See `the_number_that_needed_explaining`
+    below for the 40245 px that did change outside the mask.
+  P6_no_second_plant: PASS, AND THIS IS THE FINDING WORTH KEEPING. The cleared weed
+    region came back reading as field. FAIL-SMEAR was pre-registered as the honest
+    risk of the removal method -- per-row interpolation asserts no texture, so every
+    blade of grass inside the vacancy had to be supplied by 12 denoising steps --
+    and it did not fire. A seeded colour flood plus a boundary-interpolated fill is
+    now a demonstrated route for removing an object from a HARD-TEXTURED field, which
+    is the case beat 15's flat-field method could not handle.
+  P7_outdoors: PASS.
+  the_number_that_needed_explaining: 40245 px changed OUTSIDE the mask, which reads
+    alarming and is not. Extent x 47..480 y 513..1193 -- the mask's own bbox plus
+    a ~20 px halo, i.e. exactly the region padding_mask_crop=64 crops, resizes to
+    the model's resolution and pastes back. Only 587 of those 40245 exceed a diff
+    of 8 and only 109 exceed 20; the face box is 0. So it is the crop round-trip's
+    interpolation, not the sampler repainting him. RECORDED HERE BECAUSE THE PARENT
+    SPECS CLAIM 'max change outside the mask is 0.0' AND THAT CLAIM IS ABOUT THE COMPOSITE,
+    NOT THE OUTPUT -- a later lane reading it as an output invariant would score every
+    one of these jobs a failure.
+  what_is_still_open: 'The beat, not the plant. r1s1''s verdict said he ''reads RESIGNED,
+    not caught out'', this rung declared that out of scope in advance, and it is still
+    true: the size and position relation now lands, the performance does not. That
+    is the pose/motion lane''s variable and it is the next thing this beat needs.'
+  cost: $0. One GPU fire, one seed, no retries.
+NOTE_this_spec_is_SCORED: A verdict block was appended after the render. pipeline/derive_b03_b13_sapcomp_0820.py
+  REFUSES to overwrite this file while that block is present, because re-deriving
+  would delete the only record of what the pixels turned out to be. Pass --force only
+  if that is genuinely what you want.

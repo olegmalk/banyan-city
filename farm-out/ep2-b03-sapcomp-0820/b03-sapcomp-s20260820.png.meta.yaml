@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260820
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b03sapcomp-0820/03-bad-cover-sapcomp-0820.png
+init_sha256: 7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7
+mask_png: b03-sapcomp-s20260820-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b03sapcomp-0820/03-bad-cover-sapcomp-mask-0820.png
+mask_png_sha256: 5bd2074189015a87a52e9872bf16d1a21211a4b22ccab3010bfd78ac1ccf3e6c
+mask_white_px: 83000
+mask_bbox_px: [67, 533, 461, 1173]
+mask_width_frac: 0.4736
+mask_height_frac: 0.5263
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-19T22:31:12Z
+render_seconds: 3.8
+wall_seconds: 9.5
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed. Beat 03 is the first rung in this family whose blocker is not only CARDINALITY but a RELATION between two objects: r1s1's own verdict is 'the seedling sits to his LEFT, beside him, and he is not behind it'. A relation between a figure the sampler has already placed and a plant it draws where it likes is not a knob either, so it is composited too.
+prompt: |-
+  a tiny sapling rooted in the grass, exactly two wide oval leaves with soft round tips on one thin bare stem, in front of one crouching lean adult goblin man in a patchwork cloak, solo, far too small to hide him, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  three leaves, four leaves, many leaves, leaflets, extra stalk, multi-node weed, branching stem, pointed lance leaves, bud, flower, large tree, thick branch, forest, plant girl, alraune, 2boys, child, chibi, standing, text, photorealism, 3d render, low quality
