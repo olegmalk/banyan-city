@@ -1,0 +1,351 @@
+id: ep2-b12-noscav-0819
+task: ep2-b12-noscav-0819
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 12 lane, 2026-08-19 -- derived by pipeline/derive_b12_noscav_0819.py
+consumer: 'BEAT 12 IN THE EP2 CUT, and it is the beat''s first shot at a take that fails NOTHING. The
+  seed axis closed 0 for 5: every take failed at least one clause, and on four of the five the failure
+  was the same one -- a crouching figure behind the lower leaf, on four independent seeds, in the same
+  slot. Beat 12 ships today as best-available with a colour fault named, on a take carrying a different
+  prompt and a different seed. This rung asks whether removing one unrenderable clause removes the figure
+  and leaves the locked, flat clip that 20260871 already produced. If it does, beat 12 has a candidate
+  the assembler can swap in; if it does not, the cause is not the phrase and the beat needs a plate route
+  instead.'
+success: 'ONE 121-frame 704x1280 mp4 with its sidecar and the 704x1280 init it was conditioned on, published
+  into courier-box with a .sha256 manifest. THE DECISIVE CLAUSE IS B1, NO FIGURE ANYWHERE: it is the one
+  thing that separates this take from its parent, and a pass on everything else with a figure still in
+  frame is a FAIL of this job. The bar below was written before the pixels existed.'
+why: 'ONE VARIABLE off ep2-b12-noscav-0819, and the variable is a span of text: `-- the scavenger crouched
+  behind them, out of frame` leaves the positive and NOTHING REPLACES IT. A diffusion positive has no
+  negation operator and no way to place a named subject outside the canvas, so that clause encodes a subject
+  and a position and gets them drawn -- four of five seeds, four of four among the takes that stayed on
+  the plate, against a negative that names goblin, creature, person, face, hands and figure entering frame.
+  node.md:189 requires the scavenger OFF-SCREEN ONLY, ''the picture did not change'', so the render is
+  what violates canon and the deletion moves the output toward the approved staging. Not R4: this changes
+  a prompt, not the script.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b12-noscav-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b12-noscav-0819\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's\
+    \ provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for the cut (beat\
+    \ 12), so is_show_content is\ntrue. Still approved: false / provisional: true -- nothing is cut until\
+    \ the\n121 frames are opened against the pre-registered bar, and R4 is the\nfounder's.\n\"\"\"\nimport\
+    \ os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"!! no sidecar at %s\
+    \ -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\
+    \\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b12-noscav-0819 after the render.\\\
+    n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n        \"is_show_content:\
+    \ true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR BEAT 12, RELATED. It animates\
+    \ the\\n\"\n        \"  line he approved on 2026-08-19 -- tight on two leaves, perfectly\\n\"\n  \
+    \      \"  still -- on the plate under the take this beat already ships, at\\n\"\n        \"  --image-crf\
+    \ 10 instead of 33. Judged against the bar pre-registered\\n\"\n        \"  in pipeline/jobs/ep2-b12-noscav-0819.yaml\
+    \ BEFORE this render\\n\"\n        \"  existed. Not approved and not cut until those frames are opened.\\\
+    n\")\nprint(\"stamped %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b12-noscav-0819\b12-motion-prompt.txt: Tight on the sapling's two leaves, perfectly
+    still. Static locked framing, the frame never moves and nothing enters it. The leaves hold their shape
+    and their position; only the grass stirs, very slightly, in the air. Detailed cinematic anime, warm
+    amber backlight, hazy out-of-focus grassy field, soft glowing light, masterpiece, best quality, very
+    aesthetic.
+  C:\banyan-farm\ep2-b12-noscav-0819\b12-negative.txt: camera pan, camera tilt, zoom, dolly, push in,
+    pull back, tripod, cut to another shot, scene change, different location, split screen, still image,
+    freeze frame, goblin, creature, person, face, hands, figure entering frame, new leaf, extra leaf,
+    growing leaf, wilting, leaves falling
+  C:\banyan-farm\ep2-b12-noscav-0819\b12-jobs-encode.json: "[\n {\n  \"beat\": 12,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b12-noscav-0819-out\\\\b12-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-noscav-0819\\\\b12-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b12-noscav-0819\\\
+    \\b12-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b12-noscav-0819\b12-jobs-render.json: "[\n {\n  \"beat\": 12,\n  \"seed\": 20260871,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-noscav-0819-out\\\\b12-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b12-noscav-0819-out\\\\b12-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-noscav-0819-out\\\\12-related-LTX-noscav-s20260871.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-noscav-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
+  - --sha256
+  - cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074
+  - --out
+  - C:\banyan-farm\ep2-b12-noscav-0819-out\b12-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b12-noscav-0819\b12-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b12-noscav-0819\b12-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b12-noscav-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b12-noscav-0819-out\bench-b12-noscav.jsonl
+  - --bench-label
+  - ep2-b12-noscav-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-noscav-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b12-noscav-0819-out\12-related-LTX-noscav-s20260871.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (12-related). No allow_fail: a publish\n# that cannot find its files\
+    \ is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b12-noscav-0819-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b12-noscav-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-noscav-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/12-related-LTX-noscav-s20260871.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b12-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b12-noscav.jsonl\")\n               + glob.glob(pay_dir + \"/b12-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b12-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b12-noscav-0819.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\",\
+    \ dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b12-noscav-0819-out\12-related-LTX-noscav-s20260871.mp4
+- C:\banyan-farm\ep2-b12-noscav-0819-out\b12-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, approved_by: founder, and beat 12''s rewritten line approved
+  by name on 2026-08-19 (5d6eb792) -- which is what makes rendering it legal at all. STEWARDSHIP.md 6
+  blocked footage from this beat''s restaged line until he had read it; leaves/002b-t0-c.yaml carried
+  ''approval_status: NOT YET READ BY HIM'' for beats 12, 13, 15, 19 and 20, and that block is discharged.
+  Rendering the OLD staging instead would have been the wrong way round it.'
+bar:
+  written_before_the_pixels: Every clause below is pre-registered. Instruments are named per clause; numbers
+    are FILTERS and the verdict is the read. All 121 frames opened, not sampled -- the beat-07 lane's
+    standard.
+  B1_NO_FIGURE_ANYWHERE_AND_IT_IS_THE_DECISIVE_CLAUSE: 'No scavenger, goblin, person, face, hand, limb
+    or dark humanoid form in ANY of the 121 frames, at any edge and behind either leaf. This is the clause
+    the rung exists for and it outranks every other clause here: a take that passes B2-B5 with a figure
+    in it is a FAIL. Scored by opening every frame, with the region behind the LOWER LEAF -- where four
+    of four on-plate seeds put him, and where 20260871''s bird rose at f030 -- looked at specifically.
+    THE BIRD COUNTS: the parent''s only mover was a black bird with a large white eye, and ''any figure''
+    includes it. Reported as figure/bird/neither so a partial result is legible instead of rounded.'
+  B2_EXACTLY_TWO_LEAVES_and_the_count_is_scored_AGAINST_THE_PLATE: 'beats.''12''.done_when asks for exactly
+    two cotyledons and one bare side-branch. THE PLATE DOES NOT CARRY THAT AND NO i2v RENDER CAN ADD IT,
+    because the init is frame one. Measured on the plate itself: four blade-sized components, major axes
+    619/772/607/591 px, aspects 2.85/3.11/3.38 against composite-init-pattern.md 8''s pre-registered 1.6-2.6
+    band -- lance-shaped, and more than two. So the clause here is the one this render CAN fail: THE COUNT
+    MUST NOT CHANGE across the 121 frames. No leaf appears, vanishes, wilts or grows. The absolute count
+    remains a PLATE FAULT with a named route (the composite instrument that solved beats 15 and 19) and
+    is not charged to this take.'
+  B3_CAMERA_LOCKED: 'Instrument: farm-out/ep2-b12-stillmotion-s20260818-0819/b12_camera_drift.py -- phase
+    correlation on native-resolution BT.601 gray, cumulated, reported whole-frame AND per 3x2 block. PASS
+    = whole-frame |dy| and |dx| within the parent''s own result (+7px, all six blocks agreeing inside
+    1px). A real camera move is region-consistent; field re-inking is not. THE INSTRUMENT''S OWN LIMIT
+    IS CARRIED: a hard fade or content substitution destroys the correlation peak, so if B4 collapses,
+    THE BLOCK NUMBERS ARE NOISE and must not be quoted as a camera move (s20260873 read +133px per block
+    against a whole-frame +0px). Framing is a per-render check and is never inherited from a passing sibling:
+    20260818 tilted -387px with the ban in both the positive and the first six tokens of the negative.'
+  B4_MATCHED_CONTENT_LUMA_WITHIN_BOUNDS: 'Mean luma of the OVERLAP REGION ONLY -- f000 rows [s:] against
+    fN rows [:H-s] at the measured cumulative shift -- so a fade cannot hide behind a pan and a pan cannot
+    forge a fade. PASS = |matched drift| f000->f120 under 20 levels, two-sided, plus the equal-thirds
+    band read from pipeline/luma_drift.py for the sign-disagreement check. Bands disagreeing in sign is
+    never scored as a collapse; a single band moving alone is an OBJECT until eyes say otherwise. The
+    parent read -0.04 matched, and 20260819 on this same plate read -91.05, so this axis is live even
+    though the seed is the flat one: the collapse is a (seed x plate) INTERACTION and the prompt is one
+    of the two things changing here.'
+  B5_FOUR_QUARTERS_MOTION_alive_but_not_moving: '''Perfectly still'' does not mean ''a still''. Interframe
+    median reported for EACH QUARTER of the clip -- f000-030, f030-060, f060-090, f090-120 -- and separately
+    inside the leaf mask and the grass band. PASS = the grass band is non-zero in ALL FOUR quarters and
+    the leaf band is near zero in all four. Quartered because the parent''s whole-clip grass figure was
+    0.011 while a bird crossed it, i.e. a single number over 121 frames cannot tell ''alive throughout''
+    from ''one event in the middle of a dead clip''. Measured on regions, not on the frame: a perfect
+    32px fall over a frozen background moves whole-frame interframe by 0.056 and would fail a frame-level
+    floor.'
+duration_and_the_assembler_trap: '121 frames at 24 fps = 5.0417 s. render_t3''s default fill for footage
+  is now a last-frame HOLD (af863c0b) and the palindrome survives only as opt-in `loop_fill: pingpong`,
+  which nothing in this tree writes -- but beat 12 is near-still, so a palindrome here would be nearly
+  invisible, which is worse and not better. Whoever assembles should check beat 12''s slot length against
+  5.0417 s rather than assume.'
+failure_predicted_in_advance: 'FAIL-DEAD IS MORE LIKELY THAN THE FIGURE RETURNING, and saying so is what
+  makes a clean pass worth something. The parent''s grass band measured 0.011 -- effectively frozen --
+  and its ONLY mover was the bird this rung is trying to delete. Remove the one subject clause from a
+  positive whose whole first sentence asks for stillness, on a recipe measured to over-deliver stillness
+  (beat 18 went 5.956 -> 0.570 at crf 10 and was scored FAIL-FROZEN), and the plausible outcome is a clip
+  with nothing in it at all. That is why B5 quarters the motion instead of reporting one number: a dead
+  clip and a locked clip differ only in the grass, and only if you look at the grass in every quarter.'
+init_provenance: 'genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png, sha256 cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074,
+  read off the box from C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\ -- verified present
+  at that exact sha by certutil on 2026-08-19 before this spec was written -- and re-asserted by cover_crop.py
+  before a pixel is written. It is the SHIPPED beat-12 take''s own init and the same file all five seed
+  takes conditioned on (init byte-identical across all five, c6575d0d...), which is what licenses reading
+  them as one plate. No fetch step and no network: this spec''s grandparent had one, it 404''d, and the
+  cure was a box-local copy under the same sha assertion (0f799ddd).'
+not_asked_by_this_rung: No pick, no promotion, no cut swap, and no plate route filed off this sample.
+  THE PICK IS R4 AND NO BEAT-12 TAKE HAS EARNED ONE. Beat 12 keeps 12-related-b12-tightB-untrimmed.mp4
+  as best-available with its colour fault named, whatever this returns. The absolute leaf count is a plate
+  question and is not re-litigated here. The positives-only `out of frame` audit is named in this spec
+  and is NOT owned by this job.
+pre_registered_fail_modes:
+  FAIL-FIGURE-ANYWAY: 'the crouching form returns with the clause gone. NAMED AS THE MOST USEFUL NEGATIVE
+    RESULT: it would move the cause off the phrase and onto the plate or the checkpoint, and would retire
+    prompt surgery as beat 12''s lever in one clip.'
+  FAIL-BIRD: no scavenger, but the parent's black bird with the white eye rises again. B1 counts it. Named
+    separately from FAIL-FIGURE-ANYWAY because they point at different causes -- the bird was never in
+    any prompt.
+  FAIL-DEAD: nothing moves, grass included. The parent already sat at 0.011 in the grass band, so this
+    beat is closer to dead than to busy and deleting a subject clause can only reduce what there is to
+    animate. Named as MORE LIKELY THAN THE FIGURE RETURNING.
+  FAIL-COLLAPSE: matched-content luma drift 20 levels or more. This seed held at -0.04 on this plate,
+    but the collapse is a (seed x plate) interaction and the prompt is not a proven-innocent third factor.
+  FAIL-CAMERA: a real, region-consistent move. Per-render, never inherited.
+  FAIL-PLANT-CHANGE: a leaf appears, vanishes, wilts or grows.
+  reporting_rule: every mode above is reported BY NAME whether or not it fired, and a mode discovered
+    after the fact is reported as unpredicted rather than folded into the nearest pre-registered one --
+    the parent generation's DUSK COLLAPSE is why that sentence is here.
+the_clause_deleted_and_the_canon_that_requires_it:
+  deleted_span: -- the scavenger crouched behind them, out of frame
+  prompt_before: Tight on the sapling's two leaves, perfectly still -- the scavenger crouched behind them,
+    out of frame. Static locked framing, the frame never moves and nothing enters it. The leaves hold
+    their shape and their position; only the grass stirs, very slightly, in the air. Detailed cinematic
+    anime, warm amber backlight, hazy out-of-focus grassy field, soft glowing light, masterpiece, best
+    quality, very aesthetic.
+  prompt_after: Tight on the sapling's two leaves, perfectly still. Static locked framing, the frame never
+    moves and nothing enters it. The leaves hold their shape and their position; only the grass stirs,
+    very slightly, in the air. Detailed cinematic anime, warm amber backlight, hazy out-of-focus grassy
+    field, soft glowing light, masterpiece, best quality, very aesthetic.
+  nothing_replaces_it: Deliberate. The shot is the two leaves. Substituting a describing phrase would
+    make this two variables and would re-open the question of what the substitute itself summons.
+  the_approved_line_does_contain_it: node.md:83, the approved shot description, reads "Tight on the sapling's
+    two leaves, perfectly still -- the scavenger is still crouched in the grass behind them, out of frame."
+    The prompt is a transcription of it. This rung is NOT 'deleting text the script does not contain'
+    -- that justification was drafted, checked, and found false before filing.
+  what_makes_the_deletion_right: 'node.md:189, the staging half of the same node: "12 RELATED -- he is
+    crouched in the grass behind the leaves and out of frame, not below them. OFF-SCREEN ONLY; THE PICTURE
+    DID NOT CHANGE." Canon requires the scavenger absent from the picture; four of five renders put him
+    in it. The RENDER violates canon, and the deletion moves the output toward the approved staging.'
+  the_law_that_outranks_this_beat: A SHOT DESCRIPTION IS NOT A PROMPT. Staging prose describes what is
+    true of the scene, including what is deliberately off-screen -- normal screenwriting. A diffusion
+    positive can only describe what is IN the frame. Transcribing an off-screen clause verbatim asks for
+    exactly the thing the script says to exclude.
+  scope_named_honestly_and_NOT_claimed_as_audited: 315 specs match `out of frame`, and sampled, the overwhelming
+    majority are NEGATIVES banning subject exits -- `walking out of frame, leaving the frame` -- a correct
+    and unrelated use. The defect is an off-screen clause inside a POSITIVE, and beat 12 is the only confirmed
+    instance. The audit that would settle it reads positives only and HAS NOT BEEN RUN; a whole-file grep
+    cannot tell the two apart. Named as unowned, not claimed as measured.
+  authority: NOT R4. A prompt is not the script. What would be R4 is editing node.md's line, or widening
+    a framing he approved as 'tight on two leaves'. Beat 12's line was approved by name on 2026-08-19
+    (5d6eb792) and STEWARDSHIP.md 6 is discharged for this beat.
+derivation:
+  parent: pipeline/jobs/ep2-b12-stillmotion-s20260871-0819.yaml
+  by: pipeline/derive_b12_noscav_0819.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - duration_and_the_assembler_trap
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_asked_by_this_rung
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_clause_deleted_and_the_canon_that_requires_it
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - cut_preference
+  - derivation
+  - duration_and_the_assembler_trap
+  - fail_mode_I_DID_NOT_PRE_REGISTER
+  - failure_predicted_in_advance
+  - init_provenance
+  - pre_registered_fail_modes
+  - pre_registered_fail_modes_as_fired
+  - the_duplicate_run
+  - verdict_this_job
+  - verdict_this_job_measured
+  - what_the_next_rung_should_be
+  - what_this_licenses_after_this_verdict
+  retokened:
+  - 12-related-LTX-stillmotion-crf10-s20260871 -> 12-related-LTX-noscav-s20260871
+  - bench-b12-stillmotion -> bench-b12-noscav
+  - ep2-b12-stillmotion-s20260871-0819 -> ep2-b12-noscav-0819
+  overrides_applied_and_asserted:
+    payload:b12-motion-prompt.txt:
+    - payload b12-motion-prompt.txt (411 -> 359 chars)
+    seed:
+    - payload b12-jobs-render.json (20260871 -> 20260871, re-parsed)
+  seed: 20260871
