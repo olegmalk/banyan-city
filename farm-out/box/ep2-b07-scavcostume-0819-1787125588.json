@@ -1,0 +1,105 @@
+{
+  "id": "ep2-b07-scavcostume-0819-1787125588",
+  "task": "ep2-b07-scavcostume-0819",
+  "node": "002b-first-citizen",
+  "beat": 7,
+  "worker": "box-runner",
+  "priority": 6,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "7",
+        "--character",
+        "guard",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-guards-twoinfield-nos2-0815",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b07-scavcostume-0819",
+        "--draft-key",
+        "authored_b07_scavcostume_0819",
+        "--arm",
+        "window4",
+        "--dry",
+        "--expect-drafts-sha256",
+        "86280ff4c4214815b8a5b061eb11f3e06820380c053a52c807f9ba758aadc5fc"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "7",
+        "--character",
+        "guard",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\refs-guards-twoinfield-nos2-0815",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0812\\out-b07-scavcostume-0819",
+        "--draft-key",
+        "authored_b07_scavcostume_0819",
+        "--arm",
+        "window4",
+        "--task",
+        "ep2-b07-scavcostume-0819",
+        "--expect-drafts-sha256",
+        "86280ff4c4214815b8a5b061eb11f3e06820380c053a52c807f9ba758aadc5fc"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b07-scavcostume-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-scavcostume-0819\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/07-confiscate-*\"))\npngs = [f for f in src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-scavcostume-0819.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\", len(pngs), \"png + manifest ->\", dst)\n# frame count is 12, not 16: 4 seeds x 3 DISTINCT reference sha256s. refs-guards-twoinfield-nos2-0815 holds 3 distinct images in 4 slots (s0 and s3 are the same bytes; hashed on the box 2026-08-17), and dedup_cells drops the cell that would redraw s0, so the grid is 3 cells x 4 seeds. Hardcoded rather than derived from seeds x distinct-ref-sha256 because deriving it means mirroring the sampler slot enumeration while another lane is editing the sampler; derive it when that settles.\nraise SystemExit(0 if len(pngs) >= 12 else 1)\n"
+      ]
+    },
+    {
+      "name": "verify",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, sys\nd = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-scavcostume-0819\"\np = sorted(glob.glob(d + \"/07-confiscate-*.png\"))\nprint(\"published pngs:\", len(p))\nfor f in p:\n    print(\"   \", f.rsplit(\"/\", 1)[-1])\nif len(p) < 12:\n    sys.exit(\"FAILED: %d published png(s), expected 12 (3 distinct reference cells x 4 seeds). A short grid is not a sample, and the manifest alone cannot tell the difference.\" % len(p))\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b07-scavcostume-0819\\ep2-b07-scavcostume-0819.sha256"
+  ],
+  "started_at": "2026-08-19T07:46:38Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T07:48:50Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b07-scavcostume-0819\\ep2-b07-scavcostume-0819.sha256"
+  ]
+}
