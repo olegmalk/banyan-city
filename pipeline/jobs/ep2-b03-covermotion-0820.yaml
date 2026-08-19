@@ -492,3 +492,80 @@ derivation:
     seed:
     - payload b03-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'FAIL, AND IT FAILS BY THE MODE THIS SPEC NAMED IN ADVANCE. F-STANDS-UP fired:
+  he ducks, he holds the duck for fifty frames, and then from f090 he rises, and by f114 he
+  has walked out of the right of the frame -- the last seven frames of a five-second beat
+  contain no goblin at all. Not cuttable. TWO REAL RESULTS SIT INSIDE THE FAIL and neither
+  was guaranteed: THE DUCK HAPPENED, which is the acting variable this rung existed for and
+  it moved on the first sample; and THE COMPOSITED SAPLING SURVIVED ALL 121 FRAMES, including
+  a full stand-up, which is the clause beat 19''s motion take lost.'
+verdict_measured:
+  A1_the_plant_holds: PASS, and it is the result worth keeping. At f000, f030, f060, f090
+    and f120 the plant is ONE thin stem with TWO leaves, rooted, unchanged in count, shape
+    and height; at f120 he is gone and the sapling is standing alone mid-frame, still two
+    leaves. Beat 19's F-PLANT-REVERT turned two leaves into four-plus and an upright stem
+    into a prostrate runner in 90 frames. Read by eye at 1:1 on five frames and again on an
+    f060-f120 strip at six-frame spacing. NO plant mask was built, deliberately -- a colour
+    predicate over a green plant on a green field has produced a clean wrong number twice
+    in this repo.
+  A2_the_ratified_adult_holds: 'PASS ON THE EYES, and the pre-registered box is VOID at f120
+    for a reason that is itself a finding. The fixed box (232,352,282,404) reads luma 98.0
+    / R-B 33.0 at f000 and luma 229.8 / R-B 22.5 at f120, a delta of +131.8 and far outside
+    the +/-25 bar. THAT NUMBER IS NEITHER AN EXPOSURE FAULT NOR AN IDENTITY FAULT: by f120
+    HE IS NOT IN THE BOX, which is sitting on open sky -- its luma_std collapses from 18.5
+    to 3.0 and that is the tell. A FIXED PROBE BOX IS AN IDENTITY INSTRUMENT ONLY WHILE THE
+    SUBJECT STAYS UNDER IT. Re-placed BY EYE at 5x on f102, the last frame where his face
+    is large and unambiguous: cheek box (296,86,352,124) reads R 115.1 G 120.3 B 78.0, R-B
+    37.2, luma 113.9, std 13.0, against f000''s R 98.5 G 104.0 B 65.5, R-B 33.0, luma 98.0
+    -- +15.9 luma and +4.2 R-B, both inside the bar. At 1:1 on f102 he is the ratified lean
+    wiry adult: green skin, bald domed head, one long pointed ear in profile, adult face,
+    patterned cloak. No drift toward a human and none toward a child.'
+  A3_camera_locked: PASS. The horizon and the hill line hold their rows across all eleven
+    frames of the f060-f120 strip and across the five-frame sheet; everything that moves in
+    this clip is the figure. No raw global fit is offered, because beat 19 established that
+    a raw horizon shift on these plates is field re-inking unless it is region-consistent.
+  A4_it_is_not_frozen: 'PASS, emphatically, and it is the opposite failure that bit. judge_clip
+    reports FREEZE none, ncc range 0.603..1.000, and a lag-3 hold -- about 40 distinct pictures
+    in 120 frames, effective 8 fps. DEPTH 0.023 is reported and NOT used: judge_clip''s own
+    header retires it as an action signal because it is inverted.'
+  A5_no_exposure_blowout: 'UNSCORABLE AS WRITTEN, and the BAR is at fault rather than the
+    clip. Whole-frame mean luma f000 143.4 -> f120 156.2 is +12.8, inside the +25 bar, but
+    the track shows the number is not measuring exposure: 143.4 flat to f030, a step to 155.7
+    at f040 when he DUCKS his dark mass out of the upper frame, a dip to 130.5 at f100 when
+    he STANDS and fills it, and 156.2 at f120 when he has left. Every move in that curve is
+    the subject''s share of the frame changing. A WHOLE-FRAME LUMA DELTA IS AN EXPOSURE READING
+    ONLY WHILE THE SUBJECT''S FOOTPRINT IS CONSTANT; on a clip whose subject exits it measures
+    the exit. The pre-registered remedy -- re-roll the seed -- is NOT invoked, because the
+    premise that would justify it was never established.'
+  B1_the_cover_is_comically_inadequate: PASS while he is in frame. Through f000-f084 the plant
+    crosses his forearm and thigh and hides a strip of him and nothing more; he is plainly
+    visible in every frame. Nothing in the clip ever conceals him, which is the half of beats.'03'.done_when
+    that reads 'a crouch that actually conceals him fails the beat'.
+  B2_he_reads_CAUGHT_OUT_rather_than_RESIGNED: 'PASS FOR THE FIRST 85 FRAMES, AND THIS IS
+    THE CLAUSE THE RUNG EXISTED FOR. r1s1''s verdict on the plate was ''he reads RESIGNED,
+    not caught out'', and the composite pass fixed the geometry without touching the acting.
+    Here the acting moved: from about f036 his head and shoulders drop until by f060 his head
+    is nearly at grass level behind the plant, and he holds that low attitude to f084. It
+    reads as ducking. It is the first beat-03 artifact on which the performance clause has
+    moved at all, and it moved from ONE positive placement of the action.'
+  the_defect_that_decides_it: HE STANDS UP AND LEAVES. f090 rising, f096 up on his haunches,
+    f102 fully standing with his torso filling the upper frame, f108-f114 walking right, f120
+    only his legs at the frame edge. 'standing up, walking, running' and 'walking out of frame,
+    leaving the frame' were BOTH in this job's negative -- in its first clause and in its
+    middle -- and neither held. That is the seventh sighting of POSITIVE PLACEMENT BEATS NEGATIVES
+    in this ladder, and the first where the fail mode was written down in advance with its
+    remedy already named.
+what_the_next_rung_is: 'Exactly what this spec pre-registered, unchanged by the result: a
+  POSITIVE PLACEMENT of the down attitude, not an eighth wording of the prohibition. The b04
+  head-lock rung is the precedent and its numbers are the argument -- ''His head and shoulders
+  stay STILL'' moved a head-band centroid 64.7 px; ''his chin stays square to the camera and
+  his skull is locked in place as if held, the same three-quarter angle in every frame'' moved
+  it 4.7 px, at the same init, seed, negative and flags. The beat-03 form of that sentence
+  places the END of the shot instead of forbidding the rise: his shoulders stay below the
+  top of the leaves in every frame, and he is still crouched low in the grass in the last
+  frame. ONE VARIABLE, one sample. Do NOT change the recipe -- the plant clause, the framing,
+  the identity and the camera all held here.'
+cost: $0. One GPU fire, one seed, no retries. 268s of render, 121 frames, rc=0 on all seven
+  steps.

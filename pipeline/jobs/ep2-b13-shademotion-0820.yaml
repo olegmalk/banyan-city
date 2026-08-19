@@ -494,3 +494,76 @@ derivation:
     seed:
     - payload b13-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'FAIL, AND IT FAILS TWICE -- once by the mode this spec named and once by the
+  mode its sibling named. F-NOTHING-MOVES did NOT fire, which was this spec''s own prediction
+  and it was wrong in the useful direction: the head does tip, continuously, from f004. But
+  IT TIPS THE WRONG WAY -- forward and down into his own knees and his own shadow, not SIDEWAYS
+  into the plant''s patch of shade -- and then from f084 he rises, and by f114 he is walking
+  out of the right of the frame. Same terminal defect as ep2-b03-covermotion-0820 at almost
+  the same frame, on a different plate, a different pose and a different prompt. Not cuttable.
+  THE COMPOSITED SAPLING SURVIVED ALL 121 FRAMES on the lowest-contrast plate in the house.'
+verdict_measured:
+  A1_the_plant_holds: PASS, and on the harder plate of the pair. This composite was dropped
+    onto green foliage edge to edge -- its own parent called it the lowest object-to-ground
+    contrast any composite in this house has been given -- and at f000, f030, f060, f090 and
+    f120 the sapling is still ONE thin stem with TWO leaves, rooted. At f120 he has gone and
+    it stands alone at frame left, unchanged. Neither F-PLANT-REVERT nor F-PLANT-DISSOLVES
+    fired. Read by eye at 1:1 on five frames and on two strips at four- and six-frame spacing;
+    no plant mask was built, for the reason the growmotion five went unscored.
+  A2_the_ratified_adult_holds: 'PASS THROUGH f078, THEN UNSCORABLE, and the f120 number is
+    void for the same mechanical reason as its sibling''s. Tracked on the pre-registered box
+    (286,282,352,336) every four frames: luma 107.9 -> 105.8 -> 104.3 -> 104.3 -> 103.7 ->
+    103.8 -> 102.5 -> 102.6 -> 102.9 -> 103.1 at f036, with R-B 35.4 -> 28.5. That is a drift
+    of 4.8 luma and 6.9 R-B over 36 frames, well inside the bar, and it is the cleanest identity
+    hold of the pair. At f120 the same box reads luma 24.5 with std 37.0 -- HE IS NOT UNDER
+    IT; the box is on the dark shape of him leaving. What the eyes add, and it is not an identity
+    fault: from about f020 HIS FACE ROTATES OUT OF VIEW. By f024 the head is a bald dome seen
+    from above with the cloak''s shadow where the face was, and it stays that way to f078.
+    He is still the ratified lean adult -- green skin, bald dome, long ears, patchwork cloak,
+    and the cheek the probe watches is his -- but for fifty frames the beat has no face in
+    it.'
+  A3_camera_locked: PASS. The background foliage rows and the little grass tufts hold their
+    positions across both strips; the only thing that translates is the figure.
+  A4_it_is_not_frozen: PASS. This spec predicted F-NOTHING-MOVES as its most likely outcome
+    -- the most static init of the three, already folded, already down, with --image-crf 10
+    built to hold an init hard -- and the prediction was wrong. The head is in continuous
+    motion from f004.
+  A5_no_exposure_blowout: UNSCORABLE AS WRITTEN, exactly as on its sibling, and the same confound
+    with a bigger number. Whole-frame mean luma f000 97.7 -> f120 142.1 is +44.4, which would
+    read as a growmotion-class blowout -- but the track is 97.7 / 97.3 / 96.6 / 96.5 / 96.5
+    / 96.5 / 96.4 FLAT to f060, then 91.4 at f070 and 91.8 at f080, and only then 100.4 /
+    109.1 / 134.4 / 142.1 as he rises and exits. THE EXPOSURE IS FLAT FOR THE ENTIRE TIME
+    HE IS IN THE SHOT; the +44.4 is his dark mass leaving a bright field. Scoring this a blowout
+    and re-rolling the seed would have burned a GPU fire on a fault that does not exist. NOT
+    re-rolled.
+  B1_NO_SLIDE_AND_NO_RISE: 'FAIL, and this is the clause that decides it, because it is the
+    FOUNDER''S ruling and not a steward preference: ''the shipped version stands (no slide,
+    he sits down beside it, thin shade)'', 2026-08-18. He does not slide, but he RISES --
+    f084 the shoulders lift, f090-f096 he comes up onto his feet, f102-f114 standing and walking
+    right, f120 legs only. ''sliding down a trunk, sliding, standing up, getting up'' were
+    the FIRST FOUR TERMS of this job''s negative. They did not hold.'
+  B2_the_head_tips_sideways_into_the_shade: FAIL ON DIRECTION, PASS ON MECHANISM, and the
+    split is the useful part. The head tips -- visibly, continuously, from f004 to about f024
+    -- but it tips FORWARD AND DOWN into his knees, taking the face out of view, rather than
+    SIDEWAYS into the hand-sized patch of shade. The prompt said 'tips his head slowly sideways
+    into the plant's small patch of shade until the shade falls across his eyes'; what it
+    got was the nearest motion the init already afforded, which was more of the downward fold
+    it started in. The shade never lands on his eyes because his eyes are pointed at the ground.
+  B3_folded_small_knees_up_holds: PASS to f078, FAIL at f120. The knees stay up around his
+    ears for the first two thirds; the pose the plate's r1s1 was praised for -- 'PASS on cast
+    and on pose' -- is intact until he stands. Losing it in the last quarter is a net regression
+    against the still.
+what_the_next_rung_is: 'ONE RUNG, NOT TWO, because both failures have the same shape and the
+  same remedy: PLACE THE END OF THE SHOT POSITIVELY INSTEAD OF FORBIDDING THE EXIT. For beat
+  13 that sentence has to do two jobs at once -- keep him seated and turn the tip sideways
+  -- so it places a terminal attitude rather than a movement: ''in the last frame he is still
+  sitting in the grass with his knees up and his head tilted over to one side, his cheek toward
+  the little plant, and the small patch of shade lying across his eyes''. The b04 head-lock
+  rung is the precedent (64.7 px -> 4.7 px from moving one clause out of an instruction and
+  into a placement). Do NOT change the recipe, do NOT re-roll the seed, and do NOT touch the
+  plate: the plant, the framing, the camera and the identity all held here, and the DIM plate
+  this beat is still shot on is a separate, already-recorded item.'
+cost: $0. One GPU fire, one seed, no retries. 263s of render, 121 frames, rc=0 on all seven
+  steps.
