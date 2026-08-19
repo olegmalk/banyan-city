@@ -2878,3 +2878,4 @@
 08:12:49Z box-runner idle ready=0 failed=39
 08:22:52Z box-runner idle ready=0 failed=39
 08:25:08Z STARTED task=ep2-b08-posenet-sample-0819-1787127903 attempt=1 on box-runner
+08:25:35Z DONE task=ep2-b08-posenet-sample-0819-1787127903 rc=0 artifacts=1
