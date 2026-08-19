@@ -363,7 +363,7 @@ def masks_overlap(a, b):
 
 
 def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
-                  stamp, torch_version, ip=None):
+                  stamp, torch_version, ip=None, ctrl2_sha=None):
     """The 7.2 provenance block, written AT RENDER TIME, on the box."""
     side = [
         "# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on",
@@ -399,6 +399,28 @@ def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
             "control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no "
             "model, no photo-derived edge map, no annotator)",
         ]
+        # ONLY WHEN A SECOND NET WAS ACTUALLY COMPOSED. Absent, not empty: a
+        # one-net sidecar must be the byte-identical block six filed verdicts
+        # cite, and selftest() holds two of them to sha256.
+        net2 = getattr(a, "controlnet2", None)
+        if net2:
+            side += [
+                "controlnet_2: %s" % net2,
+                "controlnet_2_licence: %s"
+                % CONTROLNETS.get(net2, CONTROLNET_LICENCE),
+                "controlnet_2_conditioning_scale: %s"
+                % (getattr(a, "scale2", None) if getattr(a, "scale2", None)
+                   is not None else a.scale),
+                "control_2_image: %s" % getattr(a, "control2", None),
+                "control_2_image_sha256: %s" % (ctrl2_sha,),
+                "control_2_polarity: white-on-black",
+                "control_2_authored_by: pipeline/author_b08_board_hint.py (PIL, "
+                "no model, no photo-derived edge map, no annotator)",
+                "controlnet_composition: MultiControlNetModel, nets applied in "
+                "the order listed -- 1 = pose (WHICH BODY GOES WHERE), 2 = "
+                "object (WHAT IS IN THE HAND). Both run the full denoise, "
+                "control_guidance 0.0-1.0",
+            ]
     else:
         side.append("controlnet: none (the control arm; same seed, same prompt)")
     # ONLY WHEN AN IP-ADAPTER WAS ACTUALLY USED. An arm that ran without one must
@@ -590,7 +612,53 @@ def render(a):
             print(str(e), file=sys.stderr)
             return 7
 
+    # ---- THE SECOND HINT, resolved and PINNED on the same terms as the first.
+    # A second net doubles the number of ways the geometry can be a lie, so it
+    # gets the identical treatment: size-checked against the render (diffusers
+    # would silently resize it) and sha-checked against the value the job
+    # committed to before any weight loads.
+    ctrl2_img = None
+    ctrl2_sha = None
+    net2 = getattr(a, "controlnet2", None)
+    if net2:
+        if not use_cn:
+            print("--controlnet2 on the nocontrol arm is a contradiction",
+                  file=sys.stderr)
+            return 6
+        if not getattr(a, "control2", None):
+            print("--controlnet2 needs --control2: a second net with no second "
+                  "hint would be conditioned on nothing", file=sys.stderr)
+            return 6
+        cp2 = Path(a.control2)
+        if not cp2.is_absolute():
+            cp2 = root / a.control2
+        if not cp2.exists():
+            print("second control hint missing: %s" % cp2, file=sys.stderr)
+            return 6
+        ctrl2_sha = sha256_file(cp2)
+        want2 = getattr(a, "control2_sha256", None)
+        if want2 and ctrl2_sha != want2:
+            print("!! second control sha mismatch\n   want %s\n   have %s"
+                  % (want2, ctrl2_sha), file=sys.stderr)
+            return 8
+        ctrl2_img = Image.open(cp2).convert("RGB")
+        try:
+            check_control(ctrl2_img, a.width, a.height)
+        except ValueError as e:
+            print(str(e), file=sys.stderr)
+            return 7
+
     net = a.controlnet or CONTROLNET
+    if use_cn and net2 and net2 not in CONTROLNETS:
+        print("!! %r is not in this driver's ControlNet allowlist (second net). "
+              "The licence travels with the name -- see CONTROLNETS. Use one "
+              "of: %s" % (net2, ", ".join(sorted(CONTROLNETS))), file=sys.stderr)
+        return 12
+    if use_cn and net2 and net2 == net:
+        print("!! --controlnet2 is the same net as --controlnet (%r). Composing "
+              "a net with itself doubles its weight on the same question and is "
+              "never what was meant." % net, file=sys.stderr)
+        return 12
     if use_cn and net not in CONTROLNETS:
         print("!! %r is not in this driver's ControlNet allowlist. The licence "
               "travels with the name (see CONTROLNETS), and an unlisted net "
@@ -640,11 +708,30 @@ def render(a):
         cn.to("cuda")
         # from_pipe swaps the class while REUSING the loaded modules, so one set
         # of base weights serves both arms -- r8/r9's discipline.
-        pipe = AutoPipelineForText2Image.from_pipe(pipe, controlnet=cn)
-        kw = {"image": ctrl_img,
-              "controlnet_conditioning_scale": float(a.scale),
-              "control_guidance_start": 0.0,
-              "control_guidance_end": 1.0}
+        if net2:
+            # A LIST, which StableDiffusionXLControlNetPipeline.__init__ wraps
+            # into a MultiControlNetModel. `image` and
+            # `controlnet_conditioning_scale` then become per-net lists in the
+            # same order; control_guidance_start/end stay scalars and diffusers
+            # broadcasts them across the nets.
+            cn2 = ControlNetModel.from_pretrained(
+                net2, torch_dtype=torch.bfloat16, **cn_kw)
+            cn2.to("cuda")
+            s2 = float(a.scale2) if getattr(a, "scale2", None) is not None \
+                else float(a.scale)
+            pipe = AutoPipelineForText2Image.from_pipe(pipe, controlnet=[cn, cn2])
+            kw = {"image": [ctrl_img, ctrl2_img],
+                  "controlnet_conditioning_scale": [float(a.scale), s2],
+                  "control_guidance_start": 0.0,
+                  "control_guidance_end": 1.0}
+            print("  multi-controlnet: 2 nets, scales %s"
+                  % kw["controlnet_conditioning_scale"], flush=True)
+        else:
+            pipe = AutoPipelineForText2Image.from_pipe(pipe, controlnet=cn)
+            kw = {"image": ctrl_img,
+                  "controlnet_conditioning_scale": float(a.scale),
+                  "control_guidance_start": 0.0,
+                  "control_guidance_end": 1.0}
 
     # ---- MASKED IP-ADAPTER, LOADED ONTO THE FINAL PIPELINE ----------------
     # AFTER the from_pipe swap, deliberately. from_pipe rebuilds the class around
@@ -701,7 +788,7 @@ def render(a):
     side = sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative,
                          (t1 - t0).total_seconds(), (t2 - t1).total_seconds(),
                          t2.strftime("%Y-%m-%dT%H:%M:%SZ"), torch.__version__,
-                         ip=ip)
+                         ip=ip, ctrl2_sha=ctrl2_sha)
     (out_dir / ("%s-%s.png.meta.yaml" % (a.task, a.arm))).write_text(
         "\n".join(side) + "\n", encoding="utf-8")
 
@@ -806,6 +893,52 @@ def selftest():
             check("the IP sidecar records %r" % needle, needle in si)
         check("the IP sidecar still carries the ControlNet block too",
               CONTROLNET in si and "controlnet_conditioning_scale" in si)
+
+        # ---- THE SECOND NET MAY NOT MOVE THE ONE-NET PATHS EITHER ----------
+        # Same discipline as the IP-Adapter's, same reason, and asserted against
+        # the SAME two golden shas: a fixture Namespace with no `controlnet2`
+        # attribute at all must still produce the pre-existing bytes, because
+        # that is exactly the shape every caller before this feature had.
+        check("a one-net sidecar is STILL byte-identical with the multi-net "
+              "feature in the file", hashlib.sha256(s.encode()).hexdigest()
+              == GOLDEN_CN)
+        check("no controlnet_2 line appears when no second net was passed",
+              "controlnet_2" not in s and "controlnet_2" not in s0
+              and "controlnet_2" not in si)
+
+        # And when one IS composed, every part of it is named -- a frame whose
+        # clipboard came from a second net and does not say so is a 7.2 failure.
+        _twins = r"C:\banyan-farm\cnet-openpose-twins"
+        ap2n = argparse.Namespace(
+            task="t", arm="hint", width=W, height=H, steps=STEPS, cfg=CFG,
+            seed=1, scale=1.0, control="pose.png", control_sha256=None,
+            root=None, repo_commit="abc", out=td, prompt_file=str(p),
+            negative_file=str(p), controlnet=_twins,
+            controlnet2=CONTROLNET, control2="board.png", scale2=0.6)
+        s2 = "\n".join(sidecar_lines(ap2n, True, "deadbeef", "abc", "pos", "neg",
+                                     1.0, 2.0, "now", "2.4", ctrl2_sha="cafe"))
+        for needle in ("controlnet_2: %s" % CONTROLNET,
+                       "controlnet_2_conditioning_scale: 0.6",
+                       "control_2_image: board.png",
+                       "control_2_image_sha256: cafe",
+                       "MultiControlNetModel",
+                       "author_b08_board_hint.py"):
+            check("the multi-net sidecar records %r" % needle, needle in s2)
+        check("the multi-net sidecar still names the FIRST net and its scale",
+              _twins in s2 and "controlnet_conditioning_scale: 1.0" in s2)
+        check("each net's own licence travels with its own name",
+              CONTROLNETS[_twins] in s2 and CONTROLNETS[CONTROLNET] in s2)
+        # scale2 omitted must fall back to scale, not to None or to a default.
+        ap2n.scale2 = None
+        s3 = "\n".join(sidecar_lines(ap2n, True, "deadbeef", "abc", "pos", "neg",
+                                     1.0, 2.0, "now", "2.4", ctrl2_sha="cafe"))
+        # Scoped to the line itself. A first version grepped the whole block for
+        # "None" and tripped on `controlnet_variant: None`, which is a correct
+        # and deliberate line -- a check that fires on an unrelated truth is a
+        # check that will be silenced.
+        check("an omitted --scale2 is recorded as the FIRST net's scale, never "
+              "as None", "controlnet_2_conditioning_scale: 1.0" in s3
+              and "controlnet_2_conditioning_scale: None" not in s3)
 
     # The token guard, against a stand-in with CLIP's shape. The real tokenizer
     # is only on the box; what is testable here is that the arithmetic refuses
@@ -989,6 +1122,32 @@ def main():
     ap.add_argument("--negative-file", default=None)
     ap.add_argument("--out", default=None, help="output DIRECTORY (absolute)")
     ap.add_argument("--root", default=None)
+    # ---- THE SECOND NET, AND WHY IT IS A SEPARATE FLAG RATHER THAN A
+    # ---- REPEATABLE ONE.
+    # The obvious design is `action="append"` on --controlnet/--control/--scale.
+    # It was not taken, for a reason that is about EVIDENCE and not taste:
+    # `--scale` is `type=float` and `sidecar_lines` interpolates it directly, so
+    # making it repeatable turns `controlnet_conditioning_scale: 0.8` into
+    # `[0.8]` in EVERY sidecar this file has ever written -- and six filed
+    # verdicts cite those sidecars as their provenance. selftest() pins two of
+    # them to sha256 for exactly that reason. A second, separate flag cannot
+    # perturb the one-net path by construction: when it is absent, every byte
+    # downstream is what it was. That is the same shape the masked IP-Adapter
+    # was added in, and the same reason.
+    # A THIRD net would justify the repeatable rewrite. Two does not.
+    ap.add_argument("--controlnet2", default=None,
+                    help="a SECOND ControlNet, composed with --controlnet as a "
+                         "MultiControlNetModel. Allowlisted like the first. The "
+                         "openpose+scribble composition beat 08 needs: a pose "
+                         "hint cannot carry an object, because COCO-18's "
+                         "eighteen keypoints are all body parts")
+    ap.add_argument("--control2", default=None,
+                    help="the SECOND hint PNG, for --controlnet2")
+    ap.add_argument("--control2-sha256", default=None,
+                    help="pin for the second hint, same guard as --control-sha256")
+    ap.add_argument("--scale2", type=float, default=None,
+                    help="conditioning scale for the second net (defaults to "
+                         "--scale when omitted)")
     ap.add_argument("--controlnet", default=CONTROLNET,
                     help="ControlNet repo id; must be in the CONTROLNETS "
                          "allowlist, which carries each net's licence")
