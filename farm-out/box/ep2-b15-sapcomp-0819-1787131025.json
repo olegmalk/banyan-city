@@ -1,0 +1,119 @@
+{
+  "id": "ep2-b15-sapcomp-0819-1787131025",
+  "task": "ep2-b15-sapcomp-0819",
+  "node": "002b-first-citizen",
+  "beat": 15,
+  "worker": "box-runner",
+  "priority": 34,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b15sapcomp-0819\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b15sapcomp-0819\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-0819.png",
+        "--init-sha256",
+        "109abc613ff5c6d6a334c9964abaabe121b2e20a10ca1d91d06ff4d79d29e91c",
+        "--mask-png",
+        "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-mask-0819.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b15sapcomp-0819\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b15sapcomp-0819\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b15sapcomp-0819\\b15-sapcomp-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260819",
+        "--note",
+        "mask geometry check. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the removed weed's footprint and the drawn sapling's own footprint, dilated 12 and feathered 3 -- 42792 px, 4.23 percent of the frame, extent x 121..310 y 285..604. WHAT TO CHECK ON THE DRY PNG: that the mask does not reach his face, his spectacles, his hands, his knees or his boots, because those carry the six clauses r1 already passes. It DOES touch him: 278 px fall inside his silhouette proper and 589 inside the dilated protect halo, where his cloak's left edge runs x 291..370 through the mask's own rows. That is known, is why FAIL-FIGURE is a pre-registered clause, and is the number to check has not grown.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260819",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b15sapcomp-0819\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-0819.png",
+        "--init-sha256",
+        "109abc613ff5c6d6a334c9964abaabe121b2e20a10ca1d91d06ff4d79d29e91c",
+        "--mask-png",
+        "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-mask-0819.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b15sapcomp-0819\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b15sapcomp-0819\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b15sapcomp-0819\\b15-sapcomp-s20260819.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260819",
+        "--note",
+        "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT: beat 15's plant is composited instead of prompted. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed at TWO wordings here (r1 five blades on three nodes; r2 moved one clause and the plant did not move at all). Beat 19 closed its wording ladder at three rungs and this beat closed its own at two, on the same law."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b15sapcomp-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b15-sapcomp-0819\"\nNAMES = [\n    \"b15-sapcomp-s20260819.png\",\n    \"b15-sapcomp-s20260819-mask.png\",\n    \"b15-sapcomp-s20260819.png.meta.yaml\",\n    \"15-good-listener-sapcomp-0819.png\",\n    \"15-good-listener-sapcomp-mask-0819.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b15-sapcomp-0819.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b15sapcomp-0819\\b15-sapcomp-s20260819.png",
+    "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-0819.png"
+  ],
+  "started_at": "2026-08-19T09:17:13Z",
+  "attempts": 1,
+  "runner_pid": 5964,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T09:17:39Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b15sapcomp-0819\\b15-sapcomp-s20260819.png",
+    "C:\\banyan-farm\\b15sapcomp-0819\\15-good-listener-sapcomp-0819.png"
+  ]
+}
