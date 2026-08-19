@@ -1,0 +1,28 @@
+tool: "pipeline/beat19_sapling_composite.py"
+beat: 19
+node: "002b-first-citizen"
+what_this_is: "The COMPOSITE INIT that REVS[(19,3)]'s verdict names as the next rung after three wordings closed the plant ladder. NOT a fourth wording: no prompt was fired and no sampler ran."
+sampler: "NONE -- plain image processing"
+cost_usd: 0.0
+provider: "none"
+gpu: "none"
+sources: [{"role": "body/pose/field/framing/light (unaltered)", "path": "farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png", "sha256": "de7a256c29b0a752b335e1e022c111e654c4c65cbe43b05fb98bd9573e1c6cbf", "why": "r3 passes 5 of 7 of its own bar; P3's hands are carried, not re-tested"}, {"role": "the fig (silhouette, modelling, canon colour)", "path": "farm-out/ep2-b18-canon-0817/18-the-decision-ipa-r2-w015-s2.png", "sha256": "ab70a4adec4cb7b69df131febea47af2987d0bbab7e8a4c77810048b29e0a3f1", "why": "beat 18's canon plate passes its bar as ONE deep-purple-violet fig on ONE thin branch"}]
+drawn_not_sourced: "stem, one thin side-branch, two leaves -- procedural, in colours sampled from the whips this tool deletes (pattern \u00a73.1)"
+removed: "BOTH whips whole: leaf clusters, threads, all three crystals, woody stems and the two segments crossing his cloak. No stub or attachment point is left anywhere (pattern \u00a713)."
+vacancy_fill: "per-row linear interpolation from the region's own surviving boundary, WITHIN CLASS -- background holes from background, the cloak hole from cloak. Nothing cloned from elsewhere in the frame (pattern 12). The prescribed diffusion relaxation is present but OFF: measured at 0/6/20/90 iterations on this mask it washed the pink hill band and the teal treeline out of a 40x50 px vacancy, because a hole narrow in x and crossing bands in y is the case where averaging loses the structure."
+transform: {"horizon_y": 425.0, "figure_ground_y": 910.0, "px_per_cm_at_figure": 6.09, "px_per_cm_at_root": 5.9895, "canon_plant_cm": 40.0, "plant_px": 239.6, "canon_fig_cm": 7.0, "fig_px": 42, "root_px": [740, 902], "stem_apex_px": [734, 700], "branch_tip_px": [712, 762], "leaf_tips_px": [[685, 664], [775, 660]], "fig_cutout": {"src_body_px": [656, 823], "scale": 0.05103, "reduction_x": 19.6, "gain": 2.046, "src_median_luma": 29.5, "target_median_luma": 60.5, "out_px": [33, 47]}, "scale_derivation": "head 140 px crown-to-chin / 23 cm = 6.09 px/cm at his depth (ground y=910); ground plane px/cm(y) = 6.09*(y-425)/485; his seated crown-to-sole 632 px = 104 cm as the cross-check. The plate's own three crystals are 43/44/31 px tall, so a 7 cm fig at 42 px is the plate's own scale for a fruit."}
+palette_measured_from_plate: {"leaf_n": 3920, "ink_n": 5579, "dark": [76, 113, 63], "mid": [98, 127, 77], "light": [164, 183, 98], "ink": [49, 46, 55]}
+plate_fruit_median_luma: 60.5
+whip_matte_px: 28121
+finishing_mask_png: "19-the-drop-composite-mask-0819.png"
+finishing_mask_px: 57899
+body_run_px: 187667
+cross_matte_px: 1095
+checks: {"C1_fill_escaped_px": 0, "C1a_mask_over_him_px": 1725, "C1b_face_hands_maxdiff": 0, "C2_whip_residual_px": 0, "C3_fruit_components": 1, "C4_fig_above_root_px": 93, "C5_plant_within_8px_of_body": 0, "C5_measured_clearance_px": 30, "C6_plant_height_cm": 41.4, "C7_plant_in_frame": true, "C8_drawn_dark": 16, "C8_plate_dark": 4}
+fails: []
+composite_sha256: "447ce070f1d6de626a3cda6602b07b64e0e24a6496d0e6ed8ebfa2d665efc03d"
+bar: "scored against DRAFTS[19]'s pre-registered P1-P7 and Q1-Q9 byte for byte; nothing softened and nothing tightened"
+date: "2026-08-19"
+approved: false
+provisional: true
+scored: false
