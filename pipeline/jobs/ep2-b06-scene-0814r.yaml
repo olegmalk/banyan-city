@@ -141,3 +141,206 @@ steps:
     \ + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
 artifacts:
 - C:\banyan-farm\ep2-b06-scene-0814r\06-the-clipboard-LTX-world-0813.mp4
+
+# ==================================================================
+# FIRST VERDICT ON THIS FILE, 2026-08-19 — judging-lane sweep of the
+# eight beats cut-readiness-0819.yaml's `the_unscored_middle` named as
+# having ridden five consecutive cuts with no verdict block anywhere.
+# It also SETTLES the open question done-definitions left on this beat
+# in blind_read_0815_b05_b06_b10.reconciliation.contradiction_on_beat_06,
+# and it finds a gap in the prop_identity_bar's phrasing. Bar taken
+# verbatim from done-definitions beats.06.done_when. No bar invented.
+# ==================================================================
+verdict: >-
+  THE BEST OF THE EIGHT UNSCORED BEATS, AND STILL NOT A PASS: three of four clauses met,
+  one failed on the board's SIZE. The action is really there — f000-f005 he faces camera
+  holding the prop at waist height, f006-f011 he turns to his right and rotates it through
+  edge-on, f012 he is back to camera with its written face toward the lens and from f013 to
+  f045 he holds it at chest height with his eyes down on it. That is "turns the bark board
+  over and reads off it", performed, on a locked camera, with ZERO identical adjacent pairs
+  in the clip. The field is there at frame one, there is no white burst, and the man is the
+  same man in all 46 frames. WHAT FAILS IS THE BOARD: from f012 it spans from his chin to
+  below his waist and most of his shoulder width, where `done_when` requires it
+  "hand-sized". Both this job's positive ("the hand-sized bark board") and its negative
+  ("giant board, oversized board") failed to hold the size.
+verdict_judged:
+  file: review/ep2-demo-0819b/sources/06-the-clipboard-b06-scene-0814r-trim.mp4
+  sha256: 6e1d49324cc7b74ad21cd2910827ac88b15135dc3c9168ddc161425ab3fd4f8d
+  sha_recomputed_here: yes — equal to the value cut-readiness-0819.yaml beats[6] records
+  in_cut: review/ep2-demo-0819b/ep2-demo-0819b.mp4 (and 0815, 0816, 0817, 0818, 0819 before it)
+  relation_to_this_job: >-
+    The cut carries the trim_pass_0815 derivative, not this job's raw artifact: its sidecar
+    reads "3 head + 72 dead tail frames removed, 5.04s -> 1.92s". So the judged file is 46
+    frames and every frame index below is an index into the TRIMMED file. THE TRIM IS
+    LARGE — 72 of 121 frames — and what it removed was, per the record, "three seconds of a
+    held finished pose". Nothing in this verdict scores the discarded tail.
+  method: >-
+    pipeline/coldread_frames.py --pad 60, 46 consecutive frames over three strips plus a
+    16-frame overview, read consecutively per standard_0815.scoring_method. Then
+    review/ep2-picks/exact_freeze_index.py, a parity-collapsed lag-4 series, and finally
+    this spec's own payload prompt and negative text — which is where the two most useful
+    findings below came from and which no previous read of this beat had opened.
+verdict_clauses:
+  C1_turns_the_bark_board_over_and_reads_off_it: >-
+    PASS, and it is a real performance rather than a lucky pose. Read consecutively the
+    rotation is continuous: f005 the prop is flat and horizontal at waist height, f006-f008
+    his torso turns to his right and the prop tilts up, f009-f011 it is edge-on as a thin
+    dark blade near his chest, f012 it is face-out toward camera at chest height. His eyes
+    are down on it from f012 to f045 and his fingers are spread on its face. No step, no
+    lurch, no adjacent-frame jump anywhere in the turn.
+  C2_board_hand_sized: >-
+    FAIL. From f012 to f045 the board runs from just under his chin to below his waist and
+    across most of his shoulder width. That is a torso-sized slab, not hand-sized, and it is
+    not a transient — checked at f012, f021, f033 and f045. Note for whoever reads this
+    beside the record: beats.06.round_3_result describes this same take as "guard reads the
+    hand-sized bark board", and that description is not supported by the file. Left standing
+    unedited; this is the reading that disagrees.
+  C2b_board_readable: >-
+    PASS. The face carries dense ruled lines of scribble that read unambiguously as writing,
+    plus a pale-blue clip tab at its top edge. A viewer sees a man reading a written document.
+  C3_field_present_at_frame_one: >-
+    PASS. f000 is fully drawn: green grass with dandelions to the bottom edge, a low hedge
+    and dark treeline across the middle distance, pale blue sky with thin cloud above.
+  C4_no_white_burst_at_the_head_of_the_clip: >-
+    PASS, with the trim stated so the pass is not read as stronger than it is. This beat's
+    ONLY blocking condition through rounds 1 and 2 was a 40-frame white dissolve, and the
+    scene plate genuinely killed it — f000 of the trimmed file is a complete picture. The
+    honest caveat is that the trim removed three degraded head frames, so the strict claim
+    is "the file in the cut has no burst", and the record's own round_3_result already
+    claimed the stronger version ("no white burst at all") about the untrimmed render.
+  prop_identity_bar_standard_0815: >-
+    FAILS AS THE BAR IS WRITTEN, AND THE CAUSE IS NOT DRIFT — SEE
+    `verdict_finds_a_gap_in_the_prop_identity_bar`. The object visibly changes state four
+    times on screen: a wide shallow dark-rimmed TRAY carrying loose white sheets (f000-f005),
+    a thicker dark-rimmed board with no sheets (f006-f008), a thin dark blade edge-on
+    (f009-f011), and a large brown BARK BOARD densely scribbled with a pale-blue clip tab
+    (f012-f045). The blind reader described the first and the last of those and called it a
+    replacement; the clip shows the replacement happening, inside the turn, in twelve frames.
+  identity_drift_bar_standard_0815: >-
+    PASS within the clip. Same man in all 46 frames — the same black hair with the same
+    cowlick, the same long brown coat with the same standing collar, the same dark trousers.
+    No morphology change, no age slide. On the blind reader's "EYE COLOUR BLUE -> DARK BROWN"
+    finding this lane makes NO claim either way: at this render's scale the irises are dark
+    in every frame including f000, and a colour call on a few pixels is not a reading.
+verdict_settles_the_open_question_on_this_beat:
+  what_was_open: >-
+    blind_read_0815_b05_b06_b10.reconciliation.contradiction_on_beat_06 recorded a flat
+    disagreement and refused to resolve it: the sighted lane said no figure loses its count
+    on beat 06; the blind reader said "the reference has a SECOND, smaller figure standing in
+    the right background, back turned, arms raised holding up a phone or tablet. That figure
+    is absent from all ten frames." The entry named the test — "open ep2-b06-scene-0814r's
+    init plate and its frames f34-f43 and COUNT THE FIGURES in each - one look decides it" —
+    and left it undone. It has been open since 2026-08-15.
+  half_one_settled_by_counting_the_frames: >-
+    ONE FIGURE, IN ALL 46 FRAMES. Counted at every frame of three consecutive strips, not
+    sampled. Nobody appears, nobody leaves, there is never a second person. The SIGHTED
+    LANE'S CLAIM IS CORRECT as far as it goes. (One thing that is in every frame and is not a
+    figure: a small dark two-stroke chevron glyph floating at mid-right, over the hedge line.
+    It is stationary, it is present at f000 and f045 and every frame between, and it is a
+    stray mark rather than a person. It is also IN THE CUT — recorded below.)
+  half_two_settled_by_the_spec_rather_than_the_plate: >-
+    THE PLATE ITSELF IS NOT IN THIS CHECKOUT — the crop step asserts
+    C:\banyan-farm\courier-box\farm-out\ep2-b10-patrol-scene-r2-0813\10-no-form-ipa-r0-w010-s1.png
+    at sha256 441a4fd115fa2d0b5194b61b4317be8ee0e14ef6045a9507372062ef3e4cd98c, and no local
+    path resolves to it, so this lane could not count the reference's figures and does not
+    claim to have. BUT THE SPEC ANSWERS THE QUESTION ANOTHER WAY, AND MORE STRONGLY. Two
+    facts, both quotable from the payload above. (1) The init is a BEAT-10 TWO-GUARD PATROL
+    SCENE PLATE — beat 10's plate is the one drawn with a pair in it, and beat 06 borrowed it.
+    (2) This job's prompt says, in its own capitals, "ONE uniformed patrol guard, a grown man,
+    is alone in this shot and no second person is anywhere in the frame", and its negative
+    opens with "two men, second guard, a pair". SO THE SECOND FIGURE'S ABSENCE WAS ASKED FOR.
+  the_answer: >-
+    BOTH READS WERE RIGHT AND NEITHER WAS DESCRIBING A DEFECT. The reader was correct that
+    the reference has a figure the frames do not; the sighted lane was correct that nothing
+    changes count inside the clip. The hypothesis the record offered — "this would be the
+    RENDER not matching its init plate rather than drift inside the clip" — is CONFIRMED, and
+    it gains the part the record could not have known without opening the spec: the mismatch
+    is DELIBERATE AND SUCCESSFUL. A two-guard plate was deliberately reduced to one guard by
+    the prompt and the negative, and it worked at 46 of 46 frames. That is a lever that
+    WORKED, on the count axis, on this checkpoint — which is worth knowing on an episode where
+    counting guards has failed repeatedly by words alone (beat 05 produced 1, 3 and 3-plus;
+    beat 10 could not keep a pair). The difference is direction: SUBTRACTING a figure from a
+    plate that has one bound; ADDING a figure a plate lacks never has.
+verdict_finds_a_gap_in_the_prop_identity_bar:
+  the_finding: >-
+    ALL THREE OF THE BLIND READER'S BEAT-06 FAULTS ARE THE PROMPT DOING WHAT IT WAS TOLD, NOT
+    THE RENDER DRIFTING. Read the payload against the three findings. (1) The missing
+    background figure: the prompt demands "no second person is anywhere in the frame" — asked
+    for. (2) "a YELLOW-GOLD ROUND BADGE on the left chest in every frame, absent from the
+    reference": the prompt asks for "a cloth SASH OF OFFICE across his chest and a small
+    brass BADGE pinned on it" — asked for. (3) "THE PROP IS REPLACED ENTIRELY ... a wide
+    shallow dark-rimmed tray held HORIZONTALLY carrying loose white sheets and a pen becomes a
+    tall vertical brown board, densely scribbled": the prompt asks for "a bark clipboard in
+    one hand" and "the hand-sized bark board" — asked for, and the plate's tray was the WRONG
+    PROP FOR THIS BEAT, because the plate belongs to beat 10.
+  why_that_matters_for_the_bar_and_not_just_for_this_beat: >-
+    prop_identity_bar's test is "does every object a character CARRIES OR WEARS in the init
+    plate still exist in the rendered frames, as the SAME object ... and held or worn by the
+    SAME character", and it is explicitly a PLATE-to-FRAMES question answerable by a reader
+    with nothing but the plate and the frames. That is its strength and here it is also its
+    blind spot: a reader with only those two inputs CANNOT DISTINGUISH the render corrupting a
+    correct prop from the prompt correcting an incorrect one, and on this beat it is the
+    second every time. A bar that fails a beat for successfully replacing a borrowed plate's
+    wrong prop with the right one is measuring the wrong thing on exactly the beats that reuse
+    a neighbour's plate — and this episode reuses plates constantly (beat 06 runs on beat 10's
+    plate, beat 10 on beat 05's, beat 21 on beat 12's).
+  what_this_lane_does_and_does_not_do_about_it: >-
+    REPORTS IT; DOES NOT REWRITE THE BAR AND DOES NOT REOPEN ANYTHING. The bar's own SCOPE
+    paragraph governs and is respected to the letter: "THIS CLAUSE GOVERNS WHAT WE CLOSE FROM
+    HERE. It does NOT reopen beats already closed ... Read this clause forward only." Beats
+    05, 06 and 10 stay SHIP WITH FAULT NAMED with their prop faults recorded. The proposal,
+    named and not adopted, is one added question for the reader's brief: after "is it the same
+    object", ask "and does the PROMPT ask for a different one" — which costs the lane
+    commissioning the read one grep and turns an ambiguous fault into either a drift finding
+    or a plate-mismatch finding. Whoever owns standard_0815 can take it or leave it.
+verdict_contradicts_a_founder_ruling: >-
+  SECOND INSTANCE IN THIS SWEEP, same ruling, same shape as beat 05's. The frozen wardrobe
+  (done-definitions guards_CORRECTION_0816.still_genuinely_the_founders_ANSWERED_0816, R4,
+  "the cast stands as drawn") makes guard A "dark-haired, tan wrap tunic, wide white waist
+  sash, WIRE-RIM GLASSES". The man in this clip is dark-haired — correct, and note this
+  job's prompt asked for "short BROWN hair", so the black hair is the render landing NEARER
+  canon than its own prompt, the beat-11 pattern for the third time in this sweep. Everything
+  else is off: he wears a long brown COAT rather than a tan wrap tunic, his waist sash is DARK
+  BROWN rather than wide and white, the "sash of office across his chest" the prompt asked for
+  did not render at all, and there are NO WIRE-RIM GLASSES on a beat whose whole shot is his
+  face and hands. The class is already recorded (guard_plates_are_miscast_0816, "NO MOTION
+  WORK ON BEATS 05, 06, 07, 09, 10 OR 11 CAN PAY OFF UNTIL THOSE PLATES ARE REDRAWN"); what is
+  new is the attribute-by-attribute check against the file that is actually in five cuts.
+  Not a taste question — the ruling is made and frozen. Named for the plate lanes.
+verdict_measured:
+  no_freeze_and_no_dead_air_in_the_trimmed_file: >-
+    exact_freeze_index.py: `frames=46 terminal_freeze_index=None terminal_freeze_len=0
+    dup_pairs=0 runs=[]`. Zero identical pairs. Parity-collapsed lag-4 median 11.46 with a
+    minimum of 1.44, so no four-frame window is one picture. The trim did its job: the dead
+    air the record measured is gone and what is left moves throughout.
+  size_tags_did_not_bind_in_either_direction: >-
+    Worth one line for the prompt-mechanics record because it is a clean two-sided datapoint.
+    The positive contains "the hand-sized bark board" AND the negative contains "giant board,
+    oversized board", and the board still rendered torso-sized. So on this axis the positive
+    adjective did not bind and the negative ban did not prevent — which is NOT the usual
+    finding in this repo (the usual one is that the positive places and the negative fails).
+    Reported as an observation on one beat and explicitly not as a law.
+verdict_reported_forward_a_defect_that_is_in_the_cut: >-
+  A SMALL DARK CHEVRON GLYPH, stationary at mid-right over the hedge line, present in ALL 46
+  frames and therefore in every cut this beat has been in. It is not a figure and not a prop;
+  it reads as a stray ink mark or a fragment of text. Two-strokes, a few pixels. Nobody has
+  written it down before. It is small enough that a viewer may never notice it and it is not
+  scored as a clause failure, but it is in the shipped picture and a cleanup pass should know
+  where it is.
+verdict_next_instrument: >-
+  A CAST-CORRECT PLATE THAT CARRIES ITS OWN HAND-SIZED BARK BOARD. Two things this read adds
+  for whoever draws it. (1) Do not borrow beat 10's plate again: every one of this take's
+  prop faults traces to the borrowed plate holding beat 10's tray, and the prompt then having
+  to overwrite it mid-turn. (2) The board's SIZE must come from the plate, because this job
+  proves words cannot set it from either side. Named, not fired — this lane files no GPU work.
+verdict_status_recommendation: >-
+  best-available, UNCHANGED, and of the eight it is the closest to a pass — one clause short,
+  and the failing clause is a prop dimension rather than a missing action or a broken
+  identity. TWO THINGS AN ASSEMBLY SHOULD KNOW. First, at 1.88s it is by far the shortest
+  footage beat in the episode and beat 06's slot is nominally 5s, so whatever fills the
+  remaining ~3s is an edit decision that has never been written down; the ledger's beat-12
+  `upgrade_available.caution` raises exactly this trade for a 1.38s trim and it applies here
+  and has not been noted. Second, the untrimmed original exists and its extra 72 frames are a
+  held finished pose, so the choice is between a short live beat and a long dead one. Neither
+  is this lane's call; both are now visible.
+verdict_by: judging lane, 2026-08-19. $0, no GPU, no render. Bar quoted verbatim, never widened.
