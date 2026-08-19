@@ -95,7 +95,7 @@ mask_provenance: 'farm-out/ep2-b19-sapcomp-0819/19-the-drop-sapcomp-mask-0819.pn
   172847 px, 17.08% of frame: the union of the two cleared twig arcs, the two small on-figure patches,
   and the drawn sapling''s own footprint, dilated 12.'
 payload:
-  C:\banyan-farm\b19sapcomp-0819\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\"\"Paint ONE object into\
+  C:\banyan-farm\b19sapgloss-0819\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\"\"Paint ONE object into\
     \ ONE masked region of an approved plate. SDXL, $0, local.\n\nWHY THIS EXISTS. Beat 01 asks for \"\
     one small round green fruit hanging from the\nstem\" and the prompt cannot deliver it: 0 of 24 across\
     \ the wording rounds, and\n0 of 12 in round 8's img2img -- which is the decisive one, because r8's\
@@ -282,12 +282,12 @@ payload:
     \n    print(\"WROTE %s\" % a.out, flush=True)\n    print(\"WROTE %s\" % mask_png, flush=True)\n  \
     \  print(\"WROTE %s\" % sidecar, flush=True)\n    print(\"rc=0 render_s=%.1f\" % render_s, flush=True)\n\
     \    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
-  C:\banyan-farm\b19sapcomp-0819\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 19's SAPLING\
+  C:\banyan-farm\b19sapgloss-0819\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 19's SAPLING\
     \ composite and its mask, and refuse on any sha mismatch.\n\nNo model, no GPU, no spend. Both files\
     \ are on origin/main, so the sha256s\nasserted here are verifiable against the repo by anyone who\
     \ clones it. They were\nmade on a Mac by pipeline/beat19_drop_composite.py, so they are NOT on the\
     \ box's\ncourier worktree -- the courier only ever contains what the box produced.\n\"\"\"\nimport\
-    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\b19sapcomp-0819\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\b19sapgloss-0819\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
     \n       \"farm-out/ep2-b19-sapcomp-0819/\")\nUA = {\"User-Agent\": \"banyan-city-b19-sapcomp/1.0\
     \ (albert.numbro@gmail.com)\"}\nWANT = {\n    \"19-the-drop-sapcomp-0819.png\":\n        \"b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903\"\
     ,\n    \"19-the-drop-sapcomp-mask-0819.png\":\n        \"ce1e5ba2f89e9cabd0f90a3316a1436605bfd152a23b7add994995e255bcf266\"\
@@ -297,11 +297,11 @@ payload:
     \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
     \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
     \ flush=True)\n"
-  C:\banyan-farm\b19sapcomp-0819\prompt.txt: 1boy, solo, lean wiry adult goblin man, green skin, bald
+  C:\banyan-farm\b19sapgloss-0819\prompt.txt: 1boy, solo, lean wiry adult goblin man, green skin, bald
     head, patchwork cloak, kneeling in a sunny grassy field, both hands on his knees, a tiny two-leaf
     sapling rooted in the grass beside him, one round purple fig hanging from its thin side-branch, detailed
     cinematic anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\b19sapcomp-0819\negative.txt: crystal, gem, faceted, glossy, bead, vine, many fruits,
+  C:\banyan-farm\b19sapgloss-0819\negative.txt: crystal, gem, faceted, glossy, bead, vine, many fruits,
     extra fruit, fruit on the ground, holding fruit, three leaves, four leaves, many leaves, large tree,
     thick branch, trunk, forest, 2boys, child, chibi, standing, close-up, text, photorealism, 3d render,
     low quality
@@ -434,3 +434,12 @@ parent_verdict_this_job_is_built_on:
     0.30 sample stands on its own and stays the beat's evidence regardless of what comes back here.
 fetch_note: The init and mask are the PARENT'S, unchanged, re-fetched from origin/main under the same
   two sha256 assertions. That is what makes 'one variable' true of the artifacts and not only of the spec.
+derivation_bug_caught_by_a_guard: 'RECORDED RATHER THAN QUIETLY FIXED, because the guard that caught it
+  is the reason it is cheap. The first derivation of this spec retargeted the STEPS'' argv to C:\banyan-farm\b19sapgloss-0819
+  and left the PAYLOAD KEYS pointing at the parent''s C:\banyan-farm\b19sapcomp-0819 -- so the four scripts
+  would have been written to one directory and read from another, and fetch_init.py''s own hardcoded OUT
+  would have deposited the init in a third place. box_enqueue.py PRINTS EVERY PAYLOAD DESTINATION as it
+  stages, which is how a one-line mismatch surfaced before the job ran instead of as an rc=1 on the fetch
+  step. Same species as the b08 filename that survived a substitution in this rung''s parent: a programmatic
+  derivation is only as good as the set of places you remembered to substitute, and the fix is a guard
+  that says out loud what it is about to do.'
