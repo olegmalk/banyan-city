@@ -1,0 +1,337 @@
+id: ep2-b08-scale30-0820
+task: ep2-b08-scale30-0820
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 33
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 08 staging lane, 2026-08-20 -- derived by pipeline/derive_b08_scale30_0820.py, on the next
+  rung its own parent's verdict named.
+consumer: Beat 08's plate. The parent proved a second ControlNet CAN put the clipboard in the frame and
+  proved the price at scale 0.8 is unacceptable -- a bald guard in a shapeless robe with one arm. The
+  cut needs to know whether the board survives at a strength that leaves the drawing alone, because that
+  is the difference between beat 08 having a complete plate and beat 08 keeping the boardless parent it
+  already has.
+success: 'One 832x1216 png with its sidecar, published to C:\banyan-farm\courier-box\farm-out\ep2-b08-scale30-0820
+  with a sha256 manifest, and read at 1:1 and 3x beside BOTH predecessors -- ep2-b08-twinsipa-0819, which
+  has the drawing and no board, and ep2-b08-scale30-0820, which has the board and not the drawing. This
+  rung is asking for one frame with both. The preflight must print its three verification lines and the
+  sidecar must read `controlnet_2_conditioning_scale: 0.3`.'
+why: 'One number, one sample, and both outcomes are informative. The mechanism is proven and cheap: every
+  weight is on the card, both hints are byte-identical to frames already rendered, and the parent took
+  35 seconds end to end. If the board survives at 0.3 with the drawing intact, beat 08 has its plate recipe.
+  If it does not, the answer is a guidance window rather than a scale, and this sample is what distinguishes
+  them.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b08scale30-0820\prompt.txt: Two men, a guard, light sandy hair, cream shirt, white sash,
+    brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly,
+    green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\b08scale30-0820\negative.txt: giant, colossus, towering figure, different scale, floating,
+    raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl,
+    child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality,
+    deformed
+steps:
+- name: preflight
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# GUARD, NOT A VARIABLE. Carried from the parent and EXTENDED to the\n# SECOND NET and the SECOND\
+    \ HINT. Every input that conditions this frame is\n# re-read here before a GPU second is spent.\n\
+    #\n# THE NEW TRAP, AND IT IS THE REASON THE TWO SHAS ARE COMPARED TO EACH OTHER\n# RATHER THAN ONLY\
+    \ TO CONSTANTS: the scribble blob and the twins blob are\n# THE SAME SIZE (2502139104 bytes) and ship\
+    \ the BYTE-IDENTICAL config.json.\n# Same architecture, different weights. Size, file count and config\
+    \ pass\n# whichever net sits in whichever directory, so only the weight sha can tell\n# the POSE net\
+    \ from the OBJECT net -- and swapping them would condition the\n# skeleton on the board hint and the\
+    \ board on the skeleton.\nimport glob, hashlib, os, sys\n\ndef sha(p):\n    h = hashlib.sha256()\n\
+    \    with open(p, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 22), b\"\"):\n  \
+    \          h.update(chunk)\n    return h.hexdigest()\n\nd = r\"C:\\banyan-farm\\cnet-openpose-twins\"\
+    \nblob = os.path.join(d, \"diffusion_pytorch_model.safetensors\")\nn = os.path.getsize(blob)\nif n\
+    \ != 2502139104:\n    print(\"!! twins blob is %d bytes, expected 2502139104\" % n); sys.exit(1)\n\
+    got = sha(blob)\nif got != \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\":\n\
+    \    print(\"!! twins blob sha %s, expected 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\"\
+    \ % got); sys.exit(1)\nch = hashlib.sha256(open(os.path.join(d, \"config.json\"), \"rb\").read()).hexdigest()\n\
+    if ch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! twins\
+    \ config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % ch);\
+    \ sys.exit(1)\nbad = [r for r, _, fs in os.walk(d) for f in fs if f.endswith(\".incomplete\")]\nif\
+    \ bad:\n    print(\"!! .incomplete under the twins dir: %r\" % bad); sys.exit(1)\nprint(\"twins net\
+    \ verified: %d bytes, sha %s\" % (n, got))\n\n# ---- THE SECOND NET, resolved out of the offline HF\
+    \ cache by repo id.\nsd = r\"C:\\Users\\artvn\\.cache\\huggingface\\hub\\models--xinsir--controlnet-scribble-sdxl-1.0\"\
+    \nsnaps = glob.glob(os.path.join(sd, \"snapshots\", \"*\"))\nif len(snaps) != 1:\n    print(\"!! expected\
+    \ exactly 1 scribble snapshot, found %r\" % snaps); sys.exit(1)\nsblob = os.path.realpath(os.path.join(snaps[0],\
+    \ \"diffusion_pytorch_model.safetensors\"))\nsn = os.path.getsize(sblob)\nif sn != 2502139104:\n \
+    \   print(\"!! scribble blob is %d bytes, expected 2502139104\" % sn); sys.exit(1)\nsgot = sha(sblob)\n\
+    if sgot != \"b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\":\n    print(\"!! scribble\
+    \ blob sha %s, expected b3e4ac47bc814019d50dc842f579301440deb6d8f09ee1b91a30f527ace1b852\" % sgot);\
+    \ sys.exit(1)\nsch = hashlib.sha256(open(os.path.join(snaps[0], \"config.json\"), \"rb\").read()).hexdigest()\n\
+    if sch != \"b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\":\n    print(\"!! scribble\
+    \ config sha %s, expected b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801\" % sch);\
+    \ sys.exit(1)\nsbad = [r for r, _, fs in os.walk(sd) for f in fs if f.endswith(\".incomplete\")]\n\
+    if sbad:\n    print(\"!! .incomplete under the scribble dir: %r\" % sbad); sys.exit(1)\nif glob.glob(os.path.join(snaps[0],\
+    \ \"*fp16*\")):\n    print(\"!! a fp16 variant appeared; the driver passes variant=None\"); sys.exit(1)\n\
+    print(\"scribble net verified: %d bytes, sha %s\" % (sn, sgot))\n\n# ---- AND THE TWO ARE NOT THE\
+    \ SAME WEIGHTS, asserted rather than assumed.\nif got == sgot:\n    print(\"!! THE TWO NETS ARE THE\
+    \ SAME WEIGHTS. One of the two directories \"\n          \"holds a copy of the other and this render\
+    \ would condition the \"\n          \"skeleton and the board on one net.\"); sys.exit(1)\nif n !=\
+    \ sn or ch != sch:\n    print(\"!! the two nets no longer share size and config, so the premise of\
+    \ \"\n          \"this guard has changed and it must be re-read, not relaxed.\"); sys.exit(1)\nprint(\"\
+    the two nets share size %d and config %s and DIFFER in weights -- \"\n      \"only the sha separates\
+    \ them\" % (n, ch))\n\nfor rel, want in ((\"pipeline/controlnet_plate.py\", \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"\
+    ),\n                  (\"pipeline/control/b08-openpose-nat-0819.png\", \"562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"\
+    ),\n                  (\"pipeline/control/b08-board-0820.png\", \"38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6\"\
+    ),\n                  (\"pipeline/control/b08-ref-goblin-0819.png\", \"13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c\"\
+    ),\n                  (\"pipeline/control/b08-ref-guard-0819.png\", \"61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c\"\
+    )):\n    p = os.path.join(r\"C:\\banyan-farm\\b08scale30-0820\\src\", rel.replace(\"/\", os.sep))\n\
+    \    if not os.path.exists(p):\n        print(\"!! staged file missing: %s\" % p); sys.exit(1)\n \
+    \   hh = sha(p)\n    if hh != want:\n        print(\"!! %s sha %s, expected %s\" % (p, hh, want));\
+    \ sys.exit(1)\nprint(\"staged driver, BOTH hints and BOTH references verified\")"
+- name: scale30
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08scale30-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b08scale30-0820\src
+  - --repo-commit
+  - ee74ac0e3eaf920fc7637fa7e4f2727af7684628
+  - --task
+  - ep2-b08-scale30-0820
+  - --arm
+  - scale30
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - pipeline/control/b08-openpose-nat-0819.png
+  - --control-sha256
+  - 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260819'
+  - --ip-ref
+  - pipeline/control/b08-ref-goblin-0819.png
+  - --ip-mask-capsules
+  - 170.6,550.8,118.6,550.8,30;170.6,550.8,222.5,550.8,30;118.6,550.8,104,762.4,12;104,762.4,111.3,857.3,12;222.5,550.8,237.1,762.4,12;237.1,762.4,229.8,857.3,12;170.6,550.8,137.7,762.4,30;137.7,762.4,140.5,941.2,12;140.5,941.2,143.2,1123.6,12;170.6,550.8,203.4,762.4,30;203.4,762.4,200.7,941.2,12;200.7,941.2,197.9,1123.6,12;170.6,550.8,170.6,481.7,34;170.6,481.7,152.5,465.9,34;152.5,465.9,128.9,470.4,34;170.6,481.7,188.7,465.9,34;188.7,465.9,212.2,470.4,34
+  - --ip-ref-sha256
+  - 13b0c69d2f95dad6fd5472d8ab0310967b1a88c4554de7e6ff74b2d3e3644d8c
+  - --ip-ref
+  - pipeline/control/b08-ref-guard-0819.png
+  - --ip-mask-capsules
+  - 565.8,491,512.4,491,30;565.8,491,619.1,491,30;512.4,491,360,484.9,12;360,484.9,257.4,657.3,12;619.1,491,627.2,579.7,12;627.2,579.7,621.7,668.4,12;565.8,491,532.1,723.8,30;532.1,723.8,534.9,920.4,12;534.9,920.4,537.7,1121,12;565.8,491,599.5,723.8,30;599.5,723.8,596.7,920.4,12;596.7,920.4,593.8,1121,12;565.8,491,565.8,403.9,34;565.8,403.9,550.7,389.3,34;550.7,389.3,531.2,393.5,34;565.8,403.9,580.8,389.3,34;580.8,389.3,600.3,393.5,34
+  - --ip-ref-sha256
+  - 61dc3f7fbd052617e52db63e8f6d359822b6ceba14b13514ffc03179b56cd83c
+  - --ip-scale
+  - '0.7'
+  - --controlnet2
+  - xinsir/controlnet-scribble-sdxl-1.0
+  - --control2
+  - pipeline/control/b08-board-0820.png
+  - --control2-sha256
+  - 38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6
+  - --scale2
+  - '0.3'
+  - --prompt-file
+  - C:\banyan-farm\b08scale30-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08scale30-0820\negative.txt
+  - --out
+  - C:\banyan-farm\b08scale30-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# box_enqueue.courier_problems: the courier pushes from farm-out and\n# nowhere else, and ep2-cnet-probe-0817\
+    \ was invisible for two days for\n# want of exactly this step.\nimport glob, hashlib, os, shutil\n\
+    out_dir = \"C:/banyan-farm/b08scale30-0820/out\"\npay_dir = \"C:/banyan-farm/b08scale30-0820\"\nctl_dir\
+    \ = \"C:/banyan-farm/b08scale30-0820/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-scale30-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b08-scale30-0820-scale30.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/b08-openpose-nat-0819.png\")\n         \
+    \      + glob.glob(ctl_dir + \"/b08-board-0820.png\")\n               + glob.glob(ctl_dir + \"/b08-ref-*-0819.png\"\
+    ))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b08-scale30-0820.sha256\"), \"\
+    w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"\
+    published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 8 else\
+    \ 1)"
+artifacts:
+- C:\banyan-farm\b08scale30-0820\out\ep2-b08-scale30-0820-scale30.png
+bar:
+  b0_the_stack_is_what_it_claims: 'VOID-CHECK, unchanged from the parent except the one number. Preflight
+    prints `twins net verified`, `scribble net verified`, the line asserting the two nets share size and
+    config and DIFFER in weights, and `staged driver, BOTH hints and BOTH references verified`. The sidecar
+    must read `controlnet_2_conditioning_scale: 0.3` -- if it reads 0.8 the override did not take and
+    the frame is a re-run of the parent, not a result.'
+  b4a_board_down: 'THE CLAUSE THIS ROUTE IS TRYING TO CLOSE. A flat board or clipboard legibly drawn at
+    the authored quad -- corners (608.6,660.5) (719.5,678.1) (697.7,816.2) (586.7,798.6), bbox x 583-723
+    y 657-820 -- with its top edge below the shoulder line y=491. The parent DELIVERED this at 0.8, so
+    presence is not in doubt; what is in doubt is whether it survives at 0.3. AND THE HALF THE PARENT
+    MISSED IS SCORED HERE: the board must be HELD. The parent''s board hung like a satchel because the
+    far arm was absorbed into the robe; a hand, or at minimum a lowered far arm reaching it, is required
+    for `the clipboard comes DOWN` to be the picture the beat asks for. Scored by eye at 1:1 and 3x; the
+    edge metric is NOT used, see below.'
+  b6_drawn_not_traced: 'THE CLAUSE THE PARENT BROKE, AND HALF THE POINT OF THIS RUNG. Both figures read
+    as DRAWN CHARACTERS at ep2-b08-twinsipa-0819''s standard, which is the reference: a face with pupils
+    and a set jaw, hair with strands, folds in both garments, a legible metal clasp, a drawn hand with
+    a dark cuff. The parent gave all of that back for one flat robe. PASSES ONLY IF the drawing is at
+    twinsipa''s level, not merely better than boardnet''s -- ''less bad than the frame we rejected'' is
+    not a bar.'
+  b8_the_guard_has_hair: 'THE OTHER CLAUSE THE PARENT BROKE. canon.yaml `ep2-guard-hair`: guard B has
+    light sandy hair, and \bbald\b is FORBIDDEN. The prompt says `light sandy hair` and is byte-identical
+    across all three frames. twinsipa came back correctly haired; boardnet came back BALD, flipping toward
+    the reference, which is bald by construction. PASSES IF the guard has hair. This is the cheapest available
+    read on whether conditioning pressure is back to a sane level -- it moved once, so it is an instrument
+    now.'
+  b4b_both_arms_stay_on_their_skeletons: 'BOTH HALVES, AND THE SECOND HALF IS WHY IT IS RESTATED. B4b-i:
+    the pointing hand''s centroid within ~60 px of the authored wrist (280.5,695.1) -- twinsipa measured
+    40.3, boardnet 10.2, so this has never failed and is not the worry. B4b-ii: THE GUARD MUST HAVE TWO
+    ARMS. boardnet''s far arm was swallowed by the robe entirely -- no elbow, no wrist, no hand. An arm
+    that disappears has not stayed on its skeleton, and it is also why nothing held the board. The goblin''s
+    arms hang and the hands do not clasp.'
+  b7_no_limb_fragmentation: 'CARRIED, WITH THE ADMISSIBILITY RULE THAT MADE IT UNSCORABLE LAST TIME. G-R
+    at six regions, three per figure, each box ON THE DRAWN LIMB with its coordinates AND ITS LUMA published.
+    Within-figure spread <= 25.0; every guard region <= 0.0, every goblin region >= +20.0. THE PROBES
+    MUST BE LUMA-MATCHED. On boardnet no matched set existed -- the brightest available patch on each
+    guard region still spanned 120.2 luma levels because the light had turned hard and directional --
+    and the clause was reported UNMEASURABLE rather than scored. If that happens again it is reported
+    again, and the RECURRENCE is itself the finding: it would mean the lighting change tracks the second
+    net at any strength.'
+  b2_the_identities_separate: Guard face <= 0.0, goblin face >= +20.0, separation >= +20.0. twinsipa +42.0.
+    Scored to catch the identities being dragged together, and subject to the same luma-matching condition
+    as B7.
+  b4c_the_arm_belongs_to_the_guard: MUST SURVIVE. The pointing arm grows from the guard's shoulder and
+    is human-skinned. Eight mechanisms have held it, including boardnet.
+  b1_the_pair: TWO figures and only two, both whole. Two is correct under figure_count_ruled_from_the_script_0817.
+  b3_one_ground_plane: Both stand on the same grass. twinsipa measured 4 px between the two lowest skin
+    rows. Read by eye if the automated detector is confounded by foreground grass, as it was on boardnet
+    -- an honest eye call beats a number from a confounded detector.
+  b5_no_colossus: 'Neither figure towers. twinsipa measured a stature ratio near 1.13 against the authored
+    1.100. Note that BULK is scored under B6, not here: boardnet''s guard was roughly twice as wide and
+    that is a drawing failure, not a stature one.'
+not_done_on_purpose: ONE sample, ONE arm, ONE number. No sweep -- 0.3 is a single reasoned value and if
+  it is wrong the next sample moves it once more. No per-net guidance window, which is the SECOND lever
+  the parent named and needs its own driver change and its own rung. No change to either hint (both byte-identical),
+  no change to the masks, the references, the ip-scale, the first net's scale, the seed or a single word
+  of the prompt. No third figure. No colour-cast fix. No pick, no plate_ack, no canon filename, no canon.yaml
+  edit.
+rights_and_weights: THIS IS THE `licence_note`. Unchanged from the parent and clean. Base cagliostrolab/animagine-xl-3.1
+  (CreativeML Open RAIL++-M). Net 1 xinsir/controlnet-openpose-sdxl-1.0 twins variant, apache-2.0. Net
+  2 xinsir/controlnet-scribble-sdxl-1.0, apache-2.0, no attribution condition. IP-Adapter h94/IP-Adapter,
+  apache-2.0. Both references are repo-internal crops. BOTH hints are authored in PIL from numbers --
+  no annotator, so the lllyasviel/Annotators landmine is untouched by either condition. MistoLine is not
+  used.
+scoring_rule_pre_registered: 'THIS IS THE `verdict_rule`, WRITTEN BEFORE THE PIXELS.
+
+  (1) BOARD PRESENT AND HELD, AND B6 + B8 AT twinsipa''s LEVEL, AND THE CARRIED CLAUSES SURVIVE -> PASS,
+  and beat 08 has a COMPLETE plate candidate for the first time. Still NOT a pick and NOT a plate_ack;
+  that is R4''s call.
+
+  (2) BOARD PRESENT, B6 AND B8 RECOVERED, BUT THE BOARD IS HUNG RATHER THAN HELD -> the strength question
+  is SETTLED and the remaining question is the arm. Next rung is wording or a hint that includes the forearm
+  reaching the board, NOT another scale.
+
+  (3) BOARD GONE AND THE DRAWING RECOVERED -> 0.3 is below this hint''s threshold. The board lives in
+  a window between 0.3 and 0.8 and the next sample takes the midpoint; the mechanism is confirmed either
+  way.
+
+  (4) BOARD PRESENT AND THE DRAWING STILL DAMAGED -> scale is NOT the lever. The damage is not proportional
+  to strength, which points at the full-denoise application rather than the magnitude, and the next rung
+  is the per-net guidance window.
+
+  (5) B7 UNMEASURABLE AGAIN for the same lighting reason -> the hard directional key travels with the
+  second net at any strength, which is a finding about the net and not about this frame, and it changes
+  what the route is willing to spend a second condition on at all.'
+the_number_is_reasoned_not_measured: SAID PLAINLY SO NOBODY LATER CITES 0.3 AS AN OPTIMUM. The parent
+  ran the two nets at 1.0 + 0.8 = 1.8 total conditioning and the frame flattened everywhere. Beat 08 has
+  rendered well at a single net at 1.0 and at 0.8. 0.3 puts the sum at 1.3 -- above what has worked, below
+  what failed, and closer to the former. That is an argument, not a measurement, and this sample is the
+  measurement.
+who_ruled_this_rung: 'ep2-b08-boardnet-0820''s own verdict, under `next_rung_named_not_taken`: "ONE sample,
+  and the variable is the SECOND NET''S STRENGTH, nothing else... with --scale2 dropped from 0.8 to about
+  0.3. Its bar is B4a AND the two clauses this rung broke, B6 and B8, restored to parent quality." Fired
+  immediately because the card was idle with nothing claimed and nothing waiting, and the job has no dependency:
+  every weight is local and both hints already exist. Written in an `extra` key because `fresh` prose
+  is retokened and a parent id there would become this job''s own id.'
+why_these_key_names: '`scoring_rule_pre_registered` and `rights_and_weights` are this spec''s `verdict_rule`
+  and `licence_note`. derive_spec''s FINDINGS_NAME guard refuses any extra key matching /verdict|licen[cs]/,
+  which is right for findings and over-reaches on two house keys that must be written BEFORE the pixels.
+  Same declaration the last two rungs made.'
+derivation:
+  parent: pipeline/jobs/ep2-b08-boardnet-0820.yaml
+  by: pipeline/derive_b08_scale30_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - success
+  - the_number_is_reasoned_not_measured
+  - who_ruled_this_rung
+  - why
+  - why_these_key_names
+  keys_the_parent_had_that_did_NOT_cross:
+  - an_inherited_defect_reported_not_fixed
+  - bar
+  - derivation
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - rights_and_weights
+  - scoring_rule_pre_registered
+  - the_hint_carries_no_figure
+  - verdict
+  - verdict_measured
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  - who_ruled_this_rung
+  - why_these_key_names
+  retokened:
+  - b08boardnet-0820 -> b08scale30-0820
+  - ep2-b08-boardnet-0820-boardnet -> ep2-b08-scale30-0820-scale30
+  - ep2-b08-boardnet-0820 -> ep2-b08-scale30-0820
+  - ep2-b08-boardnet-0820 -> ep2-b08-scale30-0820
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step boardnet --arm (boardnet -> scale30)
+    argv:--repo-commit:
+    - step boardnet --repo-commit (ee74ac0e3eaf920fc7637fa7e4f2727af7684628 -> ee74ac0e3eaf920fc7637fa7e4f2727af7684628)
+    argv:--scale2:
+    - step boardnet --scale2 (0.8 -> 0.3)
