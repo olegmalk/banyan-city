@@ -1,0 +1,208 @@
+id: ep2-b18-tremble-s2-0819
+task: ep2-b18-tremble-s2-0819
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 24
+max_attempts: 1
+owner: beat-18 judging lane, 2026-08-17 -- filed the moment the plate verdict was in, not batched to the end of
+  the run, because the card was minutes from idle with nothing fileable behind it
+est_minutes: 7
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the render gate itself reads.
+  SCRIPT LINE, beat 18 THE DECISION, node.md verbatim: "Extreme close-up: the one fig on the thinnest branch, stem
+  trembling." No goblin in this beat, no sprint, no crouch. This is a SILENT MOTION CLIP on an approved node: no
+  voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 18 THE DECISION, node.md verbatim: "Extreme close-up: the one fig on the thinnest branch, stem
+  trembling."'
+consumer: The beat-18 slot of episode 002b, which has a passing purple plate as of 2026-08-17 and zero motion off
+  it. Beats 01 and 21 were judged in the same pass and FAILED their plate bars, so they get nothing -- this is the
+  one plant beat in the episode that earned motion today.
+success: 'THIS BAR IS BEAT 18''s AND NOTHING ELSE, and it is written before this clip exists. Beat 18 is THE DECISION:
+  an extreme close-up of the one fig on the thinnest branch, stem trembling. There is no goblin and no sprint in
+  it; a clip judged against beat 02''s sprint prose is being judged against the wrong beat. Output is ONE 704x1280
+  mp4, 121 frames at 24fps. PASS: the thin stem and the fig visibly MOVE -- a fine tremble or a small sway -- while
+  the fruit stays ONE fruit, stays attached to the stem, stays DEEP PURPLE end to end, and the frame''s lighting
+  holds STEADY. Nothing else enters frame: no creature, no person, no second fruit. Pre-registered FAIL modes: FAIL-FROZEN
+  (the plate simply sits still -- measure it, do not eyeball it: mean abs interframe diff and drift from frame 0,
+  the way ep2-b18-motion-0812 was measured on 2026-08-17); FAIL-STROBE (the lighting or the specular highlight flickers,
+  pulses or blinks, or the fruit''s surface markings appear and disappear between frames -- this is the defect measured
+  in the 0812 clip and it is the failure worth reporting, because it would mean the recipe and not the plate is
+  the lever); FAIL-COLOUR (the fig drifts off purple toward green, red or brown over the 121 frames); FAIL-COUNT
+  (a second fruit appears, or the fig turns into a leaf -- the 0812 lane''s warning that the fig drifts leafward
+  unless named ROUND is kept, and ROUND is in the positive); FAIL-DETACH (the fig leaves the stem or exits frame);
+  FAIL-PERSON (any face, figure, chibi or mascot). NOT SCORED HERE, and their absence is not a defect: leaf count
+  and plant height (this is a macro and scale has no referent in it -- that question is beat 21''s, and beat 21''s
+  plate failed on 2026-08-17), and whether the plate''s GLOSS and near-aubergine read are shippable, which is R4
+  and the founder''s alone. NOT a pick: which of the three seeds ships is R4''s call and this job does not make
+  it.'
+why: SEED 20260875 of a PASSED goblin-free recipe (pick depth; founder ordered the card kept busy through the identity
+  freeze). Only the seed moves.
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b18-tremble-s2-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source\
+    \ image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\
+    \nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\
+    \", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked
+    framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame:
+    an extreme close-up of ONE SINGLE ROUND DEEP PURPLE-VIOLET FIG -- a round purple fruit, not a leaf -- hanging
+    from the end of one very thin branch, green at its neck, matte. No creature and no person is in this shot. THE
+    THIN STEM TREMBLES: the branch it hangs from quivers and shivers finely, and the heavy round fig sways a little
+    on it, trembling as though it is about to let go. The fig stays ONE round fruit the whole time, KEEPS ITS DEEP
+    PURPLE COLOUR, and stays attached to the stem. The light on it is CONSTANT and does not flicker, pulse or strobe.
+    Soft steady light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-negative.txt: leaf, leaves, foliage, midrib, apple, green fig, green
+    fruit, red fruit, pale fruit, colour change, fruit changing colour, second fruit, two fruit, creature, goblin,
+    person, face, hands, flickering light, strobe, strobing, pulsing light, flashing light, highlight appearing
+    and disappearing, blinking glow, changing surface markings, camera pan, camera tilt, panning, tilting, camera
+    movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant
+    support, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character,
+    duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render,
+    CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-jobs-encode.json: '[{"beat": 18, "embeds": "C:\\banyan-farm\\ep2-b18-tremble-s2-0819\\b18-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b18-tremble-s2-0819\\b18-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b18-tremble-s2-0819\\b18-negative.txt"}]'
+  C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-jobs-render.json: "[\n {\n  \"beat\": 18,\n  \"seed\": 20260875,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b18-tremble-s2-0819\\\\b18-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\
+    \\ep2-b18-tremble-s2-0819\\\\b18-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b18-tremble-s2-0819\\\
+    \\18-the-decision-LTX-ep2-b18-tremble-s2-0819.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b18-tremble-s2-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b18-canon-0817\18-the-decision-ipa-r2-w015-s2.png
+  - --sha256
+  - ab70a4adec4cb7b69df131febea47af2987d0bbab7e8a4c77810048b29e0a3f1
+  - --out
+  - C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b18-tremble-s2-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b18-tremble-s2-0819\bench-ep2-b18-tremble-s2-0819.jsonl
+  - --bench-label
+  - ep2-b18-tremble-s2-0819
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands here itself,\n\
+    # so a clip that reaches this dir survives without any change to the runner.\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b18-tremble-s2-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b18-tremble-s2-0819/18-the-decision-LTX-ep2-b18-tremble-s2-0819.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b18-tremble-s2-0819/b18-init-704x1280.png\")\n            \
+    \ + glob.glob(\"C:/banyan-farm/ep2-b18-tremble-s2-0819/bench-ep2-b18-tremble-s2-0819.jsonl\"))\nlines = []\n\
+    for f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"\
+    rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b18-tremble-s2-0819.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run\
+    \ that wrote the init but no clip cannot pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b18-tremble-s2-0819\18-the-decision-LTX-ep2-b18-tremble-s2-0819.mp4
+- C:\banyan-farm\ep2-b18-tremble-s2-0819\b18-init-704x1280.png
+verdict: PASS. Every PASS clause met, every pre-registered FAIL mode measured and absent. This is the only one of
+  the three seeds whose tremble runs the whole clip.
+verdict_measured:
+  read_how: '121 frames decoded at full length (704x1280, 24fps, 121 frames -- format confirmed by ffprobe), measured
+    downscaled to 176x320, and LOOKED at: a 9-panel sheet at f000/015/030/045/060/ 075/090/105/120 plus a 12-frame
+    consecutive strip at f040-f051 to catch anything that only shows frame-to-frame.'
+  motion_not_frozen: 'PASS, and measured rather than eyeballed as the bar demands. Mean abs interframe diff, by
+    thirds: f000-030 med 5.56, f030-060 med 6.67, f060-090 med 6.05, f090-120 med 5.16. Motion is not just present,
+    it is EVEN -- no quarter of the clip is carried by another. Only 4 of 120 frame pairs fall below 0.5 and the
+    longest consecutive still run is 1 frame. Drift from f000 reaches 46.2. The fig swings on its stem and the stem
+    bends with it.'
+  lighting_steady_no_strobe: PASS, and this is the clause that killed the 0812 clip, so it was measured hardest.
+    Adjacent-frame specular pumping -- |bright(n) - bright(n-1)| as a fraction of the clip max -- exceeds 25% on
+    0 of 120 frame pairs. Whole-frame luminance high-frequency component (residual after a 9-frame moving average)
+    has std 0.95 on a mean of 118. Peak luminance 247-255. The specular highlight is present and roughly constant
+    in every one of the 21 frames looked at; it never blinks out and the fruit's surface markings never appear and
+    disappear. The 0812 defect -- a glow present at f001/f016/f076 and gone at f031-f061 -- does not occur here.
+  colour_holds_purple: 'PASS. Median hue of the saturated subject pixels sits at 315 degrees with a total spread
+    of 4.1 degrees across all 121 frames. Mean subject RGB: f000 58,25,53 -> f060 59,29,53 -> f120 59,29,54. That
+    is deep purple-violet end to end with no drift toward green, red or brown.'
+  count_attach_person: PASS on all three. One fruit in every frame looked at, never two, and it never turns leafward
+    -- it stays a round fig. It stays joined to the thin stem at the neck the whole way and never leaves frame.
+    No face, figure, chibi or mascot appears.
+caveats_not_scored:
+  background_light_band: STATED, NOT SCORED. A diagonal shadow band across the backdrop drifts over the clip (leftmost-column
+    luminance HF std 10.85). It drifts smoothly -- it does not flicker -- so it is not FAIL-STROBE, which names
+    "flickers, pulses or blinks". It is also not a camera clause, because this bar pre-registered no camera clause
+    at all. Recorded so the next reader is not surprised by it.
+  gloss_and_aubergine: 'Explicitly excluded by this spec: the plate is glossy with a hard specular and reads near-aubergine.
+    The bar says that is R4 and the founder''s alone. Untouched here.'
+  leaf_count_and_height: Excluded by the bar -- a macro has no yardstick. Untested, not defective.
+pick_candidate: 'ep2-b18-tremble-s20260871 is the pick candidate of the three. Reasons, one line each: it is the
+  ONLY seed with motion in all four quarters (s20260873 decays to med 0.45 by the last third and reads visually
+  frozen from f045 on); it is the ONLY seed with zero specular pumping (s20260872 pumps >25% on 28 of 120 adjacent
+  pairs, which is FAIL-STROBE); and its colour and count are as stable as either sibling. On the two clauses that
+  separate the three, it wins both outright.'
+pick_authority_note: 'This spec pre-registered "NOT a pick: which of the three seeds ships is R4''s call and this
+  job does not make it." That was written 2026-08-17. On 2026-08-18 the founder widened the boundary explicitly
+  -- which-of-N picks, route choices and quality tradeoffs became steward decisions, recorded with reasons and veto-able
+  by one line, with only taste left to him. So the pick above is made under the newer ruling and is stated with
+  its reasons rather than deferred. It is a CANDIDATE: the swap into the episode cut belongs to the assembly lane,
+  not to this judging lane, and nothing here promotes anything.'
+what_this_licenses: 'The assembly lane may consider s20260871 for the beat 18 slot. It licenses NO new render: the
+  recipe is proven on this beat and no variable is named for change. It does not license a fourth seed -- three
+  were filed precisely to separate "recipe is dead" from "one unlucky seed", and the answer came back 1 pass / 1
+  strobe / 1 decay, which is the show''s normal 2-3-renders-per-usable rate and needs no further sampling.'

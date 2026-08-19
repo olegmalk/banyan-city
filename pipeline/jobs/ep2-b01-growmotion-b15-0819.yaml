@@ -1,0 +1,235 @@
+id: ep2-b01-growmotion-b15-0819
+task: ep2-b01-growmotion-b15-0819
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: cold-open lane, 2026-08-18 -- filed by the lead directly; the API-dropped agent lane never reached it
+consumer: THE COLD OPEN OF EPISODE 2'S CUT. This animates the founder's own 2026-08-13 route ("inpaint a SMALL fig
+  into frame 1, then let the motion prompt grow it") on the frame-1 plate that passed its bar 7 of 7 today. A PASS
+  is a candidate opening clip; a FAIL is consumed too -- it says which clause of the growth arc (swell, darken,
+  stay-attached) the engine drops, which decides whether the fix is prompt-side, plate-side, or a staged colour
+  ramp.
+success: A 704x1280 mp4, 121 frames at 24 fps, opening on the passed nub plate. PASS is G1 growth by a continuous
+  path + G2 end-state deep purple-violet + G3 exactly two leaves in every frame + G4 no size doubling and below
+  the grass + G5 only the fig moves with the camera locked (whole-frame registration). FAIL is any of H1 frozen,
+  H2 stays green, H3 leaf count breaks, H4 balloon or camera push, H5 the fig detaches or teleports (the 2026-08-12
+  fault, named in advance), H6 scene break. A partial is a FAIL. Judged by opening all 121 frames consecutively;
+  depth is retired and no number from it will be quoted.
+why: SEED 20260840 of a PASSED goblin-free recipe (pick depth; founder ordered the card kept busy through the identity
+  freeze). Only the seed moves.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import\
+    \ Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\"\
+    , default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"\
+    --size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src\
+    \ not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda:\
+    \ fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n\
+    \    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v)\
+    \ for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W /\
+    \ float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh),\
+    \ Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"\
+    cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE\
+    \ %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's provenance\
+    \ sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for the cut (the cold open), so is_show_content\
+    \ is\ntrue. Still approved: false / provisional: true -- nothing is cut until the\n121 frames are opened against\
+    \ the pre-registered bar, and R4 is the\nfounder's.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n\
+    \    sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"\
+    utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b01-growmotion-b15-0819 after\
+    \ the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n        \"is_show_content:\
+    \ true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR THE EPISODE 2 COLD OPEN. It animates the\\\
+    n\"\n        \"  founder's own 2026-08-13 route -- a small inpainted nub, grown by\\n\"\n        \"  the motion\
+    \ prompt -- on the frame-1 plate that passed its bar 7 of\\n\"\n        \"  7 (ep2-b01-nubcomp-b-0818). Judged\
+    \ against the bar pre-registered\\n\"\n        \"  in pipeline/jobs/ep2-b01-growmotion-b15-0819.yaml BEFORE\
+    \ this render\\n\"\n        \"  existed. Not approved and not cut until those frames are opened.\\n\")\nprint(\"\
+    stamped %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-motion-prompt.txt: On the thinnest branch of the tiny two-leaf
+    sapling, the small green nub swells, darkens and rounds into a single deep purple fig -- the only thing in frame
+    that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus grassy field, soft glowing light,
+    masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-negative.txt: camera pan, camera tilt, zoom, dolly, push in, pull
+    back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-jobs-encode.json: "[\n {\n  \"beat\": 1,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b01-growmotion-b15-0819-out\\\\b01-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b01-growmotion-b15-0819\\\\b01-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-b15-0819\\\
+    \\b01-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-jobs-render.json: "[\n {\n  \"beat\": 1,\n  \"seed\": 20260840,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-growmotion-b15-0819-out\\\\b01-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b01-growmotion-b15-0819-out\\\\b01-nub-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b01-growmotion-b15-0819-out\\\\01-cold-open-LTX-nubgrow-b-s20260826.mp4\"\n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-growmotion-b15-0819
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-growmotion-b15-0819
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-growmotion-b15-0819-out\01-cold-open-LTX-nubgrow-b-s20260826.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its files is\
+    \ a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-growmotion-b15-0819-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b01-growmotion-b15-0819\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-growmotion-b15-0819\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-nubgrow-b-s20260826.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\")\n      \
+    \         + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-growmotion-b15-0819.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b01-growmotion-b15-0819-out\01-cold-open-LTX-nubgrow-b-s20260826.mp4
+- C:\banyan-farm\ep2-b01-growmotion-b15-0819-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. The motion prompt
+  IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13 verdict. Sidecar
+  stamped approved: false / provisional: true; nothing is cut until the frames are opened against the pre-registered
+  bar, and the taste call is the founder''s under R4. Silent, $0, no voice synthesis, no episode assembly.'
+pick:
+  chosen: seed 20260826 (this spec) -- the clip already on review/ep2-cold-open-0818/ as cold-open-candidate.mp4.
+  pool: 'Four seeds of one recipe, all read tonight against this identical bar: 20260826 PASS, 20260827 FAIL (fig
+    replaced in a single frame f37->f38; measured 1.30x push-in), 20260828 FAIL (best growth arc of all four, but
+    the painterly grass dissolves to a flat wash with stray hairline strokes), 20260829 FAIL (arc over by f15, then
+    106 frames of a motionless fig; frame blows out to yellow glare).'
+  reason: It is the only seed that clears the bar, so the pick is arithmetic rather than taste -- one pass in four.
+    It also happens to be the only one that both grows the fig continuously AND keeps the camera locked; each of
+    the other three trades one of those away.
+  not_hidden: 'Two of the rejects beat the pick on one axis each, and the founder should know it before he blesses
+    the pick: 20260827''s end frame is the most faithful to the plate of the four (dawn sky wedge intact, grass
+    still crisply drawn, where the pick has bloomed to pale amber), and 20260828 has a visibly better growth ramp
+    (24 continuous frames through teal and slate to deep purple, with a green calyx drawing itself in at the join).
+    Both are shown on the seed sheet on the review page. What that pair says about the recipe -- it can hold the
+    plate, and it can ramp the colour, just not yet in the same take -- is a finding for a daytime call, not a licence
+    to add variables tonight.'
+  taste_note: This is a screening pick among candidates that met a pre-registered technical bar, not a taste verdict.
+    Whether the cold open is GOOD, and whether it is the one that opens the episode, is the founder's under R4.
+    Nothing is promoted, cut or published on the strength of this pick.
+sweep_summary:
+  tally: SIX seeds of one recipe, one plate, one bar. 20260826 PASS. 20260827, 20260828, 20260829, 20260830, 20260831
+    all FAIL. One in six.
+  the_pick_is_unchanged: 'Neither late seed displaces it, but 20260830 came close enough that saying so matters:
+    it is the ONLY seed with a perfectly locked camera (registration 1.00 at both f060 and f120, against the pick''s
+    1.05) and it holds the plate''s dawn look better than any of the six -- sky wedge intact, blades still drawn,
+    where the pick blooms to pale amber. It fails on two frames near the front, where the fig steps 2.1x in area
+    instead of swelling. The bar is conjunctive and a partial is a FAIL, so it loses, and G1 was NOT softened to
+    let it in. G1 is the clause that separates "the fig grew" from "a fig appeared", which is the entire shot.'
+  three_independent_axes: 'THE REASON THE SWEEP STOPS HERE, and it is a finding rather than fatigue. The six failures
+    are not one recurring fault, they are three faults that vary independently seed to seed. COLOUR PATH -- 2 of
+    6 ramp continuously (20260826 over 16 frames, 20260828 over 24), 4 of 6 pop in 1 to 4 frames. CAMERA LOCK --
+    2 of 6 hold (20260830 at 1.00, 20260826 at 1.05); the rest measure 1.10, 1.10, 1.10, 1.30. PLATE FIDELITY --
+    best to worst: 20260830 (holds it), 20260827 (holds it), 20260826 (blooms, blades intact), 20260831 (fades to
+    a wash), 20260828 (drawing dissolves, stray strokes), 20260829 (blows out to yellow glare). No seed but the
+    pick is acceptable on all three at once, and no two failures share a cause. Rolling seeds is therefore three
+    dice at once, and six rolls bought exactly one winner -- which is what a 1-in-6 rate on three independent axes
+    looks like. A seventh seed is a lottery ticket, not an experiment, so none was filed and the card was allowed
+    to empty honestly.'
+  what_would_actually_move_it: 'Named, not started. Each of the three axes has an obvious one-variable attack --
+    the negative prompt already lists "zoom, dolly, push in" and yet four of six pushed, which is a real finding
+    about how much that negative is worth on this engine; the colour pop might be a step-count or a scheduler question;
+    the bloom/fade might be a plate-conditioning strength question. Every one of those is a RECIPE change, which
+    means a new sample under the one-sample rule, and none of them is ruled tonight. They are also premature: the
+    pick already clears the bar, and what the cold open needs next is the founder''s eye on it under R4, not a sixth
+    engineering variable.'
+  where_the_evidence_is: Per-seed verdicts with the measurements are appended to each of pipeline/jobs/ep2-b01-growmotion-b{2,3,4,5,6}-0818.yaml.
+    The six last frames are on review/ep2-cold-open-0818/ as seed-sweep-f120.jpg, pick first with a gold border.
+sweep_summary_correction:
+  the_claim: '"No two failures share a cause." (sweep_summary.three_independent_axes, last line.)'
+  why_it_is_wrong: 'The same block measures COLOUR PATH as "4 of 6 pop in 1 to 4 frames". A fault present in four
+    of six seeds is by definition a shared cause, and it is the SAME clause that kills them: of the five rejects,
+    FOUR fail G1 -- b2 (fig replaced, not grown), b4 (arc finishes in 15 frames, then 106 static), b5 (two-frame
+    pop), b6 (four-frame pop, 2.9x area step). Only b3 fails on something else alone (G5/H6 style break). G1 is
+    not one of three dice rolling independently. It is the recipe''s dominant, systematic failure mode, and the
+    other two axes ride along on top of it.'
+  what_the_failure_actually_is: 'Not "the growth is random seed to seed" but "this recipe does not DISTRIBUTE change
+    across the clip". Every G1 reject is the same shape: the subject holds, then steps 2.1x-2.9x in area across
+    1-4 frames, with at most one blended frame over the join. b4 is the same defect stretched -- all the change
+    in the first 15 frames, then nothing. The two seeds that pass G1 ramp over 16 and 24 frames. So the variable
+    is temporal distribution of change, and it is a property of the recipe, not of the seed.'
+  what_survives_unchanged: 'The conclusion "do not roll a seventh seed" is CORRECT and is not being reopened --
+    if anything this strengthens it. Rolling seeds against a systematic recipe defect is worse than a lottery: the
+    pop is the expected outcome at 4 of 6, not the unlucky one. The pick is unchanged, G1 is unchanged, and no bar
+    moved.'
+  what_it_changes: The next move. "A seventh seed is a lottery ticket" reads as "nothing to do here but wait for
+    R4". The corrected reading names a specific, testable, one-variable experiment -- attack the temporal distribution
+    of change -- which is exactly what sweep_summary. what_would_actually_move_it already lists under "the colour
+    pop might be a step-count or a scheduler question" but files as premature. With the card idle and the founder
+    asleep, a one-variable sample against the dominant failure mode is the highest-information thing the GPU can
+    do, and it needs no taste call to start. Filed as its own spec with its own pre-registered bar under the one-sample
+    rule; the variable itself is being chosen from OUTSIDE-repo research (scheduler/shift/CFG/step-count evidence
+    for video diffusion) rather than from our own comments, per the 2026-08-04 research-before-solving directive.
+  what_this_licenses: ONE sample of ONE recipe change against G1 temporal distribution. It does NOT license a batch,
+    a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
+    and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
+    on R4 alone.
