@@ -83,32 +83,13 @@ payload:
     : \"C:\\\\banyan-farm\\\\ep2-b12-stillmotion-0819-out\\\\b12-init-704x1280.png\",\n  \"out\": \"C:\\\
     \\banyan-farm\\\\ep2-b12-stillmotion-0819-out\\\\12-related-LTX-stillmotion-crf10-s20260819.mp4\"\n\
     \ }\n]"
-  C:\banyan-farm\ep2-b12-stillmotion-0819\fetch_plate.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 12's\
-    \ plate off origin/main and refuse on a sha mismatch.\n\nNo model, no GPU, no spend. C:\\\\banyan-farm\\\
-    \\plates-local -- where the 08-13\nbeat-12 jobs read this same file from -- NO LONGER EXISTS on this\
-    \ box (checked).\nSo the plate is fetched from the repo, which is better anyway: the sha asserted\n\
-    here is verifiable by anyone who clones it, and a plate that has to travel by\nhand is a plate whose\
-    \ provenance is a claim.\n\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\\\banyan-farm\\\
-    \\ep2-b12-stillmotion-0819\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
-    \n       \"genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png\")\nUA = {\"\
-    User-Agent\": \"banyan-city-b12-stillmotion/1.0 (albert.numbro@gmail.com)\"}\nWANT = \"cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074\"\
-    \n\nos.makedirs(OUT, exist_ok=True)\nraw = urllib.request.urlopen(\n    urllib.request.Request(RAW,\
-    \ headers=UA), timeout=120).read()\nhave = hashlib.sha256(raw).hexdigest()\nif have != WANT:\n   \
-    \ sys.exit(\"!! SHA MISMATCH for 12-related-r4-s2.png -- refusing.\\n   want %s\\n   have %s\"\n \
-    \            % (WANT, have))\nwith open(os.path.join(OUT, \"12-related-r4-s2.png\"), \"wb\") as fh:\n\
-    \    fh.write(raw)\nprint(\"fetched 12-related-r4-s2.png %d bytes sha %s OK\" % (len(raw), have),\
-    \ flush=True)\n"
 steps:
-- name: fetch
-  argv:
-  - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-b12-stillmotion-0819\fetch_plate.py
 - name: crop
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b12-stillmotion-0819\cover_crop.py
   - --src
-  - C:\banyan-farm\ep2-b12-stillmotion-0819\12-related-r4-s2.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b12-plateship-0819\12-related-r4-s2.png
   - --sha256
   - cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074
   - --out
@@ -256,11 +237,17 @@ duration_and_the_assembler_trap: '121 frames at 24 fps = 5.0417 s. render_t3.py:
   margin on a beat whose action is irreversible. Beat 12 is near-still, so a palindrome would be nearly
   invisible here -- which is worse, not better: it means nobody would catch it. Whoever assembles should
   check beat 12''s slot length against 5.0417 s rather than assume.'
-init_provenance: genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png, sha256 cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074,
-  fetched from origin/main by fetch_plate.py and re-asserted before the crop. It is the SHIPPED beat-12
-  take's own init (ep2-b12-tightB-0813 crops the same file at the same sha), which is what makes the palette
-  comparison a comparison. C:\banyan-farm\plates-local, where the 08-13 jobs read it from, no longer exists
-  on the box -- checked, not assumed.
+init_provenance: >-
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-s2.png, sha256 cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074,
+  published to farm-out/ep2-b12-plateship-0819 by ep2-b12-plateship-0819 (ran 2026-08-19T10:08:20Z, rc=0)
+  and re-asserted at that sha by cover_crop.py before a pixel is written. It is the SHIPPED beat-12 take's
+  own init (ep2-b12-tightB-0813 crops the same file at the same sha), which is what makes the palette
+  comparison a comparison. THIS SPEC'S OWN FETCH STEP IS GONE, and what it claimed was wrong twice over:
+  it pulled the plate from raw.githubusercontent.com, which 404s because the repo is private, and it said
+  C:\banyan-farm\plates-local "no longer exists on the box -- checked, not assumed" when three copies of
+  the plate sat on the card at this exact sha. The plate now arrives the way the guards ask for: through
+  a farm-out directory one spec owns, fetchable from origin/farm-results-rtx5090 (blob verified at
+  cc6bd5f0...c074), so --src is checked rather than asserted.
 derivation:
   parent: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml
   by: pipeline/derive_b12_stillmotion_0819.py
@@ -276,8 +263,10 @@ derivation:
   sampler_numbers_unchanged: 121 frames, 704x1280, 24 fps, guidance 2.0, --distilled-sigmas, --two-stage,
     --image-crf 10, --offload sequential, --mode production
   seed: 20260819
-  what_is_NOT_the_same: the init and its source, the two prompt files, the bar, the fail modes, one added
-    fetch step, and four sentences inside stamp_sidecar.py's appended note.
+  what_is_NOT_the_same: the init and its source, the two prompt files, the bar, the fail modes, and four
+    sentences inside stamp_sidecar.py's appended note. NO added fetch step -- the first version of this
+    spec had one, it 404'd, and the plate now comes from farm-out/ep2-b12-plateship-0819 instead, so this
+    job's step list is the parent's exactly -- crop, encode, render, stamp, publish.
   why_no_CLIP_token_count_here: 'pipeline/clip_token_count.py measured the beat-15 SDXL job and caught
     a negative at 85 of 77. It is NOT run on this job and that is deliberate: LTX conditions on a T5 encoder,
     not CLIP, so a 77-token CLIP ceiling is the wrong instrument and quoting it here would be a number
