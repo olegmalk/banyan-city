@@ -2887,3 +2887,4 @@
 08:46:22Z STARTED task=ep2-b19-dropmotion-0819-1787129173 attempt=1 on box-runner
 08:52:38Z DONE task=ep2-b19-dropmotion-0819-1787129173 rc=0 artifacts=2
 08:52:41Z STARTED task=ep2-b08-twins-fetch-0819-1787129315 attempt=1 on box-runner
+09:07:05Z DONE task=ep2-b08-twins-fetch-0819-1787129315 rc=0 artifacts=1

@@ -1,0 +1,9 @@
+# xinsir/controlnet-openpose-sdxl-1.0, allow_patterns=['diffusion_pytorch_model_twins.safetensors', 'config.json'], variant NOT passed anywhere
+# snapshot: C:\Users\artvn\.cache\huggingface\hub\models--xinsir--controlnet-openpose-sdxl-1.0\snapshots\23f966cd5cfdd3f7729c903e243d87152162d2b7
+# loadable dir: C:\banyan-farm\cnet-openpose-twins
+# THE SAME BYTES UNDER BOTH NAMES -- the second line is our
+# own renamed copy, not a different weight:
+54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4  2502139104  diffusion_pytorch_model_twins.safetensors
+54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4  2502139104  cnet-openpose-twins/diffusion_pytorch_model.safetensors
+b5b8f9a7619c9452f19407ef73a01ce3f061fcf932de43ddbaca336d12d02801  1235  cnet-openpose-twins/config.json
+# incomplete_files: 0
