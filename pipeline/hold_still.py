@@ -58,7 +58,10 @@ and it is the same on every held beat; the arc that got us there is recorded on
 the constant, and 2026-08-08 is where it stops.
 
 WHERE THE PING-PONG ACTUALLY IS, because the obvious answer is wrong and was
-believed for an hour. `render_t3` palindromes any clip its slot outruns, and that
+believed for an hour. `render_t3` palindromed any clip its slot outran (past
+tense since 2026-08-19 — the 0819c audit found that branch firing on 8 of 18
+FOOTAGE beats and the default fill is now a last-frame hold; the held branch
+below is unchanged, and the palindrome is opt-in for nobody), and that
 looked like the culprit. It is not: measured frame by frame, **no held beat in
 either delivered cut reverses** — v30 beat 14 and v31 beat 14 are each a single
 monotonic climb (20.0% and 20.6% of scale over 13.1s, zero reversals), because
@@ -73,7 +76,13 @@ So the fix was in three places and only one of them was a bug:
   - the loop, in SCREENING.html, which no longer loops a held clip — THIS was the
     bug, and on its own it is what stopped the snap-back the founder saw;
   - the palindrome, in `render_t3.held_still` — a latent path, one short clip away
-    from firing, now closed rather than left as the next session's surprise;
+    from firing, now closed rather than left as the next session's surprise.
+    Closing it for HELD clips did nothing for footage, and on 2026-08-19 the same
+    surprise arrived from the other direction: 8 of the ep2 cut's 18 footage
+    beats were being played forwards and backwards, silently. Footage now holds
+    its last frame. This entry is why that took eleven days: the branch was
+    audited once, cleared for the beats this file writes, and not asked about
+    the beats it does not;
   - the travel, here, which was cut to 2-4% in the same pass on the theory that a
     smaller move made the snap gentler. That reasoning is retired: once the page
     stopped looping there was nothing to snap, and the cut cost the move its
