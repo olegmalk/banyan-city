@@ -1224,3 +1224,12 @@ old takes archived to `clips/vo-archive/` per R6), re-measure against the whole
 cast on the fresh takes, rebuild the cut. Candidate refs are parked as
 `~/.cache/banyan-tts/cb-refs/guard2sw-{D1,M2,H2}.wav` (A/B/C) — **the live cast
 refs were not touched.** $0.
+
+### RULED — the founder picked **B**, 2026-08-19
+
+Verbatim, from the picker at `/review/ep2-guard2-voice-0819`: **"B"**. Guard 2 is
+the rules-lawyer — `am_michael`, **+4 semitones**, candidate B's ref passage,
+speed 1.05, measured **146.8 Hz** on the rendered take. That is an R4 taste
+ruling on the character's voice and the steward does not re-tune it. Recorded on
+the picker page, in `candidates.yaml` (`picked:`), and as a resolved card in
+`review/inbox.yaml`.

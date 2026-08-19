@@ -115,4 +115,20 @@ on_pick: |
   from bm_fable and only escaped by luck in this cut.
 
 cost_usd: 0.00
-awaiting: founder pick — A, B or C
+
+picked:
+  date: '2026-08-19'
+  by: founder
+  verdict: "B"                # verbatim, from the picker at review/ep2-guard2-voice-0819
+  means: >-
+    GUARD 2 = am_michael, +4.0 semitones, the ref_text above, speed 1.05 —
+    candidate B's exact recipe, measured 146.8 Hz on the rendered take. This is
+    an R4 taste ruling on the character's voice; the steward does not re-open it.
+  enacted:
+    - pipeline/build_refs.py — VOICE_SHAPING["am_michael"] added verbatim from
+      this candidate (speed 1.05, pitch +4.0, ref_text above)
+    - genomes/sapling/voices.yaml — GUARD 2 voice am_echo -> am_michael
+    - "GUARD 1 (am_adam) shaped in the same pass — see the ladder; his ref sat
+      1.1 Hz from bm_fable and passed only by MPS luck"
+    - genomes/sapling/nodes/002b-first-citizen/clips — beats 05-10 re-synthesized,
+      old takes archived to clips/vo-archive/ (R6)

@@ -1811,3 +1811,19 @@
       ruling) -- and the plank fault reproduced exactly, so the bark board goes the composite route
       too, which is the only way a board has ever shipped. Sample sheet:
       /review/ep2-mac-plates-0818/recast-samples.jpg.'
+- what: 'GUARD 2''S VOICE - ANSWERED, and this card is the receipt. You watched ep2-demo-0819c
+    and said "guard 2 has the same voice as the sapling..." You were right to within 1.7 Hz: measured
+    on that cut''s own takes, Guard 2 sat 109.1 Hz against the sapling''s 107.4 - the only confusable
+    pair in the episode. Cause was a casting gap, not a bug: both guards were cast after the
+    2026-07-25 voice-shaping pass and never got an entry, so they cloned from the same shared
+    paragraph at neutral pitch. Three candidates were built and measured on rendered takes, and you
+    picked one.'
+  url: /review/ep2-guard2-voice-0819
+  group: taste
+  since: '2026-08-19'
+  kind: decision
+  episode: 2
+  verdict_hint: A, B or C - or "none of these" and I bring three more
+  resolved:
+    date: '2026-08-19'
+    verdict: B
