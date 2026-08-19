@@ -2085,3 +2085,32 @@ rebasing 45 artifact commits on a 5.5 GiB repo is that lane's work, and its push
 logic was changed tonight (`PUSH_TIMEOUT_SECONDS` 300 → 60, deferred events).
 **Hand-carrying is a workaround for one plate, not a fix.** Until it is fixed,
 any lane publishing a box plate must expect to carry it across the same way.
+
+## Appended 2026-08-20 by the beat 08 staging lane — NO MORE b08 TEXT2IMG PLATES
+
+**Steward ruling, recorded so no lane files a fourth.** Beat 08's cut plate comes
+from the **skeleton path**, not from `plate_scratch` and not from a bare
+text2img sample. Bare text2img keeps producing **colossi** on this beat, and
+2026-08-19's macbook1 plate (`farm-out/ep2-b08-mac-plate-0819/`,
+`08-inside-him-mac-plate-r1s1.png`, seed 20260816) is the **third instance**: a
+giant goblin floating in a green field above a small guard standing on a
+separate path, board raised at his chest, no gesture, no shared ground plane.
+
+**It is not a wording problem and that is now settled rather than argued.** That
+sample's own `why_this_plate` field records the previous attempt returning "a
+HILL-SIZED goblin looming over three tiny guards", and the rewrite that followed
+*deleted the reserved sky* precisely to remove the vacancy a colossus grows in.
+It came back a colossus anyway. Beat 08's r4 had already proved a negative naming
+`giant, colossal, monster, kaiju, statue, face in the sky` removes it **not at
+all**, and the uncontrolled tally at the route's seed is **4 of 4**.
+
+**What the skeleton path buys, measured, on the same beat:** two figures at their
+authored positions with no fusion, a stature ratio inside 10% of the authored
+1.100, one ground plane, the pointing arm on the **guard** in five consecutive
+mechanisms, and — since `ep2-b08-twins-sample-0819` — the hand arriving 52.5 px
+from its authored wrist with the goblin's arm staying on its own skeleton.
+Nothing wording-only has come close to any of it.
+
+**So:** a b08 plate job that has no ControlNet hint has no consumer. If a lane
+believes it needs one, the thing to file is a rung on the skeleton route with a
+pre-registered bar, not another sample of a question closed three times.
