@@ -443,3 +443,84 @@ derivation_bug_caught_by_a_guard: 'RECORDED RATHER THAN QUIETLY FIXED, because t
   step. Same species as the b08 filename that survived a substitution in this rung''s parent: a programmatic
   derivation is only as good as the set of places you remembered to substitute, and the fix is a guard
   that says out loud what it is about to do.'
+verdict_0819:
+  verdict: PASSES Q1, AND ANSWERS Q2 THE OPPOSITE WAY TO MY WRITTEN PREDICTION. Strength 0.22 keeps the
+    whole drawing and REMOVES THE SPECULAR. The gloss that fired FAIL-CRYSTAL at 0.30 is a MID-SIGMA effect,
+    reachable by this knob -- not the late-step fine detail I argued it would be. rc=0, 2.9 s of GPU (against
+    0.30's 3.8 s, consistent with 8 steps against 12), $0.
+  the_prediction_was_WRONG_and_here_is_the_reasoning_that_failed: 'I pre-registered ''UNCHANGED'' as the
+    most likely outcome and wrote the mechanism down first: ''strength sets where the schedule STARTS,
+    not where it stops, so the final low-sigma steps run in BOTH renders. A specular is fine, high-frequency
+    detail -- exactly what low-sigma steps add. If gloss is written in those last steps, cutting 12 steps
+    to 8 removes the EARLY ones and leaves the gloss untouched.'' EVERY STEP OF THAT IS TRUE ABOUT THE
+    SCHEDULE AND THE CONCLUSION IS STILL WRONG. The premise that failed is the unstated one: that a specular
+    is ''fine, high-frequency detail''. It is not. In this dialect the highlight is a LARGE HARD-EDGED
+    LOBE covering roughly a third of the fruit -- a low-frequency SHAPE decision about what kind of object
+    this is, which is settled in the mid-sigma steps that 0.30 runs and 0.22 skips. Reasoning from the
+    sampler''s schedule was right; reasoning from my own assumption about what a highlight IS was not,
+    and one sample cost 2.9 seconds to find that out.'
+  Q1_the_geometry_must_survive: 'PASS, and CLEANER THAN THE PARENT ON ONE CLAUSE. All eight of the 0.30
+    sample''s clauses still hold: one fig attached to the side-branch and clear of the ground, one rooted
+    stem, two wide oval cotyledons with round tips, no contact, face visible, purple reads purple, one
+    adult figure, everything in frame. The conversion also held -- drawn vein line work, an outline of
+    varying weight, real grass at the root, the branch as a curving stalk -- so FAIL-PASTE did not fire
+    even at 8 of 40 steps, which was this job''s named main risk. AND THE PARENT''S ONE PARTIAL IS RESOLVED:
+    0.30 added two or three small dark leaflets at the leaf junction; 0.22 does not. Leaf blobs >=300px:
+    exactly one pair, 2873 px (0.22) against 2741 px (0.30). So the lower strength is better on leaf count
+    as well as on gloss.'
+  Q2_did_the_specular_reduce:
+    answer: YES, BY 67 PERCENT, AND IT IS VISIBLE AT 8x WITHOUT ANY METRIC.
+    measured_on_the_fruit_BODY: "Specular spread = p99 minus p50 of luminance, over the violet-segmented\
+      \ fruit body only:\n  composite (matte by construction, flat two-tone fill)   4.3\n  0.30 = 12 steps\
+      \                                        71.8\n  0.22 =  8 steps                               \
+      \         23.9\n4.3 is a flat fill, 71.8 is a specular, and 23.9 is an ordinary CEL SHADOW TERMINATOR\
+      \ -- which is the house dialect, not a defect. At 8x: 0.30 shows a large hard-edged pale mauve lobe\
+      \ over roughly a third of a near-black body and reads as a shiny plum; 0.22 shows an even violet\
+      \ body with a soft light/dark split and reads MATTE. The 0.22 fruit is closer to the canon matte\
+      \ violet fig than the 0.30 fruit is."
+    MY_PRE_REGISTERED_THRESHOLD_WAS_UNUSABLE_AND_I_AM_NOT_SCORING_AGAINST_IT: 'The bar in this very file
+      said ''brightest 2 percent under 170 is a clear reduction, 170-200 PARTIAL, over 200 unchanged'',
+      measured on a BOX around the fruit. THAT METRIC CANNOT MEASURE GLOSS AND THE PROOF IS IN ITS OWN
+      NUMBERS: the COMPOSITE -- whose fig is a flat matte fill with no highlight at all, drawn by me --
+      scores 209.1 on it, right beside 0.30''s 210.5 and 0.22''s 208.7. The box includes bright grass,
+      so the ''brightest 2 percent'' was reading the FIELD every time. Scored against the letter of my
+      own bar, this job would be filed as ''UNCHANGED'' and the finding would have been thrown away. A
+      pre-registered threshold is worth keeping only while it measures the thing it was written for; when
+      it provably does not, the honest move is to say so in the same breath as the replacement, which
+      is why the broken metric stays printed above beside the one that works.'
+  Q3_did_the_hue_move_back: 'THE QUESTION WAS BUILT ON A BAD NUMBER OF MINE, and answering it exposed
+    the error. Measured on the fruit BODY, the hue barely moves at all: composite 271 deg, 0.30 = 277
+    deg, 0.22 = 279 deg. There is no hue prior to move back from. See the_correction_this_forced -- the
+    parent verdict''s ''309 deg'' was 39 percent cloak-shadow, and that claim is retracted in the parent''s
+    own file with today''s date rather than quietly dropped here.'
+  pre_registered_fail_modes:
+    FAIL-PASTE: DID NOT FIRE, and it was this job's named main risk. 8 of 40 steps was still enough schedule
+      to convert the drawing. Highpass sigma-3 std inside the drawn region 21.71 against 0.30's 20.59
+      and the composite's 22.10; mean |delta| vs the init 10.6 against 0.30's 13.4 -- less engagement,
+      as expected from a shorter schedule, and still a pass. Which is one more reason those two numbers
+      are filters and not verdicts.
+    FAIL-GEOMETRY-LOST: DID NOT FIRE. Q1.
+    FAIL-GLOSS-UNCHANGED: DID NOT FIRE -- the mode I called most likely. 71.8 -> 23.9.
+    FAIL-COUNT: DID NOT FIRE, and it fired PARTIAL on the parent. Exactly two leaves, exactly one fruit,
+      and none of the parent's junction leaflets.
+    FAIL-CRYSTAL: DID NOT FIRE. No facets returned, and the specular that fired this mode on the parent
+      is the thing that went away.
+    FAIL-VACANCY: DID NOT FIRE. Both cleared arcs are still field.
+    FAIL-FIGURE: DID NOT FIRE. Whole-frame mean |delta| between the two outputs is 0.97, so outside the
+      fruit and the leaf junction these two renders are nearly the same image -- which is what makes the
+      fruit difference attributable to the one changed argument.
+  what_this_settles: 'THE STRENGTH KNOB REACHES MATERIAL, AND 0.30 IS NOT THE RIGHT DEFAULT FOR A MATTE
+    OBJECT. composite-init-pattern.md 9''s standing summary -- geometry transfers, material is plate-dependent
+    and unexplained -- gets a mechanism on the material half for the first time: at least one material
+    property (specular) is decided in the MID-SIGMA steps, so it is a function of WHERE THE SCHEDULE STARTS
+    and therefore of strength. Two samples, 6.7 seconds of GPU total, one variable between them, same
+    seed. That is a real finding and it is also only TWO POINTS ON ONE OBJECT IN ONE PLATE: it does not
+    establish a curve, an optimum, or that the same holds for any other material property.'
+  what_this_does_NOT_settle: 'WHICH OF THE TWO PLATES SHIPS. That is R4 and it is a taste call, not a
+    defect call: 0.22 is matte and simpler, 0.30 is glossier with more incident at the leaf junction,
+    and the canon line (''matte violet fig'') favours 0.22 while the author has never ruled on this fruit''s
+    surface. ep2-b18-canon-0817''s verdict raised gloss as a founder card and left it open; this lane
+    does not close it. Both plates are committed side by side so the choice can be made on pixels in one
+    look.'
+  is_this_plate_a_pick: 'NO. Same as the parent: no plate_ack, no promotion, no leaf, no lineage entry,
+    nothing in any cut. Beat 19 has TWO passing plate samples now and zero picks.'
