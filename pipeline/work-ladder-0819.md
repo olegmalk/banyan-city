@@ -2506,3 +2506,190 @@ the five tracing losses in writing before anyone authors it** — the point here
 is only that it now has the evidence it was waiting for. **Not taken by this
 lane. `ep2-b08-scale30-0820` remains the best frame on beat 08; no pick, no
 plate_ack, no cut.**
+
+---
+
+## Appended 2026-08-20 by the beat 08 staging lane — the grip mark, argued against the five tracing losses BEFORE it is authored
+
+Three rungs (§17, §18, §19 of `pipeline/b08-arm-route-0819.md`) each closed a
+free lever and each ended by naming the same next one: **figure ink in the board
+hint.** Every one of them also said the same thing about it — *it is owed the
+five tracing losses in writing before anyone authors it.* This is that writing.
+It is filed before any code is touched, and it changes the proposal.
+
+### 0. One measurement first, because it re-describes the defect
+
+The parent's verdict says *"the sleeve ends in a rounded mitten-like form and the
+board's top edge tucks under it — no fingers, no thumb, no grip."* That is true
+and it is not the whole defect. Measured on
+`farm-out/ep2-b08-scale30-0820/ep2-b08-scale30-0820-scale30.png`, geometry-placed
+boxes, luma > 200 for the cream masses:
+
+| form | centroid | distance to authored `Lelb` (627.2, 579.7) | distance to authored `Lwri` (621.7, 668.4) |
+|---|---|---|---|
+| the drawn fist with individual fingers | **(620.3, 577.9)** | **7.1 px** | **90.5 px** |
+| the digit-free cream lobe on the board's top edge | (679.2, 630.4) | 66.6 px | 68.9 px |
+
+**The guard's near hand is drawn one joint short.** It is not missing and it is
+not badly drawn — it is a well-articulated fist sitting 7 px from the authored
+*elbow*, closed around a shoulder strap the model invented, with 90 px of sleeve
+fabric continuing down to the board and terminating in a lobe. So the beat's
+failing clause is not "the model cannot draw a hand at this scale" (it drew one,
+here, in this frame, at 0.3, with fingers). It is **"the arm's terminus is in the
+wrong place, and the object net has never been told where it is."**
+
+That matters for the argument, because it is the difference between asking this
+net for a *drawing* — which the five losses say it will not give — and asking it
+for a *position*, which is the one thing it does give.
+
+### 1. The five losses, stated as what they actually are
+
+All five are `xinsir/controlnet-scribble-sdxl-1.0` conditioned on hand-authored
+figure ink, route log §8–§10.
+
+| # | rung | ink class | what the net did |
+|---|---|---|---|
+| 1 | `ep2-b08-cnetplate-0819` — contour, 7 px, 0.80 | whole-figure enclosure | traced 97.7 % of authored ink; **flat mannequin**; the arm ended in nothing |
+| 2 | `ep2-b08-cnetplate-r2-0819` — contour, 7 px, 0.45 | whole-figure enclosure | traced 94.4 %, surface-only; aimed wide **by construction** — and **drew a good hand with an extended index finger at the enclosed arm terminus** |
+| 3 | `ep2-b08-cnetplate-r3-0819` — contour, 7 px, 0.28 | whole-figure enclosure | **staging LOST** — drawn but uncontrolled |
+| 4 | `ep2-b08-cnetplate-r4-0819` — contour, 3 px, 0.45, **+ a 1 px finger stroke** | thin **open** stroke at the arm's end | 98.3 % traced, 83.4 % of strongest gradients on ink — and **the finger stroke did not carry; the hand regressed to a fingerless wedge** |
+| 5 | `ep2-b08-cnetplate-r5-0819` — skeleton, 7 px, 0.45 | medial axis, **non-enclosure**, inside the figures | every composition clause failed; the ink was **DRAWN AS LIGHT** (+47.0 luma on the guard's spine column) |
+
+§10's synthesis, which is the thing to beat: *"any hint this net can read is a
+hint it traces, and any hint it cannot read it ignores or draws. There is no
+setting that yields a model-drawn figure inside an authored composition."* And
+its ruling: **hand-authored geometry is closed as a composition lever for beat 08
+on this net.** That ruling is real and it is not being quietly stepped over here.
+
+### 2. The proposal as named does NOT survive, and loss 4 is the reason
+
+Every rung that named this lever called it *"a **short stroke** for the gripping
+hand."* **A short stroke is loss 4 exactly** — an open, thin mark appended at the
+end of a limb, in this hint, on this net. It failed at 0.45 with a whole contour
+around it to hold it; it is being proposed at 0.3 with nothing around it. §9 did
+not merely record that failure, it ruled on it: *"whatever the class, B4b needs a
+**hand-sized mark** at the end of the arm — a 1 px finger has now failed once."*
+
+**So the named proposal is rejected by this lane and is not what gets authored.**
+
+### 3. The variant that does survive, and precisely why it is a different class
+
+**A closed, hand-sized loop at 7 px stroke, centred on the authored L-wrist
+`(621.6704, 668.4352)`, straddling the board's top edge.** Not a stroke — an
+enclosure. Five properties, each answering a specific loss:
+
+**(a) It is enclosure-class, which is the one thing this net reads.** This is not
+an inference from the losses; it is the *positive control already in the parent
+frame.* The same net, the same hint file, the same 0.3, the same seed put a
+closed quad on screen at the authored position and the authored 9° tilt. An
+enclosure at 0.3 in this rig is a measured capability, not a hope.
+
+**(b) 7 px, not 3 px, and loss 2 is the one positive in the loss set.** §9's
+finding was that stroke weight is a *precision* dial with the opposite sign to
+the assumption: 3 px is a single unambiguous edge locus and the outline snaps to
+it (loss 4's wedge); **7 px is an ambiguous ribbon and the model fills it with
+its own drawing** — which is why loss 2, at 7 px, produced an articulated hand at
+an enclosed arm terminus. The grip loop is loss 2's single success extracted from
+loss 2's failure: same class, same weight, same kind of location. The board hint
+is already at `STROKE = 7`.
+
+**(c) The scope is one body part, not a character.** Losses 1–4 conditioned the
+entire silhouette of two whole bodies, and what they cost was *character*:
+identity, wardrobe, linework, face. The loop is ≈ 46 × 34 px — about 0.11 % of
+the frame — and it asserts nothing about the guard's face, his hair, his
+wardrobe, his pointing arm, or the goblin. Those are the four things the losses
+destroyed and the loop is silent on all of them. **This is the load-bearing
+distinction and it should be read as scope, not as size:** a hint that says
+"this character's edge is here" replaces the model's drawing of the character; a
+hint that says "one prop-contact boundary is here" does not.
+
+**(d) It touches no limb the hint does not already touch.** The hint's selftest
+pins the guard limbs its ink meets to exactly `{gripping forearm, torso, L
+thigh}` — the three a clipboard at the hip occludes. A loop of half-extent ≤ 23 px
+at `Lwri` stays inside that set with room: the nearest *new* capsule is the
+gripping upper arm at 88.9 px and the neck→Rhip torso bar at 81.6 px. **The grip
+mark can be added without widening the figure-ink carve-out by one limb**, and
+`--selftest` will assert that as pixels rather than as a claim.
+
+**(e) It is the first time the two nets agree at one pixel.** The openpose net has
+authored the guard's L-wrist at `(621.6704, 668.4352)` since `562911c8`, at scale
+1.0, and §14 already established that **the pose net's binding is not rigid** —
+an authored limb gets overridden when the checkpoint prefers a different reading.
+Section 0's 90.5 px is that override, measured. The scribble net has never been
+told anything about that coordinate. The loop is not a new *kind* of instruction;
+it is a second, independent assertion of an existing one, from the net whose
+placements this frame demonstrably obeys.
+
+### 4. The objection that nearly killed it, and the answer is in the parent frame
+
+§16's mechanism: for a scribble net a black pixel is not an absence of
+instruction, it is *"no edge here"* — so a 99.7 %-black hint asserts "no edges
+anywhere". Read literally, **the interior of the grip loop would be an assertion
+that the hand has no finger creases**, i.e. the hint would be *commissioning the
+mitten.*
+
+That is a 0.8 phenomenon and the parent frame proves it. At 0.8 the frame
+flattened everywhere and the wardrobe became one robe; at 0.3 the parent's own B6
+verdict reads *"hair with visible strands, folds in the sleeves, the gold harness
+clasp and belt buckle both legible, **a well-drawn fist gripping the harness
+strap with individual fingers**."* **Both halves of §16's mechanism are already
+calibrated at 0.3 inside the very frame this rung derives from:** the "no edge"
+half is weak enough that the model draws finger creases anyway, and the "edge
+here" half is strong enough to place a closed form at an authored location and
+tilt. The loop asks for one more instance of the second and relies on the first
+staying weak.
+
+### 5. What the losses still predict, pre-registered as named failure modes
+
+Loss 3 is the live one and it is not argued away. At 0.28 figure ink stopped
+binding, and 0.3 is 0.02 above it; §18 further showed 0.3 is not robust but
+**prompt-coupled** — nine words erased the board entirely at unchanged strength.
+The loop carries roughly a tenth of the board's ink. The honest position is that
+loss 3's number came from a *single-net* frame while the board binds at 0.3 in
+*this two-net rig* where the residuals add — so loss 3 does not transfer
+directly, but it makes "ignored" the single most likely outcome.
+
+| mode | class | what it looks like | what it would settle |
+|---|---|---|---|
+| **L1 IGNORED** | loss 3 | hand still at the elbow, board unchanged | small-scope figure ink cannot bind at the only strength the wardrobe survives → route leaves this net |
+| **L2 FLAT-TRACE** | loss 1 | a hard-rimmed, digit-free blob at the wrist | 7 px is not a ribbon at 0.3; §9's precision finding is scale-dependent |
+| **L3 MERGE** | loss 5 | loop and board top edge read as one enclosure — a bump on the board, or a luminous bar at the wrist | non-enclosure behaviour re-appears when two enclosures touch |
+| **L4 BOARD-COST** | §18 | the board degrades because the *pair* (hint, prompt) moved | §18's lesson generalises from prompt edits to hint edits |
+| **L5 THIRD-HAND** | new | a hand at the wrist **and** the existing fist at the strap | the checkpoint will not relocate a committed hand, only add one |
+
+L4 is mandatory to measure, not optional: §18's standing lesson is that a
+conditioning strength is a property of the *pair*, and this rung moves the other
+half of the pair.
+
+### 6. Verdict on the argument, and the fallback named in advance
+
+**An honest version survives — but only as (3), and (3) is not the thing three
+rungs kept naming.** The route asked for a stroke; the record says a stroke is a
+recorded loss and a 7 px closed loop at an arm terminus is the record's one
+success. The sample is therefore authorised by this lane as a **hand-sized closed
+loop**, one variable (the hint), `--scale2` held at 0.3, the prompt reverted
+byte-for-byte to the 64-token parent text so §18's crowding goes with it, seed
+pinned at 20260819.
+
+**Two guards on the authoring, so this cannot become a second variable.**
+`build()` keeps its current default and `--selftest` asserts the default hint is
+still byte-identical to `38cd39da…` — the parent's hint stays reproducible on
+disk and the grip variant is opt-in. The two hints then differ **only** by the
+loop, provably, rather than by assertion.
+
+**And the fallback if it loses, named now so nobody has to invent one under
+pressure: composite-then-inpaint**, which went **4 for 4 today** (beats 15, 19,
+03, 13) on precisely this shape of problem — a RELATION between a figure the
+sampler has already placed and something it draws where it likes. Beat 03's entry
+above says it in general terms: *"a relation between a figure the sampler has
+already placed and a plant it draws where it likes is no more a knob than a
+numeral is."* "A hand grips this board" is that same relation. Drawing the hand
+into the parent plate and running a 0.30 pass with `padding_mask_crop=64` touches
+neither net, risks neither the board nor the wardrobe, and is the instrument this
+house has the most evidence for. It is **named, not taken** — the hint rung goes
+first because it is one variable on a recipe already on the card, costs ~30 s of
+GPU, and keeps beat 08's plate a single-pass render rather than a two-pass
+composite.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. No pick, no
+`plate_ack`, no cut, and the words "complete plate candidate" are not used.**
