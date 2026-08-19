@@ -1958,3 +1958,98 @@ and unrelated use. The defect is an off-screen clause inside a **positive**, and
 the only confirmed instance. **The audit that would settle it has not been run**: it must
 read positives only, and a grep across whole spec files cannot distinguish the two. Named
 as unowned rather than claimed as measured.
+
+---
+
+## THE RE-RENDER WAVE — appended 2026-08-19 by the enactment lane
+
+**The ruling that ordered it, verbatim:** *"well b definitely and the damn goblin.
+c kinda is but still pretty bad so change it"* (`/review/ep2-goblin-design-0819`).
+B is the lean adult and he is the goblin. The C group — **03, 04, 08, 13, 20** —
+reads as him but is *"pretty bad"*, and *"change it"* is an instruction.
+
+### Where the wave stands after one pass
+
+| beat | plate | cast | beat's own `done_when` | outstanding |
+|---|---|---|---|---|
+| 03 BAD COVER | `03-bad-cover-mac-plate-r1s1` | **PASS** | **FAIL** — he is *beside* the seedling, not behind it; nothing says COVER, so the joke is not visible without dialogue | the plant, and the cover RELATION |
+| 04 THE FOOTNOTE | `04-the-footnote-mac-plate-r1s1` | **PASS**, sharpest of the four | **NEAR-PASS** — eyes off-axis to frame left, jaw set; body barely in frame at this crop | nothing blocking; usable as a plate |
+| 13 THE SHADE | `13-the-shade-mac-plate-r1s1` | **PASS** | **POSE PASSES** — folded small, knees to chest, arms over | the plant; frame is dim |
+| 20 EVIDENCE | `20-evidence-mac-plate-r4s1` | **PASS** | **FAIL** — no fig at all, no look up | see below; r1s1 has the fig |
+| 08 | not re-fired | — | — | both 08-19 rungs already have verdicts; see below |
+
+### The finding that outranks the rest of this section
+
+**The cast is solved and the canon sapling is not drawable by words on this
+checkpoint.** 3 of 3 frames came back the lean adult from the ratified wording
+alone — no reference image, no IP-Adapter, no LoRA, one seed each. And 3 of 3
+plant beats missed the plant: `a tiny sapling with two big leaves`, a wording
+`THE-SAPLING.md` lists as **already satisfying** the founder's two-leaf ruling,
+drew six-to-eight leaflets (03, 20) or no identifiable plant at all (13).
+
+**Beat 04 is the control.** It is the only one of the four with no plant in it and
+the only one that lands. Three plant beats failed on the plant; the plantless beat
+passed. That is what turns three misses into a closed axis rather than a run of
+bad luck.
+
+**So the wording ladder for the canon sapling is CLOSED** — three rungs on one
+axis, plus the b19 lane's three earlier wordings, is six. Per this ladder's own
+standing rule the next instrument is **compositional, and it gets named, not
+fired**: `ep2-b19-sapcomp-0819`, which put a fig on a plant with numpy in 3.8 s at
+$0 after three wordings could not, and passed all eight clauses of its bar. **A
+composited sapling dropped into these three plates is the rung. A fourth sentence
+about leaves is not.**
+
+Read this as a *scoping* result, not a stop: **the goblin half of all three beats
+is done and will not need re-drawing when the plant is solved**, and beat 13's
+pose is a pass on its own terms and is worth keeping.
+
+### Beat 20, and an error of mine worth keeping
+
+`REVS[(20,4)]`'s declared variable landed — r1's thick gnarled tree is gone — **and
+the beat got worse**, losing the fig and the look up. The cause is mine and is
+written into the entry: it was sold as one variable and was three (the plant,
+*plus* `crouching`, *plus* a compressed fig clause). `crouching`, added to
+reconcile "look UP" with a 40 cm plant, resolves very reasonably as a man kneeling
+to look **down** at a seedling. **The next rung is r1's positive byte for byte with
+only the plant clause swapped, and the token budget paid out of the lighting tail
+— never out of the fig clause or the look-up clause. This rev is the measurement
+proving those two are load-bearing.**
+
+**A free result worth more than the rev:** `r1s1`'s fig is unmistakably **purple**
+from a prompt whose only fruit word is `a ripe fig`. That reproduces
+`backend_divergence_probe.py` on a fresh draw — the Mac gives the founder's
+2026-08-16 purple for free. **`20-evidence-mac-plate-r1s1.png` is the frame to
+show him for that ruling.**
+
+### Beat 08 — not re-fired, and why
+
+Both 08-19 rungs already carry verdicts: `ep2-b08-ipamask-0819` **PASSED branch
+(1)** (per-figure identity binds; beat 08 has a recipe for the first time) and
+`ep2-b08-posenet-sample-0819` came back **branch (2)** (pose binds; the forearm
+flips). The thing the freeze was actually holding is the rung posenet **named and
+did not take**: *re-stage the arm — elbow low and near the ribs, forearm reaching
+forward and down — and change nothing else.* That is a staging edit to
+`author_b08_openpose_hint.py` carrying its `--selftest`, then ONE sample. **It is
+legal now and it is unowned.**
+
+### The card
+
+The rtx5090 is **idle and verified healthy** — the runner-surgery lane's restart
+landed 23:03 and its latency probe claimed and completed in the same second,
+against the ~8 minutes it cost before. **No goblin motion job is runnable yet**:
+motion needs a plate that has passed, and the blocker on three of four plates is
+compositional work that does not use the GPU. The named box rung above (b08 arm
+re-stage) is the honest next GPU job.
+
+### Two tooling faults found while filing, named not fixed
+
+1. **`mac_enqueue.known_beats()` cannot see `DRAFTS[15] = {...}`.** It parses only
+   the `DRAFTS = {...}` literal, so beat 15 — one of the cut's four slates —
+   **cannot be enqueued on the farm at all**. Beats 03, 04 and 13 were put inside
+   the literal for this reason.
+2. **The checkout guard is blind on macbook2 and macbook4.** Those two keep
+   `~/banyan-city` as a non-git rsync copy, so the guard's `git HEAD` read finds
+   nothing and passes. It correctly refused macbook1 for the same staleness
+   minutes earlier. b04's first attempt died `rc=4 no inline draft for beat 4`.
+   Both code roots are now synced from their farm checkouts.
