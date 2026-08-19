@@ -1,0 +1,398 @@
+id: ep2-b13-shadelast-0820
+task: ep2-b13-shadelast-0820
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the composite-plate motion lane, 2026-08-20, rung 2
+consumer: 'The episode 2 cut, beat 13, still a SLATE. Rung 1 produced this beat''s first motion candidate
+  with a real canon sapling in it and the candidate is not cuttable, for a reason one sentence wide. This
+  is the fix for that sentence. Immediately downstream: the beat''s entry in review/ep2-picks/ and, if
+  it passes, a founder screening. The cut swap is a taste call and is not proposed here.'
+success: 'ONE 704x1280 121-frame mp4 off the same init and the same seed as ep2-b13-shadelast-0820.yaml,
+  differing from it in ONE SENTENCE, in which THE LAST FRAME IS THE ONE THE PROMPT PLACES. The action
+  clause. `tips his head slowly sideways ... and does not stand up, does not slide` becomes a placement
+  of the last frame that does two jobs in one sentence: still seated, knees up, head tilted SIDEWAYS with
+  the face still toward camera. `his face still turned toward the camera` is the new half and it is aimed
+  at rung 1''s specific miss -- a sideways tilt that keeps the face readable, rather than the forward
+  fold the init already afforded. The comparison that matters is against rung 1 frame for frame and not
+  against an absolute: both clips exist, they share an init, a seed, a negative and every flag, so any
+  difference between them was bought by that sentence.'
+why: $0, ~12 minutes, no download, and the card went idle the moment rung 1 finished. The remedy is already
+  written in rung 1's own verdict, the precedent is measured -- 64.7 px -> 4.7 px on ep2-b04-headlock-0820
+  from one clause moved out of an instruction and into a placement -- and firing the same sentence shape
+  on THREE beats at one seed tests the MECHANISM rather than the beat. Nothing else changes, so a bad
+  result is attributable to the sentence.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-shadelast-0820\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"RESTORE beat 13's\
+    \ composite plate AND ITS MASK to the courier path\nthey were published from, and refuse on any sha\
+    \ mismatch.\n\nNo model, no GPU, no spend. Both files were written on this box by\nep2-b13-sapcomp-0820's\
+    \ publish step into\ncourier-box\\\\farm-out\\\\ep2-b13-sapcomp-0820\\\\, but the box's courier\n\
+    worktree is not a reliable place to find them later -- beat 19's had been\ncleaned out by the time\
+    \ its motion job ran -- so they are re-fetched under the\nsha256 the manifest recorded. Anyone who\
+    \ clones the repo can verify both\nnumbers.\n\nTHEY ARE RESTORED TO THEIR OWN PUBLISHED PATH rather\
+    \ than into this job's\npayload directory, and that is not cosmetic. box_enqueue refuses a --src it\n\
+    cannot trace: it reads farm-out/<dir>/<file>, fetches that plate from\norigin/farm-results-rtx5090\
+    \ to CHECK THE PICTURE, and resolves <dir> to the one\nspec whose publish step owns it. A payload-directory\
+    \ path defeats both checks,\nand \"could not check\" is not \"fine\". The sha assertion is what makes\
+    \ the\nrestore safe: a different file cannot take this name.\n\nTHE MASK IS FETCHED TOO because assert_framing.py\
+    \ reads it. The plant's\nauthored footprint is the only honest way to ask \"is the sapling wholly\
+    \ in the\ncropped frame\" on a green object over a green field -- a colour predicate has\nproduced\
+    \ a clean, wrong number twice in this ladder.\n\"\"\"\nimport hashlib, os, sys, urllib.request\n\n\
+    OUT = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-sapcomp-0820\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b13-sapcomp-0820/\"\
+    )\nUA = {\"User-Agent\": \"banyan-city-ep2-b13-shadelast-0820/1.0 (albert.numbro@gmail.com)\"}\nWANT\
+    \ = {\n    \"b13-sapcomp-s20260820.png\":\n        \"bb0ad70c4294aa1647a0db1567df30482c97780359adc799818ff1dd88e0f7b2\"\
+    ,\n    \"13-the-shade-sapcomp-mask-0820.png\":\n        \"702ce6b0cb0584ae6ac0080b85b317d9afd2333fdf0102bf17d6dfc9696d013e\"\
+    ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
+    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
+    \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
+    \ flush=True)\n"
+  C:\banyan-farm\ep2-b13-shadelast-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\n\nep2-b14-motion-crf10-0819's copy, with ONE\
+    \ addition: --anchor. The default\nis `center`, which is what every earlier copy of this file did,\
+    \ so passing\nnothing reproduces those jobs byte for byte.\n\nWHY THE ANCHOR EXISTS, measured before\
+    \ this job was filed. The picked plate\nis 832x1216 and the target is 704x1280, so the cover-crop\
+    \ scales by 1.0526\nand then discards 81.7 ORIGINAL pixels off each side. Beat 19's fruit lives\n\
+    at original x 743..773 -- the right 4% of the plate -- so a CENTRED crop\nkeeps 8 of its 32 columns\
+    \ and throws the subject of the beat out of frame.\nRight-anchored, the fruit lands at output x 610..642\
+    \ with 62px of air to the\nframe edge, and the goblin is still whole (his silhouette ends at output\n\
+    x ~500). Right-anchored is not a preference here, it is the only offset that\nholds both bodies: even\
+    \ at the maximum the fruit has only 62px to spare.\n\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\nap.add_argument(\"--anchor\"\
+    , default=\"center\", choices=[\"center\", \"left\", \"right\"])\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as\
+    \ fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\n\
+    if a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\\
+    n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"\
+    RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)),\
+    \ int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nif a.anchor == \"center\":\n  \
+    \  left = (nw - W) // 2\nelif a.anchor == \"left\":\n    left = 0\nelse:\n    left = nw - W\ntop =\
+    \ (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\n\
+    print(\"cover-crop scale=%.4f -> %dx%d, anchor=%s box (%d,%d)\"\n      % (scale, nw, nh, a.anchor,\
+    \ left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-shadelast-0820\assert_framing.py: "#!/usr/bin/env python3\n\"\"\"REFUSE TO RENDER\
+    \ IF THE COMPOSITED SAPLING IS NOT WHOLLY IN THE CROPPED INIT.\n\nBeat 13's whole reason for having\
+    \ a composite plate is that a canon\ntwo-leaf sapling is in the frame. A framing bug that clips it\
+    \ costs a GPU fire\nand produces a clip that cannot be judged on its only interesting clause -- and\n\
+    a CENTRED cover-crop discards 81.7 ORIGINAL px off each side of an 832x1216\nplate, which is enough\
+    \ to do exactly that on two of this rung's three beats.\n\nTHE INSTRUMENT IS THE COMPOSITE MASK, NOT\
+    \ A COLOUR PREDICATE, and that choice\nis the whole reason this file differs from beat 19's. These\
+    \ plants are green\nobjects on green fields; this ladder has twice recorded a colour predicate\nreturning\
+    \ a clean, wrong number on exactly that ground (the green-OR-purple\ngrowmotion mask that manufactured\
+    \ a 3.9x area step, and the b08 material probe\nthat landed on a sleeve at 100% \"pale\"). The mask\
+    \ is the plant's own authored\nfootprint, published beside the plate. Pushed through the IDENTICAL\
+    \ cover-crop\ntransform it gives the plant's exact output bbox with no predicate at all.\n\nWANT_BBOX\
+    \ below was measured on a Mac against the real published bytes BEFORE\nthis job existed, so it cannot\
+    \ be moved afterwards to fit.\n\nNo model, no network, no GPU. Reads two PNGs.\n\"\"\"\nimport sys\n\
+    from PIL import Image\n\nINIT = sys.argv[1]\nMASK = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-sapcomp-0820\\\
+    13-the-shade-sapcomp-mask-0820.png\"\nW, H = 704, 1280\nANCHOR = \"left\"\nWANT_BBOX = (14, 681, 265,\
+    \ 1236)   # pre-registered\nTOL = 4        # LANCZOS on a dilated mask is stable well inside this\n\
+    MARGIN = 8     # px of frame the plant must clear on every side\n\nim = Image.open(INIT).convert(\"\
+    RGB\")\nif im.size != (W, H):\n    sys.exit(\"!! wrong init size %dx%d -- refusing.\" % im.size)\n\
+    \nm = Image.open(MASK).convert(\"RGB\")\nsw, sh = m.size\nscale = max(W / float(sw), H / float(sh))\n\
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))\nm = m.resize((nw, nh), Image.LANCZOS)\nif\
+    \ ANCHOR == \"center\":\n    left = (nw - W) // 2\nelif ANCHOR == \"left\":\n    left = 0\nelse:\n\
+    \    left = nw - W\ntop = (nh - H) // 2\nm = m.crop((left, top, left + W, top + H)).convert(\"L\"\
+    )\n\npx = m.load()\nxs = [x for x in range(W) if any(px[x, y] > 127 for y in range(0, H, 2))]\nys\
+    \ = [y for y in range(H) if any(px[x, y] > 127 for x in range(0, W, 2))]\nif not xs or not ys:\n \
+    \   sys.exit(\"!! the composite mask is EMPTY after the crop -- the sapling is \"\n             \"\
+    not in the frame at all. REFUSING.\")\ngot = (min(xs), min(ys), max(xs), max(ys))\nprint(\"mask bbox\
+    \ x %d..%d y %d..%d (anchor=%s, want x %d..%d y %d..%d)\"\n      % (got[0], got[2], got[1], got[3],\
+    \ ANCHOR,\n         WANT_BBOX[0], WANT_BBOX[2], WANT_BBOX[1], WANT_BBOX[3]), flush=True)\n\noff =\
+    \ [abs(g - w) for g, w in zip(got, WANT_BBOX)]\nif max(off) > TOL:\n    sys.exit(\"!! mask bbox %s\
+    \ is not the pre-registered %s (max off %d > %d). \"\n             \"The crop this job measured is\
+    \ not the crop it got. REFUSING.\"\n             % (got, WANT_BBOX, max(off), TOL))\nif got[0] < MARGIN\
+    \ or got[1] < MARGIN or got[2] > W - 1 - MARGIN \\\n        or got[3] > H - 1 - MARGIN:\n    sys.exit(\"\
+    !! the sapling touches a frame edge (bbox %s in %dx%d, margin \"\n             \"%d). REFUSING.\"\
+    \ % (got, W, H, MARGIN))\nprint(\"FRAMING OK -- the composited sapling is wholly inside the cropped\
+    \ init. \"\n      \"margins L%d R%d T%d B%d\"\n      % (got[0], W - 1 - got[2], got[1], H - 1 - got[3]),\
+    \ flush=True)\n"
+  C:\banyan-farm\ep2-b13-shadelast-0820\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's\
+    \ provenance sidecar.\n\nvideo_task.write_sidecar records model, prompt, negative, init sha and\n\
+    cost_usd 0, and it does not record whether the clip may ship. Appended here\nrather than asserted\
+    \ in a commit message nobody downstream reads. REFUSES if\nthe sidecar is missing -- a clip whose\
+    \ provenance file did not get written must\nnot pass silently.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\n\
+    if not os.path.isfile(META):\n    sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\"\
+    \ % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n   \
+    \     \"# --- appended by ep2-b13-shadelast-0820 after the render.\\n\"\n        \"approved: false\\\
+    n\"\n        \"provisional: true\\n\"\n        \"is_show_content: true\\n\"\n        \"note: |\\n\"\
+    \n        \"  BEAT 13'S FIRST MOTION SAMPLE OFF A COMPOSITE PLATE, a candidate\\n\"\n        \"  for\
+    \ the beat's cut slot and not an engine probe. Conditioned on\\n\"\n        \"  b13-sapcomp-s20260820.png,\
+    \ the plate\\n\"\n        \"  ep2-b13-sapcomp-0820 produced and this lane\\n\"\n        \"  did not\
+    \ re-pick. Judged against the bar pre-registered in\\n\"\n        \"  pipeline/jobs/ep2-b13-shadelast-0820.yaml\
+    \ BEFORE this render\\n\"\n        \"  existed. NOT approved and NOT cut until all 121 frames have\
+    \ been\\n\"\n        \"  opened consecutively.\\n\"\n        \"  THE PLANT CLAUSE OVERRIDES THE PERFORMANCE\
+    \ CLAUSE. Beat 19's motion\\n\"\n        \"  take turned a two-leaf sapling into a four-leaf prostrate\
+    \ runner in\\n\"\n        \"  90 frames and undid four drawing rounds. If the plant is not one\\n\"\
+    \n        \"  rooted stem with two leaves at frame 121, this clip is a FAIL\\n\"\n        \"  however\
+    \ well he acts.\\n\"\n        \"  STEWARDSHIP.md 6 is DISCHARGED for this beat -- node.md:204, the\\\
+    n\"\n        \"  founder read and approved the 2026-08-17 rewrites on 2026-08-19 --\\n\"\n       \
+    \ \"  which is what makes a footage render legal here. It confers no\\n\"\n        \"  verdict on\
+    \ these pixels.\\n\")\nprint(\"stamped %s\" % META, flush=True)\n"
+  C:\banyan-farm\ep2-b13-shadelast-0820\b13-motion-prompt.txt: 'He is sitting folded small in the grass
+    beside the little two-leaf plant with his knees up around his ears, and he stays sitting there in
+    the same spot. His head tilts over to ONE SIDE, his cheek toward the plant, until the plant''s small
+    patch of shade lies across his eyes. IN THE LAST FRAME he is still sitting in the grass with his knees
+    up, his head tilted over sideways with his face still turned toward the camera, and the small patch
+    of shade lying across his eyes. The little plant stays exactly as it is and does not grow: ONE thin
+    stem, TWO leaves, rooted in the grass, shorter than he is. He stays the same lean wiry adult goblin
+    man from the first frame to the last: green skin, bald head, long pointed ears, patchwork cloak, one
+    face and one figure only. The camera never moves. 2D anime, hand-drawn cel animation, flat cel shading,
+    clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.
+
+    '
+  C:\banyan-farm\ep2-b13-shadelast-0820\b13-negative.txt: 'sliding down a trunk, sliding, standing up,
+    getting up, lying down, moving to a different spot, a third leaf, extra leaves, more leaves, a leafy
+    bush, a branching weed, extra stems, a second plant, a flower, a fruit, a berry, the plant growing,
+    the plant getting taller, the plant lying down, a horizontal runner, a big tree, a tree trunk, a second
+    goblin, two goblins, 2boys, crowd, child, chibi, baby, round head, cute, human skin, pale skin, hair,
+    wig, changing face, morphing, melting face, camera pan, camera tilt, zoom, dolly, push in, pull back,
+    tripod, cut to another shot, scene change, shot change, new camera angle, different location, split
+    screen, walking out of frame, leaving the frame, still image, freeze frame, photorealistic, 3D render,
+    CGI, live action, text
+
+    '
+  C:\banyan-farm\ep2-b13-shadelast-0820\b13-jobs-encode.json: "[\n {\n  \"beat\": 13,\n  \"embeds\": \"\
+    C:\\\\banyan-farm\\\\ep2-b13-shadelast-0820-out\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b13-shadelast-0820\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b13-shadelast-0820\\\\b13-negative.txt\"\n }\n]\n"
+  C:\banyan-farm\ep2-b13-shadelast-0820\b13-jobs-render.json: "[\n {\n  \"beat\": 13,\n  \"seed\": 20260820,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b13-shadelast-0820-out\\\\b13-embeds.pt\",\n  \"init\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b13-shadelast-0820-out\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\
+    \\banyan-farm\\\\ep2-b13-shadelast-0820-out\\\\13-the-shade-LTX-lastframe-0820.mp4\"\n }\n]\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shadelast-0820\fetch_init.py
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shadelast-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-sapcomp-0820\b13-sapcomp-s20260820.png
+  - --sha256
+  - bb0ad70c4294aa1647a0db1567df30482c97780359adc799818ff1dd88e0f7b2
+  - --out
+  - C:\banyan-farm\ep2-b13-shadelast-0820-out\b13-init-704x1280.png
+  - --size
+  - 704x1280
+  - --anchor
+  - left
+- name: framing
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shadelast-0820\assert_framing.py
+  - C:\banyan-farm\ep2-b13-shadelast-0820-out\b13-init-704x1280.png
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shadelast-0820\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-shadelast-0820\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-shadelast-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-shadelast-0820-out\bench-b13-shadelast.jsonl
+  - --bench-label
+  - ep2-b13-shadelast-0820
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-shadelast-0820\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b13-shadelast-0820-out\13-the-shade-LTX-lastframe-0820.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while\
+    \ returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses\
+    \ a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing\
+    \ ONE file is a FAIL of the job. No allow_fail anywhere.\nimport hashlib, os, shutil\nout_dir = \"\
+    C:/banyan-farm/ep2-b13-shadelast-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b13-shadelast-0820\"\n\
+    dst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-shadelast-0820\"\nPAIRS = [\n    (out_dir, \"\
+    13-the-shade-LTX-lastframe-0820.mp4\"),\n    (out_dir, \"13-the-shade-LTX-lastframe-0820.mp4.meta.yaml\"\
+    ),\n    (out_dir, \"b13-init-704x1280.png\"),\n    (out_dir, \"bench-b13-shadelast.jsonl\"),\n   \
+    \ (pay_dir, \"b13-motion-prompt.txt\"),\n    (pay_dir, \"b13-negative.txt\"),\n]\nos.makedirs(dst,\
+    \ exist_ok=True)\nlines = []\nfor d, name in PAIRS:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n\
+    \        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f,\
+    \ dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest()\
+    \ + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-shadelast-0820.sha256\"), \"w\",\n     \
+    \     newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(PAIRS) else\
+    \ 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-shadelast-0820-out\13-the-shade-LTX-lastframe-0820.mp4
+- C:\banyan-farm\ep2-b13-shadelast-0820-out\b13-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. STEWARDSHIP.md 6 IS DISCHARGED FOR THIS BEAT AND THE RECORD IS node.md:204: the five beats
+  rewritten 2026-08-17 to play at knee height (12, 13, 15, 19, 20) were put to the founder verbatim and
+  his answer was "all approved" on 2026-08-19; beat 13 was additionally ratified 2026-08-18 by his own
+  board ruling. node.md states the consequence in as many words: "voice synthesis, footage render and
+  episode assembly are legal for all five beats as now written". THIS IS A SILENT MOTION CLIP: no voice
+  synthesis, no episode assembly, no publication, and the approval confers no verdict on the pixels. The
+  one thing 6 still gates on this node is the 2026-08-18 beat-17 shake restage, which this job does not
+  touch. SUPERSESSION NOTE, because a reader will find the other sentence: pipeline/jobs/ep2-b15-macplate-publish-0819.yaml
+  says the beat-15 6 gate is LIVE. It was, when that spec was written on the morning of 08-19; the approval
+  landed later the same day.'
+script_line: 'Beat 13 THE SHADE (1:00-1:04), node.md:88 as rewritten 2026-08-17 and RATIFIED BY THE FOUNDER
+  2026-08-18 by his own board ruling -- "the shipped version stands (no slide, he sits down beside it,
+  thin shade)": "The scavenger''s legs give out and he drops to sit in the grass at the base of the stem,
+  then tips his head sideways into the sapling''s hand-sized patch of shade -- the only part of him it
+  will cover -- knees up around his ears." THE PLATE IS ALREADY THE SEATED END STATE, so the only action
+  left in the beat is the head tipping into the shade. Rendering a slide would be re-opening a question
+  the founder closed.'
+bar:
+  G3_he_is_still_seated_knees_up_in_the_last_frame: 'THE CLAUSE THIS RUNG EXISTS FOR, and it is a FOUNDER
+    ruling and not a steward preference: `the shipped version stands (no slide, he sits down beside it,
+    thin shade)`, 2026-08-18. At f120 he is seated with his knees up. Rung 1 was out of frame by f114.'
+  G7_the_tilt_is_SIDEWAYS_and_the_face_stays_readable: 'His head goes over to one side and his face is
+    still visible at f120. Rung 1''s tilt was real and pointed the wrong way: by f024 the head was a bald
+    dome seen from above with the cloak''s shadow where the face had been, and it stayed that way for
+    fifty frames. A beat with no face in it cannot carry a reaction.'
+  G8_the_shade_lands_on_his_eyes: Weakest clause of the three and said so in advance. The plate's shade
+    is thin and its frame is the green gloom beat 13's plate verdict already recorded as CARRIED, NOT
+    FIXED. If G3 and G7 pass and only G8 fails, this beat's next rung is a PLATE exposure rung and not
+    another wording.
+  G2_the_pre_registered_cost: 'G2 THE PRE-REGISTERED COST OF THIS SHAPE, and it is named because the precedent
+    paid it. ep2-b04-headlock-0820 moved one clause from an instruction into a placement and cut head
+    travel 64.7 px -> 4.7 px, fourteenfold -- AND IT TOOK THE EYES WITH IT: eye-band interframe fell 0.356
+    -> 0.126 and the gaze stopped travelling, which its own spec had pre-registered as a degenerate pass
+    and reported as a FAIL. The same trade is the likeliest failure here. A clip that holds the last frame
+    by holding EVERY frame is a FAIL of this rung, not a pass, and the finding would be that terminal
+    placement buys position at the cost of performance -- after which the next rung places the MIDDLE
+    of the shot as well as its end, rather than reaching for a flag.'
+not_done_on_purpose: 'NO recipe change: size, frames, fps, guidance, distilled sigmas, two-stage, offload,
+  mode and --image-crf 10 are rung 1''s, which are the b14 crf-10 parent''s. NO new init -- the same composited
+  plate, the same sha, the same anchor and the same pre-registered framing bbox. NO new seed: 20260820
+  again, so rung 1 is a true control. NO change to the NEGATIVE, which is the point -- it already named
+  `standing up` and `walking out of frame` and did not hold, and leaving it in place is what makes this
+  a test of the positive. No pick, no plate_ack, no cut, no publication.'
+pre_registered_fail_modes:
+- F-DEGENERATE-STILL -- the last frame is held by holding every frame. The precedent's own cost; see G2.
+  A FAIL, not a safe outcome.
+- F-STANDS-UP-ANYWAY -- the placement does no better than the negative did, in which case the finding
+  is that words will not hold this engine in place on these inits and the next rung is mechanical rather
+  than verbal.
+- F-PLANT-PICKED-UP -- rung 1 held the plant on beats 03 and 13 and lost it to a hand on beat 15. Re-checked
+  on all three.
+- F-IDENTITY-DRIFT -- rung 1 held on all three; a regression here would be attributable to the sentence.
+rung_1_the_control: 'ep2-b13-shademotion-0820: FAIL twice. The head tipped -- continuously from f004,
+  so the predicted F-NOTHING-MOVES did not fire -- but it tipped FORWARD AND DOWN into his own knees,
+  taking his face out of view from f024 to f078, and then he rose at f084 and was out of frame by f114.
+  The plant held all 121 frames on the lowest-contrast plate here.'
+the_one_variable: 'The action clause. `tips his head slowly sideways ... and does not stand up, does not
+  slide` becomes a placement of the last frame that does two jobs in one sentence: still seated, knees
+  up, head tilted SIDEWAYS with the face still toward camera. `his face still turned toward the camera`
+  is the new half and it is aimed at rung 1''s specific miss -- a sideways tilt that keeps the face readable,
+  rather than the forward fold the init already afforded.'
+derivation:
+  parent: pipeline/jobs/ep2-b13-shademotion-0820.yaml
+  by: pipeline/derive_sapcomp_motion_r2_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - rung_1_the_control
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - cost
+  - derivation
+  - failure_predicted_in_advance
+  - framing_measured_before_the_gpu
+  - init_provenance
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - skin_probe
+  - the_plate_was_hand_carried_to_the_results_branch
+  - verdict_0820
+  - verdict_measured
+  - what_the_next_rung_is
+  retokened:
+  - 13-the-shade-LTX-sapcomp-0820 -> 13-the-shade-LTX-lastframe-0820
+  - bench-b13-shademotion -> bench-b13-shadelast
+  - ep2-b13-shademotion-0820 -> ep2-b13-shadelast-0820
+  overrides_applied_and_asserted:
+    payload:b13-motion-prompt.txt:
+    - payload b13-motion-prompt.txt (879 -> 962 chars)
+    seed:
+    - payload b13-jobs-render.json (20260820 -> 20260820, re-parsed)
+  seed: 20260820
