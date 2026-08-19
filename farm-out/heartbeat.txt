@@ -2866,3 +2866,4 @@
 07:33:23Z DONE task=ep2-b19-sapcomp-0819-1787124740 rc=0 artifacts=2
 07:41:28Z box-runner idle ready=0 failed=39
 07:45:03Z STARTED task=ep2-b19-sapgloss-0819-1787125437 attempt=1 on box-runner
+07:45:21Z DONE task=ep2-b19-sapgloss-0819-1787125437 rc=0 artifacts=2

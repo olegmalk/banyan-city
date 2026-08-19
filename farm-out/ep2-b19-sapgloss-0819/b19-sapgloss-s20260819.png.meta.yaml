@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.22
+seed: 20260819
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b19sapgloss-0819/19-the-drop-sapcomp-0819.png
+init_sha256: b6dbd53bffd0dae77eb410c7669a042c9a040fb3faf2a5f5a5032b7431418903
+mask_png: b19-sapgloss-s20260819-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b19sapgloss-0819/19-the-drop-sapcomp-mask-0819.png
+mask_png_sha256: ce1e5ba2f89e9cabd0f90a3316a1436605bfd152a23b7add994995e255bcf266
+mask_white_px: 172847
+mask_bbox_px: [113, 251, 789, 945]
+mask_width_frac: 0.8125
+mask_height_frac: 0.5707
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-19T07:45:20Z
+render_seconds: 2.9
+wall_seconds: 8.8
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED, ONE VARIABLE. Every argument is ep2-b19-sapcomp-0819's except --strength, which goes 0.30 -> 0.22, i.e. int(40*s) goes 12 -> 8 denoising steps. Same init sha, same mask, same words, same seed 20260819. The parent PASSED its bar and fired one mode, FAIL-CRYSTAL on gloss; this measures whether that specular is an early-step or a late-step effect. Q1 is that the geometry must SURVIVE and it outranks the gloss question: a matte paste fails this job.
+prompt: |-
+  1boy, solo, lean wiry adult goblin man, green skin, bald head, patchwork cloak, kneeling in a sunny grassy field, both hands on his knees, a tiny two-leaf sapling rooted in the grass beside him, one round purple fig hanging from its thin side-branch, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  crystal, gem, faceted, glossy, bead, vine, many fruits, extra fruit, fruit on the ground, holding fruit, three leaves, four leaves, many leaves, large tree, thick branch, trunk, forest, 2boys, child, chibi, standing, close-up, text, photorealism, 3d render, low quality
