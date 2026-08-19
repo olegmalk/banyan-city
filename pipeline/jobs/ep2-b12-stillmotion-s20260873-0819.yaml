@@ -268,3 +268,67 @@ the_duplicate_run_INHERITED_FROM_THE_S20260819_PARENT_NOT_THIS_JOB: 'THIS SPEC R
   263.8 s of sample time). It was filed once by this lane and once by the lead at the tick. No provenance harm --
   the seed is fixed and the second render is the same picture -- but it is about nine minutes of card time spent
   twice, and it is recorded because ''the queue is empty'' and ''nobody else has filed this'' are different facts.'
+verdict_0819:
+  headline: 'FAIL-COLLAPSE, unambiguously, and it is a bigger event than a fade. Whole-frame drift
+    -43.48 with all three bands agreeing (-8.65 / -79.92 / -41.96), cumulative camera dy +0px so there
+    is no framing move for the number to be hiding behind, and a tracked 400-row patch down -72.73.
+    What the pixels show is not dusk: BETWEEN f024 AND f030 THE ENTIRE SKY IS REPLACED BY A WALL OF
+    DRY REEDS, and the sunset, the sun and the clouds never come back. NOT cut-preferred, no pick, no
+    promotion, no cut swap. Beat 12 keeps 12-related-b12-tightB-untrimmed.mp4.'
+  judged_by: night-close lane, 2026-08-19. Artifacts scp'd from rtx5090:C:/banyan-farm/courier-box/farm-out/
+    (the courier had not pushed) and verified against the job's own .sha256 -- 4 of 4 content files
+    OK, and b12-init-704x1280.png byte-identical (c6575d0d...) to the init under s20260818, s20260871,
+    s20260872 and s20260819. The rendered sidecar reads seed 20260873, so this is the fifth seed and
+    not a re-run.
+  the_number_that_decides: 'FAIL-COLLAPSE. pipeline/luma_drift.py, equal thirds: WHOLE f000 125.64 ->
+    f120 82.15, drift -43.48, |drift| >= 20, and BANDS AGREE IN SIGN -- which is the bar''s own
+    FAIL-COLLAPSE branch met exactly. The fall is front-loaded and then flat: 125.64 / 94.58 / 82.09 /
+    82.25 / 82.19 / 82.15 at f000/024/048/072/096/120, i.e. the picture drops 43 levels in the first
+    two seconds and then sits on the new value for three. That plateau is why this is a substitution
+    and not a progressive fade.'
+  the_repair_does_not_rescue_it: 'The s20260818 verdict established that a mean over a band cannot tell
+    a fade from a frame that MOVES, so the same repair was applied here: b12_camera_drift.py reads
+    cumulative dy f000->f120 = +0px, per-frame dy median +0.0 with min and max both +0. THERE IS NO
+    SHIFT TO COMPENSATE. The overlap-compensated drift is therefore identical to the raw one, -43.48.
+    This is a real luminance event on a locked frame, in the same class as the s20260819 parent''s
+    -91.05 and not in the class of s20260818''s -1.35.'
+  an_instrument_limit_recorded_rather_than_reported_as_a_result: 'The 3x2 block readings at f060 come
+    back (133,42) (137,44) (108,38) (109,27) (72,36) (71,37) -- large and mutually inconsistent -- while
+    the whole-frame reading is +0px and the eye sees no translation at all. This is the failure mode
+    b12_camera_drift.py already documents in its own docstring: a hard, high-contrast content
+    substitution destroys the phase-correlation peak, exactly as s20260819''s fade did to its
+    bottom-right block. THE BLOCK NUMBERS ON THIS CLIP ARE NOISE AND MUST NOT BE QUOTED AS A CAMERA
+    MOVE. Whole-frame + eyes are the reading that stands.'
+  pre_registered_fail_modes_as_fired_THIS_JOB:
+    FAIL-COLLAPSE: FIRED. -43.48, bands agreeing, no camera to explain it away.
+    FAIL-INTRUDER: 'FIRED, briefly and then swallowed. A dark rounded form sits behind the middle leaf
+      from ~f006 to ~f024 -- the same slot as the intruder in s20260819, s20260871 and s20260872 -- and
+      is then absorbed into the reed wall. Recorded because the 4-of-6 count on the ladder depends on
+      it, not because it is this take''s worst problem.'
+    FAIL-PALETTE: 'FIRED as a consequence. f000 is faithful to the init, and by f030 the plate''s pink
+      sunset sky and cumulus are gone and replaced with golden dry grass. crf 10 delivered the
+      conditioning image intact; the sampler then walked away from it.'
+    FAIL-BLOOM: DID NOT FIRE. Everything falls.
+    FAIL-DEAD: 'DID NOT FIRE on the number -- interframe mean|diff| 0.980 with 102 of 120 pairs under
+      0.5 -- but that statistic describes the last four seconds, which are a static picture of the
+      WRONG scene. A clip can be both dead and wrong.'
+    FAIL-CAMERA: DID NOT FIRE. +0px, and this take is the clean counter-example that keeps the
+      s20260818 tilt from being read as a property of the recipe.
+  what_this_settles: 'Together with s20260872 this closes the beat-12 seed axis at five seeds. Five
+    seeds, one plate, one 42-token argv, FIVE DIFFERENT FAILURES, none of them shared: 20260819 a real
+    -91.05 dusk fade plus a bird; 20260871 locked and flat but a bird with a visible eye rises and
+    leaves; 20260818 a -387px camera tilt; 20260872 a permanent crouching intruder and a re-composing
+    frame; 20260873 the sky replaced by reeds. THE ODDS ON THIS PLATE ARE NOW MEASURED, AND THEY ARE
+    0 FOR 5. That is the number that makes another seed the wrong job.'
+  what_this_licenses: 'Nothing beyond the record. No pick, no plate_ack, no promotion, no leaf, no
+    lineage entry, no cut swap, and NO SIXTH SEED. The next rung on this beat is named on the ladder
+    and it is a one-token-span deletion in the positive prompt.'
+  evidence: 'farm-out/ep2-b12-stillmotion-s20260873-0819/ -- the mp4, its sidecar, the 704x1280 init,
+    both prompt files, the bench row, the job''s .sha256, EVIDENCE-keys-f000-f120.png and
+    EVIDENCE-scan-every6f.png. Instrument:
+    farm-out/ep2-b12-stillmotion-s20260818-0819/b12_camera_drift.py, unmodified.'
+  the_filename_defect: 'This job also publishes its mp4 as 12-related-LTX-stillmotion-crf10-s20260818.mp4,
+    the s20260818 parent''s name, on a seed-20260873 render -- the same defect as s20260872 and the
+    same repair note: sidecar, bench row and .sha256 all carry the correct seed, so nothing is
+    mis-attributed, but the artifact name alone cannot identify the take. Fix the generator, not these
+    files: renaming a published artifact breaks its .sha256.'

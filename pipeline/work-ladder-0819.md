@@ -1723,3 +1723,126 @@ Worth noting for the allow-list rung: both new specs carry the inherited parent
 blocks **with this lane's `_INHERITED_..._NOT_THIS_JOB` names already on them**. So
 the honest naming propagated, and the derivation still copies the blocks. Naming a
 leak is not closing it.
+
+---
+
+## SEEDS 4 AND 5 JUDGED — the beat-12 seed axis closes 0 for 5, and the cause is a phrase
+
+Both landed, both fail, and judging them turned up something better than a sixth
+seed. `ep2-b12-stillmotion-s20260872-0819` and `-s20260873-0819`, pulled from
+`rtx5090:C:/banyan-farm/courier-box/farm-out/` (the courier still has not pushed)
+and verified against each job's own `.sha256`, 4 of 4 content files OK on both.
+**The init is byte-identical across all five takes** (`c6575d0d…`), which is what
+licenses reading them as one plate.
+
+| seed | camera dy | luma (matched content) | how it fails |
+|---|---|---|---|
+| 20260819 | +0px | **−91.05** | real dusk fade, **plus a bird** |
+| 20260871 | +7px | −0.04 | flat and locked — **but a bird with a visible eye rises and leaves** |
+| 20260818 | **−387px** | −1.35 | camera tilt, off the plate into grass |
+| **20260872** | −180px, blocks incoherent | −8.20 | **a crouching intruder that never leaves**, + the frame re-composing |
+| **20260873** | +0px | **−43.48** | **the sky replaced by a wall of reeds**, + a brief intruder |
+
+**Five seeds, one plate, one 42-token argv, five different failures, none shared.
+The lottery odds are no longer an estimate: 0 for 5.**
+
+### s20260871 WAS NEVER FULLY JUDGED, AND JUDGING IT IS WHAT BROKE THE CASE OPEN
+
+The honest close this lane was pointed at — *"seven takes have each failed
+something, stop filing seeds, the next lever is R4-gated"* — could not be written
+without checking the one take nobody had finished scoring. `s20260871` was recorded
+as "clean on luma, stillness/bird/leaf clauses **unjudged**". So it was pulled and
+run: **+7px cumulative drift with all six blocks agreeing at 1px, luma −0.04,
+tracked patch inside ±10.** That take is genuinely, measurably locked and flat —
+and then **a black bird with a large white eye rises from behind the lower leaf at
+~f030 and is gone by f090.** It fails, but it fails on the *intruder* clause, which
+is the same clause the parent failed on and which nobody had yet counted.
+
+### THE INTRUDER IS NOT A LOTTERY AND NOT THE PLATE — IT IS A PHRASE IN THE POSITIVE
+
+Count it across the five takes and the pattern is not subtle:
+
+| take | intruder behind the lower leaf? |
+|---|---|
+| 20260819 | **yes** — the parent's unexplained "bird" |
+| 20260871 | **yes** — black bird, white eye, f030→f090 |
+| 20260818 | no — *and its camera had already left the plate by f008* |
+| 20260872 | **yes** — rim-lit crouching mass with two ear-shapes, f018→f120, permanent |
+| 20260873 | **yes** — dark rounded form f006→f024, then swallowed by the reed wall |
+
+**Four of five, always in the same slot, on four independent seeds — and the one
+exception is the take whose framing descended out of the plate before anything
+could appear there.** The plate itself is clean: `b12-init-704x1280.png` is leaves,
+sun, cloud and sky, with no dark form anywhere in it. So the intruder is invented at
+sample time, reliably, by something in the conditioning that is the same on every
+seed. There is exactly one candidate, and it is in the positive prompt:
+
+> Tight on the sapling's two leaves, perfectly still — **the scavenger crouched
+> behind them, out of frame.** Static locked framing, the frame never moves and
+> nothing enters it.
+
+A diffusion positive has **no negation operator and no way to place a named subject
+outside the canvas.** "Out of frame" is not renderable; what the clause actually
+encodes is *scavenger, crouched, behind the leaves* — a subject and a position — and
+a scavenger crouched behind the leaves is exactly what four of five takes drew. The
+negative's `goblin, creature, person, face, hands, figure entering frame` has been
+fighting the positive on every one of those renders and losing every time.
+
+**This is the ladder's own positive-placement law, third instance** — and the first
+where the fix is a *deletion* rather than a rewrite. It also means beat 12's
+`why: goblin-free beat` has been **wrong on four of five renders**: a beat everyone
+believed was clear of the goblin-identity freeze has been generating off-model
+scavenger figures all evening. Nothing was published, so nothing breached; but the
+freeze is closer to this beat than the specs say, and the next lane should know it.
+
+### THE NEXT RUNG, AND WHY IT IS NOT THE R4 ONE THIS LANE EXPECTED TO NAME
+
+The standing read was that beat 12's next lever is **plate-side or R4-gated (a wider
+framing)**, because the only motion the approved line permits is the grass and
+`shortstill` established there is no grass at this framing. **That is still true of
+the *motion* clause and it is still R4.** But it is not the binding constraint any
+more, because the thing killing four of five takes is not motion — it is a subject
+the prompt asks for by name.
+
+**Next rung: `ep2-b12-noscav-0819`. One variable — delete the span
+`— the scavenger crouched behind them, out of frame` from
+`b12-motion-prompt.txt`. Nothing else changes: same plate sha, same negative, same
+seed (use 20260871, the one take that is locked and flat and fails only on the
+intruder), same 42-token argv, same crf 10, 121 frames.** Pre-register the bar as
+the intruder clause alone: `EVIDENCE-scan-every6f.png` shows no dark form behind
+the lower leaf at any frame. ~8 min of card time, $0, one sample.
+
+Why this is **not** R4 and is filable by a steward: it deletes text describing
+something the founder's approved line does not contain, that the negative already
+bans, and that is not supposed to be visible. **The approved line — "tight on two
+leaves, perfectly still" — is untouched**, which is precisely what a widening rung
+could not say. If it passes, beat 12 has its first take that fails nothing and the
+pick goes to R4 with pixels. If it fails, the intruder is deeper than the prompt and
+*then* the wider plate is the R4 question to take to the founder.
+
+**NOT FILED TONIGHT, and named rather than quietly skipped.** The card is empty
+(`ready` 0, `running` 0, `backlog` 0) and this rung is runnable, unowned, goblin-free
+and zero-dependency — so by the no-idle law it should be on the card. It is not,
+because the only derivation path is `derive_b12_stillmotion_0819.py`, whose
+**deny-list leak is still open** (six inherited verdict keys, twice), and filing
+through it at 20:30 would propagate a third generation of another beat's verdict
+into a fresh spec. Hand-writing the spec instead is the right move and it is the
+next lane's first job, not a thing to rush at the end of a close. **One rung, named
+and costed, is what this lane leaves on the card in place of a sixth seed.**
+
+### WHAT IS RECORDED, AND WHAT IS EXPLICITLY NOT
+
+Verdicts with every number are in each job's own `verdict_0819`. Evidence sheets
+(`EVIDENCE-keys-f000-f120.png`, `EVIDENCE-scan-every6f.png`) are committed beside
+the artifacts for all three takes judged tonight, including the re-judged
+`s20260871`. **No pick, no plate_ack, no promotion, no leaf, no lineage entry, no
+cut swap.** Beat 12 keeps `12-related-b12-tightB-untrimmed.mp4`, `best-available`,
+colour fault named. **The pick is R4 and no take has earned one.**
+
+**One defect found while judging, not fixed:** all three of `s20260818`,
+`s20260872` and `s20260873` publish their mp4 as
+`12-related-LTX-stillmotion-crf10-s20260818.mp4` — three distinct takes, one
+filename, three directories. Sidecar, bench row and `.sha256` all carry the correct
+seed on each, so provenance is recoverable and nothing is mis-attributed. **The
+repair belongs in the generator, not in these files:** renaming a published artifact
+invalidates the `.sha256` that proves it arrived intact.
