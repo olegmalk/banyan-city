@@ -1,0 +1,393 @@
+# BEAT 08 RUNG B, STEP 2 OF 2 -- DOES A POSE SKELETON BIND ON animagine-xl-3.1?
+# ONE SAMPLE. ONE ARM. ONE VARIABLE, AND THE VARIABLE IS THE NET.
+#
+# ============================================================================
+# THE ONE VARIABLE, AND IT IS THE INSTRUMENT ITSELF
+# ============================================================================
+# Rung 2 conditioned a 7px CONTOUR on xinsir/controlnet-SCRIBBLE-sdxl-1.0 at 0.45.
+# This conditions a COCO-18 SKELETON on xinsir/controlnet-OPENPOSE-sdxl-1.0 at 1.0.
+# Held: the base, the seed (20260819), the size, the steps, the guidance, the
+# positive prompt and the negative word for word, the driver file, the staging
+# (both figures at the same cx, the same statures, the same foot line, the same
+# shoulder, the same target, the same total reach, the same 0.847 extension --
+# asserted key for key in author_b08_openpose_hint.py --selftest against
+# author_b08_pose_hint's own metadata).
+#
+# The conditioning scale moves from 0.45 to 1.0 and THAT IS NOT A SECOND
+# VARIABLE, it is this net's documented operating point: xinsir's own card
+# recommends 1.0 for openpose, and 0.45 was a value bracketed for a scribble net
+# whose failure mode was TRACING THE OUTLINE. A skeleton has no outline to trace,
+# so the dial that 0.45 was tuning does not exist here. Stated out loud rather
+# than folded in, because a spec that changes two things and reports one is how a
+# lane fools itself.
+#
+# ============================================================================
+# WHY A DIFFERENT NET, AND WHY IT IS NOT A SIXTH TUNING ATTEMPT
+# ============================================================================
+# b08-arm-route-0819.md §10 closed hand-authored geometry on the scribble net by
+# bracketing three axes:
+#
+#   conditioning scale  0.80 / 0.45 / 0.28   staging HELD / HELD / LOST
+#   stroke weight       7px / 3px @ 0.45     HELD both; thin traced TIGHTER
+#   hint class          contour / skeleton   contour TRACES, skeleton is DRAWN
+#
+# And it explained all three with one mechanism: a SCRIBBLE net reads ENCLOSURE.
+# "These lines are lines in the picture" is the only thing it can mean, so a
+# closed contour is an object boundary it traces (which is why a THINNER stroke
+# bound TIGHTER -- a 3px line is a single unambiguous edge locus where a 7px bar
+# is an ambiguous ribbon), and a medial-axis skeleton means nothing to it, so
+# rung 5's frame RENDERED THE SKELETON as glowing scene objects: a luminous cross
+# with two orbs on each figure's chest, guard spine column luma 212.3 against a
+# 165.4 surround. Four rungs were asking a scribble net to do pose conditioning.
+#
+# A pose skeleton is the right INSTRUCTION and the wrong NET. That is what this
+# job changes, and nothing else.
+#
+# ============================================================================
+# AND A SECOND, INDEPENDENT LICENCE FOR IT, FOUND TODAY
+# ============================================================================
+# ep2-b08-ipamask-0819 (rung A, PASSED 2026-08-19) settled identity and, in doing
+# so, REGRESSED B4b's aim -- and the cause it measured is a property of the
+# contour hint, not of the adapter. The contour aims with a separate 1px FINGER
+# stroke, which leaves its forearm free to bend: extend its own elbow->wrist
+# segment and it passes 29.1 px WIDE OF THE NAVEL. The arm that hint asks for
+# genuinely is "horizontal upper arm, forearm hanging down", and rung A drew it
+# faithfully -- a human hand drooping at the wrist rather than a point.
+#
+# COCO-18 HAS NO FINGER KEYPOINT, so the elbow->wrist limb has to be the thing
+# that aims. author_b08_openpose_hint.py therefore solves the elbow against a
+# target one HAND short of the belly and puts the wrist one forearm along
+# elbow->belly: THE FOREARM RAY NOW PASSES 0.1 PX FROM THE NAVEL, and the hand a
+# pose net draws beyond the wrist lands on it. So this rung is licensed by two
+# independent findings rather than one.
+#
+# ============================================================================
+# THE THREE TRAPS THE RESEARCH NAMES, ALL HANDLED BEFORE FILING
+# ============================================================================
+# 1. THICKNESS. xinsir's own card: "When using the default pose line the
+#    performance may be unstable, this is because the pose label use more thick
+#    line in training to have a better look." He ships a replacement
+#    draw_bodypose whose only change is a resolution ratio; at max(W,H)=1216 the
+#    band is 3.0, so LIMBS ARE 24 PX AND DOTS ARE r=12. A 4px skeleton at this
+#    size is a documented way to get an unstable result and would look exactly
+#    like rung 5's failure. Independently reported in
+#    comfyui_controlnet_aux#447. The hint's --selftest asserts both numbers and
+#    every band boundary.
+# 2. THE COLOUR CODE. Limbs are zip(limbSeq, colors) and dots are
+#    zip(keypoints, colors) -- THE SAME 18-COLOUR RAMP INDEXED DIFFERENTLY. The
+#    nose DOT and the neck->R-shoulder LIMB are both (255,0,0); the R-wrist DOT is
+#    (170,255,0) while the R-elbow->R-wrist LIMB is (255,255,0). "One colour per
+#    body part" produces a hint the net has never seen. The tool asserts both
+#    halves against each other, and the drawn hint was OPENED AT FULL SIZE before
+#    this spec was written: amber R-shoulder, orange neck and green L-shoulder dots
+#    on both figures, in the right places.
+# 3. variant IS NOT PASSED. xinsir ships only the plain filename;
+#    variant="fp16" raises. CONTROLNET_VARIANT is None and unchanged.
+#
+# ============================================================================
+# WHAT IS DELIBERATELY NOT IN THE HINT, AND WHY B4a IS PRE-REGISTERED AT RISK
+# ============================================================================
+# NO BOARD RECTANGLE AND NO GROUND TICKS. A pose net's entire vocabulary is 18
+# keypoints; a rectangle is not a pose and this net was never trained on one.
+# Rung 5 put ink a net could not read into a hint AND THE NET DREW IT -- putting a
+# clipboard in a pose hint would be that exact category error in a new coat. So
+# B4a becomes a PROMPT-ONLY clause here and is expected to be the weakest one, and
+# saying so before the render is the difference between a finding and an excuse.
+# The guard's board-holding ARM is still staged (L-shoulder -> L-elbow -> L-wrist
+# ending at the hip), so the POSE of holding something low is conditioned even
+# though the object is not.
+#
+# ONE MORE PRE-REGISTERED PREDICTION: THE FIGURES WILL COME OUT SLIGHTLY TALLER
+# THAN THE HINT. A skeleton specifies the NOSE, not the crown, so the drawn skull
+# rises above the topmost ink -- the guard's highest hint pixel is y~377 against
+# the contour's authored crown at 346.5. B5 is a RATIO clause so it should be
+# unaffected, but if the measured statures come back ~5% over the authored ones,
+# that is this effect and not a failure.
+#
+# ============================================================================
+# WHY IDENTITY IS NOT IN THIS JOB
+# ============================================================================
+# Rung A proved masked IP-Adapter binds identity per figure on this stack -- the
+# guard's head moved 48.5 levels on the pre-registered instrument and came back a
+# human man. It is a SOLVED BOLT-ON with its own met bar. Carrying it in here
+# would make a two-variable job out of a one-variable question, and the question
+# is "does a skeleton bind at all on animagine". SO THIS RUNS BARE, and both
+# figures are expected to come back green. B2 IS PRE-REGISTERED TO FAIL and a PASS
+# would be the surprise. If the skeleton binds, the recipe is skeleton + the two
+# masked references, and both halves will have been proven separately.
+#
+# NO SPEND, NO PROVIDER, NO DOWNLOAD (the weights landed at 08:00Z, both byte
+# counts exact, zero .incomplete), NO CANON FILENAME, NO PICK, NO PUBLISH TO THE
+# SITE, NO POST, NO ASSEMBLY. No video is encoded on this path.
+
+id: ep2-b08-posenet-sample-0819
+task: ep2-b08-posenet-sample-0819
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+sample: true
+priority: 33
+max_attempts: 1
+owner: beat 08 arm-route lane, 2026-08-19
+
+consumer: >-
+  Beat 08's plate. Rung A gave the beat identity and left ONE clause failing --
+  B4b's aim -- with the cause measured in the contour hint's geometry. This sample
+  decides whether the pose class is the instrument that fixes it: if a skeleton
+  binds, beat 08's recipe becomes skeleton + the two masked references and both
+  halves are already proven, and if it does not, hand-authored geometry is closed
+  on POSE nets as well as scribble ones and the beat's staging falls back to the
+  plate campaign Route A named. Either answer closes something.
+
+success: >-
+  One 832x1216 png with its sidecar, published to
+  C:\banyan-farm\courier-box\farm-out\ep2-b08-posenet-sample-0819 with a sha256
+  manifest, read at full size beside rung 2's and rung A's frames, and scored
+  against the bar below. Its own sidecar must record
+  `controlnet: xinsir/controlnet-openpose-sdxl-1.0` -- if it does not, the frame is
+  void rather than negative.
+
+why: >-
+  $0, no download, no provider, ~2 minutes. The weights are on the box, the hint is
+  drawn and was opened at full size, the driver and hint are staged and
+  hash-verified on both ends with the staged copy's --selftest run ON the box, and
+  the question is the last open one on this route's conditioning line.
+
+est_minutes: 4   # rung A measured 7.5s load + 17.5s render; a fresh 2.4 GB net
+                 # read makes the first load slower
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  # BACK TO 1. The fetch job cleared it for one step; the weights are local now,
+  # so this render is offline again and cannot silently re-pull a swapped blob.
+  HF_HUB_OFFLINE: "1"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# Driver and hint staged at C:\banyan-farm\b08pose-0819\src, hash-verified on BOTH
+# ends, and the staged driver's own --selftest was run ON THE BOX and passed:
+#   pipeline\controlnet_plate.py             d6df250d36c05794e2a57a6b1bb5009d08e3899b2265dc85920bce31e9d702a6
+#   pipeline\control\b08-openpose-0819.png   3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+# The driver has GAINED --controlnet since rung A, as an ALLOWLIST that carries
+# each net's licence, so this rung does not edit the CONTROLNET constant that four
+# filed verdicts were measured against -- and its --selftest still asserts the
+# no-reference sidecar byte-identical to the pre-feature file on a sha256.
+
+payload:
+  C:\banyan-farm\b08pose-0819\prompt.txt: >-
+    Two men, a guard, light sandy hair, cream shirt, white sash, brown wrap
+    skirt, clipboard lowered in one hand, other arm pointing at the small goblin
+    man's belly, green skin, plump, adult, tall grass, pale sky, cinematic
+    lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b08pose-0819\negative.txt: >-
+    giant, colossus, towering figure, different scale, floating, raised
+    clipboard, second board, extra arms, extra hands, extra fingers, deformed
+    hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text,
+    watermark, photorealism, 3d render, low quality, deformed
+
+# Rung 2's and rung A's pair, word for word, measured at 64/77 and 69/77 on the
+# box's real tokenizer. Unchanged so that the NET is the only difference between
+# this frame and the two it will be read beside.
+
+steps:
+  - name: posehint
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b08pose-0819\src\pipeline\controlnet_plate.py
+      - --root
+      - C:\banyan-farm\b08pose-0819\src
+      - --repo-commit
+      - 161273f6f20452e87dede2c2a4b5b43b95e73179
+      - --task
+      - ep2-b08-posenet-sample-0819
+      - --arm
+      - posehint
+      - --controlnet
+      - xinsir/controlnet-openpose-sdxl-1.0
+      - --control
+      - pipeline/control/b08-openpose-0819.png
+      - --control-sha256
+      - 3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+      - --scale
+      - '1.0'
+      - --seed
+      - '20260819'
+      - --prompt-file
+      - C:\banyan-farm\b08pose-0819\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08pose-0819\negative.txt
+      - --out
+      - C:\banyan-farm\b08pose-0819\out
+  - name: publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Required by box_enqueue.courier_problems: the courier pushes from
+        # farm-out and from nowhere else, and ep2-cnet-probe-0817 rendered
+        # perfectly and was invisible for two days for want of exactly this step.
+        import glob, hashlib, os, shutil
+        out_dir = "C:/banyan-farm/b08pose-0819/out"
+        pay_dir = "C:/banyan-farm/b08pose-0819"
+        ctl_dir = "C:/banyan-farm/b08pose-0819/src/pipeline/control"
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-posenet-sample-0819"
+        os.makedirs(dst, exist_ok=True)
+        # The HINT travels with the frame: it is the frame's condition, and a
+        # reader scoring whether the net read it needs to see it at the same
+        # pixel columns.
+        files = sorted(glob.glob(out_dir + "/ep2-b08-posenet-sample-0819-posehint.png*")
+                       + glob.glob(pay_dir + "/prompt.txt")
+                       + glob.glob(pay_dir + "/negative.txt")
+                       + glob.glob(ctl_dir + "/b08-openpose-0819.png"))
+        lines = []
+        for f in files:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b08-posenet-sample-0819.sha256"), "w",
+                  newline="\n") as fh:
+            fh.write("\n".join(sorted(lines)) + "\n")
+        print("published", len(files), "file(s) + manifest ->", dst)
+        raise SystemExit(0 if len(files) >= 5 else 1)
+
+artifacts:
+  - C:\banyan-farm\b08pose-0819\out\ep2-b08-posenet-sample-0819-posehint.png
+
+# ============================================================================
+# THE BAR. The research's three-in-one question, plus the carried clauses, plus
+# the two clauses this hint class puts at risk on purpose.
+# ============================================================================
+bar:
+  b0_the_net_is_the_pose_net: >-
+    VOID-CHECK, READ FIRST AND BEFORE ANY PIXEL IS SCORED. The sidecar must say
+    `controlnet: xinsir/controlnet-openpose-sdxl-1.0`. "The pose net did nothing"
+    and "the pose net never loaded" are different findings and only the provenance
+    block tells them apart. If this fails the frame is VOID, not negative.
+  b_pose_binds: >-
+    THE RESEARCH'S FIRST QUESTION. Does pose conditioning bind at all on
+    animagine-xl-3.1? Scored as: does the rendered composition follow the
+    skeleton -- two standing figures at these positions, the guard's arm out to
+    frame left -- rather than the free-running composition the same seed and words
+    produce? The uncontrolled frame at this seed is already published
+    (farm-out/ep2-b08-cnetplate-0819/...-nocontrol.png): an extreme colossus with
+    the point on the goblin. Anything resembling the skeleton is a bind.
+    xinsir's anime showcase (masonry0.webp, opened and inspected by the research
+    lane) is an existence proof for anime-class SDXL generally but names no
+    checkpoint, so this is MAINTAINER-grade for our base and this sample is what
+    makes it DEMONSTRATED either way.
+  b_two_skeletons_two_figures: >-
+    THE RESEARCH'S SECOND QUESTION, AND THE ONE WITH NO UPSTREAM EVIDENCE EITHER
+    WAY. Every one of xinsir's own hint-to-result strips is ONE FIGURE and his card
+    makes no multi-person claim -- a DEMONSTRATED ABSENCE, not a negative. The
+    documented failure mode (Mikubill/sd-webui-controlnet#1791, open since 2023-07)
+    is that with multiple characters "one person's arms and legs are often connected
+    to others", because the hint has no per-figure identity channel and no occlusion
+    channel. Beat 08's figures are ADJACENT rather than overlapping, which is
+    exactly the case that issue does not describe -- a reason to expect it to work,
+    not a reason to skip the sample. PASSES if two distinct whole figures come back
+    with no limb crossing between them.
+  b_scale_survives: >-
+    THE RESEARCH'S THIRD QUESTION. Two skeletons whose neck-to-ankle spans differ
+    by a stated ratio are a constraint in the conditioning tensor where "a tall
+    figure and a short figure" is a prompt the model rounds off. Measured, not
+    eyeballed: row-wise edge energy inside each figure's x band, the same
+    instrument that scored rung A at 816/729. PASSES if the ratio lands within
+    10% of the authored 1.100 -- and see the header's pre-registered note that
+    both statures may read ~5% tall because a skeleton specifies the nose and not
+    the crown.
+  b1_the_pair: >-
+    TWO figures and only two, both whole in frame.
+  b2_the_identities_separate: >-
+    EXPECTED FAIL, PRE-REGISTERED, AND NOT THIS RUNG'S VARIABLE. No IP-Adapter is
+    loaded here on purpose (see the header). Both figures are expected green with
+    guard head G-R inside the measured band (floor +20.0). A PASS would be the
+    surprise and would mean the pose class does something for identity that the
+    contour class could not, which would itself be worth a rung. Scored on the same
+    instrument as always -- guard (547,372)-(584,425), goblin (148,448)-(193,504),
+    statistic G-R -- so the number is comparable to the seven frames before it.
+  b3_one_ground_plane: >-
+    Both stand on the same grass, feet at the same depth. The hint pins both ankle
+    keypoints at 0.035 of stature above y=1149.1. NOTE: no ground ticks are drawn
+    (a pose net cannot read them), so this clause now rests entirely on the ankle
+    keypoints.
+  b4a_board_down: >-
+    THE WEAKEST CLAUSE AND IT IS NAMED AS SUCH BEFORE THE RENDER. No board is drawn
+    in the hint, because a rectangle is not a pose and rung 5 proved unreadable ink
+    gets DRAWN. Only the guard's board-holding ARM is staged, ending at his hip. So
+    this is now a PROMPT-ONLY clause. A FAIL here does not count against the pose
+    net; it counts against the hint class's vocabulary, and the remedy would be a
+    multi-ControlNet pose+scribble composite (both nets local, $0) rather than
+    putting a rectangle in a pose hint.
+  b4b_legible_point: >-
+    THE CLAUSE THIS RUNG EXISTS TO FIX. The gesture must end in a HAND aimed at the
+    goblin's belly. Rung A drew a good hand hanging almost straight DOWN because
+    the contour's forearm genuinely points that way; this hint's forearm ray passes
+    0.1 px from the navel with no finger keypoint, so a hand drawn beyond the wrist
+    should land on the target. PASSES only if the gesture reads as aimed AT the
+    goblin, not merely as an extended arm.
+  b4c_the_arm_belongs_to_the_guard: >-
+    THE CLAUSE THAT MUST SURVIVE. The pointing arm grows from THE GUARD's shoulder.
+    The uncontrolled tally at this seed is 4 of 4 on the goblin. Here it is carried
+    by the R-shoulder -> R-elbow -> R-wrist chain in COLORS[2] and COLORS[3], which
+    is the most explicit form this instruction has ever taken -- the colour itself
+    names the body part.
+  b5_no_colossus: >-
+    Neither figure towers over the other.
+  b6_drawn_not_traced: >-
+    A skeleton has no outline to trace, so on the mechanism argument this should be
+    a clean PASS -- the figures should be the checkpoint's own drawing with the
+    checkpoint's own silhouettes. If they come back as flat mannequins ANYWAY, that
+    is the single most interesting possible result on this route, because it would
+    mean the tracing was never about enclosure.
+
+verdict_rule: >-
+  WRITTEN BEFORE THE PIXELS. B0 first: a sidecar that does not name the openpose
+  net makes the frame VOID. Then (1) if pose binds AND two figures come back at
+  their stated scales AND B4c holds AND B6 passes, the verdict is PASS and beat
+  08's conditioning recipe is settled -- skeleton for staging, masked references
+  for identity, both halves proven separately, and the next question is the third
+  figure the beat's done_when wants. (2) If pose binds but a clause fails -- the
+  figures fuse, the aim still misses, the board is gone -- the verdict names which,
+  and the named remedy is multi-ControlNet (pose + depth or pose + scribble with
+  staggered guidance windows; every net involved is already local and $0), which
+  is the workaround the upstream issue thread itself proposes. (3) If pose does NOT
+  bind on animagine -- the frame is the uncontrolled composition, or the skeleton
+  is drawn as glowing lines the way rung 5's was -- then HAND-AUTHORED GEOMETRY IS
+  CLOSED ON THIS CHECKPOINT ENTIRELY, not merely on the scribble net, and beat 08's
+  staging goes to Route A's plate campaign with identity supplied by rung A's
+  now-proven adapter. That third branch is the expensive one to learn and it is
+  still worth one 17-second render.
+
+not_done_on_purpose: >-
+  ONE sample, ONE arm, ONE variable. No IP-Adapter (rung A proved it separately;
+  two mechanisms in one job is a guess with a GPU attached). No `_twins` variant --
+  a second 2,386 MiB for "more precise pose, lower aesthetic score" per xinsir's
+  own discussion #3, and it is an A/B for AFTER a bind is demonstrated, not before.
+  No multi-ControlNet. No conditioning-scale sweep: 1.0 is the card's recommended
+  value and a second value needs its own question. No stroke/ratio change -- 3.0 is
+  xinsir's own band for this canvas and deviating from it is the documented way to
+  get an unstable result. No second seed. No board rectangle in the hint. No
+  re-render of the nocontrol control, which is already published and does not depend
+  on anything this job changes. No pick, no plate_ack waiver, no canon filename.
+
+licence_note: >-
+  Clean, and this is the whole reason the net was chosen. Base
+  cagliostrolab/animagine-xl-3.1 (CreativeML Open RAIL++-M, use restrictions
+  travel; D15). ControlNet xinsir/controlnet-openpose-sdxl-1.0, apache-2.0 on both
+  its front matter and its body, with NO attribution condition -- and the driver
+  now refuses any net not in an allowlist that carries its licence, so
+  thibaud/controlnet-openpose-sdxl-1.0 ("License: refers to the OpenPose's one",
+  inheriting CMU's non-commercial terms at the weights level) cannot be reached by
+  a typo. THE HINT IS AUTHORED IN PIL from the COCO-18 spec transcribed in
+  pipeline/research/openpose-controlnet-sdxl-0819.md §2 -- no preprocessor, no
+  annotator, no photo-derived pose estimate -- so lllyasviel/Annotators is not
+  touched on this route either, which was §10's explicit condition for opening it.
