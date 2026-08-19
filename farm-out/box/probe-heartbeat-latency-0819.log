@@ -1,0 +1,6 @@
+#### job probe-heartbeat-latency-0819 attempt 1 start 2026-08-19T19:04:15Z
+
+==== step stamp START 2026-08-19T19:04:15Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "-c", "import datetime;open(r'C:\\banyan-queue\\probe-heartbeat-latency-0819.txt','w').write(datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))"]
+==== step stamp END rc=0 2026-08-19T19:04:15Z ====
+#### job probe-heartbeat-latency-0819 finished rc=0 2026-08-19T19:04:15Z

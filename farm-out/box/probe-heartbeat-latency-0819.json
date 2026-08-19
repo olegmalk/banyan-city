@@ -1,0 +1,29 @@
+{
+  "id": "probe-heartbeat-latency-0819",
+  "task": "probe-heartbeat-latency-0819",
+  "priority": 1,
+  "needs_gpu": false,
+  "steps": [
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import datetime;open(r'C:\\banyan-queue\\probe-heartbeat-latency-0819.txt','w').write(datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-queue\\probe-heartbeat-latency-0819.txt"
+  ],
+  "started_at": "2026-08-19T19:04:15Z",
+  "attempts": 1,
+  "runner_pid": 27524,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-19T19:04:15Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-queue\\probe-heartbeat-latency-0819.txt"
+  ]
+}
