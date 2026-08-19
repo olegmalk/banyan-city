@@ -1,0 +1,100 @@
+#### job ep2-b15-listenmotion-0820-1787181670 attempt 1 start 2026-08-19T23:38:41Z
+
+==== step fetch START 2026-08-19T23:38:41Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\fetch_init.py"]
+fetched b15-sapcomp-s20260819.png 1175804 bytes sha df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8 OK
+fetched 15-good-listener-sapcomp-mask-0819.png 2243 bytes sha f7933427bba319044058d8712a1574b35ad084768e5807b4f3e060a6ea810fdb OK
+==== step fetch END rc=0 2026-08-19T23:38:42Z ====
+
+==== step crop START 2026-08-19T23:38:42Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b15-sapcomp-0819\\b15-sapcomp-s20260819.png", "--sha256", "df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8", "--out", "C:\\banyan-farm\\ep2-b15-listenmotion-0820-out\\b15-init-704x1280.png", "--size", "704x1280", "--anchor", "center"]
+src 832x1216 sha df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8
+cover-crop scale=1.0526 -> 876x1280, anchor=center box (86,0)
+WROTE C:\banyan-farm\ep2-b15-listenmotion-0820-out\b15-init-704x1280.png
+==== step crop END rc=0 2026-08-19T23:38:42Z ====
+
+==== step framing START 2026-08-19T23:38:42Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\assert_framing.py", "C:\\banyan-farm\\ep2-b15-listenmotion-0820-out\\b15-init-704x1280.png"]
+mask bbox x 41..240 y 300..636 (anchor=center, want x 41..240 y 300..636)
+FRAMING OK -- the composited sapling is wholly inside the cropped init. margins L41 R463 T300 B643
+==== step framing END rc=0 2026-08-19T23:38:42Z ====
+
+==== step encode START 2026-08-19T23:38:42Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\b15-jobs-encode.json"]
+-- begin-encode: phys 10.5/68.1GB, commit 12.6/115.3GB (load 15%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  29%|██▉       | 311/1065 [00:00<00:00, 2822.62it/s]
+Loading weights:  56%|█████▌    | 594/1065 [00:00<00:00, 2671.06it/s]
+Loading weights:  92%|█████████▏| 978/1065 [00:00<00:00, 3040.92it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 3072.17it/s]
+-- encode-beat-15: phys 11.6/68.1GB, commit 39.4/115.3GB (load 17%)
+[1/1] encoded beat 15 to C:\banyan-farm\ep2-b15-listenmotion-0820-out\b15-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 41.9, "peak_phys_gb": 37.5, "last_stage": "encode-beat-15"}
+==== step encode END rc=0 2026-08-19T23:40:14Z ====
+
+==== step render START 2026-08-19T23:40:14Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\b15-jobs-render.json", "--size", "704x1280", "--frames", "121", "--fps", "24", "--guidance", "2.0", "--distilled-sigmas", "--two-stage", "--image-crf", "10", "--offload", "sequential", "--mode", "production", "--task", "ep2-b15-listenmotion-0820", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-b15-listenmotion-0820-out\\bench-b15-listenmotion.jsonl", "--bench-label", "ep2-b15-listenmotion-0820"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 10.5/68.1GB, commit 12.6/115.3GB (load 15%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 11.3/68.1GB, commit 14.5/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  9.19it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.50it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  8.43it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 16.24it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 13.71it/s]
+-- load-connectors-12.7GB-and-vae: phys 11.3/68.1GB, commit 52.8/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 70.15it/s]
+-- offload-setup-sequential: phys 11.3/68.1GB, commit 62.4/115.3GB (load 16%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=10 -> C:\banyan-farm\ep2-b15-listenmotion-0820-out\cond-crf-15.png
+-- stage1-denoise-352x640-8steps: phys 12.2/68.1GB, commit 62.8/115.3GB (load 17%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:10<08:11, 70.16s/it]
+ 25%|██▌       | 2/8 [01:22<03:37, 36.21s/it]
+ 38%|███▊      | 3/8 [01:32<02:01, 24.31s/it]
+ 50%|█████     | 4/8 [01:43<01:16, 19.05s/it]
+ 62%|██████▎   | 5/8 [01:54<00:47, 15.88s/it]
+ 75%|███████▌  | 6/8 [02:03<00:27, 13.68s/it]
+ 88%|████████▊ | 7/8 [02:12<00:12, 12.32s/it]
+100%|██████████| 8/8 [02:22<00:00, 11.50s/it]
+100%|██████████| 8/8 [02:22<00:00, 17.83s/it]
+stage1 latents (1, 128, 16, 20, 11)
+-- upsample-2x-latent: phys 54.8/68.1GB, commit 65.5/115.3GB (load 80%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 16, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 57.9/68.1GB, commit 68.3/115.3GB (load 84%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:31<01:02, 31.26s/it]
+ 67%|██████▋   | 2/3 [01:04<00:32, 32.46s/it]
+100%|██████████| 3/3 [01:36<00:00, 32.08s/it]
+100%|██████████| 3/3 [01:36<00:00, 32.06s/it]
+-- decode-and-export: phys 64.7/68.1GB, commit 72.6/115.3GB (load 94%)
+[1/1] wrote C:\banyan-farm\ep2-b15-listenmotion-0820-out\15-good-listener-LTX-sapcomp-0820.mp4 in 263s (121 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 12.0GB, device 3.1/26GB)
+THROUGHPUT 0.0192 s(video)/s(wall) (1 x 5.042s of video in 263s)
+bench row -> C:\banyan-farm\ep2-b15-listenmotion-0820-out\bench-b15-listenmotion.jsonl
+{"sample_s": 262.8, "peak_gb": 12.0, "peak_commit_gb": 81.7, "frames": 121, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.0192, "two_stage": true, "image_crf": 10, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 81.7, "peak_phys_gb": 65.2, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-19T23:44:52Z ====
+
+==== step stamp START 2026-08-19T23:44:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b15-listenmotion-0820\\stamp_sidecar.py", "C:\\banyan-farm\\ep2-b15-listenmotion-0820-out\\15-good-listener-LTX-sapcomp-0820.mp4.meta.yaml"]
+stamped C:\banyan-farm\ep2-b15-listenmotion-0820-out\15-good-listener-LTX-sapcomp-0820.mp4.meta.yaml
+==== step stamp END rc=0 2026-08-19T23:44:52Z ====
+
+==== step publish START 2026-08-19T23:44:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing ONE file is a FAIL of the job. No allow_fail anywhere.\nimport hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b15-listenmotion-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b15-listenmotion-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b15-listenmotion-0820\"\nPAIRS = [\n    (out_dir, \"15-good-listener-LTX-sapcomp-0820.mp4\"),\n    (out_dir, \"15-good-listener-LTX-sapcomp-0820.mp4.meta.yaml\"),\n    (out_dir, \"b15-init-704x1280.png\"),\n    (out_dir, \"bench-b15-listenmotion.jsonl\"),\n    (pay_dir, \"b15-motion-prompt.txt\"),\n    (pay_dir, \"b15-negative.txt\"),\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor d, name in PAIRS:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b15-listenmotion-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(PAIRS) else 1)\n"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b15-listenmotion-0820
+==== step publish END rc=0 2026-08-19T23:44:52Z ====
+#### job ep2-b15-listenmotion-0820-1787181670 finished rc=0 2026-08-19T23:44:52Z
