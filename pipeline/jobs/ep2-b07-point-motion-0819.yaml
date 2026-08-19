@@ -458,3 +458,81 @@ plate_faults:
     only barely and this frame is not evidence the wording delivers a sky'
   what_they_block: 'A CUT, all three. None of them blocks the question this job asks, which is which limb
     the pointing gesture attaches to.'
+# ===========================================================================
+# VERDICT -- appended 2026-08-19 by the beat-07 judging lane, after opening
+# ALL 97 FRAMES CONSECUTIVELY via pipeline/coldread_frames.py --pad 60 (five
+# strip sheets, every source frame 0..96) plus native-resolution 704x1280
+# reads at f021, f057, f070 and f090. `depth` and `cadence` are retired and no
+# number from either is quoted here. The bar below is the one committed in this
+# file BEFORE the render existed and it is not rewritten.
+# ===========================================================================
+verdict: PASS
+verdict_headline: 'THE GUARD POINTS AT THE GOBLIN, WITH HIS OWN ARM, ON THE FIRST
+  ATTEMPT. All four pre-registered clauses pass and the PREDICTED failure did not
+  fire. The engine question that has been open on this beat since 2026-08-15 --
+  whether a gesture binds to the GUARD once both figures are fixed by an init --
+  is ANSWERED YES. Text-to-image put the pointing arm on the goblin 3 of 3 and
+  could not aim a point in 12 of 12 stills; image-to-video off a two-figure plate
+  did both in one seed.'
+verdict_clauses:
+  M1_arm_extends: 'PASS. The guard holds the plate pose -- his near hand joined
+    with the goblin''s at frame centre -- to f049 unchanged. The arm lifts f050
+    through f054 and the extension is complete by f055. Measured relative to HIS
+    OWN SHOULDER, not the frame: the shoulder stays at frame left through the
+    whole clip while the hand travels from centre-frame chest height to fully
+    extended, so no camera move can be scoring as this action.'
+  M2_aimed_at_the_goblin: 'PASS. The forearm runs up and to frame right and the
+    extended index finger lands on the goblin''s chest and collar, a few pixels
+    off his tunic V at f070 and f090. This is the clause the twelve stills failed
+    (r1-s0 aimed its one pointing hand up and away). The aim here is at the
+    scavenger and nothing else is in that line.'
+  M3_it_is_the_guards_arm: 'PASS, and this is the clause the job was filed for.
+    At native resolution the limb is unambiguous: it emerges from the guard''s own
+    frame-left shoulder, carries his dark undershirt sleeve over his pale wrap
+    tunic, and its skin matches his face. The goblin''s arm stays green and stays
+    at his own waist in the same frames. F2 -- the 3-of-3 text-to-image failure --
+    did not fire.'
+  M4_both_men_stay_themselves_and_stay_two: 'PASS. f000 to f096: the guard keeps
+    dark cropped hair, wire-rim glasses, pale wrap tunic and wide white sash; the
+    goblin keeps green skin, pointed ears, white hair and his round red-rim
+    glasses. Two figures in every one of the 97 frames. No reframe, no location
+    change, no cut. Only a slow, mild push.'
+verdict_fail_modes_all_reported:
+  F1_frozen_arms: 'DID NOT FIRE. The hand''s position relative to his shoulder at
+    f000 and f096 is not comparable -- joined at centre versus fully extended.'
+  F2_the_goblin_points: 'DID NOT FIRE. This was the pre-registered most-likely
+    failure and it is the headline of the result that it did not.'
+  F3_aimless_extension: 'DID NOT FIRE. M1 and M2 both pass on the same limb.'
+  F4_a_third_figure_arrives: 'DID NOT FIRE. Two figures in all 97 frames. Rung B
+    multiplied the goblin in 10 of 12 stills; an init suppressed that here.'
+  F5_identity_collapse: 'DID NOT FIRE. No baldness, no lost glasses, no costume
+    merge beyond the one the PLATE already carried in (see below).'
+  F6_camera_only: 'DID NOT FIRE. There is a mild push, and the arm action is
+    independent of it -- measured at the shoulder, per M1.'
+  F7_scene_break: 'DID NOT FIRE. One continuous shot, one field, one treeline.'
+verdict_measured: 'Fixed crops read off f000 and applied identically to every
+  frame, mean abs interframe difference and drift from f000 in float64, with a
+  background-only strip between the two heads as the control. guard face:
+  f001->f002 4.78, interframe mean 3.609, drift from f000 35.95 at f021 and 60.84
+  at f096. goblin face: f001->f002 5.74, drift 62.33 at f096, and its ten largest
+  interframe steps ARE the ten earliest pairs (1..10) -- the crf-33 signature this
+  ladder has now seen on four beats. background strip: interframe mean 1.068,
+  drift 36.41 at f096, its ten largest steps also the earliest (1..12), i.e. the
+  FIELD ITSELF BOILS. Whole-frame motion by third 2.48 / 2.70 / 2.35. Whole-frame
+  frame pairs under 0.5 interframe: 0 of 96 -- the near-duplicate clause this
+  ladder asked the next motion bar to carry is reported and clean.'
+verdict_what_this_does_and_does_not_settle: 'SETTLES: beat 07 is animatable, the
+  gesture binds to the right figure off an init, and no still-path count-tag fix
+  is needed to get a point out of this beat. DOES NOT SETTLE: the plate. All three
+  faults this spec named in advance are still on screen for all 97 frames -- the
+  goblin''s round RED glasses, and above all the COSTUME MERGE, the goblin wearing
+  the guard''s own pale wrap tunic and white sash. On a CONFISCATE beat that is not
+  cosmetic: two men in one uniform reads as two officials, and the shot has to read
+  as an authority pointing at a SCAVENGER. That is a PLATE defect, it is the only
+  thing left between this beat and a clean cut, and it is now the beat''s whole
+  remaining blocker.'
+verdict_cut: 'FOOTAGE THAT A VERDICT LETS INTO A CUT NOW EXISTS FOR BEAT 07 for
+  the first time. This take is superseded for cut purposes by its own crf-10
+  child, which passes the same four clauses with a cleaner init and a better-read
+  point (see ep2-b07-point-crf10-0819). Named, not made: the assembly swap is the
+  next demo assembly''s to make and is veto-able in one line.'

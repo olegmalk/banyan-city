@@ -341,3 +341,115 @@ crf_addendum_bar: 'THE FLAG QUESTION, pre-registered before this clip exists and
   frame).
   NOT SCORED HERE: whether beat 07''s slate is filled. That is the beat-07 lane''s
   call against the beat''s own done_when, and it is unaffected by this addendum.'
+# ===========================================================================
+# VERDICT -- appended 2026-08-19 by the beat-07 judging lane. Same instrument
+# as the parent: ALL 97 frames opened consecutively via coldread_frames.py
+# --pad 60, plus native 704x1280 reads at f021, f051, f070, f090. Scored twice
+# and separately: once against the beat's OWN four clauses (inherited byte for
+# byte from the parent, and NOT rewritten), and once against
+# `crf_addendum_bar`.
+# ===========================================================================
+verdict: PASS
+verdict_headline: 'PASSES THE BEAT''S BAR AND THE FLAG BAR, AND IS THE
+  CUT-PREFERRED TAKE OF THE TWO. The guard points at the goblin with his own arm,
+  the init holds for 97 frames, and -- the thing beat 18 could not do -- IT IS NOT
+  FROZEN. crf 10 bought identity here without spending the action.'
+verdict_clauses:
+  M1_arm_extends: 'PASS. Plate pose held to f044; the arm lifts f045-f049; the
+    point is established by f050 and held to f096 -- earlier and longer than the
+    parent''s f050/f055. Shoulder fixed at frame left throughout, so this is the
+    arm and not the camera.'
+  M2_aimed_at_the_goblin: 'PASS, and aimed harder than the parent. The fingertip
+    lands at the goblin''s throat and collar at f070 and f090, not merely in his
+    direction. Reads as decisive, which is the beat''s own stage direction.'
+  M3_it_is_the_guards_arm: 'PASS. Native resolution: the limb comes off the
+    guard''s frame-left shoulder wearing his dark undershirt sleeve, skin matched
+    to his face, while both of the goblin''s arms are green and at his own sides.'
+  M4_both_men_stay_themselves_and_stay_two: 'PASS. Two figures in all 97 frames.
+    Guard: dark cropped hair, wire-rims, pale wrap tunic, white sash. Goblin:
+    green skin, pointed ears, white hair, round red-rim glasses. No third figure,
+    no reframe, no cut.'
+verdict_fail_modes_all_reported:
+  F1_frozen_arms: 'DID NOT FIRE -- and it was the live risk here, being the exact
+    thing that failed beat 18''s crf-10 take. Reported with the numbers below
+    rather than by eye alone.'
+  F2_the_goblin_points: DID NOT FIRE.
+  F3_aimless_extension: DID NOT FIRE.
+  F4_a_third_figure_arrives: DID NOT FIRE.
+  F5_identity_collapse: DID NOT FIRE.
+  F6_camera_only: DID NOT FIRE.
+  F7_scene_break: DID NOT FIRE.
+crf_addendum_verdict: PASS-CRF
+crf_addendum_measured: 'Same crops, same instrument, same float64 as the parent
+  and as the beat-09 pair. Child against parent:
+  guard face f001->f002 1.05 against 4.78 (4.6x); goblin face 0.84 against 5.74
+  (6.8x); background strip 0.14 against 2.03 (14.5x).
+  Drift from f000 at f096: guard face 38.56 against 60.84; goblin face 44.38
+  against 62.33; BACKGROUND STRIP 5.43 AGAINST 36.41 -- a 6.7x reduction, the same
+  shape as beat 09''s 9.89 against 60.89. The parent''s field visibly boils; this
+  one does not.
+  Clause (1) of the addendum: PASS on both halves. The steps fall well below the
+  parent''s, and the ten largest interframe steps are no longer the ten earliest --
+  the goblin-face top ten moves from pairs 1..10 to 3..57 and the background top
+  ten from 1..12 to 1..93.
+  Clause (2): PASS by eye at 1x. f021 is the init''s two figures -- same count,
+  same clothing, same build, not substituted -- and is CLEANER than the parent''s
+  f021: the goblin''s near hand, a mitten in the parent, renders as a hand with
+  fingers.
+  MOTION COST, measured and not waved past: whole-frame motion by third 1.91 /
+  2.16 / 1.38 against the parent''s 2.48 / 2.70 / 2.35 -- about -23% overall and
+  -41% in the final third. Whole-frame pairs under 0.5 interframe: 0 of 96, same
+  as the parent, so the near-duplicate clause is clean in both. In the guard-face
+  crop alone, 6 of 96 pairs fall under 0.5 against the parent''s 0; that is worth
+  recording and it is nowhere near beat 18''s 18 of 120.'
+crf_addendum_fail_modes_all_reported:
+  FAIL_COLLAPSE_UNCHANGED: 'DID NOT FIRE. The flag moved every measure on a third
+    subject, a third plate and a third beat shape. Beat 09''s result is a property
+    of the flag, not of beat 09.'
+  FAIL_FROZEN: 'DID NOT FIRE, and this is the load-bearing negative. On a POINTING
+    beat a held init that spends the motion would be fatal -- the point IS the
+    motion. It cost 23% of the whole-frame movement and kept 100% of the gesture:
+    the arm lifts EARLIER (f045 vs f050) and holds LONGER.'
+  FAIL_ARTEFACT: 'DID NOT FIRE. No blocking and no banding at native resolution in
+    any frame opened, including flat sky and flat tunic where it would show first.'
+  FAIL_MORPH_LATE: 'DID NOT FIRE. Both figures are themselves at f096.'
+crf_addendum_calibration: 'This is the FIRST beat where crf 10 improved fidelity
+  AND the action survived intact, and it refines the ladder''s per-beat rule rather
+  than overturning it. Beats 01 and 17 gained; beat 18, a macro of fine
+  high-frequency tremble, lost 90% of its movement; beat 14 was unchanged and its
+  second seed lost movement. Beat 07 is a GROSS WHOLE-BODY gesture on a locked
+  camera at a human framing, and that is the shape the flag helps: there is enough
+  authored motion in the prompt that a cleaner init does not starve it. The rule
+  stands -- per-beat, with a motion measurement attached, never a blanket
+  re-encode -- and it now has a positive case with the mechanism named.'
+verdict_cut: 'CUT-PREFERRED OF THE TWO TAKES, and the first beat-07 footage any
+  verdict has ever let into a cut. Preferred on three grounds, all measured above:
+  a 6.7x quieter background, a cleaner f021 including a rendered hand where the
+  parent has a mitten, and a point that lands ON the target rather than toward it.
+  Named, NOT made: the assembly swap belongs to the next demo assembly and is
+  veto-able in one line. NOT a `pick` and no plate_ack is written anywhere by this
+  lane.'
+verdict_the_slate: 'BEAT 07''S `done_when` IS MET BY THIS TAKE. Clause by clause,
+  as written in review/ep2-picks/done-definitions.yaml and as amended by
+  `figure_count_ruled_from_the_script_0817`: "Guard 1 POINTS at the scavenger,
+  decisively, and the point is legible as a point" -- yes, 47 of 97 frames, the
+  fingertip at his collar; "his face stays toward the lens" -- yes, three-quarter
+  to camera in every frame; "the field is present" -- yes, grass, treeline and a
+  sky band; "identity holds against the plate" -- yes, both figures, all 97 frames.
+  The two clauses the 0817 ruling superseded (the second guard, the clipboard) have
+  no subject in a two-figure shot and are not scored.
+  ONE THING STANDS BETWEEN THIS AND A CLEAN CUT, and it is not the motion: the
+  PLATE dresses the scavenger in the guard''s own pale wrap tunic and white sash
+  and gives him round red glasses. Two men in one uniform read as two officials,
+  and a CONFISCATE beat has to read as an authority pointing at a scavenger. This
+  lane does not overturn the earlier lane''s recorded judgement that the three
+  plate faults block a cut; it narrows the blocker to exactly one of them, names
+  the follow-up, and leaves the promotion decision where it belongs.
+  SO: the slate''s blocker MOVES from "beat 07 cannot be animated" -- settled,
+  wrong -- to "the scavenger is wearing the wrong clothes." That is a still-plate
+  rung with one variable, not a motion rung, and this lane filed it in the same
+  pass: ep2-b07-scavcostume-0819, on the card, one variable (the scavenger gets a
+  garment of his own, bound inside his own noun phrase by the same grammar law
+  rung B used on `green skin`), wording measured on the real CLIP at 70/77 with
+  zero faults before the spec existed. The chain behind it is short and every
+  link exists: that plate, then this exact crf-10 recipe re-run off it.'
