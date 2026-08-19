@@ -243,3 +243,80 @@ derivation:
     - key est_minutes = 7
     payload:b04-motion-prompt.txt:
     - payload b04-motion-prompt.txt (971 -> 1138 chars)
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20, read at 1:1 plus a 5-frame strip, and measured
+# on the SAME instrument and rows this spec pre-registered. Bar not edited.
+# Ran clean: 3 steps rc=0, 121 frames at 704x1280. $0.
+# ============================================================================
+verdict: >-
+  FAIL -- G2 FIRED, THE PRE-REGISTERED DEGENERATE PASS, AND IT IS REPORTED AS A
+  FAIL BECAUSE THIS SPEC SAID IN ADVANCE THAT IT WOULD BE. The head lock worked
+  and worked enormously -- head-band centroid travel fell from rung 1's 64.7 px
+  to 4.7 px, a fourteenfold reduction, from ONE clause moved out of an
+  instruction and into a placement. And it took the eyes with it: eye-band mean
+  interframe fell from 0.356 to 0.126, well under the floor this spec set, and
+  at 1:1 the gaze does not travel. TOGETHER WITH RUNG 1 THIS BRACKETS THE BEAT
+  AND CLOSES THE WORDING ROUTE.
+verdict_measured:
+  h1_head_still: >-
+    PASS, AND BY A MARGIN THAT IS ITSELF THE EVENING'S CLEANEST CONFIRMATION OF
+    THIS LADDER'S OWN LAW. 4.7 px against a bar of under 20 and a parent of 64.7.
+    The ONLY difference between the two jobs is that "His head and shoulders stay
+    STILL" became "his chin stays square to the camera and his skull is locked in
+    place as if held, the same three-quarter angle in every frame". Same init,
+    same seed, same negative, same every flag. THE POSITIVE PLACES WHAT YOU WANT
+    AND THE NEGATIVE DOES NOT -- and so does an abstract instruction; only the
+    concrete placement moved it.
+  h2_eyes_not_frozen_too: >-
+    FAIL. 0.126 against a floor of 0.356. The eyes are quieter than the parent's,
+    not livelier, and the whole clip is calmer (overall mean interframe 0.538
+    against 1.221).
+  h3_the_gaze_arrives: >-
+    FAIL, and this is the clause that decides it. Across f0/30/60/90/120 the head
+    settles in the first frames and the eyes open into a fixed glare, then hold:
+    f30 through f120 the eyes are essentially identical. The pupils never reach
+    the far corner and never come back. No amount of H1 rescues this.
+  h4_rung_1_clauses_hold: >-
+    PASS on all three. Mouth shut throughout, camera locked, and the same adult
+    goblin -- green skin, bald dome, long pointed ears, adult face -- at frame
+    121 as at frame 1. The ratified character survives a second 121-frame render.
+pre_registered_fail_modes_as_fired: >-
+  G1 THE HEAD TURNS ANYWAY -- did NOT fire, and it was named most likely. G2 THE
+  HEAD LOCK TAKES THE WHOLE CLIP WITH IT -- FIRED, exactly as written. G3 pupils
+  as a hard flat shape -- did not fire. G4 all-white eyes with no pupil -- did
+  not fire; the pupils are present and well drawn, they simply do not move.
+what_this_settles: >-
+  ON THIS ENGINE, HOLDING THE HEAD HOLDS THE EYES. Head stillness and eye motion
+  are not independently controllable by wording here, and the two rungs prove it
+  from opposite sides: rung 1 got a gaze shift and got it by rotating the head;
+  rung 2 stopped the head and the gaze stopped with it. That is a coupling, not a
+  pair of unlucky draws, and it is measured on one instrument across two clips
+  that differ by a single clause.
+  THE WORDING ROUTE FOR BEAT 04 IS THEREFORE CLOSED, on the terms this spec set
+  before either number existed: "if both fail the answer is staging, not a third
+  wording." Two rungs, two directions, no third sentence.
+  SECOND CONFIRMATION OF THE LURCH OF THREE: the six highest-motion pairs are 8,
+  11, 14, 17, 20 and 23 -- three apart again, as in rung 1's 70/73/76/79/82/85.
+  Third independent sighting overall. Here they also sit entirely in the first
+  quarter, so this clip spends its movement early and then holds.
+what_this_did_not_settle: >-
+  Whether a TIGHTER CROP rescues the beat -- that is the named next move and it
+  is a staging decision, not a wording one. Nor whether the head/eye coupling is
+  a property of LTX, of this recipe, or of conditioning on a still init; it is
+  measured here, not explained.
+what_this_does_not_license: >-
+  No pick, no cut, no canon filename, no plate_ack. It does NOT license reading
+  H1's fourteenfold win as a success for the job: the job's question was whether
+  the eyes can move without the head, and the answer is no. It does not license a
+  reseed -- the coupling is mechanical. And it does not license relaxing beat
+  04's done_when to accept a fixed glare, which would be a taste edit and is R4.
+next_rung_named_not_taken: >-
+  STAGING, AND IT IS THE LAST ONE THIS LANE CAN NAME WITHOUT R4. Crop the plate
+  tight to the face so that the small head rotation the engine WILL give
+  (measured: 64.7 px at this crop) subtends enough of the frame to read as a
+  glance. That reuses rung 1's recipe unchanged and changes only the init's
+  framing -- a cover_crop box, not a prompt. If that also fails, the honest
+  report to the founder is that beat 04 as written ("only the eyes carry it") is
+  not reachable on this engine, and the beat needs either a different action or a
+  different tool -- which is his call and not this lane's.
