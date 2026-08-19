@@ -1233,3 +1233,97 @@ speed 1.05, measured **146.8 Hz** on the rendered take. That is an R4 taste
 ruling on the character's voice and the steward does not re-tune it. Recorded on
 the picker page, in `candidates.yaml` (`picked:`), and as a resolved card in
 `review/inbox.yaml`.
+
+---
+
+## BEAT 12 — the second rung, and a finding that is not about beat 12
+
+`ep2-b12-shortstill-0819` — **FAIL**. One variable off `ep2-b12-stillmotion-0819`
+(`--frames 121 → 73`), same seed 20260819, same init, same prompt files, same
+sampler numbers. rc=0, 73 frames, 704×1280, 24 fps, 3.0417 s, 221 s of GPU, $0.
+Verdict and every number are in the spec's `verdict_this_job_measured`.
+
+### `--frames` IS NOT A TRIM, AND THAT INVALIDATES A MOVE SEVERAL LANES ARE USING
+
+The rung's derivation (`70cd3b98`) argued that because the parent's fade was
+"progressive and back-loaded", 73 frames would "never render the part of the ramp
+that collapsed". **That reasoning is wrong and the pixels say so.** The two
+renders share `f000` — both conditioned on the same plate — and diverge
+immediately:
+
+| | f000 | f024 | f060 | f072 | f120 |
+|---|---|---|---|---|---|
+| parent, 121f | 125.47 | 125.33 | 113.63 | 98.91 | 34.37 |
+| this rung, 73f | 125.47 | **108.84** | 104.03 | 104.04 | — |
+
+The parent is flat to f048 and then falls off a cliff. This one falls for 42
+frames and then sits still. **Frame count is an input to the denoiser's temporal
+grid, not a crop of a longer render**, so a shorter rung is a re-roll of the whole
+video. Any rung anywhere on this ladder of the form "shorten it so it does not
+reach the part that broke" has no basis, and any rung that shortens **cannot**
+inherit the longer rung's early frames as evidence. Filed here rather than in the
+beat-12 spec because b01, b07, b14, b17, b18 and b19 are all running LTX rungs and
+this is the kind of thing that gets re-derived at 2am.
+
+### What actually failed
+
+The pre-registered dusk clause fired on its number — |lum(f072) − lum(f000)| =
+**21.43** against a 12-level bound — and **mis-attributed it**. Three-band mean
+luminance, f000 → f072:
+
+| rows | f000 | f072 | Δ |
+|---|---|---|---|
+| 0–560 (sky, big lit leaf) | 134.84 | 133.29 | **−1.55** |
+| 560–1120 (mid-ground) | 130.48 | 83.55 | **−46.93** |
+| 1120–1280 | 75.13 | 73.41 | **−1.72** |
+
+Two thirds of the frame do not move. The parent on the same bands falls
+everywhere (134.73 / 130.60 / 75.09 → 35.77 / 36.50 / 21.99) — *that* is a dusk
+fade; this is not one. What this is: **a large dark leaf mass enters at the left
+edge about f004 and grows across the mid-ground until f048**, pixels under
+luminance 40 going 5.09% → 19.97% and then holding. Gamma-lifted 2× at f048 it has
+midribs, a lobed contour and a warm rim light — **foliage, not a creature**, so it
+scores as `FAIL-PLANT-CHANGE` and not `FAIL-INTRUDER`. The negative already
+carried "new leaf, extra leaf, growing leaf".
+
+Also dead, as the bar honestly predicted: grass-band interframe median **0.0000**,
+0.054 levels/frame ramp-subtracted on the plateau, 8.7% of pixels changing at all
+between f060 and f061. **And the "grass band" contains no grass** — rows 1024–1280
+at this framing are another leaf and a strip of sky, so the parent's 0.011
+measured a leaf too. *"Only the grass stirs" is unscoreable on this plate at any
+length.* A wider plate, not a different prompt, is what that clause needs.
+
+### What passed, including one thing for the first time
+
+- **No intruder.** No goblin, hand, face, figure or creature at any edge in any of
+  the 73 frames. No bird. The white speck near the top is in the **init** (peak
+  luminance 200.6 there, 183.5 at f000).
+- **Hue holds** — 0.09° across the first second, 1.15° across the clip, against
+  the shipped crf-33 take's **40.24°**. Second independent confirmation that beat
+  12's recorded warm-to-cool fault belongs to the crf-33 flag, not the beat.
+- **Camera locked, and measurable for the first time on this beat** — the parent's
+  fade had invalidated the instrument. Level-normalised SAD f000→f072: best shift
+  dy=+1 dx=−1 at 43.038 against 43.098 at no shift, an improvement of 0.06 levels.
+
+### What the bird question now costs
+
+The rung was built so the bird's absence would decide between "it needed frames it
+no longer has" and "the negative's *creature* does not hold". **Because 73f is a
+different render, neither answer is available.** The only honest statement is "no
+creature in this render"; the parent's bird is still unexplained. That is a cost of
+the wrong premise and it is written down rather than resolved in the flattering
+direction.
+
+### Standing state
+
+**No swap.** Beat 12 keeps `12-related-b12-tightB-untrimmed.mp4`, `best-available`
+with its colour fault named, and the upgrade its cut-readiness row already
+records — the *trimmed* crf-33 take, an edit and not a re-render — is untouched by
+anything measured here. **No third rung filed**: the spec's `what_this_licenses`
+says one clip and it is honoured. Recorded for whoever takes the lane next, as a
+recommendation and not an order: the frame-count lever is spent as a dodge; both
+rungs now show the same shape of failure (**the negative names the thing that
+arrives and does not hold it** — "creature", then "new leaf"), so the next lever is
+the *positive* prompt, which spends its whole first sentence asking for stillness
+and gets total stillness plus one uninvited object. Beat 12 has no goblin on
+screen, so none of this waits on the design answer.
