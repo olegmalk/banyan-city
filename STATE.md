@@ -9283,3 +9283,38 @@ assembles **with** the copy step.
 
 Also corrected: I called the card empty off a 16:24Z `box_autofill --status`; a beat-19 job
 went to `running` at 20:40. A snapshot is a timestamp, not a state. Spend $0.
+
+## 2026-08-19 — the box runner's heartbeat was force-pushing a 3 GB backlog, twice per job
+
+**Fixed and deployed (`pipeline/box_runner.py`, commit `864fcb27`; box copy hash
+`2a2df1c0`).** `Courier.mark` pushed on EVERY heartbeat event, synchronously, with a 300 s
+timeout. Two of those events sit directly in front of work — `runner_up` before the first
+queue poll, `job_start` between claiming a job and running its first step — which is the
+~8 min claim-to-first-step measured twice on 08-18, alongside 40 push timeouts in a day,
+orphaned `git.exe`/`git-pack-objects`, and two runner deaths (~17:51, ~18:16).
+
+Three changes: `DEFERRED_EVENTS = (job_start, runner_up)` — their lines still go to
+`farm-out/heartbeat.txt` with the true timestamp and ride out on the next real push;
+`PUSH_TIMEOUT_SECONDS` 300 → 60; and the timed-out push's whole process TREE is killed
+(`subprocess.run(timeout=)` kills the direct child then calls `communicate()` with no
+timeout at all, while `git-pack-objects` and `ssh` live on holding the inherited pipe — the
+orphan pile, and the likeliest mechanism of both deaths: not a crash, a wedge).
+
+**Measured after deploy, probe `probe-heartbeat-latency-0819` (no-op, $0):** claimed
+19:04:15Z, first step ran 19:04:15Z — **claim-to-first-step 0 s, was ~8 min**. Job retired
+`done/` rc=0. The DONE push was cut at exactly 60 s, logged, and left **zero** git
+processes behind. Runner stayed up throughout.
+
+**THE PUSH ITSELF STILL FAILS, AND IT IS NOT THIS BUG — it is 3.18 GB.**
+`C:\banyan-farm\courier-box` is **2984 commits ahead** of `origin/farm-results-rtx5090`
+with **10,722 files / 3,178 MB** sitting in `farm-out/`. Every heartbeat has been
+re-attempting that same 3 GB transfer from scratch and no heartbeat-sized timeout can ever
+clear it. This is why lanes keep being told to scp results out of
+`rtx5090:C:/banyan-farm/courier-box/farm-out/` rather than wait for the courier. Clearing
+it is a deliberate data decision (what of 3 GB of renders belongs on a results branch at
+all, and whether the branch needs a rewrite), not something a daemon fix should improvise —
+**named here as open.** Until it is cleared, every farm-results push fails after 60 s.
+
+Also seen and NOT touched: `box_autofill.py` on the box is drifted from the repo, which its
+own `--verify-deployed` calls fatal. Unrelated to this fix; re-deploying it re-registers the
+autofill scheduled task, so it wants its own window.
