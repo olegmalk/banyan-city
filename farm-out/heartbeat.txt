@@ -3324,3 +3324,5 @@
 19:40:07Z DONE task=ep2-b09-hand-h3-0820-1787252533 rc=0 artifacts=2
 19:40:14Z STARTED task=ep2-b09-hand-h4-0820-1787252537 attempt=1 on box-runner
 19:46:26Z DONE task=ep2-b09-hand-h4-0820-1787252537 rc=0 artifacts=2
+19:46:34Z STARTED task=ep2-jerry-face-f4-0820-1787253666 attempt=1 on box-runner
+19:47:04Z DONE task=ep2-jerry-face-f4-0820-1787253666 rc=0 artifacts=1
