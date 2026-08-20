@@ -6154,3 +6154,53 @@ not be awake to read.
 so nobody splits the difference: an egg-faced or round-mascot-eyed dataset
 trains the defect, exactly as twelve bobbleheads would have and ten beat-20
 man-reads would have. That is the same refusal three times and it is deliberate.**
+
+### A MEASUREMENT OVERTURNED AN EYE VERDICT I WAS ABOUT TO PUBLISH (2026-08-21)
+
+Pixels: `review/ep2-goblin-design-0819/SKELFACE-STOP-0821.png`.
+
+`h1` (f4's wording + `tsurime, jitome`) and `h2` (+ `closed mouth,
+expressionless`) came back **looking identical to f4 at the crop**, and I had the
+sentence written: *four levers, four identical faces, the mixed dialect is
+saturated.* **Then I measured it.** White-eye pixels over the head bounding box:
+
+| rung | change | **eye area** | move |
+|---|---|---|---|
+| f4 | — | **0.097** | baseline |
+| g1 | `nose` in the **negative** | 0.090 | **noise** |
+| g2 | drop `thick eyebrows` from the negative | 0.085 | **noise** |
+| **h1** | **+`tsurime, jitome`** in the positive | **0.042** | **HALVED** |
+| h2 | h1 + `closed mouth, expressionless` | 0.041 | none beyond h1 |
+
+**The dialect is not saturated — it does not answer to NEGATIVES.** Two negative
+edits moved the eye by 0.007–0.012, which is nothing; two positive shape tags
+cut it by more than half. That is canon's own Ban et al. mechanism holding at
+full body: **a negative acts on what the positive draws, and where the positive
+is silent the negative has nothing to work on.** It is also the second time
+tonight a metric and an eye disagreed — the first was `n1 passed the bar and its
+face is an egg`, where the **eye** was right and the bar was wrong. Here the
+**metric** is right and the eye was about to throw away a working lever. Neither
+instrument is trustworthy alone; the rule that survives both is *read at 1:1 AND
+put a number on the thing you are claiming moved*.
+
+**What is still wrong, precisely.** h1's eye is a **smaller oval**, not the
+tile's **narrow upward-slanting slit**, and **no frame in five batches has ever
+drawn the brow bar** — canon's "one heavy dark brow bar" over the eyes, the
+character's loudest cue after the eyes themselves.
+
+**The next lever follows straight from the mechanism, and it is the mirror of a
+rung that already failed.** g2 merely *removed* `thick eyebrows` from the
+negative and nothing happened, because nothing in the positive asked for a brow.
+**`ep2-jerry-face-j1-0821` puts `thick eyebrows` in the POSITIVE** (and out of
+the negative, so the prompt is not arguing with itself); `j2` adds
+`half-closed eyes` on the axis that is actually moving. Both in **BACKLOG**, with
+the risk named: `thick eyebrows` is a 200k-post human-face tag and the wedge put
+it in the negative to kill a man's face, so **T1 may regress to pupils** — and if
+it does, that brow is not available by wording and the route for it is
+IP-Adapter.
+
+**`train-jerry-0820` REMAINS UNFILED, one gate, and the gate is two named defects
+wide: an oval where the tile has a slit, and a missing brow bar.** The reason for
+not splitting the difference is unchanged and now has three precedents behind it:
+ten beat-20 man-reads, twelve bobbleheads, and an egg. **A dataset teaches what
+it contains.**
