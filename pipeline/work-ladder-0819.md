@@ -5819,3 +5819,70 @@ batch produces anyway.
 `is_show_content: false` carried forward from the parent on every job: beat 09
 stays a slate, and the adult/adolescent read is still an open R4 card. h4 still
 on the card.
+
+### THE FACE IS REACHABLE AT FULL BODY, AND THE POSE SET FOUND THE INSTRUMENT'S EDGE (2026-08-20 night)
+
+Pixels: `review/ep2-goblin-design-0819/SKELFACE-0820.png` and
+`review/ep2-goblin-design-0819/SKELPOSE-0820.png`.
+
+**THE FACE BRACKET — `ep2-jerry-face-f1/f2/f3-0820`.** Same h19 skeleton, same
+scale 1.0, same seed. Only the wording moves.
+
+| rung | one variable | verdict |
+|---|---|---|
+| f1 | negative drops `thick eyebrows` | **FAIL — the same blank egg as n1** |
+| f2 | `no nose` → `snout` | **FAIL — the same blank egg**, no muzzle, no canine snout either |
+| **f3** | **the STRUCK tile wording** at this skeleton | **the face arrives** — mouth, ear flanges, facial shading, a modelled lower face, on a lean six-head body — **and it FAILS the bar** on T1 (drawn pupils) and T2 (a small nose) |
+
+**Two one-tag changes could not move it and a whole different dialect could,
+which settles the diagnosis:** the ratified recipe is **subtractive**, the tile
+is made of presences, and at full body subtraction takes everything. **The face
+is not out of reach at this framing — the wording chooses whether there is one.**
+
+**AND f3 SURVIVES ITS OWN HARDEST READING, which is why it was in the batch.**
+The phrase carries `adult` and `man`, the two words `correction_2026_08_20`
+struck as drift, **and it did not draw a man** — it drew a smooth young creature
+on a lean frame. The strike was about a human male **BUILD**, and the build is
+geometry's job now. So the strike is not overturned; its *scope* is measured for
+the first time. `ep2-jerry-face-f4/f5-0820` walk `blank eyes` and then `no nose`
+back onto f3's wording, one at a time, and the pre-registered risk is written
+down: `blank eyes` was the wedge's "whole game", and a tag that can decide a
+face can flatten one.
+
+**THE POSE SET — AND THE FAILURE I PRE-REGISTERED FIRED, ON MORE POSES THAN I
+NAMED.** I wrote that `sit` and `crouch` fold the skeleton into a third of the
+canvas where §13's binding was measured on upright figures, and that if they
+came back correctly posed and bobbleheaded, **head-to-body binds through the
+span of the whole skeleton rather than through the head keypoints.** That is
+what happened, and `kneel` — which I did not name — went with them.
+
+| pose | span | read |
+|---|---|---|
+| n1 stand | full | **5.07 heads** |
+| hunch | near-upright | ~4.5, borderline |
+| **kneel** | **folded** | **~3 heads — reads as a SMALL FIGURE, and it is not kneeling** |
+| **crouch** | **folded** | **~3 heads, same failure** |
+
+**The head keypoints were byte-frozen across every pose — ear span 136.0 px in
+all eight, asserted in the author's selftest — so this is not an authoring
+slip.** The net reads a short skeleton as a *small person*, not a folded one,
+and re-inflates the head to match. **`T8 HEAD-TO-BODY IS CARRIED ONLY FOR
+FULL-SPAN UPRIGHT SKELETONS`**, and that clause now belongs beside the recipe.
+`reach`, `point` and `sit` are still on the card; reach and point are full-span
+and are the clean contrast that confirms or breaks this reading.
+
+**WHAT IT COSTS THE LoRA, said plainly.** The pose-breadth gate cannot be
+discharged by this instrument alone: it yields standing, striding, reaching and
+pointing at the tile's proportion, and it does **not** yield the tile's own
+folded, hands-clasped stance — **which is the single pose the character is most
+often in.** `train-jerry-0820` stays **HELD** and is not filed. Two gates are
+open, not one: a face at full body, and folded poses at the right proportion.
+
+**THE NAMED INSTRUMENT FOR BOTH REMAINING GATES IS THE SAME ONE, and the record
+now points at it twice.** IP-Adapter off the tile is an **attribute** instrument
+(§11: skin, face and wardrobe transferred; the aim did not) and openpose is a
+**geometry** instrument that this lane has now bounded (§13 and tonight: stature
+binds, and only at full span). The face is an attribute and the folded silhouette
+is a shape no COCO-18 skeleton describes. **IPA over the openpose skeleton —
+each instrument doing the job the record measured it doing — is the next rung,
+and it is now argued from two independent failures rather than chosen.**
