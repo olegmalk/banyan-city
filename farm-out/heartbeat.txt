@@ -3348,3 +3348,4 @@
 19:52:24Z DONE task=ep2-jerry-skel-n7-0820-1787251376 rc=0 artifacts=1
 19:52:34Z STARTED task=ep2-jerry-skel-n8-0820-1787251379 attempt=1 on box-runner
 19:52:58Z DONE task=ep2-jerry-skel-n8-0820-1787251379 rc=0 artifacts=1
+19:53:06Z box-runner idle ready=0 failed=62
