@@ -9651,3 +9651,35 @@ pushes; daytime decision with founder. Mitigation tonight: lanes batch pushes.
 (b) FOUNDER DASHBOARD ACTION: duplicate hobby project
 olegmalkov2023…/banyan-city double-builds every push — disconnect it (card on
 board). (c) .vercel/project.json repointed at the real project (local only).
+
+## 2026-08-20 night — the goblin design axis is the TILE, not the word "adult" (audit lane)
+Founder, verbatim: *"all of the goblin clips today has had him as an adult. very
+bad character consistency"* and, on beat 13's best frame, *"this is one of the
+images where the goblin looks like an adult, which is wrong."* On 08-19 he
+pointed at **tile B** (`adult-b19-0819.jpg`); the steward recorded that as
+ratifying the WORDS beside it (`lean wiry adult goblin man …`) and wrote them
+into canon. He ruled the pixels. `pipeline/canon.yaml` `ep2-goblin-design-adult`
+now leads with `correction_2026_08_20`; both false sentences struck in place.
+Ten tile attributes written down (blank white slit eyes, no nose bridge, one
+lipless line, SHORT low flange ears, dome with no neck, two-tone green, no age
+modelling). Lower half = a **steward pick**, trousers + barefoot, and it departs
+from the tile, which draws boots.
+
+**The discriminator is FRAMING, not wording.** Beat 19 in the ship cut IS the
+tile and beat 15 is the next-best match — and *both* were rendered from the same
+man-read string, wide, with `close-up` in the negative. The tighter the crop the
+more animagine resolves the blank mask into a human male face; b04 is the
+tightest crop in the cut and the worst offender.
+
+**Audit of all 21 beats at 1:1: the goblin is in ELEVEN, not the nine every
+record inherits from `the-split-0819c.jpg`.** New: **beat 15** (second-best tile
+match, never on any sheet) and **beat 07** (filed among the four that were
+"right"; its goblin has *white hair* on a bald character). Beat 02 — bone grey,
+not green, child build — was found first by the b02 plate lane earlier the same
+day. Wave is **seven** beats: 02 03 04 07 08 13 20; 15 and 19 are the reference.
+Table: `review/ep2-ship-0821/sources/ship-manifest.yaml` `goblin_design_audit_0820`.
+
+Ship cut re-assembled after the b04/b13 swap (the manifest had described a cut
+nobody had built for an hour) — sha `e4ecfce2…ccc5`, 116.33 s, qa_local PASS 85.
+`train-jerry-0820` stays HELD; six uncommitted `ep2-b02-adultplate-*` specs are
+authored on the retired wording and are flagged, not touched.
