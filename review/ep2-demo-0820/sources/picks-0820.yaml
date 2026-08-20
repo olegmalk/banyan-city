@@ -51,16 +51,19 @@
 # untouched, and no VO was re-synthesised.
 
 cut: review/ep2-demo-0820/ep2-demo-0820.mp4
-sha256: 173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0
+sha256: 6f12302d0bebe9f0e2e370cba9c61253c27b1cf7c66839b5f5343099c0868d1f
 sha256_superseded_in_place: >-
   b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486 (the morning
   cut), 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
   (revision b before the beat 03 seed landed, 40 minutes earlier),
   b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1 (revision b,
-  before the first beat 01 swap this evening) and
+  before the first beat 01 swap this evening),
   93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305 (revision c,
-  before the beat 01 composite swap). Same path, same URL, five sets of bytes
-  today; this is the live one.
+  before the beat 01 composite swap) and
+  173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0 (revision d as
+  first assembled, which PLAYED THE COLD OPEN AT 0.53x — see
+  revision_d.the_defect_the_ship_lane_caught_in_my_cut). Same path, same URL, six
+  sets of bytes today; this is the live one.
 duration_s: 115.42
 size: 720x1280
 footage_beats: 19
@@ -1129,3 +1132,16 @@ revision_d:
       refused AGAIN because the crf-10 ingredient had been committed to farm-out with no sidecar
       beside it. That sidecar was pulled from the box and verified against the box''s own manifest
       (90a02c10…67fe) rather than reconstructed. Both refusals were correct and both were mine.'
+    the_defect_the_ship_lane_caught_in_my_cut: 'REVISION D AS FIRST ASSEMBLED PLAYED THE COLD OPEN AT
+      0.53x SPEED -- 5.04 s of clip stretched across a 9.47 s slot, the fig growing in slow motion --
+      and it shipped that way for about twenty minutes before the ship lane found it in their own
+      assembly and reported it instead of reaching into this directory. THE CAUSE IS MY SIDECAR BEING
+      HONEST: render_t3.held_still() classified clips by substring-matching `model: none`, which
+      fig_composite.py writes truthfully because no sampler ran -- but `model: none` means NO SAMPLER,
+      not NO VIDEO, and the composite emits 121 real frames at a real 24 fps. Fixed in
+      pipeline/render_t3.py by ba412265: a clip that declares its own `fps:` is footage and gets
+      footage''s treatment (play once, hold the last frame); hold_still products, which are computed
+      camera moves with no true frame rate, deliberately write `seconds:` and no `fps:`, and still
+      stretch. The cut was re-assembled on the fixed tool -- same 21 beats, same 115.42 s, same audio,
+      beat 01 now "plays once then HOLDS its last frame to fill 9.47 s". New bytes, same path, same
+      URL: 6f12302d…68d1f.'

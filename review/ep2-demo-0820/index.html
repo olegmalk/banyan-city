@@ -190,10 +190,20 @@
 <strong>The newest beat is 01, the cold open you are about to see first</strong> — 03 at 0:13 and 15 at
 1:09 landed earlier today. The re-voiced guards run 0:24–0:51 (beats 5–10; beat 9 is the slate with the
 punchline). Beat 06 at 0:29 is still the clearest single demonstration of the voice and hold fixes at once.
-sha256 <code>173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0</code>
+sha256 <code>6f12302d0bebe9f0e2e370cba9c61253c27b1cf7c66839b5f5343099c0868d1f</code>
 <span class="sub">(revision d — beat 01 swapped again, to a composite. The morning cut was
 <code>b243dbd7…</code>, the revision-b cuts <code>2d7533a5…</code> and <code>b8afbf1b…</code>, and
 revision c was <code>93fb0ddb…</code> — all at this same URL.)</span></p>
+
+<p class="sub"><strong>Re-assembled once, twenty minutes after revision d first went up
+(<code>173179f4…</code>), and it is worth knowing why.</strong> That first assembly played the cold
+open at <strong>0.53× speed</strong> — the fig growing in slow motion — because the assembler decides
+whether to stretch a clip by looking for <code>model: none</code> in its sidecar, and the new composite
+says exactly that, truthfully: no sampler ran for it. But "no sampler" is not "no video"; it is 121 real
+frames at a real 24 fps. The assembler now asks whether a clip declares its own frame rate instead, so
+footage plays once and holds its last frame and only computed camera moves stretch. Same 21 beats, same
+1:55, same audio; beat 01 plays at speed. <em>Found by the lane assembling tomorrow's ship cut, in their
+own copy, and reported rather than quietly patched here.</em></p>
 
 <ul class="counts">
   <li><b>19</b> beats of footage <span class="sub">(was 18)</span></li>
