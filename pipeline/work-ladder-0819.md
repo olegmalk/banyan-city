@@ -5088,3 +5088,63 @@ which is in every verdict this tree has published; and the **still-plate** build
 which satisfies every field clause by construction and has no ambient motion at all
 — locked-off plate versus living field is R4, built and sha'd so the ask costs
 nothing, still parked.
+
+---
+
+## SHIP CUTOFF — 12:00, 2026-08-21 (added by the ship lane, 2026-08-20 evening)
+
+**The ladder has a deadline now, and this is it.** The founder ordered episode 2
+shipped within 24 hours (`STATE.md` 2026-08-20, commit `3b69eb8c`: *"ship it."*).
+The ship candidate is assembled and in front of him at **`/review/ep2-ship-0821`**
+— 21 beats, **20 footage, 1 slate**, 1:56, $0.
+
+**The rule, in one sentence.** An upgrade **judged and swapped into
+`review/ep2-ship-0821/sources/ship-manifest.yaml` by 12:00 tomorrow** enters the
+shipped cut; anything later goes to a **post-ship patch list** and ships in a
+revision, not in this one. The clock is on the swap, not on the render — a clip
+that lands at 11:55 with no verdict is not an upgrade, it is a file.
+
+**What "swapped in" means, mechanically.** Four things, and the third is the one
+that gets skipped:
+
+1. Copy the clip **and its `.mp4.meta.yaml`** into `review/ep2-ship-0821/sources/`.
+2. **DELETE the outgoing `NN-*.mp4` and its sidecar from that directory.**
+   `get_clip()` globs `NN-*.mp4` and takes the **sorted first** — leaving both is a
+   filename-ordering coin flip, not a swap. Beat 01 proved this tonight: the
+   incoming `01-cold-open-COMP-…` sorts *before* the outgoing `01-cold-open-LTX-…`,
+   so the correct clip would have been chosen **by accident**.
+3. Edit **both** the beat's row and its `ship_status:` entry in `ship-manifest.yaml`,
+   with the fault named. A swap with no named fault is not admissible under the ship
+   order — "best-available" is only meaningful next to "with faults named".
+4. Re-run the assembly, `proof_receipts --frames --cut ep2-ship-0821`, and
+   `build_page.py`. Then `git add -f` the media (`review/**/*.mp4|jpg|mp3` is
+   gitignored; an unforced add commits the manifest and none of the pictures).
+
+**Tell the ship lane rather than editing the master.** Peer lanes own their beats;
+the ship lane owns `ep2-ship-0821.mp4`, `index.html` and `ship-manifest.yaml`. An
+additive file in that directory is always safe — the b01 lane did exactly that
+tonight with `SHIP-CANDIDATE-b01-chroma-0820.md` and nothing was lost. Two lanes
+re-assembling one master is how a cut gets silently reverted.
+
+**What is actually in scope before the cutoff, measured tonight.** Nothing on the
+GPU can reach it. Every beat with a newer 08-20 candidate — 01, 04, 08, 13, 16 —
+had that candidate **refused by its own verdict on a measured fault**, and beats
+08, 13 and 16 produced stills only. Beat 01 already took its upgrade (the chroma
+composite, in the cut). The **one** thing that still moves a picture before 12:00
+is a founder word on `/review/ep2-guards-0818`, which decides whether beat 09
+stays in.
+
+**Two traps this assembly hit, so nobody re-finds them:**
+
+- **`model: none` does not mean "no video".** A composite runs no sampler and says
+  so honestly; `render_t3.held_still()` read that substring and **stretched beat 01
+  from 5.04 s to 9.47 s** — the cold open at 0.53× speed. Fixed: a clip that
+  declares its own `fps:` is footage and is never stretched. If you build a
+  composite, **write an `fps:` line in its sidecar.**
+- **A plain scalar containing `: ` is a yaml parse error.** It killed this
+  manifest's first parse on the word `loop_fill: pingpong`, and it is the same
+  defect that has left `review/ep2-picks/b15-0819-verdict.yaml` machine-unreadable
+  for four days. Quote it or use `>-`.
+
+**After 12:00.** The patch list is a real destination, not a bin — a revision cut is
+cheap ($0, one `render_t3` run). What it is not is a reason to hold the ship.
