@@ -3,6 +3,7 @@
   482.9,
   533.5
  ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
  "erase_box": "100,290,340,640",
  "erased_px": 10310,
  "field_mean_luma": 142.6,
@@ -37,7 +38,7 @@
  "light_dx": -0.218,
  "light_dy": -0.976,
  "lit_side": "left",
- "mask_fraction": 0.0984,
+ "mask_fraction": 0.1014,
  "palette": {
   "dark": [
    68,
@@ -45,9 +46,9 @@
    50
   ],
   "ink": [
-   49,
-   72,
-   50
+   27,
+   33,
+   38
   ],
   "light": [
    169,
@@ -63,13 +64,13 @@
   "source": "the erased weed"
  },
  "plant_extent": [
-  237,
-  773,
-  430,
-  1170
+  236,
+  774,
+  428,
+  1172
  ],
- "plant_fraction": 0.0565,
- "plant_mean_luma": 110.2,
+ "plant_fill_luma": 113.3,
+ "plant_fraction": 0.0597,
  "plate": "farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png",
  "plate_sha256": "8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe",
  "root": [

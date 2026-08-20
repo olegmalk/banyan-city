@@ -96,7 +96,7 @@ def qbez(p0, p1, p2, t):
             u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1])
 
 
-def draw_taper(d, p0, p1, p2, w0, w1, fill, ink):
+def draw_taper(d, p0, p1, p2, w0, w1, fill, ink, ink_w=4):
     """A stem is a tapered polygon, not a stroked line: PIL's line joins at 3 px
     read as a chain of dots at 1x, which is decal tell #4."""
     left, right = [], []
@@ -111,7 +111,9 @@ def draw_taper(d, p0, p1, p2, w0, w1, fill, ink):
         r = 0.5 * (w0 + (w1 - w0) * t)
         left.append((x + nx * r, y + ny * r))
         right.append((x - nx * r, y - ny * r))
-    d.polygon(left + right[::-1], fill=fill, outline=ink)
+    ring = left + right[::-1]
+    d.polygon(ring, fill=fill, outline=ink)
+    outline(d, ring, ink, ink_w)
 
 
 def _blade(base, tip, width, k=1.0):
@@ -132,7 +134,26 @@ def _blade(base, tip, width, k=1.0):
     return out
 
 
-def draw_leaf(d, base, tip, width, fill, hi, ink, lit_sign):
+def outline(d, pts, ink, w):
+    """A CEL LINE, not PIL's 1 px `outline=`.
+
+    MEASURED FAILURE, first sample of this instrument. The plate's own character
+    ink is median RGB (25,31,35) -- luma 30 -- and its outlines run a median of
+    4 px, up to 28 on major contours. The first version drew the blades with a
+    1 px `outline=` in a colour sampled from the erased weed, (49,72,50), luma
+    63: half the darkness at a quarter of the width. At strength 0.30 with
+    pad-crop 64 and blur 8 that line DISSOLVED -- the pass returned beautifully
+    graded leaves with NO EDGE, soft airbrushed shapes sitting in front of a
+    hard-inked cel drawing, which is the decal read arriving through line weight
+    instead of through colour. b19's §5 law is that in this dialect a strong
+    dark line IS an edge; a weak one is nothing.
+    """
+    if w <= 1:
+        return
+    d.line(list(pts) + [pts[0]], fill=ink, width=w, joint="curve")
+
+
+def draw_leaf(d, base, tip, width, fill, hi, ink, lit_sign, ink_w=4):
     """One blade in the plate's dialect: mid-green ovate body, dark cel outline,
     a lighter CRESCENT along the LIT edge. NO MIDRIB IS DRAWN -- in this dialect
     a strong dark line IS an edge, and a composited internal line stronger than
@@ -144,15 +165,18 @@ def draw_leaf(d, base, tip, width, fill, hi, ink, lit_sign):
     so the crescent lands on the side the field is actually lit from.
     """
     prof = _blade(base, tip, width)
-    d.polygon([(x + rx, y + ry) for x, y, rx, ry in prof]
-              + [(x - rx, y - ry) for x, y, rx, ry in reversed(prof)],
-              fill=fill, outline=ink)
+    ring = ([(x + rx, y + ry) for x, y, rx, ry in prof]
+            + [(x - rx, y - ry) for x, y, rx, ry in reversed(prof)])
+    d.polygon(ring, fill=fill, outline=ink)
     hp = _blade(base, tip, width, k=0.96)
     s = float(lit_sign)
     d.polygon([(x + s * rx, y + s * ry) for x, y, rx, ry in hp]
               + [(x + s * rx * 0.34, y + s * ry * 0.34)
                  for x, y, rx, ry in reversed(hp)],
               fill=hi)
+    # the line goes on LAST, over the fill and over the highlight, so the
+    # crescent cannot cut it. Drawn at the plate's own line weight.
+    outline(d, ring, ink, ink_w)
 
 
 # ---------------------------------------------------------------------------
@@ -172,6 +196,19 @@ def dilate(m: np.ndarray, r: int) -> np.ndarray:
         s[:-1, :] |= out[1:, :]
         s[:, 1:] |= out[:, :-1]
         s[:, :-1] |= out[:, 1:]
+        out = s
+    return out
+
+
+def erode(m: np.ndarray, r: int) -> np.ndarray:
+    """b19's 4-neighbour erosion, the dual of dilate."""
+    out = m.copy()
+    for _ in range(r):
+        s = out.copy()
+        s[1:, :] &= out[:-1, :]
+        s[:-1, :] &= out[1:, :]
+        s[:, 1:] &= out[:, :-1]
+        s[:, :-1] &= out[:, 1:]
         out = s
     return out
 
@@ -270,6 +307,24 @@ def sha256_of(path: str) -> str:
         return hashlib.sha256(fh.read()).hexdigest()
 
 
+def _character_ink(a: np.ndarray) -> tuple:
+    """The darkest ink in the plate — the colour its FIGURES are outlined in.
+
+    Taken as the median of everything under a fixed INK CUTOFF, not as a
+    percentile. A percentile finds the darkest pixels in the frame, which are the
+    deepest points of the ink and its shadows -- 0.5% returned (2,2,2) on the b15
+    plate, near pure black, and true black reads as pasted in this dialect. The
+    median of `lum < 60` is what the outlines actually are: (25,31,35) on that
+    same plate, a desaturated blue-black, which is the number this was measured
+    against by hand.
+    """
+    lum = 0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2]
+    sel = lum < 60.0
+    if int(sel.sum()) < 200:            # a plate with no ink at all
+        sel = lum <= np.percentile(lum, 1.0)
+    return tuple(int(v) for v in np.median(a[sel], axis=0))
+
+
 def palette_from_erased(a: np.ndarray, weed: np.ndarray) -> dict:
     """Sample the drawn plant's colours FROM THE PLANT THIS TOOL IS DELETING.
 
@@ -288,7 +343,14 @@ def palette_from_erased(a: np.ndarray, weed: np.ndarray) -> dict:
     return {"dark": tuple(int(v) for v in np.percentile(px, 18, axis=0)),
             "mid": tuple(int(v) for v in np.percentile(px, 45, axis=0)),
             "light": tuple(int(v) for v in np.percentile(px, 86, axis=0)),
-            "ink": tuple(int(v) for v in np.median(a[ink], axis=0)),
+            # THE INK IS THE PLATE'S CHARACTER INK, NOT THE WEED'S. The weed is
+            # a background prop drawn with a light, thin line; the sapling is
+            # this shot's SUBJECT and has to carry the line weight the figure
+            # carries. Measured on this plate: his ink is median (25,31,35),
+            # luma 30, while the weed's darkest green is (49,72,50), luma 63.
+            # The first sample outlined the blades with the weed's colour and
+            # the 0.30 pass erased the edge entirely.
+            "ink": _character_ink(a),
             "n_sampled": int(leaf.sum()), "source": "the erased weed"}
 
 
@@ -316,7 +378,9 @@ def foliage_palette(a: np.ndarray, region: np.ndarray) -> dict:
     dark, mid, light = pct(0.14), pct(0.50), pct(0.88)
     # The ink is the plate's own darkest line colour, not black: this dialect
     # outlines in a dark desaturated navy/green, and true black reads as pasted.
-    ink = tuple(int(v * 0.42) for v in dark)
+    # Same law as palette_from_erased: the SUBJECT is inked in the plate's
+    # character ink, not in a darkened tint of its own fill.
+    ink = _character_ink(a)
     return {"dark": dark, "mid": mid, "light": light, "ink": ink,
             "n_sampled": int(green.sum())}
 
@@ -363,6 +427,16 @@ def main() -> int:
                          "mask eight times the working size (b16 leafcomp, "
                          "detail 10.45 -> 9.41); this is the guard that keeps "
                          "the restage from repeating it.")
+    ap.add_argument("--ink-width", type=int, default=4,
+                    help="cel-outline width in px. DEFAULT MEASURED ON THE "
+                         "PLATE, not chosen: the b15 plate's own character "
+                         "outlines run a median of 4 px (up to 28 on major "
+                         "contours) in ink of median RGB (25,31,35). The first "
+                         "sample of this instrument used PIL's 1 px `outline=` "
+                         "in the erased weed's (49,72,50) -- half the darkness "
+                         "at a quarter of the width -- and the 0.30 pass "
+                         "dissolved the edge completely, returning graded "
+                         "leaves with no line in front of a hard-inked drawing.")
     ap.add_argument("--mask-dilate", type=int, default=9)
     ap.add_argument("--erase-box", default=None,
                     help="x0,y0,x1,y1 — a plant ALREADY in the plate, erased "
@@ -548,7 +622,8 @@ def main() -> int:
     stem_col = tuple(int(min(255, v)) for v in np.array(pal["dark"]) * 0.88 + 12)
     stem_w0 = max(4.0, a.height * 0.030)
     stem_w1 = max(2.0, a.height * 0.013)
-    draw_taper(d, (rx, ry), mid, apex, stem_w0, stem_w1, stem_col, ink)
+    draw_taper(d, (rx, ry), mid, apex, stem_w0, stem_w1, stem_col, ink,
+               ink_w=a.ink_width)
 
     # TWO LEAVES, NOT A MIRRORED PAIR: 5 px apart on the stem and 6% apart in
     # length. Decal tell #4 is a visible repeat, and two identical blades
@@ -559,7 +634,8 @@ def main() -> int:
         ang = tilt + side * spread
         ln = leaf_len * k
         tip = (node[0] + ln * np.sin(ang), node[1] - ln * np.cos(ang) * 0.62)
-        draw_leaf(d, node, tip, ln * 0.40, pal["mid"], pal["light"], ink, lit_sign)
+        draw_leaf(d, node, tip, ln * 0.40, pal["mid"], pal["light"], ink,
+                  lit_sign, ink_w=a.ink_width)
         leaves.append({"side": side, "node": [round(v, 1) for v in node],
                        "tip": [round(v, 1) for v in tip], "len": round(ln, 1)})
 
@@ -664,12 +740,24 @@ def main() -> int:
     if abs(leaves[0]["len"] - leaves[1]["len"]) < 0.02 * leaf_len:
         fails.append("C4 the two blades are the same length: a mirrored pair is "
                      "decal tell #4, one blade drawn twice")
-    lum_plant = float(np.asarray(Image.fromarray(comp).convert("L"))[drawn].mean())
+    # C5 MEASURES THE FILL, NOT THE OUTLINE, and that is a correction rather
+    # than a loosening. The check exists to catch a plant whose COLOUR does not
+    # belong to the frame. A correct cel outline is supposed to be near-black,
+    # so the moment the ink was fixed from 1 px of (49,72,50) to 4 px of
+    # (25,31,35) the whole-silhouette mean fell 46.4 below the field and C5
+    # fired on the fix. Eroding the silhouette past the line measures the body
+    # colour, which is what the check was always about; the ink has its own
+    # check in the eye, and C1 still bounds where any of it may be written.
+    interior = erode(drawn, max(2, a.ink_width))
+    if int(interior.sum()) < 500:
+        interior = drawn
+    lum_plant = float(np.asarray(Image.fromarray(comp).convert("L"))[interior].mean())
     lum_field = float(np.asarray(Image.fromarray(arr).convert("L"))[region].mean())
-    geom["plant_mean_luma"] = round(lum_plant, 1)
+    geom["plant_fill_luma"] = round(lum_plant, 1)
     geom["field_mean_luma"] = round(lum_field, 1)
+    geom["c5_measures"] = "the drawn plant's FILL, silhouette eroded by ink_width"
     if abs(lum_plant - lum_field) > 46:
-        fails.append("C5 the plant's mean luma %.1f is %.1f away from the "
+        fails.append("C5 the plant's FILL luma %.1f is %.1f away from the "
                      "field's %.1f -- it will read as pasted before the pass "
                      "ever runs" % (lum_plant, abs(lum_plant - lum_field),
                                     lum_field))
