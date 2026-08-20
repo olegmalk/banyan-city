@@ -5740,3 +5740,49 @@ was five seeds and not one — a single draw of s5 would have shipped a pan.
 
 **All five are in and the read is unchanged: four yaws, no translation, and the
 only translation on offer was the camera's.**
+
+---
+
+## Appended 2026-08-20 by the beat-09 polish lane — one sentence bought the hand 35 frames where it had 8
+
+`ep2-b09-hand-h1..h4-0820`, off `ep2-b09-cropmotion-0820`. **The parent's
+positive never contains the word `hand`** — it describes hair, glasses, brows,
+eyes, head tilt, mouth and light, and the object with the largest interframe
+drift in its frame is the one object its conditioning never names. One sentence
+inserted and placed, phrased as an ongoing action (`his fingers rest against his
+cheek … shifting a little against his cheek as he thinks`) so it could not buy
+the hold by freezing. **The negative is untouched byte for byte** — it already
+carried `melting`, `morphing` and `changing face` and the hand dissolved anyway.
+
+**h1 CARRIES THE PARENT'S OWN SEED (20260819), so this is a one-variable read
+against a scored clip and not four fresh draws.** Hand box (430,430,660,700),
+the parent's own ruler, mean abs luma against f001:
+
+| | parent | h1 |
+|---|---|---|
+| first pair | **46.1** | — |
+| f005 / f010 / f020 / f035 | gone by f008 | **0.43 / 0.78 / 1.04 / 1.50** |
+| where it starts to go | f001 | **f040** (17.1, interframe 23.4 at f045) |
+| where it is gone | **f008** | ~f097 |
+
+**Thirty times less drift over the first thirty-five frames, from one sentence,
+at the same seed.** H1's first two clauses pass outright — a whole hand, palm
+and four fingers, at f008 and at f030 — and its third fails: the hand leaves
+across f040–f097 in a staircase of ~20–35 interframe jumps every three frames.
+
+**That is H-LATE, pre-registered in this spec's own fail modes and written down
+in advance as "PROGRESS and not a pass, and the frame it goes at is the number
+the next rung would be aimed with". The number is f040.**
+
+**AND THE TAIL IS DEAD, which the bar also named.** Face-band mean interframe
+runs 0.558 across f002–040, 2.463 across f041–099 and **0.036 across f100–121**,
+last-20 max 0.116; 37 of 120 pairs are under 0.05. So the clip stops once the
+hand has finished leaving. H3 says a clip frozen hard enough to keep the hand is
+a FAIL — this is the inverse and just as disqualifying: it lost the hand *and*
+froze. Camera locked throughout (corner interframe 0.43 / 0.75).
+
+**h1 is a PARTIAL. The mechanism is confirmed and the beat is not fixed.** h2–h4
+walk the seed and are still on the card; they decide whether f040 is the clause's
+ceiling or this draw's. No promotion either way — `is_show_content: false`
+carried forward from the parent, beat 09 stays a slate, and the adult/adolescent
+read is still an open R4 card.
