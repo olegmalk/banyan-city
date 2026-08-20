@@ -5382,3 +5382,23 @@ Table: `review/ep2-ship-0821/sources/ship-manifest.yaml` → `goblin_design_audi
 Pixels: `review/ep2-goblin-design-0819/AUDIT-missed-beats-0820.png`.
 **No frame moves before the cutoff** — this is an audit, and the two beats it
 newly condemns have no candidate to swap to.
+
+#### Credit, a correction to my own rung above, and a live collision
+
+**BEAT 02 WAS FOUND FIRST BY THE b02 PLATE LANE, not by this audit.** Its
+deriver — `pipeline/derive_b02_adultplate_0820.py`, still uncommitted in the
+working tree — says it in as many words: *"The 08-19 split page … listed nine
+goblin beats … Beat 02 is on neither list. It was missed."* That lane got there
+earlier on 08-20 and this audit only confirms it. What is genuinely new here is
+**beat 15**, which no lane and no sheet has ever named, and **beat 07**, which
+sits on the *right-hand* side of the 08-19 split and does not belong there.
+
+> **AND THAT LANE'S SIX SPECS ARE NOW AUTHORED AGAINST RETIRED CANON.**
+> `pipeline/jobs/ep2-b02-adultplate-s202608{20..25}-0820.yaml` (six seeds, one
+> wording) reason from *"the defect is not the adult — it is the MIX"*, which the
+> founder's night correction retires, and their `prompt.txt` is the `lean wiry
+> adult goblin man …` string verbatim. **Fired as written they render the
+> man-read six more times.** They are **not queued** — the box queue is empty and
+> none of them is in `farm-out/` — and **nothing has been touched**: they are
+> another lane's uncommitted files and this lane does not edit those. b02 lane:
+> re-read `canon.yaml` `correction_2026_08_20` before you enqueue.

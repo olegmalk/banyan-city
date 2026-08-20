@@ -729,8 +729,18 @@ beats:
 # 1:1 beside review/ep2-goblin-design-0819/adult-b19-0819.jpg. NOT from the 240px
 # proof thumbnails, which is how the two beats below got missed the first time.
 #
-# THE HEADLINE, AND IT IS A COUNTING ERROR NOBODY HAS CAUGHT UNTIL TONIGHT:
-# THE GOBLIN IS IN ELEVEN BEATS OF THIS CUT, NOT NINE. The 08-19 split sheet
+# THE HEADLINE IS A COUNTING ERROR:
+# THE GOBLIN IS IN ELEVEN BEATS OF THIS CUT, NOT NINE.
+#
+# CREDIT WHERE IT IS DUE, AND A CORRECTION TO THIS BLOCK'S FIRST DRAFT, WHICH
+# CLAIMED NOBODY HAD CAUGHT ANY OF THIS: the b02 plate lane found BEAT 02
+# independently earlier on 08-20 and said so in as many words --
+# `pipeline/derive_b02_adultplate_0820.py`, uncommitted in the working tree:
+# "The 08-19 split page ... listed nine goblin beats ... Beat 02 is on neither
+# list. It was missed." That lane got there first and this audit confirms it.
+# What is new here is BEAT 15, which no lane and no sheet has ever named, and
+# BEAT 07, which is filed on the RIGHT-hand side of the 08-19 split and does not
+# belong there. The 08-19 split sheet
 # (`the-split-0819c.jpg`, "nine frames from the cut") and every record built on
 # it — including canon.yaml's own list of beats to re-render — enumerate 03, 04,
 # 07, 08, 13, 14, 17, 19, 20 and omit BEAT 02 and BEAT 15. The sheet was built
@@ -756,7 +766,9 @@ goblin_design_audit_0820:
     no_goblin: 10
   the_two_that_were_never_audited:
     beat_02: >-
-      THE WORST IDENTITY BREAK IN THE CUT AND IT IS NOT AN AGE PROBLEM. He is not
+      FOUND FIRST BY THE b02 PLATE LANE EARLIER ON 08-20, not by this audit --
+      see the credit note above. THE WORST IDENTITY BREAK IN THE CUT AND IT IS
+      NOT AN AGE PROBLEM. He is not
       green. The figure is bone-grey/white with a huge round cranium, low pointed
       ears, closed eyes, a chubby child body, grey shirt and shorts, barefoot. So
       beat 02 breaks the tile on SPECIES COLOUR and on BUILD at once, and it has
@@ -799,6 +811,17 @@ goblin_design_audit_0820:
     four that were right). Beats 15 and 19 come OUT of any wave — they are the
     reference. Beat 14 needs one attribute changed, the ears, not a re-render.
     Beat 17 needs nothing until a frame shows his face.
+  a_live_collision_flagged_not_touched: >-
+    SIX UNCOMMITTED b02 PLATE SPECS ON DISK ARE AUTHORED AGAINST RETIRED CANON.
+    pipeline/jobs/ep2-b02-adultplate-s202608{20..25}-0820.yaml and their deriver
+    were written earlier on 08-20, before the founder's night correction, and
+    their reasoning is explicit: "the defect is not the adult -- it is the MIX."
+    That premise is now retired, and their prompt.txt is the `lean wiry adult
+    goblin man` string verbatim. Fired as written they would render the man-read
+    six more times. They are NOT queued (box queue is empty, none in farm-out)
+    and NOTHING HAS BEEN TOUCHED — they belong to a live lane and this lane does
+    not edit another lane's uncommitted files. Flagged here and in the ladder so
+    that lane re-reads before it enqueues.
   nothing_here_moves_a_frame_before_the_cutoff: >-
     This is an audit, not a swap. No beat below changes in the 2026-08-21 cut:
     every re-render it names is a post-ship patch, and the two beats it newly
