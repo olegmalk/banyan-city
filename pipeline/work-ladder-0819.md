@@ -4550,3 +4550,64 @@ and **C4' returned VOID twice** — correct both times, but the repeat is a usag
 defect of mine, because the erase region I publish IS the mask, so its ring can
 never land on real pixels. Set the scored region in from the mask boundary by
 more than the ring radius.
+
+### It landed the same hour: `--image-crf` is ONE knob, and the flag route is now closed
+
+`ep2-b01-figcrf10-s20260840-0820` rendered rc=0 in ~5 GPU-minutes, was pulled and
+sha-verified (`f9dc64a3…282b`), and is judged. **FAIL on G1 and G5a — and the
+rung did exactly what it was filed to do, which was break a confound, not win a
+slot.** F2, pre-registered as likeliest, fired almost to the word.
+
+**THE FIELD HOLDS, AND IT IS THE CRF, NOT THE SEED.** Same seed 20260840, same
+init, same prompts, one argv value:
+
+| | control, crf 33 | this job, crf 10 | incumbent, crf 10 s26 |
+|---|---|---|---|
+| region NCC shaft | −0.324 | **0.982** | 0.932 |
+| region NCC sapling | 0.055 | **0.734** | 0.637 |
+| region NCC grass | 0.038 | 0.062 | 0.323 |
+| luma Δ at peak | +10.85 | **+0.92** | +1.46 |
+| live frames | 121/121 | 105/121 | 90/121 |
+| fig total growth | **14.77×** | 1.79× | 7.88× |
+| 90 % of growth at | **f108** | f050 | f009 |
+
+It does not merely pass the field clauses, it **beats the incumbent on all three
+of shaft, sapling and luma**. The confound is broken: `--image-crf` was the
+cause and seed 20260826 was never the story.
+
+**And the fig stopped growing with it.** 800 px → 1435 px, **1.79×** against the
+control's 14.77× at the same seed. By eye at f060/f090/f120 the nub changes
+*colour* from green to a small dark purple and barely changes *size*.
+
+**So field stability and fig growth are ONE knob on this engine, and that is now
+established at two seeds on the crf-10 side** — s20260826 held the field and
+popped the fig by f009; s20260840 holds the field and grows it 1.79×. Five seeds
+plus the control at crf 33 all redraw the field and all grow the fig 8×–19×.
+Nothing in seven clips separates the behaviours, because `--image-crf` does not
+distinguish the fig from the field: it sets how far the whole picture may drift
+from its conditioning image, and the fig is part of the picture.
+
+G5a fails on **one band only** — grass floor 0.062 against 0.20, with shaft,
+sapling and fig box all clear. Even at crf 10 the foreground grass re-inks. That
+is the residual dead zone of the conditioning route, and it is small.
+
+**No cut change.** Two failing clauses against the in-cut take's one, so beat 01
+keeps `01-cold-open-LTX-fignonly-s20260840.mp4`. Written down explicitly because
+this rung produced the best field numbers this beat has ever measured and it
+would be easy to mistake that for a better clip — on screen the fig barely
+swells, which is the shot.
+
+**THE FLAG ROUTE IS CLOSED. An intermediate crf is NOT the next rung** — the pool
+samples the curve at 10 and 33, both ends fail, one on G1 and one on G5a, and a
+midpoint is a search for a value that satisfies a conjunction the knob cannot
+express. That refusal is written into the spec's
+`what_this_licenses_after_the_verdict` so the next lane reads it before
+proposing crf 20.
+
+**What is licensed is LOCALISATION**, as F2 pre-registered: composite the fig's
+growth from the crf-33 take onto the held field of the crf-10 take, using
+`fig_track.py`'s own per-frame masks — geometry-anchored, validated by eye at 5×
+on exactly these frames. Both ingredients are rendered and sha-verified; it needs
+no GPU and no new plate. Risk named in advance: the fig's stem and contact shadow
+move with the plant in the crf-33 take, so a fig-only matte may read as pasted,
+and the grass band may have to come from the held plate too.
