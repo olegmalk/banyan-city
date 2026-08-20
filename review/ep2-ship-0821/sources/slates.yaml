@@ -1,0 +1,12 @@
+# Per-beat slate wording for the SHIP CANDIDATE cut.
+#
+# render_t3 prints "[ footage pending ]" on any beat with no footage. On this
+# cut that string would be a lie: beat 16 is not waiting on a render, it is
+# waiting on a ruling, and footage for it exists and is barred. A slate the
+# viewer sees should say which of those it is.
+#
+# One entry, because this cut has one slate. Keys are beat numbers.
+
+16: >-
+  He asks the sapling why. His line plays; the picture does not.
+  The only leaf ever rendered for this beat is the one you ruled out.

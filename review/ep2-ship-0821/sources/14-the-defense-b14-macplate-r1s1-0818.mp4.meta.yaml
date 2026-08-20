@@ -1,0 +1,33 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 14
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260818
+task: ep2-b14-mac-motion-0818
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0186
+compute_s_per_video_s: 53.8
+# --- appended by ep2-b14-mac-motion-0818 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  A CANDIDATE TAKE FOR BEAT 14'S CUT SLOT, not an engine probe. It
+  animates the beat's own staged plate -- 14-the-defense-mac-plate-r1s1,
+  the seed the steward ruled shipped on 2026-08-18 -- and it is judged
+  against the bar pre-registered in pipeline/jobs/ep2-b14-mac-motion-0818.yaml
+  BEFORE this render existed. Not approved and not cut until those 121
+  frames have been opened consecutively. The standing per-seed check
+  overrides every other clause: if a pale limb-like mass appears in any
+  frame, this clip is a FAIL.
