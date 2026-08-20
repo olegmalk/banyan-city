@@ -3207,3 +3207,5 @@
 17:48:15Z FAIL task=ep2-b04-tileread-v0-0820-1787248084 rc=9 step=hintskel
 17:48:21Z STARTED task=ep2-b04-tileread-v1-0820-1787248088 attempt=1 on box-runner
 17:48:24Z FAIL task=ep2-b04-tileread-v1-0820-1787248088 rc=9 step=hintskel
+17:48:29Z STARTED task=ep2-b04-tileread-v2-0820-1787248091 attempt=1 on box-runner
+17:48:33Z FAIL task=ep2-b04-tileread-v2-0820-1787248091 rc=9 step=hintskel
