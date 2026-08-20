@@ -1,0 +1,127 @@
+{
+  "id": "ep2-b08-fistcopy-0820-1787232291",
+  "task": "ep2-b08-fistcopy-0820",
+  "node": "002b-first-citizen",
+  "beat": 8,
+  "worker": "box-runner",
+  "priority": 34,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08fistcopy-0820\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08fistcopy-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-0820.png",
+        "--init-sha256",
+        "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45",
+        "--mask-png",
+        "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08fistcopy-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08fistcopy-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b08fistcopy-0820\\b08-fistcopy-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730). IT IS THREE REGIONS AND ONE HOLE. (1) the guard's ORIGINAL left fist at the harness strap, grown 14 px -- the pass DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored wrist (622,668), 24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the copied fist at the board's top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the copied fist's interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one thing in this rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region does NOT reach the guard's FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140), or the guard's pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor's K12 and all three pass -- and that there is a clearly BLACK island inside the white rim at the board's top edge. If that island is missing the digits are unprotected and this job must stop here at $0.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b08fistcopy-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-0820.png",
+        "--init-sha256",
+        "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45",
+        "--mask-png",
+        "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08fistcopy-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08fistcopy-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b08fistcopy-0820\\b08-fistcopy-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.99",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730). IT IS THREE REGIONS AND ONE HOLE. (1) the guard's ORIGINAL left fist at the harness strap, grown 14 px -- the pass DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored wrist (622,668), 24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the copied fist at the board's top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the copied fist's interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one thing in this rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region does NOT reach the guard's FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140), or the guard's pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor's K12 and all three pass -- and that there is a clearly BLACK island inside the white rim at the board's top edge. If that island is missing the digits are unprotected and this job must stop here at $0."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08fistcopy-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-fistcopy-0820\"\nNAMES = [\n    \"b08-fistcopy-s20260820.png\",\n    \"b08-fistcopy-s20260820-mask.png\",\n    \"b08-fistcopy-s20260820.png.meta.yaml\",\n    \"08-first-citizen-fistcopy-0820.png\",\n    \"08-first-citizen-fistcopy-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-fistcopy-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b08fistcopy-0820\\b08-fistcopy-s20260820.png",
+    "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-0820.png"
+  ],
+  "backlog": {
+    "filed_at": 1787232291,
+    "filed_at_iso": "2026-08-20T13:24:51Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b08-fistcopy-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "224fb58e4e9f0f5e430c78f2e8738592572353854fc61defc4c98ed002b3a2e6",
+  "started_at": "2026-08-20T13:27:08Z",
+  "attempts": 1,
+  "runner_pid": 21356,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T13:27:36Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b08fistcopy-0820\\b08-fistcopy-s20260820.png",
+    "C:\\banyan-farm\\b08fistcopy-0820\\08-first-citizen-fistcopy-0820.png"
+  ]
+}
