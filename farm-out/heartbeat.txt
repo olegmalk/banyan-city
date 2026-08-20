@@ -3165,3 +3165,5 @@
 13:42:28Z STARTED task=ep2-b08-eraseonly-0820-1787233248 attempt=1 on box-runner
 13:42:56Z DONE task=ep2-b08-eraseonly-0820-1787233248 rc=0 artifacts=2
 13:43:01Z box-runner idle ready=0 failed=44
+13:48:06Z STARTED task=ep2-b08-nogoblin-0820-1787233508 attempt=1 on box-runner
+13:48:06Z FAIL task=ep2-b08-nogoblin-0820-1787233508 rc=1 step=fetch
