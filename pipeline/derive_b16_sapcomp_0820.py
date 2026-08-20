@@ -212,6 +212,14 @@ for name, want in WANT.items():
                 "mask, and that difference is the whole bet."),
         },
         overrides={
+            # THE PARENT'S INIT HASH. Retoken rewrites ids and FILENAMES; it
+            # cannot rewrite a sha256, so `--init-sha256` arrived carrying beat
+            # 03's 7b823832...d9f7 while the file beside it was this child's.
+            # The first filing of this spec died rc=3 in five seconds on
+            # inpaint_fruit's own assertion -- the guard working exactly as
+            # designed, before a model loaded. It is fixed here rather than
+            # explained, and the class is closed by the hash sweep below.
+            "argv:--init-sha256": want[INIT],
             "payload:fetch_init.py": fetch,
             "payload:prompt.txt": PROMPT,
             "payload:negative.txt": NEGATIVE,
@@ -367,6 +375,28 @@ for name, want in WANT.items():
                       % step.get("name"))
                 return 1
     print("notes replaced on: %s" % ", ".join(patched))
+
+    # ---- THE HASH SWEEP: close the class, not the instance ----------------
+    # `--init-sha256` came through as the PARENT's, because retoken rewrites
+    # ids and filenames and a sha256 is neither. That killed the first filing
+    # rc=3. A sha is a MEASUREMENT OF A FILE, so any 64-hex token in a child's
+    # argv that is not one of THIS child's own file hashes is, by construction,
+    # a measurement of somebody else's file. Sweep for it rather than
+    # remembering the one flag it happened to hide behind.
+    import re as _re
+    mine = set(want.values())
+    for step in child.get("steps") or []:
+        for tok in step.get("argv") or []:
+            if not isinstance(tok, str):
+                continue
+            for h in _re.findall(r"\b[0-9a-f]{64}\b", tok):
+                if h not in mine:
+                    print("!! step %r carries sha256 %s..., which is not this "
+                          "child's init or mask. A hash survives retoken by "
+                          "construction; it belongs to the parent's file."
+                          % (step.get("name"), h[:12]))
+                    return 1
+    print("hash sweep OK: every sha256 in the argv is this child's")
 
     out = os.path.join(REPO, "pipeline", "jobs", NEW_ID + ".yaml")
     if not write:

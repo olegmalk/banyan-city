@@ -244,7 +244,7 @@ steps:
   - --init
   - C:\banyan-farm\b16sapcomp-0820\16-why-sapcomp-0820.png
   - --init-sha256
-  - 7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7
+  - ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46
   - --mask-png
   - C:\banyan-farm\b16sapcomp-0820\16-why-sapcomp-mask-0820.png
   - --prompt-file
@@ -284,7 +284,7 @@ steps:
   - --init
   - C:\banyan-farm\b16sapcomp-0820\16-why-sapcomp-0820.png
   - --init-sha256
-  - 7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7
+  - ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46
   - --mask-png
   - C:\banyan-farm\b16sapcomp-0820\16-why-sapcomp-mask-0820.png
   - --prompt-file
@@ -504,6 +504,10 @@ derivation:
   - b03-sapcomp -> b16-sapcomp
   - ep2-b03-sapcomp-0820 -> ep2-b16-sapcomp-0820
   overrides_applied_and_asserted:
+    argv:--init-sha256:
+    - step dry --init-sha256 (7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7 -> ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46)
+    - step s20260820 --init-sha256 (7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7 ->
+      ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46)
     key:beat:
     - key beat = 16
     key:est_minutes:
