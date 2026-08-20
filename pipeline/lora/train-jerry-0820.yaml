@@ -148,6 +148,13 @@ steps:
 # fallback root. NOTHING IS TRUSTED BECAUSE OF HOW IT ARRIVED: every frame is
 # still verified byte-for-byte against the manifest's sha256 below, which is the
 # same guard either root passes through. The step prints which root it used.
+#
+# UPDATE, later the same night: the pull FINISHED. The checkout is current at
+# `9e7206e2` and its own copy of the dataset was re-verified against the manifest
+# — 31 frames, 0 sha mismatches, 31 captions, sampler present. So the FIRST root
+# wins from here and the staged copy is now only a fallback. Worth recording that
+# the two roots independently agree with the same manifest shas, which is the
+# check that retroactively justifies having moved the files by hand at all.
 - name: stage
   argv:
   - C:\banyan-farm\venv-lora\Scripts\python.exe
