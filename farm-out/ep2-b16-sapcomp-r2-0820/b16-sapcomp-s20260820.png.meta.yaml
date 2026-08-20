@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260820
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b16sapcomp-r2-0820/16-why-sapcomp-0820.png
+init_sha256: 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
+mask_png: b16-sapcomp-s20260820-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b16sapcomp-r2-0820/16-why-sapcomp-mask-0820.png
+mask_png_sha256: 6d4d1f3f8b3e7ce1b52177a08d1f8a7b01b180c99a2d1097d9b5b6966cb0cbe5
+mask_white_px: 102627
+mask_bbox_px: [151, 302, 784, 1199]
+mask_width_frac: 0.7608
+mask_height_frac: 0.7377
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-20T20:45:27Z
+render_seconds: 3.8
+wall_seconds: 9.8
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and beat 16 spent three wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY WHERE THE COMPOSITED PLANT IS THE SUBJECT rather than set dressing: b13's was 4.1 percent of frame, this one spans 62 percent of the width. The bet is that the pass cares about mask AREA (9.84 percent here) and not about the object's SPAN, and the big-leaf composite that measurably did nothing is the reason that is a bet and not an assumption.
+prompt: |-
+  a young sapling in the foreground with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass, close to the camera and large in frame, with one lean adult goblin man in a patchwork cloak sitting on the grass behind it, solo, small and further away, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  three leaves, four leaves, many leaves, leaflets, extra stalk, multi-node weed, branching stem, pointed lance leaves, deeply lobed leaves, palmate, bud, flower, fruit, large tree, thick branch, forest, second plant, two plants, plant girl, alraune, 2boys, child, chibi, standing, text, photorealism, 3d render, low quality

@@ -1,0 +1,43 @@
+#### job ep2-b16-sapcomp-r2-0820-1787258657 attempt 1 start 2026-08-20T20:45:09Z
+
+==== step fetch START 2026-08-20T20:45:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapcomp-r2-0820\\fetch_init.py"]
+fetched 16-why-sapcomp-0820.png 1088240 bytes sha 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d OK
+fetched 16-why-sapcomp-mask-0820.png 5745 bytes sha 6d4d1f3f8b3e7ce1b52177a08d1f8a7b01b180c99a2d1097d9b5b6966cb0cbe5 OK
+==== step fetch END rc=0 2026-08-20T20:45:14Z ====
+
+==== step dry START 2026-08-20T20:45:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapcomp-r2-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png", "--init-sha256", "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d", "--mask-png", "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b16sapcomp-r2-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16sapcomp-r2-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED's footprint (dilated 5) and the DRAWN SAPLING's own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height, not the mask.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
+mask png corners=- bbox=[151, 302, 784, 1199]  0.7608 x 0.7377 of 832x1216
+WROTE C:\banyan-farm\b16sapcomp-r2-0820\b16-sapcomp-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-20T20:45:14Z ====
+
+==== step s20260820 START 2026-08-20T20:45:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapcomp-r2-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png", "--init-sha256", "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d", "--mask-png", "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b16sapcomp-r2-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16sapcomp-r2-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and beat 16 spent three wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY WHERE THE COMPOSITED PLANT IS THE SUBJECT rather than set dressing: b13's was 4.1 percent of frame, this one spans 62 percent of the width. The bet is that the pass cares about mask AREA (9.84 percent here) and not about the object's SPAN, and the big-leaf composite that measurably did nothing is the reason that is a bet and not an assumption."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.37it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:01,  3.85it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.60it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.77it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+Token indices sequence length is longer than the specified maximum sequence length for this model (78 > 77). Running this sequence through the model will result in indexing errors
+The following part of your input was truncated because CLIP can only handle sequences up to 77 tokens: ['aesthetic']
+Token indices sequence length is longer than the specified maximum sequence length for this model (78 > 77). Running this sequence through the model will result in indexing errors
+The following part of your input was truncated because CLIP can only handle sequences up to 77 tokens: ['aesthetic']
+WROTE C:\banyan-farm\b16sapcomp-r2-0820\b16-sapcomp-s20260820.png
+WROTE C:\banyan-farm\b16sapcomp-r2-0820\b16-sapcomp-s20260820-mask.png
+WROTE C:\banyan-farm\b16sapcomp-r2-0820\b16-sapcomp-s20260820.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260820 END rc=0 2026-08-20T20:45:28Z ====
+
+==== step publish START 2026-08-20T20:45:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b16sapcomp-r2-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-sapcomp-r2-0820\"\nNAMES = [\n    \"b16-sapcomp-s20260820.png\",\n    \"b16-sapcomp-s20260820-mask.png\",\n    \"b16-sapcomp-s20260820.png.meta.yaml\",\n    \"16-why-sapcomp-0820.png\",\n    \"16-why-sapcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b16-sapcomp-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b16-sapcomp-r2-0820
+==== step publish END rc=0 2026-08-20T20:45:28Z ====
+#### job ep2-b16-sapcomp-r2-0820-1787258657 finished rc=0 2026-08-20T20:45:28Z

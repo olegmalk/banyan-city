@@ -1,0 +1,127 @@
+{
+  "id": "ep2-b16-sapcomp-r2-0820-1787258657",
+  "task": "ep2-b16-sapcomp-r2-0820",
+  "node": "002b-first-citizen",
+  "beat": 16,
+  "worker": "box-runner",
+  "priority": 33,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png",
+        "--init-sha256",
+        "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d",
+        "--mask-png",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED's footprint (dilated 5) and the DRAWN SAPLING's own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height, not the mask.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png",
+        "--init-sha256",
+        "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d",
+        "--mask-png",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and beat 16 spent three wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY WHERE THE COMPOSITED PLANT IS THE SUBJECT rather than set dressing: b13's was 4.1 percent of frame, this one spans 62 percent of the width. The bet is that the pass cares about mask AREA (9.84 percent here) and not about the object's SPAN, and the big-leaf composite that measurably did nothing is the reason that is a bet and not an assumption."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b16sapcomp-r2-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-sapcomp-r2-0820\"\nNAMES = [\n    \"b16-sapcomp-s20260820.png\",\n    \"b16-sapcomp-s20260820-mask.png\",\n    \"b16-sapcomp-s20260820.png.meta.yaml\",\n    \"16-why-sapcomp-0820.png\",\n    \"16-why-sapcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b16-sapcomp-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-s20260820.png",
+    "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png"
+  ],
+  "backlog": {
+    "filed_at": 1787258657,
+    "filed_at_iso": "2026-08-20T20:44:17Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b16-sapcomp-r2-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "866f2518fd037546625cc55bff08f9630bf1ecef400bba20a413502811c81054",
+  "started_at": "2026-08-20T20:45:09Z",
+  "attempts": 1,
+  "runner_pid": 8768,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T20:45:28Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b16sapcomp-r2-0820\\b16-sapcomp-s20260820.png",
+    "C:\\banyan-farm\\b16sapcomp-r2-0820\\16-why-sapcomp-0820.png"
+  ]
+}
