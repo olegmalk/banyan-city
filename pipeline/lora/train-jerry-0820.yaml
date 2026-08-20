@@ -1,12 +1,59 @@
 # JERRY CHARACTER LoRA — SDXL / animagine-xl-3.1 — the training run
 #
+# ══════════════════════════════════════════════════════════════════════════
+# ███ HELD — DO NOT FILE. Founder correction, 2026-08-20, late. ███
+#
+# THE RULING: the goblin must read as the B TILE's goblin CREATURE, not as an
+# adult man. The word "adult" in `pipeline/canon.yaml` `ep2-goblin-design-adult`
+# was DRIFT, not his intent.
+#
+# WHY THAT STOPS THIS JOB COLD, and why it is not a small edit. All 31 frames in
+# `manifest-jerry.yaml` were curated FOR the man-read design — that was the
+# selection criterion, applied frame by frame — and every caption was written in
+# its vocabulary. A character LoRA does not average out a wrong premise, it
+# LEARNS it: train on this set and the man-read becomes the trigger token's
+# meaning, permanently and invisibly, for every ep3 plate downstream. That is
+# the exact failure this spec's own bars were written to catch, arriving through
+# the dataset instead of through the hyperparameters. One card-hour is cheap;
+# a wrong identity baked into the enabler for "one day per episode" is not.
+#
+# TWO GATES BEFORE THIS SPEC MAY BE FILED AGAIN, and neither is this lane's
+# unilateral call:
+#   1. DATASET RE-CURATED FOR TILE FIDELITY. The audit lane is re-deriving the
+#      design from the B tile on `/review/ep2-goblin-design-0819`; the frame set
+#      has to be re-selected against that read. Coordinate with them — do not
+#      re-curate in parallel and do not assume which frames survive. Some of the
+#      current 31 may; that is a finding, not an assumption.
+#   2. CAPTIONS RE-DERIVED from the corrected canon wording, once it exists.
+#      `pipeline/lora/captions/jerry/*.txt` are written in the old vocabulary and
+#      the prune/keep table in the research doc §4 was reasoned against it.
+#
+# STATUS OF THE FILING. This spec WAS filed to backlog on 2026-08-20
+# (`lora-jerry-0820-1787245756.json`) and was pulled back before any tick could
+# promote it. It is parked on the box as
+# `C:\banyan-queue\backlog\lora-jerry-0820-1787245756.json.HOLD-founder-tile-read-0820`
+# — the suffix takes it out of autofill's runnable set. IT NEVER RAN: it did not
+# reach `ready/` or `running/`, no GPU-second was spent, no weight file exists.
+#
+# WHAT SURVIVES THE HOLD, and should not be redone: the whole trainer install
+# (SETUP.md, sd-scripts v0.11.1, `venv-lora` on torch 2.11.0+cu128, bitsandbytes
+# AdamW8bit verified on the card, accelerate configured) is design-independent
+# and stands. So does the staged-input plumbing below and the sha256 discipline.
+# What does NOT survive is the frame selection and the captions.
+#
+# The five bars below also need a re-read before reuse: B2 STYLE PRESERVATION
+# measures against "the shipped ep2 plates", and if the creature read changes
+# what ships, that reference moves with it.
+# ══════════════════════════════════════════════════════════════════════════
+#
 # 2026-08-20. $0 (local card, no provider). ~35-50 GPU-minutes.
 #
 # ── THE BLOCKER IS CLEARED. `pipeline/lora/SETUP.md` ran end to end on the box
 # 2026-08-20: sd-scripts v0.11.1 (6721028c), `C:\banyan-farm\venv-lora` on torch
 # 2.11.0+cu128 at sm_120, and the step-8 gate printed all 800 lines of
 # `sdxl_train_network.py --help` with every flag this spec passes present in it.
-# The render venv was re-verified untouched afterwards. This spec is now FILED.
+# The render venv was re-verified untouched afterwards. That blocker is gone for
+# good; the block above is a DIFFERENT and later one, about the dataset.
 #
 # PROVENANCE THE SETUP ASKED FOR (§5): bitsandbytes 0.50.1 installed and its
 # `AdamW8bit` smoke-tested on the card -- allocate, backward, step, all clean.
