@@ -1,0 +1,20 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 17
+beat_slug: "goodbye-bigbody"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260816
+render_seconds: 170.7
+png_sha256: "403531c4124c7ba9144e8d6034bc30cec6056f9a8cb9f51b619829928cfb1d6a"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, solo, full body, sitting on grass in a field, figure fills the frame, lean wiry adult goblin man, green skin, bald head, dusty patchwork cloak draped over his knees, both green clawed hands resting flat on the cloak, large hands near the camera, low angle, sunny day, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, standing, walking, running, wide shot, distant, small figure, sky, clouds, horizon, close-up, portrait, cropped, holding object, spear, sword, 2boys, child, chibi, stitches, tree, indoors, photorealism, 3d render, dark, night"
+done_when: "MOTION BAR (pre-registered before the plate was drawn): a hand makes contact with the cloak AND TRAVELS ACROSS IT -- at least one hand-width of movement RELATIVE TO THE CLOTH, continuous across consecutive frames, the hand moving and not the camera. FAIL modes named in advance: F1 frozen, F2 cloth-only, F3 camera-only, F4 morph/teleport, F5 scene break, F6 contact without traversal, F7 body-instead-of-hand. A changed picture is not a pass and a stand-up is not a pass."
+why_this_plate: "r1's tight insert put the hand at 57.5% of the frame and the brush still did not happen -- but the clip did not freeze, it RE-COMPOSED itself into a character portrait, which leaves two readings one sample cannot separate: (a) fine hand action is impossible on this engine, or (b) an insert with no body is out of distribution and the framing dragged the clip away. This plate fills the one untested cell of the grid: WHOLE BODY IN FRAME -- the composition that renders 12 of 12 stand-ups -- with the hand action as large as that frame allows (>=18% of frame width against the frozen control's 8.5%). A pass says (b) and the lever is 'stay in distribution'; a fail says (a) and fine hand action is out of reach for episode 2."
+founder_verdict: null
+revision: 2
+scored: false
