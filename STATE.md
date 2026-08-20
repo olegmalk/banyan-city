@@ -9571,3 +9571,12 @@ farm.
 dad-territory/farm-territory split. Steward may use macbook5/6 for any work
 (once CLT exists they can be render nodes too); dad's Claude may use 1-4.
 Courtesy rule stands: don't kill each other's running processes.
+
+## 2026-08-20 — SHIP ORDER (founder): episode 2 ships within 24h
+"ship it." Plan of record: best-available takes ship with named faults; open
+taste cards answered before assembly get applied, unanswered ones ship the
+current take (b16 ships as slate only if nothing legal lands). Upgrade cutoff:
+takes landing by 12:00 2026-08-21 enter the final cut; then assembly, founder
+watch-through (his kept publish gate, D-record 08-19), then live. The
+per-beat polish loop STOPS being the priority; the shipped episode is.
+(Founder also rejected the steward's ep1-standards framing — struck, not law.)
