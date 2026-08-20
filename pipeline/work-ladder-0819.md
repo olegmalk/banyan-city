@@ -6040,3 +6040,51 @@ the same boundary the folded poses drew from the other side.
 character, with a bracket (0.7–1.3 conditioning), a floor (0.45 fails), a
 demonstrated control (n5), a linearity check (n6), a seed check (n7), a pose
 check (n8) and one hard limit (full-span skeletons only).**
+
+---
+
+## Appended 2026-08-21 by the beat-04 restage lane — the tempo rung FAILS, and it fails by emptying the frame
+
+`ep2-b04-tempo-t1..t3-0820`, off `ep2-b04-peek-s3-0820`. One clause: the lean
+that "repeats" became one that is QUICK, SHARP and NERVOUS, with the count left
+to follow from the speed. An adjective and not a numeral on purpose —
+cardinality is Class A on this stack (0 of 16 at the strongest count wording)
+while a continuous adjective bound 3 of 4 in the same study. t1 carried s3's own
+seed, so it is a one-variable read against the best clip in the peek batch.
+
+**TWO OF THREE LOSE THE SUBJECT.** Whole-frame ink coverage, f001 → f121:
+
+| | f001 | f060 | f090 | f121 | |
+|---|---|---|---|---|---|
+| t1 (s3's seed) | 0.6048 | 0.6215 | 0.6056 | **0.6064** | he stays |
+| t2 | 0.6057 | 0.4290 | 0.3167 | **0.3161** | **gone** |
+| t3 | 0.6048 | 0.3285 | 0.3124 | **0.3117** | **gone** |
+
+On t2 he ducks down and crawls out of shot by f075 and the last third is **empty
+grass**. t3 does the same by f060. The peek batch lost the subject **0 times in
+5**; the tempo rung lost it **2 times in 3**.
+
+**AND THE CAUSE IS THE CLAUSE I WROTE.** The tempo sentence says he *"whips
+straight back in behind the blades"* and *"snaps straight back in"*. Slowed
+down, that is a peek. At speed, **"back behind cover" reads as "leave"** — the
+engine took the instruction literally and put him behind the cover, which on
+this framing means out of the picture. The negative carries `walking out of
+frame` and `leaving the frame` and did not stop it, which is this tree's
+negatives failing to hold position for the fourth time.
+
+**T0 EXONERATES THE CAMERA ON ALL THREE**, which is the check s5 bought:
+top-corner mean abs luma against f001 is TL 0.62 / TR 1.20 (t1), 1.04 / 2.82
+(t2), 0.83 / 2.35 (t3), against s5's 49.4 and 52.2. Nothing here is a pan. The
+frame emptied because he left it, not because it moved.
+
+**t1 SURVIVES AND IS NOT AN IMPROVEMENT.** Four centroid reversals, 51.4 px of
+head travel, still moving at the end (last-20 max step 3.93 px) — which is s3's
+performance, reached by a different sentence, and still a yaw. **The tempo axis
+is closed: it does not buy a second trip, and at two seeds in three it costs the
+beat its subject.**
+
+**`ep2-b04-peek-s3-0820` REMAINS THE BEST CLIP ON BEAT 04** and the open
+question is unchanged and is taste, not engineering: does *he turns to look and
+turns back* land the joke the founder picked *he leans out of cover and pulls
+back* for. No pick, no cut swap; beat 04 still ships b04-refire-0814 as
+best-available with its fault named.
