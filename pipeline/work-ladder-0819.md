@@ -3985,3 +3985,103 @@ Full list in the module docstring. The four that will bite first:
 
 `python3 pipeline/fill_quality.py --selftest`, or
 `--plate P.png --image I.png [--region M.png]` to judge a landed job.
+
+## 2026-08-20, evening — BEAT 20's TAKE HAD RIDDEN EIGHT CUTS UNJUDGED AND PRE-DATED THE RULING IT VIOLATES. IT IS OUT, AND NO GPU WAS SPENT
+
+A take audit, not a render rung. **`20-evidence-b20-shape-headtrim.mp4` is out of
+`review/ep2-demo-0820`; `ep2-b20-motion-0819` is in.** `QA-GATE: PASS routes=81`,
+19 footage / 2 slates (unchanged — this is a swap, not a slate closing), $0, no
+GPU, no voice synthesis: one ffmpeg assembly, six file copies, one fetch.
+
+### WHAT THE AUDIT FOUND
+
+The incumbent had been in the cut since **0815 — eight consecutive cuts** (0815,
+0816, 0817, 0818, 0819, 0819b, 0819c, 0820) on `why: carry-forward`, and no cut
+ever wrote it a verdict. Its provenance: `ep2-b20-shape-0813`, seed 20260806,
+plate 08-12, rendered 08-13, head-trimmed 08-15. **It pre-dates the 2026-08-19
+ratification of `ep2-goblin-design-adult` by four days**, and the frames say so:
+a round-domed, big-eyed, small-bodied **CHILD** in a hoodie — the exact design
+that ruling exists to retire. Its own sidecar already declared three more:
+*"near-static after the trim (motion ends at pair 16), dusk banded sky not
+daylight cel, the fruit reads dark rather than purple."* **Two of those four are
+against rulings the founder has already made** (adult design 08-19, fruit colour
+08-16). And a fifth, from opening the frames: **the tree is LEAFY.**
+
+### THE REPLACEMENT ALREADY EXISTED AND WAS ALREADY JUDGED — SO NOTHING WAS RENDERED
+
+The brief for this rung said to derive a motion re-render from the adult plate.
+**It was not filed, and the reason is that the render it describes already exists
+and already passed.** `ep2-b20-motion-0819` (seed 20260819, LTX-2.3-Distilled,
+121f @ 24 fps 704x1280, off plate `4b87cf4f…d119`) ran on 08-19 against a bar
+pre-registered before its pixels existed, and passed the clause it exists for.
+Re-rolling the same recipe on the same plate for a second sample would be a job
+with **no consumer** — the consumer is the cut, and the artifact the cut needs
+was sitting on `origin/farm-results-rtx5090` and had never been merged to main.
+That merge, with all six sha256s verified against the job's own manifest, is the
+whole of the "production" half of this rung.
+
+### THE OLD `verdict_cut` SAID "NOT PROPOSED", AND IT IS SUPERSEDED — ON ITS PREMISE, NOT ITS REASONING
+
+The take's own spec reads *"NOT PROPOSED FOR THE CUT, and beat 20 stays a slate
+for now"*, on the grounds that it cannot satisfy `done_when`'s *"the empty stem
+is the evidence and must be in frame"* and puts the founder's recorded **"THE
+BRANCH IS THE WRONG TREE"** fault on screen for five seconds.
+
+**That call was made against a SLATE.** It says so twice, and the ladder repeated
+it at §"No cut consequence from any of the three": *"beat 20 stays a slate"*. But
+beat 20 was **not** a slate — the child clip was in the cut and had been for four
+days. **The alternative was never nothing; it was this.** And the incumbent's own
+row in `picks-0820.yaml` already carried the identical fault: *"THE BRANCH IS THE
+WRONG TREE."*
+
+So the axis the old verdict turned on is a **WASH**, and it is worse than a wash:
+
+| | incumbent (child) | `ep2-b20-motion-0819` (adult) |
+|---|---|---|
+| goblin design, **ratified 08-19** | round-domed CHILD — the retired design | **lean wiry adult** |
+| fruit colour, **ruled 08-16** | "reads dark rather than purple" (its own sidecar) | **unmistakably purple** |
+| `done_when` first half — both hands to the fig | "near-static after the trim" | **pick-up completes**, both hands, fig lifted from grass to face |
+| light | "dusk banded sky not daylight cel" | **bright daylight cel** |
+| `done_when` — "the empty stem is the evidence" | **LEAFY** tree — fails outright | bare limb, **wrong species** — half-answers |
+| `done_when` second half — the look UP | never | never |
+| cost | — | **progressive darkening, ~−25 luma** |
+
+**Four axes won, one tied, one paid.** Nothing here is a taste call on the
+character and no design change is proposed: the swap *applies* two rulings the
+founder has already made rather than making a new one. Same shape as this
+morning's beat 03 swap, which put the adult in over a chibi child holding a leafy
+tree and shipped it with its own fault named.
+
+**BEAT 20 IS STILL NOT A PASS.** He does not look up and the tree is still wrong.
+It is in as **best-available with every fault named**, which is the house
+standard, and the row carries a one-line reversal.
+
+### THE FREEZE THIS LIFTS, AND THE RUNG IT MAKES FILEABLE
+
+The incumbent's row said the adult take's *"one-job darkening fix is frozen
+behind the goblin-identity letter."* **That letter was answered on 08-19.** The
+freeze is lifted and the −25 luma fix is now a fileable one-job rung. The real
+route to a PASS is still the one the old verdict named and it is unchanged: **a
+plate drawn at the 08-17 knee-height staging with the sapling's own bare stem
+beside him at face height**, then this exact recipe on it. That plate is the open
+work; the motion is proven and is not the blocker.
+
+### THREE TRAPS CHECKED RATHER THAN ASSUMED
+
+* **The reversal.** The sidecar's `assembler_note` warned that `render_t3.py:616`
+  reverses a clip whose slot outruns it and *"a reversed pick-up puts the fig
+  back in the grass."* That branch was replaced by hold-last-frame on 08-07, and
+  in any case the arithmetic runs the other way: vdur 1.736 s, `T3_TAIL_MAX` 2.0
+  → **slot 3.75 s against a 5.04 s clip**, so it is trimmed, not filled. **The
+  question that replaces it is whether the action completes inside 3.75 s.** It
+  does — checked on the assembled frame at 105.6 s, not on the source clip and
+  not by assumption: the fig is up in both hands with the caption on screen.
+* **The `get_clip()` glob.** It takes the sorted first of `NN-*.mp4`. The
+  incumbent was removed from `sources/` **and from the index** before the new
+  clip was copied in; leaving both would have been a filename coin flip.
+* **`git add -f`.** `build_site` publishes only what git tracks, and
+  `.gitignore:50-59` covers `review/**/*.mp4`. **`qa_local` caught this and
+  failed the gate** with two broken links to the new clip before it was
+  force-added — the trap fired and the gate held.
+
+`review/ep2-demo-0820` · beat 20 at ~1:44 · reversal line in `picks-0820.yaml`.

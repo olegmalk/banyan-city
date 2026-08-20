@@ -798,23 +798,51 @@ beats:
 
   - beat: 20
     slug: EVIDENCE
-    take: 20-evidence-b20-shape-headtrim.mp4
-    sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
-    why: carry-forward
+    take: 20-evidence-LTX-macplate-r1s1.mp4
+    sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
+    why: new — steward pick, 2026-08-20, applying two ratified rulings
     verdict_quoted: >-
-      NO VERDICT YET on the beat, and the recorded pick carries TWO faults this
-      beat's own done_when names as disqualifying. In the cut as best-available
-      with both named, not as a pass.
-    verdict: review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
+      STILL NOT A PASS ON THE BEAT. Swapped in because the take it replaces
+      violated two of the founder's own ratified rulings and this one satisfies
+      both, not because beat 20's done_when is met. It is not met: HE NEVER
+      LOOKS UP, and the tree is still the wrong tree. Best-available with every
+      fault named, which is the house standard — not a pass.
+    verdict: pipeline/jobs/ep2-b20-motion-0819.yaml verdict_cut (superseded — see reversal) /
+      review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
     detail: >-
-      One of the four never-judged, unchanged. (1) THE BRANCH IS THE WRONG TREE —
-      a thick gnarled MATURE-TREE limb where done_when needs the sapling's own
-      now-empty stem. (2) HE NEVER LOOKS UP, and "then the look UP" is the second
-      half of done_when. Beat 20 DID get footage on 08-19
-      (ep2-b20-motion-0819, PASS on the clause it exists for, FAIL-FROZEN did not
-      fire) and it is NOT in this cut, for two pre-declared plate faults charged
-      to the plate and not the render. Its one-job darkening fix is frozen behind
-      the goblin-identity letter.
+      THE AUDIT THAT CAUSED THIS. 20-evidence-b20-shape-headtrim had ridden EIGHT
+      cuts (0815 → 0820) on `why: carry-forward` with no verdict, and it PRE-DATES
+      the 2026-08-19 ratification of `ep2-goblin-design-adult`: its goblin is the
+      round-domed, big-eyed CHILD that ruling exists to retire, and its own
+      sidecar already declared "the fruit reads dark rather than purple" against
+      the 08-16 colour ruling, plus "near-static after the trim" and "dusk banded
+      sky not daylight cel". Four faults, two of them against ratified rulings.
+      THE REPLACEMENT (ep2-b20-motion-0819, seed 20260819, LTX-2.3-Distilled,
+      121f/24fps, judged against a bar pre-registered before it rendered) is the
+      lean wiry adult, the fig is unmistakably purple, it is bright daylight cel,
+      and the pick-up COMPLETES — both hands close on a fig sitting in the grass
+      and lift it to face height, PASS on the clause it exists for.
+      WHY ITS OWN `verdict_cut` SAID "NOT PROPOSED" AND WHY THAT IS SUPERSEDED,
+      not overridden: that call was made on 2026-08-19 against a SLATE ("beat 20
+      stays a slate for now"), and it turned on the wrong tree putting the
+      founder's recorded fault on screen. The alternative was never a slate — it
+      was this child clip, whose OWN row in this file already carried "THE BRANCH
+      IS THE WRONG TREE". The tree axis is a WASH; the incumbent's tree is
+      additionally LEAFY, which fails "the empty stem is the evidence" outright
+      where a bare limb at least half-answers it. The premise of the old verdict
+      was stale, and nothing in it was a taste call on the character.
+      WHAT IT COSTS: progressive darkening, about −25 luma across the clip. The
+      one-job fix for it was "frozen behind the goblin-identity letter" — that
+      letter was answered on 08-19, so the freeze is lifted and the fix is
+      fileable. The slot takes 3.75 s of the 5.04 s clip; the pick-up completes
+      inside it (verified on the assembled frame, not assumed) and render_t3 no
+      longer reverses, so the reversal trap the sidecar's assembler_note warned
+      about cannot fire.
+    how_to_reverse_it_in_one_line: >-
+      Restore 20-evidence-b20-shape-headtrim.mp4 + its sidecar into
+      review/ep2-demo-0820/sources/ from git history, delete
+      20-evidence-LTX-macplate-r1s1.mp4*, re-run render_t3 and proof_receipts —
+      and beat 20 goes back to the child goblin and the dark fig.
 
   - beat: 21
     slug: THE ANSWER

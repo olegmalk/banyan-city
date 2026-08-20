@@ -9377,3 +9377,20 @@ that ships with the grant: these four run banyan render workers, so do not kill
 python/caffeinate processes and do not delete `~/banyan-queue` or
 `~/banyan-city`. macbook2 can drop off WiFi (STATE.md 2026-08-16) — sweep, WoL,
 retry for five minutes before concluding a Mac is gone (runbook §macbook4).
+
+### 2026-08-20 (evening) — beat 20's take audited and swapped; C4 replaced
+
+- **Beat 20 swap.** `20-evidence-b20-shape-headtrim` (8 cuts, never judged,
+  pre-dates the 08-19 adult ruling — round CHILD goblin, dark fig, leafy tree,
+  near-static) is OUT of `review/ep2-demo-0820`; `ep2-b20-motion-0819` (adult,
+  purple fig, daylight, pick-up completes) is IN. Steward pick applying the
+  08-19 design and 08-16 colour rulings, veto-able, faults named in the row.
+  Still NOT a pass on the beat: he never looks up, the tree is still wrong.
+  $0, no GPU — the clip already existed on `farm-results-rtx5090` and was
+  merged to main with all six sha256s verified. `QA-GATE: PASS routes=81`.
+- **C4 is replaced.** `pipeline/fill_quality.py` (C4' = D/N/F). The old bar
+  certified the b08 gripcomp corduroy comb at 89%; C4' fails it at N 0.084 /
+  F 7.87 and passes every honest composite fill on b03/b13/b15/b19. Measured
+  false-positive rate on 200 real windows: **3.0%**.
+- **`pipeline/beat08_grip_copy.py`** — §21's copy-the-fist rung built and
+  selftested; the init/mask are on disk. The box spec is NOT yet filed.

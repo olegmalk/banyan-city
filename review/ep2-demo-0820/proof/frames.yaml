@@ -190,15 +190,15 @@ frames:
   frame_sha256: 25bd59a964dba7253520b91be2cdaedb289a108c4be181cb41646751dcfd313a
   frame_bytes: 14171
 - beat: 20
-  take: 20-evidence-b20-shape-headtrim.mp4
+  take: 20-evidence-LTX-macplate-r1s1.mp4
   frame: b20.jpg
   width: 240
   height: 436
-  at_seconds: 1.19
-  clip_duration_s: 2.38
-  clip_sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
-  frame_sha256: 05b01fa0fbabf040b0363fc7bcb5349ed2c02bce93df9866ca7cf0be9121483d
-  frame_bytes: 21370
+  at_seconds: 2.52
+  clip_duration_s: 5.04
+  clip_sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
+  frame_sha256: 05c05ea438ae9a6b15da86b9a6b273de41eecd4d23d38abd345360385e1e3d2e
+  frame_bytes: 17586
 - beat: 21
   take: 21-the-answer-b21-daylight-0814.mp4
   frame: b21.jpg

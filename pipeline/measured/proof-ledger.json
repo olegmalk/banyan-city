@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1612,
+ "commits_in_window": 1629,
  "covers_window": true,
  "cut": "ep2-demo-0820",
  "cut_files": [
@@ -15,7 +15,7 @@
  "cuts_shipped": 8,
  "generated": "2026-08-20",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "4eed0f542",
+ "head": "4e5a6f96d",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -37,11 +37,6 @@
    "sha": "26581735",
    "what": "first commit that added this take"
   },
-  "20-evidence-b20-shape-headtrim.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
-   "what": "first commit that added this take"
-  },
   "pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml": {
    "date": "2026-08-19",
    "sha": "da953466",
@@ -49,7 +44,7 @@
   },
   "pipeline/jobs/ep2-b03-covermid-s2-0820.yaml": {
    "date": "2026-08-20",
-   "sha": "ce6aefbc",
+   "sha": "721eeb44",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b04-refire-0814.yaml": {
@@ -117,6 +112,11 @@
    "sha": "f11ba736",
    "what": "last commit that touched the spec"
   },
+  "pipeline/jobs/ep2-b20-motion-0819.yaml": {
+   "date": "2026-08-19",
+   "sha": "c2734786",
+   "what": "last commit that touched the spec"
+  },
   "pipeline/jobs/ep2-b21-daylight-0814.yaml": {
    "date": "2026-08-19",
    "sha": "4599cb46",
@@ -126,6 +126,6 @@
  "range_base": "6fd79ce4",
  "resolved_blocks_added": 86,
  "shallow": true,
- "verdict_lines_added": 274,
+ "verdict_lines_added": 276,
  "window_days": 14
 }

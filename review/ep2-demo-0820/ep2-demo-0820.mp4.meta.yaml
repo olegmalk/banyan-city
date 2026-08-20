@@ -25,6 +25,7 @@ provisional_beats:
 - 14
 - 15
 - 19
+- 20
 beats: 21
 footage_beats:
 - 1
@@ -49,7 +50,7 @@ footage_beats:
 slate_beats:
 - 9
 - 16
-duration_s: 113.84
+duration_s: 115.2
 size: 720x1280
 source_platforms: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)+local-deterministic
   (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)
@@ -234,9 +235,10 @@ ingredients:
   provisional: true
 - beat: 20
   kind: clip
-  path: review/ep2-demo-0820/sources/20-evidence-b20-shape-headtrim.mp4
-  sha256: 24bb9babb30a12e730e3cc7a665c59848612990f2945ce0427c053c2189d3a02
+  path: review/ep2-demo-0820/sources/20-evidence-LTX-macplate-r1s1.mp4
+  sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
   publishable: true
+  provisional: true
 - beat: 20
   kind: audio
   path: review/ep2-demo-0820/sources/20-vo.mp3
@@ -400,7 +402,7 @@ sources:
   cost_usd: 0.0
 - beat: 20
   slug: EVIDENCE — 1:39–1:42
-  clip: 20-evidence-b20-shape-headtrim.mp4
+  clip: 20-evidence-LTX-macplate-r1s1.mp4
   audio: 20-vo.mp3
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
