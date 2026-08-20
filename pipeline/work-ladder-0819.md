@@ -7047,3 +7047,130 @@ each presumes:
 **None of the three is filed.** This lane predicted a monotonic axis tonight and
 the twentieth-percentile rung falsified it inside an hour; the correct next move
 is a download and a look, not a fourth confident guess.
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE FACE ADAPTER DREW THE MOUTH AND THE SMALLEST EYE IN THE LADDER, AND PUT THE COWL BACK ON THREE OF FOUR
+
+`ep2-ipa-facewt-fetch-0821` (the download, rc=0) then `ep2-jerry-face-k6a..k6d-0821`.
+Evidence: `review/ep2-goblin-design-0819/FACE-K6-AXIS-0821.png` (heads at 1:1),
+`FACE-K6-FULL-0821.png` (containment), `FACE-K6-MOUTH-0821.png` (lower face at
+2x and at contrast x2.6, k5a beside it as the known-absent control),
+`FACE-K6-BROW6X-0821.png` (the brow clause at 6x), `FACE-K6-EYESCALE-0821.png`
+(eyes normalised to a common head height).
+
+### THE INSTRUMENT ARRIVED AND IT IS PROVABLY THE INSTRUMENT
+
+`ip-adapter-plus-face_sdxl_vit-h` fetched, digest-verified, allowlisted. **The
+two SDXL ViT-H adapters are BOTH 847,517,512 bytes** — a size check passes on
+the wrong model — so `controlnet_plate.IP_WEIGHTS` now keys the licence AND the
+digest by weight filename and refuses an unlisted weight rc=12 before a model
+loads, the same shape `CONTROLNETS` carries for the twins net. Every k6 sidecar
+reads `ip_adapter_weight: sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors`
+with `sha256 677ad886…92c1`. The fetch also re-pulled the incumbent weight into
+the same snapshot so **k4a stays re-renderable** — a face-only pull would have
+stranded it behind today's `main`.
+
+### THE NUMBERS, AND THE RULER REPRODUCED ALL SEVEN INCUMBENTS BEFORE IT PRODUCED A NEW ONE
+
+| rung | head | %enc | eye px | aspect | eye vs TILE | area190 | area170 | head_frac | heads | mouth | cowl |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| TILE | — | — | 23x12 | **0.52** | 1.00x | 0.0143 | — | 0.190 | 5.2 | present | — |
+| k4a | 30% | 8.8 | 39x23 | 0.59 | 1.40x | 0.0393 | 0.0419 | 0.195 | 5.13 | 136 | 0.0% |
+| k5a | 25% | 6.1 | 38x20 | **0.53** | 1.26x | 0.0171 | 0.0235 | 0.188 | 5.31 | **23 NONE** | 0.0% |
+| **k6a** | 20% | 3.9 | 30x19 | 0.63 | **1.07x** | 0.0223 | 0.0253 | 0.181 | **5.51** | **66 PRESENT** | **0.0%** |
+| k6b | 25% | 6.1 | 30x19 | 0.63 | 1.07x | 0.0182 | 0.0220 | 0.181 | 5.51 | 62 | **47.3% COWL** |
+| k6c | 35% | 12.0 | 34x20 | 0.59 | 1.31x | 0.0243 | 0.0287 | 0.184 | 5.42 | 100 | **17.8% COWL** |
+| k6d | 50% | 24.5 | 32x22 | 0.69 | 1.24x | 0.0265 | 0.0287 | 0.193 | 5.18 | 155 | **39.2% COWL** |
+
+*Mouth ink here is a NEW measure and not the earlier column's: dark pixels 38
+levels under the local median inside the central mouth box (head-box x 0.28–0.72,
+y 0.72–0.92). It is stated rather than reproduced because the earlier column's
+method is not in the repo. It orders the known cases correctly — k5a lowest at
+23, k5b 41, every mouth-present rung 62 and up — and it corroborates, it does not
+decide. **P3 was decided by eye at 1:1 and again at contrast x2.6 on a crop that
+puts k5a's blank lower face directly beside k6a's.** Cowl is measured, not
+eyeballed: pixels in the neck band (rows 330–385, cols 350–490) with R and B both
+12+ above G. k4a, k5a and k6a read 0.0%; the ladder's earlier cowl-free verdicts
+agree with it.*
+
+### READ 1: THE COWL CAME BACK, AND ONLY THE FACE ADAPTER BRINGS IT
+
+k6b is k5a's reference **byte-for-byte** with one thing changed — the weight —
+and it came back **47.3% purple at the neck** where k5a reads 0.0%. Same for
+k6c and k6d. **This is the cleanest A/B in the whole ladder and its answer is
+that the face adapter transfers the tile's cowl through a mask that held it for
+seven straight rungs.** The framing research's leakage section (real, documented,
+partial) was not needed to explain k3's cowl; it is needed here. A weight trained
+to bind the head region harder binds everything in the reference's head region
+harder, and the tile's crop has a purple scarf at its bottom edge.
+
+**It is coverage-gated: 20% is clean and 25/35/50% are not.** Three of four
+rungs in a four-point batch failed on it, which is the batch earning its size —
+one point at 25% would have read as "the face adapter breaks containment" and
+one at 20% as "it does not".
+
+### READ 2: k6a IS THE SMALLEST EYE THIS TREE HAS DRAWN AND IT HAS A MOUTH
+
+**1.07x the tile's relative bounding box.** Every previous rung, adapter or no
+adapter, sat above the tile: j2 1.40x with no adapter at all, k4a 1.40x, k5a
+1.26x, k1 1.87x, k2 2.32x. **k6a is the first frame in the ladder whose eye is
+not oversized** — 7% over against a 40% floor that had stood since j2. T8 5.51
+heads, the tallest in the family. No horns, no cowl, containment intact —
+standing, patchwork cloak, tall grass, no portrait composition, which was the
+named containment risk for a weight trained on face crops. P1 holds: at 6x there
+is a dark brow stroke above the lid with green skin between them, scored on the
+same standard k1's and k4a's were, and like theirs **it is a stroke where canon
+says bar** — thinner than k4a's, which is a real cost and is named.
+
+### READ 3: AND IT FAILS T1b SHAPE — IN A DIRECTION NOTHING ELSE HAS FAILED IN
+
+Aspect **0.63** against the tile's 0.52 and k5a's 0.53. That is the clause the
+bar said to hold, and it is not held, so **k6a does not pass and nothing is
+promoted.**
+
+But the mechanism is new and it inverts every earlier diagnosis on this clause.
+Relative to head WIDTH the tile's eye is 0.200, k5a's 0.197, **k6a's 0.169**.
+Relative to head HEIGHT the tile's is 0.081, k5a's 0.104, **k6a's 0.102**.
+**k6a's eye is the same relative height as k5a's and 14% narrower.** The aspect
+number moved because WIDTH WAS LOST, not because height was gained. Every
+previous miss on this clause was an eye too TALL; this one is an eye too NARROW.
+Which means the dial that would fix it is **more adapter strength, not less** —
+the tile's eye is relatively wider than k6a's, so pulling harder toward the
+reference should widen it. That is the opposite of what this rung's own
+prediction named, and it is **NOT FILED**: this lane has now had two predictions
+falsified on this ladder and the gate says stop.
+
+### THE TWO-CHANNEL VARIANT IS NOT TRIED, AND THE REASON IS THE RESEARCH AND NOT A PREFERENCE
+
+`pipeline/research/ipa-ref-framing-0821.md` covers the encoder's crop, the
+subject-ratio question and mask leakage. **It does not name loading two
+adapters — face for the head, general for the body — as standard practice
+anywhere.** diffusers accepting an adapter list is a capability, not a finding.
+Filing it would be a fifth confident guess dressed as a rung, so it is not filed.
+
+### THE GATE: SHUT. `train-jerry-0820` UNFILED, THE SET IS STILL 7 FRAMES IN 4 POSES
+
+Nothing from k6 enters the dataset. Five levers are now closed — wording,
+adapter strength, reference framing for the eye, reference framing for the whole
+face, and now the adapter identity itself.
+
+### THE OPEN QUESTION IS R4 AND IT IS ONE QUESTION WITH PIXELS
+
+`FACE-K6-AXIS-0821.png` is the board. **The choice is k4a vs k6a and it is about
+what Jerry's eye looks like, which belongs to the author and not to this lane.**
+
+- **k6a** — eye **1.07x**, aspect 0.63, mouth present, thin brow stroke, T8 5.51
+- **k4a** — eye **1.40x**, aspect 0.59, mouth present, fuller brow, T8 5.13,
+  head_frac 0.195 against the 0.190 authored (k6a drifts the other way to 0.181)
+
+k6a is 40 percentage points better on eye SIZE and 0.04 worse on eye SHAPE. And
+the SHAPE clause deserves to be read with its own history before it decides
+anything: **in the entire ladder exactly three rungs have ever met 0.52–0.54 —
+k1 at 0.54, k3 at 0.54, k5a at 0.53 — and every one of them failed something
+else** (k1's eye 1.87x, k3's horns and cowl, k5a's missing mouth). A bar that
+only defective frames have met is a bar worth re-reading, and re-reading it is
+the author's call, not the steward's.
+
+Whichever way it goes, the LoRA set is authored from the winner's recipe and the
+curation gate runs on the pose set rendered with it. **Neither is filed tonight.**
