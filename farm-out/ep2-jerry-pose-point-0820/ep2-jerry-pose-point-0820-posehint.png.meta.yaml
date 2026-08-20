@@ -1,0 +1,38 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-jerry-pose-point-0820
+arm: posehint
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260823
+cost_usd: 0
+controlnet: xinsir/controlnet-openpose-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition; front matter and body both, and no annotator is used -- the hint is authored in PIL)
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 1.0
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: pipeline/control/jerry-skel-h19point-0820.png
+control_image_sha256: 1b0876d4eb8381c0052d2281a4fbe0319868f96faf626f62d8fa378083595d23
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+repo_commit: b889227bc1f0e7b96c271235de7bc61466438ae0
+model_load_seconds: 6.1
+render_seconds: 13.9
+rendered_utc: 2026-08-20T19:50:09Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  masterpiece, best quality, very aesthetic, 1other, solo, colored skin, green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose, closed mouth, :|, expressionless, arm outstretched, pointing, in tall grass, full body
+negative: |-
+  lowres, worst quality, low quality, text, watermark, pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin, old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys
