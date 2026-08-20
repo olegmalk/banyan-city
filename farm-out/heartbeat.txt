@@ -3226,3 +3226,5 @@
 17:56:43Z FAIL task=ep2-b04-tileread-v1-0820-1787248553 rc=1 step=publish
 17:56:47Z STARTED task=ep2-b04-tileread-v2-0820-1787248557 attempt=1 on box-runner
 17:57:06Z FAIL task=ep2-b04-tileread-v2-0820-1787248557 rc=1 step=publish
+17:57:11Z STARTED task=ep2-b04-tileread-v3-0820-1787248560 attempt=1 on box-runner
+17:57:29Z FAIL task=ep2-b04-tileread-v3-0820-1787248560 rc=1 step=publish
