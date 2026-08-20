@@ -1,0 +1,115 @@
+{
+  "id": "ep2-b16-motion-0820-1787259614",
+  "task": "ep2-b16-motion-0820",
+  "node": "002b-first-citizen",
+  "beat": 16,
+  "worker": "box-runner",
+  "priority": 22,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b16-motion-0820\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b16-sapcomp-r2-0820\\b16-sapcomp-s20260820.png",
+        "--sha256",
+        "8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71",
+        "--out",
+        "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "121",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b16-motion-0820",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b16-motion-0820\\bench-ep2-b16-peek-s3-0820.jsonl",
+        "--bench-label",
+        "ep2-b16-motion-0820"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-motion-0820\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/16-why-LTX-ep2-b16-motion-0820.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/b16-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/bench-ep2-b16-peek-s3-0820.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b16-motion-0820.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b16-motion-0820\\16-why-LTX-ep2-b16-motion-0820.mp4",
+    "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1787259614,
+    "filed_at_iso": "2026-08-20T21:00:14Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b16-motion-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "ef05ec95052e109a71237837bc50dc13c68e951a2d642780f97a562222032b8a",
+  "started_at": "2026-08-20T21:03:05Z",
+  "attempts": 1,
+  "runner_pid": 8768,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T21:09:15Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b16-motion-0820\\16-why-LTX-ep2-b16-motion-0820.mp4",
+    "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png"
+  ]
+}
