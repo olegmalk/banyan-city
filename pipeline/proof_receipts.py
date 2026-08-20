@@ -584,16 +584,35 @@ def extract_frames(repo: Path, cut: dict, width: int = 240) -> dict:
 
 # ------------------------------------------------------------------- the CLI --
 
-def _latest_cut(repo: Path) -> dict:
+def _latest_cut(repo: Path, name: str | None = None) -> dict:
+    """The cut to write receipts for.
+
+    Default: the newest `review/ep2-demo-*` by directory name, which is what
+    /status reads. `--cut <dirname>` targets one cut explicitly — the SHIP
+    candidate lives at `review/ep2-ship-0821/` and does not match the demo
+    glob, and pointing the default at `ep2-*` would have moved /status onto an
+    unapproved cut as a side effect of running receipts. The override is passed
+    through as the glob, so it must name a real directory under `review/`.
+    """
     import build_sim
+    if name:
+        return build_sim.read_latest_cut(repo, glob=name)
     return build_sim.read_latest_cut(repo)
 
 
 def main(argv: list) -> int:
     repo = REPO
-    cut = _latest_cut(repo)
+    want_cut = None
+    if "--cut" in argv:
+        i = argv.index("--cut")
+        if i + 1 >= len(argv):
+            print("! --cut needs a directory name under review/")
+            return 1
+        want_cut = argv[i + 1]
+    cut = _latest_cut(repo, want_cut)
     if not cut:
-        print("! no cut manifest found under review/ep2-demo-*/sources/picks-*.yaml")
+        print("! no cut manifest found under review/"
+              f"{want_cut or 'ep2-demo-*'}/sources/picks-*.yaml")
         return 1
     want_frames = "--frames" in argv or "--write" in argv
     want_ledger = "--ledger" in argv or "--write" in argv

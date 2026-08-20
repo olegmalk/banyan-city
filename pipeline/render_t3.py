@@ -374,6 +374,32 @@ def load_sound_design(clips_dir: Path | None) -> dict:
         raise SystemExit(f"sound.yaml is unreadable: {e}")
 
 
+def load_slate_notes(clips_dir: Path | None) -> dict:
+    """Optional per-cut `slates.yaml`: `{beat_number: "one honest line"}`.
+
+    Resolved against --clips like every other per-cut input, so a cut carries
+    its own slate wording beside the footage that wording is about. Missing
+    file, unparseable file or a beat with no entry all fall back to the default
+    "[ footage pending ]" — a slate never fails an assembly.
+    """
+    f = (clips_dir / "slates.yaml") if clips_dir else None
+    if not f or not f.exists():
+        return {}
+    try:
+        doc = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    except yaml.YAMLError as e:
+        raise SystemExit(f"slates.yaml is unreadable: {e}")
+    if not isinstance(doc, dict):
+        raise SystemExit("slates.yaml must be a mapping of beat number -> line")
+    out = {}
+    for k, v in doc.items():
+        try:
+            out[int(k)] = " ".join(str(v).split())
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
 def loudnorm_measure(track: Path) -> dict | None:
     """First pass of two-pass loudnorm: measured levels for a linear-gain
     second pass (dynamic single-pass loudnorm pumps on dialogue)."""
@@ -455,20 +481,36 @@ def text_png(text: str, path: Path, size: int, fg: tuple, bg: tuple,
     return path
 
 
-def slate_png(slug: str, path: Path) -> Path:
+def slate_png(slug: str, path: Path, note: str | None = None) -> Path:
+    """A beat with no footage in the cut: its title, and ONE honest line saying
+    why there is no picture.
+
+    The default line is "[ footage pending ]" and for years it was the ONLY
+    line, which understated every slate that is not waiting on a render.
+    picks-0820.yaml named the defect: beat 16's footage exists and is barred by
+    a founder ruling, and beat 09's two clips bar themselves in their own
+    headers — neither is "pending". A cut can now hand its own wording in via
+    `slates.yaml` in the --clips directory (see `load_slate_notes`), so the card
+    says what is actually true of that beat instead of a generic apology.
+    Wrapped, so a real sentence fits.
+    """
     img = Image.new("RGBA", (WIDTH, HEIGHT), BG)
     d = ImageDraw.Draw(img)
     font = mono_font(30)
     lines = wrap(slug.upper(), font, WIDTH - 120)
     lh = 42
-    y = HEIGHT // 2 - lh * len(lines) // 2
+    small = mono_font(18)
+    nlines = wrap(note or "[ footage pending ]", small, WIDTH - 160)
+    slh = 26
+    block = lh * len(lines) + 30 + slh * len(nlines)
+    y = HEIGHT // 2 - block // 2
     for i, l in enumerate(lines):
         w = font.getbbox(l)[2]
         d.text(((WIDTH - w) // 2, y + i * lh), l, font=font, fill=GREEN)
-    small = mono_font(18)
-    note = "[ footage pending ]"
-    d.text(((WIDTH - small.getbbox(note)[2]) // 2, y + lh * len(lines) + 30),
-           note, font=small, fill=(147, 166, 152, 255))
+    ny = y + lh * len(lines) + 30
+    for i, l in enumerate(nlines):
+        d.text(((WIDTH - small.getbbox(l)[2]) // 2, ny + i * slh),
+               l, font=small, fill=(147, 166, 152, 255))
     img.save(path)
     return path
 
@@ -585,7 +627,7 @@ def wants_pingpong(clips: list) -> bool:
 
 def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 manifest: dict | None = None, extra_layers: list | None = None,
-                tag_speakers: bool = True) -> Path:
+                tag_speakers: bool = True, slate_note: str | None = None) -> Path:
     """Encode one beat: fitted footage (or slate) + overlays + captions.
     Multiple clips per beat are sequenced (concat) to fill the slot, and a slot
     the sequence cannot fill ends on a HOLD of its last frame — the action
@@ -708,7 +750,8 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
             f"crop={WIDTH}:{HEIGHT},fps={FPS},"
             f"trim=duration={dur},setpts=PTS-STARTPTS[base]")
     else:
-        slate = slate_png(strip_inline_md(beat["slug"]), workdir / f"slate-{num:02d}.png")
+        slate = slate_png(strip_inline_md(beat["slug"]),
+                          workdir / f"slate-{num:02d}.png", slate_note)
         inputs += ["-loop", "1", "-t", str(dur), "-i", str(slate)]
         chains.append(f"[0:v]fps={FPS},trim=duration={dur},setpts=PTS-STARTPTS[base]")
 
@@ -1069,6 +1112,7 @@ def main() -> int:
     if not tag_speakers:
         print(f"  one voice ({', '.join(voices) or 'none'}) — speaker tags off")
 
+    slate_notes = load_slate_notes(args.clips)
     mismatched = []
     for i, beat in enumerate(beats, 1):
         dur = beat_duration(beat["slug"], beat["items"])
@@ -1108,8 +1152,11 @@ def main() -> int:
         extra = ([(title_ovl, "(W-w)/2", "110", "lt(t,2.8)")]
                  if i == 1 and title_ovl else None)
         timeline.append((render_beat(beat, i, dur, beat_clips, workdir, manifest,
-                                     extra_layers=extra, tag_speakers=tag_speakers),
+                                     extra_layers=extra, tag_speakers=tag_speakers,
+                                     slate_note=slate_notes.get(i)),
                          dur, audio))
+        if not beat_clips and slate_notes.get(i):
+            print(f"    beat {i:02d} SLATE — card reads: {slate_notes[i]}")
         sources.append({"beat": i, "slug": strip_inline_md(beat["slug"]),
                         "clip": "+".join(c.name for c in beat_clips) if beat_clips else "slate (no footage yet)",
                         "audio": audio.name if audio else "none",
