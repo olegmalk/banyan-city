@@ -185,11 +185,23 @@ def main():
                     help="comma-separated k values -> a contact sheet only, "
                          "writes no plate")
     ap.add_argument("--out", default=OUT)
+    # --src ADDED 2026-08-20 so the curve can be applied to a SIBLING plate
+    # without editing this file. The default is unchanged, so every command that
+    # has ever been run against this tool still resolves to the same bytes; the
+    # rung-4 plate `b13-sapcomp-lit-0820.png` is reproducible with no arguments,
+    # which matters because ep2-b13-shadelit-0820.yaml asserts its sha256.
+    # The consumer is pipeline/decisions-pending/ep2-b13-shade-0820/: if the
+    # author rules "draw it taller", the taller sample has to travel the same
+    # tone curve as the take it is being compared against, or the comparison is
+    # measuring the curve instead of the plant.
+    ap.add_argument("--src", default=SRC,
+                    help="plate to lift; defaults to the rung-3 composite "
+                         "sample, which is what reproduces the rung-4 plate")
     ap.add_argument("--sheet", default="",
                     help="also write a before/after contact sheet here")
     a = ap.parse_args()
 
-    src = Image.open(SRC).convert("RGB")
+    src = Image.open(a.src).convert("RGB")
     src_u8 = np.asarray(src)
     before_crop = np.asarray(cover_crop(src, CROP_W, CROP_H, CROP_ANCHOR))
 
@@ -217,8 +229,8 @@ def main():
               % (sheet, ", ".join("k=%.2f" % k for k in ks)))
         return 0
 
-    print("SOURCE %s" % os.path.relpath(SRC, REPO))
-    print("  sha256 %s" % sha256(SRC))
+    print("SOURCE %s" % os.path.relpath(a.src, REPO))
+    print("  sha256 %s" % sha256(a.src))
     report("full", src_u8)
     report("crop", before_crop)
 
