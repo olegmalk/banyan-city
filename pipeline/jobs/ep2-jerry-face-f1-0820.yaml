@@ -1,0 +1,208 @@
+id: ep2-jerry-face-f1-0820
+task: ep2-jerry-face-f1-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-20 night
+consumer: 'THE JERRY LoRA SET, WHICH STAYS HELD UNTIL ONE OF THESE PASSES. The proportion problem is solved
+  and the frames that solve it are not trainable: six more poses of a blank egg would teach the trigger
+  token a blank egg exactly as twelve bobbleheads would have taught it a mascot. No beat plate, nothing
+  promoted.'
+success: ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale 1.0, differing from ep2-jerry-skel-n1-0820
+  by the NEGATIVE loses `thick eyebrows`, and nothing else. canon's tile read says the eyes sit 'under
+  one heavy dark brow bar'; the negative inherited from the close-up wedge has been deleting it. Scored
+  on P1-P4 (brow, muzzle, mouth, shading) with T1, T2, T3 and T8 as regression clauses.
+why: 'RUNG f1: the NEGATIVE loses `thick eyebrows`, and nothing else. canon''s tile read says the eyes
+  sit ''under one heavy dark brow bar''; the negative inherited from the close-up wedge has been deleting
+  it.
+
+  n1 passed T8 at 5.07 heads and passed every face clause in the bar, and its face read at 1:1 beside
+  the tile is a FEATURELESS EGG -- two black bars on a smooth oval, no brow, no muzzle, no mouth, no shading.
+  The bar scores ABSENCES and the tile is made of PRESENCES. The recipe is framing-dependent the other
+  way round: subtraction removes the human features at a close-up and removes everything at full body.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryface-f1-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1other, solo,
+    colored skin, green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose, closed mouth,
+    :|, expressionless, standing, arms at sides, in tall grass, full body
+  C:\banyan-farm\jerryface-f1-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, hair, beard, child, chibi, grey skin, pale skin, 2boys
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT.\
+    \ The job dirs on this card carry a\n# hand-staged src\\pipeline\\controlnet_plate.py and nothing\
+    \ else --\n# jerrytile-p04-0820\\src holds exactly one file -- so a hint that is\n# not fetched is\
+    \ a job that dies after the queue has claimed it.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryface-f1-0820\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\")]\nfor name, dst, sha in want:\n\
+    \    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as\
+    \ r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n  \
+    \      print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n     \
+    \   raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n\
+    \    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryface-f1-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryface-f1-0820\src
+  - --repo-commit
+  - 8b1dd656324509562b2d65c35f677505b2375f89
+  - --task
+  - ep2-jerry-face-f1-0820
+  - --arm
+  - posehint
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19-0820.png
+  - --control-sha256
+  - 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --prompt-file
+  - C:\banyan-farm\jerryface-f1-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryface-f1-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerryface-f1-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of exactly\
+    \ this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryface-f1-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryface-f1-0820\"\nctl_dir = \"C:/banyan-farm/jerryface-f1-0820/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-face-f1-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    # The HINT travels with the frame: it is the frame's condition, and a\n# reader scoring whether the\
+    \ net read it needs to see it at the same\n# pixel columns.\nfiles = sorted(glob.glob(out_dir + \"\
+    /ep2-jerry-face-f1-0820-posehint.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n\
+    \               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"\
+    /jerry-skel-h19-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-face-f1-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 5 else 1)"
+artifacts:
+- C:\banyan-farm\jerryface-f1-0820\out\ep2-jerry-face-f1-0820-posehint.png
+bar: "SCORED ON PRESENCES, WHICH IS WHAT THE OLD BAR WAS MISSING.\n  P1 BROW. A dark brow bar over the\
+  \ eyes, as in the tile. Absent in n1.\n  P2 MUZZLE. The lower face reads forward and modelled, not flat.\
+  \ Absent in n1.\n  P3 MOUTH. A line, however thin. Absent in n1 -- not thin, ABSENT.\n  P4 SHADING.\
+  \ Any tonal modelling on the face at all. Absent in n1.\nREGRESSION CLAUSES, and any one of them fails\
+  \ the rung outright:\n  T1 no iris and no pupil.  T2 no human nose bridge, tip or nostrils.\n  T3 no\
+  \ age modelling -- no furrows, no folds, no jowls.\n  T8 4.5 heads or better. The body is the thing\
+  \ that already works and a face\n     rung that costs the body is not a trade, it is a loss.\nA rung\
+  \ passes on 2 of 4 presences with every regression clause intact. This is\ndeliberately generous: the\
+  \ question tonight is whether the face is REACHABLE at\nthis framing at all, not which wording is best."
+failure_predicted_in_advance: 'f1 HELPS AND IS NOT ENOUGH -- one brow bar on a blank egg is still a blank
+  egg. f2 IS THE COIN FLIP: `snout` has real Danbooru mass but reads CANINE on most checkpoints, and a
+  dog muzzle is a different failure from a mask, not a smaller one. f3 IS THE ONE THAT COSTS ME SOMETHING:
+  it puts back the wording this lane helped retire, on the argument that the strike was about the BUILD
+  and the build is now geometry''s job. If f3 returns a lean 5-head figure with a modelled creature face,
+  the correction is that `adult`/`man` were only dangerous while wording carried the build alone. If it
+  returns a human male face, the strike stands and is TESTED rather than asserted.'
+one_sample_rule: Three rungs on ONE question with one variable each, ~20 s a render on a card already
+  busy with another lane's work. Nothing scales off these without an eye verdict at 1:1 against adult-b19-0819.jpg
+  -- which is the check that caught this problem, since n1 passed every clause of the written bar and
+  is still not the tile.
+the_one_variable: the NEGATIVE loses `thick eyebrows`, and nothing else. canon's tile read says the eyes
+  sit 'under one heavy dark brow bar'; the negative inherited from the close-up wedge has been deleting
+  it.
+the_rung_this_is_one_variable_from: ep2-jerry-skel-n1-0820
+derivation:
+  parent: pipeline/jobs/ep2-b08-posenet-sample-0819.yaml
+  by: pipeline/derive_jerry_face_fullbody_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - licence_note
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - b08pose-0819 -> jerryface-f1-0820
+  - b08-openpose-0819 -> jerry-skel-h19-0820
+  - ep2-b08-posenet-sample-0819 -> ep2-jerry-face-f1-0820
+  overrides_applied_and_asserted:
+    argv:--control-sha256:
+    - step posehint --control-sha256 (3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+      -> 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c)
+    argv:--repo-commit:
+    - step posehint --repo-commit (161273f6f20452e87dede2c2a4b5b43b95e73179 -> 8b1dd656324509562b2d65c35f677505b2375f89)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 3
+    key:priority:
+    - key priority = 30
+    payload:negative.txt:
+    - payload negative.txt (275 -> 215 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 227 chars)
+    seed:
+    - step posehint --seed (20260819 -> 20260823)
+  seed: 20260823
