@@ -1,0 +1,9 @@
+#### job ep2-b04-tileread-v7-0820-1787248107 attempt 1 start 2026-08-20T17:49:12Z
+
+==== step hintskel START 2026-08-20T17:49:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b04tileread-v7-0820\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\b04tileread-v7-0820\\src", "--repo-commit", "0191c620c6b52d3b9e73262209f09743c9654660", "--task", "ep2-b04-tileread-v7-0820", "--arm", "nocontrol", "--control", "pipeline/control/b08-pose-skel-0819.png", "--control-sha256", "09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3", "--scale", "0.45", "--seed", "20260820", "--prompt-file", "C:\\banyan-farm\\b04tileread-v7-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b04tileread-v7-0820\\negative.txt", "--out", "C:\\banyan-farm\\b04tileread-v7-0820\\out"]
+Token indices sequence length is longer than the specified maximum sequence length for this model (92 > 77). Running this sequence through the model will result in indexing errors
+  prompt tokens: 92 (limit 77)
+!! the prompt runs 15 tokens past CLIP's 77 and diffusers would TRUNCATE it silently. The tail of every draft in this repo is the style anchor, so what gets dropped is exactly what makes the plate look like the show. Shorten it, or pass --allow-truncation if the overflow is deliberate.
+==== step hintskel END rc=9 2026-08-20T17:49:16Z ====
+#### job ep2-b04-tileread-v7-0820-1787248107 finished rc=9 2026-08-20T17:49:16Z
