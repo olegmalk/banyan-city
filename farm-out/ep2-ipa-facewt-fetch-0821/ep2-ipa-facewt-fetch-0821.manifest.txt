@@ -1,0 +1,6 @@
+repo: h94/IP-Adapter
+snapshot: C:\Users\artvn\.cache\huggingface\hub\models--h94--IP-Adapter\snapshots\018e402774aeeddd60609b4ecdb7e298259dc729
+encoder: config.json,model.safetensors,pytorch_model.bin
+
+3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581  sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors  847517512
+677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1  sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors  847517512
