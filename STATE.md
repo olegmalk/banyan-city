@@ -9358,3 +9358,22 @@ same init and same seed so rung 1 is a true control.
 `box_enqueue`'s `--src` guard could fetch them, and all six output clips were
 scp'd off `rtx5090:C:/banyan-farm/courier-box/farm-out/`. The 3.18 GB push
 backlog is still there and still the reason.
+
+## 2026-08-20 — dad's Claude granted ssh to the four farm Macs
+
+Roman authorized giving Oleg's (dad's) Claude direct ssh access to the render
+farm Macs. His MacBook Air pubkey was already on macbook5 (Roman ran
+`ssh-copy-id` there); the line
+`ssh-ed25519 AAAAC3Nza...HZ+76 olegmalkov@Olegs-MacBook-Air.local` was read out
+of `macbook5:~/.ssh/authorized_keys` and appended to
+`~/.ssh/authorized_keys` on **macbook1, macbook2, macbook3 and macbook4**
+(idempotent `grep -qxF` first; `~/.ssh` 700, `authorized_keys` 600; verified
+present exactly once on each). Nothing was restarted: `mac_worker.py` +
+`caffeinate` were left running on all four and `~/banyan-queue` untouched.
+
+His entry points are `ssh macbook1@macbook1s-MacBook-Pro.local` and the same
+pattern for 2/3/4 — user and hostname both carry the machine number. Warning
+that ships with the grant: these four run banyan render workers, so do not kill
+python/caffeinate processes and do not delete `~/banyan-queue` or
+`~/banyan-city`. macbook2 can drop off WiFi (STATE.md 2026-08-16) — sweep, WoL,
+retry for five minutes before concluding a Mac is gone (runbook §macbook4).
