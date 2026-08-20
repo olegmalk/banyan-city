@@ -1,0 +1,228 @@
+id: ep2-jerry-pose-point-0820
+task: ep2-jerry-pose-point-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-20 night
+consumer: THE JERRY LoRA TRAINING SET. A frame passing every clause of the bar is added to pipeline/lora/curation-tile-0820.yaml
+  and its caption written against canon's corrected tile read; a frame failing any clause is rejected,
+  because keeping near-misses is exactly what made the 31-frame set untrainable. No beat plate, nothing
+  promoted to a cut.
+success: ONE 832x1216 png at seed 20260823 conditioned on jerry-skel-h19point-0820.png through xinsir/controlnet-openpose-sdxl-1.0
+  at scale 1.0, the face wording and negative byte-identical to n1's, and the pose words 'arm outstretched,
+  pointing, in tall grass, full body'. Scored on T1, T2, T3, T7, T8 and T9; any failure rejects it from
+  the set.
+why: 'POSE point of six, at the ratified proportion. n1 proved the skeleton carries head-to-body and n5
+  -- the 3.1-head hint at the same scale, seed and words -- proved it by coming back a bobblehead on purpose.
+  What is left before the Jerry LoRA can train is POSE BREADTH: the curated set is seven frames in four
+  poses, and a pose-locked character LoRA is worse than none. The skeleton and the pose words move together
+  here and that is the one variable.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerrypose-point-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1other, solo,
+    colored skin, green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose, closed mouth,
+    :|, expressionless, arm outstretched, pointing, in tall grass, full body
+  C:\banyan-farm\jerrypose-point-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT.\
+    \ The job dirs on this card carry a\n# hand-staged src\\pipeline\\controlnet_plate.py and nothing\
+    \ else --\n# jerrytile-p04-0820\\src holds exactly one file -- so a hint that is\n# not fetched is\
+    \ a job that dies after the queue has claimed it.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerrypose-point-0820\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h19point-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n     \
+    \    \"1b0876d4eb8381c0052d2281a4fbe0319868f96faf626f62d8fa378083595d23\")]\nfor name, dst, sha in\
+    \ want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120)\
+    \ as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n\
+    \        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n   \
+    \     raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n\
+    \    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerrypose-point-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerrypose-point-0820\src
+  - --repo-commit
+  - b889227bc1f0e7b96c271235de7bc61466438ae0
+  - --task
+  - ep2-jerry-pose-point-0820
+  - --arm
+  - posehint
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19point-0820.png
+  - --control-sha256
+  - 1b0876d4eb8381c0052d2281a4fbe0319868f96faf626f62d8fa378083595d23
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --prompt-file
+  - C:\banyan-farm\jerrypose-point-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerrypose-point-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerrypose-point-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of exactly\
+    \ this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerrypose-point-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerrypose-point-0820\"\nctl_dir = \"C:/banyan-farm/jerrypose-point-0820/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-pose-point-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    # The HINT travels with the frame: it is the frame's condition, and a\n# reader scoring whether the\
+    \ net read it needs to see it at the same\n# pixel columns.\nfiles = sorted(glob.glob(out_dir + \"\
+    /ep2-jerry-pose-point-0820-posehint.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"\
+    /jerry-skel-h19point-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c =\
+    \ os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-pose-point-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 5 else 1)"
+artifacts:
+- C:\banyan-farm\jerrypose-point-0820\out\ep2-jerry-pose-point-0820-posehint.png
+bar: "EVERY FRAME IS SCORED FOR ENTRY TO THE TRAINING SET, not for a cut.\n  T8 HEAD-TO-BODY. 4.5 heads\
+  \ or better BY EYE against adult-b19-0819.jpg, with\n     lean limbs. n1 set the standard this batch\
+  \ is held to.\n  T1 BLANK EYES -- no iris, no pupil, no lashes.\n  T2 NO HUMAN NOSE -- no bridge, no\
+  \ tip, no drawn nostrils.\n  T3 NO AGE MODELLING -- no brow furrows, no folds, no jowls.\n  T7 NO PATCHWORK\
+  \ ON THE SKULL. The wedge measured `patchwork cloak` bleeding\n     stitch marks onto the head in six\
+  \ of eight rungs; n1-n5 did not show it at\n     full body and this batch is where that holds or does\
+  \ not.\n  T9 THE POSE IS THE ONE ASKED FOR. A rung whose skeleton the net ignored is\n     not a pose\
+  \ in the set, however good the figure is.\nT4 (ears) is unscorable at full body and is not scored. T6\
+  \ remains STRUCK.\nA frame failing ANY clause is REJECTED from the set. The whole reason the old\n31-frame\
+  \ set was untrainable is that near-misses were kept."
+failure_predicted_in_advance: 'THE UPRIGHT POSES LAND AND THE FOLDED ONES ARE THE RISK, and the
+
+  risk is specific: `sit` and `crouch` compress the skeleton into a third of the
+
+  canvas, so the head keypoints sit far from where a standing figure''s would, and
+
+  Sec 13''s measured binding was on two UPRIGHT figures. If the net treats a folded
+
+  skeleton as a small figure rather than a folded one, those two come back
+
+  correctly posed and BOBBLEHEADED -- which would say head-to-body binds through
+
+  the ratio the whole skeleton spans and not through the head keypoints alone.
+
+  That is worth knowing and is why they are in the batch rather than deferred.
+
+  `reach` AND `point` ARE THE SAFEST -- legs identical to n1''s, arms the only
+
+  change. `hunch` IS THE ONE I EXPECT THE NET TO SOFTEN: it differs from n1 by a
+
+  quarter of a head height and 2% of stature, which may be under the net''s
+
+  resolution, in which case it is a duplicate of n1 and not a pose.
+
+  IF FOUR OF SIX PASS, the set reaches six poses at the tile''s proportion counting
+
+  n1 and the stride, and the LoRA''s pose gate is discharged on arithmetic rather
+
+  than on hope.'
+one_sample_rule: DISCHARGED BY n1 AND n5, not waived. The recipe change under test -- ratified face wording
+  plus an openpose skeleton at head_frac 0.190 -- was rendered as ONE sample (n1) and judged by eye before
+  this set was authored, and n5 is the control that made that judgement a mechanism instead of a seed.
+  This batch varies the POSE, which is the thing the sample could not vary.
+the_one_variable: 'the SKELETON and the pose words that describe it, moving together: ''arm outstretched,
+  pointing, in tall grass, full body''. Everything else -- the face wording, the negative, the seed, the
+  scale, head_frac and the five head keypoints -- is byte-identical to ep2-jerry-skel-n1-0820''s.'
+the_rung_this_is_one_variable_from: ep2-jerry-skel-n1-0820
+derivation:
+  parent: pipeline/jobs/ep2-b08-posenet-sample-0819.yaml
+  by: pipeline/derive_jerry_poseset_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - licence_note
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - b08pose-0819 -> jerrypose-point-0820
+  - b08-openpose-0819 -> jerry-skel-h19point-0820
+  - ep2-b08-posenet-sample-0819 -> ep2-jerry-pose-point-0820
+  overrides_applied_and_asserted:
+    argv:--control-sha256:
+    - step posehint --control-sha256 (3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+      -> 1b0876d4eb8381c0052d2281a4fbe0319868f96faf626f62d8fa378083595d23)
+    argv:--repo-commit:
+    - step posehint --repo-commit (161273f6f20452e87dede2c2a4b5b43b95e73179 -> b889227bc1f0e7b96c271235de7bc61466438ae0)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 3
+    key:priority:
+    - key priority = 34
+    payload:negative.txt:
+    - payload negative.txt (275 -> 231 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 230 chars)
+    seed:
+    - step posehint --seed (20260819 -> 20260823)
+  seed: 20260823
