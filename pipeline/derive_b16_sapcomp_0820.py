@@ -57,8 +57,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARENT = "pipeline/jobs/ep2-b03-sapcomp-0820.yaml"
 PARENT_DIR_TOKEN = "b03sapcomp-0820"
 PARENT_ID_TOKEN = "ep2-b03-sapcomp-0820"
-NEW_ID = "ep2-b16-sapcomp-0820"
-NEW_DIR_TOKEN = "b16sapcomp-0820"
+NEW_ID = "ep2-b16-sapcomp-r2-0820"
+NEW_DIR_TOKEN = "b16sapcomp-r2-0820"
 
 OUT_DIR = "farm-out/ep2-b16-sapcomp-0820"
 INIT = "16-why-sapcomp-0820.png"
@@ -397,6 +397,43 @@ for name, want in WANT.items():
                           % (step.get("name"), h[:12]))
                     return 1
     print("hash sweep OK: every sha256 in the argv is this child's")
+
+    # ---- AND THE FLAG THAT ACTUALLY MATTERS, NAMED ------------------------
+    # The sweep above only proves a hash belongs to THIS child. It would still
+    # pass if the MASK's sha had landed in --init-sha256, which is the same
+    # failure wearing a hash that happens to be local. So --init-sha256 is
+    # asserted against the bytes of the init file on disk, by name, and the flag
+    # is required to be present at all: a step that lost the flag would sail
+    # through both checks and condition on an unverified picture.
+    seen = 0
+    for step in child.get("steps") or []:
+        argv = step.get("argv") or []
+        if "--init" not in argv or "--init-sha256" not in argv:
+            continue
+        # NOT os.path.basename: these are WINDOWS paths and this script runs on
+        # a Mac, where posixpath.basename returns the whole string because it
+        # has never heard of a backslash. That is commit 31a3c873 verbatim --
+        # "os.path.basename on a Windows path, run from a Mac, sent twenty-four
+        # renders to C:\Windows\System32" -- and it just bit this check on its
+        # first run.
+        init_named = str(argv[argv.index("--init") + 1]).replace("\\", "/").rsplit("/", 1)[-1]
+        claimed = str(argv[argv.index("--init-sha256") + 1])
+        if init_named != INIT:
+            print("!! step %r conditions on %r, not this child's init %r"
+                  % (step.get("name"), init_named, INIT))
+            return 1
+        if claimed != want[INIT]:
+            print("!! step %r asserts init sha %s... but %s hashes to %s...\n"
+                  "   This is the rc=3 the first filing died on."
+                  % (step.get("name"), claimed[:12], INIT, want[INIT][:12]))
+            return 1
+        seen += 1
+    if not seen:
+        print("!! no step carries --init with --init-sha256. The parent's do; "
+              "losing the pair means conditioning on an unverified picture.")
+        return 1
+    print("init assertion OK on %d step(s): --init-sha256 == sha256(%s)"
+          % (seen, INIT))
 
     out = os.path.join(REPO, "pipeline", "jobs", NEW_ID + ".yaml")
     if not write:
