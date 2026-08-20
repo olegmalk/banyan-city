@@ -5533,3 +5533,79 @@ frames (the old manifest's tile-faithful keeps, four poses) and **ZERO** of the
 twelve new ones — not because they are bad pictures but because a character LoRA
 learns proportion, and twelve bobbleheads against seven correct frames would make
 the mascot the majority read of the trigger token.
+
+### THE BODY ARRIVES, AND IT ARRIVES AS GEOMETRY (2026-08-20 night)
+
+Pixels: `review/ep2-goblin-design-0819/SKELETON-0820.png`. Eight rungs,
+`ep2-jerry-skel-n1..n8-0820`, ~20 s a render, $0, on a card that was idle.
+
+**THE INSTRUMENT, PICKED BY ARGUMENT FROM THE RECORD, IN TWO SENTENCES.** Two
+candidates were named — masked IP-Adapter off tile B, or ControlNet off a
+tile-derived hint — and §13 of `b08-arm-route-0819.md` MEASURED that the
+openpose net binds STATURE on this exact checkpoint ("830/715 px, ratio 1.161
+against 1.100 authored, both statures within 4%") while §11 MEASURED that the
+masked adapter is an ATTRIBUTE instrument which does not govern geometry: skin,
+face and wardrobe all transferred off the references and the arm STILL aimed
+wrong, and that verdict says of the aim, in as many words, *"That is not the
+adapter."* Head-to-body is geometry — and the second reason is the one-variable
+doctrine, because **the face is already solved by wording**, so a skeleton
+leaves the ratified recipe byte-identical where an IP-Adapter off the tile would
+re-supply the very attributes the wording already gets right and make any
+verdict unattributable.
+
+**THE TILE, MEASURED AT 1:1 INSTEAD OF ESTIMATED.** `adult-b19-0819.jpg`, crown
+y=292, chin y≈447, head 155 px; seated crown-to-sole 623 px, i.e. 4.0 heads
+seated. Seated crown-to-floor is ≈0.77 of standing height, so the tile is
+**5.2 heads standing** and `head_frac` = 0.190. canon's `correction_2026_08_20`
+said "roughly a fifth" from the eye; the number now exists.
+
+| rung | hint | scale | **measured heads** | verdict |
+|---|---|---|---|---|
+| **n1** | h19 (5.26 asked) | **1.0** | **5.07** | **PASS** — and the face holds |
+| n2 | h19 | 0.7 | 5.17 | PASS |
+| n3 | h19 | 0.45 | **4.44** | **FAIL** — under the 4.5 bar |
+| n4 | h19 | 1.3 | 5.18 | PASS, and nothing was destroyed |
+| **n5** | **h32 (3.12 asked)** | 1.0 | **3.81** | **THE CONTROL, and it fired** |
+
+Instrument: crown = topmost chartreuse skin row, chin = the bottom of that
+contiguous run, sole = the lowest hard-dark run in the central 240 columns.
+
+**n5 IS THE WHOLE RESULT AND IT IS THE ONE THAT LOOKED LIKE A WASTED RENDER.**
+Same scale, same seed 20260823, same prompt and negative to the byte, same
+stature, same shoulder half-width, same foot line. The ONLY thing that moved is
+the skeleton's `head_frac`, 0.190 → 0.320 — and the frame came back at 3.81
+heads with big round white mascot eyes, which is the twelve-pose set's defect
+reproduced **on demand, from geometry alone**. n1 is therefore not a lucky seed;
+head-to-body is a dial and we now hold it. A rung that can only confirm is not
+an instrument, and this batch had one that could refute.
+
+**THE SCALE FLOOR IS BETWEEN 0.45 AND 0.7, AND 1.3 COSTS NOTHING.** §16's
+"strength eats the picture" was measured on TWO nets composed; one openpose net
+at 1.3 lost no linework and broke no clause. The bracket has a near side (0.45,
+which drifts back toward the checkpoint's prior at 4.44) and no far side yet.
+
+**THE FACE SURVIVED THE NET, AND ONE ATTRIBUTE GOT BETTER.** T1 blank eyes, T2
+no nose, T3 no age modelling all hold in n1–n4. **T7 — the patchwork skull the
+wedge found in six of eight rungs — DID NOT FIRE ONCE at full body.** That is a
+framing effect the close-up wedge could not have seen, and it is reported as an
+observation, not as a fix: `ep2-b04-tilefix-w1..w3-0820` still own that question
+at close range.
+
+**TWO THINGS TO REPORT AGAINST THE RECIPE, both new and both from having a body
+in frame.** The mouth is **absent**, not thin — `closed mouth, :|` draws no line
+at all at this scale, where the tile has a wide lipless one; and no ear flange
+is drawn, where the wedge's close-ups grew one unasked. Both are below the
+resolution this framing can fix and neither is scored here.
+
+**WHAT THIS DOES NOT LICENSE.** No frame from this batch is a beat plate and
+none goes into a cut. The seven-beat re-render wave is untouched.
+
+**THE NEXT BATCH WAS QUEUED BEFORE THIS ONE WAS JUDGED**, which is the standing
+order now: `ep2-jerry-pose-{kneel,sit,crouch,reach,point,hunch}-0820`, six poses
+at head_frac 0.190 and scale 1.0 with the face wording, negative, seed and the
+five head keypoints byte-identical to n1's. That set is the LoRA's remaining
+gate — the curated set is seven frames in FOUR poses and a pose-locked character
+LoRA is worse than none. Pre-registered: `sit` and `crouch` fold the skeleton
+into a third of the canvas where §13's binding was measured on upright figures,
+so if those two come back correctly posed AND bobbleheaded, head-to-body binds
+through the span of the whole skeleton rather than through the head keypoints.
