@@ -3220,3 +3220,230 @@ can say about a frame with no subject in it.
 - **No pick, no `plate_ack`, no cut, no publication. Beats 03, 13 and 15 stay
   slates.** Per-clause verdicts in each spec's `verdict_measured`; clips, sheets and
   `EVIDENCE-*.png` under `farm-out/ep2-b{15,03,13}-{listenroot,covermid,shademid}-0820/`.
+
+---
+
+## Appended 2026-08-20 by the composite-plate motion lane — rungs 4, 5 and a confirmation seed, and the beat that had no footage now has two takes
+
+Five jobs, all $0, all on the rtx5090, plus one plate made on a Mac at zero GPU
+seconds. **Every one of the three beats this lane owns is now at the author's
+door and none of them has a runnable rung left that a measurement earns.** That
+last sentence is the report, not an apology — see the closing section.
+
+### THE NOUN LAW HELD, AND THEN THE MIDDLE PLACEMENT DREW BEAT 15'S BEAT
+
+`ep2-b15-listengrass-0820` deleted two words and added none (`stays in the
+**ground**` → `in the grass`, and `with **soil and** grass around its base`),
+1185 → 1175 chars. Rung 3's mound of bare earth is gone and **the goblin is in
+all 121 frames** — checked on a 121-tile sheet with f094 opened by name. The
+plant is rooted at f105 and f120 with no hand on it, and that pass finally means
+something: rung 3 had won the same clause by deleting the character who could
+pick the plant up.
+
+**Rung 2's `rooted in the GROUND` was deliberately left in place**, byte for
+byte, because rung 2 contained it and produced no mound — the two nouns were
+already discriminated by measurement — and because that sentence is the
+ongoing-action terminal placement that bought position for free at HOLD 0.508.
+`F-GROUND-IS-A-NOUN-TOO` was pre-registered as the most likely failure and did
+not fire. **The noun law's fixes are the WORDS, not the draw**: neither rung 2's
+pick-up nor rung 3's mound returns at a second seed.
+
+Then `ep2-b15-listenmid-0820` gave the action clause a **MIDDLE in continuous
+aspect** — the edit that repaired beats 03 and 13 and that beat 15 had never
+had. One inserted sentence, asserted to be an insertion (the parent prompt is
+contained in the child minus it, byte for byte), carrying no ground-material
+noun and no plant-touching word, both checked before the spec was written.
+
+**It is the first clip in six rungs where he tips his head down and over until
+his face is AT the two leaves** — which is what `node.md:98` says beat 15 *is*.
+
+| f009..f084, ALL pairs | whole frame | mouth band |
+|---|---|---|
+| rung 1 listenmotion (lost the plant to a hand) | 0.396 | 1.915 |
+| rung 2 listenlast ("the loosest of all six") | **0.079** | 0.200 |
+| rung 4 grassroot (an open mouth, HELD) | 0.166 | 0.213 |
+| **rung 5 mid** | **0.623** | **1.759** |
+| **rung 5 at a second seed** | **0.761** | **3.441** |
+
+### I RETRACTED THREE OF MY OWN INSTRUMENTS THIS PASS, AND ONE OF THEM I HAD JUST WRITTEN
+
+1. **H0's numeric half — "no interframe pair above 8× the clip median" — is
+   unusable and I wrote it one rung earlier.** On a period-3 clip the median is
+   set by the two duplicate frames in every three, so *any* real movement is tens
+   of times the median by construction; rung 4 fires it at 92× on a head turn and
+   rung 3 fired it at 165× on a subject swap, and the ratio cannot tell them
+   apart. **The instrument that can: a swap has to repaint the background where
+   the subject was.** Rung 4's two biggest pairs read 45.9–65.1 in the subject
+   band and **0.10–0.97 in every background quadrant**, with the sky and a
+   background rock both at dx 0 dy 0. No swap.
+2. **Rung 5's H1 threshold (1.5) was invented without calibration**, and it also
+   sampled every third pair on a clip that turned out to read **period 2**. Both
+   halves wrong. Replaced on the confirmation seed by a floor calibrated against
+   this beat's own history (0.30 / 0.80) — roughly half of rung 5 and four times
+   rung 2, so a seed that halves the effect still passes and one that lands back
+   in the old regime cannot.
+3. **Beat 13's G8 instrument passes on the control it was written to reject.** As
+   written it wanted the f120 eye band ≥15 below the forehead band; it reads 102.6
+   below on the lifted clip **and 95.1 below on shademid, the clip already judged
+   G8 FAIL.** Both fixed bands read std 88–89 because the head tipped out from
+   under them. Scored by eye instead.
+
+**And a fourth, reported as a failed measurement rather than as a number.** Beat
+15's relocation tracker (an f010 eye-band template) returns *four identical
+boundary hits at residual 35* on rung 5. That is a tracker with nothing to lock
+onto — the head **tips** rather than travels — not a 60 px slide. The background
+rock is the clean instrument: dx 0 dy 0 throughout, residual 3.9 and 9.5.
+
+> The generalisable half, and it is the same one three times: **an instrument
+> that cannot fail on the control is not an instrument.** Run every new threshold
+> against the clip you already know the answer for, before the pixels you don't.
+
+### THE CONFIRMATION SEED SEPARATED THE RECIPE FROM THE DRAW, AND IT WAS WORTH 4.5 MINUTES
+
+Five rungs at seed 20260820 made them true controls of each other and left
+reproducibility unmeasured. `ep2-b15-listenmid-s2-0820` changed the seed and
+nothing else (prompt asserted byte-identical in the deriver).
+
+- **The motion is the RECIPE.** 0.761 / 3.441 at the new seed against 0.623 /
+  1.759 — better, not merely equal.
+- **The temporal-resolution doubling was the DRAW.** Rung 5 alone read judge_clip
+  **period 2 / 60 distinct / 12.0 effective fps**; the second seed is back to the
+  family's **period 3 / 40 / 8.0**. `F-PERIOD-REVERTS` was pre-registered as "not
+  a failure of the beat; a sharpening of the finding", and anyone carrying 12 fps
+  forward as a property of the recipe would have been carrying a draw.
+- **Rung 5's two recorded costs were also the draw.** Its f120 leaf pair is
+  drooped and bent and its visible eye simplifies to a blank almond; at the second
+  seed the plant is two clean ovate blades on a straight stem and the eyes keep
+  their irises.
+
+**Beat 15 therefore has TWO passing clips and no pick.** Rung 5 leans in and
+*stays* at the leaves, closer to the script's sustained staging, and pays with the
+deformed leaves and the eye. The second seed leans in and comes back out, keeps
+the plant and the face clean, and carries a 3-frame tail freeze (rung 5: none) at
+**HOLD 0.362 — the loosest reading this beat has ever produced.** Which ships is
+R4. Both are committed with their frames.
+
+### BEAT 13: THE EXPOSURE RUNG RAN, AND EXPOSURE IS NOW AN EXONERATED SUSPECT
+
+`ep2-b13-shadelit-0820` — same words, same seed, same mask, same anchor, render
+argv identical on **26 of 30 tokens**; the variable is one file path and one sha.
+The plate was lifted on a Mac at 0 GPU seconds.
+
+**A gamma was the first choice and measurement rejected it.** G8 needs a dark
+patch to be *legible on a lit face*, so what has to grow is face-minus-field, and
+a gamma compresses the top: 25.1 → 24.6 → 23.7 → 22.4 at g 0.85/0.75/0.65, the
+wrong way. The curve used instead is a true exposure gain with a shoulder,
+`y = k·x/(1+(k−1)·x)` on linear light — slope k at black, 1/k at white, 0→0 and
+1→1 exactly, so it **cannot clip** (asserted: 0 newly pure-white pixels, size
+unchanged, no channel decreased). At k=2.0 the separation grows to 28.3, the
+whole-frame median goes 89.5 → 118.1 and p5 8.1 → 15.3. **k=2.6 was rejected by
+eye at 6× — the cloak's blacks lift out of ink — and k=1.5 moves the median
+inside the noise of what it is buying.**
+
+**`F-EXPOSURE-IS-NOT-THE-SUSPECT` fired, and this spec named it as the most likely
+outcome with the reasoning published in advance:** "beat 13's plate is the dim
+one" is true of the FIELD and false of the FACE — cheek probe across the three
+composites reads **b13 114.6, b03 101.8, b15 93.3**, so beat 13 already had the
+brightest face and only the darkest field. G8 fails a fourth time.
+
+**It bought something nobody asked for.** shademid's own failed sub-clause — the
+face not legible at f060 — is **repaired**, because the tilt now arrives later:
+face-band step frames run 0.1 → 50.0 across f066..f099 where shademid peaks at 35
+and decays. It missed H1's mean by 0.115 and beat its last-twenty by 3.2×.
+`F-MOTION-COST` did not fire; `F-WASHED-CEL` did not fire (f120 p5 20.1 vs 11.5).
+
+**No job is filed for beat 13, and the route is closed in this repo's own files.**
+G8 needs the plant and his eyes in one register. *Raising the plant* is refused by
+`beat13_shade_composite.py` itself — its docstring records that a canon 40 cm
+plant at his depth would crown at **y 404, his BROW**, "not what the approved line
+stages"; its `geometry()` records a chest placement already rejected by eye as "a
+flower pinned to his poncho"; and `NO_DRAW_ABOVE_Y = 640` exists so nothing it
+draws can reach his face. *Lowering his head* is a new plate with a different
+pose — authored work, not a derivation. **Underneath both is a question for the
+author, and it now has pixels behind it: four rungs have moved the face band
+10.80 → 0.64 → 4.798 → 2.885 and the tilt from nothing to fully sideways, and at
+f120 his eyes are still ~300 px above 60 px of leaf. The shade may not be filmable
+at this framing.**
+
+### BEAT 03: THE TRIM DOES NOT FIT BY 0.9 s — AND THE TRIM WAS THE WRONG QUESTION
+
+Asked with no GPU. **Live content is 74 frames = 3.0833 s**: the last pair with
+real movement is f072→f073 at 7.199 and every pair after it is 0.012–0.155. The
+slot is **voice-led, not paper-led** — `render_t3.fit_duration` returns
+`max(min(cdur, vdur+2.0), vdur+0.4)` and beat 03's VO is `total_s 3.982`, so the
+floor is **4.382 s = 105 frames** whatever clip it is handed. The spoken line
+alone outruns the live footage by 0.9 s. **Not cut-ready-with-trim**; no `-trim`
+file, no sidecar.
+
+Both trim points were computed and **both are named rather than taken**. At f073
+the assembler re-adds the freeze as a **1.299 s hold** with 0.60 s of the line
+over a frozen picture. At **f105** — the shortest trim that clears the floor, so
+no hold can fire — judge_clip's 7-frame exact freeze *disappears* and 32 near-dead
+frames survive untouched. **That second one is a trim chosen to satisfy an
+instrument and it is recorded as a refusal.**
+
+**THE FINDING IS THE INCUMBENT, AND NOBODY HAD OPENED IT.** Beat 03 is not a
+slate, so this clip's bar is whatever is in the cut. `ep2-demo-0820` still ships
+`03-bad-cover-b03-refire-0814.mp4`: a **chibi CHILD** in a buttoned shirt —
+`child, chibi, round head` is in this beat's own negative — holding the trunk of a
+**whole leafy TREE** from f018, which is the exact plant miss the composite route
+was built to close. It also dies earlier: last live pair f035→f036, **60 of 96
+pairs dead against covermid's 46**, plus a 0.34 s assembler hold.
+
+**A cut swap is NAMED AND NOT MADE**, with a six-frame-each sheet committed at
+`farm-out/ep2-b03-covermid-0820/EVIDENCE-b03-cutswap-vs-incumbent-0820.png` so it
+can be settled in one look. Both things are true at once: covermid is the better
+of the two clips and it still fails its own pre-registered H1.
+
+**And H2's height sub-clause is RETIRED rather than chased across a plate.** It
+asks for "shoulders no higher than the leaf tops"; the VO of this beat is the
+sapling saying *"I am forty centimeters tall"*, and `beats."03".done_when` says a
+crouch that actually conceals him **fails** the beat. The clause contradicts the
+beat. What is left on beat 03 is temporal and every lever is closed — wording at
+three rungs, length by beat 12's measured 73-frame re-roll, plate by the above.
+The untested hypothesis is that **the action COMPLETES at f073**, which is why
+this beat dies where beat 13's continuous tilt does not (b13 still carries 17.32,
+13.28, 8.37 inside its last twenty pairs). That is a staging question, not a GPU
+fire.
+
+### TOOLING: THE `box_enqueue` IDEMPOTENCY GAP THIS FILE OPENED IS CLOSED
+
+`c6587476` — the reused-id guard now scans **done/ and failed/** as well as
+ready/running/backlog, refuses by **what a job RUNS rather than what it is
+CALLED** (spec sha), and `--again` overrides with a fresh token. `ed95f039` fixed
+the CI red it caused: the one test that drives `main()` end to end had not been
+told about the new `prior_runs`, so it reached the real card — passing locally
+where the box answers and failing in CI where the hostname does not resolve. *A
+test that quietly reads the box on every local run is the wrong kind of green.*
+
+**Also acknowledged:** `ep2-b08-twins-sample-0819-1787168798`, the last untriaged
+row in `failed/`. It is **the one row in `failed-acknowledged.yaml` that is not a
+defect** — `controlnet_plate.py`'s licence allowlist refused a net named only by a
+path, cost 1 second after its own preflight had already re-hashed the 2.5 GB blob,
+and was fixed the same evening by adding the path **with its real licence**
+(`7a7e6c4b`) rather than by weakening the guard.
+
+### ONE OPERATIONAL NOTE, BECAUSE IT COST THIS LANE A DETOUR
+
+**`box_enqueue`'s plate check reads `origin/farm-results-rtx5090`, and a plate
+made on a Mac lives on `main`.** The lifted b13 plate is a per-pixel tone map of
+an already-checked plate with geometry asserted unchanged, so the fault the check
+exists to catch — cropping the *wrong beat's* plate — is structurally impossible;
+it was waived with `plate_ack: "unfetchable: …"` written **by hand**, because
+`derive_spec.py` refuses to author a waiver from a script and is right to. A
+`plate_ack` also **blocks `--backlog` by design**, so the job went straight to
+`ready/` with a lane awake. Both refusals are correct and both are worth knowing
+before you file a locally-derived plate.
+
+### WHERE THIS LANE'S THREE BEATS STAND, AND WHY NOTHING IS FILED
+
+| beat | state | what it is waiting on |
+|---|---|---|
+| 03 | a cut-swap candidate that beats the incumbent on every measurable axis and fails its own H1 | **the author**: swap, and whether he does anything after f073 |
+| 13 | best clip the beat has produced; G8 dead at four rungs, two suspects exonerated by tests written before their results | **the author**: is a hand-sized shade filmable at this framing at all |
+| 15 | **two passing clips at two seeds**, recipe confirmed, no pick | **the author**: which take, and the plate lane's composite for the hand's-width distance |
+
+**No job is filed by this lane and that is deliberate.** Every remaining lever is
+either closed by measurement or is a taste call, and the standing rule is that a
+rung with no consumer is not on this ladder — `NOTHING WAS INVENTED`. The card is
+free for the lanes that still have runnable questions.
