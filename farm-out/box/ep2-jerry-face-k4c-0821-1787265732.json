@@ -1,0 +1,91 @@
+{
+  "id": "ep2-jerry-face-k4c-0821-1787265732",
+  "task": "ep2-jerry-face-k4c-0821",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 28,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "stage",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT -- and k1 has THREE, because the\n# IP-Adapter reference is as much this frame's condition as the\n# skeleton is. The job dirs on this card carry a hand-staged\n# src\\pipeline\\controlnet_plate.py and nothing else.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\nroot = r\"C:\\banyan-farm\\jerryface-k4c-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\"),\n        (\"jerry-tile-sq60-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+      ]
+    },
+    {
+      "name": "posehint",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jerryface-k4c-0821\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\jerryface-k4c-0821\\src",
+        "--repo-commit",
+        "29939faba45625c647bb05da9573c4151b8b259d",
+        "--task",
+        "ep2-jerry-face-k4c-0821",
+        "--arm",
+        "ipahead",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "pipeline/control/jerry-skel-h19-0820.png",
+        "--control-sha256",
+        "244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c",
+        "--scale",
+        "1.0",
+        "--seed",
+        "20260823",
+        "--ip-ref",
+        "pipeline/control/jerry-tile-sq60-0821.png",
+        "--ip-mask",
+        "315,130,515,350",
+        "--ip-ref-sha256",
+        "8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8",
+        "--ip-scale",
+        "0.7",
+        "--prompt-file",
+        "C:\\banyan-farm\\jerryface-k4c-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jerryface-k4c-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jerryface-k4c-0821\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of this step.\n# THE REFERENCE TRAVELS WITH THE FRAME. A reader scoring whether the\n# adapter carried the brow needs the brow it was shown.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryface-k4c-0821/out\"\npay_dir = \"C:/banyan-farm/jerryface-k4c-0821\"\nctl_dir = \"C:/banyan-farm/jerryface-k4c-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-face-k4c-0821\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-jerry-face-k4c-0821-ipahead.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-skel-h19-0820.png\")\n               + glob.glob(ctl_dir + \"/jerry-tile-sq60-0821.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-face-k4c-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\jerryface-k4c-0821\\out\\ep2-jerry-face-k4c-0821-ipahead.png"
+  ],
+  "spec_sha256": "303e244c0d5ee96c08ec2d9a1da8358ddcd6e340beaf2f7726b13b109dfda43e",
+  "started_at": "2026-08-20T22:43:36Z",
+  "attempts": 1,
+  "runner_pid": 8768,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T22:44:04Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\jerryface-k4c-0821\\out\\ep2-jerry-face-k4c-0821-ipahead.png"
+  ]
+}
