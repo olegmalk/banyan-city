@@ -6331,3 +6331,51 @@ still available to him. The named next lever, not taken: trim or retime past
 f021, which costs no GPU — and the S1 reservation from the plate (the eye still
 goes to his face first) is answered by a tighter crop, which beat 09 proved
 survives i2v, not by another pass.
+
+### The trim, the VO floor, and the ship-mode swap — beat 16 is in the cut
+
+**THE POP WAS THREE FRAMES, NOT TWENTY-ONE, AND THE LADDER ENTRY ABOVE WAS
+WRONG.** It reported "533 → 639 at f021" off a 20-frame sample; per-frame the
+leaf span is 533 at f001–f003, **638 at f004**, and 639 ± 1 for every frame
+after. A coarse sample answering a fine question. Corrected here rather than
+edited above, so the mistake stays legible.
+
+**Cut with ffmpeg on the rendered mp4**, `select='gte(n\,3)',setpts=…` — 121 →
+118 frames. `--frames` is a RENDER parameter and would have produced a different
+clip, not this one shortened.
+
+**CHECKED AGAINST THE VO FLOOR BEFORE CUTTING, which is the b03 lesson.** Beat
+16's VO is **7.902 s**; `fit_duration` predicted an 8.300 s slot (floor
+vdur+0.4 = 8.302) and the assembler measured **8.62 s**. The clip undershoots
+the slot at 121 frames AND at 118, so **the trim changes the beat's length by
+zero frames.** And short footage is not looped — `render_t3` plays it once and
+holds the last frame (`tpad=stop_mode=clone`) — so the entire cost is 0.125 s
+more freeze, 42% → 43% of the slot. Hold-fill covers it. **Trimming the 21
+frames the first reading implied would have thrown away 0.875 s of his talking
+to fix 0.125 s of pop.**
+
+Trimmed clip re-judged on the same clauses: **7/7.** T0 0.77 / 0.81; M1 leaf span
+range **2 px across all 118 frames**; M2 two leaves at the last frame; M3
+face-band interframe 2.341; M4 last-20 0.975 face / 0.508 whole frame; M5 one
+man, no melt; M6 the plant still the subject.
+
+**SHIP-MODE SWAP DONE.** Beat 16 entered `review/ep2-ship-0821` under the cut's
+own **rule 2** — *a take withheld only on an unanswered taste card enters as
+best-available, veto-able on watch* — the same rule beat 09 entered under. The
+cut is now **21 footage / 0 slates**, 116.33 s, sha `46749b284721…`. Its fault is
+named in the row, on the page and in the sidecar: **the goblin is the superseded
+adult design**, blurred as depth and barely readable at that scale.
+
+**THE MANIFEST KEEPS THE PREDICTION IT FALSIFIED.** `the_cutoff` said *"No render
+in flight tonight can land a legal beat by 12:00."* One landed at 01:05, eleven
+hours inside the window. The sentence is left standing with the correction beside
+it, and the now-dead slate rule is kept with a note that it was right while it
+held.
+
+**AND THE SERVED CHECK EARNED ITS KEEP.** `qa_local` returned PASS routes=85
+while the new source clip was **not in `_site` at all** — the route 404'd on a
+green gate. A `build_site` re-run published it (20 → 21 source mp4s) and the
+gate then passed with the clip actually served. Verified by sha off the wire:
+cut `46749b28…`, clip `99d46d96…`, both matching disk and the manifest. *Passing
+the gate is not the same as being served, and only fetching the artifact tells
+you which one you have.*
