@@ -1,0 +1,31 @@
+tool: "pipeline/beat16_leaf_composite.py"
+sampler: "NONE -- plain image processing, $0, no GPU, no network"
+init: "farm-out/ep2-b16-mac-plate-0820/16-why-mac-plate-r1s1.png"
+init_sha256: "aa0119ac409b31a7bad74d3a8e250a8b6d37c274da009d4581f1d51eb35400a9"
+composite_sha256: "7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540"
+mask_png: "16-why-leafcomp-mask-0820.png"
+mask_sha256: "8db8bb33bab72c1726f0b15ef74402695490a7e6c67f4bb8f14cf7973d399268"
+mask_px: 342519
+mask_frac_of_frame: 0.3386
+drawn_footprint_frac: 0.2667
+mask_frac_note: "THE LARGEST MASK THIS HOUSE HAS FIRED, by an order of magnitude: beat 13's passing parent was 4.10 percent and its tall variant 7.97 percent. The work ladder's warning is that a 0.30 pass over most of a picture is a re-render rather than an inpaint. STRENGTH IS NOT MOVED IN RESPONSE -- it is pre-registered as its own separate rung, because changing the object class and the strength in one fire measures neither."
+rng_seed: 20260820
+blade_px: [800, 410]
+blade_aspect: 1.951
+blade_centre_px: [400, 520]
+blade_angle_deg: -62.0
+blade_shape: "ovate, widest at -0.18 of a below the middle, 7% margin asymmetry, 12 px rib bow, blunt elliptical apex. |cos|^0.82 -- beats 03 and 15's profile -- was NOT carried: at their 50 px its extra bluntness is sub-pixel and at 800 px it reads as a paddle."
+light_axis_used: [0.345, -0.939]
+light_axis_rejected_wholeframe: [0.194, -0.981]
+light_in_leaf_coords: {"along_blade": 0.991, "across_blade": -0.136}
+cast_shadow: "offset 18 px down-left along the measured key, blur 8, strength 0.20. Declared in the footprint and inside the inpaint mask; its support is measured as the pixels it actually changes."
+palette_measured_and_why_it_was_moved: "The plate's own foliage (grass bed, luma band 90-140) means (107.3, 128.1, 79.6) and the goblin's lit forehead is (111, 132, 79) -- THE SAME COLOUR to within four levels in every channel. Drawing the blade in the plate's own plant colour, which is this house's practice, would make it INVISIBLE over the part of the frame it most needs to occlude. It is therefore moved along ONE named axis, saturation toward true green, to a tone neither the yellow-green grass nor the olive skin occupies."
+what_this_rung_does_NOT_fix: "FOCUS. The plate's focal plane is on HIM -- his face is sharp and the near grass is blurred -- so the depth delivered here is occlusion and scale, not the brief's 'blurred behind it'. Blurring him means writing outside the drawn footprint, which C1 forbids and which would put a second variable in the same fire. SCALE, too: he still fills the frame, because that is the plate's own recorded fault and no composite reaches it. Both are the reason this is evidence for a taste question and not a candidate frame."
+checks: {"C1_outside_footprint_px": 0, "C1_object_px": 269868, "C1_antialias_support_px": 2859, "C1_cast_shadow_px": 40950, "C2_blade_inside_frame": true, "C3_components": [269868], "C4_drawn_dark": 39.6, "C4_plate_dark_footprint": 0.0, "C4_plate_dark_grass_bed": 38.9, "C5_aspect": 1.951, "C6_mask_frac": 0.3386, "C7_outline_grad_p99": 70.6, "C7_vein_grad_p99": 37.4, "C7_outline_darkest": 39.6, "C7_vein_darkest": 62.9, "C8_plate_face_grad_p999": 139.2, "C9_drawn_px_in_face_box": 153122, "C9_face_box_frac": 0.516, "C10_halfwidth_maxima": 1, "C10_tip_halfwidth_frac": 0.336, "C10_convexity_reported": 1.0, "detail_mean_grad_blade": 0.95, "detail_mean_grad_plate_face": 3.43}
+fails: []
+geometry_is_the_stewards: "The centre, the angle and the size are STAGING and they are the steward's. The founder has ruled on leaf SHAPE and this obeys that ruling; he has not ruled on where a leaf sits in a frame, and 'lower', 'smaller', 'other side' is one number and one $0 redraw."
+approved: false
+provisional: true
+is_show_content: false
+is_show_content_why: "CARD EVIDENCE FOR /review/ep2-b16-leaf-0820 AND NOTHING ELSE. This frame deliberately builds the shot canon.yaml sapling-cotyledon-shape currently forbids -- 'no leaf whose SHAPE is the subject of the shot' -- so that the author can look at what licensing it buys instead of imagining it. review/inbox.yaml recorded this composite as named and deliberately NOT fired, because spending it before his word would be answering a ruling with a render; it fires now only under the standing directive that every option on an open card carries pixels, and that reasoning is not retracted. CANON IS UNCHANGED. No clip, no episode and no publication may be built on these bytes, and passing every check above changes none of that -- a check measures whether the tool did its job, and whether this shot may exist at all is a taste call reserved to the author (R4)."
+date: "2026-08-20"
