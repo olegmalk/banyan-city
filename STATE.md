@@ -9395,6 +9395,37 @@ retry for five minutes before concluding a Mac is gone (runbook §macbook4).
 - **`pipeline/beat08_grip_copy.py`** — §21's copy-the-fist rung built and
   selftested; the init/mask are on disk. The box spec is NOT yet filed.
 
+### 2026-08-20 — macbook5 lid-closed survey: everything but the one root step
+
+macbook5 was handed to dad's Claude for remote use and will sit closed on a
+shelf, so it was checked for lid-closed survivability. `ssh
+macbook5@macbook5s-macbook-pro.local` answers passwordlessly from this Mac
+(macOS 26.4, `up 11 days`, sshd loaded). It is **on AC power at 100%** — keep it
+plugged in, this whole configuration assumes AC.
+
+Already correct, nothing to change: `womp 1` on AC (wake-on-magic-packet, and
+the kernel confirms `0x100=MAGICWAKE` live on `en0`), `tcpkeepalive 1`,
+`ttyskeepawake 1`. A bare `caffeinate` (pid 22935) holds
+`PreventUserIdleSystemSleep` forever, so with the **lid open** it stays awake and
+reachable indefinitely.
+
+**It will still sleep the moment the lid shuts**, and no caffeinate flag changes
+that: `ioreg` reports `AppleClamshellCausesSleep = Yes` and `SleepDisabled = No`.
+Only `pmset disablesleep 1` clears it, there is no external display for real
+clamshell mode, and that key is root-only. `sudo -n` refused; the farm-convention
+password was tried once and rejected. The account **is** in `admin`, and the key
+is valid on macOS 26.4 — `pmset -a disablesleep 1` parses and stops only at
+`'pmset' must be run as root`, where a bogus key gets a usage error instead — so
+this works the instant a password is typed, and only a human can type it:
+
+    ssh macbook5@macbook5s-macbook-pro.local sudo pmset -a disablesleep 1
+    ssh macbook5@macbook5s-macbook-pro.local sudo pmset -a sleep 0 displaysleep 5
+
+`farm-six-macs.md` §"caffeinate" already recorded this wall ("`pmset` would need
+his password; skip it") — that was the right call for render workers, which only
+need idle sleep held off with the lid up. A machine living closed on a shelf is
+the case where skipping it does not work. Farm Macs 1-4 were not touched.
+
 ## 2026-08-20 — the three open taste cards get their missing option in pixels, and every answer now fires a written chain
 
 Founder directive today: *"we need more automation unless there is something
