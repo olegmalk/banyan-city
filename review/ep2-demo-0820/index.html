@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sapling — episode 2 DEMO CUT, 2026-08-20 (the guards get their voices; eight beats stop playing backwards)</title>
+<title>Sapling — episode 2 DEMO CUT, 2026-08-20 rev b (beat 15's slate closes; the child holding a tree is out)</title>
 <style>
   :root {
     --bg: #17181a; --panel: #1f2124; --line: #33363b;
@@ -91,13 +91,13 @@
         consecutive cuts is a chibi child in a buttoned shirt — <code>child, chibi, round head</code>
         is in that beat's own negative prompt — gripping the trunk of a whole leafy tree. It is
         replaced by the ratified <strong>adult</strong> goblin crouching behind a two-leaf seedling.
-        <strong>It is not fixed, it is better:</strong> the new clip still fails its own bar, by one
-        frame, and its last stretch freezes. Read the beat 03 row for exactly what you will see.
+        <strong>It is not fixed, it is better:</strong> it still fails its own bar and its last
+        0.8&nbsp;s freezes. Read the beat 03 row for exactly what you will see.
         <em>"beat 03: back to the old clip"</em> is the whole veto.</li>
   </ul>
-  <p class="sub">A $0 seed re-roll on beat 03 is queued and running — same words, same plate, one
-  different draw — asking whether that freeze is the recipe or the luck. It changes nothing you are
-  looking at now.</p>
+  <p class="sub">The $0 seed re-roll on beat 03 landed while this page was being written — same words,
+  same plate, one different draw, 4 minutes on an idle card — and it performs 29 frames longer, so it
+  took the slot. Beat 03 was swapped twice this afternoon and this page describes the second one.</p>
 </div>
 
 <div class="callout green">
@@ -161,9 +161,10 @@
 <strong>The two new beats are 03 at 0:13 and 15 at 1:09.</strong> The re-voiced guards run 0:24–0:51
 (beats 5–10; beat 9 is the slate with the punchline). Beat 06 at 0:29 is still the clearest single
 demonstration of the voice and hold fixes at once.
-sha256 <code>2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361</code>
-<span class="sub">(revision b — the morning cut was
-<code>b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486</code> at this same URL)</span>.</p>
+sha256 <code>b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1</code>
+<span class="sub">(revision b, second assembly — the beat 03 seed re-roll landed mid-write and took the
+slot. The morning cut was <code>b243dbd7…</code> and the first revision-b cut
+<code>2d7533a5…</code>, both at this same URL.)</span></p>
 
 <ul class="counts">
   <li><b>19</b> beats of footage <span class="sub">(was 18)</span></li>
@@ -342,20 +343,27 @@ drifting specks — which is why the numbers above, not this picture, are the ev
       <td><strong>Never judged</strong> — one of four (2, 8, 12, 20). Silent by design.</td></tr>
 
   <tr class="pick"><td class="n">3</td><td>BAD COVER</td>
-      <td class="warn"><code>ep2-b03-covermid-0820</code><br>
+      <td class="warn"><code>ep2-b03-covermid-s2-0820</code><br>
       <span class="new">SWAPPED</span></td>
       <td class="new"><strong>The child holding a tree is gone.</strong> The clip that rode five cuts
       was a chibi child in a buttoned shirt gripping a whole leafy tree — both excluded by your
       ratified design and by this beat's own negative. This is the adult goblin ducking behind a
-      two-leaf seedling, and the plant holds at all five checkpoints.
-      <strong class="bad">Still a FAIL, by one frame:</strong> its bar allowed a dead tail shorter than
-      6 frames and it reads 7.
-      <br><strong>WHAT YOU WILL SEE, so you are not hunting for it:</strong> the performance ends at
-      <strong>f073 of 121</strong> — he sinks for three seconds and then the picture holds for the last
-      two, with roughly the last second of the spoken line playing over a frozen frame.
-      <strong>That freeze is in the footage, not in the assembly</strong> — the clip is longer than its
-      slot so no hold fills it, where the old clip needed 0.34 s of one. A $0 seed re-roll is running
-      to ask whether that tail is the recipe or the draw.</td></tr>
+      two-leaf seedling, and the plant holds in every frame checked.
+      <br><strong>The seed re-roll landed while this page was being written and it took the slot.</strong>
+      Same words, same plate, one different draw, 4 minutes, $0. <strong>It performs 29 frames
+      longer</strong> — it keeps acting to f102 where the first take stops at f073 — so the whole
+      spoken line now plays over a live picture instead of the last second of it landing on a frozen
+      frame.
+      <br><strong class="bad">Still a FAIL, and on paper a worse one:</strong> the bar allows a dead
+      tail shorter than 6 frames; the first take read 7 and this one reads 15. Both are true at once.
+      That number counts only frames that are byte-for-byte identical, so it measures where the
+      renderer stopped painting, not where he stopped acting — <strong>on this beat it ranks the two
+      clips backwards</strong>, and the pick was made on when the acting stops. The bar is scored FAIL
+      and left failing.
+      <br><strong>WHAT YOU WILL SEE:</strong> the last <strong>0.8 s</strong> of the shot is a held
+      picture, after the line has finished. It is in the footage, not the assembly — the clip is longer
+      than its slot so nothing fills it, where the old clip needed 0.34 s of fill.
+      <strong>Not marked cut-ready:</strong> it is in as best-available with the fault named.</td></tr>
 
   <tr><td class="n">4</td><td>THE FOOTNOTE</td><td class="warn"><code>ep2-b04-refire-0814</code></td>
       <td><strong class="bad">FAIL:</strong> the eyes never move, and only the eyes carry this beat.</td></tr>

@@ -12,9 +12,12 @@
 # standing, because the sixteen beats it describes did not move.
 #
 #   BEAT 03 — the chibi CHILD holding a leafy TREE is out of the cut. It had
-#     ridden five consecutive assemblies. Replaced by ep2-b03-covermid-0820's
-#     take, which is an ADULT goblin (the founder's ratified design) crouching
-#     behind a two-leaf seedling on a composite plate.
+#     ridden five consecutive assemblies. Replaced by an ADULT goblin (the
+#     founder's ratified design) crouching behind a two-leaf seedling on a
+#     composite plate. TAKEN TWICE IN ONE AFTERNOON: first with
+#     ep2-b03-covermid-0820's take, then 40 minutes later with its seed re-roll
+#     ep2-b03-covermid-s2-0820, which landed while this page was being written
+#     and performs 29 frames longer. See `beat_03_swap`.
 #   BEAT 15 — NO LONGER A SLATE. ep2-b15-listenmid-s2-0820's take is the beat's
 #     first footage in any cut. Steward pick between two passing clips at two
 #     seeds; ratified by the coordinator; R4 VETO-ABLE IN ONE LINE.
@@ -48,8 +51,12 @@
 # untouched, and no VO was re-synthesised.
 
 cut: review/ep2-demo-0820/ep2-demo-0820.mp4
-sha256: 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
-sha256_superseded_in_place: b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486
+sha256: b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1
+sha256_superseded_in_place: >-
+  b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486 (the morning
+  cut) and 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
+  (revision b before the beat 03 seed landed, 40 minutes earlier). Same path,
+  same URL, three sets of bytes today; this is the live one.
 duration_s: 113.84
 size: 720x1280
 footage_beats: 19
@@ -123,10 +130,47 @@ revision_b:
       into sources/, delete this one, re-run the command in `assembled_by`.
       Or "beat 15: back to a slate", same procedure with no copy.
   beat_03_swap:
-    take: 03-bad-cover-LTX-midend-0820.mp4
-    sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
-    job: pipeline/jobs/ep2-b03-covermid-0820.yaml
+    take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
+    sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
+    job: pipeline/jobs/ep2-b03-covermid-s2-0820.yaml
     replaces: 03-bad-cover-b03-refire-0814.mp4 (sha 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc)
+    and_also_replaces_the_first_choice_of_this_same_afternoon: >-
+      03-bad-cover-LTX-midend-0820.mp4, sha 06446b9e6306a779e0b545748cbf58f5f
+      5fb9697a87b2aa296e5a7440519903e, which held this slot for 40 minutes.
+      Its seed re-roll landed while the page describing it was being written and
+      is strictly better in the cut, so the slot moved again rather than waiting
+      for a tidier moment. Both are the same prompt, plate, init sha and flags;
+      the only difference between them is the draw.
+    why_the_re_roll_and_not_the_first_take: >-
+      IT KEEPS THE PICTURE ALIVE UNDER THE WHOLE SPOKEN LINE, WHICH THE FIRST
+      TAKE DID NOT. Last interframe pair above 1.0: f101->f102 against
+      f072->f073. Live content 103 frames against 74, 4.292 s against 3.083 s.
+      Beat 03's VO is 3.982 s = frame 95.6, so the first take plays roughly the
+      last second of its own line over a frozen picture and this one does not.
+      It also acts harder in the middle on the same instrument (step-frame
+      f060..f072 mean 8.726 against 6.995) and 16x harder in the tail window
+      (step pairs from f084: mean 1.514 against 0.094).
+    and_it_fails_H1_WORSE_which_is_the_finding: >-
+      judge_clip reads 15 exactly-duplicated frames from f106 where the first
+      take read 7 from f114, against a bar allowing fewer than 6. BOTH ARE TRUE
+      OF THE SAME CLIP. The exact-duplicate run counts only byte-identical pairs,
+      so it measures where the sampler stopped emitting new pixels, not where the
+      PERFORMANCE stopped — the first take stops acting at f073 and then spends
+      32 frames producing near-dead-but-not-identical pictures before its exact
+      run begins. On this beat the instrument RANKS THE TWO CLIPS BACKWARDS, and
+      the pick was made on the last-live-pair number instead, which is the same
+      quantity the record already publishes for every rung. Recorded as an
+      instrument qualification, in the same class as the three this lane retracted
+      on 08-19, and NOT as a bar quietly relaxed to fit a clip: H1 is scored FAIL
+      and stays FAIL.
+    so_beat_03_is_NOT_marked_cut_ready: >-
+      Stated because the alternative was available and would have been an
+      overclaim. The beat carries a written FAIL on a pre-registered clause; it
+      is in the cut as BEST-AVAILABLE with the fault named, exactly as thirteen
+      other beats are. What closed is the seed axis: three draws now read f069,
+      f073 and f102 for the death point, so where the performance stops is
+      substantially the draw, and the wording axis was already closed by
+      measurement at three rungs.
     decided_by: >-
       the founder's ratified adult-goblin design, applied. The DESIGN call is
       his and is already made; choosing which of two clips enacts it is the
@@ -142,26 +186,30 @@ revision_b:
       f072->f073 against f035->f036, and no assembler hold at all against the
       incumbent's 0.34 s.
     what_it_does_NOT_fix_and_this_is_on_the_page: >-
-      The clip's own last stretch is a near-frozen picture. Live content ends at
-      f073 (3.083 s of 5.042 s); judge_clip reads 7 frames EXACTLY duplicated
-      from f114 against its job's bar of "none, or shorter than 6", so the clip
-      FAILS its own pre-registered H1 by one frame. The slot is 5.042 s and the
-      spoken line is 3.982 s, so what the viewer sees under the last second of
-      the line is a held picture that is IN THE FOOTAGE, not an assembler fill —
-      no hold branch fires on this beat, which is itself an improvement on the
-      incumbent. Stated plainly here and on the review page rather than left for
-      him to catch.
+      The clip's own last stretch is still a frozen picture — the last 19 frames,
+      0.79 s of a 5.042 s slot. What changed is WHERE it starts: after the line
+      ends rather than a second before it. It is IN THE FOOTAGE, not an assembler
+      fill: the clip is longer than the slot floor so render_t3's hold branch
+      never fires on this beat, where the incumbent needed 0.34 s of one. And the
+      height sub-clause is unmoved and now shown to be unmovable — two independent
+      draws off one init put the top of his cloaked back ~185 px above the leaf
+      tops, within 10 px of each other. It is a plate property.
     how_to_veto_it_in_one_line: >-
       "beat 03: back to the old clip" — it was never deleted; it lives at
       review/ep2-demo-0819c/sources/03-bad-cover-b03-refire-0814.mp4 and in this
       repo's history. Copy it in, delete the new one, re-run `assembled_by`.
-  a_seed_re_roll_is_in_flight_on_beat_03: >-
-    ep2-b03-covermid-s2-0820, backlogged 2026-08-20, $0, ~12 minutes: the same
-    prompt, init, sha, anchor and flags at seed 20260821, asking whether the
-    7-frame tail run is the recipe or the draw. Bars carried forward byte-
-    identical. If it clears H1 it takes this slot by the same mechanical rule
-    that put covermid in it, and this file will say so. It is named here so the
-    swap above cannot be read as a claim that beat 03 is finished.
+      Or "beat 03: use the other seed" for the 20260820 take, which is at
+      farm-out/ep2-b03-covermid-0820/.
+  the_seed_re_roll_landed_during_this_revision: >-
+    ep2-b03-covermid-s2-0820: backlogged 14:04, filed by the autofill tick, rc=0
+    at 14:12, 266.3 GPU-seconds, $0. Prompt, negative and init asserted
+    byte-identical to the parent (re-diffed against the published payload after
+    the pull; init sha 31a23247 on both), seed 20260820 -> 20260821, bars carried
+    forward byte-identical and recorded as carried by derive_spec. It was filed
+    to ask whether the 7-frame tail run was the recipe or the draw. THE ANSWER IS
+    NEITHER: the run grew to 15 frames and the DEATH POINT moved 29 frames later,
+    which no fail mode in the spec predicted and which is the largest thing this
+    beat has learned. Full verdict in the job spec.
 what_it_cost: >-
   one ffmpeg assembly and twelve local file copies. No render, no voice
   synthesis, no GPU, no network, no spend. Every clip in it was made by another
@@ -389,35 +437,35 @@ beats:
 
   - beat: 3
     slug: BAD COVER
-    take: 03-bad-cover-LTX-midend-0820.mp4
-    sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
+    take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
+    sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
     why: new
     verdict_quoted: >-
-      FAIL on the clause the rung exists for, and the first real evidence that a
-      MIDDLE placement buys motion the terminal one had killed. The named bar
-      missed by one frame — judge_clip FREEZE reads 7 frames dead from f114
-      against a bar of "none, or shorter than 6" — and the honest reading is
-      worse than the bar and better than the parent at the same time.
-    verdict: pipeline/jobs/ep2-b03-covermid-0820.yaml verdict_0820 / verdict_measured
+      F-DEATH-POINT-MOVES FIRED, AND IT IS THE BIGGEST RESULT THIS BEAT HAS
+      PRODUCED. The clip performs 29 frames longer — the last interframe pair
+      above 1.0 is f101->f102 where rung 3's is f072->f073. AND H1 FAILS HARDER
+      THAN IT DID ON RUNG 3: 15 frames dead from f106 against rung 3's 7 from
+      f114. Both sentences are true of the same clip, which is the finding: on
+      this beat the exact-duplicate tail run RANKS THE TWO CLIPS BACKWARDS.
+    verdict: pipeline/jobs/ep2-b03-covermid-s2-0820.yaml verdict_0820 / verdict_measured / pre_registered_fail_modes_as_fired
     detail: >-
-      SWAPPED IN REVISION B, 2026-08-20. See `revision_b.beat_03_swap` for the
-      whole warrant. In the cut as best-available with its fault named: it fails
-      its own H1 by one frame and it is still the better clip on every axis the
-      record measures. What it FIXES is not a measurement, it is a
-      contradiction — the clip it replaces is a chibi child holding a leafy
-      tree, both of which the founder's ratified design and this beat's own
-      negative prompt exclude. Passes A1 (plant: one stem, two leaves, rooted,
-      at all five checkpoints), H4 (the cover is comically inadequate, which the
-      beat requires) and H2 on position.
+      SWAPPED IN REVISION B, 2026-08-20, and swapped twice — see
+      `revision_b.beat_03_swap`. In the cut as BEST-AVAILABLE with its fault
+      named, not as a pass. What it FIXES is not a measurement, it is a
+      contradiction: the clip it replaces is a chibi child holding a leafy tree,
+      both excluded by the founder's ratified design and by this beat's own
+      negative prompt. Passes S6 (plant one stem, two rooted leaves, no hand on
+      it, and the ratified adult goblin, checked on a 41-tile step sheet and at
+      full size at six frames), H3 on both halves for the first time on this
+      beat, H4 and H2 on position. Fails H1.
     the_freeze_the_viewer_will_see: >-
-      NAMED BECAUSE IT IS VISIBLE. Live content ends at f073 — 3.083 s of a
-      5.042 s slot — and the last 47 frames are a held picture, 7 of them
-      byte-identical. The spoken line runs 3.982 s, so roughly the last second
-      of the line plays over a frozen frame. IT IS IN THE FOOTAGE, NOT IN THE
-      ASSEMBLY: the clip is longer than the slot floor so render_t3's
-      hold-last-frame fill never fires on this beat, where the incumbent needed
-      a 0.34 s hold. The untested hypothesis in the record is that the action
-      simply COMPLETES at f073; that is a staging question, not a GPU fire.
+      NAMED BECAUSE IT IS VISIBLE. The last 19 frames are a held picture, 15 of
+      them byte-identical — 0.79 s at the end of a 5.042 s slot. The spoken line
+      runs 3.982 s and ends at frame 96, so the whole line now plays over a live
+      picture; the freeze is what remains after it. IT IS IN THE FOOTAGE, NOT IN
+      THE ASSEMBLY: the clip is longer than the slot floor so render_t3's
+      hold-last-frame fill never fires on this beat, where the clip it replaced
+      needed a 0.34 s hold.
 
   - beat: 4
     slug: THE FOOTNOTE
@@ -863,7 +911,9 @@ assembled_by_revision_b: >-
   from the index; it survives in review/ep2-demo-0819c/sources/ and in history.
   No NN-vo.mp3 was copied because both beats already had theirs in the directory
   — beat 15's has been sitting there through three cuts, playing over a slate
-  card. Output: 21 beats, 19 footage, 2 slate, 113.84 s.
+  card. Output: 21 beats, 19 footage, 2 slate, 113.84 s. RUN TWICE: once with
+  ep2-b03-covermid-0820's take and again 40 minutes later when its seed re-roll
+  landed, with the same deletion discipline both times.
 
 assembled_by: >-
   pipeline/render_t3.py in bench mode on 2026-08-19, invoked as:

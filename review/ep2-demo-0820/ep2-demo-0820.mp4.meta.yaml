@@ -73,8 +73,8 @@ ingredients:
   provisional: true
 - beat: 3
   kind: clip
-  path: review/ep2-demo-0820/sources/03-bad-cover-LTX-midend-0820.mp4
-  sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
+  path: review/ep2-demo-0820/sources/03-bad-cover-LTX-midend-s20260821-0820.mp4
+  sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
   publishable: true
   provisional: true
 - beat: 3
@@ -265,7 +265,7 @@ sources:
   cost_usd: 0.0
 - beat: 3
   slug: BAD COVER — 0:11–0:16
-  clip: 03-bad-cover-LTX-midend-0820.mp4
+  clip: 03-bad-cover-LTX-midend-s20260821-0820.mp4
   audio: 03-vo.mp3
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)

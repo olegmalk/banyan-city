@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1611,
+ "commits_in_window": 1612,
  "covers_window": true,
  "cut": "ep2-demo-0820",
  "cut_files": [
@@ -15,7 +15,7 @@
  "cuts_shipped": 8,
  "generated": "2026-08-20",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "ce6aefbc0",
+ "head": "4eed0f542",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -47,9 +47,9 @@
    "sha": "da953466",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b03-covermid-0820.yaml": {
+  "pipeline/jobs/ep2-b03-covermid-s2-0820.yaml": {
    "date": "2026-08-20",
-   "sha": "7dae6314",
+   "sha": "ce6aefbc",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b04-refire-0814.yaml": {

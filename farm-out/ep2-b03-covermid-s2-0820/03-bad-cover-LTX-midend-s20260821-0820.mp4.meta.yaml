@@ -7,8 +7,8 @@ size: 704x1280
 seconds: 5.042
 steps: 8@352x640+3@704x1280
 guidance: 2.0
-seed: 20260820
-task: ep2-b03-covermid-0820
+seed: 20260821
+task: ep2-b03-covermid-s2-0820
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,9 +16,9 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0188
-compute_s_per_video_s: 53.2
-# --- appended by ep2-b03-covermid-0820 after the render.
+throughput_s_video_per_s_wall: 0.0189
+compute_s_per_video_s: 52.8
+# --- appended by ep2-b03-covermid-s2-0820 after the render.
 approved: false
 provisional: true
 is_show_content: true
@@ -28,7 +28,7 @@ note: |
   b03-sapcomp-s20260820.png, the plate
   ep2-b03-sapcomp-0820 produced and this lane
   did not re-pick. Judged against the bar pre-registered in
-  pipeline/jobs/ep2-b03-covermid-0820.yaml BEFORE this render
+  pipeline/jobs/ep2-b03-covermid-s2-0820.yaml BEFORE this render
   existed. NOT approved and NOT cut until all 121 frames have been
   opened consecutively.
   THE PLANT CLAUSE OVERRIDES THE PERFORMANCE CLAUSE. Beat 19's motion

@@ -486,3 +486,134 @@ derivation:
     to the parent''s value under the same name. Recorded rather than implied: a pre-registered bar carried
     unchanged is legitimate, and it should say so.'
   seed: 20260821
+verdict_0820: >-
+  F-DEATH-POINT-MOVES FIRED, AND IT IS THE BIGGEST RESULT THIS BEAT HAS
+  PRODUCED. rc=0, 121 frames, 266.3 s, $0. Same prompt (asserted byte-identical
+  and re-diffed against the parent's published payload), same negative, same
+  init at sha 31a23247, one different draw. THE CLIP PERFORMS 29 FRAMES LONGER:
+  the last interframe pair above 1.0 is f101->f102 at 1.439, where rung 3's is
+  f072->f073 and every pair after it reads 0.012-0.155. Live content goes 74
+  frames -> 103 frames, 3.083 s -> 4.292 s. AND H1 FAILS HARDER THAN IT DID ON
+  RUNG 3 -- judge_clip reads 15 frames dead from f106 against rung 3's 7 from
+  f114, a bar of "none, or shorter than 6". BOTH SENTENCES ARE TRUE OF THE SAME
+  CLIP, WHICH IS THE FINDING: on this beat the exact-duplicate tail run RANKS
+  THE TWO CLIPS BACKWARDS. Every other pre-registered clause passes and S5
+  passes by a wider margin than rung 3 did. F-FREEZE-IS-THE-RECIPE, named in
+  advance as the most likely outcome, is REFUTED in the only sense that matters
+  to a cut: the freeze moved 33 frames later.
+verdict_measured:
+  H1_NO_TERMINAL_FREEZE: >-
+    FAIL AS WRITTEN, AND WORSE THAN THE CONTROL: 15 frames dead at the tail from
+    f106, ncc 1.0000, against a bar allowing a run shorter than 6. Rung 3 read 7
+    from f114. THE INSTRUMENT IS RANKING BACKWARDS AND THIS IS THE FOURTH
+    INSTRUMENT THIS LANE HAS HAD TO QUALIFY IN TWO DAYS. It counts only pairs
+    that are EXACTLY identical, so it measures where the sampler gave up
+    outputting new pixels and says nothing about where the PERFORMANCE stopped.
+    Rung 3 stops acting at f073 and then spends 32 frames producing near-dead
+    but not byte-identical pictures (0.012-0.155) before its exact run begins at
+    f114; this clip acts until f102 and then goes exactly dead almost at once.
+    A viewer sees 29 more frames of performance and a shorter interval of
+    "nearly nothing happening", and the number goes the other way. THE
+    REPLACEMENT MEASURE, and it needs no new threshold because it is the same
+    quantity the record already publishes: the last interframe pair above 1.0.
+    Rung 2 f069, rung 3 f073, this clip f102.
+  H2_he_is_still_crouched_in_the_last_frame: >-
+    PASS ON POSITION. At f120 he is in frame, down in the grass, directly behind
+    the two-leaf plant with his head at leaf level and his face beside the
+    leaves. Scored on position only, as this spec directed. HEIGHT REPORTED AS A
+    NUMBER AND NOT AS A PASS OR A FAIL, because the record retired that
+    sub-clause: read off a gridded f120 at 2x, the top of his cloaked back sits
+    at y~590 and the leaf tops at y~770-830, so the back is ~180-190 px above
+    the leaves. Rung 3 reads y~600 against y~780-840, the same ~200 px. IT IS A
+    PLATE PROPERTY, CONFIRMED BY THE SEED: two independent draws off one init
+    land within 10 px of each other, so no draw and no wording is going to buy
+    it.
+  H3_the_duck_reads_and_keeps_reading: >-
+    PASS ON BOTH HALVES FOR THE FIRST TIME ON THIS BEAT. The drop: whole-frame
+    ncc floor 0.90365 against a bar of below 0.95 (rung 3: 0.9074). The second
+    half -- "the last twenty frames are not a held photograph" -- is the one no
+    clip on this beat has ever met and it is met NEARLY: step pairs from f084 to
+    the end read max 3.955 and mean 1.514, where rung 3 reads max 0.181 and mean
+    0.094. That is SIXTEEN TIMES the tail motion. The last fifteen frames are
+    still a held photograph, so the clause is scored PASS on the twenty-frame
+    window it names and the residual freeze is reported under H1 where it
+    belongs.
+  H4_the_cover_is_still_comically_inadequate: >-
+    PASS. Read at 4x on f120: the two-leaf seedling covers a strip of his cheek
+    and one hand and nothing else; skull, back, cloak, knees and both legs are
+    plainly visible. beats."03".done_when is satisfied -- a crouch that actually
+    concealed him would FAIL the beat, and this does not come close.
+  S5_THE_MIDDLE_IS_NOT_GIVEN_BACK: >-
+    PASS BY A WIDER MARGIN THAN THE CONTROL. Step-frame whole-frame
+    mean-absolute interframe luma at f060, f063, f066, f069, f072: 9.74, 9.51,
+    9.17, 8.11, 7.10, mean 8.726 against a pre-registered floor of 3.5. Rung 3
+    reads 7.68, 7.39, 7.15, 5.53, 7.23, mean 6.995 on the same instrument in the
+    same run. So the middle placement's motion is a property of the RECIPE and
+    not of one draw -- the same answer beat 15's confirmation seed gave one day
+    earlier on the same edit, now on two beats and two seeds each. Whole-clip
+    all-pairs mean 1.668 against rung 3's 1.333.
+  S6_THE_PLANT_AND_THE_RATIFIED_ADULT_BOTH_HOLD: >-
+    PASS, GATE CLEARED. Opened as a 41-tile step sheet (every 3rd frame, the
+    hold period) and then at full size at f000, f030, f060, f090, f102 and f120.
+    THE PLANT: one thin stem, two ovate leaves, rooted in the grass, no hand on
+    it, in every frame checked. THE SUBJECT: the ratified lean adult goblin --
+    green skin, bald skull, one long pointed ear in profile, patchwork cloak
+    over a black scarf -- present and recognisable throughout. NOT a chibi
+    child, NO leafy tree, NO second figure. Fourth rung running that this
+    composite has held its plant.
+  S7_REPORT_WHERE_THE_CLIP_DIES_WHATEVER_IT_IS: >-
+    THE HEADLINE. f101->f102 at 1.439 is the last all-pairs interframe above
+    1.0. Rung 2 died at f069, rung 3 at f073, this clip at f102. The pre-
+    registered reading was that two different terminal wordings dying within
+    four frames of each other was "already two votes that the tail belongs to
+    the recipe"; ONE SEED MOVED IT 29 FRAMES AND THAT INFERENCE IS WITHDRAWN.
+    Where the performance stops on this beat is substantially a property of the
+    DRAW. AND IT CROSSES THE ONE LINE THAT MATTERS TO THE CUT: beat 03's spoken
+    line is 3.982 s = frame 95.6, so rung 3 plays roughly the last second of its
+    own line over a frozen picture and this clip does not.
+  S8_identity_and_the_flat_box_lesson: >-
+    PROBE RETRACTED AS SCORED, EXACTLY AS PRE-REGISTERED, AND THE IDENTITY
+    HOLDS. The carried box (232,352,282,404) reads f000 R 99.4 / G 104.8 / B
+    66.8, R-B 32.5, luma 98.8, std 18.8 -- and f060 and f120 read luma 231.4 and
+    231.0 at std 5.3 and 5.4. A FLAT BOX IS AN EMPTY BOX: he has dropped out
+    from under it and it is sitting on the bright horizon, so the nominal +132
+    luma is not an identity reading. Re-placed by eye at 5x on f120 on the
+    smooth skull above the ear (110,690,190,760): R 110.8 / G 115.1 / B 73.7,
+    R-B 37.1, luma 109.1, std 8.4 -- green skin at the same hue as the init.
+    Rung 3's own re-placed cheek box (90,850,140,890) is NOT quoted for this
+    clip: it reads std 63.2 here because his head is in a different place and
+    the box straddles an edge, and an edge reading is a failed measurement, not
+    a number.
+pre_registered_fail_modes_as_fired:
+  F-DEATH-POINT-MOVES: >-
+    FIRED, and it was filed as "not a failure of the beat; a sharpening". It is
+    more than a sharpening: it is the first evidence on this beat that anything
+    other than the render length controls where the performance stops, and it
+    arrived for $0 in twelve minutes.
+  F-FREEZE-IS-THE-RECIPE: >-
+    DID NOT FIRE in substance and fired on the letter. The exact run did not
+    reproduce at roughly 7 frames from roughly f114; it grew to 15 from f106 while
+    the dead ZONE shrank from 48 frames to 19. Named in advance as the most
+    likely outcome, with the reasoning published first, and the pixels disagreed
+    with the reasoning. Recorded that way round on purpose.
+  F-THE-MIDDLE-WAS-THE-DRAW: did not fire. S5 improved 6.995 -> 8.726.
+  F-PLANT-PICKED-UP / F-SUBJECT-SWAPPED: did not fire. S6's gate cleared on a full step sheet.
+  F-H1-PASSES-AND-NOTHING-ELSE-CHANGES: >-
+    did not fire, and its warning is worth keeping for the opposite case: it said
+    a green H1 at the tail must not be oversold as a repaired beat. The mirror is
+    now recorded -- a RED H1 at the tail must not be sold as a worse clip.
+what_the_next_rung_is: >-
+  NOTHING ON THE WORDING AXIS AND NOTHING ON THE SEED AXIS FROM THIS LANE. Two
+  seeds now bracket the beat and the spec pre-committed to no third. The one
+  question these numbers open is whether the death point is TUNABLE or merely
+  variable -- f069, f073, f102 across three draws -- and answering it needs a
+  sweep, which is a rung with a consumer only if somebody wants beat 03 to run
+  past f102. It does not need to: the spoken line ends at f096. The remaining
+  gap is the ~185 px H2 height, which two seeds have now shown to be a plate
+  property, and the untested staging question of whether the action should
+  COMPLETE at all before the slot ends. Both are the author's.
+cost:
+  usd: 0.0
+  gpu_seconds: 266.3
+  wall_minutes: 4.4
+  where: rtx5090, job ep2-b03-covermid-s2-0820-1787220240, rc=0

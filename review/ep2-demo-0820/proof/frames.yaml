@@ -40,15 +40,15 @@ frames:
   frame_sha256: 88d49d5746803cab47ae13c0a04388e0c8f810a6767534ddd74d6715bc78e5e0
   frame_bytes: 10197
 - beat: 3
-  take: 03-bad-cover-LTX-midend-0820.mp4
+  take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
   frame: b03.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
-  frame_sha256: 749d914abb94d1ed146b14b8b3c36c902e26ab7bb0754af1d7ffefc78586a66c
-  frame_bytes: 13614
+  clip_sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
+  frame_sha256: 75071f0731f12618e1108a32a8035b4b4e7b96181f3e33d1757bf4f69b6f87db
+  frame_bytes: 13385
 - beat: 4
   take: 04-the-footnote-b04-refire-0814.mp4
   frame: b04.jpg
