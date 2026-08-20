@@ -206,14 +206,21 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
     # End to end through main(), with the box replaced: a refused spec must send
     # no payload, queue nothing, and exit nonzero. Refusing after the scp would
     # be no guard at all -- the overwrite happens during the scp.
-    sent, queued = [], []
+    sent, queued, scanned = [], [], []
     orig = (be.send_payload, be.enqueue, be.queued_job_ids, be.PAYLOAD_INDEX,
-            be.node_is_approved)
+            be.node_is_approved, be.prior_runs)
     be.send_payload = lambda payload: sent.append(payload)
     be.enqueue = lambda job, dest="ready": queued.append(job["id"])
     be.queued_job_ids = lambda: (set(), None)
     be.PAYLOAD_INDEX = os.path.join(tmp, "main-index.jsonl")
     be.node_is_approved = lambda node: (True, "test: approved_by founder")
+    # The already-ran scan is a SECOND ssh on the enqueue path, and it has to be
+    # stubbed here for the same reason as the first: this test runs in CI, where
+    # the hostname does not resolve. It is a real box read, so leaving it live
+    # would also mean every local test run doing `dir` on the card.
+    be.prior_runs = lambda base, sha: (scanned.append(base)
+                                       or ({"done": [], "failed": [], "sha": []},
+                                           None))
     try:
         spec = {"id": "ep2-b01-shape", "node": "002b-first-citizen", "beat": 1,
                 "consumer": "the test", "steps": [{"name": "s", "argv": ["x"]}],
@@ -227,6 +234,7 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
 
         rc = be.main([a])
         check("the first job is queued", rc == 0 and len(queued) == 1 and len(sent) == 1)
+        check("and done/ was consulted before it went", scanned == ["ep2-b01-shape"])
         rc = be.main([b])
         check("its twin exits nonzero", rc == 1)
         check("and nothing more was sent to the box", len(sent) == 1)
@@ -245,10 +253,11 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
         queued[:] = []
         os.remove(be.PAYLOAD_INDEX)
 
-        def unreachable():
+        def unreachable(*_args):
             raise AssertionError("a dry run must not need the box")
 
         be.queued_job_ids = unreachable
+        be.prior_runs = unreachable
         rc = be.main([a, "--dry-run"])
         check("--dry-run neither reads the box nor writes to it",
               rc == 0 and not sent and not queued)
@@ -260,7 +269,7 @@ def test_the_guard_refuses_before_anything_is_written(tmp: str):
               be.main([a, b, "--dry-run"]) == 1)
     finally:
         (be.send_payload, be.enqueue, be.queued_job_ids, be.PAYLOAD_INDEX,
-         be.node_is_approved) = orig
+         be.node_is_approved, be.prior_runs) = orig
 
 
 # --------------------------------------------------------------------------
