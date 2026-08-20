@@ -4242,3 +4242,61 @@ indistinguishable by filename.
 `pipeline/fig_track.py --selftest` (15 checks, six frame-backed) · verdicts in
 each of `pipeline/jobs/ep2-b01-growmotion-b{10,11,12}-0818.yaml` and
 `b{15,16}-0819.yaml` under `verdict_this_job_measured`.
+
+### Landed the same day: the negative bound on the exposure and not at all on the plant
+
+`ep2-b01-fignonly-s20260840-0820` rendered rc=0, ~5 GPU-minutes, and was pulled
+by scp and verified against its own manifest
+(`4ec39e0f…0949d`). The negative and motion prompt **that actually ran** were read
+back off the box before judging: all twelve appended terms present, motion prompt
+byte-identical to the parent. The scorer was validated first by running it on the
+**parent** and reproducing that clip's independently-reached verdict exactly.
+
+**FAIL on G5a — but 7 of 8 scored clauses pass, against the parent's 6 of 8.**
+
+| | b15 parent | fignonly child | bar |
+|---|---|---|---|
+| luma Δ at peak | +17.45 | **+10.85** | ≤ 12.0 |
+| frames over luma 100 | 71 | **0** | ≤ 6 |
+| region NCC sapling | 0.092 | 0.055 | ≥ 0.45 |
+| region NCC shaft | −0.355 | −0.324 | ≥ 0.70 |
+| live frames | 121/121 | 121/121 | all |
+| max single-frame step | 1.080× | 1.084× | < 2.0× |
+| 90 % of growth at | f111 | f108 | ≥ f060 |
+| total growth | 19.37× | 14.77× | — |
+| end state | hue 301.6 / sat 0.720 | **hue 293.9 / sat 0.788** | 270–320 / ≥0.60 |
+
+**The bloom clause flipped cleanly.** The clip ends at luma **89.2**; the
+incumbent — the only clip that ever held its exposure — ends at **89.1**. Twelve
+words bought the whole of it.
+
+**The plant-growth clause did not move at all.** Sapling region NCC 0.092 → 0.055
+is inside noise, with `growing plant`, `sprouting`, `unfurling leaves`, `stem
+lengthening`, `leaves enlarging` and `plant enlarging` all provably in the
+negative that ran.
+
+**So this rung's own premise was half wrong, which is the finding.** The spec
+argued a growing sapling and a brightening field were ONE fault — *"something
+other than the fig is changing"* — and therefore one variable. **They are not one
+fault.** One is suppressible from the negative side and the other is not
+reachable from there at all. No amount of reasoning about the prompt separates
+them; only running it did.
+
+**F2, pre-registered as the likeliest outcome, did not fire.** The prediction was
+that the negative would bind and take the fig with it, because "growing" and
+"enlarging" do not know the fig is exempt. The arc is intact and the end state is
+*richer* than the parent's. The exposure terms cost the fig nothing measurable
+and are **earned** — they should be carried by every future beat-01 negative. The
+six plant-growth terms are **not** earned, and a future rung should not re-spend
+a fire rewording them.
+
+**Not proposed for the cut** — the bar is conjunctive and G5a fails. It is
+nonetheless the strongest beat-01 cold open measured to date, holding the
+incumbent's exposure discipline and the parent's growth arc in one clip, while
+the incumbent it would replace carries its own G1 failure. Both of those are R4.
+
+**Next rung deliberately left open rather than guessed at.** Not another negative
+prompt — that door is measured shut. The two candidates are **plate-side** (an
+init whose sapling is already at final size, so there is nothing left to grow;
+note this changes the plate that passed 7 of 7 and needs its own bar) and
+**compositor-side** (grow the fig against a held plate).

@@ -320,3 +320,112 @@ derivation:
     seed:
     - payload b01-jobs-render.json (20260840 -> 20260840, re-parsed)
   seed: 20260840
+
+# --- appended 2026-08-20 by the fig-detector judging lane, on landing by the composite-plate motion lane, after the pixels.
+verdict_this_job: 'FAIL on G5a field stability, and it is a HALF-BIND that answers the question
+  it was filed to ask. 7 of the 8 scored clauses pass, against 6 of 8 for its parent.
+
+
+  THE LUMA-BLOOM CLAUSE FLIPPED, CLEANLY. Peak whole-frame luma +10.85 over f000 against a
+  bar of 12.0, and ZERO of 121 frames above luma 100 against a bar of 6. The parent, same
+  seed and same init, ran +17.45 with 71 frames over 100 and failed. The clip now ends at
+  luma 89.2 -- the incumbent, the only clip that ever held its exposure, ends at 89.1. Negative-side
+  conditioning reaches this fault, and twelve words bought the whole of it.
+
+
+  THE PLANT-GROWTH CLAUSE DID NOT MOVE AT ALL. Region NCC f000->f120 sapling 0.055 against
+  the parent''s 0.092 and a bar of 0.45; shaft -0.324 against -0.355. Inside noise. `growing
+  plant`, `sprouting`, `unfurling leaves`, `stem lengthening`, `leaves enlarging` and `plant
+  enlarging` are all in the negative that provably ran (sha-verified against the job''s own
+  manifest) and the sapling grows exactly as it did before.
+
+
+  SO THE PREMISE OF THIS RUNG WAS HALF WRONG, AND THAT IS THE FINDING. The spec argued a growing
+  sapling and a brightening field were ONE fault -- ''something other than the fig is changing''
+  -- and therefore one variable. They are not one fault. One of them is suppressible from
+  the negative side and the other is not reachable from there at all, and no amount of reasoning
+  about the prompt would have separated them; only running it did.
+
+
+  F2, PRE-REGISTERED AS THE LIKELIEST OUTCOME, DID NOT FIRE. The prediction was that the negative
+  would bind and take the fig with it, because ''growing'' and ''enlarging'' do not know the
+  fig is exempt. The fig arc is intact: 121/121 live, max single-frame step 1.084x, 90% of
+  the growth still arriving at f108, ending deep purple-violet at hue 293.9 / sat 0.788 --
+  richer than the parent''s 301.6 / 0.720. Total growth 14.77x against the parent''s 19.37x,
+  which is the only trace the suppression left on the subject. The exposure terms are therefore
+  SAFE TO KEEP: they cost the fig nothing measurable.'
+verdict_this_job_measured:
+  provenance: 'Pulled by scp from the box''s own farm-out copy and verified against the job''s
+    ep2-b01-fignonly-s20260840-0820.sha256 manifest: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d,
+    matching on the mac. The negative and motion prompt that ACTUALLY RAN were read back off
+    the box: the negative carries all twelve appended terms, the motion prompt is byte-identical
+    to the parent''s. Job finished rc=0 on all four steps.'
+  instrument: pipeline/fig_track.py (geometry-anchored, selftest 15/15) plus the region-NCC
+    and whole-frame-luma probes named in this spec's `bar`. The scorer was validated before
+    use by running it on the PARENT and reproducing that clip's independently-reached verdict
+    exactly (FAIL on G5a and bloom, everything else pass).
+  clauses:
+    G1_continuous_path: PASS -- 121/121 live, max step 1.084x at f001, 90% of growth at f108
+    G2_end_state: PASS -- hue 293.9, sat 0.788, at a LIVE f120
+    G4_no_size_doubling: PASS -- max single-frame step 1.084x against 2.0x
+    G5a_field_stability: '**FAIL** -- shaft -0.324 (needs >=0.70), sapling 0.055 (needs >=0.45),
+      grass 0.038 (needs >=0.20); fig_box 0.004 passes its <0.30'
+    H_luma_bloom: PASS -- peak 98.19 at f035, +10.85 against 12.0; 0 frames over 100 against
+      6
+    H1_not_frozen: PASS -- fig-box NCC to the last frame is -0.127 at f060
+    H5_attached: PASS -- 20.6 px from the f000 geometric anchor against 40
+    H6_no_scene_break: PASS -- worst consecutive whole-frame NCC 0.9403 at f039
+    G3_G4b_G5b: UNSCORED BY DECLARATION -- no leaf counter, no grass line, and the camera
+      probe refuses. Unchanged from the parent and still not guessed at.
+  parent_child:
+    control: ep2-b01-growmotion-b15-0819, same seed 20260840, same init, one payload file
+      differing
+    luma_delta_at_peak:
+    - 17.452365944602263
+    - 10.852311567826703
+    frames_over_luma_100:
+    - 71
+    - 0
+    region_ncc_sapling:
+    - 0.09240666788622046
+    - 0.05524296217272466
+    region_ncc_shaft:
+    - -0.35545730696327527
+    - -0.3240040161979985
+    live_frames:
+    - 121
+    - 121
+    total_growth_ratio:
+    - 19.366591928251122
+    - 14.7680690399137
+    frame_at_90pct_growth:
+    - 111
+    - 108
+    max_single_frame_step:
+    - 1.0797872340425532
+    - 1.0841423948220066
+    scored_clauses_passed:
+    - 6 of 8
+    - 7 of 8
+  evidence: LANDED-fignonly-AB.png -- parent, child and incumbent at f000/f040/f080/f120 with
+    luma printed. The child is visibly the parent's shot with the wash removed.
+  cost: $0 to judge; the render was ~5 GPU-minutes on the rtx5090 box.
+verdict_cut: NOT PROPOSED FOR THE CUT. The bar is conjunctive and G5a fails, so this is not
+  a pick and no swap into review/ep2-demo-0820 is proposed. It is nonetheless the strongest
+  beat-01 cold open measured to date -- 7 of 8 scored clauses, the incumbent's exposure discipline
+  and the parent's growth arc in one clip -- and the incumbent it would replace has its own
+  G1 failure on the record. Both of those are the founder's call under R4, not this lane's.
+what_this_licenses_after_the_verdict: 'The twelve exposure terms are EARNED and should be
+  carried by every future beat-01 negative: they removed the bloom entirely and cost the fig
+  nothing measurable. The six plant-growth terms are NOT earned -- they did nothing -- and
+  a future rung should not re-spend a fire on rewording them, which is the specific mistake
+  this verdict exists to prevent.
+
+
+  What it does NOT license: another negative-prompt rung on the sapling. The clause is not
+  reachable from that side on this engine and one clean measurement says so. The two candidates
+  left are PLATE-SIDE (an init whose sapling is already at final size, so there is nothing
+  left to grow -- note this changes the plate that passed 7 of 7, so it needs its own bar)
+  and COMPOSITOR-SIDE (render the fig''s growth against a held plate). Choosing between them
+  is a route decision with the evidence now in front of it, and it is deliberately left open
+  here rather than guessed at.'
