@@ -6850,3 +6850,116 @@ does to subject fidelity is a question the ComfyUI and diffusers communities
 have answered in public and nobody here has read it. **The next lane should
 read before it renders.** The card is idle and that is the correct state when
 the only available job is a guess.
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE HORN WAS THE CROP, AND THE EYE THAT BEAT THE BAR WAS THE CROP TOO
+
+`ep2-jerry-face-k4a/b/c/d-0821`. The previous entry closed by refusing to
+render on a guess and naming the reading that had not been done. It has now
+been done, and it changed the diagnosis.
+`review/ep2-goblin-design-0819/FACE-K4-BAND-0821.png`
+
+### THE RESEARCH FOUND A MECHANISM, NOT A CONFIRMATION
+
+`pipeline/research/ipa-ref-framing-0821.md`, from source rather than opinion:
+diffusers' `load_ip_adapter` builds `feature_extractor = CLIPImageProcessor()`
+with **no arguments**, and that class defaults to `size={"shortest_edge":224}`
+with `do_center_crop=True, crop_size=224`. **Every reference is scaled on its
+short edge and then centre-cropped to a square.**
+
+k3's reference was 416x608. It became 224x327, and the crop kept rows 51..275
+while the head sat at resized rows 33..93. **The top 30% of the subject — the
+entire cranial dome — never reached the encoder**, and what did was 64x42 px,
+5.4% of the encoder's pixels, flush against row 0 with the tile's dark ear
+flanges running up into the cut and stopping there. k1's 156x152 reference was
+effectively square, lost 3 px a side, and drew no horns.
+
+So the guess ("~43 px, completed from priors") named the right magnitude and
+the **wrong mechanism**. It was not that the subject was small. It was that the
+subject was **cut**, and the horns grow upward out of the cut from exactly the
+flanges the cut passed through. Outside corroboration: the first-party tooling
+*warns* on non-square references, and the most-used implementation's docs say
+"The encoder resizes the image to 224x224 **and crops it to the center!**" with
+"use square pictures as reference for more predictable results".
+
+### THE BAND, ON A SQUARE CANVAS WHERE THE CROP IS A NO-OP
+
+| | reference | % encoded | eye box | aspect | eye vs TILE | head_frac | heads | horns | cowl |
+|---|---|---|---|---|---|---|---|---|---|
+| TILE | — | — | 23x12 | **0.52** | 1.00x | 0.190 | 5.2 | — | — |
+| j2 no adapter | — | — | 27x27 | 1.00 | 1.40x | 0.181 | 5.56 | no | no |
+| k1 | 156x152 sq | 95.6 | 52x28 | 0.54 | 1.87x | 0.219 | 4.57 | no | no |
+| k2 @0.9 | 156x152 sq | 95.6 | 57x36 | 0.63 | 2.32x | 0.227 | **4.41** | no | no |
+| k3 | **416x608** | **5.4** | 37x20 | 0.54 | **1.24x** | 0.201 | 4.97 | **HORNS** | **COWL** |
+| **k4a** | sq, head 30% | 8.8 | 39x23 | 0.59 | **1.41x** | **0.195** | **5.13** | no | no |
+| k4b | sq, head 45% | 19.7 | 45x25 | 0.56 | 1.70x | 0.203 | 4.93 | no | no |
+| k4c | sq, head 60% | 35.2 | 43x32 | 0.74 | 1.94x | 0.210 | 4.76 | no | no |
+| k4d | sq, head 75% | 55.5 | 42x36 | 0.86 | 2.10x | 0.215 | 4.65 | no | no |
+
+*T8 is reconstructed from a fixed foot line at row 1170, which is what the
+published j2/k1/k2/k3 numbers imply to within 14 px; the method reproduces all
+four of them to within 0.05 heads before it is used on a new one.*
+
+### READ 1: THE HORN IS CLOSED, AND IT WAS THE CUT
+
+**All four are horn-free and cowl-free, and containment holds on all four** —
+standing, patchwork cloak, tall grass. That includes **k4a at 8.8% coverage**,
+which is starved by any reasonable measure and still clean. The only rung in
+the family with horns is the only one that was **amputated**. Starvation alone
+does not grow horns; a subject cut at a frame edge does.
+
+The cowl came with it. No mask change was needed, and the leakage reading in
+the research (real, but documented as partial) turns out not to be required to
+explain this one: in an encode that was 94.6% flat green, the purple cowl was
+one of very few saturated features left, and restoring the head's dominance
+removed it without touching the mask.
+
+### READ 2: AND THE EYE THAT BEAT THE BAR WAS AN ARTIFACT, EXACTLY AS FILED
+
+The k4 specs named this outcome in advance as *"the likeliest way this
+disappoints"*, and it is what happened. **Eye size rises monotonically with
+coverage — 1.41x, 1.70x, 1.94x, 2.10x — and aspect rounds off with it, 0.59 to
+0.86 against the tile's 0.52.** k3's best-in-tree 1.24x was **a crippled
+embedding transferring less of everything, including less of k1's oversized-eye
+bias**. It was not a ratio effect that survived fixing the reference. **No rung
+in the band beats it, and the horn and the good eye were the same defect seen
+twice.**
+
+**k4a is the best of the band and it lands at 1.41x against the 1.4x bar this
+lane wrote before the render.** A miss of 0.4% is inside the ruler's noise and
+I am not going to call that a pass or a fail on the third decimal — what
+decides is the comparison the bar was built from: **1.41x is j2's number, which
+is what the frame does with no adapter at all.** On eye SIZE the reference route
+has bought nothing.
+
+What k4a does buy over j2, and it is not nothing: the tile's eye **KIND**
+(0.59 against j2's 1.00, where six wording rungs sat at 1.00-1.26), a **brow**
+that is separate from the lid with skin between — scored on the same standard
+k1's was, and like k1's it is *a stroke where canon says bar* — and
+**head_frac 0.195 against the 0.190 authored skeleton, the closest proportion
+in the entire ladder.**
+
+### THE GATE: STILL SHUT, AND FOR A DIFFERENT REASON THAN LAST NIGHT
+
+**`train-jerry-0820` REMAINS UNFILED. The set is still 7 frames in 4 poses.**
+Nothing from k4 enters it. A frame with a 41%-oversized eye teaches a
+41%-oversized eye, and the refusal is unchanged in kind.
+
+But the reason has moved again, and this time it moved *forward*: last night
+the blocker was a creature feature nobody could explain. Tonight **the creature
+feature is explained, reproduced, and eliminated by a one-line change to the
+canvas shape**, and what remains is a single number on a characterised,
+monotonic axis. Two levers were already closed (wording, adapter strength);
+this closes a third — **reference framing controls the drawn head and the drawn
+eye together, and it controls them in the wrong direction for our purpose.**
+
+### THE NEXT RUNG IS NAMED AND IT IS FILED, BECAUSE IT IS NO LONGER A GUESS
+
+The axis is monotonic across four measured points and k4a sits at its low end.
+**Below 30% is unexplored on a square canvas**, and that is where the trend puts
+an eye between k3's 1.24x and k4a's 1.41x *without* the cut that produced the
+horns. `k5a` at head 25% (~6.1% encoded) and `k5b` at head 20% (~3.9% encoded)
+are filed as one variable each, and **k5b deliberately goes below k3's 5.4%
+coverage on a square canvas** — which is the one test that could still show
+starvation growing a horn on its own, and would falsify Read 1 if it did.

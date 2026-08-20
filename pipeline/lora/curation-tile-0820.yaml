@@ -377,3 +377,67 @@ gate_status_2026_08_21_FINAL: >-
   it does not. Two levers are closed (wording for the face, adapter strength
   for size) and one cause is confirmed (the reference's head-to-frame ratio
   drives both the drawn head and the drawn eye).
+
+# --------------------------------------------------------------------------
+# UPDATE 7, 2026-08-21. ep2-jerry-face-k4a/b/c/d-0821 -- k3's rung with the
+# reference canvas made SQUARE and the head at 30/45/60/75% of it. One axis,
+# four points. Pixels: review/ep2-goblin-design-0819/FACE-K4-BAND-0821.png
+#
+# THE HORN IS EXPLAINED AND GONE, AND THE CAUSE WAS NOT THE ONE k3 GUESSED.
+# Research from source (pipeline/research/ipa-ref-framing-0821.md): diffusers
+# builds CLIPImageProcessor() with no arguments, which resizes the SHORT edge
+# to 224 and then CENTRE CROPS to a square. k3's 416x608 portrait became
+# 224x327 and the crop kept rows 51..275 while the head sat at 33..93 -- THE
+# TOP 30% OF THE SUBJECT, THE WHOLE CRANIAL DOME, NEVER REACHED THE ENCODER.
+# The horns grew upward out of that cut. Not smallness: amputation.
+#
+#                        %enc  eye box  aspect  vs TILE  head_frac  heads  horns
+#   TILE                   --   23x12    0.52     1.00x    0.190     5.2    --
+#   j2 (no adapter)        --   27x27    1.00     1.40x    0.181     5.56   no
+#   k1 (ref 100%)        95.6   52x28    0.54     1.87x    0.219     4.57   no
+#   k3 (19.1% PORTRAIT)   5.4   37x20    0.54     1.24x    0.201     4.97   HORNS
+#   k4a (square, 30%)     8.8   39x23    0.59     1.41x    0.195     5.13   no
+#   k4b (square, 45%)    19.7   45x25    0.56     1.70x    0.203     4.93   no
+#   k4c (square, 60%)    35.2   43x32    0.74     1.94x    0.210     4.76   no
+#   k4d (square, 75%)    55.5   42x36    0.86     2.10x    0.215     4.65   no
+#
+# ALL FOUR ARE HORN-FREE AND COWL-FREE and containment holds on all four --
+# standing, patchwork cloak, tall grass. k4a is horn-free at 8.8% coverage,
+# which is starved, so STARVATION ALONE DOES NOT GROW A HORN; the cut does.
+#
+# AND THE EYE THAT BEAT THE BAR WAS AN ARTIFACT OF THE SAME DEFECT. Eye size
+# rises monotonically with coverage (1.41x -> 2.10x) and aspect rounds off with
+# it (0.59 -> 0.86 against the tile's 0.52). k3's best-in-tree 1.24x was a
+# crippled embedding transferring less of everything, including less of k1's
+# oversized-eye bias. The horn and the good eye were ONE defect seen twice.
+# This outcome was named in the k4 specs in advance as the likeliest
+# disappointment, and it is the one that arrived.
+#
+# WHY THIS STILL CHANGES NOTHING FOR THE SET. k4a is the best of the band and
+# lands at 1.41x against a 1.4x bar written before the render -- a 0.4% miss,
+# inside noise, and identical to what j2 draws with NO adapter. On eye SIZE the
+# reference route has bought nothing. It does buy the eye's KIND (0.59 vs
+# j2's 1.00), a brow separate from the lid (a stroke where canon says bar, the
+# same standard k1 was scored on), and head_frac 0.195 against the 0.190
+# authored -- the closest proportion in the whole ladder.
+#
+# A frame with a 41%-oversized eye teaches a 41%-oversized eye. Refused, for
+# the fourth time and the same reason: a LoRA learns what it is shown.
+#
+# NEXT, AND FILED RATHER THAN GUESSED because the axis is now characterised
+# across four measured points: ep2-jerry-face-k5a-0821 (square, head 25%,
+# ~6.1% encoded) and k5b (square, head 20%, ~3.9% encoded). The trend puts an
+# eye between k3's 1.24x and k4a's 1.41x down there WITHOUT the cut. k5b sits
+# BELOW k3's 5.4% coverage on a square canvas on purpose: it is the one test
+# that could still show starvation growing a horn on its own, and it would
+# falsify the reading above if it did.
+gate_status_2026_08_21_k4_band: >-
+  HELD, and the blocker has changed from an unexplained creature feature to a
+  single number on a characterised axis. train-jerry-0820 REMAINS UNFILED and
+  the set is STILL 7 frames in 4 poses; nothing from the f/g/h/j/k, skel, pose,
+  tileset or prop families enters it. THREE LEVERS ARE NOW CLOSED: wording for
+  the face, adapter strength for size, and reference framing -- which controls
+  the drawn head and the drawn eye together and controls them in the wrong
+  direction for our purpose, since every gain in eye size costs coverage and
+  every gain in coverage costs the eye. The horn is closed on mechanism: it was
+  the centre crop amputating the reference, not the subject being small.
