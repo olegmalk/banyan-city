@@ -1,0 +1,324 @@
+# JERRY CHARACTER LoRA — SDXL / animagine-xl-3.1 — the training run
+#
+# 2026-08-20. $0 (local card, no provider). ~35-50 GPU-minutes.
+#
+# ── THIS SPEC IS NOT FILED, AND MUST NOT BE FILED YET.
+# `pipeline/lora/SETUP.md` is the blocker: the box has NO trainer installed
+# (pip list is 29 packages; no kohya, no sd-scripts, no peft, no bitsandbytes).
+# Every argv below names `C:\banyan-farm\venv-lora\Scripts\python.exe` and
+# `C:\banyan-farm\sd-scripts\`, neither of which exists on the box today. Run
+# SETUP.md's eight steps, pass its step-8 gate, THEN
+# `python3 pipeline/box_enqueue.py pipeline/lora/train-jerry-0820.yaml --backlog`.
+# Filing it before that buys a job that fails at step 1 and burns a queue slot.
+#
+# ── WHY THIS CHARACTER AND NOT THE GUARDS. Founder ruling 2026-08-20:
+# one-episode characters get no consistency infrastructure. Jerry is on screen
+# in 8 nodes across ep2-ep7; the guards are ep2-only. ep3
+# (`003b-one-leaf-for-yes`) has exactly two characters on screen, Jerry and the
+# sapling, so these two LoRAs unblock it completely. The sapling's dataset does
+# not exist yet and cannot be harvested the same way -- see README.md §sapling.
+#
+# ── WHAT IT COSTS IF IT IS WRONG. One card-hour and nothing else. No spend, no
+# publish, no canon change, no leaf touched. The LoRA is a file on disk until
+# something loads it, and the bars below decide whether anything ever does.
+
+id: lora-jerry-0820
+task: lora-jerry-0820
+node: 002b-first-citizen
+runner: box
+needs_gpu: true
+
+# Sorts behind the ep2 finishing wave. This is enabler work for ep3; it is not
+# more urgent than footage the founder is waiting to screen.
+priority: 70
+max_attempts: 1
+owner: the character-LoRA lane, 2026-08-20
+
+script_authority: 'Not a render of a script and not an episode assembly -- this
+  trains a weight file from frames that were ALREADY rendered from approved
+  nodes. STEWARDSHIP.md §6 governs "no voice synthesis, no footage render, no
+  episode assembly from a script the founder has not read"; no new footage is
+  produced here and no script is read. The 31 input frames all come from node
+  002b-first-citizen, whose live script `002b-t0-c` carries approved_by: founder
+  / approved_on: 2026-08-03.'
+
+consumer: 'The ep3 plate step. Today every plate prompt spends ~15-20 of a
+  77-token CLIP budget restating `lean wiry adult goblin man, green skin, bald
+  head, patchwork cloak` and still drifts -- pipeline/sd_prompt.py exists
+  because we overrun that budget and lose the ACTION off the end. A working
+  LoRA replaces that clause with a ~3-token trigger. If the bars below fail,
+  the consumer is the failure record and the next rung, not a shipped file.'
+
+success: 'A judged answer, not a passing one. The bars in `## BARS` are
+  pre-registered and a FAIL on any of them is a full result: it would mean the
+  31-frame set is too thin or too monocultural, which is a fact worth one
+  card-hour to learn before ep3 is scheduled around it.'
+
+why: 'STATE.md, founder, 2026-08-20: one day per episode from ep3 on, and
+  enabler #1 is a character LoRA on the recurring cast so identity stops being
+  re-fought per frame. canon.yaml currently carries four open drift subjects
+  about one character.'
+
+est_minutes: 55
+
+needs:
+- cuda
+- vram20
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+
+# ── 1. STAGE. kohya wants `<image>.txt` beside `<image>`, and our captions live
+# in pipeline/lora/captions/jerry/ instead, on purpose: farm-out/ is evidence and
+# the trainer must not write into it. This builds a flat throwaway dir from the
+# manifest and copies both halves in.
+#
+# The dir name encodes the repeat count. sd-scripts reads `<N>_<name>` and
+# repeats each image N times per epoch: 4 repeats x 31 images = 124 steps/epoch
+# at batch 1, /2 at batch 2 = 62. Ten epochs -> ~620 optimizer steps. See BARS.
+#
+# It verifies every sha256 against the manifest before copying. A frame edited
+# or re-rendered under the same name since 61dfbca4 stops the run here, rather
+# than silently changing what the LoRA trained on.
+- name: stage
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, os, shutil, yaml
+    repo = r"C:\banyan-farm\banyan-city"
+    man  = yaml.safe_load(open(os.path.join(repo, "pipeline/lora/manifest-jerry.yaml"), encoding="utf-8"))
+    dst  = r"C:\banyan-farm\lora-jerry-0820\img\4_bnyjerry"
+    os.makedirs(dst, exist_ok=True)
+    os.makedirs(r"C:\banyan-farm\lora-jerry-0820\out", exist_ok=True)
+    n = 0
+    for f in man["frames"]:
+        src = os.path.join(repo, f["image"])
+        got = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        if got != f["sha256"]:
+            raise SystemExit("SHA MISMATCH %s\n  manifest %s\n  on disk  %s"
+                             % (f["image"], f["sha256"], got))
+        stem = os.path.basename(f["caption_file"])[:-4]
+        shutil.copy2(src, os.path.join(dst, stem + ".png"))
+        shutil.copy2(os.path.join(repo, f["caption_file"]), os.path.join(dst, stem + ".txt"))
+        n += 1
+    print("staged", n, "image+caption pairs ->", dst)
+    raise SystemExit(0 if n == man["count"] else 1)
+
+# ── 2. TRAIN.
+#
+# Every value here is argued in pipeline/research/character-lora-sdxl-0820.md §5
+# against the two clusters the sources actually disagree on. The short version:
+#
+#   network_dim 32 / alpha 16 -- 16/8 is the Civitai default for a photoreal
+#     person on a photoreal base. Jerry carries non-human structure, which is
+#     nearer the "complex" case. 32 is the conservative step up, still ~35MB,
+#     still inside VRAM. Alpha below rank scales the update down and is the
+#     current preference for STYLE-PRESERVING transfer, which is bar 2.
+#   unet_lr 1e-4 -- the documented SDXL baseline. 5e-4 is the SD1.5-era number
+#     carried forward. We take the slower rate and buy the difference back with
+#     checkpoints.
+#   text_encoder_lr 5e-5 -- half the unet rate.
+#   --sdpa and NOT xformers -- SETUP.md's whole warning. xformers on this card
+#     silently downgrades torch below sm_120 and breaks every render on the box.
+#   --enable_bucket at 1024/2048 -- our frames are 832x1216 9:16. Bucketing
+#     handles that natively; cropping them to square would throw away the
+#     framing the set is thin on already.
+#   no regularization images -- optional in kohya, and the practitioner report
+#     is they either overfit hard or dampen to nothing. Using them properly
+#     would mean generating 200-500 class images first, which is GPU time better
+#     spent on the run.
+#
+# SAVE EVERY 2 EPOCHS AND JUDGE THE CHECKPOINTS. The sources split 250-1000 vs
+# 1500-2400 total steps, and nobody knows the right number for OUR 31 frames.
+# Sampling the axis is honest; asserting a point on it is not. Five checkpoints
+# land and BARS picks among them.
+- name: train
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - C:\banyan-farm\sd-scripts\sdxl_train_network.py
+  - --pretrained_model_name_or_path
+  - C:\Users\artvn\.cache\huggingface\hub\models--cagliostrolab--animagine-xl-3.1\snapshots\483f0c322568ed13697ed01dd0be07204746d12b
+  - --train_data_dir
+  - C:\banyan-farm\lora-jerry-0820\img
+  - --output_dir
+  - C:\banyan-farm\lora-jerry-0820\out
+  - --output_name
+  - bnyjerry-sdxl-v1
+  - --network_module
+  - networks.lora
+  - --network_dim
+  - '32'
+  - --network_alpha
+  - '16'
+  - --learning_rate
+  - '1e-4'
+  - --unet_lr
+  - '1e-4'
+  - --text_encoder_lr
+  - '5e-5'
+  - --lr_scheduler
+  - cosine
+  - --lr_warmup_steps
+  - '30'
+  - --optimizer_type
+  - AdamW8bit
+  - --max_train_epochs
+  - '10'
+  - --save_every_n_epochs
+  - '2'
+  - --train_batch_size
+  - '2'
+  - --resolution
+  - 832,1216
+  - --enable_bucket
+  - --min_bucket_reso
+  - '1024'
+  - --max_bucket_reso
+  - '2048'
+  - --mixed_precision
+  - bf16
+  - --save_precision
+  - bf16
+  - --gradient_checkpointing
+  - --cache_latents
+  - --cache_latents_to_disk
+  - --sdpa
+  - --seed
+  - '20260820'
+  - --save_model_as
+  - safetensors
+  - --logging_dir
+  - C:\banyan-farm\lora-jerry-0820\log
+
+# ── 3. ONE SAMPLE. Not fifteen.
+#
+# CLAUDE.md, founder 2026-08-03: before rendering a SET of anything, produce ONE
+# and have the founder look at it. The K recipe cost an hour by skipping to
+# fifteen on the steward's own metric. So this step draws exactly ONE frame from
+# the FINAL checkpoint on a prompt that is not in the dataset, and the full
+# 15-frame identity grid in BARS is a SEPARATE job that gets filed only if this
+# one frame is worth grading.
+#
+# The prompt deliberately asks for something the set does not contain -- a
+# STANDING figure, where all 31 frames are crouched or seated -- because the
+# question a LoRA has to answer is whether identity survives leaving the poses
+# it was trained on.
+# NOTE THE VENV: the RENDER venv, not venv-lora. The plates we ship are drawn by
+# C:\banyan-farm\venv at bfloat16 on CUDA, so that is where a LoRA has to be
+# measured -- sampling under a different dtype or device convention is not
+# comparable to the plates it will be judged against (the Mac and this box were
+# measured on 08-16 to differ by MAE 61 on byte-identical inputs at one seed).
+# It also keeps whatever diffusers version sd-scripts pins out of the answer.
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\lora\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-jerry-0820\out\bnyjerry-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - bnyjerry, 1boy, solo, standing, full body, walking along a dirt road at dusk, looking back over
+    his shoulder, cinematic lighting, masterpiece, best quality, very aesthetic
+  - --negative
+  - text, girl, child, chibi, glasses, photorealism, 3d render
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260820'
+  - --out
+  - C:\banyan-farm\lora-jerry-0820\out\SAMPLE-bnyjerry-standing-dusk.png
+
+# ── 4. PUBLISH. farm-out is not gitignored and the courier commits + pushes it
+# on job_done, so publishing is a copy. allow_fail so a failed copy never marks
+# a good training run failed.
+#
+# The .safetensors go too, not just the sample: a LoRA that passes and was not
+# kept is a card-hour thrown away, and five checkpoints at ~35MB is ~175MB.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = r"C:\banyan-farm\courier-box\farm-out\lora-jerry-0820"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(r"C:\banyan-farm\lora-jerry-0820\out\*.safetensors")
+                 + glob.glob(r"C:\banyan-farm\lora-jerry-0820\out\SAMPLE-*.png"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, os.path.basename(f)), "rb") as fh:
+            lines.append(hashlib.sha256(fh.read()).hexdigest() + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "lora-jerry-0820.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+
+artifacts:
+- C:\banyan-farm\lora-jerry-0820\out\bnyjerry-sdxl-v1.safetensors
+- C:\banyan-farm\lora-jerry-0820\out\SAMPLE-bnyjerry-standing-dusk.png
+
+# ══════════════════════════════════════════════════════════════════════════
+# BARS — pre-registered, written before any pixel exists.
+#
+# Judged on the FIVE saved checkpoints, not just the last. Picking the epoch is
+# part of the job; overfitting past the sweet spot is the standard character-LoRA
+# failure and the cheap insurance is having epochs 2/4/6/8/10 on disk.
+#
+# STEP 0 is the ONE SAMPLE above and it gates everything else. If the single
+# standing-at-dusk frame is not recognisably Jerry, no grid gets rendered and
+# the next rung is dataset work, not more training.
+#
+# B1 IDENTITY LOCK. 5 fresh prompts (none in the dataset) x 3 seeds = 15 frames.
+#   A BLIND COLD READER -- a fresh agent given the frame and the canon clause,
+#   no context, no prompt text, no mention of this lane -- must call it the same
+#   character in >= 13/15. This is the instrument beat 20 already used for the
+#   fig colour (`pipeline/jobs/ep2-b20-canonword-0816.yaml`); it is the standing
+#   house method, not a new one invented to be passed.
+#
+# B2 STYLE PRESERVATION. The 15 frames must be indistinguishable in look from
+#   the shipped ep2 plates. Any drift toward photoreal, 3D, or a different line
+#   weight is a FAIL EVEN IF IDENTITY IS PERFECT. The founder killed v2 for
+#   unreadability on 2026-07-27; a LoRA that quietly moves the look is the same
+#   defect arriving by a new route.
+#
+# B3 NO-REGRESSION. One non-cast prompt (a landscape, an unrelated figure) at
+#   the shipping weight, against the identical prompt+seed with the LoRA
+#   unloaded. Visible contamination is a FAIL. This is the test that catches a
+#   LoRA that learned "our style" instead of "this character" -- the likeliest
+#   failure given all 31 frames share one checkpoint, one palette and one field.
+#
+# B4 GLASSES. Zero of the 15 may wear wire-rim glasses. Nine of the 26 beat-20
+#   seeds did (guard A's feature leaking onto Jerry) and all nine were rejected
+#   from the set; this bar checks that the rejection actually worked rather than
+#   assuming it. `glasses` is in the sample step's negative for the same reason.
+#
+# B5 POSE GENERALISATION. At least one of the 5 prompts must ask for a pose the
+#   dataset does not contain -- standing, walking, or a back view. All 31 frames
+#   are crouched or seated. If identity only holds while he is crouching, the
+#   LoRA has learned the pose and the finding is that the set needs a variety
+#   batch, which is named in README.md and costs ~30 GPU-minutes.
+#
+# NOT BARS, and deliberately so: ear shape and the missing broken tusk. Both are
+# unstable across the source frames, both are R4 taste calls, and neither has a
+# founder ruling yet. Grading against a reading he has not made would be the
+# steward scoring his own taste axis. They go to him with pixels instead.
+# ══════════════════════════════════════════════════════════════════════════
