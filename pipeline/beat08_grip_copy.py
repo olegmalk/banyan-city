@@ -27,7 +27,43 @@ init, inside the mask, so the sampler removes it from real strap pixels
 instead of being handed a fabricated fill to rationalise."* That is this file.
 No fill function exists in it, and that is the entire point.
 
+WHAT HAPPENED WHEN IT RAN -- READ THIS BEFORE BELIEVING THE SECTION BELOW
+=========================================================================
+`ep2-b08-fistcopy-0820` (the `corridor` variant) LANDED AND FAILED, hard and
+usefully. At strength 0.99 the pass **drew a whole second goblin** -- green
+skull, blond hair, pointed ears, angry face -- inside the mask, with a buttoned
+shirt placket where the harness strap had been. The original fist WAS deleted
+and the copied digits DID survive exactly as predicted; everything else in the
+mask became a character.
+
+The cause is NOT the corridor, and that was measured before a corrective rung
+was filed on the wrong theory: **dropping the corridor saves 434 px of 18408**,
+because it was already covered by the fist's own margin and the copy's rim. The
+real cause is that **the two work sites are 13 px apart**, so any mask covering
+both is ONE ~200 px tall region -- and it never splits, at OLD_GROW 4 any more
+than at 14. A region that size, at 0.99, with a prompt naming "the small goblin
+man" and NO spatial conditioning anywhere in this pipeline, gets filled with the
+largest available noun. `composite-init-pattern.md` names that failure in those
+words; this rung walked into it.
+
+Hence the `eraseonly` variant: ONE site, ONE question. Mask the original fist
+alone at grow 10 -- 10020 px in a 102x118 box, 1.8x smaller than the region that
+hosted a face -- and ask only "can the sampler delete the hand from real strap
+pixels?" The copy stays in, protected, and reads as a decal until a SECOND pass
+draws its contact edge. Two small masks in series, never one big one.
+
+A SECOND FINDING, AND IT IS THE ONE WITH THE WIDEST BLAST RADIUS:
+**`--pad-crop 64` BREAKS THE "NOTHING OUTSIDE THE MASK CHANGES" GUARANTEE.**
+The landed frame differs from its init in **15355 px OUTSIDE the mask, maxdiff
+160.** `padding_mask_crop` crops the masked region with padding, upscales it,
+inpaints, and pastes back -- and the resample on the way back rewrites unmasked
+pixels inside the crop box. Every composite in this tree that asserted "nothing
+changed outside the mask" asserted it about the COMPOSITE INIT, never about the
+landed result. On this frame the guard's head was outside the crop box and read
+maxdiff 0, so B8 survived by luck of geometry rather than by the guarantee.
+
 THE THREE THINGS THE MASK HAS TO DO, AND WHY THE THIRD IS NOT OPTIONAL
+(THE `corridor` VARIANT'S REASONING, KEPT AS THE RECORD OF WHAT WAS TRIED)
 ======================================================================
  1. **COVER THE ORIGINAL FIST**, generously, so the pass rebuilds the strap
     junction from the real strap, cuff and clasp that surround it -- the
@@ -89,15 +125,35 @@ from beat08_grip_composite import (  # noqa: E402  -- ONE source for the geometr
 )
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JOB = "ep2-b08-fistcopy-0820"
-OUT_DIR = os.path.join(REPO, "farm-out", JOB)
-OUT_INIT = os.path.join(OUT_DIR, "08-first-citizen-fistcopy-0820.png")
-OUT_MASK = os.path.join(OUT_DIR, "08-first-citizen-fistcopy-mask-0820.png")
-OUT_ERASE = os.path.join(OUT_DIR, "08-first-citizen-fistcopy-erase-0820.png")
-OUT_EVID = os.path.join(OUT_DIR, "EVIDENCE-b08-fistcopy-0820.png")
+# TWO VARIANTS. `corridor` is the first one and it FAILED on the card -- see
+# the route doc: at strength 0.99 the 7463 px forearm corridor filled with the
+# largest available noun, which on a prompt naming "the small goblin man" was a
+# whole second goblin head. `fistonly` is the corrective: the SAME everything,
+# minus the corridor, so the pass is asked to do exactly one thing -- delete a
+# hand from real strap pixels -- with no empty region big enough to host a face.
+VARIANT = "corridor"
+TAG = {"corridor": "fistcopy", "fistonly": "fistonly", "eraseonly": "eraseonly"}
+
+
+def _paths():
+    t = TAG[VARIANT]
+    job = "ep2-b08-%s-0820" % t
+    d = os.path.join(REPO, "farm-out", job)
+    return (job, d,
+            os.path.join(d, "08-first-citizen-%s-0820.png" % t),
+            os.path.join(d, "08-first-citizen-%s-mask-0820.png" % t),
+            os.path.join(d, "08-first-citizen-%s-erase-0820.png" % t),
+            os.path.join(d, "EVIDENCE-b08-%s-0820.png" % t))
+
+
+JOB, OUT_DIR, OUT_INIT, OUT_MASK, OUT_ERASE, OUT_EVID = _paths()
 
 # --- the mask's dials, each one a stated choice -----------------------------
 OLD_GROW = 14      # margin around the fist the pass must delete
+# ...except on `eraseonly`, where the whole point is a SMALL region: 14 -> 10
+# takes the mask from 18408 px in a 142x211 box to 10020 px in a 102x118 one,
+# a 3.4x area cut, and the pass still gets 10 px of real strap to reason from.
+OLD_GROW_BY_VARIANT = {"eraseonly": 10}
 ARM_R = 24         # forearm corridor half-width, elbow -> wrist
 RIM_OUT = 8        # px outside the copy the pass may repaint (contact/occlusion)
 RIM_IN = 4         # px inside the copy's outline it may repaint (the closing edge)
@@ -262,8 +318,10 @@ def build():
     init = Image.fromarray(out)
 
     # ---- 2. THE MASK -------------------------------------------------------
-    old = np.asarray(poly_mask(FIST, grow=OLD_GROW)) > 0
-    arm = capsule(LELB, LWRI, ARM_R)
+    grow = OLD_GROW_BY_VARIANT.get(VARIANT, OLD_GROW)
+    old = np.asarray(poly_mask(FIST, grow=grow)) > 0
+    arm = (capsule(LELB, LWRI, ARM_R) if VARIANT == "corridor"
+           else np.zeros((H, W), bool))
     rim = np.asarray(poly_mask(moved, grow=RIM_OUT)) > 0
     band = np.asarray(poly_mask(
         [(BOARD_TOP_L[0] - 4, BOARD_TOP_L[1] - BAND_H),
@@ -271,7 +329,20 @@ def build():
          (BOARD_TOP_R[0] + 4, BOARD_TOP_R[1] + BAND_H + 2),
          (BOARD_TOP_L[0] - 4, BOARD_TOP_L[1] + BAND_H + 2)], grow=6)) > 0
 
-    union = old | arm | rim | band
+    if VARIANT == "eraseonly":
+        # ONE SITE, ONE QUESTION. The corridor variant proved the two work sites
+        # cannot share a mask: the fist (y 542-620) and the copy (y 633-711) are
+        # 13 px apart, so ANY mask covering both is one ~200 px tall region --
+        # measured at OLD_GROW 4 as well as 14, it never splits -- and at 0.99 a
+        # region that size hosted a whole second goblin head. So the rim and the
+        # board band are dropped. The pass is asked the single question §21
+        # actually posed: can the sampler delete the hand from real strap pixels?
+        # The copy stays in the init, protected, and reads as a decal until a
+        # SECOND pass on this pass's output draws its contact edge. Two small
+        # masks, in series, instead of one big one.
+        union = old
+    else:
+        union = old | arm | rim | band
     soft = Image.fromarray((union * 255).astype(np.uint8)
                            ).filter(ImageFilter.GaussianBlur(3))
     soft = soft.point(lambda v: 255 if v >= 64 else 0
@@ -303,6 +374,7 @@ def build():
         "protect_px": int(protect.sum()),
         "erase_px": int(erase.sum()),
         "old_px": int(old.sum()), "arm_px": int(arm.sum()),
+        "old_grow": int(grow),
         "mask_bbox": tuple(int(v) for v in Image.fromarray(
             (mnp * 255).astype(np.uint8)).getbbox()),
     }
@@ -350,9 +422,21 @@ def selftest():
     # K4 -- and its rim is INSIDE it, so contact can be drawn
     rim = (np.asarray(poly_mask(moved, grow=RIM_OUT)) > 0) & ~protect
     frac = float(mnp[rim].mean())
-    check("K4 a %d px band around the copy IS in the mask (%.0f%% of it) -- "
-          "the occlusion and contact shading §21 said a translation could not "
-          "invent" % (RIM_OUT + RIM_IN, 100 * frac), frac > 0.95)
+    if VARIANT == "eraseonly":
+        # THE COPY'S CONTACT EDGE IS NOT THIS VARIANT'S QUESTION. Only 17% of
+        # its rim is in the mask and that is INCIDENTAL -- the two sites are
+        # 13 px apart, so the fist's own 10 px margin unavoidably laps the top
+        # of the copy. It is not enough to draw contact with and it is not
+        # meant to be: the copy reads as a decal until a SECOND pass on this
+        # pass's output draws its edge. Stated, not hidden.
+        check("K4 the copy's contact rim is only INCIDENTALLY in the mask "
+              "(%.0f%%, and only where the fist's own margin laps it) -- this "
+              "variant asks ONE question and contact is not it" % (100 * frac),
+              frac < 0.35)
+    else:
+        check("K4 a %d px band around the copy IS in the mask (%.0f%% of it) -- "
+              "the occlusion and contact shading §21 said a translation could "
+              "not invent" % (RIM_OUT + RIM_IN, 100 * frac), frac > 0.95)
 
     # K5 -- the original is fully inside the mask, with margin
     old_core = np.asarray(poly_mask(FIST, grow=6)) > 0
@@ -360,17 +444,40 @@ def selftest():
           "-- the pass can delete it, not merely dent it",
           bool(mnp[old_core].all()))
 
-    # K6 -- the forearm corridor is open, EXCEPT where it runs into the hand
-    # it is meant to reach. The corridor ends at the wrist and the wrist is the
-    # protected copy; carving the digits back out of it is K3 doing its job,
-    # not a gap, so the clause is measured on the corridor that is not hand.
-    arm = capsule(LELB, LWRI, ARM_R - 6) & ~protect
-    check("K6 the forearm corridor elbow(%.0f,%.0f)->wrist(%.0f,%.0f) is open "
-          "(%.0f%% of the %d px of it that is not the protected hand) -- "
-          "without it the sleeve ends in nothing and the hand floats"
-          % (LELB[0], LELB[1], LWRI[0], LWRI[1],
-             100 * float(mnp[arm].mean()), int(arm.sum())),
-          float(mnp[arm].mean()) > 0.95)
+    if VARIANT != "corridor":
+        # K6 -- THE CLAUSE THE FAILED RUN BOUGHT, AND IT IS NOT ABOUT THE
+        # CORRIDOR. `ep2-b08-fistcopy-0820` came back with a whole second
+        # goblin head drawn inside the mask, and the corridor was NOT the
+        # cause: dropping it saves 434 px of 18408, because it was already
+        # covered by the fist's margin and the copy's rim. MEASURED, before a
+        # rung was filed on the wrong theory. The real cause is that the two
+        # work sites are 13 px apart, so any mask covering BOTH is one
+        # ~200 px tall region -- and that never splits, at OLD_GROW 4 any more
+        # than at 14. So the clause is on the MASK'S LARGEST COMPONENT, which
+        # is the thing that actually hosted a face.
+        import fill_quality as _Q
+        comps = _Q._components(mnp, 50)
+        big = max((c[2] for c in comps), default=0)
+        ys0, xs0 = np.nonzero(comps[0][1]) if comps else (np.array([0]),) * 2
+        bw, bh = int(xs0.max() - xs0.min()), int(ys0.max() - ys0.min())
+        check("K6 the mask's largest component is %d px in a %dx%d box, "
+              "against the %d px / 142x211 region that hosted a second "
+              "goblin's head -- %.1fx smaller by area"
+              % (big, bw, bh, 18408, 18408.0 / max(big, 1)),
+              big <= 12000 and bh <= 140)
+    else:
+        # K6 -- the forearm corridor is open, EXCEPT where it runs into the
+        # hand it is meant to reach. The corridor ends at the wrist and the
+        # wrist is the protected copy; carving the digits back out of it is K3
+        # doing its job, not a gap, so the clause is measured on the corridor
+        # that is not hand. KEPT SO THE FAILED RUN STAYS REPRODUCIBLE.
+        arm = capsule(LELB, LWRI, ARM_R - 6) & ~protect
+        check("K6 the forearm corridor elbow(%.0f,%.0f)->wrist(%.0f,%.0f) is "
+              "open (%.0f%% of the %d px of it that is not the protected hand) "
+              "-- without it the sleeve ends in nothing and the hand floats"
+              % (LELB[0], LELB[1], LWRI[0], LWRI[1],
+                 100 * float(mnp[arm].mean()), int(arm.sum())),
+              float(mnp[arm].mean()) > 0.95)
 
     # K7 -- the grip geometry §21 half-bought, unchanged
     cx, cy = m["dst_centroid"]
@@ -401,10 +508,13 @@ def selftest():
     # for by K4 -- the rim around them IS in the mask, so the pass draws the
     # contact edge that a translation alone cannot invent.
     out_of_mask = (d > 0) & ~mnp
-    check("K10 every changed pixel outside the mask (%d) is inside the "
-          "PROTECTED copy -- the edit is local and the digits are why"
+    allow = np.asarray(poly_mask(moved, grow=4)) > 0
+    check("K10 every changed pixel outside the mask (%d) is inside the COPY'S "
+          "OWN FOOTPRINT -- the edit is local and the digits are why. On "
+          "`eraseonly` that is the WHOLE copy, not just its interior, because "
+          "that variant leaves the copy entirely outside the mask"
           % int(out_of_mask.sum()),
-          int(out_of_mask.sum()) > 0 and not (out_of_mask & ~protect).any())
+          int(out_of_mask.sum()) > 0 and not (out_of_mask & ~allow).any())
     allowed = np.asarray(poly_mask(moved, grow=4)) > 0
     stray = int(((d > 0) & ~allowed).sum())
     check("K11 every changed pixel is inside the copy's footprint -- NOT ONE "
@@ -509,7 +619,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--variant", choices=sorted(TAG), default="corridor")
     a = ap.parse_args()
+    global VARIANT, JOB, OUT_DIR, OUT_INIT, OUT_MASK, OUT_ERASE, OUT_EVID
+    VARIANT = a.variant
+    JOB, OUT_DIR, OUT_INIT, OUT_MASK, OUT_ERASE, OUT_EVID = _paths()
+    print("  variant %s -> %s" % (VARIANT, os.path.basename(OUT_DIR)))
     if a.selftest:
         return selftest()
     if a.write:
