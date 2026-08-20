@@ -1,0 +1,453 @@
+#!/usr/bin/env python3
+r"""BEAT 16, THE RESTAGE: draw the canon two-leaf sapling LARGE into a field plate.
+
+WHAT THIS IS. Step 2 of the beat-16 restage. Step 1 (`pipeline/derive_b16_field_0820.py`)
+renders four FIELD plates by text with no plant in them; this draws the canon
+sapling into the picked one and writes the init + mask that a single 0.30
+inpaint pass finishes. Step 3 is one i2v motion sample off the finished plate.
+
+WHY DRAWN AND NOT PROMPTED. The canon two-leaf sapling is not reachable by
+words on this stack, and that is measured: the strongest wording available --
+the numeral plus explicit negation of every wrong count -- returned 0 of 16
+frames with two leaves. Cardinality is Class A in
+pipeline/composite-init-pattern.md: no continuous encoding, so there is no knob
+to turn. With a composited init the thing you want is not a sample from the
+model. Four beats have now shipped plants this way (19, 15, 03, 13).
+
+WHY THIS FILE EXISTS BESIDE beat19_sapling_composite.py. The b19 tool is fitted
+to b19's plate -- hard-coded leaf tips, a ground-plane px/cm model, a whip to
+erase and beat 18's fig to hang. Beat 16 needs none of that and needs one thing
+b19 never did: THE PLANT IS THE SUBJECT AND IT IS LARGE. So the geometry here is
+PARAMETRIC (root, height, tilt on the command line) rather than typed, which is
+what lets it be aimed at whichever of the four field plates gets picked without
+editing the source. The drawing primitives -- the taper, the ovate blade
+profile, the crescent highlight, the no-midrib rule -- are b19's, copied
+deliberately, because that is the shape four founder-screened plates already
+carry and the shape canon's "average leaves" ruling describes.
+
+THE THREE ANTI-DECAL CHOICES, from composite-init-pattern.md section 3, all
+honoured here:
+  1. PROCEDURAL, not a photograph and not a clone of nearby pixels.
+  2. FITTED TO THE OBJECT, not to the mask. The mask is derived FROM the drawn
+     silhouette (dilated), so the texture edge and the object edge are the same
+     edge.
+  3. THE PLATE'S OWN LIGHT IS KEPT. The direction is MEASURED from the low-pass
+     luminance gradient of the plate region the plant will occupy, and the
+     crescent highlight is placed on the lit side rather than on a side chosen
+     by hand. The palette is sampled from the plate's own foliage, so the plant
+     is made of the field's greens.
+
+AND THE ONE THING BEAT 16 HAS TO WATCH THAT THE SMALL COMPOSITES DID NOT.
+`/review/ep2-b16-leaf-0820` section 6 measured the big-leaf composite at 0.30
+and found the pass did NOTHING: detail inside the region fell 10.45 -> 9.41
+where a working pass holds it and moves it into edges, and the model moved just
+as many pixels per pixel as on the version that worked (6.65 vs 6.23) across a
+mask eight times the size. THE LESSON IS ABOUT MASK AREA, not about plants. So
+this tool REFUSES a mask over `--max-mask-frac` of the frame (default 0.34) and
+prints the fraction on every run. A seedling drawn as the subject can be large
+and still sit well under a single leaf that filled 60-80% of the picture; if the
+geometry asked for cannot, the tool says so before any GPU is booked.
+
+CANON. `sapling-two-leaves` (founder, 2026-08-16) -- exactly two. And
+`sapling-cotyledon-shape` (founder, 2026-08-17) -- "average leaves": ordinary,
+plain, the shape anyone draws when you say leaf. NO exaggerated silhouette and
+no leaf drawn as a feature; the restage exists precisely so that the SHOT does
+not make a leaf its subject. The two blades differ in length by 6% and sit 5 px
+apart on the stem, which is b19's anti-repeat rule (decal tell #4): two
+identical blades mirrored about a vertical axis are one blade drawn twice.
+
+$0. numpy + PIL. No model, no network, no GPU. Deterministic.
+
+  python3 pipeline/beat16_sapling_composite.py \
+      --plate farm-out/ep2-b16-field-fN-0820/ep2-b16-field-fN-0820-nocontrol.png \
+      --root 416,1150 --height 620 \
+      --out farm-out/ep2-b16-sapcomp-0820/16-why-sapcomp-0820.png \
+      --mask-out farm-out/ep2-b16-sapcomp-0820/16-why-sapcomp-mask-0820.png \
+      --overlay-out /tmp/b16-overlay.png
+
+  --dry-run prints the geometry, the mask fraction and every check WITHOUT
+  writing anything, which is how you aim it.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import sys
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# ---------------------------------------------------------------------------
+# b19's drawing primitives, copied deliberately. See the module docstring.
+
+LEAF_A, LEAF_B = 0.55, 1.00     # base roundness / tip sharpness
+LEAF_NORM = max((t / 40.0) ** LEAF_A * (1.0 - t / 40.0) ** LEAF_B
+                for t in range(1, 40))
+
+
+def qbez(p0, p1, p2, t):
+    u = 1.0 - t
+    return (u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0],
+            u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1])
+
+
+def draw_taper(d, p0, p1, p2, w0, w1, fill, ink):
+    """A stem is a tapered polygon, not a stroked line: PIL's line joins at 3 px
+    read as a chain of dots at 1x, which is decal tell #4."""
+    left, right = [], []
+    n = 26
+    for i in range(n + 1):
+        t = i / float(n)
+        x, y = qbez(p0, p1, p2, t)
+        dx = 2 * (1 - t) * (p1[0] - p0[0]) + 2 * t * (p2[0] - p1[0])
+        dy = 2 * (1 - t) * (p1[1] - p0[1]) + 2 * t * (p2[1] - p1[1])
+        L = max(1e-3, (dx * dx + dy * dy) ** 0.5)
+        nx, ny = -dy / L, dx / L
+        r = 0.5 * (w0 + (w1 - w0) * t)
+        left.append((x + nx * r, y + ny * r))
+        right.append((x - nx * r, y - ny * r))
+    d.polygon(left + right[::-1], fill=fill, outline=ink)
+
+
+def _blade(base, tip, width, k=1.0):
+    """Half-widths along an ovate blade: round at the petiole, pointed at the
+    apex. The normalisation constant is COMPUTED from the exponents and never
+    typed -- b19's v6 typed 0.245 where the profile's own maximum is 0.436 and
+    every blade came out 1.78x too fat, reading as a clover."""
+    bx, by = base
+    dx, dy = tip[0] - bx, tip[1] - by
+    L = max(1e-3, (dx * dx + dy * dy) ** 0.5)
+    ux, uy = dx / L, dy / L
+    nx, ny = -uy, ux
+    out, n = [], 26
+    for i in range(n + 1):
+        t = i / float(n)
+        r = (k * width * 0.5 * (t ** LEAF_A) * ((1.0 - t) ** LEAF_B) / LEAF_NORM)
+        out.append((bx + ux * L * t, by + uy * L * t, nx * r, ny * r))
+    return out
+
+
+def draw_leaf(d, base, tip, width, fill, hi, ink, lit_sign):
+    """One blade in the plate's dialect: mid-green ovate body, dark cel outline,
+    a lighter CRESCENT along the LIT edge. NO MIDRIB IS DRAWN -- in this dialect
+    a strong dark line IS an edge, and a composited internal line stronger than
+    the object's own outline gets resolved as an object boundary. That is how
+    beat 10 split its slab in two, and a leaf split down the middle is two
+    leaves, which would break the count canon rules on.
+
+    `lit_sign` is +1 or -1 and comes from the plate's MEASURED light direction,
+    so the crescent lands on the side the field is actually lit from.
+    """
+    prof = _blade(base, tip, width)
+    d.polygon([(x + rx, y + ry) for x, y, rx, ry in prof]
+              + [(x - rx, y - ry) for x, y, rx, ry in reversed(prof)],
+              fill=fill, outline=ink)
+    hp = _blade(base, tip, width, k=0.96)
+    s = float(lit_sign)
+    d.polygon([(x + s * rx, y + s * ry) for x, y, rx, ry in hp]
+              + [(x + s * rx * 0.34, y + s * ry * 0.34)
+                 for x, y, rx, ry in reversed(hp)],
+              fill=hi)
+
+
+# ---------------------------------------------------------------------------
+
+def dilate(m: np.ndarray, r: int) -> np.ndarray:
+    if r <= 0:
+        return m
+    im = Image.fromarray((m * 255).astype(np.uint8))
+    im = im.filter(ImageFilter.MaxFilter(2 * r + 1)) if r <= 5 else \
+        Image.fromarray((np.asarray(
+            Image.fromarray((m * 255).astype(np.uint8)).filter(
+                ImageFilter.GaussianBlur(r * 0.6))) > 12).astype(np.uint8) * 255)
+    return np.asarray(im) > 127
+
+
+def sha256_of(path: str) -> str:
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
+def foliage_palette(a: np.ndarray, region: np.ndarray) -> dict:
+    """The plant is made of the FIELD'S OWN GREENS, sampled from the plate.
+
+    A palette invented in code is decal tell #2 (a pattern ignoring the frame's
+    light) arriving through colour instead of through shading. `region` is where
+    the plant will go; the sample is taken from the green-dominant pixels there,
+    so a plate with warm sunlit grass yields a warm plant.
+    """
+    R, G, B = a[..., 0].astype(np.int16), a[..., 1].astype(np.int16), a[..., 2].astype(np.int16)
+    green = region & (G > R + 6) & (G > B + 6)
+    if int(green.sum()) < 400:          # fall back to the whole lower half
+        h = a.shape[0]
+        low = np.zeros(a.shape[:2], bool)
+        low[h // 2:, :] = True
+        green = low & (G > R + 4) & (G > B + 4)
+    px = a[green].astype(np.float32)
+    lum = 0.299 * px[:, 0] + 0.587 * px[:, 1] + 0.114 * px[:, 2]
+    order = np.argsort(lum)
+    px = px[order]
+    def pct(p):
+        return tuple(int(v) for v in px[int(max(0, min(len(px) - 1, p * len(px))))])
+    dark, mid, light = pct(0.14), pct(0.50), pct(0.88)
+    # The ink is the plate's own darkest line colour, not black: this dialect
+    # outlines in a dark desaturated navy/green, and true black reads as pasted.
+    ink = tuple(int(v * 0.42) for v in dark)
+    return {"dark": dark, "mid": mid, "light": light, "ink": ink,
+            "n_sampled": int(green.sum())}
+
+
+def light_direction(a: np.ndarray, region: np.ndarray):
+    """MEASURED, not chosen: the low-pass luminance gradient over the region the
+    plant will occupy. Returns (dx, dy) normalised, pointing toward the light."""
+    g = np.asarray(Image.fromarray(a).convert("L").filter(
+        ImageFilter.GaussianBlur(24)), dtype=np.float32)
+    gy, gx = np.gradient(g)
+    m = region
+    dx = float(gx[m].mean()) if m.any() else 0.0
+    dy = float(gy[m].mean()) if m.any() else 0.0
+    n = max(1e-6, (dx * dx + dy * dy) ** 0.5)
+    # gradient points toward INCREASING luminance, i.e. toward the light
+    return dx / n, dy / n
+
+
+def parse_xy(s: str):
+    x, y = s.split(",")
+    return (float(x), float(y))
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--plate", required=True, help="repo-relative or absolute")
+    ap.add_argument("--plate-sha256", default=None,
+                    help="asserted if given; printed either way")
+    ap.add_argument("--root", required=True, type=parse_xy,
+                    help="x,y where the stem meets the ground")
+    ap.add_argument("--height", required=True, type=float,
+                    help="stem apex height above the root, px")
+    ap.add_argument("--tilt", type=float, default=6.0,
+                    help="degrees the stem leans, + = to the right. A stem "
+                         "dead vertical reads as drawn; a real seedling leans.")
+    ap.add_argument("--leaf-frac", type=float, default=0.46,
+                    help="leaf length as a fraction of stem height. b19 used "
+                         "0.255 of the WHOLE plant on a 30 px seedling; beat "
+                         "16 is a close-up and the leaves carry the frame.")
+    ap.add_argument("--leaf-spread", type=float, default=62.0,
+                    help="degrees each blade sits off the stem axis")
+    ap.add_argument("--max-mask-frac", type=float, default=0.34,
+                    help="REFUSE above this. The 0.30 pass did nothing on a "
+                         "mask eight times the working size (b16 leafcomp, "
+                         "detail 10.45 -> 9.41); this is the guard that keeps "
+                         "the restage from repeating it.")
+    ap.add_argument("--mask-dilate", type=int, default=9)
+    ap.add_argument("--out", default=None)
+    ap.add_argument("--mask-out", default=None)
+    ap.add_argument("--overlay-out", default=None,
+                    help="the drawn silhouette outlined on the plate, for a "
+                         "geometry look before anything is committed")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print geometry and checks, write nothing")
+    a = ap.parse_args()
+
+    plate = a.plate if os.path.isabs(a.plate) else os.path.join(REPO, a.plate)
+    if not os.path.isfile(plate):
+        print("!! plate not found: %s" % plate)
+        return 1
+    have = sha256_of(plate)
+    if a.plate_sha256 and have != a.plate_sha256:
+        print("!! plate sha mismatch\n   want %s\n   have %s"
+              % (a.plate_sha256, have))
+        return 1
+    img = Image.open(plate).convert("RGB")
+    W, H = img.size
+    arr = np.asarray(img)
+    print("plate  %dx%d  sha256 %s" % (W, H, have))
+
+    # ---- geometry ---------------------------------------------------------
+    rx, ry = a.root
+    tilt = np.radians(a.tilt)
+    apex = (rx + a.height * np.sin(tilt), ry - a.height * np.cos(tilt))
+    # the stem bows the OTHER way from its lean, which is what a stem carrying
+    # weight does and what stops the curve reading as an arc of a circle
+    mid = (rx + a.height * 0.52 * np.sin(tilt) - a.height * 0.06 * np.cos(tilt),
+           ry - a.height * 0.52 * np.cos(tilt))
+    leaf_len = a.leaf_frac * a.height
+    spread = np.radians(a.leaf_spread)
+
+    # the region the plant will occupy, used to sample palette and light BEFORE
+    # anything is drawn
+    region = np.zeros((H, W), bool)
+    y0 = int(max(0, min(H - 1, apex[1] - leaf_len)))
+    y1 = int(max(0, min(H, ry + 10)))
+    x0 = int(max(0, min(W - 1, rx - leaf_len)))
+    x1 = int(max(0, min(W, rx + leaf_len)))
+    region[y0:y1, x0:x1] = True
+
+    pal = foliage_palette(arr, region)
+    ldx, ldy = light_direction(arr, region)
+    print("palette (from %d plate px)  dark %s  mid %s  light %s  ink %s"
+          % (pal["n_sampled"], pal["dark"], pal["mid"], pal["light"], pal["ink"]))
+    print("light direction MEASURED from the plate: dx %+.3f dy %+.3f" % (ldx, ldy))
+
+    # which side of a blade is lit: the sign of the light's x component decides
+    lit_sign = 1.0 if ldx >= 0 else -1.0
+
+    layer = Image.fromarray(arr.copy())
+    d = ImageDraw.Draw(layer)
+    ink = pal["ink"]
+    stem_col = tuple(int(min(255, v)) for v in np.array(pal["dark"]) * 0.88 + 12)
+    stem_w0 = max(4.0, a.height * 0.030)
+    stem_w1 = max(2.0, a.height * 0.013)
+    draw_taper(d, (rx, ry), mid, apex, stem_w0, stem_w1, stem_col, ink)
+
+    # TWO LEAVES, NOT A MIRRORED PAIR: 5 px apart on the stem and 6% apart in
+    # length. Decal tell #4 is a visible repeat, and two identical blades
+    # reflected about a vertical axis are one.
+    leaves = []
+    for side, dy, k in ((-1.0, 5.0, 1.00), (+1.0, 0.0, 1.06)):
+        node = (apex[0] + side * 1.0, apex[1] + dy)
+        ang = tilt + side * spread
+        ln = leaf_len * k
+        tip = (node[0] + ln * np.sin(ang), node[1] - ln * np.cos(ang) * 0.62)
+        draw_leaf(d, node, tip, ln * 0.40, pal["mid"], pal["light"], ink, lit_sign)
+        leaves.append({"side": side, "node": [round(v, 1) for v in node],
+                       "tip": [round(v, 1) for v in tip], "len": round(ln, 1)})
+
+    drawn = (np.abs(np.asarray(layer).astype(np.int16)
+                    - arr.astype(np.int16)).max(axis=2) > 0)
+
+    # a drawn edge in the plate's own ink, inset 2 px, so the new content does
+    # not run off a cliff into the field (composite-init-pattern section 3)
+    base = np.asarray(layer).astype(np.float32)
+    rim = dilate(drawn, 1) & ~drawn
+    base[rim] = base[rim] * 0.42 + np.array(ink, np.float32) * 0.58
+
+    # THE PLATE'S OWN SHADING FIELD, re-applied multiplicatively over the drawn
+    # plant so a lit corner stays lit. Without this the plant is uniformly lit
+    # inside a frame that is not, which is decal tell #2.
+    lp = np.asarray(Image.fromarray(arr).convert("L").filter(
+        ImageFilter.GaussianBlur(40)), dtype=np.float32)
+    ref = float(np.median(lp[region])) if region.any() else float(np.median(lp))
+    field = np.clip(lp / max(1.0, ref), 0.78, 1.22)
+    sel = drawn | rim
+    base[sel] = base[sel] * field[sel][..., None]
+
+    # contact shading where the stem meets the ground, so the plant is ROOTED
+    # and not standing on the field like a sticker
+    yy, xx = np.mgrid[0:H, 0:W]
+    rxr = max(14.0, a.height * 0.085)
+    ryr = max(6.0, a.height * 0.028)
+    q = (((xx - rx) / rxr) ** 2 + ((yy - ry - 3) / ryr) ** 2)
+    shade = np.clip(1.0 - q, 0.0, 1.0) * 0.30
+    base = base * (1 - shade[..., None] * 0.62)
+    comp = np.clip(base, 0, 255).astype(np.uint8)
+
+    # `> 0` and not a tolerance: `shade` is clip(1-q,0,1)*0.30, so it is exactly
+    # zero outside the contact ellipse and non-zero everywhere inside it. A
+    # threshold of 0.004 leaves a ring where the multiply still moves a channel
+    # by one count, and C1 then reports 41 px the tool really did write.
+    contact = shade > 0.0
+    touched = drawn | rim | contact
+
+    # ---- the mask a finishing pass would use ------------------------------
+    mask = np.zeros((H, W), np.uint8)
+    mask[dilate(touched, a.mask_dilate)] = 255
+    frac = float((mask > 0).sum()) / float(W * H)
+
+    ys, xs = np.where(drawn)
+    geom = {
+        "plate": os.path.relpath(plate, REPO), "plate_sha256": have,
+        "size": [W, H], "root": [round(rx, 1), round(ry, 1)],
+        "apex": [round(apex[0], 1), round(apex[1], 1)],
+        "height_px": a.height, "tilt_deg": a.tilt,
+        "leaf_len_px": round(leaf_len, 1), "leaves": leaves,
+        "light_dx": round(ldx, 3), "light_dy": round(ldy, 3),
+        "lit_side": "right" if lit_sign > 0 else "left",
+        "palette": {k: list(v) for k, v in pal.items() if k != "n_sampled"},
+        "mask_fraction": round(frac, 4),
+        "plant_extent": ([int(xs.min()), int(xs.max()),
+                          int(ys.min()), int(ys.max())] if len(xs) else None),
+        "plant_fraction": round(float(drawn.sum()) / float(W * H), 4),
+    }
+    print("plant extent x %d..%d y %d..%d, %.2f%% of frame; MASK %.2f%% of frame"
+          % (geom["plant_extent"][0], geom["plant_extent"][1],
+             geom["plant_extent"][2], geom["plant_extent"][3],
+             100 * geom["plant_fraction"], 100 * frac))
+
+    # ---- checks. A failed check stops the run. ----------------------------
+    fails = []
+    o = comp.astype(np.int16)
+    b0 = arr.astype(np.int16)
+    changed = np.abs(o - b0).max(axis=2) > 0
+    c1 = int((changed & ~touched).sum())
+    if c1:
+        fails.append("C1 %d px changed outside the drawn plant and its contact "
+                     "shadow -- the compositor wrote where it was not asked" % c1)
+    if frac > a.max_mask_frac:
+        fails.append("C2 mask is %.1f%% of the frame, over the %.1f%% ceiling. "
+                     "The 0.30 pass measurably DOES NOTHING on a mask this "
+                     "size (b16 leafcomp: detail 10.45 -> 9.41 inside the "
+                     "region). Draw the plant smaller or raise the ceiling on "
+                     "purpose and say why."
+                     % (100 * frac, 100 * a.max_mask_frac))
+    if len(xs) and (xs.min() < 2 or xs.max() > W - 3 or ys.min() < 2):
+        fails.append("C3 the plant touches the frame edge -- 'close on the "
+                     "WHOLE sapling' means the whole of it is in the picture")
+    if abs(leaves[0]["len"] - leaves[1]["len"]) < 0.02 * leaf_len:
+        fails.append("C4 the two blades are the same length: a mirrored pair is "
+                     "decal tell #4, one blade drawn twice")
+    lum_plant = float(np.asarray(Image.fromarray(comp).convert("L"))[drawn].mean())
+    lum_field = float(np.asarray(Image.fromarray(arr).convert("L"))[region].mean())
+    geom["plant_mean_luma"] = round(lum_plant, 1)
+    geom["field_mean_luma"] = round(lum_field, 1)
+    if abs(lum_plant - lum_field) > 46:
+        fails.append("C5 the plant's mean luma %.1f is %.1f away from the "
+                     "field's %.1f -- it will read as pasted before the pass "
+                     "ever runs" % (lum_plant, abs(lum_plant - lum_field),
+                                    lum_field))
+    for f in fails:
+        print("FAIL  %s" % f)
+    if not fails:
+        print("all checks pass (C1 containment, C2 mask ceiling, C3 whole "
+              "plant in frame, C4 not a mirrored pair, C5 luma agreement)")
+
+    if a.dry_run:
+        print("\n-- dry run, nothing written. geometry:")
+        print(json.dumps(geom, indent=1))
+        return 1 if fails else 0
+    if fails:
+        print("\n!! refusing to write with %d failed check(s)." % len(fails))
+        return 1
+
+    if a.overlay_out:
+        ov = Image.fromarray(arr.copy())
+        od = ImageDraw.Draw(ov)
+        edge = dilate(drawn, 2) & ~drawn
+        oa = np.asarray(ov).copy()
+        oa[edge] = (255, 40, 200)
+        Image.fromarray(oa).save(a.overlay_out)
+        print("overlay written: %s" % a.overlay_out)
+    if a.out:
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        Image.fromarray(comp).save(a.out)
+        print("init written:  %s  sha256 %s" % (a.out, sha256_of(a.out)))
+    if a.mask_out:
+        os.makedirs(os.path.dirname(os.path.abspath(a.mask_out)) or ".",
+                    exist_ok=True)
+        Image.fromarray(mask).save(a.mask_out)
+        print("mask written:  %s  sha256 %s" % (a.mask_out, sha256_of(a.mask_out)))
+    if a.out:
+        side = a.out + ".geometry.json"
+        with open(side, "w", encoding="utf-8") as fh:
+            json.dump(geom, fh, indent=1, sort_keys=True)
+        print("geometry:      %s" % side)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
