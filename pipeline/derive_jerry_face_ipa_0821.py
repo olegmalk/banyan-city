@@ -54,6 +54,7 @@ render too.
 from __future__ import annotations
 
 import os
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -77,8 +78,29 @@ REF_SHA = "6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c"
 # by pipeline/author_jerry_headfit_ref_0821.py.
 REF_FIT = "jerry-tile-headfit-0821"
 REF_FIT_SHA = "91087e527189e63c8c6ad95e5000c5c108bf943ac35c485a5659f652098ae7fd"
+# k4's references: SQUARE, because diffusers hands every reference to a
+# CLIPImageProcessor() built with no arguments, whose defaults resize the
+# SHORT edge to 224 and then CENTRE CROP to 224x224. k3's 416x608 portrait
+# canvas therefore lost the top 30% of its subject -- the whole cranial dome --
+# before the encoder saw it, and what survived was 5.4% of the encoder's
+# pixels flush against row 0. A square canvas makes that crop a NO-OP, which
+# is the only condition under which an authored head-to-frame ratio is the
+# ratio the model receives. Built by pipeline/author_jerry_squareref_0821.py,
+# which prints the encoded bbox and refuses any reference touching an edge.
+# Sources: pipeline/research/ipa-ref-framing-0821.md
+REF_SQ = {
+    "k4a": ("jerry-tile-sq30-0821", "0.30", "8.8",
+            "7642513d4e27ebf5897c8c4669f519cfa2db8d3332e5d711d26a04d118ea1cff"),
+    "k4b": ("jerry-tile-sq45-0821", "0.45", "19.7",
+            "7f24dd5e2c1e9956ae71283b6d4bc50a1c504885a5dae2c940a2280b3f539703"),
+    "k4c": ("jerry-tile-sq60-0821", "0.60", "35.2",
+            "8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8"),
+    "k4d": ("jerry-tile-sq75-0821", "0.75", "55.5",
+            "f34963347215abc42ab66c8928d48132c32ae9409b0fe5babcb2e65a432837d0"),
+}
 REFS = {"jerry-tile-head-0821": REF_SHA,
         "jerry-tile-headfit-0821": REF_FIT_SHA}
+REFS.update({name: sha for name, _f, _c, sha in REF_SQ.values()})
 IP_MASK = "315,130,515,350"
 ARM = "ipahead"
 
@@ -112,6 +134,23 @@ RUNGS = [
      "eye -- the reference is a head crop, so what the adapter was shown is a "
      "head that fills a frame."),
 ]
+
+# ---------------------------------------------------------------------------
+# k4: THE BAND, ON A SQUARE CANVAS. Four rungs, ONE axis, everything else
+# frozen at k3's. This is a SWEEP on a diagnostic axis, not a batch of
+# production frames: nothing it produces is promoted without being judged, and
+# it exists because the public answer ("make it square, make the subject
+# dominant") brackets our band without picking a point inside it.
+for _sfx in ("k4a", "k4b", "k4c", "k4d"):
+    _name, _frac, _cov, _sha = REF_SQ[_sfx]
+    RUNGS.append((
+        _sfx, "0.7", _name,
+        "k3's rung with the reference CANVAS MADE SQUARE and the head at "
+        "%s of it -- the head-to-frame ratio is the axis and it is the only "
+        "thing that moves across k4a..k4d. Same head pixels, same field "
+        "green, same mask, same --ip-scale 0.7, same seed, same skeleton, "
+        "same wording. The subject reaches the encoder INTACT at %s%% of its "
+        "pixels, where k3's reached it amputated at 5.4%%." % (_frac, _cov)))
 # the commit that carries the three staged inputs -- provenance only, but the
 # meta.yaml this writes is what a later lane reads to re-fetch them.
 COMMIT = "29939faba45625c647bb05da9573c4151b8b259d"
@@ -181,6 +220,35 @@ def publish_step(job_dir, new_id, ref):
         % {"d": job_dir, "id": new_id, "arm": ARM, "hint": HINT, "ref": ref})
 
 
+BAR_K4 = """EVERY CLAUSE k3 PASSED, HELD, PLUS THE TWO IT FAILED ON. k3 is the
+incumbent and this rung replaces it or it does not ship: nine clauses held, and
+a regression on any of them is a FAIL even if the two new ones pass.
+Ruler: pipeline/measure_face_eye_0821.py, whose --selftest reproduces the
+published f/g/h numbers before it is allowed to produce a new one.
+  READ THE RULER'S KNOWN ARTIFACT BEFORE QUOTING IT. Its WHITE_MIN is 190 and
+  k3's eyes render to a dimmer cream that falls under it, so the AREA column
+  read 0.0040 on a face with two plain eyes. The threshold is calibrated
+  against five published rungs and IS NOT MOVED to flatter a sixth. THE
+  BOUNDING-BOX COLUMN IS WHAT THIS BAR IS SCORED ON, and any area figure is
+  quoted at both 190 and 170 with the pair shown.
+THE TWO NEW CLAUSES, and they are why the rung exists:
+  NO HORNS. No spike, prong, antler or protrusion off the skull. k3 grew two.
+       This is a creature-feature fail and it is judged BY EYE at 1:1 -- the
+       pale-above-dome proxy separates k1 (0.04%) from k3 (0.90%) but reads
+       0.39% on horn-free k2, so it corroborates and does not decide.
+  NO COWL. The tile's purple cowl-scarf must not appear at the neck.
+       Containment break #2 of the three named on k1; it fired on k3.
+THE SIZE CLAUSES, which are the ones this axis is supposed to move:
+  T1b  SHAPE -- per-eye aspect (h/w). TILE 0.52; k1 0.54, k3 0.54. Hold it.
+       SIZE -- eye bounding box relative to the head box, against the tile.
+       j2 1.40x, k1 1.87x, k2 2.32x, k3 1.24x. PASS is 1.4x or lower, which
+       means k3's 1.24x is the number to beat and j2's 1.40x is the floor.
+  T8   4.5+ heads. j2 5.56, k1 4.57, k2 4.41 FAIL, k3 4.97. Scored first.
+HELD FROM k3, all nine: T1 no iris and no pupil, T2 no nose bridge, T3 no age
+modelling, P1 the brow bar with skin between it and the eye (a lash arc welded
+to the rim is an eyelid and does not count), P2 muzzle, P3 a mouth line, P4
+facial shading, plus the standing pose and the patchwork cloak in tall grass."""
+
 BAR = """T1b EYE SHAPE and P1 BROW BAR, the two clauses the wording route could
 not reach, scored exactly as they were on j1/j2 so the numbers are comparable.
 Ruler: pipeline/measure_face_eye_0821.py, whose --selftest reproduces the
@@ -235,6 +303,8 @@ WHY = {
 PARENT_RUNG = {"k1": "ep2-jerry-face-j2-0821",
                "k2": "ep2-jerry-face-k1-0821",
                "k3": "ep2-jerry-face-k1-0821"}
+PARENT_RUNG.update({s: "ep2-jerry-face-k3-0821"
+                    for s in ("k4a", "k4b", "k4c", "k4d")})
 
 REF_PROVENANCE = {
     "jerry-tile-head-0821":
@@ -248,6 +318,22 @@ REF_PROVENANCE = {
         "head_frac and the render's own crown row. Built by "
         "pipeline/author_jerry_headfit_ref_0821.py.",
 }
+REF_PROVENANCE.update({
+    name: (
+        "the SAME head crop and the same flooded field green as k3's "
+        "reference, on a SQUARE %dx%d canvas with the head at %s of frame, "
+        "CENTRED on both axes. Square because diffusers builds "
+        "CLIPImageProcessor() with no arguments and its defaults resize the "
+        "SHORT edge to 224 and then CENTRE CROP to a square: on a square "
+        "canvas that crop is a NO-OP, so the authored ratio is the ratio "
+        "encoded. The subject reaches the encoder INTACT at %s%% of its "
+        "pixels. k3's 416x608 portrait lost the top 30%% of its subject -- "
+        "the whole cranial dome -- and delivered 5.4%%. Built by "
+        "pipeline/author_jerry_squareref_0821.py; evidence "
+        "review/ep2-goblin-design-0819/CLIP-STARVE-0821.png; sources "
+        "pipeline/research/ipa-ref-framing-0821.md."
+        % (448, 448, frac, cov))
+    for name, frac, cov, _sha in REF_SQ.values()})
 
 CONSUMER = ("THE JERRY LoRA'S LAST OPEN GATE. train-jerry-0820 is UNFILED and "
             "stays that way until a rung passes T1b and P1 with T1/T3/T8/P3/P4 "
@@ -259,6 +345,16 @@ SUCCESS = ("ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale "
            "jerry-tile-head-0821.png --ip-mask 315,130,515,350 --ip-scale %s. "
            "Scored on T1b (area AND aspect) and P1 with T1, T3, T8, P3, P4 "
            "held and the standing/cloak/grass containment scored.")
+
+SUCCESS_K4 = ("ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale "
+              "1.0, j2's prompt and negative byte-identical, plus --ip-ref "
+              "%s.png --ip-mask 315,130,515,350 --ip-scale %s. Scored on the "
+              "k4 bar: k3's nine passing clauses HELD, plus NO HORNS and NO "
+              "COWL, with the eye bounding box at 1.4x the tile's or lower "
+              "and T8 at 4.5 heads or better. Judged by eye at 1:1 against "
+              "review/ep2-goblin-design-0819/adult-b19-0819.jpg, with the "
+              "ruler's bounding-box column -- not its area column -- carrying "
+              "the numbers.")
 
 ONE_SAMPLE = {
     "k1": ("ONE rung. The wording ladder's stop names IP-Adapter as the route "
@@ -351,6 +447,82 @@ PREDICTED = {
 }
 
 
+# ---------------------------------------------------------------------------
+# k4's text. The four rungs share it deliberately: they are ONE experiment with
+# four points on it, and writing four different justifications for one axis
+# would be pretending each was reasoned separately.
+_K4_WHY_HEAD = (
+    "RUNG %s OF THE k4 BAND: k3's rung with the reference canvas made SQUARE "
+    "and the head at %s of it. One axis, four points, everything else frozen "
+    "at k3's.\n\n"
+    "WHAT k3 ESTABLISHED AND WHAT IT BROKE. k3 changed the reference's "
+    "head-to-frame ratio 100%% -> 19.1%% and moved both defects at once: eye "
+    "bounding box 1.87x -> 1.24x the tile's, the best this tree has made, "
+    "with aspect held at 0.54, and head_frac 0.219 -> 0.201 with T8 back to "
+    "4.97 heads. AND IT GREW TWO HORNS and let the tile's purple cowl "
+    "through.\n\n"
+    "THE CAUSE, RESEARCHED RATHER THAN GUESSED, AND IT IS NOT THE ONE THE k3 "
+    "ENTRY NAMED. diffusers' load_ip_adapter builds `CLIPImageProcessor()` "
+    "with NO arguments, and that class defaults to resizing the SHORT edge to "
+    "224 and then CENTRE CROPPING to 224x224. k3's reference was 416x608, so "
+    "it became 224x327 and the crop kept rows 51..275 -- while the head sat "
+    "at resized rows 33..93. THE TOP 30%% OF THE SUBJECT, THE ENTIRE CRANIAL "
+    "DOME, WAS CUT OFF BEFORE THE ENCODER SAW IT, leaving 64x42 px flush "
+    "against row 0 with the tile's dark ear flanges running up into the cut. "
+    "k1's reference was 156x152, effectively square, survived the crop intact "
+    "at 96%% coverage, and drew no horns. The horns grow upward out of the "
+    "cut, from exactly those flanges. Sources and the two source files this "
+    "is read from: pipeline/research/ipa-ref-framing-0821.md. Pixels: "
+    "review/ep2-goblin-design-0819/CLIP-STARVE-0821.png.\n\n"
+    "SO THE CANVAS IS SQUARE HERE, which makes the centre crop a NO-OP and is "
+    "the only condition under which the authored head-to-frame ratio is the "
+    "ratio the model actually receives. On k3 it was not.")
+
+_K4_SAMPLE = (
+    "A SWEEP ON A DIAGNOSTIC AXIS, filed after k1, k2 and k3 were each "
+    "rendered, measured and read at 1:1 -- four points on ONE axis, not four "
+    "guesses. It is not a batch in the sense the rule bans: nothing it "
+    "produces is promoted, no dataset grows, no beat plate is cut, and the "
+    "gate stays shut until a rung is judged. Four points and not one because "
+    "the public answer is a DIRECTION -- square canvas, dominant subject -- "
+    "and does not name a ratio; the band 30-75%% brackets k3's 19.1%% below "
+    "and k1's ~100%% above, and both of those are already rendered, so the "
+    "sweep has anchors at both ends and buys the curve between them. If a "
+    "single rung had been filed instead, whichever way it came back the next "
+    "question would have been 'and what about the other side', which is the "
+    "same GPU spent over four sequential waits.")
+
+_K4_PREDICTED = (
+    "THE HORN IS THE THING BEING TESTED AND THERE ARE TWO CANDIDATE CAUSES, "
+    "which this band separates because a square canvas removes ONE of them "
+    "while leaving the other free to vary.\n\n"
+    "IF THE CUT WAS THE CAUSE -- a truncated skull completed past its "
+    "truncation -- then ALL FOUR come back horn-free, including k4a at 8.8%% "
+    "coverage, and the eye/head numbers trace a clean curve against ratio "
+    "that k3's 19.1%% and k1's ~100%% already bracket.\n\n"
+    "IF STARVATION WAS THE CAUSE -- a weakly-encoded subject completed from "
+    "the checkpoint's priors -- then k4a horns and k4c/k4d do not, and the "
+    "horn-free threshold is a coverage number this band measures.\n\n"
+    "AND THE OUTCOME THAT COSTS ME THE RESULT I LIKE, WRITTEN BECAUSE IT IS "
+    "THE LIKELIEST WAY THIS DISAPPOINTS: k3's best-yet eye may be an ARTIFACT "
+    "OF A CRIPPLED EMBEDDING rather than a ratio effect. A starved adapter "
+    "transfers less of everything, including less of the oversized-eye bias "
+    "k1 showed at full strength. If that is what happened, the eye box climbs "
+    "back toward k1's 1.87x as coverage rises, the horn and the good eye turn "
+    "out to be the SAME defect seen twice, and no point on this axis passes "
+    "both -- which retires the reference-framing route for SIZE and leaves "
+    "the eye to a face-variant adapter or to the seven mac-plate keeps.\n\n"
+    "WHAT I AM NOT FILING: the follow-up. Whichever of these three the band "
+    "shows, the next rung gets authored off the pixels. This lane has had a "
+    "prediction falsified once already on this ladder and the correction is "
+    "to name outcomes in advance, not to pre-commit to a response.")
+
+for _s in ("k4a", "k4b", "k4c", "k4d"):
+    WHY[_s] = _K4_WHY_HEAD % (_s, REF_SQ[_s][1])
+    ONE_SAMPLE[_s] = _K4_SAMPLE
+    PREDICTED[_s] = _K4_PREDICTED
+
+
 def emit(suffix, ip_scale, ref, variable, force=False):
     job_dir = "jerryface-%s-0821" % suffix
     new_id = "ep2-jerry-face-%s-0821" % suffix
@@ -358,11 +530,12 @@ def emit(suffix, ip_scale, ref, variable, force=False):
         src=PARENT, new_id=new_id,
         fresh={"owner": "goblin reference-route lane, 2026-08-21",
                "why": WHY[suffix], "consumer": CONSUMER,
-               "success": SUCCESS % ip_scale},
+               "success": (SUCCESS_K4 % (ref, ip_scale)
+                           if suffix.startswith("k4") else SUCCESS % ip_scale)},
         overrides={"argv:--arm": ARM, "argv:--repo-commit": COMMIT,
                    "key:beat": 2, "key:priority": 28, "key:est_minutes": 4},
         retoken=[(PARENT_DIR_TOKEN, job_dir)],
-        extra={"bar": BAR,
+        extra={"bar": BAR_K4 if suffix.startswith("k4") else BAR,
                "failure_predicted_in_advance": PREDICTED[suffix],
                "the_one_variable": variable,
                "the_rung_this_is_one_variable_from": PARENT_RUNG[suffix],
@@ -428,13 +601,66 @@ def emit(suffix, ip_scale, ref, variable, force=False):
     print("wrote", out)
 
 
+USAGE = """usage: derive_jerry_face_ipa_0821.py [RUNG ...] [--force]
+
+Emits the IP-Adapter face rungs derived from %s.
+With no RUNG argument it emits EVERY rung that is not already committed.
+
+  RUNG     one or more of: %s
+  --force  rewrite a rung whose spec is already committed
+
+WHY --force EXISTS, and it was added the hard way. Running this file with no
+arguments used to rewrite EVERY spec in RUNGS, including rungs that had already
+been rendered, judged and published -- replacing their `why` and `bar` with
+today's narrative and silently editing the record of what a finished rung was
+scored against. derive_spec.write() has an anti-overwrite guard, but it keys on
+a SCORED key in the target, and this family deliberately keeps verdicts OUT of
+specs by allow-list, so no spec here is ever scored and the guard could never
+fire. A committed spec is a published rung whether or not it carries a score,
+so that is what this checks instead.
+""" % (PARENT, ", ".join(s for s, _, _, _ in RUNGS))
+
+
+def _is_committed(rel):
+    """True if git tracks this path. A tracked spec is a published rung."""
+    try:
+        r = subprocess.run(["git", "-C", REPO, "ls-files", "--error-unmatch",
+                            rel], capture_output=True, text=True,
+                           encoding="utf-8")
+        return r.returncode == 0
+    except OSError:
+        # No git is not a licence to overwrite; treat it as "assume published".
+        return True
+
+
 def main():
-    want = [a for a in sys.argv[1:] if not a.startswith("-")]
-    force = "--force" in sys.argv[1:]
+    args = sys.argv[1:]
+    if "-h" in args or "--help" in args:
+        print(USAGE)
+        return 0
+    want = [a for a in args if not a.startswith("-")]
+    force = "--force" in args
+    known = {s for s, _, _, _ in RUNGS}
+    unknown = [w for w in want if w not in known]
+    if unknown:
+        print("!! unknown rung(s): %s\n%s" % (", ".join(unknown), USAGE),
+              file=sys.stderr)
+        return 2
+    wrote = skipped = 0
     for suffix, ip_scale, ref, variable in RUNGS:
         if want and suffix not in want:
             continue
+        rel = "pipeline/jobs/ep2-jerry-face-%s-0821.yaml" % suffix
+        if _is_committed(rel) and not force:
+            print("  skip %s -- already committed. It is a published rung and "
+                  "rewriting it would edit the record of what it was judged "
+                  "against. Pass --force if that is genuinely the intent."
+                  % rel)
+            skipped += 1
+            continue
         emit(suffix, ip_scale, ref, variable, force=force)
+        wrote += 1
+    print("%d written, %d left alone" % (wrote, skipped))
     return 0
 
 

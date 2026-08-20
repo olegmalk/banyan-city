@@ -1,0 +1,269 @@
+id: ep2-jerry-face-k4c-0821
+task: ep2-jerry-face-k4c-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 28
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-21
+consumer: THE JERRY LoRA'S LAST OPEN GATE. train-jerry-0820 is UNFILED and stays that way until a rung
+  passes T1b and P1 with T1/T3/T8/P3/P4 intact; the set is still 7 frames in 4 poses. No beat plate, no
+  pick, nothing promoted.
+success: 'ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale 1.0, j2''s prompt and negative
+  byte-identical, plus --ip-ref jerry-tile-sq60-0821.png --ip-mask 315,130,515,350 --ip-scale 0.7. Scored
+  on the k4 bar: k3''s nine passing clauses HELD, plus NO HORNS and NO COWL, with the eye bounding box
+  at 1.4x the tile''s or lower and T8 at 4.5 heads or better. Judged by eye at 1:1 against review/ep2-goblin-design-0819/adult-b19-0819.jpg,
+  with the ruler''s bounding-box column -- not its area column -- carrying the numbers.'
+why: 'RUNG k4c OF THE k4 BAND: k3''s rung with the reference canvas made SQUARE and the head at 0.60 of
+  it. One axis, four points, everything else frozen at k3''s.
+
+
+  WHAT k3 ESTABLISHED AND WHAT IT BROKE. k3 changed the reference''s head-to-frame ratio 100% -> 19.1%
+  and moved both defects at once: eye bounding box 1.87x -> 1.24x the tile''s, the best this tree has
+  made, with aspect held at 0.54, and head_frac 0.219 -> 0.201 with T8 back to 4.97 heads. AND IT GREW
+  TWO HORNS and let the tile''s purple cowl through.
+
+
+  THE CAUSE, RESEARCHED RATHER THAN GUESSED, AND IT IS NOT THE ONE THE k3 ENTRY NAMED. diffusers'' load_ip_adapter
+  builds `CLIPImageProcessor()` with NO arguments, and that class defaults to resizing the SHORT edge
+  to 224 and then CENTRE CROPPING to 224x224. k3''s reference was 416x608, so it became 224x327 and the
+  crop kept rows 51..275 -- while the head sat at resized rows 33..93. THE TOP 30% OF THE SUBJECT, THE
+  ENTIRE CRANIAL DOME, WAS CUT OFF BEFORE THE ENCODER SAW IT, leaving 64x42 px flush against row 0 with
+  the tile''s dark ear flanges running up into the cut. k1''s reference was 156x152, effectively square,
+  survived the crop intact at 96% coverage, and drew no horns. The horns grow upward out of the cut, from
+  exactly those flanges. Sources and the two source files this is read from: pipeline/research/ipa-ref-framing-0821.md.
+  Pixels: review/ep2-goblin-design-0819/CLIP-STARVE-0821.png.
+
+
+  SO THE CANVAS IS SQUARE HERE, which makes the centre crop a NO-OP and is the only condition under which
+  the authored head-to-frame ratio is the ratio the model actually receives. On k3 it was not.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryface-k4c-0821\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    lean wiry adult goblin man, green skin, bald head, patchwork cloak, blank eyes, tsurime, jitome, thick
+    eyebrows, half-closed eyes, standing, arms at sides, in tall grass, full body
+  C:\banyan-farm\jerryface-k4c-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, hair, beard, child, chibi, grey skin, pale skin
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- and k1 has THREE, because the\n# IP-Adapter reference is as much this frame's condition as the\n\
+    # skeleton is. The job dirs on this card carry a hand-staged\n# src\\pipeline\\controlnet_plate.py\
+    \ and nothing else.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryface-k4c-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\"),\n        (\"jerry-tile-sq60-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryface-k4c-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryface-k4c-0821\src
+  - --repo-commit
+  - 29939faba45625c647bb05da9573c4151b8b259d
+  - --task
+  - ep2-jerry-face-k4c-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19-0820.png
+  - --control-sha256
+  - 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-tile-sq60-0821.png
+  - --ip-mask
+  - 315,130,515,350
+  - --ip-ref-sha256
+  - 8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8
+  - --ip-scale
+  - '0.7'
+  - --prompt-file
+  - C:\banyan-farm\jerryface-k4c-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryface-k4c-0821\negative.txt
+  - --out
+  - C:\banyan-farm\jerryface-k4c-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of this\
+    \ step.\n# THE REFERENCE TRAVELS WITH THE FRAME. A reader scoring whether the\n# adapter carried the\
+    \ brow needs the brow it was shown.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryface-k4c-0821/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryface-k4c-0821\"\nctl_dir = \"C:/banyan-farm/jerryface-k4c-0821/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-face-k4c-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    files = sorted(glob.glob(out_dir + \"/ep2-jerry-face-k4c-0821-ipahead.png*\")\n               + glob.glob(pay_dir\
+    \ + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir\
+    \ + \"/jerry-skel-h19-0820.png\")\n               + glob.glob(ctl_dir + \"/jerry-tile-sq60-0821.png\"\
+    ))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-face-k4c-0821.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\jerryface-k4c-0821\out\ep2-jerry-face-k4c-0821-ipahead.png
+bar: "EVERY CLAUSE k3 PASSED, HELD, PLUS THE TWO IT FAILED ON. k3 is the\nincumbent and this rung replaces\
+  \ it or it does not ship: nine clauses held, and\na regression on any of them is a FAIL even if the\
+  \ two new ones pass.\nRuler: pipeline/measure_face_eye_0821.py, whose --selftest reproduces the\npublished\
+  \ f/g/h numbers before it is allowed to produce a new one.\n  READ THE RULER'S KNOWN ARTIFACT BEFORE\
+  \ QUOTING IT. Its WHITE_MIN is 190 and\n  k3's eyes render to a dimmer cream that falls under it, so\
+  \ the AREA column\n  read 0.0040 on a face with two plain eyes. The threshold is calibrated\n  against\
+  \ five published rungs and IS NOT MOVED to flatter a sixth. THE\n  BOUNDING-BOX COLUMN IS WHAT THIS\
+  \ BAR IS SCORED ON, and any area figure is\n  quoted at both 190 and 170 with the pair shown.\nTHE TWO\
+  \ NEW CLAUSES, and they are why the rung exists:\n  NO HORNS. No spike, prong, antler or protrusion\
+  \ off the skull. k3 grew two.\n       This is a creature-feature fail and it is judged BY EYE at 1:1\
+  \ -- the\n       pale-above-dome proxy separates k1 (0.04%) from k3 (0.90%) but reads\n       0.39%\
+  \ on horn-free k2, so it corroborates and does not decide.\n  NO COWL. The tile's purple cowl-scarf\
+  \ must not appear at the neck.\n       Containment break #2 of the three named on k1; it fired on k3.\n\
+  THE SIZE CLAUSES, which are the ones this axis is supposed to move:\n  T1b  SHAPE -- per-eye aspect\
+  \ (h/w). TILE 0.52; k1 0.54, k3 0.54. Hold it.\n       SIZE -- eye bounding box relative to the head\
+  \ box, against the tile.\n       j2 1.40x, k1 1.87x, k2 2.32x, k3 1.24x. PASS is 1.4x or lower, which\n\
+  \       means k3's 1.24x is the number to beat and j2's 1.40x is the floor.\n  T8   4.5+ heads. j2 5.56,\
+  \ k1 4.57, k2 4.41 FAIL, k3 4.97. Scored first.\nHELD FROM k3, all nine: T1 no iris and no pupil, T2\
+  \ no nose bridge, T3 no age\nmodelling, P1 the brow bar with skin between it and the eye (a lash arc\
+  \ welded\nto the rim is an eyelid and does not count), P2 muzzle, P3 a mouth line, P4\nfacial shading,\
+  \ plus the standing pose and the patchwork cloak in tall grass."
+failure_predicted_in_advance: 'THE HORN IS THE THING BEING TESTED AND THERE ARE TWO CANDIDATE CAUSES,
+  which this band separates because a square canvas removes ONE of them while leaving the other free to
+  vary.
+
+
+  IF THE CUT WAS THE CAUSE -- a truncated skull completed past its truncation -- then ALL FOUR come back
+  horn-free, including k4a at 8.8%% coverage, and the eye/head numbers trace a clean curve against ratio
+  that k3''s 19.1%% and k1''s ~100%% already bracket.
+
+
+  IF STARVATION WAS THE CAUSE -- a weakly-encoded subject completed from the checkpoint''s priors -- then
+  k4a horns and k4c/k4d do not, and the horn-free threshold is a coverage number this band measures.
+
+
+  AND THE OUTCOME THAT COSTS ME THE RESULT I LIKE, WRITTEN BECAUSE IT IS THE LIKELIEST WAY THIS DISAPPOINTS:
+  k3''s best-yet eye may be an ARTIFACT OF A CRIPPLED EMBEDDING rather than a ratio effect. A starved
+  adapter transfers less of everything, including less of the oversized-eye bias k1 showed at full strength.
+  If that is what happened, the eye box climbs back toward k1''s 1.87x as coverage rises, the horn and
+  the good eye turn out to be the SAME defect seen twice, and no point on this axis passes both -- which
+  retires the reference-framing route for SIZE and leaves the eye to a face-variant adapter or to the
+  seven mac-plate keeps.
+
+
+  WHAT I AM NOT FILING: the follow-up. Whichever of these three the band shows, the next rung gets authored
+  off the pixels. This lane has had a prediction falsified once already on this ladder and the correction
+  is to name outcomes in advance, not to pre-commit to a response.'
+ip_adapter:
+  ref: farm-out/jerry-skel-assets-0820/jerry-tile-sq60-0821.png
+  ref_sha256: 8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8
+  ref_provenance: 'the SAME head crop and the same flooded field green as k3''s reference, on a SQUARE
+    448x448 canvas with the head at 0.60 of frame, CENTRED on both axes. Square because diffusers builds
+    CLIPImageProcessor() with no arguments and its defaults resize the SHORT edge to 224 and then CENTRE
+    CROP to a square: on a square canvas that crop is a NO-OP, so the authored ratio is the ratio encoded.
+    The subject reaches the encoder INTACT at 35.2% of its pixels. k3''s 416x608 portrait lost the top
+    30% of its subject -- the whole cranial dome -- and delivered 5.4%. Built by pipeline/author_jerry_squareref_0821.py;
+    evidence review/ep2-goblin-design-0819/CLIP-STARVE-0821.png; sources pipeline/research/ipa-ref-framing-0821.md.'
+  mask: 315,130,515,350
+  mask_frame: RENDER pixels, 832x1216
+  scale: '0.7'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors (cached on the box; the -FACE
+    variant is 847 MB and is NOT cached)
+one_sample_rule: 'A SWEEP ON A DIAGNOSTIC AXIS, filed after k1, k2 and k3 were each rendered, measured
+  and read at 1:1 -- four points on ONE axis, not four guesses. It is not a batch in the sense the rule
+  bans: nothing it produces is promoted, no dataset grows, no beat plate is cut, and the gate stays shut
+  until a rung is judged. Four points and not one because the public answer is a DIRECTION -- square canvas,
+  dominant subject -- and does not name a ratio; the band 30-75%% brackets k3''s 19.1%% below and k1''s
+  ~100%% above, and both of those are already rendered, so the sweep has anchors at both ends and buys
+  the curve between them. If a single rung had been filed instead, whichever way it came back the next
+  question would have been ''and what about the other side'', which is the same GPU spent over four sequential
+  waits.'
+the_one_variable: k3's rung with the reference CANVAS MADE SQUARE and the head at 0.60 of it -- the head-to-frame
+  ratio is the axis and it is the only thing that moves across k4a..k4d. Same head pixels, same field
+  green, same mask, same --ip-scale 0.7, same seed, same skeleton, same wording. The subject reaches the
+  encoder INTACT at 35.2% of its pixels, where k3's reached it amputated at 5.4%.
+the_rung_this_is_one_variable_from: ep2-jerry-face-k3-0821
+derivation:
+  parent: pipeline/jobs/ep2-jerry-face-j2-0821.yaml
+  by: pipeline/derive_jerry_face_ipa_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - jerryface-j2-0821 -> jerryface-k4c-0821
+  - ep2-jerry-face-j2-0821 -> ep2-jerry-face-k4c-0821
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step posehint --arm (posehint -> ipahead)
+    argv:--repo-commit:
+    - step posehint --repo-commit (8b1dd656324509562b2d65c35f677505b2375f89 -> 29939faba45625c647bb05da9573c4151b8b259d)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 4
+    key:priority:
+    - key priority = 28
