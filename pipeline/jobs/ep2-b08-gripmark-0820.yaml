@@ -395,3 +395,174 @@ derivation:
     seed:
     - step scale30 --seed (20260819 -> 20260819)
   seed: 20260819
+
+verdict: >-
+  FAIL, AND THE FINDING IS WORTH MORE THAN THE FRAME -- IT IS THE ONE THE FIVE
+  TRACING LOSSES DID NOT CONTAIN. The loop BOUND: the pre-registered most-likely
+  mode (L1, ignored, loss-3 class) did NOT fire. It was traced at full fidelity
+  in place -- 511 gold pixels centred at (615.7, 681.2), 14.2 px from the
+  authored L-wrist. Figure ink at --scale2 0.3 in this two-net rig is above
+  threshold, which is a real answer to a real question.
+  AND THE NET NAMED IT FROM ITS NEIGHBOURHOOD RATHER THAN FROM THE WRIST
+  UNDERNEATH IT. The closed hand-sized loop came back as a SECOND GOLD BELT
+  CLASP, drawn beside the existing one at the belt line. The openpose net
+  asserts a guard L-wrist at exactly (621.6704, 668.4352) at scale 1.0, the
+  prompt says `clipboard lowered in one hand`, and the scribble net still
+  resolved the enclosure into the object class its surroundings suggest: a
+  rounded closed form on a belt beside a leather strap is hardware. THE
+  ARGUMENT THIS RUNG WAS BUILT ON IS THEREFORE FALSIFIED IN ITS LOAD-BEARING
+  STEP -- "the two nets agree at one pixel, and agreement between nets is not a
+  new class of instruction" is wrong as measured. The pose keypoint did not
+  disambiguate the mark at all.
+  L4 (BOARD-COST) fired hard alongside it: the board is gone from the entire
+  frame, authored-quad fraction below luma 80 falling 0.754 -> 0.234, which is
+  the same value the nine-word wording rung produced (0.229). And B8 came back
+  BALD with BOTH of its calibrated inputs held at the values that passed.
+  Every other clause held. `ep2-b08-scale30-0820` remains the best frame on
+  beat 08 and beat 08 does NOT have a complete plate candidate.
+verdict_measured:
+  b0_the_stack_is_what_it_claims: 'PASS, all four preflight lines printed --
+    `twins net verified`, `scribble net verified`, the two-nets-DIFFER line, and
+    `staged driver, BOTH hints and BOTH references verified`. Sidecar reads
+    `control_2_image: pipeline/control/b08-board-grip-0820.png`,
+    `control_2_image_sha256: e822a88a...` (the NEW hint reached the card),
+    `controlnet_2_conditioning_scale: 0.3`,
+    `controlnet_conditioning_scale: 1.0`, `control_image_sha256: 562911c8...`,
+    `seed: 20260819`, `repo_commit: 8b7dd6be...`, and the render log printed
+    `prompt tokens: 64 (limit 77)`. Not a re-run of the parent: one input moved
+    and the sidecar names it.'
+  b4b_the_grip: 'FAIL, AND IT IS THE INFORMATIVE KIND. There is no hand at the
+    board -- because there is no board. What arrived at the authored wrist is a
+    gold clasp: 511 pixels satisfying (R>170, G>140, B<130) in the 100x80 window
+    around the wrist, 6.4% of that window, centroid (615.7, 681.2), 14.2 px from
+    (621.7, 668.4). At 5x it is unmistakably a buckle -- a second one, beside the
+    belt clasp that was already there, with the same drawn gold rim and dark
+    inset. The guard''s near hand did not move: it is still up at the harness
+    strap, and the pale mass in the elbow window sits 2.7 px from the authored
+    ELBOW and 90.0 px from the authored WRIST, against the parent''s 8.0 and
+    96.1. The mark did not relocate a committed hand; it added an object.'
+  b4a_board_down: 'FAIL, AND MEASURED BY THE HOUSE INSTRUMENT ON BOTH FRAMES IN
+    ONE PASS. Fraction of pixels below luma 80 in the authored bbox x583-723
+    y657-820: parent 0.754, this frame 0.234. (The same instrument reproduces
+    the published figures for the other three frames on this route -- 0.754
+    against a published 0.758, 0.229 against 0.235, 0.756 against 0.757 -- so it
+    is the same measurement, not a new one.) The polygon-quad variant agrees:
+    0.895 -> 0.210. No board appears anywhere else in the frame by eye. THE
+    HINT GAINED 29% MORE INK AT FIXED STRENGTH (fraction 0.00324 -> 0.00418) AND
+    THE OBJECT WENT, exactly as nine prompt tokens at fixed strength did.'
+  b8_the_guard_has_hair: 'FAIL, AND THIS IS THE SECOND FINDING. Bald at 4x --
+    smooth scalp, no strands, no sideburns, against the parent''s clearly drawn
+    light sandy hair in a frame whose prompt is byte-identical. Section 19
+    calibrated this instrument on TWO inputs: conditioning load (bald at 1.0+0.8
+    and 1.0+0.5, sandy at 1.0+0.3) and prompt crowding (bald at 73 tokens, sandy
+    at 64). THIS FRAME HOLDS BOTH AT THE VALUES THAT PASSED -- 1.0+0.3 and 64
+    tokens -- and is bald anyway. The pre-registered reading applies as written:
+    the loop itself raised the effective load. So the effective conditioning
+    load is a property of (strength x INK), not of strength alone, and B8 now
+    reads three inputs.'
+  b6_drawn_not_traced: 'PASS. Folds in the sleeves, a legible gold harness clasp
+    and belt hardware, a drawn cuff, the goblin''s bell and tunic seams, hair
+    strands where there is hair (the goblin''s brow). Nothing reads as a
+    hard-rimmed flat form, so pre-registered mode L2 (FLAT-TRACE) did NOT fire:
+    the traced loop came back as a fully drawn object with a rim, an inset and a
+    highlight, not as a flat blob. The failure is that it is the WRONG object.'
+  b2_the_identities_separate: 'PASS, +55.5 on boxes re-placed by eye at 5x on
+    this frame and published with luma AND material. Guard forehead
+    (548,352,572,376) G-R -14.0, R-B +47.8, luma 240.6 -- bare skin above the
+    brows. Goblin cheek (150,480,174,504) G-R +41.5, R-B +75.5, luma 219.6.
+    Against a bar of +20.0 and the parent''s +60.6.'
+  b7_no_limb_fragmentation: 'PASS ON BOTH FIGURES, AND THE PARENT''S BOXES WERE
+    AGAIN NOT TRANSFERABLE -- the guard''s published forearm box (387,668) lands
+    on a SLEEVE in this frame, because the pointing arm gained a blue cuff and
+    the skin retreated. Re-placed by eye at 5x, coordinates + G-R + R-B + luma
+    published: GUARD forehead (548,352) -14.0 / +47.8 / 240.6; pointing hand
+    (300,672) -19.3 / +51.8 / 225.6; shin (525,1090) -36.9 / +52.3 / 162.6.
+    SPREAD 22.9 against a bar of 25.0, every region <= 0.0. GOBLIN cheek
+    (150,480) +41.5 / +75.5 / 219.6; forearm (231,764) +38.1 / +66.5 / 225.6;
+    ankle (106,880) +56.8 / +59.4 / 219.7. SPREAD 18.7, every region >= +38.1
+    against a floor of +20.0. LUMA HONESTY, SAME CAVEAT AS THE PARENT: the
+    guard''s triple spans 78.1 luma because his shin sits in grass shadow at
+    162.6, and a dimmer patch reads more negative, so 22.9 is an UPPER BOUND and
+    the pass is conservative. The goblin''s triple spans 6.0.'
+  b4b_ii_both_arms_stay_on_their_skeletons: 'PASS. The guard has two arms, both
+    ending in drawn hands, neither swallowed. Pointing-hand pale centroid
+    (319.9, 689.6), 39.8 px from the authored wrist (280.5, 695.1) against a bar
+    of ~60 and the parent''s 48.5 -- marginally BETTER than the parent. The
+    pointing arm was not touched, which is what the hint''s selftest asserted in
+    advance, so the loop did not act globally.'
+  b4c_the_arm_belongs_to_the_guard: 'PASS, twelfth mechanism. The pointing arm
+    grows from the guard''s shoulder and is human-skinned at -19.3.'
+  b1_the_pair: 'PASS. Two figures, both whole, only two. ZERO boards, so the
+    duplication risk did not fire. AND EXACTLY TWO HANDS ON THE GUARD -- the
+    pre-registered L5 (THIRD-HAND) did NOT fire; the loop became an object, not
+    an extra hand.'
+  b3_one_ground_plane: 'PASS by eye -- both stand in the same grass at the same
+    depth. No number published; the automated span detector is confounded on
+    this frame for the third frame running (warm sky matches the pale-skin test).'
+  b5_no_colossus: 'PASS by eye -- neither figure towers, and the proportions read
+    as an adult man beside a shorter goblin.'
+pre_registered_fail_modes_as_fired: >-
+  FIVE WERE WRITTEN BEFORE THE PIXELS. L1 IGNORED: did NOT fire -- the mark
+  bound, at 14.2 px. L2 FLAT-TRACE: did NOT fire -- the traced form is fully
+  drawn, with a rim, an inset and a highlight. L3 MERGE: fired in a form the
+  wording did not anticipate -- the loop did merge, but with the BELT and the
+  STRAP rather than with the board''s top edge, and the merge is what named it.
+  L4 BOARD-COST: FIRED, 0.754 -> 0.234. L5 THIRD-HAND: did NOT fire.
+  AND ONE MODE NOBODY PRE-REGISTERED FIRED, WHICH IS THE RUNG''S REAL RESULT:
+  WRONG NOUN. Every one of the five tracing losses drew ink ON a figure, so the
+  ink was the silhouette that named itself and the question could not arise.
+  This is the first mark on this route whose intended noun differed from what
+  its neighbourhood suggests, and the neighbourhood won.
+what_this_settles: >-
+  THREE THINGS, AND THE FIRST OUTLIVES BEAT 08.
+  (1) ON A SCRIBBLE NET YOU CHOOSE THE SHAPE AND THE PLACE; YOU DO NOT CHOOSE
+  THE NOUN. Section 10 established that any hint this net can read is a hint it
+  traces. The corollary this frame adds is that the semantic class of what gets
+  traced comes from the surrounding pixels, and neither a co-located ControlNet
+  keypoint at scale 1.0 nor the prompt overrides it. Do not place an authored
+  enclosure and expect the object you had in mind; place one only where the
+  neighbourhood already implies that object -- which is exactly why the BOARD
+  hint worked, a rectangle at a hip beside a hand is a board.
+  (2) THE EFFECTIVE CONDITIONING LOAD IS (STRENGTH x INK), NOT STRENGTH. 29%
+  more ink at an unchanged 0.3 cost the object AND the canon hair, the same two
+  clauses that raising the strength to 0.5 and adding nine prompt tokens each
+  cost. The B8 hair instrument now reads three inputs, and any lane that adds
+  ink to a hint "at the scale that worked" is raising the load.
+  (3) FIGURE INK AT 0.3 IS ABOVE THRESHOLD IN THIS TWO-NET RIG. Tracing loss 3
+  measured figure ink losing its grip at 0.28 on a SINGLE net; it does not
+  transfer here, and the route no longer has to wonder.
+what_this_did_not_settle: >-
+  Whether a hand-shaped enclosure placed somewhere the neighbourhood ALREADY
+  implies a hand would be named correctly -- this frame only shows that a belt
+  line names it hardware. Whether a smaller loop (less ink) would keep the board
+  while still binding; the two effects were not separated and separating them
+  costs a second sample on a route that has no consumer left for it. Nor whether
+  any of this holds at a second seed -- every frame on this route is seed
+  20260819. Nor the goblin''s legwear, which moved AGAIN (bare green legs here,
+  teal trousers to the ankle in the parent) and remains the unruled attribute
+  already filed as a taste card.
+observed_not_scored: >-
+  THREE. (1) THE GUARD''S POINTING SLEEVE GAINED A BLUE CUFF that nothing in the
+  prompt, the hints, the masks or the references asks for -- the same
+  unasserted-attribute invention this beat keeps producing. (2) THE GOBLIN''S
+  LEGWEAR CHANGED AGAIN, and it is why the parent''s guard forearm probe box
+  landed on cloth. (3) The frame darkened slightly, mean luma 135.4 -> 130.2,
+  consistent with a small rise in effective load rather than with the collapse
+  0.5 and 0.8 produced.
+what_this_does_not_license: >-
+  NO PICK, NO plate_ack, NO CUT, NO CANON FILENAME, AND NOT THE WORDS "COMPLETE
+  PLATE CANDIDATE". Beat 08 is exactly where it was: `ep2-b08-scale30-0820` is
+  the best frame it has and it is still one clause short. It does not license a
+  smaller loop, a second seed, a scale change, or any further figure ink on this
+  net -- the reason to stop is not disappointment, it is that finding (1) says
+  the instrument cannot do what the clause needs.
+next_rung_named_not_taken: >-
+  THE FALLBACK THIS SPEC NAMED IN ADVANCE IS NOW THE ROUTE:
+  COMPOSITE-THEN-INPAINT on ep2-b08-scale30-0820. Draw the hand into the parent
+  plate and run a 0.30 pass with padding_mask_crop=64, per
+  composite-init-pattern.md. That route went 4 for 4 on 2026-08-20 (beats 15,
+  19, 03, 13) on the same shape of problem -- a RELATION between a figure the
+  sampler has already placed and something it draws where it likes -- and it is
+  the one instrument that does not have to ask this net for a noun, because the
+  compositor draws the noun and the sampler only re-renders it. Not taken by
+  this lane.
