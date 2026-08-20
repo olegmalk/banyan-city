@@ -1,0 +1,15 @@
+#### job ep2-b16-sapcomp-0820-1787257235 attempt 1 start 2026-08-20T20:21:03Z
+
+==== step fetch START 2026-08-20T20:21:03Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapcomp-0820\\fetch_init.py"]
+fetched 16-why-sapcomp-0820.png 1091515 bytes sha ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46 OK
+fetched 16-why-sapcomp-mask-0820.png 5738 bytes sha 15af474a940e97b2936dbf21ebf3f3b318eb6892f301fb4436dc8f6a78789b19 OK
+==== step fetch END rc=0 2026-08-20T20:21:08Z ====
+
+==== step dry START 2026-08-20T20:21:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapcomp-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16sapcomp-0820\\16-why-sapcomp-0820.png", "--init-sha256", "7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7", "--mask-png", "C:\\banyan-farm\\b16sapcomp-0820\\16-why-sapcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b16sapcomp-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16sapcomp-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16sapcomp-0820\\b16-sapcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED's footprint (dilated 5) and the DRAWN SAPLING's own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height, not the mask.", "--dry-run"]
+!! INIT SHA MISMATCH -- refusing.
+   want 7b823832de44cd959e0ab9fb92ac83f645ca0dda983daee3fb366979cdc0d9f7
+   have ebd26c6162a854a11a8a7d5a6bc6a5ef2191e032cd8092c2c1af79a98d441c46
+==== step dry END rc=3 2026-08-20T20:21:08Z ====
+#### job ep2-b16-sapcomp-0820-1787257235 finished rc=3 2026-08-20T20:21:08Z
