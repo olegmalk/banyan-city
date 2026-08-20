@@ -1,0 +1,232 @@
+id: ep2-jerry-span-s3-0820
+task: ep2-jerry-span-s3-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 27
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-21
+consumer: THE JERRY LoRA'S POSE GATE. The tile's own folded hands-clasped stance is the pose this character
+  is in most often and the one the instrument has so far refused. If none of these three lands, the gate
+  cannot be discharged by openpose and the stop gets written instead of worked around. No beat plate.
+success: ONE 832x1216 png at seed 20260823 on jerry-skel-h145seat-0820.png at scale 1.0 with the seated
+  wording, scored on T8 against the TILE's seated 4.0 heads and on T9 (is it actually sitting).
+why: 'RUNG s3: s2''s stance with the AUTHORED HEAD PRE-SHRUNK to head_frac 0.145, which puts authored
+  heads-over-span at 4.72 instead of 3.63. One variable from s2, and it is the mechanistic compensation:
+  if the net sizes the head to the skeleton''s span rather than to the head keypoints, this is the rung
+  that lands and s2 is the one that does not.
+
+  sit/kneel/crouch all came back as SMALL FIGURES with the head keypoints byte-identical to the standing
+  rung''s, so the net reads a short skeleton as a small person. Before that is written down as a closed
+  limit it gets the cheap test: GIVE IT THE SPAN and let the fold come from the wording.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryspan-s3-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1other, solo,
+    colored skin, green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose, closed mouth,
+    :|, expressionless, sitting, hands clasped between knees, in tall grass, full body
+  C:\banyan-farm\jerryspan-s3-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT.\
+    \ The job dirs on this card carry a\n# hand-staged src\\pipeline\\controlnet_plate.py and nothing\
+    \ else --\n# jerrytile-p04-0820\\src holds exactly one file -- so a hint that is\n# not fetched is\
+    \ a job that dies after the queue has claimed it.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryspan-s3-0820\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h145seat-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n     \
+    \    \"a8856a2d539e08dd31f175a85cbec0541701e1379f1dfa2baffa5829e2589983\")]\nfor name, dst, sha in\
+    \ want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120)\
+    \ as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n\
+    \        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n   \
+    \     raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n\
+    \    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryspan-s3-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryspan-s3-0820\src
+  - --repo-commit
+  - a34331f74b217004c8e3535f03c5d6f72173d90f
+  - --task
+  - ep2-jerry-span-s3-0820
+  - --arm
+  - posehint
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h145seat-0820.png
+  - --control-sha256
+  - a8856a2d539e08dd31f175a85cbec0541701e1379f1dfa2baffa5829e2589983
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --prompt-file
+  - C:\banyan-farm\jerryspan-s3-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryspan-s3-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerryspan-s3-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of exactly\
+    \ this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryspan-s3-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryspan-s3-0820\"\nctl_dir = \"C:/banyan-farm/jerryspan-s3-0820/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-span-s3-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    # The HINT travels with the frame: it is the frame's condition, and a\n# reader scoring whether the\
+    \ net read it needs to see it at the same\n# pixel columns.\nfiles = sorted(glob.glob(out_dir + \"\
+    /ep2-jerry-span-s3-0820-posehint.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n\
+    \               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"\
+    /jerry-skel-h145seat-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c =\
+    \ os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-span-s3-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 5 else 1)"
+artifacts:
+- C:\banyan-farm\jerryspan-s3-0820\out\ep2-jerry-span-s3-0820-posehint.png
+bar: 'T8 IS THE WHOLE QUESTION AND IT IS READ AGAINST THE TILE, NOT AGAINST A
+
+  STANDING FIGURE. adult-b19-0819.jpg is 4.0 heads crown-to-sole SEATED. PASS is
+
+  3.6 or better crown-to-sole with lean limbs; `sit` measured 3.06 and read
+
+  unmistakably as a small child-figure, which is the failure being fixed.
+
+  T9 THE POSE IS SEATED. s1 can fail this and s2/s3 cannot -- s1''s skeleton is
+
+  standing, so if the net follows the skeleton it draws a standing figure and the
+
+  wording loses. That is a real possible outcome and it is not a bug.
+
+  REGRESSION: T1 blank eyes, T2 no human nose, T3 no age modelling. The wording is
+
+  n1''s recipe, which draws the blank egg -- these are held, not improved, here.'
+failure_predicted_in_advance: 's3 IS THE ONE I EXPECT TO LAND, and s1 IS THE ONE THAT WOULD TEACH ME
+
+  MOST BY LANDING. The measured relation across three poses is that drawn
+
+  heads-over-span falls with span -- 5.08 authored gave 5.07 at span 0.965 and
+
+  3.06 at span 0.486 -- which reads as the net sizing the head to the skeleton''s
+
+  extent and only partly honouring the head keypoints. s3 compensates for that
+
+  directly. s2 tests whether restoring most of the span is enough on its own.
+
+  s1 IS THE INTERESTING FAILURE: openpose bound composition to the pixel in Sec
+
+  13, so a standing skeleton should draw a standing figure and the seated wording
+
+  should lose. If s1 comes back SEATED and lean, then the net is weaker on this
+
+  checkpoint than Sec 13 measured, and the whole instrument is a suggestion rather
+
+  than a constraint -- which would be worth more than the pose.
+
+  IF ALL THREE FAIL, the stop gets written: openpose cannot give a folded pose at
+
+  this character''s proportion, the LoRA''s pose gate cannot be discharged by this
+
+  instrument, and the route is IP-Adapter off the tile''s own seated frame.'
+one_sample_rule: Three rungs, one variable each, ~20 s a render. This is the test that decides whether
+  a LIMIT gets written into canon, so it runs before the prose and not after it.
+the_one_variable: 's2''s stance with the AUTHORED HEAD PRE-SHRUNK to head_frac 0.145, which puts authored
+  heads-over-span at 4.72 instead of 3.63. One variable from s2, and it is the mechanistic compensation:
+  if the net sizes the head to the skeleton''s span rather than to the head keypoints, this is the rung
+  that lands and s2 is the one that does not.'
+the_rung_this_is_one_variable_from: ep2-jerry-span-s2-0820
+derivation:
+  parent: pipeline/jobs/ep2-b08-posenet-sample-0819.yaml
+  by: pipeline/derive_jerry_span_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - licence_note
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - b08pose-0819 -> jerryspan-s3-0820
+  - b08-openpose-0819 -> jerry-skel-h145seat-0820
+  - ep2-b08-posenet-sample-0819 -> ep2-jerry-span-s3-0820
+  overrides_applied_and_asserted:
+    argv:--control-sha256:
+    - step posehint --control-sha256 (3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+      -> a8856a2d539e08dd31f175a85cbec0541701e1379f1dfa2baffa5829e2589983)
+    argv:--repo-commit:
+    - step posehint --repo-commit (161273f6f20452e87dede2c2a4b5b43b95e73179 -> a34331f74b217004c8e3535f03c5d6f72173d90f)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 3
+    key:priority:
+    - key priority = 27
+    payload:negative.txt:
+    - payload negative.txt (275 -> 231 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 240 chars)
+    seed:
+    - step posehint --seed (20260819 -> 20260823)
+  seed: 20260823
