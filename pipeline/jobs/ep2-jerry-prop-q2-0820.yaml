@@ -1,0 +1,181 @@
+id: ep2-jerry-prop-q2-0820
+task: ep2-jerry-prop-q2-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryprop-q2-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1other, solo,
+    colored skin, green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose, closed mouth,
+    :|, expressionless, long legs, narrow waist, standing, arms at sides, in tall grass, full body
+  C:\banyan-farm\jerryprop-q2-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys
+steps:
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryprop-q2-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryprop-q2-0820\src
+  - --repo-commit
+  - d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+  - --task
+  - ep2-jerry-prop-q2-0820
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260823'
+  - --prompt-file
+  - C:\banyan-farm\jerryprop-q2-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryprop-q2-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerryprop-q2-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryprop-q2-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryprop-q2-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-prop-q2-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-jerry-prop-q2-0820-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-prop-q2-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\jerryprop-q2-0820\out\ep2-jerry-prop-q2-0820-nocontrol.png
+owner: goblin-design audit lane, 2026-08-20 night
+consumer: THE JERRY LoRA SET, WHICH IS CURRENTLY UNTRAINABLE. All twelve tile-set poses hold the face
+  and every one is a BOBBLEHEAD -- head about a third of standing height where the B tile is a fifth to
+  a sixth. Training on them teaches a mascot, which is the founder's child complaint arriving through
+  a different door. This rung is one candidate fix for the body. No beat plate, nothing promoted.
+success: 'ONE 832x1216 png of the standing pose at seed 20260823 with ONE change from the twelve-pose
+  recipe: positive gains long legs / narrow waist. Scored on T8 (head-to-body) with T1-T3 and T7 as regression
+  clauses.'
+why: 'RUNG q2: positive gains long legs / narrow waist. THE WEDGE WAS FOUGHT AT A CLOSE-UP because that
+  is where the man-read lived, and a close-up has no body in it -- every one of the tile bar''s seven
+  clauses is above the neck. A bar inherits the blind spot of the failure that motivated it, and this
+  is that blind spot being closed. T8 is added to the bar and the twelve-pose set is scored retrospectively:
+  all twelve FAIL it.'
+bar: "T8 IS THE ONLY SCORED CLAUSE HERE AND IT IS NEW:\n  T8 HEAD-TO-BODY. Standing height divided by\
+  \ head height. The B tile reads 5-6;\n     the twelve-pose set reads about 3. PASS is 4.5 or better\
+  \ BY EYE against\n     adult-b19-0819.jpg, with lean limbs rather than stubby ones.\nT1-T3 and T7 are\
+  \ REGRESSION CLAUSES: blank eyes, no nose, no age modelling, no\npatchwork on the skull. A rung that\
+  \ fixes the body and breaks the face is a\nFAIL, and it is the most likely way each of these three goes\
+  \ wrong.\nT4 (ears) is unscorable at full body and is not scored.\nT6 remains STRUCK."
+failure_predicted_in_advance: 'q3 WINS AND IT COSTS ME A PUBLISHED CONCLUSION. Four commits ago
+
+  this lane wrote "AXIS A IS A DEAD LEVER" off the wedge, and that was measured
+
+  entirely on close-ups, where there is no body to be wrong. If restoring `1boy`
+
+  restores adult proportion, the honest correction is that the count tag governs
+
+  the BODY and the feature tags govern the FACE, and the wedge simply never had a
+
+  body in frame to notice with.
+
+  q1 FAILS on the mechanism w1 already demonstrated: nothing in the positive asks
+
+  for a mascot, so there is nothing for the negative to cancel; per Ban et al. a
+
+  negative acts on what the positive draws, and this basin is arrived at by the
+
+  ABSENCE of a human prior rather than by any word.
+
+  q2 IS THE COIN FLIP. `long legs` is a real tag with real mass, but it describes
+
+  a proportion within a body rather than the body''s relation to the head, so it
+
+  may lengthen the legs of a bobblehead and produce something worse than either.
+
+  IF ALL THREE FAIL, the wording route is finished for the BODY exactly as it
+
+  succeeded for the face, and the answer is a reference route -- IP-Adapter or
+
+  ControlNet off the tile''s own silhouette, which supplies proportion as geometry
+
+  instead of asking for it as a word.'
+the_one_variable: 'p04''s exact prompt, negative, seed and sampler with ONE change: q1 the negative, q2
+  two positive tags, q3 the count tag alone.'
+this_rung_tests_a_conclusion_this_lane_published: q3 in particular. Commit `the ladder gets the recipe,
+  the dead lever...` states AXIS A IS A DEAD LEVER on the strength of v2/v3/v4, all of which were close-ups
+  with no body in frame. If q3 restores proportion, that conclusion is wrong as stated and the correction
+  is that the count tag governs the BODY while the feature tags govern the FACE.
+derivation:
+  parent: pipeline/jobs/ep2-jerry-tileset-p04-0820.yaml
+  by: pipeline/derive_jerry_proportion_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - owner
+  - success
+  - the_one_variable
+  - this_rung_tests_a_conclusion_this_lane_published
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - the_one_variable
+  retokened:
+  - jerrytile-p04-0820 -> jerryprop-q2-0820
+  - ep2-jerry-tileset-p04-0820 -> ep2-jerry-prop-q2-0820
+  - ep2-jerry-tileset-p04-0820 -> ep2-jerry-prop-q2-0820
+  overrides_applied_and_asserted:
+    argv:--seed:
+    - step hintskel --seed (20260823 -> 20260823)
+    payload:prompt.txt:
+    - payload prompt.txt (227 -> 252 chars)
