@@ -6061,6 +6061,103 @@ DRAFTS[16] = {
     ),
 }
 
+# --------------------------------------------------------------------------
+# r1 SCORED, 2026-08-20, macbook4, Apple MPS, seed 20260820, 137.7s, rc 0, $0.
+# farm-out/ep2-b16-mac-plate-0820/16-why-mac-plate-r1s1.png
+#
+# VERDICT: FAIL, AND THE SCORED VARIABLE WAS NEVER REACHED. There is NO LEAF IN
+# THE FRAME AT ALL. What came back is an extreme close-up of the GOBLIN'S HEAD
+# filling the picture, sharp, snarling, with blurred GRASS in the foreground
+# where the leaf should be.
+#   P1 ONE LEAF IS THE SUBJECT .... FAIL, totally. No leaf anywhere in frame.
+#   P2 THE LEAF IS AN AVERAGE LEAF  UNSCORABLE. This rung existed to test the
+#      leaf SHAPE against canon.yaml sapling-cotyledon-shape and there is no
+#      leaf to score. The 08-17 description still has not had its first outing
+#      on this beat -- it has had a first ATTEMPT, which is not the same thing
+#      and is not being written up as one.
+#   P3 ONE ADULT GOBLIN, SMALL, OUT OF FOCUS, NOT PULLING FOCUS .. FAIL on
+#      three of four. He is enormous, sharp and the entire subject. The cast
+#      half landed: he is unmistakably a lean adult with green skin, a bald
+#      head and a patchwork cloak, not a child and not a chibi.
+#   P4 FIELD PRESENT .............. PASS. Grass and sky, real depth.
+#   THE 0814 JOB'S OWN NAMED RISK FIRED, AT MAXIMUM. Its success block said the
+#      failure worth reporting was "the goblin pulling focus", and its r1
+#      recorded that it "did not happen". It happened here.
+#
+# THE CAUSE IS MINE AND IT IS ONE WORD'S POSITION. The block above says in its
+# own text "the COMPOSITION is the 0814 plate's and it PASSED ... Nothing about
+# the framing moves." IT MOVED. 0814 kept `Extreme close-up` in the STYLE TAIL,
+# after the goblin clause and after the full stop; this draft hoisted `extreme
+# close-up` to the SECOND comma-chunk, ahead of the person noun. On a face-first
+# anime checkpoint an unattached `extreme close-up` sitting immediately before
+# `a lean wiry adult goblin man` attaches to the man. I carried the framing in
+# the prose and moved it in the string, which is the exact failure this file
+# guards against at its other end: the test quietly did not test what I said.
+#
+# Recorded and NOT treated as the cause, because it is not isolated here: the
+# goblin identity is now FOUR comma-chunks (`a lean wiry adult goblin man`,
+# `green skin`, `bald head`, `patchwork cloak`) where 0814 had one short one
+# (`a small goblin boy`). That is a great deal more attention mass on the
+# person and it is a live second suspect. It is canon and cannot be deleted to
+# test it, so it is named and left standing rather than folded into the r2
+# story.
+#
+# ==========================================================================
+# BEAT 16 REVISION 2. A PURE PERMUTATION: THE SAME WORDS, ONE MOVED.
+# ==========================================================================
+# THE ONE VARIABLE: `extreme close-up` moves from comma-chunk 2 to the style
+# tail, where the 0814 round that PASSED its composition had it. Not one token
+# is added, removed or altered -- the positive is the same multiset of words in
+# a different order, and it measures the same 73 of 77.
+#
+# WHY THAT IS WORTH A SAMPLE RATHER THAN A COMPOSITE STRAIGHT AWAY. This repo
+# has measured the positive-placement law seven times (beats 05, 10, 15, 19 x2,
+# 13, 03) and beat 09 measured its converse eight, but EVERY ONE of those tests
+# added a clause, deleted one, or changed its wording. None of them held the
+# token multiset fixed and moved a chunk. A pure permutation isolates POSITION
+# as the only variable, which is the strongest form of the claim this house
+# keeps making, and beat 16 gets it for 140 seconds of an idle Mac.
+#
+# PRE-REGISTERED, AND THE FAIL MODE IS THE USEFUL HALF:
+#   PASS ....... the leaf returns to the front of the frame and the goblin
+#                goes back behind it. Position is the mechanism, the 0814
+#                composition is restored, and the leaf shape finally becomes
+#                scorable against canon for the first time on this beat.
+#   FAIL-STILL-HIS-FACE ... the goblin still eats the frame. Then POSITION IS
+#                NOT THE MECHANISM, the four-chunk canon identity is (or the
+#                checkpoint simply will not put a leaf in front of a face at
+#                this register), and the answer is the COMPOSITE ROUTE. Say
+#                that now so it is not invented afterwards.
+#   THE COMPOSITE FOR THIS BEAT IS NOT THE 4-FOR-4 ONE, and the difference is
+#                worth writing before anyone reaches for it. Beats 15, 19, 03
+#                and 13 all composited a SMALL plant INTO a plate and let a
+#                0.30 pass make it belong -- 4.1% of the frame on beat 13. Beat
+#                16 needs a LARGE object drawn IN FRONT, over most of the
+#                frame, and a 0.30 pass over 60-80% of a picture is not an
+#                inpaint, it is a re-render. Nothing in the 4-for-4 record
+#                covers that scale and the record should not be cited as if it
+#                did. beat19_drop_composite.py's own decal tell #5 is "detail
+#                at the wrong scale", and this is that risk from the far side.
+#
+# THE NEGATIVE IS RESTATED BYTE FOR BYTE below, unchanged, per this file's
+# exit-6 guard. Seed unchanged at 20260820, so r1 and r2 are two draws of ONE
+# seed differing ONLY by where three words sit. ONE SAMPLE. $0, Apple MPS.
+REVS[(16, 2)] = {
+    "prompt": (
+        "one huge wide oval cotyledon leaf with a soft round tip fills the "
+        "frame, a lean wiry adult goblin man, green skin, bald head, "
+        "patchwork cloak, sitting far behind it in a sunny grassy field, "
+        "small and out of focus, extreme close-up, shallow depth of field, "
+        "cinematic lighting, masterpiece, best quality, very aesthetic"
+    ),
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, hair, wig, lobed leaf, "
+        "five-fingered, palmate, maple leaf, serrated edge, three leaves, "
+        "potted plant, flower pot, large tree, trunk, forest, indoors, night, "
+        "dark, photorealism, 3d render"
+    ),
+}
+
 
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer

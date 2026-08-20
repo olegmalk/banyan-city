@@ -1,0 +1,31 @@
+platform: "cpu (numpy/PIL crop + LANCZOS, no GPU, no sampler)"
+model: "none -- this is a geometric operation on an existing plate"
+cost_usd: 0.0
+shot_beat: 9
+beat_slug: "the-pause"
+source_png: "farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r1-w015-s3.png"
+source_branch: "origin/farm-results-rtx5090"
+source_sha256: "2dd44da93ee20b4d25eb24716e3b4d20897193cf47a7a8c7fc29f8d3e823691c"
+why_this_source: "the one frame in the corpus with hair, wire-rims and BOTH EYES OPEN at once; fails only on framing at ~25%"
+png_sha256: "ba72dec824c6fe70102de313486f13a8f51ebcf0c3ac42e6b8a504fc10bada7d"
+face_highpass_sigma1_before: 11.79
+face_highpass_sigma1_after: 4.38
+face_highpass_retained_pct: 37.2
+control_native_closeup: "farm-out/ep2-b09-mac-plate-0819/09-the-pause-mac-plate-r3s1.png"
+control_head_frac: 0.5674
+control_face_highpass_sigma1: 9.79
+vs_control_pct: 44.8
+hair_luma_source: {"central_band_darker_half_mean_luma": 55.0, "central_band_share_under_luma_60_pct": 31.6, "warm_mask_mean_luma": 69.6, "warm_mask_p25_luma": 41.6}
+approved: false
+provisional: true
+scored: false
+founder_verdict: null
+rung: "REFERENCE-PLUS-CROP, the instrument work-ladder-0819.md named and did not fire, after the wording ladder closed at 8 renders"
+date: "2026-08-20"
+crop_box_xyxy: [223, 9, 609, 572]
+crop_size: [386, 563]
+upscale_factor: 2.157
+head_px_source: 310
+head_frac_source: 0.2549
+head_frac_after: 0.55
+chin_at_frac_after: 0.57

@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 16
+beat_slug: "why"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260820
+render_seconds: 137.7
+png_sha256: "aa0119ac409b31a7bad74d3a8e250a8b6d37c274da009d4581f1d51eb35400a9"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "one huge wide oval cotyledon leaf with a soft round tip fills the frame, extreme close-up, a lean wiry adult goblin man, green skin, bald head, patchwork cloak, sitting far behind it in a sunny grassy field, small and out of focus, shallow depth of field, cinematic lighting, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, 2boys, girl, baby, child, chibi, elf, hair, wig, lobed leaf, five-fingered, palmate, maple leaf, serrated edge, three leaves, potted plant, flower pot, large tree, trunk, forest, indoors, night, dark, photorealism, 3d render"
+done_when: "ONE LEAF IS THE SUBJECT and it is an AVERAGE LEAF -- a plain wide oval blade with a soft round tip, filling the frame, no lobes, no fingers, no palmate fig leaf, nothing exotic in its silhouette. Behind it, ONE LEAN ADULT GOBLIN in a patchwork cloak, small, clearly out of focus, not pulling focus and not a child. Field present. Scored against beats.'16'.done_when (\"close on one leaf with the scavenger blurred behind it; the leaf is the subject and he is depth\") and canon.yaml sapling-cotyledon-shape."
+why_this_plate: "Beat 16 is one of the two remaining slates in review/ep2-demo-0820 and it has had exactly ONE plate round, in 0814, whose leaf the founder rejected on 2026-08-16 as not resembling the sapling. The description he rejected it against did not exist yet; he supplied it on 2026-08-17 (\"the sapling 2 leaves are average leaves\", now canon.yaml sapling-cotyledon-shape) and no beat-16 job has been filed since -- no ep2-b16 spec dated 0817-0820 exists anywhere in the tree. This is that description's first outing on this beat, with the killed child-goblin cast corrected to the 2026-08-19 ratified adult in the same draw."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false
