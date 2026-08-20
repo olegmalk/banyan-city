@@ -5337,3 +5337,48 @@ the waist is the steward's to change; above it is the tile's and is not.
 - `/review/ep2-jerry-face-0820`'s two questions **survive and sharpen** — enormous
   ears and a broken tusk are creature features, both in `node.md:35`, both lost
   on the way to the man-read.
+
+### The audit that followed, and the two beats every record has been missing
+
+**THE GOBLIN IS IN ELEVEN BEATS OF THE SHIPPING CUT, NOT NINE.** All 21 beats
+audited against the tile on 08-20 night — f060 pulled from each source mp4 at
+native 704x1280 and read at 1:1, *not* off the 240 px proof thumbnails, which is
+how this stayed invisible. `the-split-0819c.jpg` says *"nine frames from the
+cut"* and enumerates 03 04 07 08 13 14 17 19 20. **Beat 02 and beat 15 also show
+him**, were never on any design sheet, and are the two extremes of the set:
+
+- **BEAT 02 — the worst identity break we have, and it is not an age problem.**
+  He is **BONE GREY, NOT GREEN**, with a round child cranium and body. Two tile
+  breaks at once: species colour *and* build. Its `ship_status` has read
+  *"UNJUDGED — no bar has ever been answered"* since 08-17, which is precisely
+  why nobody caught it.
+- **BEAT 15 — the second-best tile match in the cut.** Blank white eyes, no nose
+  bridge, one lipless line, two-tone chartreuse dome, barefoot. Its only break is
+  **costume** (plaid blanket-cloak, no purple cowl). Whatever produced this frame
+  is nearer the answer than anything in the re-render wave.
+
+**BEAT 07 IS FILED ON THE WRONG SIDE.** It sits among the four ADULT-B beats
+recorded as *right* on 08-19. Its goblin has **a full head of white hair** on a
+character whose canon is bald, plus the guard's round red spectacles, long elf
+ears, a human nose with nostrils, lashes and a normal neck.
+
+**BEAT 19 IS THE TILE**, not a frame resembling it.
+
+| read | beats |
+|---|---|
+| tile-faithful | **15, 19** |
+| near-tile, one named break (the ears) | 14 |
+| man-read | 03, 04, **07**, 13, 20 (20 reads OLD) |
+| child-read | **02** (and grey), 08 |
+| unjudgeable — back view | 17 |
+| no goblin | 01, 05, 06, 09, 10, 11, 12, 16, 18, 21 |
+
+**So the post-ship wave is SEVEN beats, not five.** canon's 08-19 list said 03,
+04, 08, 13, 20. Add **02** and **07**. Take **15 and 19 out** — they are the
+reference, not the work. **Beat 14 needs one attribute changed, the ears, not a
+re-render.** Beat 17 needs nothing until a frame shows his face.
+
+Table: `review/ep2-ship-0821/sources/ship-manifest.yaml` → `goblin_design_audit_0820`.
+Pixels: `review/ep2-goblin-design-0819/AUDIT-missed-beats-0820.png`.
+**No frame moves before the cutoff** — this is an audit, and the two beats it
+newly condemns have no candidate to swap to.
