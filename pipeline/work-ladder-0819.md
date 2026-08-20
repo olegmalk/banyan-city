@@ -7174,3 +7174,65 @@ the author's call, not the steward's.
 
 Whichever way it goes, the LoRA set is authored from the winner's recipe and the
 curation gate runs on the pose set rendered with it. **Neither is filed tonight.**
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — UNJUDGED-BACKLOG SWEEP: NINE FRAMES CLEARED
+
+A sweep of the box's `done/` since 08-18 against every place a verdict is
+written (ladder, `pipeline/loop/`, `pipeline/research/`, `pipeline/lora/`,
+`canon.yaml`, `review/`, `STATE.md`), matching family stems as well as exact
+ids, found **nine outputs that had never been scored anywhere** and that no
+currently-running lane owns. Everything else on the list resolved to a family
+the ladder already read under range shorthand (`w1..w6`, `n1..n8`, `s1..s5`) or
+to a live lane's own beat. Cleared here; one line each, by eye at 1:1.
+Evidence: `review/ep2-goblin-design-0819/TILEREAD-V0-V7-0820.png`.
+
+### `ep2-b04-tileread-v0..v7-0820` — eight wordings for the goblin CLOSE-UP
+
+Scored on that family's own six pre-registered clauses (T1 eyes blank white, no
+iris, no pupil, narrow and upslanting; T2 no nose bridge/tip/nostrils; T3 no age
+modelling; T4 ears; plus framing and costume).
+
+- **v0** `1boy, lean wiry adult goblin man` + `close-up` — **FAIL**. A modelled
+  human male in 3/4 with a red iris, a full nose with bridge and tip, and a
+  long pointed elf ear. T1, T2, T4 all fail. This is the man-in-green-makeup
+  the whole goblin route exists to replace.
+- **v1** same tags + `wide shot, full body` — **FAIL**. Framing works, the face
+  is unreadable at that distance so no face clause is scorable, and the cloak
+  came back plain dark rather than patchwork.
+- **v2** `colored skin` replacing the goblin tag — **FAIL**. A handsome anime
+  male profile, grey iris, full nose. The skin tag changes the palette and
+  nothing about the anatomy.
+- **v3** `solo` with no person tag — **FAIL**, and instructively: it drew a
+  CHILD, big green irises with catchlights and a human nose. Dropping the
+  person tag hands the age to the checkpoint.
+- **v4** `1other` — **FAIL** on T1 and T2 (iris and nose both present), though
+  the skull and ear read better than v0's.
+- **v5** `+ blank eyes, tsurime, jitome` — **the first blank eyes in the
+  family**: no iris, no pupil. But they are ROUND, not narrow or upslanting, so
+  T1 half-passes; the nose reduces to a shadow and the head is an egg.
+- **v6** `+ no nose, closed mouth, :|, expressionless` — T1 closest to a pass
+  (blank, narrow, a flat lid line), T2 and T3 pass, **and the face is a
+  FEATURELESS EGG: no ears, no mouth, nothing.** This frame is where the
+  "featureless egg" the curation file names after n1 first appears, and it is
+  the earliest evidence in the tree that the wording route buys the eye clause
+  by deleting the rest of the face. It was never written down until now.
+- **v7** `+ two-tone skin, shiny skin, no eyebrows` — **FAIL, and it retires a
+  tag**: `two-tone skin` painted a MAGENTA PATCH across half the face. That tag
+  does not mean what it looks like it means and should not be tried again.
+
+**WHAT THE FAMILY SETTLES:** blank eyes arrive only from v5, and v6 shows the
+price — the presences go with the modelling. That is the same trade the f/g/h/j
+ladder went on to measure and the same trade k5a hit from the other direction,
+and the origin of it was sitting unscored in `done/`.
+
+### `ep2-b04-tightcrop-0820` — the tight-crop glance clip
+
+**FAIL, and not narrowly.** t1_the_glance_reads: across the clip he does not
+visibly look away and back; the gaze is fixed forward. And the face underneath
+fails canon before the motion clause is reached — **green IRISES with visible
+pupils** (T1), and heavy age modelling: brow furrows, crow's feet, nasolabial
+folds, jowls (T3). t2_head_travel, published and scored against nothing as that
+spec asks: **head-band ink centroid travel 25.9 px** over 121 frames on a
+704-wide frame, i.e. 3.7% of frame width, std 7.5 px.
