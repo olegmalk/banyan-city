@@ -645,10 +645,20 @@ def global_zoom(ref_rgb: np.ndarray, cur_rgb: np.ndarray, small=(88, 160),
                               (H // 2, H, 0, W // 2), (H // 2, H, W // 2, W))]
     qs = [q["scale"] for q in quads]
     spread = max(qs) - min(qs)
+    # A fit that lands on the LAST scale in the grid has not found a maximum, it
+    # has run out of room, and the number it returns is the edge of the search
+    # rather than a property of the picture.  On 2026-08-20 the default grid
+    # topped out at 1.50 and b15 f000->f120 came back "1.50" on three of four
+    # quadrants; re-run to 2.50 it read 2.20 whole-frame with quadrants
+    # [2.5, 2.5, 1.25, 1.55] -- a different story (locally-varying redraw, not a
+    # push).  Anything railed is published as railed so it is never quoted.
+    hi = scales[-1]
+    railed = bool(whole["scale"] >= hi - 1e-9 or max(qs) >= hi - 1e-9)
     return {
         "scale": whole["scale"], "ncc": whole["ncc"],
         "quadrant_scales": qs, "quadrant_spread": round(spread, 3),
-        "consistent": bool(spread <= quadrant_tol),
+        "consistent": bool(spread <= quadrant_tol) and not railed,
+        "railed": railed, "scale_grid_max": hi,
         "ncc_at_unity": round(_best_ncc_shift(
             cur, prep(ref_rgb), 6)[0], 4),
     }
@@ -756,6 +766,14 @@ def selftest() -> int:
     zw = global_zoom(base, warp)
     check("global_zoom refuses a picture that is redrawn, not moved",
           not zw["consistent"], "spread=%.3f quads=%s" % (zw["quadrant_spread"], zw["quadrant_scales"]))
+    # the same known 1.20x push, searched on a grid that CANNOT reach it: the
+    # honest answer is "railed", never a confident 1.10
+    zr = global_zoom(base, zoomed, scales=[1.0, 1.05, 1.10])
+    check("global_zoom says RAILED when the answer is off its grid",
+          zr["railed"] and not zr["consistent"],
+          "scale=%.2f grid_max=%.2f railed=%s" % (zr["scale"], zr["scale_grid_max"], zr["railed"]))
+    check("a real 1.20x push on an adequate grid is NOT railed", not z["railed"],
+          "scale=%.2f railed=%s" % (z["scale"], z["railed"]))
 
     if not SELFTEST_DIR or not os.path.isdir(SELFTEST_DIR):
         print("\n-- frame-backed checks SKIPPED: set FIG_TRACK_SELFTEST_DIR to a dir")
