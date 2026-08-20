@@ -1,0 +1,103 @@
+# THE JERRY LoRA SET, RE-CURATED AGAINST THE B TILE.
+#
+# WHO WROTE THIS AND WHY IT IS A SEPARATE FILE. The LoRA lane held
+# `train-jerry-0820` on 2026-08-20 night and named two gates, the first being
+# "dataset re-curated for tile fidelity -- the audit lane is re-deriving the
+# design from the B tile. Coordinate; do not re-curate in parallel." This is the
+# audit lane discharging that gate. It is ADDITIVE and touches none of the LoRA
+# lane's files: `manifest-jerry.yaml`, `dataset-jerry.yaml` and
+# `train-jerry-0820.yaml` are theirs and are unmodified.
+#
+# THE METHOD. All 31 frames in manifest-jerry.yaml opened side by side against
+# review/ep2-goblin-design-0819/adult-b19-0819.jpg and read at 1:1 on the four
+# clauses that decide creature-vs-man: BLANK WHITE EYES (no iris, no pupil), NO
+# NOSE BRIDGE, NO AGE MODELLING, and EARS. Pixels, with every verdict and its
+# reason on the frame it belongs to:
+#     review/ep2-goblin-design-0819/LORA-RECURATION-0820.png
+#
+# THE RESULT, AND IT IS WORSE THAN THE HOLD ASSUMED.
+#   15 of 31 REJECT outright -- a human nose, human eyes, or both.
+#    9 of 31 fail on THE EARS ALONE and are otherwise tile-faithful.
+#    7 of 31 KEEP.
+# The whole beat-20 family (ten frames, a third of the set) is uniformly the
+# man-read, and one of them is an outright OLD MAN. Those ten alone would have
+# taught the trigger token a human face.
+#
+# WHY THE EAR DECIDES WHETHER THIS SET IS TRAINABLE AT ALL, and this is the
+# finding that makes the curation a judgement rather than a filter. The outside
+# research on 2026-08-20 established that DANBOORU HAS NO TAG FOR THE TILE'S
+# EAR: `short pointy ears` has zero posts, `round ears` does not exist, and
+# `long ears` is an ALIAS TO `pointy ears` (592,662 posts). No prompt can ask
+# for a short, broad, low-set, swept-back ear. THE LoRA IS THEREFORE THE ONLY
+# INSTRUMENT THAT CAN TEACH IT -- and that only works if the training set does
+# not contain the spikes. So the nine EARS frames cannot be quietly kept as
+# "close enough": including them trains the exact defect the LoRA exists to fix.
+#
+# WHICH LEAVES SEVEN FRAMES IN FOUR POSES, AND THAT IS THE HONEST NUMBER.
+# 04/05 are the same beat-14 kneel at two seeds, 12/13 the same beat-15 sit at
+# two seeds, and 18/19/20 the same beat-19 seat. A v1 trained on this would
+# almost certainly learn a pose rather than a character, and a pose-locked
+# character LoRA is worse than none: it looks like it works on the beat it was
+# trained on and silently fails everywhere else.
+#
+# SO THIS FILE DOES NOT UNBLOCK TRAINING BY ITSELF. It discharges gate 1 and
+# hands the LoRA lane a number instead of a hope. The condition for filing is in
+# `gate_for_filing` below.
+
+subject: jerry
+curated_by: goblin-design audit lane, 2026-08-20 night
+curated_against: review/ep2-goblin-design-0819/adult-b19-0819.jpg
+authority: pipeline/canon.yaml `ep2-goblin-design-adult` -> correction_2026_08_20
+evidence: review/ep2-goblin-design-0819/LORA-RECURATION-0820.png
+source_manifest: pipeline/lora/manifest-jerry.yaml   # unmodified, 31 frames
+counts: {keep: 7, ears_only_defect: 9, reject: 15, total: 31}
+
+clauses:
+  T1_eyes: blank white, no iris and no pupil drawn
+  T2_nose: no bridge, no tip, no drawn nostrils
+  T3_age: no brow furrows, no nasolabial folds, no jowls
+  T4_ears: short, broad, low, swept back -- NOT long tapering spikes
+
+keep:
+- {i: 4,  image: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-s1.png,     why: 'blank eyes, no nose, smooth mask; ears not drawn'}
+- {i: 5,  image: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-r1s1.png,   why: 'blank eyes, no nose, smooth mask; ears not drawn'}
+- {i: 12, image: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png, why: 'the beat-15 match -- blank eyes, no nose, small low ear'}
+- {i: 13, image: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r2s1.png, why: 'the beat-15 match, second seed'}
+- {i: 18, image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r1s1.png,      why: 'the beat-19 family; ear is pointed but short'}
+- {i: 19, image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png,      why: 'the tile pose -- purple cowl, patchwork cloak, blank eyes'}
+- {i: 20, image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png,      why: 'THE TILE ITSELF -- this is the plate adult-b19-0819.jpg was made from'}
+
+ears_only_defect:
+  note: >-
+    Tile-faithful on T1-T3 and WRONG ON T4. EXCLUDED FROM TRAINING, not because
+    they are bad frames but because the ear is the one attribute no prompt can
+    ask for, which makes it the one attribute the LoRA has to carry. Nine frames
+    of spikes in a sixteen-frame set would teach the spike.
+  frames: [3, 6, 7, 8, 9, 10, 11, 16, 17]
+
+reject:
+  note: >-
+    A human nose, human eyes, or both. Frames 21-30 are the whole beat-20
+    family -- a third of the set, uniformly the man-read, and 22 is an outright
+    OLD MAN with wrinkles and jowls.
+  frames: [0, 1, 2, 14, 15, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+
+gate_for_filing: >-
+  DO NOT FILE train-jerry ON THESE SEVEN ALONE. Seven frames in four poses
+  (14-kneel x2 seeds, 15-sit x2, 19-seat x3) trains a pose, not a character, and
+  a pose-locked character LoRA is worse than no LoRA because it appears to work
+  on the beat it was trained on. The set needs breadth from a TILE-FAITHFUL
+  RECIPE, which is what pipeline/derive_b04_tileread_0820.py is measuring
+  tonight. FILE WHEN: a wedge rung passes T1-T4 at the close framing, that
+  recipe generates frames across the poses the wave needs, and those frames plus
+  these seven clear the same four clauses. If NO rung passes, that is also an
+  answer and it changes the instrument -- the seven frames plus IP-Adapter off
+  the tile itself becomes the route, and that is a different spec.
+
+what_this_does_not_touch: >-
+  Nothing of the LoRA lane's. manifest-jerry.yaml, dataset-jerry.yaml,
+  build_dataset.py and train-jerry-0820.yaml are unmodified; the hold on
+  train-jerry-0820 stands and this file does not lift it. Captions are gate 2
+  and are NOT re-derived here: every one of the 31 is written in the man-read
+  vocabulary and they must be rewritten against the corrected canon wording,
+  which cannot be final until the wedge says what that wording is.
