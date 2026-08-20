@@ -1,0 +1,138 @@
+{
+  "id": "ep2-b15-listengrass-0820-1787216257",
+  "task": "ep2-b15-listengrass-0820",
+  "node": "002b-first-citizen",
+  "beat": 15,
+  "worker": "box-runner",
+  "priority": 30,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b15-sapcomp-0819\\b15-sapcomp-s20260819.png",
+        "--sha256",
+        "df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8",
+        "--out",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\b15-init-704x1280.png",
+        "--size",
+        "704x1280",
+        "--anchor",
+        "center"
+      ]
+    },
+    {
+      "name": "framing",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\assert_framing.py",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\b15-init-704x1280.png"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\b15-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\b15-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "121",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b15-listengrass-0820",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\bench-b15-listengrass.jsonl",
+        "--bench-label",
+        "ep2-b15-listengrass-0820"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820\\stamp_sidecar.py",
+        "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\15-good-listener-LTX-grassroot-0820.mp4.meta.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing ONE file is a FAIL of the job. No allow_fail anywhere.\nimport hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b15-listengrass-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b15-listengrass-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b15-listengrass-0820\"\nPAIRS = [\n    (out_dir, \"15-good-listener-LTX-grassroot-0820.mp4\"),\n    (out_dir, \"15-good-listener-LTX-grassroot-0820.mp4.meta.yaml\"),\n    (out_dir, \"b15-init-704x1280.png\"),\n    (out_dir, \"bench-b15-listengrass.jsonl\"),\n    (pay_dir, \"b15-motion-prompt.txt\"),\n    (pay_dir, \"b15-negative.txt\"),\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor d, name in PAIRS:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b15-listengrass-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(PAIRS) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\15-good-listener-LTX-grassroot-0820.mp4",
+    "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\b15-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1787216257,
+    "filed_at_iso": "2026-08-20T08:57:37Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b15-listengrass-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-20T09:00:02Z",
+  "attempts": 1,
+  "runner_pid": 21356,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T09:06:17Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\15-good-listener-LTX-grassroot-0820.mp4",
+    "C:\\banyan-farm\\ep2-b15-listengrass-0820-out\\b15-init-704x1280.png"
+  ]
+}
