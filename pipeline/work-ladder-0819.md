@@ -5974,3 +5974,47 @@ So `beat16_sapling_composite.py` needs one addition before it can take this
 plate: an erase-then-fill of that box, on b19's pattern. That is the whole gap
 between the tool as written and beat 16's plate — no GPU, no new recipe, and the
 reference implementation is already in this repo.
+
+#### ONE TAG FROM THE FACE, AND `no nose` IS THE THING THAT BREAKS IT
+
+Pixels: `review/ep2-goblin-design-0819/SKELFACE2-0820.png` and
+`review/ep2-goblin-design-0819/SKELSPAN-0820.png`.
+
+| rung | wording, one variable each | heads | verdict |
+|---|---|---|---|
+| f3 | the struck tile wording | 5.69 | face arrives; **T1 fails on pupils, T2 on a nose** |
+| **f4** | **f3 + `blank eyes`** | **5.67** | **blank white eyes, NO PUPILS — T1 PASSES for the first time on a frame that has a face.** Mouth line, ear flanges, facial shading, no age modelling, lean body. **Misses T2 by one small drawn nose tip, and P1 (the brow bar) by all of it.** |
+| f5 | f4 + `no nose` | 5.82 | **the face collapses back to the flat egg** — no mouth, no shading, two slits |
+
+**f4 and f5 together name the flattener.** `blank eyes` composes with a
+descriptive wording and *fixes* the eyes without costing the face — the risk I
+pre-registered did not fire. **`no nose` does not compose: it takes the mouth,
+the shading and the modelling with it.** The wedge's "`blank eyes` is the whole
+game and `no nose` is the second half" is true at a close-up and **half wrong at
+full body** — the second half is the part that has to go.
+
+**So the gap is one tag wide, and the next rung is the one distinction canon
+already draws.** w1 measured that a negative cannot undo what the POSITIVE asks
+for (Ban et al.). Here the positive does *not* ask for a nose — the checkpoint
+draws one from its own prior — **which is exactly the configuration a negative
+is for and the one w1 never tested.** `ep2-jerry-face-g1-0820` puts `nose` in
+the negative instead of `no nose` in the positive; `g2` drops `thick eyebrows`
+from f4's negative, because f1 ran that edit on a wording with no face on it,
+which was not a test of it. **Both are filed to BACKLOG, not ready** — this lane
+has spent its rounds and will not be awake to judge them.
+
+**AND THE SPAN FINDING IS CONFIRMED BY ITS OWN CONTRAST.** `reach` (full span)
+holds at **4.87** heads; `point` (full span) holds lean; **`sit`, `kneel` and
+`crouch` all come back as SMALL FIGURES** with oversized heads. Head keypoints
+byte-identical across all eight hints. **The openpose net carries head-to-body
+only for a skeleton that spans the frame.** The tile's own folded, hands-clasped
+stance — the pose this character is in most often — is the one this instrument
+cannot give, and no amount of scale will change that, because the net is reading
+a short skeleton as a small person.
+
+**`train-jerry-0820` IS NOT FILED. Two gates, both named, both with a next rung:**
+1. **the face** — one tag wide, `g1`/`g2` in backlog;
+2. **folded poses at the right proportion** — needs an instrument that carries a
+   SILHOUETTE, not a stick figure. IP-Adapter off the tile is the candidate the
+   record points at twice now, and it should be authored against the tile's own
+   seated frame rather than against a skeleton.
