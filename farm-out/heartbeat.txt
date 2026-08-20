@@ -3187,3 +3187,5 @@
 15:43:44Z STARTED task=ep2-b08-cnetfill-0820-1787240606 attempt=1 on box-runner
 15:44:10Z FAIL task=ep2-b08-cnetfill-0820-1787240606 rc=1 step=s20260822
 15:45:14Z box-runner idle ready=0 failed=46
+15:50:00Z STARTED task=ep2-b08-cnetfill-0820-1787240980-againa2e448 attempt=1 on box-runner
+15:50:32Z DONE task=ep2-b08-cnetfill-0820-1787240980-againa2e448 rc=0 artifacts=2

@@ -1,0 +1,59 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.7
+seed: 20260822
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b08cnetfill-0820/08-first-citizen-eraseonly-0820.png
+init_sha256: 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+mask_png: b08-cnetfill-s20260822-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b08cnetfill-0820/08-first-citizen-eraseonly-mask-0820.png
+mask_png_sha256: 8c94f1403c3e13839fe2351c70e494f9f2961c0b5a718db3f786d2a341a2d505
+mask_white_px: 10020
+mask_bbox_px: [552, 522, 654, 640]
+mask_width_frac: 0.1226
+mask_height_frac: 0.0970
+controlnet: C:\banyan-farm\cnet-openpose-twins
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition) -- the `twins` variant of xinsir/controlnet-openpose-sdxl-1.0, blob diffusion_pytorch_model_twins.safetensors sha256 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4, 2502139104 bytes, renamed into a loadable directory by ep2-b08-twins-fetch-0819. Identical terms to the default weight in that same repo; no annotator is used -- the hint is authored in PIL
+controlnet_conditioning_scale: 1.0
+control_image: b08-openpose-nat-0819.png
+control_image_sha256: 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0
+controlnet_2: xinsir/controlnet-scribble-sdxl-1.0
+controlnet_2_licence: apache-2.0 (D15 SAFE, no attribution condition)
+controlnet_2_conditioning_scale: 0.3
+control_2_image: b08-board-0820.png
+control_2_image_sha256: 38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6
+controlnet_variant: None (xinsir ships no fp16 variant file)
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+controlnet_composition: MultiControlNetModel, nets applied in the order listed
+control_hint_alignment: >-
+  BY CONSTRUCTION, NOT BY ARITHMETIC. Every hint is handed to diffusers FULL-FRAME at the init's own 832 x 1216, and StableDiffusionXLControlNetInpaintPipeline computes ONE crops_coords from the mask and passes that same tuple to the init, to the mask and to each control image (prepare_control_image(..., crops_coords=crops_coords, resize_mode=resize_mode) in both the single-net and MultiControlNetModel branches of 0.29.2). This driver crops nothing itself, so it has nothing to disagree with. The box below is that tuple, read back from the live pipe.mask_processor.get_crop_region on the blurred mask and checked against this driver's vendored copy before the render; a mismatch is a hard stop, not a warning.
+pad_crop_region_px: [468, 384, 739, 780]
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-20T15:50:31Z
+render_seconds: 13.2
+wall_seconds: 23.2
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  MASK GEOMETRY AND HINT ALIGNMENT -- AND THE MASK MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the CONDITIONING and nothing else: same init sha, same mask sha, same seed 20260822, same 40 steps, same cfg 7.5, same strength 0.70, same prompt, same negative, plus two ControlNets. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY OUTPUT: (1) the mask PNG is one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, no white at the board's top edge near y~670, none on the guard's FACE (x 531..601 y 355..420) and none on the goblin (x 60..260 y 430..1140); (2) TWO `hint` lines print, each saying 832x1216 MATCHES the init -- a hint of any other size is refused with rc 13 and the job stops here at $0; (3) a `pad_crop region` line prints the box diffusers will crop the init, the mask AND both hints with. If the mask differs from ep2-b08-str70-0820's dry mask at all, something other than the conditioning moved and this job must stop here at $0.
+prompt: |-
+  brown leather harness strap crossing a cream linen shirt, brown cuff, white sash, flat cel shading, clean ink linework, soft cinematic lighting, anime key art, detailed, masterpiece, best quality, very aesthetic
+negative: |-
+  goblin, green skin, pointed ears, second figure, face, head, hand, fist, fingers, knuckles, arm, buttons, placket, giant, colossus, towering figure, different scale, floating, raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality, deformed

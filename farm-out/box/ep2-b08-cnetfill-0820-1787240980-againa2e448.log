@@ -1,0 +1,82 @@
+#### job ep2-b08-cnetfill-0820-1787240980-againa2e448 attempt 1 start 2026-08-20T15:50:00Z
+
+==== step fetch START 2026-08-20T15:50:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08cnetfill-0820\\fetch_init.py"]
+fetched 08-first-citizen-eraseonly-0820.png 959598 bytes sha 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45 OK
+fetched 08-first-citizen-eraseonly-mask-0820.png 1653 bytes sha 8c94f1403c3e13839fe2351c70e494f9f2961c0b5a718db3f786d2a341a2d505 OK
+fetched b08-openpose-nat-0819.png 11550 bytes sha 562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0 OK
+fetched b08-board-0820.png 3828 bytes sha 38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6 OK
+==== step fetch END rc=0 2026-08-20T15:50:05Z ====
+
+==== step dry START 2026-08-20T15:50:05Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08cnetfill-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08cnetfill-0820\\08-first-citizen-eraseonly-0820.png", "--init-sha256", "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45", "--mask-png", "C:\\banyan-farm\\b08cnetfill-0820\\08-first-citizen-eraseonly-mask-0820.png", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\b08cnetfill-0820\\b08-openpose-nat-0819.png", "--control-sha256", "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0", "--scale", "1.0", "--controlnet2", "xinsir/controlnet-scribble-sdxl-1.0", "--control2", "C:\\banyan-farm\\b08cnetfill-0820\\b08-board-0820.png", "--control2-sha256", "38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6", "--scale2", "0.3", "--prompt-file", "C:\\banyan-farm\\b08cnetfill-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08cnetfill-0820\\negative.txt", "--out", "C:\\banyan-farm\\b08cnetfill-0820\\b08-cnetfill-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.70", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "MASK GEOMETRY AND HINT ALIGNMENT -- AND THE MASK MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the CONDITIONING and nothing else: same init sha, same mask sha, same seed 20260822, same 40 steps, same cfg 7.5, same strength 0.70, same prompt, same negative, plus two ControlNets. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY OUTPUT: (1) the mask PNG is one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, no white at the board's top edge near y~670, none on the guard's FACE (x 531..601 y 355..420) and none on the goblin (x 60..260 y 430..1140); (2) TWO `hint` lines print, each saying 832x1216 MATCHES the init -- a hint of any other size is refused with rc 13 and the job stops here at $0; (3) a `pad_crop region` line prints the box diffusers will crop the init, the mask AND both hints with. If the mask differs from ep2-b08-str70-0820's dry mask at all, something other than the conditioning moved and this job must stop here at $0.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+mask png corners=- bbox=[552, 522, 654, 640]  0.1226 x 0.0970 of 832x1216
+hint 1 b08-openpose-nat-0819.png scale 1.0 sha 562911c8174a6ecc -- 832x1216, MATCHES the init
+hint 2 b08-board-0820.png scale 0.3 sha 38cd39da304dbb03 -- 832x1216, MATCHES the init
+pad_crop region (vendored get_crop_region on the blurred mask) = (468, 384, 739, 780) -- diffusers applies THIS SAME box to the init, the mask and every hint
+WROTE C:\banyan-farm\b08cnetfill-0820\b08-cnetfill-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-20T15:50:05Z ====
+
+==== step s20260822 START 2026-08-20T15:50:05Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08cnetfill-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08cnetfill-0820\\08-first-citizen-eraseonly-0820.png", "--init-sha256", "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45", "--mask-png", "C:\\banyan-farm\\b08cnetfill-0820\\08-first-citizen-eraseonly-mask-0820.png", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\b08cnetfill-0820\\b08-openpose-nat-0819.png", "--control-sha256", "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0", "--scale", "1.0", "--controlnet2", "xinsir/controlnet-scribble-sdxl-1.0", "--control2", "C:\\banyan-farm\\b08cnetfill-0820\\b08-board-0820.png", "--control2-sha256", "38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6", "--scale2", "0.3", "--prompt-file", "C:\\banyan-farm\\b08cnetfill-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08cnetfill-0820\\negative.txt", "--out", "C:\\banyan-farm\\b08cnetfill-0820\\b08-cnetfill-s20260822.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.70", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "MASK GEOMETRY AND HINT ALIGNMENT -- AND THE MASK MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the CONDITIONING and nothing else: same init sha, same mask sha, same seed 20260822, same 40 steps, same cfg 7.5, same strength 0.70, same prompt, same negative, plus two ControlNets. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY OUTPUT: (1) the mask PNG is one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, no white at the board's top edge near y~670, none on the guard's FACE (x 531..601 y 355..420) and none on the goblin (x 60..260 y 430..1140); (2) TWO `hint` lines print, each saying 832x1216 MATCHES the init -- a hint of any other size is refused with rc 13 and the job stops here at $0; (3) a `pad_crop region` line prints the box diffusers will crop the init, the mask AND both hints with. If the mask differs from ep2-b08-str70-0820's dry mask at all, something other than the conditioning moved and this job must stop here at $0."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00, 16.47it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  4.99it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.09it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.66it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 2 net(s), scales [1.0, 0.3]
+CHECK_INPUTS wrapped: 0.29.2 asserts the CONTROL image is a single PIL under padding_mask_crop, and the same function requires it to be a LIST under MultiControlNetModel. The branch is skipped and its three real checks are re-run here against the init, the mask and each hint.
+CROP REGION (468, 384, 739, 780) -- vendored == live; the init, the mask and every hint are cropped by this one box
+
+  0%|          | 0/28 [00:00<?, ?it/s]
+  4%|▎         | 1/28 [00:00<00:12,  2.25it/s]
+  7%|▋         | 2/28 [00:00<00:11,  2.25it/s]
+ 11%|█         | 3/28 [00:01<00:10,  2.33it/s]
+ 14%|█▍        | 4/28 [00:01<00:10,  2.33it/s]
+ 18%|█▊        | 5/28 [00:02<00:09,  2.31it/s]
+ 21%|██▏       | 6/28 [00:02<00:09,  2.35it/s]
+ 25%|██▌       | 7/28 [00:03<00:09,  2.32it/s]
+ 29%|██▊       | 8/28 [00:03<00:08,  2.33it/s]
+ 32%|███▏      | 9/28 [00:03<00:08,  2.33it/s]
+ 36%|███▌      | 10/28 [00:04<00:07,  2.32it/s]
+ 39%|███▉      | 11/28 [00:04<00:07,  2.34it/s]
+ 43%|████▎     | 12/28 [00:05<00:06,  2.34it/s]
+ 46%|████▋     | 13/28 [00:05<00:06,  2.33it/s]
+ 50%|█████     | 14/28 [00:06<00:05,  2.34it/s]
+ 54%|█████▎    | 15/28 [00:06<00:05,  2.33it/s]
+ 57%|█████▋    | 16/28 [00:06<00:05,  2.35it/s]
+ 61%|██████    | 17/28 [00:07<00:04,  2.34it/s]
+ 64%|██████▍   | 18/28 [00:07<00:04,  2.32it/s]
+ 68%|██████▊   | 19/28 [00:08<00:03,  2.32it/s]
+ 71%|███████▏  | 20/28 [00:08<00:03,  2.33it/s]
+ 75%|███████▌  | 21/28 [00:09<00:03,  2.32it/s]
+ 79%|███████▊  | 22/28 [00:09<00:02,  2.34it/s]
+ 82%|████████▏ | 23/28 [00:09<00:02,  2.34it/s]
+ 86%|████████▌ | 24/28 [00:10<00:01,  2.34it/s]
+ 89%|████████▉ | 25/28 [00:10<00:01,  2.34it/s]
+ 93%|█████████▎| 26/28 [00:11<00:00,  2.34it/s]
+ 96%|█████████▋| 27/28 [00:11<00:00,  2.34it/s]
+100%|██████████| 28/28 [00:11<00:00,  2.54it/s]
+100%|██████████| 28/28 [00:11<00:00,  2.35it/s]
+WROTE C:\banyan-farm\b08cnetfill-0820\b08-cnetfill-s20260822.png
+WROTE C:\banyan-farm\b08cnetfill-0820\b08-cnetfill-s20260822-mask.png
+WROTE C:\banyan-farm\b08cnetfill-0820\b08-cnetfill-s20260822.png.meta.yaml
+rc=0 render_s=13.2
+==== step s20260822 END rc=0 2026-08-20T15:50:32Z ====
+
+==== step publish START 2026-08-20T15:50:32Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08cnetfill-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetfill-0820\"\nNAMES = [\n    \"b08-cnetfill-s20260822.png\",\n    \"b08-cnetfill-s20260822-mask.png\",\n    \"b08-cnetfill-s20260822.png.meta.yaml\",\n    \"08-first-citizen-eraseonly-0820.png\",\n    \"08-first-citizen-eraseonly-mask-0820.png\",\n    \"b08-openpose-nat-0819.png\",\n    \"b08-board-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-cnetfill-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 9 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b08-cnetfill-0820
+==== step publish END rc=0 2026-08-20T15:50:32Z ====
+#### job ep2-b08-cnetfill-0820-1787240980-againa2e448 finished rc=0 2026-08-20T15:50:32Z
