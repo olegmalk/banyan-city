@@ -5781,8 +5781,41 @@ hand has finished leaving. H3 says a clip frozen hard enough to keep the hand is
 a FAIL — this is the inverse and just as disqualifying: it lost the hand *and*
 froze. Camera locked throughout (corner interframe 0.43 / 0.75).
 
-**h1 is a PARTIAL. The mechanism is confirmed and the beat is not fixed.** h2–h4
-walk the seed and are still on the card; they decide whether f040 is the clause's
-ceiling or this draw's. No promotion either way — `is_show_content: false`
-carried forward from the parent, beat 09 stays a slate, and the adult/adolescent
-read is still an open R4 card.
+**h1 is a PARTIAL. The mechanism is confirmed and the beat is not fixed.**
+
+### h2 and h3 land: THREE FOR THREE ON THE CLAUSE, and the ceiling is the seed's
+
+Same ruler, same boxes, all three against their own f001:
+
+| | hand @f005 | @f010 | @f030 | starts to go | gone | face-band f041–099 | last-20 | camera |
+|---|---|---|---|---|---|---|---|---|
+| **parent** | **46.1 at the first pair** | — | — | f001 | **f008** | — | — | locked |
+| h1 (parent's seed) | 0.43 | 0.78 | 1.25 | f039 | f084 | **2.462** | 0.031 | 0.587 |
+| h2 | 0.73 | 2.00 | 4.72 | **f075** | f081 | 0.988 | 0.034 | 0.301 |
+| h3 | 1.73 | 3.71 | 11.72 | f025 | f081 | 0.687 | **0.410** | 0.330 |
+
+**The clause is the cause, not the draw.** Every seed clears f008 — the frame the
+parent died on — by between seventeen and sixty-seven frames, and the hand is a
+HAND while it lasts: h2 at f008, f030, f050, f070 and f074 is palm and four
+readable fingers, so H2 does not fire. It does not smudge; it shrinks and slides
+off the chin late.
+
+**AND THE PRICE IS VISIBLE ACROSS THE SET.** h2 buys the longest hold, f075, and
+pays for it in the performance — face-band 0.988 against h1's 2.462 on the same
+prompt. h1 and h2 bracket that trade; h3 is simply the bad draw, worst on both.
+Two of three are dead in the last twenty frames (0.031, 0.034) and **all three
+end with his eyes shut**, which fails H4 — the parent's eyes went open → closed →
+open and these do not come back.
+
+**NOTHING IN THE BATCH IS A PASS AND NOTHING IS PROMOTED.** H1 asked for the hand
+at f008, f030 *and* f120; every clip gets the first two and none gets the third.
+**The named next number is now a range, f025–f075, and the honest reading is that
+one sentence moved the failure from "immediately" to "eventually" without
+reaching the end of the clip.** The unspent lever remains the r2s2 crop (1.454x,
+90% of native, sharper hand, shut eye) — a trade the ladder already priced, and
+now the trade to actually consider, because a shut eye at the end is what this
+batch produces anyway.
+
+`is_show_content: false` carried forward from the parent on every job: beat 09
+stays a slate, and the adult/adolescent read is still an open R4 card. h4 still
+on the card.
