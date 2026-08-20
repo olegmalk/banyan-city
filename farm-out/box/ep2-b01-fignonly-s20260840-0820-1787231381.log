@@ -1,0 +1,88 @@
+#### job ep2-b01-fignonly-s20260840-0820-1787231381 attempt 1 start 2026-08-20T13:12:04Z
+
+==== step crop START 2026-08-20T13:12:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b01-nubcomp-b-0818\\b01-nubcomp-s20260826.png", "--sha256", "1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36", "--out", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820-out\\b01-nub-init-704x1280.png", "--size", "704x1280"]
+src 832x1216 sha 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+cover-crop scale=1.0526 -> 876x1280, centre box (86,0)
+WROTE C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\b01-nub-init-704x1280.png
+==== step crop END rc=0 2026-08-20T13:12:04Z ====
+
+==== step encode START 2026-08-20T13:12:04Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820\\b01-jobs-encode.json"]
+-- begin-encode: phys 10.8/68.1GB, commit 12.6/115.3GB (load 15%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  30%|██▉       | 317/1065 [00:00<00:00, 2867.30it/s]
+Loading weights:  57%|█████▋    | 604/1065 [00:00<00:00, 2717.79it/s]
+Loading weights:  83%|████████▎ | 881/1065 [00:00<00:00, 2627.79it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 2818.57it/s]
+-- encode-beat-01: phys 11.9/68.1GB, commit 39.4/115.3GB (load 17%)
+[1/1] encoded beat 1 to C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\b01-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 41.9, "peak_phys_gb": 37.8, "last_stage": "encode-beat-01"}
+==== step encode END rc=0 2026-08-20T13:13:37Z ====
+
+==== step render START 2026-08-20T13:13:37Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820\\b01-jobs-render.json", "--size", "704x1280", "--frames", "121", "--fps", "24", "--guidance", "2.0", "--distilled-sigmas", "--two-stage", "--image-crf", "33", "--offload", "sequential", "--mode", "production", "--task", "ep2-b01-fignonly-s20260840-0820", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820-out\\bench-b01-nubgrow.jsonl", "--bench-label", "ep2-b01-fignonly-s20260840-0820"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 10.8/68.1GB, commit 12.6/115.3GB (load 15%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 11.5/68.1GB, commit 14.5/115.3GB (load 16%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  9.32it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.60it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  7.72it/s]
+Loading checkpoint shards:  75%|███████▌  | 6/8 [00:00<00:00, 10.72it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 12.16it/s]
+-- load-connectors-12.7GB-and-vae: phys 11.6/68.1GB, commit 52.9/115.3GB (load 17%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 73.40it/s]
+-- offload-setup-sequential: phys 11.6/68.1GB, commit 62.5/115.3GB (load 17%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=33 -> C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\cond-crf-01.png
+-- stage1-denoise-352x640-8steps: phys 12.5/68.1GB, commit 62.8/115.3GB (load 18%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:11<08:19, 71.35s/it]
+ 25%|██▌       | 2/8 [01:26<03:49, 38.31s/it]
+ 38%|███▊      | 3/8 [01:36<02:06, 25.39s/it]
+ 50%|█████     | 4/8 [01:46<01:17, 19.47s/it]
+ 62%|██████▎   | 5/8 [01:57<00:48, 16.08s/it]
+ 75%|███████▌  | 6/8 [02:06<00:27, 13.90s/it]
+ 88%|████████▊ | 7/8 [02:16<00:12, 12.45s/it]
+100%|██████████| 8/8 [02:25<00:00, 11.54s/it]
+100%|██████████| 8/8 [02:25<00:00, 18.22s/it]
+stage1 latents (1, 128, 16, 20, 11)
+-- upsample-2x-latent: phys 56.0/68.1GB, commit 65.6/115.3GB (load 82%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 16, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 59.0/68.1GB, commit 68.3/115.3GB (load 86%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:30<01:01, 30.64s/it]
+ 67%|██████▋   | 2/3 [01:03<00:31, 31.91s/it]
+100%|██████████| 3/3 [01:34<00:00, 31.72s/it]
+100%|██████████| 3/3 [01:34<00:00, 31.65s/it]
+-- decode-and-export: phys 64.7/68.1GB, commit 72.6/115.3GB (load 94%)
+[1/1] wrote C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\01-cold-open-LTX-fignonly-s20260840.mp4 in 265s (121 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 12.0GB, device 3.1/26GB)
+THROUGHPUT 0.0190 s(video)/s(wall) (1 x 5.042s of video in 265s)
+bench row -> C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\bench-b01-nubgrow.jsonl
+{"sample_s": 264.7, "peak_gb": 12.0, "peak_commit_gb": 81.8, "frames": 121, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.019, "two_stage": true, "image_crf": 33, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 81.8, "peak_phys_gb": 65.3, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-20T13:18:17Z ====
+
+==== step stamp START 2026-08-20T13:18:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820\\stamp_sidecar.py", "C:\\banyan-farm\\ep2-b01-fignonly-s20260840-0820-out\\01-cold-open-LTX-fignonly-s20260840.mp4.meta.yaml"]
+stamped C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\01-cold-open-LTX-fignonly-s20260840.mp4.meta.yaml
+==== step stamp END rc=0 2026-08-20T13:18:17Z ====
+
+==== step publish START 2026-08-20T13:18:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260840-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260840-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-fignonly-s20260840-0820\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-fignonly-s20260840.mp4*\")\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\")\n               + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-fignonly-s20260840-0820.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"]
+published 6 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b01-fignonly-s20260840-0820
+==== step publish END rc=0 2026-08-20T13:18:17Z ====
+#### job ep2-b01-fignonly-s20260840-0820-1787231381 finished rc=0 2026-08-20T13:18:17Z
