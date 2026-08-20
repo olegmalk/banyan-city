@@ -148,7 +148,15 @@ script_authority: 'Node 002b-first-citizen, approved_by: founder, approved_on: 2
   without R4.'
 
 # --- appended 2026-08-20 by the beat-01 composite lane, after the pixels.
-verdict_this_job: 'NO SWAP, and the reason is not the one this rung expected.
+verdict_this_job: 'SUPERSEDED ON 2026-08-20 BY `verdict_chromaticity_rung_0820` AND
+  `verdict_cut_swapped_0820`, WHICH ARE IN THIS SAME FILE AND SAY THE OPPOSITE. This is rung 1 of 3 on
+  one spec and it is kept verbatim, unedited, because a page that quotes the first `verdict*` key it
+  finds would otherwise print a retracted answer as the current one. THE SWAP DID EVENTUALLY HAPPEN:
+  beat 01 is 01-cold-open-COMP-chroma-s20260840.mp4. What follows is what rung 1 measured and it is
+  still true of rung 1.
+
+
+  NO SWAP, and the reason is not the one this rung expected.
 
   F1 -- the pasted fig, the risk this whole route was warned about -- DID NOT FIRE. F2 fired, and
   the cure named for it turns out to be worse than the disease. And the rung found a third thing
@@ -319,7 +327,11 @@ verdict_this_job_measured:
       taken as a band it tears at y=1000; taken as a whole plate it is a different shot.
     F3_the_composite_wins_the_numbers_and_loses_the_picture: FIRED on the --held-still build, exactly as
       written. 8 of 8 by construction, no seam, and no ambient motion at all.
-verdict_cut: 'NOT PROPOSED FOR THE CUT, and no swap follows. review/ep2-demo-0820 beat 01 is unchanged
+verdict_cut: 'SUPERSEDED BY `verdict_cut_swapped_0820` ON 2026-08-20 — rung 1 of 3, kept verbatim.
+  The cut DID change: beat 01 is 01-cold-open-COMP-chroma-s20260840.mp4.
+
+
+  NOT PROPOSED FOR THE CUT, and no swap follows. review/ep2-demo-0820 beat 01 is unchanged
   and keeps 01-cold-open-LTX-fignonly-s20260840.mp4.
 
 
@@ -447,7 +459,11 @@ verdict_instrument_rung_0820_measured:
   full_clip_with_the_exclusion_switched_on: 110/121 live, max step 1.201, 90% at f110. G5a, G2, H, H1,
     H5 and H6 all unchanged.
   cost: $0, no GPU.
-verdict_cut_unchanged_0820: 'STILL NO SWAP. The precondition was that G1 become scorable and pass; it
+verdict_cut_unchanged_0820: 'SUPERSEDED BY `verdict_cut_swapped_0820` ON 2026-08-20 — rung 2 of 3,
+  kept verbatim. The precondition named below was met by rung 3 and the swap happened.
+
+
+  STILL NO SWAP. The precondition was that G1 become scorable and pass; it
   did neither. review/ep2-demo-0820 beat 01 keeps 01-cold-open-LTX-fignonly-s20260840.mp4. The
   exclusion is NOT adopted as this beat''s scoring configuration -- an instrument that makes the answer
   worse and still leaves it encoder-dependent is not an improvement, and adopting it after seeing what
