@@ -9520,3 +9520,39 @@ pixels. Its `decisions-pending` entry is written and records why its motion spec
 strength rung, not a motion rung, and writing the motion spec first would be
 pre-staging the outcome I want. Today's beat-13 result is that exact case caught
 one card over.
+
+### Same day, later — beat 16's third path closes the set, and it fails the same way
+
+The entry above listed beat 16's large-leaf composite as **open at hand-off**. It
+is not open any more. It was built (`pipeline/beat16_leaf_composite.py`),
+sampled once on the 5090, judged, and it is on the card as section 6. **All three
+open taste cards now have every named option in pixels.**
+
+**FAIL-PASTE.** At 1:1 the flat drawing and the 0.30 render are the same picture.
+Highpass energy inside the mask went **10.45 → 9.41** — it *dropped*, where the
+signature of the pass that works is relocation into edges at roughly constant
+magnitude (beat 06: 19.75 → 19.27). Mean |Δ| inside the mask 6.65 on a **33.86 %**
+mask, against beat 13's *passing* parent at 6.23 on 4.10 %.
+
+**So today produced the same finding twice, on two unrelated beats, and that is
+the transferable result:** *engagement does not predict success.* Beat 13's tall
+plant moved 8.62 and failed; beat 16's leaf moved 6.65 and failed; the canon-height
+plant that works moved 6.23. Mean |Δ| is a filter, never a verdict —
+`composite-init-pattern.md` §7 says so and now has two more instances behind it.
+
+Two observations no bar asked for: the leaf reads as a **mature** tropical leaf
+(banana/rubber plant) — ordinary in outline, which is what the ruling governs, but
+its size and pinnate venation say grown plant, not seedling; and the goblin is not
+"blurred behind" as the brief asks, he is **occluded**, face entirely gone, scalp
+and ears surviving. "The leaf is the subject and he is depth" is half delivered.
+
+**What it does to the ruling:** granting the licence would licence a shot this
+house cannot currently build. Not a reason to refuse it — if the macro is what
+beat 16 should be, it is worth solving and the next step is a **strength** rung,
+not a fourth wording — but the author should know it before granting, and it makes
+**restage** the stronger option. The card says exactly that.
+
+`QA-GATE: PASS routes=81`, re-run after the b16 media was force-added past
+`.gitignore` — the gate caught that omission, which is the **second** time in one
+day the force-add trap has earned the documentation in
+`decisions-pending/ep2-guards-0818/`.
