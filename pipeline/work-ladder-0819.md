@@ -5609,3 +5609,46 @@ LoRA is worse than none. Pre-registered: `sit` and `crouch` fold the skeleton
 into a third of the canvas where §13's binding was measured on upright figures,
 so if those two come back correctly posed AND bobbleheaded, head-to-body binds
 through the span of the whole skeleton rather than through the head keypoints.
+
+#### A CORRECTION TO THE RUNG ABOVE, WRITTEN TWENTY MINUTES AFTER IT
+
+**"n1 — PASS, and the face holds" IS TOO GENEROUS AND I AM STRIKING THE SECOND
+HALF.** The face was read on a six-cell contact sheet. Cropped and enlarged at
+1:1 beside the tile, n1's face is a **FEATURELESS EGG**: two vertical black bars
+on a smooth green oval. No brow bar. No muzzle. **No mouth at all** — not a thin
+one, none. No ear. No shading. The tile has all five.
+
+**And every clause it passed is an ABSENCE.** T1 blank eyes, T2 no nose, T3 no
+age modelling, T7 no patchwork — the whole bar asks what must *not* be there,
+and the tile is made of things that *are*. A frame can therefore pass the entire
+tile bar and not be the character, which is what happened, and the bar earns a
+second half: **P1 brow, P2 muzzle, P3 mouth, P4 shading.**
+
+**The mechanism is the framing dependence canon already records for the cloak,
+running the other way.** `patchwork` paints the skull at close-up and lands on
+cloth at full body. The face wording is **subtractive** — `blank eyes, no nose,
+closed mouth, expressionless` — and subtraction removes the HUMAN features at a
+close-up, where there is detail budget to spare, and removes *everything* at
+full body. **The ratified recipe is a CLOSE-UP instrument.** That is not a
+retraction of the wedge; it is the wedge's scope, discovered by using it outside
+it.
+
+**And the negative has been deleting the tile's second-loudest feature all
+along.** canon's tile read: the eyes sit *"under one heavy dark brow bar"*.
+`thick eyebrows` is in the negative of every rung this lane has fired, inherited
+from a wedge where it was killing a human male's brows.
+
+`ep2-jerry-face-f1/f2/f3-0820` are on the card — f1 drops `thick eyebrows`, f2
+swaps `no nose` for `snout`, and **f3 puts the STRUCK tile wording back at this
+skeleton.** f3 is argued, not smuggled: the strike was about a human male
+**BUILD**, the build is now geometry's job, and canon's own entry says the
+phrase is not what separates the tile from the man — *framing is*. If f3 wins it
+costs this lane a published conclusion, which is why it is in the batch.
+
+**`train-jerry-0820` STAYS HELD, and the arithmetic is unchanged in the only way
+that matters.** Proportion is solved and the frames that solve it are not
+trainable: **six more poses of a blank egg would teach the trigger token a blank
+egg exactly as twelve bobbleheads would have taught it a mascot.** The pose
+batch is still worth its seconds — it answers whether proportion binds across
+poses, which is a separate question — but nothing from either batch enters the
+training set until a face rung passes at 1:1.
