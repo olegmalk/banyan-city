@@ -551,14 +551,104 @@ subjects:
 # have to be hand-written against it rather than drifting in.
 
 - id: ep2-goblin-design-adult
+  # ///////////////////////////////////////////////////////////////////////////
+  # CORRECTED 2026-08-20 (night), BY THE FOUNDER, AND THE CORRECTION IS THE
+  # HEADLINE — read `correction_2026_08_20` BEFORE `what:`. `what:` below is the
+  # 08-19 record and it is kept verbatim because it is what every plate, spec
+  # and verdict between 08-19 and 08-20 was authored under; two of its
+  # sentences are now WRONG and are struck in place. The id keeps the word
+  # `adult` in it on purpose: renaming the subject would orphan every file that
+  # cites it, and the register's job is to make a superseded claim findable,
+  # not to make it disappear.
+  # ///////////////////////////////////////////////////////////////////////////
+  correction_2026_08_20: >-
+    "ADULT" WAS STEWARD DRIFT AND IS STRUCK. THE RULED THING IS THE B TILE'S
+    PIXELS, AND WHAT IS IN THEM IS A CREATURE, NOT A MAN. The founder, 2026-08-20
+    night, verbatim, both sentences:
+
+      "all of the goblin clips today has had him as an adult. very bad character
+      consistency"
+
+    and, shown beat 13's best frame:
+
+      "this is one of the images where the goblin looks like an adult, which is
+      wrong."
+
+    WHAT THIS CHANGES. On 08-19 he pointed at a PICTURE — tile B,
+    review/ep2-goblin-design-0819/adult-b19-0819.jpg, which is the beat 19
+    plate. The steward read that pointing finger as a ratification of the WORDS
+    beside it, `lean wiry adult goblin man, green skin, bald head, patchwork
+    cloak`, and wrote those words into canon. He never ruled on that phrase. He
+    ruled on those pixels. The two are not the same thing and the difference is
+    exactly the defect: the phrase contains `adult` and `man`, the picture
+    contains neither, and every frame authored off the phrase since has drifted
+    toward a human male face.
+
+    THE DESIGN AXIS IS THEREFORE FIDELITY TO THE B TILE'S PIXELS, not agreement
+    with any sentence. The tile is the authority; wording is only ever an
+    attempt to reach it and is falsifiable by comparison against it. Struck
+    from the record below, as drift, both instances: the claim that the identity
+    wording is "FOUNDER-RATIFIED canon from this date", and the gloss "B is the
+    lean adult". B is the CREATURE in that picture.
+
+    WHAT IS LEGIBLY IN THE TILE, written down so the next lane compares against
+    a list and not a memory. Read off adult-b19-0819.jpg at 1:1 beside the
+    08-20 frames:
+      * EYES — BLANK WHITE, no iris, no pupil, no visible sclera/lid structure;
+        two narrow upward-slanting slits under one heavy dark brow bar. This is
+        the single loudest creature cue and it is the first thing a close-up
+        destroys.
+      * NOSE — THERE IS NO HUMAN NOSE. No bridge, no tip, no drawn nostrils; the
+        lower face is a blunt forward muzzle with at most a slit.
+      * MOUTH — a single wide thin lipless line. No lip volume, no philtrum.
+      * EARS — SHORT, BROAD, LOW-SET FLANGES swept back and sitting almost flush
+        at the jawline; they barely break the head's silhouette. They are NOT
+        long tapering elf spikes.
+      * SKULL — a large smooth dome, roughly a fifth of the seated figure's
+        height, with no hair, no hairline, no eyebrows and no occipital step.
+      * NECK — effectively none. The dome sits on sloped narrow shoulders.
+      * SKIN — TWO-TONE: chartreuse/yellow-green over the crown grading to a
+        deeper green across the muzzle and jaw. Not one flat olive.
+      * SURFACE — NO AGE MODELLING AT ALL. No brow furrows, no nasolabial folds,
+        no cheekbone shadow, no jowls. The face is a smooth mask.
+      * BUILD AND STANCE — small, folded, hunched inward, hands clasped between
+        the knees, head sunk into the collar. Not upright, not heroic.
+      * COSTUME — purple cowl-scarf at the neck and shoulders over a ragged
+        patchwork cloak with visible stitch lines.
+
+    THE LOWER HALF IS NOW DECIDED, and it is a STEWARD PICK, coordinator-ratified
+    2026-08-20, not a founder ruling — it is recorded here because the tile
+    itself is ambiguous below the knee and four approved tiles showed four
+    different lower halves: LOOSE RAGGED EARTH-BROWN TROUSERS, BAREFOOT. This
+    DEPARTS FROM THE TILE ON FOOTWEAR and says so rather than pretending to read
+    it out of the pixels — the tile draws wrapped shins and heavy dark boots.
+    Beat 17 already ships barefoot. Anything below the waist is this pick's to
+    change; anything above it is the tile's and is not the steward's to move.
+
+    THE FINDING THAT MAKES THIS ACTIONABLE, and it is not a wording finding.
+    Beat 19 IN THE SHIPPING CUT IS THE TILE — 19-the-drop-dropcomp-0819.mp4 is a
+    deterministic composite over b19-sapgloss-s20260819.png, which is the tile.
+    Its plate prompt is the SAME `lean wiry adult goblin man …` string that
+    produced the man-reads on beats 03, 04, 13 and 20. So the phrase is not what
+    separates the tile from the man: FRAMING IS. The tile is a wide full-body
+    `1boy, solo` with `close-up` in its negative, at which scale the model draws
+    the face as a blank-eyed mask; the closer the crop, the more it resolves
+    that mask into a detailed adult human male. A tile-faithful recipe must
+    therefore name the creature features EXPLICITLY so they survive a close-up,
+    instead of relying on distance to hide the absence of a description.
   what: >-
     WHAT THE GOBLIN IS: a LEAN WIRY ADULT, ruled by the founder 2026-08-19 on
     /review/ep2-goblin-design-0819 with the two creatures side by side —
     "well b definitely and the damn goblin. c kinda is but still pretty bad so
-    change it". B is the lean adult (beats 07, 14, 17, 19); C is the round young
+    change it". B is the lean adult (beats 07, 14, 17, 19)  <<< STRUCK 08-20:
+    B is the CREATURE IN THAT PICTURE, and of those four beats only 19 IS the
+    tile; C is the round young
     one (beats 03, 04, 08, 13, 20) and is to be CHANGED, i.e. re-rendered to the
-    adult. The identity wording `lean wiry adult goblin man, green skin, bald
-    head, patchwork cloak` is therefore FOUNDER-RATIFIED canon from this date;
+    adult  <<< STRUCK 08-20: re-rendered TO THE TILE, and beats 03, 04, 07, 13
+    and 20 all need it. The identity wording `lean wiry adult goblin man, green
+    skin, bald head, patchwork cloak` is therefore FOUNDER-RATIFIED canon from
+    this date  <<< STRUCK 08-20: IT IS NOT, IT IS DRIFT — he ruled the pixels,
+    never this phrase; see correction_2026_08_20 above;
     until this date it was a steward inference, first written 2026-08-13 as "He is
     SHORT, not YOUNG: an adult in miniature, never a child", rewritten into the
     prompt 2026-08-15 by commit 91a35fe1 (which dropped the "short" half), and

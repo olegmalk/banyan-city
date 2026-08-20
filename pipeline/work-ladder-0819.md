@@ -5251,3 +5251,89 @@ The tusk already carries his fingerprint and the card says so rather than posing
 as a fresh oversight — it was dropped by `ep2-b04-goblin-close-0811` after he
 called the close-ups "makign the goblin look too complicated", and what was never
 asked is whether that was permanent or just that one over-stuffed prompt.
+
+---
+
+## THE DESIGN AXIS IS THE TILE, NOT THE WORD "ADULT" (goblin-design audit lane, 2026-08-20 night)
+
+**The founder corrected the premise this lane was working under, twice, in two
+sentences. Verbatim:**
+
+> all of the goblin clips today has had him as an adult. very bad character consistency
+
+and, shown beat 13's best frame:
+
+> this is one of the images where the goblin looks like an adult, which is wrong.
+
+**What that overturns.** On 08-19 he was shown three pictures and pointed at one
+— tile **B**, `review/ep2-goblin-design-0819/adult-b19-0819.jpg`. This lane's
+predecessor recorded the ruling as a ratification of the *words printed beside
+the picture*, `lean wiry adult goblin man, green skin, bald head, patchwork
+cloak`, and wrote that phrase into `pipeline/canon.yaml` as founder-ratified
+canon. **He never ruled on that phrase. He ruled on those pixels.** The phrase
+contains `adult` and `man`; the picture contains neither. Everything authored
+off the phrase since has walked toward a human male face, which is the drift he
+just named. `canon.yaml` `ep2-goblin-design-adult` now carries
+`correction_2026_08_20` and the two false sentences are struck in place.
+
+**The design axis is fidelity to the B tile's pixels.** Wording is an attempt to
+reach them and is falsifiable against them. Pixels for this rung:
+`review/ep2-goblin-design-0819/TILE-VS-CUT-0820.png` — the tile beside beats 04,
+13, 03, 20 and 08 at matched scale, each with its own read named.
+
+**What is legibly in the tile, and legibly missing from the cut** (read at 1:1,
+not remembered):
+
+| attribute | THE B TILE | the 08-20 cut |
+|---|---|---|
+| eyes | **blank white slits**, no iris, no pupil, one heavy brow bar | iris + pupil in a human eye (b04, b20), lids and sclera (b13) |
+| nose | **none** — no bridge, no tip, a blunt muzzle with a slit | full human nose, bridge and nostrils (b03, b04, b13, b20) |
+| mouth | one wide thin lipless line | lip volume, philtrum |
+| ears | **short broad low flanges**, swept back, nearly flush at the jaw | long tapering elf spikes (b04, b14) or rounded human ears (b03, b20) |
+| skull | large smooth dome, ~1/5 of seated height, no occipital step | normal male cranium |
+| neck | effectively none; dome on sloped shoulders | a neck, normal head-to-shoulder ratio |
+| skin | **two-tone** — chartreuse crown → deep green muzzle | one flat olive |
+| surface | **no age modelling at all**, a smooth mask | brow furrows, nasolabial folds, cheekbone shadow, jowls (b20) |
+| stance | small, folded, hands clasped, head sunk in the collar | upright portrait framing, chin level, glowering |
+
+**THE FINDING THAT MAKES THIS FIXABLE, and it is not a wording finding.** Beat 19
+*in the shipping cut is the tile* — `19-the-drop-dropcomp-0819.mp4` is a
+deterministic composite over `b19-sapgloss-s20260819.png`, which **is**
+`adult-b19-0819.jpg`. Its plate prompt is:
+
+> `1boy, solo, lean wiry adult goblin man, green skin, bald head, patchwork cloak, kneeling in a sunny grassy field, …`
+
+— **the same string that produced the man-reads on 03, 04, 13 and 20.** So the
+phrase is not the discriminator. **FRAMING IS.** The tile is a wide full-body
+`1boy, solo` with `close-up` **in its negative**; at that scale animagine draws
+the face as a blank-eyed mask and the creature read is a by-product of distance.
+The closer the crop, the more the model resolves that mask into a detailed adult
+human male — which is exactly why b04 (the tightest crop in the cut) is the worst
+offender and b19 (the widest) is the tile.
+
+> **A tile-faithful recipe must therefore NAME THE CREATURE FEATURES EXPLICITLY
+> so they survive a close-up, instead of relying on distance to hide the absence
+> of a description.** Six years of `lean wiry adult goblin man` said nothing
+> about eyes, nose, ears or muzzle; the engine filled all four in from `man`.
+
+**The lower half is a STEWARD PICK, and it is recorded as one:** loose ragged
+earth-brown trousers, barefoot. **It departs from the tile on footwear** — the
+tile draws wrapped shins and heavy dark boots — and says so rather than
+pretending to read it out of the pixels. Beat 17 already ships barefoot. Below
+the waist is the steward's to change; above it is the tile's and is not.
+
+**Consequences already taken, so no lane re-derives them:**
+
+- `pipeline/canon.yaml` — `correction_2026_08_20` written, both false sentences
+  struck in place. The subject id keeps the word `adult` on purpose: renaming it
+  orphans every file that cites it.
+- `review/ep2-ship-0821/sources/ship-manifest.yaml` — the 04 and 13 swap **stands
+  on mechanism** and its design-axis rationale is retired in place
+  (`design_axis_correction_0820_night` on both rows). Neither take is
+  tile-faithful; the outgoing pair read CHILD, the incoming pair read ADULT MAN.
+- `train-jerry-0820` stays **HELD**. A character LoRA does not average out a
+  wrong premise, it learns it: all 31 curated frames were selected *for* the
+  man-read.
+- `/review/ep2-jerry-face-0820`'s two questions **survive and sharpen** — enormous
+  ears and a broken tusk are creature features, both in `node.md:35`, both lost
+  on the way to the man-read.
