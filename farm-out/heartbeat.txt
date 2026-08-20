@@ -3342,3 +3342,5 @@
 19:50:46Z DONE task=ep2-jerry-pose-reach-0820-1787251927 rc=0 artifacts=1
 19:50:52Z STARTED task=ep2-jerry-pose-sit-0820-1787251922 attempt=1 on box-runner
 19:51:16Z DONE task=ep2-jerry-pose-sit-0820-1787251922 rc=0 artifacts=1
+19:51:26Z STARTED task=ep2-jerry-skel-n6-0820-1787251373 attempt=1 on box-runner
+19:51:51Z DONE task=ep2-jerry-skel-n6-0820-1787251373 rc=0 artifacts=1
