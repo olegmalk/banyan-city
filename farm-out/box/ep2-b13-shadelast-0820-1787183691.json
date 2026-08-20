@@ -1,0 +1,138 @@
+{
+  "id": "ep2-b13-shadelast-0820-1787183691",
+  "task": "ep2-b13-shadelast-0820",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 30,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b13-sapcomp-0820\\b13-sapcomp-s20260820.png",
+        "--sha256",
+        "bb0ad70c4294aa1647a0db1567df30482c97780359adc799818ff1dd88e0f7b2",
+        "--out",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\b13-init-704x1280.png",
+        "--size",
+        "704x1280",
+        "--anchor",
+        "left"
+      ]
+    },
+    {
+      "name": "framing",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\assert_framing.py",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\b13-init-704x1280.png"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\b13-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\b13-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "121",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b13-shadelast-0820",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\bench-b13-shadelast.jsonl",
+        "--bench-label",
+        "ep2-b13-shadelast-0820"
+      ]
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820\\stamp_sidecar.py",
+        "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\13-the-shade-LTX-lastframe-0820.mp4.meta.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing ONE file is a FAIL of the job. No allow_fail anywhere.\nimport hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b13-shadelast-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b13-shadelast-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-shadelast-0820\"\nPAIRS = [\n    (out_dir, \"13-the-shade-LTX-lastframe-0820.mp4\"),\n    (out_dir, \"13-the-shade-LTX-lastframe-0820.mp4.meta.yaml\"),\n    (out_dir, \"b13-init-704x1280.png\"),\n    (out_dir, \"bench-b13-shadelast.jsonl\"),\n    (pay_dir, \"b13-motion-prompt.txt\"),\n    (pay_dir, \"b13-negative.txt\"),\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor d, name in PAIRS:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-shadelast-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(PAIRS) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\13-the-shade-LTX-lastframe-0820.mp4",
+    "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\b13-init-704x1280.png"
+  ],
+  "backlog": {
+    "filed_at": 1787183691,
+    "filed_at_iso": "2026-08-19T23:54:51Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b13-shadelast-0820.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "started_at": "2026-08-20T00:04:32Z",
+  "attempts": 1,
+  "runner_pid": 21356,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-20T00:10:43Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\13-the-shade-LTX-lastframe-0820.mp4",
+    "C:\\banyan-farm\\ep2-b13-shadelast-0820-out\\b13-init-704x1280.png"
+  ]
+}
