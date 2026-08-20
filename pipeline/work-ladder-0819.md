@@ -5886,3 +5886,64 @@ binds, and only at full span). The face is an attribute and the folded silhouett
 is a shape no COCO-18 skeleton describes. **IPA over the openpose skeleton —
 each instrument doing the job the record measured it doing — is the next rung,
 and it is now argued from two independent failures rather than chosen.**
+
+---
+
+## Appended 2026-08-20 by the beat-16 restage lane — the field batch failed on DIALECT, and one word did it
+
+`ep2-b16-field-f1..f4-0820`, four text field plates for the whole-sapling
+restage, off the ratified still recipe with the negative byte-identical and the
+framing clause the only variable. All four rendered, all four judged by eye.
+
+| | F1 clean near foreground | F2 he is DEPTH | F3 one figure | F4 light has direction | F5 cel dialect |
+|---|---|---|---|---|---|
+| f1 `from below, wide shot, horizon` | **fail** — bokeh blur, not a ground plane | pass | pass | pass | **fail** |
+| f2 `from below, wide shot, blue sky, clouds` | marginal | **FAIL** — sharp, and the subject | pass | pass | **fail** |
+| f3 `eye level, medium shot, dense tall grass` | **fail** | **FAIL** — a big sharp portrait | pass | pass | **fail** |
+| f4 `from below, wide shot, sunbeam, backlighting` | marginal | **pass** (best of four) | pass | pass (strongest) | marginal |
+
+**BOTH PRE-REGISTERED FAILURES FIRED.** The predicted one — *"he comes back
+sharp anyway … the goblin pulls focus here even when he is not asked for"* —
+took f2 and f3, which is the 0820 mac-plate failure repeating for the third and
+fourth time. And *"the near foreground is exactly where a sampler likes to put
+its biggest, sharpest blades"* took f1 and f3.
+
+**BUT THE COMMON CAUSE IS NOT FRAMING AND NOT THE GOBLIN. IT IS THE WORD
+`scenery`.** All four came back as *landscape illustration* — photographic
+bokeh, painterly rendering, and on f1 and f4 monumental architecture nobody
+asked for (a vast arch on f1, posts or trunks on f4). That is a different
+dialect from the flat cel with clean ink linework the episode is drawn in, and
+it is why F1 and F5 fail across the whole batch regardless of framing: **you
+cannot draw a sharp cel seedling into a bokeh foreground without it reading as
+a decal**, which is the one failure composite-init-pattern §3 exists to prevent.
+`scenery` bought a vista where the beat needs a shot.
+
+### AND THE PLATE THIS BEAT NEEDS ALREADY EXISTS, IN THE RIGHT DIALECT
+
+`farm-out/ep2-b15-sapcomp-0819/b15-sapcomp-s20260819.png` is flat cel, clean
+ink, correct palette, the scavenger seated in the grass, **and the canon
+two-leaf sapling already drawn and already finished through the 0.30 pass.**
+Everything the four field plates failed at, that plate passes, and it passed
+its own screening.
+
+**One thing is wrong with it for beat 16 and a crop cannot fix it: HE IS BESIDE
+THE PLANT, NOT BEHIND IT.** Beat 16's relation is *the plant is the subject and
+he is depth*; b15's is *both, side by side*. Beat 09 proved this week that
+crop-and-condition survives i2v (2.157x LANCZOS, 105% of frame 1's
+high-frequency energy at f121), so a crop is a legitimate instrument here — but
+no crop moves a figure from beside a plant to behind it.
+
+**So the next rung is neither a fifth wording nor a fifth field.** It is
+`pipeline/beat16_sapling_composite.py` pointed at a seated-figure plate in the
+cel dialect, drawing the sapling LARGE IN THE NEAR FOREGROUND — in front of
+him, which is what puts him behind it. The tool is written, parametric and
+smoke-tested (drawn seedling 62% of frame width, 59% of height, **mask 8.1%**,
+well under the 34% ceiling that the big-leaf composite blew through). What it
+needs is an input plate with him seated and NO plant already in it, so the
+frame does not end up with two saplings against `sapling-two-leaves`. b15's and
+b13's composites both already contain theirs; their pre-composite parents do
+not, and that is the plate to fetch.
+
+**No pick from this batch. Beat 16 stays a slate.** The founder's card
+`/review/ep2-b16-leaf-0820` is still open and unanswered, and nothing here
+forecloses `licence`.
