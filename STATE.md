@@ -9636,3 +9636,14 @@ timeout fails the transformers wheel on this link and leaves a venv whose
 `mac_preflight` prints `torch: MISSING` on a healthy node because it runs under
 CLT python by design; and registering a host is two files, `HOSTS` in
 `mac_enqueue.py` *and* an `~/.ssh/config` alias.
+
+## 2026-08-20 night — deploy truths (diagnosis lane, 54f8a03e)
+banyan.city = git integration on banyan team project prj_EnxZWrm…, nobody
+hand-deploys. -dirty stamp = container droppings + our stamping code (fixed,
+tested). THREE open items: (a) FORCED architecture decision — .git is a
+5.39 GiB pack, Vercel clones take ~1:20 and pushes outrun clones, so prod
+serves ~40 min stale under push floods; options LFS / history trim / batched
+pushes; daytime decision with founder. Mitigation tonight: lanes batch pushes.
+(b) FOUNDER DASHBOARD ACTION: duplicate hobby project
+olegmalkov2023…/banyan-city double-builds every push — disconnect it (card on
+board). (c) .vercel/project.json repointed at the real project (local only).
