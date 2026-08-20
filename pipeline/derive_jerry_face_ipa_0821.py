@@ -97,6 +97,13 @@ REF_SQ = {
             "8752cd49228b0c7ba19a6f541e418beb60fc380290459a2c586d7e46b95c71c8"),
     "k4d": ("jerry-tile-sq75-0821", "0.75", "55.5",
             "f34963347215abc42ab66c8928d48132c32ae9409b0fe5babcb2e65a432837d0"),
+    # k5 walks the SAME axis BELOW k4a, which is where the band's own monotonic
+    # trend puts an eye between k3's 1.24x and k4a's 1.41x -- without the cut.
+    # k5b at 3.9% sits BELOW k3's 5.4% on a square canvas ON PURPOSE.
+    "k5a": ("jerry-tile-sq25-0821", "0.25", "6.1",
+            "02755eb533c45efa12656bbd87062789fa4b5d44fbbf57cd031c06ab833df2d7"),
+    "k5b": ("jerry-tile-sq20-0821", "0.20", "3.9",
+            "f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14"),
 }
 REFS = {"jerry-tile-head-0821": REF_SHA,
         "jerry-tile-headfit-0821": REF_FIT_SHA}
@@ -141,7 +148,7 @@ RUNGS = [
 # production frames: nothing it produces is promoted without being judged, and
 # it exists because the public answer ("make it square, make the subject
 # dominant") brackets our band without picking a point inside it.
-for _sfx in ("k4a", "k4b", "k4c", "k4d"):
+for _sfx in ("k4a", "k4b", "k4c", "k4d", "k5a", "k5b"):
     _name, _frac, _cov, _sha = REF_SQ[_sfx]
     RUNGS.append((
         _sfx, "0.7", _name,
@@ -305,6 +312,8 @@ PARENT_RUNG = {"k1": "ep2-jerry-face-j2-0821",
                "k3": "ep2-jerry-face-k1-0821"}
 PARENT_RUNG.update({s: "ep2-jerry-face-k3-0821"
                     for s in ("k4a", "k4b", "k4c", "k4d")})
+# k5's parent is k4a, the low end of the band it extends downward.
+PARENT_RUNG.update({s: "ep2-jerry-face-k4a-0821" for s in ("k5a", "k5b")})
 
 REF_PROVENANCE = {
     "jerry-tile-head-0821":
@@ -522,6 +531,64 @@ for _s in ("k4a", "k4b", "k4c", "k4d"):
     ONE_SAMPLE[_s] = _K4_SAMPLE
     PREDICTED[_s] = _K4_PREDICTED
 
+# ---------------------------------------------------------------------------
+# k5: the same axis, BELOW k4a. Not a new idea -- an extrapolation from four
+# measured points, which is why it is filed rather than named and held.
+_K5_WHY = (
+    "RUNG %s: k4a's rung with the square reference's head at %s of frame "
+    "instead of 0.30. Same axis, one variable, everything else frozen.\n\n"
+    "WHAT THE k4 BAND ESTABLISHED. On a SQUARE canvas the centre crop is a "
+    "no-op and all four rungs came back HORN-FREE and COWL-FREE, including "
+    "k4a at 8.8%% encoder coverage. The horn was never smallness -- it was "
+    "k3's 416x608 PORTRAIT reference losing the top 30%% of its subject, the "
+    "whole cranial dome, to CLIPImageProcessor's centre crop, with the horns "
+    "growing upward out of that cut.\n\n"
+    "AND WHAT IT COST. Eye size rose monotonically with coverage across the "
+    "band -- 1.41x, 1.70x, 1.94x, 2.10x the tile's relative bounding box -- "
+    "with aspect rounding off from 0.59 to 0.86 against the tile's 0.52. So "
+    "k3's best-in-tree 1.24x was a crippled embedding transferring less of "
+    "everything, and k4a at 1.41x merely ties what j2 draws with NO adapter.\n\n"
+    "WHY BELOW 30%% IS THE NEXT PLACE TO LOOK AND NOT A GUESS. The axis is "
+    "monotonic across four measured points and k4a sits at its low end. The "
+    "trend puts an eye between k3's 1.24x and k4a's 1.41x below 30%% -- and "
+    "there, unlike k3, the subject is INTACT. This rung is an extrapolation "
+    "from the band, not a new idea about the mechanism.")
+
+_K5_SAMPLE = (
+    "TWO RUNGS EXTENDING A CHARACTERISED AXIS, filed after k1, k2, k3 and all "
+    "four k4 rungs were rendered, measured and read at 1:1. The recipe has not "
+    "changed -- same builder, same head pixels, same mask, same scale, same "
+    "seed, same skeleton, same wording -- only the position on an axis whose "
+    "shape is now known from four points. Nothing is promoted, no dataset "
+    "grows, the gate stays shut, and both rungs are judged before anything "
+    "downstream of them is authored.")
+
+_K5_PREDICTED = (
+    "THE TREND SAYS the eye box lands between k3's 1.24x and k4a's 1.41x, "
+    "aspect improves back toward the tile's 0.52 from k4a's 0.59, and "
+    "head_frac drifts a little under the 0.190 authored from k4a's 0.195 -- "
+    "T8 has 0.6 heads of room above the 4.5 bar so it is not the clause at "
+    "risk.\n\n"
+    "k5b IS ALSO A FALSIFICATION TEST AND THAT IS WHY IT IS THE LOWER OF THE "
+    "TWO. At 3.9%% encoder coverage it sits BELOW k3's 5.4%%, on a square "
+    "canvas. The k4 reading says the horn was the CUT and that starvation "
+    "alone does not grow one. IF k5b COMES BACK WITH A HORN, that reading is "
+    "wrong -- coverage has a floor and the horn is a starvation effect after "
+    "all -- and the honest consequence is that the usable window is pinched "
+    "between a horn floor and an eye-size ceiling, which would retire the "
+    "reference route for SIZE outright.\n\n"
+    "IF BOTH COME BACK CLEAN AND NEITHER BEATS 1.4x, the axis is exhausted: "
+    "every point on it has been measured, none passes, and the eye belongs to "
+    "an instrument this route does not contain. I am not filing what that "
+    "instrument is, because the band has already falsified one confident "
+    "reading from this lane tonight.")
+
+
+for _s in ("k5a", "k5b"):
+    WHY[_s] = _K5_WHY % (_s, REF_SQ[_s][1])
+    ONE_SAMPLE[_s] = _K5_SAMPLE
+    PREDICTED[_s] = _K5_PREDICTED
+
 
 def emit(suffix, ip_scale, ref, variable, force=False):
     job_dir = "jerryface-%s-0821" % suffix
@@ -531,11 +598,11 @@ def emit(suffix, ip_scale, ref, variable, force=False):
         fresh={"owner": "goblin reference-route lane, 2026-08-21",
                "why": WHY[suffix], "consumer": CONSUMER,
                "success": (SUCCESS_K4 % (ref, ip_scale)
-                           if suffix.startswith("k4") else SUCCESS % ip_scale)},
+                           if suffix[:2] in ("k4", "k5") else SUCCESS % ip_scale)},
         overrides={"argv:--arm": ARM, "argv:--repo-commit": COMMIT,
                    "key:beat": 2, "key:priority": 28, "key:est_minutes": 4},
         retoken=[(PARENT_DIR_TOKEN, job_dir)],
-        extra={"bar": BAR_K4 if suffix.startswith("k4") else BAR,
+        extra={"bar": BAR_K4 if suffix[:2] in ("k4", "k5") else BAR,
                "failure_predicted_in_advance": PREDICTED[suffix],
                "the_one_variable": variable,
                "the_rung_this_is_one_variable_from": PARENT_RUNG[suffix],
