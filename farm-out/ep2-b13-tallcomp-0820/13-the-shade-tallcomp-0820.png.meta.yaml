@@ -1,0 +1,98 @@
+tool: pipeline/beat13_shade_composite.py --founder-option
+sampler: "NONE -- plain image processing, $0, no GPU, no network"
+what_this_is: >-
+  ANSWER B of the taste question on /review/ep2-b13-shade-0820, drawn so the
+  author can look at it instead of imagining it. The card asks: does the current
+  take satisfy "tips his head sideways into the sapling's hand-sized patch of
+  shade", OR may the plant be drawn TALLER THAN CANON in this one shot so the
+  shade can reach his face? Answer A already had pixels. Answer B had none,
+  because the only tool that can draw it refuses to. This is that refusal
+  deliberately opened, once, under a named flag.
+is_show_content: false
+why_is_show_content_false: >-
+  CARD EVIDENCE, NOT A CUT INIT. Canon says the sapling is ~40 cm and always
+  shorter than he is, in every beat of 002b (node.md:181-187, founder
+  2026-08-16 "thats ridiculous, lmao. the sapling is tiny"). This frame breaks
+  that on purpose, at ~48.7 cm, to show what the exception would look like.
+  Nothing built on it may enter the cut, and canon is unchanged unless and until
+  the author rules "draw it taller" -- at which point the exception gets written
+  into pipeline/canon.yaml AS an exception so it cannot drift.
+init: farm-out/ep2-b13-mac-plate-0819/13-the-shade-mac-plate-r1s1.png
+init_sha256: 20d36a3e92119a0c6795d6969cd6a083ddecda46a1c9bfffdc82d380e46e1c60
+composite_sha256: bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f
+mask_png: farm-out/ep2-b13-tallcomp-0820/13-the-shade-tallcomp-mask-0820.png
+mask_sha256: b1a0fb39d3bd64c2f52ecfc2f8da050e5d2eb9ca560c7541663413c1ff5b51de
+mask_px: 80592
+mask_pct_of_frame: 7.97
+the_one_variable: >-
+  PLANT HEIGHT, and nothing else. Same plate, same palette measured off that
+  plate, same light axis, same drawing primitives, same root position
+  (150, 1160) as the default build. Height 485 px -> 921 px; ~25.7 cm -> ~48.7 cm
+  at this plate's head-derived rate, against canon's ~40 cm.
+geometry:
+  base: [150.0, 1160.0]
+  stem_ctrl: [178.0, 780.0]
+  apex: [140.0, 392.0]
+  stem_w: 26.0
+  blade_rx_ry_angle: [100.0, 59.0, 70.0]
+  blade_aspect: 1.69
+  crown_y: 199
+  drawn_x_extent: [36, 243]
+  plant_px: 921
+checks_still_scored_and_all_PASS: "C1 outside-footprint 0; C2 face box maxdiff 0;
+  C3 whole plant in frame; C6 one drawn component; C8 0 px in the background
+  sprig; C9 darkest solid drawn luma 24 vs the plate's own 23"
+checks_lifted_and_why:
+  C7_NO_DRAW_ABOVE_Y: >-
+    LIFTED. 37224 drawn px above y=640, where the default build requires 0. That
+    guard exists so nothing this tool draws can reach his hands, arms or face --
+    and it IS the refusal the author is being asked to override, so it is
+    measured and printed rather than enforced. Of those 37224 px, ZERO are inside
+    his face box; C2 stayed armed and proves it.
+  C4_crown_at_knee_line: >-
+    REPORTED, NOT SCORED. Crown y 199 against his measured knee line y 595, off by
+    396 px. A plant that clears his knee line is the whole of what answer B asks
+    for, so scoring it would be scoring the answer against the premise.
+what_the_geometry_had_to_obey_and_it_is_a_finding: >-
+  THE PLANT HAD TO FIT A 248 px CORRIDOR. Tall enough to reach his eye line means
+  drawn beside his head, and beside his head there is frame edge at x 2 and face
+  box at x 250 and nothing in between. Three blade angles were built and looked
+  at: +-50 deg runs off the left edge (C3, x min 0), +-58 deg puts 114 px inside
+  his face box (C2), and only +-70 deg clears both -- 34 px of margin left, 7 px
+  right. THE CONSEQUENCE IS VISIBLE AND IS NOT A DRAWING FAULT TO BE FIXED: at
+  +-70 deg the two blades are near-vertical and overlap into a two-lobed mass
+  rather than splaying like the default's. At this framing there is no room for a
+  tall plant to have wide leaves. That is evidence about the SHOT, and it belongs
+  on the card next to the picture.
+one_correction_made_inside_this_build: >-
+  shade(root_anchored=True), founder-option only. The plate's low-pass field is
+  renormalised against `local`, the ambient level where the plant sits. Over a
+  921 px footprint reaching into the bright upper frame that mean jumps
+  101.5 -> 160.9, the root loses its lift (ratio at base 1.488 -> 0.938) and comes
+  out at luma 21.2 against the plate's own darkest 22.9 -- C9 firing correctly on
+  a genuinely too-dark root. `local` is therefore measured over the band the
+  plant is ROOTED in (the lowest quarter of its own y-extent). Root goes to 23.9
+  and C9 passes ON THE DRAWING, not on a moved bar. THE DEFAULT PATH IS UNTOUCHED
+  AND WAS RE-VERIFIED: it still reproduces 9ae127d1... byte for byte, which
+  matters because ep2-b13-sapcomp-0820.yaml asserts that sha before loading a
+  model.
+palette_measured_from_plate:
+  leaf_rgb: [83.0, 117.0, 66.0]
+  stem_rgb: [50.0, 96.0, 57.0]
+  rim_rgb: [18.0, 41.0, 36.0]
+  light_axis: [0.15, -0.988]
+  lowpass_rejected: [0.868, 0.496]
+geometry_is_the_stewards: >-
+  The staging choice in this frame is mine, not the author's, and it is offered
+  as one legible instance of "taller", not as the only one. If he rules B and
+  wants a different height or a different lean, that is a new draw and costs
+  seconds.
+what_this_does_NOT_settle: >-
+  It does not show the shade landing on his face. It shows a plant whose leaves
+  are at his eye line, which is the necessary condition. Whether a 0.30 pass then
+  puts a readable patch of shade on his cheek is the downstream sample
+  (ep2-b13-tallcomp-0820), and it is reported, never assumed.
+approved: false
+provisional: true
+scored: false
+date: '2026-08-20'
