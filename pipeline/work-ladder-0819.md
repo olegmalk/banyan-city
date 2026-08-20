@@ -5666,9 +5666,9 @@ sigmas, two-stage and `--image-crf 10` are rung 1's. **The card's word `trunk` i
 NOT in the prompt: this plate has no trunk in it — the trunk is beat 03's — and
 the cover he leans out from is the tall grass already crossing the foreground.**
 
-**FOUR OF FIVE JUDGED AND THEY AGREE. THE ENGINE PLAYS THE PEEK AS A YAW, NOT
-AS A LEAN.** On s1, s2, s3 and s4 he rotates his head to profile, away from
-camera, and rotates back. Nobody translates: the head and shoulder do not travel
+**ALL FIVE JUDGED. THE ENGINE PLAYS THE PEEK AS A YAW, NOT AS A LEAN.** On s1,
+s2, s3 and s4 he rotates his head to profile, away from camera, and rotates
+back. Nobody translates: the head and shoulder do not travel
 laterally out past the grass and return, they pivot in place. This is rung 1's
 64.7 px "head swing" arriving again — **and rung 1's swing was always a rotation,
 which the ladder recorded as `the gaze was redirected by a head rotation`.**
@@ -5681,6 +5681,7 @@ translation does not get a translation.
 | s2 20260821 | ONE (away-left, back) | **no** — settled by f090 | shut | locked | held |
 | s3 20260822 | ~TWO (away, back, away again) | **yes** | shut | locked | held |
 | s4 20260823 | ONE (away, back) | marginal — settled from f090 | shut | slight reframe, watch it | held |
+| s5 20260824 | looked like TWO+ **lateral** trips | yes | shut | **THE CAMERA MOVED — FAIL** | held |
 
 **s3 is the best of the four** and is the only one that satisfies the card's
 scoring line in spirit — head off the axis and back, twice, with the second trip
@@ -5709,5 +5710,33 @@ exist. **No pick, no `plate_ack`, no cut swap** — the init is also the superse
 adult-man design, named up front in each spec's `the_design_note_up_front`, so a
 pass here is a fact about motion and staging and not a plate choice.
 
-**s5 is still on the card** and is the last one that could show a translation;
-the read above is four of five and says so.
+### s5 IS THE ONE THAT SHOWED LATERAL TRAVEL, AND IT GOT IT BY MOVING THE FRAME
+
+**P4 fired, on exactly one seed of five, in exactly the shape it was
+pre-registered in** — *"a pan reads as a lean at a glance and does not at 1:1
+against the grass in the corners."* At a contact sheet s5 is the best clip in
+the batch: he moves side to side across the frame, repeatedly, still going at
+f120, which is the translation the other four refused. **An eye-first read would
+have picked it.**
+
+The corners say otherwise. Mean absolute luma difference against f001, whole
+frame beside the four corner patches (top corners are true background; bottom
+corners are his cloak and shoulder, so they are expected to move):
+
+| | whole frame | corner mean | **top-right corner** |
+|---|---|---|---|
+| s3 f030 / f060 / f090 / f120 | 26.9 / 25.1 / 2.5 / 27.0 | 2.98 / 4.04 / 3.58 / 3.61 | **1.72 / 1.46 / 0.93 / 2.14** |
+| s5 f030 / f060 / f090 / f120 | 39.6 / 46.7 / 41.9 / 15.3 | 22.2 / 15.5 / 30.4 / 21.1 | **49.4 / 5.4 / 52.2 / 7.7** |
+
+**s3 moves the subject and leaves the world alone; s5 moves the world.** A top
+corner at 49 and 52 is not a subject doing anything — it is the frame
+travelling. s5 is a FAIL and the clip that would have been picked at a glance.
+
+This is the one place tonight where an instrument beat the eye, and it is worth
+keeping as a ruler because it is three lines: **mean abs luma of the two TOP
+corner patches against f001.** Under ~3 the camera is locked; the bottom corners
+are useless on this plate because they are him. It is also the reason the batch
+was five seeds and not one — a single draw of s5 would have shipped a pan.
+
+**All five are in and the read is unchanged: four yaws, no translation, and the
+only translation on offer was the camera's.**
