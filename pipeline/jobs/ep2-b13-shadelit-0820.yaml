@@ -524,3 +524,108 @@ derivation:
     seed:
     - payload b13-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+verdict_0820: 'FAIL ON G8 FOR THE FOURTH TIME -- and the pre-registered most likely
+  outcome, F-EXPOSURE-IS-NOT-THE-SUSPECT, is the one that fired. rc=0, 121 frames, $0.
+  The lift landed and is not in doubt: the clip''s own f000 reads whole-frame mean luma
+  119.86 against shademid''s 97.69, +22.2, matching the +22.3 measured on the plate crop
+  before the job was filed. It bought two things that were not asked for and cost one
+  thing that was. IT REPAIRED SHADEMID''S OWN FAILED SUB-CLAUSE: at f060 shademid shows
+  dome, ear and shoulder with the face pressed into his knee, and shadelit shows a
+  legible face -- brow, eye and frown -- at the frame the parent bar named explicitly.
+  It did NOT cost motion; F-MOTION-COST did not fire. It missed H1''s mean by 0.115. And
+  it did not put a plant-cast shade anywhere near his eyes, because nothing about tone
+  can: his eyes are 300 px above a 60 px seedling. NO PICK, NO CUT: beat 13 stays a slate.'
+
+verdict_measured:
+  G8_THE_PLANTS_SHADE_IS_ON_HIS_EYES: 'FAIL BY EYE, AND ITS NUMERIC INSTRUMENT IS
+    RETRACTED -- I wrote that instrument in this spec and it does not discriminate. As
+    written it PASSES, twice over: at f120 the eye band (290,350,500,410) reads luma
+    107.5 against the forehead band (300,150,480,260) at 210.1, i.e. 102.6 BELOW where
+    the bar asked for 15; and 87.4 above the frame''s p5 of 20.1 where the bar asked for
+    20. IT PASSES JUST AS HUGELY ON THE CONTROL: shademid reads 94.4 against 189.5, 95.1
+    below, p5 11.5. An instrument that passes on the clip already judged G8 FAIL is not
+    an instrument. THE TELL IS THE DISPERSION, again: both fixed bands read std 88-89 at
+    f120 because the head has tipped right over and neither box is on the thing it names
+    any more. Scored by eye at 4x instead, on f120 and f105: his eyes are shaded by his
+    own brow and his own arm, there is no patch with an edge that can be traced to the
+    plant, and the seedling is at the bottom-left of the frame BELOW him. The clause
+    fails and the route is closed -- see the rung note below.'
+  H1_THE_PERFORMANCE_IS_NOT_GIVEN_BACK: 'FAIL ON THE MEAN BY 0.115 AND PASS ON THE LAST
+    TWENTY BY 3.2x, AND THE SHAPE IS THE FINDING RATHER THAN EITHER NUMBER. Face band
+    (250,240,400,360), the same fixed band as rungs 1-3, mean absolute interframe over
+    all 120 pairs: 2.885 against a bar of 3.0 and shademid''s 4.798. Last twenty pairs:
+    3.240 against a bar of 1.0 and shademid''s 2.263. PUBLISHED WITH ITS SHAPE: shademid
+    reads 26.3, 30.9, 34.8, 35.4, 34.4, 32.7, 32.2, 31.1, 28.9, 25.7, 25.2, 22.6 on the
+    step frames from f066 to f099 -- a burst that peaks and decays. shadelit reads 0.1,
+    0.3, 0.6, 0.8, 0.8, 2.3, 8.2, 25.1, 40.7, 44.9, 50.0, 47.5 over the same frames: it
+    is DEAD until about f078 and then goes harder than shademid ever does and is still
+    going at f120. So THE LIFT DID NOT COST MOTION, IT MOVED IT LATER AND MADE IT BIGGER,
+    and the mean is 4% under only because the first two thirds are quieter. Reported as a
+    FAIL of the clause as written because that is what the number says; the pre-registered
+    F-MOTION-COST, which is what the clause was written to catch, DID NOT FIRE.'
+  H2_he_is_still_seated_knees_up_and_the_plant_holds: 'PASS ON BOTH. At f120 he is folded
+    small in the grass with his knees up, satisfying the founder''s 2026-08-18 ruling `no
+    slide, he sits down beside it`. The plant is ONE thin stem with TWO leaves, rooted,
+    read at 2x at f000 f030 f060 f090 f120 -- the blades rotate a few degrees as the
+    frame re-inks and nothing else happens to it. Fourth rung running on this composite;
+    neither F-PLANT-REVERT nor F-PLANT-DISSOLVES fired.'
+  H3_the_sideways_tilt_survives: 'PASS, AND IT ARRIVES LATER, WHICH IS WHY H2''s FACE
+    SUB-CLAUSE IS REPAIRED. Judged 1:1 side by side against shademid at the same frames.
+    Upright at f000; at f060 shademid is already folded face-into-knee and shadelit is
+    tipped with the face still to camera; by f105 and f120 both are fully over on their
+    side with the face rotated back toward the camera. Same destination, different
+    schedule.'
+  A2_the_ratified_adult_holds: 'PASS, WITH THE PROBE RETRACTED AND RE-PLACED -- AND THE
+    RETRACTION SHAPE WAS PRE-REGISTERED IN THIS SPEC. The pre-registered box
+    (286,282,352,336) reads f000 luma 139.4 / R-B 41.8 / std 6.4 -- which confirms the
+    lift arrived, against the 141.3 / 41.0 / 6.6 this lane measured on the lifted plate
+    before the render existed -- and f120 luma 88.5 / R-B 12.0 / std 65.7. std 6.4 ->
+    65.7 is the EXPLOSION shape: a box straddling lit cheek and dark cloak after the head
+    tipped out from under it, exactly as shademid''s did (6.0 -> 56.6). Not scored.
+    Re-placed by eye at 3x on f120 over a printed coordinate grid: temple
+    (200,390,260,440) R 109.4 G 130.8 B 89.2, R-B 20.2, luma 119.7, std 2.2; cheek
+    (345,445,400,490) R 116.0 G 138.1 B 90.7, R-B 25.3, luma 126.1, std 1.8. Against
+    f000: -19.7 and -13.3 luma, both inside the +/-25 bar; -21.6 and -16.5 R-B, both
+    outside +/-15 -- AND SHADEMID''S OWN RE-PLACEMENT READ -17.0 LUMA AND -17.3 R-B, so
+    the R-B drift is this beat''s, not this lift''s. At 1:1 he is the ratified lean adult
+    goblin: green skin, bald, long pointed ears, cloak, one face, one figure.'
+  A5_no_exposure_blowout_MEASURED_AGAINST_THE_LIFTED_PLATE: 'PASS, AND IT IS THE FLATTEST
+    EXPOSURE TRACK IN THE WHOLE SET. Whole-frame mean luma 119.86 -> 119.57, -0.29 across
+    121 frames, against shademid''s +1.71 and a bar of +/-25. Scored against THIS job''s
+    f000 as the spec required.'
+  F_WASHED_CEL: 'DID NOT FIRE. The cloak keeps its ink at 4x and the frame still reads
+    cel-shaded rather than flat. The number behind the eye: frame p5 at f120 is 20.1
+    against shademid''s 11.5 -- lifted, and still black. k = 2.6, which was rejected by
+    eye at 6x on the plate before this job was filed, is where this starts to go.'
+  F_EXPOSURE_IS_NOT_THE_SUSPECT: 'FIRED, AND IT WAS NAMED AS THE MOST LIKELY OUTCOME IN
+    THIS SPEC BEFORE THE PIXELS EXISTED, with the reasoning published rather than
+    reconstructed: beat 13 already had the BRIGHTEST face of the three composite plates
+    (cheek 114.6 against b03''s 101.8 and b15''s 93.3) and only the darkest FIELD, so a
+    tone lift was aimed at pixels that were not the problem. It is worth as much as a pass
+    would have been: exposure now joins wording as an EXONERATED suspect, and both were
+    exonerated by a test written before its own result.'
+
+what_the_next_rung_is: 'NO JOB IS FILED FOR BEAT 13, AND THE REASON IS THAT THE NAMED
+  ROUTE IS ALREADY CLOSED IN THIS REPO''S OWN FILES. G8 needs the plant''s shade to reach
+  his eyes, and there are only two ways to put them in one register: raise the plant, or
+  lower his head. RAISING THE PLANT IS REFUSED BY THE COMPOSITE TOOL ITSELF -- its
+  docstring records that "a 40 cm plant at his exact depth would be 756 px and its crown
+  would land at y 404, which is his BROW ... that is not `beside him at knee height` by
+  any reading, and it is not what the approved line stages"; its geometry() records a
+  placement at his CHEST already rejected by eye as "a flower pinned to his poncho"; and
+  NO_DRAW_ABOVE_Y = 640 exists precisely so nothing this tool draws can reach his hands,
+  arms or face. LOWERING HIS HEAD IS A NEW PLATE WITH A DIFFERENT POSE, which is authored
+  work with its own wording, refs and bar -- not a derivation, and not this lane''s to
+  invent at 09:40 while the card is hungry. UNDERNEATH BOTH IS A QUESTION FOR THE AUTHOR
+  AND IT NOW HAS PIXELS BEHIND IT: the ratified line (2026-08-18) stages him tipping "his
+  head sideways into the sapling''s hand-sized patch of shade -- the only part of him it
+  will cover". Four rungs -- three wordings and one plate tone -- have moved the face band
+  10.80 -> 0.64 -> 4.798 -> 2.885 and the tilt from nothing to fully sideways, and at f120
+  his eyes are still ~300 px above 60 px of leaf. THE SHADE MAY SIMPLY NOT BE FILMABLE AT
+  THIS FRAMING, and that is a staging call, not an engine one. Evidence for one look:
+  farm-out/ep2-b13-shadelit-0820/EVIDENCE-b13-shadelit-vs-shademid-0820.png (six frames of
+  each) and EVIDENCE-b13-f060-face-repaired-0820.png (the f060 and f120 heads at 4x, which
+  is also where the unbudgeted win is visible).'
+
+cost: $0. rtx5090, rc=0, no download, no spend. The plate lift itself was 0 GPU seconds.

@@ -493,3 +493,126 @@ derivation:
     seed:
     - payload b15-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+verdict_0820: 'THE MIDDLE PLACEMENT DREW THE BEAT. rc=0, 121 frames, $0, and this is the
+  first clip in six rungs on this beat where HE TIPS HIS HEAD DOWN AND OVER UNTIL HIS FACE
+  IS AT THE TWO LEAVES -- which is what node.md:98 says beat 15 IS. He leans progressively
+  from f000 to f120, his cheek arrives beside the seedling, the plant stays rooted in the
+  grass, the goblin is in all 121 frames and the camera never moves. judge_clip: FREEZE
+  NONE (rung 4: 5 from f116) and HOLD period 2 / strength 0.559 / 60 distinct pictures /
+  12.0 EFFECTIVE FPS, against period 3 / 40 / 8.0 on every one of the six clips before it
+  -- twice the temporal resolution this family has ever produced. It FAILS H1 as I wrote
+  it and I retract the threshold rather than the clip: 1.5 was invented without
+  calibration and is above anything this engine has produced on this beat at any rung.
+  Two real costs are recorded and neither is the plant count: the leaves DEFORM as he
+  arrives, and his eye linework simplifies at f120. NO PICK, NO CUT -- beat 15 stays a
+  slate and a confirmation seed is already on the card.'
+
+verdict_measured:
+  H1_THE_DEAD_MIDDLE_IS_GONE: 'PASS IN SUBSTANCE, FAIL ON THE THRESHOLD, AND THE
+    THRESHOLD IS RETRACTED WITH ITS CALIBRATION PUBLISHED. As written the clause asked for
+    a step-frame mean of 1.5 with a third of the step frames above 1.0 over f009..f084;
+    measured that way this clip reads 0.549 with 3 of 25. THE INSTRUMENT IS WRONG TWICE.
+    First, it samples every THIRD pair because all six earlier clips read period 3 -- and
+    this one reads PERIOD 2, so "every third pair" no longer lands on the step frames it
+    was written to find. Second, 1.5 was a number I picked with nothing behind it. Scored
+    honestly on ALL pairs f009..f084, whole-frame mean-absolute interframe luma, and the
+    mouth band (300,420,420,500) over the same stretch, with every rung of this beat as
+    the calibration:
+
+        rung 1 listenmotion   0.396   mouth 1.915   (and it lost the plant to a hand)
+        rung 2 listenlast     0.079   mouth 0.200   ("the loosest of all six")
+        rung 4 grassroot      0.166   mouth 0.213   (an open mouth, HELD)
+        rung 5 THIS CLIP      0.623   mouth 1.759
+
+    EIGHT TIMES rung 2 and 3.8x rung 4 on the frame, 8.8x rung 2 on the mouth, and above
+    rung 1 -- whose 0.396 was earned by a disembodied hand holding the plant at eye level.
+    Whole-clip interframe median 0.418 against rung 4''s 0.182, and the largest pair in
+    the clip is 6.83 against rung 4''s 16.66, i.e. more motion spread more evenly and no
+    single lurch. The dead middle is gone. The clause is reported FAILED on its letter and
+    the letter is withdrawn for anyone carrying it forward; S1 on the confirmation seed
+    carries a calibrated 0.30 / 0.80 floor instead.'
+  H2_THE_PLANT_AND_THE_SUBJECT_BOTH_SURVIVE_IT: 'PASS ON THE GATE, WITH A REAL COST
+    RECORDED NEXT TO IT. All 121 frames opened on one sheet: the goblin is present,
+    seated, green, bald, long-eared and cloaked in every one, and there is no mound, no
+    swap and no cut anywhere. The plant is ONE stem and TWO leaves rooted in the grass at
+    f000 f030 f060 f090 f120 -- it never becomes three leaves, a bush, a runner or a
+    second plant, and no hand ever touches it. BUT AT f120 THE LEAVES ARE DEFORMED: read
+    at 2x they have drooped and stretched into two soft lobes and the stem has taken a
+    bend, where at f000 they are two clean ovate blades on a straight stem. This is new
+    -- rung 4 held its blade shape -- and it arrives with the lean, as his head comes into
+    the same space. Not a count failure and not F-PLANT-REVERT; recorded as the price of
+    the thing that worked, so the next lane does not discover it in a screening.'
+  H3_THE_RELOCATION_IS_SMALLER: 'THE INSTRUMENT FAILED AND I AM REPORTING THAT RATHER THAN
+    A NUMBER -- and this spec pre-registered exactly this caution. The f010 eye-band
+    template hits the search boundary at dx -60 dy -48 with a residual of 35 on f060,
+    f087, f105 AND f120 -- four identical boundary hits at a high mad is a tracker with
+    nothing to lock onto, not a 60 px slide. The cause is visible at 1:1: the head does
+    not TRAVEL, it TIPS, so the eye band from f010 no longer exists as a pattern. What can
+    be measured cleanly is the background: the rock template (10,690..170,770) reads dx 0
+    dy 0 at f060, f105 and f120 with residual 3.7-4.0, so the camera is locked. And what
+    the eye sees is the opposite of rung 4''s defect: rung 4 slid 184 px RIGHT, away from
+    the plant, and sat back; this clip leans LEFT AND DOWN, toward the plant, and arrives
+    at it. The clause as written cannot separate those two, and it should be rewritten as
+    a distance-to-plant measure rather than a displacement one.'
+  H4_no_terminal_freeze_and_no_stillness_tax: 'PASS ON BOTH, AND THE PERIOD IS THE
+    HEADLINE. judge_clip: FREEZE none, against rung 4''s 5 frames dead from f116 and a bar
+    of "none, or shorter than 5". HOLD strength 0.559 against a bar of 0.638 and rung 4''s
+    0.638. AND HOLD PERIOD 2, 60 DISTINCT PICTURES, 12.0 EFFECTIVE FPS -- every other clip
+    in this family, including both controls and all three sibling beats, reads period 3 /
+    40 / 8.0. ncc 0.94758..1.00000. The void condition does NOT fire: period 2 is not
+    period 1, the largest whole-frame pair in the clip is 6.83 against a median of 0.418,
+    and the 121-frame sheet shows no cut. Whether one inserted sentence bought MOTION or
+    bought TEMPORAL RESOLUTION is not separable from this one clip, and it is
+    pre-registered on the confirmation seed as F-PERIOD-REVERTS.'
+  H5_the_beat_still_reads: 'PASS, WITH ONE REGRESSION NAMED. He is seated in the grass
+    with his knees up and both hands on his knees at f120 -- he never stands, never leaves
+    frame, never touches the plant. His mouth is open and dark at f030, f060 and f090,
+    read at 4x, and the mouth band carries 1.759 through the middle where rung 4 held an
+    open mouth at 0.213. THE REGRESSION: at f120 his visible eye has simplified to a blank
+    white almond with the iris gone, and the face generally is looser than at f000. It is
+    a drawing-quality drift, not an identity drift (see A2), and it is worth an author''s
+    eye because it lands on the beat''s money frame.'
+  A2_the_ratified_adult_holds: 'PASS. The pre-registered box (302,408,356,448) reads f000
+    luma 90.4 / R-B 18.0 / std 15.7 and f120 luma 66.7 / R-B 1.5 / std 36.4. RETRACTED AS
+    SCORED on the dispersion rule: std 15.7 -> 36.4 is the INFLATION shape, a box that has
+    come to straddle an edge as the head tipped and the cloak moved under it -- the same
+    shape beat 13 showed at 6.0 -> 85.0, and the more dangerous of the two because an
+    inflated std looks like a subject that changed. Re-placed by eye at 3x on f120 over a
+    printed coordinate grid, cheek below the dome and clear of the ink: (225,320,285,365)
+    R 76.6 G 115.0 B 54.4, R-B 22.2, luma 96.6, std 11.2. Against f000: +6.2 luma and
+    +4.2 R-B, both well inside the +/-25 and +/-15 bars, with the dispersion in the same
+    range (11.2 against 15.7). Two neighbouring placements agree within 6 luma. At 1:1 he
+    is the ratified lean adult goblin: green skin, bald, long pointed ears, cloak, one
+    face, one figure.'
+  A3_camera_locked: PASS. Background rock template dx 0 dy 0 at f060, f105 and f120,
+    residual 3.7-4.0. The frame looks recomposed and is not; what moves is him.
+  A5_no_exposure_blowout: PASS. Whole-frame mean luma 158.68 -> 156.25, -2.43 across 121
+    frames, and honest -- the subject is in frame throughout.
+  F_MIDDLE_IS_A_CUT: DID NOT FIRE, a third beat for three. `HALFWAY THROUGH THE SHOT` was
+    read as a moment. No shot change, no relocation to a new scene, largest whole-frame
+    interframe 6.83.
+  F_SUBJECT_RELOCATES_AGAIN: 'DID NOT FIRE IN THE SHAPE IT WAS NAMED. It was pre-registered
+    as the most likely failure of this rung, on the argument that the midpoint anchor sits
+    in the wrong sentence for frames f087..f105. Rung 4''s slide-right-and-sit-back is
+    gone; what replaced it is a lean toward the plant, which is the beat. The prediction
+    was wrong in the useful direction and the reasoning behind it was not: a midpoint
+    placement DID reach the end of the clip on this beat, which is a finding the b03 and
+    b13 rungs could not supply.'
+
+what_the_next_rung_is: 'ALREADY FILED AND ON THE CARD: ep2-b15-listenmid-s2-0820, the same
+  prompt and the same init at seed 20260821. Five rungs at one seed made them true controls
+  of each other and left reproducibility across draws the one unmeasured thing, and this is
+  the clip that would go in front of the founder -- beat 14''s crf-10 rung is the precedent
+  for asking, believed until its second seed cost movement. NOT FILED and named instead:
+  (a) a wording rung -- there is none left that this lane can justify, the plant clause is
+  closed at rung 4 and the placement axis has had its terminal and its middle; (b) the
+  leaf deformation and the f120 eye simplification, which are quality drift on a passing
+  clip and belong to an author''s look, not to a fifth wording; (c) the plate question the
+  b15 lane already owns -- at f000 the plate puts his face ~160 px from the leaves where
+  the script says a hand''s width, and this clip closes that distance by LEANING rather
+  than by the plate being right. Evidence, committed:
+  farm-out/ep2-b15-listenmid-0820/EVIDENCE-b15r5-all-121-frames-0820.png,
+  EVIDENCE-b15r5-the-lean-0820.png and EVIDENCE-b15r5-f000-vs-f120-0820.png.'
+
+cost: $0. rtx5090, rc=0, no download, no spend.

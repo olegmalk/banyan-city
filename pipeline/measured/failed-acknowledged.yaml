@@ -186,6 +186,25 @@ acknowledged:
     is already committed at an asserted sha. RE-RUNNABLE UNCHANGED; not re-queued by the night-close lane
     because the rung belongs to the beat-19 composite lane and box_enqueue idempotency is a known-open gap.'
   doc: pipeline/jobs/ep2-b19-sapmid-0819.yaml -> outcome_0819
+- id: ep2-b08-twins-sample-0819-1787168798
+  group: guard-refusal
+  why: 'rc=12 at the SECOND step, 2026-08-19T19:47:02Z, and A GUARD REFUSED IT ON PURPOSE -- this is the
+    one row in this file that is not a defect at all. controlnet_plate.py keeps a CONTROLNETS allowlist
+    because the licence travels with the NAME, and this job passed it a local DIRECTORY,
+    C:\banyan-farm\cnet-openpose-twins: xinsir ships the twins variant as a second blob inside the openpose
+    repo and from_pretrained cannot load a weight by filename, so ep2-b08-twins-fetch-0819 had renamed our
+    copy into a loadable directory -- after which the only name the driver ever saw was a path, and a path
+    carries no terms. The driver refused rather than record a render under the wrong licence, and its
+    refusal named the two nets it would accept. Its own preflight had already passed: the 2502139104-byte
+    blob re-hashed to sha 54a2afb1..., config and staged driver and hint all verified, so no GPU second and
+    no download was wasted -- the refusal cost 1 second. FIXED THE SAME EVENING by adding the path to the
+    table WITH ITS REAL LICENCE rather than by weakening the guard (commit 7a7e6c4b, "the twins weights can
+    only be named by a path, and a path carries no licence"), and the successor
+    ep2-b08-twins-sample-0819-1787169144 -- filed 346 s later -- is in done/. Superseded, not live. The
+    guard should not be softened: thibaud''s SDXL openpose inherits CMU OpenPose''s non-commercial terms at
+    the weights level and MistoLine carries a standing visible-attribution obligation, which is exactly the
+    class of mistake an unlisted path would launder.'
+  doc: pipeline/controlnet_plate.py CONTROLNETS (the path entry and its comment) + commit 7a7e6c4b
 count_note_0819: 'The `count: 39` field at the top of this file is STALE and was already stale before this
   entry: `acknowledged` held 41 rows against it. Left as measured rather than silently corrected, because the
   number is written by a measuring pass with its own `measured_at` (2026-08-18T17:29Z) and hand-editing it
