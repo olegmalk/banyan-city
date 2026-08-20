@@ -185,6 +185,14 @@ def main() -> int:
                     help="Gaussian feather radius as a fraction of the dilation radius")
     ap.add_argument("--no-gain-match", action="store_true",
                     help="paste the grow patch at its own exposure (publishes the seam)")
+    ap.add_argument("--gain-mode", choices=("luma", "chroma"), default="luma",
+                    help="luma (default): ONE scalar ring gain, multiplicative on RGB, which leaves "
+                         "chromaticity -- and so HSV hue and saturation -- exactly unchanged. "
+                         "chroma: THREE per-channel ring gains, a von Kries diagonal correction that "
+                         "matches the patch's colour balance to the held field's as well as its "
+                         "brightness. chroma CAN move the fig's hue and saturation and therefore CAN "
+                         "reach the G2 end-state clause; do not run it without pre-registering that "
+                         "cost, because a rung that buys G1 by spending G2 has bought nothing.")
     ap.add_argument("--gain-clamp", type=float, default=2.0)
     ap.add_argument("--held-still", action="store_true",
                     help="take the ENTIRE field from the held clip's f000 on every frame -- "
@@ -289,6 +297,7 @@ def main() -> int:
 
         # ---- ring gain match ------------------------------------------------
         gain = 1.0
+        chan_gain = [1.0, 1.0, 1.0]
         if not a.no_gain_match:
             ring = dilate_disk(matte, max(8, d)) & (~matte)
             if ring.sum() >= 200:
@@ -296,9 +305,17 @@ def main() -> int:
                 lh = float(np.median(luma(held_rgb)[ring]))
                 if lg > 1e-3:
                     gain = lh / lg
+                if a.gain_mode == "chroma":
+                    gm = np.median(src_rgb[ring], axis=0)
+                    hm = np.median(held_rgb[ring], axis=0)
+                    chan_gain = [float(hm[c] / gm[c]) if gm[c] > 1e-3 else 1.0 for c in range(3)]
             gain = float(min(max(gain, 1.0 / a.gain_clamp), a.gain_clamp))
+            chan_gain = [float(min(max(g, 1.0 / a.gain_clamp), a.gain_clamp)) for g in chan_gain]
 
-        patch = np.clip(src_rgb * gain, 0, 255)
+        if a.gain_mode == "chroma" and not a.no_gain_match:
+            patch = np.clip(src_rgb * np.array(chan_gain)[None, None, :], 0, 255)
+        else:
+            patch = np.clip(src_rgb * gain, 0, 255)
         al = alpha[..., None]
         comp = held_rgb * (1.0 - al) + patch * al
 
@@ -319,6 +336,8 @@ def main() -> int:
             "matte_over_fig": round(float(matte.sum()) / max(1.0, float(m.sum())), 3),
             "dilate_px": d, "feather_px": round(a.feather_frac * d, 2),
             "gain": round(gain, 4),
+            "channel_gain": [round(g, 4) for g in chan_gain],
+            "channel_gain_spread": round(max(chan_gain) - min(chan_gain), 4),
             "blend_zone_px": int((alpha > 0.0).sum()),
         })
 
@@ -336,8 +355,9 @@ def main() -> int:
         "blend_zone_masks": os.path.abspath(a.out_blend) if a.out_blend else None,
         "blend_zone_is_what_fig_track_must_exclude_from_its_ring": True,
         "gain_match": not a.no_gain_match,
+        "gain_mode": a.gain_mode,
         "held_still_whole_field_constructed_not_measured": bool(a.held_still),
-        "gain_is_multiplicative_on_rgb_so_hue_and_sat_are_unchanged": True,
+        "gain_is_multiplicative_on_rgb_so_hue_and_sat_are_unchanged": a.gain_mode == "luma",
         "frozen_bands_constructed_not_measured": [{"y0": y0, "y1": y1} for y0, y1 in bands],
         "detector_dead_frames_on_grow": dead,
         "held_on_dead_frames": held_on_dead,
