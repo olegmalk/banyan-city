@@ -4876,3 +4876,67 @@ every time.** Deterministic property of the crop.
 **Licensed and cheap:** a compositor pass carrying the plate's own ink over the
 fill (no GPU), and the txt2img route with those four findings as its brief.
 **Beat 08 keeps `ep2-b08-scale30-0820`; nothing staged.**
+
+
+### The instrument rung was taken the same hour, and the mechanism it named was wrong
+
+`ep2-b01-figcomp-heldfield-0820`, instrument rung. **G1 is still VOID, so there is
+still no swap.** Logged at a success's weight because the next lane must not spend
+a fire re-deriving this.
+
+**Built exactly as filed.** `fig_track --exclude-masks` / `segment_frame(exclude=…)`
+takes a region the background annulus may not use; `fig_composite --out-blend`
+writes it — every pixel where `alpha > 0`, so the feathered middle *and* the
+pure-grow halo, because a pure-grow pixel sitting in a held-clip background is a
+discontinuity in **which film** the field came from. Handed over, never inferred.
+
+**It does not rescue f001.**
+
+| encode | sep without exclusion | sep with it |
+|---|---|---|
+| PNG, no encode | 1.764 dead | **1.747** dead |
+| libx264 crf 0 | 1.883 dead | **1.651** dead |
+| libx264 crf 10 | 1.883 dead | **ring starved → VOID** |
+| libx264 crf 14 | 1.838 dead | **1.752** dead |
+| libx264 crf 18 | 2.178 ok | **3.084** ok |
+| libx264 crf 23 | 2.248 ok | **3.236** ok |
+
+Sideways and slightly *down* against a 2.00 gate, flipping at exactly the same
+point in the sweep — and across the full clip it **costs ten live frames**,
+120/121 → **110/121**, max step 1.068 → 1.201. At small radii the blend zone eats
+the annulus and leaves a 711–1001 px sliver hugging the excluded boundary, which
+the **40 px ring floor wrongly accepts**. That is a second defect, found here and
+deliberately *not* fixed here: the floor is a constant every published verdict was
+scored under, and raising it having just seen which way it moves this clip would be
+choosing an instrument to get an answer.
+
+**The mechanism is real; it is just not the one that decides f001.** Where clean
+background is plentiful the exclusion is a clear win (crf 18: 2.178 → 3.084). The
+selftest pins it — under annulus contamination of σ 0/15/40 the plain reading runs
+71.12 → 18.57 → dead while the excluded reading is **70.754 every time**, invariant
+to the contamination, which is the entire claim.
+
+**And the good news, measured rather than assumed: the encoder dependence is NOT
+systemic.** Full-clip sweep — 120/121 at PNG, crf 0, 10, 14 and 121/121 at crf 18,
+23, with the dead list **exactly `[1]` or `[]`** in every row and max step and f90 %
+stable at 1.068–1.229 / f107–f108. **One frame moves.** Every other G1 verdict in
+this tree is untouched, and both ingredients re-score digit for digit under the new
+build (fignonly 121/121, 1.084, f108, 293.9/0.788; figcrf10 105/121, 1.404, f050).
+The composite mp4 also rebuilds to the identical sha — `--out-blend` changed no pixel.
+
+**Not adopted.** The exclusion is committed as a tool and is *not* switched on for
+beat 01: an instrument that makes the answer worse and still leaves it
+encoder-dependent is not an improvement. 18/18 selftest, six frame-backed checks
+unchanged, and the first new one is the guard that matters — *an empty exclusion
+changes not one published number*.
+
+**Where the evidence actually points now.** Both ingredients clear the same gate at
+the same frame on their own pixels — grow 2.27, held 2.90 — and only the composite
+sits on it. The fig is film A, the background is film B, and the gain match is
+deliberately multiplicative so it leaves chromaticity untouched; a chromaticity
+offset between the two renders therefore lands straight in the statistic the gate
+reads. **That is a picture rung, not an instrument rung** — match the patch's
+chromaticity as well as its luma — **and its cost must be pre-registered before it
+runs**, because unlike the luma match it *can* reach G2, and a rung that quietly
+buys G1 by spending G2 has bought nothing. Ring geometry is closed. Encode-picking
+is still not licensed, and the table above is exactly why it is named twice.

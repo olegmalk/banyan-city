@@ -378,3 +378,99 @@ what_this_licenses_after_the_verdict: 'THE LOCALISATION ROUTE IS OPEN AND THE CO
   field, it is R4, and it is deliberately not being asked yet: it should be asked once, with pixels,
   alongside a heldfield build whose G1 can actually be scored. The clip is built and sha''d so that ask
   costs nothing when it comes.'
+
+# --- appended 2026-08-20 by the beat-01 composite lane, after taking this spec's own named next rung.
+verdict_instrument_rung_0820: 'THE RUNG THIS SPEC LICENSED WAS TAKEN AND IT FAILED. G1 IS STILL VOID,
+  the swap precondition is not met, and beat 01 is unchanged. Recorded at the same weight as a
+  success, because the mechanism named in what_this_licenses_after_the_verdict was wrong and the next
+  lane must not spend a second fire on it.
+
+
+  WHAT WAS PREDICTED: that fig_track''s background annulus was landing inside the compositor''s feather
+  at the fig''s smallest radius, that the mixed field there inflated the ring MAD, and that handing the
+  detector the blend zone would lift f001 over the 2.00 separability gate and make G1 readable in a
+  direction no encoder could flip.
+
+
+  WHAT HAPPENED: separability at f001 went 1.764 -> 1.747 on the PNG frames and 1.883 -> 1.651 at
+  crf 0. Sideways, and slightly DOWN. The clause still flips at exactly the same point in the encode
+  sweep -- dead at PNG / crf 0 / crf 10 / crf 14, live at crf 18 / crf 23 -- so nothing about G1''s
+  unscorability changed. And across the full 121 frames the exclusion COSTS ten live frames,
+  120/121 -> 110/121, with max single-frame step rising 1.068 -> 1.201.
+
+
+  WHY IT COSTS FRAMES: at small radii the blend zone eats the annulus. The excluded ring at f001 is
+  711 to 1001 px hugging the excluded boundary, against 6907 px once the fig is large enough for the
+  outward fallback to fire. The 40 px ring floor accepts that sliver as a background model when it
+  should not. That is a SECOND defect, found by this rung, and it is deliberately NOT fixed here: the
+  floor is a constant every published verdict in this tree was scored under, and raising it now --
+  having just seen which way it moves this clip -- would be choosing an instrument to get an answer.
+  It needs a number set from first principles and pre-registered.
+
+
+  THE MECHANISM IS REAL, IT IS JUST NOT THE ONE THAT DECIDES f001. Where clean background is
+  plentiful the exclusion is a clear improvement: crf 18 separability 2.178 -> 3.084, crf 23 2.248 ->
+  3.236. The selftest pins it -- under annulus contamination of sigma 0 / 15 / 40 the plain reading
+  runs 71.12 -> 18.57 -> dead while the excluded reading is 70.754 at every level, i.e. invariant to
+  the contamination, which is the whole claim of the fix.
+
+
+  AND ONE PIECE OF GOOD NEWS, MEASURED RATHER THAN ASSUMED: the encoder dependence is NOT systemic. The
+  full-clip sweep is 120/121 at PNG, crf 0, crf 10 and crf 14 and 121/121 at crf 18 and crf 23, with the
+  dead list exactly [1] or [] in every case and max step and the f90% frame stable at 1.068-1.229 and
+  f107/f108. ONE FRAME moves. Every other G1 verdict this tree has published is untouched by this, and
+  the two ingredient clips re-score digit for digit under the new build.'
+verdict_instrument_rung_0820_measured:
+  instrument_validated_before_use: 'Both ingredients re-scored with the modified fig_track and NO
+    exclusion, reproducing their published verdicts exactly: fignonly 121/121 live, max step 1.084,
+    90% at f108, hue 293.9 / sat 0.788, shaft -0.324 / sapling 0.055 / grass 0.038, luma +10.85;
+    figcrf10 105/121, 1.404, f050, shaft 0.982 / sapling 0.734 / grass 0.062, luma +0.92. The
+    composite mp4 also rebuilds to the identical sha 796a283b...67ced, so --out-blend changed no pixel.'
+  f001_separability_with_and_without_the_exclusion:
+    png_no_encode: [1.764, 1.747]
+    libx264_crf_0: [1.883, 1.651]
+    libx264_crf_10: [1.883, 'ring starved -> VOID']
+    libx264_crf_14: [1.838, 1.752]
+    libx264_crf_18: [2.178, 3.084]
+    libx264_crf_23: [2.248, 3.236]
+    gate: 2.00
+    note: left value is without the exclusion, right value is with it.
+  full_clip_liveness_across_the_encode_sweep:
+    png_no_encode: [120, 1.072, 108]
+    libx264_crf_0: [120, 1.086, 108]
+    libx264_crf_10: [120, 1.083, 108]
+    libx264_crf_14: [120, 1.068, 107]
+    libx264_crf_18: [121, 1.172, 108]
+    libx264_crf_23: [121, 1.229, 107]
+    note: '[live frames of 121, max single-frame step, frame at 90% of growth]. The dead list is
+      exactly [1] or [] in every row -- the encoder moves ONE frame and nothing else.'
+  full_clip_with_the_exclusion_switched_on: 110/121 live, max step 1.201, 90% at f110. G5a, G2, H, H1,
+    H5 and H6 all unchanged.
+  cost: $0, no GPU.
+verdict_cut_unchanged_0820: 'STILL NO SWAP. The precondition was that G1 become scorable and pass; it
+  did neither. review/ep2-demo-0820 beat 01 keeps 01-cold-open-LTX-fignonly-s20260840.mp4. The
+  exclusion is NOT adopted as this beat''s scoring configuration -- an instrument that makes the answer
+  worse and still leaves it encoder-dependent is not an improvement, and adopting it after seeing what
+  it does to a verdict would be the thing this lane keeps refusing.'
+what_this_licenses_after_the_instrument_rung: 'THE RING-GEOMETRY ROUTE IS CLOSED. Do not re-file it.
+  Measured: excluding the blend zone moves f001 by 0.017 the wrong way and costs ten frames elsewhere.
+
+
+  WHAT THE EVIDENCE NOW POINTS AT is not the instrument at all. Both ingredients clear the same gate at
+  the same frame on their own pixels -- grow 2.27, held 2.90 -- and only the composite sits on it. The
+  composite''s fig is film A and its background is film B, and the gain match is deliberately
+  multiplicative so that it leaves chromaticity untouched. A chromaticity offset between the two
+  renders is therefore carried straight into the one statistic the gate reads. That is a PICTURE rung,
+  not an instrument rung: match the imported patch''s chromaticity to the held field''s as well as its
+  luma. ITS COST MUST BE PRE-REGISTERED BEFORE IT IS RUN, because unlike the luma match it CAN reach
+  G2 -- hue 270-320, sat >= 0.60 -- and a rung that quietly buys G1 by spending G2 has bought nothing.
+
+
+  ALSO OPEN, AND BIGGER THAN THIS BEAT: the 40 px ring floor accepts a background model of 711 px
+  hugging an excluded boundary. That constant is in every verdict this tree has published. It should be
+  set from first principles and pre-registered, and then everything re-scored under it -- not nudged
+  now, in the middle of a clip whose verdict it would change.
+
+
+  STILL NOT LICENSED: choosing an encode. The sweep above makes crf 18 and 23 look free and they are
+  not; it is the same move as picking the instrument, and it is named here twice for that reason.'
