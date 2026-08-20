@@ -431,27 +431,61 @@ payload:
     ]}\n        control_kwargs[\"control_guidance_start\"] = CONTROL_GUIDANCE[0]\n        control_kwargs[\"\
     control_guidance_end\"] = CONTROL_GUIDANCE[1]\n        print(\"PIPELINE %s, %d net(s), scales %s\"\
     \n              % (pipeline_class, len(nets),\n                 control_kwargs[\"controlnet_conditioning_scale\"\
-    ]), flush=True)\n\n    blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else\
-    \ mask\n\n    # ---- ALIGNMENT, CHECKED AGAINST THE LIVE METHOD RATHER THAN ASSERTED.\n    # diffusers\
-    \ derives ONE crops_coords from this blurred mask and applies it to\n    # the init, the mask and\
-    \ every control image. If the installed version's\n    # get_crop_region disagrees with the copy vendored\
-    \ above, the box written\n    # into the sidecar would be fiction and the hint's alignment would be\n\
-    \    # unverified -- so it is a hard stop. Control runs only: the no-control path\n    # must stay\
-    \ the path six filed verdicts were measured on.\n    if controls and a.pad_crop:\n        live = tuple(int(v)\
-    \ for v in pipe.mask_processor.get_crop_region(\n            blurred, W, H, pad=a.pad_crop))\n   \
-    \     if live != tuple(region):\n            print(\"!! CROP REGION DISAGREES WITH THE VENDORED COPY\
-    \ -- refusing.\\n\"\n                  \"   vendored %s\\n   diffusers %s\\n   The hint is cropped\
-    \ by \"\n                  \"diffusers' box, so a sidecar carrying a different one cannot \"\n   \
-    \               \"be trusted about alignment.\" % (tuple(region), live), flush=True)\n           \
-    \ return 14\n        print(\"CROP REGION %s -- vendored == live; the init, the mask and every \"\n\
-    \              \"hint are cropped by this one box\" % (live,), flush=True)\n\n    kwargs = dict(prompt=prompt,\
-    \ negative_prompt=negative, image=plate,\n                  mask_image=blurred, width=W, height=H,\n\
-    \                  num_inference_steps=a.steps, guidance_scale=a.cfg,\n                  strength=a.strength,\n\
-    \                  generator=torch.Generator(\"cuda\").manual_seed(a.seed))\n    if a.pad_crop:\n\
-    \        kwargs[\"padding_mask_crop\"] = a.pad_crop\n    kwargs.update(control_kwargs)\n\n    t1 =\
-    \ time.time()\n    out = pipe(**kwargs).images[0]\n    render_s = time.time() - t1\n\n    out.save(a.out)\n\
-    \n    versions = {\"python\": sys.version.split()[0], \"torch\": module_version(\"torch\"),\n    \
-    \            \"diffusers\": module_version(\"diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"\
+    ]), flush=True)\n\n        # ---- A COPY-PASTE BUG IN 0.29.2's check_inputs, AND THE PROOF IS\n  \
+    \      # ---- INSIDE check_inputs ITSELF.\n        # `__call__` passes CONTROL_IMAGE as the parameter\
+    \ that function calls\n        # `image`. Its padding_mask_crop branch then says:\n        #     if\
+    \ not isinstance(image, PIL.Image.Image):\n        #         raise ValueError(\"The image should be\
+    \ a PIL image when\n        #                           inpainting mask crop, ...\")\n        # --\
+    \ which is lifted verbatim from the plain inpaint pipeline, where\n        # `image` IS the init.\
+    \ Twenty lines further down the SAME function\n        # requires that same argument to be a LIST\
+    \ whenever the controlnet is a\n        # MultiControlNetModel (\"For multiple controlnets: `image`\
+    \ must be type\n        # `list`\"). The two clauses contradict each other, so with two nets the\n\
+    \        # call can never be valid, and with one net the check passes only by\n        # accident\
+    \ -- it happens to be looking at a PIL image that is not the\n        # one it was written to guard.\
+    \ The init, which the branch MEANT, is\n        # never type-checked by this pipeline at all.\n  \
+    \      #\n        # Everything downstream of the check handles the list correctly:\n        # `prepare_control_image`\
+    \ is called in a loop over `control_image` in\n        # the MultiControlNetModel branch, with the\
+    \ SAME crops_coords and the\n        # same resize_mode as the init and the mask. So the render is\
+    \ sound and\n        # only the validator is wrong.\n        #\n        # THE PATCH IS THEREFORE THE\
+    \ NARROWEST ONE THAT EXISTS: call diffusers'\n        # own check with padding_mask_crop=None -- which\
+    \ skips ONLY that branch\n        # and leaves every other clause, including the multi-net list checks,\n\
+    \        # running exactly as written -- and re-assert the three things the\n        # branch actually\
+    \ wanted, against the images it actually meant.\n        if a.pad_crop and isinstance(control_kwargs[\"\
+    control_image\"], list):\n            _orig_check = pipe.check_inputs\n\n            def _checked(*args,\
+    \ **kw):\n                if \"padding_mask_crop\" in kw:\n                    kw[\"padding_mask_crop\"\
+    ] = None\n                elif len(args) >= 21:\n                    args = args[:20] + (None,) +\
+    \ args[21:]\n                _orig_check(*args, **kw)\n                from PIL import Image as _I\n\
+    \                bad = [i for i, c in enumerate(control_kwargs[\"control_image\"])\n             \
+    \          if not isinstance(c, _I.Image)]\n                if bad:\n                    raise ValueError(\"\
+    hint %s is not a PIL image\" % bad)\n                if not isinstance(plate, _I.Image):\n       \
+    \             raise ValueError(\"the init must be a PIL image with \"\n                          \
+    \           \"padding_mask_crop\")\n                if not isinstance(blurred, _I.Image):\n      \
+    \              raise ValueError(\"the mask must be a PIL image with \"\n                         \
+    \            \"padding_mask_crop\")\n\n            pipe.check_inputs = _checked\n            print(\"\
+    CHECK_INPUTS wrapped: 0.29.2 asserts the CONTROL image is a \"\n                  \"single PIL under\
+    \ padding_mask_crop, and the same function \"\n                  \"requires it to be a LIST under\
+    \ MultiControlNetModel. The \"\n                  \"branch is skipped and its three real checks are\
+    \ re-run here \"\n                  \"against the init, the mask and each hint.\", flush=True)\n\n\
+    \    blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask\n\n    # ----\
+    \ ALIGNMENT, CHECKED AGAINST THE LIVE METHOD RATHER THAN ASSERTED.\n    # diffusers derives ONE crops_coords\
+    \ from this blurred mask and applies it to\n    # the init, the mask and every control image. If the\
+    \ installed version's\n    # get_crop_region disagrees with the copy vendored above, the box written\n\
+    \    # into the sidecar would be fiction and the hint's alignment would be\n    # unverified -- so\
+    \ it is a hard stop. Control runs only: the no-control path\n    # must stay the path six filed verdicts\
+    \ were measured on.\n    if controls and a.pad_crop:\n        live = tuple(int(v) for v in pipe.mask_processor.get_crop_region(\n\
+    \            blurred, W, H, pad=a.pad_crop))\n        if live != tuple(region):\n            print(\"\
+    !! CROP REGION DISAGREES WITH THE VENDORED COPY -- refusing.\\n\"\n                  \"   vendored\
+    \ %s\\n   diffusers %s\\n   The hint is cropped by \"\n                  \"diffusers' box, so a sidecar\
+    \ carrying a different one cannot \"\n                  \"be trusted about alignment.\" % (tuple(region),\
+    \ live), flush=True)\n            return 14\n        print(\"CROP REGION %s -- vendored == live; the\
+    \ init, the mask and every \"\n              \"hint are cropped by this one box\" % (live,), flush=True)\n\
+    \n    kwargs = dict(prompt=prompt, negative_prompt=negative, image=plate,\n                  mask_image=blurred,\
+    \ width=W, height=H,\n                  num_inference_steps=a.steps, guidance_scale=a.cfg,\n     \
+    \             strength=a.strength,\n                  generator=torch.Generator(\"cuda\").manual_seed(a.seed))\n\
+    \    if a.pad_crop:\n        kwargs[\"padding_mask_crop\"] = a.pad_crop\n    kwargs.update(control_kwargs)\n\
+    \n    t1 = time.time()\n    out = pipe(**kwargs).images[0]\n    render_s = time.time() - t1\n\n  \
+    \  out.save(a.out)\n\n    versions = {\"python\": sys.version.split()[0], \"torch\": module_version(\"\
+    torch\"),\n                \"diffusers\": module_version(\"diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"\
     %Y-%m-%dT%H:%M:%SZ\")\n    mask_lines = [\"mask_shape: %s\" % shape]\n    if shape == \"png\":\n \
     \       mask_lines += [\"mask_png_source: %s\" % a.mask_png.replace(\"\\\\\", \"/\"),\n          \
     \             \"mask_png_sha256: %s\" % mask_sha,\n                       \"mask_white_px: %d\"\n\

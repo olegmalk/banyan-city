@@ -745,6 +745,62 @@ def main() -> int:
               % (pipeline_class, len(nets),
                  control_kwargs["controlnet_conditioning_scale"]), flush=True)
 
+        # ---- A COPY-PASTE BUG IN 0.29.2's check_inputs, AND THE PROOF IS
+        # ---- INSIDE check_inputs ITSELF.
+        # `__call__` passes CONTROL_IMAGE as the parameter that function calls
+        # `image`. Its padding_mask_crop branch then says:
+        #     if not isinstance(image, PIL.Image.Image):
+        #         raise ValueError("The image should be a PIL image when
+        #                           inpainting mask crop, ...")
+        # -- which is lifted verbatim from the plain inpaint pipeline, where
+        # `image` IS the init. Twenty lines further down the SAME function
+        # requires that same argument to be a LIST whenever the controlnet is a
+        # MultiControlNetModel ("For multiple controlnets: `image` must be type
+        # `list`"). The two clauses contradict each other, so with two nets the
+        # call can never be valid, and with one net the check passes only by
+        # accident -- it happens to be looking at a PIL image that is not the
+        # one it was written to guard. The init, which the branch MEANT, is
+        # never type-checked by this pipeline at all.
+        #
+        # Everything downstream of the check handles the list correctly:
+        # `prepare_control_image` is called in a loop over `control_image` in
+        # the MultiControlNetModel branch, with the SAME crops_coords and the
+        # same resize_mode as the init and the mask. So the render is sound and
+        # only the validator is wrong.
+        #
+        # THE PATCH IS THEREFORE THE NARROWEST ONE THAT EXISTS: call diffusers'
+        # own check with padding_mask_crop=None -- which skips ONLY that branch
+        # and leaves every other clause, including the multi-net list checks,
+        # running exactly as written -- and re-assert the three things the
+        # branch actually wanted, against the images it actually meant.
+        if a.pad_crop and isinstance(control_kwargs["control_image"], list):
+            _orig_check = pipe.check_inputs
+
+            def _checked(*args, **kw):
+                if "padding_mask_crop" in kw:
+                    kw["padding_mask_crop"] = None
+                elif len(args) >= 21:
+                    args = args[:20] + (None,) + args[21:]
+                _orig_check(*args, **kw)
+                from PIL import Image as _I
+                bad = [i for i, c in enumerate(control_kwargs["control_image"])
+                       if not isinstance(c, _I.Image)]
+                if bad:
+                    raise ValueError("hint %s is not a PIL image" % bad)
+                if not isinstance(plate, _I.Image):
+                    raise ValueError("the init must be a PIL image with "
+                                     "padding_mask_crop")
+                if not isinstance(blurred, _I.Image):
+                    raise ValueError("the mask must be a PIL image with "
+                                     "padding_mask_crop")
+
+            pipe.check_inputs = _checked
+            print("CHECK_INPUTS wrapped: 0.29.2 asserts the CONTROL image is a "
+                  "single PIL under padding_mask_crop, and the same function "
+                  "requires it to be a LIST under MultiControlNetModel. The "
+                  "branch is skipped and its three real checks are re-run here "
+                  "against the init, the mask and each hint.", flush=True)
+
     blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask
 
     # ---- ALIGNMENT, CHECKED AGAINST THE LIVE METHOD RATHER THAN ASSERTED.
