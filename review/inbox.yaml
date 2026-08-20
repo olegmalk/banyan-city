@@ -1911,3 +1911,35 @@
     gives is his. Frames and verdicts: farm-out/ep2-b13-shadelit-0820/,
     farm-out/ep2-b13-shademid-0820/, pipeline/jobs/ep2-b13-shadelit-0820.yaml,
     pipeline/work-ladder-0819.md.'
+- what: 'BEAT 16, WHY - one look, and it is not a render problem. THE BEAT''S BRIEF ASKS FOR
+    A LEAF-AS-SUBJECT MACRO SHOT, WHICH YOUR OWN "AVERAGE LEAVES" RULING FORBIDS. node.md
+    beat 16 says "close on the sapling''s leaf; the scavenger sits blurred behind it" and
+    the shot list hardens it to "the leaf is the subject and he is depth"; canon.yaml sapling-cotyledon-shape,
+    from your 08-17 answer, rules out "any leaf drawn as a feature - no exaggerated silhouette,
+    NO LEAF WHOSE SHAPE IS THE SUBJECT OF THE SHOT". Both are yours and they ask for opposite
+    shots. The page is three pictures: the 0814 leaf you rejected on 08-16 (a deeply lobed
+    palmate fig leaf, with the KILLED CHILD goblin behind it - a second fault nobody had caught),
+    and this morning''s two $0 samples, the first outing for the "average leaf" phrasing and
+    the ratified adult, BOTH FAIL with the goblin''s head filling the frame and no leaf reached
+    at all. r2 was a PURE PERMUTATION of r1 - same 73 tokens reordered, same host, same seed
+    - and the composition did not move, so the wording ladder is closed at three rungs and
+    no fourth wording should be spent.'
+  url: /review/ep2-b16-leaf-0820
+  group: taste
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  verdict_hint: restage the beat (say what the shot should be instead - e.g. both leaves,
+    the whole plant as subject, him behind it, which satisfies canon and drops the clause
+    the sampler has refused three times) / licence THIS ONE SHOT to feature the leaf shape
+    (written into canon AS an exception so it cannot drift) / name a third staging
+  note_for_lanes: 'NOT BLOCKING. Beat 16 ships in review/ep2-demo-0820 as a slate and nothing
+    waits on this. THE THIRD PATH IS NAMED AND DELIBERATELY NOT FIRED: a steward composite
+    that draws a large leaf in front, over most of the frame, one sample first. It is costed
+    and it is NOT the 4-for-4 shape - beats 15/19/03/13 composited a SMALL plant into a plate
+    (4.1% of frame on b13) and let a 0.30 pass make it belong, whereas a 0.30 pass over 60-80%
+    of a picture is a re-render, not an inpaint. It waits because it builds the exact shot
+    canon currently forbids, and spending it before his word would be answering a ruling with
+    a render. Wording is closed (three rungs, incl. the permutation negative); the done_when
+    is a RELATION, the shape beat 03 established cannot be bought with words. Frames: farm-out/ep2-b16-mac-plate-0820/,
+    review/ep2-demo-0816/sources/16-why-b16-anim-0814.mp4. Write-up: pipeline/work-ladder-0819.md.'
