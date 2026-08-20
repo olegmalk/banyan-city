@@ -103,10 +103,75 @@ RIM_OUT = 8        # px outside the copy the pass may repaint (contact/occlusion
 RIM_IN = 4         # px inside the copy's outline it may repaint (the closing edge)
 BAND_H = 14        # the board's top-edge contact band
 
+# THE GOLD CHEST CLASP IS HELD OUT OF THE MASK, AS FAR AS IT CAN BE. It sits
+# directly above the fist the pass has to delete, and an unmasked first draft put
+# 21.7% of it inside the mask for no gain: the pass does not need to redraw a
+# landmark in order to draw the strap beneath it, and a distinctive wardrobe
+# object half-inside a mask is how B6 gets re-opened by accident.
+#
+# THE CARVE-OUT IS NOT ABSOLUTE AND THE REASON IS GEOMETRY, NOT TOLERANCE. The
+# clasp and the fist are adjacent objects: freezing every clasp pixel and giving
+# the fist its 6 px of deletion margin are incompatible where they touch. The
+# fist's coverage is the POINT of this rung, so the carve-out YIELDS there --
+# it is (clasp gold, dilated 2) MINUS (the fist's own required margin). What
+# that costs is printed by K15 rather than rounded to zero.
+CLASP_BOX = (555, 490, 605, 545)    # where to look for the clasp's gold, at 6x
+
+STRENGTH = 0.55
 STRENGTH_ARGUMENT = """\
-STRENGTH: pending the (strength x ink) table -- see the job spec. 0.30 is
-ruled out by §21: it is the strength that exists to PRESERVE structure and it
-cannot delete a hand."""
+CHOSEN: 0.55, at 40 steps and cfg 7.5. ONE SAMPLE. The argument, in four parts,
+because §21 refused to let this be a knob turn.
+
+1. WHY NOT 0.30, THE HOUSE DEFAULT (66 of the specs in this tree).
+   `composite-init-pattern.md`: an inpaint pass runs only `int(steps x
+   strength)` of its schedule -- at 40 steps, 0.30 is TWELVE steps. That is
+   the regime chosen precisely because it PRESERVES structure: it is what put
+   blade texture back into beat 03's smooth ramp and leaves into b15/b19's
+   clone fills. Every one of those was ADDITIVE -- a smooth vacancy given
+   texture, or a sprite blended down. NONE of them had to DELETE a fully-inked
+   object with its own dark outline. 0.30 hands the fist twelve steps and a
+   latent that still contains it, and gets a dented fist.
+
+2. WHY NOT 0.99 (the tree's other recorded value, 39 of 40 steps).
+   That is a fresh render inside the mask, and it would certainly delete the
+   fist. It would also destroy the one thing this rung is built around: the
+   12 px rim opened around the copy exists so the pass draws CONTACT against
+   the protected digits, and a band re-rendered from noise does not blend to
+   a neighbour it cannot see -- it draws something unrelated and leaves a hard
+   seam exactly at the protect boundary. High strength is not free here in a
+   way it was not for any sibling beat, because this mask has a hard interior
+   edge those masks did not have.
+
+3. WHY 0.55. Twenty-two of forty steps: most of the way to a fresh draw, from
+   a latent that still carries the composite's colours and the surrounding
+   strap. Above the structure-preserving regime, below a from-noise redraw.
+   It is a choice, not a measurement, and it is filed as ONE SAMPLE for that
+   reason -- the sample's whole job is to find out which side of the deletion
+   threshold it lands on.
+
+4. WHAT IT COSTS AGAINST B6, B8 AND THE WARDROBE -- AND WHY §21'S FEAR IS
+   SMALLER THAN IT LOOKED, MEASURED. §21 warned a higher strength "re-opens
+   the exact clauses (B6, B8, the wardrobe) the 0.30 number was bought with".
+   Those clauses were bought at the CONDITIONING scale (`--scale2`) on a
+   WHOLE-FRAME txt2img render -- §19's table is scale2 0.3/0.5/0.8, not a
+   denoise strength. A MASKED pass cannot write one pixel outside its mask at
+   ANY strength, so the price is not a guess about the knob; it is the item's
+   overlap with 1.82% of the frame, and K15 prints it:
+
+       B8 canon hair          0 of 18200 px reachable  -- 0.0%, at any strength
+       gold chest clasp      11 of   994 px            --  1.1%, all of it
+                                                          inside the fist's own
+                                                          6 px deletion margin
+       gold belt buckle     382 of  5366 px            --  7.1%
+       B6 white sash        108 of   332 px            -- 32.5%
+       B6 cream shirt      5750 of 28573 px            -- 20.1%
+
+   B8 IS UNTOUCHABLE AND THAT WAS THE LOUDEST OF THE THREE. What is genuinely
+   at risk is B6: a fifth of the cream shirt and a third of the white sash sit
+   in the corridor the arm has to be drawn through, and at 0.55 the sampler
+   may merge them the way `--scale2` 0.5 did. That is the real price, it is
+   the reason the corridor was widened knowingly, and it is pre-registered as
+   a named fail mode rather than discovered afterwards."""
 
 
 def _erode(m, r):
@@ -118,6 +183,20 @@ def _erode(m, r):
         im = im.filter(ImageFilter.MinFilter(2 * k + 1))
         r -= k
     return np.asarray(im) > 0
+
+
+def clasp_gold(a, grow=2):
+    """The chest clasp's own gold pixels, dilated -- found, not boxed."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+    R, G, B = (a[:, :, i].astype(int) for i in range(3))
+    g = (R > 150) & (G > 110) & (B < 130) & ((R - B) > 60)
+    x0, y0, x1, y1 = CLASP_BOX
+    z = np.zeros(g.shape, bool)
+    z[y0:y1, x0:x1] = True
+    g = g & z
+    return np.asarray(Image.fromarray((g * 255).astype("uint8")).filter(
+        ImageFilter.MaxFilter(2 * grow + 1))) > 0
 
 
 def capsule(p0, p1, r):
@@ -185,7 +264,8 @@ def build():
     # leak the pass's strength onto the one thing in this rung that cannot be
     # re-invented; the rim above is the blend zone, and it is outside this.
     protect = _erode(np.asarray(poly_mask(moved)) > 0, RIM_IN)
-    mnp = (np.asarray(soft) > 0) & ~protect
+    keep_clasp = clasp_gold(a) & ~(np.asarray(poly_mask(FIST, grow=6)) > 0)
+    mnp = (np.asarray(soft) > 0) & ~protect & ~keep_clasp
     mask = Image.fromarray((mnp * 255).astype(np.uint8))
 
     # The sub-region a landed result is scored on by C4': where the fist WAS.
@@ -328,6 +408,43 @@ def selftest():
     check("K13 the mask is under 4%% of the frame -- it is WIDER than the "
           "parent's by the corridor, and that is the price named up front",
           m["mask_frac"] < 0.04)
+
+    # K15 -- THE WARDROBE PRICE, MEASURED RATHER THAN ASSERTED. §21 refused to
+    # file this rung partly because a higher strength "re-opens the exact
+    # clauses (B6, B8, the wardrobe) the 0.30 number was bought with". That
+    # fear was formed on a WHOLE-FRAME txt2img render where the knob was the
+    # conditioning scale; a MASKED pass cannot write a pixel outside its mask,
+    # whatever its denoise strength, so the price is not a guess about strength
+    # -- it is exactly the item's overlap with 1.88% of the frame. Printed here
+    # so the spec's argument quotes a measurement.
+    lum = a.astype(float).mean(axis=2)
+    Rc, Gc, Bc = a[:, :, 0].astype(int), a[:, :, 1].astype(int), a[:, :, 2].astype(int)
+    gold = (Rc > 150) & (Gc > 110) & (Bc < 130) & ((Rc - Bc) > 60)
+    def box(x0, y0, x1, y1):
+        z = np.zeros((H, W), bool); z[y0:y1, x0:x1] = True; return z
+    items = [
+        ("B8 canon hair (the head)", box(500, 300, 640, 430)),
+        ("gold chest clasp", gold & box(555, 490, 605, 545)),
+        ("gold belt buckle", gold & box(495, 640, 600, 760)),
+        ("B6 white sash", (lum > 225) & (np.abs(Rc - Bc) < 25) & box(380, 655, 700, 700)),
+        ("B6 cream shirt", (lum > 200) & ((Rc - Bc) > 25) & box(380, 430, 720, 670)),
+    ]
+    for nm, it in items:
+        n, inm = int(it.sum()), int((it & mnp).sum())
+        print("     %-26s %6d px, %5d reachable by the pass (%.1f%%)"
+              % (nm, n, inm, 100.0 * inm / max(n, 1)))
+    hair = items[0][1]
+    check("K15 B8's canon hair is UNREACHABLE -- 0 px of the head is in the "
+          "mask, so the clause §21 feared a higher strength would re-open "
+          "cannot move at any strength", not mnp[hair].any())
+    clasp = items[1][1]
+    kept = clasp_gold(a) & ~(np.asarray(poly_mask(FIST, grow=6)) > 0)
+    left = int((clasp & mnp).sum())
+    check("K15 the gold chest clasp is frozen except where the fist's own 6 px "
+          "deletion margin overtakes it -- %d of %d gold px reachable, down "
+          "from 216 uncarved, and every one of them is inside that margin"
+          % (left, int(clasp.sum())),
+          left <= 40 and not (clasp & mnp & kept).any())
 
     # K14 -- the region C4' will score on landing is big enough to be scorable
     import fill_quality as Q
