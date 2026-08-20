@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — beat 13, THE SHADE: one question, with the pixels</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  p { max-width: 78ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  .callout.red { border-left-color: #b06060; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  img { width: 100%; height: auto; border: 1px solid var(--line);
+        border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  img.tall { max-width: 480px; }
+  video { width: 100%; max-width: 400px; height: auto; border: 1px solid var(--line);
+          border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
+  .pair { display: flex; flex-wrap: wrap; gap: 16px; }
+  .pair figure { margin: 0; flex: 1 1 300px; }
+  figcaption { color: var(--muted); font-size: 13.5px; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  ul { max-width: 78ch; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  a { color: var(--new); }
+  .q { font-size: 19px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Beat 13, THE SHADE — one question, and it needs a look rather than a read</h1>
+  <p class="sub">Four rungs, four failures on the same clause, and every mechanism that could fix it is
+  now closed by measurement or contradicts canon. This page is the two frames and the one question.
+  $0 — no render was made for it.</p>
+</header>
+
+<p class="stamp">PRIVATE REVIEW PAGE · A TASTE CALL (R4) · NOTHING IS BLOCKED WHILE IT WAITS</p>
+
+<div class="callout">
+  <p class="q"><strong>THE QUESTION.</strong> Does this satisfy <em>"tips his head sideways into the
+  sapling's hand-sized patch of shade"</em> — or may the plant be drawn <strong>taller than canon in
+  this one shot</strong> so the shade can actually reach his face?</p>
+  <p class="sub">Either answer closes the beat. <em>"That's the shade, ship it"</em> and it goes into
+  the cut with the clause written off. <em>"Draw it taller here"</em> and the plate lane gets a
+  one-shot exception to the 40 cm rule, written into canon as an exception rather than a drift.
+  Or name a third thing.</p>
+</div>
+
+<h2>1. Why it cannot be filmed as written — the measurement, on the beat's best frame</h2>
+<p>This is <code>ep2-b13-shadelit-0820</code> at its last frame, the deepest head-tilt any rung has
+produced. He is seated on the ground; the sapling is at his hip. <strong>His eyes are about 320 px
+above the top of the two leaves</strong>, and the leaves themselves are about 60 px of plant. There is
+no head position in this staging that puts his face inside that shadow.</p>
+<img class="tall" src="/review/ep2-b13-shade-0820/B13-QUESTION-geometry-f120.png"
+     alt="Beat 13 f120 with his eye line and the leaf tops marked, about 320 px apart">
+<p class="sub">Measured off the frame, not asserted. The same reading appears twice in the code that
+draws this plate: <code>beat13_shade_composite.py</code> records that a canon 40 cm plant at his depth
+would crown at <strong>y 404 — his brow</strong>, "not what the approved line stages", and it carries a
+hard guard <code>NO_DRAW_ABOVE_Y = 640</code> so nothing it draws can reach his face. A chest placement
+was tried and rejected by eye as "a flower pinned to his poncho".</p>
+
+<h2>2. This is the best the beat has ever looked, and that is the point</h2>
+<p>The right-hand frame is what an exposure rung bought this morning for $0 and no new words: same
+prompt, same seed, same mask, same anchor — one tone curve on the plate. It repaired a defect nobody
+had asked it to repair, the face going illegible in the middle of the shot.</p>
+<img src="/review/ep2-b13-shade-0820/B13-QUESTION-face-f060.png"
+     alt="Beat 13 frame 60, shademid on the left with the face lost, shadelit on the right with the face legible">
+<p class="sub">So the question is not "can this be made prettier first". It is asked <em>on the best
+pixels the beat owns</em>, which is the only honest place to ask it.</p>
+
+<h2>3. What was already tried, so this is not a rerun of an old ask</h2>
+<ul>
+  <li><strong>Wording</strong> — three rungs. The middle-placement edit that repaired beats 03 and 15
+  gave this beat its performance back and did nothing for the shade.</li>
+  <li><strong>Exposure</strong> — tested and <strong>exonerated</strong>. "Beat 13's plate is the dim
+  one" is true of the field and false of the face: his cheek reads 114.6 against beat 03's 101.8 and
+  beat 15's 93.3. He already had the brightest face in the episode.</li>
+  <li><strong>Raising the plant</strong> — refused by the plate code itself, on canon: the sapling is
+  about 40 cm and always shorter than he is, in every beat of 002b. <em>That refusal is exactly what
+  this question asks you to override, or not.</em></li>
+  <li><strong>Lowering his head further</strong> — that is a new plate with a different pose. Authored
+  work, not a derivation, and nobody should start it before the question above is answered.</li>
+  <li><strong>The instrument</strong> — the measurement that was supposed to score the shade was
+  <strong>retracted</strong>: it passes on the clip it was written to reject. Scored by eye instead,
+  which is another reason this comes to you rather than to a number.</li>
+</ul>
+
+<h2>4. The line it is being judged against</h2>
+<blockquote>The scavenger's legs give out and he drops to sit in the grass at the base of the stem,
+then tips his head sideways into the sapling's <strong>hand-sized patch of shade — the only part of
+him it will cover</strong> — knees up around his ears.</blockquote>
+<p class="sub">Your own earlier ruling is the other half of the tension: <em>"thats ridiculous, lmao.
+the sapling is tiny."</em> The line asks for shade on his face; the ruling makes the plant too small to
+cast it. Both are yours, so which one gives is yours too.</p>
+
+<footer>
+  Clips and frames: <code>farm-out/ep2-b13-shadelit-0820/</code> and
+  <code>farm-out/ep2-b13-shademid-0820/</code>. Verdicts:
+  <code>pipeline/jobs/ep2-b13-shadelit-0820.yaml</code>. Full write-up of the four rungs and the three
+  retracted instruments: <code>pipeline/work-ladder-0819.md</code>. The beat currently ships in the
+  demo cut as best-available with its fault named —
+  <a href="/review/ep2-demo-0820/">/review/ep2-demo-0820</a>.
+</footer>
+
+</div>
+</body>
+</html>

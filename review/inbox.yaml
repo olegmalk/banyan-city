@@ -1874,3 +1874,40 @@
     it is a card and not a fix. NO CONFORMITY VERDICT WAS RECORDED EITHER WAY. Until it
     is answered the attribute is unasserted in the prompt, the reference and the hint,
     and unasserted attributes on this beat are invented fresh per frame.'
+- what: 'BEAT 13, THE SHADE - one look, and the page is two frames and one sentence.
+    DOES THIS SATISFY "TIPS HIS HEAD SIDEWAYS INTO THE SAPLING''S HAND-SIZED PATCH OF
+    SHADE", OR MAY THE PLANT BE DRAWN TALLER THAN CANON IN THIS ONE SHOT? Four rungs
+    have failed the same clause and the beat is at its best-ever pixels, so this is
+    asked on the good frames rather than after another attempt. The reason it may not
+    be filmable at all: measured on the deepest head-tilt any rung has produced, HIS
+    EYES SIT ~320 px ABOVE ~60 px OF LEAF - he is seated on the ground and the sapling
+    is at his hip, so no head position puts his face inside that shadow. The plate code
+    says the same thing twice on its own: a canon 40 cm plant at his depth would crown
+    at his BROW, and it carries a hard guard so nothing it draws can reach his face. A
+    chest placement was tried and rejected by eye as "a flower pinned to his poncho".
+    Every other lever is closed - wording at three rungs, exposure TESTED AND EXONERATED
+    (his cheek reads 114.6 against beat 03''s 101.8 and beat 15''s 93.3, so he already
+    had the brightest face in the episode and only the darkest field), and the
+    instrument that was supposed to score the shade was RETRACTED because it passes on
+    the clip it was written to reject. Raising the plant is refused by canon, which is
+    exactly what this asks you to override or not.'
+  url: /review/ep2-b13-shade-0820
+  group: taste
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  verdict_hint: '"that''s the shade, ship it" (the clause is written off and the beat
+    closes as best-available) / "draw it taller in this one shot" (the plate lane gets a
+    one-shot exception to the 40 cm rule, logged in canon AS an exception so it cannot
+    drift) / name a third staging'
+  note_for_lanes: 'NOT BLOCKING. Beat 13 already ships in review/ep2-demo-0820 as
+    best-available with its fault named, so nothing waits on this. NO NEW RENDER WAS
+    MADE FOR THIS CARD and none should be: the two suspects with a mechanism were both
+    tested and both came back negative on tests written before their results, and the
+    two remaining routes are a canon override (founder) and a new posed plate (authored
+    work, not a derivation). The tension is between two of the founder''s own things -
+    node.md:88 asks for shade on his face, and his 2026-08-16 ruling ("thats ridiculous,
+    lmao. the sapling is tiny") makes the plant too small to cast it - so which one
+    gives is his. Frames and verdicts: farm-out/ep2-b13-shadelit-0820/,
+    farm-out/ep2-b13-shademid-0820/, pipeline/jobs/ep2-b13-shadelit-0820.yaml,
+    pipeline/work-ladder-0819.md.'
