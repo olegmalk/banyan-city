@@ -190,9 +190,10 @@
 <strong>The newest beat is 01, the cold open you are about to see first</strong> — 03 at 0:13 and 15 at
 1:09 landed earlier today. The re-voiced guards run 0:24–0:51 (beats 5–10; beat 9 is the slate with the
 punchline). Beat 06 at 0:29 is still the clearest single demonstration of the voice and hold fixes at once.
-sha256 <code>93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305</code>
-<span class="sub">(revision c — the beat 01 swap. The morning cut was <code>b243dbd7…</code>, the first
-revision-b cut <code>2d7533a5…</code> and the second <code>b8afbf1b…</code>, all at this same URL.)</span></p>
+sha256 <code>173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0</code>
+<span class="sub">(revision d — beat 01 swapped again, to a composite. The morning cut was
+<code>b243dbd7…</code>, the revision-b cuts <code>2d7533a5…</code> and <code>b8afbf1b…</code>, and
+revision c was <code>93fb0ddb…</code> — all at this same URL.)</span></p>
 
 <ul class="counts">
   <li><b>19</b> beats of footage <span class="sub">(was 18)</span></li>
@@ -363,19 +364,29 @@ drifting specks — which is why the numbers above, not this picture, are the ev
   <tr><th>#</th><th>beat</th><th>in the cut</th><th>state</th></tr>
 
   <tr class="pick"><td class="n">1</td><td>COLD OPEN</td>
-      <td class="warn"><code>ep2-b01-fignonly-s20260840-0820</code><br>
-      <span class="warn"><strong>FAIL on G5a — 7 of 8 scored clauses pass</strong></span><br>
-      <span class="sub">best-available, fault named · R4 veto-able</span></td>
-      <td class="new"><strong>NEW TAKE, and the one it replaced held a score that is void.</strong>
-      That 5-clause PASS was measured with the green–magenta colour predicate retired today; the fig
-      crosses desaturated slate on its way from green to purple and the old mask kept only 13.7% of it
-      at f090. Rescored on the geometry-anchored detector, <strong>the old take FAILS G1</strong> — 90%
-      of its growth is done by f009 and it is static from f030, which is "a fig appeared", not "the fig
-      grew". This take grows properly: 121/121 frames tracked, zero shrinking frames, 90% of the growth
-      still arriving at f108, ending deep purple. It also holds its exposure — zero of 121 frames blow
-      past luma 100, where its own sibling had 71. <strong>What it costs, named:</strong> the sapling
-      grows with the fig instead of holding still, so G5a fails and you will see the leaves swell.
-      Neither clip passes; this is the trade, and it is yours to overturn.</td></tr>
+      <td class="warn"><code>ep2-b01-figcomp-heldfield-0820</code><br>
+      <span class="warn"><strong>FAIL on G5a, one band — 7 of 8 scored clauses pass</strong></span><br>
+      <span class="sub">best-available, fault named · R4 veto-able · $0, no GPU</span></td>
+      <td class="new"><strong>NEW TAKE, and it is a COMPOSITE — no sampler ran for it.</strong>
+      Its fig is the previous take's fig, frame for frame. Its field comes from a second render of the
+      same seed and the same init at a different conditioning strength, everywhere outside a feathered
+      matte cut from the fig detector's own per-frame masks. Both ingredients are named with their
+      hashes in the clip's sidecar and the licence gate walks them.
+      <strong>Same 7-of-8 as the take it replaces, and the same single failing clause — the difference
+      is which seven.</strong> This one fails G5a on ONE band, the grass floor at 0.062 against 0.20,
+      and holds shaft 0.982 and sapling 0.734. The old take failed the same clause on ALL THREE bands:
+      shaft −0.324, sapling 0.055, grass 0.038. Exposure +0.93 against +10.85, steadiness 0.9966 against
+      0.9403, and the camera probe no longer rails. G1 passes 121/121 — and for the first time on this
+      beat that answer was checked across six different encodes and came back identical every time,
+      because the previous build's G1 verdict moved with the video codec.
+      <strong>What it costs, named:</strong> the colour match pushed the ripe fig from hue 293.9 to
+      305.2. Still purple-violet, still inside the clause, but further off-centre than the old take was.
+      The bound was written down at 12.0° before the clip existed; this used 10.8° of it.
+      <strong>And the part that is yours, not ours:</strong> the take we removed is the more DRAMATIC
+      picture — its whole sapling grows and by the end two big leaves sweep across the top third of the
+      frame. This one is a locked-off plate where only the fig moves, which is what your cold-open line
+      asks for. That is a taste call and it is one line to overturn: <em>"beat 01: put fignonly
+      back."</em></td></tr>
 
   <tr><td class="n">2</td><td>THE SPRINT</td><td class="warn"><code>ep2-b02-anchor-s20260834</code></td>
       <td><strong>Never judged</strong> — one of four (2, 8, 12, 20). Silent by design.</td></tr>

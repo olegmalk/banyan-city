@@ -20,15 +20,15 @@ cut: ep2-demo-0820
 generated_by: pipeline/proof_receipts.py --frames
 frames:
 - beat: 1
-  take: 01-cold-open-LTX-fignonly-s20260840.mp4
+  take: 01-cold-open-COMP-chroma-s20260840.mp4
   frame: b01.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
-  frame_sha256: 72668768bb41aa50f395221dd473de5adfdb82947f086fbf3157bc03d7f2e45d
-  frame_bytes: 8369
+  clip_sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
+  frame_sha256: 4bf90bc15ad42e6590a32bf0a22badb46b522514eed3723495817feecf385e5a
+  frame_bytes: 7458
 - beat: 2
   take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
   frame: b02.jpg

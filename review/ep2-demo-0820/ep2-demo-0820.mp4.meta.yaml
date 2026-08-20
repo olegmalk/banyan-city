@@ -10,8 +10,8 @@
 # this tree. It is a separate question from `publishable:`, which is the
 # licence gate's word and says nothing about taste either way.
 platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)
-model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)+none
-  -- no model was loaded
+model: none — no sampler ran for this clip+diffusers/LTX-2.3-Distilled-Diffusers (Lightricks
+  LTX-2.3 distilled, bf16)+none -- no model was loaded
 cost_usd: 0.0
 node: 002b
 leaf: bench (--out) — no leaf, not canon
@@ -52,13 +52,14 @@ slate_beats:
 - 16
 duration_s: 115.2
 size: 720x1280
-source_platforms: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)+local-deterministic
-  (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)
+source_platforms: local-mac (CPU, no GPU)+local-gpu (NVIDIA GeForce RTX 5090 Laptop
+  GPU @ rtx5090)+local-deterministic (pipeline/beat19_drop_animate.py, PIL/numpy,
+  ffmpeg)
 ingredients:
 - beat: 1
   kind: clip
-  path: review/ep2-demo-0820/sources/01-cold-open-LTX-fignonly-s20260840.mp4
-  sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+  path: review/ep2-demo-0820/sources/01-cold-open-COMP-chroma-s20260840.mp4
+  sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
   publishable: true
   provisional: true
 - beat: 1
@@ -252,11 +253,11 @@ ingredients:
 sources:
 - beat: 1
   slug: COLD OPEN — 0:00–0:06
-  clip: 01-cold-open-LTX-fignonly-s20260840.mp4
+  clip: 01-cold-open-COMP-chroma-s20260840.mp4
   audio: 01-vo.mp3
   voice_engine: chatterbox-0.5B
-  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
-  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  platform: local-mac (CPU, no GPU)
+  model: none — no sampler ran for this clip
   cost_usd: 0.0
 - beat: 2
   slug: THE SPRINT — 0:06–0:11

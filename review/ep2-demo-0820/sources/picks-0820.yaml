@@ -51,13 +51,15 @@
 # untouched, and no VO was re-synthesised.
 
 cut: review/ep2-demo-0820/ep2-demo-0820.mp4
-sha256: 93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305
+sha256: 173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0
 sha256_superseded_in_place: >-
   b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486 (the morning
   cut), 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
-  (revision b before the beat 03 seed landed, 40 minutes earlier) and
+  (revision b before the beat 03 seed landed, 40 minutes earlier),
   b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1 (revision b,
-  before the beat 01 swap this evening). Same path, same URL, four sets of bytes
+  before the first beat 01 swap this evening) and
+  93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305 (revision c,
+  before the beat 01 composite swap). Same path, same URL, five sets of bytes
   today; this is the live one.
 duration_s: 115.42
 size: 720x1280
@@ -415,28 +417,55 @@ beats:
 
   - beat: 1
     slug: COLD OPEN
-    take: 01-cold-open-LTX-fignonly-s20260840.mp4
-    sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+    take: 01-cold-open-COMP-chroma-s20260840.mp4
+    sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
     why: new
     verdict_quoted: >-
-      FAIL on G5a field stability. 7 of the 8 SCORED clauses pass. IN AS
-      BEST-AVAILABLE WITH THE FAULT NAMED — a steward pick, not a pass, not a
-      taste verdict. R4 VETO-ABLE IN ONE LINE.
-    verdict: pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml verdict_this_job / verdict_this_job_measured
+      FAIL on G5a field stability, ON ONE BAND. 7 of the 8 SCORED clauses pass.
+      IN AS BEST-AVAILABLE WITH THE FAULT NAMED — a steward pick, not a pass,
+      not a taste verdict. R4 VETO-ABLE IN ONE LINE.
+    verdict: pipeline/jobs/ep2-b01-figcomp-heldfield-0820.yaml verdict_chromaticity_rung_0820
+    superseded_take_in_this_slot: >-
+      01-cold-open-LTX-fignonly-s20260840.mp4 (sha 4ec39e0f…0949d) rode this slot
+      from revision c. IT IS NOT DELETED and it is not gone from the repo — it is
+      at farm-out/ep2-b01-fignonly-s20260840-0820/, and its fig is the fig in the
+      clip that replaced it, frame for frame. To put it back: copy it into
+      sources/, delete the new one, restore this row's take and sha, re-run the
+      command in `assembled_by`.
     detail: >-
-      Replaces 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4, which had
-      ridden every cut this beat has had. THE TAKE IT REPLACES HELD A 7-OF-7
-      THAT IS VOID: that score was produced by the green–magenta colour
-      predicate retired on 2026-08-20, and rescored on the geometry-anchored
-      detector the incumbent FAILS G1 — it reaches 90% of its growth by f009 and
-      stands visually static from f030, which is "a fig appeared" rather than
-      "the fig grew". This take passes G1 (121/121 frames live, max single-frame
-      step 1.084x, 90% of growth still arriving at f108), G2 (hue 293.9, sat
-      0.788), G4, H luma bloom (peak +10.85, ZERO frames over luma 100), H1, H5
-      and H6, and fails G5a because the sapling grows along with the fig
-      (sapling region NCC 0.055 against a bar of 0.45). G3, G4b and G5b are
-      UNSCORED BY DECLARATION — no leaf counter, no grass line, and the camera
-      probe refuses its own reading. See `revision_c.beat_01_swap`.
+      A COMPOSITE, NOT A RENDER — no sampler ran for this clip and it cost $0 and
+      zero GPU seconds. Its FIG is the previous take's fig, frame for frame; its
+      FIELD is ep2-b01-figcrf10-s20260840-0820's field, everywhere outside a
+      feathered matte taken from pipeline/fig_track.py's own per-frame masks.
+      Both ingredients are named with their shas in the clip's sidecar and the
+      licence gate walks them.
+
+      IT SCORES 7 OF 8, THE SAME COUNT AS THE TAKE IT REPLACES, AND THE
+      DIFFERENCE IS WHICH SEVEN. Both fail only G5a. This take fails it on ONE
+      band — grass floor 0.062 against 0.20 — and holds shaft 0.982 and sapling
+      0.734. The take it replaces failed the SAME clause on ALL THREE bands:
+      shaft −0.324, sapling 0.055, grass 0.038. It also beats it on whole-frame
+      luma (+0.93 against +10.85) and on steadiness (worst consecutive NCC 0.9966
+      against 0.9403), and the camera probe reads railed:false where the previous
+      take read railed:true at the grid maximum. G1 passes 121/121 with max step
+      1.184x and 90% of growth at f108 — and, unlike any earlier beat-01 take,
+      that answer was verified IDENTICAL across six encodes (PNG, libx264 crf 0,
+      10, 14, 18, 23), because this clip's predecessor build had a G1 verdict that
+      moved with the codec.
+
+      WHAT IT COST, NAMED RATHER THAN BURIED: the per-channel colour match moved
+      the fig's end state from hue 293.9 to 305.2 — still inside the 270–320
+      clause, but 14.8° off the window's centre where the old take sat 1.4° off
+      it. Saturation 0.788 → 0.780. That cost was written into the job spec and
+      bounded at 12.0° BEFORE the build existed; it used 10.8° of the 12.0.
+
+      AND THE HONEST TASTE NOTE, which is R4 and not this lane's: the take it
+      replaces is the MORE DRAMATIC picture. Its whole sapling grows and by f120
+      two big leaves sweep across the upper third of the frame. This one is a
+      locked-off plate where only the fig moves — which is what the script's own
+      cold-open sentence asks for ("the only thing in frame that moves"), and
+      what G5a was written to enforce. Both pictures are on the review page.
+      G3, G4b and G5b are UNSCORED BY DECLARATION. See `revision_d.beat_01_swap`.
 
   - beat: 2
     slug: THE SPRINT
@@ -1034,3 +1063,69 @@ revision_c:
       field is the only one rendered at --image-crf 10; the six at crf 33 land in a band of
       -0.195 to 0.144 on sapling NCC with no seed escaping it. crf and seed are perfectly
       confounded across the pool, and that rung holds the seed and moves only the crf.
+
+revision_d:
+  date: 2026-08-20, night
+  by: the beat-01 composite lane
+  cost_usd: 0.0
+  gpu_seconds: 0
+  what_it_cost: 'NOTHING BUT CPU. No sampler ran. One 43-second composite on a Mac, one ffmpeg
+    re-assembly, one proof-receipt pass. The two clips it is made of were both rendered earlier
+    the same evening to answer pre-registered questions, and neither fire was spent to feed this cut.'
+  authority: A STEWARD PICK, NOT A TASTE VERDICT, on the same footing as revisions b and c.
+    Mechanical selection among takes with a stated reason. VETO-ABLE IN ONE LINE. The founder
+    has screened neither this clip nor the one it replaces, and putting a clip in a REVIEW cut
+    is how it gets screened.
+  ships_under: the founder's 2026-08-20 SHIP ORDER (STATE.md) — best-available takes ship with
+    named faults, upgrades landing by 12:00 2026-08-21 enter the final cut. This landed the
+    evening of 08-20, inside that window, so the assembly lane inherits a settled beat 01.
+  beat_01_swap:
+    take: 01-cold-open-COMP-chroma-s20260840.mp4
+    sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
+    replaces: 01-cold-open-LTX-fignonly-s20260840.mp4 (sha 4ec39e0f…0949d), which rode revision c
+    made_by: pipeline/fig_composite.py --gain-mode chroma
+    job: pipeline/jobs/ep2-b01-figcomp-heldfield-0820.yaml
+    the_swap_in_one_line: 'Same clause count, 7 of 8, and the same single failing clause — but
+      this one fails G5a on ONE band where the other failed it on ALL THREE, and it holds the
+      field the other redraws.'
+    the_numbers:
+      note: left column is the take leaving the slot, right column is the take entering it.
+      region_ncc_shaft: [-0.324, 0.982]
+      region_ncc_sapling: [0.055, 0.734]
+      region_ncc_grass: [0.038, 0.062]
+      luma_delta_at_peak: [10.85, 0.93]
+      worst_consecutive_whole_frame_ncc: [0.9403, 0.9966]
+      live_frames: [121, 121]
+      max_single_frame_step: [1.084, 1.184]
+      frame_at_90pct_growth: [108, 108]
+      end_state_hue_sat: [[293.9, 0.788], [305.2, 0.780]]
+      camera_probe_railed: [true, false]
+    what_it_still_fails: 'G5a, on the grass floor alone — 0.062 against a 0.20 bar, inherited
+      whole from the held plate. Measured, not assumed: on that plate the grass band''s
+      consecutive-frame NCC is 0.9950 and its correlation to f000 decays MONOTONICALLY
+      (0.842, 0.554, 0.299, 0.098, 0.062), which is a foreground that SWEEPS. The crf-33 clip''s
+      same band reads 0.9640 consecutive and decays non-monotonically, which is a foreground
+      being RE-INKED. The two-point clause cannot tell those apart and returns ~0.06 for both.
+      That is a bar defect filed for a ruling, NOT applied to re-score this clip.'
+    what_it_cost_and_it_is_named: 'The per-channel colour match moved the fig end state from
+      hue 293.9 to 305.2. Still inside the 270-320 clause, but 14.8 deg off the window centre
+      against the old take''s 1.4 deg. The bound was written into the job spec at 12.0 deg BEFORE
+      the build existed and this used 10.8 of it. Saturation 0.788 -> 0.780 against a -0.10 bound.'
+    the_taste_note_that_is_R4_and_not_this_lanes: 'THE TAKE LEAVING THE SLOT IS THE MORE DRAMATIC
+      PICTURE. Its whole sapling grows and by f120 two big leaves sweep across the upper third of
+      the frame. The one entering is a locked-off plate where only the fig moves. That is what the
+      script''s own cold-open sentence asks for -- "the only thing in frame that moves" -- and what
+      G5a was written to enforce, so the written standard picks it. But "more correct" and "better
+      shot" are different questions and only one of them is this lane''s. Both pictures are side by
+      side at farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-SWAP-chroma-vs-incut.jpg.'
+    how_to_veto_in_one_line: '"beat 01: put fignonly back" — the clip is at
+      farm-out/ep2-b01-fignonly-s20260840-0820/ at its original sha, never deleted. Copy it into
+      sources/, delete the new one, restore the beat-1 row''s take and sha, re-run `assembled_by`.'
+    a_guard_caught_this_swap_before_the_cut_shipped: 'The first assembly attempt REFUSED. The
+      clip''s hand-written sidecar used `ingredients:` for a prettier nested mapping, and that key
+      is build_site.publishable()''s reserved manifest shape -- so the gate could not read the
+      list, could not check what was inside the composite, and withheld the whole cut. Exactly the
+      laundering that walk exists to stop. Fixed by handing it a real ingredient list, which then
+      refused AGAIN because the crf-10 ingredient had been committed to farm-out with no sidecar
+      beside it. That sidecar was pulled from the box and verified against the box''s own manifest
+      (90a02c10…67fe) rather than reconstructed. Both refusals were correct and both were mine.'
