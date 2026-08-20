@@ -684,6 +684,25 @@ subjects:
         so no prompt can request it. Naming no ear tag at all and negating both
         spike tags produced it anyway. Absence plus suppression was the lever.
 
+    AND ITS LIMIT, MEASURED THE SAME NIGHT: IT GIVES THE FACE AND IT DOES NOT
+    GIVE THE BODY. Twelve poses rendered off this recipe hold the face twelve
+    times out of twelve and are all BOBBLEHEADS -- head about a third of
+    standing height where the tile is a fifth to a sixth, limbs stubby. Three
+    one-variable fixes all failed: negating `super deformed` (the real Danbooru
+    tag for the defect) changed nothing, `long legs, narrow waist` lengthened
+    the legs of a bobblehead, and restoring `1boy` -- the 2.1M-post human-male
+    anatomy prior, and the fix this lane expected to work -- was identical.
+    So the SUBJECT-TAG-IS-A-DEAD-LEVER finding above survives its hardest test.
+    THE NAMED NEXT INSTRUMENT FOR PROPORTION IS A REFERENCE ROUTE -- IP-Adapter
+    or ControlNet off the tile's own silhouette, supplying proportion as
+    GEOMETRY rather than asking for it as a word. Until that exists, USE THIS
+    RECIPE FOR CLOSE-UPS AND FACES AND DO NOT TRUST IT FOR A FULL BODY.
+    A NINTH ATTRIBUTE IS THEREFORE ADDED TO THE TILE LIST ABOVE AND IT IS THE
+    ONE THIS LANE'S OWN BAR WAS BLIND TO: HEAD-TO-BODY, a fifth to a sixth of
+    standing height, lean limbs. The bar was built at a close-up because that
+    is where the man-read lived, and every clause in it was above the neck.
+    Pixels: review/ep2-goblin-design-0819/PROPORTION-0820.png.
+
     WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
     it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
     832x1216). `pipeline/plate_scratch.py` is the MAC authoring path and its own

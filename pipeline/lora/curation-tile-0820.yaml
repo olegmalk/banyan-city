@@ -101,3 +101,39 @@ what_this_does_not_touch: >-
   and are NOT re-derived here: every one of the 31 is written in the man-read
   vocabulary and they must be rewritten against the corrected canon wording,
   which cannot be final until the wedge says what that wording is.
+
+# --------------------------------------------------------------------------
+# UPDATE, same night, after the twelve-pose breadth batch this file asked for.
+#
+# THE GATE ABOVE IS NOT MET AND THE REASON IS NEW. `ep2-jerry-tileset-p01..p12`
+# rendered the ratified recipe across twelve poses. All twelve hold the FACE --
+# blank white eyes, no nose, no eyebrows, bald dome, green, twelve for twelve.
+# ALL TWELVE ARE BOBBLEHEADS: head about a THIRD of standing height where the B
+# tile is a fifth to a sixth, limbs stubby. Training on them teaches a mascot,
+# which is the founder's child complaint arriving through a different door.
+#
+# Three one-variable fixes were run immediately and ALL THREE FAILED
+# (`ep2-jerry-prop-q1/q2/q3-0820`): negating `super deformed`, adding
+# `long legs, narrow waist`, and restoring `1boy`. Pixels:
+# review/ep2-goblin-design-0819/PROPORTION-0820.png
+#
+# So the wording route is finished for the BODY exactly as it succeeded for the
+# FACE, and the named next instrument is a REFERENCE ROUTE -- IP-Adapter or
+# ControlNet off the tile's own silhouette, which supplies proportion as
+# geometry instead of asking for it as a word.
+gate_status_2026_08_20_night: HELD -- breadth acquired, proportion lost
+usable_frames_now:
+  from_the_old_manifest: 7   # tile-faithful, four poses
+  from_the_twelve_pose_batch: 0
+  why_zero: >-
+    Every one of the twelve passes T1-T3 and T7 and FAILS T8 (head-to-body).
+    They are not rejected as bad pictures -- they are consistent and they are
+    the right creature's face -- but a character LoRA learns proportion, and
+    twelve bobbleheads against seven correctly-proportioned frames would make
+    the mascot the majority read of the trigger token.
+the_next_instrument_and_it_is_not_this_lane_s_to_file_at_3am: >-
+  IP-Adapter or ControlNet conditioned on adult-b19-0819.jpg itself. The tile is
+  one image and it already contains the proportion; a reference route supplies
+  it as geometry. controlnet_plate.py already carries --ip-ref/--ip-mask flags
+  and the box has the IPA weights staged, so this is a spec, not a build. It
+  should be authored awake and with the founder's screening cadence in mind.
