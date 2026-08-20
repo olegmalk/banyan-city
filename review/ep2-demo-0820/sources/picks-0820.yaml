@@ -51,13 +51,15 @@
 # untouched, and no VO was re-synthesised.
 
 cut: review/ep2-demo-0820/ep2-demo-0820.mp4
-sha256: b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1
+sha256: 93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305
 sha256_superseded_in_place: >-
   b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486 (the morning
-  cut) and 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
-  (revision b before the beat 03 seed landed, 40 minutes earlier). Same path,
-  same URL, three sets of bytes today; this is the live one.
-duration_s: 113.84
+  cut), 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
+  (revision b before the beat 03 seed landed, 40 minutes earlier) and
+  b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1 (revision b,
+  before the beat 01 swap this evening). Same path, same URL, four sets of bytes
+  today; this is the live one.
+duration_s: 115.42
 size: 720x1280
 footage_beats: 19
 slate_beats: 2
@@ -413,16 +415,28 @@ beats:
 
   - beat: 1
     slug: COLD OPEN
-    take: 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
-    sha256: 535a2e350ad5bebee17cc8cfc0f4bafebb91ee6029d7e664f7601597ebd9a319
-    why: carry-forward
-    verdict_quoted: PASS on all five pre-registered clauses (G1-G5), CUT-PREFERRED.
-    verdict: pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml verdict_this_job / verdict_this_job_measured
+    take: 01-cold-open-LTX-fignonly-s20260840.mp4
+    sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+    why: new
+    verdict_quoted: >-
+      FAIL on G5a field stability. 7 of the 8 SCORED clauses pass. IN AS
+      BEST-AVAILABLE WITH THE FAULT NAMED — a steward pick, not a pass, not a
+      taste verdict. R4 VETO-ABLE IN ONE LINE.
+    verdict: pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml verdict_this_job / verdict_this_job_measured
     detail: >-
-      Same file, same sha as 0819c. WHAT CHANGED IS THE CUT, NOT THE TAKE: this
-      is one of the two beats where the hold fix was frame-verified. Its verdict
-      passed G1 on "growth monotone, 0 shrinks" — true of the file, and until
-      tonight false of the cut. Now both.
+      Replaces 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4, which had
+      ridden every cut this beat has had. THE TAKE IT REPLACES HELD A 7-OF-7
+      THAT IS VOID: that score was produced by the green–magenta colour
+      predicate retired on 2026-08-20, and rescored on the geometry-anchored
+      detector the incumbent FAILS G1 — it reaches 90% of its growth by f009 and
+      stands visually static from f030, which is "a fig appeared" rather than
+      "the fig grew". This take passes G1 (121/121 frames live, max single-frame
+      step 1.084x, 90% of growth still arriving at f108), G2 (hue 293.9, sat
+      0.788), G4, H luma bloom (peak +10.85, ZERO frames over luma 100), H1, H5
+      and H6, and fails G5a because the sapling grows along with the fig
+      (sapling region NCC 0.055 against a bar of 0.45). G3, G4b and G5b are
+      UNSCORED BY DECLARATION — no leaf counter, no grass line, and the camera
+      probe refuses its own reading. See `revision_c.beat_01_swap`.
 
   - beat: 2
     slug: THE SPRINT
@@ -951,3 +965,72 @@ assembled_by: >-
   new VO takes had to be COPIED into it first, because find_audio() and
   vo_manifest() resolve against --clips and nowhere else. Bench mode means --out:
   no leaf, nothing in lineage.yaml, not canon.
+
+# --- appended 2026-08-20 (revision c, in place -- same path, same URL, NEW BYTES)
+# --- by the fig-detector judging lane. ONE PICK MOVED: beat 01.
+revision_c:
+  date: 2026-08-20, evening
+  by: the fig-detector judging lane
+  cost_usd: 0.0
+  gpu_seconds: 0
+  what_it_cost: 'No GPU for the assembly: one ffmpeg re-assembly, two file copies, one proof-receipt
+    pass. The take itself cost ~5 GPU-minutes earlier this evening on the rtx5090 box (ep2-b01-fignonly-s20260840-0820),
+    and that fire was spent to answer a pre-registered question, not to feed this cut.'
+  authority: A STEWARD PICK, NOT A TASTE VERDICT, on the same footing as revision b's two.
+    Mechanical selection among takes with a stated reason; taste is R4 and stays R4. The founder
+    has seen neither this take nor the one it replaces, and putting a clip in a REVIEW cut
+    is how it gets screened -- this row records what he is being shown and why, not a claim
+    that he has accepted it. VETO-ABLE IN ONE LINE, written out below.
+  beat_01_swap:
+    take: 01-cold-open-LTX-fignonly-s20260840.mp4
+    sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+    job: pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml
+    replaces: 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+    decided_by: the steward (this lane), 2026-08-20; ratified by the session coordinator.
+      NOT the founder -- he has seen neither clip.
+    why_the_incumbent_had_to_move: 'ITS 7-OF-7 IS VOID, AND THAT IS THE WHOLE PREMISE OF THIS
+      SWAP. Every fig mask this repo had before today was a colour predicate, and the beat-01
+      fig crosses desaturated slate on its way from green to purple -- the retired green-magenta
+      predicate keeps 91.1% of the true fig at f072 and 13.7% at the slate frame f090. The
+      incumbent''s ''PASS on all five clauses, CUT-PREFERRED'' was scored on that instrument.
+      Rescored on pipeline/fig_track.py, which anchors on the composite''s own inpaint mask
+      and never re-acquires from a colour class, THE INCUMBENT FAILS G1: 90% of its growth
+      is done by f009 and the clip is visually static from f030. G1 is the clause that separates
+      ''the fig grew'' from ''a fig appeared'', which is the entire shot. Stated with its
+      caveat: 31 of the incumbent''s 121 frames are dead to the detector, so the exact pop
+      frame is not certified -- but nothing changes after f030 by eye, and its fig sits 1.76
+      ring-MADs from its own background at f000 against 2.7-plus for every challenger, so
+      it is also the low-contrast one of the pool.'
+    why_this_take: Three reasons, in order of weight. (1) IT IS THE ONLY CLIP THAT GROWS.
+      121/121 frames live, ZERO shrinking frames, maximum single-frame step 1.084x, and 90%
+      of the growth still arriving at f108 -- the arc runs to the end of the shot instead
+      of finishing in the first quarter. Validated by eye at 5x on f000/f060/f090/f120, f090
+      being the slate frame the old instrument went blind on. (2) IT HOLDS ITS EXPOSURE. Peak
+      whole-frame luma +10.85 over f000 and ZERO of 121 frames above luma 100; it ends at
+      luma 89.2 where the incumbent ends at 89.1. Its own parent, same seed, ran +17.45 with
+      71 frames over 100 -- twelve words in the negative bought the difference at no measurable
+      cost to the fig. (3) IT IS 7 OF 8 AGAINST THE INCUMBENT'S 6 OF 8 on clauses scored by
+      an instrument that is selftested at 15 checks and validated by eye.
+    what_the_pick_COSTS_and_it_is_named: 'G5a. The sapling grows along with the fig: its two
+      leaves go from a sprout sitting below the grass tips at f000 to filling the upper half
+      of the frame at f120, and the grass thickens with them. Region NCC f000->f120 reads
+      shaft -0.324, sapling 0.055, grass 0.038, against the incumbent''s 0.932 / 0.637 / 0.323.
+      The motion prompt asks for the nub to swell as ''the only thing in frame that moves''
+      and this clip does not obey that. It is a real, visible fault and it is on screen for
+      five seconds.'
+    the_trade_stated_plainly: Neither clip passes. The incumbent holds a locked field around
+      a fig that pops in nine frames; this one grows a fig properly inside a field that moves
+      with it. Seven clips have now been scored and no seed or wording has produced both.
+      The pick is that a cold open whose subject actually grows, with a moving field, reads
+      better than a static plate with a fruit that appears -- and that judgement is exactly
+      the kind R4 can overturn.
+    R4_veto_in_one_line: If the founder prefers the held field, restore 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+      to sources/ and re-assemble -- the file is one `git checkout` away and its row above
+      this one is intact.
+    precedent: Beat 03 and beat 20 both ship in this cut as best-available with a written
+      FAIL and every fault named; this is the same standard applied to beat 01.
+    the_next_rung_is_already_filed: ep2-b01-figcrf10-s20260840-0820, backlogged to the box
+      the same evening. Across all seven scored beat-01 clips, the ONLY one that holds its
+      field is the only one rendered at --image-crf 10; the six at crf 33 land in a band of
+      -0.195 to 0.144 on sapling NCC with no seed escaping it. crf and seed are perfectly
+      confounded across the pool, and that rung holds the seed and moves only the crf.

@@ -20,15 +20,15 @@ cut: ep2-demo-0820
 generated_by: pipeline/proof_receipts.py --frames
 frames:
 - beat: 1
-  take: 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+  take: 01-cold-open-LTX-fignonly-s20260840.mp4
   frame: b01.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 535a2e350ad5bebee17cc8cfc0f4bafebb91ee6029d7e664f7601597ebd9a319
-  frame_sha256: e6d01eb6be1d2d6feb7e81a4e46d0a7572a44b4a76011de1aa19254b20cd182d
-  frame_bytes: 8359
+  clip_sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+  frame_sha256: 72668768bb41aa50f395221dd473de5adfdb82947f086fbf3157bc03d7f2e45d
+  frame_bytes: 8369
 - beat: 2
   take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
   frame: b02.jpg

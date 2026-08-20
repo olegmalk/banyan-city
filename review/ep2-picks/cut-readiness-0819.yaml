@@ -1086,3 +1086,55 @@ the_unscored_middle: >-
   to fit the clip — done-definitions' own `definition_written` fields say
   repeatedly that a definition written retroactively "could not be bent to fit
   the clips that already exist", and that discipline is worth keeping.
+
+# --- appended 2026-08-20 evening by the fig-detector judging lane by the composite-plate motion lane, after the pixels.
+amended_0820b:
+  date: 2026-08-20, evening
+  by: the fig-detector judging lane
+  what_moved: 'ONE ROW, beat 01, and it moves DOWNWARD. Everything above -- including the
+    0819 summary block and the amended_0820 block -- is left exactly as written. This amendment
+    does not rewrite the beat 01 row above it; that row''s `status: PASS`, its `verdict` and
+    its `upgrade_available.why` are all VOID and are named as such here so the record shows
+    the claim was made and then withdrawn.'
+  beat_01: 'PASS -> BEST-AVAILABLE WITH A WRITTEN FAIL, and the take changed. 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+    is OUT after riding every cut this beat has had; 01-cold-open-LTX-fignonly-s20260840.mp4
+    (job ep2-b01-fignonly-s20260840-0820, seed 20260840, sha 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d)
+    is IN. Not cut-ready: it carries a written FAIL on G5a. Steward pick, ratified by the
+    session coordinator, veto-able in one line.'
+  why_the_row_above_is_void: 'THE PASS WAS AN INSTRUMENT ARTIFACT, NOT A PICTURE. Every clause
+    of it that touches the fig was measured with a luma-normalised green-magenta COLOUR PREDICATE,
+    and the beat-01 fig crosses desaturated slate on its way from green to purple: measured
+    against the geometry-anchored mask, that predicate keeps 91.1% of the true fig at f072
+    and 13.7% at the slate frame f090. Re-scored on pipeline/fig_track.py -- anchored to the
+    composite''s own inpaint mask, never re-acquired by colour, selftest 15/15 -- the take
+    FAILS G1: 90% of its growth is done by f009 and it is static from f030, which is ''a fig
+    appeared'' rather than ''the fig grew''. Caveat published with it: 31 of its 121 frames
+    are dead to the detector, so the exact pop frame is not certified. Full notice at pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml
+    verdict_this_job_VOIDED_2026_08_20.'
+  what_survives_from_the_void_row: 'Its FIELD numbers. That take holds its picture better
+    than anything else measured -- region NCC f000->f120 shaft 0.932 / sapling 0.637 / grass
+    0.323, whole-frame luma +1.46 lifetime with ZERO frames over luma 100 -- and none of that
+    was measured with the retired predicate. It is the evidence that the field-stability clause
+    is achievable at all. It is also confounded: that clip is the only one in the pool at
+    --image-crf 10 AND the only one at seed 20260826.'
+  the_new_row_in_one_line: '7 of 8 SCORED clauses pass -- G1 (121/121 frames live, max single-frame
+    step 1.084x, 90% of growth still arriving at f108), G2 (hue 293.9 / sat 0.788), G4, H
+    luma bloom (peak +10.85, ZERO frames over luma 100), H1, H5, H6 -- and G5a FAILS because
+    the sapling grows along with the fig (sapling region NCC 0.055 against a bar of 0.45).
+    G3, G4b and G5b are UNSCORED BY DECLARATION: no leaf counter, no grass line, and the camera
+    probe refuses its own reading.'
+  live_cut_now: 'review/ep2-demo-0820/ep2-demo-0820.mp4, sha 93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305
+    -- still 19 footage beats and 2 slates (9, 16); this is a swap, not a slate closing. Duration
+    115.42 s. Per-beat manifest with the warrant and the veto: review/ep2-demo-0820/sources/picks-0820.yaml
+    `revision_c`. QA-GATE: PASS routes=81; the served mp4''s sha was recomputed off _site/
+    and equals the manifest value.'
+  the_pass_count_went_down_and_that_is_correct: This cut now claims one fewer written pass
+    than it did this morning. Nothing regressed in any picture -- a pass that was never real
+    stopped being claimed.
+  in_flight: ep2-b01-figcrf10-s20260840-0820, backlogged to the box. Across all seven scored
+    beat-01 clips the only one that holds its field is the only one rendered at --image-crf
+    10, and crf is perfectly confounded with seed across the pool. That rung holds seed 20260840
+    and moves only the crf, 33 -> 10.
+  this_file_still_makes_no_taste_call: Unchanged. This is a steward pick recorded with its
+    reason and its one-line veto. It is not a verdict on the picture, and the founder has
+    screened neither clip.

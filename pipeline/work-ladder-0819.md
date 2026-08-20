@@ -4448,3 +4448,86 @@ question, 10020 px in a 102x118 box.
 **And C4' returned VOID on its first live use, correctly:** the big mask left
 120 real px in the ring against a 200 px floor, so it refused to score rather
 than guess. The retired C4 would have returned a confident number.
+
+### The swap: beat 01 changes hands, and the cut's pass count goes DOWN by one
+
+**`review/ep2-demo-0820` revision c.** `01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4`
+is **out** after riding every cut this beat has had;
+`01-cold-open-LTX-fignonly-s20260840.mp4` is **in**, as **best-available with
+its FAIL named**. A steward pick under the widened taste/picks boundary,
+ratified by the session coordinator, **R4 veto-able in one line**. Same
+precedent as beats 03 and 20, which already ship in this cut with written FAILs.
+`QA-GATE: PASS routes=81`, 19 footage / 2 slates (a swap, not a slate closing),
+$0 for the assembly, no GPU, no voice synthesis.
+
+**THE INCUMBENT'S 7-OF-7 IS VOID, AND THAT IS THE PREMISE.** Its PASS was scored
+with the green–magenta colour predicate retired earlier the same day — the one
+that keeps **91.1 %** of the true fig at f072 and **13.7 % at the slate frame
+f090**. Re-scored on the geometry-anchored detector it **fails G1**: 90 % of its
+growth is done by **f009** and it is visually static from f030. Published with
+its caveat: 31 of its 121 frames are dead to the detector, so the exact pop
+frame is not certified.
+
+The void notice is written **where the verdict lives** so nobody re-cites it:
+`pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml` now carries
+`verdict_this_job_VOIDED_2026_08_20` and `cut_preference_VOIDED_2026_08_20`, and
+`review/ep2-picks/cut-readiness-0819.yaml` carries `amended_0820b`. **Neither
+original was deleted** — deleting a wrong score hides that it was made.
+
+**What survives from the voided row is its FIELD numbers**, which the retired
+predicate never touched: shaft 0.932 / sapling 0.637 / grass 0.323, luma +1.46
+lifetime, zero frames over luma 100. That is the evidence the G5 clause is
+achievable at all — and it is also the confound the next rung separates.
+
+| | old take (s20260826) | new take (s20260840) |
+|---|---|---|
+| scored clauses passed | 6 of 8 | **7 of 8** |
+| G1 growth | **FAIL** — 90 % by f009, static from f030 | **PASS** — 121/121 live, 90 % at f108 |
+| G5a field | **PASS** — sapling 0.637 | **FAIL** — sapling 0.055 |
+| luma bloom | PASS — +1.46, 0 over 100 | PASS — +10.85, **0 over 100** |
+| end state | purple | hue 293.9 / sat 0.788 |
+
+**Neither clip passes, and the trade is stated on the page in those words.** The
+cut now claims **one fewer written pass than it did this morning** — nothing
+regressed in any picture, a pass that was never real stopped being claimed.
+
+Assembly verified end to end before handover: 19/19 source shas match what
+ffmpeg recorded at mux time, and the **served** `_site/` mp4 hashes to
+`93fb0ddb…8305`, equal to the value in `picks-0820.yaml`. `HTTP 200` on both the
+page and the file.
+
+### Next rung, filed to the box BEFORE this write-up so the card was never idle
+
+**`ep2-b01-figcrf10-s20260840-0820`.** The variable was in the render argv all
+along. `--image-crf N` round-trips the conditioning still through libx264 before
+it is used as the init — this pipeline's conditioning-strength knob under
+another name.
+
+| clip | `--image-crf` | sapling NCC | luma Δ |
+|---|---|---|---|
+| incumbent s20260826 | **10** | **0.637** | **+1.46** |
+| b10 s20260835 | 33 | 0.144 | +71.07 |
+| b11 s20260836 | 33 | 0.126 | +57.37 |
+| b12 s20260837 | 33 | −0.195 | +44.17 |
+| b15 s20260840 | 33 | 0.092 | +17.45 |
+| b16 s20260841 | 33 | −0.174 | +23.67 |
+| fignonly s20260840 | 33 | 0.055 | +10.85 |
+
+Six clips at crf 33 land in a band of **−0.195 to 0.144** and no seed escapes
+it. One clip at crf 10 lands at **0.637** and is the only one whose luma never
+leaves the plate. **crf and seed are perfectly confounded across the whole
+pool** — that clip is also the only one at seed 20260826 — so every conclusion
+resting on it, *including this lane's own "the clause is achievable on this
+recipe"*, rests on a pair that has never been moved independently. The rung
+holds seed 20260840 and moves only the crf.
+
+Neither route the last verdict left open is taken yet, and the reason is on
+record: **plate-side is aimed at a cause the evidence does not establish** — the
+*same plate* produced a held sapling under the incumbent, so the plate is not
+indicted, and the change would discard a plate that passed 7 of 7.
+**Compositor-side is real but larger** (it makes the background a still) and
+needs no GPU, so it should not be spent before the cheap in-pipeline knob the
+measurement actually points at has been tried once. **F2 pre-registered as
+likeliest:** the field holds and the fig pops, which would show the two are ONE
+knob and send the route to localisation — for which this detector's own
+validated per-frame masks already exist.

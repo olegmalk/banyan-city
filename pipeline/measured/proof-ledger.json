@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1629,
+ "commits_in_window": 1646,
  "covers_window": true,
  "cut": "ep2-demo-0820",
  "cut_files": [
@@ -15,7 +15,7 @@
  "cuts_shipped": 8,
  "generated": "2026-08-20",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "4e5a6f96d",
+ "head": "6ab17ee0f",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -37,9 +37,9 @@
    "sha": "26581735",
    "what": "first commit that added this take"
   },
-  "pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml": {
-   "date": "2026-08-19",
-   "sha": "da953466",
+  "pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml": {
+   "date": "2026-08-20",
+   "sha": "3cc835b0",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b03-covermid-s2-0820.yaml": {
@@ -123,9 +123,9 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "6fd79ce4",
+ "range_base": "cdd87bd6",
  "resolved_blocks_added": 86,
  "shallow": true,
- "verdict_lines_added": 276,
+ "verdict_lines_added": 294,
  "window_days": 14
 }

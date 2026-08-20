@@ -1,0 +1,51 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 1
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260840
+task: ep2-b01-fignonly-s20260840-0820
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.019
+compute_s_per_video_s: 52.5
+# --- appended by ep2-b01-fignonly-s20260840-0820 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  A CANDIDATE TAKE FOR THE EPISODE 2 COLD OPEN. It animates the
+  founder's own 2026-08-13 route -- a small inpainted nub, grown by
+  the motion prompt -- on the frame-1 plate that passed its bar 7 of
+  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered
+  in pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml BEFORE this render
+  existed. Not approved and not cut until those frames are opened.
+# --- appended 2026-08-20 by the fig-detector judging lane, AFTER the frames were opened.
+judged: '2026-08-20'
+judged_by: pipeline/fig_track.py -- geometry-anchored, selftest 15/15 -- plus the region-NCC
+  and whole-frame-luma probes named in the job spec's `bar`. The scorer was validated before
+  use by reproducing the PARENT clip's independently-reached verdict exactly.
+verdict: 'FAIL on G5a field stability. 7 of the 8 SCORED clauses pass. PASS: G1 continuous
+  path (121/121 frames live, max single-frame step 1.084x, 90% of growth still arriving at
+  f108); G2 end-state deep purple-violet (hue 293.9, sat 0.788); G4 no size doubling; H luma
+  bloom (peak +10.85 over f000 against a bar of 12.0, and ZERO of 121 frames over luma 100);
+  H1 not frozen; H5 attached (20.6 px from the f000 geometric anchor); H6 no scene break.
+  FAIL: G5a -- the sapling grows along with the fig, region NCC f000-to-f120 sapling 0.055
+  against a bar of 0.45. UNSCORED BY DECLARATION: G3 (this repo has no leaf counter), G4b
+  below-the-grass (no grass line is defined), G5b camera-locked (the probe refuses its own
+  reading).'
+in_the_cut_as: 'BEST-AVAILABLE, WITH THE FAULT NAMED -- a steward pick, not a pass and not
+  a taste verdict. R4 VETO-ABLE IN ONE LINE. The take it replaced, 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4,
+  held a 7-of-7 that is VOID: it was scored with the green-magenta colour predicate retired
+  on 2026-08-20, and rescored on the geometry-anchored detector it FAILS G1, reaching 90%
+  of its growth by f009 and standing visually static from f030. See review/ep2-demo-0820/sources/picks-0820.yaml,
+  beat_01_swap.'

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sapling — episode 2 DEMO CUT, 2026-08-20 rev b (beat 15's slate closes; the child holding a tree is out)</title>
+<title>Sapling — episode 2 DEMO CUT, 2026-08-20 rev c (the cold open changes, and its old score was void)</title>
 <style>
   :root {
     --bg: #17181a; --panel: #1f2124; --line: #33363b;
@@ -63,15 +63,44 @@
 <div class="wrap">
 
 <header class="top">
-  <h1>Sapling — episode 2, DEMO CUT (2026-08-20, revision b)</h1>
+  <h1>Sapling — episode 2, DEMO CUT (2026-08-20, revision c)</h1>
   <p class="sub"><strong>Two picks moved and one of them closes a slate.</strong> Beat 15 has footage
-  for the first time in any cut, and beat 03's chibi child holding a leafy tree is out. Still carrying
-  this morning's two fixes: the six re-voiced guard takes and the end of eight beats playing partly
-  backwards. 1:54, <strong>19 beats of footage and 2 slates</strong> — the most footage and the fewest
-  slates this episode has had. No render, no voice synthesis, no GPU, no spend, $0.</p>
+  for the first time in any cut, and beat 03's chibi child holding a leafy tree is out. <strong>Revision c
+  adds a third pick: the cold open.</strong> Still carrying this morning's two fixes: the six re-voiced
+  guard takes and the end of eight beats playing partly backwards. 1:55, <strong>19 beats of footage and
+  2 slates</strong> — the most footage and the fewest slates this episode has had. No render, no voice
+  synthesis, no GPU, no spend, $0 for the assembly.</p>
 </header>
 
 <p class="stamp">DEMO — NOT AN EPISODE. NOT CANON. NO LEAF. PRIVATE REVIEW PAGE.</p>
+
+<div class="callout red">
+  <p><strong>REVISION C, 2026-08-20 — THE COLD OPEN CHANGES, AND THE REASON IS THAT ITS OLD SCORE WAS
+  MEASURED WRONG.</strong> This is the first thing you will see when you press play, so it is the first
+  thing on this page.</p>
+  <p>Every fig mask this repo had was a <em>colour</em> predicate, and the beat-01 fig crosses
+  desaturated slate on its way from green to purple — at frame 90 the old instrument could see
+  <strong>13.7%</strong> of a fig that is plainly there. The cold open that has ridden every cut of
+  this episode was scored <em>"PASS on all five clauses, CUT-PREFERRED"</em> on that instrument.
+  Re-scored on a detector that anchors to the composite's own inpaint mask and never re-acquires by
+  colour, <strong class="bad">the old take fails G1</strong>: 90% of its growth is finished by frame 9
+  and it is visually static from frame 30. That is <em>"a fig appeared"</em>, not <em>"the fig
+  grew"</em> — and G1 exists to tell those apart. <strong>A pass this page used to claim was never
+  real.</strong></p>
+  <p><strong>What is in the slot now, and what it costs.</strong> A take at a different seed that
+  actually grows: 121 of 121 frames tracked, zero shrinking frames, 90% of the growth still arriving at
+  frame 108, ending a deep purple. It also holds its exposure — <strong>zero</strong> of its 121 frames
+  blow past luma 100, where its own sibling had 71 of them. <strong class="bad">The fault, named: the
+  sapling grows too.</strong> Its two leaves go from a sprout below the grass tips to filling the top
+  half of the frame, and the prompt asks for the fig to be the only thing that moves. So it fails G5a
+  and <strong>it is in as best-available, not as a pass</strong> — 7 of 8 scored clauses against the
+  old take's 6 of 8.</p>
+  <p class="sub">Neither clip passes. Seven takes have now been scored and none has produced both a
+  growing fig and a still field. <em>"beat 01: back to the old clip"</em> is the whole veto.
+  The next experiment is already queued and costs you nothing to wait for: across all seven takes, the
+  only one that ever held its field is the only one rendered with a clean conditioning image, so that
+  one variable is being tested on its own.</p>
+</div>
 
 <div class="callout">
   <p><strong>REVISION B, 2026-08-20 — the two things that moved, and how to undo either in one
@@ -122,9 +151,9 @@
   16 stays a slate on your 2026-08-16 ruling. Beat 19's fall stays best-available. Six written passes,
   eight verdicts that are not passes, four never judged — <em>identical to 0819c</em>, because no beat
   was judged or re-rendered between the two cuts. Nothing here is an upgrade to any picture.</p>
-  <p class="sub"><strong>That last paragraph described the morning assembly and revision b breaks
-  it</strong> — two picks moved, so beats 03 and 15 are no longer 0819c's. It is left standing rather
-  than rewritten so the two passes can be told apart. Beat 16 and beat 19 are still exactly as
+  <p class="sub"><strong>That last paragraph described the morning assembly and revisions b and c break
+  it</strong> — three picks have moved, so beats 01, 03 and 15 are no longer 0819c's. It is left standing
+  rather than rewritten so the passes can be told apart. Beat 16 and beat 19 are still exactly as
   described.</p>
 </div>
 
@@ -157,14 +186,13 @@
 
 <h2>The cut</h2>
 <video controls playsinline preload="metadata" src="/review/ep2-demo-0820/ep2-demo-0820.mp4"></video>
-<p class="sub">1:54 · 12.1 MB · 9:16 · captions burnt in · Chatterbox VO muxed in sync.
-<strong>The two new beats are 03 at 0:13 and 15 at 1:09.</strong> The re-voiced guards run 0:24–0:51
-(beats 5–10; beat 9 is the slate with the punchline). Beat 06 at 0:29 is still the clearest single
-demonstration of the voice and hold fixes at once.
-sha256 <code>b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1</code>
-<span class="sub">(revision b, second assembly — the beat 03 seed re-roll landed mid-write and took the
-slot. The morning cut was <code>b243dbd7…</code> and the first revision-b cut
-<code>2d7533a5…</code>, both at this same URL.)</span></p>
+<p class="sub">1:55 · 12.0 MB · 9:16 · captions burnt in · Chatterbox VO muxed in sync.
+<strong>The newest beat is 01, the cold open you are about to see first</strong> — 03 at 0:13 and 15 at
+1:09 landed earlier today. The re-voiced guards run 0:24–0:51 (beats 5–10; beat 9 is the slate with the
+punchline). Beat 06 at 0:29 is still the clearest single demonstration of the voice and hold fixes at once.
+sha256 <code>93fb0ddb486f9a056b53b1c2d02f51bf93ec23ae5d64a60d75964979eb848305</code>
+<span class="sub">(revision c — the beat 01 swap. The morning cut was <code>b243dbd7…</code>, the first
+revision-b cut <code>2d7533a5…</code> and the second <code>b8afbf1b…</code>, all at this same URL.)</span></p>
 
 <ul class="counts">
   <li><b>19</b> beats of footage <span class="sub">(was 18)</span></li>
@@ -176,10 +204,12 @@ slot. The morning cut was <code>b243dbd7…</code> and the first revision-b cut
   <li><b>8</b> beats no longer reversed</li>
   <li><b>$0</b> and no GPU</li>
 </ul>
-<p class="sub">The first four add up: 6 passes + 9 verdicts that are not passes + 4 never judged = the
-19 footage beats. They are meant to be checked. <strong>The two new beats both landed in the middle
-column, not the first one:</strong> beat 15 fails one clause of five and beat 03 fails one of four, so
-neither is a written pass and the pass count does not move. Every sha on this page was recomputed off
+<p class="sub">The first four add up: 5 passes + 10 verdicts that are not passes + 4 never judged = the
+19 footage beats. They are meant to be checked. <strong>All three new beats landed in the middle column,
+not the first one:</strong> beat 15 fails one clause of five, beat 03 one of four, and beat 01 one of
+eight — none is a written pass. <strong>The pass count went DOWN by one, and that is the honest
+direction:</strong> beat 01's old 5-clause PASS was scored with an instrument retired today and does not
+survive re-scoring, so a pass this page used to claim was never real. Every sha here was recomputed off
 the bytes in this checkout after the re-assembly — 19 of 19 match what ffmpeg recorded at mux time.</p>
 
 <h2 id="voices">The voices — and the proof they are actually in the file</h2>
@@ -333,11 +363,19 @@ drifting specks — which is why the numbers above, not this picture, are the ev
   <tr><th>#</th><th>beat</th><th>in the cut</th><th>state</th></tr>
 
   <tr class="pick"><td class="n">1</td><td>COLD OPEN</td>
-      <td class="ok"><code>ep2-b01-growmotion-crf10-0819</code><br>
-      <span class="ok"><strong>PASS, 5 clauses</strong></span></td>
-      <td class="new">Same take, same sha. <strong>Hold fix frame-verified: 105 of 105 moving pairs →
-      0.</strong> Its verdict passed "growth monotone, 0 shrinks" — true of the file, and until now
-      false of the cut. Now both.</td></tr>
+      <td class="warn"><code>ep2-b01-fignonly-s20260840-0820</code><br>
+      <span class="warn"><strong>FAIL on G5a — 7 of 8 scored clauses pass</strong></span><br>
+      <span class="sub">best-available, fault named · R4 veto-able</span></td>
+      <td class="new"><strong>NEW TAKE, and the one it replaced held a score that is void.</strong>
+      That 5-clause PASS was measured with the green–magenta colour predicate retired today; the fig
+      crosses desaturated slate on its way from green to purple and the old mask kept only 13.7% of it
+      at f090. Rescored on the geometry-anchored detector, <strong>the old take FAILS G1</strong> — 90%
+      of its growth is done by f009 and it is static from f030, which is "a fig appeared", not "the fig
+      grew". This take grows properly: 121/121 frames tracked, zero shrinking frames, 90% of the growth
+      still arriving at f108, ending deep purple. It also holds its exposure — zero of 121 frames blow
+      past luma 100, where its own sibling had 71. <strong>What it costs, named:</strong> the sapling
+      grows with the fig instead of holding still, so G5a fails and you will see the leaves swell.
+      Neither clip passes; this is the trade, and it is yours to overturn.</td></tr>
 
   <tr><td class="n">2</td><td>THE SPRINT</td><td class="warn"><code>ep2-b02-anchor-s20260834</code></td>
       <td><strong>Never judged</strong> — one of four (2, 8, 12, 20). Silent by design.</td></tr>
@@ -517,8 +555,8 @@ blue is entirely voices and fills.</p>
   <li><strong>Nothing is promoted to canon.</strong> Bench assembly via <code>--out</code>: no leaf,
   nothing in <code>lineage.yaml</code>, no <code>plate_ack</code>. Every clip it replaced is still on
   disk, and every superseded voice take is in the node's <code>vo-archive/</code>.
-  <span class="sub">Revision b amends this: <strong>two picks were written</strong>, both steward picks
-  with their warrants and their one-line vetoes in the manifest. Neither is a taste verdict and neither
+  <span class="sub">Revisions b and c amend this: <strong>three picks were written</strong>, all steward
+  picks with their warrants and their one-line vetoes in the manifest. None is a taste verdict and none
   makes anything canon.</span></li>
   <li><strong>No script text was touched.</strong> The re-voice is a re-synthesis of lines you have
   already read and approved — the ruled-legal class — so §6 is satisfied and the assembler's approval

@@ -330,3 +330,50 @@ what_this_licenses: 'Nothing further on beat 01 from this lane. No new seed, no 
   whoever picks that up: G1 was not the failure here, so the temporal-distribution
   attack should be re-derived on the crf-10 recipe before it is filed, since this take
   ramps over 85 frames with a 1.48x maximum step.'
+
+# --- appended 2026-08-20 by the fig-detector judging lane -- VOID NOTICE by the composite-plate motion lane, after the pixels.
+verdict_this_job_VOIDED_2026_08_20: 'THE `verdict_this_job` AND `verdict_this_job_measured`
+  ABOVE ARE VOID. DO NOT RE-CITE THEM. They are left in place unedited because deleting a
+  wrong score hides that it was ever made, and this key is the correction that must travel
+  with them.
+
+
+  WHY. Every clause of that PASS that touches the fig -- G1 growth, G4 size, and the ''bloom''
+  argument the verdict makes against its own parent -- was measured with a luma-normalised
+  green-magenta COLOUR PREDICATE. The beat-01 fig crosses desaturated slate on its way from
+  green to purple. Scored against the geometry-anchored mask, that predicate keeps 91.1% of
+  the true fig at f072 and 13.7% AT THE SLATE FRAME f090, re-inflating to 96.7% at f096. It
+  was not measuring the fig; it was measuring a hue window the fig walks out of.
+
+
+  RE-SCORED 2026-08-20 with pipeline/fig_track.py -- geometry-anchored on the composite''s
+  own inpaint mask, never re-acquired from a colour class, selftest 15/15 including six frame-backed
+  checks and hand-verified keyframes -- THIS TAKE FAILS G1. It reaches 90% of its total measured
+  growth by f009 and is visually static from f030. G1 is the clause that separates ''the fig
+  grew'' from ''a fig appeared'', and this clip is the second.
+
+
+  STATED WITH ITS CAVEAT, because the new instrument publishes its own dead zones: 31 of this
+  clip''s 121 frames are DEAD to the detector, so the exact frame of the pop is not certified.
+  Nothing changes after f030 by eye, and this clip''s fig sits 1.76 ring-MADs from its own
+  background at f000 against 2.7-plus for all five growmotion challengers -- it is the low-contrast
+  one of the pool, which is why it is also the one the detector loses most often.
+
+
+  WHAT SURVIVES. The field-stability finding does: this take holds its picture better than
+  anything else measured -- region NCC f000->f120 of shaft 0.932 / sapling 0.637 / grass 0.323,
+  and a whole-frame luma that never leaves the plate (+1.46 lifetime, ZERO frames over luma
+  100) against +17.45 to +71.07 for the challengers. That is real, it was not measured with
+  the retired predicate, and it is the evidence that the G5 clause is achievable at all. It
+  is also confounded: this is the only clip in the pool rendered at --image-crf 10 AND the
+  only one at seed 20260826. ep2-b01-figcrf10-s20260840-0820 separates them.
+
+
+  CUT CONSEQUENCE: OUT OF THE CUT as of 2026-08-20 evening. review/ep2-demo-0820 beat 01 now
+  holds 01-cold-open-LTX-fignonly-s20260840.mp4 (7 of 8 scored clauses, FAIL on G5a, in as
+  best-available with the fault named and R4-veto-able). The file is still on disk and the
+  swap is one `git checkout` away; see review/ep2-demo-0820/sources/picks-0820.yaml revision_c.'
+cut_preference_VOIDED_2026_08_20: The `cut_preference` key above is void for the same reason
+  and by the same evidence -- it recommends this take on the strength of the retired predicate's
+  G1 reading. Superseded by picks-0820.yaml revision_c.beat_01_swap, which is a steward pick
+  and names what it costs.
