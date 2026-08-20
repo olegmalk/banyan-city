@@ -3374,3 +3374,4 @@
 20:28:01Z DONE task=ep2-jerry-face-h2-0821-1787257552 rc=0 artifacts=1
 20:28:07Z STARTED task=ep2-b16-sapcomp-0820-1787257589 attempt=1 on box-runner
 20:28:21Z DONE task=ep2-b16-sapcomp-0820-1787257589 rc=0 artifacts=2
+20:28:33Z box-runner idle ready=0 failed=62
