@@ -1003,10 +1003,32 @@ beats:
     vo:
       file: review/ep2-demo-0819/sources/20-vo.mp3
       sha256: 8528ef0392447db3d8bfe15a6ed30e5624da370836ac5095d99399613a8e3ec8
+    amended_2026_08_20: >-
+      THE TAKE ABOVE IS OUT OF THE 0820 CUT. Everything above stands as the
+      record of the 0819 cut and is left unedited. What the audit added: this
+      take was rendered 08-13 off an 08-12 plate and had ridden EIGHT cuts on
+      `why: carry-forward` without a verdict, so it PRE-DATES the 2026-08-19
+      ratification of `ep2-goblin-design-adult` — its goblin is the round-domed,
+      big-eyed CHILD that ruling retires, and its own sidecar already declared
+      "the fruit reads dark rather than purple" against the 08-16 colour ruling
+      cited above, plus "near-static after the trim" and "dusk banded sky not
+      daylight cel". Opened at frame level, its tree is a slender LEAFY one,
+      which fails "the empty stem is the evidence" outright.
+      `ep2-b20-motion-0819` replaces it in review/ep2-demo-0820 — lean wiry
+      adult, purple fig, daylight cel, and the pick-up completes. That take's
+      own `verdict_cut` had read "NOT PROPOSED FOR THE CUT", and it is
+      superseded on its PREMISE rather than its reasoning: it was written
+      against a SLATE ("beat 20 stays a slate for now") when the real
+      alternative was this clip, whose own row already carried the identical
+      wrong-tree fault. BOTH blocked_on items above remain TRUE of the new take
+      as well — he still never looks up, and the tree is still not the sapling's
+      own stem. The beat is NOT closed and the route is unchanged: a plate at
+      the 08-17 knee-height staging with the sapling's bare stem beside him.
     cites:
       - cut: review/ep2-demo-0819/ep2-demo-0819.mp4.meta.yaml ingredients[beat 20]
       - record: review/ep2-picks/done-definitions.yaml beats.'20' (done_when, colour_ruled_0816)
       - spec: pipeline/jobs/ep2-b20-canonword-0816.yaml
+      - amendment: review/ep2-demo-0820/sources/picks-0820.yaml beat 20 (the swap and its reversal line)
 
   - beat: 21
     slug: THE ANSWER

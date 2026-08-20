@@ -1296,3 +1296,94 @@ for C4 has to come first, and nothing tried in this section is it.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
 plate_ack, NO cut, and beat 08 does NOT have a complete plate candidate.**
+
+## 22. The copy worked, the mask did not: 0.99 drew a second goblin into it (2026-08-20)
+
+§21 named the copy-the-fist rung and refused to file it for two reasons — no
+trustworthy instrument, and an unargued strength. Both were discharged (C4' in
+`pipeline/fill_quality.py`; the argument in `beat08_grip_copy.py`), the rung was
+filed, and it ran. **`ep2-b08-fistcopy-0820`, FAIL.** Evidence
+`farm-out/ep2-b08-fistcopy-0820/EVIDENCE-b08-fistcopy-verdict-0820.png`, 3x,
+plate | init | landed.
+
+### WHAT THE PASS DID
+
+At strength 0.99 into an 18408 px mask it **drew a whole second goblin** — green
+skull, blond hair, pointed ears, an angry face — with a buttoned shirt placket
+where the harness strap had been. At 1x. The two predictions that held:
+
+* **THE FIST WAS DELETED**, completely, from real strap pixels. The thing §21
+  said 0.30 could not do, 0.99 did.
+* **THE COPIED DIGITS SURVIVED BYTE-INTACT.** The latent-blend argument was
+  right and it is now demonstrated rather than sourced: an unmasked region is
+  restored every step, so protected drawn content is safe **at any strength**.
+
+### THE OBVIOUS CORRECTIVE WAS WRONG, AND MEASURING IT FIRST IS THE POINT
+
+The corridor was the part of the mask I had argued hardest for, so it looked
+like the culprit. **Dropping it saves 434 px of 18408** — it was already covered
+by the fist's own margin and the copy's rim. A rung filed on that theory would
+have changed 2% of the mask and learned nothing.
+
+**The cause is geometry.** The two work sites — the fist at y 542-620 and the
+copy at y 633-711 — are **13 px apart**, so any mask covering both is ONE
+~200 px tall region. Swept: it does not split at `OLD_GROW` 4 any more than at
+14.
+
+| OLD_GROW / rim | mask px | components | largest box |
+|---|---|---|---|
+| 14 / 8,4 | 17974 | 2 | 142x211 |
+| 10 / 6,3 | 15964 | 2 | 138x205 |
+| 6 / 5,2 | 14222 | **1** | 134x200 |
+| 4 / 4,2 | 13392 | **1** | 132x197 |
+
+A region that size, at 0.99, under a prompt naming *"the small goblin man"*,
+with **no spatial conditioning anywhere in this pipeline** — `inpaint_fruit.py`
+has no controlnet at all — gets filled with the largest available noun.
+`composite-init-pattern.md` names that failure in exactly those words. This rung
+walked into it while quoting the same document about strength.
+
+### THE SECOND FINDING, AND IT HAS THE WIDER BLAST RADIUS
+
+**`--pad-crop 64` BREAKS THE "NOTHING OUTSIDE THE MASK CHANGES" GUARANTEE.** The
+landed frame differs from its init in **15355 px OUTSIDE the mask, maxdiff 160.**
+`padding_mask_crop` crops the masked region with padding, upscales it, inpaints,
+and pastes back — and the resample on the way back rewrites unmasked pixels
+inside the crop box. The latent blend protects the *latent*; the crop-and-paste
+happens around it.
+
+Every composite in this tree asserted *"nothing changed outside the mask"* about
+the **composite init**, never about the **landed result**, and b03/b13/b15/b19
+all ran through this same script with `--pad-crop 64`. On this frame the guard's
+head fell outside the crop box and read maxdiff 0, so **B8 survived by luck of
+geometry rather than by the guarantee.** Any beat clause claimed to be safe
+"because it is outside the mask" is only safe if it is also outside the crop box,
+and that has never been checked anywhere.
+
+### C4' RETURNED **VOID**, AND THAT IS THE INSTRUMENT WORKING
+
+Its first live use. The 18408 px mask left only **120 real px** in the erase
+region's 3-12 px ring, against a 200 px floor, so `fill_quality.py` refused to
+score rather than guess — published dead zone 5, behaving as documented. **The
+retired C4 would have returned a confident number here.** A bar that declines is
+worth more than a bar that answers.
+
+### THE RUNG THAT FOLLOWS, AND IT IS FILED
+
+**`ep2-b08-eraseonly-0820`, backlogged**, derived from the failed parent.
+**ONE SITE, ONE QUESTION:** mask the original fist alone at grow 10 — 10020 px,
+largest component 9956 px in a **102x118** box, 1.8x smaller by area than the
+region that hosted a face — and ask only whether the sampler can delete the hand
+from real strap pixels. The copy stays in, wholly outside the mask, and **will
+still read as a decal**; that is pre-registered as expected, not as a fail,
+because drawing its contact edge is a SECOND pass on this pass's output. **Two
+small masks in series, never one big one.**
+
+One variable: the mask. Strength stays 0.99, the prompt stays byte-identical,
+and the pre-committed next step if a noun still arrives is strength 0.99 → 0.70.
+
+**The forearm is out of scope and stays out.** Re-routing a limb needs spatial
+conditioning and this tool has none; that is a txt2img-route question.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
+plate_ack, and beat 08 still does NOT have a complete plate candidate.**

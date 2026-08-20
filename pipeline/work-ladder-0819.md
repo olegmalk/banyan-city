@@ -4419,3 +4419,32 @@ The 5090 is the primary device for ANY work it can do — plates included
 Macs get work ONLY when the 5090 is busy and the work would otherwise wait,
 i.e. as parallel overflow — never as the default home of a job class.
 "Mac-class by construction" is retired as a routing reason.
+
+### THE FIST-COPY RUNG RAN AND FAILED — verdict in `b08-arm-route-0819.md` §22, corrective filed
+
+`ep2-b08-fistcopy-0820`: at strength 0.99 the pass **drew a second goblin** into
+the 18408 px mask. The fist WAS deleted and the copied digits DID survive
+byte-intact — both predictions held — and everything else in the mask became a
+character. Corrective **`ep2-b08-eraseonly-0820` is backlogged**: one site, one
+question, 10020 px in a 102x118 box.
+
+**Two findings that leave this beat.**
+
+1. **MEASURE THE OBVIOUS CORRECTIVE BEFORE FILING IT.** The forearm corridor was
+   the part I had argued hardest for and it looked like the culprit. Dropping it
+   saves **434 px of 18408** — it was already covered by the fist's margin and
+   the copy's rim. The real cause is that the two work sites are 13 px apart, so
+   no margin setting splits the mask; swept at OLD_GROW 4, 6, 10 and 14.
+2. **`--pad-crop 64` BREAKS THE OUT-OF-MASK GUARANTEE, TREE-WIDE.** The landed
+   frame differs from its init in **15355 px OUTSIDE the mask, maxdiff 160**,
+   because `padding_mask_crop` upscales a crop and resamples it back. Every
+   composite here asserted that clause about the **composite init**, never about
+   the **landed result**, and b03/b13/b15/b19 all ran the same script with the
+   same flag. **A clause is only safe outside the mask if it is also outside the
+   crop box, and nothing has ever checked that.** On this frame the guard's head
+   happened to fall outside it and read maxdiff 0 — B8 survived by luck of
+   geometry.
+
+**And C4' returned VOID on its first live use, correctly:** the big mask left
+120 real px in the ring against a 200 px floor, so it refused to score rather
+than guess. The retired C4 would have returned a confident number.
