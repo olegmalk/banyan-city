@@ -79,13 +79,34 @@ def sidecar_prompt(png):
     safe_load raise, and at least one file in review/ is already known not to
     parse. The one key we need is machine-written and always quoted.
     """
-    side = png[:-4] + ".yaml"
-    if not os.path.exists(side):
+    # TWO SIDECAR NAMES, AND THE SECOND IS NOT A TIDINESS ADDITION. The mac
+    # plate path writes `<name>.yaml`; `controlnet_plate.py:472` writes
+    # `<name>.png.meta.yaml`. Every box-rendered frame therefore looked to this
+    # function like a frame with NO recorded prompt, and a frame with no prompt
+    # is silently dropped from the dataset by the caller. That would have
+    # excluded the entire reference-route set -- the only frames in the tree
+    # that carry the tile's proportion -- from the LoRA, without an error.
+    for side in (png[:-4] + ".yaml", png + ".meta.yaml"):
+        if os.path.exists(side):
+            break
+    else:
         return None, None
     text = open(side, encoding="utf-8", errors="replace").read()
     m = re.search(r'^prompt:\s*"(.*?)"\s*$', text, re.M | re.S)
+    prompt = m.group(1).strip() if m else None
+    if prompt is None:
+        # THE BLOCK-SCALAR FORM, which is what controlnet_plate.py writes:
+        #     prompt: |-
+        #       masterpiece, best quality, ...
+        # Read the indented run and rejoin it, because a prompt folded across
+        # lines is still one tag string and the prune patterns are written
+        # against the single-line form.
+        b = re.search(r'^prompt:\s*\|-?\s*\n((?:[ \t]+.*\n?)+)', text, re.M)
+        if b:
+            prompt = " ".join(l.strip() for l in b.group(1).splitlines()
+                              if l.strip())
     s = re.search(r'^size:\s*"?([0-9]+x[0-9]+)', text, re.M)
-    return (m.group(1).strip() if m else None), (s.group(1) if s else None)
+    return prompt, (s.group(1) if s else None)
 
 
 def tidy(text):
