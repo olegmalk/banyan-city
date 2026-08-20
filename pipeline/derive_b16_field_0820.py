@@ -201,11 +201,13 @@ def stage_src(tags) -> int:
     for tag in tags:
         d = "C:\\banyan-farm\\b16field-%s-0820\\src\\pipeline" % tag
         subprocess.run(["ssh", "-o", "ConnectTimeout=20", BOX,
-                        "mkdir %s" % d], capture_output=True, text=True)
+                        "mkdir %s" % d], capture_output=True, text=True,
+                       encoding="utf-8")
         cp = subprocess.run(
             ["scp", "-q", "-o", "ConnectTimeout=25", local,
              "%s:C:/banyan-farm/b16field-%s-0820/src/pipeline/controlnet_plate.py"
-             % (BOX, tag)], capture_output=True, text=True)
+             % (BOX, tag)], capture_output=True, text=True,
+                       encoding="utf-8")
         if cp.returncode:
             bad.append("%s scp rc=%d %s" % (tag, cp.returncode,
                                             (cp.stderr or "").strip()))
@@ -214,7 +216,8 @@ def stage_src(tags) -> int:
             ["ssh", "-o", "ConnectTimeout=20", BOX,
              "certutil -hashfile C:\\banyan-farm\\b16field-%s-0820\\src\\"
              "pipeline\\controlnet_plate.py SHA256" % tag],
-            capture_output=True, text=True)
+            capture_output=True, text=True,
+                       encoding="utf-8")
         have = ""
         for ln in (chk.stdout or "").splitlines():
             ln = ln.strip().replace(" ", "")
