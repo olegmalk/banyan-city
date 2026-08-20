@@ -3167,3 +3167,4 @@
 13:43:01Z box-runner idle ready=0 failed=44
 13:48:06Z STARTED task=ep2-b08-nogoblin-0820-1787233508 attempt=1 on box-runner
 13:48:06Z FAIL task=ep2-b08-nogoblin-0820-1787233508 rc=1 step=fetch
+13:53:10Z box-runner idle ready=0 failed=45
