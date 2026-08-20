@@ -590,6 +590,373 @@ def test_the_new_link_never_contradicts_the_old_one():
           len(claimed) > 100)
 
 
+# ---------------------------------------------------------------------------
+# THE ALREADY-RAN GUARD.
+#
+# Twice the card has re-rendered a question it had already answered, because
+# every collision guard above compares against LIVE work and a finished job owns
+# nothing. 2026-08-19: ep2-b19-dropmotion-0819 filed twice sixteen minutes apart,
+# 264s of GPU, two byte-identical mp4s. 2026-08-20: three jobs that finished at
+# 04:56 sat unread until 12:20 and were re-filed clean by the resuming lane; b03
+# re-rendered to completion.
+#
+# The cases below are the whole decision. A duplicate is refused, a REVISION is
+# not -- diagnose/fix/re-render edits specs in place far more often than it
+# renames them, and a guard that refuses the standing process gets switched off.
+# No ssh: the directory listing and the finished records are injected.
+# ---------------------------------------------------------------------------
+
+B19 = "ep2-b19-dropmotion-0819"
+
+
+def _ran_spec(**extra) -> dict:
+    """The shape of the job that ran twice: a crop step and an ltx_i2v step."""
+    spec = {
+        "id": B19,
+        "consumer": "the b19 motion lane",
+        "steps": [
+            {"name": "crop", "argv": ["python.exe", "cover_crop.py", "--src",
+                                      "b19-init.png", "--size", "704x1280"]},
+            {"name": "render", "argv": ["python.exe", "ltx_i2v.py", "--stage",
+                                        "render", "--jobs", "jobs.json",
+                                        "--frames", "121", "--crf", "10"]},
+        ],
+    }
+    spec.update(extra)
+    return spec
+
+
+def _record(spec: dict, epoch: int = 1787128259, **extra) -> tuple:
+    """(filename, the job record as the runner leaves it in done/).
+
+    The runner writes back into the file it retires -- attempts, rc, started_at,
+    finished_at, runner_pid, artifacts_present -- so a fixture without those
+    would test a record shape that never exists on the box.
+    """
+    job = be.to_job(spec)
+    job["id"] = "%s-%d" % (spec["id"], epoch)
+    job = be.with_run_sha(job, spec.get("payload"))
+    job.update({"attempts": 1, "rc": 0, "runner_pid": 4812,
+                "runner_host": "rtx5090", "started_at": "2026-08-19T08:30:12Z",
+                "finished_at": "2026-08-19T08:34:36Z",
+                "artifacts_present": ["b19-drop.mp4"], "artifact_notes": []})
+    job.update(extra)
+    return job["id"] + ".json", job
+
+
+def _listing(done=(), failed=(), sha=()) -> dict:
+    return {"done": list(done), "failed": list(failed), "sha": list(sha)}
+
+
+def _filed(spec: dict, again: bool = False) -> tuple:
+    """(job, sha) as main() builds them, without touching the box."""
+    job = be.with_run_sha(be.to_job(spec, again=again), spec.get("payload"))
+    return job, job["spec_sha256"]
+
+
+def test_a_clean_id_passes():
+    """Nothing in done/, nothing in failed/, nothing queued: file it."""
+    job, sha = _filed(_ran_spec())
+
+    def never(_path):
+        raise AssertionError("nothing matched, so no record should be read")
+
+    check("an id the box has never seen is not refused",
+          be.duplicate_problems(job, sha, _listing(), live_ids=set(),
+                                read=never) == [])
+    check("and a listing that matched OTHER beats is still clean",
+          be.duplicate_problems(job, sha,
+                                _listing(done=["ep2-b14-crf10-0819-1787000000.json",
+                                               "ep2-b03-covermid-0820-1787200000.json"]),
+                                live_ids={"ep2-b07-judge-0820-1787300000"},
+                                read=never) == [])
+
+
+def test_the_job_that_already_ran_is_refused_and_says_where_it_ran():
+    """The 2026-08-19 re-file, driven directly. Same spec, same sha, done/."""
+    spec = _ran_spec()
+    name, record = _record(spec)
+    job, sha = _filed(spec)
+    problems = be.duplicate_problems(job, sha, _listing(done=[name]),
+                                     live_ids=set(),
+                                     spec_path="pipeline/jobs/%s.yaml" % B19,
+                                     read=lambda p: record)
+    check("the second filing of a finished job is refused", len(problems) == 1)
+    said = problems[0] if problems else ""
+    check("it reads as a BLOCK like every other refusal in the file",
+          said.startswith("BLOCKED:"))
+    check("names the id", B19 in said)
+    check("names the directory it was found in", "in done/" in said)
+    check("names the timestamped filename it found", name in said)
+    check("names when it ran and how it exited",
+          "2026-08-19T08:34:36Z" in said and "rc 0" in said)
+    check("and names the exact invocation that overrides",
+          "python3 pipeline/box_enqueue.py pipeline/jobs/%s.yaml --again" % B19
+          in said)
+    check("the refusal is loud about the cost rather than merely tidy",
+          "264s" in said and "already" in said)
+
+
+def test_a_job_that_failed_is_refused_too():
+    """failed/ counts. A job that died on rc 92 does not become un-run.
+
+    It is the weaker of the two directions on purpose -- re-running a failure
+    can be exactly right -- so what this asserts is that the answer arrives as a
+    refusal naming --again, not as silence.
+    """
+    spec = _ran_spec()
+    name, record = _record(spec, epoch=1787129173, rc=92, failed_step="render",
+                           finished_at="2026-08-19T09:02:11Z")
+    job, sha = _filed(spec)
+    problems = be.duplicate_problems(job, sha, _listing(failed=[name]),
+                                     live_ids=set(), read=lambda p: record)
+    check("a job sitting in failed/ is refused", len(problems) == 1)
+    said = problems[0] if problems else ""
+    check("and the refusal names failed/, not done/",
+          "in failed/" in said and "in done/" not in said)
+    check("carrying its rc so the reader can judge whether to re-run",
+          "rc 92" in said)
+
+
+def test_a_revision_is_not_a_duplicate():
+    """Same id, DIFFERENT content: pass. This is the design call.
+
+    Diagnose -> fix in the pipeline -> re-render is the standing process and it
+    edits specs in place. If this refused, the guard would fire on most of what
+    a lane legitimately does, and a guard that cries wolf gets switched off --
+    this repo has already lost the runner watchdog for four days that way.
+    """
+    name, record = _record(_ran_spec())
+    revised = _ran_spec()
+    revised["steps"][1]["argv"][-1] = "14"          # crf 10 -> 14, a real change
+    job, sha = _filed(revised)
+    check("an edited spec files as a revision, not a duplicate",
+          be.duplicate_problems(job, sha, _listing(done=[name]), live_ids=set(),
+                                read=lambda p: record) == [])
+
+    cosmetic = _ran_spec()
+    cosmetic["steps"][1]["name"] = "render the drop"
+    cosmetic["priority"] = 40
+    cosmetic["task"] = "b19 drop motion, second look"
+    job, sha = _filed(cosmetic)
+    check("but renaming a step, renaming the task or renumbering the priority "
+          "changes nothing the card renders, so it is still a duplicate",
+          len(be.duplicate_problems(job, sha, _listing(done=[name]),
+                                    live_ids=set(), read=lambda p: record)) == 1)
+
+
+def test_the_sha_ignores_everything_the_runner_wrote_afterwards():
+    """The record we compare against is one the runner has edited.
+
+    execute() writes attempts, started_at, finished_at, rc, failed_step,
+    runner_pid, runner_host, artifacts_present and artifact_notes back into the
+    job file before retiring it. Hashing over a deny-list would read every
+    finished job as a revision the first time the runner learned a new key.
+    """
+    spec = _ran_spec()
+    _, record = _record(spec)
+    job, _ = _filed(spec)
+    check("a finished record hashes to what we filed",
+          be.run_sha256(record) == be.run_sha256(job))
+    check("and the enqueue-time stamp survives the round trip",
+          record.get("spec_sha256") == job["spec_sha256"])
+
+    stamped = be.inject_drafts_expectation(
+        dict(job, steps=[dict(job["steps"][0]),
+                         dict(job["steps"][1],
+                              argv=job["steps"][1]["argv"] + ["--harness", "C:\\h"])]),
+        spec, repo_sha="f" * 64)[0]
+    check("the drafts hash this script injects is not part of the identity -- "
+          "a --sync-drafts must not disguise a duplicate as a revision",
+          be.run_sha256(stamped) == be.run_sha256(
+              dict(job, steps=[dict(job["steps"][0]),
+                               dict(job["steps"][1],
+                                    argv=job["steps"][1]["argv"]
+                                    + ["--harness", "C:\\h"])])))
+
+
+def test_a_payload_only_edit_is_a_revision_where_the_record_can_show_it():
+    """`payload:` is not copied into the job json, and that costs a comparison.
+
+    Against a record filed since spec_sha256 exists, a changed prompt file is a
+    revision and passes. Against an older record there is no payload to compare
+    and the argv-only sha matches, so it refuses -- and the refusal has to SAY
+    that, because "your prompt changed and I could not see it" is exactly the
+    case where --again is the right answer rather than a shrug.
+    """
+    dest = r"C:\banyan-farm\b19\prompt.txt"
+    first = _ran_spec(payload={dest: "the fruit drops past his shoulder"})
+    name, record = _record(first)
+    second = _ran_spec(payload={dest: "the fruit drops and rolls to a stop"})
+    job, sha = _filed(second)
+    check("two prompts, two shas", sha != record["spec_sha256"])
+    check("so a prompt edit against a stamped record is a revision",
+          be.duplicate_problems(job, sha, _listing(done=[name]), live_ids=set(),
+                                read=lambda p: record) == [])
+
+    old = dict(record)
+    old.pop("spec_sha256")
+    problems = be.duplicate_problems(job, sha, _listing(done=[name]),
+                                     live_ids=set(), read=lambda p: old)
+    check("against a record filed before the stamp existed it refuses",
+          len(problems) == 1)
+    check("and says plainly that the payload was NOT part of that comparison",
+          "payload" in problems[0] and "--again" in problems[0])
+
+
+def test_could_not_read_the_record_is_a_refusal_not_a_pass():
+    """The law the rest of this file already keeps, one directory further on."""
+    spec = _ran_spec()
+    name, _ = _record(spec)
+    job, sha = _filed(spec)
+    problems = be.duplicate_problems(job, sha, _listing(done=[name]),
+                                     live_ids=set(), read=lambda p: None)
+    check("an unreadable prior record refuses", len(problems) == 1)
+    check("and says what was not established, not that something is wrong",
+          "NOT established" in problems[0] and "not 'fine'" in problems[0])
+
+    check("an unreachable box is not an empty done/",
+          be.parse_dup_listing("[done]\n[failed]\n[sha]\n") is None)
+    check("but a box that answered with nothing found IS an empty done/",
+          be.parse_dup_listing("[done]\n[failed]\n[sha]\n" + be.DUP_MARKER)
+          == {"done": [], "failed": [], "sha": []})
+
+
+def test_the_wildcard_listing_is_a_prefix_and_not_the_answer():
+    """`dir /b <base>*.json` over-matches by design; the filter is here.
+
+    ep2-b03-cover* also lists ep2-b03-covermid-0820, and refusing on that would
+    be a confident wrong answer about a different beat.
+    """
+    job, sha = _filed(_ran_spec(id="ep2-b03-cover-0820"))
+
+    def never(_path):
+        raise AssertionError("a prefix match is not a match")
+
+    check("a longer id sharing our prefix is not this job",
+          be.duplicate_problems(job, sha,
+                                _listing(done=["ep2-b03-covermid-0820-1787200000.json"]),
+                                live_ids=set(), read=never) == [])
+    check("base_job_id strips the epoch stamp",
+          be.base_job_id("ep2-b19-dropmotion-0819-1787128259.json") == B19)
+    check("and the --again token on top of it",
+          be.base_job_id("ep2-b19-dropmotion-0819-1787128259-again0a1b2c.json") == B19)
+    check("while a spec id that merely ends in a date keeps it",
+          be.base_job_id("ep2-b15-listenroot-0820.json") == "ep2-b15-listenroot-0820")
+
+
+def test_a_duplicate_under_a_nudged_name_is_caught_by_its_sha():
+    """The id is how candidates are FOUND; the sha is what decides.
+
+    A re-file under a nudged id has no id to match, so the sweep matches the
+    stamped sha inside the records themselves. Zero-cost today (no record
+    carries one yet) and self-activating as they turn over.
+    """
+    job, sha = _filed(_ran_spec(id="ep2-b19-dropmotion-b-0819"))
+    hit = r"C:\banyan-queue\done\ep2-b19-dropmotion-0819-1787128259.json"
+
+    def never(_path):
+        raise AssertionError("a sha hit needs no record read")
+
+    problems = be.duplicate_problems(job, sha, _listing(sha=[hit]), live_ids=set(),
+                                     read=never)
+    check("identical content under another name is refused", len(problems) == 1)
+    check("and the refusal names the record it collided with",
+          hit in problems[0] and "BYTE-IDENTICAL" in problems[0])
+
+    same = _ran_spec()
+    job, sha = _filed(same)
+    name, record = _record(same)
+    both = be.duplicate_problems(job, sha,
+                                 _listing(done=[name],
+                                          sha=[r"C:\banyan-queue\done\%s" % name]),
+                                 live_ids=set(), read=lambda p: record)
+    check("a record that matches on BOTH id and sha is one refusal, not two",
+          len(both) == 1)
+
+
+def test_a_job_already_queued_is_refused_whatever_its_sha():
+    """The live half, and it answers differently from the finished half.
+
+    A finished job's outputs exist and can be read; a twin filed into ready/
+    races the original onto the same farm-out paths with nobody in between. Both
+    incident write-ups assumed this door was already shut -- it was not: the
+    live guard compares payload PATHS, so a spec with no `payload:` block was
+    never compared to anything at all.
+    """
+    revised = _ran_spec()
+    revised["steps"][1]["argv"][-1] = "14"
+    job, sha = _filed(revised)
+
+    def never(_path):
+        raise AssertionError("a queued job has no finished record to read")
+
+    problems = be.duplicate_problems(
+        job, sha, _listing(), live_ids={B19 + "-1787128259"}, read=never)
+    check("a revision filed while the original is still queued is refused",
+          len(problems) == 1)
+    check("and it says QUEUED rather than already ran",
+          "ALREADY QUEUED" in problems[0] and "--list" in problems[0])
+    check("live_ids=None -- the queue was not read -- drops only the live half",
+          be.duplicate_problems(job, sha, _listing(), live_ids=None,
+                                read=never) == [])
+
+
+def test_again_overrides_and_mints_an_id_that_cannot_land_on_the_old_one():
+    """--again is the escape hatch, and it must not destroy what it overrides.
+
+    enqueue() moves with /Y, so an id identical to an existing record OVERWRITES
+    it. A spec that opted out of stamping is exactly where that bites, which is
+    why the token is minted below the epoch's resolution rather than from it.
+    """
+    spec = _ran_spec()
+    name, record = _record(spec)
+    job, sha = _filed(spec, again=True)
+    problems = be.duplicate_problems(job, sha, _listing(done=[name]),
+                                     live_ids=set(), read=lambda p: record)
+    check("the refusal still fires -- --again overrides it, it does not skip it",
+          len(problems) == 1)
+    kept, notes = be.dup_override(problems, True, job["id"])
+    check("--again clears the refusal", kept == [])
+    check("and prints that it is overriding, with what it overrode",
+          notes and "OVERRIDING" in notes[0]
+          and any("already ran" in n.lower() for n in notes))
+    check("without --again the same refusal stands",
+          be.dup_override(problems, False, job["id"])[0] == problems)
+    check("and --again with nothing refused says so rather than passing silently",
+          be.dup_override([], True, job["id"])[1])
+
+    check("the overriding id carries a token the plain one does not",
+          "-again" in job["id"] and "-again" not in be.to_job(spec)["id"])
+    check("it is still recognisably the same spec",
+          be.base_job_id(job["id"]) == B19)
+    minted = {be.to_job(spec, again=True)["id"] for _ in range(8)}
+    check("and two overrides in the same second are two different filenames",
+          len(minted) == 8)
+
+
+def test_the_guard_actually_runs_on_the_enqueue_path():
+    """A guard defined and never called is the hole it was written to close.
+
+    main() cannot be driven without a box, so this pins the wiring: the scan is
+    called, its unreadable answer exits rather than passing, --again reaches
+    to_job, and the stamp goes onto the job before it is sent.
+    """
+    src = open(os.path.join(os.path.dirname(os.path.abspath(be.__file__)),
+                            "box_enqueue.py"), encoding="utf-8").read()
+    body = src[src.index("def main("):]
+    check("main scans done/ and failed/ before filing", "prior_runs(" in body)
+    check("main refuses to file when that scan could not run",
+          "already-ran guard cannot run" in body)
+    check("main stamps the sha onto the job it sends", "with_run_sha(" in body)
+    check("main routes --again through to the id minting",
+          "to_job(spec, again=args.again)" in body)
+    check("and --again is a real flag with help text",
+          '"--again"' in body and "mints a fresh id token" in body)
+    check("the dry run says it did NOT consult done/",
+          "cannot tell you whether this job already ran" in body)
+
+
 def main():
     print("box_enqueue payload-collision guard")
     test_the_overwrite_that_happened_is_refused()
@@ -627,6 +994,20 @@ def main():
             case(td)
     test_the_real_beat_11_plate_resolves_in_the_real_pipeline_jobs()
     test_the_new_link_never_contradicts_the_old_one()
+    print()
+    print("box_enqueue already-ran guard")
+    test_a_clean_id_passes()
+    test_the_job_that_already_ran_is_refused_and_says_where_it_ran()
+    test_a_job_that_failed_is_refused_too()
+    test_a_revision_is_not_a_duplicate()
+    test_the_sha_ignores_everything_the_runner_wrote_afterwards()
+    test_a_payload_only_edit_is_a_revision_where_the_record_can_show_it()
+    test_could_not_read_the_record_is_a_refusal_not_a_pass()
+    test_the_wildcard_listing_is_a_prefix_and_not_the_answer()
+    test_a_duplicate_under_a_nudged_name_is_caught_by_its_sha()
+    test_a_job_already_queued_is_refused_whatever_its_sha()
+    test_again_overrides_and_mints_an_id_that_cannot_land_on_the_old_one()
+    test_the_guard_actually_runs_on_the_enqueue_path()
     print()
     if FAILURES:
         print("✗ %d failure(s): %s" % (len(FAILURES), ", ".join(FAILURES)))

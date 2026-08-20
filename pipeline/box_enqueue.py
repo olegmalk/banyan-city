@@ -58,6 +58,17 @@ the three failures this script exists to prevent:
      see backlog_problems.
 
     python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml --backlog
+
+  8. A job the card has ALREADY RUN, re-filed by a lane that did not look in
+     done/ first. Every guard above compares against LIVE work only, so a
+     finished job owned nothing and a re-file walked straight in: 264s of GPU
+     on 2026-08-19 answering a question already answered, and three finished
+     jobs re-filed clean on 2026-08-20 with one of them re-rendered. Refused
+     now by content rather than by name -- same steps and same payload is a
+     duplicate, a changed spec is a revision and still passes. See the note
+     above duplicate_problems for why those two answers differ.
+
+    python3 pipeline/box_enqueue.py pipeline/jobs/<spec>.yaml --again
 """
 
 from __future__ import annotations
@@ -142,18 +153,28 @@ def load_spec(path: str) -> dict:
     return yaml.safe_load(text)
 
 
-def to_job(spec: dict) -> dict:
+def to_job(spec: dict, again: bool = False) -> dict:
     """Spec (repo vocabulary) -> job (what box_runner executes).
 
     Only the keys the runner reads are copied through. Everything else in a spec
     -- consumer, success, why, gate -- is planning metadata that stays in the
     repo file, where a person reads it, rather than riding to the box as noise.
+
+    `again` mints a token below the epoch's resolution. Two things need it and
+    the epoch alone gives neither: a re-file inside the same second, and a spec
+    that opted out of stamping (`stamp_id: false`, or an id already ending in
+    ten digits) where the filename would otherwise be identical -- and enqueue()
+    moves with /Y, so an identical filename OVERWRITES the record instead of
+    sitting beside it. An override that quietly destroys the evidence of the run
+    it is overriding is worse than the refusal it bypassed.
     """
     jid = spec.get("id")
     if not jid:
         sys.exit("!! spec has no id")
     if spec.get("stamp_id", True) and not jid[-10:].isdigit():
         jid = "%s-%d" % (jid, int(time.time()))
+    if again:
+        jid = "%s-again%06x" % (jid, time.time_ns() % 0x1000000)
     job = {
         "id": jid,
         "task": spec.get("task", spec.get("id")),
@@ -1537,6 +1558,393 @@ def queued_job_ids():
     return ids, None
 
 
+# --------------------------------------------------------------------------
+# 8. THE JOB THAT ALREADY RAN. Twice now, and the second time nobody had even
+# looked at what the first run made.
+#
+#   2026-08-19  ep2-b19-dropmotion-0819 was filed twice, sixteen minutes apart:
+#               -1787128259 at 08:30 and -1787129173 at 08:46, seven minutes
+#               after the first landed in done/. 264s of GPU on a question the
+#               first run had already answered. It did not come through
+#               backlog/ (autofill.log reads BACKLOG EMPTY at every tick across
+#               the window, and box_autofill.plan_fill DOES dedupe against
+#               done/) -- it went straight into ready/, which is what this
+#               script does when --backlog is omitted.
+#   2026-08-20  ep2-b15-listenroot-0820, ep2-b03-covermid-0820 and
+#               ep2-b13-shademid-0820 all finished at 04:56 and sat unread until
+#               12:20. The resuming lane re-filed all three clean; b03 re-rendered
+#               to completion and produced a byte-identical mp4. The two that had
+#               not started were renamed .DUP-already-ran-0820 in ready/ by hand.
+#
+# WHAT THE QUEUE COULD SEE, AND WHAT IT COULD NOT. Every existing collision
+# guard in this file compares against LIVE work, and it compares PAYLOAD PATHS,
+# not jobs: payload_collisions refuses a path already claimed by a job in
+# ready/, running/ or backlog/. Two consequences the incident write-ups both
+# state slightly wrong. A finished job owns nothing -- "it stops being a
+# collision the moment that run leaves the queue" is deliberate and correct for
+# the overwrite hazard it was built for, and blind to this one. And a spec with
+# no `payload:` block was never compared to anything at all, live or not, so
+# "box_enqueue refuses a reused id against ready/, running/ and backlog/" was
+# never true either; that door is closed here too.
+#
+# THE KEY IS THE JOB'S CONTENT, NOT ITS NAME, because the name cannot be the
+# key: to_job stamps an epoch second onto every id, so two filings of one spec
+# are ALREADY different ids and land as two different files in done/. So the
+# id is used to FIND candidates (base_job_id strips the stamp back to the spec
+# id) and a sha over what actually runs is used to DECIDE.
+#
+# SAME ID + SAME SHA REFUSES. SAME ID + DIFFERENT SHA PASSES, LOUDLY. That is
+# the design call, and it is the opposite of treating the id as a primary key.
+# The argument:
+#
+#   * Every documented failure is an IDENTICAL re-file. Both b19 and the three
+#     0820 jobs were the same spec filed twice by a resumed lane; b19's two runs
+#     are byte-identical mp4s and so are b03's, eight hours apart. The sha is
+#     the only thing that separates that from ordinary work.
+#   * Refusing revisions would fire on the normal loop. Diagnose -> fix in the
+#     pipeline -> re-render is the standing process, and it edits a spec in
+#     place far more often than it renames one. A guard that refuses most of
+#     what a lane legitimately does gets switched off -- this file already
+#     records the runner watchdog being off for four days after exactly that.
+#   * done/ stays readable anyway. Each record is <spec-id>-<epoch>.json and
+#     carries its own full steps, so two revisions under one spec id are two
+#     distinguishable records, not an ambiguity. That is unlike farm-out/, where
+#     resolve_producer refuses an ambiguous directory because the two jobs share
+#     one namespace and neither answer is checkable.
+#   * The asymmetry of being wrong. A false DUP costs one --again and a line of
+#     explanation. A missed DUP costs 264s of card time and a reader who finds
+#     two completed records for one question.
+#
+# A LIVE JOB IS THE ONE EXCEPTION and is refused whatever its sha, because the
+# hazard is different: a finished job's outputs exist and can be looked at,
+# while a twin filed into ready/ races the original onto the same farm-out
+# paths with no human in between. Cancel the queued one or --again; do not run
+# both.
+#
+# WHAT THE SHA COVERS, said exactly, because a hash that is vague about its
+# input is worse than none. run_sha256 hashes the steps' argv, env, artifacts,
+# needs_gpu and max_attempts -- WHAT RUNS -- plus the `payload:` bodies, and
+# deliberately NOT: the stamped id, the task name, step names, backlog filing
+# metadata, the --expect-drafts-sha256 this script injects, or anything the
+# runner writes into the record afterwards (attempts, rc, started_at,
+# finished_at, artifacts_present). Three of those exclusions are load-bearing:
+#   - the injected drafts hash, because it is stamped from repo state rather
+#     than written by the spec author, so leaving it in would let an unrelated
+#     edit to wave-drafts.yaml disguise a genuine duplicate as a revision;
+#   - the runner's own keys, because the prior run's record is the only copy of
+#     it we have and it must hash to the same number as the file we filed;
+#   - the id and task, so a duplicate re-filed under a nudged name is still
+#     caught by the sha sweep below.
+#
+# THE ONE HONEST WEAKNESS. `payload:` is not copied into the job json (to_job
+# drops it on purpose), so a job filed BEFORE this change carries no
+# spec_sha256 and the only sha recomputable from its record is the argv-only
+# one. A revision that changed nothing but a prompt file therefore reads as a
+# duplicate against those older records. The refusal says so in as many words
+# and names --again. Jobs filed from here on carry the full sha and the
+# comparison is exact.
+DUP_MARKER = "DUP-SCANNED"
+DUP_DIRS = ("done", "failed")
+
+# The job keys that describe what the card will DO. An allow-list rather than a
+# deny-list because the runner appends to the record it retires -- started_at,
+# attempts, runner_pid, runner_host, rc, failed_step, artifacts_present,
+# artifact_notes, unprovenanced -- and a deny-list would have to be extended
+# every time it learns a new one, silently reading every finished job as a
+# revision until someone noticed.
+RUN_KEYS = ("steps", "env", "artifacts", "needs_gpu", "max_attempts")
+
+SAFE_ID = re.compile(r"\A[A-Za-z0-9._-]+\Z")
+# What to_job and --again append: an epoch second, or an --again token, or both.
+ID_STAMP = re.compile(r"-(?:again[0-9a-f]+|[0-9]{9,})\Z")
+
+
+def base_job_id(name: str) -> str:
+    """The spec id under a queue filename: <spec-id>[-<epoch>][-again<hex>].json.
+
+    Repeated because both suffixes can be present and --again stacks on top of
+    the epoch. Nine digits minimum for the epoch so a date-suffixed spec id --
+    ep2-b15-listenroot-0820, and nearly every spec in pipeline/jobs is one --
+    keeps its own tail.
+    """
+    s = str(name).strip()
+    if s.lower().endswith(".json"):
+        s = s[:-5]
+    while True:
+        shorter = ID_STAMP.sub("", s)
+        if shorter == s:
+            return s
+        s = shorter
+
+
+def canonical_run(job: dict) -> dict:
+    """The part of a job that decides what the card renders. See note above.
+
+    Step NAMES are dropped with the other cosmetics: a renamed step runs the
+    identical command, and calling that a revision would wave through the exact
+    re-file this guard exists to catch. `allow_fail` stays -- it changes whether
+    a failing step stops the job.
+    """
+    steps = []
+    for step in job.get("steps") or []:
+        argv, skip = [], False
+        for a in [str(x) for x in (step.get("argv") or [])]:
+            if skip:                       # the value after --expect-drafts-sha256
+                skip = False
+                continue
+            if a == DRAFTS_FLAG:
+                skip = True
+                continue
+            argv.append(a)
+        steps.append({"argv": argv, "allow_fail": bool(step.get("allow_fail"))})
+    out = {k: job.get(k) for k in RUN_KEYS if k in job}
+    out["steps"] = steps
+    return out
+
+
+def run_sha256(job: dict, payload: dict = None) -> str:
+    """sha256 over what this job runs, and over the files it is handed.
+
+    Two shas, not one, and the caller picks: WITH payload for the number stamped
+    into the job and compared exactly against another stamped job, WITHOUT it for
+    the only comparison a pre-2026-08-20 record can support.
+    """
+    import hashlib
+
+    blob = json.dumps(canonical_run(job), sort_keys=True, ensure_ascii=False,
+                      separators=(",", ":"))
+    if payload:
+        bodies = {norm_dest(d): (b if isinstance(b, str)
+                                 else json.dumps(b, sort_keys=True))
+                  for d, b in payload.items()}
+        blob += "\n" + json.dumps(bodies, sort_keys=True, ensure_ascii=False,
+                                  separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def with_run_sha(job: dict, payload: dict = None) -> dict:
+    """Stamp the job with its own content hash, for the NEXT filing to compare.
+
+    Rides to the box as an unknown key the runner ignores and the sidecar keeps,
+    which makes it provenance (§7.2) as well as a guard input: a record on the
+    results branch now says which spec content produced it, exactly.
+    """
+    return dict(job, spec_sha256=run_sha256(job, payload))
+
+
+def dup_scan_command(base: str, sha: str) -> str:
+    """One cmd line: the id's records in done/ and failed/, and a sha sweep.
+
+    The wildcard keeps the listing to the handful of files that could match
+    instead of the whole of done/; a base id with a character `dir` would read
+    as a pattern falls back to listing everything and filtering here, because a
+    wrong wildcard would silently list nothing and read as "never ran".
+
+    findstr is the cheap half of the id-independent check: it matches the sha
+    inside the records themselves, so a duplicate re-filed under a nudged name
+    is caught too. It finds nothing for jobs filed before spec_sha256 existed,
+    which is a gap that closes itself as records turn over.
+    """
+    pat = (base + "*") if SAFE_ID.match(base or "") else "*"
+    parts = []
+    for d in DUP_DIRS:
+        parts.append("echo [%s]" % d)
+        parts.append("dir /b %s\\%s\\%s.json 2>nul" % (QUEUE_ROOT, d, pat))
+    parts.append("echo [sha]")
+    parts.append('findstr /m /c:"%s" %s 2>nul'
+                 % (sha, " ".join("%s\\%s\\*.json" % (QUEUE_ROOT, d)
+                                  for d in DUP_DIRS)))
+    parts.append("echo " + DUP_MARKER)
+    return " & ".join(parts)
+
+
+def parse_dup_listing(stdout: str):
+    """{"done": [...], "failed": [...], "sha": [...]}, or None for "no answer".
+
+    parse_queue_listing's reason, one directory further on: `dir /b` and findstr
+    both exit 1 on finding nothing, so only the marker echoed at the end of the
+    line separates an empty done/ from a dead ssh -- and reading a dead ssh as
+    "never ran" is the whole failure.
+    """
+    out = stdout or ""
+    if DUP_MARKER not in out:
+        return None
+    found = {"done": [], "failed": [], "sha": []}
+    section = None
+    for line in out.splitlines():
+        line = line.strip()
+        if not line or line == DUP_MARKER:
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            section = line[1:-1]
+            continue
+        if section == "sha":
+            # findstr prints "FINDSTR: Cannot open ...*.json" when a directory
+            # is empty, and that line ends in .json too. Only full paths under
+            # the queue root count.
+            if (line.lower().startswith(QUEUE_ROOT.lower())
+                    and line.lower().endswith(".json")):
+                found["sha"].append(line)
+        elif section in found and line.lower().endswith(".json"):
+            found[section].append(line)
+    return found
+
+
+def prior_runs(base: str, sha: str):
+    """(listing, None) for what done/ and failed/ hold, or (None, why)."""
+    r = ssh(dup_scan_command(base, sha))
+    found = parse_dup_listing(r.stdout)
+    if found is None:
+        return None, (r.stderr or r.stdout or "ssh returned nothing").strip()[:200]
+    return found, None
+
+
+def box_job_record(path: str):
+    """A finished job's own json, read off the box, or None.
+
+    None is "could not read", never "not a duplicate" -- duplicate_problems
+    refuses on it, for the reason every other unfetchable in this file refuses.
+    """
+    r = ssh('type "%s"' % path)
+    text = r.stdout or ""
+    if r.returncode != 0 or "{" not in text:
+        return None
+    try:
+        record = json.loads(text[text.index("{"):])
+    except ValueError:
+        return None
+    return record if isinstance(record, dict) else None
+
+
+def _ran_when(record: dict, name: str) -> str:
+    """When the prior run finished, in whatever the record can support."""
+    for key in ("finished_at", "started_at"):
+        if record.get(key):
+            return str(record[key])
+    # Nothing recorded: the epoch this script stamped into the filename is the
+    # only clock left, and it says when the job was FILED rather than when it
+    # finished. Labelled as such rather than passed off as the finish time.
+    stem = name[:-5] if name.lower().endswith(".json") else name
+    stamp = re.search(r"-([0-9]{9,})(?:-again[0-9a-f]+)?\Z", stem)
+    if stamp:
+        return "filed %s" % time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                                          time.gmtime(int(stamp.group(1))))
+    return "time not recorded"
+
+
+def duplicate_problems(job: dict, sha: str, found: dict, live_ids=None,
+                       spec_path: str = None, read=None) -> list:
+    """Refuse a job the card has already run, or is about to run.
+
+    `found` is a parse_dup_listing dict, `live_ids` the set from queued_job_ids
+    (or None for "not looked", which drops the live half only), `read` fetches a
+    finished record by box path so a test can hand one over without ssh.
+    """
+    read = read or box_job_record
+    base = base_job_id(job.get("id") or "")
+    invocation = ("python3 pipeline/box_enqueue.py %s --again"
+                  % (spec_path or ("pipeline/jobs/%s.yaml" % base)))
+    problems = []
+
+    for jid in sorted(live_ids or ()):
+        if base_job_id(jid) != base:
+            continue
+        problems.append(
+            "BLOCKED: %s is ALREADY QUEUED on the box as %s.json -- it has not run "
+            "yet, so filing a second copy does not add an answer, it adds a race: "
+            "both would publish into the same farm-out directory with nobody "
+            "between them.\n"
+            "      See what is waiting:  python3 pipeline/box_enqueue.py --list\n"
+            "      Then either let that one run, or park it (.DUP-already-ran) and "
+            "file this deliberately:\n"
+            "        %s" % (base, jid, invocation))
+
+    for other in sorted(found.get("sha") or ()):
+        if base_job_id(other.rsplit("\\", 1)[-1]) == base:
+            continue                    # its own id's records are handled below
+        problems.append(
+            "BLOCKED: a job with BYTE-IDENTICAL content to this one has already run "
+            "on the box, under a different name.\n"
+            "      %s\n"
+            "      spec_sha256 %s -- same steps, same argv, same payload, so it "
+            "would render the same frames to the same paths. Look at what that job "
+            "made before spending the card again.\n"
+            "      Deliberate re-run:  %s" % (other, sha, invocation))
+
+    for where in DUP_DIRS:
+        for name in sorted(found.get(where) or ()):
+            if base_job_id(name) != base:
+                continue                # the wildcard is a prefix, not the answer
+            path = "%s\\%s\\%s" % (QUEUE_ROOT, where, name)
+            record = read(path)
+            if record is None:
+                problems.append(
+                    "BLOCKED: %s has a record in %s/ (%s) and it could not be read, "
+                    "so whether this is the SAME job or a revision of it was NOT "
+                    "established -- and 'could not check' is not 'fine'.\n"
+                    "      Read it by hand:  ssh %s type %s\n"
+                    "      Or file anyway, deliberately:  %s"
+                    % (base, where, name, SSH_HOST, path, invocation))
+                continue
+            theirs, exact = record.get("spec_sha256"), True
+            mine = sha
+            if not theirs:
+                # Filed before spec_sha256 existed. The argv-only sha is the most
+                # its record can support, and it cannot see `payload:`.
+                theirs, mine, exact = (run_sha256(record), run_sha256(job), False)
+            if theirs != mine:
+                print("  dup      %s ran before as %s (%s/, %s) and the spec has "
+                      "CHANGED since --" % (base, name, where, _ran_when(record, name)))
+                print("           filing it as a revision. %s"
+                      % ("sha %s -> %s" % (theirs[:12], mine[:12]) if exact else
+                         "that record predates spec_sha256, so the comparison "
+                         "covered argv only"))
+                continue
+            problems.append(
+                "BLOCKED: this job ALREADY RAN. %s is in %s/ on the box as %s "
+                "(finished %s%s).\n"
+                "      Nothing that decides what the card renders has changed since"
+                "%s, so this would spend the GPU on a question that is already "
+                "answered -- 264s of it on 2026-08-19, and again on 2026-08-20 when "
+                "three finished jobs were re-filed before anyone read them.\n"
+                "      LOOK AT WHAT IT MADE FIRST. The record and its artifacts are "
+                "on the box and on the results branch; the first thing a resuming "
+                "lane owes a dead one is a look at done/, not a re-file.\n"
+                "      Genuinely want it run again -- new seed, a re-measure, "
+                "something on the box changed underneath it?\n"
+                "        %s"
+                % (base, where, name, _ran_when(record, name),
+                   "" if record.get("rc") is None else ", rc %s" % record["rc"],
+                   "" if exact else
+                   " (that record predates spec_sha256, so this compared the steps' "
+                   "argv and NOT the `payload:` bodies -- if the only thing you "
+                   "changed is a prompt file, that is a revision and --again is the "
+                   "right answer)",
+                   invocation))
+    return problems
+
+
+def dup_override(problems: list, again: bool, jid: str) -> tuple:
+    """(problems, notes) once --again has had its say.
+
+    An override that prints "overridden" and nothing else is a switch, not a
+    decision: the refusals are echoed under it so the line that files the job
+    also records what it was told and chose to ignore.
+    """
+    if not again:
+        return problems, []
+    if not problems:
+        # Said out loud rather than passed over. A lane that reached for --again
+        # expected a refusal; not getting one usually means it is looking at a
+        # different spec than it thinks, and silence would hide that.
+        return problems, ["--again given, but nothing refused this job -- it would "
+                          "have filed anyway. The id still carries an --again token."]
+    notes = ["--again: OVERRIDING %d refusal(s) and filing as %s -- a fresh token, "
+             "so this cannot land on the earlier record" % (len(problems), jid)]
+    notes += ["  was refused because: " + p.split("\n", 1)[0] for p in problems]
+    return [], notes
+
+
 def send_payload(payload: dict) -> None:
     """Write a spec's `payload:` files onto the box before the job goes live.
 
@@ -1758,6 +2166,10 @@ def main(argv=None) -> int:
     ap.add_argument("--backlog", action="store_true",
                     help="file into backlog/ instead of ready/: same guards, but the "
                          "job waits there until box_autofill.py finds the card hungry")
+    ap.add_argument("--again", action="store_true",
+                    help="file a job the box has already run: prints every refusal "
+                         "it is overriding and mints a fresh id token, so the new "
+                         "record cannot land on the old one")
     ap.add_argument("--expires-h", type=float, default=36.0,
                     help="hours a backlog entry stays true; past it the autofill "
                          "parks it .EXPIRED rather than firing a stale recipe")
@@ -1780,7 +2192,9 @@ def main(argv=None) -> int:
     live_ids = None
     if args.dry_run:
         print("(dry run: box queue not read -- collision check covers only "
-              "enqueues from the last %ds)" % RESERVE_GRACE_SEC)
+              "enqueues from the last %ds, and done/ is not consulted at all, "
+              "so a dry run cannot tell you whether this job already ran)"
+              % RESERVE_GRACE_SEC)
     else:
         live_ids, why = queued_job_ids()
         if live_ids is None:
@@ -1796,10 +2210,34 @@ def main(argv=None) -> int:
     for path in args.spec:
         print("%s" % path)
         spec = load_spec(path)
-        job = to_job(spec)
+        job = to_job(spec, again=args.again)
         if args.backlog:
             job = with_backlog_meta(job, path, args.expires_h)
-        problems = gate_checks(spec, job)
+        # The sha rides along on the job whatever happens next -- the NEXT
+        # filing is what reads it back off the record.
+        job = with_run_sha(job, spec.get("payload"))
+        # Printed rather than left in the json, which --dry-run truncates at
+        # 2000 characters and this key is appended past: it is what the next
+        # filing compares against, so it is the one number a person re-filing
+        # by hand needs to be able to read and grep for.
+        print("  sha      %s  (spec_sha256)" % job["spec_sha256"])
+        # Asked before the gates, because it is the one question whose answer
+        # makes every other check moot: has the card already done exactly this?
+        # A dry run cannot ask it (it reads nothing off the box) and says so.
+        problems = []
+        if not args.dry_run:
+            found, why = prior_runs(base_job_id(job["id"]), job["spec_sha256"])
+            if found is None:
+                sys.exit("!! cannot read the box's done/ and failed/ (%s) -- the "
+                         "already-ran guard cannot run, so nothing was sent or "
+                         "queued" % why)
+            dups = duplicate_problems(job, job["spec_sha256"], found,
+                                      live_ids=live_ids, spec_path=path)
+            dups, overridden = dup_override(dups, args.again, job["id"])
+            for note in overridden:
+                print("  %s" % note)
+            problems += dups
+        problems += gate_checks(spec, job)
         if args.backlog:
             problems += backlog_problems(spec)
         # rid identifies THIS claim, so the re-read below can tell our own line
