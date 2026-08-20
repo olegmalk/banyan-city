@@ -1,0 +1,7 @@
+#### job ep2-b16-field-f1-0820-1787251977 attempt 1 start 2026-08-20T19:19:19Z
+
+==== step hintskel START 2026-08-20T19:19:19Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16field-f1-0820\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\b16field-f1-0820\\src", "--repo-commit", "d1d559d2a475b6d6260ac18a345bd2f65546b0f6", "--task", "ep2-b16-field-f1-0820", "--arm", "nocontrol", "--control", "pipeline/control/b08-pose-skel-0819.png", "--control-sha256", "09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3", "--scale", "0.45", "--seed", "20260841", "--prompt-file", "C:\\banyan-farm\\b16field-f1-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16field-f1-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16field-f1-0820\\out"]
+C:\Users\artvn\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\banyan-farm\\b16field-f1-0820\\src\\pipeline\\controlnet_plate.py': [Errno 2] No such file or directory
+==== step hintskel END rc=2 2026-08-20T19:19:19Z ====
+#### job ep2-b16-field-f1-0820-1787251977 finished rc=2 2026-08-20T19:19:19Z

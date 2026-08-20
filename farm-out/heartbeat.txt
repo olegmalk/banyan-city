@@ -3308,3 +3308,5 @@
 19:18:30Z DONE task=ep2-jerry-face-f2-0820-1787252581 rc=0 artifacts=1
 19:18:41Z STARTED task=ep2-jerry-face-f3-0820-1787252584 attempt=1 on box-runner
 19:19:07Z DONE task=ep2-jerry-face-f3-0820-1787252584 rc=0 artifacts=1
+19:19:19Z STARTED task=ep2-b16-field-f1-0820-1787251977 attempt=1 on box-runner
+19:19:19Z FAIL task=ep2-b16-field-f1-0820-1787251977 rc=2 step=hintskel
