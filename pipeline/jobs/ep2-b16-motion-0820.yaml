@@ -59,10 +59,11 @@ payload:
     camera, camera equipment, film equipment, walking out of frame, leaving the frame, standing up, scene
     change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action,
     motion blur, text
-  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt",
+  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-encode.json: '[{"beat": 16, "embeds": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt",
     "prompt_file": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-negative.txt"}]'
-  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-render.json: '[{"beat": 4, "seed": 20260821, "embeds": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt",
-    "init": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png", "out": "C:\\banyan-farm\\ep2-b16-motion-0820\\16-why-LTX-ep2-b16-motion-0820.mp4"}]'
+  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-render.json: '[{"beat": 16, "seed": 20260821, "embeds":
+    "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt", "init": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b16-motion-0820\\16-why-LTX-ep2-b16-motion-0820.mp4"}]'
 steps:
 - name: crop
   argv:
@@ -284,6 +285,7 @@ derivation:
   - b04-init- -> b16-init-
   - b04-embeds -> b16-embeds
   - bench-ep2-b04 -> bench-ep2-b16
+  - '"beat": 4 -> "beat": 16'
   - ep2-b04-peek-s3-0820 -> ep2-b16-motion-0820
   overrides_applied_and_asserted:
     argv:--sha256:

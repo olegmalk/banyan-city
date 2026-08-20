@@ -225,7 +225,12 @@ def main() -> int:
                  ("b04-jobs-", "b16-jobs-"),
                  ("b04-init-", "b16-init-"),
                  ("b04-embeds", "b16-embeds"),
-                 ("bench-ep2-b04", "bench-ep2-b16")],
+                 ("bench-ep2-b04", "bench-ep2-b16"),
+                 # the beat NUMBER inside the jobs json, which ltx_i2v prints
+                 # and logs. The top-level `beat: 16` override does not reach
+                 # inside a payload string, so the running log said
+                 # `encode-beat-04` on a beat-16 job.
+                 ('"beat": 4', '"beat": 16')],
         extra={
             "bar": BAR,
             "failure_predicted_in_advance": PREDICTED,
