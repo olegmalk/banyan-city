@@ -3074,3 +3074,149 @@ detail bar comes first, and nothing tried here is it.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
 plate_ack, NO cut, and beat 08 does NOT have a complete plate candidate.**
+
+## Appended 2026-08-20 by the composite-plate motion lane — rung 3 was ALREADY FILED AND ALREADY RUN, and nobody had looked at it for seven and a half hours
+
+`ep2-b15-listenroot-0820`, `ep2-b03-covermid-0820`, `ep2-b13-shademid-0820`. The
+lane that wrote "filing rung 3 now" did file it — commit `2dee7fe7` at 04:33, all
+three enqueued, all three run by 04:56, rc=0, 121 frames, 264.7 / 268.3 / 262.4 s,
+$0 — and then died before pulling a single frame. **The card was idle and three
+finished renders sat unread on it from 04:56 to 12:20.** The first thing a
+resuming lane owes a dead one is not a re-file; it is a look at `done/`.
+
+**This lane re-filed them before checking, which is the operational lesson worth
+more than the apology.** `box_enqueue.py` refuses a reused id against `ready/`,
+`running/` and `backlog/` — it does **not** look in `done/`, so three completed
+jobs re-queued clean and one of them re-rendered before it was caught. The two
+that had not started were renamed `.DUP-already-ran-0820` in `ready/` on the
+`ep2-b02-anchor` precedent. **Check `done/` by task name before you enqueue
+anything a previous lane may have filed.**
+
+### And the mistake paid for itself: bit-exact reproducibility, end to end, eight hours apart
+
+The b03 duplicate ran to completion at 12:27 and produced
+`06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e` — **byte for
+byte the same mp4 as the 04:42 run**, across fetch_init, cover_crop,
+assert_framing, encode, render and publish, on the same box at seed 20260820.
+Only the sidecar timestamps differ. Nobody had ever measured that on this rig;
+now the whole "same seed is a true control" argument three rungs deep has a
+number behind it.
+
+### THE HEADLINE: a middle placement in continuous aspect gives the performance back, and it is measured on the instrument that was written before the pixels
+
+| beat | face/whole-frame instrument | rung 1 | rung 2 | **rung 3** |
+|---|---|---|---|---|
+| 13 | face band (250,240,400,360) mean abs interframe | 10.80 | 0.64 | **4.798** |
+| 13 | same, last 20 pairs | 24.07 | 0.148 | **2.263** |
+| 03 | whole-frame interframe at f060..f072 (step frames) | — | 0.44 / 0.40 / 0.34 | **7.60 / 7.29 / 7.02** |
+| 03 | judge_clip FREEZE (exact ncc 1.0000 run) | — | 33 from f088 | **7 from f114** |
+
+Beat 13's bar was **3.0 mean / 1.0 last-20 and deliberately not rung 1's 10.80**,
+because rung 1 earned its number by standing up and walking out of frame. 4.798 is
+the seated middle it asked for and this family had never produced. Beat 13's tilt
+also goes **fully sideways** where rung 2's verdict had to write "he leans, he does
+not tip" — judged 1:1 side by side, and it is not close.
+
+**Publish the SHAPE of an interframe mean, not the mean.** All six clips in this
+family read `judge_clip` **period 3, 8.0 effective fps** — a new picture every
+third frame — so the energy lives on the step frames and the gaps read 0.04–0.35.
+Beat 13's band reads **26.4, 30.9, 34.8, 35.4, 34.4, 32.7, 32.2, 31.1, 28.9** at
+f066..f090 and **17.32, 13.28, 8.37** inside the last twenty. Rung 2's step frames
+read 0.16–0.23. Like for like the comparison holds; quoted as a bare mean it would
+have looked like smooth 4.8-per-frame motion, which is not what is on the screen.
+
+### F-MIDDLE-IS-A-CUT did NOT fire, on either beat
+
+`HALFWAY THROUGH THE SHOT` was read as a moment, not a shot change. Largest
+whole-frame interframe anywhere in beat 13 is 4.32 and in beat 03 is 7.7 — both
+are the body moving on a step frame. It was pre-registered as a real risk because
+the negative's `cut to another shot, scene change, shot change` is by this
+ladder's own law not protection. **The phrase is safe and other beats may use it.**
+
+### THE COST, AND IT IS NOT THE COST RUNG 2 PAID
+
+Rung 2's G2 was a *stillness* tax — the clip bought its terminal position by making
+every frame the last frame. Rung 3 pays in a different currency on each beat:
+
+- **Beat 13 gave back the FACE, in the middle, for about thirty frames.** From
+  ~f042 to ~f072 the head has tipped far enough that the face is pressed into his
+  own knee; the bar named f060 explicitly and the face is not readable there. This
+  is **rung 1's fifty-frame fold returning at 60% length** as the direct consequence
+  of the tilt that H3 wanted. Legible at f000, f030, f090, f120.
+- **Beat 03 gave back nothing and still failed by one frame**, 7 against a bar of
+  "under 6". And the exact-freeze instrument **understates both clips**: at the
+  interframe level rung 3 is dead from **f075** and rung 2 from **f069**. The
+  middle placement bought seventeen times the motion energy through the middle and
+  **did not move the moment the clip stops.** A rung 4 aimed at the trailing run is
+  aimed at the wrong 45 frames; the cheap answer is a **shorter render** — 121
+  frames is the whole slot and the last 45 are dead in every clip of this family.
+
+### BEAT 15: THE NOUN LAW, THIRD CONFIRMATION IN THREE CONSECUTIVE RUNGS ON ONE BEAT
+
+**At f094 the goblin is deleted and replaced by a mound of bare earth, in one frame
+pair, and never returns.** Whole-frame interframe on f093→f094 reads **28.14**
+against a clip median of **0.171**; no other pair in the clip exceeds 1.7. It is a
+hard swap. The last 27 frames of a five-second beat about a man talking to a
+seedling contain no man.
+
+The one variable was the rooting clause, and it introduced one new noun:
+`rising up out of the grass beside him **with soil and grass around its base**`.
+`soil` appears in **no other beat-15 prompt** — not `listenmotion`, not
+`listenlast`. The beat's three rungs now read:
+
+| rung | the phrase | what arrived |
+|---|---|---|
+| 1 | `talks to them from a **hand's width** away` | a hand, holding the plant at eye level |
+| 2 | `Nobody touches the plant and nobody **picks it up**` | a pick-up: the plant uprooted in his fist at f120 |
+| 3 | `with **soil** and grass around its base` | a mound of soil, in the frame's largest object slot, which was the subject |
+
+**A noun is a placement wherever it appears — including inside a subordinate clause
+about something else — and a placement with no assigned position takes the position
+of the largest thing nearby.** §18's b08 grip finding said the *neighbourhood* names
+what a mark becomes; this says the *frame* decides where an unplaced noun lands. The
+next rung on beat 15 is one edit: **no soil, no earth, no dirt, no ground-material
+noun of any kind** — the stem and the grass are the only nouns the rooting clause
+may contain. Three GPU fires, one rule, three independent confirmations at one init
+and one seed.
+
+### THREE INSTRUMENTS RETRACTED, AND ONE OF THEM BROKE IN A SHAPE THIS FILE HAD NOT SEEN
+
+Yesterday's entry generalised that a fixed window measures the subject only while
+the subject stays in the window, and named `luma_std` **collapse** as the tell. All
+three of today's skin probes broke; **only two broke that way**.
+
+| beat | probe f000 → f120 | luma_std | what the box was actually on |
+|---|---|---|---|
+| 03 | luma 98.4 → 228.5 | **18.5 → 5.9** (collapse) | the hazy horizon — his head dropped ~450 px by f060 |
+| 15 | luma 90.3 → 203.2 | **14.9 → 3.1** (collapse) | lit grass — the subject is not in the picture |
+| 13 | luma 107.6 → 49.0 | **6.0 → 85.0 → 56.6** (**explosion**) | the boundary between lit cheek and dark cloak |
+
+**A dispersion that jumps fourteenfold is a box on an EDGE exactly as a dispersion
+that collapses is a box on a FIELD. Both are the premise dying and only the
+dispersion shows it** — the means were 130, 113 and 59 luma out, all three clean,
+confident and meaningless. Beat 13's is the more dangerous of the two shapes,
+because a *collapsed* std looks obviously wrong on inspection and an *inflated* one
+looks like a subject that changed.
+
+Beats 03 and 13 re-placed by eye at 5x on f120 and published with **material as
+well as luma**: b03 cheek (90,850,140,890) luma 92.4 / R−B 17.9 / std 7.4 and the
+lit temple (60,700,120,760) luma 103.5 / R−B 34.9 — **+5.1 luma, +1.6 R−B**, i.e.
+the same skin; b13 cheek (180,440,240,500) luma 90.6 / R−B 17.3 / std 4.9, with two
+neighbouring placements inside 1.7 luma of it. Identity holds on both by eye at 1:1.
+**Beat 15's has nothing to re-place onto**, which is the only honest thing a probe
+can say about a frame with no subject in it.
+
+### What this decides
+
+- **Beat 13's next rung is the PLATE EXPOSURE rung**, and it is now earned rather
+  than asserted. Its spec pre-registered the test: *if H1 passes and G8 still fails,
+  the wording is exonerated.* H1 passed by 7x and G8 failed — at f120 his eyes are
+  at y≈400–560 and the seedling is at y≈690–780 with 60 px leaves. Three rungs of
+  wording have moved the face band 10.80 → 0.64 → 4.798 and the tilt from nothing to
+  fully sideways, and **not one of them put light on his eyes.** Wording is done on
+  this beat.
+- **Beat 03's next lever is length or plate, not words.**
+- **Beat 15's next rung is one noun.**
+- **No pick, no `plate_ack`, no cut, no publication. Beats 03, 13 and 15 stay
+  slates.** Per-clause verdicts in each spec's `verdict_measured`; clips, sheets and
+  `EVIDENCE-*.png` under `farm-out/ep2-b{15,03,13}-{listenroot,covermid,shademid}-0820/`.
