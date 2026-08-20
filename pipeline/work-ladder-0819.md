@@ -3725,3 +3725,111 @@ asked on**.
 |---|---|---|---|
 | 09 | judged crop plate at the 55 % bar (`farm-out/ep2-b09-platecrop-0820/`), motion **backlogged** | the adolescent read | **founder**, inside the existing `/review/ep2-guards-0818` card — no new card |
 | 16 | two judged plates, both FAIL (`farm-out/ep2-b16-mac-plate-0820/`) | wording closed at three rungs; needs the **large-object composite** (a build) or an **R4 restage** | **steward** for the build; **founder** only if the restage is taken |
+
+## 2026-08-20, later — THE CROPPED PLATE SURVIVES MOTION, AND ONE HAND DOES NOT
+
+`ep2-b09-cropmotion-0820` ran and is judged: **four of four**, and the clause
+that carries it is the one the spec named as **most likely to fail**.
+
+| clause | bar | measured | |
+|---|---|---|---|
+| C1 framing survives | head ≥ 50 % of frame height at f001 | **54.7–56.3 %** (crown at the top edge, chin y ~700–720, read off a 40-px-ruled frame; 55 % predicted), unchanged at f121 | PASS |
+| C2 init still holds | f001→f002 face step **< 20** | **18.033** — parent **0.533** by the same code | PASS, *marginal* |
+| C3 softness does not compound | f121 face highpass ≥ **70 %** of f001 | **105.3 %** (3.574 → 3.762) | PASS, decisive |
+| C4 face is doing something | face step mean > 1.0, motion in first and last thirds | **1.109**, thirds 1.905 / 0.452 / 0.969 | PASS, *asterisked* |
+
+**THE RESULT: reference-plus-crop is NOT a stills-only instrument.** A 2.157x
+LANCZOS upscale that starts at **45 % of a native close-up's high-frequency
+energy** does not get mushier across 121 frames of i2v — it ends at **105 % of
+frame 1**. `FAIL-SOFT-COMPOUNDS`, pre-registered as the likeliest outcome, did
+not fire. **Beat 09's framing axis is closed by geometry, and every beat blocked
+on head size inherits the route**: crop the reference to the bar and condition on
+the crop, instead of spending another wording rung on framing.
+
+**WHAT BROKE IS THE HAND, and only the hand.** Hand box (430,430,660,700) drifts
+**46.1 at the first pair** and 50.6 by f021; its ten largest steps are f001, 004,
+007, 010, 012, 016 — the front-loaded shape the parent's verdict named as *"the
+init is thrown away"*, here confined to one object. Opened at 1:1: it does not
+cut, it **shrinks and dissolves** — full hand at f001, fingers by f004, two
+fingers under the nose at f006, **gone by f008**. Everything else held and was
+measured: cheek luma 136.0 → 137.6 / R−B 90.9 → 86.4, left grass strip drift
+8.78, sky corner 66.6 → 65.7, camera locked, one face, mouth closed, eyes open →
+closed → open with the brows drawn.
+
+**So `--image-crf 10` IS NOT PLATE-INDEPENDENT IN STRENGTH, and that is a
+correction to a finding this file generalised yesterday.** 0.53 → 18.03 on a
+byte-identical sampler with only the init changed. Read it as **"the init holds
+where it is sharp"**: the one element that dissolved is the softest, most
+upscaled object in the frame. C2 still passes, so the crf finding is not
+overturned — it is bounded.
+
+**NO CUT SWAP, and the spec forbade it before the pixels existed.** The cut stays
+at **19 footage / 2 slates** (`slate_beats [9, 16]`). `is_show_content: false`
+was pre-registered with its reason: **passing the bar you were given is not a
+licence to enter a cut on a different bar.** This clip inherits the plate's cast
+frame for frame and the adult read is an open R4 card. NO PICK, NO `plate_ack`,
+NO PROMOTION.
+
+**Two instruments retracted inside this scoring, both this lane's own, both the
+fixed-window failure this file has now retracted four times.**
+
+- **An automated head-extent finder** (gradient energy across the head band)
+  returned rows 79–1115 — an **81 % head** — by locking onto grass texture below
+  the chin. C1 is read off a ruled frame instead, with the arithmetic prediction
+  published beside it.
+- **The parent's grass control strip does not survive the crop.** Carried over as
+  y 1000–1280 it is not background at this head size — it is his chest, his cloak
+  and, at f001, **his forearm**. It read 47.57 drift against the face's 27.02 and
+  would have been written up as *"the world is re-invented more than the subject
+  moves"*, **the exact opposite of the truth**: that number IS the hand deletion.
+  A control strip inherited from a wider parent measures whatever the tighter
+  child put there.
+
+Scored by `pipeline/judge_b09_cropmotion_0820.py`, which **derives both probe
+boxes from the recorded crop geometry** rather than placing them by eye, and
+which was run over the parent with the parent's own box so the comparison is one
+ruler. Freeze read the way this file rules it: terminal exact-duplicate run **0
+on both clips** (that counter saying nothing), **last live pair f105 on both**,
+dead pairs 56/120 child against 67/120 parent.
+
+**Next rung on the hand, named and NOT fired:** re-run this init with the
+dissolution as the single pre-registered clause, or start from the **r2s2** crop
+(1.454x, 90 % of native) whose sharper hand may survive — but r2s2 has a shut
+eye, so that is a trade, not a fix.
+
+### BEAT 16'S CARD IS FILED, AND THE QUESTION IS NOT THE ONE THE LADDER EXPECTED
+
+`/review/ep2-b16-leaf-0820` (+ `review/inbox.yaml`), three pictures and one
+sentence: the 0814 leaf he rejected on 08-16 (a lobed palmate fig, with the
+**killed child goblin** behind it) and today's two head-fill fails. The question
+is **not** "make the leaf better": beat 16's brief asks for a **leaf-as-subject
+macro**, and `canon.yaml sapling-cotyledon-shape` — his own 08-17 answer — rules
+out *"any leaf drawn as a feature … no leaf whose SHAPE is the subject of the
+shot"*. **Both are his and they ask for opposite shots.** Restage, or licence
+this one shot. The large-object composite stays **named and not fired** for the
+reason it was named: it builds the shot canon currently forbids, and spending it
+before his word would be answering a ruling with a render.
+
+### TOOLING RUNG — A `key:steps` OVERRIDE IS A SILENT REFS OVERRIDE
+
+Recorded as a named rung because it cost nothing to find and will cost a real
+verdict when it is not known. `box_enqueue.py`'s refs guard reads the reference
+set **out of the producer spec's argv**. `derive_spec.py` overriding `key:steps`
+on a producer **replaces the argv wholesale**, so the guard finds no `--refs`
+and reports the producer *"used no reference set"* — which is not a warning, it
+is a **weaker pass than the truth**, and it reads exactly like a clean result.
+
+It fired on `ep2-b09-platecrop-0820` today: the guard printed *"used no
+reference set"* while the plate's real ancestry is
+**`refs-guards-twoinfield-nos2-0815`** (checked against `CARD_REFS_DENYLIST` —
+not on it), stated in the spec's own prose and nowhere the guard can see it.
+
+**The shape of the failure is what generalises.** A denylist that cannot see its
+input reports the empty case and the unlisted case identically, so *"no refs"*
+and *"refs I cannot enumerate"* come out as the same line. **Before trusting a
+`used no reference set` line, check whether the producer spec carries a
+`key:steps` override** — and if it does, the refs the guard did not read are in
+the spec's prose, not in its argv. The honest fix is the guard reading refs from
+a declared field rather than from argv; until then this is a **read-the-prose**
+rung and it is written here so the next lane does not re-derive it from a
+confident-looking pass.

@@ -262,3 +262,128 @@ derivation:
   carried_verbatim_by_the_callers_own_hand: 'is_show_content -- authored as `extra` but byte-identical
     to the parent''s value under the same name. Recorded rather than implied: a pre-registered bar carried
     unchanged is legitimate, and it should say so.'
+
+# ============================================================================
+# VERDICT -- appended 2026-08-20, scored against the four clauses this spec's own
+# `success` field pre-registered before the pixels existed. Second filing: the
+# FIRST one died rc 1 in zero seconds at step `crop` -- `!! src not found`. The
+# plate had been published to origin/farm-results-rtx5090 exactly as
+# init_provenance says, but the box's courier-box checkout is DIVERGED from that
+# branch and cannot fast-forward, so the file was never on the card. Fixed by
+# scp'ing the plate in and verifying its sha256 ON THE BOX (ba72dec8..., the
+# value this spec asserts) before re-filing with --again; the crop step then
+# re-verified the same hash itself. rc 0, published, pulled, all four artifacts
+# checked against the box's own manifest (4/4 OK). 264.3 s sample, peak torch
+# 12.0 GB. Measured by pipeline/judge_b09_cropmotion_0820.py, which derives both
+# probe boxes from the recorded crop geometry rather than placing them by eye,
+# and which was run over the PARENT with the parent's own box so every
+# comparison below is one ruler.
+# ============================================================================
+verdict: 'FOUR OF FOUR, and the clause that carries the result is the one named as
+  MOST LIKELY TO FAIL. A 2.157x LANCZOS upscale that starts at 45% of a native
+  close-up''s high-frequency energy does NOT get mushier over 121 frames of i2v --
+  it ends at 105% of where it began. REFERENCE-PLUS-CROP IS NOT A STILLS-ONLY
+  INSTRUMENT. Beat 09''s framing axis is closed by geometry. One thing did break
+  and it is not the softness: the hand at his cheek dissolves over the first eight
+  frames.'
+pass_clauses:
+  C1_the_framing_survives: 'PASS. Crown cropped at the top frame edge (y 0 -- the
+    control macr3s1''s own composition, reproduced on purpose) and the chin read at
+    y ~700-720 off a 40-px-ruled f001: 54.7-56.3% of frame height against a 50% bar
+    and a 55% arithmetic prediction. Re-read on f121: unchanged. The cover crop took
+    832x1216 to 704x1280 by cutting WIDTH and keeping full height, exactly as
+    FAIL-CROP-MOVES-THE-HEAD predicted it would.'
+  C2_the_init_still_holds: 'PASS, marginal, AND THE MARGIN IS THE FINDING.
+    f001->f002 face-crop step 18.033 against a bar of "under 20". The parent
+    measures 0.533 by this same code on its own box (its verdict quotes 0.66 for
+    the same pair, measured by hand). That is a 34x rise inside a clause that still
+    passes. On a hand-free sub-box (100,380,420,700) it is 9.093, so the rise is
+    mostly -- not only -- the hand.'
+  C3_the_softness_does_not_compound: 'PASS, decisively, and this is the headline.
+    Face highpass sigma-1 std 3.574 (f001) -> 3.762 (f121) = 105.3% RETAINED,
+    against a bar of 70%. Hand-free box: 3.595 -> 3.737 = 104.0%. The sampler did
+    not read the upscale softness as the subject''s own texture.'
+  C4_the_face_is_still_doing_something: 'PASS on the pre-registered box, and it
+    needs its asterisk. Face-crop interframe mean 1.109 > 1.0, motion by third
+    1.905 / 0.452 / 0.969 -- both ends alive. But the first third is INFLATED BY
+    THE HAND DISSOLVING, and on the hand-free box the mean is 0.844, BELOW the bar,
+    with thirds 1.300 / 0.411 / 0.823. Reported rather than smoothed: the clause
+    passes as written and would not pass if the hand were excluded.'
+what_actually_broke: 'THE HAND, and only the hand. Hand box (430,430,660,700)
+  drifts 46.1 from f000 at the FIRST pair and 50.6 by f021; its ten largest steps
+  are f001, 004, 007, 010, 012, 016 -- the front-loaded shape the parent''s verdict
+  named as what "the init is thrown away" looks like as a number, here confined to
+  one object. Opened at 1:1 across f001-f016 it does not cut, it SHRINKS AND
+  DISSOLVES: a full hand across the cheek at f001, fingers by f004, two fingers
+  under the nose at f006, gone by f008. The parent held its hand to f121 on a
+  NATIVE plate.'
+what_held: 'Everything else, and it was measured, not assumed. IDENTITY at f121:
+  same man, same dark hair carrying the init''s own highlight, same round wire-rims,
+  same green collar, white sash and gold clasp. SKIN, cheek box (300,470,400,560):
+  luma 136.0 -> 137.6, R-B 90.9 -> 86.4, std 40.6 -> 44.6. WORLD, left grass strip
+  (0,430,80,760): drift 8.78, luma 157.0 -> 154.5, std 56.1 -> 57.9; sky corner
+  (0,0,70,170) luma 66.6 -> 65.7. CAMERA locked. MOUTH closed in every frame
+  opened. ONE FACE throughout. PERFORMANCE: eyes open at f001, closed through
+  f021-f100, open again at f121 with the brows drawn -- "his face works through a
+  thought" performed rather than described.'
+pre_registered_fail_modes:
+  FAIL-SOFT-COMPOUNDS: 'DID NOT FIRE. Named as the most likely outcome and it is
+    wrong, which is the point of naming it in advance. 105.3% retained.'
+  FAIL-CROP-MOVES-THE-HEAD: 'DID NOT FIRE. 54.7-56.3% measured at f001 and again at
+    f121.'
+  FAIL-COLLAPSE-RETURNS: 'PARTIALLY FIRED, and it is the one correction here. C2
+    did not fail, so the crf-10 finding is not overturned -- but 0.53 -> 18.03 on a
+    byte-identical sampler with only the init changed means the finding is NOT
+    plate-independent in strength. Read it as "the init holds WHERE IT IS SHARP":
+    the single element that dissolved is the softest, most upscaled object in the
+    frame.'
+  FAIL-STROBE: 'DID NOT FIRE, but the wobble is 3x the parent''s and that is worth
+    a line. Whole-frame luma 86.69-95.96 (range 9.27), largest single-frame step
+    4.043, against the parent''s 104.91-109.04 (range 4.13) and 1.273. Nowhere near
+    a flicker; not nothing either.'
+  FAIL-SECOND-FACE: DID NOT FIRE. One face throughout.
+  FAIL-MOUTH: 'DID NOT FIRE. Same stated limit as the parent: frames opened at full
+    resolution, not all 121.'
+freeze_reading: 'Terminal exact-duplicate run 0 on BOTH clips, which is that
+  counter saying nothing rather than saying good -- it ranks clips backwards
+  whenever the death point moves, so it is reported and not read. LAST LIVE PAIR
+  f105 on both, identical. Dead pairs (whole-frame mean |delta| <= 0.20): child
+  56 of 120, parent 67 of 120, i.e. the child is marginally the livelier clip by
+  the measure that does rank.'
+two_instruments_retracted_during_this_scoring: 'Named because both were this
+  lane''s own and both are the fixed-window failure work-ladder-0819.md has now
+  retracted four times. (1) An AUTOMATED HEAD-EXTENT FINDER -- gradient energy
+  summed across the head band -- returned rows 79-1115, an 81% head, by locking
+  onto grass texture below the chin. Retracted; C1 is read off a 40-px-ruled frame
+  instead and the arithmetic prediction is published beside it. (2) THE PARENT''S
+  GRASS CONTROL STRIP, carried over as y 1000-1280, IS NOT BACKGROUND IN THIS CROP
+  -- at this head size it is his chest, his cloak and, at f001, his forearm. It
+  read 47.57 drift against the face''s 27.02 and would have been written up as "the
+  world is re-invented more than the subject moves", which is the exact opposite of
+  the truth: that number IS the hand deletion. Re-placed by eye onto the left grass
+  strip and the sky corner, both of which hold. Every probe above is published with
+  its dispersion; none collapsed and none exploded, so the premise was alive
+  wherever a number was read.'
+what_this_settles: 'REFERENCE-PLUS-CROP SURVIVES i2v. The question this slot was
+  bought to answer -- whether the softness of a 2.157x upscale holds across 121
+  frames -- is answered yes, at 105% of frame 1. Beat 09''s framing axis is closed
+  for good and EVERY OTHER BEAT BLOCKED ON HEAD SIZE INHERITS THE ROUTE: crop the
+  reference frame to the bar and condition on the crop, rather than spending
+  another wording rung on framing. The 08-20 stills finding stands unchanged
+  underneath it -- crop buys framing cleanly from a ~38% head (1.454x, 90% of
+  native) and pays real softness from ~25% (2.157x, 45%) -- and this clip proves
+  the expensive end of that range is still usable in motion.'
+what_this_does_NOT_settle: 'Nothing about CAST or taste; the adult read is an open
+  R4 card and a crop cannot change how old he looks. And it does not settle THE
+  HAND. The obvious next rung is named and NOT fired: re-run this init at the same
+  everything with the hand''s dissolution as the single pre-registered clause, or
+  start from the r2s2 crop (1.454x, 90% of native) whose sharper hand may survive
+  -- but r2s2 has a shut eye, so that is a trade and not a fix. One lane, one
+  variable, and this lane''s variable was the crop.'
+no_cut_swap_and_the_spec_forbade_it_first: 'THE BEAT-09 SLATE STAYS A SLATE. The
+  cut is unchanged at 19 footage / 2 slates (review/ep2-demo-0820,
+  slate_beats [9, 16]). `is_show_content: false` was pre-registered in this spec
+  with its reason, and PASSING THE BAR YOU WERE GIVEN IS NOT A LICENCE TO ENTER A
+  CUT ON A DIFFERENT BAR: this is an INIT MEASUREMENT, it inherits the plate''s
+  cast frame for frame, and the adult read is an open R4 card
+  (/review/ep2-guards-0818). NO PICK, NO plate_ack, NO PROMOTION.'
