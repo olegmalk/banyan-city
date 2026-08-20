@@ -1,0 +1,83 @@
+# What the remaining steps of an episode actually cost, MEASURED.
+#
+# /status's "The path to episode 2" prints a time against every step. Two of
+# those steps are machine work this repo runs on its own hardware, and until
+# 2026-08-20 the only figure for them was `pipeline/build_status.py`'s "~4 min",
+# the median of the ledgered runs of 2026-07-27/28 — episode 1, fifteen scenes,
+# a different assembler and a different machine. Publishing that against a
+# twenty-one scene episode would have been an estimate wearing a measurement's
+# clothes, which is the one thing that panel exists not to do.
+#
+# So it was timed. Both numbers below are wall clock off `/usr/bin/time -p`,
+# on the real inputs, on the machine named in each row. Neither is a model of
+# anything: they are what the command took.
+#
+# WHAT THESE ARE NOT. They are not a prediction of the box, which is a different
+# machine; they are not scaled per scene, because the assembler's cost is
+# dominated by one whole-episode encode and does not divide cleanly; and they
+# are not a floor for a bigger episode. Re-run the commands and replace them.
+#
+# `ship_path.assembly_minutes()` reads this file and falls back to
+# build_status.STEPS when it cannot, so a bad edit here degrades to the older
+# figure rather than to silence.
+
+measured_at: 2026-08-20
+measured_by: the /status path-section lane
+
+order:
+  # THE SHIP ORDER, TRANSCRIBED — and transcribed on purpose rather than parsed
+  # live. STATE.md holds the founder's own words and is the record; it is also
+  # appended to several times a day, and `pipeline/vercel-ignore-build.sh` keeps
+  # it OFF the site-input list for exactly that reason (a build per append is
+  # the shape of the >$100 month the guard was written against). A page that
+  # read it live would either force STATE.md onto that list or publish a
+  # countdown that only moves when some unrelated file does.
+  #
+  # So the order lands here, in a file that IS a site input, with the block it
+  # came from named so the two can be diffed by hand. `ship_path.read_ship_order`
+  # prefers this and falls back to parsing STATE.md, so forgetting to transcribe
+  # degrades to the older, slower path rather than to a blank section.
+  #
+  # THE RECORD NAMES NO TIMEZONE. STATE.md writes "12:00 2026-08-21" flat. UTC
+  # is what every other stamp this repo publishes means, so that is how it is
+  # read — and the page says on its face that it did so.
+  date: 2026-08-20
+  headline: episode 2 ships within 24h
+  cutoff_utc: 2026-08-21 12:00
+  source: >-
+    STATE.md, heading "## 2026-08-20 — SHIP ORDER (founder): episode 2 ships
+    within 24h"
+  words: >-
+    Best-available takes ship with named faults; open taste cards answered
+    before assembly get applied, unanswered ones ship the current take. Takes
+    landing by the cutoff enter the final cut; then assembly, founder
+    watch-through (his kept publish gate), then live.
+
+assembly:
+  # One full T3 assembly of the actual ship candidate: 21 scenes, 20 of them
+  # footage and one slate, captions burned in, 18 voice tracks muxed in sync,
+  # title and end cards, loudness-normalised master.
+  seconds: 26.8
+  command: >-
+    /usr/bin/time -p python3 pipeline/render_t3.py sapling 002b
+    --clips review/ep2-ship-0821/sources --out <scratch>/timing-probe.mp4
+  host: macbook (Apple silicon, ffmpeg
+    /opt/homebrew/bin/ffmpeg)
+  produced: 21 beats (20 footage, 1 slate), ~116 s of video, $0.00
+  note: >-
+    Wall clock, single run, on the ship candidate's own sources — not a
+    synthetic input and not an average. It wrote to a scratch path with --out,
+    so it produced no leaf and touched nothing in the tree.
+
+screening_gate:
+  # `pipeline/qa_local.py` — the gate that must pass before anyone is handed a
+  # URL. It runs all three site builders and then sweeps every route _site/
+  # exposes in each of its three forms, content-checking the load-bearing pages.
+  seconds: 99.7
+  command: /usr/bin/time -p python3 pipeline/qa_local.py
+  host: macbook (Apple silicon)
+  produced: "QA-GATE: PASS routes=83"
+  note: >-
+    Wall clock, single run, and it passed — 83 routes swept. Most of it is the
+    three builders re-rendering the whole site, not the sweep; `--no-build` is
+    much faster and is not what the gate does before a handover.

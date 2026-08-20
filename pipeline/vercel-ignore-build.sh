@@ -190,6 +190,18 @@ SITE_INPUTS=(
   # table, so the two are one input.
   pipeline/episode_eta.py
   pipeline/box_job_minutes.py
+  # /status's "path to episode 2" — the three-tense panel that counts the ship
+  # cut's scenes, the named faults on them and the time each remaining step
+  # costs. build_sim imports it at column 0, so the walk in test_pipeline would
+  # have demanded it anyway; it is listed with its reason because of the
+  # decision it encodes. IT DOES NOT PUT STATE.md ON THIS LIST, deliberately.
+  # The ship order lives in the founder's words in STATE.md, which is appended
+  # to several times a day — listing it would buy a site build per append, which
+  # is the shape of the spend this whole guard descends from. The order is
+  # transcribed into pipeline/measured/ship-path.yaml (already an input above)
+  # and read from there, with the STATE.md block named in the file so the two
+  # can be diffed by hand. The prose stays the record; the input stays cheap.
+  pipeline/ship_path.py
   pipeline/generate_shots.py
   pipeline/sd_prompt.py
   # read at build time for the founder's inbox on the status page.

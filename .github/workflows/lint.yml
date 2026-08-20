@@ -75,6 +75,12 @@ jobs:
       # claim — chiefly that a missing measurement is never published as a zero,
       # and that machine hours are never added to the author's decision time.
       - run: python pipeline/test_episode_eta.py
+      # /status's "path to episode 2" panel. Every failure it guards is a page
+      # that renders perfectly and says something false — a countdown off a
+      # cutoff that was never in the record, "0 of 21 scenes" published from a
+      # read that failed, or an estimate wearing the word "measured". None of
+      # those raise, so nothing but a test catches them.
+      - run: python pipeline/test_ship_path.py
       # 40% of the IP-Adapter renders drawn to 2026-08-15 (112 of 280) were exact
       # byte-duplicates, because reference sets smaller than four were poured into
       # four fixed slots. The dedup that stops it and the sidecar header that used
