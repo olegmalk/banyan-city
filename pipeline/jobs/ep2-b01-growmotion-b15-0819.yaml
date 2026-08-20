@@ -233,3 +233,174 @@ sweep_summary_correction:
     a bar change, or a re-pick. If the sample clears G1 it becomes a second candidate in the cold-open pick set
     and the founder sees both; if it does not, the pick still stands alone and the cold open is still shippable
     on R4 alone.
+
+# --- appended 2026-08-20 by the fig-detector judging lane by the composite-plate motion lane, after the pixels.
+verdict_this_job: 'FAIL -- G5, by the thing that makes it the best clip in the pool. This
+  is the close one and the reason the re-roll is worth filing.
+
+
+  G1 PASS, the widest margin anything has cleared it by. 121/121 frames live -- the only clip
+  besides b11 the detector never loses -- 892 -> 17275 px, ZERO shrinking frames, maximum
+  single-frame step 1.08x, and the arc runs to the end: 50% of the growth at f086, 90% at
+  f111. This is ''the fig grew'', not ''a fig appeared'', which is the whole clause. Validated
+  by eye at 5x on f000/f060/f090/f120, f090 being the desaturated slate frame the retired
+  predicate went blind on (13.7% recall) and this one holds through at a 1.03x worst step.
+
+
+  G2 PASS: hue 301.6, sat 0.72, val 0.42 -- deep purple-violet.
+
+
+  G4 (size) PASS on b13''s settled per-frame reading, max step 1.08x against a 2.0x bar. See
+  clause_instrument_status for the tension this reading carries at a 19.37x total.
+
+
+  G5 FAIL, and it is not the bloom -- b15 has the MILDEST bloom of the five by 2.4x (peak
+  104.64 at f035, +17.45, and the only one that has not passed 100 by f024). It fails because
+  THE SAPLING GROWS TOO. Its two leaves go from a sprout sitting below the grass tips at f000
+  to filling the upper half of the frame by f120, the stem thickens and elongates, and the
+  grass thickens with it. Region NCC f000->f120: shaft -0.355 (the leaves have grown into
+  the top strip), sapling 0.092, grass floor 0.027 -- against the incumbent''s 0.932 / 0.637
+  / 0.323 on the same init. The prompt asks for the nub to swell as ''the only thing in frame
+  that moves''; here the whole picture does.
+
+
+  G4 (below the grass), EYE NOTE ONLY, clause retracted for want of a threshold: the plant
+  tops the grass from about f072 and is well clear of it by f120.
+
+
+  H4 camera push NOT PROVEN and not quotable. The first fit said 1.5x on three of four quadrants
+  and that was the search grid''s edge, not a measurement; extended to 2.50 it reads 2.20
+  whole-frame with quadrants [2.5, 2.5, 1.25, 1.55], spread 1.25 -- the top of the picture
+  magnifying about twice as hard as the bottom, which is a locally-varying redraw and not
+  a camera move. The probe now refuses railed fits outright (fig_track.py 527c4b5f).
+
+
+  G3, eye note only: two leaves at every one of f000/f024/f048/f072/f096/f120. Six frames
+  are not 121 and this is not scored.
+
+
+  H1, H5 both clear: nothing frozen (fig-box NCC to the last frame is still -0.184 at f080),
+  and the fig centre moves 14 px across 121 frames (786,339 -> 788,325) with the jump gate
+  live throughout.'
+verdict_this_job_measured:
+  instrument: 'pipeline/fig_track.py (commit 527c4b5f), geometry-anchored, NOT a colour predicate.
+    The mask starts from the composite''s own inpaint mask b01-nubcomp-s20260826-mask.png
+    carried through this job''s cover_crop into the 704x1280 init -- centroid (785.1, 339.4),
+    the --centre 405,750 the composite was given -- and every later frame propagates by region
+    continuity. Five declared gates; a frame that fails one publishes status:dead, a reason
+    in words and area_px:null, and never enters a growth ratio. 15 selftest checks pass including
+    the six frame-backed ones: the anchor lands on the geometry, all six hand-verified b15
+    keyframes (read by eye off gridded crops, the f090 slate frame among them) sit within
+    22 px, and the retired green-magenta predicate is shown keeping 91.1% of the true fig
+    at f072 and 13.7% at f090 -- that collapse and re-inflation IS the 3.9x b15 balloon the
+    old instrument published, and it is an artifact of the mask. Re-validated for this verdict
+    by eye at 5x on b15 f000/f060/f090/f120: the outline hugs the green nub, the green sphere,
+    the grey-blue slate sphere and the purple berry.'
+  clause_instrument_status:
+    G3 (exactly two leaves in every frame): RETRACTED -- NO INSTRUMENT EXISTS. This repo has
+      no leaf counter, and eyes on a six-frame sample cannot certify a universal over 121
+      frames. What the sample says is recorded per clip as a look, not as a score. The clause
+      is unscored rather than assumed.
+    G4, second half (below the grass): RETRACTED -- no grass line is defined anywhere in the
+      spec or the plate, so there is no threshold to measure against. Recorded per clip as
+      an eye note only.
+    G5, camera-locked half (whole-frame registration): RETRACTED -- the instrument refuses.
+      global_zoom fits one scale to the picture and refits it on four disjoint quadrants;
+      a camera move is one transform, so disagreeing quadrants mean the picture is being redrawn
+      and no scale may be quoted. Not one of the five is quadrant-consistent. On b15 the default
+      grid also RAILED at its 1.50 maximum and invited a 'three quadrants agree on a 1.5x
+      push' reading; extended to 2.50 it reads 2.20 whole-frame with quadrants [2.5, 2.5,
+      1.25, 1.55]. Fixed in 527c4b5f so a railed fit publishes railed:true and can never be
+      quoted again.
+    G4, first half (no size doubling): 'SCORED, on the reading ep2-b01-growmotion-b13-0819
+      already settled and this lane did not move: MAXIMUM SINGLE-FRAME AREA RATIO under 2.0x,
+      not total growth -- which is how b13 passed G4 while growing x10.30. TENSION NAMED,
+      NOT ACTED ON: a per-frame reading admits an unbounded total, and b15 rides it to 19.37x,
+      nearly double b13''s. Re-reading a settled clause in order to fail a clip is not a thing
+      to do quietly, so it is written here instead.'
+    G5, only-the-fig-moves half: 'LIVE and scored. Region NCC between f000 and f120 -- gain-
+      and offset-invariant, so the bloom does not fake it -- on four bands: the light shaft
+      (y0-350), the sapling (y430-740, x150-560), the fig box (y700-900, x230-450) and the
+      grass floor (y1000-1280). The INCUMBENT cold open, same init and recipe family, is the
+      in-pool control and reads 0.932 / 0.637 / 0.023 / 0.323: the field holds and only the
+      fig box decorrelates. That is what the clause asks for and it is achievable on this
+      recipe.'
+  detector:
+    frames: 121
+    live: 121
+    dead: 0
+    dead_runs: none
+    area_first_px: 892
+    area_last_px: 17275
+    area_last_frame: 120
+    total_ratio: 19.37
+    max_single_frame_step:
+    - 28
+    - 1.08
+    max_single_frame_drop:
+    - 9
+    - 0.976
+    shrink_frames: 0
+    consecutive_live_steps: 120
+    frame_reaching_50pct_of_growth: 86
+    frame_reaching_90pct_of_growth: 111
+    fig_hue_sat_val_first:
+    - 40.6
+    - 0.522
+    - 0.722
+    fig_hue_sat_val_last:
+    - 301.6
+    - 0.72
+    - 0.42
+  bloom_note: 'Whole-frame mean luma, measured per frame by this lane (no fig mask needed,
+    so no clause of it is retractable). The 2026-08-20 ladder published f000->f120 endpoints
+    only, which hides the shape: the step is not gradual, it lands in the first two frames
+    and holds. Correction to that entry -- it said all five reach 100-156 by f024; b15 is
+    at 99.58 at f024 and peaks 104.64 at f035, so it alone never makes 100 inside the first
+    24 frames. The incumbent never exceeds 100 at all (87.71 -> 89.08, peak +1.46), which
+    proves the bloom is a property of these seeds and not of the recipe''s plate.'
+  bloom:
+    f000: 87.19
+    f024: 99.58
+    f060: 100.44
+    f120: 97.8
+    peak: 104.64
+    peak_frame: 35
+    delta_at_peak: 17.45
+    frames_over_luma_100: 71
+    first_frame_over_100: 25
+    incumbent_same_init_for_scale: 87.71 -> 89.08, peak +1.46, 0 frames over 100
+  g5_region_ncc_f000_to_f120:
+    shaft (y0-350, static sky/light): -0.355
+    sapling (y430-740, x150-560): 0.092
+    fig box (y700-900,x230-450): 0.002
+    grass floor (y1000-1280): 0.027
+    incumbent_control:
+      shaft (y0-350, static sky/light): 0.932
+      sapling (y430-740, x150-560): 0.637
+      fig box (y700-900,x230-450): 0.023
+      grass floor (y1000-1280): 0.323
+  h6_worst_consecutive_whole_frame_ncc:
+  - 39
+  - 0.9522
+  evidence:
+  - BLOOM-6clip.png -- all five plus the incumbent at f000/f024/f060/f120 with luma printed
+  - GEOM-b15-vs-incumbent.png -- gridded f000..f120 A/B
+  - VALIDATE-b15-5x.png -- the detector's own mask at 5x on f000/f060/f090/f120
+  - SAPLING-b15-b16.png -- the whole plant across the clip
+  - (sheets built in the lane scratchpad from the pulled frames; the frames themselves are
+    the job's own farm-out mp4)
+  cost: $0 -- numpy + Pillow on the mac, no model, no network, no GPU.
+  authority: Steward screening call against a bar pre-registered in this file BEFORE the render,
+    under the 2026-08-18 taste/picks boundary. R4 taste remains the founder's; nothing here
+    enters the cut.
+verdict_cut: NOT PROPOSED FOR THE CUT -- but it is the pool's only clip that fails on ONE
+  clause, and the clause it fails is the one a prompt change addresses rather than a re-render
+  lottery.
+what_this_licenses_after_the_verdict: Nothing renders off this verdict by itself. All five
+  of the growmotion pool FAIL, so the derived swap into review/ep2-demo-0820 does not fire
+  and the incumbent cold open stays where it is. One re-roll is filed to the box backlog carrying
+  these bars plus the two clauses this round showed are the real gate -- an explicit whole-frame
+  luma-bloom bound and an explicit field-stability bound -- and it is judged on landing with
+  pipeline/fig_track.py. See pipeline/work-ladder-0819.md, the 2026-08-20 growmotion-five
+  scoring section.
