@@ -1138,3 +1138,52 @@ amended_0820b:
   this_file_still_makes_no_taste_call: Unchanged. This is a steward pick recorded with its
     reason and its one-line veto. It is not a verdict on the picture, and the founder has
     screened neither clip.
+
+amended_0820c:
+  date: 2026-08-20, night
+  by: the beat-01 composite lane
+  what_moved: 'NOTHING IN THE CUT. Beat 01 keeps 01-cold-open-LTX-fignonly-s20260840.mp4 and
+    every row above is left exactly as written. This amendment exists for two reasons: the
+    `in_flight` line in amended_0820b is now FALSE and a stale in-flight claim is how a
+    finished rung gets re-run, and the beat has a candidate that is by eye better than what
+    is shipping and must not be lost just because it was not swapped.'
+  the_in_flight_line_above_is_discharged: 'ep2-b01-figcrf10-s20260840-0820 landed rc=0, was
+    sha-verified (f9dc64a34522f56e42abf0c1c155832772895f57ac6d7480fcc6b01503c9282b) and is
+    judged FAIL on G1 and G5a. It broke the confound it was filed to break: --image-crf, not
+    seed 20260826, is what holds the field -- shaft 0.982 / sapling 0.734 / luma +0.92 at the
+    SAME seed as the control -- and the fig stops growing with it, 1.79x against 14.77x. Field
+    stability and fig growth are ONE knob on this engine. No cut change followed. THE FLAG
+    ROUTE IS CLOSED and an intermediate crf is refused in advance; see that spec''s
+    what_this_licenses_after_the_verdict before proposing crf 20.'
+  the_candidate_that_exists_and_was_not_picked: 'ep2-b01-figcomp-heldfield-0820 --
+    farm-out/ep2-b01-figcomp-heldfield-0820/01-cold-open-COMP-figgrow-on-heldfield-0820.mp4,
+    sha 796a283b01d6f2950de826b23cad8403d79159e22b2edb79f80dc1218e967ced. $0, no GPU, no new
+    plate: the in-cut take''s own fig, frame for frame, composited onto the crf-10 take''s held
+    field with fig_track''s own per-frame masks. It BEATS the clip in the slot on shaft (0.982
+    vs -0.324), sapling (0.736 vs 0.055), luma (+0.93 vs +10.85) and steadiness (worst
+    consecutive whole-frame NCC 0.9966 vs 0.9403), and by eye at 5x it does not read as a
+    composite. It is still not picked.'
+  why_it_was_not_picked: 'Its G1 growth clause CANNOT BE SCORED, and a slot is not filled on a
+    clause that cannot be read. The composite loses one frame, f001, to the detector''s
+    separability gate at 1.76 against a bar of 2.00 -- and the same frames pass that gate at
+    libx264 crf 18 and 23 and miss it at crf 0 (lossless), 10 and 14. The verdict follows the
+    encoder, backwards, because compression smooths the detector''s background annulus. A
+    clause whose answer I can choose by picking a CRF is not a measurement, so G1 is VOID and
+    scored neither way. That leaves one FAIL of seven scorable plus a VOID, against the in-cut
+    take''s one FAIL of eight scored -- a tie on failures and a clause lost. G5a still fails on
+    the grass band alone (0.062), inherited from the held plate.'
+  what_would_change_this: 'An INSTRUMENT rung, $0, no GPU. fig_track''s background annulus runs
+    1.35r to 2.10r and at the fig''s smallest radius it lands inside the compositor''s feather,
+    where the two clips'' fields are blended and the ring MAD is inflated. Exclude the blend
+    zone from the ring -- the compositor knows exactly where it is -- and f001 becomes readable
+    in a direction no encoder can flip. If G1 then passes, this composite is proposed as a swap
+    WITH pixels. Explicitly NOT the route: choosing an encode that clears the gate.'
+  a_taste_question_parked_not_asked: 'farm-out/ep2-b01-figcomp-heldfield-0820/01-cold-open-COMP-stillplate-0820.mp4,
+    sha 5f2f428c1b6b1ad367c22cd9e912178ed8e15854757ba5401c7a248f54e14920 -- the same fig on a
+    frozen plate. No seam, every field clause satisfied BY CONSTRUCTION rather than measured,
+    and no ambient motion at all: no grass sway, no drifting light shafts, no dust. Locked-off
+    plate versus living field is R4 and it is deliberately not being asked yet; it should be
+    asked once, with pixels, beside a heldfield build whose G1 can be scored. Built and sha''d
+    so the ask costs nothing when it comes.'
+  this_file_still_makes_no_taste_call: Unchanged. Nothing here is a verdict on a picture, and
+    the founder has screened none of these clips.
