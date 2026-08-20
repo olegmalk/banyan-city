@@ -420,3 +420,88 @@ derivation:
     seed:
     - payload b13-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+verdict_0820: 'THE BEST CLIP THIS BEAT HAS PRODUCED AND STILL A FAIL. rc=0, 121 frames,
+  262.4 s, $0. H1 -- the clause the rung exists for -- PASSES on its pre-registered
+  instrument by a factor of seven over the parent, and H3 passes decisively. It fails
+  on H2''s face sub-clause: the performance came back and it took the face with it for
+  about thirty frames in the middle. That is a NEW and much smaller version of rung 1''s
+  defect, and it is the cost of the thing that worked. NO PICK, NO CUT: beat 13 stays a
+  slate.'
+
+verdict_measured:
+  H1_THE_PERFORMANCE_COMES_BACK: 'PASS, AND IT IS THE POINT OF THE WHOLE RUNG. Face band
+    (250,240,400,360), the same fixed band as rungs 1 and 2, mean absolute interframe
+    luma over all 120 pairs: RUNG 1 10.80 / RUNG 2 0.64 / RUNG 3 4.798, against a bar of
+    3.0. Last twenty pairs: 24.07 / 0.148 / 2.263, against a bar of 1.0. The bar was
+    written to reject rung 1''s number as well as rung 2''s -- rung 1 earned its 10.80 by
+    standing up and walking out of frame -- and 4.798 is the seated middle it asked for.
+    PUBLISHED WITH ITS SHAPE, because a mean alone would flatter it: this family holds
+    every 3rd frame (judge_clip period 3, 8.0 effective fps, ALL SIX CLIPS including both
+    controls), so the energy is on the step frames and the band reads 26.4, 30.9, 34.8,
+    35.4, 34.4, 32.7, 32.2, 31.1, 28.9, 25.7, 25.2, 22.6 at f066..f099 and 0.04-0.35 in
+    between; the last twenty pairs carry 17.32, 13.28 and 8.37. Rung 2''s equivalent
+    step frames read 0.16-0.23 and its last twenty pairs never exceed 0.23. Like for
+    like, on the same band, same init, same seed: the face was dead and now it is not.'
+  H2_he_is_still_seated_knees_up_face_readable: 'PASS ON THE POSTURE, FAIL ON THE FACE,
+    AND THE FAILURE IS THE COST OF H1. Posture: at f120 he is folded small in the grass
+    with his knees up, satisfying the founder ruling `no slide, he sits down beside it`
+    (2026-08-18) -- carried from rung 2 and NOT given back. Face: legible at f000 (full
+    face, eyes brow and mouth), f030 (down-cast, eyes and brow legible), f090 (one eye
+    and brow, mouth behind the arm) and f120 (both eyes, brow and mouth, head fully
+    sideways). NOT LEGIBLE AT f060, which the bar named explicitly: from about f042 to
+    about f072 the head has tipped far enough that the face is pressed into his own knee
+    and the camera sees dome, ear and shoulder. Rung 1 lost the face for fifty frames
+    from f024; rung 3 loses it for about thirty in the middle and gets it back. Smaller,
+    milder, still a FAIL of the clause as written.'
+  H3_the_tilt_is_SIDEWAYS_and_goes_further_than_rung_2s: 'PASS, DECISIVELY, AND JUDGED
+    SIDE BY SIDE AT 1:1. Rung 2''s head is in essentially the same attitude at f000, f060
+    and f120 -- the verdict called it "he leans, he does not tip", and the frames agree.
+    Rung 3 travels continuously: upright and facing camera at f000, tipping through f030
+    and f048, fully over on its side by f090, and at f120 the head is tipped right over
+    sideways with the face rotated back toward the camera. This is the attitude the beat
+    asks for and no previous rung has drawn it.'
+  H4_G8_the_shade_on_his_eyes_and_what_it_decides: 'FAIL -- AND PER THIS SPEC''S OWN
+    PRE-REGISTERED CLAUSE, THAT SETTLES THE ROUTE. At f120 his eyes are at y~400-560 and
+    the seedling is at the bottom-left of the frame at y~690-780 with two leaves about
+    60 px across; there is no plant-cast shade anywhere near his face, and what shadow
+    is on him is his own arm and knee. The clause said: if H1 passes -- a clip that is
+    demonstrably moving -- and G8 still fails, the wording is exonerated. H1 PASSED.
+    THE WORDING IS EXONERATED AND BEAT 13''S NEXT RUNG IS THE PLATE EXPOSURE RUNG,
+    deferred from this pass on purpose and now earned by measurement rather than by
+    assertion.'
+  A1_the_plant_holds: PASS, third rung running, and still on the hardest plate in the
+    set -- green foliage edge to edge. One stem, two leaves, rooted, at f000 f030 f060
+    f090 f120. Neither F-PLANT-REVERT nor F-PLANT-DISSOLVES fired.
+  A2_the_ratified_adult_holds: 'RETRACTED AS SCORED, RE-PLACED BY EYE, AND THE IDENTITY
+    HOLDS. The pre-registered box (286,282,352,336) reads f000 luma 107.6 / R-B 34.6 /
+    luma_std 6.0 and f120 luma 49.0 / R-B 14.6 / luma_std 56.6, nominally -58.6 luma. IT
+    IS NOT AN IDENTITY READING, and this is the OTHER failure shape of a fixed probe:
+    not a collapse but an EXPLOSION. luma_std goes 6.0 -> 1.3 -> 1.4 -> 85.0 -> 56.6
+    across f000..f120, because the head tipped out from under the box and left it
+    straddling the boundary between lit cheek and dark cloak. A dispersion that jumps
+    fourteenfold is a box on an edge exactly as a dispersion that collapses is a box on
+    a field; BOTH ARE THE PREMISE DYING, AND ONLY THE DISPERSION SHOWS IT. Re-placed by
+    eye at 5x on f120 -- cheek below the eye, clear of the linework, (180,440,240,500) --
+    R 81.5 G 100.3 B 64.3, R-B 17.3, luma 90.6, std 4.9; two neighbouring placements
+    agree (160,460,220,510 -> luma 90.3 R-B 16.4; 190,470,250,520 -> luma 88.9 R-B 16.0).
+    Against f000: -17.0 luma, inside the +/-25 bar; -17.3 R-B, marginally outside +/-15,
+    on a cheek that at f120 is under his own arm. At 1:1 he is the ratified lean adult
+    goblin, one face, one figure.'
+  A3_camera_locked: PASS. Grass, foliage edge and plant base identical at f000 and f120.
+  A5_no_exposure_blowout: 'PASS. 97.68 -> 99.39, +1.71 across 121 frames -- the flattest
+    exposure track of the six clips, and unconfounded because he stays under his own
+    footprint the whole time.'
+  F_MIDDLE_IS_A_CUT: DID NOT FIRE. No shot change, no relocation; the largest whole-frame
+    interframe in the clip is 4.32 and it is the head moving on a step frame.
+
+what_the_next_rung_is: 'THE PLATE EXPOSURE RUNG, named in rung 2 and now earned. Beat
+  13''s plate is the DIM one -- its own plate verdict recorded the green gloom as CARRIED,
+  NOT FIXED -- and G8 has now failed on a clip that is demonstrably alive, which removes
+  the only competing suspect. Wording is done on this beat: three rungs have moved the
+  face band 10.80 -> 0.64 -> 4.798 and the tilt from nothing to fully sideways, and none
+  of them put light on his eyes. The face sub-clause of H2 is a smaller, separate
+  question and should NOT be chased with a fourth wording either: it is the head''s own
+  travel occluding the face, so it is a framing or a plate question too.'
+
+cost: $0. 262.4 s on the rtx5090, rc=0, no download, no spend.

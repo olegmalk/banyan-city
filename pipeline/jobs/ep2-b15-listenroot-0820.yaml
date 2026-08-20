@@ -413,3 +413,61 @@ derivation:
     seed:
     - payload b15-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+verdict_0820: 'FAIL, and the worst single frame this beat has produced. rc=0, 121 frames,
+  264.7 s, $0. AT f094 THE GOBLIN IS DELETED AND REPLACED BY A MOUND OF BARE EARTH,
+  in ONE frame pair -- f093 is the seated goblin talking to the plant, f094 is grass,
+  the plant, and a low mound of soil where he sat. He never comes back. Whole-frame
+  mean-absolute interframe luma on that pair reads 28.14 against a clip median of
+  0.171; every other pair in the clip is under 1.7. It is a hard swap, not a dissolve.'
+
+verdict_measured:
+  H1_THE_PLANT_IS_STILL_ROOTED_IN_THE_LAST_FRAME: 'PASS ON THE LETTER AND THE PASS IS
+    WORTHLESS. At f105 and f120 the stem runs down into the grass, one stem, two
+    leaves, unmoved from f000, and NO HAND IS ON IT -- because there is no hand in
+    the shot. Rung 2 lost the plant at f105 to a fist; rung 3 keeps it by removing
+    the character who could pick it up. The failed clause was repaired and the beat
+    was destroyed doing it, which is why this rung is FAIL and not PARTIAL.'
+  H2_NOTHING_IS_BOUGHT_FROM_THE_PERFORMANCE: 'RETRACTED -- THE INSTRUMENT IS BROKEN BY
+    THE DEFECT IT WAS POINTED AT. judge_clip reads FREEZE none and HOLD period 1 /
+    strength 0.01, both inside the bar (rung 2 read period 3 / 0.508). The reading
+    is not a performance: all five other clips in this family read period 3 at 8.0
+    effective fps, and this one reads period 1 with essentially zero autocorrelation
+    BECAUSE IT CONTAINS A CUT. A hold statistic is a performance reading only while
+    the clip is one continuous shot. Not scored.'
+  H3_the_beat_still_reads_and_he_stays_seated: 'FAIL, absolutely. He is seated and his
+    mouth is moving at f030 and f060 and f090 -- and from f094 to f120, twenty-seven
+    frames and the whole last quarter, there is no goblin in the frame at all. The
+    beat is a man talking to a seedling; a fifth of it has no man.'
+  A2_the_ratified_adult_holds: 'RETRACTED, NOT SCORED. The pre-registered box (302,408,
+    356,448) reads f000 R 64.0 G 112.2 B 46.9, R-B 17.0, luma 90.3, luma_std 14.9 and
+    f120 R 217.3 G 211.5 B 123.4, R-B 93.9, luma 203.2, luma_std 3.1 -- nominally
+    +112.9 luma and +76.9 R-B, an identity catastrophe. IT IS NOT AN IDENTITY READING.
+    luma_std collapses 14.9 -> 3.1: a flat box is an empty box, and this one is sitting
+    on lit grass and haze because the subject is not merely out of the box, he is out
+    of the picture. Third clip in this family whose fixed probe measured the subject
+    leaving. There is nothing to re-place the box onto.'
+  A5_no_exposure_blowout: 'PASS AND MEANINGLESS FOR THE SAME REASON. 158.46 -> 176.72,
+    +18.26, inside the +/-25 bar -- and +18 of it is a goblin-shaped dark mass being
+    replaced by bright grass. Published, not credited.'
+  A3_camera_locked: PASS. Background, horizon and plant position are identical at f000
+    and f120; the only thing that changed is the subject.
+
+what_the_next_rung_is: 'THE NOUN `soil` GOES, AND NOTHING ELSE. This is the same law
+  that took beat 15''s last two rungs, arriving a third time in a row and from a third
+  direction. Rung 1 lost the plant to `from a hand''s width away` -- a unit of
+  measurement read as a placement of a hand. Rung 2 lost it to `Nobody touches the
+  plant and nobody picks it up` -- a negation inside the positive prompt read as a
+  placement of a pick-up. Rung 3''s one variable added, for the first time in any b15
+  prompt (grep: `soil` appears in listenroot and in NEITHER listenmotion NOR
+  listenlast), the clause `rising up out of the grass beside him with soil and grass
+  around its base` -- and a mound of bare soil arrived, occupying the largest object
+  slot in the frame, which was the goblin. A NOUN IS A PLACEMENT WHEREVER IT APPEARS,
+  INCLUDING IN A SUBORDINATE CLAUSE DESCRIBING SOMETHING ELSE, AND A PLACEMENT WITH NO
+  ASSIGNED POSITION TAKES THE POSITION OF THE LARGEST THING NEARBY. The rooting clause
+  must be stated with no soil, no earth, no dirt, no ground-material noun of any kind:
+  the stem and the grass are the only nouns the clause is allowed. Beat 15 has now
+  paid three GPU fires to learn one rule, and the rule now has three independent
+  confirmations on ONE init at ONE seed.'
+
+cost: $0. 264.7 s on the rtx5090, rc=0, no download, no spend.

@@ -411,3 +411,74 @@ derivation:
     seed:
     - payload b03-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+verdict_0820: 'FAIL on the clause the rung exists for, and the first real evidence that
+  a MIDDLE placement buys motion the terminal one had killed. rc=0, 121 frames, 268.3 s,
+  $0. The named bar missed by one frame -- judge_clip FREEZE reads 7 frames dead from
+  f114 against a bar of "none, or shorter than 6" -- and the honest reading is worse
+  than the bar and better than the parent at the same time. See H1.'
+
+verdict_measured:
+  H1_NO_TERMINAL_FREEZE: 'FAIL AS WRITTEN, 33 -> 7. judge_clip: 7 frames dead at the tail
+    from frame 114, ncc 1.0000; the bar allowed a run shorter than 6. Rung 2 was 33 from
+    f088. BUT THE EXACT-FREEZE INSTRUMENT UNDERSTATES BOTH CLIPS AND THE UNDERSTATEMENT
+    IS THE FINDING. Whole-frame mean-absolute interframe luma, per step frame (this
+    family holds every 3rd frame, 8.0 effective fps, all six clips): rung 3 reads 7.60,
+    7.29, 7.02, 5.54, 7.20 at f060..f072 and then 0.07, 0.04, 0.06, 0.12, 0.04, 0.03,
+    0.02 ... from f075 to the end. Rung 2 at the same frames reads 0.44, 0.40, 0.34,
+    0.05, 0.04 and then the same near-zero floor. SO: rung 3 is acting SEVENTEEN TIMES
+    HARDER than rung 2 through the middle of the clip and then stops at f075, where rung
+    2 had already stopped at f069. The middle placement bought a large amount of real
+    motion and did not move the moment the clip dies. A rung 4 that only chases the
+    trailing run is chasing the wrong 45 frames.'
+  H2_he_is_still_crouched_in_the_last_frame: 'PASS ON POSITION, FAIL ON THE HEIGHT
+    SUB-CLAUSE, and the split is worth keeping. At f120 he is in frame, down in the
+    grass, directly behind the plant, head at leaf-top level -- rung 1 was gone by f114
+    and the one thing rung 2 achieved is NOT given back. But the bar also said
+    "shoulders no higher than the top of the leaves": the leaf pair sits at y~800-850 in
+    the 704x1280 frame and the top of his cloaked back is at y~610, roughly 200 px
+    ABOVE the leaves. He is crouched; he is not below the plant.'
+  H3_the_duck_reads_and_keeps_reading: 'SPLIT. The duck reads, decisively and better
+    than the parent -- he sinks continuously from f000 to f072, head and shoulders
+    dropping to grass level, and whole-frame ncc floor is 0.9074 against a bar of "below
+    0.95". The last twenty frames ARE a held photograph: interframe 0.01-0.11, ncc
+    1.0000 to four places. Half a pass.'
+  H4_the_cover_is_still_comically_inadequate: 'PASS. At f120 the two-leaf seedling hides
+    a strip of his forearm and nothing else; head, back, cloak and knees are all plainly
+    visible. beats."03".done_when is satisfied -- a crouch that actually concealed him
+    would fail the beat, and this one does not come close.'
+  A1_the_plant_holds: PASS, third rung running on this composite. One stem, two leaves,
+    rooted, at f000 f030 f060 f090 f120, including through the whole sink.
+  A2_the_ratified_adult_holds: 'RETRACTED AS SCORED, RE-PLACED BY EYE, AND THE IDENTITY
+    HOLDS. The pre-registered box (232,352,282,404) reads f000 luma 98.4 / R-B 33.3 /
+    luma_std 18.5 and f120 luma 228.5 / R-B 22.2 / luma_std 6.2 -- nominally +130.1 luma.
+    IT IS NOT AN IDENTITY READING: by f060 his head has dropped ~450 px and the box is
+    sitting on the hazy horizon, and the tell is in the number the bar does not read,
+    luma_std 18.5 -> 5.9 at f060 and 6.2 at f120. A flat box is an empty box. Re-placed
+    by eye at 5x on f120 and published with MATERIAL as well as luma: cheek/jaw below
+    the eye (90,850,140,890) R 87.6 G 99.2 B 69.6, R-B 17.9, luma 92.4, std 7.4 --
+    -6.0 luma (inside +/-25) and -15.4 R-B (just outside +/-15), on a cheek that is in
+    the shade of his own duck; temple and dome (60,700,120,760) R 104.7 G 109.5 B 69.8,
+    R-B 34.9, luma 103.5, std 10.3 -- +5.1 luma and +1.6 R-B, both well inside, on the
+    lit side of the same head. At 1:1 he is plainly the ratified lean adult: green skin,
+    bald, long pointed ears, patchwork cloak, one face, one figure.'
+  A3_camera_locked: PASS. Horizon, cloud bank and plant base identical at f000 and f120.
+  A5_no_exposure_blowout: 'PASS AND UNCONFOUNDED. 143.34 -> 150.61, +7.27, and unlike
+    rung 1''s +131.8 this one is honest because the subject''s footprint barely changes:
+    he never leaves the frame.'
+  F_MIDDLE_IS_A_CUT: 'DID NOT FIRE. `HALFWAY THROUGH THE SHOT` produced no shot change,
+    no relocation and no second scene; whole-frame interframe never exceeds 7.7 anywhere
+    in the clip. The phrase was read as a moment, exactly as intended. Recorded because
+    it was pre-registered as a real risk and it is now answered for beats 03 and 13.'
+
+what_the_next_rung_is: 'NOT ANOTHER FREEZE WORDING. The measurement above says the
+  middle placement worked -- 17x the parent''s motion energy through f072 -- and that
+  the clip dies at f075 in BOTH rungs, i.e. at the same place regardless of the words.
+  Two candidates, and the cheap one first: (a) SHORTEN THE RENDER. 121 frames is the
+  whole slot and the last 45 are dead in every clip of this family; a 73-frame render
+  has no dead tail to fill and costs 40% less GPU. (b) The height sub-clause of H2 is a
+  PLATE property as much as a motion one -- he starts the shot too tall relative to a
+  two-leaf seedling -- and no wording will put a grown goblin''s back below a 15 cm
+  plant. Neither is proposed here as a pick.'
+
+cost: $0. 268.3 s on the rtx5090, rc=0, no download, no spend.
