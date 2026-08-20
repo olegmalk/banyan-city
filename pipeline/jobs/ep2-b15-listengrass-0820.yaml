@@ -1,0 +1,490 @@
+id: ep2-b15-listengrass-0820
+task: ep2-b15-listengrass-0820
+node: 002b-first-citizen
+beat: 15
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the composite-plate motion lane, 2026-08-20, rung 4
+consumer: 'The episode 2 cut, beat 15, still a SLATE. Rung 3 repaired the rooting clause and destroyed
+  the beat doing it; this removes the noun that did the destroying and nothing else. Downstream: the beat''s
+  entry in review/ep2-picks/ and, if it passes, a founder screening. The cut swap is a taste call and
+  is not proposed here.'
+success: 'ONE 704x1280 121-frame mp4 off the same init and the same seed as ep2-b15-listengrass-0820.yaml,
+  differing from it in TWO DELETED WORDS inside one clause and in nothing else, in which the GOBLIN IS
+  PRESENT IN ALL 121 FRAMES and the plant is still rooted at f120. THE ROOTING CLAUSE RUNG 3 ADDED, AND
+  NOTHING ELSE. Two words go and none arrive: `stays in the ground` becomes `stays in the grass`, and
+  `with soil and grass around its base` becomes `with grass around its base`. The clause keeps everything
+  it was written to carry -- the stem''s POSITION (beside him, out of the grass), its ROOTEDNESS, and
+  the first-frame/last-frame continuity -- and carries ZERO ground-material nouns: no soil, no earth,
+  no dirt, no mud, no loam, no ground. Rung 3''s mound of bare earth occupied the frame''s largest object
+  slot, which was the goblin; `grass` is the one material already saturating this plate, so the base region
+  gets a noun with nothing to displace. RUNG 2''S TERMINAL SENTENCE IS UNTOUCHED, INCLUDING ITS OWN `rooted
+  in the ground` -- that phrase was in rung 2, rung 2 produced no mound, and editing the one clause in
+  this family that bought position for free would be a second variable AND a risk to the only thing that
+  works. Rung 3 is the control and the comparison is frame for frame against it: same init, same sha,
+  same anchor, same seed, same negative byte for byte, same every flag, so a difference between them was
+  bought by those two words.'
+why: '$0, ~4.5 minutes of GPU, no download. Beat 15 has now paid three GPU fires to learn one rule and
+  the rule has three independent confirmations at one init and one seed: a noun is a placement wherever
+  it appears, and an unplaced one takes the position of the largest thing nearby. Rung 4 is the cheapest
+  possible test of that rule -- it deletes two words and adds none -- and it is also the first clip in
+  this beat''s history that can test the rooting clause against a goblin who is still in the picture,
+  because rung 3 kept its plant by removing him. A bad result is attributable to the clause, and the most
+  likely bad result is named.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b15-listengrass-0820\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"RESTORE beat 15's\
+    \ composite plate AND ITS MASK to the courier path\nthey were published from, and refuse on any sha\
+    \ mismatch.\n\nNo model, no GPU, no spend. Both files were written on this box by\nep2-b15-sapcomp-0819's\
+    \ publish step into\ncourier-box\\\\farm-out\\\\ep2-b15-sapcomp-0819\\\\, but the box's courier\n\
+    worktree is not a reliable place to find them later -- beat 19's had been\ncleaned out by the time\
+    \ its motion job ran -- so they are re-fetched under the\nsha256 the manifest recorded. Anyone who\
+    \ clones the repo can verify both\nnumbers.\n\nTHEY ARE RESTORED TO THEIR OWN PUBLISHED PATH rather\
+    \ than into this job's\npayload directory, and that is not cosmetic. box_enqueue refuses a --src it\n\
+    cannot trace: it reads farm-out/<dir>/<file>, fetches that plate from\norigin/farm-results-rtx5090\
+    \ to CHECK THE PICTURE, and resolves <dir> to the one\nspec whose publish step owns it. A payload-directory\
+    \ path defeats both checks,\nand \"could not check\" is not \"fine\". The sha assertion is what makes\
+    \ the\nrestore safe: a different file cannot take this name.\n\nTHE MASK IS FETCHED TOO because assert_framing.py\
+    \ reads it. The plant's\nauthored footprint is the only honest way to ask \"is the sapling wholly\
+    \ in the\ncropped frame\" on a green object over a green field -- a colour predicate has\nproduced\
+    \ a clean, wrong number twice in this ladder.\n\"\"\"\nimport hashlib, os, sys, urllib.request\n\n\
+    OUT = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b15-sapcomp-0819\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-b15-sapcomp-0819/\"\
+    )\nUA = {\"User-Agent\": \"banyan-city-ep2-b15-listengrass-0820/1.0 (albert.numbro@gmail.com)\"}\n\
+    WANT = {\n    \"b15-sapcomp-s20260819.png\":\n        \"df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8\"\
+    ,\n    \"15-good-listener-sapcomp-mask-0819.png\":\n        \"f7933427bba319044058d8712a1574b35ad084768e5807b4f3e060a6ea810fdb\"\
+    ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
+    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
+    \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
+    \ flush=True)\n"
+  C:\banyan-farm\ep2-b15-listengrass-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\n\nep2-b14-motion-crf10-0819's copy,\
+    \ with ONE addition: --anchor. The default\nis `center`, which is what every earlier copy of this\
+    \ file did, so passing\nnothing reproduces those jobs byte for byte.\n\nWHY THE ANCHOR EXISTS, measured\
+    \ before this job was filed. The picked plate\nis 832x1216 and the target is 704x1280, so the cover-crop\
+    \ scales by 1.0526\nand then discards 81.7 ORIGINAL pixels off each side. Beat 19's fruit lives\n\
+    at original x 743..773 -- the right 4% of the plate -- so a CENTRED crop\nkeeps 8 of its 32 columns\
+    \ and throws the subject of the beat out of frame.\nRight-anchored, the fruit lands at output x 610..642\
+    \ with 62px of air to the\nframe edge, and the goblin is still whole (his silhouette ends at output\n\
+    x ~500). Right-anchored is not a preference here, it is the only offset that\nholds both bodies: even\
+    \ at the maximum the fruit has only 62px to spare.\n\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\nap.add_argument(\"--anchor\"\
+    , default=\"center\", choices=[\"center\", \"left\", \"right\"])\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n\
+    \    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as\
+    \ fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\n\
+    if a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\\
+    n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"\
+    RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)),\
+    \ int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nif a.anchor == \"center\":\n  \
+    \  left = (nw - W) // 2\nelif a.anchor == \"left\":\n    left = 0\nelse:\n    left = nw - W\ntop =\
+    \ (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\n\
+    print(\"cover-crop scale=%.4f -> %dx%d, anchor=%s box (%d,%d)\"\n      % (scale, nw, nh, a.anchor,\
+    \ left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b15-listengrass-0820\assert_framing.py: "#!/usr/bin/env python3\n\"\"\"REFUSE TO\
+    \ RENDER IF THE COMPOSITED SAPLING IS NOT WHOLLY IN THE CROPPED INIT.\n\nBeat 15's whole reason for\
+    \ having a composite plate is that a canon\ntwo-leaf sapling is in the frame. A framing bug that clips\
+    \ it costs a GPU fire\nand produces a clip that cannot be judged on its only interesting clause --\
+    \ and\na CENTRED cover-crop discards 81.7 ORIGINAL px off each side of an 832x1216\nplate, which is\
+    \ enough to do exactly that on two of this rung's three beats.\n\nTHE INSTRUMENT IS THE COMPOSITE\
+    \ MASK, NOT A COLOUR PREDICATE, and that choice\nis the whole reason this file differs from beat 19's.\
+    \ These plants are green\nobjects on green fields; this ladder has twice recorded a colour predicate\n\
+    returning a clean, wrong number on exactly that ground (the green-OR-purple\ngrowmotion mask that\
+    \ manufactured a 3.9x area step, and the b08 material probe\nthat landed on a sleeve at 100% \"pale\"\
+    ). The mask is the plant's own authored\nfootprint, published beside the plate. Pushed through the\
+    \ IDENTICAL cover-crop\ntransform it gives the plant's exact output bbox with no predicate at all.\n\
+    \nWANT_BBOX below was measured on a Mac against the real published bytes BEFORE\nthis job existed,\
+    \ so it cannot be moved afterwards to fit.\n\nNo model, no network, no GPU. Reads two PNGs.\n\"\"\"\
+    \nimport sys\nfrom PIL import Image\n\nINIT = sys.argv[1]\nMASK = r\"C:\\banyan-farm\\courier-box\\\
+    farm-out\\ep2-b15-sapcomp-0819\\15-good-listener-sapcomp-mask-0819.png\"\nW, H = 704, 1280\nANCHOR\
+    \ = \"center\"\nWANT_BBOX = (41, 300, 240, 636)   # pre-registered\nTOL = 4        # LANCZOS on a\
+    \ dilated mask is stable well inside this\nMARGIN = 8     # px of frame the plant must clear on every\
+    \ side\n\nim = Image.open(INIT).convert(\"RGB\")\nif im.size != (W, H):\n    sys.exit(\"!! wrong init\
+    \ size %dx%d -- refusing.\" % im.size)\n\nm = Image.open(MASK).convert(\"RGB\")\nsw, sh = m.size\n\
+    scale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\n\
+    m = m.resize((nw, nh), Image.LANCZOS)\nif ANCHOR == \"center\":\n    left = (nw - W) // 2\nelif ANCHOR\
+    \ == \"left\":\n    left = 0\nelse:\n    left = nw - W\ntop = (nh - H) // 2\nm = m.crop((left, top,\
+    \ left + W, top + H)).convert(\"L\")\n\npx = m.load()\nxs = [x for x in range(W) if any(px[x, y] >\
+    \ 127 for y in range(0, H, 2))]\nys = [y for y in range(H) if any(px[x, y] > 127 for x in range(0,\
+    \ W, 2))]\nif not xs or not ys:\n    sys.exit(\"!! the composite mask is EMPTY after the crop -- the\
+    \ sapling is \"\n             \"not in the frame at all. REFUSING.\")\ngot = (min(xs), min(ys), max(xs),\
+    \ max(ys))\nprint(\"mask bbox x %d..%d y %d..%d (anchor=%s, want x %d..%d y %d..%d)\"\n      % (got[0],\
+    \ got[2], got[1], got[3], ANCHOR,\n         WANT_BBOX[0], WANT_BBOX[2], WANT_BBOX[1], WANT_BBOX[3]),\
+    \ flush=True)\n\noff = [abs(g - w) for g, w in zip(got, WANT_BBOX)]\nif max(off) > TOL:\n    sys.exit(\"\
+    !! mask bbox %s is not the pre-registered %s (max off %d > %d). \"\n             \"The crop this job\
+    \ measured is not the crop it got. REFUSING.\"\n             % (got, WANT_BBOX, max(off), TOL))\n\
+    if got[0] < MARGIN or got[1] < MARGIN or got[2] > W - 1 - MARGIN \\\n        or got[3] > H - 1 - MARGIN:\n\
+    \    sys.exit(\"!! the sapling touches a frame edge (bbox %s in %dx%d, margin \"\n             \"\
+    %d). REFUSING.\" % (got, W, H, MARGIN))\nprint(\"FRAMING OK -- the composited sapling is wholly inside\
+    \ the cropped init. \"\n      \"margins L%d R%d T%d B%d\"\n      % (got[0], W - 1 - got[2], got[1],\
+    \ H - 1 - got[3]), flush=True)\n"
+  C:\banyan-farm\ep2-b15-listengrass-0820\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's\
+    \ provenance sidecar.\n\nvideo_task.write_sidecar records model, prompt, negative, init sha and\n\
+    cost_usd 0, and it does not record whether the clip may ship. Appended here\nrather than asserted\
+    \ in a commit message nobody downstream reads. REFUSES if\nthe sidecar is missing -- a clip whose\
+    \ provenance file did not get written must\nnot pass silently.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\n\
+    if not os.path.isfile(META):\n    sys.exit(\"!! no sidecar at %s -- refusing to call the job clean.\"\
+    \ % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n   \
+    \     \"# --- appended by ep2-b15-listengrass-0820 after the render.\\n\"\n        \"approved: false\\\
+    n\"\n        \"provisional: true\\n\"\n        \"is_show_content: true\\n\"\n        \"note: |\\n\"\
+    \n        \"  BEAT 15'S FIRST MOTION SAMPLE OFF A COMPOSITE PLATE, a candidate\\n\"\n        \"  for\
+    \ the beat's cut slot and not an engine probe. Conditioned on\\n\"\n        \"  b15-sapcomp-s20260819.png,\
+    \ the plate\\n\"\n        \"  ep2-b15-sapcomp-0819 produced and this lane\\n\"\n        \"  did not\
+    \ re-pick. Judged against the bar pre-registered in\\n\"\n        \"  pipeline/jobs/ep2-b15-listengrass-0820.yaml\
+    \ BEFORE this render\\n\"\n        \"  existed. NOT approved and NOT cut until all 121 frames have\
+    \ been\\n\"\n        \"  opened consecutively.\\n\"\n        \"  THE PLANT CLAUSE OVERRIDES THE PERFORMANCE\
+    \ CLAUSE. Beat 19's motion\\n\"\n        \"  take turned a two-leaf sapling into a four-leaf prostrate\
+    \ runner in\\n\"\n        \"  90 frames and undid four drawing rounds. If the plant is not one\\n\"\
+    \n        \"  rooted stem with two leaves at frame 121, this clip is a FAIL\\n\"\n        \"  however\
+    \ well he acts.\\n\"\n        \"  STEWARDSHIP.md 6 is DISCHARGED for this beat -- node.md:204, the\\\
+    n\"\n        \"  founder read and approved the 2026-08-17 rewrites on 2026-08-19 --\\n\"\n       \
+    \ \"  which is what makes a footage render legal here. It confers no\\n\"\n        \"  verdict on\
+    \ these pixels.\\n\")\nprint(\"stamped %s\" % META, flush=True)\n"
+  C:\banyan-farm\ep2-b15-listengrass-0820\b15-motion-prompt.txt: 'He is sitting in the grass with both
+    hands resting on his knees and he stays sitting there in the same spot. His head is tilted down and
+    over to one side so that his face is a few centimetres from the two leaves, and he is talking to them:
+    his mouth moves as he speaks. IN THE LAST FRAME he is still sitting in the grass with both hands on
+    his knees, his head still tilted down toward the plant, and the plant is still rooted in the ground
+    with its stem rising out of the grass beside him. The plant''s thin stem stays in the grass for the
+    whole shot, rising up out of the grass beside him with grass around its base, and it is rooted there
+    in the last frame just as it is in the first. The little plant stays exactly as it is and does not
+    grow: ONE thin stem, TWO leaves, rooted in the grass, shorter than he is. He stays the same lean wiry
+    adult goblin man from the first frame to the last: green skin, bald head, long pointed ears, patchwork
+    cloak, one face and one figure only. The camera never moves. 2D anime, hand-drawn cel animation, flat
+    cel shading, clean ink linework, anime key art, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.
+
+    '
+  C:\banyan-farm\ep2-b15-listengrass-0820\b15-negative.txt: 'open sky between them, the plant out of frame,
+    standing up, a third leaf, extra leaves, more leaves, a leafy bush, a branching weed, extra stems,
+    a second plant, a flower, a fruit, a berry, the plant growing, the plant getting taller, the plant
+    lying down, a horizontal runner, a big tree, a tree trunk, a second goblin, two goblins, 2boys, crowd,
+    child, chibi, baby, round head, cute, human skin, pale skin, hair, wig, changing face, morphing, melting
+    face, camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene
+    change, shot change, new camera angle, different location, split screen, walking out of frame, leaving
+    the frame, still image, freeze frame, photorealistic, 3D render, CGI, live action, text
+
+    '
+  C:\banyan-farm\ep2-b15-listengrass-0820\b15-jobs-encode.json: "[\n {\n  \"beat\": 15,\n  \"embeds\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b15-listengrass-0820-out\\\\b15-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b15-listengrass-0820\\\\b15-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b15-listengrass-0820\\\\b15-negative.txt\"\n }\n]\n"
+  C:\banyan-farm\ep2-b15-listengrass-0820\b15-jobs-render.json: "[\n {\n  \"beat\": 15,\n  \"seed\": 20260820,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b15-listengrass-0820-out\\\\b15-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b15-listengrass-0820-out\\\\b15-init-704x1280.png\",\n  \"out\": \"C:\\\
+    \\banyan-farm\\\\ep2-b15-listengrass-0820-out\\\\15-good-listener-LTX-grassroot-0820.mp4\"\n }\n]\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-listengrass-0820\fetch_init.py
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-listengrass-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b15-sapcomp-0819\b15-sapcomp-s20260819.png
+  - --sha256
+  - df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8
+  - --out
+  - C:\banyan-farm\ep2-b15-listengrass-0820-out\b15-init-704x1280.png
+  - --size
+  - 704x1280
+  - --anchor
+  - center
+- name: framing
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-listengrass-0820\assert_framing.py
+  - C:\banyan-farm\ep2-b15-listengrass-0820-out\b15-init-704x1280.png
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b15-listengrass-0820\b15-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b15-listengrass-0820\b15-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b15-listengrass-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b15-listengrass-0820-out\bench-b15-listengrass.jsonl
+  - --bench-label
+  - ep2-b15-listengrass-0820
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-listengrass-0820\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b15-listengrass-0820-out\15-good-listener-LTX-grassroot-0820.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while\
+    \ returning a code that reads like a render\n# failure, and box_enqueue.output_path_problems refuses\
+    \ a spec whose\n# declared artifacts are never named by any step -- which a wildcard\n# defeats. Missing\
+    \ ONE file is a FAIL of the job. No allow_fail anywhere.\nimport hashlib, os, shutil\nout_dir = \"\
+    C:/banyan-farm/ep2-b15-listengrass-0820-out\"\npay_dir = \"C:/banyan-farm/ep2-b15-listengrass-0820\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b15-listengrass-0820\"\nPAIRS = [\n    (out_dir,\
+    \ \"15-good-listener-LTX-grassroot-0820.mp4\"),\n    (out_dir, \"15-good-listener-LTX-grassroot-0820.mp4.meta.yaml\"\
+    ),\n    (out_dir, \"b15-init-704x1280.png\"),\n    (out_dir, \"bench-b15-listengrass.jsonl\"),\n \
+    \   (pay_dir, \"b15-motion-prompt.txt\"),\n    (pay_dir, \"b15-negative.txt\"),\n]\nos.makedirs(dst,\
+    \ exist_ok=True)\nlines = []\nfor d, name in PAIRS:\n    f = os.path.join(d, name)\n    if not os.path.isfile(f):\n\
+    \        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f,\
+    \ dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest()\
+    \ + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b15-listengrass-0820.sha256\"), \"w\",\n   \
+    \       newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(PAIRS) else\
+    \ 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b15-listengrass-0820-out\15-good-listener-LTX-grassroot-0820.mp4
+- C:\banyan-farm\ep2-b15-listengrass-0820-out\b15-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. STEWARDSHIP.md 6 IS DISCHARGED FOR THIS BEAT AND THE RECORD IS node.md:204: the five beats
+  rewritten 2026-08-17 to play at knee height (12, 13, 15, 19, 20) were put to the founder verbatim and
+  his answer was "all approved" on 2026-08-19; beat 13 was additionally ratified 2026-08-18 by his own
+  board ruling. node.md states the consequence in as many words: "voice synthesis, footage render and
+  episode assembly are legal for all five beats as now written". THIS IS A SILENT MOTION CLIP: no voice
+  synthesis, no episode assembly, no publication, and the approval confers no verdict on the pixels. The
+  one thing 6 still gates on this node is the 2026-08-18 beat-17 shake restage, which this job does not
+  touch. SUPERSESSION NOTE, because a reader will find the other sentence: pipeline/jobs/ep2-b15-macplate-publish-0819.yaml
+  says the beat-15 6 gate is LIVE. It was, when that spec was written on the morning of 08-19; the approval
+  landed later the same day.'
+script_line: 'Beat 15 GOOD LISTENER (1:10-1:15), node.md:98 as rewritten 2026-08-17 and READ AND APPROVED
+  BY THE FOUNDER 2026-08-19: "He tips his head down and sideways until his eyes are level with the two
+  leaves, and talks to them from a hand''s width away; both of them share the frame." His spoken line
+  in the beat is "You''re a good listener. The last three people I talked to filed a report." -- so a
+  MOVING MOUTH is correct here, unlike beat 04.'
+bar:
+  H0_THE_GOBLIN_IS_IN_EVERY_ONE_OF_THE_121_FRAMES: 'THE GATE. This clause did not exist before rung 3
+    and rung 3 is why it does: its bar had no way to notice that the subject had been deleted, and scored
+    a PASS on the plant *because* he was gone. Instrument, pre-registered: whole-frame mean-absolute interframe
+    luma over all 120 pairs must have NO pair above 8x the clip median (rung 3 read 28.14 against a median
+    of 0.171, i.e. 165x), AND the goblin must be present and recognisable by eye at f000, f030, f060,
+    f090, f094, f105 and f120 -- f094 named explicitly because that is the frame rung 3 died on. IF H0
+    FAILS, NOTHING ELSE IN THIS BAR IS SCORED: every other clause is measured on a shot that contains
+    its subject, and a clause that can pass on an empty frame is not an instrument.'
+  H1_THE_PLANT_IS_STILL_ROOTED_IN_THE_LAST_FRAME: 'CARRIED VERBATIM FROM RUNG 3, and now gated by H0 so
+    it cannot be won the way rung 3 won it. At f105 and f120, read at 2x on the plant region: the stem
+    runs down into the grass and no hand is on it. Rung 2 is the precise control -- it passed this at
+    f090 and failed it at f105 -- so the whole question is still the last sixth of the clip. A clip that
+    holds to f090 and loses it again is a FAIL and the finding would be that the pick-up is not prompt-driven
+    at all but something the engine does to a small object near a hand, after which the next rung is mechanical.'
+  H2_NOTHING_IS_BOUGHT_FROM_THE_PERFORMANCE: 'Rung 2''s own numbers are the floor, because rung 2 is the
+    control and it cost nothing: FREEZE none, and HOLD strength at or below 0.60 (rung 2 read 0.508; its
+    frozen beat-03 sibling read 0.958 with a 33-frame dead tail). A rung 4 that fixes the plant by stilling
+    the clip has traded the one clean result in this family for the one broken clause, and is a FAIL.
+    VOID CONDITION, ADDED AFTER RUNG 3 AND NOT NEGOTIABLE: judge_clip''s HOLD and FREEZE statistics are
+    a performance reading ONLY while the clip is one continuous shot. Rung 3 read HOLD period 1 / strength
+    0.01 -- nominally the loosest number this family has ever produced -- because it contained a hard
+    cut, and every other clip in the family reads period 3 at 8.0 effective fps. If H0 fails, or if the
+    clip reads period 1 while its siblings read period 3, this clause is RETRACTED AND NOT SCORED rather
+    than credited.'
+  H3_the_beat_still_reads_and_he_stays_seated: 'Carried from rung 2, which passed both, and from rung
+    3, which passed it for 93 frames and then had no subject: he is sitting in the grass at f120, and
+    his mouth is open and moving at f030/f060/f090. A regression on either is attributable to the one
+    clause.'
+not_done_on_purpose: 'NO recipe change -- size, frames, fps, guidance, distilled sigmas, two-stage, offload,
+  mode and --image-crf 10 are the b14 crf-10 parent''s, four rungs deep now. NO new init, NO new sha,
+  NO new anchor. NO new seed: 20260820 for the fourth time, so rungs 1, 2 and 3 are all true controls,
+  and this box has already demonstrated bit-exact reproducibility across an eight-hour gap on this exact
+  recipe. NO change to the NEGATIVE, unchanged since rung 1. NO SHORTER RENDER: --frames is an input to
+  the denoiser''s temporal grid and not a crop, so a shorter rung is a re-roll of the whole video and
+  cannot inherit this one''s early frames as evidence. NO edit to rung 2''s terminal sentence, for the
+  reason set out in the_one_variable. No pick, no plate_ack, no cut, no publication -- beat 15 stays a
+  SLATE.'
+pre_registered_fail_modes:
+- F-GROUND-IS-A-NOUN-TOO -- a mound of earth arrives anyway, from rung 2's surviving `the plant is still
+  rooted in the GROUND`. That is the one ground-material noun this rung deliberately did not remove, on
+  the evidence that rung 2 contained it and produced no mound. If it fires, the noun law is stronger than
+  the rung-2 control suggested -- an abstract locative `ground` places a substance as readily as a material
+  `soil` does -- and rung 5 is its deletion, which is then the LAST ground noun in the prompt and closes
+  the axis. Named as the most likely FAIL of this rung.
+- 'F-PLANT-PICKED-UP -- rung 2''s defect returns. Rung 3 cannot be read on this clause at all: it kept
+  its plant by deleting the hand''s owner, so this rung is the FIRST clip to test the rooting clause against
+  a goblin who is still in the picture. A pick-up here would mean the rooting clause never fixed anything
+  and rung 3''s H1 pass was pure artifact.'
+- F-STILL-FROZEN / F-STILL-DAMPED -- the clip buys the plant by stilling, i.e. beat 15 acquires the cost
+  its beat-03 and beat-13 siblings pay. Scored against rung 2's 0.508, and only if H0 passes.
+- F-SUBJECT-DELETED-AGAIN -- H0 fires. Whatever the cause, a second one-frame subject swap on this init
+  at this seed makes it a property of the init and the recipe rather than of any word, and the next rung
+  is mechanical rather than lexical.
+- F-IDENTITY-DRIFT -- held on every clip in this family that still had a subject to measure; a regression
+  would be attributable to the clause.
+- F-MOUND-WITHOUT-DELETION -- a soil mound appears somewhere in frame while the goblin stays. Recorded
+  separately from H0 because it would mean the noun places a substance but does not necessarily evict
+  the largest object, which narrows the law's second half.
+rung_3_the_control: 'ep2-b15-listenroot-0820: FAIL, and the worst single frame this beat has produced.
+  AT f094 THE GOBLIN IS DELETED AND REPLACED BY A MOUND OF BARE EARTH in ONE frame pair -- whole-frame
+  interframe 28.14 against a clip median of 0.171, no other pair above 1.7, a hard swap and not a dissolve
+  -- and he never comes back. The last 27 frames of a five-second beat about a man talking to a seedling
+  contain no man. H1 passed on the letter and the pass was worthless: the plant is rooted because nobody
+  is left to pick it up. H2 and the skin probe were both RETRACTED as broken by the defect they were pointed
+  at -- a hold statistic reads a cut as stillness, and a fixed box on an empty frame reads luma 203 with
+  luma_std 3.1. Rooted to f120, seated and talking at f030/f060/f090, camera locked.'
+skin_probe:
+  box_xyxy_in_the_704x1280_init:
+  - 302
+  - 408
+  - 356
+  - 448
+  placed_on: his left cheek, below the spectacle rim and above the cloak collar -- SKIN, not cloth, chosen
+    by eye at 5x on the real cropped init and not by any colour rule
+  f000_reading: R 67.9 G 114.6 B 50.3, R-B 17.6, luma 93.3 (std 20.3)
+  how_to_read_it: Re-measure the same box on f120 and publish R, G, B, R-B and luma beside these. A green-skinned
+    figure on a green field is exactly the case where one scalar decides nothing, so the whole triple
+    is published and the verdict is written by eye against it.
+  carried_verbatim_from: 'ep2-b15-listenroot-0820.yaml, and through it from the rung-1 spec where the
+    box was placed by eye at 5x before any of these frames existed. Every rung renders the same init at
+    the same sha, anchor and 704x1280 crop, so the box lands on the same skin. Copied byte for byte and
+    labelled rather than re-placed: re-placing a probe after the frames exist is choosing the number.'
+  retracted_on_rung_3_and_why: 'Rung 3''s reading of this box -- f120 luma 203.2, R-B 93.9, nominally
+    a +112.9 identity catastrophe -- WAS NOT AN IDENTITY READING. luma_std collapsed 14.9 -> 3.1: a flat
+    box is an empty box, and this one was sitting on lit grass because the subject was out of the picture
+    entirely. PUBLISH luma_std WITH EVERY READING. A collapse means the box is on a field and an EXPLOSION
+    means it is on an edge (beat 13''s went 6.0 -> 85.0); both are the premise dying and only the dispersion
+    shows it. If either shape appears, the probe is RETRACTED and re-placed by eye at 5x on the frame
+    in question, and the verdict is written by eye at 1:1 against a re-placed box with material published
+    beside luma.'
+the_one_variable: 'THE ROOTING CLAUSE RUNG 3 ADDED, AND NOTHING ELSE. Two words go and none arrive: `stays
+  in the ground` becomes `stays in the grass`, and `with soil and grass around its base` becomes `with
+  grass around its base`. The clause keeps everything it was written to carry -- the stem''s POSITION
+  (beside him, out of the grass), its ROOTEDNESS, and the first-frame/last-frame continuity -- and carries
+  ZERO ground-material nouns: no soil, no earth, no dirt, no mud, no loam, no ground. Rung 3''s mound
+  of bare earth occupied the frame''s largest object slot, which was the goblin; `grass` is the one material
+  already saturating this plate, so the base region gets a noun with nothing to displace. RUNG 2''S TERMINAL
+  SENTENCE IS UNTOUCHED, INCLUDING ITS OWN `rooted in the ground` -- that phrase was in rung 2, rung 2
+  produced no mound, and editing the one clause in this family that bought position for free would be
+  a second variable AND a risk to the only thing that works.'
+the_prompt_diff:
+  parent_chars: 1185
+  child_chars: 1175
+  chars_removed: 10
+  chars_added: 0
+  before: The plant's thin stem stays in the ground for the whole shot, rising up out of the grass beside
+    him with soil and grass around its base, and it is rooted there in the last frame just as it is in
+    the first.
+  after: The plant's thin stem stays in the grass for the whole shot, rising up out of the grass beside
+    him with grass around its base, and it is rooted there in the last frame just as it is in the first.
+  ground_nouns_checked_against_the_new_clause:
+  - soil
+  - earth
+  - dirt
+  - mud
+  - loam
+  - clay
+  - ground
+  - topsoil
+  - humus
+  - compost
+  - sand
+  - gravel
+  - mound
+  deliberately_retained_elsewhere: rung 2's terminal sentence `the plant is still rooted in the ground
+    with its stem rising out of the grass beside him` -- byte for byte, as the control. See the_one_variable
+    and F-GROUND-IS-A-NOUN-TOO.
+derivation:
+  parent: pipeline/jobs/ep2-b15-listenroot-0820.yaml
+  by: pipeline/derive_b15_soilless_r4_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - rung_3_the_control
+  - skin_probe
+  - success
+  - the_one_variable
+  - the_prompt_diff
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - cost
+  - derivation
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - rung_2_the_control
+  - skin_probe
+  - the_one_variable
+  - verdict_0820
+  - verdict_measured
+  - what_the_next_rung_is
+  retokened:
+  - ep2-b15-listenroot-0820 -> ep2-b15-listengrass-0820
+  - 15-good-listener-LTX-rooted-0820 -> 15-good-listener-LTX-grassroot-0820
+  - bench-b15-listenroot -> bench-b15-listengrass
+  - ep2-b15-listenroot-0820 -> ep2-b15-listengrass-0820
+  overrides_applied_and_asserted:
+    payload:b15-motion-prompt.txt:
+    - payload b15-motion-prompt.txt (1185 -> 1175 chars)
+    seed:
+    - payload b15-jobs-render.json (20260820 -> 20260820, re-parsed)
+  seed: 20260820
