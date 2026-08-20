@@ -105,11 +105,14 @@ this much.  A tie means two equally good explanations and the detector must not
 silently pick one."""
 
 JUMP_MAX_FRAC = 0.60
-"""Maximum centroid displacement in one frame as a fraction of the previous
-equivalent radius.  The fig hangs on a stem; it does not teleport.  A jump past
-this is either H5 (detach/teleport, a real fault) or a mis-lock (an instrument
-fault) -- the detector cannot tell them apart from one frame, so it declares
-dead and lets the eye decide."""
+"""Maximum centroid displacement PER FRAME ELAPSED, as a fraction of the last
+live equivalent radius.  The fig hangs on a stem; it does not teleport.  A jump
+past this is either H5 (detach/teleport, a real fault) or a mis-lock (an
+instrument fault) -- the detector cannot tell them apart from one frame, so it
+declares dead and lets the eye decide.  The budget is multiplied by the gap
+since the last live frame: measuring an eight-frame displacement against a
+one-frame budget is how a single dead frame used to cascade into a dead clip
+(the incumbent cold open read 120/121 dead before this was fixed)."""
 
 RATIO_SUSPECT = 2.0
 """Single-frame area ratio at or above which the frame is FLAGGED (not killed).
@@ -139,11 +142,17 @@ that a doubling fig still has ring left inside the window."""
 MIN_ROI = 48
 """Floor on the ROI half-width in px, for the 24-px-wide f000 nub."""
 
+ANCHOR_TOL_PX = 20
+"""How far the f000 segmentation may sit from the composite mask's own centroid
+before frame 0 is called dead.  This is the ONE gate that can kill the anchor
+frame: everything else there is advisory, because the nub's position on frame 1
+is known from `nub_composite.py`'s geometry and does not have to be found."""
+
 
 def gates_dict() -> dict:
     return {
         "SEP_MIN": SEP_MIN, "NCC_MIN": NCC_MIN, "NCC_MARGIN_MIN": NCC_MARGIN_MIN,
-        "JUMP_MAX_FRAC": JUMP_MAX_FRAC, "RATIO_SUSPECT": RATIO_SUSPECT,
+        "JUMP_MAX_FRAC": JUMP_MAX_FRAC, "RATIO_SUSPECT": RATIO_SUSPECT, "ANCHOR_TOL_PX": ANCHOR_TOL_PX,
         "TAU_MAT": TAU_MAT, "TAU_LUM": TAU_LUM,
         "RING_INNER": RING_INNER, "RING_OUTER": RING_OUTER,
         "ROI_PAD": ROI_PAD, "MIN_ROI": MIN_ROI,
@@ -461,9 +470,14 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
             v_ncc = ncc(prev_patch, cur)
             best_rival = -1.0
             step = max(2, int(round(st["r_eq"] / 2)))
+            # A "rival" whose patch still covers most of the true patch is not a
+            # rival, it is the same answer shifted; excluding only 1.2 r_eq let
+            # those self-overlaps score within 0.06 of the hit and kill frames
+            # the detector had in fact found.
+            excl = max(1.2 * st["r_eq"], float(prev_half))
             for dy in range(-4 * step, 4 * step + 1, step):
                 for dx in range(-4 * step, 4 * step + 1, step):
-                    if math.hypot(dy, dx) <= 1.2 * st["r_eq"]:
+                    if math.hypot(dy, dx) <= excl:
                         continue
                     q = patch_at(obj, st["cy"] + dy, st["cx"] + dx, prev_half)
                     if q.size:
@@ -472,6 +486,7 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
 
         jump = math.hypot(st["cy"] - cy, st["cx"] - cx)
         prev_r = r_eq
+        gap = 1 if last_live is None else max(1, i - last_live)
 
         # ------------------------- THE GATES -------------------------
         if st["sep_material"] < SEP_MIN and st["sep_luma"] < SEP_MIN:
@@ -482,9 +497,10 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
             rec["dead_reasons"].append("ncc %.3f < %.2f" % (v_ncc, NCC_MIN))
         if v_margin is not None and v_margin < NCC_MARGIN_MIN:
             rec["dead_reasons"].append("ncc margin %.3f < %.2f" % (v_margin, NCC_MARGIN_MIN))
-        if jump > JUMP_MAX_FRAC * max(prev_r, 4.0):
+        if jump > JUMP_MAX_FRAC * max(prev_r, 4.0) * gap:
             rec["dead_reasons"].append(
-                "centroid jump %.1f px > %.2f x r_eq %.1f" % (jump, JUMP_MAX_FRAC, prev_r))
+                "centroid jump %.1f px > %.2f x r_eq %.1f x %d frame(s) elapsed"
+                % (jump, JUMP_MAX_FRAC, prev_r, gap))
         if st.get("touches_roi") and not st.get("touches_frame"):
             rec["dead_reasons"].append(
                 "mask still reaches the search window after %.1fx growth -- extent not bounded"
@@ -495,6 +511,27 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
             rec["flags"].append("component re-seeded from nearest in-mask pixel")
         if st.get("touches_frame"):
             rec["flags"].append("fig is clipped by the frame edge -- area is a lower bound")
+
+        # THE ANCHOR FRAME IS NOT DETECTED, IT IS KNOWN.  f000 is the plate the
+        # composite pasted the nub into, so its footprint comes from geometry and
+        # the identity gates have nothing to compare against anyway (there is no
+        # previous frame).  Here the gates become ADVISORY: the one thing that can
+        # kill f000 is the detector disagreeing with the geometry it was handed,
+        # which is a real failure and is checked explicitly.  Without this the
+        # incumbent cold open died on frame 0 at separability 1.76 -- on a frame
+        # where nothing had to be found.
+        if i == 0:
+            off = math.hypot(st["cy"] - float(ys.mean()), st["cx"] - float(xs.mean()))
+            rec["anchor_offset_px"] = round(off, 2)
+            if off > ANCHOR_TOL_PX:
+                rec["dead_reasons"] = [
+                    "detector disagrees with the geometric anchor by %.1f px > %d"
+                    % (off, ANCHOR_TOL_PX)]
+            else:
+                rec["flags"] += ["anchor frame: %s" % r for r in rec["dead_reasons"]]
+                rec["dead_reasons"] = []
+                rec["flags"].append(
+                    "position asserted from the composite mask, not detected (%.1f px off)" % off)
 
         prev_area = None
         for r in reversed(recs):
