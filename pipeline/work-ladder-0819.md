@@ -6534,3 +6534,127 @@ supposed to stop that, and the ref is a head crop rather than the full tile for
 the same reason. If k1 comes back seated, or in the tile's purple cowl, or with
 the tile's background, the mask is not holding and the next variable is the
 mask, not the scale.
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE INSTRUMENT BOUGHT THE KIND OF EYE AND NOT ITS SIZE
+
+`ep2-jerry-face-k1-0821`. j2's frame with one variable: an IP-Adapter reference
+that is **the tile's own head crop**, masked to the head box, at `--ip-scale
+0.7`. Prompt, negative, h19 skeleton, `--scale 1.0` and seed 20260823 all
+byte-identical to j2. Pixels, tile / j2 / k1 at a common head height:
+`review/ep2-goblin-design-0819/FACE-K1-IPA-0821.png`
+
+### IT DREW THE BROW. EIGHT RUNGS OF WORDS COULD NOT
+
+**P1 scores for the first time.** An angled dark brow mass over each eye,
+converging toward the nose, **with skin between it and the lid** — which is the
+whole difference between a brow and the lash arc j1 and j2 produced welded to
+the eye rim. Construction is the tile's own, and it arrived without being
+named, because nothing named it: the prompt is j2's, and j2 has `thick
+eyebrows` in it and drew no brow.
+
+**And the eye is a SLIT.** Per-eye aspect **0.54 and 0.46 against the tile's
+0.52**, where six wording rungs sat between 1.00 and 1.26. That axis was the
+one the last entry measured as running out at 37% of the distance; the adapter
+crossed it in one render.
+
+| | area | eye box | aspect |
+|---|---|---|---|
+| **TILE** | 0.0143 | 23x12 | **0.52** |
+| j2, end of the wording route | 0.0353 | 27x27 | 1.00 |
+| **k1** | **0.0566** | 52x28 | **0.54** |
+
+### AND IT FAILS THE BAR, ON THE CLAUSE THAT WENT BACKWARDS
+
+**Area 0.0566 against a 0.030 bar — worse than j2's 0.0353.** Not a
+contradiction with the row above, and the decomposition says why. Normalised to
+the head box, the eye's bounding box is:
+
+| | of head area | vs the tile |
+|---|---|---|
+| TILE | 1.62% | — |
+| j2 | 2.27% | **1.40x** |
+| k1 | 3.03% | **1.87x** |
+
+**k1 is FURTHER from the tile on size and exactly right on kind.** j2 was the
+right width and twice too tall; k1 is the right shape at roughly twice the
+scale. That is the signature of an instrument that supplies a KIND of thing —
+which is what canon's curation file predicted an attribute instrument would do,
+in the sentence that named this route.
+
+*(One honesty note on the tile's own 0.0143: the tile's slits are partly
+overpainted by its brow shadow, so a white-pixel count undercounts them. The
+BOUNDING BOX figures above are the fair comparison and they are what the
+argument rests on.)*
+
+### THE OTHER COST, MEASURED, AND IT IS THE ONE TO WATCH
+
+| | head_frac drawn | heads |
+|---|---|---|
+| authored skeleton | 0.190 | — |
+| j2 | 0.181 | **5.56** |
+| **k1** | **0.219** | **4.57** |
+
+**T8 passes at 4.57 against a 4.5 bar with 0.07 heads of room left.** The
+mechanism is not mysterious: **the reference is a HEAD CROP, so the adapter's
+own notion of how much of a frame is head is 100%, and a mask says WHERE, not
+HOW MUCH.** This is the bobblehead direction — the same axis n5 manufactured on
+demand by moving head_frac to 0.320 — arriving through the adapter instead of
+through geometry.
+
+### THE SCORECARD, AND THE CONTAINMENT THAT DID NOT BREAK
+
+| clause | j2 | **k1** |
+|---|---|---|
+| T1 no iris / no pupil | PASS | **PASS** |
+| T2 no human nose | fail (a bump) | **PASS** — a dot and a slit, no bridge |
+| T3 no age modelling | PASS | **PASS** |
+| T8 4.5+ heads | PASS 5.56 | **PASS 4.57** — 0.07 of room left |
+| P1 brow bar | **FAIL, 0 of 7** | **PASS — first ever** |
+| P2 forward muzzle | FAIL, flat | **PASS** |
+| P3 mouth line | PASS | **PASS** |
+| P4 shading | PASS | **PASS** |
+| T1b shape | FAIL a=1.00 | **PASS a=0.54** |
+| **T1b area** | FAIL 0.0353 | **FAIL 0.0566** |
+
+**Nine of ten, and the one that fails is the one the whole rung is judged on.**
+All three predicted containment breaks were scored and **none fired**: he is
+standing, in the patchwork cloak, in tall grass. No seated pose, no purple
+cowl, no tile background. The third named risk — brow arrives AND T1 regresses
+to pupils — did not fire either.
+
+### `train-jerry-0820` REMAINS UNFILED, AND THE REASON HAS CHANGED FOR THE THIRD TIME
+
+It was *no proportion*. Then *no face*. Then *the wording cannot reach it*. It
+is now **one clause and a dial**: the eye is the right kind at the wrong size,
+and the head is 0.219 where 0.190 was authored. That is a materially better
+place to be held at, and it is still held, because a LoRA learns what it is
+shown and what this shows is a creature with double-size eyes.
+
+### k2 IS FILED, ONE VARIABLE, AND THE SPLIT IS PREDICTED IN ADVANCE
+
+`ep2-jerry-face-k2-0821`: k1 at **`--ip-scale 0.9`**, nothing else.
+**I expect it to split T1b from T8** — more strength should pull the eye toward
+a reference that has the right size, and pull the head toward a reference that
+is 100% head, spending the 0.07 heads T8 has left. **If that is exactly what
+happens it is not a dead end, it is a clean decomposition: the eye belongs to
+the adapter and the head belongs to the skeleton**, and head_frac is a dial
+this tree has already proved it holds. The rung after would be 0.9 with a
+pre-shrunk authored head — one variable, both clauses reachable at once.
+
+What would stop the route instead: containment breaking at 0.9, or T1
+regressing to pupils. Either means the strength that buys the face also buys
+the reference's composition, and the instrument has to become a face-only
+adapter (`ip-adapter-plus-face`, 847 MB, NOT cached on the box) or a tighter
+mask — a different spec either way.
+
+### AND THE RULER IS CODE NOW
+
+`pipeline/measure_face_eye_0821.py`, with the five published f/g/h frames
+committed beside it and `--selftest` asserting this code reproduces their
+numbers before it is allowed to produce a new one. The last entry criticised
+two lanes for a measurement with no generator under it; that criticism does not
+survive this lane repeating it. It also reports the per-eye bounding box and
+aspect — **the half an area figure cannot see, and the half that turned out to
+carry the whole finding twice tonight.**

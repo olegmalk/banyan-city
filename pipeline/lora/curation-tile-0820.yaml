@@ -250,3 +250,53 @@ gate_status_2026_08_21_face_wording: >-
   set is still 7 frames in 4 poses; nothing from the face, skel, pose, tileset
   or prop families enters it. The instrument now under test is IP-Adapter off
   adult-b19-0819.jpg itself -- ep2-jerry-face-k1-0821.
+
+# --------------------------------------------------------------------------
+# UPDATE 4, 2026-08-21, after the REFERENCE ROUTE FOR THE FACE ran.
+# ep2-jerry-face-k1-0821: j2's frame with ONE variable -- an IP-Adapter
+# reference that is the tile's own head crop
+# (farm-out/jerry-skel-assets-0820/jerry-tile-head-0821.png, adult-b19-0819.jpg
+# cropped 176,280-332,432), masked to 315,130,515,350 at --ip-scale 0.7.
+# Pixels: review/ep2-goblin-design-0819/FACE-K1-IPA-0821.png
+#
+# THIS FILE'S OWN PREDICTION WAS RIGHT. "An ATTRIBUTE instrument for an
+# attribute problem" is what it called IPA, and that is exactly what arrived:
+#   P1 BROW -- SCORES FOR THE FIRST TIME in 8 rungs. An angled dark brow over
+#     each eye with SKIN between it and the lid, which is the whole difference
+#     from the lash arc j1/j2 drew welded to the rim. Nothing asked for it.
+#   T1b SHAPE -- eye aspect 0.54 / 0.46 against the TILE's 0.52, where six
+#     wording rungs sat at 1.00-1.26.
+#   T2 -- improves to a dot and a slit, no bridge.
+#   P2 muzzle, P3 mouth, P4 shading, T1, T3 -- all hold.
+#   Containment holds: standing, patchwork cloak, tall grass. No seated pose,
+#     no purple cowl, no tile background. All three predicted breaks scored.
+#
+# AND IT FAILS ON SIZE, WHICH IS A DIFFERENT DEFECT FROM EVERY PRIOR ONE.
+# Eye area 0.0566 against a 0.030 bar -- WORSE than j2's 0.0353. Normalised
+# eye bounding box over head box: TILE 1.62%, j2 2.27% (1.40x), k1 3.03%
+# (1.87x). The eye arrived at the tile's KIND and roughly twice its SIZE.
+# T8 also slid: head_frac 0.181 -> 0.219, heads 5.56 -> 4.57 against a 4.5 bar.
+# The reference is a HEAD CROP, so the adapter's notion of how much frame is
+# head is 100%, and a mask says WHERE not HOW MUCH.
+#
+# WHAT THIS MEANS FOR THE SET. Nothing enters it yet. But the hold's reason has
+# changed for the THIRD time -- "no proportion", then "no face", then "the
+# wording cannot reach it", and now ONE CLAUSE AND A DIAL. A frame with
+# double-size eyes teaches double-size eyes, so the refusal is unchanged in
+# kind; it is much closer in distance.
+#
+# ep2-jerry-face-k2-0821 IS FILED, one variable, --ip-scale 0.9, with the split
+# predicted in advance: the eye should improve and T8 should spend its
+# remaining 0.07 heads. If it splits exactly that way, the eye belongs to the
+# adapter and the head belongs to the skeleton -- and head_frac is a dial this
+# file already recorded as controllable (n5 moved it 0.190 -> 0.320 alone and
+# manufactured a bobblehead on demand). The rung after is 0.9 with a pre-shrunk
+# authored head, one variable, both clauses reachable at once.
+gate_status_2026_08_21_reference_route: >-
+  HELD, and one clause wide. ep2-jerry-face-k1-0821 discharges P1 (brow, first
+  in 8 rungs), T1b SHAPE (aspect 0.54 vs the tile's 0.52), T2, P2, P3, P4, T1
+  and T3, and holds the standing/cloak/grass containment. It FAILS T1b AREA at
+  0.0566 against 0.030 -- the tile's eye KIND at roughly twice its SIZE -- and
+  it costs proportion, T8 5.56 -> 4.57 heads at head_frac 0.219 against a 0.190
+  authored skeleton. train-jerry-0820 REMAINS UNFILED and the set is still 7
+  frames in 4 poses. Next: ep2-jerry-face-k2-0821 at --ip-scale 0.9.
