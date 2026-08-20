@@ -4412,3 +4412,10 @@ enqueueing** — that is what caught this one.
 
 Judged on landing against the pre-registered bar. `sample: true`, priority 34,
 est 7 min, $0.
+
+## Routing directive (founder, 2026-08-20 evening)
+The 5090 is the primary device for ANY work it can do — plates included
+(SDXL stills run fine on the card and finish in seconds vs 70-140s on a Mac).
+Macs get work ONLY when the 5090 is busy and the work would otherwise wait,
+i.e. as parallel overflow — never as the default home of a job class.
+"Mac-class by construction" is retired as a routing reason.
