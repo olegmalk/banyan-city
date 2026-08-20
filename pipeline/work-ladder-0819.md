@@ -6552,7 +6552,12 @@ converging toward the nose, **with skin between it and the lid** — which is th
 whole difference between a brow and the lash arc j1 and j2 produced welded to
 the eye rim. Construction is the tile's own, and it arrived without being
 named, because nothing named it: the prompt is j2's, and j2 has `thick
-eyebrows` in it and drew no brow.
+eyebrows` in it and drew no brow. **Scored PASS with its one qualification
+named: k1's brow is THINNER than the tile's.** At 6x side by side the
+construction is identical — a dark-GREEN angled shading stroke, not black ink,
+with a skin band under it — and canon's wording is *"one heavy dark brow bar"*.
+k1's is a stroke, not a bar. The sheet is on disk; anyone who reads that as a
+fail has the pixels to say so with.
 
 **And the eye is a SLIT.** Per-eye aspect **0.54 and 0.46 against the tile's
 0.52**, where six wording rungs sat between 1.00 and 1.26. That axis was the
