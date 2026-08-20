@@ -140,7 +140,95 @@ def figure(head_frac, pose="stand", cx_frac=0.5,
         kp["Lwri"] = (cx + th * 1.55, up(TPL["elb"]) + 0.010 * stature)
         kp["Relb"] = (cx - th * 1.15, up(TPL["elb"]))
         kp["Rwri"] = (cx - th * 1.05, up(TPL["wri"]) - 0.030 * stature)
-    elif pose != "stand":
+
+    # -----------------------------------------------------------------------
+    # THE POSE SET, ADDED 2026-08-20 AFTER n1/n5 SETTLED THE INSTRUMENT.
+    #
+    # EVERY POSE BELOW HOLDS head_frac AND THE HEAD KEYPOINTS AT THE VALUES
+    # `stand` GIVES THEM WHEN THE FIGURE IS UPRIGHT, and lowers the whole head
+    # group as one rigid block when it is not. The LoRA gate is PROPORTION
+    # DIVERSITY, so a pose that quietly changes the head's size while changing
+    # the pose would teach the trigger token the one thing this route exists to
+    # fix. `crown_offset` is the block move; nothing else touches the head.
+    # -----------------------------------------------------------------------
+    def drop_head(dy, dx=0.0):
+        for n in ("nose", "Reye", "Leye", "Rear", "Lear"):
+            kp[n] = (kp[n][0] + dx, kp[n][1] + dy)
+
+    def drop_upper(dy, dx=0.0):
+        for n in ("neck", "Rsho", "Lsho"):
+            kp[n] = (kp[n][0] + dx, kp[n][1] + dy)
+
+    if pose == "kneel":
+        # Both knees down, torso upright. The KNEE takes the ground line and
+        # the ankles fold back behind it.
+        d = (TPL["kne"] * k) * stature
+        drop_head(d)
+        drop_upper(d)
+        for n in ("Relb", "Lelb", "Rwri", "Lwri", "Rhip", "Lhip"):
+            kp[n] = (kp[n][0], kp[n][1] + d)
+        kp["Rkne"] = (cx - th * 0.55, ground_y - TPL["ank"] * stature)
+        kp["Lkne"] = (cx + th * 0.55, ground_y - TPL["ank"] * stature)
+        kp["Rank"] = (cx - th * 0.70, ground_y - TPL["ank"] * stature
+                      - 0.030 * stature)
+        kp["Lank"] = (cx + th * 0.70, ground_y - TPL["ank"] * stature
+                      - 0.030 * stature)
+    elif pose == "sit":
+        # THE TILE'S OWN STANCE: seated, knees up, hands clasped between them,
+        # head sunk into the collar. canon: "small, folded, hunched inward".
+        d = (TPL["hip"] * k) * stature - 0.055 * stature
+        drop_head(d + 0.020 * stature)
+        drop_upper(d)
+        kp["Rhip"] = (cx - th * 0.60, ground_y - TPL["ank"] * stature
+                      - 0.020 * stature)
+        kp["Lhip"] = (cx + th * 0.60, ground_y - TPL["ank"] * stature
+                      - 0.020 * stature)
+        kp["Rkne"] = (cx - th * 0.95, kp["Rsho"][1] + 0.115 * stature)
+        kp["Lkne"] = (cx + th * 0.95, kp["Lsho"][1] + 0.115 * stature)
+        kp["Rank"] = (cx - th * 0.75, ground_y - TPL["ank"] * stature)
+        kp["Lank"] = (cx + th * 0.75, ground_y - TPL["ank"] * stature)
+        kp["Relb"] = (cx - th * 1.10, kp["Rsho"][1] + 0.085 * stature)
+        kp["Lelb"] = (cx + th * 1.10, kp["Lsho"][1] + 0.085 * stature)
+        kp["Rwri"] = (cx - th * 0.20, kp["Rsho"][1] + 0.135 * stature)
+        kp["Lwri"] = (cx + th * 0.20, kp["Lsho"][1] + 0.135 * stature)
+    elif pose == "crouch":
+        d = (TPL["hip"] * k) * stature - 0.150 * stature
+        drop_head(d)
+        drop_upper(d)
+        kp["Rhip"] = (cx - th * 0.60, kp["Rsho"][1] + 0.150 * stature)
+        kp["Lhip"] = (cx + th * 0.60, kp["Lsho"][1] + 0.150 * stature)
+        kp["Rkne"] = (cx - th * 1.00, kp["Rsho"][1] + 0.130 * stature)
+        kp["Lkne"] = (cx + th * 1.00, kp["Lsho"][1] + 0.130 * stature)
+        kp["Rank"] = (cx - th * 0.85, ground_y - TPL["ank"] * stature)
+        kp["Lank"] = (cx + th * 0.85, ground_y - TPL["ank"] * stature)
+        kp["Relb"] = (cx - th * 1.15, kp["Rsho"][1] + 0.075 * stature)
+        kp["Lelb"] = (cx + th * 1.15, kp["Lsho"][1] + 0.075 * stature)
+        kp["Rwri"] = (cx - th * 0.75, kp["Rsho"][1] + 0.145 * stature)
+        kp["Lwri"] = (cx + th * 0.75, kp["Lsho"][1] + 0.145 * stature)
+    elif pose == "reach":
+        # Both arms up. The legs and the head are `stand`'s exactly, so this
+        # pose isolates the ARMS and nothing else.
+        kp["Relb"] = (cx - th * 1.35, up(0.86))
+        kp["Lelb"] = (cx + th * 1.35, up(0.86))
+        kp["Rwri"] = (cx - th * 1.20, up(1.00))
+        kp["Lwri"] = (cx + th * 1.20, up(1.00))
+    elif pose == "point":
+        # One arm out horizontal at shoulder height, the other hanging.
+        kp["Lelb"] = (cx + th * 1.70, kp["Lsho"][1] + 0.010 * stature)
+        kp["Lwri"] = (cx + th * 2.90, kp["Lsho"][1] + 0.015 * stature)
+    elif pose == "hunch":
+        # canon: "hunched inward, head sunk into the collar. Not upright, not
+        # heroic." Standing, but folded: the head drops a quarter of its own
+        # height into the shoulders and the shoulders roll forward and in.
+        drop_head(0.25 * head_h)
+        kp["Rsho"] = (cx - th * 0.78, kp["Rsho"][1] + 0.020 * stature)
+        kp["Lsho"] = (cx + th * 0.78, kp["Lsho"][1] + 0.020 * stature)
+        kp["neck"] = (cx, kp["neck"][1] + 0.020 * stature)
+        kp["Relb"] = (cx - th * 0.90, up(TPL["elb"]))
+        kp["Lelb"] = (cx + th * 0.90, up(TPL["elb"]))
+        kp["Rwri"] = (cx - th * 0.30, up(TPL["wri"]) + 0.015 * stature)
+        kp["Lwri"] = (cx + th * 0.30, up(TPL["wri"]) + 0.015 * stature)
+    elif pose not in ("stand", "stride"):
         raise ValueError("unknown pose %r" % (pose,))
 
     meta = {
@@ -188,6 +276,16 @@ HINTS = [
      "TILE PROPORTION, SECOND POSE. The LoRA gate is proportion diversity, "
      "not one good standing frame, so a second pose is filed in the same "
      "batch rather than after it."),
+    # ---- THE POSE SET, added after n1/n5 settled the instrument. Same
+    # ---- head_frac, same head keypoints; only the body moves.
+    ("jerry-skel-h19kneel-0820.png", TILE_HEAD_FRAC, "kneel", "pose set"),
+    ("jerry-skel-h19sit-0820.png", TILE_HEAD_FRAC, "sit",
+     "THE TILE'S OWN STANCE, folded and hands clasped."),
+    ("jerry-skel-h19crouch-0820.png", TILE_HEAD_FRAC, "crouch", "pose set"),
+    ("jerry-skel-h19reach-0820.png", TILE_HEAD_FRAC, "reach", "pose set"),
+    ("jerry-skel-h19point-0820.png", TILE_HEAD_FRAC, "point", "pose set"),
+    ("jerry-skel-h19hunch-0820.png", TILE_HEAD_FRAC, "hunch",
+     "canon's 'hunched inward, head sunk into the collar'."),
 ]
 
 
