@@ -9394,3 +9394,98 @@ retry for five minutes before concluding a Mac is gone (runbook §macbook4).
   false-positive rate on 200 real windows: **3.0%**.
 - **`pipeline/beat08_grip_copy.py`** — §21's copy-the-fist rung built and
   selftested; the init/mask are on disk. The box spec is NOT yet filed.
+
+## 2026-08-20 — the three open taste cards get their missing option in pixels, and every answer now fires a written chain
+
+Founder directive today: *"we need more automation unless there is something
+strictly blocked by human action."* Applied to the review board, that reads as
+two defects, both of which were present on all three open cards. **A card was
+stopping at the question instead of at the human** — every answer would have
+started a fresh round of *"right, so what do I do now?"* — and **two of the three
+had an option the author could only read about, not look at.** $0 all day.
+
+**New: `pipeline/decisions-pending/`.** One subdirectory per open card, naming
+what fires for each option and carrying the runnable artifact where one exists.
+Nothing in it is enqueued — `box_autofill` reads `backlog/`, `box_enqueue` takes
+an explicit path, and nothing globs the tree. Rule 3 of its README — *an option
+whose next step is authored work gets NOTHING here, and says so* — ended up doing
+the work in two of four entries, and those entries are what stop the next lane
+inventing a spec the author never asked for.
+
+**BEAT 13 — answer B was built, rendered, and argues against itself.**
+`beat13_shade_composite.py` refuses to draw it: `NO_DRAW_ABOVE_Y = 640` exists so
+nothing it composites can reach his face. The guard got an explicit
+`--founder-option` **door, not a deletion** — it lifts C7 and downgrades C4 to
+reported (both state the staging the question asks about overriding), and
+**refuses to lift C2**, so his face stays byte-identical and armed, with 0 of the
+37 224 newly-drawn pixels above y 640 inside it. The default build still
+reproduces `9ae127d1…` byte for byte, which matters because a filed spec asserts
+it before loading a model.
+
+The geometry turned out to be a finding. Tall enough to reach his eye line means
+drawn beside his head, and beside his head there is frame edge at x 2 and face
+box at x 250 — **a 248 px corridor.** Three blade angles were built and looked at:
+±50° ran off frame (C3 caught it), ±58° put 114 px on his cheek (C2 caught it),
+only ±70° clears both, and at ±70° the blades are near-vertical and overlap. *At
+this framing a tall plant cannot have wide leaves.* One real correction was
+forced by C9 rather than by a threshold moving: over a 921 px footprint the
+low-pass reference `local` averages in bright sky the plant only passes through
+(101.5 → 160.9), the root loses its lift (1.488 → 0.938) and lands at luma 21.2
+against the plate's own darkest 22.9. `local` is now measured over the band the
+plant is **rooted** in, founder-option only; root 23.9, C9 passes on the drawing.
+
+**The 0.30 sample came back a tulip** — two leaves overlapping into one
+heart-shaped mass on a long bare wire, and at 1:1 nearly indistinguishable from
+the flat drawing, which by §7 means the pass is a paste. **The sampler is
+exonerated by measurement, not by argument:** mean |Δ| inside the mask 8.62
+against the working parent's 6.23, on 7.97 % of frame against 4.10 %, against sky
+rather than grass. It engaged *harder* and the picture is worse.
+
+**The finding outgrew the beat:** a ~50 cm plant carrying **exactly two seed
+leaves** is a lollipop by construction — cotyledons sit near the ground. So *"draw
+it taller in this one shot"* does not override one of the founder's rules, it
+collides with a second one that is also his. **Height and leaf count are one
+ruling seen from two sides.** The third option that implies — a plant with *more
+than two leaves*, i.e. one that has grown — is a story question about where in the
+season beat 13 sits, and it is named on the card and handed back rather than
+taken.
+
+**BEAT 09 / GUARDS — the question moved onto the pixels that would enter the cut.**
+The card had been asking "do they read as grown men" off four sheets of stills
+since 08-18. Beat 09's cropmotion clip (four of four, landed today) is now on it
+as a playable clip plus a seven-frame strip: a **close-up at 55 % head** where the
+four sheets are wide shots with 60 px faces, and the honest complication the page
+already admitted in prose — 5 of 12 adult against 0 of 12 — made visible. Its one
+fault is named on the card and is not about age: the hand at his cheek dissolves
+over f001–f008. `swap-b09-into-cut.sh` is written, syntax-checked and **not run**;
+it asserts the clip's sha, asserts there is no rival `09-*.mp4` (`get_clip()`
+globs and takes the sorted first, so a leftover file is a coin flip, not a swap),
+force-adds past `.gitignore` before the gate (how the beat-03 swap failed first
+time), refuses to invent the hand edits, and ends on `qa_local` rather than on a
+claim. On "pass" or "stage" the cut goes to **20 footage / 1 slate**.
+
+**BEAT 04 — a card that did not exist.** Two rungs refused the beat from opposite
+sides (rung 1: the gaze moved by swinging his head **64.7 px** against a prompt
+that said it would not; rung 2: head locked to 4.7 px and the eye band went with
+it, 0.356 → 0.126) and the closing note handed the call upward, where it sat
+unasked because nobody had written the options. `/review/ep2-b04-action-0820`:
+three action lines, $0, the coupling law quoted, the failure shown on frames, the
+VO line untouched under all three. **A THE PEEK** turns rung 1's defect into the
+beat and is the only one with a rendered demonstration that the engine will do it;
+**B HAND OVER HIS OWN MOUTH** is offered with its risk named — it asks for the
+exact object beat 09's clip destroyed this morning; **C THE SLOW SINK** is the
+cheapest to score and the least funny, and says so. Nothing is pre-staged, on
+purpose: the pick *is* the spec.
+
+**Board:** 6 open, 86 resolved; every `verdict_hint` now opens with the single
+word that closes it and names where the chain lives. `QA-GATE: PASS routes=81`,
+and the new media was checked present in `_site/` rather than inferred from the
+route count.
+
+**Open at hand-off:** beat 16's large-leaf composite — the third path on
+`/review/ep2-b16-leaf-0820`, still the only open card whose named option has no
+pixels. Its `decisions-pending` entry is written and records why its motion spec
+**cannot** be pre-staged yet: if the still comes back a paste, the next step is a
+strength rung, not a motion rung, and writing the motion spec first would be
+pre-staging the outcome I want. Today's beat-13 result is that exact case caught
+one card over.
