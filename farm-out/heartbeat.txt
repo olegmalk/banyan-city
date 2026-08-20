@@ -3137,3 +3137,5 @@
 11:12:05Z STARTED task=ep2-b09-cropmotion-0820-1787224216 attempt=1 on box-runner
 11:12:05Z FAIL task=ep2-b09-cropmotion-0820-1787224216 rc=1 step=crop
 11:15:05Z box-runner idle ready=0 failed=44
+11:17:07Z STARTED task=ep2-b09-cropmotion-0820-1787224619-againda4f18 attempt=1 on box-runner
+11:23:24Z DONE task=ep2-b09-cropmotion-0820-1787224619-againda4f18 rc=0 artifacts=2
