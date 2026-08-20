@@ -2023,3 +2023,27 @@
     with beat 04 named in the 08-19 to-be-changed list for ep2-goblin-design-adult. Evidence:
     pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml, pipeline/jobs/ep2-b04-headlock-0820.yaml,
     pipeline/work-ladder-0819.md.'
+- what: 'Beat 08 - the guard''s strap: six samples, every steward lever measured shut, and the only
+    one left is your hand. The plate draws the guard''s fist over his harness strap; deleting it and
+    having the strap read as a strap is the whole question. Prompt, mask size, strength, negative,
+    a CPU compositor and finally a ControlNet each moved exactly one thing and each is now closed by
+    measurement, not opinion. What is left is a hand-authored matte over that one region - a spatial
+    artifact somebody draws - and that is yours (R4), not mine.'
+  url: /review/ep2-demo-0820
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  beat: 8
+  verdict_hint: 'draw the matte (or hand me a rough one and I will condition on it) / accept beat 08
+    as it ships and close the question / or say the strap is not worth a hand and I stop looking at it'
+  note_for_lanes: 'NOT BLOCKING THE SHIP. Beat 08 ships as-is on ep2-b08-scale30-0820, nothing is
+    staged and no pick is proposed; the beat is in the cut either way. NO FURTHER RUNG IS LICENSED on
+    this route and none should be filed - the closing finding is a property of the tool, written up in
+    pipeline/b08-arm-route-0819.md Section 28: padding_mask_crop is what makes a 102x118 px region
+    inpaintable at full model resolution, and the same crop rescales the ControlNet hint 3.07x, so the
+    pose net was handed one torso filling the frame instead of the two figures that were authored.
+    There is no value of that flag that satisfies both. Pixels: EVIDENCE-b08-cnetfill-verdict-0820.png
+    (three frames at 4x, plus the hint as authored beside the hint as the net received it). And read
+    the row of numbers on that page before trusting any future metric on this tree: shard, ink, green
+    channel, drift and the band signature filed this morning ALL PASSED the frame that is unusable at
+    a glance.'
