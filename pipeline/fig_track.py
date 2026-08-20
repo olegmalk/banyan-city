@@ -423,9 +423,17 @@ def objectness_full(rgb: np.ndarray, stats: dict, shape) -> np.ndarray:
     return f
 
 
-def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
+def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None):
     """Track the fig across a frame sequence.  Emits one record per frame; a
-    frame the detector cannot stand behind gets `status: dead` and no area."""
+    frame the detector cannot stand behind gets `status: dead` and no area.
+
+    `mask_sink`, if given, is called once per frame as `mask_sink(i, mask, rec)`
+    with the SAME boolean full-frame mask the record's `area_px` was counted
+    from -- and with `mask=None` on any frame the gates killed.  It exists so a
+    downstream consumer (the compositor) uses the detector's own matte instead
+    of re-deriving a second one that could disagree with the score.  It cannot
+    change what is measured: it is called after the record is final, and it is
+    handed a copy."""
     ys, xs = np.nonzero(anchor_mask)
     if ys.size == 0:
         raise SystemExit("!! anchor mask is empty")
@@ -458,6 +466,8 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
             rec["area_px"] = None
             rec["probe"] = st
             recs.append(rec)
+            if mask_sink is not None:
+                mask_sink(i, None, rec)
             continue
 
         # -- template NCC at the found position, and the margin over a rival --
@@ -572,6 +582,8 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False):
             last_live = i
 
         recs.append(rec)
+        if mask_sink is not None:
+            mask_sink(i, None if rec["status"] != "ok" else mask.copy(), rec)
         if verbose:
             print("f%03d %-4s area=%-7s sep(m/l)=%.2f/%.2f ncc=%s %s" % (
                 i, rec["status"], rec["area_px"], st["sep_material"], st["sep_luma"],
@@ -919,6 +931,11 @@ def main() -> int:
     ap.add_argument("--anchor-mask", help="the inpaint/composite mask PNG")
     ap.add_argument("--anchor-cover-crop", default="832x1216->704x1280")
     ap.add_argument("--out", help="write the per-frame JSON here")
+    ap.add_argument("--masks", help="write the detector's own per-frame matte here as "
+                                    "mNNN.png (1-based, 8-bit, 255=fig). DEAD frames "
+                                    "write NO file -- absence is the dead zone, and a "
+                                    "consumer that needs a matte there must say what it "
+                                    "did instead.")
     ap.add_argument("--overlay", help="write a LOOK sheet of the detector's own answer here")
     ap.add_argument("--overlay-frames", default="0,24,48,72,90,96,108,120")
     ap.add_argument("--gates", action="store_true", help="print the declared gates and exit")
@@ -941,7 +958,17 @@ def main() -> int:
 
     names = sorted(n for n in os.listdir(a.frames) if n.lower().endswith(".png"))
     paths = [os.path.join(a.frames, n) for n in names]
-    recs = track(paths, anchor, verbose=a.verbose)
+    sink = None
+    if a.masks:
+        os.makedirs(a.masks, exist_ok=True)
+
+        def sink(i, mask, rec):
+            if mask is None:
+                return
+            Image.fromarray((mask * 255).astype(np.uint8)).save(
+                os.path.join(a.masks, "m%03d.png" % (i + 1)))
+
+    recs = track(paths, anchor, verbose=a.verbose, mask_sink=sink)
 
     live = [r for r in recs if r["status"] == "ok"]
     out = {
