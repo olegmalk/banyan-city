@@ -15,7 +15,7 @@ one pass); macbook4 added 2026-08-19:
 | macbook2 | M1 Pro | `READY` | 137.7 s |
 | macbook3 | M1 Pro | `READY` | 137.3 s |
 | macbook4 | M1 Pro, 32 GB | `READY` (2026-08-19) | 139.6 s |
-| macbook5 | M1 Pro, macOS 26.4 | provisioning 2026-08-20 | see "Onboarding 5 and 6" |
+| macbook5 | M1 Pro, 32 GB, macOS 26.4 | `READY` (2026-08-20) | 147.6 s |
 | macbook6 | M1 Pro, macOS 26.6.1 | provisioning 2026-08-20 | see "Onboarding 5 and 6" |
 | rtx5070  | — | — | 192.168.3.153 times out |
 
@@ -29,6 +29,12 @@ r1 plate already in `farm-out/` — same `png_sha256`
 truthfully, and it is worth asking for on every future onboard: file a beat
 whose plate the repo already owns and compare the sha, rather than eyeballing
 a picture nothing can be diffed against.
+
+**macbook5 passed the same proof on 2026-08-20** — beat 19 r1, seed 20260819,
+`png_sha256` `3cc0b6bc…` again, 147.6 s. So that sha is now reproduced on an M1
+Max and three separate M1 Pros across macOS 26.4 and 26.6, which retires the
+"maybe it is only stable per machine" caveat: a mismatch on a new Mac is a real
+defect, not a machine-class difference, and should be treated as one.
 
 **It was NOT dead, it was asleep on WiFi.** `hostname does not resolve` above
 was measured during one of the association drops STATE.md 2026-08-16 already
@@ -114,6 +120,13 @@ the ceiling is an association choice, not hardware — but re-homing a headless
 Mac's Wi-Fi over its own ssh session risks losing the machine to a room nobody
 is in, so it was not attempted. Serialize instead: `kill -STOP` the second
 rsync while the first machine's toolchain lands, `kill -CONT` it after.
+Serializing paid — with the CLT and wheel downloads out of the way the single
+remaining copy ran at ~2 MB/s, better than double what it managed while racing.
+Two cautions: **`kill -STOP` on the rsync pid you can see does not stop the
+transfer** (that is the parent; its children keep streaming, and macbook6 took
+on 600 MB while "paused" — suspend the process group or just accept it), and
+the whole ~2.5 h is unattended, so chain it on sentinels (`while ps -p <rsync>;
+do sleep; done` into preflight into the render) rather than sitting on it.
 
 **5. `HOSTS` in `mac_enqueue.py` AND `~/.ssh/config`.** The registration step
 is two files, not one: `mac_enqueue` ssh's by the *short* name, so a host that
@@ -148,7 +161,11 @@ is how the first attempt went; the rsync above is the short version.
 
     scp pipeline/mac_preflight.py <host>:/tmp/ && ssh <host> 'python3 /tmp/mac_preflight.py'
 
-Wants `verdict: READY`, `problems: []`, `zero_mib: 0`. macbook1 and macbook3
+Wants `verdict: READY`, `problems: []`, `zero_mib: 0`. **It reports
+`torch: "MISSING: No module named 'torch'"` and `mps: false` on a perfectly
+healthy node** — it runs under CLT `python3` 3.9.6, which is not the render
+venv, by design (it needs no venv, no torch and no network). Those two lines
+are not the verdict; `problems: []` is. Do not "fix" them. macbook1 and macbook3
 once rendered SDXL as pure noise for days on a UNet that was 88% / 93% holes
 while its size, file count and manifest all compared equal. Both hash clean as
 of 2026-08-18. It needs no venv, no torch and no network, so there is no excuse

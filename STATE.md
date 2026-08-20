@@ -9599,3 +9599,40 @@ e8f21b95 is an ancestor of the remote. Pushes failed for a period and recovered.
 Lanes may stop hand-carrying by scp when a normal pull from the branch works —
 verify freshness per use, don't assume either way. The Finished-page staleness
 was two dead hand-run steps (ledger rebuild + thumbs), now wired into qa_local.
+
+## 2026-08-20 — macbook5 is a render node; macbook6 provisioning behind it
+Acting on the founder's "all six Macs are shared, use them fully". Both were
+bare: no Xcode CLT, no `python3` at all.
+
+**macbook5 is live and proven.** CLT 26.6 installed headlessly (no keyboard),
+uv-managed CPython 3.11.16 venv at `~/banyan-farm-macbook5/venv` pinned to
+macbook4's exact 31 packages (torch 2.13.0 / MPS True, diffusers 0.29.2,
+transformers 4.44.2), 6.5 GB HF cache copied over the LAN from this Mac.
+`mac_preflight` → `verdict: READY`, `problems: []`, `zero_mib: 0`, 4/4 blobs
+hash-clean. Beat 19 r1 came back **byte-identical to the plate the repo already
+owns** — `png_sha256 3cc0b6bc…`, 147.6 s. `mac_worker` is running under
+caffeinate and `mac_enqueue.py --status` shows **five ALIVE hosts**.
+
+**macbook6** has CLT and an identical verified venv; its cache copy is the only
+thing outstanding and it is chained to run preflight and the same beat-19 proof
+on its own, unattended. It stays out of the rotation until that sha lands — no
+worker is started, and `mac_enqueue` refuses hosts without a live heartbeat.
+
+**The farm's real ceiling is its Wi-Fi, and it is worth someone's attention.**
+All six Macs are associated to **2.4 GHz 802.11n, channel 6, 20 MHz**, sharing
+one medium. Two parallel 6.5 GB cache copies plus a CLT download measured 887
+and 546 KB/s; serialized, a single copy reached ~2 MB/s. Provisioning two bare
+Macs was a ~2.5 hour physical dependency that no amount of scheduling removes.
+Every machine is a/b/g/n/**ax** capable and 5 GHz APs are visible to them, so
+this is an association/AP-config choice, not hardware — but re-homing a
+headless Mac's Wi-Fi over its own ssh session risks stranding it in an empty
+room, so it was not attempted remotely. **This is an at-keyboard win available
+to anyone who is next to that router**, and it would pay for itself the next
+time a model has to reach four machines.
+
+Traps recorded in `pipeline/mac-farm-runbook-0818.md`: uv's 30 s default HTTP
+timeout fails the transformers wheel on this link and leaves a venv whose
+`bin/python3` exists with no torch in it (gate on an import, never a path);
+`mac_preflight` prints `torch: MISSING` on a healthy node because it runs under
+CLT python by design; and registering a host is two files, `HOSTS` in
+`mac_enqueue.py` *and* an `~/.ssh/config` alias.
