@@ -6018,3 +6018,25 @@ a short skeleton as a small person.
    SILHOUETTE, not a stick figure. IP-Adapter off the tile is the candidate the
    record points at twice now, and it should be authored against the tile's own
    seated frame rather than against a skeleton.
+
+#### AND THE DIAL IS LINEAR, SEED-ROBUST AND POSE-ROBUST — n6/n7/n8 closed
+
+Pixels: `review/ep2-goblin-design-0819/SKELDIAL-0820.png`.
+
+| authored head_frac | asked | **measured** |
+|---|---|---|
+| 0.320 (n5) | 3.12 heads | **3.81** |
+| 0.190 (n1) | 5.26 heads | **5.07** |
+| 0.160 (n6) | 6.25 heads | **5.91** |
+
+**Three authored values, three landings, monotone and close.** n6 answers the
+coin flip I named: the net **lands where it is aimed** rather than saturating
+near the checkpoint's own prior, so the tile's exact value is reachable and not
+merely approachable. n7 (seed 20260824) and n8 (the stride) both hold lean, so
+the dial is **seed-robust and pose-robust for full-span skeletons** — which is
+the same boundary the folded poses drew from the other side.
+
+**The whole batch, one line: `head_frac` is now an authorable parameter of this
+character, with a bracket (0.7–1.3 conditioning), a floor (0.45 fails), a
+demonstrated control (n5), a linearity check (n6), a seed check (n7), a pose
+check (n8) and one hard limit (full-span skeletons only).**
