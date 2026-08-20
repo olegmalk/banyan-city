@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapling — beat 04, THE FOOTNOTE: pick an action</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 38px 0 6px; font-weight: 650; }
+  h3 { font-size: 16px; margin: 24px 0 4px; font-weight: 640; color: var(--accent); }
+  p, ul, ol { max-width: 78ch; }
+  li { margin: 6px 0; }
+  .muted { color: var(--muted); font-size: 14.5px; }
+  .ask { background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
+         padding: 18px 20px; margin: 26px 0; }
+  .ask h2 { margin-top: 0; color: var(--accent); }
+  .opt { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--new);
+         border-radius: 10px; padding: 14px 18px; margin: 16px 0; }
+  .opt h3 { margin-top: 0; color: var(--new); }
+  .opt.mine { border-left-color: var(--pass); }
+  .opt.mine h3 { color: var(--pass); }
+  .line { display: block; margin: 8px 0; padding: 10px 14px; background: #101113;
+          border-radius: 6px; border-left: 2px solid var(--accent);
+          font-size: 15.5px; line-height: 1.5; }
+  blockquote { margin: 0 0 14px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); }
+  figure { margin: 14px 0 6px; } figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; }
+  code { background: #101113; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 7px 14px 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Beat 04, THE FOOTNOTE — the beat needs a different action, and here are three</h1>
+  <p class="sub">The engine has refused this beat from both directions and the wording route is closed.
+  Nothing here is a render — three action lines, written for $0, and one of them is a whole answer.</p>
+</header>
+
+<p class="stamp">PRIVATE REVIEW PAGE · A TASTE CALL (R4) · NOTHING IS BLOCKED WHILE IT WAITS</p>
+
+<div class="ask">
+  <h2>The question</h2>
+  <p><strong>Beat 04 as written cannot be filmed on this engine. Pick the action that replaces it —
+  A, B or C — or write a fourth.</strong></p>
+  <p class="muted">The beat currently asks for <em>"stillness with LIVE EYES … this is the one beat where a
+  near-motionless body is correct and <strong>only the eyes carry it</strong>."</em> That is the one thing
+  this engine will not do, and it has now been measured refusing it twice, from opposite sides. Your VO line
+  does not change under any of the three; this is a stage direction, not a rewrite.</p>
+</div>
+
+<h2>1. Why it cannot be filmed as written — two rungs, opposite directions, same wall</h2>
+<figure>
+  <img src="/review/ep2-b04-action-0820/B04-two-rungs-0820.png"
+       alt="Two rows of three frames: rung 1 shows the head rotating across the clip, rung 2 shows it locked and motionless">
+  <figcaption>Top row, rung 1: the gaze does move — and it moves by swinging his whole head. Bottom row,
+  rung 2: the head is held still and the face is the same picture in all three frames.</figcaption>
+</figure>
+<table>
+  <tr><th>rung</th><th>what was asked</th><th>head travel</th><th>eye motion</th><th>result</th></tr>
+  <tr><td>1 · <code>ep2-b04-eyes-crf10-0819</code></td>
+      <td>darting eyes, and in as many words <em>"his head and shoulders stay STILL"</em></td>
+      <td><strong>64.7 px</strong></td><td>0.356</td>
+      <td>FAIL — the gaze was redirected by a head rotation, not by the eyes</td></tr>
+  <tr><td>2 · <code>ep2-b04-headlock-0820</code></td>
+      <td>the head genuinely locked</td>
+      <td>4.7 px</td><td><strong>0.126</strong></td>
+      <td>FAIL — the head stopped and the eyes stopped with it</td></tr>
+</table>
+<p><strong>The finding, in the lane's own words:</strong></p>
+<blockquote>ON THIS ENGINE, HOLDING THE HEAD HOLDS THE EYES. Head stillness and eye motion are not
+independently controllable by wording here, and the two rungs prove it from opposite sides. That is a
+coupling, not a pair of unlucky draws.</blockquote>
+<p class="muted">The take currently in the cut is older and worse than either: <code>b04-refire-0814</code>,
+carried as best-available with its fault named — <em>"the same iris position in the same sockets from f005
+to f096, no saccade, no dart, no blink."</em> A tighter crop was also measured as a lever and came back
+almost absent. Everything cheap has been spent.</p>
+
+<h2>2. What any replacement has to keep</h2>
+<ul>
+  <li><strong>The VO line, unchanged and unre-recorded</strong> — <em>"Worst stealth plan I have ever seen —
+  and I once watched an architect hide an outage in a footnote."</em> All three options below are written to
+  make that line land harder, not to accommodate it.</li>
+  <li><strong>The beat's job</strong> — he is hiding badly, in the six seconds before the guards arrive. Beat
+  03 put him behind a trunk that hides roughly one-sixth of him; beat 05 brings two patrol guards in at a jog.</li>
+  <li><strong>What the engine is good at</strong> — gross body motion. It draws stand-ups, ducks, leans and
+  tilts readily; it has now twice refused to move one small feature while the rest holds. Every option below
+  moves something big.</li>
+  <li><strong>An ONGOING action rather than a static attitude</strong> — one measured finding says a terminal
+  clause naming an ongoing action holds position without costing the performance, where a static attitude
+  makes every frame the last frame. All three are phrased as ongoing.</li>
+</ul>
+
+<h2>3. The three</h2>
+
+<div class="opt mine">
+  <h3>A — THE PEEK <span class="muted" style="font-weight:400">· the one I would pick, and the pick is yours</span></h3>
+  <span class="line">The scavenger leans out from behind the trunk to look, and pulls straight back the
+  moment he has looked — the whole head and shoulder make the trip, twice, and he is still doing it when
+  the shot ends.</span>
+  <p><strong>Why this one.</strong> It turns the exact defect into the beat. Rung 1's failure was that the
+  engine swung his head 64.7 px when it had been told not to; here that swing <em>is</em> the action, so the
+  one thing the engine has already proved it will do unbidden becomes the thing being asked for. It is the
+  only option on this page with a rendered demonstration that it works — the top row of the picture above
+  is, accidentally, a rehearsal of it.</p>
+  <p><strong>The joke gets better.</strong> Leaning out from cover to check whether anyone can see you is
+  the worst possible stealth, and the line calls it that over a picture of it. R3 wants the comedy to be
+  the mechanism; here it is.</p>
+  <p class="muted">Scorable as: his head crosses the trunk's edge and returns, at least twice, with motion
+  in the last twenty frames.</p>
+</div>
+
+<div class="opt">
+  <h3>B — HIS OWN HAND OVER HIS OWN MOUTH</h3>
+  <span class="line">The scavenger claps a hand over his own mouth to keep the held breath in, holds it
+  there, and is losing the fight with it as the shot ends.</span>
+  <p><strong>What it buys.</strong> An arm entering frame is large, unambiguous motion, and "held breath" is
+  stated by the picture rather than inferred from a still face. Silencing yourself when nobody has spoken is
+  its own joke.</p>
+  <p><strong>The risk, named rather than buried: this asks for the object this engine most recently
+  destroyed.</strong> Beat 09's clip, rendered today, has a hand resting at a cheek — full hand at frame 1,
+  two fingers by frame 6, <em>gone by frame 8</em>. A hand at a face is exactly the shot that dissolved. It
+  may well work here and it is a real option, but it is the only one of the three carrying a fresh
+  same-week failure of its central object.</p>
+</div>
+
+<div class="opt">
+  <h3>C — THE SLOW SINK</h3>
+  <span class="line">The scavenger holds his breath and sinks slowly lower behind the trunk as it runs out,
+  a little smaller every second, and is still sinking when the shot ends.</span>
+  <p><strong>What it buys.</strong> The grossest motion available and by far the cheapest to score — one
+  scalar, the top of his head, over 121 frames, monotonic or not. No isolated feature, no hand, no head/eye
+  coupling to fight. Of the three this is the one most likely to simply come back working.</p>
+  <p><strong>What it costs.</strong> It is the least funny of the three and the furthest from what you
+  originally wrote — "eyes darting" is alert and this is deflating. Hiding by becoming shorter, far too
+  late, is a joke, but a quieter one than A's.</p>
+</div>
+
+<h2>4. What happens after you answer</h2>
+<p>Nothing here is pre-staged, deliberately: the pick <em>is</em> the spec. Whichever line you choose gets
+written into <code>node.md</code> and <code>done-definitions.yaml</code> as the beat's new action and
+<code>done_when</code>, and a rung is filed off it the same day. One word — <strong>A</strong>,
+<strong>B</strong> or <strong>C</strong> — is a complete answer.</p>
+<p class="muted"><strong>One repair is owed no matter what you pick, and it is not a taste call.</strong>
+Beat 04's shot prompt still says <code>a small round goblin</code> — the killed child design. Your 08-19
+ruling made <code>lean wiry adult goblin man</code> canon and named beat 04 in the list to be re-rendered
+to it. That gets fixed in the same edit; it needs nothing from you.</p>
+
+<footer>
+  Script: <code>genomes/sapling/nodes/002b-first-citizen/node.md</code> beat 04 (0:16–0:22).
+  Definition: <code>review/ep2-picks/done-definitions.yaml</code>. The two rungs and their measurements:
+  <code>pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml</code> and
+  <code>pipeline/jobs/ep2-b04-headlock-0820.yaml</code>. The beat currently ships in the demo cut as
+  best-available with its fault named — <a href="/review/ep2-demo-0820/">/review/ep2-demo-0820</a>.
+  $0: no render was made for this page.
+</footer>
+
+</div>
+</body>
+</html>
