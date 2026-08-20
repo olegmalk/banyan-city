@@ -159,7 +159,44 @@ def figure(head_frac, pose="stand", cx_frac=0.5,
         for n in ("neck", "Rsho", "Lsho"):
             kp[n] = (kp[n][0] + dx, kp[n][1] + dy)
 
-    if pose == "kneel":
+    if pose == "seatspan":
+        # ==================================================================
+        # THE TILE'S ACTUAL STANCE, AND IT IS A SPAN FIX, NOT A POSE TWEAK.
+        #
+        # `sit` folded the knees up to the chest -- GROUND-sitting -- and the
+        # skeleton spanned about 0.40 of stature. The net read that short span
+        # as a SMALL PERSON and re-inflated the head: 3.06 heads drawn against
+        # 5.26 authored, with the head keypoints byte-identical to `stand`'s.
+        # kneel and crouch failed the same way.
+        #
+        # But the tile is not ground-sitting. HE IS SITTING ON SOMETHING WITH
+        # HIS FEET FLAT ON THE GROUND -- measured off adult-b19-0819.jpg, his
+        # soles are at y=915 and his crown at y=292, which is 0.77 of his
+        # standing height, not half of it. Authoring the stance he is ACTUALLY
+        # in keeps the ankles on the same foot line every other rung uses and
+        # holds the span at ~0.74, and that is the cheap test of the mechanism:
+        # if span is what the net reads, giving it the span should give back
+        # the proportion, with the fold coming from the wording.
+        # ==================================================================
+        hip_y = ground_y - TPL["kne"] * k * stature      # hips at knee height
+        d = (TPL["hip"] * k * stature) - (ground_y - hip_y)
+        drop_head(d)
+        drop_upper(d)
+        kp["Rhip"] = (cx - th * 0.60, hip_y)
+        kp["Lhip"] = (cx + th * 0.60, hip_y)
+        # Knees forward and level with the hips; ankles ON the authored foot
+        # line, which is the invariant this whole lane has held since n1.
+        kp["Rkne"] = (cx - th * 0.85, hip_y + 0.010 * stature)
+        kp["Lkne"] = (cx + th * 0.85, hip_y + 0.010 * stature)
+        kp["Rank"] = (cx - th * 0.70, ground_y - TPL["ank"] * stature)
+        kp["Lank"] = (cx + th * 0.70, ground_y - TPL["ank"] * stature)
+        # canon: "hands clasped between the knees, head sunk into the collar".
+        kp["Relb"] = (cx - th * 1.05, kp["Rsho"][1] + 0.105 * stature)
+        kp["Lelb"] = (cx + th * 1.05, kp["Lsho"][1] + 0.105 * stature)
+        kp["Rwri"] = (cx - th * 0.18, hip_y - 0.010 * stature)
+        kp["Lwri"] = (cx + th * 0.18, hip_y - 0.010 * stature)
+        drop_head(0.20 * head_h)
+    elif pose == "kneel":
         # Both knees down, torso upright. The KNEE takes the ground line and
         # the ankles fold back behind it.
         d = (TPL["kne"] * k) * stature
@@ -286,6 +323,19 @@ HINTS = [
     ("jerry-skel-h19point-0820.png", TILE_HEAD_FRAC, "point", "pose set"),
     ("jerry-skel-h19hunch-0820.png", TILE_HEAD_FRAC, "hunch",
      "canon's 'hunched inward, head sunk into the collar'."),
+    # ---- THE SPAN FIX. `sit`/`kneel`/`crouch` all came back as SMALL FIGURES
+    # ---- because the net reads a short skeleton as a small person. These two
+    # ---- author the tile's ACTUAL stance -- seated with the feet on the same
+    # ---- foot line every other rung uses -- which holds the span at 0.69 of
+    # ---- stature instead of 0.49, and one of them shrinks the authored head
+    # ---- by the same factor in case the net normalises head size to span.
+    ("jerry-skel-h19seat-0820.png", TILE_HEAD_FRAC, "seatspan",
+     "THE TILE'S STANCE AT FULL SPAN, head_frac unchanged at 0.190."),
+    ("jerry-skel-h145seat-0820.png", 0.145, "seatspan",
+     "THE SAME STANCE WITH THE HEAD PRE-SHRUNK to 0.145, which puts the "
+     "authored heads-over-span at 4.72 instead of 3.63. If the net normalises "
+     "head size to the skeleton's span rather than reading the head keypoints, "
+     "this is the rung that lands and the plain one does not."),
 ]
 
 
