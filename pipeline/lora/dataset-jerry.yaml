@@ -1,0 +1,226 @@
+# DATASET — the adult goblin (THE SCAVENGER / Jerry), SDXL character LoRA
+#
+# 2026-08-20. $0. This file is the CURATION, made by opening the pixels: a
+# 51-frame contact sheet plus a 26-frame face-crop sheet of the beat-20 seeds.
+# Every include and every reject below has a reason a later lane can check.
+#
+# WHY THIS CHARACTER. Founder ruling 2026-08-20: one-episode characters get no
+# consistency infrastructure. Jerry is on screen in 8 nodes across ep2-ep7; the
+# sapling is in 16/16. Those two are the recurring cast that earns a LoRA, and
+# ep3 (`003b-one-leaf-for-yes`) has exactly those two on screen and nobody else.
+# The guards are ep2-only and are explicitly out of scope. See
+# `pipeline/research/character-lora-sdxl-0820.md` §0.
+#
+# THE POOL. 51 frames in farm-out/ carry the RATIFIED adult wording
+# (`lean wiry adult goblin man, green skin, bald head, patchwork cloak`) in
+# their own sidecar `prompt:`. That string is the 2026-08-19 B-group wording the
+# founder chose; frames drawn from the older child/bald-gremlin wordings are not
+# in the pool at all, which is why the pool is 51 and not several hundred.
+#
+# ── THE FINDING THAT CHANGED THE CURATION, and it is not a small one.
+# NINE OF THE TWENTY-SIX beat-20 seeds draw the goblin in WIRE-RIM GLASSES.
+# Glasses are not in his prompt, are not in his canon, and ARE the canon of
+# guard A, who is rendered from the same harness on adjacent beats. 35% of the
+# highest-volume dir in the pool carries another character's signature feature.
+# Trained unfiltered, the LoRA would have learned glasses as part of Jerry --
+# and it would have learned it from the one dir big enough to dominate the set.
+# Every one is rejected below by name. This is exactly the defect a dataset
+# manifest exists to catch, and it is invisible in a filename.
+#
+# ── THE SECOND FINDING, recorded but NOT acted on, because it is R4.
+# Ear shape is not stable across the pool: some frames give long pointed elf
+# ears, some small rounded near-human ears. The ratified wording says nothing
+# about ears, so nothing is wrong with any of these frames -- but a LoRA will
+# average whatever we feed it. `genomes/sapling/nodes/002b-first-citizen/node.md`
+# also describes "one broken tusk", and NO frame in the pool has a tusk at all.
+# Both are taste calls (R4) and both are put to the founder with pixels rather
+# than settled here. Until he rules, the set is deliberately mixed on ears, so
+# the LoRA averages rather than commits to a reading he did not make.
+#
+# ── FRAMING MONOCULTURE, stated because it caps what this LoRA can be.
+# Almost every frame is a crouched or seated figure in grass at eye level or
+# above. There is one true close-up (beat 04) and no standing figure, no walking
+# figure, no back view, no night. 25 of the 51 are one prompt at 25 seeds. The
+# variety axis is thin and no amount of curation thickens it; the honest fix is
+# a purpose-rendered variety batch, named in `pipeline/lora/README.md` as the
+# next rung and NOT fired here.
+
+subject: jerry
+character: THE SCAVENGER (Jerry) -- the adult goblin
+trigger: bnyjerry
+canon_wording: lean wiry adult goblin man, green skin, bald head, patchwork cloak
+base_model: cagliostrolab/animagine-xl-3.1
+native_size: 832x1216
+
+# ── CAPTIONING RULE (research doc §4). Tags naming a PERMANENT attribute are
+# deleted so they get absorbed into the trigger; tags naming a VARIABLE stay, so
+# they stay promptable. `prune` is applied to the sidecar's own prompt text --
+# these frames were rendered from prompts already written in our booru dialect,
+# so the prompt is a better caption source than a tagger would be, and it is
+# ground truth about what was asked rather than a guess about what was drawn.
+prune:
+  # The identity run itself. Order matters: longest first.
+  - 'a lean wiry adult goblin man, green skin, bald head, dusty patchwork cloak'
+  - 'a lean wiry adult goblin man, green skin, bald head, patchwork cloak'
+  - 'lean wiry adult goblin man, green skin, bald head, dusty patchwork cloak'
+  - 'lean wiry adult goblin man, green skin, bald head, patchwork cloak'
+# Identity ADJECTIVES on an otherwise-variable phrase. The pose survives, the
+# permanent attribute does not: "both green clawed hands resting flat" is a
+# pose we want to keep steering, "green" and "clawed" are Jerry.
+rewrite:
+  'both green clawed hands': 'both hands'
+  'both clawed hands': 'both hands'
+  'green clawed hand and forearm': 'one hand and forearm'
+
+# ── THE SET. tier A = an identity verdict was recorded for this exact frame.
+# tier B = ratified wording, on-model by eye on the contact sheet, no per-frame
+# verdict exists. Nothing here is tier A on ears or tusk; see above.
+include:
+  # -- distinct beats: the variety half of the set, 21 frames --
+  - path: farm-out/ep2-b03-mac-plate-0819/03-bad-cover-mac-plate-r1s1.png
+    tier: A
+    note: crouched beside the sapling, three-quarter, hazy daylight. C-group cast PASS.
+  - path: farm-out/ep2-b04-mac-plate-0819/04-the-footnote-mac-plate-r1s1.png
+    tier: A
+    note: THE ONLY TRUE CLOSE-UP IN THE POOL -- face and shoulders. Highest-value single frame.
+  - path: farm-out/ep2-b13-mac-plate-0819/13-the-shade-mac-plate-r1s1.png
+    tier: A
+    note: folded small, knees to chest, close. C-group cast PASS.
+  - path: farm-out/ep2-b14-mac-plate-0816/14-the-defense-mac-plate-r2s1.png
+    tier: B
+    note: crouched at bare earth, high angle, dark cloak. Hands large in frame.
+  - path: farm-out/ep2-b14-mac-plate-0816/14-the-defense-mac-plate-s1.png
+    tier: B
+    note: same beat, red-and-black scarf variant.
+  - path: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-r1s1.png
+    tier: B
+    note: founder-ratified B-group beat. Face turned away -- teaches the profile.
+  - path: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-r1s2.png
+    tier: B
+    note: same, second seed.
+  - path: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-r1s3.png
+    tier: B
+    note: same, third seed, crouched on rock.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r1.png
+    tier: B
+    note: seated in grass, head tipped back, looking up. Rare upward gaze.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r3.png
+    tier: B
+    note: seated cross-legged, blue sky, full body.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r4.png
+    tier: B
+    note: seated on a grass mound, plaid drape. Costume variance kept on purpose.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r5.png
+    tier: B
+    note: leaning back, head far back. Rare pose.
+  - path: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png
+    tier: B
+    note: crouched in yellow-green grass, hands on knees, face visible.
+  - path: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r2s1.png
+    tier: B
+    note: same, second seed.
+  - path: farm-out/ep2-b16-mac-plate-0820/16-why-mac-plate-r1s1.png
+    tier: B
+    note: closer read on the face. Shallow depth of field.
+  - path: farm-out/ep2-b16-mac-plate-0820/16-why-mac-plate-r2s1.png
+    tier: B
+    note: same, second seed.
+  - path: farm-out/ep2-b17-bigbody-plate-0816/17-goodbye-bigbody-mac-plate-r2s1.png
+    tier: B
+    note: figure fills frame, low angle, hands near camera. THE ONLY LOW ANGLE IN THE SET.
+  - path: farm-out/ep2-b17-bigbody-plate-0816/17-goodbye-bigbody-mac-plate-r3s1.png
+    tier: B
+    note: same, tall-grass background.
+  - path: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r1s1.png
+    tier: B
+    note: kneeling. Deeper maroon/violet drape -- costume variance kept on purpose.
+  - path: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png
+    tier: B
+    note: kneeling, hands on knees, seated wide.
+  - path: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png
+    tier: B
+    note: same, third seed.
+
+  # -- beat 20: 10 of the 17 glasses-free seeds. Capped at 10 deliberately: all
+  # 26 share ONE prompt, so past ten they add seed noise on a single pose and
+  # start out-weighting the 21 frames that carry the variety. --
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s1.png
+    tier: A
+    note: beat-20 colour probe, cold-read PASS lineage. Glasses-free.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s3.png
+    tier: B
+    note: bared-teeth grimace, long pointed ears. Expression variety.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s5.png
+    tier: B
+    note: near-frontal, neutral. Small rounded ears -- the other ear reading.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s9.png
+    tier: B
+    note: scowl, three-quarter.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s10.png
+    tier: B
+    note: red-eyed scowl, frontal, tight.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s16.png
+    tier: B
+    note: grin, three-quarter. Expression variety.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s19.png
+    tier: B
+    note: heavy brow, frontal.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s22.png
+    tier: B
+    note: dappled tree shade -- the only broken lighting in the set.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s24.png
+    tier: B
+    note: sly half-smile, long ears.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r4s1.png
+    tier: A
+    note: the r4 wording round. Looking down and away -- rare downward gaze.
+
+# ── REJECTED, by name and reason. A later lane that wants to widen the set
+# should read this first rather than re-deriving it from the contact sheet.
+reject:
+  - path: farm-out/ep2-b08-mac-plate-0819/08-inside-him-mac-plate-r1s1.png
+    reason: TWO FIGURES -- guard A is in frame and is the larger subject. A character
+      LoRA trained with a second person in shot learns the second person too.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r2.png
+    reason: near-silhouette in deep shade; face and costume unreadable. Teaches nothing
+      about identity and teaches the model that Jerry is a dark shape.
+  - path: farm-out/ep2-b15-mac-plate-0815/15-good-listener-mac-body-r6.png
+    reason: THE SUBJECT IS A GIANT CONIFER. The goblin is a speck at its base. Drawn
+      from a Jerry prompt, contains no usable Jerry.
+  - path: farm-out/ep2-b17-mac-plate-0815/17-goodbye-mac-seated-r1.png
+    reason: figure is roughly 5% of frame under a vast sky. At 1024 bucket the face is
+      a few pixels.
+  # -- the glasses nine --
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s2.png
+    reason: WIRE-RIM GLASSES (guard-A feature, not in Jerry's prompt or canon).
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s4.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s7.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s8.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s12.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s13.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s14.png
+    reason: WIRE-RIM GLASSES.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s17.png
+    reason: WIRE-RIM GLASSES, and the figure is distant and small.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s20.png
+    reason: WIRE-RIM GLASSES.
+  # -- held in reserve: clean, but redundant on beat 20's single prompt --
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s6.png
+    reason: RESERVE -- glasses-free and on-model, held back only to cap beat 20 at ten.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s11.png
+    reason: RESERVE -- as above.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s15.png
+    reason: RESERVE -- as above.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s18.png
+    reason: RESERVE -- as above.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s21.png
+    reason: RESERVE -- as above.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s23.png
+    reason: RESERVE -- as above.
+  - path: farm-out/ep2-b20-mac-plate-0819/20-evidence-mac-plate-r1s25.png
+    reason: RESERVE -- as above.
