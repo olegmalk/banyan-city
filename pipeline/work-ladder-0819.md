@@ -5488,3 +5488,48 @@ is worse than none because it looks like it works on the beat it was trained on.
 **`train-jerry-0820` stays held**, and the gate is now a number instead of a
 hope: file when a tile-passing recipe has produced pose breadth. w4/w5/w6 are
 that, running now.
+
+### The recipe gives the face and cannot give the body — and the bar was blind to it
+
+**Twelve poses off the ratified recipe. Twelve out of twelve hold the face.
+Twelve out of twelve are bobbleheads.** Head about a **third** of standing
+height where the B tile is a **fifth to a sixth**; limbs stubby; p07 is a chibi
+holding an apple. Pixels: `review/ep2-goblin-design-0819/PROPORTION-0820.png`.
+
+**Why nothing caught it until a body was in frame.** The wedge was fought at a
+close-up *on purpose*, because that is where the man-read lived — and a close-up
+has no body in it. **Every one of the tile bar's seven clauses is above the
+neck.** A bar inherits the blind spot of the failure that motivated it.
+`T8 HEAD-TO-BODY` is now in the bar and in `canon.yaml`, and the twelve-pose set
+is scored retrospectively: **all twelve FAIL it**.
+
+**Three one-variable fixes, all three failed:**
+
+| rung | change | result |
+|---|---|---|
+| q1 | negative gains `super deformed` (the real Danbooru tag for this defect) | **FAIL** — unchanged. Nothing in the positive asks for a mascot, so the negative has nothing to cancel |
+| q2 | `long legs, narrow waist` | **FAIL** — longer legs on the same bobblehead |
+| q3 | `1other` → `1boy` | **FAIL** — identical |
+
+> **q3 is the one I bet on, in writing, before it ran.** Its spec says I expected
+> restoring the 2.1M-post human-male anatomy prior to bring adult proportion back
+> and to cost me the *"AXIS A is a dead lever"* conclusion published four commits
+> earlier. It did not. **That conclusion survives its own hardest test, which is
+> the only reason it is now worth anything.**
+
+**So the wording route is finished for the BODY exactly as it succeeded for the
+FACE**, and that was pre-registered before the three ran. **The named next
+instrument is a REFERENCE ROUTE** — IP-Adapter or ControlNet conditioned on
+`adult-b19-0819.jpg` itself, supplying proportion as *geometry* instead of asking
+for it as a word. `controlnet_plate.py` already carries the `--ip-ref` flags and
+the box has the IPA weights staged, so it is a spec and not a build. **It is
+deliberately not filed at 3am** — it should be authored awake.
+
+**Until it exists: use the recipe for CLOSE-UPS AND FACES; do not trust it for a
+full body.**
+
+**`train-jerry-0820` stays HELD, and the arithmetic is now honest:** 7 usable
+frames (the old manifest's tile-faithful keeps, four poses) and **ZERO** of the
+twelve new ones — not because they are bad pictures but because a character LoRA
+learns proportion, and twelve bobbleheads against seven correct frames would make
+the mascot the majority read of the trigger token.
