@@ -3134,3 +3134,5 @@
 10:44:01Z box-runner idle ready=0 failed=43
 10:54:12Z box-runner idle ready=0 failed=43
 11:04:22Z box-runner idle ready=0 failed=43
+11:12:05Z STARTED task=ep2-b09-cropmotion-0820-1787224216 attempt=1 on box-runner
+11:12:05Z FAIL task=ep2-b09-cropmotion-0820-1787224216 rc=1 step=crop
