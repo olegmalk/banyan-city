@@ -1,0 +1,40 @@
+#### job ep2-b13-tallcomp-0820-1787228625 attempt 1 start 2026-08-20T12:23:50Z
+
+==== step fetch START 2026-08-20T12:23:50Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13tallcomp-0820\\fetch_init.py"]
+fetched 13-the-shade-tallcomp-0820.png 1117352 bytes sha bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f OK
+fetched 13-the-shade-tallcomp-mask-0820.png 3834 bytes sha b1a0fb39d3bd64c2f52ecfc2f8da050e5d2eb9ca560c7541663413c1ff5b51de OK
+==== step fetch END rc=0 2026-08-20T12:23:55Z ====
+
+==== step dry START 2026-08-20T12:23:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13tallcomp-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b13tallcomp-0820\\13-the-shade-tallcomp-0820.png", "--init-sha256", "bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f", "--mask-png", "C:\\banyan-farm\\b13tallcomp-0820\\13-the-shade-tallcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b13tallcomp-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b13tallcomp-0820\\negative.txt", "--out", "C:\\banyan-farm\\b13tallcomp-0820\\b13-tallcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THIS MASK IS TWICE THE PARENT'S: 80592 px, 7.97 percent of the frame, against the sapcomp parent's 41497 px and 4.10 percent -- because the plant is 921 px tall here instead of 485. Like the parent's it is the DRAWN PLANT'S FOOTPRINT ALONE dilated, and the composite is purely additive: there was no wrong plant near him to erase. WHAT TO CHECK ON THE DRY PNG: that the white region is a tall narrow column up the left of the frame and that it does NOT touch his FACE (box x 250..570 y 60..500), his hands or his folded arms. The compositor measured 37224 drawn px above y=640 -- the guard the founder-option deliberately lifted -- and ZERO of them inside his face box, with C2 face-box maxdiff 0 armed and passing. If the dry mask reaches his face, the composite is wrong and this job stops here at $0.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f
+mask png corners=- bbox=[24, 187, 255, 1174]  0.2776 x 0.8117 of 832x1216
+WROTE C:\banyan-farm\b13tallcomp-0820\b13-tallcomp-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-20T12:23:55Z ====
+
+==== step s20260820 START 2026-08-20T12:23:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13tallcomp-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b13tallcomp-0820\\13-the-shade-tallcomp-0820.png", "--init-sha256", "bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f", "--mask-png", "C:\\banyan-farm\\b13tallcomp-0820\\13-the-shade-tallcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b13tallcomp-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b13tallcomp-0820\\negative.txt", "--out", "C:\\banyan-farm\\b13tallcomp-0820\\b13-tallcomp-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ONE SAMPLE, ONE SEED, ONE VARIABLE. Every sampler number is the sapcomp parent's, unchanged: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, seed 20260820, animagine-xl-3.1 base weights in the SDXL inpaint pipeline, and the prompt and negative byte-for-byte (the negative is 72 of 77 CLIP tokens; a single added word silently drops the tail). THE ONE VARIABLE IS THE INIT: the taller-than-canon composite replaces the canon-height one. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, which is the setting that converted the parent's flat vector plant into the frame's own line quality. WHETHER IT DOES THE SAME OVER TWICE THE AREA, AGAINST SKY AND BACKGROUND FOLIAGE RATHER THAN GRASS, IS THE WHOLE QUESTION AND IT IS NOT ASSUMED. This is card evidence for /review/ep2-b13-shade-0820. It is not a cut init, it is not a pick, and passing a bar is not a licence to enter a cut."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:07,  1.21s/it]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:01,  2.30it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  2.56it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:05<00:01,  1.18s/it]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.19it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 9s
+WROTE C:\banyan-farm\b13tallcomp-0820\b13-tallcomp-s20260820.png
+WROTE C:\banyan-farm\b13tallcomp-0820\b13-tallcomp-s20260820-mask.png
+WROTE C:\banyan-farm\b13tallcomp-0820\b13-tallcomp-s20260820.png.meta.yaml
+rc=0 render_s=4.9
+==== step s20260820 END rc=0 2026-08-20T12:24:16Z ====
+
+==== step publish START 2026-08-20T12:24:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b13tallcomp-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-tallcomp-0820\"\nNAMES = [\n    \"b13-tallcomp-s20260820.png\",\n    \"b13-tallcomp-s20260820-mask.png\",\n    \"b13-tallcomp-s20260820.png.meta.yaml\",\n    \"13-the-shade-tallcomp-0820.png\",\n    \"13-the-shade-tallcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-tallcomp-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b13-tallcomp-0820
+==== step publish END rc=0 2026-08-20T12:24:16Z ====
+#### job ep2-b13-tallcomp-0820-1787228625 finished rc=0 2026-08-20T12:24:16Z
