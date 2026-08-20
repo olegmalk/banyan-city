@@ -1955,10 +1955,12 @@
   since: '2026-08-20'
   kind: decision
   episode: 2
-  verdict_hint: restage the beat (say what the shot should be instead - e.g. both leaves,
-    the whole plant as subject, him behind it, which satisfies canon and drops the clause
-    the sampler has refused three times) / licence THIS ONE SHOT to feature the leaf shape
-    (written into canon AS an exception so it cannot drift) / name a third staging
+  verdict_hint: 'ONE WORD; both chains are pre-written in pipeline/decisions-pending/ep2-b16-leaf-0820/.
+    "restage" (say what the shot should be instead - e.g. both leaves, the whole plant as subject, him
+    behind it, which satisfies canon and drops the clause the sampler has refused three times; nothing
+    is filed from here because the new staging is yours to write) / "licence" THIS ONE SHOT to feature
+    the leaf shape (written into canon AS an exception so it cannot drift) / name a third staging.
+    READ SECTION 6 FIRST - the third path now has pixels and they bear on the choice.'
   note_for_lanes: 'NOT BLOCKING. Beat 16 ships in review/ep2-demo-0820 as a slate and nothing
     waits on this. THE THIRD PATH IS NAMED AND DELIBERATELY NOT FIRED: a steward composite
     that draws a large leaf in front, over most of the frame, one sample first. It is costed
@@ -1968,7 +1970,22 @@
     canon currently forbids, and spending it before his word would be answering a ruling with
     a render. Wording is closed (three rungs, incl. the permutation negative); the done_when
     is a RELATION, the shape beat 03 established cannot be bought with words. Frames: farm-out/ep2-b16-mac-plate-0820/,
-    review/ep2-demo-0816/sources/16-why-b16-anim-0814.mp4. Write-up: pipeline/work-ladder-0819.md.'
+    review/ep2-demo-0816/sources/16-why-b16-anim-0814.mp4. Write-up: pipeline/work-ladder-0819.md.
+    UPDATED 2026-08-20 - THE THIRD PATH IS NO LONGER COSTED, IT IS MEASURED, AND IT FAILS. The large-leaf
+    composite was built and sampled once ($0, is_show_content false, card evidence only). FAIL-PASTE: at
+    1:1 the drawing and the render are the same picture, and the detail inside the leaf went DOWN
+    (highpass 10.45 -> 9.41) where a working pass holds magnitude and relocates it into edges. The
+    sampler is exonerated by measurement rather than argument - it moved 6.65 mean levels against the
+    working beat-13 parent''s 6.23, over a mask eight times the area (33.86% of frame), so it engaged and
+    changed nothing structural. SECOND BEAT TODAY where engagement failed to predict success. Two things
+    no bar asked for: the leaf reads as a MATURE tropical leaf (banana/rubber plant) rather than a
+    seedling''s - ordinary in outline, which is what the ruling governs, but its size and pinnate
+    venation say grown plant; and he is not "blurred behind" as the brief asks, he is OCCLUDED, face
+    entirely gone, only scalp and ears - so "the leaf is the subject and he is depth" is half delivered.
+    WHAT IT MEANS FOR THE ANSWER: granting the licence would licence a shot this house cannot currently
+    build. Not a reason to refuse it - if the macro is what beat 16 should be it is worth solving, and
+    the next step would be a STRENGTH rung, not a fourth wording - but he should know it before granting,
+    and it makes "restage" a stronger option than it was this morning.'
 - what: 'BEAT 04, THE FOOTNOTE - PICK AN ACTION. The beat as written cannot be filmed on this
     engine, and it has now been measured refusing it TWICE FROM OPPOSITE SIDES. Its done_when
     asks for "stillness with LIVE EYES ... this is the one beat where a near-motionless body is
