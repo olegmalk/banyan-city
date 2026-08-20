@@ -3421,3 +3421,5 @@
 23:12:08Z STARTED task=ep2-ipa-facewt-fetch-0821-1787267520 attempt=1 on box-runner
 23:15:09Z DONE task=ep2-ipa-facewt-fetch-0821-1787267520 rc=0 artifacts=0
 23:16:13Z box-runner idle ready=0 failed=62
+23:19:48Z STARTED task=ep2-jerry-face-k6a-0821-1787267982 attempt=1 on box-runner
+23:20:18Z DONE task=ep2-jerry-face-k6a-0821-1787267982 rc=0 artifacts=1
