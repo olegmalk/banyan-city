@@ -80,7 +80,8 @@ PARENT_ID_TOKEN = "ep2-b04-tileread-v6-0820"
 SEED = 20260820
 
 HEAD = subprocess.run(["git", "-C", REPO, "rev-parse", "HEAD"],
-                      capture_output=True, text=True).stdout.strip()
+                      capture_output=True, text=True,
+                      encoding="utf-8").stdout.strip()
 
 QUALITY = "masterpiece, best quality, very aesthetic"
 V6_IDENTITY = ("1other, solo, colored skin, green skin, bald, patchwork cloak, "

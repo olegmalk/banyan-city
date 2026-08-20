@@ -141,7 +141,8 @@ PARENT_ID_TOKEN = "ep2-b02-adultplate-s20260820-0820"
 SEED = 20260820
 
 HEAD = subprocess.run(["git", "-C", REPO, "rev-parse", "HEAD"],
-                      capture_output=True, text=True).stdout.strip()
+                      capture_output=True, text=True,
+                      encoding="utf-8").stdout.strip()
 
 # ---------------------------------------------------------------- the wedge --
 QUALITY = "masterpiece, best quality, very aesthetic"

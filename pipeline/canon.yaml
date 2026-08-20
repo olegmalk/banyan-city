@@ -702,6 +702,58 @@ subjects:
     standing height, lean limbs. The bar was built at a close-up because that
     is where the man-read lived, and every clause in it was above the neck.
     Pixels: review/ep2-goblin-design-0819/PROPORTION-0820.png.
+    >>> THE PARAGRAPH ABOVE IS DISCHARGED THE SAME NIGHT. THE REFERENCE ROUTE
+    >>> EXISTS, THE INSTRUMENT IS THE POSE NET, AND THE STANDARD IS NOW
+    >>> WORDING-PLUS-GEOMETRY. Pixels:
+    >>> review/ep2-goblin-design-0819/SKELETON-0820.png.
+    >>>
+    >>> THE GOBLIN STANDARD, BOTH HALVES:
+    >>>   FACE   the recipe above, unchanged and byte-identical.
+    >>>   BODY   a COCO-18 openpose skeleton authored at head_frac 0.190,
+    >>>          conditioned through xinsir/controlnet-openpose-sdxl-1.0 at
+    >>>          scale 0.7 to 1.3. Author it with
+    >>>          pipeline/author_jerry_skel_0820.py; the hints live in
+    >>>          pipeline/control/jerry-skel-*.png.
+    >>>
+    >>> THE TILE IS 5.2 HEADS, MEASURED RATHER THAN ESTIMATED. adult-b19-0819.jpg
+    >>> at 1:1 -- crown y=292, chin y~447, head 155 px, seated crown-to-sole
+    >>> 623 px = 4.0 heads seated; a seated crown-to-floor is ~0.77 of standing
+    >>> height, so 5.2 heads standing and head_frac = 1/5.2 = 0.190. The "fifth
+    >>> to a sixth" above was the eye and the eye was right.
+    >>>
+    >>> MEASURED, one variable per rung, everything else byte-identical
+    >>> including the seed: n1 h19 at 1.0 gives 5.07 heads; n2 at 0.7 gives
+    >>> 5.17; n3 at 0.45 gives 4.44 and FAILS; n4 at 1.3 gives 5.18 and destroys
+    >>> nothing. THE SCALE FLOOR IS BETWEEN 0.45 AND 0.7.
+    >>>
+    >>> AND THE CONTROL IS WHY THIS IS A MECHANISM AND NOT A LUCKY SEED. n5 held
+    >>> the scale, the seed, the prompt, the negative, the stature, the shoulder
+    >>> width and the foot line and moved head_frac 0.190 to 0.320 ALONE. It came
+    >>> back at 3.81 heads with round white mascot eyes -- the twelve-pose set's
+    >>> defect reproduced ON DEMAND FROM GEOMETRY. Head-to-body is a dial.
+    >>>
+    >>> WHY NOT IP-ADAPTER, since it was the other named candidate:
+    >>> b08-arm-route-0819.md Sec 13 measured openpose binding stature to within
+    >>> 4% of authored on this checkpoint, and Sec 11 measured the masked
+    >>> adapter transferring skin, face and wardrobe while the ARM STILL AIMED
+    >>> WRONG -- "That is not the adapter". It is an ATTRIBUTE instrument. And
+    >>> the face is already solved by wording, so a skeleton leaves the recipe
+    >>> byte-identical where an adapter would re-supply it and make the rung
+    >>> unattributable. IPA REMAINS UNTRIED HERE and is the right instrument if
+    >>> a later question is about an attribute no wording can reach.
+    >>>
+    >>> TWO THINGS ONLY A BODY IN FRAME COULD SHOW, reported and NOT fixed:
+    >>> the mouth is ABSENT rather than thin -- `closed mouth, :|` draws no line
+    >>> at all at full body, where the tile has a wide lipless one; and no ear
+    >>> flange is drawn at all, where the close-up wedge grew one unasked, so T4
+    >>> stays unscorable at this framing. AND ONE THAT WENT RIGHT: the patchwork
+    >>> skull did not fire ONCE at full body, which corroborates the
+    >>> framing-dependent CLOAK rule above from the other side.
+    >>>
+    >>> THE LIMIT OF THIS ENTRY IS FIVE UPRIGHT STANDING FRAMES. `sit` and
+    >>> `crouch` were queued the same night and are NOT covered by it: a folded
+    >>> skeleton spans a third of the canvas and Sec 13's binding was measured
+    >>> on upright figures.
 
     WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
     it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
