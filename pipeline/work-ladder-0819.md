@@ -2855,3 +2855,80 @@ that and it went red the moment the file landed; the file was committed in
 between because lint and tests had been run **before** it was written and not
 after, and the suite's output was piped to `/dev/null`. *Run tests as their own
 step and read the exit code BEFORE committing* — third sighting.
+
+---
+
+## Appended 2026-08-20 by the beat 08 staging lane — the grip mark FIRED, and the mode that fired was not one of the five
+
+`ep2-b08-gripmark-0820`, **FAIL**, and the argument above is falsified in its
+load-bearing step. Full numbers in the spec's `verdict_measured` and route log
+`pipeline/b08-arm-route-0819.md` §20; evidence
+`farm-out/ep2-b08-gripmark-0820/EVIDENCE-b08-gripmark-0820.png`.
+
+**What the argument got right.** The named proposal — "a short stroke" — really
+was tracing loss 4, and rejecting it was right: the mark that got authored, a
+closed 7 px hand-sized loop, **bound**. The pre-registered most-likely mode (L1
+IGNORED, loss-3 class) did NOT fire. 511 gold pixels, centroid **(615.7, 681.2)**,
+**14.2 px** from the authored L-wrist. Figure ink at `--scale2` 0.3 in this
+two-net rig is above threshold, and loss 3's 0.28 number — measured on a single
+net — does not transfer. L2 did not fire either: the traced form is fully drawn,
+with a rim, a dark inset and a highlight.
+
+**What the argument got wrong, and it is the useful half.** The loop came back as
+**a second gold belt clasp**. §3(e) of the argument claimed the mark was
+different in kind because "the openpose net has authored a wrist at exactly
+(621.6704, 668.4352) since 562911c8 … the grip mark is the first time the two
+conditions agree at one pixel, and agreement between nets is not a new class of
+instruction." **As measured, the pose keypoint contributed nothing.** Neither did
+the prompt, which says `clipboard lowered in one hand`.
+
+### The rule to steal, and it outlives this beat
+
+**On a scribble net you choose the SHAPE and the PLACE. You do not choose the
+NOUN.** §10 established that any hint this net can read is a hint it traces; the
+corollary this frame adds is that **what gets traced is named by the surrounding
+pixels**. Every one of the five tracing losses drew ink ON a figure, so the ink
+WAS the silhouette that named itself and the question never arose. This is the
+first authored mark on the route whose intended noun differed from what its
+neighbourhood implies, and the neighbourhood won: a rounded closed form on a belt
+line beside a leather strap is hardware. **Place an authored enclosure only where
+the scene already implies the object you want** — which is exactly why the board
+hint has worked four times. A rectangle at a hip, beside a hand, is a board.
+
+### And a second rule, for anyone composing hints anywhere
+
+**The effective conditioning load is (strength x INK), not strength.** The hint
+gained 29% more ink at an unchanged 0.3 (fraction 0.00324 → 0.00418) and cost the
+same two clauses that raising strength to 0.5 and adding nine prompt tokens each
+cost: the board fell **0.754 → 0.234** (the wording rung's was 0.229) and the
+guard went **bald** with BOTH of B8's calibrated inputs held at values that
+passed. §18's lesson generalises — a conditioning strength is a property of the
+triple (strength, prompt, ink), and **"0.3 is the scale that works" must not be
+inherited across a HINT edit** any more than across a prompt edit.
+
+### What held
+
+B0 with the new sha in the sidecar and `prompt tokens: 64` in the log; B1 two
+figures, exactly two hands (**L5 third-hand did not fire**), zero boards so no
+duplication; B2 +55.5; B7 22.9 / 18.7 on boxes **re-placed by eye at 5x** and
+published with luma AND material — the parent's guard forearm box landed on a
+**sleeve** here, the third frame running that admissibility rule has earned
+itself; B4b-i **better** than the parent at 39.8 px; B4c; B6 intact; the pointing
+arm untouched exactly as the hint's selftest promised. **The loop did not act
+globally.**
+
+### One operational note for every lane on this box
+
+**The courier push has failed 23 times in a row** (`push exceeded 60s and its
+process tree was killed`). `farm-out/` on the rtx5090 is box-only right now and
+this result had to be pulled by `scp`. Nothing is lost, but nobody should read an
+empty `farm-results-rtx5090` as "the job did not run".
+
+**Route status: every free lever on beat 08's grip is spent, including the one
+three rungs deferred.** The fallback the spec named in advance is now the route —
+**composite-then-inpaint** on the parent plate, 4 for 4 on 2026-08-20 across
+beats 15, 19, 03 and 13, and the one instrument that never has to ask this net
+for a noun because the compositor draws the noun and the sampler only re-renders
+it. **Not taken by this lane. `ep2-b08-scale30-0820` remains the best frame on
+beat 08; NO pick, NO plate_ack, NO cut, and beat 08 does NOT have a complete
+plate candidate.**

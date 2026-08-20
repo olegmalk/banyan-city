@@ -1064,3 +1064,105 @@ only remaining input that addresses **position**. It would be the first figure
 ink ever placed in that hint and it is still owed the five tracing losses in
 writing before it is authored — but §19 is the evidence those losses were
 waiting for. **§17's frame remains the best on this beat.**
+
+## 20. The loop bound, was traced perfectly, and came back a belt buckle (2026-08-20)
+
+Section 19 named figure ink in the board hint as the last free lever and said it
+was owed the five tracing losses in writing. That argument was filed first
+(`pipeline/work-ladder-0819.md`, "the grip mark, argued against the five tracing
+losses"), and it **rejected the lever as three rungs had named it**: "a short
+stroke" is loss 4 exactly, and section 9 had already ruled that B4b needs a
+hand-sized mark. What it authorised instead was a **closed, hand-sized loop at 7
+px**, centred on the authored L-wrist and straddling the board's top edge.
+`ep2-b08-gripmark-0820` fired it: one variable, `--control2`
+`b08-board-0820.png` -> `b08-board-grip-0820.png`, the prompt back to the
+parent's byte-identical 64 tokens, `--scale2` 0.3, seed 20260819, everything
+else held and verified in the sidecar.
+
+**FAIL. And the mode that fired was not one of the five.**
+
+| clause | parent scale30 | gripmark |
+|---|---|---|
+| board: quad px < luma 80 (bbox x583-723 y657-820) | **0.754** | **0.234** |
+| the mark at the authored L-wrist | nothing | **a gold belt clasp**, 511 px, centroid 14.2 px off |
+| B8 hair (canon) | sandy | **BALD** |
+| near hand vs authored ELBOW / WRIST | 8.0 / 96.1 px | 2.7 / 90.0 px |
+| B4b-i pointing hand -> authored wrist | 48.5 px | **39.8 px** |
+| B2 separation | +60.6 | +55.5 |
+| B7 guard / goblin spread | 21.7 / 8.1 | 22.9 / 18.7 |
+| frame mean luma | 135.4 | 130.2 |
+
+### The mark bound. That question is answered and it is not the failure.
+
+The pre-registered most-likely mode was **L1 IGNORED** (loss-3 class: figure ink
+lost its grip at 0.28, and 0.3 is 0.02 above it with a tenth of the board's ink).
+It did not fire. The loop was traced at full fidelity, in place: 511 pixels
+satisfying (R>170, G>140, B<130) in the wrist window, centroid **(615.7, 681.2)**,
+**14.2 px** from the authored **(621.6704, 668.4352)**. **Figure ink at 0.3 in
+this two-net rig is above threshold** — loss 3's number came from a single-net
+frame and does not transfer.
+
+### THE FINDING: YOU CHOOSE THE SHAPE AND THE PLACE. YOU DO NOT CHOOSE THE NOUN.
+
+The traced form came back as a **second gold belt clasp**, drawn beside the one
+already there, with a rim, a dark inset and a highlight — a fully drawn object,
+so **L2 (flat-trace) did not fire either**. The openpose net asserts a guard
+L-wrist at exactly that pixel at scale 1.0. The prompt says `clipboard lowered in
+one hand`. Neither disambiguated it. A rounded closed form sitting on a belt line
+beside a leather strap is, to this checkpoint, **hardware**.
+
+**The argument this rung was built on is falsified in its load-bearing step.** It
+claimed the loop was different in kind from the five losses because "the two nets
+agree at one pixel, and agreement between nets is not a new class of
+instruction." As measured, the pose keypoint contributed nothing to the mark's
+identity.
+
+**And section 10's synthesis gains a corollary.** *"Any hint this net can read is
+a hint it traces"* — true, and now: **what it traces is named by the surrounding
+pixels.** Every one of the five losses drew ink ON a figure, so the ink WAS the
+silhouette that named itself and the question could not arise. This is the first
+mark on this route whose intended noun differed from what its neighbourhood
+implies, and the neighbourhood won. The practical rule for any lane: **place an
+authored enclosure only where the scene already implies the object you want** —
+which is exactly why the board hint has worked four times. A rectangle at a hip,
+beside a hand, is a board.
+
+### Second finding: the effective load is (strength x INK), not strength
+
+Section 19 calibrated the B8 hair instrument on two inputs — conditioning load
+(bald at 1.0+0.8 and 1.0+0.5, sandy at 1.0+0.3) and prompt crowding (bald at 73
+tokens, sandy at 64). **This frame holds both at the values that passed and comes
+back bald anyway.** The only thing that moved is the hint's ink fraction,
+0.00324 -> **0.00418**, +29% at unchanged strength — and it cost the same two
+clauses that +0.2 of strength and +9 prompt tokens each cost: the canon hair and
+the object. The board fell to **0.234**, against the wording rung's 0.229.
+
+**So B8 now reads three inputs, and "0.3 is the scale that works" is not a safe
+thing to inherit across a HINT edit any more than across a prompt edit.** Section
+18's rule generalises: a conditioning strength is a property of the whole
+triple (strength, prompt, ink).
+
+### What held, and it matters for reading the failure
+
+B0 all four preflight lines with the new sha in the sidecar and 64 tokens in the
+log; B1 two figures, exactly two hands (**L5 third-hand did not fire**) and zero
+boards so no duplication; B2 +55.5; B7 22.9 / 18.7 on boxes **re-placed by eye at
+5x** and published with luma AND material — the parent's guard forearm box landed
+on a **sleeve** here, the third frame running that rule has earned itself; B4b-i
+**better** than the parent at 39.8 px; B4c; B6 intact. **The loop did not act
+globally.** The pointing arm the hint's selftest promised not to touch was not
+touched.
+
+### Route status
+
+**Every lever on this net is spent, including the one three rungs deferred.** The
+argument was written honestly before the pixels, the sample was cheap and every
+outcome was informative, and the answer is no — not because the mark was too
+weak, but because the instrument cannot be told what a mark means. The fallback
+the spec named in advance is now the route: **composite-then-inpaint** on the
+parent plate (4 for 4 on 2026-08-20 across beats 15, 19, 03, 13), which is the
+one instrument that never has to ask this net for a noun, because the compositor
+draws the noun and the sampler only re-renders it.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. No pick, no
+plate_ack, no cut, and beat 08 does NOT have a complete plate candidate.**
