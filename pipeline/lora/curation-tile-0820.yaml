@@ -300,3 +300,37 @@ gate_status_2026_08_21_reference_route: >-
   it costs proportion, T8 5.56 -> 4.57 heads at head_frac 0.219 against a 0.190
   authored skeleton. train-jerry-0820 REMAINS UNFILED and the set is still 7
   frames in 4 poses. Next: ep2-jerry-face-k2-0821 at --ip-scale 0.9.
+
+# --------------------------------------------------------------------------
+# UPDATE 5, 2026-08-21. ep2-jerry-face-k2-0821 -- k1 at --ip-scale 0.9.
+# THE STRENGTH AXIS IS CLOSED. Pixels:
+# review/ep2-goblin-design-0819/FACE-K2-SCALE-0821.png
+#                    eye area   eye box   aspect   head_frac   heads
+#   TILE               0.0143    23x12     0.52      0.190       5.2
+#   j2 (no adapter)    0.0353    27x27     1.00      0.181       5.56
+#   k1 @0.7            0.0566    52x28     0.54      0.219       4.57
+#   k2 @0.9            0.0557    57x36     0.63      0.227       4.41  FAIL
+# Area moved 1.6% relative (noise), SHAPE moved AWAY from the tile, and T8 fell
+# through the 4.5 bar. The prediction filed with k2 got T8 right and the eye
+# wrong. T1 holds at 6x -- the specks inside k2's eyes are 2 px stray marks,
+# not irises -- and the brow and the containment hold.
+#
+# THE ONE UNTESTED CAUSE. head_frac drawn goes 0.181 -> 0.219 -> 0.227 against
+# an unchanged 0.190 authored skeleton: the adapter inflates the head
+# monotonically with strength. The reference is a HEAD CROP, so what the
+# adapter was shown is a head that fills a frame, and a mask says WHERE it acts
+# and not how big what it draws should be. That covers the oversized head AND
+# the oversized eye and no rung has tested it.
+#
+# ep2-jerry-face-k3-0821 IS FILED: same head pixels, same mask, back to 0.7,
+# reference rebuilt at head-to-frame 19.1% (the tile's measured standing
+# head_frac) on flat field green. Builder:
+# pipeline/author_jerry_headfit_ref_0821.py. Three outcomes named in the spec
+# and none of their follow-ups filed.
+gate_status_2026_08_21_end_of_night: >-
+  HELD. The set is still 7 frames in 4 poses and NOTHING from the f/g/h/j/k,
+  skel, pose, tileset or prop families has entered it. Two levers are closed --
+  WORDING for the face (six rungs) and ADAPTER STRENGTH for size (k2) -- and
+  the residual is one measured number: the eye is the tile's KIND at roughly
+  twice its relative size, with the reference's head-to-frame ratio as the one
+  untested cause. train-jerry-0820 REMAINS UNFILED. Next: ep2-jerry-face-k3-0821.

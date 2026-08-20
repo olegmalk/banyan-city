@@ -6663,3 +6663,88 @@ two lanes for a measurement with no generator under it; that criticism does not
 survive this lane repeating it. It also reports the per-eye bounding box and
 aspect — **the half an area figure cannot see, and the half that turned out to
 carry the whole finding twice tonight.**
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — STRENGTH IS NOT THE SIZE DIAL, AND I HAD PREDICTED THE WRONG HALF
+
+`ep2-jerry-face-k2-0821`. k1 at `--ip-scale 0.9`, nothing else.
+`review/ep2-goblin-design-0819/FACE-K2-SCALE-0821.png`
+
+**THE PREDICTION FILED WITH THIS RUNG WAS HALF WRONG, AND THE WRONG HALF WAS
+THE ONE THAT MATTERED.** It said: more strength should pull the eye toward a
+reference that has the right size, and pull the head toward a reference that is
+100% head, spending T8's remaining 0.07 heads. **T8 behaved exactly as
+predicted. The eye did not.**
+
+| | eye area | eye box | aspect | head_frac | heads |
+|---|---|---|---|---|---|
+| TILE | 0.0143 | 23x12 | **0.52** | 0.190 | 5.2 |
+| j2, no adapter | 0.0353 | 27x27 | 1.00 | 0.181 | 5.56 |
+| **k1** @0.7 | 0.0566 | 52x28 | **0.54** | 0.219 | 4.57 |
+| **k2** @0.9 | **0.0557** | 57x36 | **0.63 / 0.71** | 0.227 | **4.41 FAIL** |
+
+**Eye area moved 1.6% relative — noise. Eye shape moved the WRONG way**, 0.54
+back toward round while the tile sits at 0.52. **And T8 fell through the 4.5
+bar.** Every effect of more strength landed on composition and none on the
+residual.
+
+**SO THE STRENGTH AXIS IS CLOSED.** The adapter supplies a KIND of eye, it is
+saturated by 0.7, and SIZE is not on that lever at any value we would want to
+run. k2 is a **FAIL** — T8 below bar, T1b area unchanged, T1b shape regressed —
+with T1 (no pupils, checked at 6x; the specks are 2 px stray marks, not irises),
+the brow, and the whole containment still holding.
+
+### THE ONE CAUSE BOTH k RUNGS POINT AT, AND IT IS NOT THE STRENGTH
+
+head_frac drawn: **0.181 with no adapter → 0.219 at 0.7 → 0.227 at 0.9**,
+against a **0.190 authored skeleton that did not change**. The adapter inflates
+the head monotonically with strength. **The reference is a HEAD CROP — what the
+adapter was shown is a head that fills a frame — and a mask says WHERE the
+adapter acts, not how big the thing it draws should be.** That single cause
+covers the oversized head *and* the oversized eye, and it has never been
+tested, because every rung so far has shown the adapter the same 100%-head
+reference.
+
+### `ep2-jerry-face-k3-0821` IS FILED. ONE VARIABLE: THE REFERENCE'S HEAD-TO-FRAME RATIO, 100% → 19.1%
+
+Same head pixels, same mask, back to the 0.7 that gave the best shape. The crop
+is placed on a 416x608 field-green canvas at **head height 0.191 of frame** —
+the tile's own measured standing head_frac — at the crown row the render draws,
+with the crop's cream sky flooded to the tile's field green so a hard rectangle
+does not become the loudest feature in the encode.
+`pipeline/author_jerry_headfit_ref_0821.py` is the builder; the ref is
+sha-pinned and staged like every other input.
+
+Three outcomes named in the spec, **and none of their follow-ups is filed**:
+both defects move together (the ratio was the cause); only T8 moves (the eye is
+the checkpoint's own prior, which no reference route reaches, and the honest
+route becomes training from frames that already have the face); or the face
+reverts to j2's (the adapter needed the head to fill the reference to bite, and
+the instrument has to become a face-only adapter). **The last prediction this
+lane filed was falsified inside the hour. The rung after k3 gets authored off
+what k3 shows.**
+
+### `train-jerry-0820` REMAINS UNFILED
+
+Unchanged, and the standing at the end of the night is worth stating plainly:
+the set is still **7 frames in 4 poses**. Nothing from the f, g, h, j, k, skel,
+pose, tileset or prop families has entered it. What the night bought is not a
+dataset — it is **two closed levers and one measured residual**: wording is done
+for the face, adapter strength is done for size, and what remains is one number
+(the eye is the right kind at roughly twice the tile's relative size) with one
+untested cause behind it.
+
+### AND A GUARD GOT FIXED BECAUSE THIS LANE TRIPPED IT
+
+`derive_fetch_guard.assert_fetch_urls_resolve` **passed k3's reference and the
+raw URL returned 404.** The docstring said "against the tree" and it was doing
+exactly that; the log line said `fetch URL OK`, and that is the line a caller
+reads. Written, staged and committed-but-unpushed all passed it — which is the
+precise failure it exists to prevent, since *"a 404 costs a queued job and a
+claimed card"* is its own error text. It now checks each named file against
+`origin/main` as well, with no network call (it reads the local remote ref, which
+a push has just updated) and no hard failure when git cannot answer, and the log
+line now says which check ran. Verified against the real case: the unpushed
+probe is caught, the pushed reference is not. *A guard whose name is stronger
+than its check is a guard that gets trusted for the thing it does not do.*
