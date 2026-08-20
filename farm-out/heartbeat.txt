@@ -3116,3 +3116,5 @@
 09:00:02Z STARTED task=ep2-b15-listengrass-0820-1787216257 attempt=1 on box-runner
 09:06:17Z DONE task=ep2-b15-listengrass-0820-1787216257 rc=0 artifacts=2
 09:09:17Z box-runner idle ready=0 failed=43
+09:14:19Z STARTED task=ep2-b13-shadelit-0820-1787217247 attempt=1 on box-runner
+09:20:40Z DONE task=ep2-b13-shadelit-0820-1787217247 rc=0 artifacts=2
