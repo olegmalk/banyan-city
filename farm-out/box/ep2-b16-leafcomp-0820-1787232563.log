@@ -1,0 +1,39 @@
+#### job ep2-b16-leafcomp-0820-1787232563 attempt 1 start 2026-08-20T13:29:36Z
+
+==== step fetch START 2026-08-20T13:29:36Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16leafcomp-0820\\fetch_init.py"]
+fetched 16-why-leafcomp-0820.png 920759 bytes sha 7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540 OK
+fetched 16-why-leafcomp-mask-0820.png 5715 bytes sha 8db8bb33bab72c1726f0b15ef74402695490a7e6c67f4bb8f14cf7973d399268 OK
+==== step fetch END rc=0 2026-08-20T13:29:37Z ====
+
+==== step dry START 2026-08-20T13:29:37Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16leafcomp-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16leafcomp-0820\\16-why-leafcomp-0820.png", "--init-sha256", "7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540", "--mask-png", "C:\\banyan-farm\\b16leafcomp-0820\\16-why-leafcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b16leafcomp-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16leafcomp-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16leafcomp-0820\\b16-leafcomp-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THIS MASK IS THE LARGEST THIS HOUSE HAS EVER FIRED: 342519 px, 33.86 percent of the frame, against beat 13's passing parent at 4.10 percent and its tall variant at 7.97. WHAT TO CHECK ON THE DRY PNG: that the white region is ONE leaf-shaped blade tilted up to the right with a petiole running off the BOTTOM edge, that its top edge sits below y=150 so his skull crown stays outside it, and that it does NOT touch the frame edges anywhere except the bottom. If the dry mask is a rectangle, or reaches the left or right edge, the composite is wrong and this job stops here at $0.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540
+mask png corners=- bbox=[96, 149, 662, 1215]  0.6803 x 0.8766 of 832x1216
+WROTE C:\banyan-farm\b16leafcomp-0820\b16-leafcomp-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-20T13:29:37Z ====
+
+==== step s20260820 START 2026-08-20T13:29:37Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16leafcomp-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16leafcomp-0820\\16-why-leafcomp-0820.png", "--init-sha256", "7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540", "--mask-png", "C:\\banyan-farm\\b16leafcomp-0820\\16-why-leafcomp-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b16leafcomp-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16leafcomp-0820\\negative.txt", "--out", "C:\\banyan-farm\\b16leafcomp-0820\\b16-leafcomp-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ONE SAMPLE, ONE SEED, ONE VARIABLE. Every sampler number is beat 13's, unchanged: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, seed 20260820, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, which is the setting that converted four earlier flat vector plants into their frames' own line quality. THE ONE VARIABLE IS THE INIT, and it is a different CLASS of init: those four composited a SMALL plant INTO a plate over 4-8 percent of frame; this draws a LARGE object IN FRONT over 33.86 percent. WHETHER 0.30 FINISHES AN 800 px LEAF OR RE-RENDERS A THIRD OF THE PICTURE IS THE WHOLE QUESTION AND IT IS NOT ASSUMED. This is card evidence for /review/ep2-b16-leaf-0820. It is not a cut init, it is not a pick, and passing a bar is not a licence to enter a cut."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  8.45it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  1.88it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.83it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\b16leafcomp-0820\b16-leafcomp-s20260820.png
+WROTE C:\banyan-farm\b16leafcomp-0820\b16-leafcomp-s20260820-mask.png
+WROTE C:\banyan-farm\b16leafcomp-0820\b16-leafcomp-s20260820.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260820 END rc=0 2026-08-20T13:29:49Z ====
+
+==== step publish START 2026-08-20T13:29:49Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b16leafcomp-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-leafcomp-0820\"\nNAMES = [\n    \"b16-leafcomp-s20260820.png\",\n    \"b16-leafcomp-s20260820-mask.png\",\n    \"b16-leafcomp-s20260820.png.meta.yaml\",\n    \"16-why-leafcomp-0820.png\",\n    \"16-why-leafcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b16-leafcomp-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b16-leafcomp-0820
+==== step publish END rc=0 2026-08-20T13:29:49Z ====
+#### job ep2-b16-leafcomp-0820-1787232563 finished rc=0 2026-08-20T13:29:49Z

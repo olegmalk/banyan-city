@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260820
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b16leafcomp-0820/16-why-leafcomp-0820.png
+init_sha256: 7d9031c2ddd72f234f1d37abd04db0b7e2ebdaebd1862220b41089fc55d95540
+mask_png: b16-leafcomp-s20260820-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b16leafcomp-0820/16-why-leafcomp-mask-0820.png
+mask_png_sha256: 8db8bb33bab72c1726f0b15ef74402695490a7e6c67f4bb8f14cf7973d399268
+mask_white_px: 342519
+mask_bbox_px: [96, 149, 662, 1215]
+mask_width_frac: 0.6803
+mask_height_frac: 0.8766
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-20T13:29:48Z
+render_seconds: 3.8
+wall_seconds: 8.8
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ONE SAMPLE, ONE SEED, ONE VARIABLE. Every sampler number is beat 13's, unchanged: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, seed 20260820, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. 0.30 runs int(40 * 0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, which is the setting that converted four earlier flat vector plants into their frames' own line quality. THE ONE VARIABLE IS THE INIT, and it is a different CLASS of init: those four composited a SMALL plant INTO a plate over 4-8 percent of frame; this draws a LARGE object IN FRONT over 33.86 percent. WHETHER 0.30 FINISHES AN 800 px LEAF OR RE-RENDERS A THIRD OF THE PICTURE IS THE WHOLE QUESTION AND IT IS NOT ASSUMED. This is card evidence for /review/ep2-b16-leaf-0820. It is not a cut init, it is not a pick, and passing a bar is not a licence to enter a cut.
+prompt: |-
+  one large plain oval leaf with a soft round tip in the foreground, green blade, midrib and side veins, cel shaded, filling most of the frame, one lean adult goblin man behind it, green skin, bald head, long pointed ears, patchwork cloak, sunny grassy field, warm afternoon light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  text, 2boys, girl, baby, child, chibi, elf, hair, wig, lobed leaf, five-fingered, palmate, maple leaf, serrated edge, three leaves, potted plant, flower pot, large tree, trunk, forest, indoors, night, dark, photorealism, 3d render
