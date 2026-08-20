@@ -4611,3 +4611,67 @@ on exactly these frames. Both ingredients are rendered and sha-verified; it need
 no GPU and no new plate. Risk named in advance: the fig's stem and contact shadow
 move with the plant in the crf-33 take, so a fig-only matte may read as pasted,
 and the grass band may have to come from the held plate too.
+
+### The prompt was the lever: beat 08's goblin is gone, and the plate still fails — `b08-arm-route-0819.md` §24
+
+**`ep2-b08-nogoblin-0820`, rc=0, 9.7 s of render, $0.** One variable against the
+parent: the prompt. Two samples had put a goblin in this mask; taking the goblin
+out of the prompt took it out of the picture, completely, first try.
+
+| in-mask G−R | mean | px > +20 |
+|---|---|---|
+| init (guard's own fist) | −28.59 | 0 |
+| parent `eraseonly` | −2.83 | **1934** |
+| **this frame** | **−16.06** | **166** |
+| the real material around it | −19.90 | 0 |
+
+**IT WAS FILED BY A DEAD LANE AND IT WAS DEAD ON ARRIVAL — 404 IN ITS FIRST STEP,
+THREE SECONDS IN.** `derive_spec`'s retoken rewrites *every* string in a child;
+the pair that moved the working directory also moved the **fetch URL for the
+parent's published init** onto `farm-out/ep2-b08-nogoblin-0820/`, a directory
+nobody had written. **§23 had recorded the near-miss as a success** — "derive_spec
+refused the fetch override as a no-op, which is the guarantee working" — but that
+refusal only says your replacement equalled the parent's original; it says nothing
+about what retoken left in the child. **Generalisable: after a retoken, re-read
+the payload for strings that must still name the PARENT. Published-artifact URLs
+are the whole class.** Fixed at the address (git stores one blob for identical
+content, so republishing the two files under the child's name costs two tree
+entries), re-filed `--backlog --again`, autofilled, ran clean.
+
+**THE PLATE STILL FAILS, ON THE OTHER HALF OF THE SAME CLAUSE.** H1 wants the fist
+*deleted* AND *replaced by plausible strap, cuff and shirt*. First half passes —
+no skin-toned fist survives at 9x. Second half fails: the plate's own strap is
+**severed**, a **new brown strap segment with a NEW GOLD CLASP** is drawn across
+it, and the rest is a fan of hard white/black wedges. At 1x it reads as a
+strap cluster; at 4x it is an artifact. **The failure has stopped being a
+character and become over-drawing** — which is what makes the pre-committed next
+rung earned rather than merely next.
+
+**C4' VOIDED A THIRD TIME AND §23's PROPOSED FIX WAS BACKWARDS.** Prescribed call:
+`ring 120 real px, need 200`. Setting the region further *IN* from the mask
+boundary moves its ring *deeper into repainted pixels*; the fix is to push the
+**RING out** past the pad-crop drift band (`assess(ring=…)` already takes it).
+Real fraction of the annulus: 3–12 px **3.1 %**, 20–30 **41.4 %**, 30–40 99.1 %,
+**35–45 100.0 %**. At 35–45 the frame PASSES (D 3.479, N 2.510, F 1.24; null
+false-FAIL 13.0 %).
+
+**AND THAT PASS IS THE INSTRUMENT FINDING.** The parent passes the same call at
+D 1.751 — and the parent is a green goblin fist. C4' bars D from below and leaves
+it unbounded above, so shards read as "detail". Shard rate (fill px whose |grad|
+beats its own ring's p99): **material replaced 1.82 %, parent 2.79 %, this fill
+9.27 %**; near-black px 242 → 114 → **925**. **C4' is a one-sided detector and its
+blind side is over-drawing** — three streak artifacts certified now. Two cheap
+instrument debts filed: a **ceiling on D** (or a shard-rate clause), and a
+standing rule that every C4' call on a `--pad-crop` composite re-bases its ring
+and **publishes the annulus's real-pixel fraction**.
+
+Also measured: **out-of-mask drift 8598 px / maxdiff 151, and 8598 of 8598 fall
+INSIDE the pad-crop box (x488-719 y458-705), 0 outside** — the mechanism confirmed
+exactly, dense within ~20 px of the mask and gone by 30, which is *why* the
+prescribed ring starves. B8 hair maxdiff 0. Goblin box maxdiff 0. H3 digits
+legible at 9x, but the copy is inside the crop box and took maxdiff 121 / 1598 px.
+
+**NO CUT CHANGE AND NOTHING STAGED** — the standing instruction was to stage
+pixels if it passed, and it does not. Beat 08 keeps `ep2-b08-scale30-0820`. Next
+rung: **strength 0.99 → 0.70**, one variable; if it still draws a clasp the route
+closes on §23's written conclusion.

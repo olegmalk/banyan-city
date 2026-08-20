@@ -591,3 +591,86 @@ derivation:
     scope_limits, strength_argument -- authored as `extra` but byte-identical to the parent''s value under
     the same name. Recorded rather than implied: a pre-registered bar carried unchanged is legitimate,
     and it should say so.'
+verdict_this_job: 'THE PROMPT WAS THE LEVER, AND THE PLATE STILL FAILS. Two samples drew a goblin into
+  this mask; removing the goblin from the prompt removed the goblin from the picture, completely, on the
+  first try. That is the one question this rung asked and the answer is YES. It is not a passing plate:
+  the region did not fill with the strap, cuff and shirt the prompt asked for, it filled with a SECOND
+  BUCKLED STRAP and a fan of hard white/black wedges. H1''s measurable half passes (the fist is gone)
+  and H1''s plausible half fails at 5x. NO CUT CHANGE and no staging: ep2-b08-scale30-0820 remains beat
+  08''s best frame.'
+verdict_this_job_measured:
+  provenance: 'Filed --backlog --again 13:54:40Z, autofilled and run 13:57:05-13:57:25Z on the box, rc=0,
+    render_s=9.7, model cagliostrolab/animagine-xl-3.1 cuda/bf16. Pulled by scp from courier-box/farm-out
+    and verified against the job''s own manifest: all 7 files OK, frame sha c24225303f11cbd0282debfd647aabb296405361cdeddc26f8aa8dd923d9691a.
+    $0.'
+  H1_the_fist_is_GONE: 'SPLIT. PASS on the measurable half -- no skin-toned fist survives anywhere in
+    the mask, judged by eye at 9x against the init side by side. FAIL on the half that says ''replaced
+    by plausible harness strap, cuff and shirt'': the plate''s own diagonal strap is SEVERED at the mask''s
+    top edge, a new brown strap segment carrying a NEW GOLD CLASP is drawn across it, and the rest of
+    the region is a radiating fan of hard white and black wedges with a teal fringe. At 1x it reads as
+    a strap-and-clasp cluster and does not shout; at 4x and above it is an artifact.'
+  H5_NO_NEW_NOUN: 'PASS, and this is the clause the rung was filed to move. No face, no head, no figure,
+    no placket, no goblin -- not in the mask and not anywhere in the frame. MEASURED on the green channel,
+    in-mask G-R: init -28.59 (guard skin) -> parent eraseonly -2.83 with 1934 px above +20 (the green
+    fist) -> THIS FRAME -16.06 with 166 px above +20. The real material around the fill (ring 35-45 px,
+    6840 px, 100% untouched) reads -19.90 with ZERO px above +20, so the fill now sits 3.8 levels off
+    its own neighbourhood where the parent sat 17.1 off. The 46 px above +40 are one desaturated teal
+    fringe (mean RGB 112,159,143) along a single shard edge at x603-638 y556-627 -- a chromatic artifact
+    on a hard edge, not skin. RECORDED AND NOT LAUNDERED: a strap segment and a gold clasp that were not
+    in the init ARE new objects. They are hardware, not a figure, so the clause as written passes; the
+    clause''s spirit is dented and the picture says so.'
+  C4prime: 'VOID AS PRESCRIBED -- THE THIRD IN A ROW -- AND PASS ON AN HONESTLY RE-BASED RING. The spec''s
+    call (region = the published erase png, ring 3-12 px) returned ''ring 120 real px, need 200''; the
+    parent''s control run of the same call returns 148. The bar''s own prediction, ''4673 real px'', was
+    measured on the INIT, where nothing has changed yet -- it could never have been the number that matters.
+    THE LADDER''S PROPOSED FIX IS WRONG AND IS WITHDRAWN HERE: setting the scored region further IN from
+    the mask boundary moves its ring DEEPER into repainted pixels, not out of them. What works is to leave
+    the region on the actual fill and push the RING outward past the pad-crop drift band, which assess(ring=...)
+    already supports. Measured real-pixel density of the annulus, identical on both frames: 3-12 px 3.1%,
+    13-22 7.9%, 20-30 41.4%, 30-40 99.1%, 35-45 100.0%. At ring 35-45 (6840 px, all real, so no survivor-bias
+    subsample) THIS FRAME PASSES: D 3.479, N 2.510, F 1.24 against D>=0.45, N>=0.25, F<=2.60. Parent control
+    at the same ring: D 1.751, N 1.484, F 0.77 -- it passes too, and it is a green goblin fist. Empirical
+    null on 200 real windows of the same footprint at this ring: false-FAIL 13.0% (D 10.0, N 8.0, F 2.0),
+    the fill at D pct 92.5, N pct 90.5, F pct 81.0.'
+  C4prime_is_certifying_a_streak_again: 'THE INSTRUMENT FINDING, and it is the third time (see b08-arm-route-0819.md
+    21). C4'' bars D from BELOW and leaves it unbounded ABOVE, so a fill made of shards scores as ''detailed''
+    and passes. Shard rate -- fraction of fill px whose |grad| exceeds the 99th percentile of its own
+    real ring: the material this fill replaced 1.82%, the parent''s goblin fist 2.79%, THIS FILL 9.27%.
+    Near-black px (L<40) 242 -> 114 -> 925; near-white (L>240) 535 -> 663 -> 1542. Five times the shard
+    density of the plate it replaced, and D 3.479 reads it as a pass. F does not catch it either, because
+    the wedges fan out in several directions at once and F only measures whether the fill is MORE directional
+    than its material.'
+  H3_the_digits_SURVIVED: 'PASS by eye at 9x: three finger creases and the thumb are individually legible
+    on the copied fist, side by side with the init and the parent. NOT free, and reported: the copy sits
+    INSIDE the pad-crop box (box y ends 705, the copy spans y 640-705), so it read maxdiff 121 over 1598
+    px against the parent''s 55. Legible is not untouched, and a third pass over this geometry should
+    expect the copy to keep taking resample damage.'
+  B8_hair: 'PASS, measured: maxdiff 0 over the head box (500..640, 300..430), and the head is wholly outside
+    the pad-crop box.'
+  B6_wardrobe: 'PASS: cream shirt, white sash and brown wrap are still three garments; the mask never
+    reached the sash or the belt.'
+  OUT_OF_MASK_DRIFT_is_MEASURED_not_assumed: '8598 px changed outside the mask, maxdiff 151 (parent: 8574
+    px, maxdiff 132 -- the geometry is identical, so this is run-to-run noise, not a new effect). THE
+    MECHANISM IS CONFIRMED EXACTLY: the pad-crop box is x488-719 y458-705, and 8598 of 8598 out-of-mask
+    changed pixels fall INSIDE it, 0 outside. The drift is dense within ~20 px of the mask boundary and
+    gone by 30 px, which is the whole reason the prescribed C4'' ring is starved.'
+  scale30_clauses_hold: Goblin box (60..260, 430..1140) maxdiff 0. Board box (300..832, 660..1000) maxdiff
+    1 over 23 px. Both far outside the crop box; B1-B5 are untouched by construction and measured rather
+    than assumed.
+verdict_cut: 'NOT PROPOSED FOR THE CUT, AND NOT STAGED. The lane''s standing instruction was ''if it passes,
+  beat 08 finally has its grip -- stage pixels for cut assembly''. It does not pass: H1''s plausibility
+  half fails and the fill is 5x shard-dense against the material it replaced. review/ep2-demo-0820 beat
+  08 is unchanged and keeps ep2-b08-scale30-0820, which remains the best frame this beat has.'
+what_this_licenses_after_the_verdict: 'THE PRE-COMMITTED NEXT RUNG IS NOW WELL-MOTIVATED RATHER THAN MERELY
+  NEXT: strength 0.99 -> 0.70, one variable, everything else byte-identical. The reason it was NOT taken
+  after the parent was that the fault was a NOUN and strength does not choose nouns. That objection is
+  now discharged by measurement -- the noun is gone at 0.99, so what remains is OVER-DRAWING, and strength
+  is exactly the knob that governs how much the sampler is allowed to invent over its conditioning. A
+  second clause rides with it: the wedge fan and the second clasp are what 0.99 does with 10020 px of
+  freedom. IF 0.70 STILL DRAWS A SECOND CLASP, THE ROUTE CLOSES on the conclusion already written into
+  23: a tool with no spatial conditioning of any kind cannot be asked to erase a limb from a figure, and
+  beat 08''s grip goes back to txt2img with four measured samples saying why. TWO INSTRUMENT DEBTS, both
+  cheap and neither GPU work: (1) C4'' needs a CEILING on D, or a shard-rate clause beside it, because
+  it has now certified three streak artifacts; (2) every future C4'' call on a --pad-crop composite must
+  re-base its ring past the drift band and publish the annulus''s real-pixel fraction, because the prescribed
+  3-12 px ring is structurally starved on this pipeline and returns VOID every time.'

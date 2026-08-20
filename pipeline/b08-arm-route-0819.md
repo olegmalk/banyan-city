@@ -1466,3 +1466,162 @@ from a figure, and beat 08's grip goes back to the txt2img route with three
 measured samples saying why.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08.**
+
+## 24. The prompt WAS the lever — the goblin is gone, and the plate still fails (2026-08-20)
+
+`ep2-b08-nogoblin-0820`, rc=0, **9.7 s of render**, $0. One variable against
+`ep2-b08-eraseonly-0820`: the prompt. Same init sha `7cc1a4cb…`, same mask sha
+`8c94f140…`, same strength 0.99, same 40 steps, same cfg 7.5.
+
+### IT DID NOT GET THERE ON THE FIRST TRY, AND THE REASON IS WORTH MORE THAN THE RUNG
+
+The job was filed at 17:45 and was **dead at 17:48, rc=1, in its FIRST step,
+three seconds in: HTTP 404**. Not the recipe — the address.
+
+`derive_spec`'s retoken pass rewrites *every* string in a child, and this
+deriver asked for `("b08-eraseonly" → "b08-nogoblin")` to move the working
+directory and the User-Agent. It also hit the one string that had to keep
+naming the **parent**:
+
+```
+https://raw.githubusercontent.com/.../farm-out/ep2-b08-eraseonly-0820/
+                                  → .../farm-out/ep2-b08-nogoblin-0820/
+```
+
+— a directory nobody had published, because the init and the mask live under the
+run that produced them. The sha256 assertions were right, the filenames were
+right, the bytes were on `main`; the child was reading them from an address
+invented by a search-and-replace.
+
+**And §23 recorded the near-miss as a success.** It says *"`derive_spec` refused
+the init and fetch overrides as no-ops, which is the guarantee working."* That
+refusal was correct — the text offered was the parent's, byte for byte — but it
+was read as *"the fetch inherits fine"* when retoken had **already changed it**.
+A refusal that fires because your replacement equals the parent's original tells
+you nothing about what the child ended up carrying. **Generalisable: after a
+retoken, re-read the child's payload for strings that must still point at the
+PARENT. Published-artifact URLs are the whole class.**
+
+Fixed at the address, not the string: the same two files are now published under
+the child's own name too. Git stores one blob for identical content, so it costs
+two tree entries and makes every guard, the retoken and the sha assertion line
+up. Re-filed with `--backlog --again`, autofilled, ran clean.
+
+### THE ANSWER: YES, AND IT IS UNAMBIGUOUS
+
+Two samples put a goblin in this mask. Removing the goblin from the prompt
+removed it from the picture, completely, first try. Measured on the green
+channel, in-mask `G−R`:
+
+| | in-mask G−R mean | px > +20 | px > +40 |
+|---|---|---|---|
+| init (guard's own fist) | −28.59 | 0 | 0 |
+| **parent** eraseonly | **−2.83** | **1934** | 0 |
+| **this frame** | **−16.06** | **166** | 46 |
+| the real material around it (ring 35–45 px, 6840 px, 100 % untouched) | **−19.90** | **0** | 0 |
+
+The parent sat 17.1 levels off its own neighbourhood; this fill sits 3.8 off.
+The 46 strongly-green px are a single desaturated teal fringe (mean RGB
+112,159,143) along one shard edge at x603-638 y556-627 — a chromatic artifact on
+a hard edge, not skin.
+
+### AND THE PLATE STILL FAILS, ON THE OTHER HALF OF THE SAME CLAUSE
+
+H1 says the fist must be *deleted* **and** *replaced by plausible harness strap,
+cuff and shirt*. The first half passes: no skin-toned fist survives anywhere,
+by eye at 9x. The second half fails. The plate's own diagonal strap is **severed
+at the mask's top edge**, a **new brown strap segment carrying a NEW GOLD CLASP**
+is drawn across it, and the rest of the region is a radiating fan of hard white
+and black wedges. The prompt asked for "brown leather harness strap … brown
+cuff" and at 0.99 the sampler drew *another one of those*, with hardware.
+
+At 1x the frame reads fine — a strap-and-clasp cluster at the chest, the copied
+fist reading correctly at the board, the goblin untouched. At 4x it is an
+artifact. **That is worse than it sounds and better than the parent**: the
+failure has stopped being a *character* and become *over-drawing*.
+
+`EVIDENCE-b08-nogoblin-verdict-0820.png` — init / parent / child at 9x, and the
+copy at 7x.
+
+### C4' VOIDED A THIRD TIME, AND §23's PROPOSED FIX WAS BACKWARDS
+
+The prescribed call returned **`ring 120 real px, need 200`**; the parent's
+control run of the same call returns 148. §23 said the fix was to set the scored
+region **IN** from the mask boundary by more than the ring radius. **That is
+backwards and is withdrawn here** — moving the region inward moves its ring
+*deeper into repainted pixels*. The bar's own prediction ("4673 real px") was
+measured on the **init**, where nothing has changed yet, so it could never have
+been the number that matters.
+
+What works is to leave the region on the actual fill and push the **RING**
+outward past the pad-crop drift band; `assess(ring=…)` already takes it.
+Real-pixel density of the annulus, identical on both frames:
+
+| ring, px from the erase region | 3–12 | 13–22 | 20–30 | 30–40 | 35–45 |
+|---|---|---|---|---|---|
+| real (untouched) | 3.1 % | 7.9 % | 41.4 % | 99.1 % | **100.0 %** |
+
+At **35–45** — 6840 px, all real, so no survivor-biased subsample — this frame
+**PASSES: D 3.479, N 2.510, F 1.24** against D ≥ 0.45, N ≥ 0.25, F ≤ 2.60.
+Empirical null on 200 real windows of the same footprint at that ring: false-FAIL
+**13.0 %**, the fill at D pct 92.5, N pct 90.5, F pct 81.0.
+
+### THE INSTRUMENT FINDING: C4' HAS NOW CERTIFIED THREE STREAK ARTIFACTS
+
+The parent control passes the same re-based call at D 1.751, N 1.484, F 0.77 —
+**and it is a green goblin fist.** This frame passes at D 3.479 — and it is a
+wedge fan. C4' bars D from **below** and leaves it unbounded **above**, so a fill
+made of shards scores as "detailed".
+
+Shard rate — the fraction of fill px whose |grad| exceeds the 99th percentile of
+its own real ring:
+
+| | shard rate | near-black L<40 | near-white L>240 |
+|---|---|---|---|
+| the material this fill replaced | **1.82 %** | 242 | 535 |
+| parent's goblin fist | 2.79 % | 114 | 663 |
+| **this fill** | **9.27 %** | **925** | **1542** |
+
+**Five times the shard density of the plate it replaced, and D reads it as a
+pass.** F misses it too, because the wedges fan out in several directions at
+once and F only asks whether the fill is *more* directional than its material
+(1.24 — it is barely). §21 said "C4 is a smear detector"; the sharper statement
+is **C4' is a one-sided detector and its blind side is over-drawing.**
+
+### WHAT ELSE HELD, MEASURED
+
+* **H3 the digits SURVIVED** — three creases and the thumb legible at 9x. Not
+  free: the copy sits **inside** the pad-crop box (box y ends 705, copy spans
+  y 640-705) and read maxdiff 121 over 1598 px, against the parent's 55.
+  Legible is not untouched.
+* **B8 hair** maxdiff **0** over (500..640, 300..430); head outside the crop box.
+* **B6 wardrobe** — three garments; the mask never reached sash or belt.
+* **Out-of-mask drift** 8598 px, maxdiff 151 (parent 8574 / 132 — same geometry,
+  so run-to-run noise). **Mechanism confirmed exactly: the crop box is
+  x488-719 y458-705 and 8598 of 8598 out-of-mask changed px fall INSIDE it, 0
+  outside.** Dense within ~20 px of the mask boundary, gone by 30 — which is
+  precisely why the prescribed C4' ring is structurally starved.
+* **scale30 clauses** — goblin box maxdiff 0, board box maxdiff 1 over 23 px.
+
+### THE RUNG THAT FOLLOWS, AND WHY IT IS NOW EARNED
+
+**Strength 0.99 → 0.70.** §23 pre-committed it and §23 was right not to take it
+then: the fault was a **noun**, and strength does not choose nouns. That
+objection is now discharged by measurement. The noun is gone at 0.99, so what is
+left is **over-drawing** — and strength is exactly the knob that governs how far
+the sampler may invent over its conditioning. One variable, everything else
+byte-identical.
+
+**If 0.70 still draws a second clasp, the route closes** on the conclusion
+already written in §23: a tool with no spatial conditioning of any kind cannot be
+asked to erase a limb from a figure, and beat 08's grip goes back to txt2img with
+four measured samples saying why.
+
+**Two instrument debts, both cheap, neither of them GPU work:** (1) C4' needs a
+**ceiling** on D, or a shard-rate clause beside it; (2) every C4' call on a
+`--pad-crop` composite must re-base its ring past the drift band and **publish
+the annulus's real-pixel fraction**, because the prescribed 3-12 px ring is
+structurally starved on this pipeline and will VOID every time.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. No cut change, and
+nothing staged.**
