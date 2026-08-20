@@ -5666,9 +5666,9 @@ sigmas, two-stage and `--image-crf 10` are rung 1's. **The card's word `trunk` i
 NOT in the prompt: this plate has no trunk in it — the trunk is beat 03's — and
 the cover he leans out from is the tall grass already crossing the foreground.**
 
-**THREE OF FIVE JUDGED AND THEY AGREE. THE ENGINE PLAYS THE PEEK AS A YAW, NOT
-AS A LEAN.** On s1, s2 and s3 he rotates his head to profile, away from camera,
-and rotates back. Nobody translates: the head and shoulder do not travel
+**FOUR OF FIVE JUDGED AND THEY AGREE. THE ENGINE PLAYS THE PEEK AS A YAW, NOT
+AS A LEAN.** On s1, s2, s3 and s4 he rotates his head to profile, away from
+camera, and rotates back. Nobody translates: the head and shoulder do not travel
 laterally out past the grass and return, they pivot in place. This is rung 1's
 64.7 px "head swing" arriving again — **and rung 1's swing was always a rotation,
 which the ladder recorded as `the gaze was redirected by a head rotation`.**
@@ -5680,13 +5680,24 @@ translation does not get a translation.
 | s1 20260820 | ONE (away, back) | **yes** | shut | locked | held |
 | s2 20260821 | ONE (away-left, back) | **no** — settled by f090 | shut | locked | held |
 | s3 20260822 | ~TWO (away, back, away again) | **yes** | shut | locked | held |
+| s4 20260823 | ONE (away, back) | marginal — settled from f090 | shut | slight reframe, watch it | held |
 
-**s3 is the best of the three** and is the only one that satisfies the card's
+**s3 is the best of the four** and is the only one that satisfies the card's
 scoring line in spirit — head off the axis and back, twice, with the second trip
-unfinished at the last frame. P3, P4 and P5 hold on all three: mouth shut for
-121 frames, camera locked against the grass in the corners, one figure, no melt.
-**P4 did not fire and it was the pre-registered favourite** — the negative's
-camera block was under load for the first time on this beat and held.
+unfinished at the last frame. P3 and P5 hold on all four: mouth shut for 121
+frames, one figure, no melt. **P4 did not fire in the shape it was predicted in**
+— the negative's camera block was under load for the first time on this beat and
+no pan wore the lean's clothes; s4 alone shows a small reframe (he sits lower and
+larger in the last third) and it is logged rather than waved off, because a
+reframe that size on one seed of four is exactly what a next rung would chase if
+a second seed showed it.
+
+**THE SHAPE OF THE FAILURE IS THE TEMPO, NOT THE ACTION.** Three of the four
+give ONE out-and-back and then settle; only s3 starts a second. So the beat's
+remaining problem is not that the engine refuses the peek — it plays it every
+time — but that 121 frames at 24 fps buys one slow trip where the card asked for
+two. That was pre-registered as the second-most-likely outcome and its named
+follow-up is a TEMPO WORD, not a restage.
 
 **WHAT THIS SETTLES.** The restage was the right call and the wording route was
 correctly closed: pick A produces a repeatable, cuttable performance where two
@@ -5698,5 +5709,5 @@ exist. **No pick, no `plate_ack`, no cut swap** — the init is also the superse
 adult-man design, named up front in each spec's `the_design_note_up_front`, so a
 pass here is a fact about motion and staging and not a plate choice.
 
-**s4 and s5 are still on the card** and are the two that could still show a
-translation; the read above is three of five and says so.
+**s5 is still on the card** and is the last one that could show a translation;
+the read above is four of five and says so.
