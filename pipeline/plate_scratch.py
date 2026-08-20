@@ -6157,6 +6157,68 @@ REVS[(16, 2)] = {
         "dark, photorealism, 3d render"
     ),
 }
+# --------------------------------------------------------------------------
+# r2 SCORED, 2026-08-20, macbook4, seed 20260820, rc 0, $0.
+# farm-out/ep2-b16-mac-plate-0820/16-why-mac-plate-r2s1.png
+#
+# VERDICT: FAIL. `FAIL-STILL-HIS-FACE` FIRED, EXACTLY AS PRE-REGISTERED, AND IT
+# IS THE MORE USEFUL OUTCOME OF THE TWO. Still no leaf anywhere in the frame.
+# The goblin's head is if anything LARGER than r1's, squarely centred, sharp,
+# with blurred grass across the bottom third where the leaf should be.
+#   P1 leaf is the subject ..... FAIL. No leaf.
+#   P2 average leaf shape ...... UNSCORABLE for the second time.
+#   P3 goblin small, out of focus, not pulling focus .. FAIL. He is the shot.
+#   P4 field present ........... PASS.
+#
+# WHAT IT SETTLES, AND THE NEGATIVE RESULT IS WORTH MORE THAN THE PASS WOULD
+# HAVE BEEN. POSITION IS NOT THE MECHANISM HERE. The r1 block above diagnosed
+# the failure as `extreme close-up` sitting ahead of the person noun and called
+# that "the cause". Moving it back -- a PURE PERMUTATION, the same 73 tokens in
+# a different order, same host, same seed -- changed the composition not at all.
+# So the r1 diagnosis is RETRACTED as the cause. It may still be a real effect
+# somewhere; it is not what is holding beat 16.
+#
+# This is also the strongest form of the placement-law test anyone here has
+# run, and it comes back NEGATIVE on this beat. Every prior test of the law
+# (beats 05, 10, 15, 19 x2, 13, 03) added a clause, deleted one, or reworded
+# it, and this repo has been reading those as evidence that POSITION places.
+# Held to a fixed token multiset with only order moving, position placed
+# nothing. The law's seven wins are not overturned -- they changed the words,
+# and changing the words is what they measured -- but the version of it that
+# says "where a noun sits decides what it attaches to" does not survive this
+# frame, and any lane about to reorder a prompt should know that.
+#
+# WHAT IS LEFT, AND IT IS NOT A THIRD WORDING. Two independent draws at two
+# orderings, plus the 0814 round whose leaf only arrived at f40 with a
+# goblin-forward opening frame recorded as its shipping fault, are three votes
+# that this checkpoint will not put a leaf in front of this face at this
+# register. Beat 16's `done_when` is a RELATION -- "the leaf is the subject and
+# HE IS DEPTH" -- and beat 03 already established, and paid for, the rule that
+# a relation between a figure the sampler has placed and an object it draws
+# where it likes is no more a knob than a numeral is. Beat 03's relation was
+# COMPOSITED and it held on the first fire.
+#
+# SO THE NEXT RUNG IS THE COMPOSITE, AND ITS SHAPE IS NOT THE 4-FOR-4 ONE.
+# Written out here so the next lane does not cite a record that does not cover
+# it: beats 15, 19, 03 and 13 composited a SMALL plant INTO a plate -- 4.1% of
+# the frame on beat 13 -- and let a 0.30 pass make it belong. Beat 16 needs a
+# LARGE object drawn IN FRONT, over most of the frame. A 0.30 pass over 60-80%
+# of a picture is not an inpaint, it is a re-render, and a drawn polygon at
+# 800px has to carry venation and cel line weight that a 30px one never had.
+# That is `beat19_drop_composite.py`'s decal tell #5, "detail at the wrong
+# scale", approached from the opposite side. It is a real build with a real
+# risk and it is NOT fired here -- one lane, one variable, and this lane's
+# variable was the wording.
+#
+# THE CHEAPER THING TO TRY FIRST, NAMED AND NOT FIRED: the beat may not need a
+# leaf-filling frame at all. `done_when` is the founder's structure, but he has
+# never seen a beat-16 frame that obeys it, and canon.yaml
+# `sapling-cotyledon-shape` independently rules out "any leaf drawn as a
+# feature -- no leaf whose SHAPE is the subject of the shot". A wider restage
+# (both leaves, the plant as subject, him behind it) would satisfy the canon
+# and the beat's sense while dropping the clause the sampler keeps refusing.
+# THAT IS AN R4 RESTAGE, NOT A FIX, and it now has pixels to be asked on.
+# --------------------------------------------------------------------------
 
 
 def measure(pipe, text: str) -> tuple[int, bool]:

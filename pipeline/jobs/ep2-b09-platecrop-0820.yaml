@@ -1,0 +1,129 @@
+id: ep2-b09-platecrop-0820
+task: ep2-b09-platecrop-0820
+node: 002b-first-citizen
+beat: 9
+runner: local-mac
+priority: 8
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: the b09/b16 slate lane, 2026-08-20 -- filed AFTER the work ran, as the ownership record farm-out/ep2-b09-platecrop-0820
+  needs
+consumer: ep2-b09-cropmotion-0820, whose --src is this job's r1s3 output, and box_enqueue's refs check,
+  which must be able to name the reference set this plate was drawn with. That set is the parent's and
+  is carried here rather than re-asserted, because a crop conditions on nothing of its own.
+success: 'ALREADY MEASURED, and recorded in the sidecars beside the outputs rather than described here.
+  r1s3: head 25.5% -> 55.0% of frame height, 2.157x, face highpass sigma-1 11.79 -> 4.38, 45% of a native
+  57%-head close-up of the same beat. r2s2: 37.8% -> 55.0%, 1.454x, 13.73 -> 8.83, 90% of native. Both
+  were also OPENED and looked at, because this house has just had an instrument that ranked two clips
+  backwards. NO PICK and NO PROMOTION: a plate is a fixture, and beat 09''s adult read is an open R4 card.'
+why: 'beat 09''s wording ladder closed by measurement at eight renders and the work ladder named the replacement
+  instrument in one sentence: condition on the refs to get the hair, then recover the framing with a crop
+  pass rather than with words. This is that crop pass. It takes the parent''s own frames -- which won
+  the hair at 3 of 12 and lost the framing at 0 of 12, the parent''s pre-registered fail mode firing because
+  the refs depict two men at full length -- and buys the framing back geometrically.'
+est_minutes: 1
+needs: []
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: crop
+  argv:
+  - python3
+  - pipeline/beat09_plate_crop.py
+  - --all
+- name: publish
+  argv:
+  - git
+  - push
+  - origin
+  - <commit-tree over origin/farm-results-rtx5090>:refs/heads/farm-results-rtx5090
+artifacts:
+- farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r1s3.png
+- farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r1s3.yaml
+- farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png
+- farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.yaml
+- farm-out/ep2-b09-platecrop-0820/ep2-b09-platecrop-0820.sha256
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE
+  on an approved node: no voice, no motion, no episode assembly, no publication. `guards_CORRECTION_0816.what_this_releases`
+  governs and is unchanged: staged plates of the approved pair may be DRAWN; motion off a costume card
+  may not.'
+script_line: 'Beat 09 THE PAUSE (0:42-0:46): close on Guard 1''s face working through the thought, in
+  daylight.'
+already_ran:
+  when: '2026-08-20'
+  where: this Mac checkout, CPU only -- numpy and PIL, no model, no network
+  cost_usd: 0.0
+  published_to: origin/farm-results-rtx5090
+  note: This spec is a RECORD of work that has executed, not a plan. It is filed in pipeline/jobs so resolve_producer()
+    can name the directory's owner, and it is never enqueued.
+refs_are_the_parents_and_that_is_the_point: A crop applies no reference conditioning, no prompt and no
+  sampler, so the reference set that drew these pixels is the parent's refs-guards-twoinfield-nos2-0815
+  -- inherited through the steps this derivation carried from ep2-b09-cast-0817 before they were overridden,
+  and true of the bytes either way. Not on box_enqueue.CARD_REFS_DENYLIST, checked rather than assumed.
+source_frames:
+  r1s3: farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r1-w015-s3.png -- the one frame in the corpus carrying
+    near-black cropped hair, wire-rims and BOTH EYES OPEN at once; fails only on framing
+  r2s2: 'farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r2-w015-s2.png -- the largest head of the three c1
+    passes, so it needs only 1.45x: the easy end of the same instrument, kept as the control that gives
+    the softness curve two points'
+derivation:
+  parent: pipeline/jobs/ep2-b09-cast-0817.yaml
+  by: the b09/b16 slate lane, 2026-08-20
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - already_ran
+  - consumer
+  - owner
+  - refs_are_the_parents_and_that_is_the_point
+  - source_frames
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - frame_count_correction_0817
+  retokened:
+  - ep2-b09-cast-0817 -> ep2-b09-platecrop-0820
+  overrides_applied_and_asserted:
+    key:artifacts:
+    - key artifacts = ['farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r1s3.png', 'farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r1s3.yaml',
+      'farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png', 'farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.yaml',
+      'farm-out/ep2-b09-platecrop-0820/ep2-b09-platecrop-0820.sha256']
+    key:est_minutes:
+    - key est_minutes = 1
+    key:needs:
+    - key needs = []
+    key:needs_gpu:
+    - key needs_gpu = False
+    key:runner:
+    - key runner = 'local-mac'
+    key:steps:
+    - 'key steps = [{''name'': ''crop'', ''argv'': [''python3'', ''pipeline/beat09_plate_crop.py'', ''--all'']},
+      {''name'': ''publish'', ''argv'': [''git'', ''push'', ''origin'', ''<commit-tree over origin/farm-results-rtx5090>:refs/heads/farm-results-rtx5090'']}]'

@@ -3579,3 +3579,149 @@ is a coin flip on filename ordering, not a swap — the old file has to leave th
 directory *and* the index. And `build_site` copies only what is in the tree:
 force-add the media *before* running the gate, or `qa_local` reports broken links
 on `/` and it is right to.
+
+---
+
+## 2026-08-20, LATE AFTERNOON — THE LAST TWO SLATES: 09 AND 16, FORENSICS AND ONE RUNG EACH
+
+`review/ep2-demo-0820` is 19 footage beats and 2 slates. Neither slate had been
+worked this session. Both are classified here **(b) — attempted and failed with
+a named next rung** — and neither is what its own record said it was.
+
+| beat | what the record said blocked it | what actually blocks it |
+|---|---|---|
+| 09 | "reference-weight or a crop pass to reach the 55 % head… wants ONE SAMPLE" | **nothing, as of today.** The crop pass ran, $0, and the plate exists. What is left above it is an **open R4 card** that no init can answer. |
+| 16 | "the plant description itself is what failed… whether a canonical sapling description exists at all is the open question" | **that question was answered by the founder the next day and nobody cashed it in.** The real blocker is one level deeper and is now measured. |
+
+### BEAT 09 — THE PLATE BAR IS MET ON THE CLAUSE THAT WAS BLOCKING IT
+
+**The forensics found a frame nobody had looked at twice.** This file's sharpest
+line about beat 09 is that its clauses never co-occur — *"seed 20260817 has the
+eyes and a 48% head; seed 20260820 has a 56% head and shut eyes"*. That is true
+of the **Mac** rung and **it is not true of the corpus.**
+`09-the-pause-ipa-r1-w015-s3.png`, one of the twelve box IP-Adapter frames from
+08-17, carries in ONE picture: **near-black cropped hair** (a recorded c1 pass),
+**unmistakable wire-rims** (`cast_gate_closed_0816` asks for them by name),
+**both eyes open with visible irises**, and a **real grass field**. Its only
+failure is the head at **25.5 %** against a 55 % bar — the one condition that is
+not a property of the sampler at all. It was invisible because its rung was
+scored **0 of 12 on framing** and filed under a failure.
+
+**The rung this file named and did not fire has now fired.**
+`pipeline/beat09_plate_crop.py`, **$0, no GPU, no sampler**, and it has a
+**measured threshold**, which is the part worth stealing. Against a native
+57 %-head close-up of the same beat (`macr3s1`, face highpass sigma-1 **9.79**):
+
+| | head | upscale | face highpass σ1 | vs native |
+|---|---|---|---|---|
+| r1s3 | 25.5 % → 55 % | **2.157x** | 11.79 → **4.38** | **45 %** |
+| r2s2 | 37.8 % → 55 % | **1.454x** | 13.73 → **8.83** | **90 %** |
+
+**So crop buys framing cleanly from a ~38 % head and pays real softness from
+~25 %.** Both were also *opened and looked at*, because this file has just had
+to retire an instrument that ranked two clips backwards: **r1s3 holds its cel
+line by eye despite the number** and is the best beat-09 plate that exists;
+r2s2 is sharper and has a shut eye and mid-brown shaggy hair. **NO PICK, NO
+`plate_ack`, NO PROMOTION.**
+
+**The plate guard was satisfied, not waived, and that mattered here.**
+`guards_CORRECTION_0816.what_this_releases` forbids the shortcut by name —
+*"DO NOT FIRE MOTION OFF A COSTUME CARD, and do not write a `plate_ack` waiver
+to get past the plate guard — that is the defect that produced beat 08's
+unusable clips."* Both halves hold: this init is **not** a costume card (it is
+the approved guard on a real field — precisely the staged plate that entry says
+six beats were missing), and the guard reads it for real, because the plate was
+**published to `origin/farm-results-rtx5090`** by the same route the b03/b13
+sapcomp and b04 mac plates took today. `plate_problems` resolves it and passes
+it at **flatness 0.019 of 0.62**.
+
+**`ep2-b09-cropmotion-0820` is BACKLOGGED**, derived via `derive_spec.py` off
+`ep2-b09-faceturn-crf10-0819` with **one override pair** — `--src` and its
+asserted `--sha256`. Everything else is carried byte-identical, `--image-crf 10`
+included. `is_show_content: false` stands and the slate stays a slate.
+
+> **One thing the refs guard taught in passing.** It refused the first attempt
+> not on the plate but because **no spec owned the directory the plate was
+> published into** — "could not check is not fine". The fix was to make the
+> producer exist (`pipeline/jobs/ep2-b09-platecrop-0820.yaml`, derived from
+> `ep2-b09-cast-0817`, which is genuinely the parent because a crop conditions
+> on nothing of its own), **not** to waive with `plate_ack: "unresolved:"`.
+> **Worth knowing:** overriding `key:steps` on that producer dropped the argv
+> the guard reads refs out of, so it now reports *"used no reference set"* — a
+> weaker pass than the truth. The real set is
+> `refs-guards-twoinfield-nos2-0815` (**not** on `CARD_REFS_DENYLIST`, checked)
+> and the spec says so in prose. **A steps override is a refs override, silently.**
+
+**WHAT IS LEFT ON BEAT 09 IS NOT THE CARD'S.** The adult read is the **one open
+taste question on the board** (`/review/ep2-guards-0818`, since 08-17, "THE
+GUARDS READ ADOLESCENT"). No init fixes it, the adjective route is closed by his
+own 08-12 ruling, and **no second card is filed** — this beat is already inside
+that one. Owner: **the founder.**
+
+### BEAT 16 — THE OPEN QUESTION HAD BEEN ANSWERED FOR THREE DAYS
+
+`done-definitions` beats.'16' filed one question with the 08-16 rejection:
+*"whether a canonical sapling description exists at all"*. **He answered it on
+08-17** — *"the sapling 2 leaves are average leaves"*, now
+`canon.yaml sapling-cotyledon-shape`, which spells out the compliant phrasing.
+**No ep2-b16 job of any kind was filed between 08-14 and today.** Beat 16 also
+had **no draft in `plate_scratch.py` at all**, so the Mac filer could not reach
+it even if a lane had tried.
+
+And the 0814 wording, still live in `wave-drafts.yaml`, carried **two canon
+faults nobody had caught**: the leaf clause **failed to assert** a shape (`cotyledon`
+is compliant *vocabulary* and pins nothing — the vacancy law did the rest and a
+lobed palmate fig leaf arrived), and the cast was **`a small goblin boy`**, the
+killed child design, three days after `ep2-goblin-design-adult` was ratified.
+**No checker could catch either:** `check_canon_drift.py` reads
+`wave-drafts.yaml` and `pipeline/jobs/`, and a prompt that fails to ASSERT
+canon violates nothing.
+
+**Two samples ran on macbook4, both $0, and both FAIL — with the leaf variable
+never once reached.** r1 and r2 came back as an extreme close-up of the
+**goblin's head filling the frame**, sharp, with blurred grass where the leaf
+should be. **The 0814 job's own named risk — "the goblin pulling focus", which
+its r1 recorded as not having happened — fired at maximum, twice.**
+
+**r2 is the result worth keeping, and it is a negative one.** r1's failure was
+diagnosed as `extreme close-up` having been hoisted ahead of the person noun
+(my error: the block claimed to carry the 0814 composition and moved it). r2
+moved it back as a **PURE PERMUTATION — the same 73 tokens in a different
+order, same host, same seed** — and **the composition did not change at all.**
+
+> **This is the strongest form of the placement-law test this repo has run, and
+> it comes back NEGATIVE.** All seven prior wins (beats 05, 10, 15, 19 ×2, 13,
+> 03) **added, deleted or reworded** a clause. None held the token multiset
+> fixed and moved a chunk. Those seven stand — they measured what changing the
+> words does — but the reading that has been creeping in, *"where a noun sits
+> decides what it attaches to"*, does not survive this frame. **A lane about to
+> fix a composition by reordering should spend the 140 seconds knowing that.**
+
+**THE WORDING LADDER IS CLOSED AT THREE RUNGS** (0814, and today's two), and
+beat 16's `done_when` is a **RELATION** — "the leaf is the subject and **he is
+depth**" — which is the exact shape beat 03 established cannot be bought with
+words. **The next rung is the composite.** Its shape is **not** the 4-for-4 one
+and the record should not be cited as if it were: beats 15/19/03/13 composited a
+**small** plant **into** a plate (4.1 % of frame on b13) and let a 0.30 pass make
+it belong. Beat 16 needs a **large object drawn in front**, over most of the
+frame — a 0.30 pass over 60–80 % of a picture is a re-render, not an inpaint,
+and a polygon at 800 px must carry venation and line weight a 30 px one never
+did. That is decal tell #5 from the far side. **Named, costed, NOT fired** — one
+lane, one variable, and this lane's variable was the wording.
+
+**And the cheaper thing to try before that build, also not fired:** the beat may
+not need a leaf-filling frame at all. `sapling-cotyledon-shape` independently
+rules out *"any leaf drawn as a feature — no leaf whose SHAPE is the subject of
+the shot"*, and beat 16's `done_when` asks for exactly that. A **wider restage**
+— both leaves, the plant as subject, him behind it — satisfies canon and the
+beat's sense while dropping the clause the sampler has now refused three times.
+**That is an R4 restage, not a fix.** No card is filed today: it belongs behind
+the one open taste question, and unlike this morning **it now has pixels to be
+asked on**.
+
+### WHERE THE TWO SLATES STAND
+
+| beat | on disk | blocker | owner |
+|---|---|---|---|
+| 09 | judged crop plate at the 55 % bar (`farm-out/ep2-b09-platecrop-0820/`), motion **backlogged** | the adolescent read | **founder**, inside the existing `/review/ep2-guards-0818` card — no new card |
+| 16 | two judged plates, both FAIL (`farm-out/ep2-b16-mac-plate-0820/`) | wording closed at three rungs; needs the **large-object composite** (a build) or an **R4 restage** | **steward** for the build; **founder** only if the restage is taken |

@@ -1,0 +1,264 @@
+id: ep2-b09-cropmotion-0820
+task: ep2-b09-cropmotion-0820
+node: 002b-first-citizen
+beat: 9
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+owner: the b09/b16 slate lane, 2026-08-20 -- backlogged the same hour the plate was published to the results
+  branch, on an idle card
+consumer: 'The beat-09 SLATE in review/ep2-demo-0820, one of the cut''s last two. Not this clip -- is_show_content
+  stays false while the adult read is an open R4 card. What the slot buys is the answer to whether a CROPPED
+  plate survives i2v: if the softness of a 2.157x upscale holds across 121 frames, beat 09''s framing
+  axis is closed for good and every other beat blocked on head size inherits the route. If it does not,
+  reference-plus-crop is a still-only instrument and the beat needs the IP-Adapter arm re-shot tighter.'
+success: 'ONE 704x1280 mp4, 121 frames at 24 fps. THE BAR IS THE SOFTNESS QUESTION AND THE FRAMING IT
+  WAS BOUGHT WITH, and nothing else; cast and taste are explicitly out of scope. C1 THE FRAMING SURVIVES:
+  head bounding box on frame 1 measures at least 50% of frame height (the plate is 55%; the 704x1280 cover
+  crop preserves full height, so anything under 50 means the crop step moved the head). C2 THE INIT STILL
+  HOLDS: f001->f002 face-crop step under 20, the parent''s own pass threshold, which it met at 0.66. A
+  softer init is the one thing that could plausibly change this and that is why it is re-measured rather
+  than assumed. C3 THE SOFTNESS DOES NOT COMPOUND: highpass sigma-1 std over the face box on frame 121
+  is at least 70% of frame 1''s. A cropped init starts at 45% of a native plate''s detail; the failure
+  this clause catches is the sampler treating that softness as the subject and smearing further with every
+  frame. C4 THE FACE IS STILL DOING SOMETHING: face-crop interframe mean above 1.0 with motion in both
+  the first and last thirds, the parent''s measure, which read 2.155. Report N of 4 with each number beside
+  its threshold.'
+why: 'The parent settled that --image-crf 10 makes the init HOLD for 121 frames and said in the same breath
+  what it could not settle: it inherited an init that fails its own plate bar on framing, on a hand in
+  frame and on the adult read. Beat 09''s plate bar has now been met on the framing clause by geometry
+  rather than by words -- the wording ladder was closed by measurement at eight renders, and the instrument
+  the work ladder named instead (reference-plus-crop) ran today for $0 and reached 55% head from an IP-Adapter
+  frame that already carried near-black cropped hair, wire-rims and open eyes. This is the first beat-09
+  motion job whose starting picture is not a known-miscast one.'
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-cropmotion-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-cropmotion-0820\b09-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing
+    in bright daylight with deep tall grass behind him. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his
+    brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH
+    STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME
+    MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses,
+    one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft
+    steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b09-cropmotion-0820\b09-negative.txt: open mouth, talking, speaking, shouting, teeth,
+    tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different
+    man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver
+    hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down,
+    scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live
+    action, motion blur, text
+  C:\banyan-farm\ep2-b09-cropmotion-0820\b09-jobs-encode.json: '[{"beat": 9, "embeds": "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\b09-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\b09-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\b09-negative.txt"}]'
+  C:\banyan-farm\ep2-b09-cropmotion-0820\b09-jobs-render.json: '[{"beat": 9, "seed": 20260819, "embeds":
+    "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\b09-embeds.pt", "init": "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\b09-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b09-cropmotion-0820\\09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-cropmotion-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r1s3.png
+  - --sha256
+  - ba72dec824c6fe70102de313486f13a8f51ebcf0c3ac42e6b8a504fc10bada7d
+  - --out
+  - C:\banyan-farm\ep2-b09-cropmotion-0820\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-cropmotion-0820\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-cropmotion-0820\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-cropmotion-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-cropmotion-0820\bench-ep2-b09-cropmotion-0820.jsonl
+  - --bench-label
+  - ep2-b09-cropmotion-0820
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-cropmotion-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b09-cropmotion-0820/09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b09-cropmotion-0820/b09-init-704x1280.png\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/ep2-b09-cropmotion-0820/bench-ep2-b09-cropmotion-0820.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b09-cropmotion-0820.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b09-cropmotion-0820\09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
+- C:\banyan-farm\ep2-b09-cropmotion-0820\b09-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through
+  it, slowly." One man, one face, no second figure, no dialogue in this beat. This is a SILENT MOTION
+  CLIP on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+carried_byte_identical_from_the_parent: prompt and negative payloads, seed, 121 frames, 24 fps, 704x1280,
+  guidance 2.0, --distilled-sigmas, --two-stage, --image-crf 10, --offload sequential. The ONLY overrides
+  are --src and --sha256. Stated out loud per derive_spec's CARRIED VERBATIM convention rather than left
+  to be inferred from a diff.
+init_provenance:
+  plate: farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r1s3.png
+  published_to: origin/farm-results-rtx5090
+  sha256: ba72dec824c6fe70102de313486f13a8f51ebcf0c3ac42e6b8a504fc10bada7d
+  derived_from: farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r1-w015-s3.png, an 08-17 box IP-Adapter frame
+  operation: pipeline/beat09_plate_crop.py -- crop box [223,9,609,573] of 832x1216, LANCZOS to 832x1216,
+    upscale 2.157x. No sampler, no model, no GPU. Chin placed at 0.57 of frame height to reproduce the
+    native close-up's composition rather than centring the head.
+  measured:
+    head_frac_source: 0.255
+    head_frac_after: 0.55
+    face_highpass_sigma1_before: 11.79
+    face_highpass_sigma1_after: 4.38
+    pct_of_native_closeup_control: 45.0
+    control: farm-out/ep2-b09-mac-plate-0819/09-the-pause-mac-plate-r3s1.png
+  no_plate_ack_on_purpose: guards_CORRECTION_0816 forbids a plate_ack waiver on this beat family by name.
+    The plate was published to the branch the guard reads instead, and box_enqueue.plate_problems resolves
+    it and passes it at flatness 0.019 of 0.62.
+is_show_content: false
+is_show_content_why: The framing clause of beat 09's plate bar is met for the first time and TWO of its
+  clauses are not. The adult read is an open R4 card (/review/ep2-guards-0818) and a clip inherits its
+  plate's cast defects frame for frame; the crop cannot change how old he looks. This is an INIT MEASUREMENT
+  and must never reach a cut. The beat-09 slate stays a slate.
+pre_registered_fail_modes:
+  FAIL-SOFT-COMPOUNDS: NAMED AS THE MOST LIKELY. The init is a 2.157x upscale at 45% of a native plate's
+    high-frequency energy. If i2v reads that as the subject's own texture, C3 fails and the clip gets
+    progressively mushier. If it fires, reference-plus-crop is a STILLS instrument and the next rung is
+    the IP-Adapter arm re-shot at a tighter framing so the crop starts from ~38% and only needs 1.45x
+    -- the ratio measured today at 90% of native.
+  FAIL-CROP-MOVES-THE-HEAD: cover_crop.py takes 832x1216 to 704x1280 by cropping WIDTH (target aspect
+    0.55 against the source's 0.684) and keeping full height, so the 55% head should be preserved exactly.
+    C1 exists because 'should' is not 'measured', and this beat has already lost a rung to a framing claim
+    that was carried in prose and moved in the string.
+  FAIL-COLLAPSE-RETURNS: The parent's crf-10 finding was measured on a DIFFERENT init. If C2 fails here,
+    the finding was plate-dependent, which would be a correction to a result this repo has already generalised
+    to every i2v job on the card.
+derivation:
+  parent: pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml
+  by: the b09/b16 slate lane, 2026-08-20
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - carried_byte_identical_from_the_parent
+  - consumer
+  - init_provenance
+  - is_show_content
+  - is_show_content_why
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - is_show_content
+  - is_show_content_why
+  - pass_clauses
+  - pre_registered_fail_modes
+  - the_comparison
+  - the_performance_that_survived
+  - verdict
+  - what_this_does_NOT_settle
+  - what_this_licenses
+  - what_this_settles_AND_IT_IS_NOT_ONLY_BEAT_09
+  retokened:
+  - 09-the-pause-ipa-r2-w015-s2 -> 09-the-pause-platecrop-r1s3
+  - ep2-b09-faceturn-crf10-0819 -> ep2-b09-cropmotion-0820
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (55a56b8faa5c1c8abcd3cc7306800a616e91210a65995b498e0b9a5e191e0e8e -> ba72dec824c6fe70102de313486f13a8f51ebcf0c3ac42e6b8a504fc10bada7d)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b09-cast-0817\09-the-pause-platecrop-r1s3.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r1s3.png)
+  carried_verbatim_by_the_callers_own_hand: 'is_show_content -- authored as `extra` but byte-identical
+    to the parent''s value under the same name. Recorded rather than implied: a pre-registered bar carried
+    unchanged is legitimate, and it should say so.'
