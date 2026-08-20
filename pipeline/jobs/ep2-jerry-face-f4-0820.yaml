@@ -1,0 +1,215 @@
+id: ep2-jerry-face-f4-0820
+task: ep2-jerry-face-f4-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 28
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-20 night
+consumer: THE JERRY LoRA SET, HELD. A frame that passes T1-T3 and T8 with a face on it is the first trainable
+  full-body frame this project has produced; the close mac plates carry the face and no reliable proportion,
+  and the reference-route frames so far carry the proportion and no face. No beat plate.
+success: ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale 1.0 with f3's wording PLUS `blank
+  eyes`, and nothing else. f3 drew a real face -- mouth, ears, shading, modelling -- on a lean 6-head
+  body, and failed T1 on drawn pupils and T2 on a small nose. `blank eyes` is the single tag the wedge
+  measured as 'the whole game' for T1, and this asks whether it can be added to a wording that draws a
+  face without collapsing it back into a mask. Scored on T1 (blank eyes), T2 (no human nose), T3 (no age
+  modelling), T8 (4.5+ heads) AND on P1-P4 -- brow, muzzle, mouth, shading. This is the first rung where
+  a frame can pass both halves.
+why: 'RUNG f4: f3''s wording PLUS `blank eyes`, and nothing else. f3 drew a real face -- mouth, ears,
+  shading, modelling -- on a lean 6-head body, and failed T1 on drawn pupils and T2 on a small nose. `blank
+  eyes` is the single tag the wedge measured as ''the whole game'' for T1, and this asks whether it can
+  be added to a wording that draws a face without collapsing it back into a mask.
+
+  f1 (drop `thick eyebrows`) and f2 (`no nose` -> `snout`) both came back the SAME BLANK EGG as n1 --
+  one tag cannot reach the face at this framing. f3, the struck tile wording at the same skeleton, came
+  back with a mouth, ear flanges, facial shading and a lean 6-head body, and failed T1 and T2 on drawn
+  pupils and a small nose. So the face IS reachable at full body and the subtractive recipe is what flattens
+  it. This walks the two clauses that matter back in, one at a time, onto the wording that works.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryface-f4-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    lean wiry adult goblin man, green skin, bald head, patchwork cloak, blank eyes, standing, arms at
+    sides, in tall grass, full body
+  C:\banyan-farm\jerryface-f4-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT.\
+    \ The job dirs on this card carry a\n# hand-staged src\\pipeline\\controlnet_plate.py and nothing\
+    \ else --\n# jerrytile-p04-0820\\src holds exactly one file -- so a hint that is\n# not fetched is\
+    \ a job that dies after the queue has claimed it.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryface-f4-0820\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\")]\nfor name, dst, sha in want:\n\
+    \    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as\
+    \ r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n  \
+    \      print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n     \
+    \   raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n\
+    \    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryface-f4-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryface-f4-0820\src
+  - --repo-commit
+  - 8b1dd656324509562b2d65c35f677505b2375f89
+  - --task
+  - ep2-jerry-face-f4-0820
+  - --arm
+  - posehint
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19-0820.png
+  - --control-sha256
+  - 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --prompt-file
+  - C:\banyan-farm\jerryface-f4-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryface-f4-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerryface-f4-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of exactly\
+    \ this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryface-f4-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryface-f4-0820\"\nctl_dir = \"C:/banyan-farm/jerryface-f4-0820/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-face-f4-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    # The HINT travels with the frame: it is the frame's condition, and a\n# reader scoring whether the\
+    \ net read it needs to see it at the same\n# pixel columns.\nfiles = sorted(glob.glob(out_dir + \"\
+    /ep2-jerry-face-f4-0820-posehint.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n\
+    \               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"\
+    /jerry-skel-h19-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-face-f4-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 5 else 1)"
+artifacts:
+- C:\banyan-farm\jerryface-f4-0820\out\ep2-jerry-face-f4-0820-posehint.png
+bar: 'BOTH HALVES, and this is the first rung that can pass both.
+
+  PRESENCES: P1 brow bar, P2 forward muzzle, P3 a mouth line, P4 facial shading. f3 scored 2 of 4; n1,
+  f1 and f2 scored 0 of 4.
+
+  ABSENCES: T1 no iris and no pupil -- f3''s hard fail. T2 no human nose bridge, tip or nostrils -- f3''s
+  second fail. T3 no age modelling. T8 4.5 heads or better.
+
+  PASS is 2 of 4 presences with T1, T2, T3 and T8 all intact. Nothing has ever scored that.'
+failure_predicted_in_advance: 'THE THING I EXPECT AND DO NOT WANT: `blank eyes` is a strong attractor
+  and may drag the whole face back to the mask rather than only the eyes -- the wedge''s own finding was
+  that it is ''the whole game'', and a tag that decides a face is a tag that can flatten one. If f4 returns
+  the egg, the reading is that the subtractive tags are not additive with a descriptive wording and the
+  two dialects cannot be mixed; the route then is IP-ADAPTER off the tile for the FACE over an openpose
+  skeleton for the BODY -- attribute instrument and geometry instrument each doing the job the record
+  says it does, which is where Sec 11 and Sec 13 pointed all along.
+
+  f5 IS THE RISKIER OF THE TWO and is filed anyway because if f4 works and f5 does not, that isolates
+  `no nose` as the flattener, which is worth a rung.'
+one_sample_rule: Two rungs, one variable each, ~20 s a render, on a card whose queue this lane is already
+  feeding. Round 2 of 2 on the face-at-full-body question; if neither passes, the stop gets written and
+  training stays held rather than forced.
+the_one_variable: f3's wording PLUS `blank eyes`, and nothing else. f3 drew a real face -- mouth, ears,
+  shading, modelling -- on a lean 6-head body, and failed T1 on drawn pupils and T2 on a small nose. `blank
+  eyes` is the single tag the wedge measured as 'the whole game' for T1, and this asks whether it can
+  be added to a wording that draws a face without collapsing it back into a mask.
+the_rung_this_is_one_variable_from: ep2-jerry-face-f3-0820
+derivation:
+  parent: pipeline/jobs/ep2-b08-posenet-sample-0819.yaml
+  by: pipeline/derive_jerry_face_fullbody_0820.py (f4/f5 addendum)
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - licence_note
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - observed_not_scored
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - b08pose-0819 -> jerryface-f4-0820
+  - b08-openpose-0819 -> jerry-skel-h19-0820
+  - ep2-b08-posenet-sample-0819 -> ep2-jerry-face-f4-0820
+  overrides_applied_and_asserted:
+    argv:--control-sha256:
+    - step posehint --control-sha256 (3fe4eacc56042ef6ae01d425b922918ae2287fde124a51f6c76718e64ddd7662
+      -> 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c)
+    argv:--repo-commit:
+    - step posehint --repo-commit (161273f6f20452e87dede2c2a4b5b43b95e73179 -> 8b1dd656324509562b2d65c35f677505b2375f89)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 3
+    key:priority:
+    - key priority = 28
+    payload:negative.txt:
+    - payload negative.txt (275 -> 224 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 184 chars)
+    seed:
+    - step posehint --seed (20260819 -> 20260823)
+  seed: 20260823
