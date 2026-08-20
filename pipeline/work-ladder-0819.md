@@ -5402,3 +5402,89 @@ sits on the *right-hand* side of the 08-19 split and does not belong there.
 > none of them is in `farm-out/` — and **nothing has been touched**: they are
 > another lane's uncommitted files and this lane does not edit those. b02 lane:
 > re-read `canon.yaml` `correction_2026_08_20` before you enqueue.
+
+### THE RECIPE EXISTS. v6 draws the B tile's creature at a close-up, on purpose.
+
+**Eight recipes, one seed, at beat 04's framing — the crop that has produced a
+human male every single time.** 9.6 s a render, $0, on an idle card. Pixels:
+`review/ep2-goblin-design-0819/WEDGE-TILEREAD-0820.png`.
+
+| rung | what moved | verdict |
+|---|---|---|
+| v0 | the canon string, CLOSE | **FAIL** — big human nose, iris eye, human ear |
+| v1 | the canon string, WIDE | n/a — the face is too small to score, *which is the point* |
+| v2 | `1boy`, no feature tags | **FAIL** — human eye and lid, human nose, human ear |
+| v3 | no count tag at all | **FAIL** — swings to a **CHILD**: big iris eyes, eyelashes |
+| v4 | `1other` | **FAIL** — unchanged |
+| v5 | + `blank eyes, tsurime, jitome` | **NEAR** — blank white eyes arrive; round, not slits; a nose nub stays |
+| **v6** | + `no nose, closed mouth, :\|, expressionless` | **PASS — T1-T4, all four** |
+| v7 | + `two-tone skin, shiny skin, no eyebrows` | **REGRESS** — a PINK PATCH on the skull |
+
+**THE RECIPE, and every token in it is a Danbooru tag with a post count behind it:**
+
+```
+masterpiece, best quality, very aesthetic, 1other, solo, colored skin,
+green skin, bald, patchwork cloak, blank eyes, tsurime, jitome, no nose,
+closed mouth, :|, expressionless, <framing>
+neg: lowres, worst quality, low quality, text, watermark, pointy ears,
+long pointy ears, elf, monster boy, pointy nose, dot nose, human face,
+wrinkled skin, old man, thick eyebrows, hair, beard, child, chibi,
+grey skin, pale skin, 2boys
+```
+
+**Three things this settles that were argued about all evening:**
+
+1. **AXIS A IS A DEAD LEVER.** `1boy` / no count tag / `1other` changed nothing
+   about the face, and dropping the count tag made it *worse* (a child). That
+   was the outside research's own top recommendation and the pictures say no.
+2. **THE EAR ARRIVED WITHOUT BEING ASKED FOR.** Danbooru has no tag for the
+   tile's short low flange, so v6 could not request one — and it drew one
+   anyway, because nothing asked for a pointy ear and both spike tags are
+   negated. Absence plus suppression was enough. That is worth more than any
+   tag would have been.
+3. **`blank eyes` IS THE WHOLE GAME AND `no nose` IS THE SECOND HALF.** v5
+   alone gets the eyes; v6 adds the nose and mouth and the face stops being a
+   man's. Predicted in the spec before the render, and it landed.
+
+**A DEFECT NOBODY WAS LOOKING FOR, found by looking:** `patchwork cloak` **puts
+patchwork on the skull** — stitch marks and a red patch on the head in six of
+eight rungs. A costume tag bleeding onto anatomy. Six follow-on rungs are on the
+card now (`ep2-b04-tilefix-w1..w6-0820`): w1 negates it, w2 renames the costume,
+w3 isolates the two-tone tag v7 never actually tested, and w4/w5/w6 ask whether
+the recipe survives a seated, a running and a wide body.
+
+> **AND THE PUBLISH STEP LIED ABOUT ALL EIGHT.** Every render exited rc=0 and
+> every job exited rc=1. The publish glob inherited from the parent looks for
+> `<task>-hintskel.png`; `controlnet_plate.py:492` writes `<task>-<arm>.png` and
+> the arm is `nocontrol`. Eight finished pictures sat on the box while the queue
+> said failure, and they had to be copied off by hand. Fixed in the w-series.
+> **THE SAME BUG IS LIVE IN THE SIX UNCOMMITTED `ep2-b02-adultplate-*` SPECS.**
+> They will render perfectly and publish nothing. b02 lane: fix the glob before
+> you file, and re-read `canon.yaml` `correction_2026_08_20` before you file at all.
+
+### The Jerry LoRA set, re-curated against the tile — gate 1 discharged, and it does not unblock training
+
+`pipeline/lora/curation-tile-0820.yaml`, pixels in
+`review/ep2-goblin-design-0819/LORA-RECURATION-0820.png`. All 31 frames read at
+1:1 against the tile:
+
+- **15 REJECT** on a human nose, human eyes or both. **The entire beat-20 family
+  is ten of them** — a third of the set, uniformly the man-read, one an outright
+  old man with wrinkles and jowls. Those ten alone would have taught the trigger
+  token a human face.
+- **9 fail on THE EARS ALONE** and are otherwise tile-faithful.
+- **7 KEEP.**
+
+**The ear is what decides whether the set is trainable, and this is the part that
+is not obvious.** Danbooru cannot name the tile's ear, so no prompt will ever ask
+for it — **the LoRA is the only instrument that can teach it**, and that only
+works if the training set contains none of the spikes. So the nine near-misses
+cannot be quietly kept as "close enough": including them trains the exact defect
+the LoRA exists to fix.
+
+**Which leaves seven frames in FOUR poses** (b14 kneel ×2 seeds, b15 sit ×2, b19
+seat ×3). That trains a pose, not a character, and a pose-locked character LoRA
+is worse than none because it looks like it works on the beat it was trained on.
+**`train-jerry-0820` stays held**, and the gate is now a number instead of a
+hope: file when a tile-passing recipe has produced pose breadth. w4/w5/w6 are
+that, running now.
