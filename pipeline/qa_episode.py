@@ -36,6 +36,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
 REPO = Path(__file__).resolve().parent.parent
 WIDTH, HEIGHT = 720, 1280
 CHROME_BAND = 0.22          # platform UI safe area (bottom fraction)
@@ -311,6 +313,53 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
                if band_hits else "", warn=True)
     except ImportError:
         record(ep, "captions clear chrome band", True, "PIL unavailable — skipped", warn=True)
+
+    # --- playback rate ---
+    # THE GATE HOLE OF 2026-08-20, CLOSED. A composite whose sidecar honestly
+    # said `model: none` (no sampler ran) was misread as a held still and
+    # STRETCHED to fill its slot: five seconds of cold open at 0.53x. Nothing
+    # here caught it, and nothing here could have — the file's sha, size,
+    # duration, loudness, links and routes are all identical whether the
+    # footage inside plays at 1x or at half speed. Duration is the wrong
+    # instrument too: a stretch fills the SAME slot, so the master's runtime
+    # does not move by a millisecond.
+    #
+    # What identifies it is the FILL PATH, which only the assembler knows, so
+    # the assembler now writes it per beat and this reads it back. Stretching
+    # is legitimate for exactly one thing — a hold_still product, a computed
+    # camera move with no true frame rate. Anything that declares its own `fps:`
+    # is footage and must never be stretched.
+    meta = video.with_suffix(video.suffix + ".meta.yaml")
+    rows = []
+    if meta.exists():
+        try:
+            rows = (yaml.safe_load(meta.read_text(encoding="utf-8")) or {}).get("sources") or []
+        except yaml.YAMLError:
+            rows = []
+    graded = [r for r in rows if isinstance(r, dict) and r.get("fill")]
+    if not graded:
+        record(ep, "no footage time-stretched", True,
+               "assembler recorded no fill modes — re-assemble to grade this "
+               "(render_t3 writes `fill:` per beat since 2026-08-20)", warn=True)
+    else:
+        bad = []
+        for r in graded:
+            if r.get("fill") != "stretch":
+                continue
+            names = [n for n in str(r.get("clip", "")).split("+") if n.endswith(".mp4")]
+            for n in names:
+                sc = (clips_dir / (n + ".meta.yaml")) if clips_dir else None
+                declares_fps = bool(sc and sc.exists()
+                                    and re.search(r"^\s*fps\s*:\s*[0-9]",
+                                                  sc.read_text(encoding="utf-8", errors="replace"), re.M))
+                if declares_fps:
+                    bad.append(f"beat {r.get('beat')} {n} "
+                               f"({r.get('clip_s')}s stretched into {r.get('slot_s')}s)")
+        record(ep, "no footage time-stretched", not bad,
+               "; ".join(bad) if bad
+               else f"{len(graded)} beats graded, "
+                    f"{sum(1 for r in graded if r.get('fill') == 'stretch')} stretched "
+                    "(held stills only)")
 
     # --- manifests ---
     if clips_dir and clips_dir.is_dir():

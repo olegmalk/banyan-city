@@ -287,8 +287,15 @@ def main():
   fig growing in slow motion for nine seconds. The composite's sidecar honestly says
   <code>model: none</code> (no sampler ran), and the assembler read that as “this is a still with a
   computed zoom, so it may be stretched”. A composite is footage. Fixed: a clip that declares its
-  own frame rate is never treated as a still. The demo cut on disk still has the stretched version;
-  that is the b01 lane's to re-run and they have been told.</p>
+  own frame rate is never treated as a still.</p>
+  <p><strong>The cut above is the fixed one, measured and not assumed:</strong> beat 01's last
+  moving frame is at <b>3.79&nbsp;s</b>, inside its own 5.04&nbsp;s clip. Stretched, the motion
+  would have run past 7&nbsp;s. The demo cut was re-assembled by the b01 lane and is also fixed.</p>
+  <p><strong>What this cost us is worth more than the fix, and it is on the fault list below.</strong>
+  Every gate passed the half-speed cut: the licence gate, the sha recheck, qa_local's 83 routes,
+  qa_episode's 15 checks. A clip at 0.53&times; hashes, serves, links and measures exactly like one
+  at full speed. It was caught by a person reading a log line. <b>qa_episode now asserts playback
+  rate</b> so the next one is caught by the gate instead.</p>
 </div>
 
 <h2>Every beat, and what is wrong with it</h2>

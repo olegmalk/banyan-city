@@ -260,6 +260,9 @@ sources:
   slug: COLD OPEN — 0:00–0:06
   clip: 01-cold-open-COMP-chroma-s20260840.mp4
   audio: 01-vo.mp3
+  fill: hold
+  clip_s: 5.042
+  slot_s: 9.47
   voice_engine: chatterbox-0.5B
   platform: local-mac (CPU, no GPU)
   model: none — no sampler ran for this clip
@@ -268,6 +271,9 @@ sources:
   slug: THE SPRINT — 0:06–0:11
   clip: 02-the-sprint-b02-anchor-s20260834-0817.mp4
   audio: none
+  fill: once
+  clip_s: 4.042
+  slot_s: 4.04
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
   cost_usd: 0.0
@@ -275,6 +281,9 @@ sources:
   slug: BAD COVER — 0:11–0:16
   clip: 03-bad-cover-LTX-midend-s20260821-0820.mp4
   audio: 03-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 5.04
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -283,6 +292,9 @@ sources:
   slug: THE FOOTNOTE — 0:16–0:22
   clip: 04-the-footnote-b04-refire-0814.mp4
   audio: 04-vo.mp3
+  fill: hold
+  clip_s: 4.042
+  slot_s: 6.16
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -291,6 +303,9 @@ sources:
   slug: THE PATROL — 0:22–0:27
   clip: 05-the-patrol-b05-standB-trim.mp4
   audio: 05-vo.mp3
+  fill: once
+  clip_s: 4.917
+  slot_s: 4.92
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -299,6 +314,9 @@ sources:
   slug: THE CLIPBOARD — 0:27–0:34
   clip: 06-the-clipboard-b06-scene-0814r-trim.mp4
   audio: 06-vo.mp3
+  fill: hold
+  clip_s: 1.917
+  slot_s: 6.45
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -307,6 +325,9 @@ sources:
   slug: CONFISCATE — 0:34–0:37
   clip: 07-confiscate-b07-point-crf10-0819.mp4
   audio: 07-vo.mp3
+  fill: once
+  clip_s: 4.042
+  slot_s: 4.04
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -315,6 +336,9 @@ sources:
   slug: INSIDE HIM — 0:37–0:42
   clip: 08-inside-him-b08-twohander.mp4
   audio: 08-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 4.12
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -323,6 +347,9 @@ sources:
   slug: THE PAUSE — 0:42–0:45
   clip: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
   audio: 09-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 3.88
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -331,6 +358,9 @@ sources:
   slug: NO FORM — 0:45–0:50
   clip: 10-no-form-b10-pairB-trim.mp4
   audio: 10-vo.mp3
+  fill: once
+  clip_s: 4.042
+  slot_s: 4.08
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -339,6 +369,9 @@ sources:
   slug: THEY LEAVE — 0:50–0:55
   clip: 11-they-leave-b11-w4-s20260903-0817.mp4
   audio: 11-vo.mp3
+  fill: hold
+  clip_s: 4.042
+  slot_s: 4.56
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -347,6 +380,9 @@ sources:
   slug: RELATED — 0:55–1:00
   clip: 12-related-b12-tightB-untrimmed.mp4
   audio: 12-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 4.68
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -355,6 +391,9 @@ sources:
   slug: THE SHADE — 1:00–1:04
   clip: 13-the-shade-b13-refire-0814.mp4
   audio: 13-vo.mp3
+  fill: once
+  clip_s: 4.042
+  slot_s: 3.56
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -363,6 +402,9 @@ sources:
   slug: THE DEFENSE — 1:04–1:10
   clip: 14-the-defense-b14-macplate-r1s1-0818.mp4
   audio: 14-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 5.08
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -371,6 +413,9 @@ sources:
   slug: GOOD LISTENER — 1:10–1:15
   clip: 15-good-listener-LTX-mid-s20260821-0820.mp4
   audio: 15-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 5.04
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -379,6 +424,9 @@ sources:
   slug: WHY — 1:15–1:22
   clip: slate (no footage yet)
   audio: 16-vo.mp3
+  fill: slate
+  clip_s: 0.0
+  slot_s: 8.6
   voice_engine: chatterbox-0.5B
   platform: none
   model: none
@@ -387,6 +435,9 @@ sources:
   slug: GOODBYE — 1:22–1:27
   clip: 17-goodbye-b17-navy-crf10-0819.mp4
   audio: 17-vo.mp3
+  fill: hold
+  clip_s: 4.042
+  slot_s: 4.67
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -395,6 +446,9 @@ sources:
   slug: THE DECISION — 1:27–1:34
   clip: 18-the-decision-b18-tremble-s20260871.mp4
   audio: 18-vo.mp3
+  fill: hold
+  clip_s: 5.042
+  slot_s: 10.95
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -403,6 +457,9 @@ sources:
   slug: THE DROP — 1:34–1:39
   clip: 19-the-drop-dropcomp-0819.mp4
   audio: none
+  fill: once
+  clip_s: 5.0
+  slot_s: 5.0
   platform: local-deterministic (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)
   model: none -- no model was loaded
   cost_usd: 0.0
@@ -410,6 +467,9 @@ sources:
   slug: EVIDENCE — 1:39–1:42
   clip: 20-evidence-LTX-macplate-r1s1.mp4
   audio: 20-vo.mp3
+  fill: once
+  clip_s: 5.042
+  slot_s: 3.74
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -418,6 +478,9 @@ sources:
   slug: THE ANSWER — 1:42–1:47
   clip: 21-the-answer-b21-daylight-0814.mp4
   audio: none
+  fill: once
+  clip_s: 5.042
+  slot_s: 5.0
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
   cost_usd: 0.0

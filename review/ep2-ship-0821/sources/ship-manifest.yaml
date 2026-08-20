@@ -13,7 +13,7 @@
 # below that is a steward pick says so, and carries its one-line veto.
 
 cut: review/ep2-ship-0821/ep2-ship-0821.mp4
-sha256: 20e416c2da375bcb634496f27855ac9ced2185220fb3eb7dc56fbab5c9e836ee
+sha256: 5a68646d24b24bf72b25f1a75cc9a5747c66d3b3c4e3757d2803700978c1a27d
 duration_s: 116.33
 size: 720x1280
 fps: 24
@@ -79,11 +79,25 @@ a_bug_this_assembly_found_and_fixed_because_it_was_in_the_cold_open:
     ep2-demo-0820 was re-assembled with the same clip before the fix existed,
     so the demo cut on disk has the stretched cold open too. Reported to the
     b01 lane rather than fixed inside their directory.
+  the_gate_that_now_catches_it: >-
+    EVERY GATE PASSED THE HALF-SPEED CUT — the licence gate, the proof-receipt
+    sha recheck, qa_local's 83 routes and qa_episode's 15 checks. A clip at
+    0.53x hashes, serves, links and measures exactly like one at full speed, and
+    duration is the wrong instrument because a stretch fills the SAME slot. What
+    caught it was a person reading a log line. So render_t3 now RECORDS the fill
+    path per beat in the master's sidecar (`fill: slate|once|hold|stretch|
+    pingpong`, with clip_s and slot_s), and qa_episode asserts on it: a beat may
+    only be stretched if its clip declares no `fps:`. Proven to fail, not just
+    to pass — poisoning beat 01's row to `stretch` makes qa_episode exit 1 with
+    "beat 1 ... (5.04s stretched into 9.46s)". qa_episode is 16 checks now.
   verified_after_the_fix: >-
-    Beat 01 plays its 5.04 s once and holds to 9.46 s. Fill window 5.10-9.40 s:
-    0 moving pairs of 103, 42 bit-identical, max mean delta 0.006. Looked at,
-    not only measured — green nub at 0.2 s, still green at 2.5 s, full purple
-    fig at 4.9 s, held at 7.0 s.
+    Beat 01 plays its 5.04 s once and holds to 9.46 s. Measured on the SHIPPED
+    master: its last moving frame is at 3.79 s, inside its own clip — stretched,
+    the motion would have run past 7 s. Fill window 5.10-9.40 s: 0 moving pairs
+    of 103, 42 bit-identical, max mean delta 0.006. Looked at, not only measured
+    — green nub at 0.2 s, still green at 2.5 s, full purple fig at 4.9 s, held
+    at 7.0 s. The master's own sidecar now grades all 21 beats: 14 once, 6 hold,
+    1 slate, ZERO stretched.
 
 # ---------------------------------------------------------------- the rules --
 
@@ -726,7 +740,7 @@ master:
   loudness: measured -16.2 LUFS, re-mastered -0.80 dB to -16.7 LUFS. -17 is
     unreachable without squashing the peaks further; render_t3 said so and
     stopped rather than squashing.
-  container: h264 720x1280 24 fps, aac 44.1 kHz stereo, 12,794,268 bytes.
+  container: h264 720x1280 24 fps, aac 44.1 kHz stereo, 12,793,567 bytes.
 
 # ---------------------------------------------------------- what this is not --
 

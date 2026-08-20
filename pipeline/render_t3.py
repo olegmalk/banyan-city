@@ -618,6 +618,33 @@ def held_still(clips: list) -> bool:
     return True
 
 
+def fill_mode(clips: list, cdur: float, dur: float) -> str:
+    """Which fill path render_beat will take: slate / once / stretch / pingpong / hold.
+
+    WRITTEN DOWN BECAUSE THE GATES COULD NOT SEE IT. On 2026-08-20 a composite
+    was misclassified as a held still and played at 0.53x for five seconds, and
+    every gate passed it — the licence gate, the proof-receipt sha recheck,
+    qa_local's 83 routes and qa_episode's 15 checks. A clip at half speed
+    hashes, serves, links and measures exactly like one at full speed. The only
+    thing that caught it was a person reading an assembler log line.
+
+    So the assembler now RECORDS the path in the master's own sidecar, per beat,
+    and qa_episode asserts on it. The mirror of render_beat's branch order is
+    the cost of that: keep the two in step.
+    """
+    if not clips:
+        return "slate"
+    if not cdur or dur <= cdur:
+        return "once"
+    if held_still(clips):
+        return "stretch"
+    if dur > cdur + 0.05 and cdur <= PINGPONG_MAX_S and wants_pingpong(clips):
+        return "pingpong"
+    if dur > cdur + 0.05:
+        return "hold"
+    return "once"
+
+
 def wants_pingpong(clips: list) -> bool:
     """Does this beat's OWN record ask to be played forwards and then backwards?
 
@@ -1177,6 +1204,10 @@ def main() -> int:
         sources.append({"beat": i, "slug": strip_inline_md(beat["slug"]),
                         "clip": "+".join(c.name for c in beat_clips) if beat_clips else "slate (no footage yet)",
                         "audio": audio.name if audio else "none",
+                        # how the slot was filled — the one property a sha cannot
+                        # carry, and the one a half-speed cut got past every gate on
+                        "fill": fill_mode(beat_clips, cdur, dur),
+                        "clip_s": round(cdur, 3), "slot_s": round(dur, 3),
                         **({"voice_engine": manifest["engine"]}
                            if manifest and manifest.get("engine") else {}),
                         **beat_provenance(beat_clips)})
