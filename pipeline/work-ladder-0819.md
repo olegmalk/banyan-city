@@ -4971,3 +4971,120 @@ untouched by either half, exactly as the script's docstring pre-registered
 ("it cannot remove a shape"). The band is a SHAPE, so the lever is spatial — a
 controlnet (the tool has none) or a hand-authored matte (R4, the author's).
 Both sit outside what §26 closed. **Beat 08 keeps `ep2-b08-scale30-0820`.**
+
+### The chromaticity rung fired, the prediction written above it was wrong, and beat 01 finally changes hands
+
+`ep2-b01-figcomp-heldfield-0820`, picture rung, `--gain-mode chroma`. $0, no GPU,
+no sampler. **F3 fired** — the fail mode the spec listed as "it works" — against a
+bar committed one commit earlier and not touched since.
+
+**The one variable was the one registered:** the single scalar ring gain became
+three per-channel ring gains, a von Kries diagonal correction. Same matte, same
+dilation, same feather, same ingredients at the same shas, same encode. Default
+stays `luma`, and in that mode the composite rebuilds **byte-identical** to the
+committed build (`796a283b…67ced`), so the flag is inert unless asked for.
+
+**I predicted F1 in writing, with numbers, and I was wrong.** The pre-flight said
+the f001 per-channel spread of 0.0144 was an order of magnitude too small against
+a 14 % separability gap, so the rung would spend G2 at f120 and buy no G1. A 1.4 %
+correction at f001 was enough. The prediction stays where it was written.
+
+**G1 is scorable by the pre-registered rule and it passes.**
+`G1_SCORABILITY_OPERATIONALISED` demanded an *identical* live/dead answer across
+PNG and libx264 crf 0, 10, 14, 18, 23 — six rows, or the rung fails whatever else
+improved:
+
+| encode | live | dead list | max step | f90 % |
+|---|---|---|---|---|
+| PNG | **121/121** | `[]` | 1.134 | f108 |
+| crf 0 | **121/121** | `[]` | 1.178 | f108 |
+| crf 10 | **121/121** | `[]` | 1.186 | f108 |
+| crf 14 | **121/121** | `[]` | 1.184 | f108 |
+| crf 18 | **121/121** | `[]` | 1.133 | f108 |
+| crf 23 | **121/121** | `[]` | 1.108 | f108 |
+
+The clause no longer moves with the codec — which is what *scorable* was defined
+to mean before the build existed. Compare the luma build one rung up: dead list
+`[1]` at four encodes, `[]` at two. **Encode-picking was never needed and is still
+not licensed.**
+
+**G2 held inside both bounds and it was not cheap.** Hue 294.4 → **305.2**, delta
+**+10.8 against a bound of 12.0** — 90 % of the budget written for it before it
+existed. Saturation 0.789 → 0.780 against −0.10. Absolute clause clear at 270–320 /
+≥ 0.60. *A rung that buys G1 by spending G2 has bought nothing, and this one came
+within 1.2° of buying nothing.* That margin is the headline, not the pass.
+
+**The leak check as I wrote it names four bands and one of them is the fig's own
+box.** That is a defect in my clause, not in the build: `fig_box` is the one region
+G5a positively *requires* to change, so its 0.39° / 0.0243 drift at f120 is the
+recolour landing on the subject. The **three actual field bands read 0.00° and
+0.0000 saturation at f000 *and* f120** — exact zeros, in the building lane's
+measurement and again in the verifying lane's independent re-run. The matcher
+provably never reached outside the matte. Recorded both ways rather than quietly
+rewritten.
+
+### The swap: beat 01 changes hands, and for once the cut's pass count does not go down
+
+`review/ep2-demo-0820` **revision d**. `01-cold-open-COMP-chroma-s20260840.mp4`
+(`12e256fd…1e28`) replaces `01-cold-open-LTX-fignonly-s20260840.mp4`, which held
+the slot for one evening. Cut sha `173179f4…c16a0`, same path, same URL, five sets
+of bytes today.
+
+| | leaving | entering |
+|---|---|---|
+| G5a bands failed | **3 of 4** | **1 of 4** |
+| shaft / sapling / grass NCC | −0.324 / 0.055 / 0.038 | **0.982 / 0.734** / 0.062 |
+| luma delta at peak | +10.85 | **+0.93** |
+| worst consecutive NCC | 0.9403 | **0.9966** |
+| G1 | 121/121, 1.084, f108 | 121/121, 1.184, f108 |
+| G1 stable across encodes | — | **yes, six rows** |
+| end state hue / sat | 293.9 / 0.788 | 305.2 / 0.780 |
+| scored clauses passed | 7 of 8 | **7 of 8** |
+
+**Same count, same failing clause, different seven.** This is the first beat-01
+swap that does not trade one failure for another: it fails G5a on the grass floor
+alone, inherited whole from the held plate, and holds the two bands the outgoing
+take destroyed.
+
+> **AND THE PART THAT IS NOT THIS LANE'S.** The take leaving the slot is the more
+> DRAMATIC picture — its whole sapling grows and two big leaves sweep the top third
+> of the frame by f120. The one entering is a locked-off plate where only the fig
+> moves, which is what the cold-open line asks for and what G5a exists to enforce.
+> The written standard picks it. "More correct" and "better shot" are different
+> questions and the founder has screened neither clip. Both are side by side at
+> `farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-SWAP-chroma-vs-incut.jpg`.
+> One line overturns it: *"beat 01: put fignonly back."*
+
+**The veto path was a promise with nothing behind it.** `picks-0820.yaml` said the
+outgoing clip "is not deleted and it is not gone from the repo — it is at
+`farm-out/ep2-b01-fignonly-s20260840-0820/`". That directory was **untracked**. It
+is committed with the swap, sidecar and sha256 manifest, so the one-line veto now
+has something to restore. Same for the crf-10 ingredient's sidecar, which the
+licence gate had already refused the cut over once tonight.
+
+**Gates before anyone got a URL:** `qa_local.py` **PASS, 83 routes**;
+`qa_episode.py` 15 checks pass / 1 advisory, audio intact at −16.8 LUFS;
+`proof_receipts` 19 takes, 19 sha match, 0 differs; and the bytes actually served
+at `/review/ep2-demo-0820/ep2-demo-0820.mp4` hash to the sha the page prints.
+
+**A lane died mid-swap and this is what that cost.** The build was committed
+(`eee6ea9f`) and every artifact was on disk and sha-clean, but the swap itself sat
+uncommitted with the new mp4 **untracked** under `review/**/*.mp4` and the old one
+deleted — a half-swap that failed the tree's gate for everyone. The recovery was
+not to re-run anything: it was to read the disk, re-measure every claim
+independently (the six-row sweep and the leak check above are the verifying lane's
+own numbers, and they agree with the dead lane's to the digit), and then commit.
+**Nothing was re-rendered and nothing was taken on trust.**
+
+**What this closes.** The composite route for beat 01 is *done*, not closed — it
+delivered and there is no further rung on it. Ring geometry (closed), encode-picking
+(never licensed) and the gain match (this rung) are all settled. Three things stay
+open and none is this beat's: **G5a's grass band is a two-point clause that cannot
+tell a foreground that SWEEPS from one being RE-INKED** (held plate: consecutive NCC
+0.9950, monotonic decay 0.842 → 0.062; crf-33 clip: 0.9640, non-monotonic — both
+return ~0.06 on the two-point test) — filed for a ruling, **not** applied to
+re-score this clip; the **40 px ring floor** that accepts a 711 px background model,
+which is in every verdict this tree has published; and the **still-plate** build,
+which satisfies every field clause by construction and has no ambient motion at all
+— locked-off plate versus living field is R4, built and sha'd so the ask costs
+nothing, still parked.

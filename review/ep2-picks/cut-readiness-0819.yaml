@@ -1225,3 +1225,46 @@ amended_0820d:
   still_not_licensed: Choosing an encode. The sweep makes crf 18 and 23 look free and they are not; it
     is the same move as picking the instrument.
   this_file_still_makes_no_taste_call: Unchanged.
+
+amended_0820e:
+  date: 2026-08-20, night
+  by: the beat-01 composite lane (finished by the lane that verified it)
+  what_moved: 'THE CUT MOVED. Beat 01 = 01-cold-open-COMP-chroma-s20260840.mp4, sha
+    12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28, in review/ep2-demo-0820
+    revision d (cut sha 173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0). It
+    replaces 01-cold-open-LTX-fignonly-s20260840.mp4, which held the slot for one evening.'
+  the_prediction_in_amended_0820d_came_true_and_the_one_in_the_spec_did_not: 'amended_0820d named the
+    next candidate exactly right -- a PICTURE rung matching the imported patch''s chromaticity, with
+    its G2 cost pre-registered before it ran. That rung was built and it WORKS. The spec''s own
+    pre-flight arithmetic predicted it would fail (F1: spend G2 at f120, buy no G1 at f001, because the
+    f001 per-channel spread of 0.0144 is an order of magnitude under a 14% gap). A 1.4% correction at
+    f001 was enough. The wrong prediction stays on the record above the result.'
+  the_swap_precondition_is_finally_met: 'G1 SCORABLE AND PASSING, WITH G2 INTACT. The pre-registered
+    scorability test -- identical live/dead across PNG and libx264 crf 0, 10, 14, 18, 23 -- reads
+    121/121 with an EMPTY dead list in all six rows, 90% of growth at f108 in every row, max step
+    1.108-1.186. G2 held at hue 305.2 / sat 0.780, a delta of +10.8 against the 12.0 bound written
+    before the build existed. Encode-picking was never needed and is still not licensed.'
+  why_this_is_a_pick_and_not_a_pass: 'The clip scores 7 of 8 and the bar is conjunctive, so it does NOT
+    pass. It fails G5a on the grass floor alone, 0.062 against 0.20, inherited whole from the held
+    plate. The take it replaces also scored 7 of 8 and failed the SAME clause on ALL THREE bands
+    (shaft -0.324, sapling 0.055, grass 0.038). Same count, same clause, different seven -- and this is
+    the first beat-01 swap that does not trade one failure for another.'
+  authority: 'A STEWARD PICK, VETO-ABLE IN ONE LINE -- "beat 01: put fignonly back." The outgoing clip
+    is committed at farm-out/ep2-b01-fignonly-s20260840-0820/ with its sidecar and sha256 manifest;
+    that directory was UNTRACKED while picks-0820.yaml promised it was still in the repo, and the swap
+    commit fixes it.'
+  gates_run_before_the_url_was_handed_to_anyone: 'qa_local.py PASS, 83 routes. qa_episode.py 15 checks
+    pass, 1 advisory, audio intact at -16.8 LUFS. proof_receipts 19 takes / 19 sha match / 0 differs.
+    The bytes actually served at /review/ep2-demo-0820/ep2-demo-0820.mp4 hash to the sha the page
+    prints.'
+  what_would_change_this_now: 'NOTHING ON THE COMPOSITE ROUTE -- it is done, not closed, and there is
+    no further rung to file on it. Ring geometry is closed, encode-picking is unlicensed, the gain
+    match is settled. What is open is a BAR question and a taste question, neither of them this beat''s
+    to answer: G5a''s grass band is a two-point clause that cannot tell a foreground that SWEEPS from
+    one being RE-INKED (filed for a ruling, deliberately NOT applied to re-score this clip), and the
+    still-plate build parked in amended_0820c is still parked.'
+  this_file_still_makes_no_taste_call: 'Unchanged, and it matters more here than in any earlier
+    amendment. The take leaving the slot is the MORE DRAMATIC picture -- its whole sapling grows, two
+    big leaves sweep the top third by f120. The one entering is a locked-off plate where only the fig
+    moves. The written standard picks the second; "more correct" and "better shot" are different
+    questions and the founder has screened neither clip.'

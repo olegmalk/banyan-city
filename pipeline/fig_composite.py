@@ -44,6 +44,15 @@ For each frame i:
       (R,G,B)/(R+G+B), and therefore HSV hue and saturation, EXACTLY unchanged.
       It cannot manufacture or destroy the G2 end-state clause; it is published
       per frame so a reader can see how hard it worked.
+
+      That paragraph describes `--gain-mode luma`, which is still what you get
+      if you say nothing.  `--gain-mode chroma` REPLACES the scalar with three
+      per-channel gains -- a von Kries diagonal that matches the patch's colour
+      BALANCE as well as its brightness -- and it therefore CAN move hue and
+      saturation and CAN reach G2.  Do not run it without pre-registering that
+      cost: a rung that buys a growth clause by spending the end-state clause
+      has bought nothing.  On beat 01, 2026-08-20, it spent 10.8 deg of a 12.0
+      deg bound that was written down before the build existed.
   4.  Everything outside the feathered matte is the held clip's own pixel,
       untouched.  `--freeze-band` optionally takes a horizontal band from the
       held clip's f000 instead -- for the residual grass, which re-inks even at

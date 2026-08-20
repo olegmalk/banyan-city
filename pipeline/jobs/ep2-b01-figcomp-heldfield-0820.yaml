@@ -547,3 +547,166 @@ bar_chromaticity_rung_PRE_REGISTERED_0820:
     F4_it_moves_the_growth_arc: the recoloured fig segments differently and total growth, the f90% frame
       or the max single-frame step shift. Scored as G1/G4 failures on their own terms, not excused.
   cost: $0, no GPU, ~1 minute of a Mac.
+verdict_chromaticity_rung_0820: 'F3 FIRED. THE RUNG WORKS, THE PRE-FLIGHT ARITHMETIC THAT PREDICTED IT
+  WOULD NOT IS ON THE RECORD ABOVE IT, AND BEAT 01 CHANGES HANDS.
+
+
+  THE ONE VARIABLE WAS THE ONE REGISTERED: the single scalar ring gain became three per-channel ring
+  gains, a von Kries diagonal correction, `--gain-mode chroma`. Same matte, same dilation, same
+  feather, same ingredients at the same shas, same encode. The default stays `luma` and in that mode
+  the composite rebuilds BYTE-IDENTICAL to the committed build, sha 796a283b...67ced, so the flag is
+  inert unless asked for.
+
+
+  I PREDICTED F1 IN WRITING WITH NUMBERS AND I WAS WRONG. `failure_predicted_in_advance` said the f001
+  per-channel spread of 0.0144 was an order of magnitude too small against a 14% separability gap, so
+  the rung would spend G2 at f120 and buy no G1. A 1.4% correction at f001 was enough. The prediction
+  stays where it was written; it is not edited to match the outcome.
+
+
+  G1 IS SCORABLE BY THE PRE-REGISTERED RULE AND IT PASSES. `G1_SCORABILITY_OPERATIONALISED` demanded an
+  IDENTICAL live/dead answer for every frame across PNG and libx264 crf 0, 10, 14, 18 and 23. All six
+  rows read 121/121 live with an EMPTY dead list, 90% of growth at f108 in every row, max single-frame
+  step 1.108-1.186. The clause no longer moves with the codec. Encode-picking was never needed and is
+  still unlicensed.
+
+
+  G2 HELD, INSIDE BOTH BOUNDS, AND IT WAS NOT CHEAP. Hue 294.4 -> 305.2, a delta of +10.8 against the
+  12.0 bound: the rung spent 90% of the G2 budget written for it before it existed. Saturation 0.789 ->
+  0.780 against -0.10. The absolute clause is clear at 270-320 / >= 0.60. A rung that buys G1 by
+  spending G2 has bought nothing, and this one came within 1.2 degrees of buying nothing. That margin
+  is the honest headline, not the pass.
+
+
+  THE LEAK CHECK AS I WROTE IT NAMES FOUR BANDS AND ONE OF THEM IS THE FIG''S OWN BOX. That is a defect
+  in my clause, not in the build: `fig_box` is the one region G5a positively requires to change, so its
+  0.39 deg / 0.0243 drift at f120 is the recolour landing on the subject, exactly where it was aimed.
+  The THREE actual field bands read 0.00 deg and 0.0000 saturation at f000 AND at f120 -- exact zeros,
+  in both the building lane''s measurement and the verifying lane''s independent re-run. The matcher
+  provably never reached outside the matte. Recorded both ways rather than quietly rewritten.
+
+
+  WHAT DID NOT CHANGE, WHICH IS WHY THE SWAP IS ARGUABLE AT ALL: G5a still fails. It fails on the grass
+  floor alone, 0.062 against a 0.20 bar, inherited whole from the held plate.'
+verdict_chromaticity_rung_0820_measured:
+  scored_by: pipeline/fig_track.py, the geometry-anchored detector, unchanged since the instrument rung
+    -- so this is a PICTURE change scored on a fixed instrument, and every earlier beat-01 verdict
+    remains comparable digit for digit.
+  independently_re_run_by_the_verifying_lane: 'The lane that built this clip died before it could
+    write the verdict up. Every number in this block was RE-MEASURED from the committed artifacts by
+    the lane that finished it, not copied out of a commit message. The two lanes agree to the digit.'
+  G1_scorability_sweep_the_pre_registered_test:
+    png_no_encode: [121, 1.134, 108]
+    libx264_crf_0: [121, 1.178, 108]
+    libx264_crf_10: [121, 1.186, 108]
+    libx264_crf_14: [121, 1.184, 108]
+    libx264_crf_18: [121, 1.133, 108]
+    libx264_crf_23: [121, 1.108, 108]
+    dead_list_every_row: []
+    note: '[live frames of 121, max single-frame step, frame at 90% of growth]. IDENTICAL live/dead in
+      all six rows, which is what the spec defined SCORABLE to mean before the build existed. Compare
+      the luma build, whose dead list was [1] at four encodes and [] at two.'
+  the_eight_scored_clauses_at_the_shipped_encode:
+    G1_continuous_path: PASS -- 121/121 live, max step 1.184, 90% of growth at f108
+    G2_end_state_purple_violet: PASS -- hue 305.2, saturation 0.780 at f120
+    G4_no_size_doubling: PASS -- max single-frame step 1.184 against 2.0
+    G5a_field_stability: '**FAIL** -- shaft 0.982 (>=0.70) PASS, sapling 0.734 (>=0.45) PASS, fig_box
+      0.062 (<0.30) PASS, grass 0.062 (>=0.20) FAIL. ONE band of four.'
+    H_luma_bloom: PASS -- peak 88.36 at f019, +0.93 against <=12.0, ZERO frames over luma 100
+    H1_not_frozen: PASS -- fig-box NCC to the last frame at f060 = 0.022 against <0.80
+    H5_attached: PASS -- 20.2 px from the f000 anchor against <=40
+    H6_no_scene_break: PASS -- worst consecutive whole-frame NCC 0.9966 at f118 against >=0.80
+    unscored_by_declaration: G3 (no leaf counter), G4b below-the-grass (no grass line), G5b
+      camera-locked (the probe refuses or rails).
+    tally: 7 of 8 scored clauses pass. Conjunctive, so the clip does NOT pass the bar; it is a
+      best-available steward pick with its fault named.
+  G2_delta_against_the_pre_registered_bound:
+    reference_luma_only_build: [294.4, 0.789]
+    this_build: [305.2, 0.780]
+    delta_hue: 10.8
+    bound_hue: 12.0
+    delta_saturation: -0.009
+    bound_saturation: -0.10
+    absolute_clause: 270-320 deg and >= 0.60 -- clear.
+    budget_spent: 90% of the hue allowance, 9% of the saturation allowance.
+  leak_check_re_run_chroma_build_vs_luma_control:
+    f000: {shaft: [0.0, 0.0], sapling: [0.0, 0.0], grass: [0.0, 0.0], fig_box: [0.0, 0.0]}
+    f120: {shaft: [0.0, 0.0], sapling: [0.0, 0.0], grass: [0.0, 0.0], fig_box: [0.39, 0.0243]}
+    note: '[delta hue in degrees, delta saturation] against the luma-only build on the same frames.
+      Bound was 0.5 deg / 0.005 for FIELD bands and all three read exact zeros. fig_box is the fig''s
+      own box and is not a field band -- see the verdict prose.'
+    whole_frame_pixels_that_differ_at_all: [2744, 48318]
+    whole_frame_max_channel_delta: [4, 30]
+    whole_frame_note: at f000 and f120 respectively. The change is bounded and localised; it is the
+      matte and its feather and nothing else.
+  both_ingredients_re_score_digit_for_digit:
+    fignonly_the_fig_source: 121/121 live, max step 1.084, 90% at f108, hue 293.9 / sat 0.788, shaft
+      -0.324 / sapling 0.055 / grass 0.038, luma +10.85
+    figcrf10_the_field_source: 105/121 live, max step 1.404, 90% at f050, shaft 0.982 / sapling 0.734 /
+      grass 0.062, luma +0.92
+    why_this_matters: the build changed a PICTURE, not an instrument, so the ingredients must be
+      unmoved. They are.
+  head_to_head_against_the_take_it_replaces:
+    note: left value is 01-cold-open-LTX-fignonly-s20260840.mp4 leaving the slot, right value is this
+      composite entering it. Both score 7 of 8 and both fail only G5a.
+    region_ncc_shaft: [-0.324, 0.982]
+    region_ncc_sapling: [0.055, 0.734]
+    region_ncc_grass: [0.038, 0.062]
+    g5a_bands_failed: [3, 1]
+    luma_delta_at_peak: [10.85, 0.93]
+    worst_consecutive_whole_frame_ncc: [0.9403, 0.9966]
+    live_frames: [121, 121]
+    max_single_frame_step: [1.084, 1.184]
+    frame_at_90pct_growth: [108, 108]
+    end_state_hue_sat: [[293.9, 0.788], [305.2, 0.780]]
+    g1_answer_stable_across_encodes: [false, true]
+  cost: $0, no GPU, no sampler, 121 frames of CPU. The encode sweep and both re-scores were CPU too.
+verdict_cut_swapped_0820: 'THE SWAP HAPPENED, under the coordinator''s standing decision rule: G1
+  scorable and passing WITH G2 intact -> veto-able steward swap. review/ep2-demo-0820 revision d,
+  beat 01 = 01-cold-open-COMP-chroma-s20260840.mp4, sha 12e256fd...1e28, cut sha
+  173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0.
+
+
+  IT IS A STEWARD PICK AND NOT A TASTE VERDICT. Mechanical selection between two takes that score the
+  same 7 of 8, on the ground that this one fails its single clause on ONE band where the other failed
+  it on THREE, holds the field the other redraws, and answers G1 in a way no codec can flip. R4
+  VETO-ABLE IN ONE LINE: "beat 01: put fignonly back." The outgoing clip is committed at
+  farm-out/ep2-b01-fignonly-s20260840-0820/ with its sidecar and its own sha256 manifest -- that
+  directory was UNTRACKED while picks-0820.yaml promised the clip was still in the repo, which is
+  fixed in the same commit as the swap.
+
+
+  AND THE TASTE NOTE THAT IS NOT THIS LANE''S TO SETTLE: the take leaving the slot is the MORE DRAMATIC
+  picture -- its whole sapling grows and two big leaves sweep the top third of the frame by f120. This
+  one is a locked-off plate where only the fig moves, which is what the cold-open line asks for and
+  what G5a exists to enforce. The written standard picks it. "More correct" and "better shot" are
+  different questions and the founder has screened neither clip; both are side by side at
+  farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-SWAP-chroma-vs-incut.jpg.
+
+
+  GATES RUN BEFORE ANYONE GETS A URL: qa_local.py PASS, 83 routes. qa_episode.py 15 checks pass, 1
+  advisory warning, audio intact at -16.8 LUFS. proof_receipts 19 takes / 19 sha match / 0 differs. The
+  served bytes at /review/ep2-demo-0820/ep2-demo-0820.mp4 hash to the sha the page itself prints.'
+what_this_licenses_after_the_chromaticity_rung: 'THE COMPOSITE ROUTE FOR BEAT 01 IS DONE, not closed --
+  it delivered, and there is no further rung to file on it. Three things are now settled and must not
+  be re-opened without new evidence: ring geometry (closed by the instrument rung), encode-picking
+  (never licensed), and the gain match (this rung; chroma is available and its cost is known).
+
+
+  WHAT IS STILL OPEN AND IS NOT THIS BEAT''S TO FIX:
+
+  1. G5a''s grass band is a TWO-POINT clause and it cannot tell a foreground that SWEEPS from one being
+  RE-INKED. On the held plate the grass band''s consecutive-frame NCC is 0.9950 and its correlation to
+  f000 decays monotonically (0.842, 0.554, 0.299, 0.098, 0.062); on the crf-33 clip the same band reads
+  0.9640 consecutive and decays non-monotonically. Both return ~0.06 on the two-point test. That is a
+  BAR defect filed for a ruling. It was NOT applied to re-score this clip, because relaxing a clause
+  after seeing which way it moves a verdict is the move this lane keeps refusing.
+
+  2. The 40 px ring floor in fig_track accepts a background model of 711 px hugging an excluded
+  boundary. That constant is in every verdict this tree has published. It needs a number set from first
+  principles and pre-registered, not nudged now.
+
+  3. `farm-out/ep2-b01-figcomp-heldfield-0820/01-cold-open-COMP-stillplate-0820.mp4` -- the whole field
+  frozen from the held clip''s f000 -- satisfies every field clause BY CONSTRUCTION and has no ambient
+  motion at all. Locked-off plate versus living field is R4. Built and sha''d so the ask costs nothing
+  when it comes; still parked, still not asked.'
