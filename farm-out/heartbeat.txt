@@ -3222,3 +3222,5 @@
 17:53:21Z box-runner idle ready=0 failed=54
 17:55:56Z STARTED task=ep2-b04-tileread-v0-0820-1787248550 attempt=1 on box-runner
 17:56:19Z FAIL task=ep2-b04-tileread-v0-0820-1787248550 rc=1 step=publish
+17:56:24Z STARTED task=ep2-b04-tileread-v1-0820-1787248553 attempt=1 on box-runner
+17:56:43Z FAIL task=ep2-b04-tileread-v1-0820-1787248553 rc=1 step=publish
