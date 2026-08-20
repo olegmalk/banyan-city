@@ -158,19 +158,138 @@ def draw_leaf(d, base, tip, width, fill, hi, ink, lit_sign):
 # ---------------------------------------------------------------------------
 
 def dilate(m: np.ndarray, r: int) -> np.ndarray:
-    if r <= 0:
-        return m
-    im = Image.fromarray((m * 255).astype(np.uint8))
-    im = im.filter(ImageFilter.MaxFilter(2 * r + 1)) if r <= 5 else \
-        Image.fromarray((np.asarray(
-            Image.fromarray((m * 255).astype(np.uint8)).filter(
-                ImageFilter.GaussianBlur(r * 0.6))) > 12).astype(np.uint8) * 255)
-    return np.asarray(im) > 127
+    """b19's exact 4-neighbour dilation, numpy only.
+
+    The first version of this file used a PIL MaxFilter with a GaussianBlur
+    fallback above r=5, which is a DIFFERENT operator either side of a
+    threshold; b19's is one operator at every radius and is the one the mask
+    arithmetic in that tool was tuned against.
+    """
+    out = m.copy()
+    for _ in range(r):
+        s = out.copy()
+        s[1:, :] |= out[:-1, :]
+        s[:-1, :] |= out[1:, :]
+        s[:, 1:] |= out[:, :-1]
+        s[:, :-1] |= out[:, 1:]
+        out = s
+    return out
+
+
+def reach(seed: np.ndarray, allow: np.ndarray, limit: int = 3000) -> np.ndarray:
+    """Flood `seed` through `allow`. numpy only, like the other composite tools."""
+    cur = seed & allow
+    for _ in range(limit):
+        nxt = dilate(cur, 1) & allow
+        if nxt.sum() == cur.sum():
+            return nxt
+        cur = nxt
+    return cur
+
+
+def weed_matte(a: np.ndarray, box, thresh: float, seed_thresh: float = None,
+               forbid: np.ndarray = None) -> np.ndarray:
+    """The plant ALREADY IN THE PLATE, inside `box`, by luminance against the field.
+
+    Beat 16's input plate carries a thin weed the b15 composite replaced. Drawing
+    a second sapling in front of it would put TWO plants in frame against canon
+    `sapling-two-leaves`, so it has to come out before anything is drawn.
+
+    A THRESHOLD ALONE DOES NOT WORK AND THAT IS MEASURED, NOT ASSUMED. The field
+    reads luma 212.6 median / 208.3 p05 in the upper frame, so `lum < 170`
+    separates the weed there cleanly — but the field DARKENS toward the near
+    foreground (p05 120.5 below y≈1000), so widening the box grew the matte
+    monotonically: 4,292 px at one box, 7,319, 12,427, 15,904 at the next three.
+    That is the threshold eating field, not finding more weed.
+
+    So the matte is b19's: FLOOD FROM A DARK SEED. `seed_thresh` picks the weed's
+    own ink — far darker than any field streak — and `reach` grows it only
+    through pixels under `thresh`, inside the box, and never into `forbid` (the
+    figure). Disconnected field wisps are excluded by construction because
+    nothing joins them to the stem, and the box can then be drawn generously
+    instead of tuned to a pixel.
+    """
+    x0, y0, x1, y1 = box
+    b = np.zeros(a.shape[:2], bool)
+    b[y0:y1, x0:x1] = True
+    if forbid is not None:
+        b &= ~forbid
+    R, G, B = a[..., 0].astype(np.int16), a[..., 1].astype(np.int16), a[..., 2].astype(np.int16)
+    lum = 0.299 * R + 0.587 * G + 0.114 * B
+    allow = b & (lum < thresh)
+    if seed_thresh is None:
+        return allow
+    return reach(b & (lum < seed_thresh), allow)
+
+
+def fill_from_boundary(a: np.ndarray, hole: np.ndarray,
+                       body: np.ndarray = None, iters: int = 3) -> np.ndarray:
+    """Fill `hole` from the region's OWN boundary, per-row. b19's §12 method.
+
+    No clone survives a luminance gradient, and this plate is a horizontally
+    banded field — so the fill is a per-row linear interpolation between the
+    nearest surviving pixels on that row, which reproduces the banding exactly,
+    and a few diffusion passes then remove the row-to-row seams. NOTHING IS
+    COPIED FROM ELSEWHERE IN THE FRAME, so decal tell #4 (a visible repeat) is
+    impossible by construction.
+
+    AND IT FILLS WITHIN CLASS, which is b19's other half and is load-bearing
+    here rather than theoretical. The first run of this port asserted the hole
+    was field-only and C0 refused it: 1,686 px of ink sit within 24 px of the
+    weed at x 250–288, y 533–635, and that is HIS KNEE AND HAND. Interpolating
+    across it would average field with skin on those rows — b19's v11 did
+    exactly this and left a 22 px grey smear where a vine ran up to a cheek. So
+    a hole pixel in the background is filled only from surviving BACKGROUND on
+    its row, and never from the figure.
+    """
+    out = a.astype(np.float32).copy()
+    H, W = a.shape[:2]
+    if body is None:
+        body = np.zeros((H, W), bool)
+    xs = np.arange(W, dtype=np.float32)
+    for cls in (~body, body):
+        for y in range(H):
+            row = hole[y] & cls[y]
+            if not row.any():
+                continue
+            keep = (~hole[y]) & cls[y]
+            if keep.sum() < 6:
+                continue
+            for c in range(3):
+                out[y, row, c] = np.interp(xs[row], xs[keep], out[y, keep, c])
+    for _ in range(iters):
+        blur = np.asarray(Image.fromarray(
+            np.clip(out, 0, 255).astype(np.uint8)
+        ).filter(ImageFilter.GaussianBlur(2.0))).astype(np.float32)
+        out[hole] = blur[hole]
+    return np.clip(out, 0, 255).astype(np.uint8)
 
 
 def sha256_of(path: str) -> str:
     with open(path, "rb") as fh:
         return hashlib.sha256(fh.read()).hexdigest()
+
+
+def palette_from_erased(a: np.ndarray, weed: np.ndarray) -> dict:
+    """Sample the drawn plant's colours FROM THE PLANT THIS TOOL IS DELETING.
+
+    b19's law and the strongest source available: same frame, same light, same
+    checkpoint, same line weight — and it is NOT decal tell #4, because the
+    source pixels do not survive into the output. Falls back to the field's
+    greens (foliage_palette) when there is nothing to erase.
+    """
+    R, G, B = a[..., 0].astype(np.int16), a[..., 1].astype(np.int16), a[..., 2].astype(np.int16)
+    lum = 0.299 * R + 0.587 * G + 0.114 * B
+    leaf = weed & (G - B > 18) & (lum < 190)
+    ink = weed & (lum < 90)
+    if int(leaf.sum()) < 250 or int(ink.sum()) < 40:
+        return {}
+    px = a[leaf]
+    return {"dark": tuple(int(v) for v in np.percentile(px, 18, axis=0)),
+            "mid": tuple(int(v) for v in np.percentile(px, 45, axis=0)),
+            "light": tuple(int(v) for v in np.percentile(px, 86, axis=0)),
+            "ink": tuple(int(v) for v in np.median(a[ink], axis=0)),
+            "n_sampled": int(leaf.sum()), "source": "the erased weed"}
 
 
 def foliage_palette(a: np.ndarray, region: np.ndarray) -> dict:
@@ -245,6 +364,56 @@ def main() -> int:
                          "detail 10.45 -> 9.41); this is the guard that keeps "
                          "the restage from repeating it.")
     ap.add_argument("--mask-dilate", type=int, default=9)
+    ap.add_argument("--erase-box", default=None,
+                    help="x0,y0,x1,y1 — a plant ALREADY in the plate, erased "
+                         "before anything is drawn. Two plants in frame breaks "
+                         "canon sapling-two-leaves, and a 0.30 pass PRESERVES a "
+                         "weed rather than removing one (12 of 40 steps from a "
+                         "latent that still carries the init), so masking it is "
+                         "not enough — it has to be gone from the pixels.")
+    ap.add_argument("--erase-lum", type=float, default=170.0,
+                    help="luma below which a pixel inside --erase-box is the "
+                         "weed. Default measured on the b15 mac plate: field "
+                         "median 212.6 / p05 208.3, weed box p05 81.8.")
+    ap.add_argument("--erase-seed-lum", type=float, default=120.0,
+                    help="luma of the weed's own INK, the flood seed. The matte "
+                         "is grown from here through --erase-lum pixels, so "
+                         "disconnected field wisps are excluded by construction "
+                         "and the box can be drawn generously. With this on, "
+                         "the matte is 3,988 px and IDENTICAL at box bottoms "
+                         "620 and 640 — a threshold-only matte grew 4,292 -> "
+                         "15,904 across four boxes.")
+    ap.add_argument("--erase-grow", type=int, default=4,
+                    help="px to dilate the matte before filling. WITHOUT THIS "
+                         "THE ERASE LEAVES A STENCIL: the flood takes the "
+                         "weed's ink and leaves its lit edge and antialiasing "
+                         "behind, and the first run of this port came back with "
+                         "a pale ghost of the whole plant standing in the field "
+                         "-- the dark gone, the outline intact. The fringe is "
+                         "brighter than any sane --erase-lum and darker than "
+                         "the field, so it is removed geometrically instead of "
+                         "by threshold. Re-subtracted from the body afterwards "
+                         "so growth cannot eat his edge.")
+    ap.add_argument("--fill-iters", type=int, default=3,
+                    help="diffusion passes after the per-row interpolation")
+    ap.add_argument("--erase-clearance", type=int, default=24,
+                    help="C0: how far out to look for ink of another class "
+                         "beside the hole. Reported always; only refuses when "
+                         "--body-box is not given, because without a class map "
+                         "the fill would average across it.")
+    ap.add_argument("--body-box", default=None,
+                    help="x0,y0,x1,y1 where the FIGURE is; SEMICOLON-SEPARATE "
+                         "SEVERAL. The per-row fill runs within class, so a "
+                         "hole in the background is filled only from surviving "
+                         "background, and anything inside a body box is never "
+                         "matted for erasure. Required when C0 finds another "
+                         "object's ink beside the hole; on the b15 plate it "
+                         "does (his knee and hand at x 250-288). ONE RECTANGLE "
+                         "IS NOT ENOUGH THERE and the first run proved it: a "
+                         "single x>=250 box protected the weed's top-right leaf "
+                         "as if it were him and left it standing in the output. "
+                         "His true left edge is x~322 above y 420 and x~254 "
+                         "below it, so it takes two.")
     ap.add_argument("--out", default=None)
     ap.add_argument("--mask-out", default=None)
     ap.add_argument("--overlay-out", default=None,
@@ -265,8 +434,77 @@ def main() -> int:
         return 1
     img = Image.open(plate).convert("RGB")
     W, H = img.size
-    arr = np.asarray(img)
+    raw = np.asarray(img)
     print("plate  %dx%d  sha256 %s" % (W, H, have))
+
+    # ---- 0. erase the plant the plate already has -------------------------
+    weed = np.zeros((H, W), bool)
+    arr = raw
+    if a.erase_box:
+        box = tuple(int(v) for v in a.erase_box.split(","))
+        if len(box) != 4:
+            print("!! --erase-box wants x0,y0,x1,y1")
+            return 1
+        body = np.zeros((H, W), bool)
+        for chunk in (a.body_box or "").split(";"):
+            if not chunk.strip():
+                continue
+            bx = tuple(int(v) for v in chunk.split(","))
+            if len(bx) != 4:
+                print("!! --body-box wants x0,y0,x1,y1 (semicolon-separated)")
+                return 1
+            body[bx[1]:bx[3], bx[0]:bx[2]] = True
+        # THE FIGURE IS NEVER ERASED. At x1=265 the matte took 392 px on his
+        # side of the class line -- the left edge of his knee, which shares the
+        # weed's luma. Subtracting the body makes the erase box safe to draw
+        # generously instead of tuned to a pixel, which is the difference
+        # between a box that is right and a box that happens to be right.
+        weed = weed_matte(raw, box, a.erase_lum,
+                          seed_thresh=a.erase_seed_lum, forbid=body)
+        core = int(weed.sum())
+        if a.erase_grow:
+            weed = dilate(weed, a.erase_grow) & ~body
+        n = int(weed.sum())
+        if a.erase_grow:
+            print("erase  matte %d px -> %d after growing %d px (the lit fringe "
+                  "the threshold cannot see)" % (core, n, a.erase_grow))
+        if n < 200:
+            print("!! --erase-box matted only %d px at luma<%s -- the box or "
+                  "the threshold is wrong, and erasing nothing silently is how "
+                  "two plants reach the frame." % (n, a.erase_lum))
+            return 1
+        ys, xs = np.where(weed)
+        # C0: the hole must be FIELD ONLY. b19 filled within class because its
+        # hole ran into the figure; this asserts the situation b19 had to handle
+        # does not arise, instead of assuming it.
+        lum_all = (0.299 * raw[..., 0] + 0.587 * raw[..., 1]
+                   + 0.114 * raw[..., 2])
+        ink_outside = (lum_all < a.erase_lum) & ~weed
+        near = dilate(weed, a.erase_clearance) & ~weed
+        bleed = int((ink_outside & near).sum())
+        # C0c THE MATTE IS NOT CLIPPED BY ITS OWN BOX. If it runs to an edge the
+        # box is cutting the weed in half and half a weed survives into the
+        # frame, which is the exact canon failure this erase exists to prevent.
+        clipped = [nm for nm, v, lim in
+                   (("left", xs.min(), box[0]), ("top", ys.min(), box[1]),
+                    ("right", xs.max(), box[2] - 1), ("bottom", ys.max(), box[3] - 1))
+                   if v == lim]
+        if clipped:
+            print("!! C0c the matte touches the %s edge of --erase-box, so the "
+                  "box is cutting the weed rather than containing it. Widen it."
+                  % "/".join(clipped))
+            return 1
+        print("erase  %d px  bbox x %d..%d y %d..%d  |  C0 other-class ink "
+              "within %d px of the hole: %d  |  class map: %s"
+              % (n, xs.min(), xs.max(), ys.min(), ys.max(), a.erase_clearance,
+                 bleed, a.body_box or "NONE"))
+        if bleed and not a.body_box:
+            print("!! C0 FAILED: ink of another object sits beside the hole and "
+                  "there is no class map, so a per-row fill would average the "
+                  "field with whatever that ink belongs to -- b19's v11 left a "
+                  "22 px grey smear doing exactly this. Pass --body-box.")
+            return 1
+        arr = fill_from_boundary(raw, weed, body=body, iters=a.fill_iters)
 
     # ---- geometry ---------------------------------------------------------
     rx, ry = a.root
@@ -288,10 +526,17 @@ def main() -> int:
     x1 = int(max(0, min(W, rx + leaf_len)))
     region[y0:y1, x0:x1] = True
 
-    pal = foliage_palette(arr, region)
+    # THE PALETTE COMES OFF THE ERASED WEED WHEN THERE IS ONE (b19's law: the
+    # strongest source is the plant you are deleting, and it cannot be a repeat
+    # because those pixels do not survive). The field's greens are the fallback.
+    pal = palette_from_erased(raw, weed) if weed.any() else {}
+    if not pal:
+        pal = foliage_palette(arr, region)
+        pal["source"] = "the field's own greens"
     ldx, ldy = light_direction(arr, region)
-    print("palette (from %d plate px)  dark %s  mid %s  light %s  ink %s"
-          % (pal["n_sampled"], pal["dark"], pal["mid"], pal["light"], pal["ink"]))
+    print("palette (%s, %d px)  dark %s  mid %s  light %s  ink %s"
+          % (pal["source"], pal["n_sampled"], pal["dark"], pal["mid"],
+             pal["light"], pal["ink"]))
     print("light direction MEASURED from the plate: dx %+.3f dy %+.3f" % (ldx, ldy))
 
     # which side of a blade is lit: the sign of the light's x component decides
@@ -355,8 +600,13 @@ def main() -> int:
     touched = drawn | rim | contact
 
     # ---- the mask a finishing pass would use ------------------------------
+    # b19's form exactly: it covers the DRAWN plant AND the ERASED VACANCY, not
+    # only what was painted. A mask fitted to the paint alone makes the result a
+    # foregone conclusion and measures nothing (beat 14's C8) — and here it
+    # would also leave the filled-in field unfinished, a smooth interpolated
+    # patch in a frame of drawn grass.
     mask = np.zeros((H, W), np.uint8)
-    mask[dilate(touched, a.mask_dilate)] = 255
+    mask[dilate(touched, a.mask_dilate) | dilate(weed, 5)] = 255
     frac = float((mask > 0).sum()) / float(W * H)
 
     ys, xs = np.where(drawn)
@@ -368,7 +618,10 @@ def main() -> int:
         "leaf_len_px": round(leaf_len, 1), "leaves": leaves,
         "light_dx": round(ldx, 3), "light_dy": round(ldy, 3),
         "lit_side": "right" if lit_sign > 0 else "left",
-        "palette": {k: list(v) for k, v in pal.items() if k != "n_sampled"},
+        "palette": {k: (list(v) if isinstance(v, tuple) else v)
+                    for k, v in pal.items()},
+        "erased_px": int(weed.sum()),
+        "erase_box": a.erase_box,
         "mask_fraction": round(frac, 4),
         "plant_extent": ([int(xs.min()), int(xs.max()),
                           int(ys.min()), int(ys.max())] if len(xs) else None),
@@ -383,6 +636,16 @@ def main() -> int:
     fails = []
     o = comp.astype(np.int16)
     b0 = arr.astype(np.int16)
+    # C0b THE ERASE STAYED IN ITS HOLE. fill_from_boundary only assigns inside
+    # `hole`, but that is a property of the code and this is the check that
+    # makes it a property of the OUTPUT — a fill that leaks is how b19's v11 put
+    # a grey smear on a cheek.
+    if weed.any():
+        leaked = int((np.abs(arr.astype(np.int16) - raw.astype(np.int16)
+                             ).max(axis=2) > 0)[~weed].sum())
+        if leaked:
+            fails.append("C0b the erase wrote %d px outside its own matte"
+                         % leaked)
     changed = np.abs(o - b0).max(axis=2) > 0
     c1 = int((changed & ~touched).sum())
     if c1:

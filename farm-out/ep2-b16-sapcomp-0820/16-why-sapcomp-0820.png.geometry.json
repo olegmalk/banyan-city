@@ -1,0 +1,84 @@
+{
+ "apex": [
+  482.9,
+  533.5
+ ],
+ "erase_box": "100,290,340,640",
+ "erased_px": 10310,
+ "field_mean_luma": 142.6,
+ "height_px": 640.0,
+ "leaf_len_px": 294.4,
+ "leaves": [
+  {
+   "len": 294.4,
+   "node": [
+    481.9,
+    538.5
+   ],
+   "side": -1.0,
+   "tip": [
+    237.8,
+    436.4
+   ]
+  },
+  {
+   "len": 312.1,
+   "node": [
+    483.9,
+    533.5
+   ],
+   "side": 1.0,
+   "tip": [
+    773.2,
+    461.0
+   ]
+  }
+ ],
+ "light_dx": -0.218,
+ "light_dy": -0.976,
+ "lit_side": "left",
+ "mask_fraction": 0.0984,
+ "palette": {
+  "dark": [
+   68,
+   93,
+   50
+  ],
+  "ink": [
+   49,
+   72,
+   50
+  ],
+  "light": [
+   169,
+   181,
+   103
+  ],
+  "mid": [
+   97,
+   122,
+   70
+  ],
+  "n_sampled": 3290,
+  "source": "the erased weed"
+ },
+ "plant_extent": [
+  237,
+  773,
+  430,
+  1170
+ ],
+ "plant_fraction": 0.0565,
+ "plant_mean_luma": 110.2,
+ "plate": "farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png",
+ "plate_sha256": "8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe",
+ "root": [
+  416.0,
+  1170.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 6.0
+}
