@@ -156,6 +156,23 @@ main { max-width: 1180px; }
 .qlede { color: var(--muted); }
 .qprov { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .4rem 0 0; }
 
+/* ---- the freshness line, and the banner it becomes when the feed dies ----
+   THE DEFECT THIS EXISTS FOR (founder, 2026-08-20): he opened /queue and read
+   "Finished — newest day first" with Sunday 16 August at the top, four days
+   after the fact, and took it for a quiet card. It was not: the box rendered
+   246 jobs in those four days and pushed every one to the results branch. What
+   had stopped was the hand-run regeneration of queue-history.json. A page whose
+   newest row is days old must say so IN THE READER'S WORDS, because the one
+   thing a reader cannot tell from an empty top row is which of the two silences
+   it is. Quiet when fresh (it is a fact, not an alarm); loud when not. */
+.qfresh { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .35rem 0 0; }
+.qfresh.stale { display: block; margin: .9rem 0 0; padding: .75rem .9rem;
+  border: 1px solid var(--alarm, #e2564d); border-left-width: 4px; border-radius: 10px;
+  color: var(--ink); background: color-mix(in srgb, var(--alarm, #e2564d) 9%, transparent);
+  font: 500 .84rem/1.65 var(--mono); }
+.qfresh.stale b { color: var(--alarm, #e2564d); letter-spacing: .04em; }
+.qfresh .qfresh-fix { display: block; margin: .35rem 0 0; color: var(--muted); }
+
 /* ---- the counters across the top ---- */
 .qstats { display: grid; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none;
   grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
@@ -498,6 +515,85 @@ def clock(iso: str) -> str:
     return dt.strftime("%H:%M") if dt else "—"
 
 
+# How old the newest finished render may be before this page calls its own feed
+# dead. The box's own quiet gaps are minutes (see ledger_freshness.py's measured
+# p50 3.3 min / longest-ever 0.75 h off 2107 commits), so a day is far past any
+# silence the card has ever taken while working — but a day is also the point at
+# which a HUMAN stops reading a top row as "this morning" and starts reading it
+# as history, and this threshold exists for the human, not the card.
+FEED_STALE_HOURS = 24
+
+
+def age_words(seconds: float) -> str:
+    """A gap in seconds → the phrase a person would say. Never `0 days`."""
+    s = max(0.0, float(seconds))
+    if s < 5400:
+        return f"{int(round(s / 60))} minutes ago"
+    if s < 36 * 3600:
+        h = s / 3600.0
+        return f"{h:.0f} hours ago" if h >= 2 else "an hour ago"
+    d = s / 86400.0
+    return f"{d:.1f} days ago" if d < 10 else f"{int(round(d))} days ago"
+
+
+def newest_finish(jobs: list) -> str | None:
+    """The `finished_at` of the most recent run this page can show, or None.
+
+    Read off the rows and not off `_meta.measured_at` on purpose: measured_at is
+    when the GENERATOR ran, and the 2026-08-20 defect is exactly a generator
+    that had not run. The only honest answer to "how current is this page" is
+    the timestamp of the newest thing on it.
+    """
+    stamps = [j.get("finished_at") for j in jobs
+              if isinstance(j, dict) and j.get("finished_at")]
+    return max(stamps) if stamps else None
+
+
+def freshness_html(jobs: list, now: datetime.datetime = None) -> str:
+    """The line above the gallery that says how current the gallery is.
+
+    Three states and no fourth: fresh (a quiet fact), stale (a red banner naming
+    the date the feed stopped and the command that restarts it), and undatable
+    (say that, rather than implying either). The element always carries
+    `data-newest` so the reader's own browser can re-decide — a page built while
+    fresh and read three days later is the same lie in slower motion, and the
+    script at the bottom re-renders this from the client clock.
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    newest = newest_finish(jobs)
+    dt = parse_iso(newest)
+    if dt is None:
+        return ('<p class="qfresh stale" data-newest="">'
+                '<b>THE AGE OF THIS PAGE IS UNKNOWN.</b> Not one row carries a '
+                'finish time, so nothing here can be dated and this page will '
+                'not guess. Re-run <code>python3 pipeline/queue_history.py</code>.'
+                '</p>')
+
+    age_s = (now - dt).total_seconds()
+    when = dt.strftime("%a %-d %B %Y at %H:%M" if sys.platform != "win32"
+                       else "%a %d %B %Y at %H:%M")
+    attrs = f'data-newest="{_e(newest)}" data-stale-h="{FEED_STALE_HOURS}"'
+
+    if age_s < FEED_STALE_HOURS * 3600:
+        return (f'<p class="qfresh" {attrs}>Newest render on this page finished '
+                f'<b>{_e(when)}</b> {TZ_LABEL} — {_e(age_words(age_s))}.</p>')
+
+    return (
+        f'<p class="qfresh stale" {attrs}>'
+        f'<b>THIS FEED IS STALE — nothing newer than {_e(when)} {TZ_LABEL} '
+        f'({_e(age_words(age_s))}) is on this page.</b> That is a statement about '
+        f'the page, NOT about the render box: the box publishes every finished '
+        f'job to <code>{_e(RESULTS_BRANCH)}</code> as it goes, and anything it '
+        f'has run since that time exists and is simply not shown here. An empty '
+        f'top row on a stale feed is not an idle card.'
+        f'<span class="qfresh-fix">The page is baked from the committed '
+        f'<code>pipeline/measured/queue-history.json</code>, which nothing '
+        f'refreshes on a schedule. To move it: '
+        f'<code>python3 pipeline/queue_history.py</code>, commit the file, push. '
+        f'To check before trusting it: '
+        f'<code>python3 pipeline/ledger_freshness.py</code>.</span></p>')
+
+
 def dur_words(sec) -> str:
     """Seconds → `2m 53s`. A duration nobody measured is an em dash, never 0s."""
     try:
@@ -811,6 +907,7 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
 
     measured = meta.get("measured_at") or "unknown"
     src_commit = str(meta.get("source_commit") or "")[:9]
+    fresh = freshness_html(jobs, now)
 
     stats = (
         '<ul class="qstats">'
@@ -915,10 +1012,12 @@ file it wrote.</p>
 {len(jobs)} renders · written by <code>pipeline/queue_history.py</code> and committed,
 so this page is exactly as fresh as that file and no fresher. The block below it is
 live.</p>
+{fresh}
 {stats}
 {live}
 {up_section}
 <h2 id="finished">Finished — newest day first</h2>
+{fresh}
 <p class="qlede">Grouped by the day each render finished, on a {TZ_LABEL} clock.
 Thumbnails are 512&nbsp;px previews from the <code>{THUMB_BRANCH}</code> branch; the
 full-resolution frame is in the record and on the results branch.</p>
@@ -1690,6 +1789,62 @@ LIVE_JS = """
       count.textContent = cards.length + " renders \\u00b7 prompt search unavailable: "
         + e.message;
     });
+})();
+
+/* ---- the feed's age, re-decided against the READER's clock -----------------
+   The banner above the gallery is rendered at build time, and a build-time
+   verdict rots exactly like the data it describes: a page built while the feed
+   was fresh and opened three days later would print "4 hours ago" forever. So
+   every .qfresh element carries the newest row's ISO stamp, and this re-reads
+   it now. It can only ever make the page MORE cautious — the words come from
+   the same threshold the builder used, and with JavaScript off the build-time
+   sentence stands, which is why that one is written to be true on its own. */
+(function () {
+  var els = document.querySelectorAll(".qfresh[data-newest]");
+  if (!els.length) return;
+  function words(s) {
+    s = Math.max(0, s);
+    if (s < 5400) return Math.round(s / 60) + " minutes ago";
+    if (s < 36 * 3600) {
+      var h = s / 3600;
+      return h < 2 ? "an hour ago" : Math.round(h) + " hours ago";
+    }
+    var d = s / 86400;
+    return (d < 10 ? d.toFixed(1) : String(Math.round(d))) + " days ago";
+  }
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    var iso = el.getAttribute("data-newest");
+    if (!iso) continue;
+    var t = Date.parse(iso);
+    if (isNaN(t)) continue;
+    var hrs = parseFloat(el.getAttribute("data-stale-h")) || 24;
+    var age = (Date.now() - t) / 1000;
+    var stale = age >= hrs * 3600;
+    if (!stale) continue;                    /* build-time text already fits */
+    if (el.classList.contains("stale")) {
+      /* already loud — only the age needs to stop lying */
+      var b = el.querySelector("b");
+      if (b) b.textContent = b.textContent.replace(
+        /\\(([^()]*ago)\\)/, "(" + words(age) + ", as of when you opened this)");
+      continue;
+    }
+    /* it was fresh when this page was built and it is not now */
+    var when = new Date(t).toLocaleString();
+    el.className = "qfresh stale";
+    el.textContent = "";
+    var b2 = document.createElement("b");
+    b2.textContent = "THIS FEED HAS GONE STALE SINCE THIS PAGE WAS BUILT \\u2014 "
+      + "nothing newer than " + when + " (" + words(age) + ") is on it.";
+    el.appendChild(b2);
+    var fix = document.createElement("span");
+    fix.className = "qfresh-fix";
+    fix.textContent = "The render box publishes every finished job to "
+      + RESULTS_BRANCH + " as it goes, so renders since then exist and are "
+      + "simply not shown here. An empty top row on a stale feed is not an "
+      + "idle card. Re-run pipeline/queue_history.py, commit, push.";
+    el.appendChild(fix);
+  }
 })();
 """
 

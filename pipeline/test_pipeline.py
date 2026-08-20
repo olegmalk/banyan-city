@@ -8950,6 +8950,86 @@ def test_the_queue_page_is_actually_published_and_actually_swept():
           "queue.html" in sim and "full history" in sim)
 
 
+def test_the_queue_page_says_so_when_its_own_feed_has_died():
+    """2026-08-20, the founder: /queue's "Finished — newest day first" showed
+    Sunday 16 August at the top, four days stale, and he read it as a quiet card.
+
+    It was the opposite of quiet. The box had rendered 246 jobs in those four
+    days and pushed every one of them to farm-results-rtx5090 on time; what had
+    stopped was the HAND-RUN regeneration of pipeline/measured/queue-history.json,
+    which nothing schedules. Both silences look identical from the top of a
+    gallery — an old date and no new rows — and only one of them is a problem
+    with the machine, so a reader who cannot tell them apart will guess, and he
+    guessed the harmless one.
+
+    The page therefore has to date ITSELF, out loud, past a day. These checks are
+    on the wording as much as the logic: "stale" alone would still leave him
+    guessing which silence it is, so the banner must say the box kept publishing
+    and name the command that moves the file.
+    """
+    import datetime
+
+    import build_queue as bq
+
+    utc = datetime.timezone.utc
+    row = {"id": "j1", "beat": 7, "kind": "motion", "rc": 0,
+           "finished_at": "2026-08-16T15:56:59Z", "duration_s": 10,
+           "prompt": "p", "prompt_source": "artifact sidecar", "outputs": []}
+    data = {"_meta": {}, "upcoming": [], "jobs": [row]}
+
+    # The exact defect: measured_at was one minute old on the day he saw it, so
+    # any freshness taken from _meta would have called this page current.
+    fresh_meta = {"_meta": {"measured_at": "2026-08-20T13:00:00Z"},
+                  "upcoming": [], "jobs": [row]}
+    stale_out = bq.render(fresh_meta,
+                          datetime.datetime(2026, 8, 20, 13, 1, tzinfo=utc))
+    check("four days after the newest row the page calls its own feed stale",
+          "THIS FEED IS STALE" in stale_out)
+    check("a freshly-run generator over an old branch does not buy freshness",
+          "THIS FEED IS STALE" in stale_out)
+    check("the banner dates the last thing it knows about",
+          "16 August 2026" in stale_out)
+    check("and says how long ago that was in days",
+          "days ago" in stale_out)
+    check("it states the box kept publishing, so the reader cannot read the "
+          "gap as an idle card",
+          "not an idle card" in stale_out.lower()
+          and bq.RESULTS_BRANCH in stale_out)
+    check("and it names the command that moves the file",
+          "queue_history.py" in stale_out)
+    check("the banner sits with the gallery it is describing, not only up top",
+          stale_out.count("THIS FEED IS STALE") >= 2)
+    check("its heading is still the one he was reading",
+          "Finished &#8212; newest day first" in stale_out
+          or "Finished — newest day first" in stale_out)
+
+    # An hour old is a working card, and a red banner there teaches him to
+    # ignore red banners — the same reasoning as the acknowledged-failures chip.
+    ok_out = bq.render(data, datetime.datetime(2026, 8, 16, 17, 0, tzinfo=utc))
+    check("an hour after the newest row there is no alarm",
+          "THIS FEED IS STALE" not in ok_out)
+    check("but the age is still stated, because a quiet fact is not nothing",
+          "Newest render on this page finished" in ok_out)
+
+    # A page built fresh and read days later is the same lie, slower.
+    check("the freshness element carries the stamp for the reader's own clock",
+          'data-newest="2026-08-16T15:56:59Z"' in ok_out)
+    check("and the script re-decides staleness in the browser",
+          "qfresh[data-newest]" in bq.LIVE_JS
+          and "GONE STALE SINCE THIS PAGE WAS BUILT" in bq.LIVE_JS)
+
+    # Undatable is its own answer. Guessing either way would be the same fault.
+    blind = bq.render({"_meta": {}, "upcoming": [],
+                       "jobs": [dict(row, finished_at=None)]},
+                      datetime.datetime(2026, 8, 20, 13, 0, tzinfo=utc))
+    check("rows with no finish time make the age UNKNOWN, not fine",
+          "AGE OF THIS PAGE IS UNKNOWN" in blind)
+
+    # The threshold is the human's, not the card's, and it is stated once.
+    check("one named threshold, in hours, not a number buried in a branch",
+          isinstance(bq.FEED_STALE_HOURS, int) and bq.FEED_STALE_HOURS == 24)
+
+
 # ---------------------------------------------------------------------------
 # THE PICTURE A MOTION JOB STARTS FROM MUST BE A PLACE.
 #
@@ -9955,6 +10035,7 @@ def test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer():
 
 def main():
     import tempfile
+    test_the_queue_page_says_so_when_its_own_feed_has_died()
     test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer()
     test_a_derived_spec_carries_structure_and_never_a_verdict()
     test_a_stale_harness_cannot_render_a_killed_wording()

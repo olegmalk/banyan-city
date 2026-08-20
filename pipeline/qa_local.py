@@ -18,6 +18,7 @@ Last line is machine-parseable:  QA-GATE: PASS routes=N | QA-GATE: FAIL failures
 """
 
 import argparse
+import datetime
 import email.utils
 import html
 import os
@@ -881,6 +882,107 @@ def _ago(seconds):
     return "%.1fh" % (seconds / 3600.0)
 
 
+def check_ledger_freshness():
+    """Is /queue's history file current enough to hand anybody?
+
+    WHY THIS EXISTS. On 2026-08-20 the founder opened /queue, read "Finished —
+    newest day first" with Sunday 16 August at the top, and took it for a quiet
+    card. The card had not been quiet: it rendered 246 jobs over those four days
+    and pushed every one to farm-results-rtx5090 on schedule. What had stopped
+    was the HAND-RUN regeneration of pipeline/measured/queue-history.json, which
+    no schedule, hook, CI step or caller touches — the page is exactly as fresh
+    as the last time a human remembered to re-run its generator.
+
+    `ledger_freshness.py` was written on 2026-08-16, the same week and for the
+    same defect, and then wired into nothing. A guard with no caller is a guard
+    that does not exist; this is the caller. Every founder-facing handover goes
+    through this gate, so this is the last place the staleness can be caught
+    before he reads it as a fact about the machine.
+
+    WHAT IS FAILED HERE IS THE FOUNDER'S QUESTION, NOT A LANE'S. ledger_freshness
+    answers a stricter one — "may I decide run status from this file", where any
+    commit on the branch the ledger has not seen is disqualifying — and the box
+    force-pushes a heartbeat every few minutes, so that verdict is STALE within
+    minutes of a perfectly good rebuild. Wiring THAT to a gate would paint this
+    output permanently red, and a permanently red gate is one lanes learn to step
+    over; the same reasoning that put a denominator under /queue's failed chip and
+    the same lesson as the runner watchdog that got switched off after 60 false
+    restarts. So the gate fails on the page's own threshold — is the newest render
+    it can show more than a day old, which is when a reader stops reading the top
+    row as "recent" — and reports the stricter verdict underneath as a note.
+
+    Two tiers, then:
+      FAIL  the newest row is over build_queue.FEED_STALE_HOURS old. This is the
+            defect he hit, and the remedy is `python3 pipeline/queue_history.py`,
+            ~12 s, $0, no GPU.
+      warn  the feed is inside a day but the branch has moved on. Worth saying —
+            a rebuild would add those runs — and not worth blocking a handover.
+
+    Anything unreadable is a WARN, for the same reason the public probe warns: a
+    laptop offline mid-flight must not red a local screening run, and neither
+    check will claim current on a question it could not finish.
+
+    Returns a list of failure strings (empty = pass)."""
+    failures = []
+    print(bold("RENDER-LEDGER FRESHNESS  (what /queue bakes from)"))
+    try:
+        sys.path.insert(0, os.path.join(REPO, "pipeline"))
+        import build_queue as bq
+        data = bq.load()
+        newest = bq.newest_finish(bq.sorted_jobs(data))
+        dt = bq.parse_iso(newest)
+    except Exception as e:                                  # never red on import
+        print("  %s could not read the ledger through build_queue (%s)"
+              % (yellow("warn"), e))
+        print()
+        return failures
+
+    if dt is None:
+        print("  %s no row in pipeline/measured/queue-history.json carries a "
+              "finish time — age cannot be judged" % yellow("warn"))
+        print("  %s /queue says so on its own face rather than guessing.\n"
+              % yellow("    "))
+        return failures
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    age_s = (now - dt).total_seconds()
+    limit_s = bq.FEED_STALE_HOURS * 3600
+    when = dt.strftime("%a %-d %b %H:%M") + " " + bq.TZ_LABEL
+
+    if age_s >= limit_s:
+        failures.append(
+            "pipeline/measured/queue-history.json is %s old — /queue would show "
+            "the founder %s as its newest day, and he has already misread that "
+            "as an idle card. Fix: python3 pipeline/queue_history.py, commit it"
+            % (bq.age_words(age_s), when))
+        print("  %s newest render on /queue finished %s — %s"
+              % (red("FAIL"), when, bq.age_words(age_s)))
+        print("       over the page's own %d-hour line; it will print a stale "
+              "banner as built" % bq.FEED_STALE_HOURS)
+        print("       Fix (~12 s, $0): python3 pipeline/queue_history.py, then commit it.")
+        print()
+        return failures
+
+    print("  %s newest render on /queue finished %s — %s"
+          % (c("32", "ok  "), when, bq.age_words(age_s)))
+
+    # The stricter reading, as a note. It is the one that catches a ledger built
+    # minutes ago off a branch ref last fetched hours ago, which no age check can.
+    try:
+        import ledger_freshness as lf
+        verdict = lf.check()
+        if verdict.state != lf.CURRENT:
+            print("  %s %s" % (yellow("note"), verdict.headline))
+            for ln in verdict.lines:
+                print("       %s" % ln)
+            print("       Not blocking: the page is inside its own freshness line. "
+                  "A rebuild would still add those runs.")
+    except Exception:
+        pass                       # a note that cannot be produced is just absent
+    print()
+    return failures
+
+
 def check_public_freshness():
     """Is the PUBLIC site actually serving current work?
 
@@ -1115,6 +1217,10 @@ def main():
     # stay green while a page the founder was promised does not exist.
     page_gaps = unpublished_review_pages()
 
+    # Before the route sweep, because a page that is present, valid and four
+    # days out of date passes every check below it.
+    ledger_failures = check_ledger_freshness()
+
     public_failures = check_public_freshness() if args.public else []
 
     results = []
@@ -1200,7 +1306,19 @@ def main():
         )
         print()
 
-    total = len(failures) + len(public_failures) + len(page_gaps)
+    if ledger_failures:
+        print(bold("/QUEUE WOULD SHOW A DEAD FEED AS AN IDLE CARD"))
+        for f in ledger_failures:
+            print("  %s %s" % (red("FAIL"), f))
+        print(
+            "  Every route below can be green while this is red: the page is present,\n"
+            "  valid and days out of date. The box is almost certainly fine — it is the\n"
+            "  committed history file that stopped moving."
+        )
+        print()
+
+    total = (len(failures) + len(public_failures) + len(page_gaps)
+             + len(ledger_failures))
     if total:
         print(red("QA gate FAILED — do not hand this URL to the founder."))
         print("QA-GATE: FAIL failures=%d" % total)
