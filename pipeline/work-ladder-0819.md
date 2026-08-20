@@ -6963,3 +6963,87 @@ horns. `k5a` at head 25% (~6.1% encoded) and `k5b` at head 20% (~3.9% encoded)
 are filed as one variable each, and **k5b deliberately goes below k3's 5.4%
 coverage on a square canvas** — which is the one test that could still show
 starvation growing a horn on its own, and would falsify Read 1 if it did.
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE AXIS IS EXHAUSTED: THE BEST FACE THIS TREE HAS MEASURED HAS NO MOUTH
+
+`ep2-jerry-face-k5a/k5b-0821`, the two points below k4a on the same square
+axis. `review/ep2-goblin-design-0819/FACE-K5-AXIS-0821.png`
+
+### THE FALSIFICATION TEST PASSED, SO READ 1 STANDS
+
+k5b was filed at head 20% / **3.9% encoder coverage — BELOW k3's 5.4%** — on a
+square canvas, precisely so that a horn there would prove last entry's reading
+wrong. **k5b came back horn-free.** Starvation does not grow a horn; the centre
+crop amputating the reference does. That is now tested rather than argued.
+
+### AND THE AXIS IS NOT MONOTONIC, WHICH MY OWN PREDICTION MISSED
+
+The k5 spec predicted "an eye between k3's 1.24x and k4a's 1.41x" below 30%.
+**Half right.** k5a at 25% landed at **1.26x** — dead in the predicted window.
+k5b at 20% **reversed to 1.83x**. The axis has an optimum near 25%, not a slope,
+and I had implicitly assumed monotonicity from four points.
+
+| rung | head | %enc | eye vs TILE | aspect | area(190) | head_frac | heads | mouth ink |
+|---|---|---|---|---|---|---|---|---|
+| TILE | — | — | 1.00x | **0.52** | 0.0143 | 0.190 | 5.2 | present |
+| k5b | 20% | 3.9 | 1.83x | 0.74 | 0.0454 | 0.190 | 5.28 | 312 **NO MOUTH** |
+| **k5a** | 25% | 6.1 | **1.26x** | **0.53** | **0.0171** | **0.188** | 5.31 | 210 **NO MOUTH** |
+| k4a | 30% | 8.8 | 1.41x | 0.59 | 0.0393 | 0.195 | 5.13 | 451 |
+| k4b | 45% | 19.7 | 1.70x | 0.56 | 0.0481 | 0.203 | 4.93 | 471 |
+| k4c | 60% | 35.2 | 1.94x | 0.74 | 0.0482 | 0.210 | 4.76 | 447 |
+| k4d | 75% | 55.5 | 2.10x | 0.86 | 0.0541 | 0.215 | 4.65 | 473 |
+
+### k5a IS THE BEST FACE THIS TREE HAS PRODUCED AND IT IS STILL A FAIL
+
+Eye **1.26x** the tile's relative bounding box with aspect **0.53** against the
+tile's 0.52 — the closest either number has ever come. **Area 0.0171, which
+passes the 0.030 clause for the first time in the entire ladder**, and 0.0235
+even at the disclosure threshold 170, so it is not a shading artifact.
+`head_frac` 0.188 against the 0.190 authored. T8 5.31 heads. No horns, no cowl,
+containment intact.
+
+**It has no mouth.** Not a thin one — none, confirmed at 1:1 and again at
+contrast x2.6 on a blank lower face. **P3 fails**, and P3 exists because the
+curation file wrote it after n1: *"a line, however thin. n1 has NONE — absent,
+not thin."* The featureless egg came back through a different door.
+
+### THE FINDING THAT CLOSES THE AXIS
+
+**The two halves of the face have different optima on one dial.** The eye is
+best at 25% coverage. The mouth is only reliably drawn from 30% up — ink 447,
+471, 473 across 30/45/60/75%, collapsing to 210 at 25%. **k4a at 30% is the
+lowest rung that keeps the mouth, and its eye is 1.41x, which is what j2 draws
+with no adapter at all.**
+
+So there is no point on this axis that passes: above 30% the eye is wrong,
+below 30% the presences drop out. Seven square points, one dial, no window.
+
+### THE GATE: SHUT. `train-jerry-0820` UNFILED, THE SET IS STILL 7 FRAMES IN 4 POSES
+
+Nothing from k4 or k5 enters the dataset. **Four levers are now closed** —
+wording for the face, adapter strength for size, reference framing for the eye,
+and now reference framing for the *whole face*, because the eye and the
+presences cannot both be satisfied by one coverage number.
+
+### THE NEXT INSTRUMENT IS NAMED AND DELIBERATELY NOT FILED
+
+The defect is no longer a value on a dial, so a seventh point on that dial is
+not the answer. What the shape of the result argues for, in order of how much
+each presumes:
+
+1. **`ip-adapter-plus-face_sdxl_vit-h` — 847 MB, NOT cached on the box.** It is
+   trained for exactly the regime where a face must survive a small share of the
+   reference, which is the regime where our presences drop out. **The download
+   is a physical dependency and is the one concrete unblocking action here**; it
+   presumes nothing about the outcome.
+2. **Two conditioning channels instead of one**, so the eye and the mouth are
+   not both downstream of a single coverage number.
+3. **Accept k4a** — mouth present, eye at 1.41x — and treat the eye as a defect
+   the LoRA is *not* asked to fix. That is a change to what the character looks
+   like, which is R4 and not the steward's.
+
+**None of the three is filed.** This lane predicted a monotonic axis tonight and
+the twentieth-percentile rung falsified it inside an hour; the correct next move
+is a download and a look, not a fourth confident guess.

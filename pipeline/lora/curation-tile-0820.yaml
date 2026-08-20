@@ -441,3 +441,59 @@ gate_status_2026_08_21_k4_band: >-
   direction for our purpose, since every gain in eye size costs coverage and
   every gain in coverage costs the eye. The horn is closed on mechanism: it was
   the centre crop amputating the reference, not the subject being small.
+
+# --------------------------------------------------------------------------
+# UPDATE 8, 2026-08-21. ep2-jerry-face-k5a/k5b-0821 -- the two points BELOW
+# k4a on the same square axis. Pixels:
+# review/ep2-goblin-design-0819/FACE-K5-AXIS-0821.png
+#
+# THE FALSIFICATION TEST PASSED. k5b ran at 3.9% encoder coverage, BELOW k3's
+# 5.4%, on a square canvas, specifically so a horn there would disprove the k4
+# reading. It came back HORN-FREE. Starvation does not grow a horn; the centre
+# crop amputating the reference does.
+#
+# AND THE AXIS IS NOT MONOTONIC -- my own k5 prediction missed that. k5a at 25%
+# landed at 1.26x, inside the predicted window; k5b at 20% REVERSED to 1.83x.
+# There is an optimum near 25%, not a slope.
+#
+#        head  %enc  eyevsTILE  aspect  area   head_frac  heads  mouth-ink
+#  TILE   --    --     1.00x     0.52   0.0143   0.190     5.2   present
+#  k5b   20%   3.9     1.83x     0.74   0.0454   0.190     5.28  312 NO MOUTH
+#  k5a   25%   6.1     1.26x     0.53   0.0171   0.188     5.31  210 NO MOUTH
+#  k4a   30%   8.8     1.41x     0.59   0.0393   0.195     5.13  451
+#  k4b   45%  19.7     1.70x     0.56   0.0481   0.203     4.93  471
+#  k4c   60%  35.2     1.94x     0.74   0.0482   0.210     4.76  447
+#  k4d   75%  55.5     2.10x     0.86   0.0541   0.215     4.65  473
+#
+# k5a IS THE BEST FACE THIS TREE HAS PRODUCED AND IT IS STILL A FAIL. Eye 1.26x
+# at aspect 0.53 against the tile's 0.52 -- the closest either number has come --
+# and area 0.0171, which PASSES the 0.030 clause for the FIRST TIME in the whole
+# ladder (0.0235 even at the disclosure threshold 170, so it is not a shading
+# artifact). head_frac 0.188 against 0.190 authored. No horns, no cowl.
+# AND IT HAS NO MOUTH -- none, not a thin one, confirmed at 1:1 and at contrast
+# x2.6 on a blank lower face. P3 FAILS. This file wrote P3 after n1 precisely
+# as "a line, however thin. n1 has NONE -- absent, not thin." The featureless
+# egg came back through a different door, and the curation clause caught it.
+#
+# THE FINDING THAT CLOSES THE AXIS: THE TWO HALVES OF THE FACE HAVE DIFFERENT
+# OPTIMA ON ONE DIAL. The eye is best at 25% coverage; the mouth is only
+# reliably drawn from 30% up (ink 447-473 across 30-75%, collapsing to 210 at
+# 25%). k4a at 30% is the lowest rung that keeps the mouth and its eye is 1.41x
+# -- what j2 draws with NO adapter. Seven square points, one dial, no window.
+#
+# NEXT INSTRUMENT, NAMED AND NOT FILED: (1) ip-adapter-plus-face_sdxl_vit-h,
+# 847 MB and NOT cached -- trained for exactly the regime where a face must
+# survive a small share of the reference, and the download is the one concrete
+# unblocking action that presumes nothing; (2) two conditioning channels so the
+# eye and the mouth are not both downstream of one coverage number; (3) accept
+# k4a's 1.41x eye as a defect the LoRA is not asked to fix -- which is a change
+# to what the character looks like, R4, and not the steward's to make.
+gate_status_2026_08_21_axis_exhausted: >-
+  SHUT. train-jerry-0820 REMAINS UNFILED and the set is STILL 7 frames in 4
+  poses; nothing from the f/g/h/j/k, skel, pose, tileset or prop families
+  enters it. FOUR LEVERS ARE NOW CLOSED: wording for the face, adapter strength
+  for size, reference framing for the eye, and reference framing for the whole
+  face -- because the eye and the facial presences cannot both be satisfied by
+  one coverage number. The horn is closed on mechanism and confirmed by a
+  falsification rung. The best face this tree has measured, k5a, passes the eye
+  area clause for the first time ever and has no mouth.
