@@ -1,0 +1,189 @@
+id: ep2-jerry-tileset-p08-0820
+task: ep2-jerry-tileset-p08-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerrytile-p08-0820\prompt.txt: masterpiece, best quality, very aesthetic, 1other, solo,
+    colored skin, green skin, bald, ragged cloak, blank eyes, tsurime, jitome, no nose, closed mouth,
+    :|, expressionless, close-up, portrait, from side, profile
+  C:\banyan-farm\jerrytile-p08-0820\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys
+steps:
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerrytile-p08-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerrytile-p08-0820\src
+  - --repo-commit
+  - d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+  - --task
+  - ep2-jerry-tileset-p08-0820
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260827'
+  - --prompt-file
+  - C:\banyan-farm\jerrytile-p08-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerrytile-p08-0820\negative.txt
+  - --out
+  - C:\banyan-farm\jerrytile-p08-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerrytile-p08-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/jerrytile-p08-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-tileset-p08-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-jerry-tileset-p08-0820-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-tileset-p08-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\jerrytile-p08-0820\out\ep2-jerry-tileset-p08-0820-nocontrol.png
+owner: goblin-design audit lane, 2026-08-20 night
+consumer: 'THE JERRY LoRA TRAINING SET. pipeline/lora/curation-tile-0820.yaml re-curated the existing
+  31 frames against the B tile and kept SEVEN, in four poses, and refuses to file training on a set that
+  would teach a pose instead of a character. This job is one of twelve poses filling that gap. It is a
+  training CANDIDATE and not a pick: no beat plate, nothing in any cut, and it still has to clear T1-T4
+  and T7 by eye before it enters any manifest.'
+success: ONE 832x1216 png of the tile-faithful creature in the pose 'close-up, portrait, from side, profile'
+  (LoRA needs a profile or it learns one camera), at seed 20260827. The identity clause and the negative
+  are byte-identical to the ratified recipe in pipeline/canon.yaml correction_2026_08_20; the POSE and
+  the cloak word are the only things that differ between the twelve jobs, and the cloak word is set by
+  the framing rule, not by choice.
+why: 'POSE p08 OF TWELVE, SERVING LoRA needs a profile or it learns one camera. The recipe was measured
+  over fourteen $0 samples tonight and is ratified in canon; what the dataset lacks is bodies, not wording.
+  `ragged cloak` is used here because the framing is a close-up and the cloak word is framing-dependent
+  by measurement: at a tight crop `patchwork` paints the SKULL (six of eight wedge rungs), at full body
+  it lands on the cloth. Negating it does not work -- rung w1 added `scar, stitches` to the negative and
+  the patch returned frame-for-frame identical.'
+bar: "EVERY FRAME IS A CANDIDATE, NOT A PICK, AND CLEARS THE SAME FOUR\nCLAUSES BY EYE BEFORE IT ENTERS\
+  \ THE MANIFEST -- read at 1:1 against\nreview/ep2-goblin-design-0819/adult-b19-0819.jpg:\n  T1 EYES\
+  \  blank white, no iris, no pupil.\n  T2 NOSE  no bridge, no tip, no drawn nostrils.\n  T3 AGE   no\
+  \ brow furrows, no folds, no jowls.\n  T4 EARS  short and low if visible. LONG TAPERING SPIKES ARE A\
+  \ REJECT, and on\n           this set that is not a style note: the LoRA exists to teach an ear\n  \
+  \         Danbooru cannot name, so one spiked frame in the set teaches the\n           spike.\n  T7\
+  \ SKIN IS NOT A COSTUME. No stitches, seams or patches on the head or face.\nT5 (dome) and T6 (two-tone)\
+  \ are NOT scored. T6 was STRUCK from the tile bar on\n2026-08-20 -- rung w3 proved `two-tone skin` renders\
+  \ as two discrete regions (a\nmagenta half-head), so the tile's falloff is rendered light and asking\
+  \ for it\nmanufactures a defect.\nA FRAME THAT FAILS ANY OF T1-T4 OR T7 IS DROPPED, NOT FIXED. There\
+  \ are twelve\nhere and the set does not need all twelve."
+failure_predicted_in_advance: 'THE CLOSE-UPS ARE THE RISK AND THE FULL BODIES ARE NOT. Every
+
+  full-body rung tonight held the face (w4 seated, w5 running, w6 wide), so p01,
+
+  p02, p04-p07, p10-p12 are predicted to pass T1-T3 and to be UNSCORABLE on T4
+
+  because the ear will be a few pixels. An unscorable pass tells us nothing about
+
+  the ear, which is the attribute the LoRA is for -- so THE THREE CLOSE-UPS (p03,
+
+  p08, p09) CARRY THE EAR EVIDENCE ALONE, and if they fail, the set trains
+
+  everything except the one thing no prompt can say.
+
+  THE TWO MOST LIKELY INDIVIDUAL FAILURES, named so they are not explained away:
+
+  p09 (looking up, from below) because a low angle puts the jaw and the underside
+
+  of the skull in frame and nothing tonight has tested that geometry; and p10
+
+  (from behind, looking back) because a turned head is where identity drift lives
+
+  in every i2v result this tree has produced.
+
+  IF FEWER THAN SIX PASS, the wording route has reached its ceiling for dataset
+
+  purposes and the honest next instrument is IP-Adapter conditioned on the tile
+
+  itself -- slower, and not to be reached for before this is measured.'
+one_sample_rule: SATISFIED, and this is the one place in tonight's work where the argument has to be made
+  rather than pointed at. The rule is one sample per RECIPE CHANGE and this file changes no recipe --
+  it was sampled fourteen times tonight (tileread v0-v7, tilefix w1-w6), the pictures are on /review/ep2-goblin-design-0819,
+  and w4/w5/w6 already showed it survives a seated, a running and a wide body. What varies here is the
+  POSE, which is the missing dataset input. Nothing is promoted and no beat is rendered.
+the_one_variable: The pose-and-framing clause. Identity clause, negative, checkpoint, steps, cfg and size
+  are identical across all twelve; the seed walks so the set is not seed-degenerate; the cloak word is
+  a function of the framing and not a free choice.
+derivation:
+  parent: pipeline/jobs/ep2-b04-tilefix-w2-0820.yaml
+  by: pipeline/derive_jerry_tileset_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - publish_glob_fixed_here
+  - the_one_variable
+  retokened:
+  - b04tilefix-w2-0820 -> jerrytile-p08-0820
+  - ep2-b04-tilefix-w2-0820 -> ep2-jerry-tileset-p08-0820
+  - ep2-b04-tilefix-w2-0820 -> ep2-jerry-tileset-p08-0820
+  overrides_applied_and_asserted:
+    argv:--seed:
+    - step hintskel --seed (20260820 -> 20260827)
+    payload:prompt.txt:
+    - payload prompt.txt (208 -> 213 chars)
