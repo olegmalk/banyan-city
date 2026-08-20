@@ -106,6 +106,34 @@ def publish_beside_the_child(src_dir: str, dst_dir: str, want: dict,
     return dst_dir
 
 
+
+def _not_on_origin_main(paths, repo: str = REPO) -> list:
+    """Which of `paths` are absent from origin/main.
+
+    No network call: it reads the local origin/main ref, which is what a fetch
+    or a push just updated. If git cannot answer at all -- no repo, no remote
+    ref -- it returns nothing rather than blocking a deriver that is otherwise
+    fine, because a guard that cannot run must not become a guard that lies
+    about having run; the caller logs which check it got.
+    """
+    import subprocess
+    try:
+        subprocess.run(["git", "rev-parse", "--verify", "-q",
+                        "refs/remotes/origin/main"], cwd=repo, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except (OSError, subprocess.CalledProcessError):
+        return []
+    missing = []
+    for rel in paths:
+        rel = rel.replace(os.sep, "/")
+        r = subprocess.run(["git", "cat-file", "-e", "origin/main:" + rel],
+                           cwd=repo, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL)
+        if r.returncode != 0:
+            missing.append(rel)
+    return missing
+
+
 def assert_fetch_urls_resolve(spec_path: str, must_hold=(), repo: str = REPO,
                               log=print) -> set:
     """Re-read the EMITTED spec and check its fetch URLs against the tree.
@@ -135,7 +163,24 @@ def assert_fetch_urls_resolve(spec_path: str, must_hold=(), repo: str = REPO,
                 "Publish the files there (publish_beside_the_child) or "
                 "override the payload, which lands AFTER retoken."
                 % (rel, ", ".join(missing) or "anything"))
-        log("  fetch URL OK: %s/ holds %d named file(s)" % (rel, len(must_hold)))
+        unpushed = _not_on_origin_main(
+            [os.path.join(rel, n) for n in must_hold], repo=repo)
+        if unpushed:
+            raise FetchGuardError(
+                "!! the emitted spec fetches %s from the MAIN branch and %s "
+                "not in origin/main -- present on this disk only.\n"
+                "   A TREE CHECK IS NOT A FETCH CHECK. The runner pulls these "
+                "over the wire from raw.githubusercontent.com/.../main/, so a "
+                "file that is written, or staged, or committed-but-unpushed "
+                "passes every local test and 404s the job after the queue has "
+                "claimed the card. Commit and push the asset, then re-run this "
+                "deriver.\n   Caught for real on 2026-08-21: "
+                "jerry-tile-headfit-0821.png passed this guard and the raw URL "
+                "returned 404."
+                % (", ".join(sorted(unpushed)),
+                   "it is" if len(unpushed) == 1 else "they are"))
+        log("  fetch URL OK: %s/ holds %d named file(s), all in origin/main"
+            % (rel, len(must_hold)))
     return found
 
 
