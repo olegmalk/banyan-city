@@ -1166,3 +1166,133 @@ draws the noun and the sampler only re-renders it.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. No pick, no
 plate_ack, no cut, and beat 08 does NOT have a complete plate candidate.**
+
+## 21. The composite's hand moved and the strap did not survive it — and the bar certified the wreckage (2026-08-20)
+
+Section 20 ruled the fallback: composite-then-inpaint on the parent plate, the
+one instrument that never has to ask the scribble net for a noun. A lane took
+it, wrote `pipeline/beat08_grip_composite.py`, rendered composite rounds, and
+died mid-judging with its last state "Round 3 reads correctly" and a self-caught
+doubt about its own detail bar. This section is that judging finished.
+
+**`ep2-b08-gripcomp-0820`, FAIL.** Evidence
+`farm-out/ep2-b08-gripcomp-0820/EVIDENCE-b08-gripcomp-verdict-0820.png`, 5x,
+plate | round 3 on disk | what the source now builds.
+
+### Where judging actually stopped, which is not where the note said
+
+Nothing was committed: the compositor and the whole output directory were
+untracked, no verdict was appended anywhere, and **no inpaint job was ever
+filed.** `ep2-b08-gripcomp-0820` is an INIT plus a MASK. It has never been near
+the card. It is the first half of a two-half route.
+
+And the round that "reads correctly" is not the round in the tree. **The on-disk
+init differs from what the source's `build()` now produces in 4488 of the hole's
+4489 px and in zero px anywhere else** — same hand, same translation, same mask,
+a different vacancy fill. `--write` refuses to run when the selftest fails, so
+the artifact was written while C4 passed and the fill was swapped afterwards.
+The artifact is an axial continuation; the source is an isotropic Jacobi
+diffusion whose docstring still describes the axial one. `STRAP_AXIS` is defined
+and never read.
+
+### The re-base the lane asked for: its own self-catch was wrong, and by 0.4%
+
+The doubt was that C4's baseline ring included the removed object's own outline
+and was therefore inflated. It does, and it is worth **0.08 of 17.94**. Same
+ring pixels, gradient computed with the fist still there **17.94**, with the
+fist gone and the fill in **17.86**.
+
+| annulus outside the hole | 1 px | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| grad on the plate | 12.53 | 13.78 | 14.18 | 14.73 | 18.18 | 19.19 | 21.19 | 21.37 | 18.62 | 12.86 | 12.16 |
+
+**The innermost ring is the coolest.** The baseline is high because the gold
+clasp, the sash edge and the shirt folds are 8–10 px away, not because of the
+rim. Re-based honestly — rings 3–12, 4–14, 5–14, 6–16, 8–20 px, every one of
+them excluding the object entirely — the current fill reads **17%, 18%, 18%,
+19%, 22%** against a 45% bar. The correction was worth making and it moves
+nothing.
+
+### THE FINDING: C4 IS A SMEAR DETECTOR, AND IT CERTIFIED A STREAK ARTIFACT
+
+The two fills fail in opposite directions and only one of them was caught.
+
+| | fill grad | share of ring | C4 | what it is at 5x |
+|---|---|---|---|---|
+| round 3, on disk | **16.04** | **89%** | **PASS** | a ribbed corduroy comb down the strap |
+| current source | 3.29 | 18% | FAIL | a smooth pale blob, the strap gone, the clasp dangling |
+
+A mean-|gradient| bar asks one question — *is this flat?* — and a ladder of
+streaks is not flat. **The bar passed the artifact at twice its threshold and an
+eye rejects it in a second.** The obvious extension does not rescue it either:
+`|gy|/|gx|` reads **0.64 in the fill and 0.64 in the untouched ring**, because
+the streaks run along the strap's own dominant axis, which is exactly the axis
+the fill was designed to continue along. Measured, not assumed. **No cheap pixel
+statistic tried here separates the fill an eye rejects from the material it
+replaces**, so no further round on this vacancy may be judged by C4.
+
+### What the composite DID hold, measured, because it is real and it is the ceiling
+
+Every parent clause outside the mask survives **by construction and it is
+proved, not asserted**: maxdiff outside the mask **0** over the whole frame,
+zero stray pixels, and all six of the parent's published pure-skin probes
+untouched by the mask. Coordinates, luma AND material published, per the
+admissibility rule three frames have now earned:
+
+GUARD face (541,363,565,387) G−R **−18.9** / R−B +49.7 / luma 228.4; forearm
+(387,668,411,692) **−10.6** / +39.5 / 227.3; shin (535,1096,559,1120) **−32.3**
+/ +48.6 / 189.4 — **spread 21.7** against 25.0, every region ≤ 0.0.
+GOBLIN face (150,480,174,504) **+41.7** / +75.3 / 222.0; forearm
+(231,764,255,788) **+41.6** / +73.9 / 222.1; shin (106,880,130,904) **+49.7** /
++63.7 / 221.9 — **spread 8.1**, every region ≥ +20.0. **B2 +60.6.** These
+reproduce the parent's published 21.7 / 8.1 / +60.6 exactly, so the instrument
+is the same one. B4a: authored-quad fraction below luma 80 **0.754 → 0.664**,
+the drop being the hand's intended occlusion of the board's top-left corner and
+not a board regression. B1, B3, B5, B6, B8, B4c: byte-identical pixels.
+
+**The grip clause is half-bought.** Fingers and a thumb ARE visible at the
+board's top edge at 5x — they are the plate's own articulated fist, translated,
+so the digits are drawn rather than invented — and the hand straddles the edge,
+1540 px above and 1439 below. Centroid 4.9 px from the authored L-wrist against
+the parent's 90.5, and closer to the wrist than to the elbow: **the parent's
+defect is inverted.** What fails is `held, not tucked`: at 5x the moved unit
+carries a visible stair-stepped octagonal rim against the wrap skirt and the
+sash, it sits ON the board's undisturbed outline rather than closing around it,
+and there is no contact shading. It reads as a sticker of a hand.
+
+### THE OPERATION IS WRONG, NOT THE FILL
+
+The compositor's own docstring rejected MOVE-THE-BOARD because "a translation of
+a mis-cut object is a decal." MOVE-THE-HAND fails the mirror of that test: the
+cut is clean and **the hole is not fillable.** Moving the fist 91 px opens
+4489 px in a harness-strap / cuff / shirt junction with a gold clasp on its top
+edge, and the plate contains no clean source for that junction — not a patch to
+copy, not an axis to continue, not a boundary to interpolate. Three fill
+families have now been tried on it (per-row ramp, axial continuation, isotropic
+diffusion) and all three left an artifact an eye names instantly.
+
+**And this is why the four wins do not transfer.** Beats 15, 19, 03 and 13 all
+either removed an object from a homogeneous field or dropped a sprite onto one.
+**Not one of them had to reconstruct a garment junction.** The generalisable
+rule: *composite-then-inpaint is licensed where the vacancy's material is
+continuous and unstructured; it is not a licence to relocate a part of a figure
+across its own clothing.*
+
+### The rung that follows, named and NOT filed, with the reason
+
+Not a fourth fill. The vacancy should not exist: the honest version is to
+**COPY** the fist to the board edge and leave the original in the init, inside
+the mask, so the sampler removes it from real strap pixels instead of being
+handed a fabricated fill to rationalise. **That rung is not zero-dependency and
+not mechanical, and it is not filed for two reasons.** First, a 0.30 pass does
+not delete a hand — 0.30 is the strength that exists to preserve structure — so
+the rung has to choose a higher strength inside the mask and that re-opens the
+exact clauses (B6, B8, the wardrobe) the 0.30 number was bought with, at
+`(strength × ink)` prices §20 already measured. That is an argued tradeoff, not
+a knob turn. Second and decisive: **the instrument that would score its vacancy
+has just been shown to certify artifacts at twice its bar.** Filing a render
+whose verdict cannot be trusted is filing work with no consumer. A replacement
+for C4 has to come first, and nothing tried in this section is it.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
+plate_ack, NO cut, and beat 08 does NOT have a complete plate candidate.**

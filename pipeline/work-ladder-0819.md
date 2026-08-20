@@ -2984,3 +2984,93 @@ exclude.
 
 Per-clause verdicts in each spec's `verdict_measured`. No cut consequence: beats
 03, 13 and 15 stay slates.
+
+---
+
+## Appended 2026-08-20 by the beat 08 judging lane — the composite route reached beat 08 and beat 08 is the plate it does not fit
+
+A lane took §20's named fallback (composite-then-inpaint, 4 for 4 that day),
+wrote `pipeline/beat08_grip_composite.py`, and died mid-judging with its state
+recorded as "Round 3 reads correctly" plus a self-caught doubt about its own
+detail bar. This lane finished the judging. **`ep2-b08-gripcomp-0820`, FAIL.**
+Full numbers in `pipeline/b08-arm-route-0819.md` §21; evidence at 5x in
+`farm-out/ep2-b08-gripcomp-0820/EVIDENCE-b08-gripcomp-verdict-0820.png`.
+
+### Three things a lane picking up a dead lane's work should copy
+
+**1. "It reads correctly" was a note about a file the source no longer builds.**
+The on-disk init differs from what `build()` produces in **4488 of the hole's
+4489 px and zero px anywhere else** — the fill was swapped after the artifact
+was written, and `--write` refuses on a failing selftest, so the artifact is
+from a round that passed and the code is from a round that does not. *Before
+trusting any inherited "it works", rebuild the artifact and diff it.* The two
+files agreeing is not the default; here they had already diverged.
+
+**2. The dead lane's own self-catch was wrong, and measuring it was still the
+right move.** It suspected its detail baseline was inflated because the ring
+included the removed object's outline. It does — by **0.08 of 17.94**. Same ring
+pixels, gradient with the fist present 17.94, with it gone 17.86; the *innermost*
+annulus is the *coolest* (12.53 at 1 px, 21.4 at 8–10 px), because the gold clasp
+and the shirt folds are what make that neighbourhood busy. Re-based five ways
+that exclude the object entirely, the fill reads 17–22% against a 45% bar.
+**Inheriting a doubt is not the same as inheriting a finding.** Re-base it, and
+publish the number even when it changes nothing.
+
+**3. THE BAR CERTIFIED THE WRECKAGE — and this is the transferable one.** The
+two fills fail in opposite directions and the pre-registered instrument caught
+only one:
+
+| | fill grad | share of ring | bar | what it is at 5x |
+|---|---|---|---|---|
+| round 3, on disk | **16.04** | **89%** | **PASS** | a ribbed corduroy comb down the strap |
+| current source | 3.29 | 18% | FAIL | a smooth blob, strap gone, clasp dangling |
+
+A mean-|gradient| detail bar asks *is this flat?* and nothing else. **A ladder of
+streaks is not flat, so it passes at twice the threshold, and an eye rejects it
+in a second.** The obvious fix does not work either — `|gy|/|gx|` is **0.64 in
+the fill and 0.64 in the untouched ring**, because a fill that continues along a
+material's axis inherits that material's own anisotropy. Measured, not assumed.
+**Any lane using composite-init-pattern.md §9b's 45% gradient bar should read it
+as a smear detector only.** It cannot arbitrate between a fill and an artifact.
+
+### The route finding, which outlives beat 08
+
+**Composite-then-inpaint is licensed where the vacancy's material is continuous
+and unstructured. It is not a licence to relocate a part of a figure across its
+own clothing.** Beats 15, 19, 03 and 13 all removed an object from a homogeneous
+field or dropped a sprite onto one; **not one had to reconstruct a garment
+junction.** Beat 08's move opens 4489 px in a harness-strap / cuff / shirt
+junction with a gold clasp on its top edge, and the plate holds no clean source
+for it — no patch to copy, no axis to continue, no boundary to interpolate.
+Three fill families have now proved that. **The operation is wrong, not the
+fill.**
+
+### What the composite did buy, because it is real and it is the ceiling
+
+Maxdiff outside the mask **0** over the whole frame, zero stray px, all six of
+the parent's published pure-skin probes untouched: GUARD spread **21.7** (bar
+25.0, every region ≤ 0.0), GOBLIN **8.1** (every region ≥ +41.6), **B2 +60.6** —
+reproducing the parent's published figures exactly, coordinates + luma + material
+in §21 per the rule three frames have earned. B4a 0.754 → **0.664**, the drop
+being the hand's intended occlusion of the board corner. And the grip is
+**half-bought**: real drawn fingers and a thumb at the board's top edge at 5x,
+straddling it 1540/1439, centroid **4.9 px** from the authored L-wrist against
+the parent's 90.5 — the parent's defect inverted. It still fails `held, not
+tucked`: a visible stair-stepped octagonal rim, sitting on the board's outline
+rather than closing around it, no contact shading. A sticker of a hand.
+
+### Next rung: named, argued, and deliberately NOT filed
+
+Not a fourth fill. The honest version is to **copy** the fist to the board edge
+and leave the original in the init inside the mask, so the sampler removes it
+from real pixels. **Not filed, and the reasons are the point.** A 0.30 pass does
+not delete a hand — 0.30 is the number that exists to preserve structure — so
+the rung must choose a higher strength inside the mask, which re-opens B6, B8
+and the wardrobe at the `(strength × ink)` prices §20 measured. That is an
+argued tradeoff, not a knob turn. And decisively: **the instrument that would
+score its vacancy has just been shown to certify artifacts at twice its bar.** A
+render whose verdict cannot be trusted has no consumer. A replacement for the
+detail bar comes first, and nothing tried here is it.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
+plate_ack, NO cut, and beat 08 does NOT have a complete plate candidate.**
