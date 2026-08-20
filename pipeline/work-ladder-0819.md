@@ -6088,3 +6088,69 @@ question is unchanged and is taste, not engineering: does *he turns to look and
 turns back* land the joke the founder picked *he leans out of cover and pulls
 back* for. No pick, no cut swap; beat 04 still ships b04-refire-0814 as
 best-available with its fault named.
+
+### THE SEATED GATE WAS MY OWN AUTHORING ERROR, AND STRIKING IT CLOSES THE POSE GATE (2026-08-21)
+
+Pixels: `review/ep2-goblin-design-0819/SKELSEAT-0821.png`. Three rungs,
+`ep2-jerry-span-s1/s2/s3-0820`, one variable each.
+
+**I wrote "the openpose net carries head-to-body only for full-span skeletons"
+and called it a limit. It is not a limit, it is a rule about how to author, and
+the pose that failed was a pose the character is not in.** The stance I called
+`sit` folded the knees to the chest — ground-sitting, span 0.49 of stature.
+**The tile is not ground-sitting.** His soles are at y=915 and his crown at
+y=292: he is sitting on something with his feet flat and **still spans 0.77 of
+his standing height.**
+
+| rung | span | **crown-to-sole heads** (tile = **4.02**) |
+|---|---|---|
+| `sit` (the bad stance) | 0.49 | **3.06 — FAIL, and the only failure in the set** |
+| **s1 standing skeleton + seated WORDING** | 0.965 | **4.82 — PASS, and it came back SEATED** |
+| s2 the tile's actual stance | 0.689 | **5.23 — PASS** |
+| s3 s2 with the head pre-shrunk to 0.145 | 0.685 | 5.23 — **no further gain**, so the compensation is unnecessary once the span is right |
+
+**s1 is the one that changes the rule and it went against what §13 predicted.**
+I wrote that a standing skeleton *should* draw a standing figure and the seated
+wording *should* lose, and that if it did not, the net is a suggestion rather
+than a constraint. **It did not.** On this checkpoint the pose net governs
+**SIZE** strongly and **POSE** loosely enough for the prompt to overrule the
+fold. s3 also failed to improve on s2, which kills the head-normalisation
+hypothesis I built the rung on — span alone explains it.
+
+> **THE RULE THAT REPLACES THE LIMIT: the skeleton's span sets the drawn SIZE,
+> so author the span you want and let the fold come from the WORDING.** A short
+> skeleton is read as a *small person*, not a folded one. Nothing about folded
+> poses is out of reach.
+
+**THE POSE GATE IS DISCHARGED** — stand, stride, reach, point and three seated
+variants, all at the tile's proportion. Struck from the entry above and from
+`canon.yaml`.
+
+### AND THE FACE GATE IS NOT, SO TRAINING STAYS HELD
+
+`g1` put `nose` in the **negative** — the configuration canon says w1 never
+tested — and `g2` dropped `thick eyebrows`. **Both came back indistinguishable
+from f4 at 1:1** (5.66 and 5.64 heads against f4's 5.67, same face). **A negative
+does not reach this face either**, which is now measured twice rather than
+argued from Ban et al.
+
+**And re-reading f4 against the tile found a defect bigger than the one I was
+chasing.** I had it down as "misses T2 by one nose tip". **The louder miss is
+the EYE SHAPE: f4 draws big round white ovals where the tile has two narrow
+upward-slanting slits under a brow bar.** T2 is a nose tip; this is the
+character's single loudest cue. **The bar gains T1b EYE SHAPE**, and nothing has
+ever scored it.
+
+**The named lever is the ratified recipe's own eye-shape pair, `tsurime,
+jitome`, which f4 dropped when it took the descriptive wording** — and the
+argument for trying it rather than another nose tag is measured: **`blank eyes`
+COMPOSED with this wording and `no nose` DESTROYED it**, so a tag describing a
+SHAPE behaves differently here from a tag demanding an ABSENCE. Filed as
+`ep2-jerry-face-h1/h2-0821` to **BACKLOG** — this lane has judged five batches
+tonight and hands the gate on with a lever rather than firing a sixth it will
+not be awake to read.
+
+**`train-jerry-0820` IS NOT FILED. One gate, not two, and the reason is stated
+so nobody splits the difference: an egg-faced or round-mascot-eyed dataset
+trains the defect, exactly as twelve bobbleheads would have and ten beat-20
+man-reads would have. That is the same refusal three times and it is deliberate.**

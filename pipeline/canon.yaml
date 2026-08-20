@@ -754,6 +754,53 @@ subjects:
     >>> `crouch` were queued the same night and are NOT covered by it: a folded
     >>> skeleton spans a third of the canvas and Sec 13's binding was measured
     >>> on upright figures.
+    >>>
+    >>> ///// AND THAT LIMIT IS STRUCK THE NEXT MORNING, 2026-08-21, BY THREE
+    >>> ///// RUNGS. Pixels: review/ep2-goblin-design-0819/SKELSEAT-0821.png
+    >>>
+    >>> `sit`, `kneel` and `crouch` came back as small figures and the steward
+    >>> read that as an instrument limit. IT WAS AN AUTHORING ERROR. The stance
+    >>> authored as `sit` folded the knees to the chest -- GROUND-sitting, span
+    >>> 0.49 of stature -- and THE TILE IS NOT GROUND-SITTING. His soles are at
+    >>> y=915 and his crown at y=292 in adult-b19-0819.jpg: he is sitting on
+    >>> something with his feet flat and still spans 0.77 of his standing
+    >>> height. Authoring the stance he is actually in restores the span, and
+    >>> the proportion comes back with it.
+    >>>
+    >>> MEASURED, crown-to-sole in heads, against the tile's seated 4.02:
+    >>>   sit  span 0.49  ->  3.06   FAIL, and the only failure
+    >>>   s1   span 0.965 ->  4.82   PASS -- the STANDING skeleton with SEATED
+    >>>                                WORDING, and it came back SEATED
+    >>>   s2   span 0.689 ->  5.23   PASS -- the tile's actual stance
+    >>>   s3   span 0.685 ->  5.23   PASS -- s2 with the head pre-shrunk; no
+    >>>                                further gain, so the compensation is
+    >>>                                unnecessary once the span is right
+    >>>
+    >>> s1 IS THE ONE THAT CHANGES THE RULE, and it went against what Sec 13
+    >>> predicted: a STANDING skeleton under seated wording drew a SEATED
+    >>> figure at the standing skeleton's scale. On this checkpoint the pose
+    >>> net governs SIZE strongly and POSE loosely enough for the prompt to
+    >>> overrule the fold.
+    >>>
+    >>> THE RULE, and it replaces the limit: THE SKELETON'S SPAN SETS THE DRAWN
+    >>> SIZE, SO AUTHOR THE SPAN YOU WANT AND LET THE FOLD COME FROM THE
+    >>> WORDING. A short skeleton is read as a small person, not a folded one.
+    >>> Nothing about folded poses is out of reach.
+    >>>
+    >>> THE POSE GATE ON THE JERRY LoRA IS THEREFORE DISCHARGED: stand, stride,
+    >>> reach, point and three seated variants, all at the tile's proportion.
+    >>> ONE GATE REMAINS AND IT IS THE FACE. f4 (`lean wiry adult goblin man,
+    >>> green skin, bald head, patchwork cloak, blank eyes` at this skeleton)
+    >>> is the best full-body face so far -- blank pupil-less eyes, a mouth,
+    >>> ear flanges, shading, 5.67 heads -- and it still draws BIG ROUND WHITE
+    >>> OVALS where the tile has narrow upward-slanting slits, plus one small
+    >>> nose tip. g1 put `nose` in the NEGATIVE and g2 dropped `thick
+    >>> eyebrows`; both came back indistinguishable from f4 at 1:1, so a
+    >>> negative does not reach this face either. The named lever is the
+    >>> ratified recipe's own eye-shape pair, `tsurime, jitome`, which f4
+    >>> dropped -- filed as ep2-jerry-face-h1/h2-0821 in BACKLOG. TRAINING
+    >>> STAYS HELD until a full-body face passes; an egg-faced or
+    >>> round-mascot-eyed dataset trains the defect.
 
     WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
     it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
