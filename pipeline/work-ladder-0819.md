@@ -6278,3 +6278,56 @@ it is NOT taken yet, because cropping and animating in one job leaves two causes
 
 **No pick, no `plate_ack`. Beat 16 is still a slate and the founder's card
 `/review/ep2-b16-leaf-0820` is still open with `licence` still available to him.**
+
+### BEAT 16 HAS FOOTAGE. `ep2-b16-motion-0820`, the first clip this beat has ever had
+
+i2v off the r2 plate, crf-10 family, seed 20260821. **The action is the inverse
+of everything else this week:** beat 16's VO is the SAPLING'S — *"He talks to me
+because I'm the only thing here that won't file a report … I can't even wave"* —
+so the MAN behind is the one who talks and the PLANT is the one that holds
+still. b04's negative bans `open mouth`, `talking` and `lip sync`; all of it is
+deleted here, because this man speaks.
+
+**And the word `wave` appears in neither file, asserted by a guard.** The obvious
+sentence is *the leaves do not wave*, and that is the beat-15 trap this tree has
+paid for twice: a negation inside the positive is the noun phrase, placed.
+`Nobody touches the plant` closed a fist on the plant at f105 and uprooted it by
+f120. The leaves are given something else to do instead — they hang, they hold,
+the daylight slides across them.
+
+| clause | result |
+|---|---|
+| **T0 camera locked** | **PASS** — top corners 0.72 / 0.74 mean against f001 (s5's pan read 49.4 / 52.2) |
+| **M1 the plant holds** | **PARTIAL** — see below |
+| **M2 two leaves at f121** | **PASS** — canon `sapling-two-leaves` survives 121 frames of i2v |
+| **M3 he is talking** | **PASS** — mouth opens and closes, teeth, a real speech cycle |
+| **M4 still going at f121** | **PASS** — last-20 interframe mean 0.526, max 3.289 |
+| **M5 the figure survives** | **PASS** — one man, seated, no melt, no second goblin |
+| **M6 the plant is the subject** | **PASS** — in front at f001 and at f121 |
+
+**M1 IS ONE POP, NOT A DRIFT, AND THE SHAPE IS ALREADY IN THIS FILE.** Leaf-pair
+span, measured on the blade silhouette:
+
+| f001 | f021 | f041 | f061 | f081 | f101 | f121 |
+|---|---|---|---|---|---|---|
+| 533 px | **639** | 639 | 639 | 639 | 639 | 638 |
+
+The plant resettles ONCE between f001 and f021 — +20% span — and then holds to
+within one pixel for a hundred frames. It does not wave and it does not drift.
+**That is the front-loaded "the init is thrown away" signature beat 09 measured
+on its hand** (largest steps at f001, 004, 007, 010, 012, 016), arriving here as
+a one-time re-interpretation of composited geometry rather than as destruction —
+the engine reads the drawn plant, decides what it is, and then defends it.
+
+**FIRST TIME THIS TREE HAS ANIMATED A COMPOSITED PLANT AS THE SUBJECT.** b19,
+b15, b03 and b13 all carried theirs as small set dressing. M2 was the named
+unmeasured risk — a third leaf or a branching stem across 121 frames — and it
+did not fire.
+
+**NO PICK, NO `plate_ack`, NO CUT SWAP.** Beat 16 stays a slate: the clip's
+first 20 frames carry the pop, the plate carries the superseded adult design,
+and the founder's `/review/ep2-b16-leaf-0820` card is still open with `licence`
+still available to him. The named next lever, not taken: trim or retime past
+f021, which costs no GPU — and the S1 reservation from the plate (the eye still
+goes to his face first) is answered by a tighter crop, which beat 09 proved
+survives i2v, not by another pass.
