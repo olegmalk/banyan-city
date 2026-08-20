@@ -37,7 +37,18 @@ as a full path rather than under --ip-subfolder.
 
 WHAT WOULD FALSIFY THE CONTAINMENT, named in advance: a seated figure, a purple
 cowl, or the tile's field background. Any of those and the mask is not holding,
-and the next variable is the mask, not the scale.
+and the next variable is the mask, not the scale. None of the three fired at
+0.7.
+
+RE-RUNNING k1 DOES NOT REPRODUCE THE SPEC THAT RAN, and this is deliberate.
+k1 rendered at 21:39Z; k2 was authored afterwards off what k1 showed, and
+writing k2's rung table rewrote the shared `bar` and `one_sample_rule` prose
+that both rungs draw from -- so `python3 ... k1` now emits a spec carrying
+k1's own results. The file on disk is left as the one that RAN, spec_sha256
+e9334e5794fa592d311d52bfd2e6767220f080139fee4521e519b02cb9e4bd07, because a
+spec is a record of what conditioned a frame and not a document to keep
+current. `--force` will overwrite it; do not, unless you are re-running the
+render too.
 """
 
 from __future__ import annotations
@@ -53,8 +64,6 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PARENT = "pipeline/jobs/ep2-jerry-face-j2-0821.yaml"
 PARENT_DIR_TOKEN = "jerryface-j2-0821"
-JOB_DIR = "jerryface-k1-0821"
-NEW_ID = "ep2-jerry-face-k1-0821"
 
 ASSET_URL = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
              "farm-out/jerry-skel-assets-0820/")
@@ -64,14 +73,31 @@ HINT_SHA = "244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c"
 REF = "jerry-tile-head-0821"
 REF_SHA = "6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c"
 IP_MASK = "315,130,515,350"
-IP_SCALE = "0.7"
 ARM = "ipahead"
+
+# (suffix, --ip-scale, the one variable). k2 was filed AFTER k1 was looked at,
+# which is the one-sample rule satisfied rather than skipped: k1 is the first
+# sample on this instrument and k2 is one variable from it.
+RUNGS = [
+    ("k1", "0.7",
+     "the IP-Adapter itself, at the diffusers masking-example default 0.7 -- "
+     "the value ep2-b08-ipamask-0819 ran at. Prompt, negative, skeleton, "
+     "--scale and seed are j2's, unchanged."),
+    ("k2", "0.9",
+     "k1's frame with --ip-scale 0.7 -> 0.9 and NOTHING else. k1 bought the "
+     "tile's eye KIND (aspect 0.54 against the tile's 0.52, where six wording "
+     "rungs sat at 1.0-1.26) and its brow, and did NOT buy SIZE: k1's eye "
+     "bounding box is 1.87x the tile's relative to the head, where j2's was "
+     "1.40x. Wrong size, right kind. Strength is the dial that decides how far "
+     "the frame is pulled toward the reference's proportions, and it is the "
+     "only lever that is one variable from here."),
+]
 # the commit that carries the three staged inputs -- provenance only, but the
 # meta.yaml this writes is what a later lane reads to re-fetch them.
 COMMIT = "29939faba45625c647bb05da9573c4151b8b259d"
 
 
-def stage_step():
+def stage_step(job_dir):
     return (
         '# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n'
         '# BEFORE A GPU SECOND IS SPENT -- and k1 has THREE, because the\n'
@@ -99,10 +125,10 @@ def stage_step():
         '    with open(os.path.join(dst, name), "wb") as fh:\n'
         '        fh.write(blob)\n'
         '    print("staged", name, got, "->", dst)\n'
-        % (ASSET_URL, JOB_DIR, DRIVER_SHA, HINT, HINT_SHA, REF, REF_SHA))
+        % (ASSET_URL, job_dir, DRIVER_SHA, HINT, HINT_SHA, REF, REF_SHA))
 
 
-def publish_step():
+def publish_step(job_dir, new_id):
     return (
         '# Required by box_enqueue.courier_problems: the courier pushes from\n'
         '# farm-out and from nowhere else, and ep2-cnet-probe-0817 rendered\n'
@@ -132,83 +158,137 @@ def publish_step():
         '    fh.write("\\n".join(sorted(lines)) + "\\n")\n'
         'print("published", len(files), "file(s) + manifest ->", dst)\n'
         'raise SystemExit(0 if len(files) >= 6 else 1)'
-        % {"d": JOB_DIR, "id": NEW_ID, "arm": ARM, "hint": HINT, "ref": REF})
+        % {"d": job_dir, "id": new_id, "arm": ARM, "hint": HINT, "ref": REF})
 
 
 BAR = """T1b EYE SHAPE and P1 BROW BAR, the two clauses the wording route could
 not reach, scored exactly as they were on j1/j2 so the numbers are comparable.
-  T1b  white-eye pixels over the head bounding box. TILE 0.0143, j2 0.0353.
-       PASS is 0.030 or lower AND reading as an upward-slanting slit at 1:1 --
-       eye HEIGHT is the whole residual, 27 px where the tile scales to 15.
-  P1   a dark brow bar ABOVE the eyes with green skin between it and the eye.
-       0 of 7 rungs have ever scored it. A lash arc welded to the eye rim is
-       an eyelid and does not count.
+Ruler: pipeline/measure_face_eye_0821.py, whose --selftest reproduces the
+published f/g/h numbers before it is allowed to produce a new one.
+  T1b  AREA -- white-eye pixels over the head box. TILE 0.0143, j2 0.0353,
+       k1 0.0566. PASS is 0.030 or lower.
+       SHAPE -- per-eye aspect (h/w). TILE 0.52. Six wording rungs sat at
+       1.00-1.26; k1 came back 0.54. PASS is a slit at 1:1, not a small oval.
+       BOTH clauses, and k1 proved they move independently.
+  P1   a dark brow ABOVE the eyes with skin between it and the eye. 0 of 7
+       wording rungs ever scored it; k1 did. A lash arc welded to the eye rim
+       is an eyelid and does not count.
 HELD, and a regression on any of these is a FAIL of the instrument even if the
-face improves: T1 no iris and no pupil, T3 no age modelling, T8 4.5+ heads
-(j1/j2 measured 5.59 / 5.56), P3 a mouth line, P4 facial shading.
+face improves: T1 no iris and no pupil, T3 no age modelling, T8 4.5+ heads,
+P3 a mouth line, P4 facial shading.
+T8 IS THE ONE UNDER PRESSURE AND IT IS SCORED FIRST. j2 drew 5.56 heads at
+head_frac 0.181; k1 drew 4.57 at 0.219, against a 0.190 authored skeleton. The
+reference is a HEAD CROP, so the adapter's own notion of how much frame is head
+is 100%, and the mask says WHERE not HOW MUCH. Below 4.5 is a fail.
 CONTAINMENT, and it is scored: the figure must still be STANDING, in the
-patchwork cloak, in tall grass. A seated figure, a purple cowl or the tile's
-field background means the head-box mask is not holding."""
+patchwork cloak, in tall grass. None of the three predicted breaks fired on k1
+at 0.7 -- no seated pose, no purple cowl, no tile background -- and 0.9 is
+where they would first show."""
 
-WHY = ("RUNG k1: the same j2 frame with an IP-ADAPTER REFERENCE THAT IS THE "
-       "TILE'S OWN HEAD, masked to the head box. One variable, and the "
-       "variable is the instrument. The wording route closed at four tags of "
-       "affordance with the residual measured as a single number -- j2's eye "
-       "is the right WIDTH to within 7% and 79% too TALL, and the brow bar is "
-       "0 of 7 -- and canon's own curation file says why no word will fix it: "
-       "Danbooru has no tag for this creature's eye slit or brow mass any "
-       "more than it has one for its ear. An attribute the dialect cannot "
-       "name needs an instrument that does not name, which is what IPA is.")
+WHY = {
+    "k1": (
+        "RUNG k1: the same j2 frame with an IP-ADAPTER REFERENCE THAT IS THE "
+        "TILE'S OWN HEAD, masked to the head box. One variable, and the "
+        "variable is the instrument. The wording route closed at four tags of "
+        "affordance with the residual measured as a single number -- j2's eye "
+        "is the right WIDTH to within 7% and 79% too TALL, and the brow bar is "
+        "0 of 7 -- and canon's own curation file says why no word will fix it: "
+        "Danbooru has no tag for this creature's eye slit or brow mass any "
+        "more than it has one for its ear. An attribute the dialect cannot "
+        "name needs an instrument that does not name, which is what IPA is."),
+    "k2": (
+        "RUNG k2: k1 with --ip-scale 0.7 -> 0.9 and nothing else.\n\n"
+        "WHAT k1 SETTLED. The instrument works and it works on the clause the "
+        "words could not reach. k1 came back with the tile's eye KIND -- "
+        "aspect 0.54 against the tile's 0.52, where six wording rungs sat "
+        "between 1.00 and 1.26 -- and with a brow, the clause that was 0 of 7. "
+        "It also holds T1, T2, T3, P2, P3, P4 and the whole containment.\n\n"
+        "WHAT k1 DID NOT BUY, AND IT IS ONE WORD: SIZE. Relative to the head "
+        "box, k1's eye bounding box is 1.87x the tile's; j2's was 1.40x. So "
+        "the frame moved further away on scale while arriving on shape, which "
+        "is not a contradiction -- it is the signature of an instrument that "
+        "supplies KIND. Strength is the dial that says how far the picture is "
+        "pulled toward the reference's own proportions, and it is the only "
+        "lever one variable from here."),
+}
 
-CONSUMER = ("THE JERRY LoRA'S LAST OPEN GATE, second instrument. "
-            "train-jerry-0820 is UNFILED and stays that way until a rung "
-            "passes P1 and T1b with T1/T3/T8/P3/P4 intact; the set is still 7 "
-            "frames in 4 poses. No beat plate, no pick, nothing promoted.")
+PARENT_RUNG = {"k1": "ep2-jerry-face-j2-0821", "k2": "ep2-jerry-face-k1-0821"}
+
+CONSUMER = ("THE JERRY LoRA'S LAST OPEN GATE. train-jerry-0820 is UNFILED and "
+            "stays that way until a rung passes T1b and P1 with T1/T3/T8/P3/P4 "
+            "intact; the set is still 7 frames in 4 poses. No beat plate, no "
+            "pick, nothing promoted.")
 
 SUCCESS = ("ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale "
            "1.0, j2's prompt and negative byte-identical, plus --ip-ref "
-           "jerry-tile-head-0821.png --ip-mask 315,130,515,350 --ip-scale "
-           "0.7. Scored on T1b and P1 with T1, T3, T8, P3, P4 held and the "
-           "standing/cloak/grass containment scored.")
+           "jerry-tile-head-0821.png --ip-mask 315,130,515,350 --ip-scale %s. "
+           "Scored on T1b (area AND aspect) and P1 with T1, T3, T8, P3, P4 "
+           "held and the standing/cloak/grass containment scored.")
 
-PREDICTED = (
-    "TWO WAYS THIS FAILS AND THEY POINT DIFFERENT DIRECTIONS.\n\n"
-    "CONTAINMENT BREAK -- the frame comes back seated, or cowled in purple, "
-    "or standing in the tile's open field. IPA leaks composition and the ref "
-    "is a crop of a seated figure. Then the mask is the next variable, not "
-    "the scale, and the tightest available mask is the head box itself "
-    "(330,145,502,330) with the ref repainted onto flat ground.\n\n"
-    "ATTRIBUTE MISS -- the containment holds and the face is still j2's. That "
-    "would mean 0.7 is too weak against a controlnet running at scale 1.0 for "
-    "the full denoise, and the next rung is an ip-scale ladder, NOT a second "
-    "reference and NOT a wording edit.\n\n"
-    "AND THE THIRD OUTCOME IS THE ONE TO WATCH FOR: the brow and slit arrive "
-    "AND T1 regresses to pupils, because the tile's slits sit in a modelled "
-    "socket and IPA carries what it is shown. That is a partial win and it is "
-    "scored as a FAIL of this rung, because a LoRA trained on a pupilled face "
-    "teaches pupils.")
+ONE_SAMPLE = {
+    "k1": ("ONE rung. The wording ladder's stop names IP-Adapter as the route "
+           "and this is the first sample on it; no scale sweep, no second "
+           "reference, no second seed until this one has been looked at."),
+    "k2": ("ONE rung, filed AFTER k1 was rendered, measured and read at 1:1 -- "
+           "the rule satisfied rather than skipped. NOT a scale sweep: 0.9 is "
+           "the single next value, and if it splits T1b from T8 the answer is "
+           "a head_frac edit on top, not three more scales."),
+}
+
+PREDICTED = {
+    "k1": (
+        "TWO WAYS THIS FAILS AND THEY POINT DIFFERENT DIRECTIONS.\n\n"
+        "CONTAINMENT BREAK -- the frame comes back seated, or cowled in "
+        "purple, or standing in the tile's open field. IPA leaks composition "
+        "and the ref is a crop of a seated figure. Then the mask is the next "
+        "variable, not the scale.\n\n"
+        "ATTRIBUTE MISS -- the containment holds and the face is still j2's. "
+        "Then 0.7 is too weak against a controlnet running at 1.0 for the full "
+        "denoise, and the next rung is an ip-scale ladder.\n\n"
+        "AND THE THIRD OUTCOME TO WATCH FOR: the brow and slit arrive AND T1 "
+        "regresses to pupils, because the tile's slits sit in a modelled "
+        "socket and IPA carries what it is shown. Scored as a FAIL, because a "
+        "LoRA trained on a pupilled face teaches pupils."),
+    "k2": (
+        "I EXPECT THIS TO SPLIT T1b FROM T8, AND THAT IS WHY IT IS WORTH A "
+        "RENDER RATHER THAN A GUESS. More adapter strength should pull the eye "
+        "further toward the reference's proportions -- the residual is size "
+        "and the reference has the right size -- while pulling the HEAD "
+        "further toward a reference that is 100% head. k1 already moved "
+        "head_frac 0.181 -> 0.219 and T8 5.56 -> 4.57 against a 4.5 bar, so "
+        "there is 0.07 heads of room and 0.9 will probably spend it.\n\n"
+        "IF THAT IS WHAT HAPPENS IT IS NOT A DEAD END, it is a clean "
+        "decomposition: the eye belongs to the adapter and the head belongs to "
+        "the skeleton, and head_frac is a dial this tree has already proved it "
+        "holds -- n5 moved it 0.190 -> 0.320 alone and manufactured a "
+        "bobblehead on demand. The rung after would then be k2's scale with a "
+        "PRE-SHRUNK authored head, one variable, and both clauses reachable at "
+        "once.\n\n"
+        "THE OUTCOME THAT WOULD STOP THIS ROUTE: containment breaks -- seated, "
+        "purple cowl, or the tile's field -- or T1 regresses to pupils. Either "
+        "means the strength that buys the face also buys the reference's "
+        "composition, and the instrument has to become a FACE-only adapter "
+        "(ip-adapter-plus-face, 847 MB, NOT cached on the box) or a tighter "
+        "mask, both of which are a different spec."),
+}
 
 
-def main():
+def emit(suffix, ip_scale, variable, force=False):
+    job_dir = "jerryface-%s-0821" % suffix
+    new_id = "ep2-jerry-face-%s-0821" % suffix
     child = derive_spec.derive(
-        src=PARENT, new_id=NEW_ID,
+        src=PARENT, new_id=new_id,
         fresh={"owner": "goblin reference-route lane, 2026-08-21",
-               "why": WHY, "consumer": CONSUMER, "success": SUCCESS},
+               "why": WHY[suffix], "consumer": CONSUMER,
+               "success": SUCCESS % ip_scale},
         overrides={"argv:--arm": ARM, "argv:--repo-commit": COMMIT,
                    "key:beat": 2, "key:priority": 28, "key:est_minutes": 4},
-        retoken=[(PARENT_DIR_TOKEN, JOB_DIR)],
+        retoken=[(PARENT_DIR_TOKEN, job_dir)],
         extra={"bar": BAR,
-               "failure_predicted_in_advance": PREDICTED,
-               "the_one_variable":
-                   "an IP-Adapter reference that is the tile's own head crop, "
-                   "masked to the head box, at --ip-scale 0.7. Prompt, "
-                   "negative, skeleton, --scale and seed are j2's, unchanged.",
-               "the_rung_this_is_one_variable_from": "ep2-jerry-face-j2-0821",
-               "one_sample_rule":
-                   "ONE rung. The wording ladder's stop names IP-Adapter as "
-                   "the route and this is the first sample on it; no scale "
-                   "sweep, no second reference, no second seed until this one "
-                   "has been looked at.",
+               "failure_predicted_in_advance": PREDICTED[suffix],
+               "the_one_variable": variable,
+               "the_rung_this_is_one_variable_from": PARENT_RUNG[suffix],
+               "one_sample_rule": ONE_SAMPLE[suffix],
                "ip_adapter":
                    {"ref": "farm-out/jerry-skel-assets-0820/%s.png" % REF,
                     "ref_sha256": REF_SHA,
@@ -217,7 +297,7 @@ def main():
                         "cropped (176,280)-(332,432), 156x152, no resample",
                     "mask": IP_MASK,
                     "mask_frame": "RENDER pixels, 832x1216",
-                    "scale": IP_SCALE,
+                    "scale": ip_scale,
                     "weights": "h94/IP-Adapter sdxl_models/"
                                "ip-adapter-plus_sdxl_vit-h.safetensors "
                                "(cached on the box; the -FACE variant is 847 "
@@ -236,17 +316,17 @@ def main():
             "--ip-ref", "pipeline/control/%s.png" % REF,
             "--ip-mask", IP_MASK,
             "--ip-ref-sha256", REF_SHA,
-            "--ip-scale", IP_SCALE,
+            "--ip-scale", ip_scale,
         ] + argv[i:]
 
     child["steps"][0] = {"name": "stage",
                          "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
-                                  "-c", stage_step()]}
+                                  "-c", stage_step(job_dir)]}
     child["steps"][-1] = {"name": "publish",
                           "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
-                                   "-c", publish_step()]}
+                                   "-c", publish_step(job_dir, new_id)]}
     child["artifacts"] = [
-        r"C:\banyan-farm\%s\out\%s-%s.png" % (JOB_DIR, NEW_ID, ARM)]
+        r"C:\banyan-farm\%s\out\%s-%s.png" % (job_dir, new_id, ARM)]
 
     render = [s for s in child["steps"] if s["name"] not in ("stage", "publish")]
     assert len(render) == 1, [s["name"] for s in render]
@@ -254,21 +334,31 @@ def main():
     for flag, val in (("--ip-ref", "pipeline/control/%s.png" % REF),
                       ("--ip-mask", IP_MASK),
                       ("--ip-ref-sha256", REF_SHA),
-                      ("--ip-scale", IP_SCALE),
+                      ("--ip-scale", ip_scale),
                       ("--seed", "20260823"),
                       ("--scale", "1.0"),
                       ("--arm", ARM),
                       ("--repo-commit", COMMIT)):
         assert argv.count(flag) == 1, (flag, argv.count(flag))
         assert argv[argv.index(flag) + 1] == val, (flag, argv[argv.index(flag) + 1])
-    assert JOB_DIR in " ".join(argv) and PARENT_DIR_TOKEN not in " ".join(argv)
+    joined = " ".join(argv)
+    assert job_dir in joined and PARENT_DIR_TOKEN not in joined
 
-    out = "pipeline/jobs/%s.yaml" % NEW_ID
-    derive_spec.write(child, out)
+    out = "pipeline/jobs/%s.yaml" % new_id
+    derive_spec.write(child, out, force=force)
     derive_fetch_guard.assert_fetch_urls_resolve(
         os.path.join(REPO, out),
         must_hold=("controlnet_plate.py", HINT + ".png", REF + ".png"))
     print("wrote", out)
+
+
+def main():
+    want = [a for a in sys.argv[1:] if not a.startswith("-")]
+    force = "--force" in sys.argv[1:]
+    for suffix, ip_scale, variable in RUNGS:
+        if want and suffix not in want:
+            continue
+        emit(suffix, ip_scale, variable, force=force)
     return 0
 
 
