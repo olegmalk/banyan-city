@@ -4792,3 +4792,50 @@ been judged and cited in two ladder entries **while existing nowhere in this
 repository**. `fig_track --selftest` 15/15 (six frame-backed), `lint_genome` 0,
 `test_pipeline` 0 — and `test_pipeline` earned its keep by catching a malformed
 colon in this spec's own `consumer` block before it was committed.
+
+### Strength WAS the knob: beat 08's strap survives a 0.70 pass, one crossing band short — `b08-arm-route-0819.md` §25
+
+**`ep2-b08-str70-0820`, rc=0, 7.3 s of render, $0**, filed and judged inside the
+hour §24 closed. One variable: strength 0.99 → 0.70, same seed 20260822.
+**Neither pre-registered fail mode fired** — the fist did not dent (it is gone
+completely; **deletion does not need 0.99**) and no clasp was drawn.
+
+| | C4' D | shard | ink L<90 | in-mask G−R | >+20 px | drew |
+|---|---|---|---|---|---|---|
+| init (plate) | 2.169 | **1.82 %** | **13.3 %** | −28.59 | 0 | the guard's fist |
+| 0.99 eraseonly | 1.751 | 2.79 % | 10.6 % | −2.83 | **1934** | green goblin fist |
+| 0.99 nogoblin | 3.479 | **9.27 %** | **24.6 %** | −16.06 | 166 | 2nd clasp + wedge fan |
+| **0.70 str70** | 1.548 | **0.38 %** | 10.5 % | **−23.11** | **0** | **the strap + one crossing band** |
+
+**THE SYMMETRY IS THE FINDING: at 0.99 the fill is 5.1× MORE shard-dense than the
+material it replaced, at 0.70 it is 4.8× LESS.** The plate's own line quality sits
+between the ends of the knob and neither end lands on it — 0.70 much the closer,
+and the only one of the three that keeps the strap running.
+
+**FAIL, NARROWLY, ON ONE PRE-REGISTERED SUB-CLAUSE.** H1(b) says "no second
+strap"; a second brown band crosses below the buckle forming a small X that is
+not in the init. The bar was written forty minutes before the pixels landed and
+**is not being relaxed now that a second strap is what arrived** — recorded in
+both directions, because a strap crossing a strap is *in vocabulary* where a
+floating clasp and a wedge fan are not, and at 3x the frame reads as a plausible
+harness. **No cut change, nothing staged; beat 08 keeps `ep2-b08-scale30-0820`.**
+
+**THE SHARD CLAUSE IS NOW CALIBRATED AND IT KILLS THE DEBT §24 FILED.** Empirical
+null, 200 real windows of this footprint: shard median 0.35 %, p95 4.11 %, p99
+6.74 % — the parent's 9.27 % is at the **99.5th percentile of real material** and
+the 3.00 % bar sits near p90. The same null puts **D p95 at 4.658**, so the
+"ceiling on D" filed yesterday **would not have caught the parent's 3.479** and is
+**withdrawn**. The shard rate is the right clause — **and it needs a FLOOR too**:
+this frame is 4.8× smoother than the plate and nothing in C4' can say so.
+
+Also: out-of-mask drift **8574 / 8598 / 8600 px across three renders of identical
+geometry, 100 % of it inside the pad-crop box every time** — the drift is a
+deterministic property of the crop, not of what the sampler drew.
+
+**Next rung, its stopping rule written before it runs:** keep 0.70, add the noun
+that arrived to the NEGATIVE (`double strap, crossed straps, second strap, extra
+strap, strap end, buckle, clasp`) — one variable, ~20 s, $0, because this route
+has now *measured* that the prompt chooses nouns. **If it draws a THIRD unwanted
+noun the route closes** and beat 08's grip goes back to txt2img. **No intermediate
+strength**: 0.99 over-draws, 0.70 under-inks, and the remaining fault is a noun,
+not a quantity.

@@ -555,3 +555,87 @@ derivation:
     - key est_minutes = 2
     key:priority:
     - key priority = 34
+verdict_this_job: 'STRENGTH WAS THE KNOB, NEITHER PRE-REGISTERED FAIL MODE FIRED, AND THIS IS THE BEST
+  FRAME THE INPAINT ROUTE HAS PRODUCED. The fist is deleted completely -- it did not merely dent, which
+  was the most-likely fail mode -- the guard''s own harness strap RUNS from the buckle to the belt through
+  what was the hand, no second buckle and no clasp appear, and there is no green anywhere. FAIL, narrowly,
+  on ONE sub-clause of H1(b): the strap gains a SECOND CROSSING BAND below the buckle that is not in the
+  init, forming a small X, and the fill''s linework is softer than the plate''s own ink. The bar was written
+  40 minutes before the pixels landed and says ''no second strap''; it is not being relaxed now that a
+  second strap is what arrived. NO CUT CHANGE and nothing staged.'
+verdict_this_job_measured:
+  provenance: 'Filed --backlog 14:21:19Z, autofilled, ran 14:24:07-14:24:25Z, rc=0, render_s=7.3, animagine-xl-3.1
+    cuda/bf16. Pulled by scp and verified against the job''s own manifest: all 7 OK, frame sha in ep2-b08-str70-0820.sha256.
+    $0. The deriver''s fetch-URL guard passed on the published tree and the job fetched both files by
+    sha on the first attempt -- the 404 class did not recur.'
+  THE_FOUR_FRAME_LADDER: "One row per rung, every number on the same footprint, so the two knobs can be\
+    \ read against each other. C4' at the re-based 35-45 px ring (6840 px, 100% real on every frame).\
+    \ Shard rate = fill px whose |grad| beats the 99th percentile of that ring.\n                    \
+    \    C4' D    N     F     shard   ink L<90  in-mask G-R  >+20 px\n  init (the plate)      2.169  1.752\
+    \  0.93   1.82%   13.3%     -28.59         0\n  0.99 eraseonly        1.751  1.484  0.77   2.79% \
+    \  10.6%      -2.83      1934   green goblin fist\n  0.99 nogoblin         3.479  2.510  1.24   9.27%\
+    \   24.6%     -16.06       166   2nd clasp + wedge fan\n  0.70 str70 (this)     1.548  1.157  1.12\
+    \   0.38%   10.5%     -23.11         0   strap runs, gains a crossing band\nTHE SYMMETRY IS THE FINDING.\
+    \ At 0.99 the fill is 5.1x MORE shard-dense than the material it replaced and 1.85x more inked; at\
+    \ 0.70 it is 4.8x LESS shard-dense and slightly under-inked. The plate's own line quality sits between\
+    \ the two and neither end of the knob lands on it. 0.70 is much the closer of the two -- 10.5% ink\
+    \ against the plate's 13.3% -- and it is the only one of the three that keeps the strap."
+  H1_the_fist_is_GONE_and_the_strap_RUNS: '(a) DELETED -- PASS, and this is the answer to the most-likely
+    fail mode. ''The fist only dents'' was pre-registered as the way 0.70 would fail and it did not happen:
+    no skin-toned remnant survives anywhere in poly(FIST) grown 6, by eye at 14x against the init side
+    by side. Deletion does NOT need 0.99. (b) PLAUSIBLE -- FAIL by one sub-clause, and it is the smallest
+    failure this route has produced. The strap RUNS continuously from the buckle to the belt, which the
+    parent''s did not; no second buckle and no clasp appear, which the parent''s did (a few-px orange
+    speck at x~600 y~575 is the only hardware hint). But a SECOND BROWN BAND crosses the strap below the
+    buckle, forming a small X that is not in the init, with two short stubs at its top -- and the clause
+    says ''no second strap''. Written down rather than argued away: a strap crossing a strap is IN VOCABULARY
+    for a harness in a way a floating gold clasp and a fan of white wedges are not, and at 3x -- the screening
+    scale -- the frame reads as a plausible harness. That is a reason to keep going on this route, not
+    a reason to rewrite the clause after the fact.'
+  C4prime_RING_RE_BASED: 'PASS: D 1.548, N 1.157, F 1.12 at ring 35-45 px, 6840 px, 100.0% real -- the
+    annulus fraction is published as the bar requires. THE PRESCRIBED 3-12 px RING WAS NOT RUN, per the
+    bar, because it has VOIDed three times on this exact geometry. AND THE PASS IS WORTH LITTLE, exactly
+    as the bar says: C4'' passed all four frames including a green goblin fist and a wedge fan.'
+  C4prime_SHARD_RATE_the_clause_C4_is_missing: 'PASS, and by the largest margin of the four: 0.38% against
+    a 3.00% bar, where the parent read 9.27% and the material replaced reads 1.82%. THE CLAUSE IS NOW
+    CALIBRATED RATHER THAN GUESSED: an empirical null of 200 real windows of this footprint on the parent
+    frame gives median 0.35%, p95 4.11%, p99 6.74%, max 16.43% -- the parent''s 9.27% sits at the 99.5th
+    percentile of real material, and the 3.00% bar sits near p90. AND IT CORRECTS THE DEBT AS FILED: the
+    same null puts D at median 1.077, p95 4.658, so a D CEILING would have to sit at ~4.7 to keep false
+    FAILs at 5% and would NOT have caught the parent''s D 3.479. A ceiling on D is the wrong fix; the
+    shard rate is the right one. NOTE THE OTHER DIRECTION IS UNBARRED: 0.38% is 4.8x SMOOTHER than the
+    material it replaced, and the clause as written cannot say so. A floor belongs beside the ceiling.'
+  H3_the_digits_SURVIVED: 'PASS at 14x, and the copy took LESS damage than at 0.99: maxdiff 78 over the
+    pad-crop overlap, against 121 at the parent and 55 at the grandparent.'
+  H5_NO_NEW_NOUN: PASS on every count including the sharpened one. No face, no head, no figure, no placket,
+    NO SECOND BUCKLE and NO CLASP. In-mask G-R -23.11 with ZERO px above +20, against -19.90 for the real
+    material around the fill and -28.59 for the init -- the closest of the four frames to its own neighbourhood,
+    and the only one with no green pixels at all. The crossing band is recorded under H1(b) where it belongs;
+    it is a strap, not a new kind of thing.
+  B8_hair: 'PASS: maxdiff 0 over (500..640, 300..430) for the third run running.'
+  B6_wardrobe: 'PASS: cream shirt, white sash and brown wrap still three garments.'
+  OUT_OF_MASK_DRIFT_is_MEASURED_not_assumed: 8600 px, maxdiff 121, and 8600 of 8600 fall INSIDE the pad-crop
+    box x488-719 y458-705 -- 0 outside, for the third frame running. The count is now 8574 / 8598 / 8600
+    across three renders of identical geometry, which is the tightest evidence yet that the drift is a
+    deterministic property of the crop and not of what the sampler drew.
+  scale30_clauses_hold: Goblin box maxdiff 0, board box maxdiff 1 over 23 px, as on both parents.
+verdict_cut: 'NOT PROPOSED FOR THE CUT AND NOT STAGED, on a pre-registered clause that failed. Beat 08
+  keeps ep2-b08-scale30-0820. Recorded plainly because this is the frame that would be easiest to talk
+  oneself into: it is a large, visible improvement, it reads well at 3x, and it still carries a band the
+  init does not have. The rung that follows is cheap enough that taking the clean version is worth twenty
+  more seconds of card.'
+what_this_licenses_after_the_verdict: 'ONE MORE RUNG, AND ITS STOPPING RULE IS WRITTEN HERE BEFORE IT
+  RUNS. What is left is a NOUN -- a second strap -- and this route has now MEASURED that the prompt chooses
+  nouns (nogoblin removed the goblin outright at unchanged strength). So: keep strength 0.70, keep the
+  positive, add to the NEGATIVE the noun that actually arrived -- ''double strap, crossed straps, second
+  strap, extra strap, strap end, buckle, clasp''. One variable, the negative, ~20 s of card, $0. STOPPING
+  RULE, pre-committed: if that pass draws a THIRD unwanted noun, the route closes on the conclusion in
+  b08-arm-route-0819.md 23 and beat 08''s grip goes back to txt2img -- the lesson would be that a tool
+  with no spatial conditioning trades one invention for another indefinitely, and five samples is enough
+  to say so. DO NOT PROPOSE AN INTERMEDIATE STRENGTH: 0.99 over-draws, 0.70 under-inks, and the fault
+  at 0.70 is a noun rather than a quantity, so a midpoint searches for a value that satisfies a conjunction
+  the knob does not express -- the same refusal beat 01''s crf ladder reached on 2026-08-20. INSTRUMENT
+  DEBT REVISED: the D ceiling filed yesterday is WRONG (the null puts it at ~4.7, which would not have
+  caught the parent) and is withdrawn in favour of the shard-rate clause used here, WHICH NEEDS A FLOOR
+  AS WELL AS A CEILING -- this frame is 4.8x smoother than the material it replaced and nothing in C4''
+  can say so.'

@@ -1625,3 +1625,95 @@ structurally starved on this pipeline and will VOID every time.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. No cut change, and
 nothing staged.**
+
+## 25. Strength was the knob after all, and the strap survives — one crossing band short (2026-08-20)
+
+`ep2-b08-str70-0820`, rc=0, **7.3 s of render**, $0. One variable against §24:
+strength 0.99 → 0.70. Same init sha, same mask sha, **same seed 20260822**, same
+40 steps, same cfg 7.5, prompt and negative byte-identical.
+
+**Neither pre-registered fail mode fired.** The most likely one said the fist
+would only *dent* at a lower strength. It did not dent — it is gone completely,
+by eye at 14x. **Deletion does not need 0.99.** The second said a clasp would be
+drawn anyway, proving the invention was not a function of strength. No clasp was
+drawn. **Strength was the knob.**
+
+### THE FOUR-FRAME LADDER, ONE FOOTPRINT, BOTH KNOBS
+
+C4' at the re-based 35–45 px ring (6840 px, **100 % real on every frame**);
+shard rate = fill px whose |grad| beats that ring's 99th percentile.
+
+| | C4' D | N | F | shard | ink L<90 | in-mask G−R | px > +20 | what it drew |
+|---|---|---|---|---|---|---|---|---|
+| init (the plate) | 2.169 | 1.752 | 0.93 | **1.82 %** | **13.3 %** | −28.59 | 0 | the guard's own fist |
+| 0.99 `eraseonly` | 1.751 | 1.484 | 0.77 | 2.79 % | 10.6 % | −2.83 | **1934** | green goblin fist |
+| 0.99 `nogoblin` | 3.479 | 2.510 | 1.24 | **9.27 %** | **24.6 %** | −16.06 | 166 | 2nd clasp + wedge fan |
+| **0.70 `str70`** | 1.548 | 1.157 | 1.12 | **0.38 %** | 10.5 % | **−23.11** | **0** | **the strap, plus one crossing band** |
+
+**The symmetry is the finding.** At 0.99 the fill is **5.1× more** shard-dense
+than the material it replaced and 1.85× more inked; at 0.70 it is **4.8× less**
+shard-dense and slightly under-inked. **The plate's own line quality sits between
+the two ends of the knob and neither end lands on it** — 0.70 much the closer
+(10.5 % ink against 13.3 %), and the only one of the three that keeps the strap.
+
+### WHAT IT COSTS TO KEEP THE BAR I WROTE
+
+H1(b) says *"the guard's own strap RUNS continuously through the mask … and no
+second strap, second buckle or second clasp appears."* The strap **runs** — the
+parent's was severed. No buckle, no clasp; a few-px orange speck at x≈600 y≈575
+is the only hardware hint. But a **second brown band crosses the strap below the
+buckle**, forming a small X that is not in the init, with two short stubs at its
+top. **That is a second strap and the clause says no second strap.**
+
+The bar was written forty minutes before the pixels landed. It is not being
+relaxed now that a second strap is what arrived. Recorded honestly in both
+directions: a strap crossing a strap is **in vocabulary** for a harness in a way
+that a floating gold clasp and a fan of white wedges are not, and at 3x — the
+screening scale — the frame reads as a plausible harness. **That is a reason to
+take one more rung, not a reason to rewrite the clause after the fact.**
+
+Everything else passes, several by the widest margin the route has seen: **G−R
+−23.11 with ZERO px above +20** (closest of the four to its own neighbourhood,
+and the only frame with no green at all); **shard rate 0.38 % against a 3.00 %
+bar**; the copy took **less** damage than at 0.99 (maxdiff 78 against 121);
+B8 hair maxdiff 0 for the third run; out-of-mask drift **8600 px, and 8600 of
+8600 inside the crop box** — 8574 / 8598 / 8600 across three renders of identical
+geometry, which is the tightest evidence yet that the drift is a deterministic
+property of the crop and not of what the sampler drew.
+
+`EVIDENCE-b08-str70-verdict-0820.png` — init, 0.99, 0.99, 0.70 at 9x.
+
+### THE SHARD CLAUSE IS NOW CALIBRATED, AND IT KILLS THE DEBT §24 FILED
+
+An empirical null of **200 real windows of this exact footprint**: shard rate
+median **0.35 %**, p95 4.11 %, p99 6.74 %, max 16.43 %. The parent's 9.27 % sits
+at the **99.5th percentile of real material**; the 3.00 % bar sits near p90.
+
+The same null puts **D at median 1.077 and p95 4.658** — so **the "ceiling on D"
+filed in §24 is wrong and is withdrawn**: a ceiling that keeps false FAILs at
+5 % would have to sit near 4.7 and **would not have caught the parent's 3.479**.
+The shard rate is the right clause and the D ceiling is not.
+
+**And the shard clause needs a FLOOR as well as a ceiling.** This frame is 4.8×
+*smoother* than the material it replaced and nothing in C4' — which passed all
+four frames, including a green goblin fist — can say so.
+
+### THE RUNG THAT FOLLOWS, WITH ITS STOPPING RULE WRITTEN BEFORE IT RUNS
+
+What is left is a **noun**, and this route has now *measured* that **the prompt
+chooses nouns** (§24: removing the goblin removed it outright at unchanged
+strength). So: keep 0.70, keep the positive, and add to the **negative** the noun
+that actually arrived — `double strap, crossed straps, second strap, extra strap,
+strap end, buckle, clasp`. One variable, ~20 s of card, $0.
+
+**STOPPING RULE, pre-committed: if that pass draws a THIRD unwanted noun, the
+route closes** on §23's conclusion and beat 08's grip goes back to txt2img. The
+lesson would be that a tool with no spatial conditioning trades one invention for
+another indefinitely, and five samples is enough to say so.
+
+**DO NOT PROPOSE AN INTERMEDIATE STRENGTH.** 0.99 over-draws, 0.70 under-inks,
+and the fault at 0.70 is a *noun* rather than a quantity — a midpoint searches for
+a value satisfying a conjunction the knob does not express, which is the same
+refusal beat 01's crf ladder reached this morning.
+
+**`ep2-b08-scale30-0820` remains beat 08's frame. No cut change, nothing staged.**
