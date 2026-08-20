@@ -301,6 +301,20 @@ script_line: 'Beat 13 THE SHADE (1:00-1:04), node.md:88 as rewritten 2026-08-17 
   will cover -- knees up around his ears." THE PLATE IS ALREADY THE SEATED END STATE, so the only action
   left in the beat is the head tipping into the shade. Rendering a slide would be re-opening a question
   the founder closed.'
+plate_ack: 'unfetchable: b13-sapcomp-lit-0820.png is a $0 Mac-side TONE MAP of this beat''s own
+  already-published, already-checked plate -- b13-sapcomp-s20260820.png, sha bb0ad70c..., produced
+  by ep2-b13-sapcomp-0820 and fetchable on origin/farm-results-rtx5090 -- so it exists on main and
+  not on the results branch. ADDED BY HAND, because derive_spec.py refuses to author a waiver from a
+  script and it is right to. WHY IT IS SAFE, and it is not "could not check so fine": the fault this
+  check exists to catch is a --src that is the WRONG BEAT''S PLATE (twice in the 2026-08-14 wave),
+  and that is STRUCTURALLY IMPOSSIBLE here -- the lift is a per-pixel monotonic curve over the
+  checked parent with size, geometry and every pixel coordinate asserted unchanged by the tool
+  before it wrote the file, so the picture is the same picture. AND IT WAS ACTUALLY LOOKED AT: the
+  cropped init before and after, side by side at 1:1, is committed at
+  farm-out/ep2-b13-sapcomp-0820/CONTACT-b13-exposure-k2.0-0820.png, opened at 1:1 and again at 6x on
+  the head, with k=2.6 rejected by eye at that magnification before k=2.0 was chosen. Eyeballed by
+  the composite-plate motion lane, 2026-08-20. The file is committed and pushed to main with its
+  sha256 asserted in this spec and again inside fetch_init.py, so anyone can verify both numbers.'
 bar:
   G8_THE_PLANTS_SHADE_IS_ON_HIS_EYES: 'THE FAILED CLAUSE AND THE ONLY REASON THIS RUNG EXISTS, and it
     is now measured rather than eyeballed. At f120, read at 4x: a distinct darker patch lying across the
