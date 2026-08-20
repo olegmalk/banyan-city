@@ -62,6 +62,34 @@ cut_assembled_from_this_ledger: >-
   by that assembly; per-beat manifest at
   review/ep2-demo-0819b/sources/picks-0819b.yaml.
 
+amended_0820:
+  date: '2026-08-20'
+  by: the composite-plate motion lane
+  what_moved: >-
+    TWO ROWS, AND THE SUMMARY BLOCK BELOW IS 0819's AND IS LEFT AS IT WAS. It
+    describes review/ep2-demo-0819 and its four slates; rewriting it would erase
+    the state this ledger was written to record. Read it as history and read
+    these two lines as the amendment.
+  beat_15: >-
+    slate -> best-available. FIRST FOOTAGE IN ANY CUT, closing the one slate
+    where nothing whatever existed. Steward pick between two passing seeds,
+    ratified by the coordinator, veto-able in one line. The composite-init route
+    this file named on 08-19 is the route that closed it.
+  beat_03: >-
+    best-available -> best-available, DIFFERENT FILE. The chibi child holding a
+    leafy tree is out after five cuts; an adult goblin behind a two-leaf seedling
+    is in. Not cut-ready: it carries a written FAIL.
+  live_cut_now: >-
+    review/ep2-demo-0820/ep2-demo-0820.mp4, sha
+    b8afbf1b2b8ce9bfb2ac7a144f60af7911e347d6e9638cfb01d45322ff15dac1 — 19 footage
+    beats and 2 slates (9, 16), the most footage and the fewest slates this
+    episode has had. Per-beat manifest with both warrants and both vetoes:
+    review/ep2-demo-0820/sources/picks-0820.yaml `revision_b`.
+  this_file_still_makes_no_taste_call: >-
+    Unchanged. Both amendments are steward picks recorded with their reasons and
+    their one-line vetoes; neither is a verdict on the pictures and neither has
+    been screened by the founder.
+
 summary:
   beats: 21
   footage_in_live_cut: 17
@@ -220,6 +248,22 @@ beats:
   - beat: 3
     slug: BAD COVER
     status: best-available
+    SWAPPED_0820: >-
+      THE TAKE BELOW IS OUT OF THE CUT. Amended 2026-08-20 by the composite-plate
+      motion lane: review/ep2-demo-0820 now carries
+      03-bad-cover-LTX-midend-s20260821-0820.mp4 (sha
+      0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48,
+      pipeline/jobs/ep2-b03-covermid-s2-0820.yaml). The 0814 file below had
+      ridden five consecutive cuts and is a chibi CHILD holding a leafy TREE,
+      which the founder's ratified adult design and this beat's own negative
+      prompt both exclude. `status` STAYS best-available: the new take carries a
+      written FAIL on its pre-registered H1 (15 exactly-duplicated tail frames
+      from f106 against a bar of 6) and BEAT 03 IS NOT MARKED CUT-READY. What it
+      buys is the performance running to f102 instead of f073, so the 3.982 s
+      spoken line now plays over a live picture. The exact-freeze instrument
+      ranks the two candidates backwards on this beat and the pick was made on
+      the last-live-pair number instead — recorded as an instrument
+      qualification in the job spec, not as a bar relaxed to fit a clip.
     take:
       file: review/ep2-demo-0819/sources/03-bad-cover-b03-refire-0814.mp4
       sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
@@ -663,9 +707,52 @@ beats:
 
   - beat: 15
     slug: GOOD LISTENER
-    status: slate
-    take: null
-    verdict: NO FOOTAGE. No ep2-b15 motion job exists dated 0817 or later that any verdict lets into a cut.
+    status: best-available
+    status_0819_was: slate
+    CUT_READY_0820: >-
+      YES, AND THE SLATE IS CLOSED. This row is amended 2026-08-20 by the
+      composite-plate motion lane. Beat 15 has footage in a cut for the first
+      time. `status` moves slate -> best-available and NOT to PASS: the take
+      passes four of five pre-registered clauses and fails S3's freeze clause by
+      3 frames, so it goes in with its fault named, which is what
+      best-available means in this file.
+    take:
+      file: review/ep2-demo-0820/sources/15-good-listener-LTX-mid-s20260821-0820.mp4
+      sha256: 3ee36f170386a815a9e3f98c687741099756cd2adaac02f667bd798b9720171c
+    the_pick_0820:
+      chosen_from: >-
+        TWO PASSING CLIPS AT TWO SEEDS off one recipe, produced within hours of
+        each other. ep2-b15-listenmid-0820 (seed 20260820) leans in and STAYS at
+        the leaves and pays with a drooped bent leaf pair at f120 and an eye that
+        simplifies to a blank almond. ep2-b15-listenmid-s2-0820 (seed 20260821)
+        leans in and comes back out with the plant and the face clean.
+      decided_by: the steward (the composite-plate motion lane), 2026-08-20, ratified by the session coordinator
+      NOT_decided_by: >-
+        the founder. He has seen neither candidate. This is a STEWARD PICK --
+        mechanical selection among takes with a stated reason -- and the file's
+        own authority note applies: taste is R4 throughout.
+      why: >-
+        Clean leaves (two ovate blades on a straight stem at f090 and f120, and
+        the plant is the thing eight beats of this episode keep getting wrong);
+        live eyes to f120, where beat 04 is already in this cut FAILING on
+        exactly that clause; and more motion, measured -- f009..f084 all-pairs
+        whole-frame interframe 0.761 against the sibling's 0.623 and mouth band
+        3.441 against 1.759, on floors of 0.30 / 0.80 calibrated on this beat's
+        own history before either clip existed.
+      what_it_costs: >-
+        3 exactly-duplicated frames at the tail from f118 where the sibling has
+        none, and the sustained lean that is arguably closer to the script's
+        staging. The second is a TASTE axis and is why the pick is veto-able.
+      veto: >-
+        one line -- "beat 15: use the other seed" or "beat 15: back to a slate".
+        The sibling take is at farm-out/ep2-b15-listenmid-0820/.
+    verdict: >-
+      PASS on S1, S2, S4 and S5; FAIL on S3's freeze clause by 3 frames. "THE
+      RECIPE REPRODUCES AND THE HEADLINE NUMBER DID NOT" -- the middle placement
+      buys motion at a second seed and the period-2 / 12.0 fps doubling the
+      sibling showed was the DRAW, not the recipe. HOLD strength 0.362, the
+      loosest reading this beat has produced.
+    verdict_superseded_0819: NO FOOTAGE. No ep2-b15 motion job exists dated 0817 or later that any verdict lets into a cut.
     blocker_moved_tonight: >-
       TWO THINGS CHANGED AND NEITHER CLOSES THE SLATE. (1) §6 IS NO LONGER THE
       OBSTACLE: the founder read the restaged lines and approved all five beats
@@ -676,13 +763,21 @@ beats:
       twice running, where eight earlier candidates had floating leaves, four
       were indoors and six mac plates put the plant on his shoulder or made it
       the size of a hill.
-    blocked_on: >-
-      THE LEAF COUNT. `done_when` needs him and the sapling in the same frame
-      and the growth ladder allows exactly two cotyledons; the plate wording
-      ladder is CLOSED at two rungs with the count still wrong. The named route
-      is a COMPOSITE INIT — that plate's own frame with beat 12's leaves
-      composited onto a thin stem at ~40 cm, a hand's width from his face —
-      which is a build, not a rev, and it is the b15 lane's.
+    blocked_on: null
+    blocked_on_0819_and_how_it_closed: >-
+      THE LEAF COUNT, and the route this row named is the route that worked. It
+      read: "the plate wording ladder is CLOSED at two rungs with the count still
+      wrong. The named route is a COMPOSITE INIT — that plate's own frame with
+      beat 12's leaves composited onto a thin stem at ~40 cm, a hand's width from
+      his face — which is a build, not a rev." The composite was built and six
+      motion rungs then ran on it. Two of them BROKE the plant or the subject
+      (rung 2 lost the plant to one phrase, rung 3 lost the goblin to one noun)
+      and neither loss reappeared at a second seed, so those were the words and
+      not the draw.
+    still_open_and_no_motion_rung_can_buy_it: >-
+      THE HAND'S WIDTH. The composite puts his face ~160 px from the leaves where
+      the script says a hand's width. It is a PLATE property and belongs to the
+      plate lane; it is not a blocker on the cut and the beat ships without it.
     vo:
       file: review/ep2-demo-0819/sources/15-vo.mp3
       sha256: 072123193efa6248a0c70500a898541c0923940256415ed23aa53e3489889c2e

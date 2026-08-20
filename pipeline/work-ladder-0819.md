@@ -3447,3 +3447,135 @@ before you file a locally-derived plate.
 either closed by measurement or is a taste call, and the standing rule is that a
 rung with no consumer is not on this ladder — `NOTHING WAS INVENTED`. The card is
 free for the lanes that still have runnable questions.
+
+---
+
+## 2026-08-20, AFTERNOON — THE THREE BEATS LEAVE THE LADDER AND GO INTO THE CUT
+
+The closing section above said all three of this lane's beats were at the
+author's door with no runnable rung left. **That was true and it was also a
+place to stop one step short.** A beat at the author's door still has to be
+*put in front of him*, and two of these three were not: beat 15's take was on
+disk while its slate card played its voice for the third cut running, and beat
+03's slot was still holding a chibi child gripping a leafy tree — five
+consecutive assemblies of a clip that the founder's ratified design and the
+beat's own negative prompt both exclude. Neither needed a GPU, a dollar or a
+ruling. **The ladder's own standing rule is that a rung with no consumer is not
+on it; the mirror rule, which this pass had to learn, is that a RESULT with a
+consumer is not finished until the consumer has it.**
+
+### BEAT 15: THE PICK, AND WHAT IT COSTS
+
+Two passing clips at two seeds, and the choice was R4-shaped only in one of its
+three parts. Taken: **`ep2-b15-listenmid-s2-0820`, seed 20260821.**
+
+| | rung 5 (20260820) | **the pick (20260821)** |
+|---|---|---|
+| f009..f084 all-pairs | 0.623 | **0.761** |
+| mouth band | 1.759 | **3.441** |
+| plant at f090/f120 | drooped, bent stem | **two clean ovate blades, straight stem** |
+| visible eye at f120 | blank almond | **keeps its irises** |
+| tail freeze | none | **3 frames from f118** |
+| the lean | leans in and **stays** | leans in and comes back out |
+
+Two of the three reasons are mechanical and one is not. The leaves and the eyes
+are defect counts — and the eye one compounds, because **beat 04 is already in
+this cut FAILING on precisely "the eyes never move"**, so a second dead-eye beat
+four minutes later is a pattern rather than a miss. The lean is taste, it is the
+one axis where the sibling is better, and it is why the pick ships **veto-able in
+one line** rather than as a verdict.
+
+**The judder was not a factor and the reason is worth keeping.** The pick reads
+period 3 / 40 distinct / 8.0 effective fps — the family reading and the
+episode's. Rung 5's period 2 / 60 / 12.0 was *proved to be the draw* by this very
+seed. Picking the smoother clip would have been picking a lottery ticket, and it
+would have left one beat at twice the temporal resolution of its neighbours.
+
+### BEAT 03: A SEED MOVED THE DEATH POINT 29 FRAMES, AND THE FREEZE INSTRUMENT RANKED THE TWO CLIPS BACKWARDS
+
+`ep2-b03-covermid-s2-0820` — prompt, negative and init re-diffed against the
+parent's published payload after the pull (byte-identical; init sha 31a23247 on
+both), seed 20260820 → 20260821, **bars carried forward byte-identical** and
+recorded as carried by `derive_spec` rather than implied. 266 GPU-seconds, $0.
+Backlogged at 14:04 on an idle card, filed by the autofill tick, rc=0 at 14:12.
+
+The spec pre-registered `F-FREEZE-IS-THE-RECIPE` as the most likely outcome and
+published the reasoning first: rung 2 and rung 3 died within four frames of each
+other from completely different terminal wordings, "which is already two
+independent votes that the tail belongs to the recipe". **The pixels disagreed
+with the reasoning.**
+
+| | rung 2 | rung 3 | **s2** |
+|---|---|---|---|
+| last all-pair above 1.0 | f069 | f073 | **f102** |
+| step-frame f060..f072 mean | 0.34 | 6.995 | **8.726** |
+| step pairs f084→end, mean | — | 0.094 | **1.514** |
+| judge_clip exact tail run | 33 from f088 | 7 from f114 | **15 from f106** |
+
+**Both of the last two rows are true of the same clip, and that is the finding.**
+The exact-duplicate run counts only byte-identical pairs, so it measures where
+the sampler stopped emitting new pixels — not where the *performance* stopped.
+Rung 3 stops acting at f073 and then spends 32 frames producing near-dead but not
+identical pictures before its exact run even begins; s2 acts until f102 and then
+goes exactly dead almost at once. A viewer sees 29 more frames of performance and
+**the number goes the other way.** On this beat the instrument ranks the two
+candidates backwards.
+
+> **The fourth instrument this lane has had to qualify in two days, and the first
+> one that fails by ordering rather than by threshold.** The previous three were
+> retracted for being uncalibrated, mis-sampled, or unable to fail on their
+> control. This one is calibrated, correctly sampled, and passes on its control —
+> and it still cannot be used to choose, because the quantity it measures is not
+> the quantity that matters. *An instrument that ranks backwards is worse than one
+> that cannot fail, because it looks like it is working.*
+
+The replacement needed no new threshold: **the last interframe pair above 1.0**,
+which the record already publishes for every rung on this beat. The bar was
+scored **FAIL and left failing** — H1 is not relaxed to fit the clip, and beat 03
+is **not marked cut-ready**. It is in the cut as best-available with the fault
+named, like thirteen other beats.
+
+**Two things closed with it.** The seed axis: three draws now read f069, f073 and
+f102, so where the performance stops is substantially the *draw*, and the ladder's
+earlier inference from two agreeing rungs is withdrawn in writing. And H2's
+height: two independent draws off one init put the top of his cloaked back within
+**10 px** of each other, ~185 px above the leaf tops. It was already suspected to
+be a plate property; two seeds make it one.
+
+Also new, and unasked for: **H3's second half is met for the first time on this
+beat.** "The last twenty frames are not a held photograph" — step pairs from f084
+read mean 1.514 against rung 3's 0.094, sixteen times the tail motion.
+
+### BEAT 13: THE QUESTION SHIPS WITH THE 320 PX DRAWN ON THE FRAME
+
+No rung, no render, no dollar. `/review/ep2-b13-shade-0820` + one inbox card:
+*does this satisfy "tips his head sideways into the sapling's hand-sized patch of
+shade", or may the plant be drawn taller than canon in this one shot?*
+
+The page's argument is a picture, not a paragraph: the deepest head-tilt any rung
+has produced, with his eye line and the leaf tops drawn on it and the gap
+labelled — **~320 px of nothing over ~60 px of leaf**, with him seated on the
+ground and the sapling at his hip. Beside it, the f060 pair, so the question is
+asked *on the best pixels the beat owns* rather than after another attempt. The
+page also lists the four closed levers, so it cannot be read as a fifth wording
+of a question that is already shut.
+
+**Both halves of the tension are the founder's own** — `node.md:88` asks for
+shade on his face, and his 2026-08-16 ruling makes the plant too small to cast
+it — which is what makes it a card and not a fix.
+
+### WHAT THE CUT LOOKS LIKE NOW
+
+`review/ep2-demo-0820`, re-assembled twice in place at the same URL:
+**19 footage beats and 2 slates (9, 16)** — the most footage and the fewest
+slates episode 2 has had. `sha b8afbf1b`. Both picks carry their warrant, their
+named cost and a one-line veto in `sources/picks-0820.yaml` → `revision_b`, and
+`review/ep2-picks/cut-readiness-0819.yaml` carries the amendment with its 0819
+summary left standing as history.
+
+**One trap worth carrying to any lane that swaps a clip.** `get_clip()` globs
+`NN-*.mp4` and takes the sorted first, so leaving the old file beside the new one
+is a coin flip on filename ordering, not a swap — the old file has to leave the
+directory *and* the index. And `build_site` copies only what is in the tree:
+force-add the media *before* running the gate, or `qa_local` reports broken links
+on `/` and it is right to.
