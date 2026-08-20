@@ -41,11 +41,45 @@ stamps `content="unknown"` rather than omitting the tag. The absence of a tag
 already means something specific — this deploy predates the stamp entirely —
 and a builder that shrugged must not be able to impersonate that, or the other
 way round. qa_local reports the two separately for the same reason.
+
+BUT A PLATFORM CHECKOUT IS NOT AN AUTHOR'S TREE, added 2026-08-20. From at
+least 2026-08-19 banyan.city served EVERY production deploy stamped
+`<sha>-dirty` — a permanent dirty flag, which is the same as no flag at all:
+qa_local can never say "current" and the freshness check this file exists to
+feed goes back to being blind, just noisily this time. It was not our build
+dirtying the tree, and it was not Linux: the GitHub Pages mirror runs the same
+`build_site.py` on ubuntu-latest out of a real checkout and stamps clean, a
+pristine `--depth=10` clone stamps clean, and a full `vercel build` run against
+that clone stamps clean too. What is left is the Vercel BUILD CONTAINER's own
+droppings landing in `/vercel/path0` beside the checkout — files no author
+wrote and no `.gitignore` of ours anticipated.
+
+So the dirty question is now asked in two halves, because there are two facts
+and they have different weights:
+
+  * TRACKED changes — modified or deleted files git is already following. These
+    really do mean the bytes being built are not the commit's bytes. They flag
+    dirty everywhere, always, no exemption.
+  * UNTRACKED files. Locally these count too, and deliberately: a builder reads
+    media out of the tree and can publish a file that was never committed. In a
+    checkout the PLATFORM made and named — `VERCEL_GIT_COMMIT_SHA` or
+    `GITHUB_SHA` present AND equal to the sha git is sitting on — nobody edited
+    anything; whatever is untracked arrived with the container. Those are
+    reported in the build log and not counted against the stamp.
+
+The env sha is not trusted on its own for this: it must AGREE with git's HEAD.
+A platform variable that names some other commit means the checkout is not what
+the platform thinks it is, which is precisely when the stamp must stay strict.
+
+And a dirty tree now SAYS WHAT IS DIRTY, once, on stderr — see `_report`. The
+whole cost of this bug was that `-dirty` named no path, so three sessions could
+only guess at what the build container leaves lying around.
 """
 
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -55,6 +89,26 @@ REPO = Path(__file__).resolve().parent.parent
 STAMP_RE = re.compile(r"^([0-9a-f]{7,40})(-dirty)?$")
 
 UNKNOWN = "unknown"
+
+# The variables a CI platform sets to name the commit it checked out for us.
+# Order is preference; both are 40-hex in practice, short forms accepted.
+PLATFORM_SHA_KEYS = ("VERCEL_GIT_COMMIT_SHA", "GITHUB_SHA")
+
+# How many porcelain lines _report prints before it stops. Enough to name a
+# cause, few enough that a container full of cache droppings cannot bury the
+# rest of the build log.
+REPORT_LIMIT = 20
+
+
+def platform_checkout(env):
+    """-> (env var name, sha) for a build whose platform names its own commit,
+    else (None, ""). The sha is lowercased; a short form is allowed because
+    nothing here needs the full 40 to compare a prefix."""
+    for key in PLATFORM_SHA_KEYS:
+        v = (env.get(key) or "").strip().lower()
+        if re.fullmatch(r"[0-9a-f]{7,40}", v):
+            return key, v
+    return None, ""
 
 
 def _git(args):
@@ -93,31 +147,65 @@ def build_commit(env=None, git=None):
     """
     env = os.environ if env is None else env
     run = _git if git is None else git
+    key, platform_sha = platform_checkout(env)
 
     sha = run(["rev-parse", "HEAD"])
     if re.fullmatch(r"[0-9a-f]{40}", sha or ""):
         # --porcelain over `diff --quiet`: it also sees untracked files that a
-        # builder may have read. Any output at all means the bytes being built
-        # are not the bytes of this commit.
-        dirty = bool(run(["status", "--porcelain"]))
+        # builder may have read. Kept whole rather than reduced to a bool, so
+        # the report below can name what it found.
+        entries = [ln for ln in run(["status", "--porcelain"]).splitlines()
+                   if ln.strip()]
+        # The platform named a commit AND git is sitting on it: this checkout
+        # is the platform's, untouched by an author, so untracked files beside
+        # it are the container's and cannot have come out of a commit.
+        verified = bool(platform_sha) and sha.startswith(platform_sha)
+        counted = ([e for e in entries if not e.startswith("??")]
+                   if verified else entries)
         ct = run(["log", "-1", "--format=%ct"])
         return {
             "sha": sha[:7],
-            "dirty": dirty,
+            "dirty": bool(counted),
             "commit_time": int(ct) if ct.isdigit() else None,
             "source": "git",
+            "entries": entries,
+            "checkout": key if verified else None,
         }
 
-    for key in ("VERCEL_GIT_COMMIT_SHA", "GITHUB_SHA"):
-        v = (env.get(key) or "").strip().lower()
-        if re.fullmatch(r"[0-9a-f]{7,40}", v):
-            return {"sha": v[:7], "dirty": False, "commit_time": None,
-                    "source": "env:" + key}
+    if platform_sha:
+        return {"sha": platform_sha[:7], "dirty": False, "commit_time": None,
+                "source": "env:" + key, "entries": [], "checkout": key}
 
-    return {"sha": "", "dirty": False, "commit_time": None, "source": "none"}
+    return {"sha": "", "dirty": False, "commit_time": None, "source": "none",
+            "entries": [], "checkout": None}
 
 
 _CACHE = {}
+
+
+def _report(info, out=None):
+    """Name the uncommitted paths, once, on stderr. Silent on a clean tree.
+
+    stderr and not stdout: build_site's stdout is a report a human reads and
+    other tools parse, and this is a diagnostic. Vercel and Actions both
+    capture the two together, which is the only place it needs to arrive.
+    """
+    entries = info.get("entries") or []
+    if not entries:
+        return
+    out = sys.stderr if out is None else out
+    if info["dirty"]:
+        head = ("build-commit: %s — the working tree does not match this "
+                "commit (%d path(s)):" % (stamp_value(info), len(entries)))
+    else:
+        head = ("build-commit: %s — %d untracked path(s) beside a %s checkout, "
+                "not counted against the stamp:"
+                % (stamp_value(info), len(entries), info.get("checkout")))
+    print(head, file=out)
+    for line in entries[:REPORT_LIMIT]:
+        print("    " + line, file=out)
+    if len(entries) > REPORT_LIMIT:
+        print("    … and %d more" % (len(entries) - REPORT_LIMIT), file=out)
 
 
 def current():
@@ -130,6 +218,7 @@ def current():
     """
     if "info" not in _CACHE:
         _CACHE["info"] = build_commit()
+        _report(_CACHE["info"])
     return _CACHE["info"]
 
 

@@ -39,19 +39,33 @@ def check(name, cond):
         FAILURES.append(name)
 
 
-def fake_git(sha=HEAD40, dirty=False, ct="1786427284"):
+def fake_git(sha=HEAD40, dirty=False, ct="1786427284", status=None):
     """A stand-in for build_commit._git. Returns "" for a command it does not
     know, which is exactly how the real one reports failure — so a branch that
-    forgets to handle "" shows up here rather than in production."""
+    forgets to handle "" shows up here rather than in production.
+
+    `status` is the raw porcelain block when a case needs to say WHICH kind of
+    change it means — `??` untracked and ` M` tracked are weighted differently
+    in a platform checkout. `dirty=True` is the shorthand for one tracked edit.
+    """
+    porcelain = status
+    if porcelain is None:
+        porcelain = " M pipeline/build_site.py" if dirty else ""
+
     def run(args):
         if args[:2] == ["rev-parse", "HEAD"]:
             return sha
         if args[:2] == ["status", "--porcelain"]:
-            return " M pipeline/build_site.py" if dirty else ""
+            return porcelain
         if args[:2] == ["log", "-1"]:
             return ct
         return ""
     return run
+
+
+# What the Vercel build container leaves in /vercel/path0 beside the checkout:
+# untracked, ours by neither authorship nor .gitignore.
+CONTAINER_DROPPINGS = "?? .cache/\n?? .npm/\n"
 
 
 def head(*metas):
@@ -95,6 +109,87 @@ def test_a_build_that_cannot_see_git_falls_back_to_what_the_platform_says():
     check("a platform sha carries no invented time", v["commit_time"] is None)
     g = bc.build_commit(env={"GITHUB_SHA": HEAD40}, git=no_git)
     check("GITHUB_SHA is used too (the Pages mirror)", g["sha"] == HEAD7)
+
+
+def test_a_container_dropping_beside_a_platform_checkout_is_not_an_uncommitted_build():
+    # THE 2026-08-20 CASE. Every banyan.city production deploy stamped
+    # `<sha>-dirty`, which is a flag that is always on and therefore says
+    # nothing: qa_local could never call the live site current. Nothing in the
+    # repo did it — the Pages mirror builds the same generator on Linux and
+    # stamps clean, and so does a full `vercel build` over a pristine clone —
+    # so what is left in the tree is the Vercel build container's, arriving
+    # after a checkout the platform itself named.
+    env = {"VERCEL_GIT_COMMIT_SHA": HEAD40}
+    info = bc.build_commit(env=env, git=fake_git(status=CONTAINER_DROPPINGS))
+    check("platform checkout + untracked droppings → not dirty",
+          info["dirty"] is False)
+    check("platform checkout stamps the bare sha", bc.stamp_value(info) == HEAD7)
+    check("the droppings are still recorded, not discarded",
+          len(info["entries"]) == 2)
+    check("the exempting checkout names itself",
+          info["checkout"] == "VERCEL_GIT_COMMIT_SHA")
+    check("git still supplies the commit time a platform sha cannot",
+          info["commit_time"] == 1786427284)
+
+
+def test_a_tracked_edit_is_dirty_even_in_a_platform_checkout():
+    # The exemption is for files git is not following. A MODIFIED tracked file
+    # means the bytes being built are not the commit's bytes, which is the one
+    # thing `-dirty` exists to say, and no environment excuses it.
+    env = {"VERCEL_GIT_COMMIT_SHA": HEAD40}
+    both = CONTAINER_DROPPINGS + " M genomes/sapling/lineage.yaml\n"
+    info = bc.build_commit(env=env, git=fake_git(status=both))
+    check("platform checkout + a tracked edit → dirty", info["dirty"] is True)
+    check("that stamp carries -dirty", bc.stamp_value(info) == HEAD7 + "-dirty")
+    info = bc.build_commit(env=env, git=fake_git(status=" D cuts/cuts.yaml\n"))
+    check("a deleted tracked file is dirty too", info["dirty"] is True)
+
+
+def test_the_exemption_needs_the_platform_and_git_to_agree_on_the_commit():
+    # A platform variable naming some OTHER commit means the checkout is not
+    # what the platform thinks it is. That is exactly when to stay strict, so
+    # the exemption is keyed on agreement, never on the variable being set.
+    other = "aef79ac1122334455667788990011223344556677"
+    info = bc.build_commit(env={"VERCEL_GIT_COMMIT_SHA": other},
+                           git=fake_git(status=CONTAINER_DROPPINGS))
+    check("platform sha ≠ HEAD → no exemption", info["dirty"] is True)
+    check("platform sha ≠ HEAD → no checkout claimed", info["checkout"] is None)
+    # A short sha from a platform that abbreviates still matches by prefix.
+    short = bc.build_commit(env={"VERCEL_GIT_COMMIT_SHA": HEAD7},
+                            git=fake_git(status=CONTAINER_DROPPINGS))
+    check("an abbreviated platform sha still matches HEAD", short["dirty"] is False)
+
+
+def test_an_untracked_file_on_a_developers_machine_still_dirties_the_build():
+    # No platform variable, no exemption. The builder reads media out of the
+    # tree and can publish a file that was never committed, which is why
+    # --porcelain (not `diff --quiet`) was chosen here in the first place.
+    info = bc.build_commit(env={}, git=fake_git(status=CONTAINER_DROPPINGS))
+    check("untracked, no platform → dirty", info["dirty"] is True)
+    check("untracked, no platform → -dirty stamp",
+          bc.stamp_value(info) == HEAD7 + "-dirty")
+
+
+def test_a_dirty_build_names_the_paths_that_made_it_dirty():
+    # The whole cost of the 2026-08-20 bug was that `-dirty` named nothing, so
+    # three sessions could only guess what the container leaves behind.
+    import io
+    buf = io.StringIO()
+    bc._report(bc.build_commit(env={}, git=fake_git(status=CONTAINER_DROPPINGS)), buf)
+    out = buf.getvalue()
+    check("the report names a path", ".npm/" in out)
+    check("the report says which stamp it explains", HEAD7 + "-dirty" in out)
+    quiet = io.StringIO()
+    bc._report(bc.build_commit(env={}, git=fake_git()), quiet)
+    check("a clean tree reports nothing at all", quiet.getvalue() == "")
+    # Exempted droppings are reported too — swallowed silently is how a real
+    # cause hides behind a rule written for a fake one.
+    ci = io.StringIO()
+    bc._report(bc.build_commit(env={"VERCEL_GIT_COMMIT_SHA": HEAD40},
+                               git=fake_git(status=CONTAINER_DROPPINGS)), ci)
+    check("an exempted dropping is still printed", ".cache/" in ci.getvalue())
+    check("the exempt report says it was not counted",
+          "not counted" in ci.getvalue())
 
 
 def test_a_build_that_knows_nothing_says_unknown_rather_than_nothing():
@@ -290,6 +385,11 @@ def main():
     test_a_clean_checkout_stamps_the_commit_it_is_sitting_on()
     test_a_build_from_an_uncommitted_tree_refuses_to_claim_a_clean_sha()
     test_a_build_that_cannot_see_git_falls_back_to_what_the_platform_says()
+    test_a_container_dropping_beside_a_platform_checkout_is_not_an_uncommitted_build()
+    test_a_tracked_edit_is_dirty_even_in_a_platform_checkout()
+    test_the_exemption_needs_the_platform_and_git_to_agree_on_the_commit()
+    test_an_untracked_file_on_a_developers_machine_still_dirties_the_build()
+    test_a_dirty_build_names_the_paths_that_made_it_dirty()
     test_a_build_that_knows_nothing_says_unknown_rather_than_nothing()
     test_the_meta_block_omits_a_time_it_does_not_have()
     test_what_the_builders_emit_is_what_the_reader_parses()
