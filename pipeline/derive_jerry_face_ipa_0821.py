@@ -68,7 +68,7 @@ PARENT_DIR_TOKEN = "jerryface-j2-0821"
 
 ASSET_URL = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
              "farm-out/jerry-skel-assets-0820/")
-DRIVER_SHA = "aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a"
+DRIVER_SHA = "ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32"
 HINT = "jerry-skel-h19-0820"
 HINT_SHA = "244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c"
 REF = "jerry-tile-head-0821"
@@ -104,7 +104,62 @@ REF_SQ = {
             "02755eb533c45efa12656bbd87062789fa4b5d44fbbf57cd031c06ab833df2d7"),
     "k5b": ("jerry-tile-sq20-0821", "0.20", "3.9",
             "f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14"),
+    # k6 RE-WALKS THE SAME AXIS WITH A DIFFERENT ADAPTER. Two of the four
+    # references are k5's own, reused BYTE-FOR-BYTE (re-authoring sq25
+    # reproduced its committed digest), so k6a/k6b against k5b/k5a is a clean
+    # A/B on the WEIGHT with the reference held identical. sq35 and sq50 are
+    # new points, placed to bracket the 30% floor where k4's mouth appeared.
+    "k6a": ("jerry-tile-sq20-0821", "0.20", "3.9",
+            "f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14"),
+    "k6b": ("jerry-tile-sq25-0821", "0.25", "6.1",
+            "02755eb533c45efa12656bbd87062789fa4b5d44fbbf57cd031c06ab833df2d7"),
+    "k6c": ("jerry-tile-sq35-0821", "0.35", "12.0",
+            "528ffeb89f23a937a1bf10e5afde8739686577b4b84d31a06316ce639f11cafa"),
+    "k6d": ("jerry-tile-sq50-0821", "0.50", "24.5",
+            "8c6de1bc776f4f89f0f14145a03973cdfb7c1ccb04de655faba273c8cd363cf8"),
 }
+
+# THE ADAPTER WEIGHT IS A RUNG PROPERTY FROM k6 ONWARD, AND IT IS PASSED
+# EXPLICITLY RATHER THAN BY MOVING THE DRIVER'S DEFAULT. k1..k5 carry no
+# --ip-weight, so their recipe re-renders byte-identically off today's driver;
+# only the k6 family names the face weight, and it names it in argv where the
+# sidecar records it.
+#
+# WHY THE DIGEST IS QUOTED HERE AND NOT ONLY IN THE DRIVER: the two SDXL ViT-H
+# adapters are BOTH 847,517,512 bytes. A reader comparing a k5 sidecar with a
+# k6 sidecar cannot tell them apart by size, by repo, by subfolder or by
+# encoder folder -- only by these two strings. controlnet_plate.IP_WEIGHTS
+# refuses anything not in that table before a model loads.
+IP_WEIGHT_PLUS = "ip-adapter-plus_sdxl_vit-h.safetensors"
+IP_WEIGHT_FACE = "ip-adapter-plus-face_sdxl_vit-h.safetensors"
+WEIGHT_SHA = {
+    IP_WEIGHT_PLUS:
+        "3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581",
+    IP_WEIGHT_FACE:
+        "677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1",
+}
+
+
+def weight_for(suffix):
+    """Which adapter this rung loads. k6 onward: the FACE variant."""
+    return IP_WEIGHT_FACE if suffix.startswith("k6") else IP_WEIGHT_PLUS
+
+
+def weights_note(suffix):
+    w = weight_for(suffix)
+    if w == IP_WEIGHT_PLUS:
+        return ("h94/IP-Adapter sdxl_models/%s, apache-2.0, sha256 %s "
+                "(cached on the box since before k1; THE SAME 847,517,512 "
+                "BYTES as the -FACE variant, so only this digest separates "
+                "them)" % (w, WEIGHT_SHA[w]))
+    return ("h94/IP-Adapter sdxl_models/%s, apache-2.0, sha256 %s, 847,517,512 "
+            "bytes, fetched and digest-verified on the box by "
+            "ep2-ipa-facewt-fetch-0821 (rc=0, snapshot 018e4027, encoder "
+            "image_size 224 / patch 14 / hidden 1280, 0 .incomplete). THE "
+            "GENERAL ADAPTER IS THE SAME NUMBER OF BYTES, so the digest is the "
+            "only separator; controlnet_plate.IP_WEIGHTS refuses an unlisted "
+            "weight rc=12 before any model loads and the sidecar records this "
+            "digest." % (w, WEIGHT_SHA[w]))
 REFS = {"jerry-tile-head-0821": REF_SHA,
         "jerry-tile-headfit-0821": REF_FIT_SHA}
 REFS.update({name: sha for name, _f, _c, sha in REF_SQ.values()})
@@ -158,9 +213,32 @@ for _sfx in ("k4a", "k4b", "k4c", "k4d", "k5a", "k5b"):
         "green, same mask, same --ip-scale 0.7, same seed, same skeleton, "
         "same wording. The subject reaches the encoder INTACT at %s%% of its "
         "pixels, where k3's reached it amputated at 5.4%%." % (_frac, _cov)))
+
+# ---------------------------------------------------------------------------
+# k6: THE SAME AXIS, A DIFFERENT ADAPTER. The one variable across the whole
+# family is the WEIGHT, and the coverage walk is there because the k5 finding
+# is precisely that the defect is coverage-dependent -- a single point could
+# not tell "the face adapter fixes it" from "this point happens to work".
+for _sfx in ("k6a", "k6b", "k6c", "k6d"):
+    _name, _frac, _cov, _sha = REF_SQ[_sfx]
+    RUNGS.append((
+        _sfx, "0.7", _name,
+        "k5a's frozen recipe with --ip-weight swapped from "
+        "ip-adapter-plus_sdxl_vit-h to ip-adapter-plus-FACE_sdxl_vit-h, and "
+        "the reference head share at %s of the square canvas (%s%% of the "
+        "encoder's pixels). THE ADAPTER IS THE VARIABLE; the coverage walk is "
+        "the axis it is being read against, because the defect this instrument "
+        "is aimed at is itself coverage-dependent and one point could not "
+        "separate a fixed adapter from a lucky point. Everything else is k5a's "
+        "byte-for-byte: 832x1216, seed 20260823, h19 skeleton at --scale 1.0, "
+        "j2's prompt and negative, mask 315,130,515,350, --ip-scale 0.7, the "
+        "same head crop on the same flooded field green. k6a and k6b reuse k5b "
+        "and k5a's OWN reference files, digest-identical, so those two pairs "
+        "are a clean A/B on the weight alone." % (_frac, _cov)))
+
 # the commit that carries the three staged inputs -- provenance only, but the
 # meta.yaml this writes is what a later lane reads to re-fetch them.
-COMMIT = "29939faba45625c647bb05da9573c4151b8b259d"
+COMMIT = "894b6214ce4ce3f88e8d518ae33de73fbc71f909"
 
 
 def stage_step(job_dir, ref):
@@ -589,20 +667,174 @@ for _s in ("k5a", "k5b"):
     ONE_SAMPLE[_s] = _K5_SAMPLE
     PREDICTED[_s] = _K5_PREDICTED
 
+# ---------------------------------------------------------------------------
+# k6: A DIFFERENT INSTRUMENT, NOT AN EIGHTH POINT ON A CLOSED AXIS.
+_K6_WHY = (
+    "RUNG %s: k5a's frozen recipe with the ADAPTER WEIGHT changed to "
+    "ip-adapter-plus-face_sdxl_vit-h, at head share %s of the square canvas "
+    "(%s%% of the encoder's pixels).\n\n"
+    "WHAT THE SEVEN SQUARE POINTS SETTLED, AND WHY AN EIGHTH IS NOT THE "
+    "ANSWER. The reference-framing axis is fully characterised and it has NO "
+    "WINDOW. The EYE is best at 25%% coverage -- k5a came back at 1.26x the "
+    "tile's relative bounding box with aspect 0.53 against the tile's 0.52 "
+    "and area 0.0171, the first rung in the entire ladder to pass the 0.030 "
+    "clause, and 0.0235 even at the disclosure threshold 170 so it is not a "
+    "shading artifact. The MOUTH is only drawn from 30%% up -- ink 447, 471, "
+    "473 across 30/45/60/75%%, collapsing to 210 at 25%% and 312 at 20%%, "
+    "which at 1:1 and at contrast x2.6 on a blank lower face is NOT A THIN "
+    "MOUTH BUT NONE. k4a at 30%% is the lowest rung that keeps the mouth and "
+    "its eye is 1.41x, which is what j2 draws with no adapter at all.\n\n"
+    "TWO HALVES OF ONE FACE, TWO OPTIMA, ONE DIAL. That is a statement about "
+    "the INSTRUMENT and not about the value, so the instrument is what "
+    "changes. ip-adapter-plus-face_sdxl_vit-h is trained for exactly the "
+    "regime where the presences drop out: a face that must survive a small "
+    "share of the reference. It is the same repo, the same apache-2.0 terms, "
+    "the same ViT-H encoder and the same 847,517,512 bytes as the incumbent "
+    "-- only the digest separates them, which is why the driver now carries "
+    "an IP_WEIGHTS allowlist keyed by filename and refuses an unlisted weight "
+    "before a model loads.\n\n"
+    "THE COVERAGE WALK IS PART OF THE INSTRUMENT TEST AND NOT A SECOND "
+    "VARIABLE. The defect being aimed at is coverage-dependent by "
+    "construction, so a single point could not tell 'the face adapter keeps "
+    "the mouth' from 'this point happens to'. The four points bracket the "
+    "30%% floor on both sides: 20 and 25 are k5b's and k5a's OWN references "
+    "reused digest-identical, which makes k6a/k6b a clean A/B on the weight "
+    "with the reference held; 35 and 50 are new, above the floor where the "
+    "incumbent kept the mouth and lost the eye.")
+
+_K6_SAMPLE = (
+    "ONE BATCH OF FOUR, filed after every one of k1, k2, k3, k4a-d, k5a and "
+    "k5b was rendered, measured and read at 1:1 -- fourteen rungs of looking "
+    "before this recipe changed. THE RECIPE CHANGE IS ONE THING: the adapter "
+    "weight. Everything the seven square rungs held constant is still "
+    "constant, and two of the four references are the previous rungs' own "
+    "files byte-for-byte.\n\n"
+    "WHY FOUR AND NOT ONE. The one-sample rule exists so a recipe is not "
+    "scaled before it is seen, and nothing here is being scaled: no dataset "
+    "grows, no beat plate is rendered, no pose set is produced, the gate stays "
+    "shut. Four diagnostic points on a characterised axis is the same shape as "
+    "the k4 band that closed the horn question, and the axis is exactly the "
+    "one on which the defect is known to move -- a single point would be "
+    "unreadable against seven measured incumbents. Est 16 GPU-minutes total.\n\n"
+    "AND THE PHYSICAL DEPENDENCY WAS CLEARED FIRST, NOT ASSUMED: "
+    "ep2-ipa-facewt-fetch-0821 fetched the weight, asserted its digest against "
+    "the incumbent's (identical sizes, different shas), asserted the incumbent "
+    "is still resolvable in the same snapshot so k4a stays re-renderable, and "
+    "exited rc=0 before this batch was authored.")
+
+_K6_PREDICTED = (
+    "THE LIKELIEST WAY THIS DISAPPOINTS, and it is not the mouth. The face "
+    "adapter is a stronger identity channel on the FACE region specifically, "
+    "and the tile's face is the thing whose eye is 1.87x too big when it "
+    "transfers at full strength (k1). So the mouth may well arrive at 20-25%% "
+    "coverage AND BRING k1'S EYE WITH IT -- presences restored, T1b lost, "
+    "which is the same trade the coverage axis already refused. If that is "
+    "what the band shows, the face adapter is not a fix, it is the same "
+    "tradeoff on a different dial, and --ip-scale below 0.7 becomes the honest "
+    "next question rather than a fifth coverage point.\n\n"
+    "THE SECOND FAILURE MODE IS THE CONTAINMENT. This weight is trained on "
+    "face crops, and every rung since k1 has been scored on the goblin STAYING "
+    "a standing full-body figure in a patchwork cloak in tall grass inside a "
+    "head-box mask. A portrait composition, a seated figure or the purple cowl "
+    "returning is a FAIL on containment no matter what the face looks like, "
+    "and it would mean the mask -- not the weight -- is the next instrument.\n\n"
+    "THE THIRD, and it is the one that would close the route: horns. Every "
+    "square rung has been horn-free, k5b at 3.9%% coverage included, so the "
+    "cut hypothesis is tested and standing. A horn on a square canvas from a "
+    "DIFFERENT ADAPTER would say the horn is a property of weak face "
+    "conditioning after all and not of the crop -- which would falsify the k4 "
+    "reading and put both this route and k4a's fallback in doubt.\n\n"
+    "IF NO RUNG PASSES: the honest consequence is that the eye and the "
+    "presences cannot both be had from a reference channel at all, and what is "
+    "left is R4 -- accept k4a's 1.41x eye with the mouth present and treat the "
+    "eye as a defect the LoRA is not asked to fix. That is a change to what "
+    "the character LOOKS LIKE, which belongs to the author and not to this "
+    "lane. It goes on the board as an option with pixels, not as a decision.")
+
+for _s in ("k6a", "k6b", "k6c", "k6d"):
+    WHY[_s] = _K6_WHY % (_s, REF_SQ[_s][1], REF_SQ[_s][2])
+    ONE_SAMPLE[_s] = _K6_SAMPLE
+    PREDICTED[_s] = _K6_PREDICTED
+# k6's parent is k5a, whose recipe it freezes and whose weight it swaps.
+PARENT_RUNG.update({s: "ep2-jerry-face-k5a-0821"
+                    for s in ("k6a", "k6b", "k6c", "k6d")})
+
+SUCCESS_K6 = (
+    "ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale 1.0, j2's "
+    "prompt and negative byte-identical, plus --ip-ref %s.png --ip-mask "
+    "315,130,515,350 --ip-scale %s AND --ip-weight "
+    "ip-adapter-plus-face_sdxl_vit-h.safetensors. Scored on the k6 bar: k5a's "
+    "passing clauses HELD, plus P3 A MOUTH PRESENT and NO HORNS and NO COWL, "
+    "with the eye bounding box at 1.4x the tile's or lower and T8 at 4.5 heads "
+    "or better. Judged by eye at 1:1 against "
+    "review/ep2-goblin-design-0819/adult-b19-0819.jpg, with the ruler's "
+    "bounding-box column -- not its area column -- carrying the numbers, and "
+    "the sidecar's ip_adapter_weight line read to confirm which of the two "
+    "same-sized adapters actually rendered it.")
+
+BAR_K6 = """EVERY CLAUSE k5a PASSED, HELD, PLUS THE ONE IT FAILED ON. k5a is
+the incumbent -- the best face this tree has measured -- and this rung replaces
+it or it does not ship. A regression on any held clause is a FAIL even if P3
+passes, because a mouth on a worse face is not progress.
+Ruler: pipeline/measure_face_eye_0821.py, whose --selftest reproduces the
+published f/g/h numbers before it is allowed to produce a new one.
+  READ THE RULER'S KNOWN ARTIFACT BEFORE QUOTING IT. Its WHITE_MIN is 190 and
+  a dimmer cream eye falls under it, so the AREA column can read 0.0040 on a
+  face with two plain eyes. The threshold is calibrated against five published
+  rungs and IS NOT MOVED to flatter a sixth. THE BOUNDING-BOX COLUMN IS WHAT
+  THIS BAR IS SCORED ON, and any area figure is quoted at both 190 and 170
+  with the pair shown.
+THE CLAUSE THIS RUNG EXISTS FOR:
+  P3  A MOUTH. A line, however thin -- the wording the curation file used
+      after n1: "a line, however thin. n1 has NONE -- absent, not thin."
+      Judged BY EYE at 1:1 on the lower face and again at contrast x2.6,
+      which is how k5a's absence was confirmed. Mouth ink corroborates and
+      does not decide: 447/471/473 at 30/45/60/75%, 210 at 25%, 312 at 20%.
+THE SIZE CLAUSES, unchanged, because they are what k5a already passed:
+  T1b SHAPE -- per-eye aspect (h/w). TILE 0.52; k5a 0.53. Hold it.
+      SIZE -- eye bounding box relative to the head box, against the tile.
+      j2 1.40x with NO adapter, k4a 1.41x, k5a 1.26x. PASS is 1.4x or lower,
+      and k5a's 1.26x is the number to beat.
+  T8  4.5+ heads. k5a 5.31, k4a 5.13. Scored first.
+THE CREATURE-FEATURE CLAUSES, still live because a new weight can reopen them:
+  NO HORNS. No spike, prong, antler or protrusion off the skull. Only k3 --
+      the amputated portrait reference -- ever grew them, and k5b at 3.9%
+      coverage on a square canvas did not, so the cut reading is tested. A
+      horn HERE would falsify it. Judged BY EYE at 1:1.
+  NO COWL. The tile's purple cowl-scarf must not appear at the neck.
+HELD FROM k5a: T1 no iris and no pupil, T2 no nose bridge, T3 no age
+modelling, P1 the brow bar with skin between it and the eye (a lash arc welded
+to the rim is an eyelid and does not count), P2 muzzle, P4 facial shading,
+plus the standing pose, the patchwork cloak and the tall grass -- the whole
+containment. A PORTRAIT COMPOSITION IS A CONTAINMENT FAIL: this weight is
+trained on face crops and the frame is a full-body standing shot.
+AND ONE MECHANICAL CLAUSE, because the two adapters are the same 847,517,512
+bytes: the sidecar's ip_adapter_weight line must name
+ip-adapter-plus-face_sdxl_vit-h.safetensors and its licence line must carry
+sha256 677ad886...92c1. A frame that rendered on the incumbent weight is not
+this rung no matter how it looks."""
+
 
 def emit(suffix, ip_scale, ref, variable, force=False):
     job_dir = "jerryface-%s-0821" % suffix
     new_id = "ep2-jerry-face-%s-0821" % suffix
+    weight = weight_for(suffix)
+    if suffix[:2] == "k6":
+        success = SUCCESS_K6 % (ref, ip_scale)
+    elif suffix[:2] in ("k4", "k5"):
+        success = SUCCESS_K4 % (ref, ip_scale)
+    else:
+        success = SUCCESS % ip_scale
     child = derive_spec.derive(
         src=PARENT, new_id=new_id,
         fresh={"owner": "goblin reference-route lane, 2026-08-21",
                "why": WHY[suffix], "consumer": CONSUMER,
-               "success": (SUCCESS_K4 % (ref, ip_scale)
-                           if suffix[:2] in ("k4", "k5") else SUCCESS % ip_scale)},
+               "success": success},
         overrides={"argv:--arm": ARM, "argv:--repo-commit": COMMIT,
                    "key:beat": 2, "key:priority": 28, "key:est_minutes": 4},
         retoken=[(PARENT_DIR_TOKEN, job_dir)],
-        extra={"bar": BAR_K4 if suffix[:2] in ("k4", "k5") else BAR,
+        extra={"bar": (BAR_K6 if suffix[:2] == "k6"
+                       else BAR_K4 if suffix[:2] in ("k4", "k5") else BAR),
                "failure_predicted_in_advance": PREDICTED[suffix],
                "the_one_variable": variable,
                "the_rung_this_is_one_variable_from": PARENT_RUNG[suffix],
@@ -614,10 +846,7 @@ def emit(suffix, ip_scale, ref, variable, force=False):
                     "mask": IP_MASK,
                     "mask_frame": "RENDER pixels, 832x1216",
                     "scale": ip_scale,
-                    "weights": "h94/IP-Adapter sdxl_models/"
-                               "ip-adapter-plus_sdxl_vit-h.safetensors "
-                               "(cached on the box; the -FACE variant is 847 "
-                               "MB and is NOT cached)"}},
+                    "weights": weights_note(suffix)}},
         by="pipeline/derive_jerry_face_ipa_0821.py")
 
     # ---- the IPA flags are ADDED, not overridden: derive_spec's argv
@@ -628,12 +857,18 @@ def emit(suffix, ip_scale, ref, variable, force=False):
         if "--prompt-file" not in argv:
             continue
         i = argv.index("--prompt-file")
-        step["argv"] = argv[:i] + [
+        ipa_flags = [
             "--ip-ref", "pipeline/control/%s.png" % ref,
             "--ip-mask", IP_MASK,
             "--ip-ref-sha256", REFS[ref],
             "--ip-scale", ip_scale,
-        ] + argv[i:]
+        ]
+        # --ip-weight is passed ONLY when it differs from the driver's default,
+        # so k1..k5 re-emit byte-identical argv and the flag's presence is
+        # itself the record that this rung ran a different model.
+        if weight != IP_WEIGHT_PLUS:
+            ipa_flags += ["--ip-weight", weight]
+        step["argv"] = argv[:i] + ipa_flags + argv[i:]
 
     child["steps"][0] = {"name": "stage",
                          "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
@@ -657,6 +892,18 @@ def emit(suffix, ip_scale, ref, variable, force=False):
                       ("--repo-commit", COMMIT)):
         assert argv.count(flag) == 1, (flag, argv.count(flag))
         assert argv[argv.index(flag) + 1] == val, (flag, argv[argv.index(flag) + 1])
+    # THE WEIGHT, ASSERTED IN BOTH DIRECTIONS. Present and correct on k6;
+    # ABSENT on every earlier rung, because a k5 spec that suddenly carried an
+    # --ip-weight would no longer be the spec that produced the k5 verdict.
+    if weight == IP_WEIGHT_PLUS:
+        assert "--ip-weight" not in argv, suffix
+    else:
+        assert argv.count("--ip-weight") == 1, suffix
+        assert argv[argv.index("--ip-weight") + 1] == weight, suffix
+    # And the spec's own provenance block names that weight AND its digest, so
+    # a reader never has to infer which of two same-sized models rendered it.
+    wnote = child["ip_adapter"]["weights"]
+    assert weight in wnote and WEIGHT_SHA[weight] in wnote, suffix
     joined = " ".join(argv)
     assert job_dir in joined and PARENT_DIR_TOKEN not in joined
 
