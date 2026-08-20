@@ -3359,3 +3359,4 @@
 20:17:01Z DONE task=ep2-jerry-face-g1-0820-1787255734 rc=0 artifacts=1
 20:17:11Z STARTED task=ep2-jerry-face-g2-0820-1787255737 attempt=1 on box-runner
 20:17:35Z DONE task=ep2-jerry-face-g2-0820-1787255737 rc=0 artifacts=1
+20:17:44Z box-runner idle ready=0 failed=62
