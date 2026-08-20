@@ -313,7 +313,8 @@ def anchor_from_mask(mask_png: str, src_wh, dst_wh) -> np.ndarray:
 # one frame
 # ---------------------------------------------------------------------------
 
-def segment_frame(rgb: np.ndarray, cy: float, cx: float, r_eq: float, roi_grow: float = 1.0):
+def segment_frame(rgb: np.ndarray, cy: float, cx: float, r_eq: float, roi_grow: float = 1.0,
+                  exclude: np.ndarray = None):
     """Segment the fig near (cy,cx) with a ring-relative material+luma probe.
 
     Returns (mask_full, stats).  Never decides anything about validity -- the
@@ -323,12 +324,27 @@ def segment_frame(rgb: np.ndarray, cy: float, cx: float, r_eq: float, roi_grow: 
     polarity (a distance is unsigned), and this fig inverts polarity -- it starts
     as a light blob on a dark dawn field and ends as a dark blob on a blown-out
     one, which is enough to drive a plain luma NCC negative.
+
+    `exclude` is a full-frame boolean of pixels the BACKGROUND ANNULUS may not
+    use.  It exists for one measured reason.  On a composite, the ring at the
+    object's smallest radius falls inside the compositor's feather, where two
+    clips' fields are mixed: the ring's MAD is then the mixture's spread rather
+    than any real background's, separability collapses, and the frame dies on an
+    instrument artefact.  On 2026-08-20 that put beat 01's f001 at 1.76 against a
+    2.00 gate and made the G1 clause flip on the libx264 CRF -- crf 0, 10 and 14
+    dead, crf 18 and 23 live.  The compositor KNOWS where its feather is, so it
+    hands that region over; nothing here infers it from the picture.
+
+    When `exclude` is None every line below is the code that shipped before it
+    existed, branch for branch -- checked by the selftest, because every verdict
+    on every non-composite clip was scored by that code.
     """
     H, W = rgb.shape[:2]
     pad = max(MIN_ROI, int(round(ROI_PAD * r_eq * roi_grow)))
     y0, y1 = max(0, int(cy) - pad), min(H, int(cy) + pad + 1)
     x0, x1 = max(0, int(cx) - pad), min(W, int(cx) + pad + 1)
     sub = rgb[y0:y1, x0:x1]
+    excl = None if exclude is None else exclude[y0:y1, x0:x1]
     r, g, lum = chroma_luma(sub)
     hh, ww = lum.shape
     yy, xx = np.mgrid[0:hh, 0:ww]
@@ -339,10 +355,19 @@ def segment_frame(rgb: np.ndarray, cy: float, cx: float, r_eq: float, roi_grow: 
     stats = {}
     for _ in range(3):
         ring = (dist >= RING_INNER * r_eq) & (dist <= RING_OUTER * r_eq) & (~mask)
+        if excl is not None:
+            ring = ring & (~excl)
         if ring.sum() < 40:
+            # The annulus is starved. Reach further out inside the ROI -- and if a
+            # region was excluded, it stays excluded out there too: the cure for a
+            # contaminated background is never to re-admit the contamination.
             ring = (dist >= RING_INNER * r_eq) & (~mask)
+            if excl is not None:
+                ring = ring & (~excl)
         if ring.sum() < 40:
-            return np.zeros((H, W), bool), {"ring_px": int(ring.sum()), "empty_ring": True}
+            return np.zeros((H, W), bool), {
+                "ring_px": int(ring.sum()), "empty_ring": True,
+                "ring_starved_by_exclusion": bool(excl is not None and excl.any())}
 
         rr, rg = float(np.median(r[ring])), float(np.median(g[ring]))
         sr, sg = mad(r[ring]), mad(g[ring])
@@ -364,8 +389,13 @@ def segment_frame(rgb: np.ndarray, cy: float, cx: float, r_eq: float, roi_grow: 
         ly, lx = float(ys.mean()), float(xs.mean())
         r_eq = math.sqrt(mask.sum() / math.pi)
 
-        ring2 = (np.hypot(yy - ly, xx - lx) >= RING_INNER * r_eq) & (~mask)
-        ring2 &= (np.hypot(yy - ly, xx - lx) <= RING_OUTER * r_eq)
+        d2 = np.hypot(yy - ly, xx - lx)
+        ring2 = (d2 >= RING_INNER * r_eq) & (~mask)
+        ring2 &= (d2 <= RING_OUTER * r_eq)
+        if excl is not None:
+            ring2 = ring2 & (~excl)
+            if ring2.sum() < 40:
+                ring2 = (d2 >= RING_INNER * r_eq) & (~mask) & (~excl)
         use = ring2 if ring2.sum() >= 40 else ring
         sep_mat = abs(float(np.median(d_mat[mask])) - float(np.median(d_mat[use]))) / \
             max(0.5 * (mad(d_mat[mask]) + mad(d_mat[use])), 1e-3)
@@ -423,7 +453,8 @@ def objectness_full(rgb: np.ndarray, stats: dict, shape) -> np.ndarray:
     return f
 
 
-def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None):
+def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None,
+          exclude_paths=None):
     """Track the fig across a frame sequence.  Emits one record per frame; a
     frame the detector cannot stand behind gets `status: dead` and no area.
 
@@ -433,7 +464,11 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None):
     downstream consumer (the compositor) uses the detector's own matte instead
     of re-deriving a second one that could disagree with the score.  It cannot
     change what is measured: it is called after the record is final, and it is
-    handed a copy."""
+    handed a copy.
+
+    `exclude_paths`, if given, is one PNG per frame (or None per frame) marking
+    pixels the background annulus may not use -- written by whoever CREATED them,
+    not guessed at here.  See `segment_frame`."""
     ys, xs = np.nonzero(anchor_mask)
     if ys.size == 0:
         raise SystemExit("!! anchor mask is empty")
@@ -447,13 +482,19 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None):
 
     for i, p in enumerate(frame_paths):
         rgb = np.array(Image.open(p).convert("RGB"))
+        excl = None
+        if exclude_paths and exclude_paths[i]:
+            excl = np.array(Image.open(exclude_paths[i]).convert("L")) > 127
+            if excl.shape != rgb.shape[:2]:
+                raise SystemExit("!! exclusion mask %s is %s, frame is %s"
+                                 % (exclude_paths[i], excl.shape, rgb.shape[:2]))
         _, _, lum = chroma_luma(rgb)
         # A mask that runs off the search window has an unbounded extent, but
         # that is first a WINDOW problem: grow the window twice before calling
         # it a dead frame, so a fig that doubles is measured rather than lost.
         grow = 1.0
         for _ in range(3):
-            mask, st = segment_frame(rgb, cy, cx, r_eq, roi_grow=grow)
+            mask, st = segment_frame(rgb, cy, cx, r_eq, roi_grow=grow, exclude=excl)
             if not st.get("touches_roi") or st.get("touches_frame"):
                 break
             grow *= 1.8
@@ -462,7 +503,13 @@ def track(frame_paths, anchor_mask: np.ndarray, verbose=False, mask_sink=None):
         rec = {"frame": i, "status": "ok", "dead_reasons": [], "flags": []}
         if not st or "area_px" not in st:
             rec["status"] = "dead"
-            rec["dead_reasons"].append("no-component" if st.get("empty_comp") else "no-ring")
+            if st.get("ring_starved_by_exclusion"):
+                rec["dead_reasons"].append(
+                    "ring starved: the excluded region leaves under 40 clean background px "
+                    "anywhere in the ROI -- VOID, not a guess off contaminated ground")
+            else:
+                rec["dead_reasons"].append(
+                    "no-component" if st.get("empty_comp") else "no-ring")
             rec["area_px"] = None
             rec["probe"] = st
             recs.append(rec)
@@ -758,6 +805,64 @@ def selftest() -> int:
     check("region continuity re-seeds rather than guessing", reseeded and comp.sum() == 24,
           "reseeded=%s n=%d" % (reseeded, comp.sum()))
 
+    # --- 2b. THE RING EXCLUSION -------------------------------------------
+    # Added 2026-08-20 for composites. Three properties, all checkable without
+    # frames, and the first is the one that keeps every earlier verdict valid.
+    def _synthetic(sigma):
+        """A green disc on a warm field, with `sigma` of contamination laid over
+        exactly the annulus the probe will use -- the composite's feather, in
+        miniature."""
+        rng = np.random.default_rng(7)
+        gy, gx = np.mgrid[0:240, 0:240]
+        d = np.hypot(gy - 120, gx - 120)
+        im = np.full((240, 240, 3), 90.0)
+        im[..., 0] += 40.0
+        im += rng.normal(0.0, 2.0, (240, 240, 3))
+        obj = d <= 18
+        im[obj] = np.array((60.0, 190.0, 110.0)) + rng.normal(0.0, 2.0, (int(obj.sum()), 3))
+        band = (d > 22) & (d < 46)
+        if sigma:
+            im[band] += rng.normal(0.0, float(sigma), (int(band.sum()), 3))
+        return np.clip(im, 0, 255).astype(np.uint8), band, d
+
+    clean_img, band, d = _synthetic(0)
+    _, s_none = segment_frame(clean_img, 120, 120, 18.0)
+    _, s_empty = segment_frame(clean_img, 120, 120, 18.0,
+                               exclude=np.zeros((240, 240), bool))
+    same = all(s_none.get(k) == s_empty.get(k) for k in
+               ("area_px", "cy", "cx", "r_eq", "sep_material", "sep_luma", "ring_px"))
+    check("an EMPTY exclusion changes not one published number", same,
+          "area %s/%s sep %s/%s ring %s/%s" % (s_none.get("area_px"), s_empty.get("area_px"),
+                                               s_none.get("sep_material"), s_empty.get("sep_material"),
+                                               s_none.get("ring_px"), s_empty.get("ring_px")))
+
+    # Contamination in the annulus degrades the reading monotonically and finally
+    # kills the frame -- and the EXCLUDED reading is the same number every time,
+    # which is the whole claim: it is measuring real background, not the mixture.
+    plain, fixed = [], []
+    for sig in (0, 15, 40):
+        img, bnd, _d = _synthetic(sig)
+        _, sp = segment_frame(img, 120, 120, 18.0)
+        _, sf = segment_frame(img, 120, 120, 18.0, exclude=bnd)
+        plain.append(sp.get("sep_material"))
+        fixed.append(sf.get("sep_material"))
+    degrades = (plain[0] is not None and plain[1] is not None
+                and plain[1] < plain[0] / 2.0 and plain[2] is None)
+    invariant = (None not in fixed and max(fixed) - min(fixed) < 1e-6)
+    check("contamination wrecks the annulus; excluding it reads the same every time",
+          degrades and invariant,
+          "plain sep %s -> excluded sep %s" % (plain, fixed))
+
+    everything = np.ones((240, 240), bool)
+    everything[d <= 20] = False                  # leave the object, take all background
+    _, s_starved = segment_frame(clean_img, 120, 120, 18.0, exclude=everything)
+    check("an exclusion that eats the whole background is VOID, never a number",
+          s_starved.get("empty_ring") and s_starved.get("ring_starved_by_exclusion")
+          and "area_px" not in s_starved,
+          "empty_ring=%s starved=%s area=%s" % (s_starved.get("empty_ring"),
+                                                s_starved.get("ring_starved_by_exclusion"),
+                                                s_starved.get("area_px")))
+
     # --- the camera probe, on synthetic ground truth ------------------------
     rng = np.random.default_rng(7)
     base = rng.integers(0, 255, (1280, 704, 3), dtype=np.uint8)
@@ -931,6 +1036,11 @@ def main() -> int:
     ap.add_argument("--anchor-mask", help="the inpaint/composite mask PNG")
     ap.add_argument("--anchor-cover-crop", default="832x1216->704x1280")
     ap.add_argument("--out", help="write the per-frame JSON here")
+    ap.add_argument("--exclude-masks", help="directory of per-frame PNGs (255 = exclude) marking "
+                                            "pixels the BACKGROUND ANNULUS may not use. Written by "
+                                            "whatever built them -- fig_composite.py --out-blend "
+                                            "emits exactly this. Matched to frames by sort order; a "
+                                            "frame with no file is scored with no exclusion.")
     ap.add_argument("--masks", help="write the detector's own per-frame matte here as "
                                     "mNNN.png (1-based, 8-bit, 255=fig). DEAD frames "
                                     "write NO file -- absence is the dead zone, and a "
@@ -968,12 +1078,21 @@ def main() -> int:
             Image.fromarray((mask * 255).astype(np.uint8)).save(
                 os.path.join(a.masks, "m%03d.png" % (i + 1)))
 
-    recs = track(paths, anchor, verbose=a.verbose, mask_sink=sink)
+    excl_paths = None
+    if a.exclude_masks:
+        en = sorted(n for n in os.listdir(a.exclude_masks) if n.lower().endswith(".png"))
+        if len(en) != len(paths):
+            ap.error("--exclude-masks has %d PNGs for %d frames; a partial exclusion set is a "
+                     "silently different instrument on the frames it misses" % (len(en), len(paths)))
+        excl_paths = [os.path.join(a.exclude_masks, n) for n in en]
+
+    recs = track(paths, anchor, verbose=a.verbose, mask_sink=sink, exclude_paths=excl_paths)
 
     live = [r for r in recs if r["status"] == "ok"]
     out = {
         "detector": "pipeline/fig_track.py",
         "gates": gates_dict(),
+        "exclude_masks": os.path.abspath(a.exclude_masks) if a.exclude_masks else None,
         "frames": len(recs),
         "live": len(live),
         "dead": len(recs) - len(live),

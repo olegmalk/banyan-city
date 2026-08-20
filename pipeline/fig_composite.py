@@ -170,6 +170,13 @@ def main() -> int:
     ap.add_argument("--fps", type=int, default=24)
     ap.add_argument("--crf", type=int, default=14)
     ap.add_argument("--masks", help="also keep fig_track's raw per-frame mattes here")
+    ap.add_argument("--out-blend", help="write the BLEND ZONE per frame here as bNNN.png (255 = this "
+                                        "pixel is not purely the held clip's). Feed it straight to "
+                                        "fig_track --exclude-masks: it is the region whose local "
+                                        "statistics belong to neither source clip, and a detector "
+                                        "that models the background there is modelling a mixture. "
+                                        "This file KNOWS the region; nothing downstream has to "
+                                        "guess it from the picture.")
     ap.add_argument("--dilate-frac", type=float, default=0.45,
                     help="dilation radius as a fraction of the fig's equivalent radius")
     ap.add_argument("--dilate-min", type=int, default=8,
@@ -227,7 +234,22 @@ def main() -> int:
                 os.path.join(a.masks, "m%03d.png" % (i + 1)))
 
     os.makedirs(a.out_frames, exist_ok=True)
+    if a.out_blend:
+        os.makedirs(a.out_blend, exist_ok=True)
     held0 = np.asarray(Image.open(hp[0]).convert("RGB"), np.float64)
+
+    def write_blend(i, alpha):
+        """The blend zone is every pixel the held clip did not supply alone.
+
+        alpha == 0 is pure held and alpha == 1 is pure grow, and BOTH ends are
+        excluded here, not just the soft middle: a pure-grow pixel sitting in a
+        held-clip background is a discontinuity in WHICH FILM the field came
+        from, and a ring drawn across that boundary is no more honest than one
+        drawn across the feather."""
+        if not a.out_blend:
+            return
+        Image.fromarray(((alpha > 0.0) * 255).astype(np.uint8)).save(
+            os.path.join(a.out_blend, "b%03d.png" % (i + 1)))
 
     per_frame = []
     last = None            # (mask, grow_rgb, r_eq) of the last LIVE frame
@@ -254,6 +276,7 @@ def main() -> int:
             # says so, rather than guessing a fig.
             Image.fromarray(held_rgb.astype(np.uint8)).save(
                 os.path.join(a.out_frames, "f%03d.png" % (i + 1)))
+            write_blend(i, np.zeros(held_rgb.shape[:2]))
             per_frame.append({"frame": i, "status": "no-matte-yet", "fig_area_px": None,
                               "matte_area_px": 0, "dilate_px": 0, "feather_px": 0.0,
                               "gain": 1.0})
@@ -288,6 +311,7 @@ def main() -> int:
 
         Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8)).save(
             os.path.join(a.out_frames, "f%03d.png" % (i + 1)))
+        write_blend(i, alpha)
         per_frame.append({
             "frame": i, "status": status,
             "fig_area_px": int(m.sum()),
@@ -295,6 +319,7 @@ def main() -> int:
             "matte_over_fig": round(float(matte.sum()) / max(1.0, float(m.sum())), 3),
             "dilate_px": d, "feather_px": round(a.feather_frac * d, 2),
             "gain": round(gain, 4),
+            "blend_zone_px": int((alpha > 0.0).sum()),
         })
 
     out = {
@@ -308,6 +333,8 @@ def main() -> int:
         "gates": ft.gates_dict(),
         "dilate_frac": a.dilate_frac, "dilate_min": a.dilate_min,
         "feather_frac": a.feather_frac,
+        "blend_zone_masks": os.path.abspath(a.out_blend) if a.out_blend else None,
+        "blend_zone_is_what_fig_track_must_exclude_from_its_ring": True,
         "gain_match": not a.no_gain_match,
         "held_still_whole_field_constructed_not_measured": bool(a.held_still),
         "gain_is_multiplicative_on_rgb_so_hue_and_sat_are_unchanged": True,
