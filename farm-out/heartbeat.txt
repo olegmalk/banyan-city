@@ -3294,3 +3294,5 @@
 18:45:19Z DONE task=ep2-jerry-skel-n5-0820-1787251370 rc=0 artifacts=1
 18:45:28Z STARTED task=ep2-b04-peek-s1-0820-1787251436 attempt=1 on box-runner
 18:51:41Z DONE task=ep2-b04-peek-s1-0820-1787251436 rc=0 artifacts=2
+18:51:52Z STARTED task=ep2-b04-peek-s2-0820-1787251442 attempt=1 on box-runner
+18:58:03Z DONE task=ep2-b04-peek-s2-0820-1787251442 rc=0 artifacts=2
