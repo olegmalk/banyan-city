@@ -1697,15 +1697,26 @@
       b07/b08 adult identity wording was right.'
 - what: 'THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four. Five casting
     rounds have not moved it. Second half of the same question: MAY THE GOBLIN READ AS A PLAIN GREEN MAN?
-    Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.'
+    Every attempt to make him read as a goblin costs us something else, and "green man" is reachable now.
+    UPDATED 2026-08-20 - IT IS NOW ASKED ON MOTION, ON THE EXACT PIXELS THAT WOULD ENTER THE CUT: beat
+    09''s cropmotion clip landed today, passed four of four, and is on the card as a playable clip plus a
+    seven-frame strip. It is a CLOSE-UP, head at 55% of frame, so it is the largest clearest look at a
+    guard''s face anywhere in episode 2 - where the four sheets above it are wide shots whose faces are
+    60 px tall. It is also the honest complication made visible rather than asserted: beat 09 scored adult
+    5 of 12 where beats 05/06/10/11 scored 0 of 12. Beat 09 is one of the two remaining slates and this
+    answer is the only thing holding it. Its one fault is named on the card and is not about age - the
+    hand at his cheek dissolves over f001-f008.'
   url: /review/ep2-guards-0818
   group: taste
   since: '2026-08-17'
   kind: decision
   episode: 2
-  verdict_hint: 'recast until they read grown / accept them as they are / stage around it (crop, angle,
-    coverage -- REAL option: b08''s guard scored adult 12 of 12 and b09''s close-up 5 of 12, so the
-    adolescent read is not universal). And separately: green man yes / no'
+  verdict_hint: 'ONE WORD, and the chain is already written so nothing comes back to you twice. "pass"
+    (accept them as they are -> beat 09''s clip goes into the cut immediately; every step is pre-written
+    and runnable in pipeline/decisions-pending/ep2-guards-0818/swap-b09-into-cut.sh, taking the cut to 20
+    footage / 1 slate) / "recast" (keep drawing until they read grown; beat 09 stays a slate) / "stage"
+    (crop, angle and coverage carry the age -- the option beat 09''s own close-up is the evidence for, and
+    it fires the same swap). And separately: green man yes / no'
   note_for_lanes: 'Seven guard beats were cast-corrected and scored on 08-17, N of 12 per beat, in review/ep2-picks/cast-0817-scores.yaml.
     The adjective route is already closed by his 2026-08-12 ruling - body-type and tone words stay out
     of the prompt and the register is staged - so "just say adult" is not available and this needs him.
@@ -1890,16 +1901,31 @@
     had the brightest face in the episode and only the darkest field), and the
     instrument that was supposed to score the shade was RETRACTED because it passes on
     the clip it was written to reject. Raising the plant is refused by canon, which is
-    exactly what this asks you to override or not.'
+    exactly what this asks you to override or not. UPDATED 2026-08-20 - OPTION B NOW HAS
+    PIXELS AND THEY ARGUE AGAINST IT. The taller plant was drawn and put through the same
+    0.30 pass that made the canon-height one belong, one variable, $0. IT COMES BACK A
+    TULIP: two leaves overlapping into one heart-shaped mass on a long bare wire, and at
+    1:1 the render is nearly indistinguishable from the flat drawing, which by this
+    house''s own rule means the pass is a paste. THE SAMPLER IS EXONERATED IN ADVANCE:
+    the pass moved MORE pixels here than on the version that worked (8.62 mean levels
+    inside the mask against 6.23, over 7.97% of frame against 4.10%), so the shape is
+    wrong, not the recipe. THE FINDING IS BIGGER THAN THE BEAT: a half-metre plant
+    carrying EXACTLY TWO SEED LEAVES is a lollipop by construction - seed leaves sit near
+    the ground - so "draw it taller" does not override one of your rules, it collides
+    with a second one that is also yours, the two-leaf sapling. Height and leaf count are
+    the same ruling from two sides. Which makes the honest third option a plant with MORE
+    THAN TWO LEAVES, i.e. one that has grown: a story question about where in the season
+    beat 13 sits, not a shot question, and not mine to pre-empt.'
   url: /review/ep2-b13-shade-0820
   group: taste
   since: '2026-08-20'
   kind: decision
   episode: 2
-  verdict_hint: '"that''s the shade, ship it" (the clause is written off and the beat
-    closes as best-available) / "draw it taller in this one shot" (the plate lane gets a
-    one-shot exception to the 40 cm rule, logged in canon AS an exception so it cannot
-    drift) / name a third staging'
+  verdict_hint: 'ONE WORD; both chains are pre-written in pipeline/decisions-pending/ep2-b13-shade-0820/
+    so neither answer comes back to you twice. "A" (that''s the shade, ship it - the clause is written off,
+    the beat closes as best-available, and NOTHING is filed because the take is already in the cut) / "B"
+    (draw it taller in this one shot - a one-shot exception goes into canon AS an exception, then the
+    motion rung fires) / name a third staging - AND SECTION 5 OF THE CARD IS MY ARGUMENT THAT YOU SHOULD.'
   note_for_lanes: 'NOT BLOCKING. Beat 13 already ships in review/ep2-demo-0820 as
     best-available with its fault named, so nothing waits on this. NO NEW RENDER WAS
     MADE FOR THIS CARD and none should be: the two suspects with a mechanism were both
@@ -1943,3 +1969,40 @@
     a render. Wording is closed (three rungs, incl. the permutation negative); the done_when
     is a RELATION, the shape beat 03 established cannot be bought with words. Frames: farm-out/ep2-b16-mac-plate-0820/,
     review/ep2-demo-0816/sources/16-why-b16-anim-0814.mp4. Write-up: pipeline/work-ladder-0819.md.'
+- what: 'BEAT 04, THE FOOTNOTE - PICK AN ACTION. The beat as written cannot be filmed on this
+    engine, and it has now been measured refusing it TWICE FROM OPPOSITE SIDES. Its done_when
+    asks for "stillness with LIVE EYES ... this is the one beat where a near-motionless body is
+    correct and ONLY THE EYES CARRY IT". Rung 1 asked for darting eyes and said in as many words
+    that his head and shoulders stay still: the gaze moved, and it moved by swinging his whole
+    head 64.7 px. Rung 2 locked the head to 4.7 px and THE EYES STOPPED WITH IT, eye-band
+    interframe 0.356 -> 0.126. The law, in the lane''s own words: ON THIS ENGINE, HOLDING THE
+    HEAD HOLDS THE EYES - a coupling, not two unlucky draws. The take in the cut is older and
+    worse than either (the same iris position in the same sockets from f005 to f096). Wording is
+    closed and a tighter crop was measured as a lever and came back almost absent, so the beat
+    needs a DIFFERENT ACTION, which is yours. The card is three action lines written for $0, with
+    the failure shown on frames rather than described. All three move something big, because gross
+    body motion is what this engine does; all three are phrased as ongoing actions; and your VO
+    line does not change under any of them - this is a stage direction, not a rewrite.'
+  url: /review/ep2-b04-action-0820
+  group: taste
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  verdict_hint: 'ONE WORD. "A" THE PEEK (he leans head and shoulder out of cover and pulls straight
+    back, twice - turns rung 1''s defect into the beat, and is the only option with a rendered
+    demonstration that the engine will do it, since rung 1 is accidentally a rehearsal of it; MY
+    PICK, and the pick is yours) / "B" HIS OWN HAND OVER HIS OWN MOUTH (large unambiguous motion,
+    but it asks for the exact object beat 09''s clip destroyed this morning - a hand at a face,
+    full hand to gone in eight frames) / "C" THE SLOW SINK (cheapest to score - one scalar, his
+    crown row, over 121 frames - and the least funny, and the card says so) / or write a fourth.'
+  note_for_lanes: 'NOT BLOCKING. Beat 04 ships in review/ep2-demo-0820 as best-available with its
+    fault named, so nothing waits on this. NO RENDER WAS MADE FOR THIS CARD and none should be -
+    script writing is free and STEWARDSHIP 6 legal, rendering an unpicked action is not. NOTHING IS
+    PRE-STAGED IN pipeline/decisions-pending/ ON PURPOSE: the pick IS the spec, and pre-staging
+    three of them would be pre-staging three different episodes. Whichever line he picks gets
+    written into node.md and done-definitions.yaml as the beat''s new action and done_when, and a
+    rung is filed off it the same day. ONE REPAIR IS OWED WHATEVER HE ANSWERS AND NEEDS NOTHING
+    FROM HIM: beat 04''s shot prompt still says "a small round goblin", the killed child design,
+    with beat 04 named in the 08-19 to-be-changed list for ep2-goblin-design-adult. Evidence:
+    pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml, pipeline/jobs/ep2-b04-headlock-0820.yaml,
+    pipeline/work-ladder-0819.md.'
