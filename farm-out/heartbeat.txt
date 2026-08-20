@@ -3304,3 +3304,5 @@
 19:17:11Z DONE task=ep2-b04-peek-s5-0820-1787251457 rc=0 artifacts=2
 19:17:27Z STARTED task=ep2-jerry-face-f1-0820-1787252578 attempt=1 on box-runner
 19:17:58Z DONE task=ep2-jerry-face-f1-0820-1787252578 rc=0 artifacts=1
+19:18:06Z STARTED task=ep2-jerry-face-f2-0820-1787252581 attempt=1 on box-runner
+19:18:30Z DONE task=ep2-jerry-face-f2-0820-1787252581 rc=0 artifacts=1
