@@ -37,6 +37,14 @@
   th { color: var(--muted); font-weight: 600; }
   .fail { color: var(--fail); } .pass { color: var(--pass); } .warn { color: var(--warn); }
   code { background: #101113; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  video { width: 100%; max-width: 330px; height: auto; border-radius: 6px; display: block;
+          border: 1px solid var(--line); background: #000; }
+  .new { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid #8fc4e8;
+         border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
+  .new h2 { margin-top: 0; color: #8fc4e8; }
+  .stamp { display: inline-block; margin: 0 0 6px; padding: 3px 9px; border-radius: 3px;
+           background: #1f2a33; border: 1px solid #3f5b6b; color: #bfe0f2;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
 </style>
 </head>
 <body>
@@ -55,11 +63,17 @@
   On every one of these four beats the scoring lane wrote down the same thing without being asked to look
   for it: soft face, slight build, adolescent rather than adult. It is <em>one</em> question about the
   approved cast, not four separate faults.</p>
-  <p>Three ways out, and all three are yours:</p>
+  <p>Three ways out, and all three are yours. <strong>One word is a complete answer</strong> — the work each
+  one sets off is already written down and waiting, so nothing comes back to you for a second decision:</p>
   <ul>
-    <li><strong>Recast</strong> — keep drawing until they read grown, and treat anything younger as a miss.</li>
-    <li><strong>Accept them as they are</strong> — these are the men this model draws; the show has young guards.</li>
-    <li><strong>Stage around it</strong> — crop, angle and coverage carry the age instead of the faces.</li>
+    <li><strong>"pass"</strong> — they read grown enough; accept them as they are. <span class="muted">Fires
+    immediately: beat 09's clip goes into the cut. Every step is pre-written in
+    <code>pipeline/decisions-pending/ep2-guards-0818/</code> and needs no further call from you.</span></li>
+    <li><strong>"recast"</strong> — keep drawing until they read grown, and treat anything younger as a miss.
+    <span class="muted">Beat 09 stays a slate; a casting rung gets filed for the four beats.</span></li>
+    <li><strong>"stage"</strong> — crop, angle and coverage carry the age instead of the faces.
+    <span class="muted">This is the option beat 09's own close-up is evidence for: it scored 5 of 12 adult
+    where the wide shots scored 0 of 12.</span></li>
   </ul>
   <p class="muted"><strong>What is not on the menu: writing <code>adult</code> into the prompt.</strong>
   Your 2026-08-12 ruling — <em>"chase silly via pose and expression staging"</em> — closed the adjective route
@@ -130,6 +144,36 @@ per beat. A fourth row exists on the box and is a byte-for-byte copy of the firs
   </figcaption>
 </figure>
 
+<div class="new">
+  <p class="stamp">ADDED 2026-08-20 · THE EXACT PIXELS THAT WOULD ENTER THE CUT</p>
+  <h2>Beat 09 now has motion, and it is the frame this question should be asked on</h2>
+  <p>Everything above is stills. This is <strong>five seconds of beat 09</strong>, rendered on 08-20 and
+  passing every bar it was given — and unlike the sheets above, <em>this is the actual clip that would go
+  into the episode.</em> Beat 09 is one of the two remaining slates. It is held back by exactly one thing:
+  your answer to the question at the top of this page.</p>
+  <video controls playsinline preload="metadata" src="/review/ep2-guards-0818/b09-cropmotion.mp4"></video>
+  <p class="muted">121 frames, 5.0 s, 704&times;1280, LTX-2.3 distilled, seed 20260819. $0.</p>
+  <figure>
+    <img src="/review/ep2-guards-0818/b09-cropmotion-frames.png"
+         alt="Seven frames of beat 09 across the clip, showing the guard's face in close-up">
+    <figcaption>The same clip as seven frames, for a look without pressing play. His eyes open, close and
+    open again with the brows drawn; the camera is locked and there is one face in frame throughout.</figcaption>
+  </figure>
+  <p><strong>Why it belongs on this page and not on a new one.</strong> This is a <em>close-up</em> — his
+  head is 55&nbsp;% of the frame — so it is the largest, clearest look at a guard's face anywhere in
+  episode 2. If the adolescent read is going to be decided, it should be decided here rather than on a
+  wide shot where the face is 60 px tall. And it is the honest complication made visible: on the stills
+  above, beat 09's face scored adult <strong>5 of 12</strong> against 0 of 12 on beats 05, 06, 10 and 11.
+  This is what that 5 of 12 looks like moving.</p>
+  <p><strong>One fault in it, named rather than hidden, and it is not about age.</strong> His hand rests
+  at his cheek in frame 1 and <em>dissolves</em> over the next eight frames — full hand at f001, two
+  fingers by f006, gone by f008. You can see it between the first two frames of the strip. That is a
+  separate defect with its own next rung, and it does not bear on how old he looks.</p>
+  <p class="muted">No pick and no promotion is being claimed here: the clip's own spec pre-registered
+  <code>is_show_content: false</code>, on the ground that passing the bar you were given is not a licence
+  to enter a cut on a different bar. The different bar is this page.</p>
+</div>
+
 <div class="mine">
   <h2 style="margin-top:0">What this page is not asking</h2>
   <p><strong>It is not about hair.</strong> The defect that shut these beats — 14 of 17 prompts asking for
@@ -140,7 +184,8 @@ per beat. A fourth row exists on the box and is a byte-for-byte copy of the firs
   <p class="muted">Honest complication, because it argues for the third option: the read is <em>not</em>
   universal. On beat 08 the same guard was scored adult 12 of 12, and on beat 09's close-up the face read adult
   5 of 12. Whatever makes them look young is not baked into every frame the model draws — which is why "stage
-  around it" is a real option and not a consolation prize.</p>
+  around it" is a real option and not a consolation prize. <strong>Beat 09's close-up is now on this page as
+  a moving clip</strong> — see the blue block above.</p>
 </div>
 
 <h2>Where these came from</h2>
