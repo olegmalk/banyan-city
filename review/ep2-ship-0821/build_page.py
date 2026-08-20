@@ -51,13 +51,15 @@ CARDS = [
         title="Beat 16's brief asks for a leaf-as-subject macro that your “average leaves” "
               "ruling forbids — restage the beat, or licence this one shot?",
         answers=["restage", "licence", "a third staging"],
-        gates="beat 16 — the one slate in this cut",
+        gates="beat 16 — no longer a slate",
         changes_cut=False,
-        effect="Neither answer fills the slate by 12:00. <b>licence</b> reopens the shot but does "
-               "NOT un-reject the footage that exists — that clip failed on the leaf itself, which "
-               "is a different objection — so it still needs a render. The 08-20 attempt at a third "
-               "path produced stills only and fired FAIL-PASTE, which is why STATE.md now reads "
-               "restage as the stronger option."),
+        effect="<b>THE RESTAGE ROUTE HAS DELIVERED, so this question is now moot unless you prefer "
+               "the macro.</b> Beat 16 has footage as of 01:05 and it is in the cut: the canon "
+               "two-leaf sapling drawn large in the foreground with him behind it — the brief's "
+               "actual relation, obtained without needing an exception to your “average leaves” "
+               "ruling. <b>restage</b> ratifies what you are watching. <b>licence</b> still reopens "
+               "the macro, and still needs a render nobody has made. Answering changes no picture "
+               "before 12:00 either way — the picture already changed."),
     dict(
         url="/review/ep2-b04-action-0820", since="2026-08-20",
         title="Beat 04 as written cannot be filmed on this engine — pick the action that replaces it.",
@@ -226,8 +228,8 @@ def main():
 
 <header class="top">
   <h1>Sapling — episode 2, SHIP CANDIDATE</h1>
-  <p class="sub"><strong>This is the cut you ordered on 08-20.</strong> 1:56, twenty beats of
-  footage and one slate — the most footage and the fewest slates this episode has ever had.
+  <p class="sub"><strong>This is the cut you ordered on 08-20.</strong> 1:56, and as of 01:05 <strong>twenty-one beats of footage and no slate at all</strong> — the first cut
+  of this episode in which every beat has a picture.
   Best-available takes, every fault named, nothing hidden behind a passing score. No render, no
   voice synthesis, no GPU, no spend: <strong>$0</strong>. Every clip in it already existed when
   you gave the order.</p>
@@ -242,8 +244,8 @@ def main():
 <a href="{BASE}/sources/ship-manifest.yaml">sources/ship-manifest.yaml</a></p>
 
 <ul class="counts">
-  <li><b>20</b> footage beats</li>
-  <li><b>1</b> slate</li>
+  <li><b>21</b> footage beats</li>
+  <li><b>0</b> slates</li>
   <li><b>{n_fail}</b> beats carrying a named FAIL</li>
   <li><b>{n_pass}</b> clean passes</li>
   <li><b>$0</b> to assemble</li>
@@ -272,13 +274,43 @@ def main():
 </div>
 
 <div class="callout">
+  <h2>And a second ship-mode entry, made after this page was first written: BEAT 16</h2>
+  <p><strong>The last slate is gone.</strong> At 01:05 tonight beat 16 got the first footage it has
+  ever had, and I put it in the cut. This file said, four hours earlier, <em>“No render in flight
+  tonight can land a legal beat by 12:00.”</em> That was wrong, and I have left the sentence
+  standing in the manifest with the correction beside it.</p>
+  <p>Beat 16 is the beat whose brief asks for a leaf-as-subject macro that <strong>your own
+  “average leaves” ruling forbids</strong>. Rather than ask you to licence an exception, the
+  restage takes the brief's actual relation — <em>the plant is the subject and he is depth behind
+  it</em> — and builds that. The sapling is not prompted: it is <strong>drawn</strong>, because the
+  strongest wording available returns two leaves 0 times in 16. It is drawn large in the near
+  foreground of a plate that already had him seated, that plate's own weed erased first so the
+  frame holds exactly one plant, and finished with one 0.30 pass. Then one motion sample. Then
+  three frames off the head with ffmpeg. <strong>$0, four GPU jobs, no download.</strong></p>
+  <p>It scores <strong>seven of seven</strong> on the bar written before it rendered — including
+  the clause its own spec called unmeasured, since no clip in this tree had ever animated a drawn
+  plant as the <em>subject</em> before, and canon's two leaves survived all 121 frames.</p>
+  <p><strong>The fault it ships with, named rather than scored away: the goblin is the SUPERSEDED
+  ADULT design.</strong> You ruled on 08-20 that he must read as the B tile's creature; this plate
+  predates that. He is blurred depth behind the plant and the design barely reads at that size —
+  but it is the old one, and “barely reads” is a reason to tell you, not a reason not to.
+  Two smaller costs: your eye still goes to his face before the plant, because he is a face and the
+  plant is a shape; and 43&nbsp;% of the beat is a held final frame, because the voice outruns the
+  picture by 3.7&nbsp;s.</p>
+  <p><strong>Veto in one line: “beat 16: back to a slate.”</strong> Nothing else in the cut moves;
+  the voice already plays and always did.</p>
+</div>
+
+<div class="callout">
   <p><strong>What is worth watching for, in order.</strong> Beat 09 at 0:44 (above). Beat 01 at
   0:00 — a NEW cold open that landed inside the window tonight: it is not a render but a composite,
   the growing fig from one take joined to the held field of its crf-10 sibling, which is the first
   time this beat has had both. Its remaining fault is one band of grass that still moves. Beat 18
   at 1:28 — 5.9&nbsp;s of held frame, the longest freeze in the episode and an honest cost of
-  killing the palindrome. Beat 16 at 1:15 — the one slate, and its card now says what the beat is
-  instead of “footage pending”.</p>
+  killing the palindrome. Beat 16 at 1:15 — <strong>the last slate, filled tonight</strong>. It is the beat
+  whose brief asks for a shot your own canon forbids; the restage gives the brief’s relation — the
+  sapling is the subject, he is depth behind it — without the exception. Its goblin is the
+  SUPERSEDED adult design, blurred, and barely readable at that scale; that is named, not hidden.</p>
 </div>
 
 <div class="callout green">
@@ -338,6 +370,11 @@ without it.</p>
   and it is the only hard blocker in the list.</li>
   <li><strong>Watch the cut.</strong> Your watch-through is the publish gate you kept on 08-19;
   no leaf is written and nothing goes live until it happens.</li>
+  <li><strong>Beat 16: in or out.</strong> “beat 16: back to a slate” removes it. Same class as
+  beat 09 — a steward entry on a beat that was held only by an unanswered taste card — so silence
+  is not acceptance here either. Answering <a href="/review/ep2-b16-leaf-0820">/review/ep2-b16-leaf-0820</a>
+  with <b>restage</b> ratifies what you are watching; <b>licence</b> reopens the macro and needs a
+  render nobody has made.</li>
   <li><strong>Beat 09: in or out.</strong> “beat 09: back to a slate” removes it. Silence is
   <em>not</em> acceptance here — it is a steward override of a written declaration, so I would
   rather have the word. Answering <a href="/review/ep2-guards-0818">/review/ep2-guards-0818</a>

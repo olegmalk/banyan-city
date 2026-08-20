@@ -169,6 +169,16 @@ frames:
   clip_sha256: 3ee36f170386a815a9e3f98c687741099756cd2adaac02f667bd798b9720171c
   frame_sha256: 6e6cb60caed09f908143e3c08bfe3402009df29fd31b8f05f07b4094da670610
   frame_bytes: 15973
+- beat: 16
+  take: 16-why-b16-motion-trim-0821.mp4
+  frame: b16.jpg
+  width: 240
+  height: 436
+  at_seconds: 2.46
+  clip_duration_s: 4.92
+  clip_sha256: 99d46d963c980f95674ea7e5a56058514254a99b3794e4989ae3464d479f0411
+  frame_sha256: a6992590b67d06e4f673696347c9e4a7a881a0b35659fd7ba16b17b5dd3358ff
+  frame_bytes: 17008
 - beat: 17
   take: 17-goodbye-b17-navy-crf10-0819.mp4
   frame: b17.jpg

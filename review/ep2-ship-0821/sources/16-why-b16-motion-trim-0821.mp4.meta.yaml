@@ -1,0 +1,67 @@
+# Shot provenance (7.2) — from ep2-b16-motion-0820, TRIMMED for this cut.
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 16
+size: 704x1280
+seconds: 4.917
+frames: 118
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260821
+task: ep2-b16-motion-0820
+cost_usd: 0
+gpu_seconds_for_this_trim: 0
+mode: production
+offload: sequential
+sha256: 99d46d963c980f95674ea7e5a56058514254a99b3794e4989ae3464d479f0411
+source_clip: farm-out/ep2-b16-motion-0820/04-the-footnote-LTX-ep2-b16-motion-0820.mp4
+source_sha256: c9fa142a4dc093a8025bec063b321c98567dbf4a8395e55b95b26644c9e06e82
+# --- the trim, and why it is a trim and not a re-render.
+trim: |
+  THREE FRAMES OFF THE HEAD, with ffmpeg, on the rendered mp4:
+    ffmpeg -i <src> -vf "select='gte(n\,3)',setpts=N/FRAME_RATE/TB" ...
+  `--frames` is a RENDER parameter, not a trim -- it would have produced a
+  different clip, not this one shortened. 121 -> 118 frames, 5.042 -> 4.917 s.
+why_three_frames: |
+  The i2v re-reads the composited plant ONCE and then defends it. Leaf-pair
+  span, measured per frame: f001 533 px, f002 533, f003 533, f004 638, and
+  639 +/- 1 for every frame after. The pop is three frames wide. An earlier
+  20-frame sample of the same clip reported it as "533 -> 639 by f021" and
+  that was a coarse read of a fine event; the ladder entry was corrected.
+  Trimming 3 frames removes it. Trimming 21 would have cost 0.875 s of his
+  talking for nothing.
+the_slot_arithmetic: |
+  Beat 16's VO is 7.902 s, so the slot is voice-led and the clip undershoots it
+  either way -- the trim does not change the beat's length by a single frame.
+  render_t3.fit_duration PREDICTED 8.300 s (floor vdur+0.4 = 8.302, cap
+  vdur+2.0 = 9.902) for both the 121-frame and the 118-frame clip; THE
+  ASSEMBLER THEN MEASURED 8.62 s, and the measured number is the one that
+  counts. Short footage is not looped: render_t3 plays it once and holds the
+  last frame (tpad=stop_mode=clone). So the whole cost of the trim is 0.125 s
+  more held frame -- 3.578 s of freeze becomes 3.703 s, 42% of the slot to 43%.
+  Hold-fill covers it, which is what the trim was checked against before it
+  was made.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  BEAT 16'S FIRST FOOTAGE OF ANY KIND. Conditioned on
+  b16-sapcomp-s20260820.png (ep2-b16-sapcomp-r2-0820): the canon two-leaf
+  sapling DRAWN into ep2-b15-mac-plate-0819's pre-composite plate by
+  pipeline/beat16_sapling_composite.py -- the weed that plate carries erased
+  first -- and finished with one 0.30 inpaint pass.
+  Judged 7/7 on the bar pre-registered in ep2-b16-motion-0820 AFTER the trim:
+  T0 camera locked (top corners 0.77 / 0.81 vs f001); M1 the plant holds --
+  leaf span range 2 px across all 118 frames; M2 exactly two leaves at the last
+  frame; M3 he is visibly talking (face-band interframe 2.341); M4 still moving
+  in the last twenty (0.975 face / 0.508 whole frame); M5 one man, seated, no
+  melt; M6 the plant is still the subject.
+  FAULTS IT SHIPS WITH, named rather than scored away:
+   - THE GOBLIN IS THE SUPERSEDED ADULT-MAN DESIGN. The founder ruled on
+     2026-08-20 that he must read as the B tile's CREATURE. He is blurred
+     depth here and the design barely reads, but it is the old one.
+   - The eye still goes to his FACE before the plant, because he is a face and
+     the plant is a shape. The named lever is a tighter crop, not another pass.
+   - 41% of the beat is a held final frame, because the VO outruns the clip by
+     3.4 s. That is the same hold-fill every short beat in this cut uses.

@@ -13,7 +13,7 @@
 # below that is a steward pick says so, and carries its one-line veto.
 
 cut: review/ep2-ship-0821/ep2-ship-0821.mp4
-sha256: e4ecfce254bd506c77ef3daedd09ac2176527203edadca270b79cc1d93bcccc5
+sha256: 46749b284721c4589088504f05ea80c0ec703c5db97a4863a71c73160bdde893
 # RE-ASSEMBLED 2026-08-20 night after the beat 04 + beat 13 swap. The previous
 # bytes (5a68646d24b24bf72b25f1a75cc9a5747c66d3b3c4e3757d2803700978c1a27d) were
 # assembled at 20:05 from the OUTGOING refire takes; the manifest was swapped at
@@ -22,9 +22,9 @@ sha256: e4ecfce254bd506c77ef3daedd09ac2176527203edadca270b79cc1d93bcccc5
 duration_s: 116.33
 size: 720x1280
 fps: 24
-footage_beats: 20
-slate_beats: 1
-which_slates: [16]
+footage_beats: 21
+slate_beats: 0
+which_slates: []
 supersedes: review/ep2-demo-0820/ep2-demo-0820.mp4
 prior_manifest: review/ep2-demo-0820/sources/picks-0820.yaml
 readiness_ledger: review/ep2-picks/cut-readiness-0819.yaml
@@ -57,7 +57,8 @@ what_changed_from_ep2_demo_0820:
     the swap is a swap and not a filename-ordering coin flip.
   one_card: >-
     Beat 16's slate card now says what is actually true of beat 16 instead of
-    "[ footage pending ]". See `the_slate_card`.
+    "[ footage pending ]". See `the_slate_card_is_retired` — the mechanism stays
+    wired, this cut just has no slate left to use it on.
   counts: 19 footage / 2 slates  ->  20 footage / 1 slate.
   runtime: 116.33 s, unchanged. Beat 09's slot was already 3.92 s of voice over
     a card; it is now 3.92 s of picture under the same voice.
@@ -114,18 +115,24 @@ ship_mode_rules_applied:
     below with the fault quoted.
   - >-
     A TAKE WITHHELD ONLY ON AN UNANSWERED TASTE CARD ENTERS AS BEST-AVAILABLE,
-    marked veto-able on watch. Exactly one beat is in this class and it is
-    beat 09. See `beat_09_ship_mode_entry` — it is the one genuinely contested
-    decision in this cut and it is written out in full rather than buried in a
-    row.
+    marked veto-able on watch. TWO beats are in this class. Beat 09 — see
+    `beat_09_ship_mode_entry`, still the one genuinely contested decision in
+    this cut. And BEAT 16, entered 2026-08-21 at 01:05 on footage that did not
+    exist when this file was first written; its row carries the full argument
+    and its one-line veto.
   - >-
     A TAKE WITHHELD ON A MECHANISM FAILURE STAYS OUT. Beats 01, 04, 08, 13 and
     16 all had newer candidates land on 08-20 and every one of them was
     refused by its own verdict on a measured fault, not on a taste question.
-    Nothing was promoted to fill a slot.
+    Nothing was promoted to fill a slot. STILL TRUE, AND BEAT 16 IS NO LONGER
+    AN EXAMPLE: its 08-20 refusal stands (the big-leaf composite failed
+    FAIL-PASTE on measurement), and what entered on 08-21 is a DIFFERENT
+    artifact from a different route that passed its own bar 7/7.
   - >-
     A SLATE WITH NO LEGAL FOOTAGE SHIPS AS A DESIGNED CARD THAT SAYS WHAT THE
-    BEAT IS. Beat 16 only.
+    BEAT IS. THIS RULE NO LONGER FIRES ANYWHERE IN THIS CUT. It applied to beat
+    16 and to nothing else, and it stopped applying at 01:05 on 2026-08-21 when
+    the restage produced legal footage. Kept because it was right while it held.
 
 # ------------------------------------------------- the one contested entry --
 
@@ -197,22 +204,19 @@ beat_09_ship_mode_entry:
     pipeline/decisions-pending/ep2-guards-0818/swap-b09-into-cut.sh becomes a
     no-op for this cut because the swap it describes is already done here.
 
-the_slate_card:
-  beat: 16
-  wording: >-
-    "He asks the sapling why. His line plays; the picture does not. The only
-    leaf ever rendered for this beat is the one you ruled out."
-  why_not_the_default: >-
-    render_t3 printed "[ footage pending ]" on every slate and picks-0820.yaml
-    named that as a defect: beat 16 is not pending a render. Footage EXISTS
-    (16-why-b16-anim-0814.mp4) and is barred by the founder's own 2026-08-16
-    ruling — "both of them are wrong though and do not resemble the sapling" —
-    which filled 87 of 97 frames with a nine-to-eleven-lobed palmate leaf. The
-    card now says which of the three kinds of slate it is.
-  mechanism: sources/slates.yaml, loaded by render_t3.load_slate_notes. New
-    tonight, committed as f2a8e88f, default unchanged so no other cut moves.
-  the_beat_still_has_its_voice: 16-vo.mp3 plays over the card, unchanged. The
-    line ("the only thing here that won't file a report") lands.
+the_slate_card_is_retired:
+  what: >-
+    THERE IS NO SLATE IN THIS CUT. sources/slates.yaml and
+    render_t3.load_slate_notes stay in the tree and stay wired — they cost
+    nothing and the next cut with a slate will want them — but this cut has
+    nothing to load. The card that read "He asks the sapling why. His line
+    plays; the picture does not." is gone because the picture now exists.
+  the_prediction_this_falsifies: >-
+    `the_cutoff` said, in this file, "No render in flight tonight can land a
+    legal beat by 12:00." That was wrong. A render in flight tonight landed one
+    at 01:05, eleven hours inside the window. The sentence is corrected in
+    place rather than deleted, because a manifest that quietly drops its own
+    failed predictions is worth less than one that keeps them.
 
 # --------------------------------------------------------------- the beats --
 
@@ -602,34 +606,59 @@ beats:
 
   - beat: 16
     slug: WHY
-    take: null
-    why: slate
-    verdict: pipeline/jobs/ep2-b16-anim-0814.yaml verdict / verdict_the_founder_ruling_and_the_proof_this_is_the_rejected_leg
+    take: 16-why-b16-motion-trim-0821.mp4
+    sha256: 99d46d963c980f95674ea7e5a56058514254a99b3794e4989ae3464d479f0411
+    why: ship-mode entry, 2026-08-21 01:xx — THE LAST SLATE IS GONE
+    entered: >-
+      Steward pick, beat-16 restage lane, under ship rule 2 (a take withheld
+      only on an unanswered taste card enters as best-available, veto-able on
+      watch). VETO IN ONE LINE: "beat 16: back to a slate." Nothing else in the
+      cut moves and the voice already plays.
+    verdict: pipeline/jobs/ep2-b16-motion-0820.yaml bar / pipeline/work-ladder-0819.md
     verdict_quoted: >-
-      FAIL. "THIS FILE IS FOOTAGE THE FOUNDER RULED NOT SHIPPABLE, AND IT HAS
-      SHIPPED IN FOUR CUTS ASSEMBLED AFTER HE RULED." Three of three done_when
-      clauses are MET and the beat still fails, because from f010 to f096 a
-      nine-to-eleven-lobed palmate leaf fills the entire frame. The rejected
-      thing IS the picture, for 87 of 97 frames.
-    fault_shipping: NO PICTURE. The one slate in the episode.
-    why_it_is_still_a_slate_after_the_ship_order: >-
-      Because the rule is "best-available beats a slate", not "anything beats a
-      slate". The only footage this beat has ever had is footage the founder
-      RULED OUT — an answered ruling, not an unanswered card, so the ship-mode
-      exception that let beat 09 in does not reach it. The 08-20 attempt to
-      build a third path produced STILLS ONLY and failed:
-      farm-out/ep2-b16-leafcomp-0820 and ep2-b16-mac-plate-0820 contain no mp4
-      at all, and the verdict was "FAIL-PASTE, pre-registered and fired ... At
-      1:1 the composite and the output are nearly indistinguishable."
-    the_card_says_so: see `the_slate_card`.
-    open_card: /review/ep2-b16-leaf-0820 — restage / licence / third staging.
-      STATE.md's read after the FAIL-PASTE result is that restage is now the
-      stronger option.
-    how_to_reverse_it_in_one_line: >-
-      `cp review/ep2-demo-0819b/sources/16-why-b16-anim-0814.mp4*
-      review/ep2-ship-0821/sources/` and re-assemble. The clip was never
-      deleted — but it is the leaf he rejected, and putting it back is a
-      founder call, not a steward one.
+      7/7 AFTER THE TRIM. T0 camera locked (top corners 0.77 / 0.81 vs f001,
+      against beat 04's s5 pan at 49.4 / 52.2); M1 the plant holds — leaf-pair
+      span range 2 px across all 118 frames; M2 exactly two leaves at the last
+      frame, canon sapling-two-leaves surviving 121 frames of i2v for the first
+      time in this tree; M3 he is visibly talking (face-band interframe 2.341);
+      M4 still moving in the last twenty (0.975 face, 0.508 whole frame); M5 one
+      man, seated, no melt; M6 the plant is still the subject.
+    fault_shipping: >-
+      THE GOBLIN IS THE SUPERSEDED ADULT-MAN DESIGN. The founder ruled on
+      2026-08-20 that he must read as the B tile's CREATURE; this plate predates
+      that and carries the old one. He is blurred depth behind the plant and the
+      design BARELY READS at this scale — but it is the old design and this row
+      says so rather than letting it pass as depth. Two lesser faults: the eye
+      still goes to his face before the plant, because he is a face and the
+      plant is a shape (the named lever is a tighter crop, not another pass);
+      and 43% of the beat is a held final frame, because the VO outruns the clip
+      by 3.7 s — the same hold-fill every short beat in this cut uses.
+    what_it_closed: >-
+      BEAT 16'S FIRST FOOTAGE OF ANY KIND, and the episode's last slate. The
+      beat's brief asks for a leaf-as-subject macro that canon
+      sapling-cotyledon-shape forbids; the RESTAGE route delivers the brief's
+      actual relation — the plant is the subject, he is depth — without needing
+      the exception. Three wordings, a big-leaf composite and a four-plate text
+      field batch all failed this beat first.
+    how_it_was_made: >-
+      The canon two-leaf sapling DRAWN into ep2-b15-mac-plate-0819's
+      pre-composite plate by pipeline/beat16_sapling_composite.py (that plate's
+      own weed erased first, b19's flood matte + within-class fill), finished
+      with ONE 0.30 inpaint pass (ep2-b16-sapcomp-r2-0820), then one i2v sample
+      (ep2-b16-motion-0820), then THREE FRAMES trimmed off the head with ffmpeg.
+      Total spend for the beat: $0, four GPU jobs, no download.
+    the_trim: >-
+      3 frames, 121 -> 118, 5.042 -> 4.917 s. The i2v re-reads the composited
+      plant once and then defends it: leaf span 533 px at f001-f003, 638 at
+      f004, 639 ± 1 thereafter. The pop is three frames wide. `--frames` would
+      have been a different render, not this clip shortened, so it was cut with
+      ffmpeg on the rendered mp4. The slot is voice-led and unchanged by the
+      trim (VO 7.902 s, slot 8.62 s measured); the whole cost is 0.125 s more
+      held frame.
+    open_card: >-
+      /review/ep2-b16-leaf-0820 — restage / licence / third staging. THE
+      RESTAGE ROUTE HAS NOW DELIVERED, so the question is moot unless he
+      prefers the macro. The card stays open and `licence` is still his to take.
 
   - beat: 17
     slug: GOODBYE
@@ -848,7 +877,7 @@ ship_status:
   13: {word: FAIL NAMED,           class: fail, of: "no shade reaches his eyes; and this is the frame you called an adult, which is wrong"}
   14: {word: FAIL NAMED,           class: fail, of: M2 and M3}
   15: {word: PASS BUT S3,          class: warn, of: "3-frame freeze; face 160 px from the leaves. DESIGN: the second-best tile match in the cut"}
-  16: {word: SLATE,                class: fail, of: the only footage is the leaf you ruled out}
+  16: {word: SHIP-MODE ENTRY,      class: new,  of: "7/7 on its bar after a 3-frame trim; the goblin is the SUPERSEDED ADULT design, blurred"}
   17: {word: PASS,                 class: pass, of: two costs no clause covers; script line unread}
   18: {word: PASS,                 class: pass, of: 5.9 s held frame — the longest in the cut}
   19: {word: "8/8, ONE UNASKED",   class: warn, of: he does not notice}
@@ -967,4 +996,9 @@ the_cutoff:
     Every other open card either has no pre-staged alternative (beat 04's
     action, beat 16's staging) or its alternatives have already been rendered
     and refused on mechanism (beats 01, 08, 13). No render in flight tonight
-    can land a legal beat by 12:00.
+    can land a legal beat by 12:00. -- THAT LAST SENTENCE WAS WRONG AND IS LEFT
+    STANDING SO THE CORRECTION IS LEGIBLE. The beat-16 restage lane landed one
+    at 01:05, eleven hours inside the window: a composited plate
+    (ep2-b16-sapcomp-r2-0820) and one i2v sample (ep2-b16-motion-0820), trimmed
+    by 3 frames, entered under ship rule 2. Beat 16 was the last slate and this
+    cut is now 21 footage / 0 slates.

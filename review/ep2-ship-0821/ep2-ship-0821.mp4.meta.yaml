@@ -25,6 +25,7 @@ provisional_beats:
 - 13
 - 14
 - 15
+- 16
 - 19
 - 20
 beats: 21
@@ -44,13 +45,13 @@ footage_beats:
 - 13
 - 14
 - 15
+- 16
 - 17
 - 18
 - 19
 - 20
 - 21
-slate_beats:
-- 16
+slate_beats: []
 duration_s: 116.08
 size: 720x1280
 source_platforms: local-mac (CPU, no GPU)+local-gpu (NVIDIA GeForce RTX 5090 Laptop
@@ -210,6 +211,12 @@ ingredients:
   path: review/ep2-ship-0821/sources/15-vo.mp3
   sha256: 072123193efa6248a0c70500a898541c0923940256415ed23aa53e3489889c2e
   publishable: true
+- beat: 16
+  kind: clip
+  path: review/ep2-ship-0821/sources/16-why-b16-motion-trim-0821.mp4
+  sha256: 99d46d963c980f95674ea7e5a56058514254a99b3794e4989ae3464d479f0411
+  publishable: true
+  provisional: true
 - beat: 16
   kind: audio
   path: review/ep2-ship-0821/sources/16-vo.mp3
@@ -424,14 +431,14 @@ sources:
   cost_usd: 0.0
 - beat: 16
   slug: WHY — 1:15–1:22
-  clip: slate (no footage yet)
+  clip: 16-why-b16-motion-trim-0821.mp4
   audio: 16-vo.mp3
-  fill: slate
-  clip_s: 0.0
+  fill: hold
+  clip_s: 4.917
   slot_s: 8.6
   voice_engine: chatterbox-0.5B
-  platform: none
-  model: none
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
   cost_usd: 0.0
 - beat: 17
   slug: GOODBYE — 1:22–1:27
