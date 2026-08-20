@@ -5938,6 +5938,130 @@ REVS[(9, 3)] = {
 }
 
 
+# ==========================================================================
+# BEAT 16 -- WHY. THE FIRST PLATE DRAFT THIS BEAT HAS EVER HAD IN THIS FILE.
+# ==========================================================================
+# WHY IT IS BEING DRAWN AT ALL, since the founder rejected this beat by name.
+# On 2026-08-16 he was shown legs A and B and answered: "the difference between
+# leg b and a is just how this big leaf looks, both of them are wrong though and
+# do not resemble the sapling." `done-definitions.yaml` beats.'16' records that
+# verbatim as an R4 ruling, adds "DO NOT RE-RENDER BEAT 16 OFF EITHER LEG'S
+# WORDING -- the plant description itself is what failed", and files ONE open
+# question with it: "whether a canonical sapling description exists at all".
+#
+# THAT QUESTION WAS ANSWERED THE NEXT DAY, BY HIM, AND NOTHING HAS CASHED IT IN
+# ON THIS BEAT. canon.yaml `sapling-cotyledon-shape` carries his 2026-08-17
+# words -- "the sapling 2 leaves are average leaves" -- and names the compliant
+# phrasing outright: `wide oval cotyledon leaves with soft round tips, not
+# narrow, not pointed, not lance-shaped`, which is live on beats 12/15/19/20.
+# So this rung is NOT a re-render off either leg's wording. It is the first
+# beat-16 draw off the description he supplied to replace the one he rejected.
+#
+# WHAT THE OLD WORDING ACTUALLY SAID, because the diff is the finding.
+# `wave-drafts.yaml` beats.16.authored_b16_plate, still live and unedited:
+#     "One oversized green cotyledon leaf of a tiny sapling fills the frame,
+#      turning slightly in still air, A SMALL GOBLIN BOY sitting out of focus
+#      far behind in green summer grass..."
+# Two canon faults in one line, and neither is a wording opinion:
+#   (1) THE LEAF IS UNGUARDED. `cotyledon` is compliant VOCABULARY and asserts
+#       no SHAPE. Every clause that pins the shape on the beats that pass --
+#       `wide oval`, `soft round tips`, `not narrow, not pointed, not
+#       lance-shaped` -- is absent. This file's own vacancy law says an
+#       unasserted attribute is decided fresh by every frame, and what arrived
+#       was a five-to-seven lobed palmate fig leaf: the exact thing canon rules
+#       out. The prompt did not CONTRADICT canon, it FAILED TO ASSERT it, which
+#       is why no checker caught it -- and check_canon_drift.py reads
+#       wave-drafts.yaml and pipeline/jobs/ and does NOT read this file at all.
+#   (2) THE CAST IS THE KILLED DESIGN. `a small goblin boy` predates the whole
+#       adult correction. canon.yaml `ep2-goblin-design-adult` is FOUNDER-
+#       RATIFIED from 2026-08-19 ("well b definitely and the damn goblin") and
+#       the identity wording is `lean wiry adult goblin man, green skin, bald
+#       head, patchwork cloak`. Beat 16 appears in neither the B list nor the C
+#       list of that ruling because it has no plate to classify; its draft is
+#       older than both and worse than either.
+#
+# THE ONE SCORED VARIABLE IS THE LEAF. The cast correction rides along and is
+# NOT a second experiment: it is conformity to a ratified canon, and drawing
+# beat 16 with a goblin boy in it would be filing a known-illegal plate to keep
+# a variable count tidy. It is declared here so the next lane does not read a
+# leaf result as a cast result.
+#
+# WHAT IS CARRIED, NOT RE-TESTED. The COMPOSITION is the 0814 plate's and it
+# PASSED: `round_1_result` reads "WORKS. A large leaf fills the frame from f40
+# on with the goblin behind it, blurred and out of focus - the leaf is the
+# subject and he is depth, exactly as the plate was written. The failure
+# plate-drafts told me to watch for (the goblin pulling focus) did not happen."
+# Nothing about the framing moves. `extreme close-up`, leaf-first in the
+# positive, goblin behind and out of focus, field present -- all inherited.
+#
+# THE TENSION THIS RUNG WILL EITHER DISSOLVE OR PROVE, PRE-REGISTERED.
+# `sapling-cotyledon-shape` also rules out "any leaf drawn as a feature -- no
+# lance shapes, no exaggerated silhouette, NO LEAF WHOSE SHAPE IS THE SUBJECT
+# OF THE SHOT". Beat 16's own done_when makes the leaf the subject of the shot.
+# Read narrowly -- the ruling is an entry about SHAPE and bans the exotic leaf,
+# not the close-up -- an ordinary average leaf filling the frame satisfies both,
+# and that is the reading this rung takes. If the picture comes back an
+# unremarkable leaf and STILL reads wrong to him, then the collision is real,
+# the beat needs a restage (wider, both leaves, the plant as subject) and that
+# restage is R4. NO CARD IS FILED FOR IT NOW, on purpose: it would be a question
+# with no pixels, and there are already four open inbox entries, three of them
+# taste. This rung is how the question gets pixels.
+#
+# ONE SAMPLE, Apple MPS, $0, nothing on the box. Positive measures 73/77 and the
+# negative 68/77 on animagine's own tokenizer (pipeline/clip_token_count.py),
+# so neither tail is dropped.
+DRAFTS[16] = {
+    "slug": "why",
+    "prompt": (
+        "one huge wide oval cotyledon leaf with a soft round tip fills the "
+        "frame, extreme close-up, a lean wiry adult goblin man, green skin, "
+        "bald head, patchwork cloak, sitting far behind it in a sunny grassy "
+        "field, small and out of focus, shallow depth of field, cinematic "
+        "lighting, masterpiece, best quality, very aesthetic"
+    ),
+    # THE SHAPE BANS ARE BELT AND BRACES AND ARE NOT THE MECHANISM. This repo
+    # has measured the positive-placement law seven times and beat 09 measured
+    # its converse eight: `brown hair` sat in beat 09's negative at all eight
+    # renders and brown hair arrived at all eight. So the leaf shape is bought
+    # by `wide oval ... soft round tip` in the POSITIVE; the terms below only
+    # stop the checkpoint reaching for the mature-tree foliage it clearly has.
+    # WRITTEN AS `lobed leaf`, NOT `deeply lobed`, DELIBERATELY: canon.yaml's
+    # forbid pattern for this subject is the exact positive phrasing `deeply
+    # lobed`, and the checker reads positive and negative as ONE string, so a
+    # ban spelled the same way as the forbid reports itself as the violation.
+    # canon.yaml's own note on the forbid patterns says this in full.
+    "negative": (
+        "text, 2boys, girl, baby, child, chibi, elf, hair, wig, lobed leaf, "
+        "five-fingered, palmate, maple leaf, serrated edge, three leaves, "
+        "potted plant, flower pot, large tree, trunk, forest, indoors, night, "
+        "dark, photorealism, 3d render"
+    ),
+    "seed": 20260820,
+    "done_when": (
+        "ONE LEAF IS THE SUBJECT and it is an AVERAGE LEAF -- a plain wide "
+        "oval blade with a soft round tip, filling the frame, no lobes, no "
+        "fingers, no palmate fig leaf, nothing exotic in its silhouette. "
+        "Behind it, ONE LEAN ADULT GOBLIN in a patchwork cloak, small, "
+        "clearly out of focus, not pulling focus and not a child. Field "
+        "present. Scored against beats.'16'.done_when (\"close on one leaf "
+        "with the scavenger blurred behind it; the leaf is the subject and he "
+        "is depth\") and canon.yaml sapling-cotyledon-shape."
+    ),
+    "why": (
+        "Beat 16 is one of the two remaining slates in review/ep2-demo-0820 "
+        "and it has had exactly ONE plate round, in 0814, whose leaf the "
+        "founder rejected on 2026-08-16 as not resembling the sapling. The "
+        "description he rejected it against did not exist yet; he supplied it "
+        "on 2026-08-17 (\"the sapling 2 leaves are average leaves\", now "
+        "canon.yaml sapling-cotyledon-shape) and no beat-16 job has been "
+        "filed since -- no ep2-b16 spec dated 0817-0820 exists anywhere in "
+        "the tree. This is that description's first outing on this beat, with "
+        "the killed child-goblin cast corrected to the 2026-08-19 ratified "
+        "adult in the same draw."
+    ),
+}
+
+
 def measure(pipe, text: str) -> tuple[int, bool]:
     tok = pipe.tokenizer
     ids = tok(text, truncation=False)["input_ids"]
