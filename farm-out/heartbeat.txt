@@ -3252,3 +3252,5 @@
 18:14:26Z box-runner idle ready=0 failed=62
 18:17:21Z STARTED task=ep2-jerry-tileset-p01-0820-1787249831 attempt=1 on box-runner
 18:17:39Z DONE task=ep2-jerry-tileset-p01-0820-1787249831 rc=0 artifacts=1
+18:17:47Z STARTED task=ep2-jerry-tileset-p02-0820-1787249834 attempt=1 on box-runner
+18:18:06Z DONE task=ep2-jerry-tileset-p02-0820-1787249834 rc=0 artifacts=1
