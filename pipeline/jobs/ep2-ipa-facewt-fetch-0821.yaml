@@ -1,0 +1,243 @@
+# FETCH THE **FACE** IP-ADAPTER WEIGHT. NO RENDER, NO GPU.
+#
+# ============================================================================
+# WHY THIS IS FILED NOW
+# ============================================================================
+# The goblin face is one defect from done and the defect is not a value on a
+# dial. Seven square-canvas points on the reference-framing axis (k4a..k4d,
+# k5a, k5b, plus k3's amputated portrait) established a shape with NO WINDOW:
+#
+#   the EYE is best at 25% head-to-frame  -- k5a, 1.26x the tile's box,
+#     aspect 0.53 against the tile's 0.52, area 0.0171 (the first rung in the
+#     entire ladder to pass the 0.030 clause)
+#   the MOUTH is only drawn from 30% up   -- ink 447/471/473 across
+#     30/45/60/75%, collapsing to 210 at 25% and 312 at 20%, i.e. ABSENT
+#
+# One dial, two optima. k5a is the best face this tree has produced and it has
+# no mouth; k4a keeps the mouth and its eye is 1.41x, which is what the frame
+# draws with NO adapter at all. An eighth point on that dial is not the answer.
+#
+# `ip-adapter-plus-face_sdxl_vit-h` is trained for exactly the regime where the
+# presences drop out: a face that must survive a small share of the reference.
+# It is the one concrete unblocking action available here and it PRESUMES
+# NOTHING about the outcome -- it is a download and a look.
+#
+# ============================================================================
+# WHY THIS IS A SEPARATE JOB FROM THE SAMPLES
+# ============================================================================
+# Same reason ep2-b08-twins-fetch-0819 was: HF_HUB_OFFLINE has to be CLEARED to
+# fetch, the env block is per-JOB and not per-step, and the only honest way to
+# scope that clearance to one step is for the job to BE that step. Nothing here
+# loads a model, builds a pipeline or touches the GPU (needs_gpu: false), so it
+# must not hold the card from a lane that can use it. The card is idle with an
+# empty backlog as this is filed, so under the no-artificial-delay rule it
+# starts now.
+#
+# ============================================================================
+# THE TRAP THIS JOB EXISTS TO CLOSE, AND IT IS NOT THE DOWNLOAD
+# ============================================================================
+# **THE TWO ADAPTERS ARE THE SAME NUMBER OF BYTES.** 847,517,512 exactly, for
+# both `ip-adapter-plus_sdxl_vit-h.safetensors` (the incumbent, k1..k5) and
+# `ip-adapter-plus-face_sdxl_vit-h.safetensors` (this one). Size cannot tell
+# them apart. Only the sha256 can:
+#
+#   plus  (incumbent)  3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581
+#   face  (this fetch) 677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1
+#
+# That is mac_preflight's whole lesson stated on Windows: macbook1 rendered
+# SDXL as pure noise for days on a UNet that was the exact right length. A
+# byte-count assertion would PASS on the wrong adapter here, and the frame it
+# produced would look like a result.
+#
+# AND THE SECOND HAZARD, which is why this fetch names THREE patterns and not
+# one. `snapshot_download` materialises the snapshot directory for whatever
+# commit `main` resolves to TODAY. If h94/IP-Adapter has moved since the cache
+# was filled, a face-only pull would create a NEW snapshot dir containing only
+# the face weight -- and the incumbent recipe, resolving `main` offline, would
+# land in that same new dir and MISS. k4a is the standing fallback if the face
+# adapter does not pass; losing the ability to re-render it would be a
+# self-inflicted wound. So the pull names the face weight, the incumbent weight
+# and the ViT-H image encoder together, and the step asserts all three are
+# present in ONE resolved snapshot directory with their expected digests.
+# Unchanged files cost no network -- the blobs are content-addressed and
+# already in the cache.
+#
+# NO SPEND: public apache-2.0 weights over the box's own link, $0, no provider,
+# no key, no ledger row. NO GPU. NO RENDER, NO PICK, NO CANON FILENAME.
+
+id: ep2-ipa-facewt-fetch-0821
+task: ep2-ipa-facewt-fetch-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: false
+sample: false
+priority: 30
+max_attempts: 2
+owner: goblin reference-route lane, 2026-08-21
+
+consumer: >-
+  ep2-jerry-face-k6a..k6d-0821, the four-point face-adapter batch: k5a's frozen
+  recipe (832x1216, seed 20260823, h19 skeleton at scale 1.0, j2's prompt and
+  negative byte-identical, mask 315,130,515,350, --ip-scale 0.7) with
+  --ip-weight swapped to the face adapter and the reference head share walked
+  20/25/35/50% on the square canvas. Nothing else in this repo needs these
+  bytes, so this fetch has exactly one consumer and it is named.
+
+success: >-
+  The resolved h94/IP-Adapter snapshot directory on the box holds all three of
+  sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors (847,517,512 bytes,
+  sha256 677ad886...92c1), sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+  (847,517,512 bytes, sha256 3f5062b8...6581) and models/image_encoder/
+  (config.json + a weight); zero .incomplete files anywhere under the
+  models--h94--IP-Adapter cache; and a manifest recording the resolved commit
+  and every digest is in
+  C:\banyan-farm\courier-box\farm-out\ep2-ipa-facewt-fetch-0821. The step
+  asserts the byte counts AND the shas itself and exits nonzero on any, so a
+  truncated or mis-resolved download fails HERE and not inside a render.
+
+why: >-
+  It is the only physical dependency of the named next instrument, the card is
+  idle with an empty backlog, the licence is apache-2.0 on the same repo whose
+  incumbent weight this route has been rendering with since k1, the size is
+  read off the HF blob API rather than off prose, and it is $0. And it is
+  licensed by a measurement rather than by curiosity: the mouth ink series
+  447/471/473/210/312 is a presence failing at low reference coverage, which is
+  the one thing this weight variant claims to improve.
+
+est_minutes: 8   # 808 MiB over the box's link (the 2,386 MiB twins weight took
+                 # 3m25s), plus sha256 passes over ~1.7 GB of local blobs
+
+needs: [network]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  # CLEARED, AND THIS ONE-STEP JOB IS WHAT SCOPES IT. Every rendering spec on
+  # this route keeps it at "1"; see the header.
+  HF_HUB_OFFLINE: "0"
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+
+steps:
+  - name: fetch-verify-publish
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |-
+        # Fetches, ASSERTS THE DIGESTS (not the byte counts -- the two adapters
+        # are the same length), and writes its manifest straight into
+        # courier-box\farm-out, because the courier pushes from there and
+        # nowhere else.
+        import glob, hashlib, json, os, sys
+        from huggingface_hub import snapshot_download
+        REPO = "h94/IP-Adapter"
+        FACE = "sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors"
+        PLUS = "sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors"
+        SIZE = 847517512
+        WANT = {FACE: "677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1",
+                PLUS: "3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581"}
+
+        def sha(p):
+            h = hashlib.sha256()
+            with open(p, "rb") as fh:
+                for c in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(c)
+            return h.hexdigest()
+
+        # THREE patterns, not one. See the header: a face-only pull can strand
+        # the incumbent recipe in a stale snapshot dir. Unchanged files are
+        # already in the content-addressed blob store and cost no network.
+        d = snapshot_download(REPO, allow_patterns=[FACE, PLUS,
+                                                    "models/image_encoder/*"])
+        print("snapshot:", d, flush=True)
+        bad, man = [], []
+        for rel, want in sorted(WANT.items()):
+            p = os.path.join(d, rel.replace("/", os.sep))
+            if not os.path.exists(p):
+                bad.append("MISSING " + rel)
+                continue
+            n = os.path.getsize(p)
+            got = sha(p)
+            print("  %-52s %13d bytes  %s" % (os.path.basename(rel), n, got),
+                  flush=True)
+            if n != SIZE:
+                bad.append("SIZE %s: %d != %d" % (rel, n, SIZE))
+            if got != want:
+                bad.append("SHA %s: %s != %s" % (rel, got, want))
+            man.append("%s  %s  %d" % (got, rel, n))
+
+        # THE ENCODER, because ip_adapter_image_encoder_folder points at it and
+        # a missing encoder is a hard offline miss inside the render.
+        enc = os.path.join(d, "models", "image_encoder")
+        encf = sorted(os.path.basename(f) for f in glob.glob(enc + os.sep + "*"))
+        print("  image_encoder:", encf, flush=True)
+        if "config.json" not in encf:
+            bad.append("image_encoder/config.json missing")
+        if not any(f.endswith((".safetensors", ".bin")) for f in encf):
+            bad.append("image_encoder has no weight file")
+        else:
+            cfgp = os.path.join(enc, "config.json")
+            with open(cfgp, "r", encoding="utf-8") as fh:
+                c = json.load(fh)
+            print("  encoder image_size:", c.get("image_size"),
+                  "patch_size:", c.get("patch_size"),
+                  "hidden_size:", c.get("hidden_size"), flush=True)
+            if c.get("image_size") != 224:
+                bad.append("encoder image_size is %r, not 224" % c.get("image_size"))
+
+        inc = glob.glob(os.path.join(
+            os.environ.get("HF_HOME", ""), "hub", "models--h94--IP-Adapter",
+            "**", "*.incomplete"), recursive=True)
+        print("  .incomplete files:", len(inc), flush=True)
+        if inc:
+            bad.append("%d .incomplete file(s) under the cache" % len(inc))
+
+        dst = r"C:\banyan-farm\courier-box\farm-out\ep2-ipa-facewt-fetch-0821"
+        os.makedirs(dst, exist_ok=True)
+        with open(os.path.join(dst, "ep2-ipa-facewt-fetch-0821.manifest.txt"),
+                  "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("repo: %s\nsnapshot: %s\nencoder: %s\n\n%s\n"
+                     % (REPO, d, ",".join(encf), "\n".join(sorted(man))))
+        print("published manifest ->", dst, flush=True)
+
+        for b in bad:
+            print("!! " + b, file=sys.stderr)
+        raise SystemExit(1 if bad else 0)
+
+artifacts: []
+
+bar: >-
+  Mechanical; nothing to score by eye. FACE present at 847,517,512 bytes with
+  sha256 677ad886...92c1, PLUS still present at the same length with sha256
+  3f5062b8...6581 IN THE SAME RESOLVED SNAPSHOT DIRECTORY, the ViT-H encoder
+  folder complete with image_size 224, and zero .incomplete files -> PASS, and
+  the k6 batch may be filed against these exact digests. Any failure -> the k6
+  batch is NOT filed; re-run once (max_attempts 2), and a second failure means
+  this variant cannot be reached from the box, which retires the face-adapter
+  instrument rather than being retried a third time. A PASS is NOT a result
+  about the mouth: this job only proves the weight is present, whole and
+  distinguishable from the incumbent.
+
+not_done_on_purpose: >-
+  No render. No pipeline load. No GPU. No dataset. No edit to the driver's
+  IP_WEIGHT constant -- the k6 batch passes --ip-weight explicitly so k1..k5
+  remain reproducible byte-for-byte. No .bin variant (the 1,013,454,761-byte
+  pickle; the safetensors is the same weights and is not a pickle). No deletion
+  of the incumbent adapter -- k4a is the standing fallback and the A/B needs
+  both. No FaceID variant: FaceID needs insightface, a second model download
+  and a face-detection dependency chain, and it is a different instrument that
+  has not been ruled by any measurement here.
+
+licence_note: >-
+  apache-2.0, same repo and same terms as the incumbent adapter this route has
+  rendered with since k1 -- h94/IP-Adapter, front matter `license: apache-2.0`.
+  No attribution condition, D15 SAFE. No annotator, no preprocessor and no
+  insightface model is fetched, so lllyasviel/Annotators stays untouched on
+  this route. The digest, the size and this licence line are recorded in the
+  driver's IP_WEIGHTS allowlist, keyed by weight filename, exactly as the
+  `twins` net's are recorded in CONTROLNETS -- so an unlisted adapter is
+  refused before any weight loads rather than silently recorded as the
+  incumbent's.
