@@ -1,9 +1,51 @@
 # One-time trainer install on the rtx5090 box
 
-**Status: NOT DONE. This is why `pipeline/lora/train-jerry-0820.yaml` is not
-filed.** The brief's rule was: file the job with `--backlog` only if the box
-already has a trainer; otherwise commit the spec plus this file and stop. The
-box has no trainer, so this stops here.
+**Status: DONE, 2026-08-20.** All eight steps ran on the box and the step-8 gate
+passed. Resolved versions:
+
+| | |
+|---|---|
+| sd-scripts | tag **v0.11.1**, commit `6721028c79ee85a78b3a06dfd8954dae310a1cce`, at `C:\banyan-farm\sd-scripts` |
+| Trainer venv | `C:\banyan-farm\venv-lora`, Python 3.12.10, torch **2.11.0+cu128**, `torch.cuda.get_device_capability()` → `(12, 0)` |
+| xformers | **absent** — `pip show xformers` not found in either venv |
+| Optimizer | **bitsandbytes 0.50.1**, `AdamW8bit` smoke-tested on the card (allocate → backward → `step()`) and it works. The spec's `--optimizer_type AdamW8bit` stands; §5's AdamW fallback is NOT needed |
+| accelerate | `C:\Users\artvn\.cache\huggingface\accelerate\default_config.yaml` written non-interactively; loads as `DistributedType.NO / bf16 / 1 process` |
+| Step-8 gate | `sdxl_train_network.py --help` → **800 lines**, and all 17 flags the job spec passes are present in it |
+
+**The render venv was re-verified untouched afterwards**, which is the whole
+point of the separation: `C:\banyan-farm\venv` still reports torch
+`2.11.0+cu128`, capability `(12, 0)`, `diffusers 0.29.2`, `transformers 4.44.2`,
+no xformers, and a bf16 CUDA matmul executes. Nothing was installed into it.
+
+### Four things execution corrected in the steps below
+
+1. **v0.11.1's `requirements.txt` does not list xformers at all.** The trap's
+   direct vector is gone in this tag, and the install completed with torch
+   unchanged. The three rules below still stand unedited — a future tag bump can
+   reintroduce it, and the cost of keeping them is zero.
+2. **Step 4 must run with `cwd = C:\banyan-farm\sd-scripts`.** The last line of
+   `requirements.txt` is `-e .`, which resolves against the working directory;
+   run from anywhere else it installs the wrong thing or fails. The command as
+   written below does not `cd`.
+3. **Step 4 also folds in step 5.** `bitsandbytes` is already a line in
+   v0.11.1's `requirements.txt`, so it arrives with the batch; step 5 is a
+   verification, not an install.
+4. **Step 8's `--help` needs `PYTHONUTF8=1`.** On a stock cmd console it dies
+   with `UnicodeEncodeError: 'charmap' codec can't encode…` — the help text
+   contains Japanese and the console is cp1252. The parser itself is fine; only
+   printing fails. The job spec already sets `PYTHONUTF8` in its `env:`, so the
+   run is unaffected. Note the cmd quoting: `set "PYTHONUTF8=1"`, because
+   `set PYTHONUTF8=1 && …` puts the trailing space in the value and Python then
+   refuses to start with `invalid PYTHONUTF8 environment variable value`.
+
+Also observed, not a problem: `triton not found; flop counting will not work`
+warns on every invocation. Triton has no Windows wheel and nothing in this
+config needs it.
+
+A constraints file (`C:\banyan-farm\lora-constraints.txt`, pinning
+`torch==2.11.0+cu128` plus the resolved torchvision) was passed to step 4 with
+`--extra-index-url …/cu128` so that a torch swap would **fail loudly** instead
+of silently. It was not exercised — nothing tried to move torch.
 
 Measured on the box over ssh, 2026-08-20, read-only:
 
@@ -67,6 +109,10 @@ git clone https://github.com/kohya-ss/sd-scripts C:\banyan-farm\sd-scripts
 Pin to a release tag rather than tracking main, so a job filed today still runs
 next month. Record the resolved commit in this file when you do it.
 
+Done 2026-08-20: `git checkout v0.11.1` (the newest tag), resolving to
+`6721028c79ee85a78b3a06dfd8954dae310a1cce`. The clone is a detached HEAD at that
+tag, not `main`.
+
 ### 2. Create the isolated venv
 
 ```
@@ -99,9 +145,13 @@ Expect `2.x.x+cu128 (12, 0)`.
 ### 4. sd-scripts' own requirements, minus xformers
 
 ```
-C:\banyan-farm\venv-lora\Scripts\python.exe -m pip install -r C:\banyan-farm\sd-scripts\requirements.txt
+cd /d C:\banyan-farm\sd-scripts
+C:\banyan-farm\venv-lora\Scripts\python.exe -m pip install -c C:\banyan-farm\lora-constraints.txt --extra-index-url https://download.pytorch.org/whl/cu128 -r requirements.txt
 C:\banyan-farm\venv-lora\Scripts\python.exe -m pip show torch
 ```
+
+(The `cd` is required — `requirements.txt` ends in `-e .`. The constraints file
+and extra index are the fail-loud guard described at the top of this file.)
 
 **Gate again: still `+cu128`.** If `requirements.txt` pins xformers, edit it out
 before running this and note the edit here. If torch got swapped anyway,
@@ -149,11 +199,14 @@ C:\banyan-farm\venv-lora\Scripts\python.exe -m pip install onnxruntime-gpu huggi
 ### 8. Prove it before filing any job
 
 ```
+set "PYTHONUTF8=1"
 C:\banyan-farm\venv-lora\Scripts\python.exe C:\banyan-farm\sd-scripts\sdxl_train_network.py --help
 C:\banyan-farm\venv-lora\Scripts\python.exe -m pip show torch
 ```
 
-Help text prints, torch is still `+cu128` → the install is done. **Then** file
+Help text prints, torch is still `+cu128` → the install is done. Without the
+`PYTHONUTF8` line this raises `UnicodeEncodeError` on a cp1252 console even
+though the install is perfectly good. **Then** file
 `pipeline/lora/train-jerry-0820.yaml` with `box_enqueue.py --backlog`, and
 update the Status line at the top of this file with the date, the sd-scripts
 commit, and the resolved torch version.
@@ -167,6 +220,27 @@ The training job reads the frames from the box's repo checkout at
 `61dfbca4` (9 of them were untracked on the Mac and were committed with the
 manifest for exactly this reason), so a `git pull` in that checkout is the whole
 dataset transfer. Nothing needs scp.
+
+**Measured 2026-08-20, and it is slower than that sentence suggests.** Two
+things the next lane should know:
+
+- **Nothing on the box ever pulls this checkout.** `box_runner.py` deliberately
+  never touches its branch or working tree, and `box_enqueue.py` /
+  `box_autofill.py` have no guard on its HEAD. The only staleness detector is
+  `box_preflight.py --max-age-days` (default 2.0), and it only fires when the
+  preflight job happens to be queued. Somebody has to type the pull. Assume the
+  checkout is stale until you have looked.
+- **The pull itself is a long transfer** — this is a 5.5 GiB repo with media, and
+  the box was 3 days behind, so it ran for tens of minutes. Start it before you
+  need it, not when the job is already queued.
+
+Credentials are fine and need no login: both the checkout and the `courier-box`
+worktree carry
+`core.sshCommand = ssh -i C:/banyan-farm/farm_deploy_key -o StrictHostKeyChecking=no`,
+and that deploy key is passphrase-less. **Do not set `GIT_SSH_COMMAND` when you
+run the pull** — the environment variable overrides `core.sshCommand`, drops the
+deploy key, and the pull dies with `git@github.com: Permission denied
+(publickey)`. That failure looks exactly like broken credentials and is not.
 
 The captions live in `pipeline/lora/captions/jerry/` and are *not* beside their
 images — kohya wants `<image>.txt` next to `<image>`. The job spec's first step
