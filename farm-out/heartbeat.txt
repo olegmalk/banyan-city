@@ -3184,3 +3184,5 @@
 15:14:55Z box-runner idle ready=0 failed=45
 15:25:02Z box-runner idle ready=0 failed=45
 15:35:06Z box-runner idle ready=0 failed=45
+15:43:44Z STARTED task=ep2-b08-cnetfill-0820-1787240606 attempt=1 on box-runner
+15:44:10Z FAIL task=ep2-b08-cnetfill-0820-1787240606 rc=1 step=s20260822
