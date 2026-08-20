@@ -95,12 +95,13 @@ def _components(mask):
     return lab, n
 
 
-def measure(path: str, box=None, interior: bool = False) -> dict:
+def measure(path: str, box=None, interior: bool = False,
+            white_min: int = WHITE_MIN) -> dict:
     img = np.array(Image.open(path).convert("RGB"))
     x0, x1, y0, y1 = box or head_box(img)
     sub = img[y0:y1 + 1, x0:x1 + 1].astype(int)
     lo, hi = sub.min(2), sub.max(2)
-    white = (lo > WHITE_MIN) & ((hi - lo) < WHITE_SPREAD)
+    white = (lo > white_min) & ((hi - lo) < WHITE_SPREAD)
 
     comp = _components(white)
     if interior and comp:
@@ -121,15 +122,19 @@ def measure(path: str, box=None, interior: bool = False) -> dict:
             eyes.append({"px": size, "w": w, "h": h, "aspect": h / w})
     return {"path": path, "box": (x0, x1, y0, y1), "head_w": head_w,
             "head_h": head_h, "white": int(white.sum()),
+            "white_min": int(white_min),
             "frac": float(white.sum()) / (head_w * head_h), "eyes": eyes}
 
 
 def fmt(m: dict) -> str:
     eyes = "  ".join("%dx%d a=%.2f" % (e["w"], e["h"], e["aspect"])
                      for e in m["eyes"]) or "-"
-    return ("%-46s head=%dx%d  white=%5d  area=%.4f  eyes: %s"
+    flag = ("" if m.get("white_min", WHITE_MIN) == WHITE_MIN
+            else "  !! NON-DEFAULT white_min=%d, NOT the calibrated threshold "
+                 "-- disclosure only, never a score" % m["white_min"])
+    return ("%-46s head=%dx%d  white=%5d  area=%.4f  eyes: %s%s"
             % (os.path.basename(m["path"]), m["head_w"], m["head_h"],
-               m["white"], m["frac"], eyes))
+               m["white"], m["frac"], eyes, flag))
 
 
 # (frame, published area, tolerance). The h-series is where the j and k rungs
@@ -176,17 +181,31 @@ def main(argv=None) -> int:
     ap.add_argument("--interior", action="store_true",
                     help="drop white touching the box edge (needed on the "
                          "tile jpg, whose sky is cream)")
+    ap.add_argument("--white-min", type=int, default=WHITE_MIN,
+                    help="DISCLOSURE KNOB, NOT A SCORING ONE. The default %d "
+                         "is calibrated against five published rungs and a "
+                         "score is only ever quoted at it. k3's eyes render to "
+                         "a dimmer cream that falls under it and its area read "
+                         "0.0040 on a face with two plain eyes; this flag "
+                         "exists so that disclosure is reproducible instead of "
+                         "a hand-edit of the constant, and every line it "
+                         "produces is stamped NON-DEFAULT." % WHITE_MIN)
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--frames-dir", default=os.path.join(REPO, "farm-out"),
                     help="where the baseline rung frames live")
     a = ap.parse_args(argv)
     if a.selftest:
+        if a.white_min != WHITE_MIN:
+            print("!! --selftest is the calibration and it only runs at the "
+                  "default white_min=%d" % WHITE_MIN, file=sys.stderr)
+            return 2
         return selftest(a.frames_dir)
     if not a.frames:
         ap.error("give at least one frame, or --selftest")
     box = tuple(int(v) for v in a.box.split(",")) if a.box else None
     for f in a.frames:
-        print(fmt(measure(f, box=box, interior=a.interior)))
+        print(fmt(measure(f, box=box, interior=a.interior,
+                          white_min=a.white_min)))
     return 0
 
 
