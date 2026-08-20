@@ -3059,3 +3059,5 @@
 00:30:54Z box-runner idle ready=0 failed=43
 00:36:06Z STARTED task=ep2-b03-covermid-0820-1787186012 attempt=1 on box-runner
 00:42:25Z DONE task=ep2-b03-covermid-0820-1787186012 rc=0 artifacts=2
+00:43:27Z STARTED task=ep2-b13-shademid-0820-1787186019 attempt=1 on box-runner
+00:49:39Z DONE task=ep2-b13-shademid-0820-1787186019 rc=0 artifacts=2
