@@ -86,7 +86,12 @@ node: 002b-first-citizen
 beat: 20
 runner: box
 needs_gpu: true
-priority: 49
+# 60, NOT the 49 this spec was written with. `box_runner.py` sorts ready/ by
+# priority ASCENDING (line 497, "lower runs first"), and when this was filed on
+# 2026-08-16 the queue another lane owns sat at 54-57 (ep2-b02-anchor,
+# ep2-b02-pose2, ep2-b03-st). At 49 this one-minute colour probe would have run
+# BEFORE all of them. It is not more urgent than their wave; it sorts behind it.
+priority: 60
 max_attempts: 1
 owner: the beat-20 colour lane, 2026-08-16
 script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
