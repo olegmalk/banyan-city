@@ -1187,3 +1187,41 @@ amended_0820c:
     so the ask costs nothing when it comes.'
   this_file_still_makes_no_taste_call: Unchanged. Nothing here is a verdict on a picture, and
     the founder has screened none of these clips.
+
+amended_0820d:
+  date: 2026-08-20, night
+  by: the beat-01 composite lane
+  what_moved: 'NOTHING IN THE CUT, again. Beat 01 keeps 01-cold-open-LTX-fignonly-s20260840.mp4.
+    This amendment exists because MY OWN what_would_change_this in amended_0820c is now FALSE, and
+    leaving it would be the same defect I opened amended_0820c to fix one commit earlier.'
+  the_claim_i_made_and_have_now_disproved: 'amended_0820c said an instrument rung -- excluding the
+    compositor''s blend zone from fig_track''s ring annulus -- would make f001 readable in a direction
+    no encoder could flip, and that if G1 then passed the composite would be proposed as a swap. IT WAS
+    BUILT AND IT DOES NOT. Separability at f001 goes 1.764 -> 1.747 on the PNG frames and 1.883 ->
+    1.651 at crf 0, against a 2.00 gate: sideways and slightly DOWN. The clause still flips at the same
+    point in the encode sweep, and across the full clip the exclusion COSTS ten live frames,
+    120/121 -> 110/121. Ring geometry is closed as a route.'
+  so_G1_is_still_VOID_and_the_swap_precondition_is_still_not_met: 'One failing clause of seven scorable
+    plus a VOID, against the in-cut take''s one failing clause of eight scored. Unchanged. The
+    exclusion is NOT adopted as this beat''s scoring configuration -- an instrument that makes the
+    answer worse and still leaves it encoder-dependent is not an improvement, and adopting it after
+    seeing what it does to a verdict is the move this lane keeps refusing.'
+  what_the_rung_did_buy: 'Two things worth the fire. THE ENCODER DEPENDENCE IS NOT SYSTEMIC -- the
+    full-clip sweep reads 120/121 at PNG, crf 0, crf 10 and crf 14 and 121/121 at crf 18 and crf 23,
+    with the dead list exactly [1] or [] in every row and max step and the f90% frame stable at
+    1.068-1.229 and f107/f108. ONE FRAME moves, so every other G1 verdict in this tree stands, and both
+    ingredient clips re-score digit for digit under the new build. AND A SECOND DEFECT WAS FOUND: the
+    40 px ring floor accepts a background model of 711 px hugging an excluded boundary. That constant
+    is in every published verdict here; it needs a number set from first principles and pre-registered,
+    not nudged now.'
+  what_would_change_this_now: 'A PICTURE rung, not an instrument rung, and its cost pre-registered
+    before it runs. Both ingredients clear the same gate at the same frame on their own pixels (grow
+    2.27, held 2.90) and only the composite sits on it -- the fig is film A, the background is film B,
+    and the gain match is multiplicative BY DESIGN so it leaves chromaticity untouched, which carries
+    any colour-balance offset between the two renders straight into the statistic the gate reads.
+    Matching the imported patch''s chromaticity as well as its luma is the candidate. It CAN reach G2
+    (hue 270-320, sat >= 0.60) where the luma match provably could not, so G2 must be named as its cost
+    in advance: a rung that buys G1 by spending G2 has bought nothing.'
+  still_not_licensed: Choosing an encode. The sweep makes crf 18 and 23 look free and they are not; it
+    is the same move as picking the instrument.
+  this_file_still_makes_no_taste_call: Unchanged.
