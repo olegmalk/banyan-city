@@ -1,0 +1,385 @@
+id: ep2-b09-r2s2-c3-0821
+task: ep2-b09-r2s2-c3-0821
+node: 002b-first-citizen
+beat: 9
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+owner: beat-09 crop-trade lane, 2026-08-21 morning
+consumer: 'BEAT 09''S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more:
+  the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of
+  a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is
+  an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip''s own measured numbers,
+  and a clip that does not beat it changes nothing. Cell c3 of five, seed 20260852, cheek arm.'
+success: 'One 704x1280 121-frame mp4 at seed 20260852 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE
+  HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093
+  and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent''s, last
+  live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed,
+  one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS AN ACCEPTED COST, not a fail
+  -- it is the price the ladder named this route at. THIS CELL IS ONE VARIABLE FROM ep2-b09-hand-h3-0820
+  (same seed, r1s3 crop).'
+why: 'The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of
+  the clip, and it paid the r2s2 route''s own price -- a shut eye -- while declining the route. The remaining
+  lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up''s high-frequency energy
+  against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes,
+  an idle card and a 12:00 cutoff. Cell c3, seed 20260852, cheek arm.'
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b09-r2s2-c3-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing
+    in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers
+    rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and
+    they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE
+    WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle,
+    his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking,
+    and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped
+    hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and
+    does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece,
+    best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-negative.txt: open mouth, talking, speaking, shouting, teeth,
+    tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different
+    man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver
+    hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down,
+    scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live
+    action, motion blur, text
+  C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-jobs-encode.json: '[{"beat": 9, "embeds": "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\b09-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\b09-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\b09-negative.txt"}]'
+  C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-jobs-render.json: '[{"beat": 9, "seed": 20260852, "embeds":
+    "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\b09-embeds.pt", "init": "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\b09-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b09-r2s2-c3-0821\\09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b09-r2s2-c3-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r2s2.png
+  - --sha256
+  - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
+  - --out
+  - C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b09-r2s2-c3-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b09-r2s2-c3-0821\bench-ep2-b09-r2s2-c3-0821.jsonl
+  - --bench-label
+  - ep2-b09-r2s2-c3-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-r2s2-c3-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b09-r2s2-c3-0821/09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b09-r2s2-c3-0821/b09-init-704x1280.png\")\n     \
+    \        + glob.glob(\"C:/banyan-farm/ep2-b09-r2s2-c3-0821/bench-ep2-b09-r2s2-c3-0821.jsonl\"))\n\
+    lines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b09-r2s2-c3-0821.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\n\
+    raise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b09-r2s2-c3-0821\09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4
+- C:\banyan-farm\ep2-b09-r2s2-c3-0821\b09-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through
+  it, slowly." One man, one face, no second figure, no dialogue in this beat. This is a SILENT MOTION
+  CLIP on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+bar: "THE H-BATCH'S BARS, WITH THE PRICE THE LADDER NAMED MOVED FROM THE FAIL\nCOLUMN TO THE COST COLUMN,\
+  \ AND WITH THE SLOT SUBSTITUTED FOR THE CLIP. Scored by\neye at 1:1 first, on f001, f008, f030, f050,\
+  \ f070 and f093, and then with the\ncommitted rulers. THE SLOT IS f001-f093; f094-f121 are rendered\
+  \ and are NOT\nSHIPPED, so no clause below is scored on them.\n\nT0 THE PAN RULER, AND IT IS A GATE:\
+  \ nothing else is read off a clip that fails\n   it. Background patch residual (each patch's own mean\
+  \ removed, because\n   whole-frame luma falls ~7 levels over the first thirty frames on this recipe\n\
+  \   and the raw b04 form reports that exposure drift as a camera move) must not\n   exceed 1.5x the\
+  \ incumbent's slot mean on either patch -- bg_corner 7.02 and\n   bg_low 2.84, so 10.5 and 4.3. THE\
+  \ ABSOLUTE b04 BAR OF 3.0 IS PRINTED AND IS\n   NOT USED: the SHIPPING clip fails it at 7.02, so imported\
+  \ unexamined it would\n   fail the incumbent, and a bar that fails the thing it is meant to protect\
+  \ is\n   not a bar. THE TOP-RIGHT CORNER IS EXCLUDED BY NAME on both crops -- it is\n   his hair, not\
+  \ the world.\nX1 THE HAND AT f008 AND f030. A whole hand -- knuckles or palm and readable\n   fingers\
+  \ against the face -- at f008 and at f030. f008 is the frame the\n   pre-crop parent died on; f030 is\
+  \ where the h-batch's best cell was still\n   whole. This is the clause the rung exists for.\nX2 THE\
+  \ HAND AT f093, THE LAST FRAME THAT SHIPS. This is the PROMOTION clause and\n   it is separate from\
+  \ X1 on purpose: X1 says the mechanism carried to a sharper\n   plate, X2 says the beat is fixed for\
+  \ the audience. A clip that passes X1 and\n   fails X2 is PROGRESS and the frame it goes at is the next\
+  \ rung's number --\n   the same reading the h-batch's H-LATE got, and it is not a swap.\nX3 THE HAND\
+  \ IS A HAND. Not a mitten, not three fingers, not a smudge, not a\n   fifth finger. A hand that survives\
+  \ by becoming a shape is a FAIL and is named\n   here so it cannot be reported as a hold.\nX4 THE FACE\
+  \ STILL WORKS, AND THE CLIP IS ALIVE AT THE END OF THE SLOT. Brows\n   draw and ease, eyes shift, the\
+  \ head tilts a few degrees. LAST LIVE PAIR must\n   reach 93 -- the incumbent's is 92 of 92, so a clip\
+  \ that dies inside the slot\n   to hold the hand loses on the incumbent's own ruler and not on an opinion.\n\
+  \   Face-band interframe mean in slot >= 1.0 (incumbent 1.390) and no third of\n   the slot under 0.15\
+  \ (incumbent's middle third is 0.187 and that is already\n   the fault this beat has).\nX5 THE PARENT'S\
+  \ SURVIVING CLAUSES: mouth closed for the whole slot, one face,\n   one man, the same man at f093 as\
+  \ at f001, no second hand.\n\nACCEPTED COSTS, PRICED IN, RECORDED AS COSTS AND NOT AS FAILS:\n  * ONE\
+  \ EYE IS SQUINTED SHUT FROM f001. It is a property of the r2s2 plate, not\n    of the motion -- it is\
+  \ the `shut eye` the ladder priced this route at, and\n    it is visible on the very first frame rather\
+  \ than only at the end. THE\n    INCUMBENT HAS BOTH EYES OPEN AND THIS DOES NOT. That is the trade,\
+  \ it is\n    named here before any pixel exists, and a clip is not failed for it.\n  * EYES SHUT AT\
+  \ THE END. Off the end of the slot (f100+) and therefore not\n    scored at all; recorded because the\
+  \ h-batch's verdict turned on it.\n  * SOFTER GLOBALLY THAN A NATIVE CLOSE-UP. 1.454x LANCZOS, 90.2%\
+  \ of the native\n    control's high-frequency energy against r1s3's 45% -- this crop is the\n    SHARPER\
+  \ of the two, which is the point, but neither is native.\n\nTHE SWAP TEST, WHICH IS NARROWER THAN THE\
+  \ BAR AND IS THE ONLY THING THAT MOVES\nTHE CUT: a clip swaps in only if it passes T0, X1, X3, X4 and\
+  \ X5, beats the\nincumbent on last-live-pair-in-slot AND on hand-hold by eye, and does not lose\nthe\
+  \ face acting (X4's two numbers). X2 is what makes it a clear win rather than\na marginal one. If nothing\
+  \ clears that, the incumbent stands and this batch is a\nmeasurement, not a swap."
+failure_predicted_in_advance: 'WHAT I EXPECT, WRITTEN BEFORE IT RUNS. The crop should help X1
+
+  and X3 for a mechanical reason the ladder already established: `the init holds
+
+  where it is sharp`, and this hand is drawn at 1.454x instead of 2.157x -- 90.2%
+
+  of a native close-up''s high-frequency energy against 45%. The hand is the
+
+  softest object in the r1s3 frame and it is the first thing to go; on r2s2 it is
+
+  not the softest object.
+
+  WHAT I EXPECT TO GO WRONG, IN ORDER.
+
+  H-POSE, AND IT IS WHY THE m ARM EXISTS: the carried sentence describes a hand
+
+  flat on the CHEEK and the r2s2 init has it curled at the MOUTH. If the c cells
+
+  show the hand sliding off the mouth toward the cheek over the first ten frames
+
+  while the m cells do not, that is H-POSE and the answer is the m wording. If
+
+  BOTH arms hold, the sentence''s placement clause was doing less work than its
+
+  naming clause, and that is a finding about this engine worth more than the clip.
+
+  X4-FREEZE, unchanged from h1: two of three h-cells were dead in their last
+
+  twenty frames. A sharper init gives the sampler less to re-decide, which helps
+
+  the hand and may also flatten the face. That is why last-live-pair is a GATE
+
+  here and not a note.
+
+  THE EYE. I am not predicting the squint opens. It is in the init and the
+
+  positive does not mention it; the h-batch''s eyes went the other way and stayed
+
+  there. If a c cell OPENS the eye mid-clip that is a bonus and it is not a bar.
+
+  AND THE ONE I CANNOT PRICE: whether a boy with one eye shut and a fist at his
+
+  mouth reads the beat better or worse than a boy with two open eyes and no hand.
+
+  That is taste and it is not mine to settle -- which is why the swap is VETO-ABLE
+
+  and the manifest row will say what was traded, in numbers, rather than claiming
+
+  an upgrade.'
+init_provenance: 'farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png, sha256 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a,
+  on origin/main at the time this spec was written (checked, not assumed). Produced by pipeline/beat09_plate_crop.py
+  from 09-the-pause-ipa-r2-w015-s2.png on origin/farm-results-rtx5090: a 1.454x LANCZOS crop of a 572x837
+  region taking a 37.83% head to the 55% bar with the chin at 0.57, retaining 64.3% of the source''s own
+  face high-frequency energy and reaching 90.2% of the native close-up control. No sampler, no model,
+  no GPU. The box re-asserts this sha before it writes anything.'
+is_show_content: true
+is_show_content_why: 'CHANGED FROM THE PARENT, ON TWO FACTS AND NOT ON A WISH. (1) Beat 09 is no longer
+  a slate: it entered review/ep2-ship-0821 on 2026-08-20 as a SHIP-MODE ENTRY over its own pre-registered
+  is_show_content:false, and the cut ships with it. (2) The adult/adolescent read that withheld it --
+  /review/ep2-guards-0818 -- has been RULED A PASS by the founder ("dumb grown men"), so the open R4 card
+  h1 deferred to is closed and this is an ordinary steward pick. A winner is therefore a VETO-ABLE SWAP
+  into the ship cut with its faults named in the manifest row, not a promotion past a card.'
+not_done_on_purpose: 'No crf change, no strength change, no guidance/sigma change, no
+
+  negative edit, no second plate, no new crop parameters -- beat09_plate_crop.py
+
+  is not re-run and its r2s2 output is used at its committed sha. The r1s3 route
+
+  is not retired: if this fails, the incumbent stands unchanged and nothing about
+
+  it has been touched. No pick and no plate_ack is written by this file; a swap,
+
+  if one is earned, is a separate commit with its own manifest row and its own
+
+  veto line.'
+pre_registered_fail_modes: 'H-POSE the cheek sentence pulls the hand off the mouth on a
+
+  plate that never had it on the cheek; visible as a hand that TRAVELS over
+
+  f001-f010 rather than one that dissolves. The m arm is the pre-spent answer and
+
+  the c/m pair at the same seed is what tells them apart.
+
+  H-FREEZE the sharper init holds the hand by holding everything. last-live-pair
+
+  under 93 or a slot third under 0.15 and it is a FAIL, not a hold.
+
+  H-SMUDGE the hand persists as a shape that is not a hand. Reads as a hold on
+
+  every number in this file and does not at 1:1, which is why the frames are
+
+  written out and looked at.
+
+  H-SECONDHAND naming a hand summons one; nothing was added to the negative, here
+
+  as in h1, so a second hand is the rung that would earn a negative edit.
+
+  H-LATE the hand clears f008 and f030 and goes before f093. PROGRESS, not a swap,
+
+  and the frame it goes at is the next rung''s number.
+
+  H-EYE-COST the squint reads as a wince or a squint-at-the-sun rather than a man
+
+  thinking, and the trade is simply bad. Taste, veto-able, named up front.'
+the_incumbent_this_must_beat: "THE CLIP IN THE CUT RIGHT NOW, measured 2026-08-21 with\npipeline/judge_b09_crop_0821.py,\
+  \ in its own geometry, over the SLOT (f001-f093):\n  hand drift from f001   f005 46.98  f008 48.78 \
+  \ f030 50.16  f093 47.70\n                         (the hand collapses at the FIRST pair, step 46.06,\
+  \ and\n                          the box never recovers -- gone for the whole slot)\n  last live pair\
+  \         92 of 92 in slot (105 of 120 whole)\n  dead pairs in slot     38 of 92\n  face-band interframe\
+  \   1.390 mean in slot; by thirds 2.422 / 0.187 / 1.567\n                         (the middle third\
+  \ is nearly dead)\n  T0 pan residual        bg_corner 7.02 mean / 10.99 max in slot\n              \
+  \           bg_low    2.84 mean / 27.60 max in slot (spike at f012)\n  eyes                   OPEN,\
+  \ both, visible irises, at f001\nThat is the thing to beat, and it is beatable on exactly one axis."
+the_one_variable: 'THE CROP, AND FOR THE m CELLS ONE SENTENCE. Every other byte is ep2-b09-hand-h1-0820''s:
+  the hand sentence in the positive, the negative untouched, --image-crf 10, 121 frames at 24 fps, guidance
+  2.0, distilled sigmas, two-stage, sequential offload, the same cover_crop.py with the same sha assertion.
+  Only --src and --sha256 move, from 09-the-pause-platecrop-r1s3.png to -r2s2.png. This cell is ONE VARIABLE
+  from ep2-b09-hand-h3-0820 (same seed, r1s3 crop).'
+the_pose_note_up_front: 'THE INIT IS NOT THE PICTURE THE CARRIED SENTENCE DESCRIBES, and it was checked
+  by looking at it at 1:1 rather than assumed from the filename. r1s3: hand flat on the cheek, fingers
+  up, both eyes open, blue irises. r2s2: hand CURLED AT THE MOUTH, knuckles at the lips, thumb under the
+  chin, the left eye squinted shut, the head turned further away. The carried sentence says `cheek` twice.
+  That is why two of the five cells swap it for a pose-matched sentence at seeds the c arm also runs,
+  so the wording is one variable at a fixed crop instead of a confound inside the crop result.'
+derivation:
+  parent: pipeline/jobs/ep2-b09-hand-h1-0820.yaml
+  by: pipeline/derive_b09_r2s2_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - is_show_content
+  - is_show_content_why
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_incumbent_this_must_beat
+  - the_one_variable
+  - the_pose_note_up_front
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - is_show_content
+  - is_show_content_why
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - the_one_variable
+  - why_it_is_phrased_as_an_ongoing_action
+  retokened:
+  - ep2-b09-hand-h1-0820 -> ep2-b09-r2s2-c3-0821
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (ba72dec824c6fe70102de313486f13a8f51ebcf0c3ac42e6b8a504fc10bada7d -> 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r1s3.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r2s2.png)
+    seed:
+    - payload b09-jobs-render.json (20260819 -> 20260852, re-parsed)
+  seed: 20260852
