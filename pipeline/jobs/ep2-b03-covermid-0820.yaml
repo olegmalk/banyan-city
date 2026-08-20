@@ -482,3 +482,112 @@ what_the_next_rung_is: 'NOT ANOTHER FREEZE WORDING. The measurement above says t
   plant. Neither is proposed here as a pick.'
 
 cost: $0. 268.3 s on the rtx5090, rc=0, no download, no spend.
+
+trim_evaluation_0820: 'THE TRIM ROUTE IS CLOSED BY MEASUREMENT, AND THE MEASUREMENT IS
+  ARITHMETIC RATHER THAN TASTE. Asked before any GPU: does beat 03 FIT inside this clip''s
+  live frames? It does not, by 0.9 s.
+
+  LIVE FRAMES, measured on all 121 frames of this clip by this lane rather than read off
+  the verdict: the last frame pair with real movement is f072->f073 (7.199 whole-frame
+  mean-absolute interframe luma). Every pair from f073 on is 0.012..0.155, i.e. a still
+  with codec noise. LIVE CONTENT = frames 0..073 = 74 frames = 3.0833 s. (19 of 120 pairs
+  in the whole clip exceed 0.5, and all 19 are at or before f073.)
+
+  WHAT THE BEAT NEEDS. genomes/.../002b-first-citizen/node.md:37 gives BAD COVER
+  0:11-0:16, a 5.0 s paper slot; but the slot is VOICE-LED, not paper-led.
+  render_t3.fit_duration(script_s, cdur, vdur) with a voice present returns
+  round(max(min(cdur, vdur + 2.0), vdur + 0.4), 2). Beat 03''s VO
+  (review/ep2-demo-0820/sources/03-vo.json, chatterbox-0.5B) is total_s 3.982 and the
+  mp3 measures 3.982042; the single line runs 0.0 -> 3.682 with chunk ends at 1.997 and
+  3.682. So the FLOOR on this beat''s slot is vdur + 0.4 = 4.382 s = 105.2 frames,
+  whatever clip is handed to it.
+
+  74 LIVE FRAMES AGAINST A 105-FRAME FLOOR. The spoken line alone (3.982 s) outruns the
+  live footage (3.083 s) by 0.9 s, so there is no trim point at which the beat plays over
+  moving pictures. Two trim points were computed and BOTH are named rather than taken:
+
+    * trim at f073 (74f, 3.0833 s) -- every dead frame removed. fit_duration then returns
+      4.382 s, dur > cdur + 0.05 fires, and render_t3 HOLDS THE LAST FRAME for 1.299 s.
+      The freeze does not disappear; it moves from inside the clip to the assembler, and
+      0.60 s of the spoken line ("...forty centimeters tall", which ends at 3.682 s) plays
+      over a frozen picture.
+    * trim at f105 (106f, 4.41667 s) -- the SHORTEST trim that needs no assembler hold at
+      all, because 4.41667 clears the 4.382 floor, so dur == cdur and neither the hold nor
+      the palindrome branch can be reached. It deletes the entire 7-frame exact freeze
+      judge_clip reported from f114, so H1 WOULD READ CLEAN. IT IS NOT SCORED AS A PASS
+      AND MUST NOT BE: 32 near-dead frames (f074..f105) survive it untouched. That is a
+      trim chosen to satisfy an instrument, and this repo''s own rule is that a metric
+      agreeing with me is not a sample.
+
+  VERDICT: NOT cut-ready-with-trim. No sidecar written, no -trim file cut, nothing
+  renamed. The condition the rung was given was "if the beat fits within the live frames",
+  and it does not.'
+
+cut_swap_named_not_made_0820: 'AND THE TRIM QUESTION WAS THE WRONG QUESTION, WHICH IS THE
+  FINDING. Beat 03 is not a slate -- it has footage in the published cut -- so this clip''s
+  consumer is a SWAP, and the bar that decides a swap is the INCUMBENT, not an absolute.
+  The incumbent was opened for the first time by this lane and it is worse than this clip
+  in every axis either of them can be measured on.
+
+  IN ep2-demo-0820/sources (still, today): 03-bad-cover-b03-refire-0814.mp4, 97 frames,
+  4.0417 s, seed 20260806, task ep2-b03-refire-0814, its own meta reading
+  "used as-is; leg A of the A/B pair (leg undetermined in the record)". Opened frame by
+  frame:
+
+    * IT IS A CHILD. A chibi goblin with a round head, pale grey-green skin, a buttoned
+      shirt and shorts, standing upright at f000. Not the ratified lean adult, and
+      `child, chibi, baby, round head` is in the b03 negative by name.
+    * IT IS A WHOLE LEAFY TREE. From f018 he is holding the trunk of a young tree with a
+      branching stem and dozens of leaves -- exactly the plant miss the composite route
+      was built to close -- where canon is ONE thin stem and TWO leaves.
+    * IT DIES EARLIER THAN THIS CLIP. Last live pair f035->f036; 34 of 96 pairs above 0.5,
+      median 0.078. 60 of its 96 pairs are dead, against this clip''s 46.
+    * IT ALSO GETS AN ASSEMBLER HOLD. cdur 4.0417 against the same 4.382 floor, so the
+      published beat already holds its last frame for 0.34 s on top of 2.5 s of internal
+      near-freeze.
+
+  THIS CLIP, against the same instruments: the ratified lean adult green goblin with long
+  pointed ears and the patchwork cloak, one figure, identity holding at 1:1 (A2 re-placed
+  by eye: cheek luma 92.4 / R-B 17.9, lit temple 103.5 / R-B 34.9); ONE thin stem and TWO
+  leaves, rooted, at f000 f030 f060 f090 f120 (A1, third rung running); camera locked (A3);
+  exposure +7.27 (A5); and 74 live frames against the incumbent''s 36.
+
+  SO: A CUT SWAP IS NAMED AND NOT MADE -- beat 03 to ep2-b03-covermid-0820, untrimmed,
+  and the assembler''s own last-frame HOLD (in the tool since 2026-08-19) covers the tail.
+  Evidence for one look, committed:
+  farm-out/ep2-b03-covermid-0820/EVIDENCE-b03-cutswap-vs-incumbent-0820.png -- six frames
+  of each, labelled, at 1:1 scale ratio. It is NOT made here because publication and picks
+  are not a job spec''s to make and the assembly is another lane''s; and because this clip
+  FAILS ITS OWN PRE-REGISTERED H1 and that failure stands unchanged. Both facts are true at
+  once: it is the better of the two clips and it is not yet a good clip.'
+
+plate_rung_NOT_derived_and_why_0820: 'THE NAMED PLATE RUNG IS NOT FILED, AND THE REASON IS
+  A MEASUREMENT, NOT A PREFERENCE. what_the_next_rung_is named two levers and (b) was "the
+  height sub-clause of H2 is a PLATE property -- he starts the shot too tall relative to a
+  two-leaf seedling". Opening the plate closes that rung instead of earning it:
+
+    * On the 704x1280 cropped init his head occupies y~240..500 and the composited
+      seedling''s leaf pair sits at y~750..830. His head is ~450 px above the leaves and
+      the leaves are ~60 px across.
+    * The bar clause asks for "shoulders no higher than the leaf tops". THE VO OF THIS
+      BEAT IS THE SAPLING SAYING "I am forty centimeters tall." A full-grown goblin whose
+      shoulders are below 40 cm is lying flat, and beats."03".done_when says in as many
+      words that `a crouch that actually conceals him fails the beat` -- which H4 passed
+      on, at f120, in this very clip.
+    * So the height sub-clause and H4 cannot both be satisfied by ANY plate that keeps
+      canon. It is not an unmet bar, it is a CONTRADICTORY one, and it is retired here
+      rather than chased with a plate. That is a bar call and it is the steward''s; the
+      pose, the crouch and the concealment clauses are untouched.
+
+  WHAT IS ACTUALLY LEFT ON THIS BEAT, stated so nobody re-derives it at 2am: the clip is a
+  held photograph from f073 and the beat needs 105 frames. That is TEMPORAL, and every
+  lever named for it is already closed. Wording: three rungs, closed by this ladder''s own
+  rule. Length: --frames is an input to the denoiser''s temporal grid and not a crop, and
+  beat 12 already MEASURED a 73-frame re-roll flattening at f042, so "shorten it so it does
+  not reach the part that broke" has no basis. Plate: closed above. The one hypothesis
+  nobody has tested is that THE ACTION COMPLETES -- his sink from f000 to f073 is a
+  one-shot movement with nothing after it, which is why this beat dies where beat 13 (a
+  continuous tilt) does not: beat 13''s rung 3 still carries 17.32, 13.28 and 8.37 inside
+  its last twenty pairs. That is a script-and-staging question about what he DOES for the
+  second half of a five-second beat, and it belongs to the founder''s pass on the swap
+  above, not to a GPU fire. NO JOB IS FILED FOR BEAT 03.'
