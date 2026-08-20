@@ -488,8 +488,12 @@ def module_version(name: str) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--init", required=True)
-    ap.add_argument("--init-sha256", required=True,
+    # NOT argparse-required, and that is deliberate: `--selftest` runs the whole
+    # module with no init, no plate and no prompt, and argparse would reject it
+    # before main() ever saw the flag. The four are asserted by hand below,
+    # AFTER the selftest branch, so a real invocation still cannot omit them.
+    ap.add_argument("--init")
+    ap.add_argument("--init-sha256",
                     help="asserted before anything loads; a mismatch is a hard stop")
     ap.add_argument("--ellipse", default="",
                     help="cx,cy,rx,ry in pixels of the init image")
@@ -517,9 +521,9 @@ def main() -> int:
                     help="assert the sha, draw the mask PNG beside --out and stop "
                          "BEFORE loading any model. Costs nothing and is the step "
                          "where a misplaced mask gets caught by eye.")
-    ap.add_argument("--prompt-file", required=True)
-    ap.add_argument("--negative-file", required=True)
-    ap.add_argument("--out", required=True)
+    ap.add_argument("--prompt-file")
+    ap.add_argument("--negative-file")
+    ap.add_argument("--out")
     ap.add_argument("--steps", type=int, default=40)
     ap.add_argument("--cfg", type=float, default=7.5)
     ap.add_argument("--strength", type=float, default=0.99)
@@ -560,6 +564,15 @@ def main() -> int:
 
     if a.selftest:
         return selftest()
+
+    missing = [f for f, v in (("--init", a.init), ("--init-sha256", a.init_sha256),
+                              ("--prompt-file", a.prompt_file),
+                              ("--negative-file", a.negative_file),
+                              ("--out", a.out)) if not v]
+    if missing:
+        print("!! missing required argument(s): %s" % ", ".join(missing),
+              flush=True)
+        return 2
 
     if not os.path.isfile(a.init):
         print("!! init not found: %s" % a.init, flush=True)
@@ -636,6 +649,27 @@ def main() -> int:
     prompt = read_text(a.prompt_file)
     negative = read_text(a.negative_file)
 
+    # ---- CONTROL HINTS, resolved BEFORE any weight loads and before the dry
+    # run returns, so a mis-sized or mis-pinned hint costs zero GPU seconds and
+    # is caught at the same $0 step the mask geometry is.
+    try:
+        controls = resolve_controls(a, (W, H))
+    except ControlError as e:
+        print(str(e), flush=True)
+        return e.code
+
+    # The crop box, from THIS driver's vendored copy of diffusers'
+    # get_crop_region, on the same blurred mask the pipeline will be handed. In
+    # the dry run it is the number the operator checks the hint against by eye;
+    # in the real run it is re-derived from the LIVE method and the two must
+    # agree. Blurring here costs nothing and is not the pipeline's blur call --
+    # `mask_processor.blur` is `ImageFilter.GaussianBlur(blur_factor)` and
+    # nothing else, so this is the same image.
+    from PIL import ImageFilter
+    blur_preview = (mask.filter(ImageFilter.GaussianBlur(a.blur)) if a.blur
+                    else mask)
+    region = crop_region(blur_preview, W, H, a.pad_crop) if a.pad_crop else None
+
     if a.dry_run:
         print("DRY RUN -- no model loaded, nothing rendered.", flush=True)
         print("init_sha256 OK %s" % have, flush=True)
@@ -643,6 +677,15 @@ def main() -> int:
               % (shape, corners or "-", bbox,
                  (bbox[2] - bbox[0]) / float(W),
                  (bbox[3] - bbox[1]) / float(H), W, H), flush=True)
+        for i, c in enumerate(controls):
+            print("hint %d %s scale %s sha %s -- %dx%d, MATCHES the init"
+                  % (i + 1, os.path.basename(c["path"]), c["scale"],
+                     c["sha256"][:16], c["image"].size[0], c["image"].size[1]),
+                  flush=True)
+        if controls:
+            print("pad_crop region (vendored get_crop_region on the blurred "
+                  "mask) = %s -- diffusers applies THIS SAME box to the init, "
+                  "the mask and every hint" % (region,), flush=True)
         print("WROTE %s" % mask_png, flush=True)
         print("rc=0 dry_run=1", flush=True)
         return 0
@@ -666,7 +709,62 @@ def main() -> int:
         print("!! unexpected unet.in_channels=%d" % in_ch, flush=True)
         return 5
 
+    # ---- THE CLASS SWAP, AND IT HAPPENS ONLY IF A HINT WAS PASSED.
+    # from_pipe rebuilds the class around the SAME loaded modules, so one set of
+    # base weights serves both arms and the no-control path never touches this.
+    pipeline_class = "StableDiffusionXLInpaintPipeline"
+    control_kwargs = {}
+    if controls:
+        from diffusers import AutoPipelineForInpainting, ControlNetModel
+
+        cn_kw = {} if CONTROLNET_VARIANT is None else {"variant": CONTROLNET_VARIANT}
+        nets = []
+        for c in controls:
+            m = ControlNetModel.from_pretrained(c["net"],
+                                                torch_dtype=torch.bfloat16, **cn_kw)
+            m.to("cuda")
+            nets.append(m)
+        # A LIST is wrapped into a MultiControlNetModel by the constructor, and
+        # `control_image` / `controlnet_conditioning_scale` then become per-net
+        # lists in the same order. A single net stays a bare model and bare
+        # values -- the shape controlnet_plate.py uses on the txt2img side.
+        pipe = AutoPipelineForInpainting.from_pipe(
+            pipe, controlnet=(nets if len(nets) > 1 else nets[0]))
+        pipeline_class = type(pipe).__name__
+        if len(nets) > 1:
+            control_kwargs = {
+                "control_image": [c["image"] for c in controls],
+                "controlnet_conditioning_scale": [c["scale"] for c in controls]}
+        else:
+            control_kwargs = {
+                "control_image": controls[0]["image"],
+                "controlnet_conditioning_scale": controls[0]["scale"]}
+        control_kwargs["control_guidance_start"] = CONTROL_GUIDANCE[0]
+        control_kwargs["control_guidance_end"] = CONTROL_GUIDANCE[1]
+        print("PIPELINE %s, %d net(s), scales %s"
+              % (pipeline_class, len(nets),
+                 control_kwargs["controlnet_conditioning_scale"]), flush=True)
+
     blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask
+
+    # ---- ALIGNMENT, CHECKED AGAINST THE LIVE METHOD RATHER THAN ASSERTED.
+    # diffusers derives ONE crops_coords from this blurred mask and applies it to
+    # the init, the mask and every control image. If the installed version's
+    # get_crop_region disagrees with the copy vendored above, the box written
+    # into the sidecar would be fiction and the hint's alignment would be
+    # unverified -- so it is a hard stop. Control runs only: the no-control path
+    # must stay the path six filed verdicts were measured on.
+    if controls and a.pad_crop:
+        live = tuple(int(v) for v in pipe.mask_processor.get_crop_region(
+            blurred, W, H, pad=a.pad_crop))
+        if live != tuple(region):
+            print("!! CROP REGION DISAGREES WITH THE VENDORED COPY -- refusing.\n"
+                  "   vendored %s\n   diffusers %s\n   The hint is cropped by "
+                  "diffusers' box, so a sidecar carrying a different one cannot "
+                  "be trusted about alignment." % (tuple(region), live), flush=True)
+            return 14
+        print("CROP REGION %s -- vendored == live; the init, the mask and every "
+              "hint are cropped by this one box" % (live,), flush=True)
 
     kwargs = dict(prompt=prompt, negative_prompt=negative, image=plate,
                   mask_image=blurred, width=W, height=H,
@@ -675,6 +773,7 @@ def main() -> int:
                   generator=torch.Generator("cuda").manual_seed(a.seed))
     if a.pad_crop:
         kwargs["padding_mask_crop"] = a.pad_crop
+    kwargs.update(control_kwargs)
 
     t1 = time.time()
     out = pipe(**kwargs).images[0]
@@ -705,58 +804,250 @@ def main() -> int:
     ]
     sidecar = a.out + ".meta.yaml"
     with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("\n".join([
-            "# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py",
-            "# on the rtx5090. The plate outside the mask is the founder's own",
-            "# pixels; only the region described below was redrawn.",
-            "platform: local-gpu (rtx5090)",
-            "model: %s" % BASE,
-            "model_licence: %s" % BASE_LICENCE,
-            "pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=%d)" % in_ch,
-            "size: %dx%d" % (W, H),
-            "steps: %d" % a.steps,
-            "guidance: %s" % a.cfg,
-            "strength: %s" % a.strength,
-            "seed: %d" % a.seed,
-            "padding_mask_crop: %s" % (a.pad_crop or "null"),
-            "mask_blur_factor: %d" % a.blur,
-            "init_image: %s" % a.init.replace("\\", "/"),
-            "init_sha256: %s" % have,
-            "mask_png: %s" % os.path.basename(mask_png),
-        ] + mask_lines + [
-            "mask_is_the_stewards: >-",
-            yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
-                       "`inpaint` and named no size, no position, no colour and no "
-                       "shape. The mask above is the steward's and is the first "
-                       "thing his correction should move -- 'lower', 'smaller', "
-                       "'other side' is one number here; the words in the prompt "
-                       "are his own approved shots.md wording."),
-            "rendered_utc: %s" % stamp,
-            "render_seconds: %.1f" % render_s,
-            "wall_seconds: %.1f" % (time.time() - t0),
-            "cost_usd: 0",
-            "python_version: %s" % versions["python"],
-            "torch_version: %s" % versions["torch"],
-            "diffusers_version: %s" % versions["diffusers"],
-            "approved: false",
-            "provisional: >-",
-            yaml_block("PROVISIONAL. A steward-rendered SAMPLE, not a pick and not "
-                       "canon. Never takes a canon filename, is not published, not "
-                       "posted, and not assembled into an episode. Ground truth is "
-                       "the founder (R4)."),
-            "note: >-",
-            yaml_block(a.note or "one inpainted sample; the fruit question."),
-            "prompt: |-",
-            yaml_block(prompt),
-            "negative: |-",
-            yaml_block(negative),
-            "",
-        ]))
+        fh.write(sidecar_text(
+            pipeline_class=pipeline_class, in_ch=in_ch, W=W, H=H, steps=a.steps,
+            cfg=a.cfg, strength=a.strength, seed=a.seed, pad_crop=a.pad_crop,
+            blur=a.blur, init=a.init, init_sha=have,
+            mask_png_name=os.path.basename(mask_png), mask_lines=mask_lines,
+            control_lines=control_meta_lines(controls, region), stamp=stamp,
+            render_s=render_s, wall_s=time.time() - t0, versions=versions,
+            note=a.note, prompt=prompt, negative=negative))
 
     print("WROTE %s" % a.out, flush=True)
     print("WROTE %s" % mask_png, flush=True)
     print("WROTE %s" % sidecar, flush=True)
     print("rc=0 render_s=%.1f" % render_s, flush=True)
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# SELFTEST. $0, no torch, no CUDA, no network, no GPU.
+#
+# IT IS ANCHORED ON A FILED VERDICT AND NOT ON A FIXTURE I WROTE TODAY.
+# `ep2-b08-str70-0820` is one of the six b08 verdicts these ControlNet flags must
+# not disturb. Its sidecar is in the tree, its sha is pinned below, and the test
+# reproduces it BYTE FOR BYTE through the refactored `sidecar_text()`. A
+# fixture-based test would only prove the new code agrees with itself.
+#
+# THE ALIGNMENT CLAUSE IS STRUCTURAL, because that is the class of defect that
+# ate this beat: the hints are handed over FULL-FRAME and this module contains no
+# crop of its own, so there is nothing here that can disagree with the single
+# crops_coords diffusers derives from the mask. Both halves are asserted -- the
+# size equality, and the absence of any crop call in the source.
+# ---------------------------------------------------------------------------
+GOLDEN_SIDECAR = "farm-out/ep2-b08-str70-0820/b08-str70-s20260822.png.meta.yaml"
+GOLDEN_SIDECAR_SHA = \
+    "363f1d42a8f078ed2b177a7896e2749038901a4db94e13c380e4d11e14639d5e"
+GOLDEN_MASK = "farm-out/ep2-b08-str70-0820/08-first-citizen-eraseonly-mask-0820.png"
+GOLDEN_INIT = "farm-out/ep2-b08-str70-0820/08-first-citizen-eraseonly-0820.png"
+HINT_POSE = "farm-out/ep2-b08-scale30-0820/b08-openpose-nat-0819.png"
+HINT_POSE_SHA = \
+    "562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0"
+HINT_BOARD = "farm-out/ep2-b08-scale30-0820/b08-board-0820.png"
+HINT_BOARD_SHA = \
+    "38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6"
+NET_POSE = r"C:\banyan-farm\cnet-openpose-twins"
+NET_BOARD = "xinsir/controlnet-scribble-sdxl-1.0"
+
+
+class _Args(object):
+    """argparse.Namespace by another name, so the validator can be called."""
+
+    def __init__(self, **kw):
+        self.controlnet = self.control = self.control_sha256 = ""
+        self.controlnet2 = self.control2 = self.control2_sha256 = ""
+        self.scale = self.scale2 = None
+        self.__dict__.update(kw)
+
+
+def selftest() -> int:
+    import re
+
+    from PIL import Image, ImageFilter
+
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    checks = []
+
+    def check(label, ok):
+        checks.append((label, bool(ok)))
+        print("%s %s" % ("ok  " if ok else "FAIL", label), flush=True)
+
+    def raises(fn, code):
+        try:
+            fn()
+        except ControlError as e:
+            return e.code == code
+        return False
+
+    # ---- 1. THE GOLDEN SIDECAR, REPRODUCED BYTE FOR BYTE ------------------
+    gpath = os.path.join(repo, GOLDEN_SIDECAR)
+    golden = open(gpath, "rb").read()
+    check("the golden sidecar is the bytes this test was written against",
+          hashlib.sha256(golden).hexdigest() == GOLDEN_SIDECAR_SHA)
+    gtext = golden.decode("utf-8")
+    glines = gtext.split("\n")
+
+    def body_after(key):
+        """The yaml_block body under a `key: >-` / `key: |-` line, unindented."""
+        i = glines.index(key)
+        out = []
+        for line in glines[i + 1:]:
+            if line.startswith("  "):
+                out.append(line[2:])
+            else:
+                break
+        return "\n".join(out)
+
+    # The mask block is REBUILT from the real mask PNG rather than sliced out of
+    # the golden, so the numbers in it are proved and not copied.
+    mask = Image.open(os.path.join(repo, GOLDEN_MASK)).convert("L")
+    W, H = mask.size
+    box = mask.point(lambda v: 255 if v > 0 else 0).getbbox()
+    bbox = [box[0], box[1], box[2] - 1, box[3] - 1]
+    mask_lines = [
+        "mask_shape: png",
+        "mask_png_source: C:/banyan-farm/b08str70-0820/"
+        "08-first-citizen-eraseonly-mask-0820.png",
+        "mask_png_sha256: %s" % sha256_of(os.path.join(repo, GOLDEN_MASK)),
+        "mask_white_px: %d"
+        % (W * H - mask.point(lambda v: 255 if v > 0 else 0).histogram()[0]),
+        "mask_bbox_px: [%d, %d, %d, %d]" % tuple(bbox),
+        "mask_width_frac: %.4f" % ((bbox[2] - bbox[0]) / float(W)),
+        "mask_height_frac: %.4f" % ((bbox[3] - bbox[1]) / float(H)),
+    ]
+    i0 = glines.index("mask_shape: png")
+    check("the mask block computed off the real mask matches the filed one",
+          glines[i0:i0 + len(mask_lines)] == mask_lines)
+
+    rebuilt = sidecar_text(
+        pipeline_class="StableDiffusionXLInpaintPipeline", in_ch=4, W=832, H=1216,
+        steps=40, cfg=7.5, strength=0.7, seed=20260822, pad_crop=64, blur=8,
+        init=r"C:\banyan-farm\b08str70-0820\08-first-citizen-eraseonly-0820.png",
+        init_sha=sha256_of(os.path.join(repo, GOLDEN_INIT)),
+        mask_png_name="b08-str70-s20260822-mask.png", mask_lines=mask_lines,
+        control_lines=[], stamp="2026-08-20T14:24:24Z", render_s=7.3,
+        wall_s=13.3,
+        versions={"python": "3.12.10", "torch": "2.11.0+cu128",
+                  "diffusers": "0.29.2"},
+        note=body_after("note: >-"), prompt=body_after("prompt: |-"),
+        negative=body_after("negative: |-"))
+    check("a NO-CONTROL sidecar is byte-identical to the filed verdict's",
+          rebuilt.encode("utf-8") == golden)
+
+    # ---- 2. THE DEFAULT PATH CANNOT BE TOUCHED BY THE NEW FLAGS -----------
+    check("no control flag resolves to NO controls at all",
+          resolve_controls(_Args(), (832, 1216)) == [])
+    check("no controls emit NO sidecar lines", control_meta_lines([], None) == [])
+    check("no controls leave the pipeline class alone",
+          "pipeline: StableDiffusionXLInpaintPipeline (base weights, "
+          "unet.in_channels=4)" in gtext)
+
+    # ---- 3. THE TWO HINTS, RESOLVED ---------------------------------------
+    both = _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+                 control_sha256=HINT_POSE_SHA, scale=1.0,
+                 controlnet2=NET_BOARD, control2=os.path.join(repo, HINT_BOARD),
+                 control2_sha256=HINT_BOARD_SHA, scale2=0.3)
+    controls = resolve_controls(both, (832, 1216))
+    check("two hints resolve to two nets in the order given",
+          [c["net"] for c in controls] == [NET_POSE, NET_BOARD])
+    check("their scales are the ones passed, not defaults",
+          [c["scale"] for c in controls] == [1.0, 0.3])
+    check("both nets carry their licence out of the allowlist",
+          all("apache-2.0" in c["licence"] for c in controls))
+
+    # ---- 4. ALIGNMENT, THE CLAUSE THIS BEAT DIED ON -----------------------
+    init = Image.open(os.path.join(repo, GOLDEN_INIT))
+    check("every hint is handed over FULL-FRAME, in the init's own size",
+          all(c["image"].size == init.size for c in controls))
+    src = open(os.path.abspath(__file__), "r", encoding="utf-8").read()
+    check("this module crops NOTHING itself -- diffusers' one crops_coords is "
+          "the only crop there is",
+          not re.search(r"\.crop\(", src))
+    blurred = mask.filter(ImageFilter.GaussianBlur(8))
+    region = crop_region(blurred, 832, 1216, 64)
+    check("the vendored crop_region returns one box inside the frame",
+          len(region) == 4 and 0 <= region[0] < region[2] <= 832
+          and 0 <= region[1] < region[3] <= 1216)
+    check("that box contains the whole mask, which is what padding means",
+          region[0] <= bbox[0] and region[1] <= bbox[1]
+          and region[2] > bbox[2] and region[3] > bbox[3])
+    check("the crop keeps the render's aspect ratio, so no hint is stretched "
+          "differently from the init",
+          abs((region[2] - region[0]) / (region[3] - region[1]) - 832 / 1216)
+          < 0.01)
+    small = Image.open(os.path.join(repo, HINT_POSE)).convert("RGB").resize((831, 1216))
+    check("a hint that is not the init's size is REFUSED (rc 13)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+                    control_sha256=HINT_POSE_SHA, scale=1.0),
+              (832, 1216), open_image=lambda _p: small), 13))
+
+    # ---- 5. THE REFUSALS ---------------------------------------------------
+    check("an unlisted net is refused before any weight loads (rc 12)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet="thibaud/controlnet-openpose-sdxl-1.0",
+                    control=os.path.join(repo, HINT_POSE),
+                    control_sha256=HINT_POSE_SHA, scale=1.0), (832, 1216)), 12))
+    check("a net with no hint is refused (rc 6)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_POSE, scale=1.0), (832, 1216)), 6))
+    check("a hint with no net is refused (rc 6)",
+          raises(lambda: resolve_controls(
+              _Args(control=os.path.join(repo, HINT_POSE)), (832, 1216)), 6))
+    check("a net with no stated scale is refused (rc 6)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+                    control_sha256=HINT_POSE_SHA), (832, 1216)), 6))
+    check("an unpinned hint is refused (rc 8)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+                    scale=1.0), (832, 1216)), 8))
+    check("a hint whose bytes are not the pinned ones is refused (rc 8)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+                    control_sha256="0" * 64, scale=1.0), (832, 1216)), 8))
+    check("the same net twice is refused (rc 12)",
+          raises(lambda: resolve_controls(
+              _Args(controlnet=NET_BOARD, control=os.path.join(repo, HINT_BOARD),
+                    control_sha256=HINT_BOARD_SHA, scale=0.3,
+                    controlnet2=NET_BOARD, control2=os.path.join(repo, HINT_POSE),
+                    control2_sha256=HINT_POSE_SHA, scale2=0.3), (832, 1216)), 12))
+
+    # ---- 6. THE CONTROL BLOCK IN THE SIDECAR -------------------------------
+    cl = control_meta_lines(controls, region)
+    joined = "\n".join(cl)
+    for needle in ("controlnet: " + NET_POSE, "controlnet_2: " + NET_BOARD,
+                   "controlnet_conditioning_scale: 1.0",
+                   "controlnet_2_conditioning_scale: 0.3",
+                   "control_image_sha256: " + HINT_POSE_SHA,
+                   "control_2_image_sha256: " + HINT_BOARD_SHA,
+                   "MultiControlNetModel",
+                   "pad_crop_region_px: [%d, %d, %d, %d]" % tuple(region)):
+        check("the control block records %r" % needle[:46], needle in joined)
+    withctl = sidecar_text(
+        pipeline_class="StableDiffusionXLControlNetInpaintPipeline", in_ch=4,
+        W=832, H=1216, steps=40, cfg=7.5, strength=0.7, seed=20260822,
+        pad_crop=64, blur=8, init="x.png", init_sha="0" * 64,
+        mask_png_name="m.png", mask_lines=mask_lines, control_lines=cl,
+        stamp="2026-08-20T14:24:24Z", render_s=1.0, wall_s=2.0,
+        versions={"python": "3", "torch": "2", "diffusers": "0.29.2"},
+        note="n", prompt="p", negative="q")
+    check("a control run names the ControlNet pipeline in its sidecar",
+          "pipeline: StableDiffusionXLControlNetInpaintPipeline" in withctl)
+    check("the control block sits between the mask block and the steward note, "
+          "leaving every pre-existing line in its filed order",
+          withctl.index("mask_height_frac") < withctl.index("controlnet: ")
+          < withctl.index("mask_is_the_stewards"))
+
+    bad = [c for c, ok in checks if not ok]
+    print("\n%d/%d assertions passed" % (len(checks) - len(bad), len(checks)),
+          flush=True)
+    if bad:
+        print("FAILED: %s" % "; ".join(bad), flush=True)
+        return 1
+    print("SELFTEST PASS -- the no-control path is byte-identical to the filed "
+          "ep2-b08-str70-0820 sidecar, and hint alignment is by construction.",
+          flush=True)
     return 0
 
 
