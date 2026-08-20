@@ -46,6 +46,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import derive_spec  # noqa: E402
 
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = 20260820
 
 BEATS = [
@@ -254,7 +255,24 @@ def _fresh(b):
 
 
 def _extra(b):
+    # THE SKIN PROBE IS CARRIED VERBATIM FROM RUNG 1 AND THAT IS THE ONLY HONEST
+    # WAY TO HAVE ONE HERE. `extra` keys do not cross a derivation, and
+    # measure_sapcomp_motion_0820.py refuses to run without a pre-registered box
+    # -- correctly, since inventing one after the pixels exist is choosing the
+    # number. The box in rung 1's spec was placed by eye at 5x BEFORE any of
+    # these frames existed, and rung 2 renders the same init at the same crop
+    # and the same anchor, so the box still lands on the same skin. It is copied
+    # byte for byte and labelled, rather than re-placed.
+    parent = derive_spec.load(os.path.join(REPO, b["parent"]))
+    probe = dict(parent["skin_probe"])
+    probe["carried_verbatim_from"] = (
+        "%s, where it was placed by eye at 5x before that job's pixels existed. "
+        "Rung 2 uses the same init, the same sha, the same anchor and the same "
+        "704x1280 crop, so the box lands on the same skin. Copied byte for byte, "
+        "not re-placed: re-placing a probe after the frames exist is choosing the "
+        "number." % os.path.basename(b["parent"]))
     return {
+        "skin_probe": probe,
         "rung_1_the_control": b["rung1"],
         "the_one_variable": b["variable"],
         "bar": dict(b["bar"], G2_the_pre_registered_cost=G2_COST),

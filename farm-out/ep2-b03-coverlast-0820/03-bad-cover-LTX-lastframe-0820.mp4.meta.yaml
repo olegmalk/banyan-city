@@ -1,0 +1,42 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 3
+size: 704x1280
+seconds: 5.042
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260820
+task: ep2-b03-coverlast-0820
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.019
+compute_s_per_video_s: 52.5
+# --- appended by ep2-b03-coverlast-0820 after the render.
+approved: false
+provisional: true
+is_show_content: true
+note: |
+  BEAT 03'S FIRST MOTION SAMPLE OFF A COMPOSITE PLATE, a candidate
+  for the beat's cut slot and not an engine probe. Conditioned on
+  b03-sapcomp-s20260820.png, the plate
+  ep2-b03-sapcomp-0820 produced and this lane
+  did not re-pick. Judged against the bar pre-registered in
+  pipeline/jobs/ep2-b03-coverlast-0820.yaml BEFORE this render
+  existed. NOT approved and NOT cut until all 121 frames have been
+  opened consecutively.
+  THE PLANT CLAUSE OVERRIDES THE PERFORMANCE CLAUSE. Beat 19's motion
+  take turned a two-leaf sapling into a four-leaf prostrate runner in
+  90 frames and undid four drawing rounds. If the plant is not one
+  rooted stem with two leaves at frame 121, this clip is a FAIL
+  however well he acts.
+  STEWARDSHIP.md 6 is DISCHARGED for this beat -- node.md:204, the
+  founder read and approved the 2026-08-17 rewrites on 2026-08-19 --
+  which is what makes a footage render legal here. It confers no
+  verdict on these pixels.

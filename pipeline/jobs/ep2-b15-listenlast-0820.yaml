@@ -389,3 +389,23 @@ derivation:
     seed:
     - payload b15-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+skin_probe:
+  box_xyxy_in_the_704x1280_init:
+  - 302
+  - 408
+  - 356
+  - 448
+  placed_on: his left cheek, below the spectacle rim and above the cloak collar -- SKIN, not
+    cloth, chosen by eye at 5x on the real cropped init and not by any colour rule
+  f000_reading: R 67.9 G 114.6 B 50.3, R-B 17.6, luma 93.3 (std 20.3)
+  how_to_read_it: Re-measure the same box on f120 and publish R, G, B, R-B and luma beside
+    these. A green-skinned figure on a green field is exactly the case where one scalar decides
+    nothing, so the whole triple is published and the verdict is written by eye against it.
+  carried_verbatim_from: 'ep2-b15-listenmotion-0820.yaml, where it was placed by eye at 5x
+    BEFORE that job''s pixels existed. Rung 2 renders the same init at the same sha, the same
+    anchor and the same 704x1280 crop, so the box lands on the same skin. Copied byte for
+    byte and labelled rather than re-placed: re-placing a probe after the frames exist is
+    choosing the number, and measure_sapcomp_motion_0820.py refuses to run without one precisely
+    so that this decision has to be made out loud.'

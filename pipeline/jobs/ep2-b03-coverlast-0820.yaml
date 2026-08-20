@@ -391,3 +391,77 @@ derivation:
     seed:
     - payload b03-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+skin_probe:
+  box_xyxy_in_the_704x1280_init:
+  - 232
+  - 352
+  - 282
+  - 404
+  placed_on: his cheek and jaw, below the eye and above the black scarf -- SKIN, not cloth,
+    chosen by eye at 5x on the real cropped init and not by any colour rule
+  f000_reading: R 101.5 G 108.2 B 70.1, R-B 31.4, luma 101.8 (std 20.8)
+  how_to_read_it: Re-measure the same box on f120 and publish R, G, B, R-B and luma beside
+    these. A green-skinned figure on a green field is exactly the case where one scalar decides
+    nothing, so the whole triple is published and the verdict is written by eye against it.
+  carried_verbatim_from: 'ep2-b03-covermotion-0820.yaml, where it was placed by eye at 5x
+    BEFORE that job''s pixels existed. Rung 2 renders the same init at the same sha, the same
+    anchor and the same 704x1280 crop, so the box lands on the same skin. Copied byte for
+    byte and labelled rather than re-placed: re-placing a probe after the frames exist is
+    choosing the number, and measure_sapcomp_motion_0820.py refuses to run without one precisely
+    so that this decision has to be made out loud.'
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'THE PLACEMENT WORKED AND G2 -- THE COST THIS SPEC PRE-REGISTERED -- FIRED WITH
+  IT, SO THIS IS A FAIL WITH THE MECHANISM PROVEN. Rung 1 stood him up at f090 and had him
+  out of frame by f114 against a negative that named `standing up` in its first clause. Rung
+  2 changed ONE SENTENCE -- same init, same sha, same anchor, same seed 20260820, same negative
+  byte for byte, same every flag -- and HE STAYS DOWN: at f120 he is still crouched low behind
+  the plant, in frame, head at leaf level. The negative could not do it and one placement
+  of the last frame did. AND THEN THE CLIP DIES: judge_clip reports 33 FRAMES DEAD AT THE
+  TAIL, FROM FRAME 88, ncc exactly 1.0000. He holds the pose because the render stopped, not
+  because he is holding it.'
+verdict_measured:
+  G3_he_is_still_crouched_in_the_last_frame: PASS, AND IT IS THE POINT OF THE RUNG. At f060,
+    f090 and f120 he is hunched right down in the grass behind the two-leaf plant with his
+    head at leaf height and his whole body in frame. Rung 1's f120 was empty grass with his
+    legs at the edge. One sentence.
+  G5_the_duck_survives_the_lock: PASS ON PRESENCE, FAIL ON LIFE. The duck is there -- it arrives
+    around f036 and is deep by f060, the same shape rung 1 achieved -- but it stops moving
+    at f088 and the last 33 frames are byte-identical. Rung 1 is the control and it did not
+    freeze at all (judge_clip FREEZE none, ncc floor 0.603); rung 2's ncc floor rises to 0.891,
+    i.e. every pair changes less, and then stops.
+  G6_the_cover_is_still_comically_inadequate: PASS. He is plainly visible at f120 -- a hunched
+    adult goblin with a two-leaf seedling in front of him hiding a strip of one arm. Nothing
+    conceals him at any point.
+  G2_the_pre_registered_cost: FIRED, AND IN ITS SHARPEST POSSIBLE FORM. This spec said in
+    advance that a clip which holds the last frame by holding EVERY frame is a FAIL and not
+    a pass, on the precedent of ep2-b04-headlock-0820 whose lock cut head travel 64.7 px ->
+    4.7 px and took the eyes with it. Here the trade is not a quiet damping, it is a hard
+    terminal freeze at f088. REPORTED AS THE FAIL IT WAS DECLARED TO BE.
+  A1_the_plant_holds: PASS, third time on this beat. One thin stem, two leaves, rooted, at
+    f000, f030, f060, f090 and f120.
+  A2_the_ratified_adult_holds: 'PASS ON THE EYES; the fixed box is void at f120 again and
+    this time for a DIFFERENT reason worth distinguishing. Box (232,352,282,404) reads luma
+    97.9 / R-B 33.6 at f000 and 227.6 / 22.3 at f120 with luma_std 17.9 -> 6.5. In rung 1
+    the box emptied because he LEFT THE FRAME; here he never leaves -- HIS HEAD DROPPED BELOW
+    THE BOX. Same void, opposite cause, and neither is visible in the mean. At 1:1 on f060
+    and f120 he is the ratified lean adult: green skin, bald dome, long pointed ear, patterned
+    cloak.'
+  A3_camera_locked: PASS. Horizon and hill line hold their rows for all 121 frames.
+  A5_no_exposure_blowout: 143.3 -> 155.4, +12.2, statistically identical to rung 1's +12.8
+    -- and confounded the same way, by his dark mass ducking out of the upper frame. Reported,
+    not scored, for the reason given in rung 1's verdict.
+what_the_next_rung_is: 'THE MECHANISM IS SETTLED AND SHOULD NOT BE RE-TESTED: a placement
+  of the last frame holds this engine in place where a negative cannot. What is open is the
+  COST, and the next rung is aimed at it and not at the position. Options in the order this
+  lane would take them: (1) place a MIDDLE as well as an end -- name what he is doing at the
+  halfway point, so the sampler has somewhere to go between f000 and the terminal attitude,
+  which is the natural extension of the finding rather than a new mechanism; (2) if that also
+  freezes, the finding is that the terminal placement saturates the conditioning and the remedy
+  is mechanical -- a shorter render, since 121 frames of a five-second beat at 24 fps is the
+  full slot and a 73-frame clip has no dead tail to fill. DO NOT reach for a flag, do not
+  re-roll the seed, and do not touch the plate: the plant, the framing, the camera and the
+  identity have now held across two rungs.'
+cost: $0. One GPU fire, one seed, no retries. 121 frames, rc=0 on all seven steps.

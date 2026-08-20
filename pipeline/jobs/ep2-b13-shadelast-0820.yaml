@@ -396,3 +396,79 @@ derivation:
     seed:
     - payload b13-jobs-render.json (20260820 -> 20260820, re-parsed)
   seed: 20260820
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+skin_probe:
+  box_xyxy_in_the_704x1280_init:
+  - 286
+  - 282
+  - 352
+  - 336
+  placed_on: his cheek, below the eye and clear of the ink linework -- SKIN, not cloth, chosen
+    by eye at 5x on the real cropped init and not by any colour rule
+  f000_reading: R 100.1 G 123.8 B 65.7, R-B 34.4, luma 110.1 (std 6.0)
+  how_to_read_it: Re-measure the same box on f120 and publish R, G, B, R-B and luma beside
+    these. A green-skinned figure on a green field is exactly the case where one scalar decides
+    nothing, so the whole triple is published and the verdict is written by eye against it.
+  carried_verbatim_from: 'ep2-b13-shademotion-0820.yaml, where it was placed by eye at 5x
+    BEFORE that job''s pixels existed. Rung 2 renders the same init at the same sha, the same
+    anchor and the same 704x1280 crop, so the box lands on the same skin. Copied byte for
+    byte and labelled rather than re-placed: re-placing a probe after the frames exist is
+    choosing the number, and measure_sapcomp_motion_0820.py refuses to run without one precisely
+    so that this decision has to be made out loud.'
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'THE PLACEMENT WORKED ON EVERY CLAUSE IT WAS AIMED AT, AND G2 TOOK THE PERFORMANCE
+  -- FAIL, with the largest measured confirmation of the placement mechanism this ladder has.
+  Rung 1 rose at f084 and was out of frame by f114, and its head tipped FORWARD into its own
+  knees so that the face was gone from f024 to f078. Rung 2 changed ONE SENTENCE at the same
+  init, sha, anchor, seed and negative, and BOTH OF THOSE ARE FIXED: he is still sitting folded
+  small with his knees up at f120, and his FACE IS READABLE IN EVERY FRAME. The founder''s
+  `no slide, he sits down beside it` now holds. What it cost is everything that was moving:
+  face-band interframe collapsed from mean 10.80 to 0.64, SEVENTEENFOLD, and over the last
+  twenty frames from 24.07 to 0.148.'
+verdict_measured:
+  G3_he_is_still_seated_knees_up_in_the_last_frame: PASS, and it is a FOUNDER ruling being
+    satisfied rather than a steward preference -- `the shipped version stands (no slide, he
+    sits down beside it, thin shade)`, 2026-08-18. At f120 he is folded small in the grass
+    with his knees up, exactly as the plate has him. Rung 1 was walking away by f114.
+  G7_the_tilt_is_SIDEWAYS_and_the_face_stays_readable: 'PASS ON THE FACE, WEAK ON THE TILT.
+    The face is forward and readable at f000, f030, f060, f090 and f120 -- eyes, brow and
+    mouth all legible -- which is the whole of what rung 1 lost when its head folded into
+    its knees and left a bald dome and a shadow for fifty frames. The sideways component is
+    present but small: he leans, he does not tip. Given G2 below, the small tilt is not a
+    separate defect -- it is the same defect.'
+  G8_the_shade_lands_on_his_eyes: 'FAIL, as this spec said in advance it probably would. The
+    plate''s shade is thin and its frame is the green gloom beat 13''s plate verdict recorded
+    as CARRIED, NOT FIXED. Per this spec''s own clause: G3 and G7 passed and only G8 failed,
+    so THIS BEAT''S NEXT RUNG IS A PLATE EXPOSURE RUNG AND NOT ANOTHER WORDING.'
+  G2_the_pre_registered_cost: 'FIRED, AND IT IS THE MEASUREMENT THAT MAKES THIS RUNG WORTH
+    ITS GPU MINUTES. Face band (250,240,400,360), mean absolute interframe luma over all 120
+    pairs: RUNG 1 10.80, RUNG 2 0.64. Over the last twenty pairs: 24.07 -> 0.148. judge_clip''s
+    ncc range tells the same story from the whole frame: 0.687..1.000 becomes 0.972..0.9997,
+    i.e. the largest single-pair change in rung 2 is smaller than rung 1''s typical one. No
+    terminal freeze -- unlike its beat-03 sibling, which died outright at f088 -- so this
+    is the DISTRIBUTED form of the cost: nothing stopped, everything got quiet. Declared a
+    FAIL in advance and reported as one.'
+  A1_the_plant_holds: PASS, third time on the hardest plate in the set. One stem, two leaves,
+    rooted, at all five sampled frames, on a frame that is green foliage edge to edge.
+  A2_the_ratified_adult_holds: 'PASS, MEASURED END TO END, and this is the FIRST CLIP OF THE
+    FOUR WHERE THE PRE-REGISTERED BOX IS STILL VALID AT f120 -- because he is still under
+    it. Box (286,282,352,336): f000 R 98.8 G 121.1 B 64.3, R-B 34.4, luma 108.0; f120 R 97.2
+    G 115.6 B 67.7, R-B 29.5, luma 104.6. That is -3.4 luma and -4.9 R-B across the whole
+    clip, inside a +/-25 and +/-15 bar. luma_std 6.0 -> 0.6 is not an identity reading, it
+    is G2 again: the cheek stopped changing.'
+  A3_camera_locked: PASS.
+  A5_no_exposure_blowout: PASS AND FINALLY UNCONFOUNDED, which is itself the proof of rung
+    1's instrument finding. 97.7 -> 92.7, -5.0 across 121 frames. Rung 1 read +44.4 on the
+    same init, the same seed and the same recipe; the only difference is that in rung 1 he
+    walked out of the frame and in rung 2 he did not. The +44.4 was the exit and never the
+    exposure.
+what_the_next_rung_is: 'TWO, IN THIS ORDER, AND NEITHER IS A WORDING. (1) THE PLATE. This
+  spec pre-registered that if G3 and G7 passed and only G8 failed, beat 13''s next rung is
+  a PLATE EXPOSURE rung -- the DIM green-gloom plate, named as CARRIED NOT FIXED by the composite
+  job before either motion take existed. The shade cannot land on his eyes in a frame that
+  has no light in it. (2) THE COST, shared with ep2-b03-coverlast-0820: place a MIDDLE as
+  well as an end so the sampler has somewhere to go, or shorten the render. DO NOT re-roll
+  the seed, do not touch the flags, and do not re-word the position -- it is solved.'
+cost: $0. One GPU fire, one seed, no retries. 121 frames, rc=0 on all seven steps.
