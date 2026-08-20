@@ -146,6 +146,42 @@ IP_WEIGHT = "ip-adapter-plus_sdxl_vit-h.safetensors"
 IP_IMAGE_ENCODER_FOLDER = "models/image_encoder"   # see the trap above
 IP_SCALE = 0.7            # the value diffusers' own masking example uses
 
+# WHICH ADAPTER WEIGHTS MAY BE NAMED, AND WHY THIS TABLE IS NOT OPTIONAL.
+# Same discipline as CONTROLNETS above, and it earns its place here for a reason
+# that table does not have: **THE TWO SDXL ViT-H ADAPTERS ARE THE SAME NUMBER OF
+# BYTES.** `ip-adapter-plus_sdxl_vit-h.safetensors` and
+# `ip-adapter-plus-face_sdxl_vit-h.safetensors` are both 847,517,512 bytes
+# exactly. A size check passes on the wrong one. A filename typo that resolves
+# to a real file in that repo is a DIFFERENT MODEL rendering under the sidecar
+# of the one the verdict thinks it is reading -- and rungs k1..k5 have filed
+# verdicts resting on the `plus` weight specifically.
+#
+# So the digest travels WITH the name, in one table, and an unlisted weight is
+# refused before any model loads. This is mac_preflight's rule at the adapter
+# level: macbook1 rendered SDXL as pure noise for days on a UNet that was the
+# exact right LENGTH.
+#
+# The `.bin` variants are deliberately absent. They are pickles, they are a
+# different size (1,013,454,761 for the face one), and safetensors carries the
+# same weights without the pickle.
+IP_WEIGHTS = {
+    "ip-adapter-plus_sdxl_vit-h.safetensors":
+        "apache-2.0 (D15 SAFE, no attribution condition) -- h94/IP-Adapter "
+        "sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors, 847517512 bytes, "
+        "sha256 3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581. "
+        "The general (non-face) PLUS adapter; the weight every rung from k1 to "
+        "k5 was measured on",
+    "ip-adapter-plus-face_sdxl_vit-h.safetensors":
+        "apache-2.0 (D15 SAFE, no attribution condition) -- h94/IP-Adapter "
+        "sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, 847517512 "
+        "bytes, sha256 "
+        "677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, "
+        "fetched by ep2-ipa-facewt-fetch-0821. THE SAME LENGTH as the general "
+        "adapter above and only the digest separates them. Trained for faces "
+        "that must survive a small share of the reference, which is the regime "
+        "where k5a's mouth disappeared",
+}
+
 
 
 def sha256_file(path):
@@ -579,7 +615,22 @@ def render(a):
                 return 11
             ref_paths.append(rp)
             ref_shas.append(sha)
-        ip = {"repo": a.ip_repo, "licence": IP_LICENCE,
+        # THE WEIGHT IS ALLOWLISTED BEFORE ANY MODEL LOADS. See IP_WEIGHTS: the
+        # face and non-face SDXL adapters are the same number of bytes, so the
+        # digest is the only thing that separates them and the sidecar must
+        # carry it.
+        if a.ip_weight not in IP_WEIGHTS:
+            print("!! %r is not in this driver's IP-Adapter allowlist. The "
+                  "digest travels with the name (see IP_WEIGHTS) because "
+                  "ip-adapter-plus_sdxl_vit-h and ip-adapter-plus-face_sdxl_"
+                  "vit-h are BOTH 847,517,512 bytes -- a size check passes on "
+                  "the wrong one and the sidecar would name a model that did "
+                  "not render the frame. Add it to the table with its real "
+                  "digest and licence, or use one of: %s"
+                  % (a.ip_weight, ", ".join(sorted(IP_WEIGHTS))),
+                  file=sys.stderr)
+            return 12
+        ip = {"repo": a.ip_repo, "licence": IP_WEIGHTS[a.ip_weight],
               "subfolder": a.ip_subfolder, "weight": a.ip_weight,
               "image_encoder_folder": a.ip_image_encoder_folder,
               "scale": [[float(a.ip_scale)] * len(ref_paths)],
@@ -893,6 +944,28 @@ def selftest():
             check("the IP sidecar records %r" % needle, needle in si)
         check("the IP sidecar still carries the ControlNet block too",
               CONTROLNET in si and "controlnet_conditioning_scale" in si)
+
+        # ---- THE ADAPTER ALLOWLIST -----------------------------------------
+        # The whole reason this table exists, asserted rather than commented:
+        # the two SDXL ViT-H adapters are indistinguishable by length, so the
+        # digest is the only separator and both must carry their own.
+        check("the default IP weight is in the allowlist", IP_WEIGHT in IP_WEIGHTS)
+        check("the FACE adapter is in the allowlist",
+              "ip-adapter-plus-face_sdxl_vit-h.safetensors" in IP_WEIGHTS)
+        check("every allowlisted adapter carries a sha256 in its licence line",
+              all("sha256 " in v and len(v.split("sha256 ")[1].split(",")[0]
+                                          .split(".")[0].strip()) == 64
+                  for v in IP_WEIGHTS.values()))
+        check("the two adapters' digests differ even though their sizes do not",
+              len({v.split("sha256 ")[1][:64] for v in IP_WEIGHTS.values()})
+              == len(IP_WEIGHTS)
+              and all("847517512" in v for v in IP_WEIGHTS.values()))
+        for wname, wlic in IP_WEIGHTS.items():
+            sw = "\n".join(sidecar_lines(
+                ap, True, "deadbeef", "abc", "pos", "neg", 1.0, 2.0, "now",
+                "2.4", ip=dict(ipm, weight=wname, licence=wlic)))
+            check("the sidecar for %s names that weight and ITS OWN digest"
+                  % wname, wname in sw and wlic.split("sha256 ")[1][:64] in sw)
 
         # ---- THE SECOND NET MAY NOT MOVE THE ONE-NET PATHS EITHER ----------
         # Same discipline as the IP-Adapter's, same reason, and asserted against
