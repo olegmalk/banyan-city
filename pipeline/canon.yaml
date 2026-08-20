@@ -609,6 +609,13 @@ subjects:
       * NECK — effectively none. The dome sits on sloped narrow shoulders.
       * SKIN — TWO-TONE: chartreuse/yellow-green over the crown grading to a
         deeper green across the muzzle and jaw. Not one flat olive.
+        <<< WITHDRAWN AS AN ATTRIBUTE, 2026-08-20, ON MEASUREMENT. This is
+        RENDERED LIGHT, not a property of the skin. Asked for as a skin
+        attribute it produces a two-coloured head every time: `two-tone skin`
+        (18,474 posts) means two DISCRETE REGIONS, and rung w3 — which tested
+        the tag in isolation after v7 had confounded it with two others —
+        returned a MAGENTA HALF-HEAD. Do not chase it; chasing it manufactures
+        the defect. Struck from the tile bar.
       * SURFACE — NO AGE MODELLING AT ALL. No brow furrows, no nasolabial folds,
         no cheekbone shadow, no jowls. The face is a smooth mask.
       * BUILD AND STANCE — small, folded, hunched inward, hands clasped between
@@ -635,6 +642,55 @@ subjects:
     has A FULL HEAD OF WHITE HAIR on a character whose canon is bald, plus the
     guard's spectacles. Full table:
     review/ep2-ship-0821/sources/ship-manifest.yaml `goblin_design_audit_0820`.
+
+    THE RECIPE THAT DRAWS THIS CREATURE ON PURPOSE, MEASURED 2026-08-20 NIGHT
+    AND THIS IS THE PART TO COPY. Fourteen samples on the box, $0, one seed,
+    one variable each (`pipeline/derive_b04_tileread_0820.py` then
+    `derive_b04_tilefix_0820.py`; pictures on /review/ep2-goblin-design-0819 as
+    WEDGE-TILEREAD-0820.png and TILEFIX-0820.png). Every token is a Danbooru
+    tag with a post count behind it, because animagine-xl-3.1's own card says
+    it is "optimized for Danbooru-style tags rather than natural language":
+
+      POSITIVE
+        masterpiece, best quality, very aesthetic, 1other, solo, colored skin,
+        green skin, bald, <CLOAK>, blank eyes, tsurime, jitome, no nose,
+        closed mouth, :|, expressionless, <FRAMING>
+      NEGATIVE
+        lowres, worst quality, low quality, text, watermark, pointy ears,
+        long pointy ears, elf, monster boy, pointy nose, dot nose, human face,
+        wrinkled skin, old man, thick eyebrows, hair, beard, child, chibi,
+        grey skin, pale skin, 2boys
+
+      <CLOAK> IS FRAMING-DEPENDENT AND THAT IS A MEASURED RULE, not a taste
+      call: `ragged cloak` at CLOSE-UP, `patchwork cloak` at FULL BODY. At a
+      head-and-shoulders crop the largest surface in frame is the skull, and
+      `patchwork` paints it — stitch marks and a red patch on the head in six
+      of eight rungs. At full body the same tag lands on the cloth where it
+      belongs (w4, w5). Negating it does NOT work: w1 added `scar, stitches`
+      to the negative and the patch came back frame-for-frame identical,
+      exactly as Ban et al. (ECCV 2024, arXiv:2406.02965) predict — a negative
+      acts only after the positive has drawn the thing.
+
+    THREE THINGS THE SAMPLES SETTLED THAT WOULD OTHERWISE BE RE-ARGUED:
+      * THE SUBJECT TAG IS A DEAD LEVER. `1boy` / no count tag / `1other` all
+        drew the same human face, and DROPPING the count tag made it worse (a
+        child). That was the outside research's own top recommendation and the
+        pixels refused it. `1other` is kept only because it is harmless.
+      * `blank eyes` IS THE WHOLE GAME AND `no nose` IS THE SECOND HALF. The
+        eyes rung alone flips the read; the nose-and-mouth rung finishes it.
+      * THE TILE'S EAR ARRIVED WITHOUT BEING ASKED FOR. Danbooru has no tag for
+        a short low swept-back ear — `short pointy ears` has ZERO posts,
+        `round ears` does not exist, `long ears` is an ALIAS to `pointy ears` —
+        so no prompt can request it. Naming no ear tag at all and negating both
+        spike tags produced it anyway. Absence plus suppression was the lever.
+
+    WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
+    it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
+    832x1216). `pipeline/plate_scratch.py` is the MAC authoring path and its own
+    header measures Mac and box as different renderers (MAE 61 of 255 at
+    identical seed, prompt and checkpoint). ITS ~14 IDENTITY SITES ARE NOT
+    UPDATED HERE. A Mac sample of this recipe is one cheap job and it must come
+    before the Mac path adopts it.
 
     THE FINDING THAT MAKES THIS ACTIONABLE, and it is not a wording finding.
     Beat 19 IN THE SHIPPING CUT IS THE TILE — 19-the-drop-dropcomp-0819.mp4 is a
