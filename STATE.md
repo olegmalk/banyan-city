@@ -9580,3 +9580,14 @@ takes landing by 12:00 2026-08-21 enter the final cut; then assembly, founder
 watch-through (his kept publish gate, D-record 08-19), then live. The
 per-beat polish loop STOPS being the priority; the shipped episode is.
 (Founder also rejected the steward's ep1-standards framing — struck, not law.)
+
+## 2026-08-20 — production bar (founder): ONE DAY per episode
+"we should not take a week for sure. we should take a day." Standing target
+from episode 3 on. The enablers, in priority order: (1) character LoRA on the
+canon cast — kills the identity-drift class; (2) scripts written to the
+engine's measured strengths (single figure, ongoing action, no held props /
+two-body staging without a rig); (3) composite-first for plants/props, never
+wording; (4) paid renders for the hardest beats — SPEND, stays founder-gated,
+parked as an open question with a cost estimate. The week-long
+research-per-beat loop was episode 2's cost of discovering the laws; the laws
+are now written and reusable.
