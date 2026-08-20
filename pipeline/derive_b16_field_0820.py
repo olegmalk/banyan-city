@@ -64,9 +64,29 @@ it, including the plant words it would be tempting to add: negatives have failed
 to hold position three for three on this tree, and the composite's mask covers
 whatever the field puts in the foreground anyway.
 
+THE STAGING STEP THIS RECIPE FAMILY NEEDS AND NEVER WROTE DOWN, and it cost
+this lane one dead job. `ep2-b16-field-f1-0820` failed rc=2 three seconds in:
+
+    can't open file 'C:\banyan-farm\b16field-f1-0820\src\pipeline\
+    controlnet_plate.py': [Errno 2] No such file or directory
+
+The step's argv points at `<payload dir>\src\pipeline\controlnet_plate.py` and
+**nothing in the spec, in box_enqueue or in box_runner puts that file there.**
+The parent and its twelve tileset siblings all ran because a human staged it by
+hand a minute before enqueuing; the derivation copies the argv faithfully and
+inherits a precondition that is invisible in the yaml. box_enqueue's payload
+guards cannot see it either -- `src\...` is not a payload key, so there is
+nothing for them to check.
+
+So this file stages it, verifies it, and refuses to claim success otherwise:
+`--stage` (implied by `--write`) mkdirs `<dir>\src\pipeline`, scps
+`pipeline/controlnet_plate.py`, and reads the sha256 BACK OFF THE BOX against
+the local file's. The file is byte-identical at the pinned `--repo-commit`
+d1d559d2 and at HEAD, checked, so staging HEAD's copy is staging the pinned one.
+
 $0, ~3 min each, ~12 min for the set.
 
-Run:  python3 pipeline/derive_b16_field_0820.py [--write]
+Run:  python3 pipeline/derive_b16_field_0820.py [--write] [--stage]
 """
 
 from __future__ import annotations
@@ -156,8 +176,70 @@ that already has him seated at the right depth -- beat 15's or beat 13's, both
 of which are on disk and both of which already carry a composited plant."""
 
 
+STAGED_FILE = "pipeline/controlnet_plate.py"
+BOX = "rtx5090"
+
+
+def _sha256(path: str) -> str:
+    import hashlib
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
+def stage_src(tags) -> int:
+    """Put controlnet_plate.py where every step's argv already says it is.
+
+    Verified by reading the sha BACK OFF THE BOX, not by trusting scp's exit
+    code: this whole function exists because a file that is missing on the box
+    is invisible to every guard between here and the GPU.
+    """
+    import subprocess
+    local = os.path.join(REPO, STAGED_FILE)
+    want = _sha256(local)
+    print("staging %s  sha256 %s" % (STAGED_FILE, want[:12]))
+    bad = []
+    for tag in tags:
+        d = "C:\\banyan-farm\\b16field-%s-0820\\src\\pipeline" % tag
+        subprocess.run(["ssh", "-o", "ConnectTimeout=20", BOX,
+                        "mkdir %s" % d], capture_output=True, text=True)
+        cp = subprocess.run(
+            ["scp", "-q", "-o", "ConnectTimeout=25", local,
+             "%s:C:/banyan-farm/b16field-%s-0820/src/pipeline/controlnet_plate.py"
+             % (BOX, tag)], capture_output=True, text=True)
+        if cp.returncode:
+            bad.append("%s scp rc=%d %s" % (tag, cp.returncode,
+                                            (cp.stderr or "").strip()))
+            continue
+        chk = subprocess.run(
+            ["ssh", "-o", "ConnectTimeout=20", BOX,
+             "certutil -hashfile C:\\banyan-farm\\b16field-%s-0820\\src\\"
+             "pipeline\\controlnet_plate.py SHA256" % tag],
+            capture_output=True, text=True)
+        have = ""
+        for ln in (chk.stdout or "").splitlines():
+            ln = ln.strip().replace(" ", "")
+            if len(ln) == 64 and all(c in "0123456789abcdefABCDEF" for c in ln):
+                have = ln.lower()
+                break
+        if have != want:
+            bad.append("%s sha on box %r != %r" % (tag, have[:12], want[:12]))
+        else:
+            print("  %s  staged and verified on the box" % tag)
+    for b in bad:
+        print("!! %s" % b)
+    return 1 if bad else 0
+
+
 def main() -> int:
     write = "--write" in sys.argv
+    if "--stage" in sys.argv or write:
+        rc = stage_src([t for t, _, _, _ in VARIANTS])
+        if rc:
+            print("!! staging failed -- not writing specs for a step whose "
+                  "script is not on the box.")
+            return rc
+        if "--stage" in sys.argv and not write:
+            return 0
     bad = []
     for tag, framing, seed, serves in VARIANTS:
         new_id = "ep2-b16-field-%s-0820" % tag
