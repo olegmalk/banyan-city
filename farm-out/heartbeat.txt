@@ -3203,3 +3203,5 @@
 17:22:38Z box-runner idle ready=0 failed=46
 17:32:42Z box-runner idle ready=0 failed=46
 17:42:46Z box-runner idle ready=0 failed=46
+17:48:11Z STARTED task=ep2-b04-tileread-v0-0820-1787248084 attempt=1 on box-runner
+17:48:15Z FAIL task=ep2-b04-tileread-v0-0820-1787248084 rc=9 step=hintskel
