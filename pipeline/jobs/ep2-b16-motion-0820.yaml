@@ -1,0 +1,315 @@
+id: ep2-b16-motion-0820
+task: ep2-b16-motion-0820
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b16-motion-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b16-motion-0820\b16-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: a young green sapling with TWO wide oval leaves on one thin stem, close to the camera
+    and large in the foreground, rooted in a sunny grassy field, and behind it ONE lean wiry adult goblin
+    man alone, green skin, bald head, patchwork cloak, sitting on the grass further away, smaller and
+    softer than the plant. THE MAN BEHIND IS TALKING, ON AND ON: his mouth opens and closes as he speaks,
+    his jaw works, his head moves a little as he makes his point and his shoulders shift with it, and
+    he is still going. THE SAPLING IN FRONT HOLDS ITS PLACE: its two leaves hang where they are on their
+    stem, steady and heavy, and the daylight slides slowly across them. HALFWAY THROUGH he is mid-sentence
+    with his mouth open and the two leaves are hanging exactly where they began. AT THE END he is still
+    talking, mid-word, and the leaves are still hanging in the same place, the conversation unfinished
+    and carrying on past the last frame. The plant stays THE SAME PLANT from the first frame to the last:
+    the same two leaves, the same one stem. The light is CONSTANT and does not flicker, pulse or strobe.
+    Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b16-motion-0820\b16-negative.txt: second face, second goblin, two goblins, 2boys,
+    crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing,
+    morphing, melting face, skin colour change, human skin, pale skin, hair, wig, glasses, three leaves,
+    four leaves, many leaves, leaflets, extra stalk, branching stem, second plant, two plants, flower,
+    fruit, large tree, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow,
+    camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod,
+    camera, camera equipment, film equipment, walking out of frame, leaving the frame, standing up, scene
+    change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action,
+    motion blur, text
+  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-negative.txt"}]'
+  C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-render.json: '[{"beat": 4, "seed": 20260821, "embeds": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-embeds.pt",
+    "init": "C:\\banyan-farm\\ep2-b16-motion-0820\\b16-init-704x1280.png", "out": "C:\\banyan-farm\\ep2-b16-motion-0820\\16-why-LTX-ep2-b16-motion-0820.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b16-motion-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b16-sapcomp-r2-0820\b16-sapcomp-s20260820.png
+  - --sha256
+  - 8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71
+  - --out
+  - C:\banyan-farm\ep2-b16-motion-0820\b16-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b16-motion-0820\b16-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b16-motion-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b16-motion-0820\bench-ep2-b16-peek-s3-0820.jsonl
+  - --bench-label
+  - ep2-b16-motion-0820
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-motion-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/16-why-LTX-ep2-b16-motion-0820.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/b16-init-704x1280.png\")\n      \
+    \       + glob.glob(\"C:/banyan-farm/ep2-b16-motion-0820/bench-ep2-b16-peek-s3-0820.jsonl\"))\nlines\
+    \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b16-motion-0820.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\n\
+    raise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b16-motion-0820\16-why-LTX-ep2-b16-motion-0820.mp4
+- C:\banyan-farm\ep2-b16-motion-0820\b16-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched; the staging is a stage direction, logged by the coordinator lane
+  on 2026-08-20 as the option satisfying both the brief and the founder''s own 08-17 canon ruling. His
+  card /review/ep2-b16-leaf-0820 remains open and unanswered.'
+script_line: 'Beat 16 WHY (1:15-1:22), node.md verbatim: "Close on the sapling''s leaf; the scavenger
+  sits blurred behind it." RESTAGED 2026-08-20 to CLOSE ON THE WHOLE CANON SAPLING with him behind it.
+  The VO is the SAPLING''S and is unchanged -- the founder''s own 2026-08-19 word to keep it: "He talks
+  to me because I''m the only thing here that won''t file a report. Buddy, I wish I could. I can''t even
+  wave." THAT LINE IS WHY THE PLANT MUST NOT MOVE.'
+owner: beat-16 restage lane, 2026-08-21
+consumer: BEAT 16'S SLATE IN THE EPISODE 2 CUT -- one of the last two empty slots, and the only beat in
+  the episode with no footage candidate of any kind. Three wordings, a big-leaf composite and a four-plate
+  field batch all failed it. Its first real plate landed tonight (ep2-b16-sapcomp-r2-0820) and this is
+  the clip made from it. If it holds, beat 16 stops being a slate.
+success: 'One 704x1280 121-frame mp4 in which THE PLANT HOLDS STILL AND THE MAN BEHIND IT TALKS. T0 first:
+  camera locked, top-corner mean abs luma under ~3 against f001. Then M1 two leaves on one stem in the
+  same place at f121 as at f001 -- this beat''s joke is that it cannot wave, so a waving plant is the
+  wrong shot, not a lively one; M2 still exactly two leaves, canon sapling-two-leaves, which a composited
+  plant under 121 frames of i2v has never been asked to survive before; M3 he is visibly talking, mouth
+  and shoulders; M4 still moving inside the last twenty frames; M5 one man, seated, no melt; M6 the plant
+  is still the subject and still in front.'
+why: $0, ~7 minutes, one seed, and it is the last step between beat 16 and a footage candidate it has
+  never had. The recipe is the crf-10 i2v family that has run clean eight times this week; only the init
+  and the words change, so a bad result is attributable to this beat rather than to the recipe. One sample
+  before any batch -- and this init has never been animated.
+bar: "JUDGED BY EYE AT 1:1, AND T0 IS READ BEFORE ANY OTHER CLAUSE.\n  T0 CAMERA LOCKED -- mean abs luma\
+  \ of the two TOP corner patches against f001,\n     under ~3. Bought on beat 04 the hard way: s5 was\
+  \ the best-looking clip in\n     its batch, would have been picked by eye, and read 49.4 and 52.2. A\
+  \ clip\n     that fails T0 is not scored further.\n  M1 THE PLANT HOLDS. Two leaves, one stem, in the\
+  \ same place at f121 as at\n     f001. This beat's whole joke is that it cannot wave, so a waving plant\
+  \ is\n     not a lively take, it is the wrong shot.\n  M2 STILL TWO LEAVES at f121. Canon `sapling-two-leaves`.\
+  \ i2v growing a third\n     is the named risk of animating a composited plant and it is the one thing\n\
+  \     no amount of good motion redeems.\n  M3 HE IS TALKING. Mouth opening and closing, some head and\
+  \ shoulder movement.\n     A frozen man behind a still plant is a photograph, and the beat is a\n  \
+  \   conversation.\n  M4 STILL GOING AT f121 -- visible movement in the last twenty frames. b03 and\n\
+  \     b13 both bought their hold by killing the clip; the placement here names an\n     ongoing action\
+  \ for exactly that reason.\n  M5 THE FIGURE SURVIVES -- one man, seated, no melt, no second goblin,\
+  \ no drift\n     into the plant.\n  M6 THE PLANT IS STILL THE SUBJECT. It is in front and it stays in\
+  \ front; if\n     the pass pulls focus to him the shot has inverted.\nNOT SCORED: which goblin design\
+  \ he is. The plate carries the superseded adult\nand the creature ruling is a separate re-render for\
+  \ a separate day."
+failure_predicted_in_advance: "M1 IS THE RISK AND IT IS THE OPPOSITE OF THE USUAL ONE. Every\nother beat\
+  \ this week fought to get MOTION out of this engine; here the composited\nplant is the largest, highest-contrast\
+  \ object in the frame and i2v likes to move\nexactly that. If the leaves swing, the beat is lost in\
+  \ the funniest possible way\n\u2014 an engine waving the plant that says it cannot wave \u2014 and the\
+  \ next lever is a\nterminal placement of the leaves' position, not a negative.\nSECOND, AND SPECIFIC\
+  \ TO A COMPOSITED INIT: M2. The plant is drawn geometry that\nsurvived one 0.30 pass; 121 frames of\
+  \ i2v is a much longer argument with it, and\na third leaf or a branching stem is how it would lose.\
+  \ No i2v run in this tree\nhas ever animated a composited plant AS THE SUBJECT -- b19, b15, b03 and\
+  \ b13 all\ncarried theirs as small set dressing -- so this is genuinely unmeasured.\nTHIRD: M3 AND M1\
+  \ MAY BE COUPLED. Beat 04 measured that holding the head holds\nthe eyes on this engine; if holding\
+  \ the plant also holds HIM, this beat needs\nits stillness and its performance to come from different\
+  \ places and the honest\nnext instrument is a composite of two renders rather than one prompt.\nNOT\
+  \ PREDICTED, WATCHED ANYWAY: the mouth. b04 and b09 spent the week keeping\nmouths SHUT and their negatives\
+  \ are full of `open mouth`, `talking`, `lip sync`.\nThose words are deleted here because this man speaks\
+  \ -- if the deletion also\nremoves something that was holding the face together, that is a finding about\n\
+  the negative and not about the beat."
+init_provenance: 'farm-out/ep2-b16-sapcomp-r2-0820/b16-sapcomp-s20260820.png, sha256 8f4e9ba3...bc71,
+  read off the box''s own courier mirror and asserted by the crop step. It is the output of ep2-b16-sapcomp-r2-0820:
+  the canon sapling drawn by pipeline/beat16_sapling_composite.py into ep2-b15-mac-plate-0819''s pre-composite
+  plate (weed erased first via b19''s flood matte and within-class fill) and finished with one 0.30 pass.
+  Its six plate clauses all passed by eye; detail on the drawn plant rose 5.751 -> 5.836 and the pass
+  moved 16.0 per pixel, against the big-leaf attempt''s 10.45 -> 9.41.'
+not_done_on_purpose: 'No crop change. No crf, guidance or sigma change. No second seed. No goblin-design
+  change -- the plate carries the superseded adult and that is a separate re-render. No cut swap and no
+  plate_ack: beat 16 stays a slate until the founder screens something, and his /review/ep2-b16-leaf-0820
+  card is still open with `licence` still available to him.'
+pre_registered_fail_modes: M-WAVE the leaves swing, which loses the beat in the funniest available way
+  and is the likeliest outcome, because the composited plant is the largest high-contrast object in frame
+  and i2v moves exactly that. M-THIRDLEAF the plant grows a leaf or a branch across 121 frames; unmeasured,
+  because no i2v run in this tree has animated a composited plant as the SUBJECT. M-FROZEN the plant holds
+  and takes the man with it -- beat 04 measured that holding the head holds the eyes on this engine, and
+  if stillness is similarly contagious here the beat needs two renders rather than one prompt. M-MOUTH
+  the deleted mouth negatives were also holding the face together and it drifts. M-INVERT the pass pulls
+  focus to him and the plant stops being the subject.
+the_one_variable: 'THE INIT AND THE WORDS -- there is no earlier rung on this beat to hold a variable
+  against, because this is its first animation of any kind. Every generative flag is the parent''s: 704x1280,
+  121 frames, 24 fps, guidance 2.0, distilled sigmas, two-stage, --image-crf 10, sequential offload. THE
+  NEGATIVE''S MOUTH BLOCK IS DELETED and the plant-count words added; both are forced by the beat -- b04''s
+  negative bans `open mouth`, `talking` and `lip sync` and this man is speaking. Nothing else in it moved.'
+the_plate_reservation_carried_forward: 'S1 PASSED WITH A CAVEAT AND IT IS CARRIED HERE RATHER THAN DROPPED.
+  The relation is unambiguous -- the plant is in front, large, and occludes him -- but the eye still goes
+  to his FACE first, because he is a face and the plant is a shape. The plate spec pre-registered this
+  and named the lever: a tighter crop, which beat 09 proved this week survives i2v at 105% of frame 1''s
+  high-frequency energy. That lever is NOT taken here, because cropping and animating in the same job
+  would leave two candidate causes for anything that happens.'
+why_the_word_wave_is_not_in_the_prompt: 'The joke is `I can''t even wave` and the obvious sentence is
+  `the leaves do not wave`. THAT IS THE BEAT-15 TRAP AND THIS TREE HAS PAID FOR IT TWICE: a negation inside
+  the POSITIVE is not a prohibition, it is the noun phrase, placed. `Nobody touches the plant` closed
+  a fist on the plant at f105 and the sapling was uprooted by f120. So the leaves are given something
+  to do that is not waving -- they hang, they hold, the daylight slides across them -- and the word never
+  appears in either file.'
+derivation:
+  parent: pipeline/jobs/ep2-b04-peek-s3-0820.yaml
+  by: pipeline/derive_b16_motion_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_one_variable
+  - the_plate_reservation_carried_forward
+  - why
+  - why_the_word_wave_is_not_in_the_prompt
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - one_sample_rule
+  - pre_registered_fail_modes
+  - the_design_note_up_front
+  - the_one_variable
+  - the_placement_law_as_applied
+  retokened:
+  - 04-the-footnote-LTX -> 16-why-LTX
+  - b04-motion-prompt -> b16-motion-prompt
+  - b04-negative -> b16-negative
+  - b04-jobs- -> b16-jobs-
+  - b04-init- -> b16-init-
+  - b04-embeds -> b16-embeds
+  - bench-ep2-b04 -> bench-ep2-b16
+  - ep2-b04-peek-s3-0820 -> ep2-b16-motion-0820
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350 -> 8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b16-sapcomp-r2-0820\b16-sapcomp-s20260820.png)
+    key:beat:
+    - key beat = 16
+    key:est_minutes:
+    - key est_minutes = 7
+    key:script_authority:
+    - 'key script_authority = "Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+      `approved_on: 2026-08-03`. The line is untouched; the staging is a stage direction, logged by the
+      coordinator lane on 2026-08-20 as the option satisfying both the brief and the founder''s own 08-17
+      canon ruling. His card /review/ep2-b16-leaf-0820 remains open and unanswered."'
+    key:script_line:
+    - 'key script_line = ''Beat 16 WHY (1:15-1:22), node.md verbatim: "Close on the sapling\''s leaf;
+      the scavenger sits blurred behind it." RESTAGED 2026-08-20 to CLOSE ON THE WHOLE CANON SAPLING with
+      him behind it. The VO is the SAPLING\''S and is unchanged -- the founder\''s own 2026-08-19 word
+      to keep it: "He talks to me because I\''m the only thing here that won\''t file a report. Buddy,
+      I wish I could. I can\''t even wave." THAT LINE IS WHY THE PLANT MUST NOT MOVE.'''
+    payload:b16-motion-prompt.txt:
+    - payload b16-motion-prompt.txt (1411 -> 1355 chars)
+    payload:b16-negative.txt:
+    - payload b16-negative.txt (728 -> 780 chars)
+    seed:
+    - payload b16-jobs-render.json (20260822 -> 20260821, re-parsed)
+  seed: 20260821
