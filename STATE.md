@@ -9565,3 +9565,9 @@ lid close; requires AC). No Xcode CLT / python3 — NOT a render node until CLT
 is installed at the keyboard. macbook5 same day: disablesleep applied after the
 founder supplied the password; both machines are dad's-Claude territory, not
 farm.
+
+## 2026-08-20 correction (founder): ALL SIX Macs are shared, full access both ways
+"we and dad both have full access to all 6. dont limit yourself" — there is no
+dad-territory/farm-territory split. Steward may use macbook5/6 for any work
+(once CLT exists they can be render nodes too); dad's Claude may use 1-4.
+Courtesy rule stands: don't kill each other's running processes.
