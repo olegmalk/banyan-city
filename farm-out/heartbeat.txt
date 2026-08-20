@@ -3425,3 +3425,5 @@
 23:20:18Z DONE task=ep2-jerry-face-k6a-0821-1787267982 rc=0 artifacts=1
 23:20:27Z STARTED task=ep2-jerry-face-k6b-0821-1787267985 attempt=1 on box-runner
 23:20:55Z DONE task=ep2-jerry-face-k6b-0821-1787267985 rc=0 artifacts=1
+23:21:07Z STARTED task=ep2-jerry-face-k6c-0821-1787267987 attempt=1 on box-runner
+23:21:35Z DONE task=ep2-jerry-face-k6c-0821-1787267987 rc=0 artifacts=1
