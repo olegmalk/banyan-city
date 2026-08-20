@@ -104,6 +104,7 @@ import build_commit  # noqa: E402  one source for "which commit built this"
 import charts  # noqa: E402  the page's pictures, and the one beat-state palette
 import proof_receipts  # noqa: E402  the bytes behind every per-beat claim
 import repo_slug  # noqa: E402  one source for "which repo is this"
+import ship_path  # noqa: E402  the path to the next episode, built from the files
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
 GH = repo_slug.GH_REPO            # pipeline/repo_slug.py — never hardcode the owner
@@ -2193,7 +2194,13 @@ def read_latest_cut(repo=REPO, glob=CUT_DIR_GLOB) -> dict:
         dirs = sorted(p for p in (repo / "review").glob(glob) if p.is_dir())
         read = []                      # newest last, only the ones that parse
         for d in dirs:
-            picks = sorted(d.glob("sources/picks-*.yaml"))
+            # `picks-*.yaml` is what every demo cut writes. The SHIP CANDIDATE
+            # writes `ship-manifest.yaml` instead, because it is not a picks
+            # list — it is the record of what ships and what is wrong with it.
+            # Fallback, not a merge: a directory with both keeps its picks file
+            # and nothing that exists today changes shape.
+            picks = (sorted(d.glob("sources/picks-*.yaml"))
+                     or sorted(d.glob("sources/ship-manifest*.yaml")))
             if not picks:
                 continue
             with open(picks[-1], encoding="utf-8") as fh:
@@ -4805,6 +4812,16 @@ def build(out_dir: Path):
     # the section rather than publishing an ETA it cannot support.
     eta_section = episode_eta_html(eta_rows)
 
+    # --- THE PATH TO THE NEXT EPISODE, in three tenses. Founder, 2026-08-20:
+    # "the full path of making the episode with estimated time for each part,
+    # viewable on the website." The section above answers "when is an episode
+    # finished" in the abstract; this one answers "what is left, in order, and
+    # who is holding each part" for the episode under a ship order. Every count
+    # in it is read at build time from the ship cut, the readiness ledger, the
+    # box's job records and STATE.md's order — see pipeline/ship_path.py, which
+    # renders "" rather than a guess when those cannot be read.
+    path_section = ship_path.html()
+
     # --- THE SAPLING. The show is called Sapling and the page that shows it
     # being made used to draw it as fifteen emoji in a five-wide grid — one
     # episode's stills, one glyph each, and nothing about the series. The tree
@@ -5301,7 +5318,7 @@ def build(out_dir: Path):
 <meta name="twitter:description" content="{_e(DESC)}">
 <meta name="twitter:image" content="{CANONICAL}/og.png">
 <title>Banyan City — {PAGE_NAME}</title>
-<style>{THEME_CSS}{SIM_CSS}{STRIP_CSS}{charts.CHART_CSS}</style>
+<style>{THEME_CSS}{SIM_CSS}{STRIP_CSS}{charts.CHART_CSS}{ship_path.PATH_CSS}</style>
 </head>
 <body>
 <main>
@@ -5327,6 +5344,8 @@ jobs listed under each one cannot start until it is made, and the number in fron
 how long it has been sitting there.</p>
 <p class="notice" style="margin:.2rem 0 .7rem">{review_pointer(review_open)}</p>
 {waiting_html(inbox, backlog, now)}
+
+{path_section}
 
 {eta_section}
 

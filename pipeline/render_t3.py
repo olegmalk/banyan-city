@@ -594,9 +594,26 @@ def held_still(clips: list) -> bool:
         # misread costs less — footage holds rather than reverses — but it still
         # costs the stretch, and a computed push has no true frame rate to loop.
         meta = lg.sidecar_for(c, lg.META_EXT)
-        if not (meta
-                and "model: none" in meta.read_text(encoding="utf-8",
-                                                    errors="replace")):
+        if not meta:
+            return False
+        text = meta.read_text(encoding="utf-8", errors="replace")
+        if "model: none" not in text:
+            return False
+        # `model: none` MEANS "no sampler ran", AND THAT IS NOT THE SAME THING
+        # AS "no video". A composite is assembled from clips that were rendered:
+        # pipeline/fig_composite.py runs no sampler, writes `model: none`
+        # honestly, and produces 121 real frames at a real 24 fps. Read on the
+        # substring alone, beat 01's chroma composite was classified a held
+        # still on 2026-08-20 and STRETCHED 5.04s to 9.47s — the cold open
+        # played at 0.53x speed, the fig growing in slow motion, and the tool
+        # printed "held still ... stretched" while doing it.
+        #
+        # The discriminator is a DECLARED FRAME RATE. hold_still writes
+        # `seconds:` and deliberately no `fps:`, because a computed push-in has
+        # no true frame rate — that absence is the property the stretch relies
+        # on. Anything that states its own fps is footage and gets footage's
+        # treatment: play once, hold the last frame.
+        if re.search(r"^\s*fps\s*:\s*[0-9]", text, re.M):
             return False
     return True
 
