@@ -1,0 +1,380 @@
+id: ep2-b01-figcomp-heldfield-0820
+task: ep2-b01-figcomp-heldfield-0820
+node: 002b-first-citizen
+beat: 1
+runner: local-mac
+priority: 30
+needs_gpu: false
+max_attempts: 1
+sample: true
+owner: the beat-01 composite lane, 2026-08-20
+consumer: 'THE COLD OPEN OF EPISODE 2''S CUT, which as of this filing holds ep2-b01-fignonly-s20260840-0820
+  as a best-available steward pick with G5a failing and named. This is the LOCALISATION rung that
+  ep2-b01-figcrf10-s20260840-0820''s verdict licensed, and the only route that rung left open: separate
+  the fig from the field in the compositor, because no render setting separates them.'
+success: ONE 704x1280 121-frame mp4 at 24 fps in which the FIG is the crf-33 take's fig, frame for frame,
+  and the FIELD is the crf-10 take's field, frame for frame, joined by fig_track.py's own geometry-anchored
+  per-frame masks -- in which the sapling and shaft regions hold at region NCC 0.45 and 0.70 from f000
+  to the last frame while the fig box stays below 0.30 and the grass floor holds at 0.20, AND the fig
+  still ramps by a continuous path (90% of its growth at or after f060, no single-frame step at or above
+  2.0x, the detector live on every frame) to a deep purple-violet end state, AND the whole-frame luma
+  peak stays within 12.0 levels of f000 with at most 6 frames over 100. Every threshold is carried
+  clause for clause from the parent named in `control`; not one is relaxed. AND the composite must not
+  READ as a composite -- see `pre_registered_fail_modes.F1`, which is a taste clause the numbers cannot
+  reach and is answered by opening the frames at 5x, not by a metric.
+why: '$0, no GPU, no new plate, ~3 minutes of a Mac. Seven beat-01 clips are scored and the pool is
+  exhausted as a render problem. --image-crf 33 grows the fig 14.77x and redraws the field; --image-crf
+  10 holds the field better than anything ever measured on this beat and grows the fig 1.79x. Those are
+  now established as ONE knob at two seeds: --image-crf sets how far the whole picture may drift from
+  its conditioning image and the fig is part of the picture. The flag route is closed by measurement and
+  an intermediate crf is refused in advance. Localisation is the one thing left, both ingredients are
+  already rendered and sha-verified, and the masks it needs already exist and are validated by eye at 5x
+  on exactly these frames.'
+est_minutes: 3
+needs:
+- numpy
+- pillow
+- ffmpeg
+ingredients:
+  GROW_the_fig_comes_from:
+    clip: 01-cold-open-LTX-fignonly-s20260840.mp4
+    job: ep2-b01-fignonly-s20260840-0820
+    image_crf: 33
+    seed: 20260840
+    sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
+    in_repo: review/ep2-demo-0820/sources/01-cold-open-LTX-fignonly-s20260840.mp4
+    note: THIS IS ALSO THE CLIP CURRENTLY IN THE CUT. The rung is trying to beat its own ingredient.
+  HELD_the_field_comes_from:
+    clip: 01-cold-open-LTX-figcrf10-s20260840.mp4
+    job: ep2-b01-figcrf10-s20260840-0820
+    image_crf: 10
+    seed: 20260840
+    sha256: f9dc64a34522f56e42abf0c1c155832772895f57ac6d7480fcc6b01503c9282b
+    in_repo: farm-out/ep2-b01-figcrf10-s20260840-0820/01-cold-open-LTX-figcrf10-s20260840.mp4
+    note: committed BY THIS RUNG. It had been pulled by scp, judged and cited in two ladder entries
+      while existing nowhere in the repository.
+  same_seed_same_init_same_prompts: true
+  both_shas_asserted_before_anything_was_written: true
+steps:
+- name: composite
+  argv:
+  - python3
+  - pipeline/fig_composite.py
+  - --grow
+  - <frames of GROW>
+  - --held
+  - <frames of HELD>
+  - --anchor-mask
+  - b01-nubcomp-s20260826-mask.png
+  - --out-frames
+  - <dir>
+  - --out-json
+  - <json>
+  - --out-mp4
+  - 01-cold-open-COMP-figgrow-on-heldfield-0820.mp4
+- name: judge
+  argv:
+  - python3
+  - pipeline/fig_track.py
+  - --frames
+  - <decoded frames of the OUTPUT mp4, not the pre-encode PNGs>
+  - --anchor-mask
+  - b01-nubcomp-s20260826-mask.png
+artifacts:
+- farm-out/ep2-b01-figcomp-heldfield-0820/01-cold-open-COMP-figgrow-on-heldfield-0820.mp4
+- farm-out/ep2-b01-figcomp-heldfield-0820/01-cold-open-COMP-stillplate-0820.mp4
+- farm-out/ep2-b01-figcomp-heldfield-0820/heldfield.composite.json
+- farm-out/ep2-b01-figcomp-heldfield-0820/stillplate.composite.json
+- farm-out/ep2-b01-figcomp-heldfield-0820/evidence/
+recipe:
+  matte: pipeline/fig_track.py track(mask_sink=...) -- the detector's OWN per-frame boolean mask, the
+    same array its area_px is counted from. Never re-derived, so the thing cut out and the thing scored
+    cannot disagree.
+  dilation: 'exact Euclidean disk, radius max(8, 0.45 x the fig''s equivalent radius) -> 8 px at f000,
+    30 px at f120. NOT cosmetic: fig_track''s binary_open deliberately deletes the thin dark stem, which
+    is right for measuring a fig and wrong for cutting one out, and the stem and contact shadow move WITH
+    the fruit. This is the mitigation for the pre-named risk F1.'
+  feather: Gaussian, radius 0.5 x the dilation.
+  gain_match: 'per-frame scalar, median ring luma of HELD over median ring luma of GROW, clamped to
+    [0.5, 2.0]. Measured range on this build 0.974..1.114. Multiplicative on RGB, so chromaticity and
+    therefore HSV hue and saturation are EXACTLY unchanged: it cannot manufacture or destroy G2.'
+  everything_outside_the_feathered_matte: the held clip's own pixel, untouched.
+  dead_zones: fig_track publishes no matte on a killed frame and this file invents none. GROW is 121/121
+    live, so zero frames were held and `held_on_dead_frames` is empty.
+  matte_area_px: 2007 at f000 -> 29069 at f120, max 29262.
+bar:
+  carried_from: pipeline/jobs/ep2-b01-figcrf10-s20260840-0820.yaml, clause for clause and threshold for
+    threshold, which carried them unchanged from ep2-b01-fignonly-s20260840-0820. Not one number is
+    relaxed for this rung, and none was rewritten after the pixels were seen.
+  how_it_is_judged: pipeline/fig_track.py (selftest 15/15, six frame-backed) against anchor mask
+    b01-nubcomp-s20260826-mask.png, plus the region-NCC and whole-frame-luma probes. Judged on the
+    DECODED OUTPUT MP4, not on the pre-encode PNGs, because the mp4 is what would ship.
+  G1_growth_by_a_continuous_path: SCORED. Detector live on every frame it scores; no single-frame area
+    step at or above 2.0x; the frame reaching 90% of total growth at or after f060.
+  G2_end_state_deep_purple_violet: SCORED, and requires a LIVE final frame -- fig hue 270-320 deg,
+    saturation >= 0.60.
+  G3_exactly_two_leaves_in_every_frame: CARRIED BUT NOT SCORED -- no leaf counter exists. Eye note only.
+  G4_no_size_doubling: SCORED -- maximum single-frame area ratio under 2.0x.
+  G4b_below_the_grass: CARRIED BUT NOT SCORED -- no grass line is defined. Eye note only.
+  G5a_field_stability: SCORED. Region NCC f000 to last frame on four bands -- shaft y0-350; sapling
+    y430-740 x150-560; fig box y700-900 x230-450; grass floor y1000-1280. PASS requires sapling >= 0.45
+    AND shaft >= 0.70 AND grass >= 0.20, with fig box < 0.30.
+  G5b_camera_locked: CARRIED BUT NOT SCORED -- global_zoom refuses. Reported, never scored.
+  H_luma_bloom: SCORED. Peak whole-frame luma within 12.0 levels of f000, at most 6 of 121 frames above
+    luma 100.
+  H1_frozen: SCORED. FAIL if fig-box NCC to the final frame is at or above 0.80 by f060.
+  H5_detach_or_teleport: SCORED. 40 px bound on the fig centroid against the f000 geometric anchor
+    (785.1, 339.4), plus the detector's jump gate.
+  H6_scene_break: SCORED. FAIL if any consecutive whole-frame NCC drops below 0.80.
+  conjunctive: A partial is a FAIL. Three clauses are unscored by declaration (G3, G4b, G5b) and can
+    produce neither a PASS nor a FAIL.
+control: ep2-b01-figcrf10-s20260840-0820 and ep2-b01-fignonly-s20260840-0820, which are this rung's two
+  ingredients. The comparison that matters is against fignonly, because that clip IS in the cut.
+pre_registered_fail_modes:
+  F1_the_fig_reads_as_pasted: 'NAMED IN THE PARENT VERDICT BEFORE THIS RUNG EXISTED. The fig''s own stem
+    and its contact shadow move with the plant in the crf-33 take, so a fig-only matte drops a fruit onto
+    a stem that is somewhere else. No metric in the bar can see this. It is answered by opening
+    f000/f030/f060/f090/f120 at 5x with held, grow and composite side by side, and if it fires the rung
+    STOPS -- there is no polishing loop for a pasted fig.'
+  F2_the_grass_has_to_come_from_the_plate_too: 'NAMED IN THE PARENT VERDICT. The grass floor reads 0.062
+    against a 0.20 bar even at crf 10, so the foreground re-inks regardless of which clip the field comes
+    from, and the composite inherits that failure whole.'
+  F3_the_composite_wins_the_numbers_and_loses_the_picture: G5a passes because the field is literally
+    copied, and the clip is a still with a fruit on it. Watch for it; it is a taste question and it is
+    the founder's under R4.
+script_authority: 'Node 002b-first-citizen, approved_by: founder, approved_on: 2026-08-03. No new prompt,
+  no new render, no new plate -- this rung generates no pixels that a sampler has not already produced
+  under an approved script. $0, silent, no voice synthesis, no episode assembly. Nothing enters the cut
+  without R4.'
+
+# --- appended 2026-08-20 by the beat-01 composite lane, after the pixels.
+verdict_this_job: 'NO SWAP, and the reason is not the one this rung expected.
+
+  F1 -- the pasted fig, the risk this whole route was warned about -- DID NOT FIRE. F2 fired, and
+  the cure named for it turns out to be worse than the disease. And the rung found a third thing
+  nobody had filed: THE G1 CLAUSE, ON THIS BUILD, IS DECIDED BY THE VIDEO ENCODER AND NOT BY THE
+  PICTURE, so it is VOID rather than passed or failed.
+
+
+  THE COMPOSITE WORKS AS A PICTURE. Opened at 5x on f000/f030/f060/f090/f120 with held, grow and
+  composite side by side, the fig sits on the HELD plate''s own stem at every keyframe. Dilating
+  the detector''s mask by 0.45 of the fig''s equivalent radius carries the crown stub and the contact
+  shadow across with the fruit, which is exactly what F1 said would be missing. There is no seam, no
+  halo and no exposure step -- the ring gain match never had to work harder than 1.114x. At 1x it
+  reads as one shot: a locked field with the foreground grass sweeping, and a fig that goes green ->
+  teal -> slate -> deep purple over five seconds. It is the best beat-01 cold open this tree has
+  produced, and it is still not proposed for the cut.
+
+
+  AND IT BEATS ITS OWN INGREDIENT ON THE FIELD, BY A LOT. Region NCC f000->f120: shaft 0.982 and
+  sapling 0.736, against the in-cut take''s -0.324 and 0.055. Whole-frame luma peaks +0.93 against
+  +10.85. Worst consecutive whole-frame NCC 0.9966 against 0.9403. Those are the held clip''s numbers,
+  which is the point: outside the matte the composite IS the held clip.
+
+
+  G5a STILL FAILS, ON ONE BAND, AND F2 IS WHY -- grass floor 0.062 against 0.20, inherited whole from
+  the held plate. But the clause is mis-reading that band, and this lane measured it rather than
+  asserting it. On the held plate the grass band''s CONSECUTIVE-frame NCC is 0.9950 mean / 0.9887 min
+  and its correlation to f000 decays MONOTONICALLY -- 0.842, 0.554, 0.299, 0.098, 0.062 at
+  f010/030/060/090/120. That is a foreground that SWEEPS. The crf-33 control''s same band reads 0.9640
+  / 0.8720 consecutive and decays non-monotonically -- 0.423, 0.019, 0.177, 0.166, 0.038. That is a
+  foreground being RE-INKED. G5a''s grass clause is a two-point f000-to-last statistic and cannot tell
+  those apart. It is failing this clip for grass that moves the way grass moves.
+
+
+  THE CURE F2 NAMED WAS SAMPLED AND IT IS WORSE. --freeze-band 1000:1280 takes the grass from the held
+  f000 and scores grass 1.000 -- BY CONSTRUCTION, which the tool labels in its own output. On screen it
+  TEARS: every blade crossing y=1000 is severed and offset, visible at f060 and blatant at f120,
+  because the blades cross the band boundary. The grass cannot be taken as a band. It can only be taken
+  as a whole plate, and that is a different shot.
+
+
+  THE FINDING THAT VOIDS G1. The composite loses exactly one frame, f001, to the separability gate at
+  1.76 against a bar of 2.00, with template NCC 0.988, margin 0.680 and a 0.73 px jump -- the detector
+  plainly found the right object and declined to stand behind it. Both ingredients clear that gate at
+  the same frame on their own pixels (grow 2.27, held 2.90); only the composite sits on it. And then the
+  same composite PNG frames were encoded five ways:
+
+
+  PNG, no encode 1.76 DEAD | libx264 crf 0, mathematically lossless 1.88 DEAD | crf 10 1.88 DEAD |
+  crf 14 1.84 DEAD | crf 18 2.18 OK | crf 23 2.25 OK.
+
+
+  The answer straddles the gate on an encoder setting, and BACKWARDS -- the more compressed encode
+  passes, because compression smooths the detector''s background annulus, lowers its MAD and raises
+  separability. A clause whose verdict I can choose by picking a CRF is not a measurement. G1 is VOID
+  at f001 on this build and this lane scores it NEITHER WAY. What survives is the part that does not
+  move with the encoder: 120 of 121 frames live outside f001, maximum single-frame area step 1.068
+  against a 2.0x bar, and 90% of the growth arriving at f107 against a bar of f060.
+
+
+  WHICH ALSO VOIDS THE TWO BUILDS THAT LOOKED LIKE WINNERS. --freeze-band and --held-still both score
+  8 of 8 and both are unquotable. Their G5a bands are 1.000 by construction, not measured. And their
+  G1 "121/121 live, PASS" is the same encoder artefact seen from the other side: they contain the
+  IDENTICAL fig, from the identical grow frames, and their f001 flipped live because freezing pixels
+  200 px BELOW the fig changed libx264''s bit allocation. Two clips scoring 8 of 8 is not this rung''s
+  result and is not reported as one.'
+verdict_this_job_measured:
+  provenance: 'Both ingredients sha-asserted before anything was written: grow
+    4ec39e0f...0949d, held f9dc64a3...282b, each equal to the value its own job manifest recorded on the
+    box. Output composites hash to 796a283b...67ced (heldfield) and 5f2f4288...4920 (stillplate); the
+    rejected --freeze-band build hashed f7fb3788...1fc83 and is not committed.'
+  instrument: pipeline/fig_track.py (selftest 15/15, six frame-backed) plus the region-NCC and
+    whole-frame-luma probes named in `bar`. Scored on the DECODED output mp4.
+  cost: $0. No GPU. ~3 minutes of a Mac, 43 s of it the compositor.
+  heldfield_vs_the_clip_it_would_replace:
+    note: left column is ep2-b01-fignonly-s20260840-0820, the take currently in the cut; right column is
+      this rung's `heldfield` composite. Its fig IS the left column's fig.
+    region_ncc_shaft:
+    - -0.324
+    - 0.982
+    region_ncc_sapling:
+    - 0.055
+    - 0.736
+    region_ncc_fig_box:
+    - 0.004
+    - 0.058
+    region_ncc_grass:
+    - 0.038
+    - 0.062
+    luma_delta_at_peak:
+    - 10.85
+    - 0.93
+    frames_over_luma_100:
+    - 0
+    - 0
+    live_frames:
+    - 121
+    - 120
+    fig_area_first_px:
+    - 927
+    - 847
+    fig_area_last_px:
+    - 13690
+    - 14065
+    total_growth_ratio:
+    - 14.77
+    - 16.61
+    frame_at_90pct_growth:
+    - 108
+    - 107
+    max_single_frame_step:
+    - 1.084
+    - 1.068
+    worst_consecutive_whole_frame_ncc:
+    - 0.9403
+    - 0.9966
+  clauses_heldfield:
+    G1_continuous_path: '**VOID** -- not passed and not failed. 120/121 live, the one dead frame f001
+      sitting at separability 1.76 against a 2.00 gate that the same frames clear at libx264 crf 18 and
+      23 and miss at crf 0, 10 and 14. Max step 1.068, 90% of growth at f107, both clear.'
+    G2_end_state: PASS -- hue 294.4, sat 0.789 at a live f120
+    G4_no_size_doubling: PASS -- max single-frame step 1.068
+    G5a_field_stability: '**FAIL on one band only** -- grass 0.062 (needs >=0.20); shaft 0.982, sapling
+      0.736, fig box 0.058 all clear. The in-cut take fails all three bands.'
+    H_luma_bloom: PASS -- peak +0.93 at f019, zero frames over 100
+    H1_not_frozen: PASS -- fig-box NCC to last at f060 = 0.019
+    H5_attached: PASS -- 20.4 px from the f000 geometric anchor
+    H6_no_scene_break: PASS -- worst consecutive whole-frame NCC 0.9966, the steadiest clip measured on
+      this beat
+    G3_G4b_G5b: UNSCORED BY DECLARATION.
+  G5b_camera_probe_reported_never_scored:
+    heldfield_composite: f000->f060 scale 1.06 spread 0.26 consistent false RAILED FALSE; f000->f120
+      scale 1.08 spread 0.10 consistent false RAILED FALSE. Identical to the held plate's own numbers,
+      as it must be -- outside the matte the composite is the held plate.
+    in_cut_fignonly: f000->f060 scale 1.10 spread 0.46 consistent false **RAILED TRUE**; f000->f120
+      scale **1.50 = the grid maximum** spread 0.24 consistent false **RAILED TRUE**.
+    reading: Both refuse to score, because `consistent:false` means the picture is redrawn rather than
+      moved. Only one of them is also off the probe's own grid, and it is the one in the cut.
+  the_g1_encoder_sweep:
+    gate: fig_track SEP_MIN 2.00 on frame f001
+    png_no_encode: [1.76, dead]
+    libx264_crf_0_lossless: [1.88, dead]
+    libx264_crf_10: [1.88, dead]
+    libx264_crf_14: [1.84, dead]
+    libx264_crf_18: [2.18, ok]
+    libx264_crf_23: [2.25, ok]
+    ingredients_at_the_same_frame: grow 2.27 ok, held 2.90 ok -- neither is near the gate.
+    reading: the clause is measuring how noisy the background annulus is, and at the fig's smallest
+      radius that is set by the codec. Choosing a CRF chooses the verdict, so there is no verdict.
+  the_grass_band_discriminator:
+    held_crf10_consecutive_ncc: {mean: 0.9950, min: 0.9887}
+    held_crf10_decay_to_f000_at_f010_030_060_090_120: [0.842, 0.554, 0.299, 0.098, 0.062]
+    grow_crf33_consecutive_ncc: {mean: 0.9640, min: 0.8720}
+    grow_crf33_decay_to_f000_at_f010_030_060_090_120: [0.423, 0.019, 0.177, 0.166, 0.038]
+    band_contrast: 'grass band std 32.8 levels, mean abs f000-to-f120 delta 28.8, p95 112 -- the band is
+      high-contrast and genuinely changing. This is not instrument noise either way.'
+    reading: monotonic decay at high consecutive NCC is coherent motion; non-monotonic decay at low
+      consecutive NCC is re-inking. The two-point clause sees the same 0.06 for both.
+  evidence:
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-whole-strip.jpg -- the shot, f000..f120
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-5x-f060-held-grow-comp.jpg -- F1 answered
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-5x-f120-held-grow-comp.jpg -- F1 answered
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-grass-sweeps-coherently.jpg -- why 0.062
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-grassband-tears-at-y1000.jpg -- F2's cure
+    - farm-out/ep2-b01-figcomp-heldfield-0820/evidence/COMP-stillplate-whole-strip.jpg -- the alternative
+  pre_registered_fail_modes_as_fired:
+    F1_the_fig_reads_as_pasted: DID NOT FIRE. Answered at 5x on all five keyframes.
+    F2_the_grass_has_to_come_from_the_plate_too: FIRED, and its named cure was sampled and refused --
+      taken as a band it tears at y=1000; taken as a whole plate it is a different shot.
+    F3_the_composite_wins_the_numbers_and_loses_the_picture: FIRED on the --held-still build, exactly as
+      written. 8 of 8 by construction, no seam, and no ambient motion at all.
+verdict_cut: 'NOT PROPOSED FOR THE CUT, and no swap follows. review/ep2-demo-0820 beat 01 is unchanged
+  and keeps 01-cold-open-LTX-fignonly-s20260840.mp4.
+
+
+  The arithmetic: the in-cut take carries ONE failing clause out of eight scored. This composite carries
+  ONE failing clause out of SEVEN scorable, plus a VOID. It does not beat the in-cut take''s clause
+  count -- it ties on failures and loses a clause to unscorability.
+
+
+  The substance, which matters more: the clause it cannot score is G1, the growth arc, which is the one
+  thing this entire localisation route exists to preserve. Swapping a clip into the cut on the strength
+  of a clause this lane has just proved is decided by an encoder setting would be exactly the failure the
+  2026-08-20 entries above it were written to prevent. When the instrument rung below makes G1 readable,
+  this composite gets scored again and the swap gets re-proposed on numbers.
+
+
+  Recorded explicitly because it would be easy to swap it anyway. By eye it is the best beat-01 cold open
+  in this tree''s history, and it beats the clip it would replace on shaft, sapling, luma and steadiness
+  while carrying that clip''s exact fig. The bar is conjunctive, the grass clause fails, and the growth
+  clause cannot be read. Best-looking is not a clause.'
+what_this_licenses_after_the_verdict: 'THE LOCALISATION ROUTE IS OPEN AND THE COMPOSITOR IS NOT THE
+  OBSTACLE. F1 is closed by pixels, not by argument: a matte dilated by 0.45 of the fig''s own radius
+  carries the stem and the contact shadow and the result does not read as pasted at 5x on any keyframe.
+  pipeline/fig_composite.py is committed with its guards and its dead-zone policy, and it is
+  deterministic -- both ingredients are in the repo at their asserted shas, so any of the three builds
+  reproduces byte for byte.
+
+
+  THE NEXT RUNG IS AN INSTRUMENT RUNG, NOT A PICTURE RUNG, AND IT IS $0. fig_track''s background annulus
+  runs from 1.35 to 2.10 equivalent radii, and at the fig''s SMALLEST radius that annulus lands inside
+  the compositor''s feather, where the two clips'' fields are blended and the ring MAD is inflated. The
+  compositor knows exactly where the blend zone is and can hand it to the detector. Score composites with
+  the blend zone excluded from the ring -- or with the ring pushed outside the feather''s support -- and
+  f001 becomes readable in a direction that an encoder cannot flip. DO NOT instead choose an encode that
+  makes it pass; that door is named here so the next lane does not walk through it.
+
+
+  G5a''S GRASS CLAUSE NEEDS A RULING BEFORE IT IS SPENT AGAIN. As instrumented it is a two-point
+  f000-to-last NCC and it cannot separate coherent foreground sway from re-inking; this lane has the
+  discriminator in hand (consecutive-frame NCC plus monotonicity of the decay) and did NOT apply it to
+  re-score this clip, because rewriting a pre-registered bar after seeing the pixels is how a score
+  becomes worthless. It is filed as a bar change for a ruling, not as a result.
+
+
+  NOT LICENSED: freezing the grass as a band. Sampled once, and it tears every blade that crosses
+  y=1000. Anyone proposing --freeze-band on this beat should open
+  evidence/COMP-grassband-tears-at-y1000.jpg first.
+
+
+  NOT LICENSED EITHER: another crf sweep, another seed, another negative. All three doors are measured
+  shut in the specs above this one.
+
+
+  A TASTE QUESTION IS PARKED, NOT PROPOSED. --held-still puts the same fig on a frozen plate. It has no
+  seam, it satisfies every field clause by construction, and it has no ambient motion at all -- no grass
+  sway, no drifting light shafts, no dust. That is a trade between a locked-off plate and a living
+  field, it is R4, and it is deliberately not being asked yet: it should be asked once, with pixels,
+  alongside a heldfield build whose G1 can actually be scored. The clip is built and sha''d so that ask
+  costs nothing when it comes.'

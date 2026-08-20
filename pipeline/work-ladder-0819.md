@@ -4675,3 +4675,120 @@ legible at 9x, but the copy is inside the crop box and took maxdiff 121 / 1598 p
 pixels if it passed, and it does not. Beat 08 keeps `ep2-b08-scale30-0820`. Next
 rung: **strength 0.99 → 0.70**, one variable; if it still draws a clasp the route
 closes on §23's written conclusion.
+
+
+### The composite is the best beat-01 cold open ever made here, and its growth clause is decided by libx264
+
+`ep2-b01-figcomp-heldfield-0820` — the localisation rung the crf-10 verdict
+licensed. $0, no GPU, no new plate, ~3 minutes of a Mac. **No swap**, and none of
+the three reasons is the one the rung was warned about.
+
+**The tool first.** `pipeline/fig_composite.py`, plus one additive hook in
+`fig_track.py`: `track(mask_sink=…)` hands the compositor **the same boolean mask
+the detector's own `area_px` is counted from**, so the thing cut out and the thing
+scored cannot disagree, and a killed frame hands it `None` rather than a guess.
+The dilation is not a flourish — `binary_open` *deliberately deletes the thin dark
+stem*, which is right for measuring a fig and wrong for cutting one out, so the
+matte is dilated by an exact Euclidean disk of 0.45 r_eq (8 px at f000, 30 px at
+f120) and feathered by half of that. The ring gain match is multiplicative on RGB,
+which leaves chromaticity — and therefore hue and saturation — **exactly**
+unchanged, so it cannot reach the G2 clause in either direction.
+
+**F1, THE RISK THIS WHOLE ROUTE WAS WARNED ABOUT, DID NOT FIRE.** Opened at 5× on
+f000/f030/f060/f090/f120 with held, grow and composite side by side: the fig sits
+on the *held* plate's own stem at every keyframe, crown stub and contact shadow
+carried across, no seam, no halo, gain never working harder than 1.114×. At 1× it
+reads as one shot — locked field, foreground grass sweeping, a fig going green →
+teal → slate → deep purple over five seconds.
+
+**And it beats the clip it would replace, on that clip's own fig.**
+
+| | in-cut fignonly (crf 33) | this composite |
+|---|---|---|
+| region NCC shaft | −0.324 | **0.982** |
+| region NCC sapling | 0.055 | **0.736** |
+| region NCC grass | 0.038 | 0.062 |
+| luma Δ at peak | +10.85 | **+0.93** |
+| worst consecutive whole-frame NCC | 0.9403 | **0.9966** |
+| total fig growth | 14.77× | 16.61× |
+| 90 % of growth at | f108 | f107 |
+
+**G5a still fails on the grass, and the clause is mis-reading it.** 0.062 against
+0.20, inherited whole from the held plate — but measured rather than assumed: on
+the held plate that band's **consecutive**-frame NCC is 0.9950 mean / 0.9887 min
+and its correlation to f000 decays **monotonically**, 0.842 → 0.554 → 0.299 →
+0.098 → 0.062. That is a foreground that *sweeps*. The crf-33 control reads 0.9640
+/ 0.8720 consecutive and decays **non**-monotonically, 0.423 / 0.019 / 0.177 /
+0.166 / 0.038 — that is a foreground being *re-inked*. **A two-point f000-to-last
+NCC returns ~0.06 for both.** The band is high-contrast and really changing (std
+32.8, mean |Δ| 28.8), so this is not instrument noise on either side.
+
+**The cure F2 named was sampled and it is worse than the disease.**
+`--freeze-band 1000:1280` scores grass **1.000 by construction** — and **tears
+every blade that crosses y=1000**, visible at f060, blatant at f120. The grass
+cannot be taken as a band; the blades cross the boundary. Evidence sheet
+committed. Anyone proposing it again should open the jpg first.
+
+### The finding: G1's verdict on this clip is set by the encoder, not by the picture
+
+The composite loses exactly one frame — f001 — to the separability gate at
+**1.76 against a bar of 2.00**, with template NCC 0.988, margin 0.680 and a 0.73 px
+jump. The detector plainly found the right object and declined to stand behind it.
+Both ingredients clear that same gate on their own pixels (grow 2.27, held 2.90).
+So the same composite frames were encoded five ways:
+
+| encode | f001 | sep_material |
+|---|---|---|
+| PNG, no encode | **dead** | 1.76 |
+| libx264 crf 0 *(mathematically lossless)* | **dead** | 1.88 |
+| libx264 crf 10 | **dead** | 1.88 |
+| libx264 crf 14 | **dead** | 1.84 |
+| libx264 crf 18 | ok | 2.18 |
+| libx264 crf 23 | ok | 2.25 |
+
+**The answer straddles the gate on an encoder setting, and backwards** — the *more*
+compressed encode passes, because compression smooths the detector's background
+annulus, lowers its MAD and raises separability. A clause whose verdict I can
+choose by picking a CRF is not a measurement. **G1 is VOID at f001 on this build
+and is scored neither way.** What survives is what the encoder cannot move: 120 of
+121 live outside f001, max single-frame step **1.068**, 90 % of growth at **f107**.
+
+**Which also voids the two builds that looked like winners.** `--freeze-band` and
+`--held-still` both score **8 of 8** and both are unquotable: their field bands are
+1.000 *by construction*, and their "121/121 live, G1 PASS" is the same encoder
+artefact from the other side — identical fig, identical grow frames, and f001
+flipped live because freezing pixels **200 px below the fig** changed libx264's bit
+allocation. Two 8-of-8 clips are not this rung's result and are not reported as one.
+
+**Camera probe, reported and never scored:** the composite is `consistent:false`,
+**`railed:false`** (scale 1.06/1.08, spread 0.26/0.10) — the held plate's own
+numbers, as it must be. The **in-cut take is `railed:true`** at f060 *and* f120,
+pinned to the grid maximum 1.50. Both refuse to score; only one is off the probe's
+own grid, and it is the one shipping.
+
+**NO SWAP.** One failing clause out of *eight scored* (in-cut) against one failing
+clause out of *seven scorable* plus a VOID (this). That ties on failures and loses
+a clause to unscorability — and the clause it loses is G1, the growth arc, the one
+thing localisation exists to preserve. Swapping on the strength of a clause this
+lane has just proved an encoder decides is the exact move the entries above were
+written to prevent. `review/ep2-demo-0820` beat 01 is untouched. Written down
+explicitly because by eye this is the best cold open the beat has ever had, and
+best-looking is not a clause.
+
+**Next rung is an INSTRUMENT rung and it is $0.** `fig_track`'s annulus runs
+1.35 r → 2.10 r, and at the fig's *smallest* radius it lands inside the
+compositor's feather, where the two fields are blended and the ring MAD is
+inflated. The compositor knows exactly where the blend zone is — exclude it from
+the ring, or push the ring outside the feather's support, and f001 becomes
+readable in a direction no CRF can flip. **Do not instead pick an encode that
+passes.** Also filed, and deliberately *not* applied retroactively: G5a's grass
+clause needs a ruling, because the discriminator exists and rewriting a bar after
+seeing the pixels is how a score becomes worthless. Parked as an R4 taste question,
+not asked yet: `--held-still` is a locked-off plate with no ambient motion at all —
+built, sha'd, and worth one ask *alongside* a heldfield build whose G1 can be scored.
+
+Both ingredients now live in the repo at their asserted shas — the crf-10 clip had
+been judged and cited in two ladder entries **while existing nowhere in this
+repository**. `fig_track --selftest` 15/15 (six frame-backed), `lint_genome` 0,
+`test_pipeline` 0 — and `test_pipeline` earned its keep by catching a malformed
+colon in this spec's own `consumer` block before it was committed.
