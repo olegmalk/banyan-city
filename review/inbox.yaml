@@ -2047,3 +2047,34 @@
     the row of numbers on that page before trusting any future metric on this tree: shard, ink, green
     channel, drift and the band signature filed this morning ALL PASSED the frame that is unusable at
     a glance.'
+- what: 'JERRY''S EARS, AND THE TUSK NOBODY EVER DREW - two design picks on one character, two
+    words each, and they batch with your next look. Curating his 31-frame LoRA training set meant
+    seeing every frame of him side by side for the first time, and two attributes fell out that no
+    ruling covers. (a) THE EARS: node.md line 35 asks for "enormous ears" and your ratified identity
+    clause says nothing about ears at all, so the engine improvises per frame - across 31 kept plates
+    the range runs from NO VISIBLE EAR to LONG SWEPT-BACK ELF EARS. (b) THE BROKEN TUSK: the same
+    line of node.md asks for "one broken tusk" and in 31 frames it has never once been drawn. Both
+    are on the page as crops, side by side.'
+  url: /review/ep2-jerry-face-0820
+  group: taste
+  since: '2026-08-20'
+  kind: decision
+  episode: 2
+  verdict_hint: 'EARS - enormous / long and pointed / small and rounded / leave it free. TUSK - bring
+    it back, or it stays gone and I edit node.md so the script stops describing a character we do not
+    draw. Or "you pick, it is not a taste question" and I rule both and log them.'
+  note_for_lanes: 'NOT BLOCKING AND NOT URGENT - it batches, and no lane should wait on it. Raised by
+    the character-LoRA lane 2026-08-20 off pipeline/lora/manifest-jerry.yaml while curating the Jerry
+    training set; the prep lane named both in pipeline/lora/README.md as open R4 items and this card
+    is them reaching the board with pixels. Checked against ruled canon first: pipeline/canon.yaml
+    ep2-goblin-design-adult (ratified 2026-08-19) is SILENT on both attributes, so this is genuinely
+    unruled rather than drift off something already decided - which is why it is a card and not a fix.
+    THE TUSK HAS HIS FINGERPRINT ON IT ALREADY and the card says so: on 2026-08-10 he called the
+    close-ups "makign the goblin look too complicated", the answer was ep2-b04-goblin-close-0811 with
+    one variable - `tusks` removed - and it worked. What was never asked is whether that was permanent
+    or just that one over-stuffed prompt. DELIBERATELY NOT A TRAINING BAR: train-jerry-0820.yaml
+    excludes ear shape and the tusk from its five pre-registered bars, because grading against a
+    reading he has not made would be the steward scoring his own taste axis. v1 trains on the mixed
+    set on purpose and inherits the average; applying either answer later costs one ~55-minute $0
+    retrain and forecloses nothing. Zero renders were made for this card - every crop is from a plate
+    we already owned.'

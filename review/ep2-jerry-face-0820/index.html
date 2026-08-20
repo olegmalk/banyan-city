@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jerry's ears, and the tusk nobody ever drew</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15.5px; margin: 26px 0 4px; font-weight: 620; color: var(--accent); }
+  p, ul { max-width: 78ch; }
+  li { margin: 5px 0; }
+  .muted { color: var(--muted); font-size: 14.5px; }
+  .ask { background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
+         padding: 18px 20px; margin: 26px 0; }
+  .ask h2 { margin-top: 0; color: var(--accent); }
+  .mine { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--warn);
+          border-radius: 10px; padding: 16px 18px; margin: 22px 0; }
+  figure { margin: 18px 0 6px; }
+  img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  code { background: #101113; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  blockquote { margin: 10px 0; padding: 2px 0 2px 14px; border-left: 2px solid var(--accent);
+               color: var(--ink); max-width: 78ch; }
+  .opts { list-style: none; padding-left: 0; }
+  .opts li { padding: 8px 0 8px 0; border-bottom: 1px solid var(--line); }
+  .opts li:last-child { border-bottom: 0; }
+  .k { color: var(--accent); font-weight: 640; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Jerry's ears, and the tusk nobody ever drew</h1>
+  <p class="sub">Two design picks on one character, surfaced by curating his LoRA training set.
+  <strong>Nothing is blocked on either.</strong> Batch them with your next look; if you say nothing,
+  v1 trains on the mixed set exactly as it stands and neither answer is foreclosed.</p>
+</header>
+
+<p>Building the 31-frame training set for Jerry meant looking at every frame of him we have
+side by side for the first time. Two things fell out that no ruling covers. Both are taste,
+so neither gets decided here.</p>
+
+<p>The reason they are worth one minute of your time <em>now</em> rather than later: a LoRA
+averages whatever it is fed. Trained on the set below, it will learn "Jerry's ears are
+whatever, roughly" and "Jerry has no tusk" — and those become the defaults every ep3 plate
+inherits, quietly, without anyone choosing them.</p>
+
+<figure>
+  <img src="CONTACT-jerry-ears-tusk-0820.jpg" alt="Contact sheet: four crops of Jerry's head showing ear shapes ranging from no visible ear to long elf-length ears, and four crops of his mouth showing fangs but no broken tusk.">
+  <figcaption>Crops from the actual training set. Row A: the ear range. Row B: the four clearest
+  mouths in all 31 frames. Index numbers are positions in
+  <code>pipeline/lora/manifest-jerry.yaml</code>.</figcaption>
+</figure>
+
+<h2>A. The ears</h2>
+
+<p>The script asks for a specific thing. <code>node.md</code> line 35:</p>
+
+<blockquote>A SCAVENGER — goblin-ish, <strong>enormous ears</strong>, one broken tusk, patchwork
+cloak — sprints into frame, skids, and dives behind the sapling's thin trunk.</blockquote>
+
+<p>The identity clause you ratified on 2026-08-19 does not mention ears at all —
+<code>lean wiry adult goblin man, green skin, bald head, patchwork cloak</code>. So the prompt
+says nothing, and the engine improvises per frame. Across 31 frames the range runs from
+<em>no visible ear whatsoever</em> to <em>long swept-back elf ears</em>, and every one of those
+frames is a plate we kept.</p>
+
+<p>"Enormous ears" was in the original brief and has simply never made it into the clause the
+plates are actually drawn from.</p>
+
+<h2>B. The broken tusk</h2>
+
+<p>Same line of <code>node.md</code> asks for <strong>one broken tusk</strong>. In 31 frames it
+has never once been drawn. Fangs show up — small upper canines, visible in idx 14 and 17 — but
+a single broken tusk, the asymmetric detail the script names, does not exist in any frame we own.</p>
+
+<div class="mine">
+  <p style="margin-top:0"><strong>This one is not an oversight, and you have a fingerprint on it.</strong>
+  On 2026-08-10 you called the close-ups <em>"bad character consistency, makign the goblin look too
+  complicated and ending up making t bad"</em>, and at ~15:45 the same afternoon you ratified the
+  opposite recipe on beat 15 — tags only, <code>green skin</code>, nothing else. The fix that came out
+  of that was <code>ep2-b04-goblin-close-0811</code>, one variable: <strong><code>tusks</code>
+  removed</strong>.</p>
+  <p style="margin-bottom:0">So the tusk was dropped to buy simplicity, and it worked. What was never
+  asked is whether you meant to drop it <em>permanently</em> or just off that one over-stuffed prompt.
+  The script still says he has one.</p>
+</div>
+
+<div class="ask">
+  <h2>What I need from you — two words each, and they batch</h2>
+
+  <p><span class="k">EARS.</span> Pick a lane and I write it into canon and into every plate prompt:</p>
+  <ul class="opts">
+    <li><span class="k">Enormous</span> — honour the script. Big, prominent, unmissable. Silhouette reads
+      goblin from across the room.</li>
+    <li><span class="k">Long and pointed</span> — the idx 17 look. Elegant, elf-adjacent, currently our
+      most striking frames.</li>
+    <li><span class="k">Small and rounded</span> — the idx 13 look. Downplays the ears, leans human,
+      makes him read sadder and less creaturely.</li>
+    <li><span class="k">Leave it free</span> — you like the variation and do not want it pinned.
+      Legitimate answer; I stop treating it as drift.</li>
+  </ul>
+
+  <p><span class="k">TUSK.</span></p>
+  <ul class="opts">
+    <li><span class="k">Bring it back</span> — one broken tusk, as written. I add it to the clause and
+      accept it will cost some consistency, since it is exactly the kind of small asymmetric detail the
+      engine fumbles.</li>
+    <li><span class="k">It stays gone</span> — and I edit <code>node.md</code> so the script stops
+      describing a character we do not draw.</li>
+  </ul>
+
+  <p class="muted" style="margin-bottom:0">Or <em>"you pick, it is not a taste question"</em> — and I
+  rule both, log them, and you never hear about it again.</p>
+</div>
+
+<h2>What happens if you do not answer</h2>
+
+<p>Nothing stalls. v1 of the LoRA trains on the mixed set as it stands, which is the deliberate
+choice: it inherits the average rather than committing to a reading you have not made. Both
+questions stay open and cost one retrain to apply later — the retrain is ~55 GPU-minutes and $0.
+I would rather leave v1 honestly mixed than bake in my own taste and call it canon.</p>
+
+<h2>Provenance</h2>
+<table>
+<tr><th>Raised by</th><td>the character-LoRA lane, 2026-08-20, while curating the Jerry training set</td></tr>
+<tr><th>Evidence</th><td>all 31 frames in <code>pipeline/lora/manifest-jerry.yaml</code>, sourced from node 002b-first-citizen plates</td></tr>
+<tr><th>Checked against</th><td><code>pipeline/canon.yaml</code> <code>ep2-goblin-design-adult</code> (ratified 2026-08-19) — silent on both attributes, so this is genuinely unruled rather than drift off something already decided</td></tr>
+<tr><th>Script source</th><td><code>genomes/sapling/nodes/002b-first-citizen/node.md</code> line 35</td></tr>
+<tr><th>Cost of asking</th><td>$0. No render was made for this page; every crop is from a plate we already had.</td></tr>
+</table>
+
+</div>
+</body>
+</html>
