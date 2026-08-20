@@ -72,6 +72,13 @@ HINT = "jerry-skel-h19-0820"
 HINT_SHA = "244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c"
 REF = "jerry-tile-head-0821"
 REF_SHA = "6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c"
+# k3's reference: the SAME head, placed on flat field green at the tile's
+# measured standing head_frac 0.190, at the crown row the render draws. Built
+# by pipeline/author_jerry_headfit_ref_0821.py.
+REF_FIT = "jerry-tile-headfit-0821"
+REF_FIT_SHA = "91087e527189e63c8c6ad95e5000c5c108bf943ac35c485a5659f652098ae7fd"
+REFS = {"jerry-tile-head-0821": REF_SHA,
+        "jerry-tile-headfit-0821": REF_FIT_SHA}
 IP_MASK = "315,130,515,350"
 ARM = "ipahead"
 
@@ -79,11 +86,11 @@ ARM = "ipahead"
 # which is the one-sample rule satisfied rather than skipped: k1 is the first
 # sample on this instrument and k2 is one variable from it.
 RUNGS = [
-    ("k1", "0.7",
+    ("k1", "0.7", REF,
      "the IP-Adapter itself, at the diffusers masking-example default 0.7 -- "
      "the value ep2-b08-ipamask-0819 ran at. Prompt, negative, skeleton, "
      "--scale and seed are j2's, unchanged."),
-    ("k2", "0.9",
+    ("k2", "0.9", REF,
      "k1's frame with --ip-scale 0.7 -> 0.9 and NOTHING else. k1 bought the "
      "tile's eye KIND (aspect 0.54 against the tile's 0.52, where six wording "
      "rungs sat at 1.0-1.26) and its brow, and did NOT buy SIZE: k1's eye "
@@ -91,13 +98,26 @@ RUNGS = [
      "1.40x. Wrong size, right kind. Strength is the dial that decides how far "
      "the frame is pulled toward the reference's proportions, and it is the "
      "only lever that is one variable from here."),
+    ("k3", "0.7", REF_FIT,
+     "k1's rung with ONE thing changed: the reference's HEAD-TO-FRAME RATIO, "
+     "100% -> 19.1%. Same head pixels, same mask, same 0.7, placed on flat "
+     "field green at the tile's measured standing head_frac of 0.190 and at "
+     "the crown row the render draws. k2 closed the strength lever -- 0.7 to "
+     "0.9 moved eye AREA by 1.6% relative, which is nothing, moved eye ASPECT "
+     "the WRONG way (0.54/0.46 -> 0.63/0.71, away from the tile's 0.52) and "
+     "spent the last of T8 (4.57 -> 4.41 heads, under the 4.5 bar). So the "
+     "adapter supplies KIND and saturates by 0.7, and SIZE is not on that "
+     "axis. What BOTH k rungs did do is inflate the head: 0.181 -> 0.219 -> "
+     "0.227 head_frac. One cause explains the oversized head AND the oversized "
+     "eye -- the reference is a head crop, so what the adapter was shown is a "
+     "head that fills a frame."),
 ]
 # the commit that carries the three staged inputs -- provenance only, but the
 # meta.yaml this writes is what a later lane reads to re-fetch them.
 COMMIT = "29939faba45625c647bb05da9573c4151b8b259d"
 
 
-def stage_step(job_dir):
+def stage_step(job_dir, ref):
     return (
         '# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n'
         '# BEFORE A GPU SECOND IS SPENT -- and k1 has THREE, because the\n'
@@ -125,10 +145,10 @@ def stage_step(job_dir):
         '    with open(os.path.join(dst, name), "wb") as fh:\n'
         '        fh.write(blob)\n'
         '    print("staged", name, got, "->", dst)\n'
-        % (ASSET_URL, job_dir, DRIVER_SHA, HINT, HINT_SHA, REF, REF_SHA))
+        % (ASSET_URL, job_dir, DRIVER_SHA, HINT, HINT_SHA, ref, REFS[ref]))
 
 
-def publish_step(job_dir, new_id):
+def publish_step(job_dir, new_id, ref):
     return (
         '# Required by box_enqueue.courier_problems: the courier pushes from\n'
         '# farm-out and from nowhere else, and ep2-cnet-probe-0817 rendered\n'
@@ -158,7 +178,7 @@ def publish_step(job_dir, new_id):
         '    fh.write("\\n".join(sorted(lines)) + "\\n")\n'
         'print("published", len(files), "file(s) + manifest ->", dst)\n'
         'raise SystemExit(0 if len(files) >= 6 else 1)'
-        % {"d": job_dir, "id": new_id, "arm": ARM, "hint": HINT, "ref": REF})
+        % {"d": job_dir, "id": new_id, "arm": ARM, "hint": HINT, "ref": ref})
 
 
 BAR = """T1b EYE SHAPE and P1 BROW BAR, the two clauses the wording route could
@@ -212,7 +232,22 @@ WHY = {
         "lever one variable from here."),
 }
 
-PARENT_RUNG = {"k1": "ep2-jerry-face-j2-0821", "k2": "ep2-jerry-face-k1-0821"}
+PARENT_RUNG = {"k1": "ep2-jerry-face-j2-0821",
+               "k2": "ep2-jerry-face-k1-0821",
+               "k3": "ep2-jerry-face-k1-0821"}
+
+REF_PROVENANCE = {
+    "jerry-tile-head-0821":
+        "review/ep2-goblin-design-0819/adult-b19-0819.jpg cropped "
+        "(176,280)-(332,432), 156x152, no resample. The head fills the "
+        "reference.",
+    "jerry-tile-headfit-0821":
+        "the SAME crop, its cream sky flooded to the tile's own field green "
+        "and placed on a 416x608 field-green canvas at head height 116 px = "
+        "0.191 of frame, crown at 0.093 -- the tile's MEASURED standing "
+        "head_frac and the render's own crown row. Built by "
+        "pipeline/author_jerry_headfit_ref_0821.py.",
+}
 
 CONSUMER = ("THE JERRY LoRA'S LAST OPEN GATE. train-jerry-0820 is UNFILED and "
             "stays that way until a rung passes T1b and P1 with T1/T3/T8/P3/P4 "
@@ -233,7 +268,31 @@ ONE_SAMPLE = {
            "the rule satisfied rather than skipped. NOT a scale sweep: 0.9 is "
            "the single next value, and if it splits T1b from T8 the answer is "
            "a head_frac edit on top, not three more scales."),
+    "k3": ("ONE rung, filed after k1 AND k2 were rendered, measured and read "
+           "at 1:1. It is not a third guess on the same axis -- k2 CLOSED the "
+           "strength axis, and this is the first rung on the axis both k rungs "
+           "pointed at by inflating the head. Three outcomes are named in "
+           "advance and none of their follow-ups is filed, because the last "
+           "prediction this lane filed was falsified within the hour."),
 }
+
+WHY["k3"] = (
+    "RUNG k3: k1's rung with the reference's HEAD-TO-FRAME RATIO changed from "
+    "100% to 19.1% and nothing else.\n\n"
+    "WHAT k2 CLOSED. Strength is not the size dial. 0.7 -> 0.9 moved eye AREA "
+    "0.0566 -> 0.0557, which is 1.6% relative and is noise; moved eye ASPECT "
+    "0.54/0.46 -> 0.63/0.71, i.e. AWAY from the tile's 0.52; and spent the "
+    "last of T8, 4.57 -> 4.41 heads against a 4.5 bar. Every effect of more "
+    "strength landed on composition and none on the residual. The prediction "
+    "filed with k2 got the T8 half right and the eye half WRONG, and the eye "
+    "half is the one that mattered.\n\n"
+    "WHAT BOTH k RUNGS DID DO IS INFLATE THE HEAD: head_frac drawn 0.181 (j2, "
+    "no adapter) -> 0.219 (k1) -> 0.227 (k2), against a 0.190 authored "
+    "skeleton. ONE CAUSE EXPLAINS THE OVERSIZED HEAD AND THE OVERSIZED EYE: "
+    "the reference is a head CROP, so what the adapter was shown is a head "
+    "that fills a frame, and a mask says WHERE the adapter acts, not how big "
+    "the thing it draws should be. k3 shows it the same head at the size a "
+    "head should occupy in a full-body frame.")
 
 PREDICTED = {
     "k1": (
@@ -270,10 +329,29 @@ PREDICTED = {
         "composition, and the instrument has to become a FACE-only adapter "
         "(ip-adapter-plus-face, 847 MB, NOT cached on the box) or a tighter "
         "mask, both of which are a different spec."),
+    "k3": (
+        "IF THE RATIO IS THE CAUSE, both defects move together: head_frac back "
+        "toward 0.190 with T8 back over 4.5, and the eye down from 1.87x the "
+        "tile's relative bounding box, while the brow and the 0.54 aspect "
+        "survive because the head pixels are unchanged.\n\n"
+        "IF ONLY T8 MOVES and the eye stays at 1.87x, then the eye is not "
+        "downstream of the ref's framing and the remaining lever is the "
+        "CHECKPOINT's own eye prior -- which no reference route reaches, and "
+        "the honest answer becomes that this face is trainable only from "
+        "frames that already have it, i.e. the seven mac-plate keeps plus "
+        "whatever k1 can be cropped to yield.\n\n"
+        "IF THE FACE GOES BACK TO j2's, the adapter needed the head to fill "
+        "the reference in order to bite at all, and the route is a face-only "
+        "adapter (ip-adapter-plus-face, 847 MB, NOT cached) rather than a "
+        "reframed reference.\n\n"
+        "THE THING I AM NOT DOING is filing all three of those now. k2 "
+        "falsified a prediction of mine an hour old; the next rung after this "
+        "one gets authored off what k3 shows, not off which of these three I "
+        "currently believe."),
 }
 
 
-def emit(suffix, ip_scale, variable, force=False):
+def emit(suffix, ip_scale, ref, variable, force=False):
     job_dir = "jerryface-%s-0821" % suffix
     new_id = "ep2-jerry-face-%s-0821" % suffix
     child = derive_spec.derive(
@@ -290,11 +368,9 @@ def emit(suffix, ip_scale, variable, force=False):
                "the_rung_this_is_one_variable_from": PARENT_RUNG[suffix],
                "one_sample_rule": ONE_SAMPLE[suffix],
                "ip_adapter":
-                   {"ref": "farm-out/jerry-skel-assets-0820/%s.png" % REF,
-                    "ref_sha256": REF_SHA,
-                    "ref_provenance":
-                        "review/ep2-goblin-design-0819/adult-b19-0819.jpg "
-                        "cropped (176,280)-(332,432), 156x152, no resample",
+                   {"ref": "farm-out/jerry-skel-assets-0820/%s.png" % ref,
+                    "ref_sha256": REFS[ref],
+                    "ref_provenance": REF_PROVENANCE[ref],
                     "mask": IP_MASK,
                     "mask_frame": "RENDER pixels, 832x1216",
                     "scale": ip_scale,
@@ -313,27 +389,27 @@ def emit(suffix, ip_scale, variable, force=False):
             continue
         i = argv.index("--prompt-file")
         step["argv"] = argv[:i] + [
-            "--ip-ref", "pipeline/control/%s.png" % REF,
+            "--ip-ref", "pipeline/control/%s.png" % ref,
             "--ip-mask", IP_MASK,
-            "--ip-ref-sha256", REF_SHA,
+            "--ip-ref-sha256", REFS[ref],
             "--ip-scale", ip_scale,
         ] + argv[i:]
 
     child["steps"][0] = {"name": "stage",
                          "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
-                                  "-c", stage_step(job_dir)]}
+                                  "-c", stage_step(job_dir, ref)]}
     child["steps"][-1] = {"name": "publish",
                           "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
-                                   "-c", publish_step(job_dir, new_id)]}
+                                   "-c", publish_step(job_dir, new_id, ref)]}
     child["artifacts"] = [
         r"C:\banyan-farm\%s\out\%s-%s.png" % (job_dir, new_id, ARM)]
 
     render = [s for s in child["steps"] if s["name"] not in ("stage", "publish")]
     assert len(render) == 1, [s["name"] for s in render]
     argv = [str(a) for a in render[0]["argv"]]
-    for flag, val in (("--ip-ref", "pipeline/control/%s.png" % REF),
+    for flag, val in (("--ip-ref", "pipeline/control/%s.png" % ref),
                       ("--ip-mask", IP_MASK),
-                      ("--ip-ref-sha256", REF_SHA),
+                      ("--ip-ref-sha256", REFS[ref]),
                       ("--ip-scale", ip_scale),
                       ("--seed", "20260823"),
                       ("--scale", "1.0"),
@@ -348,17 +424,17 @@ def emit(suffix, ip_scale, variable, force=False):
     derive_spec.write(child, out, force=force)
     derive_fetch_guard.assert_fetch_urls_resolve(
         os.path.join(REPO, out),
-        must_hold=("controlnet_plate.py", HINT + ".png", REF + ".png"))
+        must_hold=("controlnet_plate.py", HINT + ".png", ref + ".png"))
     print("wrote", out)
 
 
 def main():
     want = [a for a in sys.argv[1:] if not a.startswith("-")]
     force = "--force" in sys.argv[1:]
-    for suffix, ip_scale, variable in RUNGS:
+    for suffix, ip_scale, ref, variable in RUNGS:
         if want and suffix not in want:
             continue
-        emit(suffix, ip_scale, variable, force=force)
+        emit(suffix, ip_scale, ref, variable, force=force)
     return 0
 
 
