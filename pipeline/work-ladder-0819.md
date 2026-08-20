@@ -5178,3 +5178,12 @@ Re-assembled on the fixed tool: same 21 beats, same 115.42 s, same audio at
 Cut sha `6f12302d…8d1f`; the stretched bytes are recorded as superseded in
 `picks-0820.yaml` with the reason, and the review page says so above the fold rather
 than quietly shipping a sixth set of bytes at the same URL.
+
+## Scheduling bug, live, owner needed (found by the LoRA lane 2026-08-20 night)
+box_autofill scores jobs by argv fingerprint and NEVER reads est_minutes — a
+55-min training job scores 0.9 min, so autofill stacks more work behind an
+invisible card-hog. box_runner has no preemption and no max-runtime kill.
+Fix (daytime, needs box redeploy): score by spec est_minutes when present,
+fingerprint as fallback; consider a max-runtime kill honoring est_minutes*3.
+Tonight's mitigation: LoRA lane holds training until ship jobs drain; tick
+files short jobs only.
