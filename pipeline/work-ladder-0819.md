@@ -4531,3 +4531,22 @@ measurement actually points at has been tried once. **F2 pre-registered as
 likeliest:** the field holds and the fig pops, which would show the two are ONE
 knob and send the route to localisation — for which this detector's own
 validated per-frame masks already exist.
+
+### AND THE CORRECTIVE FAILED THE SAME WAY — `b08-arm-route-0819.md` §23
+
+`ep2-b08-eraseonly-0820`: halving the mask (18408 → 10020 px, 142x211 → 102x118)
+changed the **size** of the noun and not the noun. fistcopy drew a goblin head;
+this drew a **green goblin fist**. **The generalisable finding: shrinking a mask
+does not stop a sampler reaching for a noun the PROMPT names** — and beat 08's
+inherited prompt names "the small goblin man" and "green skin" at a region that
+is entirely guard's clothing. I had pre-committed strength as the next lever and
+am not taking it; the second sample distinguished what the first could not, and
+the reason is written into §23 rather than skipped. **`ep2-b08-nogoblin-0820`
+backlogged: one variable, the prompt.**
+
+Two confirmations worth keeping: the `--pad-crop` out-of-mask drift **scales with
+the crop box** (15355 → 8574 px), which is the mechanism behaving as described;
+and **C4' returned VOID twice** — correct both times, but the repeat is a usage
+defect of mine, because the erase region I publish IS the mask, so its ring can
+never land on real pixels. Set the scored region in from the mask boundary by
+more than the ring radius.

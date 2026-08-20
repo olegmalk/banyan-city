@@ -1387,3 +1387,82 @@ conditioning and this tool has none; that is a txt2img-route question.
 
 **`ep2-b08-scale30-0820` remains the best frame on beat 08. NO pick, NO
 plate_ack, and beat 08 still does NOT have a complete plate candidate.**
+
+## 23. Halving the mask changed the SIZE of the noun, not the noun (2026-08-20)
+
+**`ep2-b08-eraseonly-0820`, FAIL.** Evidence
+`farm-out/ep2-b08-eraseonly-0820/EVIDENCE-b08-eraseonly-verdict-0820.png`, 3x,
+init | fistcopy's goblin head | eraseonly's green fist.
+
+§22's corrective ran: one site, the guard's fist alone at grow 10, **10020 px in
+a 102x118 box — 1.8x smaller by area** than the region that hosted a face. The
+pass **drew a green goblin FIST** where the guard's hand was. It did not delete
+the hand; it recoloured and redrew it as the other character's.
+
+| | fistcopy | eraseonly |
+|---|---|---|
+| mask | 18408 px, 142x211 | **10020 px, 102x118** |
+| what arrived | a goblin head, ears, hair, a shirt placket | **a green goblin fist** |
+| H1 fist gone | PASS | **FAIL** |
+| H3 copied digits | PASS | **PASS** |
+| out-of-mask drift | 15355 px, maxdiff 160 | **8574 px, maxdiff 132** |
+| B8 head box | maxdiff 0 | **maxdiff 0** |
+| C4' | VOID (ring 120) | **VOID (ring 148)** |
+
+Two things the second run confirmed cleanly. **The out-of-mask drift scales with
+the crop box**, 15355 → 8574 px, which is the `--pad-crop` mechanism §22 named
+behaving exactly as described — it is the crop, not the mask. And **the copied
+digits survived a second 0.99 pass**, this time wholly outside the mask rather
+than interior-protected.
+
+### THE PRE-COMMITTED NEXT STEP WAS STRENGTH, AND IT IS NOT BEING TAKEN
+
+§22 registered *"if a face, a hand or a bunched garment object appears … STRENGTH
+is the next rung: 0.99 → 0.70"*. **The second sample distinguished something the
+first could not, so that pre-commitment is superseded and the reason is written
+rather than skipped.** What arrives is not *any* noun. Both times it is
+**specifically the goblin**, and beat 08's prompt names one twice:
+
+> "...other arm pointing at the small **goblin** man's belly, **green skin**,
+> plump, adult..."
+
+That is the whole-frame txt2img prompt, carried byte-identical through two
+derivations on the deliberate ground that unchanged wording keeps the mask the
+only variable. **That was the right discipline for testing the mask and it is the
+wrong prompt for this pass.** The mask lies entirely on the GUARD — his harness
+strap, his cream sleeve, his brown cuff. There is no goblin in it and no hand in
+it. Handing that region a prompt naming a green-skinned goblin at strength 0.99,
+and then being surprised by a green fist, is the error.
+
+### C4' HAS NOW RETURNED VOID TWICE, AND THE SECOND ONE IS ON ME
+
+Ring 120 px, then 148 px, against a 200 px floor. The instrument is right both
+times — it refuses to score a region whose neighbourhood was repainted — but the
+repeat is a **usage** defect, not an instrument defect: **the erase region I
+publish IS the mask**, so its ring can never land on real pixels. The fix is to
+set the scored region IN from the mask boundary by more than the ring's outer
+radius, so the ring falls on untouched plate. Not applied yet, and named here so
+the next rung does not spend a third render discovering it.
+
+### THE RUNG THAT FOLLOWS, AND IT IS FILED
+
+**`ep2-b08-nogoblin-0820`, backlogged.** ONE VARIABLE: the prompt. The init, the
+mask, the strength, the steps, the cfg and the seed-bearing structure are all
+inherited byte-identical — `derive_spec` refused the init and fetch overrides as
+no-ops, which is the guarantee working.
+
+* **POSITIVE** describes only what the mask covers: *"brown leather harness strap
+  crossing a cream linen shirt, brown cuff, white sash"* + this plate's cel
+  dialect. **No figure noun at all** — there is no person in that region, only
+  clothing on one.
+* **NEGATIVE** keeps beat 08's whole negative and adds the nouns both samples
+  actually drew: `goblin, green skin, pointed ears, second figure, face, head,
+  hand, fist, fingers, knuckles, arm, buttons, placket`.
+
+**If that fails, strength 0.70 is next, and after that the route closes.** The
+honest conclusion waiting behind it: a tool with **no spatial conditioning of any
+kind** — `inpaint_fruit.py` has no controlnet — cannot be asked to erase a limb
+from a figure, and beat 08's grip goes back to the txt2img route with three
+measured samples saying why.
+
+**`ep2-b08-scale30-0820` remains the best frame on beat 08.**
