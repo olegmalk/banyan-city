@@ -4839,3 +4839,40 @@ has now *measured* that the prompt chooses nouns. **If it draws a THIRD unwanted
 noun the route closes** and beat 08's grip goes back to txt2img. **No intermediate
 strength**: 0.99 over-draws, 0.70 under-inks, and the remaining fault is a noun,
 not a quantity.
+
+### The negative moved 91% of the pixels and left the same band — beat 08's inpaint route is CLOSED — `b08-arm-route-0819.md` §26
+
+**`ep2-b08-nostrap2-0820`, rc=0, 7.3 s, $0.** One variable: the negative, handed
+the exact noun that arrived. Against its parent, inside the mask: **9152 of 10020
+px changed (91.3 %), mean |Δ| 12.8 — and the crossing band came back in the same
+place.** The lever that removed the goblin outright in §24 cannot remove this.
+
+> **A NEGATIVE PROMPT REMOVES A KIND, NOT A COUNT.** `goblin` is a kind. `second
+> strap` is a cardinality over a thing the pass's own POSITIVE names. The same
+> token pulls both ways and there is nowhere to put the word *second*.
+
+**THE ROUTE CLOSES, and the stopping rule fired on a better reason than the one
+registered** (registered: "a third noun arrives"; actual: the second noun was
+named, 91 % of the fill was redrawn in response, and it stayed). Five samples,
+~55 s of card, $0. §23's conclusion now has its evidence: no spatial
+conditioning, no limb erasure.
+
+**What the ladder bought:** (1) the fist can be deleted and does **not** need
+0.99; (2) mask size does not choose the noun, the prompt does — for a *kind*;
+(3) strength governs invention symmetrically — 5.1× too shard-dense at 0.99, 4.8×
+too smooth at 0.70, the plate's own line quality between the ends of the knob;
+(4) a negative removes a kind, not a count.
+
+**The shard FLOOR earned its place on its first outing** — 0.31 % against 0.80 %,
+the only automatic clause that fails this frame in the direction it is actually
+wrong. The ceiling-only version filed a rung earlier would have passed it by the
+widest margin on the board. **The D ceiling stays withdrawn.**
+
+**Drift settled:** 8574 / 8598 / 8600 / 8572 px over four renders of identical
+geometry, two strengths, three prompts — 0.3 % spread, **100 % inside the crop box
+every time.** Deterministic property of the crop.
+
+**NOT licensed:** another strength, another wording, another mask size.
+**Licensed and cheap:** a compositor pass carrying the plate's own ink over the
+fill (no GPU), and the txt2img route with those four findings as its brief.
+**Beat 08 keeps `ep2-b08-scale30-0820`; nothing staged.**

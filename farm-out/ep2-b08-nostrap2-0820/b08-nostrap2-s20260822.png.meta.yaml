@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.7
+seed: 20260822
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b08nostrap2-0820/08-first-citizen-eraseonly-0820.png
+init_sha256: 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+mask_png: b08-nostrap2-s20260822-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b08nostrap2-0820/08-first-citizen-eraseonly-mask-0820.png
+mask_png_sha256: 8c94f1403c3e13839fe2351c70e494f9f2961c0b5a718db3f786d2a341a2d505
+mask_white_px: 10020
+mask_bbox_px: [552, 522, 654, 640]
+mask_width_frac: 0.1226
+mask_height_frac: 0.0970
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-20T14:39:30Z
+render_seconds: 7.3
+wall_seconds: 13.5
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  MASK GEOMETRY CHECK -- AND IT MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the NEGATIVE and nothing else: same init sha, same mask sha, same seed 20260822, same strength 0.70, same 40 steps, same cfg 7.5, same positive. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY PNG: one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, NO white at the board's top edge near y~670, and no white on the guard's FACE (x 531..601 y 355..420) or the goblin (x 60..260 y 430..1140). If it differs from ep2-b08-str70-0820's dry mask at all, something other than the negative moved and this job must stop here at $0.
+prompt: |-
+  brown leather harness strap crossing a cream linen shirt, brown cuff, white sash, flat cel shading, clean ink linework, soft cinematic lighting, anime key art, detailed, masterpiece, best quality, very aesthetic
+negative: |-
+  double strap, crossed straps, second strap, extra strap, strap end, buckle, clasp, buckles, goblin, green skin, pointed ears, second figure, face, head, hand, fist, fingers, knuckles, arm, buttons, placket, giant, colossus, towering figure, different scale, floating, raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl, child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality, deformed

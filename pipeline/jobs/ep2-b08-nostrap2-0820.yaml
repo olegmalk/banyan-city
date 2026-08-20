@@ -540,3 +540,74 @@ derivation:
     - key priority = 34
     payload:negative.txt:
     - payload negative.txt (391 -> 483 chars)
+verdict_this_job: 'THE NEGATIVE MOVED THE PIXELS AND NOT THE STRUCTURE, AND THAT CLOSES THE ROUTE. Handed
+  the exact noun that arrived -- ''double strap, crossed straps, second strap, extra strap, strap end''
+  -- the pass redrew 91.3% of the fill (9152 of 10020 px, mean |delta| 12.8 against its parent) and left
+  the SAME crossing band below the buckle. FAIL on H1(b), FAIL on the new ink clause (9.1% against a 10.3%
+  floor), FAIL on the new shard floor (0.31% against 0.80%). Not one of the three pre-registered fail
+  modes describes this: no third noun arrived, the negative did not eat the real strap, and the ink did
+  not merely stay soft -- it got softer. The fourth outcome, unregistered and the most informative of
+  the five: THE LEVER THAT REMOVED THE GOBLIN CANNOT REMOVE THIS.'
+verdict_this_job_measured:
+  provenance: Filed --backlog 14:36:22Z, autofilled, ran 14:39:13-14:39:31Z, rc=0, render_s=7.3, animagine-xl-3.1
+    cuda/bf16. Pulled by scp, all 7 files verified against the job's own manifest. $0. pipeline/derive_fetch_guard.py
+    passed at derive time and the card fetched both inputs by sha on the first attempt.
+  THE_FIVE_FRAME_LADDER: "C4' at the re-based 35-45 px ring (100% real on every frame); shard = fill px\
+    \ whose |grad| beats that ring's p99; ink = px with L<90 in the erase region.\n                  \
+    \   C4' D    N     F     shard   ink    in-mask G-R  >+20   what it drew\n  init (the plate)   2.169\
+    \  1.752  0.93   1.82%  13.3%    -28.59        0    the guard's own fist\n  0.99 eraseonly     1.751\
+    \  1.484  0.77   2.79%  10.6%     -2.83     1934    green goblin fist\n  0.99 nogoblin      3.479\
+    \  2.510  1.24   9.27%  24.6%    -16.06      166    2nd clasp + wedge fan\n  0.70 str70         1.548\
+    \  1.157  1.12   0.38%  10.5%    -23.11        0    strap runs + crossing band\n  0.70 nostrap2  \
+    \    1.669  1.257  1.21   0.31%   9.1%    -24.47        0    the same crossing band"
+  H1_the_fist_is_GONE_the_strap_RUNS_and_it_is_INKED: '(a) DELETED -- PASS, for the second time at 0.70.
+    (b) ONE STRAP -- FAIL. The crossing band below the buckle is still there, in the same place, at 12x.
+    (c) INKED -- FAIL: 9.1% against the plate''s 13.3% and a 10.3% floor, and it is WORSE than the parent''s
+    10.5%, which is the direction the likeliest fail mode predicted but a step further than it predicted.'
+  THE_NEGATIVE_MOVED_THE_PIXELS_AND_NOT_THE_STRUCTURE: 'THE MEASUREMENT THAT MAKES THIS A CLOSE RATHER
+    THAN A SIXTH RUNG. Against its parent, inside the mask: 9152 of 10020 px changed (91.3%), maxdiff
+    128, mean |delta| 12.8. The negative was not ignored -- it redrew almost the whole fill -- and the
+    crossing band came back anyway. Compare the goblin case, where the SAME lever removed the noun outright
+    and completely. THE GENERALISABLE FINDING: A NEGATIVE PROMPT REMOVES A KIND, NOT A COUNT. ''goblin''
+    is a kind and the region contained one; ''second strap'' is a CARDINALITY over a thing this pass''s
+    own POSITIVE asks for by name (''brown leather harness strap''). The same token pulls both ways and
+    the text encoder has no place to put the word ''second''. No wording of that clause fixes it, which
+    is why no sixth prompt rung is filed.'
+  C4prime_RING_RE_BASED: 'PASS -- D 1.669, N 1.257, F 1.21 at ring 35-45 px, 100.0% real. As the bar says,
+    it decides nothing: this instrument has now passed all five frames including a green goblin fist and
+    a wedge fan.'
+  C4prime_SHARD_RATE_with_a_FLOOR_this_time: 'FAIL on the floor: 0.31% against 0.80%. THE FLOOR EARNED
+    ITS PLACE ON ITS FIRST OUTING -- it is the only automatic clause that fails this frame in the direction
+    the frame is actually wrong (too smooth, under-inked), and the ceiling-only version filed one rung
+    earlier would have called 0.31% a pass by the widest margin on the board. Null calibration unchanged:
+    median 0.35%, p95 4.11%, p99 6.74% over 200 real windows of this footprint.'
+  H5_NO_NEW_NOUN: 'PASS: G-R -24.47 with ZERO px above +20, no face, no head, no figure, no hardware beyond
+    the same few-px orange speck the parent carried.'
+  H3_the_digits_SURVIVED: 'PASS at 12x, and the copy took the LEAST damage of the four passes: maxdiff
+    71, against 78 / 121 / 55.'
+  B8_hair: 'PASS: maxdiff 0 over (500..640, 300..430), fourth run running.'
+  B6_wardrobe: 'PASS: three garments.'
+  OUT_OF_MASK_DRIFT_is_MEASURED_not_assumed: '8572 px, maxdiff 89, and 8572 of 8572 INSIDE the crop box
+    x488-719 y458-705 -- 0 outside, for the fourth frame running. The series is now 8574 / 8598 / 8600
+    / 8572 over four renders of identical geometry with three different prompts and two strengths: a 0.3%
+    spread. THE DRIFT IS A DETERMINISTIC PROPERTY OF THE CROP, NOT OF WHAT THE SAMPLER DREW, and that
+    is settled.'
+  scale30_clauses_hold: Goblin box maxdiff 0, board box maxdiff 1 over 23 px, as on all four parents.
+verdict_cut: 'NOT PROPOSED AND NOT STAGED. Beat 08 keeps ep2-b08-scale30-0820. Said plainly for the record:
+  ep2-b08-str70-0820 is the best PICTURE this route produced and it reads as a plausible harness at 3x,
+  but it failed a clause written before it landed and this rung''s job was to buy the clean version. It
+  did not, so nothing changes.'
+what_this_licenses_after_the_verdict: 'THE INPAINT ROUTE FOR BEAT 08''s GRIP IS CLOSED. The stopping rule
+  was written into this spec before the render and it fires -- on a better reason than the one registered.
+  Registered: ''a THIRD unwanted noun arrives''. Actual: the SECOND noun was named in the negative, the
+  pass redrew 91.3% of the fill in response, and the noun stayed. That is not a tool that needs one more
+  wording; it is a lever that cannot express what is wrong. FIVE SAMPLES, about fifty-five seconds of
+  card, $0, and the conclusion b08-arm-route-0819.md 23 wrote in advance now has its evidence: a tool
+  with NO SPATIAL CONDITIONING of any kind cannot be asked to erase a limb from a figure and be told what
+  may stand where it was. WHAT IS LICENSED INSTEAD, and what is NOT. NOT licensed: another strength, another
+  wording, another mask size -- all three levers are measured and none of them is aimed at a count. LICENSED
+  and cheap: (1) a COMPOSITOR pass that carries the plate''s own ink over the fill, which is the residual
+  defect on str70 (9.1-10.5% against 13.3%) and needs no GPU and no sampler; (2) the txt2img route with
+  the four findings this ladder produced as its brief. INSTRUMENT: the shard FLOOR failed this frame on
+  its first outing and is the only automatic clause that caught the direction this frame is wrong in --
+  it should be carried into every C4'' call from here, and the D ceiling stays withdrawn.'

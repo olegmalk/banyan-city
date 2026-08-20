@@ -1717,3 +1717,93 @@ a value satisfying a conjunction the knob does not express, which is the same
 refusal beat 01's crf ladder reached this morning.
 
 **`ep2-b08-scale30-0820` remains beat 08's frame. No cut change, nothing staged.**
+
+## 26. The negative moved 91 % of the pixels and left the same band — the route is closed (2026-08-20)
+
+`ep2-b08-nostrap2-0820`, rc=0, **7.3 s of render**, $0. One variable against §25:
+the NEGATIVE, handed the exact noun that arrived — `double strap, crossed straps,
+second strap, extra strap, strap end`.
+
+### THE MEASUREMENT THAT MAKES THIS A CLOSE AND NOT A SIXTH RUNG
+
+Against its parent, inside the mask: **9152 of 10020 px changed (91.3 %),
+maxdiff 128, mean |Δ| 12.8.** The negative was not ignored — it redrew almost the
+entire fill — **and the crossing band came back in the same place.**
+
+Compare §24, where the same lever removed the goblin *outright and completely*
+on the first try at unchanged strength.
+
+> **A NEGATIVE PROMPT REMOVES A KIND, NOT A COUNT.**
+> `goblin` is a kind, and the region contained one. `second strap` is a
+> **cardinality** over a thing this pass's own POSITIVE asks for by name
+> ("brown leather harness strap"). The same token pulls both ways and the text
+> encoder has nowhere to put the word *second*. No wording of that clause fixes
+> it, which is why no sixth prompt rung is filed.
+
+### THE FIVE-FRAME LADDER
+
+C4' at the re-based 35–45 px ring (100 % real on every frame); shard = fill px
+whose |grad| beats that ring's p99; ink = px with L<90 in the erase region.
+
+| | C4' D | N | F | shard | ink | in-mask G−R | >+20 | what it drew |
+|---|---|---|---|---|---|---|---|---|
+| init (the plate) | 2.169 | 1.752 | 0.93 | 1.82 % | 13.3 % | −28.59 | 0 | the guard's own fist |
+| 0.99 `eraseonly` | 1.751 | 1.484 | 0.77 | 2.79 % | 10.6 % | −2.83 | 1934 | green goblin fist |
+| 0.99 `nogoblin` | 3.479 | 2.510 | 1.24 | 9.27 % | 24.6 % | −16.06 | 166 | 2nd clasp + wedge fan |
+| 0.70 `str70` | 1.548 | 1.157 | 1.12 | 0.38 % | 10.5 % | −23.11 | 0 | strap runs + crossing band |
+| **0.70 `nostrap2`** | 1.669 | 1.257 | 1.21 | **0.31 %** | **9.1 %** | −24.47 | 0 | **the same crossing band** |
+
+FAIL on H1(b), on the new ink clause (9.1 % against a 10.3 % floor — *worse* than
+its parent) and on the new shard **floor** (0.31 % against 0.80 %). **None of the
+three pre-registered fail modes describes this**: no third noun arrived, the
+negative did not eat the real strap, and the ink did not merely stay soft.
+
+`EVIDENCE-b08-nostrap2-verdict-0820.png` — init, `str70`, this frame at 12x.
+
+### THE SHARD FLOOR EARNED ITS PLACE ON ITS FIRST OUTING
+
+It is **the only automatic clause that fails this frame in the direction the
+frame is actually wrong** — too smooth, under-inked. The ceiling-only version
+filed one rung earlier would have passed 0.31 % by the widest margin on the
+board. The **D ceiling stays withdrawn** (§25: the null puts its 5 %-FP point at
+4.658, which would not have caught the 3.479 wedge fan).
+
+### AND THE DRIFT QUESTION IS SETTLED
+
+**8574 / 8598 / 8600 / 8572 px** over four renders of identical geometry with
+three different prompts and two strengths — a **0.3 % spread** — and **100 % of it
+inside the crop box every single time.** The `--pad-crop` drift is a
+deterministic property of the crop, not of what the sampler drew.
+
+### THE ROUTE IS CLOSED, AND THE STOPPING RULE FIRED ON A BETTER REASON THAN THE ONE REGISTERED
+
+Registered: *"a THIRD unwanted noun arrives"*. Actual: **the second noun was
+named in the negative, the pass redrew 91.3 % of the fill in response, and the
+noun stayed.** That is not a tool that needs one more wording; it is a lever that
+cannot express what is wrong.
+
+**Five samples, about fifty-five seconds of card, $0**, and §23's conclusion now
+has its evidence: **a tool with no spatial conditioning of any kind cannot be
+asked to erase a limb from a figure AND be told what may stand where it was.**
+
+**What the ladder bought, and it is not nothing:**
+
+1. The fist **can** be deleted, and does **not** need 0.99 — 0.70 deletes it.
+2. Mask **size** does not choose the noun; the **prompt** does — for a *kind*.
+3. Strength governs invention **symmetrically**: 5.1× too shard-dense at 0.99,
+   4.8× too smooth at 0.70, and the plate's own line quality sits between the
+   ends of the knob.
+4. A negative removes a kind, not a count.
+
+**NOT licensed:** another strength, another wording, another mask size. All three
+levers are measured and none is aimed at a count.
+
+**Licensed and cheap:** (1) a **compositor** pass carrying the plate's own ink
+over the fill — the residual defect on `str70` (9.1–10.5 % against 13.3 %), no GPU
+and no sampler needed; (2) the **txt2img route**, with the four findings above as
+its brief.
+
+**`ep2-b08-scale30-0820` remains beat 08's frame.** Recorded plainly: `str70` is
+the best *picture* this route produced and reads as a plausible harness at 3x,
+but it failed a clause written before it landed, and this rung's job was to buy
+the clean version. It did not, so nothing changes.
