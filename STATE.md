@@ -9556,3 +9556,12 @@ not a fourth wording — but the author should know it before granting, and it m
 `.gitignore` — the gate caught that omission, which is the **second** time in one
 day the force-add trap has earned the documentation in
 `decisions-pending/ep2-guards-0818/`.
+
+## 2026-08-20 — macbook6 onboarded (dad's remote use)
+New machine, account `macbook6`, macOS 26.6.1, reachable at
+`macbook6@macbook6s-macbook-pro.local`. Steward + dad's MacBook Air keys
+installed; `disablesleep 1`, `sleep 0`, `displaysleep 5`, `womp 1` set (survives
+lid close; requires AC). No Xcode CLT / python3 — NOT a render node until CLT
+is installed at the keyboard. macbook5 same day: disablesleep applied after the
+founder supplied the password; both machines are dad's-Claude territory, not
+farm.
