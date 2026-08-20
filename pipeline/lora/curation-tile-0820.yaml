@@ -334,3 +334,46 @@ gate_status_2026_08_21_end_of_night: >-
   the residual is one measured number: the eye is the tile's KIND at roughly
   twice its relative size, with the reference's head-to-frame ratio as the one
   untested cause. train-jerry-0820 REMAINS UNFILED. Next: ep2-jerry-face-k3-0821.
+
+# --------------------------------------------------------------------------
+# UPDATE 6, 2026-08-21. ep2-jerry-face-k3-0821 -- k1's rung with the
+# REFERENCE'S HEAD-TO-FRAME RATIO changed 100% -> 19.1% and nothing else.
+# Pixels: review/ep2-goblin-design-0819/FACE-K3-RATIO-0821.png
+#
+# THE CAUSE IS CONFIRMED AND BOTH DEFECTS MOVED TOGETHER:
+#                        eye box  aspect  bbox vs tile  head_frac  heads
+#   TILE                  23x12    0.52     --            0.190     5.2
+#   j2 (no adapter)       27x27    1.00     1.40x         0.181     5.56
+#   k1 (ref 100% head)    52x28    0.54     1.87x         0.219     4.57
+#   k2 (same ref, 0.9)    57x36    0.63     2.32x         0.227     4.41 FAIL
+#   k3 (ref 19.1% head)   37x20    0.54     1.24x  BEST   0.201     4.97
+#
+# The adapter was being shown a head that fills a frame and was drawing one.
+# NOTE ON THE AREA COLUMN: the committed ruler reads k3 at 0.0040 and that is
+# an ARTIFACT -- k3's eyes are shaded under its fixed min>190. The threshold is
+# NOT moved (it is calibrated against five published rungs); the bounding-box
+# column is what the reading rests on.
+#
+# AND k3 FAILS ON SOMETHING NEW: HORNS -- two pale spikes off the skull, which
+# no negative bans because no rung had needed it to. Plus containment break #2
+# of the three named in advance: the tile's PURPLE COWL is at his neck.
+# HYPOTHESIS, labelled as one and NOT acted on: at 19.1% of a 416x608 canvas
+# the head is ~43 px after CLIP's 224x224 resize, and a weakly-encoded subject
+# gets completed from the model's own priors.
+#
+# THE NEXT RUNG IS NAMED AND NOT FILED. A ratio between 100% and 19.1%, or a
+# squarer canvas, is one variable either way -- but the encoder reading is a
+# guess, a prediction from this same lane was falsified tonight, and what
+# IP-Adapter reference framing does to subject fidelity is public knowledge
+# nobody here has read. Read before rendering.
+gate_status_2026_08_21_FINAL: >-
+  STOP AND HOLD. train-jerry-0820 REMAINS UNFILED and NOTHING is committed as a
+  standard. The set is still 7 frames in 4 poses, unchanged; nothing from the
+  f/g/h/j/k, skel, pose, tileset or prop families enters it. k3 is the best
+  face this tree has produced -- T1, T2, T3, P1, P2, P3, P4, T8 and the eye's
+  SHAPE all hold, at 1.24x the tile's eye size -- and it has HORNS, so it does
+  not go in the dataset. A LoRA learns what it is shown, and after training the
+  trigger token outranks every prompt that would argue with the defect; today
+  it does not. Two levers are closed (wording for the face, adapter strength
+  for size) and one cause is confirmed (the reference's head-to-frame ratio
+  drives both the drawn head and the drawn eye).

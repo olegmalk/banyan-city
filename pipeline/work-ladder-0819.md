@@ -6748,3 +6748,105 @@ a push has just updated) and no hard failure when git cannot answer, and the log
 line now says which check ran. Verified against the real case: the unpushed
 probe is caught, the pushed reference is not. *A guard whose name is stronger
 than its check is a guard that gets trusted for the thing it does not do.*
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE CAUSE IS CONFIRMED, THE RUNG STILL FAILS, AND THE GATE STAYS SHUT
+
+`ep2-jerry-face-k3-0821`. k1's rung with **one** variable: the reference's
+head-to-frame ratio, **100% → 19.1%**. Same head pixels, same mask, back to
+`--ip-scale 0.7`. `review/ep2-goblin-design-0819/FACE-K3-RATIO-0821.png`
+
+### OUTCOME 1 OF THE THREE NAMED IN THE SPEC. BOTH DEFECTS MOVED TOGETHER
+
+| | eye box | aspect | eye bbox vs tile | head_frac | heads |
+|---|---|---|---|---|---|
+| TILE | 23x12 | **0.52** | — (1.62% of head) | 0.190 | 5.2 |
+| j2, no adapter | 27x27 | 1.00 | 1.40x | 0.181 | 5.56 |
+| k1 @ ref 100% | 52x28 | 0.54 | 1.87x | 0.219 | 4.57 |
+| k2 @ 0.9 | 57x36 | 0.63 | 2.32x | 0.227 | **4.41 FAIL** |
+| **k3 @ ref 19.1%** | **37x20** | **0.54** | **1.24x — BEST** | **0.201** | **4.97** |
+
+**The reference's head-to-frame ratio was the cause, and one variable moved
+both defects at once**: the eye from 1.87x the tile's relative bounding box to
+**1.24x** — closer than anything the wording route ever managed, j2 included —
+while keeping the tile's aspect at **0.54**, and head_frac from 0.219 back to
+**0.201** against the 0.190 authored, T8 recovering to **4.97 heads**. The
+hypothesis was that the adapter was shown a head that fills a frame and drew
+one. It was.
+
+**ON THE AREA NUMBER, DISCLOSED RATHER THAN QUIETLY FIXED.** The committed
+ruler reads k3 at **0.0040**, and that figure is an **artifact, not a result**:
+k3's eyes are shaded to a dimmer cream that falls under the ruler's fixed
+`min>190`, and at `min>170` the same code returns 0.0316 and finds both eyes at
+37x20. **The threshold is NOT being moved** — it is calibrated against five
+published rungs and moving it to flatter a sixth is the one thing a ruler must
+never do. The bounding-box column above is the comparison this entry argues
+from, it is threshold-independent in kind, and the strict area figure stands in
+the record as unusable for k3 with the reason attached.
+
+### AND IT FAILS, ON SOMETHING NO PRIOR RUNG HAD
+
+**HORNS.** Two long pale spikes rising from the skull. Nothing asked for them;
+the negative bans `pointy ears`, `long pointy ears` and `elf`, and it does not
+ban horns because no rung had ever needed it to. **A new creature feature is a
+hard fail** — this gate exists to stop a LoRA learning things the character
+does not have, and a horn is a louder wrong thing than an oversized eye.
+
+**AND CONTAINMENT BROKE, on break #2 of the three named in advance:** the
+tile's **purple cowl-scarf** is at his neck. k1 and k2 at ref-100% held the
+patchwork cloak cleanly; the reframed reference let the cowl through.
+
+**The likely single cause of both, and it is a HYPOTHESIS and is labelled
+one:** at 19.1% of a 416x608 canvas the head is ~116 px, and CLIP ViT-H encodes
+the reference at 224x224 — so the subject lands around **43 px** in the encode.
+A weakly-encoded subject is one the model completes from its own priors, and
+"green bald humanoid" completes to horns. **This is not researched and it is
+not being acted on tonight.**
+
+### THE GATE DECISION: **STOP AND HOLD. `train-jerry-0820` REMAINS UNFILED.**
+
+Nothing is committed as a standard. The set is **still 7 frames in 4 poses**,
+unchanged since 2026-08-20; nothing from the f, g, h, j, k, skel, pose, tileset
+or prop families enters it. No pick, no `plate_ack`, no canon filename, no beat
+plate, nothing promoted.
+
+**The reason is the same one this gate has given three times and it has not
+weakened: a LoRA learns what it is shown.** k3 is the best face this tree has
+made and it has horns. Ten beat-20 man-reads would have taught a human face,
+twelve bobbleheads a mascot, six blank eggs a blank egg — and sixteen frames
+with horns teach horns, after which the trigger token outranks every prompt
+that would argue with it. **Today the defect is arguable per beat. After
+training it is not.** That asymmetry is the whole reason this gate is worth
+what it has cost.
+
+**What the night actually bought, stated as an inventory rather than a
+feeling:**
+
+- **Two levers closed.** Wording is finished for the face (six rungs, four tags
+  of affordance, `thick eyebrows` proven inert-but-harmless). Adapter strength
+  is finished for size (k2: 1.6% relative on area, shape regressed, T8 spent).
+- **One cause confirmed.** The reference's head-to-frame ratio drives both the
+  drawn head size and the drawn eye size, demonstrated by a single-variable
+  change that moved both.
+- **The best face so far, and it is not usable.** k3 holds T1, T2, T3, P1, P2,
+  P3, P4, T8 and the eye's shape, at 1.24x the tile's eye size — and fails on
+  horns and a leaked cowl.
+- **Three artifacts that outlive the rungs**: a committed ruler whose
+  calibration is a test (`pipeline/measure_face_eye_0821.py --selftest`), a
+  committed reference builder that reproduces its output byte-for-byte
+  (`pipeline/author_jerry_headfit_ref_0821.py --check`), and a fetch guard that
+  now checks `origin/main` because this lane tripped the gap in it.
+
+### THE NEXT RUNG IS NAMED AND IS **NOT** FILED
+
+The ratio between 100% (horn-free, eye 1.87x) and 19.1% (eye 1.24x, horns) is
+unexplored, and a middle value — or the same ratio on a squarer canvas so the
+subject survives CLIP's 224x224 resize — is one variable either way. **It is
+not filed, on purpose.** The encoder-resolution reading above is a guess, this
+lane has had a prediction falsified once tonight already, and the standing rule
+is that research means outside this repo: what IP-Adapter reference framing
+does to subject fidelity is a question the ComfyUI and diffusers communities
+have answered in public and nobody here has read it. **The next lane should
+read before it renders.** The card is idle and that is the correct state when
+the only available job is a guess.
