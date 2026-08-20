@@ -5187,3 +5187,67 @@ Fix (daytime, needs box redeploy): score by spec est_minutes when present,
 fingerprint as fallback; consider a max-runtime kill honoring est_minutes*3.
 Tonight's mitigation: LoRA lane holds training until ship jobs drain; tick
 files short jobs only.
+
+## The Jerry LoRA: trainer installed, job filed, then HELD before it ran (LoRA lane, 2026-08-20 night)
+
+**Trainer install is DONE and is design-independent — do not redo it.** SETUP.md
+ran end to end on the box: sd-scripts pinned to **v0.11.1** (`6721028c`),
+`C:\banyan-farm\venv-lora` on torch **2.11.0+cu128** at sm_120, bitsandbytes
+0.50.1 with **AdamW8bit smoke-tested on the card**, accelerate written
+non-interactively, and `sdxl_train_network.py --help` printing all 800 lines with
+**every one of the 17 flags the spec passes** present. The render venv was
+re-verified afterwards and is untouched — torch 2.11.0+cu128, `(12, 0)`,
+diffusers 0.29.2, no xformers, bf16 CUDA matmul executes. The separation held.
+
+Three things execution corrected, all now in `pipeline/lora/SETUP.md`: **v0.11.1's
+`requirements.txt` never lists xformers at all** (the trap's direct vector is gone
+in this tag; the rules stay, a bump can bring it back); step 4 must run with
+`cwd=sd-scripts` because the file ends in `-e .`; and step 8's `--help` dies with
+`UnicodeEncodeError` on a cp1252 console because the help text is partly Japanese —
+needs `PYTHONUTF8=1`, quoted as `set "PYTHONUTF8=1"` or the trailing space lands in
+the value and Python refuses to start.
+
+**The box checkout is 621 commits / 532 MB behind and nothing on the box ever
+pulls it.** Measured ~87 KB/s — ~100 minutes to move history the job never reads,
+for a job whose whole input is 64 files and 36 MB. So the dataset went over
+directly (tar + scp, archive sha256 identical both ends) into a staging root, and
+the stage step now tries the repo checkout FIRST and falls back to it. Nothing is
+trusted because of how it arrived: every frame is still verified byte-for-byte
+against the manifest, and the step prints which root it used. Also recorded there:
+**do not set `GIT_SSH_COMMAND` when pulling on the box** — it overrides
+`core.sshCommand`, drops the farm deploy key, and fails as `Permission denied
+(publickey)`, which looks exactly like broken credentials and is not.
+
+> **THEN THE FOUNDER CORRECTED THE PREMISE, AND THE JOB WAS PULLED BACK BEFORE IT
+> RAN.** The goblin must read as the **B tile's CREATURE**, not an adult man;
+> "adult" in `canon.yaml` was drift. All 31 frames were *selected for* the man-read
+> and every caption is written in its vocabulary. **A character LoRA does not
+> average out a wrong premise, it learns it** — train on this set and the man-read
+> becomes what the trigger token MEANS, permanently and invisibly, for every ep3
+> plate downstream. That is the failure the spec's own bars exist to catch,
+> arriving through the dataset instead of the settings.
+
+It was filed to backlog (`lora-jerry-0820-1787245756.json`) and pulled back before
+any tick could promote it; parked on the box as
+`...json.HOLD-founder-tile-read-0820`, which takes it out of autofill's runnable
+set. **It never reached `ready/` or `running/`. No GPU-second was spent, no weight
+file exists.** The card spent the evening on the audit lane's ship jobs, which is
+the right order.
+
+**Two gates before it may be filed again, neither this lane's call alone:**
+1. **Dataset re-curated for tile fidelity** — the audit lane is re-deriving the
+   design from the B tile on `/review/ep2-goblin-design-0819`. Coordinate; do not
+   re-curate in parallel, and do not assume which of the current 31 survive.
+2. **Captions re-derived** from the corrected canon wording once it exists.
+
+Also flagged in the spec: **bar B2 measures style against "the shipped ep2
+plates", and that reference moves if the creature read changes what ships.**
+
+Two R4 questions reached the board with pixels and **survive the correction —
+they sharpen under it**, because enormous ears and a broken tusk are *creature*
+features, both in the original script line (`node.md:35`), both lost on the way to
+the man-read: `/review/ep2-jerry-face-0820`. Non-blocking, nothing waits on them.
+The tusk already carries his fingerprint and the card says so rather than posing
+as a fresh oversight — it was dropped by `ep2-b04-goblin-close-0811` after he
+called the close-ups "makign the goblin look too complicated", and what was never
+asked is whether that was permanent or just that one over-stuffed prompt.
