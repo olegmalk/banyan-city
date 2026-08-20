@@ -4940,3 +4940,34 @@ chromaticity as well as its luma — **and its cost must be pre-registered befor
 runs**, because unlike the luma match it *can* reach G2, and a rung that quietly
 buys G1 by spending G2 has bought nothing. Ring geometry is closed. Encode-picking
 is still not licensed, and the table above is exactly why it is named twice.
+
+### The compositor rung: the free half is adopted, the clever half passes every clause and looks awful — `b08-arm-route-0819.md` §27
+
+`pipeline/beat08_ink_carry.py`, $0, CPU, 0.7 s. Two operations, and judging split
+them.
+
+**ADOPTED — take the plate's bytes outside the mask.** Fill inside, plate
+outside, 2 px feather: **drift beyond the feather 0 px against the render's
+7560**, and the protected fist copy returns to **byte-exact** (maxdiff 0 against
+11–121 over four renders). Inside the hole nothing changes (D 1.547 vs 1.548).
+Free, cannot make a picture worse, retires a defect four renders carried.
+**This is the composite form for every inpaint result in this tree from here.**
+
+**REJECTED — snap to the plate's palette and re-ink.** It moved both numbers the
+right way (shard 0.38 % → **2.82 %**, inside the 0.80–3.00 % band; ink 10.5 % →
+**12.2 %** against the plate's 13.3 %) and produced **the worst picture on the
+board**: posterised blocks, staircase edges, lavender *background* blobs on the
+guard's chest, because a 12–70 px palette ring reaches the sky.
+
+> **THE SHARD-RATE CLAUSE I FILED ONE RUNG AGO PASSED A FRAME THAT IS UNUSABLE
+> AT A GLANCE.** It measures edge statistics, and posterisation produces
+> plate-like edge statistics by destroying the picture. Necessary, not
+> sufficient — the same sentence §24 wrote about C4' now applies to the clause
+> added to fix C4'.
+
+**CHAIN STOPS, at the clause it was always going to stop at.** No motion sample
+filed: the pre-condition was a passing fill and H1(b)'s crossing band is
+untouched by either half, exactly as the script's docstring pre-registered
+("it cannot remove a shape"). The band is a SHAPE, so the lever is spatial — a
+controlnet (the tool has none) or a hand-authored matte (R4, the author's).
+Both sit outside what §26 closed. **Beat 08 keeps `ep2-b08-scale30-0820`.**

@@ -1807,3 +1807,74 @@ its brief.
 the best *picture* this route produced and reads as a plausible harness at 3x,
 but it failed a clause written before it landed, and this rung's job was to buy
 the clean version. It did not, so nothing changes.
+
+## 27. The compositor: half of it is a free win, half of it passes every clause and looks awful (2026-08-20)
+
+`pipeline/beat08_ink_carry.py`, $0, CPU, ~0.7 s, no sampler. Two operations in
+one script, and judging split them cleanly.
+
+| | C4' D | N | F | shard | ink | drift beyond feather | copy maxdiff |
+|---|---|---|---|---|---|---|---|
+| init (the plate) | 2.169 | 1.752 | 0.93 | 1.82 % | 13.3 % | 0 | 0 |
+| 0.70 `str70` | 1.548 | 1.157 | 1.12 | 0.38 % | 10.5 % | **7560** | 11 |
+| **restore-only** | 1.547 | 1.157 | 1.12 | 0.38 % | 10.5 % | **0** | **0** |
+| ink-carry (snap + re-ink) | 1.543 | 1.106 | 1.04 | **2.82 %** | **12.2 %** | 0 | 0 |
+
+### THE FREE WIN: TAKE THE PLATE'S BYTES OUTSIDE THE MASK
+
+A composite has no reason to inherit `--pad-crop`'s drift. Take the fill inside
+the mask and the **plate** outside it, blending only a 2 px feather, and the
+whole drift class disappears: **0 px differ from the plate beyond the feather**,
+against 7560 for the render, and **the protected fist copy goes back to
+byte-exact** (maxdiff 0, against 11–121 across four renders). Inside the hole
+nothing changes at all — D 1.547 against 1.548 is the feather and nothing else.
+
+**This is adopted as the composite form for every inpaint result in this tree.**
+It costs nothing, it cannot make a picture worse, and it retires a defect that
+four renders in a row carried. `--restore-only`.
+
+### THE HALF THAT FAILED, AND IT FAILED IN THE MOST INSTRUCTIVE WAY AVAILABLE
+
+Snap the fill to a palette read off the plate, then re-ink the boundaries the
+plate itself draws lines between. **It moved both numbers the right way** —
+shard 0.38 % → 2.82 %, into the 0.80–3.00 % band the last rung established; ink
+10.5 % → 12.2 % against the plate's 13.3 % — **and the picture is the worst on
+the board.** Blocky posterisation, staircase edges, and lavender *background*
+blobs on the guard's chest, because a palette sampled from a 12–70 px ring
+reaches the sky and the sampler's soft mid-tones snap to it.
+
+> **THE SHARD-RATE CLAUSE PASSED A FRAME THAT IS UNUSABLE AT A GLANCE.** I filed
+> that clause one rung ago, and it caught the right thing then. It measures edge
+> STATISTICS, and posterisation produces plate-like edge statistics by
+> destroying the picture. Necessary, not sufficient. §24 said "a C4' pass is not
+> evidence"; the same sentence now applies to the clause I added to fix C4'.
+
+Three wrong formulations preceded the one that ran, each caught by measurement
+and each written into the script's docstring: inking every label boundary turned
+**65 %** of the hole black (58.7 % ink density); testing "is this boundary pixel
+dark" found **nothing**, because where the plate draws a line the two materials
+are never adjacent — the line is *between* them; and deciding ink by darkness
+called the navy collar a line and the strap's own outline a material, which a
+run-width test gets right. The rule that finally ran is entirely read off the
+plate. It still is not enough, because the palette's *scope* is the real
+problem: a local ring gives the right colours but makes every material look thin,
+so the ink-level test breaks; a wide ring fixes the ink test and imports the sky.
+
+`EVIDENCE-b08-inkcarry-verdict-0820.png` — init, `str70`, restore-only, ink-carry
+at 12x.
+
+### THE CHAIN STOPS HERE, AT THE CLAUSE IT WAS ALWAYS GOING TO STOP AT
+
+The consumer chain was: a passing fill → an i2v motion sample off that plate → a
+candidate for beat 08's take. **The pre-condition is not met and no motion sample
+is filed.** H1(b) — the crossing band — is untouched by either half of the
+compositor, exactly as this script's docstring pre-registered before it was run:
+*"it cannot remove a shape."* Snapping made the band flatter and crisper; it did
+not make it absent.
+
+**What would actually move H1(b)**, named without being filed: the band is a
+SHAPE, so the lever is spatial, and the only spatial levers left are a
+controlnet (`inpaint_fruit.py` has none) or a hand-authored matte (R4 — the
+author's, not the steward's). Both sit outside what §26 closed.
+
+**`ep2-b08-scale30-0820` remains beat 08's frame. Nothing staged, no pick.**
