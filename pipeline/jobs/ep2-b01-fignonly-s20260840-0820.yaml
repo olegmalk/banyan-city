@@ -1,0 +1,322 @@
+id: ep2-b01-fignonly-s20260840-0820
+task: ep2-b01-fignonly-s20260840-0820
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the fig-detector judging lane, 2026-08-20
+consumer: 'THE COLD OPEN OF EPISODE 2''S CUT, which currently holds 01-cold-open-b01-nubgrow-crf10-s20260826-0819.mp4
+  and should not. That incumbent passed 7 of 7 on the colour predicate retired today; rescored on the
+  geometry-anchored detector it reaches 90% of its growth by f009 and is visually static from f030, which
+  is the G1 failure -- ''a fig appeared'' rather than ''the fig grew'' -- that G1 exists to catch. It
+  also holds its field perfectly, which none of the five challengers do. This job asks whether one clip
+  can do both. A PASS is a veto-able steward pick and a proposed swap, with pixels, under R4. A FAIL is
+  consumed too: it says whether the fig and its plant are separable by wording at all, which decides whether
+  the next move is plate-side or prompt-side.'
+success: 'ONE 704x1280 121-frame mp4 at 24 fps off the same init and the same seed 20260840 as the parent
+  named in `control` below, differing from it in the contents of one payload file and nothing else, in
+  which the whole-frame luma peak stays within 12.0 levels of f000 with at most 6 frames over 100, the
+  sapling and shaft regions hold at region NCC 0.45 and 0.70 f000-to-f120 while the fig box falls below
+  0.30, and the fig still ramps by a continuous path to a deep purple-violet end state with no single-frame
+  area step at or above 2.0x. The ONLY difference from the parent named in `control` below is the contents
+  of b01-negative.txt: twelve terms appended, none removed. Same seed 20260840, same init, same motion
+  prompt byte for byte, same steps, same flags, same 121 frames. Every threshold above is a value MEASURED
+  on this init today -- the incumbent''s for the field ones, the parent''s for the growth ones -- and
+  not a number chosen to be clearable. G3 and G4''s ''below the grass'' are carried unscored because no
+  instrument for either exists in this repo.'
+why: '$0, ~12 minutes of GPU, no download, nothing to fetch. All five growmotion seeds were scored FAIL
+  today against bars pre-registered before their renders, and the pool''s structure is the finding: the
+  recipe gives a locked field with a popped fig (the incumbent, seed 20260826) or a real growth arc inside
+  a moving field (b15, seed 20260840), and no seed of six has given both. That is why this is not a seed
+  re-roll -- a seventh seed re-runs a lottery whose two outcomes are both already in hand and both already
+  fail. It changes instead the one thing the measurement names: b15 obeyed all thirteen negative terms
+  and failed on the two faults none of them mentions. One variable, one sample, judged on landing before
+  anything is scaled.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp\
+    \ the clip's provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for\
+    \ the cut (the cold open), so is_show_content is\ntrue. Still approved: false / provisional: true\
+    \ -- nothing is cut until the\n121 frames are opened against the pre-registered bar, and R4 is the\n\
+    founder's.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"\
+    !! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"\
+    utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b01-fignonly-s20260840-0820\
+    \ after the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n     \
+    \   \"is_show_content: true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR THE EPISODE\
+    \ 2 COLD OPEN. It animates the\\n\"\n        \"  founder's own 2026-08-13 route -- a small inpainted\
+    \ nub, grown by\\n\"\n        \"  the motion prompt -- on the frame-1 plate that passed its bar 7\
+    \ of\\n\"\n        \"  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered\\n\"\n  \
+    \      \"  in pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml BEFORE this render\\n\"\n       \
+    \ \"  existed. Not approved and not cut until those frames are opened.\\n\")\nprint(\"stamped %s\"\
+    \ % META, flush=True)"
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-motion-prompt.txt: On the thinnest branch of the
+    tiny two-leaf sapling, the small green nub swells, darkens and rounds into a single deep purple fig
+    -- the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus
+    grassy field, soft glowing light, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame, growing plant, sprouting, unfurling leaves, stem lengthening, leaves enlarging,
+    plant enlarging, blooming, brightening, exposure change, overexposed, blown highlights, changing background
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-jobs-encode.json: "[\n {\n  \"beat\": 1,\n  \"embeds\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820-out\\\\b01-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820\\\\b01-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820\\\\b01-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-jobs-render.json: "[\n {\n  \"beat\": 1,\n  \"seed\"\
+    : 20260840,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820-out\\\\b01-embeds.pt\"\
+    ,\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820-out\\\\b01-nub-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260840-0820-out\\\\01-cold-open-LTX-fignonly-s20260840.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-fignonly-s20260840-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-fignonly-s20260840-0820
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\01-cold-open-LTX-fignonly-s20260840.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its\
+    \ files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260840-0820-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260840-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-fignonly-s20260840-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-fignonly-s20260840.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b01-fignonly-s20260840-0820.sha256\"), \"w\", newline=\"\\n\") as\
+    \ fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\01-cold-open-LTX-fignonly-s20260840.mp4
+- C:\banyan-farm\ep2-b01-fignonly-s20260840-0820-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. The motion
+  prompt IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13
+  verdict. Sidecar stamped approved: false / provisional: true; nothing is cut until the frames are opened
+  against the pre-registered bar, and the taste call is the founder''s under R4. Silent, $0, no voice
+  synthesis, no episode assembly.'
+bar:
+  carried_from: pipeline/jobs/ep2-b01-growmotion-b15-0819.yaml, clause for clause
+  how_it_is_judged: pipeline/fig_track.py --frames <dir> --anchor-mask anchor/b01-nubcomp-s20260826-mask.png,
+    plus the region-NCC and whole-frame-luma probes recorded in the parent's verdict_this_job_measured.
+    Judged on landing, not batched -- this is ONE sample of ONE recipe change under the one-sample rule.
+  G1_growth_by_a_continuous_path: 'SCORED. Detector live on every frame it scores; no single-frame area
+    step at or above 2.0x; growth distributed rather than popped -- the frame reaching 90% of total growth
+    must be at or after f060. Parent b15: 121/121 live, max step 1.08x, 90% at f111. The INCUMBENT fails
+    this clause at f009 and that is on the record.'
+  G2_end_state_deep_purple_violet: 'SCORED, and it requires a LIVE f120. Fig hue at the last frame in
+    270-320 deg with saturation at or above 0.60. Parent b15: hue 301.6, sat 0.72. If the last frame is
+    dead the clause is retracted, not guessed -- b16 is why this sentence exists: 55 dead frames, f098
+    reads amber, f120 looks purple, neither was scored.'
+  G3_exactly_two_leaves_in_every_frame: CARRIED BUT NOT SCORED -- NO INSTRUMENT EXISTS. This repo has
+    no leaf counter and a sampled look cannot certify a universal over 121 frames. Recorded as an eye
+    note. Naming this is the point; it was scored by assumption before.
+  G4_no_size_doubling: 'SCORED on the reading ep2-b01-growmotion-b13-0819 settled and this lane did not
+    move: maximum single-frame area ratio under 2.0x, not total growth. TENSION CARRIED FORWARD: that
+    reading admits an unbounded total and b15 rode it to 19.37x. Not changed here, because changing a
+    settled clause in the same breath as scoring against it is how a bar stops meaning anything.'
+  G4b_below_the_grass: CARRIED BUT NOT SCORED -- no grass line is defined in this spec or on the plate,
+    so there is no threshold. Eye note only. If it is to become a bar someone must put a y-coordinate
+    on the plate first.
+  G5a_field_stability_THE_NEW_EXPLICIT_CLAUSE: 'SCORED, and this is the clause that killed the best clip
+    of the last round. Region NCC between f000 and f120 -- gain- and offset-invariant, so a global exposure
+    change cannot fake it -- on four bands: shaft y0-350; sapling y430-740 x150-560; fig box y700-900
+    x230-450; grass floor y1000-1280. PASS requires sapling at or above 0.45 AND shaft at or above 0.70
+    AND grass floor at or above 0.20, with the fig box BELOW 0.30 (the fig must be the thing that changed).
+    Reference values, measured, not invented: the incumbent seed 20260826 on this same init reads 0.932
+    / 0.637 / 0.023 / 0.323 and would pass; parent b15 reads -0.355 / 0.092 / 0.002 / 0.027 and fails
+    on three of the four.'
+  G5b_camera_locked: CARRIED BUT NOT SCORED -- the instrument refuses. global_zoom fits one scale to the
+    picture and refits it on four disjoint quadrants; disagreeing quadrants mean the picture is being
+    redrawn and no scale may be quoted, and a fit that lands on the grid edge now publishes railed:true
+    and is unquotable as well. Not one of the five 2026-08-20 clips was quadrant-consistent. Reported,
+    never scored.
+  H_LUMA_BLOOM_THE_OTHER_NEW_EXPLICIT_CLAUSE: 'SCORED. Whole-frame mean luma, every frame, no fig mask
+    involved so no part of it is retractable. FAIL if peak whole-frame luma exceeds f000 by more than
+    12.0 levels, or if more than 6 of 121 frames read above luma 100. Reference values, measured: incumbent
+    +1.46 with 0 frames over 100 (passes with room); the five seeds run +17.45 (b15), +23.67, +44.17,
+    +57.37, +71.07 with 71 to 120 frames over 100, and ALL FIVE FAIL THIS BOUND INCLUDING THE MILDEST.
+    Correcting the 2026-08-20 ladder while carrying it forward: it is not true that all five pass 100
+    by f024 -- b15 sits at 99.58 at f024 and peaks 104.64 at f035.'
+  H1_frozen: SCORED. FAIL if fig-box NCC to the final frame is at or above 0.80 by f060, i.e. the last
+    half is a still. b16 reads 0.669 at f060 and 0.965 at f100.
+  H5_detach_or_teleport: SCORED by the detector's own jump gate, live per frame; plus the fig centroid
+    must stay within 40 px of its f000 geometric anchor (785.1, 339.4) for the whole clip. Parent b15
+    moves 14 px across 121 frames and passes.
+  H6_scene_break: SCORED. FAIL if any consecutive whole-frame NCC drops below 0.80. b16 reads 0.6415 at
+    f001 and fails; b15 reads 0.9522 worst and passes.
+  conjunctive: A partial is a FAIL, as the parent said. Two clauses are unscored by declaration (G3, G4b)
+    and one is unquotable by its own instrument (G5b); those three cannot produce a PASS and cannot produce
+    a FAIL, and the verdict will say so out loud rather than let an absent key read as a clear one.
+control: ep2-b01-growmotion-b15-0819, frame for frame. Its verdict and every number this bar references
+  are appended to that spec under verdict_this_job_measured.
+failure_predicted_in_advance: 'F2 is the most likely single outcome: the negative binds and takes the
+  fig with it, because ''growing'', ''enlarging'' and ''blooming'' do not know that the fig is exempt.
+  It is named here before the render so that a collapsed arc reads as the predicted cost of a fair test
+  and not as a surprise to be explained away afterwards.'
+init_provenance: 'The shared beat-01 nub composite init, unchanged: the frame-1 plate that passed its
+  bar 7 of 7 on 2026-08-18, with the small green nub inpainted at composite centre 405,750 (mask b01-nubcomp-s20260826-mask.png,
+  832x1216, cover-cropped to 704x1280 -- centroid (785.1, 339.4)). That mask is also the detector''s geometric
+  anchor, so the judging instrument and the render start from the same object.'
+pre_registered_fail_modes:
+  F1_the_negative_does_not_bind: 'The sapling grows anyway and the field still blooms: region NCC and
+    luma land within noise of the parent''s. Then negative-side conditioning does not reach this fault
+    on this engine, the two candidate fixes left are plate-side (a plate whose sapling is already at final
+    size, so there is nothing to grow) or a staged colour-only ramp, and NEITHER is licensed by this rung.'
+  F2_it_binds_and_takes_the_fig_with_it: 'The field holds -- G5a and the luma bound pass -- and G1 collapses,
+    because ''growing'' and ''enlarging'' suppressed the one thing that was supposed to enlarge. This
+    is the predicted cost and the most likely single outcome. It would make the clause boundary the finding:
+    the engine cannot separate the fig from its plant by wording, and the split has to be made in the
+    plate or in the compositor.'
+  F3_it_binds_cleanly: Field holds AND the fig still ramps. This is the first clip in this beat's history
+    to clear every scored clause, it becomes a veto-able steward pick for the cold open, and the swap
+    into review/ep2-demo-0820 is proposed WITH pixels and with the incumbent's own G1 failure alongside
+    it. Still not a taste verdict; R4 is the founder's.
+  F4_the_seed_does_not_reproduce: Same seed, same init, one prompt file changed, and the output differs
+    structurally everywhere. Then b15 was never a control for anything, this whole family of one-variable
+    rungs has been comparing noise, and that is worth knowing before another one is filed.
+script_authority_note: 'Node 002b-first-citizen, approved_by: founder, approved_on: 2026-08-03. The motion
+  prompt is unchanged from the parent and is the script''s own cold-open sentence. Sidecar stamps approved:
+  false / provisional: true. Silent, $0, no voice synthesis, no episode assembly. Nothing enters the cut
+  without the founder''s eye under R4.'
+the_one_variable: 'The ONLY difference from ep2-b01-growmotion-b15-0819 is the contents of b01-negative.txt:
+  twelve terms appended, none removed. Same seed 20260840, same init, same motion prompt byte for byte,
+  same steps, same flags, same 121 frames.'
+derivation:
+  parent: pipeline/jobs/ep2-b01-growmotion-b15-0819.yaml
+  by: pipeline/derive_b01_fignonly_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - control
+  - failure_predicted_in_advance
+  - init_provenance
+  - owner
+  - pre_registered_fail_modes
+  - script_authority_note
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - pick
+  - sweep_summary
+  - sweep_summary_correction
+  - verdict_cut
+  - verdict_this_job
+  - verdict_this_job_measured
+  - what_this_licenses_after_the_verdict
+  retokened:
+  - ep2-b01-growmotion-b15-0819 -> ep2-b01-fignonly-s20260840-0820
+  - 01-cold-open-LTX-nubgrow-b-s20260826 -> 01-cold-open-LTX-fignonly-s20260840
+  - ep2-b01-growmotion-b15-0819 -> ep2-b01-fignonly-s20260840-0820
+  overrides_applied_and_asserted:
+    payload:b01-negative.txt:
+    - payload b01-negative.txt (160 -> 349 chars)
+    seed:
+    - payload b01-jobs-render.json (20260840 -> 20260840, re-parsed)
+  seed: 20260840
