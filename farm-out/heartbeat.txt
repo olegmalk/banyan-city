@@ -3258,3 +3258,5 @@
 18:18:33Z DONE task=ep2-jerry-tileset-p03-0820-1787249836 rc=0 artifacts=1
 18:18:43Z STARTED task=ep2-jerry-tileset-p04-0820-1787249839 attempt=1 on box-runner
 18:19:01Z DONE task=ep2-jerry-tileset-p04-0820-1787249839 rc=0 artifacts=1
+18:19:07Z STARTED task=ep2-jerry-tileset-p05-0820-1787249841 attempt=1 on box-runner
+18:19:25Z DONE task=ep2-jerry-tileset-p05-0820-1787249841 rc=0 artifacts=1
