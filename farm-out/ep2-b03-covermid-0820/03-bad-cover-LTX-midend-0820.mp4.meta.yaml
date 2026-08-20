@@ -16,8 +16,8 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0188
-compute_s_per_video_s: 53.2
+throughput_s_video_per_s_wall: 0.0194
+compute_s_per_video_s: 51.6
 # --- appended by ep2-b03-covermid-0820 after the render.
 approved: false
 provisional: true
