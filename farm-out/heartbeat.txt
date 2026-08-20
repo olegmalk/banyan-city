@@ -3199,3 +3199,4 @@
 17:06:04Z box-runner up pid=8768 host=MSI
 17:06:05Z STARTED task=ep2-b04-tightcrop-0820-1787245395 attempt=1 on box-runner
 17:12:24Z DONE task=ep2-b04-tightcrop-0820-1787245395 rc=0 artifacts=2
+17:12:34Z box-runner idle ready=0 failed=46
