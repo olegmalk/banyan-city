@@ -137,3 +137,60 @@ the_next_instrument_and_it_is_not_this_lane_s_to_file_at_3am: >-
   it as geometry. controlnet_plate.py already carries --ip-ref/--ip-mask flags
   and the box has the IPA weights staged, so this is a spec, not a build. It
   should be authored awake and with the founder's screening cadence in mind.
+
+# --------------------------------------------------------------------------
+# UPDATE 2, same night, after the REFERENCE ROUTE ran. The proportion half of
+# the gate is DISCHARGED and a new half opened in the same batch.
+#
+# WHAT LANDED. `ep2-jerry-skel-n1..n5-0820` conditioned the ratified face
+# wording on a COCO-18 openpose skeleton authored at the tile's MEASURED
+# head_frac of 0.190 (5.2 heads; adult-b19-0819.jpg at 1:1, head 155 px, seated
+# crown-to-sole 623 px, seated is ~0.77 of standing). Measured heads: n1 at
+# scale 1.0 -> 5.07, n2 at 0.7 -> 5.17, n3 at 0.45 -> 4.44 (fails), n4 at
+# 1.3 -> 5.18. Pixels: review/ep2-goblin-design-0819/SKELETON-0820.png
+#
+# AND THE CONTROL IS WHY THIS IS A MECHANISM. n5 held the scale, the seed, the
+# prompt, the negative, the stature, the shoulder width and the foot line and
+# moved head_frac 0.190 -> 0.320 ALONE. It came back at 3.81 heads with round
+# white mascot eyes -- this file's own "all twelve are bobbleheads" defect,
+# reproduced ON DEMAND FROM GEOMETRY. Head-to-body is a dial and we hold it.
+#
+# SO WHY IS THIS STILL HELD. BECAUSE THE FACE WENT BLANK, and it took a 1:1
+# crop to see it: n1's face beside the tile's is a FEATURELESS EGG -- two
+# vertical black bars on a smooth green oval, no brow bar, no muzzle, NO MOUTH
+# AT ALL, no ear, no shading. The tile has all five.
+#
+# THE STRUCTURAL LESSON, and it is this file's business because it is a
+# CURATION lesson: EVERY CLAUSE OF THE TILE BAR SCORES AN ABSENCE. T1 blank
+# eyes, T2 no nose, T3 no age modelling, T7 no patchwork. The tile is made of
+# PRESENCES. A frame can therefore pass the entire bar and not be the
+# character -- which is exactly what a curation filter is supposed to catch and
+# what this one would have let through. Four presence clauses are added below.
+#
+# A LoRA LEARNS WHAT IT IS SHOWN. Six more poses of a blank egg would teach the
+# trigger token a blank egg exactly as twelve bobbleheads would have taught it a
+# mascot, and exactly as ten beat-20 man-reads would have taught it a human
+# face. That is the same mistake three times and it is refused three times.
+presence_clauses_added_2026_08_20:
+  P1_brow: a dark brow bar over the eyes, as the tile has
+  P2_muzzle: the lower face reads forward and modelled, not flat
+  P3_mouth: a line, however thin. n1 has NONE -- absent, not thin
+  P4_shading: any tonal modelling on the face at all
+gate_status_2026_08_20_late: >-
+  STILL HELD, and the reason has changed from "no proportion" to "no face".
+  Proportion is a solved, controllable dial. Nothing from
+  ep2-jerry-skel-* or ep2-jerry-pose-* enters this set until a rung passes
+  P1-P4 at 1:1 against adult-b19-0819.jpg with T1, T2, T3 and T8 intact.
+  ep2-jerry-face-f1/f2/f3-0820 are that question: f1 drops `thick eyebrows`
+  from the negative (canon says the tile's eyes sit "under one heavy dark brow
+  bar" and we have been negating it since the wedge), f2 swaps `no nose` for
+  `snout`, f3 puts the struck tile wording back now that geometry rather than
+  wording carries the build.
+what_the_trained_set_will_look_like_if_a_face_rung_passes: >-
+  A MIX, on purpose, and the mix is the point. The seven surviving mac-plate
+  frames are CLOSE framings with a modelled creature face and unreliable
+  proportion; the reference-route frames are FULL BODY with reliable proportion
+  and, so far, no face. Neither half is the character on its own and a LoRA
+  trained on both learns the union -- provided the full-body half stops being a
+  mask, which is what the face rungs are for. This is written down now so the
+  next lane does not read "7 keeps" as "the set is nearly there".
