@@ -3415,3 +3415,5 @@
 22:54:56Z box-runner idle ready=0 failed=62
 22:58:00Z STARTED task=ep2-jerry-face-k5a-0821-1787266676 attempt=1 on box-runner
 22:58:29Z DONE task=ep2-jerry-face-k5a-0821-1787266676 rc=0 artifacts=1
+22:58:37Z STARTED task=ep2-jerry-face-k5b-0821-1787266678 attempt=1 on box-runner
+22:59:05Z DONE task=ep2-jerry-face-k5b-0821-1787266678 rc=0 artifacts=1
