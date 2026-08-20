@@ -3277,3 +3277,5 @@
 18:24:50Z box-runner idle ready=0 failed=62
 18:25:45Z STARTED task=ep2-jerry-prop-q1-0820-1787250333 attempt=1 on box-runner
 18:26:03Z DONE task=ep2-jerry-prop-q1-0820-1787250333 rc=0 artifacts=1
+18:26:15Z STARTED task=ep2-jerry-prop-q2-0820-1787250336 attempt=1 on box-runner
+18:26:33Z DONE task=ep2-jerry-prop-q2-0820-1787250336 rc=0 artifacts=1
