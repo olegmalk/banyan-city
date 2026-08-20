@@ -2932,3 +2932,55 @@ for a noun because the compositor draws the noun and the sampler only re-renders
 it. **Not taken by this lane. `ep2-b08-scale30-0820` remains the best frame on
 beat 08; NO pick, NO plate_ack, NO cut, and beat 08 does NOT have a complete
 plate candidate.**
+
+### Rung 2 landed the same night: the placement holds him in place on all three, and only ONE of the three paid the G2 cost
+
+`ep2-b03-coverlast-0820`, `ep2-b13-shadelast-0820`, `ep2-b15-listenlast-0820`.
+One sentence changed on each — same init, same sha, same anchor, same seed
+20260820, **the negative byte for byte identical**, every flag identical. rc=0
+on all three, 121 frames, $0.
+
+**THE MECHANISM IS SETTLED. A placement of the last frame holds this engine
+where a negative cannot.** Beat 03 was out of frame at f114 and is now still
+crouched behind the plant at f120. Beat 13 was walking away at f114 and had
+folded its face into its own knees from f024; it is now still folded small with
+its knees up **and its face readable in every frame**, which satisfies the
+founder's *"no slide, he sits down beside it"*. Beat 15 stood at f100 and now
+never stands. Three for three, against negatives that had already failed three
+for three.
+
+**AND THE COST SPLIT THE SET, WHICH IS THE FINDING.** G2 — pre-registered off
+`ep2-b04-headlock-0820`, whose lock cut head travel 64.7 px → 4.7 px and killed
+the eyes — fired on two of the three and in two different shapes:
+
+| beat | terminal sentence names | position | cost |
+|---|---|---|---|
+| 03 | a static attitude (*still crouched down low*) | held | **33 frames dead from f088**, ncc 1.0000 |
+| 13 | a static attitude (*still sitting, knees up*) | held | face-band interframe **10.80 → 0.64**, last-20 **24.07 → 0.148** |
+| 15 | an **ongoing action** (*head still tilted toward the plant … he is talking*) | held | **none** — FREEZE none, ncc 0.926–1.000, HOLD strength **0.508**, the loosest of all six clips |
+
+**A terminal placement that names an ONGOING ACTION appears to hold position
+without buying it from the performance; one that names a STATIC ATTITUDE buys
+it by making every frame the last frame.** One sample across three beats of one
+rung — the next thing to test, not a law.
+
+**Beat 13 also settled rung 1's instrument argument by experiment.** Same init,
+same seed, same recipe: whole-frame luma **+44.4 in rung 1, −5.0 in rung 2**.
+The only difference is that in rung 1 he walked out of the frame. The +44.4 was
+the exit and never the exposure. Beat 13 r2 is also the first clip of the six
+whose pre-registered skin box is **still valid at f120**, because it is the
+first where he is still under it (−3.4 luma, −4.9 R−B).
+
+**Beat 15 fails at the last frame, and the sentence that caused it is the one I
+wrote to prevent it.** Deleting `a hand's width away` bought **85 frames** — the
+sapling stays rooted to f090 against rung 1's f020 — and then at f105 his hand
+closes on the stem and at f120 the plant is uprooted and hanging from his fist.
+The prompt's final sentence was **`Nobody touches the plant and nobody picks it
+up.`** A negation inside the *positive* prompt is not a prohibition; it is the
+phrase `picks it up`, placed. **The rule this beat has now paid for twice: state
+only what IS in the shot, never what is absent — and not even inside the
+positive.** Both of my fixes reintroduced the noun phrase they were meant to
+exclude.
+
+Per-clause verdicts in each spec's `verdict_measured`. No cut consequence: beats
+03, 13 and 15 stay slates.

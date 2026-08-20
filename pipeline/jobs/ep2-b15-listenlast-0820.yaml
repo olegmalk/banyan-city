@@ -409,3 +409,56 @@ skin_probe:
     byte and labelled rather than re-placed: re-placing a probe after the frames exist is
     choosing the number, and measure_sapcomp_motion_0820.py refuses to run without one precisely
     so that this decision has to be made out loud.'
+
+# --- appended 2026-08-20 by the composite-plate motion lane, after the pixels.
+verdict_0820: 'FAIL AT THE LAST FRAME AND THE BEST CLIP OF THE SIX, and the fail is caused
+  by a sentence I wrote to prevent it. Deleting the idiom bought 85 FRAMES: rung 1 had the
+  sapling out of the ground and in his hand by f020, rung 2 keeps it ROOTED to f090. He never
+  stands up. He talks. Nothing freezes. And then at f105 his hand closes on the stem and at
+  f120 the plant is uprooted and drooping from his fist. THE PROMPT''S LAST SENTENCE WAS `Nobody
+  touches the plant and nobody picks it up.` A negation inside the positive prompt is not
+  a prohibition -- it is the phrase `picks it up`, placed.'
+verdict_measured:
+  G1_THE_PLANT_STAYS_IN_THE_GROUND: FAIL, and it fails ONLY in the last sixth. Rooted at frame
+    left with its base in the grass at f000, f030, f060 and f090 -- four of the five scored
+    frames, against rung 1's one. At f105, at 2x, his fingers have closed on the stem; at
+    f120 the plant is out of the ground and hanging from his fist. Two leaves throughout in
+    both rungs, so this was never a cardinality failure in either.
+  G3_he_is_still_seated_in_the_last_frame: PASS. He is sitting in the grass at f120, in frame,
+    hands and body where the plate put them. Rung 1 stood him up at f100. Third of three beats
+    on which the terminal placement beat a negative that had already failed.
+  G4_the_beat_still_reads: 'PASS, AND IT IS THE ONE CLIP OF SIX WHERE THE PLACEMENT COST NOTHING.
+    Mouth open and speaking at f030, f060 and f090; head turned toward the leaves; hands on
+    knees. judge_clip: FREEZE none, ncc 0.926..1.000, and HOLD strength 0.508 -- THE LOWEST
+    of all six clips in this family, i.e. the most varied motion, where its two siblings came
+    in at 0.958 (with a 33-frame dead tail) and 0.892.'
+  G2_the_pre_registered_cost: 'DID NOT FIRE, and the difference between this clip and its
+    two siblings is the most useful thing in the rung. All three got the same treatment --
+    an action clause rewritten as a placement of the last frame -- and beat 03 froze dead
+    at f088 while beat 13''s face-band interframe fell 10.80 -> 0.64. This one did neither.
+    THE DISTINGUISHING FEATURE IS WHAT THE TERMINAL SENTENCE NAMES. Beats 03 and 13 place
+    a STATIC ATTITUDE in the last frame -- `still crouched down low`, `still sitting with
+    his knees up` -- and the sampler satisfied it by making every frame the last frame. Beat
+    15''s places an ONGOING ACTION -- `his head still tilted down toward the plant` while
+    `he is talking to them: his mouth moves` -- and there is nothing to freeze into, because
+    the terminal state is itself a motion. A TERMINAL PLACEMENT THAT NAMES AN ONGOING ACTION
+    HOLDS POSITION WITHOUT BUYING IT FROM THE PERFORMANCE. That is a one-sample observation
+    across three beats of one rung and it is the next thing to test, not a law yet.'
+  A2_the_ratified_adult_holds: 'PASS, and valid at f120 because he is still under the box.
+    (302,408,356,448): f000 R 65.3 G 111.3 B 47.3, R-B 18.1, luma 90.3; f120 R 79.8 G 109.3
+    B 60.2, R-B 19.6, luma 94.8. +4.5 luma, +1.5 R-B. The std rise 14.5 -> 36.1 is his head
+    having turned so the box straddles a jaw edge, not a material change.'
+  A3_camera_locked: PASS.
+  A5_no_exposure_blowout: 'PASS AND UNCONFOUNDED: 158.5 -> 153.1, -5.5, with him in frame
+    for all 121 frames. Rung 1 read -22.5 on the same init and seed and the difference is
+    his stand-up.'
+what_the_next_rung_is: 'ONE VARIABLE AGAIN, AND IT IS THE SENTENCE I ADDED. `Nobody touches
+  the plant and nobody picks it up` comes OUT and is replaced by a statement of what IS: `the
+  plant''s thin stem stays in the ground with grass growing round its base, and both of his
+  hands stay closed on his knees from the first frame to the last`. THE RULE THIS BEAT HAS
+  NOW PAID FOR TWICE: state only what is in the shot, never what is absent, AND NOT EVEN INSIDE
+  THE POSITIVE PROMPT. Rung 1 lost the plant to `a hand''s width away`; rung 2 lost it to
+  `nobody picks it up`. Both times the fix I wrote reintroduced the noun phrase it was meant
+  to exclude. Nothing else changes -- the placement shape works, the beat reads, the identity
+  holds, the exposure is flat and there is no freeze.'
+cost: $0. One GPU fire, one seed, no retries. 121 frames, rc=0 on all seven steps.
