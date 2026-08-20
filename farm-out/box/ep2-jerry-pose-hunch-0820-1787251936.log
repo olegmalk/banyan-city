@@ -1,0 +1,79 @@
+#### job ep2-jerry-pose-hunch-0820-1787251936 attempt 1 start 2026-08-20T19:19:58Z
+
+==== step stage START 2026-08-20T19:19:58Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT. The job dirs on this card carry a\n# hand-staged src\\pipeline\\controlnet_plate.py and nothing else --\n# jerrytile-p04-0820\\src holds exactly one file -- so a hint that is\n# not fetched is a job that dies after the queue has claimed it.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\nroot = r\"C:\\banyan-farm\\jerrypose-hunch-0820\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n        (\"jerry-skel-h19hunch-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"78422b89fa81d5d6fadc53fbf4a275e3d08c964f148f1cd2dd845a6fc90331f0\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"]
+staged controlnet_plate.py aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a -> C:\banyan-farm\jerrypose-hunch-0820\src\pipeline
+staged jerry-skel-h19hunch-0820.png 78422b89fa81d5d6fadc53fbf4a275e3d08c964f148f1cd2dd845a6fc90331f0 -> C:\banyan-farm\jerrypose-hunch-0820\src\pipeline\control
+==== step stage END rc=0 2026-08-20T19:20:00Z ====
+
+==== step posehint START 2026-08-20T19:20:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jerrypose-hunch-0820\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\jerrypose-hunch-0820\\src", "--repo-commit", "b889227bc1f0e7b96c271235de7bc61466438ae0", "--task", "ep2-jerry-pose-hunch-0820", "--arm", "posehint", "--controlnet", "xinsir/controlnet-openpose-sdxl-1.0", "--control", "pipeline/control/jerry-skel-h19hunch-0820.png", "--control-sha256", "78422b89fa81d5d6fadc53fbf4a275e3d08c964f148f1cd2dd845a6fc90331f0", "--scale", "1.0", "--seed", "20260823", "--prompt-file", "C:\\banyan-farm\\jerrypose-hunch-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\jerrypose-hunch-0820\\negative.txt", "--out", "C:\\banyan-farm\\jerrypose-hunch-0820\\out"]
+  prompt tokens: 64 (limit 77)
+  negative tokens: 66 (limit 77)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+Couldn't connect to the Hub: Cannot reach https://huggingface.co/api/models/cagliostrolab/animagine-xl-3.1: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable..
+Will try to load from local cache.
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.62it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:03,  1.19it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.30it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.69it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:21,  1.82it/s]
+  5%|▌         | 2/40 [00:00<00:13,  2.88it/s]
+  8%|▊         | 3/40 [00:01<00:12,  3.00it/s]
+ 10%|█         | 4/40 [00:01<00:12,  2.94it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.02it/s]
+ 15%|█▌        | 6/40 [00:02<00:11,  3.02it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.01it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.06it/s]
+ 22%|██▎       | 9/40 [00:03<00:10,  3.05it/s]
+ 25%|██▌       | 10/40 [00:03<00:10,  2.99it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.09it/s]
+ 30%|███       | 12/40 [00:04<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.01it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.06it/s]
+ 38%|███▊      | 15/40 [00:05<00:08,  3.04it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.03it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.06it/s]
+ 45%|████▌     | 18/40 [00:06<00:07,  3.05it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.07it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.06it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.05it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.06it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.07it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.05it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.08it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.06it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.04it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.07it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.10it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.07it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.01it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.10it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.03it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.07it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.09it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.07it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.05it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.08it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.02it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.01it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.03it/s]
+OK ep2-jerry-pose-hunch-0820-posehint.png load=6.3s render=13.9s
+rc=0
+==== step posehint END rc=0 2026-08-20T19:20:23Z ====
+
+==== step publish START 2026-08-20T19:20:23Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of exactly this step.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerrypose-hunch-0820/out\"\npay_dir = \"C:/banyan-farm/jerrypose-hunch-0820\"\nctl_dir = \"C:/banyan-farm/jerrypose-hunch-0820/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-pose-hunch-0820\"\nos.makedirs(dst, exist_ok=True)\n# The HINT travels with the frame: it is the frame's condition, and a\n# reader scoring whether the net read it needs to see it at the same\n# pixel columns.\nfiles = sorted(glob.glob(out_dir + \"/ep2-jerry-pose-hunch-0820-posehint.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-skel-h19hunch-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-pose-hunch-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 5 else 1)"]
+published 5 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-jerry-pose-hunch-0820
+==== step publish END rc=0 2026-08-20T19:20:23Z ====
+#### job ep2-jerry-pose-hunch-0820-1787251936 finished rc=0 2026-08-20T19:20:23Z
