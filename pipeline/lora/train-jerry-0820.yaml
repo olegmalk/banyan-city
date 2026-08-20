@@ -2,14 +2,16 @@
 #
 # 2026-08-20. $0 (local card, no provider). ~35-50 GPU-minutes.
 #
-# ── THIS SPEC IS NOT FILED, AND MUST NOT BE FILED YET.
-# `pipeline/lora/SETUP.md` is the blocker: the box has NO trainer installed
-# (pip list is 29 packages; no kohya, no sd-scripts, no peft, no bitsandbytes).
-# Every argv below names `C:\banyan-farm\venv-lora\Scripts\python.exe` and
-# `C:\banyan-farm\sd-scripts\`, neither of which exists on the box today. Run
-# SETUP.md's eight steps, pass its step-8 gate, THEN
-# `python3 pipeline/box_enqueue.py pipeline/lora/train-jerry-0820.yaml --backlog`.
-# Filing it before that buys a job that fails at step 1 and burns a queue slot.
+# ── THE BLOCKER IS CLEARED. `pipeline/lora/SETUP.md` ran end to end on the box
+# 2026-08-20: sd-scripts v0.11.1 (6721028c), `C:\banyan-farm\venv-lora` on torch
+# 2.11.0+cu128 at sm_120, and the step-8 gate printed all 800 lines of
+# `sdxl_train_network.py --help` with every flag this spec passes present in it.
+# The render venv was re-verified untouched afterwards. This spec is now FILED.
+#
+# PROVENANCE THE SETUP ASKED FOR (§5): bitsandbytes 0.50.1 installed and its
+# `AdamW8bit` smoke-tested on the card -- allocate, backward, step, all clean.
+# So `--optimizer_type AdamW8bit` below is the one that actually ran; SETUP.md's
+# plain-AdamW / batch-1 fallback was NOT needed.
 #
 # ── WHY THIS CHARACTER AND NOT THE GUARDS. Founder ruling 2026-08-20:
 # one-episode characters get no consistency infrastructure. Jerry is on screen
@@ -89,14 +91,30 @@ steps:
 # It verifies every sha256 against the manifest before copying. A frame edited
 # or re-rendered under the same name since 61dfbca4 stops the run here, rather
 # than silently changing what the LoRA trained on.
+#
+# TWO ROOTS, AND WHY. The box's repo checkout is the authoritative source and is
+# tried first. But on 2026-08-20 it was 621 commits / 532 MB behind, and that
+# pull measured ~87 KB/s against a 36 MB dataset -- ~100 minutes to move history
+# we do not need, to run a job that needs 64 files. So the 64 files were
+# transferred directly (tar, scp, sha256 of the archive verified end to end) into
+# `...\lora-jerry-0820\src`, which mirrors repo-relative paths, and that is the
+# fallback root. NOTHING IS TRUSTED BECAUSE OF HOW IT ARRIVED: every frame is
+# still verified byte-for-byte against the manifest's sha256 below, which is the
+# same guard either root passes through. The step prints which root it used.
 - name: stage
   argv:
   - C:\banyan-farm\venv-lora\Scripts\python.exe
   - -c
   - |
     import hashlib, os, shutil, yaml
-    repo = r"C:\banyan-farm\banyan-city"
-    man  = yaml.safe_load(open(os.path.join(repo, "pipeline/lora/manifest-jerry.yaml"), encoding="utf-8"))
+    CANDIDATES = [r"C:\banyan-farm\banyan-city",
+                  r"C:\banyan-farm\lora-jerry-0820\src"]
+    REL = "pipeline/lora/manifest-jerry.yaml"
+    repo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)
+    if repo is None:
+        raise SystemExit("NO DATASET ROOT. Tried:\n  " + "\n  ".join(CANDIDATES))
+    print("dataset root:", repo)
+    man  = yaml.safe_load(open(os.path.join(repo, REL), encoding="utf-8"))
     dst  = r"C:\banyan-farm\lora-jerry-0820\img\4_bnyjerry"
     os.makedirs(dst, exist_ok=True)
     os.makedirs(r"C:\banyan-farm\lora-jerry-0820\out", exist_ok=True)
@@ -111,6 +129,10 @@ steps:
         shutil.copy2(src, os.path.join(dst, stem + ".png"))
         shutil.copy2(os.path.join(repo, f["caption_file"]), os.path.join(dst, stem + ".txt"))
         n += 1
+    # The sampler travels with the dataset, from the SAME root, so step 3 cannot
+    # end up running a different revision of it than this step verified.
+    shutil.copy2(os.path.join(repo, "pipeline/lora/sample_lora.py"),
+                 r"C:\banyan-farm\lora-jerry-0820\sample_lora.py")
     print("staged", n, "image+caption pairs ->", dst)
     raise SystemExit(0 if n == man["count"] else 1)
 
@@ -222,7 +244,7 @@ steps:
 - name: sample
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\banyan-city\pipeline\lora\sample_lora.py
+  - C:\banyan-farm\lora-jerry-0820\sample_lora.py
   - --lora
   - C:\banyan-farm\lora-jerry-0820\out\bnyjerry-sdxl-v1.safetensors
   - --lora-weight
