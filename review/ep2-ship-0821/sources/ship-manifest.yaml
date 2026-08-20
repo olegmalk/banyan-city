@@ -13,7 +13,12 @@
 # below that is a steward pick says so, and carries its one-line veto.
 
 cut: review/ep2-ship-0821/ep2-ship-0821.mp4
-sha256: 5a68646d24b24bf72b25f1a75cc9a5747c66d3b3c4e3757d2803700978c1a27d
+sha256: e4ecfce254bd506c77ef3daedd09ac2176527203edadca270b79cc1d93bcccc5
+# RE-ASSEMBLED 2026-08-20 night after the beat 04 + beat 13 swap. The previous
+# bytes (5a68646d24b24bf72b25f1a75cc9a5747c66d3b3c4e3757d2803700978c1a27d) were
+# assembled at 20:05 from the OUTGOING refire takes; the manifest was swapped at
+# 20:56 and the cut was not re-run, so for an hour this file described a cut
+# that did not exist. Same 21 beats, same 116.33 s, same slate, same audio.
 duration_s: 116.33
 size: 720x1280
 fps: 24
@@ -304,21 +309,58 @@ beats:
 
   - beat: 4
     slug: THE FOOTNOTE
-    take: 04-the-footnote-b04-refire-0814.mp4
-    sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
-    why: carry-forward
-    verdict: pipeline/jobs/ep2-b04-refire-0814.yaml verdict / verdict_measured
+    take: 04-the-footnote-b04-eyes-crf10-0819.mp4
+    sha256: e4def5393b3bd461f618c3af3d84a39c72100ae3d573bd44a8b0093984976d16
+    why: >-
+      SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane, to
+      answer the founder's 08-20 complaint that the cut FLIPS the goblin's age
+      between shots. The outgoing 04-the-footnote-b04-refire-0814.mp4 is the
+      PRE-RULING ROUND CHILD — picture C on /review/ep2-goblin-design-0819, the
+      creature the founder ruled against on 08-19 ("c kinda is but still pretty
+      bad so change it"). This take holds ONE creature across 121 frames, which
+      is measured and not asserted, and that is the whole of what it wins.
+    design_axis_correction_0820_night: >-
+      THE SWAP STANDS AND ITS ORIGINAL REASON DOES NOT. The paragraph above was
+      written before the founder's 08-20 night ruling and called this take "the
+      ratified lean adult" as if that were the win. It is not. His words:
+      "all of the goblin clips today has had him as an adult. very bad
+      character consistency." The design target is the B TILE'S CREATURE
+      (review/ep2-goblin-design-0819/adult-b19-0819.jpg) — blank white eyes,
+      blunt lipless muzzle, short low flange ears, big smooth dome on a short
+      neck. "lean wiry adult goblin man" was STEWARD DRIFT and is struck from
+      canon (pipeline/canon.yaml ep2-goblin-design-adult, dated correction).
+      So BOTH takes are wrong on design: the outgoing reads CHILD, this one
+      reads ADULT MAN, and neither is the tile. This one is kept because it is
+      strictly better on MECHANISM (see why_this_is_still_the_better_ship) and
+      because a design re-render cannot reach the 12:00 cutoff. Beat 04 is on
+      the named design patch wave.
+    verdict: pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml verdict / verdict_measured
     verdict_quoted: >-
-      FAIL on the clause the whole beat rests on. done_when is "stillness with
-      LIVE EYES ... only the eyes carry it." THE EYES NEVER MOVE — same iris
-      position in the same sockets from f005 to f096, no saccade, no dart, no
-      blink.
-    fault_shipping: DEAD EYES on the one beat whose definition is the eyes.
+      "FAIL ON THE BEAT, PASS ON THE CHARACTER ... the founder-ratified adult
+      goblin survives 121 frames of i2v without drifting, which is the first
+      time that has been shown." E3 identity: "Same green skin, same bald domed
+      head, same long pointed ears, same adult face at frame 121 as at frame 1
+      ... NO DRIFT TOWARD A CHILD." E2 mouth shut PASS, E4 camera locked PASS.
+      E1 FAILS: the gaze shifts, but by a head rotation, not by the pupils.
+    fault_shipping: >-
+      THE GAZE IS CARRIED BY A HEAD TURN, NOT THE PUPILS — the head-band
+      centroid travels 64.7 px against a prompt that said the head stays still,
+      and the framing is head-and-shoulders rather than the face-fills-frame
+      close-up the shot spec asks for.
+    why_this_is_still_the_better_ship: >-
+      The outgoing take failed the SAME eye clause ("THE EYES NEVER MOVE") and
+      failed design canon on top of it, and it abandons its own init: the f1→f2
+      interframe step is 39.1 against a 0.108 median for the rest of the clip —
+      a hard jump from the wide plate to a close-up in one frame pair. This take
+      has no such jump (max 10.4, at f76, motion spread across thirds). Wrong
+      character plus dead eyes plus a jump is strictly worse than right
+      character plus a head-turn glance.
     upgradeable_before_cutoff: >-
-      NO, and the route is closed. Both 08-20 rungs failed: headlock took the
-      eyes with the head ("G2 fired, the pre-registered degenerate pass"),
-      eyes-crf10 redirected the gaze by rotating the head instead. "THE WORDING
-      ROUTE FOR BEAT 04 IS THEREFORE CLOSED — the answer is staging."
+      NO further. The WORDING route is closed by the two 08-20 rungs (headlock
+      took the eyes with the head; this one turned the head). The named next
+      rung is STAGING — crop the plate tight so the head rotation the engine
+      will give subtends enough frame to read as a glance — and it is a
+      post-ship patch.
     open_card: /review/ep2-b04-action-0820 — A / B / C, replaces the action
       entirely. Nothing pre-staged; the pick IS the spec, so it cannot land
       before the 12:00 cutoff.
@@ -468,21 +510,54 @@ beats:
 
   - beat: 13
     slug: THE SHADE
-    take: 13-the-shade-b13-refire-0814.mp4
-    sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
-    why: carry-forward
-    verdict: pipeline/jobs/ep2-b13-refire-0814.yaml verdict / verdict_contradicts_a_founder_ruling
+    take: 13-the-shade-b13-shadelit-0820.mp4
+    sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
+    why: >-
+      SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane,
+      and it clears TWO founder rulings the outgoing take broke. The outgoing
+      13-the-shade-b13-refire-0814.mp4 is the PRE-RULING ROUND CHILD (picture C
+      on /review/ep2-goblin-design-0819) AND it grows a mature forked tree and
+      climbs it, against the ruling that the sapling is tiny. This take is
+      seated, with the real 60 px composited two-leaf seedling in frame beside
+      him, and it keeps the tiny sapling the founder ruled for.
+    design_axis_correction_0820_night: >-
+      THE SWAP STANDS AND ITS ORIGINAL REASON DOES NOT — and this is the beat
+      he ruled on. Shown this take's best frame the founder said: "this is one
+      of the images where the goblin looks like an adult, which is wrong." The
+      paragraph above and the A2 verdict quoted below both score the man-read
+      as a PASS; that scoring is retired. The design target is the B TILE'S
+      CREATURE (review/ep2-goblin-design-0819/adult-b19-0819.jpg), and "lean
+      wiry adult goblin man" was steward drift, struck in pipeline/canon.yaml.
+      BOTH takes are wrong on design — the outgoing reads CHILD, this one reads
+      ADULT MAN. This one is kept because the outgoing ALSO breaks a live
+      founder ruling on the sapling (mature forked tree, climbed) on top of
+      being wrong on design, so the swap trades two faults for one. Beat 13 is
+      the headline entry on the named design patch wave.
+    verdict: pipeline/jobs/ep2-b13-shadelit-0820.yaml verdict_0820 / verdict_measured
     verdict_quoted: >-
-      "THE END STATE PASSES AND THE CLIP CONTRADICTS A FOUNDER RULING TO REACH
-      IT." Two of three terms met — he ends folded small with knees drawn up at
-      the base of the trunk. The third is not: it grows a whole mature forked
-      tree and he climbs it, where the founder ruled the sapling is tiny.
-    fault_shipping: a mature forked tree, climbed, against a ruling that the sapling is tiny.
+      A2_the_ratified_adult_holds: "PASS ... At 1:1 he is the ratified lean
+      adult goblin: green skin, bald, long pointed ears, cloak, one face, one
+      figure." A5 exposure: "PASS, AND IT IS THE FLATTEST EXPOSURE TRACK IN THE
+      WHOLE SET" (−0.29 luma over 121 frames). "IT REPAIRED SHADEMID'S OWN
+      FAILED SUB-CLAUSE: at f060 shademid shows dome, ear and shoulder with the
+      face pressed into his knee, and shadelit shows a legible face."
+      G8 FAILS: "it did not put a plant-cast shade anywhere near his eyes."
+    fault_shipping: >-
+      G8 UNMET — the plant's shade never reaches his eyes. It cannot on this
+      staging: his eyes are 300 px above a 60 px seedling, which is geometry,
+      not tone. He sits in the seedling's company, not in its shade.
+    why_this_is_still_the_better_ship: >-
+      The outgoing take was FAIL NAMED on a founder ruling already (mature tree,
+      climbed) and is the wrong creature; this one is the right creature, sits
+      the beat as written ("slides down and sits, knees up around his ears"),
+      and keeps the tiny sapling the founder ruled for. It trades a broken
+      ruling for an unmet sub-clause. The other three 08-20 b13 clips stay out:
+      sapcomp walks him out of frame by f114, shademid buries his face at f060,
+      shadelast lost the performance.
     upgradeable_before_cutoff: >-
-      NO. Four b13 clips rendered on 08-20 and all four failed on mechanism —
-      "FAIL ON G8 FOR THE FOURTH TIME", "THE BEST CLIP THIS BEAT HAS PRODUCED
-      AND STILL A FAIL", "G2 TOOK THE PERFORMANCE — FAIL", "by f114 he is
-      walking out of the right of the frame. Not cuttable."
+      Only by a peer take from the b13 lane before 12:00. G8 is closed by
+      geometry on this staging — the named route is a different staging (bring
+      the shade source into reach), which is a post-ship patch.
     open_card: /review/ep2-b13-shade-0820 — A / B / third staging. The card's
       own section 5 argues the answer is neither (B renders as "a balloon on a
       wire").
@@ -652,7 +727,7 @@ ship_status:
   1:  {word: "7 OF 8, ONE BAND",   class: warn, of: G5a — the grass floor still moves with the fig}
   2:  {word: UNJUDGED,             class: warn, of: no bar has ever been answered}
   3:  {word: FAIL NAMED,           class: fail, of: H1 — 0.79 s freeze at the tail}
-  4:  {word: FAIL NAMED,           class: fail, of: the eyes never move}
+  4:  {word: FAIL NAMED,           class: fail, of: "the glance is a head turn, not the pupils; and he reads as an adult man"}
   5:  {word: FAIL NAMED,           class: fail, of: 4 of 7 clauses + a frozen cast ruling}
   6:  {word: FAIL NAMED,           class: fail, of: the bark board is the wrong size}
   7:  {word: "PASS, PLATE FAULT",  class: warn, of: scavenger dressed as a second official}
@@ -661,7 +736,7 @@ ship_status:
   10: {word: FAIL NAMED,           class: fail, of: the board faces the camera}
   11: {word: NO STANDING VERDICT,  class: fail, of: an earlier pass was retired}
   12: {word: UNJUDGED,             class: warn, of: colour shifts warm-to-cool}
-  13: {word: FAIL NAMED,           class: fail, of: "a mature tree, climbed"}
+  13: {word: FAIL NAMED,           class: fail, of: "no shade reaches his eyes; and this is the frame you called an adult, which is wrong"}
   14: {word: FAIL NAMED,           class: fail, of: M2 and M3}
   15: {word: PASS BUT S3,          class: warn, of: 3-frame freeze; face 160 px from the leaves}
   16: {word: SLATE,                class: fail, of: the only footage is the leaf you ruled out}

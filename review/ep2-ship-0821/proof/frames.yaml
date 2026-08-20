@@ -50,15 +50,15 @@ frames:
   frame_sha256: 75071f0731f12618e1108a32a8035b4b4e7b96181f3e33d1757bf4f69b6f87db
   frame_bytes: 13385
 - beat: 4
-  take: 04-the-footnote-b04-refire-0814.mp4
+  take: 04-the-footnote-b04-eyes-crf10-0819.mp4
   frame: b04.jpg
   width: 240
   height: 436
-  at_seconds: 2.02
-  clip_duration_s: 4.04
-  clip_sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
-  frame_sha256: 3595942da245e3b78d837df2d87afb5b9d19c30cc63af9458d21290022cbc5f9
-  frame_bytes: 10492
+  at_seconds: 2.52
+  clip_duration_s: 5.04
+  clip_sha256: e4def5393b3bd461f618c3af3d84a39c72100ae3d573bd44a8b0093984976d16
+  frame_sha256: e68fc3dd077b60f120065fb36d2f6e7fc5758bb8b509679b2f5493e934fbcd42
+  frame_bytes: 18015
 - beat: 5
   take: 05-the-patrol-b05-standB-trim.mp4
   frame: b05.jpg
@@ -140,15 +140,15 @@ frames:
   frame_sha256: a5e17d83350a7071c94223867cda47d4f00947f50048720bd2de3f04c167aa57
   frame_bytes: 18967
 - beat: 13
-  take: 13-the-shade-b13-refire-0814.mp4
+  take: 13-the-shade-b13-shadelit-0820.mp4
   frame: b13.jpg
   width: 240
   height: 436
-  at_seconds: 2.02
-  clip_duration_s: 4.04
-  clip_sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
-  frame_sha256: 49c05ab662a6640662a8db160820424963660797f70c5a090512836c9b576884
-  frame_bytes: 13571
+  at_seconds: 2.52
+  clip_duration_s: 5.04
+  clip_sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
+  frame_sha256: 474f64acb4aaae41580f8c37f2b57f2a2f1e97e17815a0725974f4f56c1a0161
+  frame_bytes: 15129
 - beat: 14
   take: 14-the-defense-b14-macplate-r1s1-0818.mp4
   frame: b14.jpg

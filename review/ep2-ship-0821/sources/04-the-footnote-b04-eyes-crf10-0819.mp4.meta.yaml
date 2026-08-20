@@ -4,11 +4,11 @@ model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16
 model_licence: LTX-2 Community License Agreement
 shot_beat: 4
 size: 704x1280
-seconds: 4.042
+seconds: 5.042
 steps: 8@352x640+3@704x1280
 guidance: 2.0
-seed: 20260806
-task: ep2-b04-refire-0814
+seed: 20260819
+task: ep2-b04-eyes-crf10-0819
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,6 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0171
-compute_s_per_video_s: 58.6
-demo_note: 'used as-is; leg A of the A/B pair (leg undetermined in the record)'
+throughput_s_video_per_s_wall: 0.0191
+compute_s_per_video_s: 52.5
