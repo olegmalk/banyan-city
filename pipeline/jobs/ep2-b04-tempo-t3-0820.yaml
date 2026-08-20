@@ -1,0 +1,305 @@
+id: ep2-b04-tempo-t3-0820
+task: ep2-b04-tempo-t3-0820
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-tempo-t3-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed ears,
+    patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face and shoulders.
+    HE SNAPS OUT AND SNAPS STRAIGHT BACK, QUICK AND NERVOUS: he flicks his head and one shoulder out past
+    the tall grass blades that cross in front of him in one fast movement, takes the look in an instant,
+    and whips straight back in behind the blades -- a short sharp trip, over almost as soon as it starts,
+    and he is already going out again. HALFWAY THROUGH he is snapping back in behind the blades at speed,
+    his head already turning the other way. AT THE END he is mid-flick, caught partway out, the movement
+    unfinished and carrying on past the last frame. HIS MOUTH STAYS SHUT the whole time and his jaw stays
+    set -- he is looking, not speaking, and no word is said. He stays down low with his knees under him
+    in the grass. He stays THE SAME GOBLIN from the first frame to the last: the same green skin, the
+    same bald head, the same long pointed ears, one face and one figure only. The light on him is CONSTANT
+    and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest,
+    masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-negative.txt: open mouth, talking, speaking, shouting, teeth,
+    tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl,
+    round head, big eyes, cute, different face, changing face, face changing, morphing, melting face,
+    skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, standing up, sitting down, scene change, shot change, new camera angle,
+    different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\b04-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\b04-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\b04-negative.txt"}]'
+  C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-jobs-render.json: '[{"beat": 4, "seed": 20260862, "embeds":
+    "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\b04-embeds.pt", "init": "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\b04-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b04-tempo-t3-0820\\04-the-footnote-LTX-ep2-b04-tempo-t3-0820.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-tempo-t3-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+  - --sha256
+  - 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350
+  - --out
+  - C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-tempo-t3-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-tempo-t3-0820\bench-ep2-b04-tempo-t3-0820.jsonl
+  - --bench-label
+  - ep2-b04-tempo-t3-0820
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-tempo-t3-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-tempo-t3-0820/04-the-footnote-LTX-ep2-b04-tempo-t3-0820.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b04-tempo-t3-0820/b04-init-704x1280.png\")\n    \
+    \         + glob.glob(\"C:/banyan-farm/ep2-b04-tempo-t3-0820/bench-ep2-b04-tempo-t3-0820.jsonl\"))\n\
+    lines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-tempo-t3-0820.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b04-tempo-t3-0820\04-the-footnote-LTX-ep2-b04-tempo-t3-0820.mp4
+- C:\banyan-farm\ep2-b04-tempo-t3-0820\b04-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. The ACTION is restaged under the founder''s 2026-08-20 pick on /review/ep2-b04-action-0820,
+  which is a stage direction and not a script change: the VO line is untouched, so the approved leaf still
+  governs. (Rung 1 and rung 2 both carried a script_line naming BEAT 09 THE PAUSE, inherited from a beat-09
+  parent and never corrected; it is corrected here.)'
+script_line: 'Beat 04 THE FOOTNOTE (0:16-0:22), node.md verbatim: "The scavenger holds his breath, eyes
+  darting." RESTAGED 2026-08-20 by founder pick A off /review/ep2-b04-action-0820, THE PEEK: "The scavenger
+  leans out from behind the trunk to look, and pulls straight back the moment he has looked -- the whole
+  head and shoulder make the trip, twice, and he is still doing it when the shot ends." The VO line is
+  UNCHANGED and is not re-recorded: "Worst stealth plan I have ever seen -- and I once watched an architect
+  hide an outage in a footnote."'
+owner: beat-04 restage lane, 2026-08-20 night (the tempo rung)
+consumer: 'BEAT 04''S SLOT IN THE EPISODE 2 CUT. The peek batch settled that this engine plays the founder''s
+  picked action and settled what is still wrong with it: three of four clips fit ONE out-and-back into
+  121 frames where the card asked for two. This is the batch''s own named follow-up, seed 20260862 of
+  three. It is not a restage and not a new action -- the pick stands and only the speed of the trip changes.'
+success: 'One 704x1280 121-frame mp4 at seed 20260862 with TWO trips in it. The camera number is read
+  first: mean abs luma of the two TOP corner patches against f001, under ~3, because the peek batch''s
+  best-looking clip was a pan at 49.4 and 52.2 and would have been picked by eye. Then T1 two out-and-back
+  trips; T2 visible travel inside the last twenty frames; T3 it is travel and not a jitter -- a head vibrating
+  in place is a FAIL and is not two trips; T4 mouth shut, one figure, no melt, same goblin at f121. The
+  seed is walked off s3''s so a win at t1 can be told apart from a lucky draw.'
+why: '$0, ~7 minutes, one clause, and it is the rung the peek batch named in advance -- ''the follow-up
+  is a TEMPO WORD, not a restage''. The card was idle with no runnable job on it and this is the best-argued
+  work available: a completed batch, a single diagnosed defect, a one-variable change on a recipe that
+  has now run clean eight times. Seed 20260862 of three.'
+bar: "JUDGED BY EYE AT 1:1, AND THE CAMERA NUMBER IS READ BEFORE ANY OTHER\nCLAUSE, because s5 taught\
+  \ this batch that the best-looking clip can be a pan.\n  T0 CAMERA LOCKED -- mean abs luma of the TWO\
+  \ TOP corner patches against f001,\n     under ~3. s3 read 1.72 / 1.46 / 0.93 / 2.14; s5 read 49.4 /\
+  \ 5.4 / 52.2 /\n     7.7 and is a FAIL. Bottom corners are his cloak on this plate and say\n     nothing.\
+  \ A clip that fails T0 is not scored further.\n  T1 TWO TRIPS. His head goes off axis and returns, and\
+  \ then does it again.\n     This is what the rung is for and it is the only clause that can promote\
+  \ it.\n  T2 STILL GOING AT f121 -- visible travel inside the last twenty frames.\n  T3 IT IS STILL A\
+  \ PERFORMANCE, not a vibration. `quick`, `snap`, `whip` and\n     `blur` are speed words and the named\
+  \ risk is that they buy speed by\n     shaking; a head that jitters in place is a FAIL and is not two\
+  \ trips.\n  T4 MOUTH SHUT for 121 frames, one figure, no melt, the same goblin at f121 as\n     at f001.\n\
+  NOT SCORED: which goblin design is on the plate. The init is the superseded\nadult man, as it was for\
+  \ the whole peek batch."
+failure_predicted_in_advance: 'T3 IS THE RISK I AM BUYING. Every speed word in the positive is
+
+  also a word for small fast motion, and the cheapest way for a video model to
+
+  look fast is to jitter. If the set comes back shaking rather than travelling,
+
+  the tempo axis is closed the way the eye axis was, and the honest next move is
+
+  the card''s option C -- the slow sink -- which was argued as the grossest motion
+
+  available and the most likely to simply work.
+
+  SECOND: NO CHANGE AT ALL. `quick` may be too weak a signal against 121 frames of
+
+  a model that has already shown it likes one slow arc, in which case three of
+
+  three look like s1 and the axis is closed by a different door.
+
+  THIRD, AND THE ONE I WOULD ACTUALLY TAKE: ONE FAST TRIP AND THEN A SETTLE. That
+
+  is a partial and it means the speed bound but the repeat did not, and the next
+
+  lever is the END placement rather than the tempo -- `already going out again`
+
+  is doing that work here and could be made the last clause instead of the middle
+
+  one.
+
+  WHAT I AM NOT DOING is asking for a number. `twice` and `three times` are the
+
+  obvious words and cardinality is measured not to bind on this stack (0 of 16
+
+  frames at the strongest count wording), while a continuous adjective bound 3 of
+
+  4 in the same study. Spending a rung on a numeral would be re-running an
+
+  experiment this repo has already paid for.'
+init_provenance: 's3''s, unchanged, which is rung 1''s and rung 2''s: farm-out/ep2-b04-mac-plate-0819/04-the-footnote-mac-plate-r1s1.png,
+  sha256 5dd35da5...4350, cover-cropped to 704x1280 by the same step with the same assertion.'
+not_done_on_purpose: 'No new action -- the founder''s pick stands and this is a tempo adjustment inside
+  it. No numeral. No negative edit. No crop, crf, guidance or sigma change. No goblin-design change. No
+  cut swap: beat 04 still ships b04-refire-0814 as best-available with its fault named, and no clip from
+  the peek batch was picked either.'
+pre_registered_fail_modes: T-JITTER the speed words buy a vibrating head instead of a faster trip; the
+  likeliest, and it closes the tempo axis. T-NOCHANGE `quick` is too weak and all three look like s1's
+  single slow arc. T-ONETRIP one fast trip then a settle -- a partial, meaning speed bound and repeat
+  did not, and the next lever is the END placement rather than the tempo. T-PAN the camera moves, as it
+  did on s5; T0 exists so this cannot be mistaken for travel. T-SMEAR speed words pull smeared frames
+  even though `motion blur` is in the negative; a first draft of this positive said `his head a blur of
+  movement` and that phrase was REMOVED before filing rather than shipped and explained -- a positive
+  that contradicts its own negative is not a controlled variable, which is the peek batch's own lesson
+  one rung earlier.
+the_design_note_up_front: THE INIT IS THE SUPERSEDED ADULT MAN, as it was for the whole peek batch. The
+  founder ruled on 2026-08-20 that the goblin must read as the B tile's CREATURE; beat 04 is on the re-render
+  list for it and this rung does not address it. The question here is tempo, which is a fact about the
+  engine and separable from which face is on the plate. Not a plate pick.
+the_one_variable: THE TEMPO OF THE ACTION CLAUSE. s3's positive asked for a lean that 'repeats'; this
+  asks for one that is QUICK, SHARP and NERVOUS and lets the count follow from the speed. The middle and
+  end placements are kept and re-pointed at the faster motion. Identity, camera, mouth, crouch and quality
+  clauses are s3's byte for byte. THE NEGATIVE IS UNTOUCHED, still with `drifting sideways` and `moving
+  to a different spot` deleted and nothing added, exactly as the peek batch left it. Init, sha, crop,
+  size, frames, fps, guidance, sigmas, two-stage and --image-crf 10 are s3's. Across the three jobs only
+  the seed differs, and t1's is s3's.
+why_an_adjective_and_not_a_number: Because the number is measured not to bind. Cardinality is Class A
+  in pipeline/composite-init-pattern.md -- no continuous encoding, CLIP's numeral embeddings near identical,
+  and this repo's own frames put the strongest available count wording at 0 of 16. The SAME study found
+  a continuous adjective (height) binding 3 of 4 in the same batch. `twice` is the obvious word and spending
+  a rung on it would re-run an experiment already paid for; a shorter trip is how two of them fit in five
+  seconds.
+derivation:
+  parent: pipeline/jobs/ep2-b04-peek-s3-0820.yaml
+  by: pipeline/derive_b04_tempo_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_design_note_up_front
+  - the_one_variable
+  - why
+  - why_an_adjective_and_not_a_number
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - one_sample_rule
+  - pre_registered_fail_modes
+  - the_design_note_up_front
+  - the_one_variable
+  - the_placement_law_as_applied
+  retokened:
+  - ep2-b04-peek-s3-0820 -> ep2-b04-tempo-t3-0820
+  overrides_applied_and_asserted:
+    key:est_minutes:
+    - key est_minutes = 7
+    payload:b04-motion-prompt.txt:
+    - payload b04-motion-prompt.txt (1411 -> 1400 chars)
+    seed:
+    - payload b04-jobs-render.json (20260822 -> 20260862, re-parsed)
+  seed: 20260862
