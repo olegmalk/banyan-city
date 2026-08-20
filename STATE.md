@@ -9591,3 +9591,11 @@ wording; (4) paid renders for the hardest beats — SPEND, stays founder-gated,
 parked as an open question with a cost estimate. The week-long
 research-per-beat loop was episode 2's cost of discovering the laws; the laws
 are now written and reusable.
+
+## 2026-08-20 late — courier verdict REVERSED: it is healthy
+The "courier permanently broken / 23 failed pushes / 3.2GB divergence" belief is
+stale: measured tonight, origin/farm-results-rtx5090 tip == box HEAD (8f025ac7),
+e8f21b95 is an ancestor of the remote. Pushes failed for a period and recovered.
+Lanes may stop hand-carrying by scp when a normal pull from the branch works —
+verify freshness per use, don't assume either way. The Finished-page staleness
+was two dead hand-run steps (ledger rebuild + thumbs), now wired into qa_local.
