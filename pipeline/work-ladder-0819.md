@@ -4300,3 +4300,115 @@ prompt — that door is measured shut. The two candidates are **plate-side** (an
 init whose sapling is already at final size, so there is nothing left to grow;
 note this changes the plate that passed 7 of 7 and needs its own bar) and
 **compositor-side** (grow the fig against a held plate).
+
+## 2026-08-20, evening — THE COPY-THE-FIST RUNG IS FILED, AND THE CLAUSE THAT BLOCKED IT WAS NEVER THE ONE AT RISK
+
+`ep2-b08-fistcopy-0820`, **backlogged** (spec sha `224fb58e…`), init and mask on
+`origin/main` and fetched by sha. §21 named this rung, refused to file it, and
+gave exactly two reasons. Both are discharged, one of them by a measurement that
+says §21's own fear was aimed at the wrong clause.
+
+### THE OPERATION: COPY, DO NOT MOVE
+
+§21's prescription, quoted: *"the honest version is to COPY the fist to the board
+edge and leave the original in the init, inside the mask, so the sampler removes
+it from real strap pixels instead of being handed a fabricated fill to
+rationalise."* `pipeline/beat08_grip_copy.py`, selftest **PASS on 18 clauses**.
+**All 4489 px §21 could not fill are still byte-identical plate** — no vacancy is
+opened and the file contains no fill function, which is the whole point.
+
+The mask is three regions and one hole: the original fist grown 14 px (the pass
+**deletes** it), the **forearm corridor** elbow→wrist (the pass **draws** an arm),
+a 12 px rim around the copy (the pass draws **contact**) — and the copy's
+interior, 2852 px, carved back out **hard** so the drawn digits are not
+re-invented.
+
+**The corridor is the clause that was missing, and it is why the parent read as a
+sticker.** The plate draws the guard's hand AT the authored elbow — that *is* the
+defect — and the pose hint puts the wrist 89 px below it at the board. Copy the
+fist to the wrist with no corridor and the cream sleeve still ends in nothing
+above a floating hand.
+
+One clause could not be stated the parent's way and it is written out rather than
+smoothed: **K10.** The parent asserted "nothing changed outside the mask, maxdiff
+0". Here 2852 px DO change outside it — the copy's protected interior — because
+holding them out of the mask is the only way the pass cannot touch them. All 2852
+are inside the protected copy and all are byte-exact plate.
+
+### §21's FIRST BLOCKER: THE STRENGTH. THE ANSWER CHANGED TWICE, AND THE SECOND CHANGE CAME FROM THE TREE
+
+§21: *"a 0.30 pass does not delete a hand … the rung has to choose a higher
+strength inside the mask and that re-opens the exact clauses (B6, B8, the
+wardrobe) the 0.30 number was bought with."*
+
+**First correction — the fear is aimed at the wrong knob.** §19's table is
+`--scale2` **0.3/0.5/0.8**, a CONDITIONING scale on a WHOLE-FRAME txt2img render.
+This is a masked inpaint, and a masked pass cannot write a pixel outside its mask
+at any strength. So the price is not a guess about a knob; it is each item's
+overlap with 1.82% of the frame, and `K15` prints it:
+
+| | reachable by the pass |
+|---|---|
+| **B8 canon hair** | **0 of 18200 px — 0.0%, at any strength** |
+| gold chest clasp | 11 of 994 (216 uncarved) |
+| gold belt buckle | 382 of 5366 |
+| B6 white sash | 108 of 332 — **32.5%** |
+| B6 cream shirt | 5750 of 28573 — **20.1%** |
+
+**B8 was the loudest of the three and it is untouchable.** What is genuinely at
+risk is **B6**, because a fifth of the shirt and a third of the sash lie in the
+corridor the arm must be drawn through. That is now a pre-registered fail mode.
+The clasp carve-out **yields where it must**: freezing every clasp pixel and
+giving the fist its 6 px deletion margin are incompatible where the two objects
+touch, so the carve-out is (clasp gold, dilated 2) MINUS that margin.
+
+**Second correction, and this one reversed the choice.** The first draft of the
+argument said 0.55, reasoning about plain img2img. `inpaint_fruit.py`'s own
+docstring — sourced to the diffusers 0.29.2 pipeline it loads — says otherwise:
+
+> "`strength` must be high to ADD something. It is not the img2img case; the
+> unmasked region is restored every step by the blend above, so a high strength
+> costs nothing outside the mask."
+
+`latents = (1 - init_mask) * init_latents_proper + init_mask * latents`. And the
+same file records **0 of 12 at strength 0.35 or 0.55** for adding an object the
+init lacks. **0.55 was a value the tree had already measured as insufficient.**
+Filed at **0.99**.
+
+**And that property is stronger than the guard I wrote.** I worried a near-fresh
+draw would wreck the copied digits. It cannot: they are outside the mask and the
+blend restores every unmasked pixel **at every step**, so they are safe by
+construction of the sampler rather than by the size of the knob. The one real
+leak is `--blur 8` softening the boundary, which is wanted and is named: if the
+digits come back mushy at their rim, the next rung lowers `--blur`, not strength.
+
+### §21's SECOND BLOCKER: THE INSTRUMENT. IT IS REPLACED
+
+*"the instrument that would score its vacancy has just been shown to certify
+artifacts at twice its bar."* That is C4, and C4' exists — the section above this
+one. The spec's first bar clause is `pipeline/fill_quality.py` on the 7914 px
+region where the fist was, published as an explicit erase-region PNG so the
+judge cannot shop for it. **D ≥ 0.45 AND N ≥ 0.25 AND F ≤ 2.60.**
+
+### TWO THINGS DELIBERATELY NOT SPENT, AND ONE LEAK THE TOOL COULD NOT CATCH
+
+**Wording is unchanged, byte-identical to scale30's.** §18 measured that grip
+wording buys a hand and pays with the board — and **that trade does not even
+apply here**, because the board is outside the mask and restored every step, so
+this pass *cannot* lose it. One variable: the composite.
+
+**No second seed.** One sample, one seed, one strength — the first deletion this
+tree has ever asked an inpaint pass for, so there is no prior on which side of
+the threshold it lands.
+
+**AND A DERIVATION LEAK WORTH THE NEXT LANE'S ATTENTION.** `script_authority` is
+on `derive_spec`'s **ALLOW** list, so the child inherited the parent's value —
+which was a paragraph about **beat 13's** open script conflict (*"`slides down
+the trunk` against a tiny sapling"*), standing as beat 08's authority. The ALLOW
+list is right that the KEY belongs on a child; **the VALUE never does.** No
+`REFUSE` name matches it because the leak is not findings-shaped, it is
+*beat*-shaped. **Grep every derived spec for the parent's beat number before
+enqueueing** — that is what caught this one.
+
+Judged on landing against the pre-registered bar. `sample: true`, priority 34,
+est 7 min, $0.

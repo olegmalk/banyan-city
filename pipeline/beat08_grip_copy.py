@@ -117,37 +117,51 @@ BAND_H = 14        # the board's top-edge contact band
 # that costs is printed by K15 rather than rounded to zero.
 CLASP_BOX = (555, 490, 605, 545)    # where to look for the clasp's gold, at 6x
 
-STRENGTH = 0.55
+STRENGTH = 0.99
 STRENGTH_ARGUMENT = """\
-CHOSEN: 0.55, at 40 steps and cfg 7.5. ONE SAMPLE. The argument, in four parts,
-because §21 refused to let this be a knob turn.
+CHOSEN: 0.99, at 40 steps and cfg 7.5. ONE SAMPLE.
+
+THE FIRST DRAFT OF THIS ARGUMENT SAID 0.55 AND IT WAS WRONG, from reasoning
+about plain img2img when this is not that. `inpaint_fruit.py`'s own docstring,
+sourced to the diffusers 0.29.2 pipeline it loads, settles it:
+
+    "`strength` must be high to ADD something. It is not the img2img case; the
+     unmasked region is restored every step by the blend above, so a high
+     strength costs nothing outside the mask."
+
+The blend it means is SDXL inpaint's latent branch, taken because animagine has
+no inpainting variant and its UNet has 4 input channels:
+
+    latents = (1 - init_mask) * init_latents_proper + init_mask * latents
+
+and the same file records the measurement that kills the middle of the range:
+adding an object the init lacks got **0 of 12 at strength 0.35 or 0.55**.
 
 1. WHY NOT 0.30, THE HOUSE DEFAULT (66 of the specs in this tree).
    `composite-init-pattern.md`: an inpaint pass runs only `int(steps x
    strength)` of its schedule -- at 40 steps, 0.30 is TWELVE steps. That is
-   the regime chosen precisely because it PRESERVES structure: it is what put
-   blade texture back into beat 03's smooth ramp and leaves into b15/b19's
-   clone fills. Every one of those was ADDITIVE -- a smooth vacancy given
-   texture, or a sprite blended down. NONE of them had to DELETE a fully-inked
-   object with its own dark outline. 0.30 hands the fist twelve steps and a
-   latent that still contains it, and gets a dented fist.
+   the regime chosen precisely because it PRESERVES structure, and every
+   sibling that used it was INTEGRATING something already drawn into the init
+   (b13's sapling, b15/b19's clone fills, beat 03's ramp given blade texture).
+   NONE of them had to DELETE a fully-inked object with its own dark outline
+   and CREATE a forearm that is not in the plate at all. 0.30 hands the fist
+   twelve steps and a latent that still contains it, and gets a dented fist.
 
-2. WHY NOT 0.99 (the tree's other recorded value, 39 of 40 steps).
-   That is a fresh render inside the mask, and it would certainly delete the
-   fist. It would also destroy the one thing this rung is built around: the
-   12 px rim opened around the copy exists so the pass draws CONTACT against
-   the protected digits, and a band re-rendered from noise does not blend to
-   a neighbour it cannot see -- it draws something unrelated and leaves a hard
-   seam exactly at the protect boundary. High strength is not free here in a
-   way it was not for any sibling beat, because this mask has a hard interior
-   edge those masks did not have.
+2. WHY 0.99 IS NOT THE RISK IT LOOKS LIKE, AND THIS IS THE PART I HAD BACKWARDS.
+   I worried a near-fresh draw would wreck the copied digits. It cannot: the
+   digits are OUTSIDE the mask, and the latent blend above restores every
+   unmasked pixel AT EVERY STEP. So they are safe by construction of the
+   sampler, not by the size of the knob -- a strictly stronger guarantee than
+   the one K3 was written to give, and it holds at any strength. The 12 px
+   contact rim IS inside the mask and IS redrawn, which is what it was opened
+   for, and it is redrawn with the restored digits visible as context on every
+   step rather than against a neighbour the model cannot see.
 
-3. WHY 0.55. Twenty-two of forty steps: most of the way to a fresh draw, from
-   a latent that still carries the composite's colours and the surrounding
-   strap. Above the structure-preserving regime, below a from-noise redraw.
-   It is a choice, not a measurement, and it is filed as ONE SAMPLE for that
-   reason -- the sample's whole job is to find out which side of the deletion
-   threshold it lands on.
+3. THE ONE LEAK, NAMED. `--blur 8` softens the mask edge, so the outermost few
+   px of the protected digits take a fraction of the pass. That is wanted --
+   a hard protect boundary is how you get a seam -- but it is a leak and it is
+   stated rather than denied. If the digits come back mushy at their rim, the
+   next rung lowers `--blur`, not the strength.
 
 4. WHAT IT COSTS AGAINST B6, B8 AND THE WARDROBE -- AND WHY §21'S FEAR IS
    SMALLER THAN IT LOOKED, MEASURED. §21 warned a higher strength "re-opens
@@ -155,8 +169,10 @@ because §21 refused to let this be a knob turn.
    Those clauses were bought at the CONDITIONING scale (`--scale2`) on a
    WHOLE-FRAME txt2img render -- §19's table is scale2 0.3/0.5/0.8, not a
    denoise strength. A MASKED pass cannot write one pixel outside its mask at
-   ANY strength, so the price is not a guess about the knob; it is the item's
-   overlap with 1.82% of the frame, and K15 prints it:
+   ANY strength -- that is the same latent-blend property as part 2, and it is
+   the pipeline's behaviour rather than a hope -- so the price is not a guess
+   about the knob; it is the item's overlap with 1.82% of the frame, and K15
+   prints it:
 
        B8 canon hair          0 of 18200 px reachable  -- 0.0%, at any strength
        gold chest clasp      11 of   994 px            --  1.1%, all of it
@@ -168,10 +184,11 @@ because §21 refused to let this be a knob turn.
 
    B8 IS UNTOUCHABLE AND THAT WAS THE LOUDEST OF THE THREE. What is genuinely
    at risk is B6: a fifth of the cream shirt and a third of the white sash sit
-   in the corridor the arm has to be drawn through, and at 0.55 the sampler
-   may merge them the way `--scale2` 0.5 did. That is the real price, it is
-   the reason the corridor was widened knowingly, and it is pre-registered as
-   a named fail mode rather than discovered afterwards."""
+   in the corridor the arm has to be drawn through, and at 0.99 the sampler
+   redraws that fifth from near-noise -- it may merge shirt into wrap the way
+   `--scale2` 0.5 did, inside the corridor. THAT IS THE REAL PRICE OF THIS
+   RUNG, it is the reason the corridor was widened knowingly, and it is
+   pre-registered as a named fail mode rather than discovered afterwards."""
 
 
 def _erode(m, r):

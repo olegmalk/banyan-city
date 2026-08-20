@@ -1,0 +1,610 @@
+id: ep2-b08-fistcopy-0820
+task: ep2-b08-fistcopy-0820
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: beat 08 arm-route lane, 2026-08-20 -- derived by pipeline/derive_b08_fistcopy_0820.py, init by
+  pipeline/beat08_grip_copy.py (selftest PASS, 18 clauses)
+consumer: "BEAT 08's PLATE DECISION. The beat has no complete plate candidate: ep2-b08-scale30-0820 is\
+  \ the best frame and its grip clause fails, and \xA721 closed the move-the-hand route with a general\
+  \ rule -- composite-then-inpaint is licensed where the vacancy's material is continuous and unstructured,\
+  \ and is NOT a licence to relocate part of a figure across its own clothing. This sample answers the\
+  \ one question that rule leaves open: whether the vacancy can be avoided altogether by copying rather\
+  \ than moving, and letting the sampler delete the original from real strap pixels. A pass makes beat\
+  \ 08 a plate candidate; a fail closes the composite route on this beat and sends it back to staging."
+success: 'ONE 832x1216 PNG plus its sidecar, published into courier-box, off the asserted init sha. The
+  bar is below and every clause of it was written before the pixels existed. NOT a pick and NOT a plate_ack:
+  landing is judged by this lane against the bar, and R4 taste calls are the founder''s.'
+why: "\xA721 named this rung, refused to file it, and gave two reasons. Both are now discharged. THE FIRST:\
+  \ 'a 0.30 pass does not delete a hand ... so the rung has to choose a higher strength inside the mask\
+  \ and that re-opens the exact clauses (B6, B8, the wardrobe) the 0.30 number was bought with. That is\
+  \ an argued tradeoff, not a knob turn.' The argument is written out in pipeline/beat08_grip_copy.py\
+  \ STRENGTH_ARGUMENT and its load-bearing half is a MEASUREMENT, not a position: those clauses were bought\
+  \ at the CONDITIONING scale on a whole-frame txt2img render, and a masked pass cannot write a pixel\
+  \ outside its mask at any strength, so B8's canon hair is 0 of 18200 px reachable and the gold clasp\
+  \ is 11 of 994. THE SECOND: 'the instrument that would score its vacancy has just been shown to certify\
+  \ artifacts at twice its bar.' That instrument is replaced -- pipeline/fill_quality.py, C4', whose false-positive\
+  \ rate on this very plate is a measured 3.0%."
+est_minutes: 7
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b08fistcopy-0820\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\"\"Paint ONE object into\
+    \ ONE masked region of an approved plate. SDXL, $0, local.\n\nWHY THIS EXISTS. Beat 01 asks for \"\
+    one small round green fruit hanging from the\nstem\" and the prompt cannot deliver it: 0 of 24 across\
+    \ the wording rounds, and\n0 of 12 in round 8's img2img -- which is the decisive one, because r8's\
+    \ init\ncarried no fruit at all and so was a clean test of whether img2img will ADD an\nobject the\
+    \ init lacks. It will not, at strength 0.35 or 0.55. The founder chose\n`inpaint` over `drop` on 2026-08-10\
+    \ (ledger `ep2-b01-fig-route-0810`), so the\nfruit becomes its own step and this is that step.\n\n\
+    THE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.\n\n  * animagine-xl-3.1 has NO\
+    \ inpainting variant, so this loads the BASE weights\n    into StableDiffusionXLInpaintPipeline. diffusers\
+    \ 0.29.2 supports that\n    explicitly -- its own check is \"The unet should have either 4 or 9 input\n\
+    \    channels\", and at 4 (a normal SDXL checkpoint) it takes the latent-blend\n    branch instead\
+    \ of concatenating mask channels:\n        latents = (1 - init_mask) * init_latents_proper + init_mask\
+    \ * latents\n    HF's docs name the trade-off in their own words: \"the overall image quality\n  \
+    \  may be lower, but it generally tends to preserve the mask area (that is why\n    you can see the\
+    \ mask outline)\". Preserving the unmasked area is exactly what\n    we want here -- the plate is\
+    \ the founder's and must come back unchanged\n    outside the mask.\n  * `padding_mask_crop` is the\
+    \ countermeasure for the failure mode this beat has:\n    a SMALL object in a LARGE frame. It crops\
+    \ the masked region with padding,\n    upscales that crop to the pipeline resolution, inpaints there,\
+    \ and pastes it\n    back -- so the fruit is drawn at full model resolution instead of at the ~5%\n\
+    \    of the frame it will occupy. Verified present in 0.29.2's __call__ on the box.\n  * `strength`\
+    \ must be high to ADD something. It is not the img2img case; the\n    unmasked region is restored\
+    \ every step by the blend above, so a high strength\n    costs nothing outside the mask.\n\n    diffusers\
+    \ 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py\n\
+    \    inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint\n\
+    \    model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1\n    padding_mask_crop\
+    \ issue: https://github.com/huggingface/diffusers/issues/6345\n\nWHAT THIS SCRIPT REFUSES TO DO. It\
+    \ will not run on an init whose sha256 does not\nmatch the one named on the command line. G1 says\
+    \ a conditioned render starts from\na frame the founder has passed, and the only way that gate means\
+    \ anything is if\nthe bytes are asserted rather than the filename. It also never writes a canon\n\
+    filename and always writes `approved: false` in the sidecar.\n\nTHE MASK IS GEOMETRY AND IT IS THE\
+    \ STEWARD'S, NOT HIS. He approved a method, not\na size or a position. The ellipse is passed in on\
+    \ the command line, drawn to a\nPNG beside the output so it can be looked at, and reported in the\
+    \ sidecar in both\npixels and as a fraction of the frame, so the first correction he makes can be\n\
+    \"lower\", \"smaller\", \"other side\" and it is one number.\n\nSECOND CALLER, 2026-08-15: THE BARK\
+    \ BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.\nA prop -- a clipboard made of bark -- gates three\
+    \ beats of 002b (06 \"turns over a\nclipboard made of bark and reads\", 08 \"lowers the clipboard\
+    \ and points\", 10\n\"flips the clipboard around: the back is blank\"). Four wording attempts closed\n\
+    the wording lever for good (see `a5e61487`, `c7a11ff0`): they established that\nwording reaches the\
+    \ prop's MATERIAL -- deleting the noun killed the chrome clip\nand white paper in 12 frames of 12\
+    \ -- and that wording does NOT reach its\nGEOMETRY. `large flat rectangular` was in the positive of\
+    \ a clean, uncontested\nprompt and all four seeds still rounded the object into a lozenge, a dome,\
+    \ a\nsurfboard blank and a basket lid. So the geometry has to come from the mask, and\nan ELLIPSE\
+    \ MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four\nprompts already failed against,\
+    \ and masking a board with one would re-draw the\ndefect under test. Hence `--quad`, four corners\
+    \ and four straight edges. A\nrectangle is a quad; a rectangular board held at an angle is a quad\
+    \ in\nperspective, which an axis-aligned rectangle would not fit either.\n\nTHIRD CALLER, 2026-08-17:\
+    \ EYEWEAR ON ONE MAN OF TWO, AND WHY THE MASK BECAME\nARBITRARY. `glasses` named in ONE man's clause\
+    \ lands on BOTH men, 5 of 5 -- a\ndifferent failure from the prop above, which goes to ONE WRONG figure.\
+    \ The\nfounder ruled \"draw the second man without glasses. we need to have control.\"\nThe published\
+    \ cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its\nEOS carries global prompt semantics,\
+    \ so the token steers the whole frame and no\nwording says WHICH face; a negative cannot unbind it.\
+    \ The mask is therefore the\nonly lever, and the region that matters here is a THIN BAND along a spectacle\n\
+    frame -- neither a blob nor a convex polygon, so neither `--ellipse` nor `--quad`\ncan express it.\
+    \ Hence `--mask-png`, which also retires the board-MINUS-the-hand\nlimitation recorded against this\
+    \ script in wave-drafts.yaml. The band is authored\nby pipeline/attribute_mask.py, a $0 step with\
+    \ no GPU and no sampler in it, which\nis what makes \"control\" checkable instead of asserted.\n\n\
+    \    python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \\\n        (--ellipse cx,cy,rx,ry\
+    \ | --quad x0,\u2026,y3 | --mask-png m.png) \\\n        --prompt-file p.txt --negative-file n.txt\
+    \ \\\n        --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \\\n        [--seed N] [--pad-crop\
+    \ 64] [--blur 8] [--dry-run]\n\"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport\
+    \ datetime as _dt\nimport hashlib\nimport os\nimport sys\nimport time\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\
+    \nBASE_LICENCE = \"CreativeML Open RAIL++-M (use restrictions travel; D15)\"\n\n\ndef sha256_of(path:\
+    \ str) -> str:\n    h = hashlib.sha256()\n    with open(path, \"rb\") as fh:\n        for chunk in\
+    \ iter(lambda: fh.read(1 << 20), b\"\"):\n            h.update(chunk)\n    return h.hexdigest()\n\n\
+    \ndef read_text(path: str) -> str:\n    with open(path, \"r\", encoding=\"utf-8\") as fh:\n      \
+    \  return fh.read().strip()\n\n\ndef yaml_block(text: str, indent: str = \"  \") -> str:\n    return\
+    \ \"\\n\".join(indent + line for line in text.splitlines())\n\n\ndef module_version(name: str) ->\
+    \ str:\n    try:\n        return __import__(name).__version__\n    except Exception:\n        return\
+    \ \"unresolved\"\n\n\ndef main() -> int:\n    ap = argparse.ArgumentParser(description=__doc__,\n\
+    \                                 formatter_class=argparse.RawDescriptionHelpFormatter)\n    ap.add_argument(\"\
+    --init\", required=True)\n    ap.add_argument(\"--init-sha256\", required=True,\n                \
+    \    help=\"asserted before anything loads; a mismatch is a hard stop\")\n    ap.add_argument(\"--ellipse\"\
+    , default=\"\",\n                    help=\"cx,cy,rx,ry in pixels of the init image\")\n    ap.add_argument(\"\
+    --quad\", default=\"\",\n                    help=\"x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in order,\
+    \ a \"\n                         \"STRAIGHT-EDGED mask. A rectangle is a quad, and a \"\n        \
+    \                 \"rectangular board seen at an angle is a quad and is NOT \"\n                 \
+    \        \"an ellipse. Exactly one of --ellipse/--quad/--mask-png \"\n                         \"\
+    is required.\")\n    ap.add_argument(\"--mask-png\", default=\"\",\n                    help=\"an\
+    \ 8-bit mask PNG the same size as --init: white is \"\n                         \"redrawn, black is\
+    \ preserved. This is the general case \"\n                         \"the two shape flags are special\
+    \ cases of. It exists \"\n                         \"because a region worth masking is often neither\
+    \ a blob \"\n                         \"nor a convex polygon -- a THIN BAND along a spectacle \"\n\
+    \                         \"frame, or a board MINUS the hand holding it (a \"\n                  \
+    \       \"limitation recorded against this script in \"\n                         \"wave-drafts.yaml\
+    \ and not expressible as one ellipse or \"\n                         \"one quad). Authoring the geometry\
+    \ is a separate $0 step \"\n                         \"with no GPU and no sampler in it, which is\
+    \ the point: \"\n                         \"WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND\
+    \ \"\n                         \"CAN DIFF, not something the model gets a vote on. See \"\n      \
+    \                   \"pipeline/attribute_mask.py.\")\n    ap.add_argument(\"--dry-run\", action=\"\
+    store_true\",\n                    help=\"assert the sha, draw the mask PNG beside --out and stop\
+    \ \"\n                         \"BEFORE loading any model. Costs nothing and is the step \"\n    \
+    \                     \"where a misplaced mask gets caught by eye.\")\n    ap.add_argument(\"--prompt-file\"\
+    , required=True)\n    ap.add_argument(\"--negative-file\", required=True)\n    ap.add_argument(\"\
+    --out\", required=True)\n    ap.add_argument(\"--steps\", type=int, default=40)\n    ap.add_argument(\"\
+    --cfg\", type=float, default=7.5)\n    ap.add_argument(\"--strength\", type=float, default=0.99)\n\
+    \    ap.add_argument(\"--seed\", type=int, default=20260810)\n    ap.add_argument(\"--pad-crop\",\
+    \ type=int, default=64,\n                    help=\"padding_mask_crop; 0 disables it\")\n    ap.add_argument(\"\
+    --blur\", type=int, default=8, help=\"mask blur_factor\")\n    ap.add_argument(\"--note\", default=\"\
+    \")\n    a = ap.parse_args()\n\n    if not os.path.isfile(a.init):\n        print(\"!! init not found:\
+    \ %s\" % a.init, flush=True)\n        return 2\n    have = sha256_of(a.init)\n    if have != a.init_sha256:\n\
+    \        print(\"!! INIT SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\"\n              % (a.init_sha256,\
+    \ have), flush=True)\n        return 3\n\n    if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if\
+    \ v) != 1:\n        print(\"!! pass exactly one of --ellipse, --quad or --mask-png\", flush=True)\n\
+    \        return 2\n\n    cx = cy = rx = ry = 0\n    corners: list = []\n    mask_sha = \"\"\n    if\
+    \ a.mask_png:\n        if not os.path.isfile(a.mask_png):\n            print(\"!! --mask-png not found:\
+    \ %s\" % a.mask_png, flush=True)\n            return 2\n        mask_sha = sha256_of(a.mask_png)\n\
+    \        shape = \"png\"\n        bbox = []\n    elif a.ellipse:\n        try:\n            cx, cy,\
+    \ rx, ry = (int(v) for v in a.ellipse.split(\",\"))\n        except Exception:\n            print(\"\
+    !! --ellipse wants cx,cy,rx,ry\", flush=True)\n            return 2\n        shape = \"ellipse\"\n\
+    \        bbox = [cx - rx, cy - ry, cx + rx, cy + ry]\n    else:\n        try:\n            vals =\
+    \ [int(v) for v in a.quad.split(\",\")]\n        except Exception:\n            vals = []\n      \
+    \  if len(vals) != 8:\n            print(\"!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3 (8 integers)\"\
+    , flush=True)\n            return 2\n        corners = list(zip(vals[0::2], vals[1::2]))\n       \
+    \ xs = [p[0] for p in corners]\n        ys = [p[1] for p in corners]\n        shape = \"quad\"\n \
+    \       bbox = [min(xs), min(ys), max(xs), max(ys)]\n\n    from PIL import Image, ImageDraw\n\n  \
+    \  plate = Image.open(a.init).convert(\"RGB\")\n    W, H = plate.size\n    mask = Image.new(\"L\"\
+    , (W, H), 0)\n    if shape == \"png\":\n        supplied = Image.open(a.mask_png).convert(\"L\")\n\
+    \        if supplied.size != (W, H):\n            print(\"!! MASK SIZE MISMATCH -- refusing.\\n  \
+    \ init %dx%d\\n   mask %dx%d\"\n                  % (W, H, supplied.size[0], supplied.size[1]), flush=True)\n\
+    \            return 6\n        mask = supplied\n        box = mask.point(lambda v: 255 if v > 0 else\
+    \ 0).getbbox()\n        if box is None:\n            print(\"!! mask is entirely black -- nothing\
+    \ would be redrawn.\", flush=True)\n            return 7\n        # getbbox()'s right/bottom are exclusive;\
+    \ the sidecar reports inclusive px.\n        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]\n   \
+    \ elif shape == \"ellipse\":\n        ImageDraw.Draw(mask).ellipse(bbox, fill=255)\n    else:\n  \
+    \      ImageDraw.Draw(mask).polygon(corners, fill=255)\n\n    os.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\n    mask_png = os.path.splitext(a.out)[0] + \"-mask.png\"\n    mask.save(mask_png)\n\
+    \n    prompt = read_text(a.prompt_file)\n    negative = read_text(a.negative_file)\n\n    if a.dry_run:\n\
+    \        print(\"DRY RUN -- no model loaded, nothing rendered.\", flush=True)\n        print(\"init_sha256\
+    \ OK %s\" % have, flush=True)\n        print(\"mask %s corners=%s bbox=%s  %.4f x %.4f of %dx%d\"\n\
+    \              % (shape, corners or \"-\", bbox,\n                 (bbox[2] - bbox[0]) / float(W),\n\
+    \                 (bbox[3] - bbox[1]) / float(H), W, H), flush=True)\n        print(\"WROTE %s\" %\
+    \ mask_png, flush=True)\n        print(\"rc=0 dry_run=1\", flush=True)\n        return 0\n\n    import\
+    \ torch\n    from diffusers import StableDiffusionXLInpaintPipeline\n\n    if not torch.cuda.is_available():\n\
+    \        print(\"!! no CUDA. This is the box's job; stopping.\", flush=True)\n        return 4\n\n\
+    \    t0 = time.time()\n    pipe = StableDiffusionXLInpaintPipeline.from_pretrained(\n        BASE,\
+    \ torch_dtype=torch.bfloat16, use_safetensors=True)\n    pipe = pipe.to(\"cuda\")\n    pipe.set_progress_bar_config(disable=True)\n\
+    \    in_ch = int(pipe.unet.config.in_channels)\n    print(\"MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d\
+    \ in %.0fs\"\n          % (BASE, in_ch, time.time() - t0), flush=True)\n    if in_ch not in (4, 9):\n\
+    \        print(\"!! unexpected unet.in_channels=%d\" % in_ch, flush=True)\n        return 5\n\n  \
+    \  blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask\n\n    kwargs\
+    \ = dict(prompt=prompt, negative_prompt=negative, image=plate,\n                  mask_image=blurred,\
+    \ width=W, height=H,\n                  num_inference_steps=a.steps, guidance_scale=a.cfg,\n     \
+    \             strength=a.strength,\n                  generator=torch.Generator(\"cuda\").manual_seed(a.seed))\n\
+    \    if a.pad_crop:\n        kwargs[\"padding_mask_crop\"] = a.pad_crop\n\n    t1 = time.time()\n\
+    \    out = pipe(**kwargs).images[0]\n    render_s = time.time() - t1\n\n    out.save(a.out)\n\n  \
+    \  versions = {\"python\": sys.version.split()[0], \"torch\": module_version(\"torch\"),\n       \
+    \         \"diffusers\": module_version(\"diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"\
+    %Y-%m-%dT%H:%M:%SZ\")\n    mask_lines = [\"mask_shape: %s\" % shape]\n    if shape == \"png\":\n \
+    \       mask_lines += [\"mask_png_source: %s\" % a.mask_png.replace(\"\\\\\", \"/\"),\n          \
+    \             \"mask_png_sha256: %s\" % mask_sha,\n                       \"mask_white_px: %d\"\n\
+    \                       % (W * H - mask.point(lambda v: 255 if v > 0 else 0)\n                   \
+    \       .histogram()[0])]\n    elif shape == \"ellipse\":\n        mask_lines += [\"mask_centre_px:\
+    \ [%d, %d]\" % (cx, cy),\n                       \"mask_radii_px: [%d, %d]\" % (rx, ry)]\n    else:\n\
+    \        mask_lines += [\"mask_corners_px: %s\"\n                       % str([[int(x), int(y)] for\
+    \ x, y in corners])]\n    mask_lines += [\n        \"mask_bbox_px: [%d, %d, %d, %d]\" % tuple(bbox),\n\
+    \        \"mask_width_frac: %.4f\" % ((bbox[2] - bbox[0]) / float(W)),\n        \"mask_height_frac:\
+    \ %.4f\" % ((bbox[3] - bbox[1]) / float(H)),\n    ]\n    sidecar = a.out + \".meta.yaml\"\n    with\
+    \ open(sidecar, \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\"\\n\".join([\n\
+    \            \"# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py\",\n         \
+    \   \"# on the rtx5090. The plate outside the mask is the founder's own\",\n            \"# pixels;\
+    \ only the region described below was redrawn.\",\n            \"platform: local-gpu (rtx5090)\",\n\
+    \            \"model: %s\" % BASE,\n            \"model_licence: %s\" % BASE_LICENCE,\n          \
+    \  \"pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=%d)\" % in_ch,\n \
+    \           \"size: %dx%d\" % (W, H),\n            \"steps: %d\" % a.steps,\n            \"guidance:\
+    \ %s\" % a.cfg,\n            \"strength: %s\" % a.strength,\n            \"seed: %d\" % a.seed,\n\
+    \            \"padding_mask_crop: %s\" % (a.pad_crop or \"null\"),\n            \"mask_blur_factor:\
+    \ %d\" % a.blur,\n            \"init_image: %s\" % a.init.replace(\"\\\\\", \"/\"),\n            \"\
+    init_sha256: %s\" % have,\n            \"mask_png: %s\" % os.path.basename(mask_png),\n        ] +\
+    \ mask_lines + [\n            \"mask_is_the_stewards: >-\",\n            yaml_block(\"THE FOUNDER\
+    \ APPROVED A METHOD, NOT THIS GEOMETRY. He said \"\n                       \"`inpaint` and named no\
+    \ size, no position, no colour and no \"\n                       \"shape. The mask above is the steward's\
+    \ and is the first \"\n                       \"thing his correction should move -- 'lower', 'smaller',\
+    \ \"\n                       \"'other side' is one number here; the words in the prompt \"\n     \
+    \                  \"are his own approved shots.md wording.\"),\n            \"rendered_utc: %s\"\
+    \ % stamp,\n            \"render_seconds: %.1f\" % render_s,\n            \"wall_seconds: %.1f\" %\
+    \ (time.time() - t0),\n            \"cost_usd: 0\",\n            \"python_version: %s\" % versions[\"\
+    python\"],\n            \"torch_version: %s\" % versions[\"torch\"],\n            \"diffusers_version:\
+    \ %s\" % versions[\"diffusers\"],\n            \"approved: false\",\n            \"provisional: >-\"\
+    ,\n            yaml_block(\"PROVISIONAL. A steward-rendered SAMPLE, not a pick and not \"\n      \
+    \                 \"canon. Never takes a canon filename, is not published, not \"\n              \
+    \         \"posted, and not assembled into an episode. Ground truth is \"\n                      \
+    \ \"the founder (R4).\"),\n            \"note: >-\",\n            yaml_block(a.note or \"one inpainted\
+    \ sample; the fruit question.\"),\n            \"prompt: |-\",\n            yaml_block(prompt),\n\
+    \            \"negative: |-\",\n            yaml_block(negative),\n            \"\",\n        ]))\n\
+    \n    print(\"WROTE %s\" % a.out, flush=True)\n    print(\"WROTE %s\" % mask_png, flush=True)\n  \
+    \  print(\"WROTE %s\" % sidecar, flush=True)\n    print(\"rc=0 render_s=%.1f\" % render_s, flush=True)\n\
+    \    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
+  C:\banyan-farm\b08fistcopy-0820\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 08's FIST-COPY\
+    \ composite and its mask; refuse on any sha mismatch.\n\nNo model, no GPU, no spend. Both files are\
+    \ on origin/main -- written by\npipeline/beat08_grip_copy.py on a Mac, so they are NOT on the box's\
+    \ courier\nworktree, which only ever contains what the box produced. The sha256s asserted\nhere are\
+    \ verifiable against the repo by anyone who clones it.\n\nWHAT THE INIT CONTAINS, SO THE OPERATOR\
+    \ IS NOT SURPRISED BY IT: the guard has\nTWO left fists. That is not a defect, it is the rung. The\
+    \ plate's own fist is\nstill at the strap where it was drawn -- inside the mask, for this pass to\n\
+    delete from real pixels -- and a byte-exact COPY of it sits at the board's top\nedge, outside the\
+    \ mask, where its drawn digits are protected by the latent\nblend at every step. \xA721 tried the\
+    \ other order (move the hand, fabricate a fill\nfor the vacancy) and three fill families all left\
+    \ an artifact an eye names.\n\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\\
+    b08fistcopy-0820\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\n    \
+    \   \"farm-out/ep2-b08-fistcopy-0820/\")\nUA = {\"User-Agent\": \"banyan-city-b08-fistcopy/1.0 (albert.numbro@gmail.com)\"\
+    }\nWANT = {\n    \"08-first-citizen-fistcopy-0820.png\":\n        \"7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45\"\
+    ,\n    \"08-first-citizen-fistcopy-mask-0820.png\":\n        \"bfee06c5f1bf7ddc895c6c0cd5a26f541e034ed4d3516d9a15a8e2e032d55785\"\
+    ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
+    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
+    \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
+    \ flush=True)\n"
+  C:\banyan-farm\b08fistcopy-0820\prompt.txt: Two men, a guard, light sandy hair, cream shirt, white sash,
+    brown wrap skirt, clipboard lowered in one hand, other arm pointing at the small goblin man's belly,
+    green skin, plump, adult, tall grass, pale sky, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\b08fistcopy-0820\negative.txt: giant, colossus, towering figure, different scale, floating,
+    raised clipboard, second board, extra arms, extra hands, extra fingers, deformed hands, crowd, girl,
+    child, chibi, armor, helmet, knight, dark, night, text, watermark, photorealism, 3d render, low quality,
+    deformed
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08fistcopy-0820\fetch_init.py
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08fistcopy-0820\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\b08fistcopy-0820\08-first-citizen-fistcopy-0820.png
+  - --init-sha256
+  - 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+  - --mask-png
+  - C:\banyan-farm\b08fistcopy-0820\08-first-citizen-fistcopy-mask-0820.png
+  - --prompt-file
+  - C:\banyan-farm\b08fistcopy-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08fistcopy-0820\negative.txt
+  - --out
+  - C:\banyan-farm\b08fistcopy-0820\b08-fistcopy-DRY.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260820'
+  - --note
+  - 'MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds
+    instead of a GPU fire. THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730).
+    IT IS THREE REGIONS AND ONE HOLE. (1) the guard''s ORIGINAL left fist at the harness strap, grown
+    14 px -- the pass DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored
+    wrist (622,668), 24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the
+    copied fist at the board''s top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the
+    copied fist''s interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one
+    thing in this rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region
+    does NOT reach the guard''s FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140),
+    or the guard''s pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor''s
+    K12 and all three pass -- and that there is a clearly BLACK island inside the white rim at the board''s
+    top edge. If that island is missing the digits are unprotected and this job must stop here at $0.'
+  - --dry-run
+- name: s20260820
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b08fistcopy-0820\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\b08fistcopy-0820\08-first-citizen-fistcopy-0820.png
+  - --init-sha256
+  - 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+  - --mask-png
+  - C:\banyan-farm\b08fistcopy-0820\08-first-citizen-fistcopy-mask-0820.png
+  - --prompt-file
+  - C:\banyan-farm\b08fistcopy-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b08fistcopy-0820\negative.txt
+  - --out
+  - C:\banyan-farm\b08fistcopy-0820\b08-fistcopy-s20260820.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260820'
+  - --note
+  - 'MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds
+    instead of a GPU fire. THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730).
+    IT IS THREE REGIONS AND ONE HOLE. (1) the guard''s ORIGINAL left fist at the harness strap, grown
+    14 px -- the pass DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored
+    wrist (622,668), 24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the
+    copied fist at the board''s top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the
+    copied fist''s interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one
+    thing in this rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region
+    does NOT reach the guard''s FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140),
+    or the guard''s pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor''s
+    K12 and all three pass -- and that there is a clearly BLACK island inside the white rim at the board''s
+    top edge. If that island is missing the digits are unprotected and this job must stop here at $0.'
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while\
+    \ returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses\
+    \ a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing\
+    \ ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\n\
+    from_dir = \"C:/banyan-farm/b08fistcopy-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-fistcopy-0820\"\
+    \nNAMES = [\n    \"b08-fistcopy-s20260820.png\",\n    \"b08-fistcopy-s20260820-mask.png\",\n    \"\
+    b08-fistcopy-s20260820.png.meta.yaml\",\n    \"08-first-citizen-fistcopy-0820.png\",\n    \"08-first-citizen-fistcopy-mask-0820.png\"\
+    ,\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor\
+    \ name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise\
+    \ SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n\
+    \    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-fistcopy-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines)\
+    \ == len(NAMES) else 1)\n"
+artifacts:
+- C:\banyan-farm\b08fistcopy-0820\b08-fistcopy-s20260820.png
+- C:\banyan-farm\b08fistcopy-0820\08-first-citizen-fistcopy-0820.png
+script_authority: 'Node 002b-first-citizen, approved_by: founder. THIS PRODUCES A PLATE, NOT AN EPISODE:
+  STEWARDSHIP 6 gates voice, footage and assembly, and a still init for an approved beat is none of those.
+  inpaint_fruit.py writes approved: false and a provisional: block into its own sidecar. Beat 08''s script
+  line is ''lowers the clipboard and points'' and this rung touches only the LOWERING hand -- the pointing
+  arm is outside the mask and byte-restored every step. No authoring call is made here: the hand that
+  grips is the plate''s own drawn fist, translated, so not one digit is invented.'
+bar:
+  C4prime: 'THE CLAUSE THIS RUNG WAITED FOR. Run pipeline/fill_quality.py on the 7914 px region where
+    the original fist was (published as 08-first-citizen-fistcopy-erase-0820.png): D >= 0.45 AND N >=
+    0.25 AND F <= 2.60, against the landed frame with the init as --plate. The retired C4 would have passed
+    the gripcomp corduroy comb at 89%; C4'' fails it at N 0.084 / F 7.87 and passes every honest composite
+    fill on b03/b13/b15/b19. Measured false-positive rate 3.0%.'
+  H1_the_fist_is_GONE: 'The original fist must be DELETED, not dented. No skin-toned blob survives inside
+    poly(FIST) grown 6: judged by eye at 5x and by the absence of a closed light region there. THIS IS
+    THE CLAUSE THE STRENGTH WAS CHOSEN FOR and the one most likely to fail.'
+  H2_the_arm_CONNECTS: "A forearm runs from the authored elbow (627,580) to the copied hand at the wrist\
+    \ (621,673) with no gap and no second limb. \xA721's 'sticker of a hand' verdict is what this clause\
+    \ exists to prevent."
+  H3_the_digits_SURVIVED: The copied fist's drawn fingers and thumb are still individually legible at
+    5x. They are outside the mask and restored every step by the latent blend, so this is close to guaranteed
+    -- it is in the bar because --blur 8 softens the boundary and the outer rim of them does take a fraction
+    of the pass.
+  H4_contact_not_decal: "The hand closes around the board's top edge: contact shading or occlusion is\
+    \ visible where fingers cross it, and the stair-stepped octagonal rim \xA721 named is gone. This is\
+    \ the clause the 12 px rim was opened for."
+  B6_wardrobe: "The cream shirt, the white sash and the brown wrap are still THREE garments, not one robe.\
+    \ 20.1% of the shirt and 32.5% of the sash are inside the corridor and are genuinely at risk -- see\
+    \ the named fail mode. Measured the way \xA719 measured it: sleeve RGB against scale30's (217.9,193.4,165.0),\
+    \ and merged-into-wrap reads about (161.6,115.4,80.3)."
+  B8_hair: Canon light sandy hair, not bald. 0 of 18200 head px are in the mask so this CANNOT move; it
+    is in the bar as a falsifiable check on that claim, and if it moves the mask is not what it says it
+    is.
+  scale30_clauses_hold: "Every clause scale30 passes, outside the mask, unchanged: B1, B2 (goblin/guard\
+    \ skin separation, +60.6), B3, B4a (board quad px below luma 80, 0.758 -- MINUS the hand's intended\
+    \ occlusion of the top-left corner, which is the point of the rung and not a regression), B4b, B4c,\
+    \ B5. The board is OUTSIDE the mask and the latent blend restores it every step, so unlike \xA718\
+    \ this pass cannot lose it."
+init_provenance: "pipeline/beat08_grip_copy.py --write, selftest PASS on 18 clauses. init 08-first-citizen-fistcopy-0820.png\
+  \ sha 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45, mask 08-first-citizen-fistcopy-mask-0820.png\
+  \ sha bfee06c5f1bf7ddc895c6c0cd5a26f541e034ed4d3516d9a15a8e2e032d55785, both on origin/main and fetched\
+  \ by sha. The init is ep2-b08-scale30-0820's plate (sha 448e40cb...) with a byte-exact translated COPY\
+  \ of the guard's own fist added at (+18,+91); 3101 of 3101 copied px are identical to the plate's, 0\
+  \ strokes were drawn, and the 4489 px \xA721 could not fill are all still byte-identical plate because\
+  \ no vacancy was ever opened."
+pre_registered_fail_modes:
+  most_likely_THE_FIST_SURVIVES: 0.99 is 39 of 40 steps and should be enough, but this is the first deletion
+    this tree has asked for and the fist is high-contrast with its own dark outline. If a skin-coloured
+    lump remains at the strap, the answer is NOT more strength -- it is already at the ceiling -- it is
+    a wider OLD_GROW so the pass has more real strap to reason from, or the route closes.
+  second_B6_MERGES_IN_THE_CORRIDOR: "A fifth of the cream shirt and a third of the white sash are inside\
+    \ the forearm corridor and get redrawn from near-noise. \xA719 measured exactly this collapse at --scale2\
+    \ 0.5: shirt + sash + wrap became ONE BROWN ROBE. If it fires, the corridor is the cause and it is\
+    \ narrowable -- ARM_R 24 was chosen to fit a sleeve, not measured."
+  third_TWO_HANDS: The pass deletes the original incompletely AND draws a new hand at the end of the corridor,
+    leaving three hands in frame. Named because the negative already carries 'extra arms, extra hands'
+    and it did not prevent the parent's mitten.
+  NOT_a_fail_mode_the_vacancy_artifact: 'The corduroy comb, the smooth blob and the per-row ladder cannot
+    recur: there is no vacancy and no fill function in the init. If C4'' fails, it fails on what the SAMPLER
+    drew, which is a different and more interesting failure.'
+sample_declaration: 'ONE SAMPLE, one seed, one strength. The founder''s 2026-08-03 rule: before rendering
+  a SET of anything, produce ONE. This is the first inpaint pass beat 08 has ever filed and the first
+  anywhere in this tree asked to DELETE a fully-inked object rather than integrate one, so there is no
+  prior on which side of the deletion threshold it lands.'
+scope_limits: "Whether beat 08's staging is right. \xA721's rule stands and this sample does not overturn\
+  \ it -- it tests the one case the rule leaves open. It also says nothing about the goblin, the pointing\
+  \ arm, or the hair, all of which are outside the mask by construction."
+strength_argument: "CHOSEN: 0.99, at 40 steps and cfg 7.5. ONE SAMPLE.\n\nTHE FIRST DRAFT OF THIS ARGUMENT\
+  \ SAID 0.55 AND IT WAS WRONG, from reasoning\nabout plain img2img when this is not that. `inpaint_fruit.py`'s\
+  \ own docstring,\nsourced to the diffusers 0.29.2 pipeline it loads, settles it:\n\n    \"`strength`\
+  \ must be high to ADD something. It is not the img2img case; the\n     unmasked region is restored every\
+  \ step by the blend above, so a high\n     strength costs nothing outside the mask.\"\n\nThe blend it\
+  \ means is SDXL inpaint's latent branch, taken because animagine has\nno inpainting variant and its\
+  \ UNet has 4 input channels:\n\n    latents = (1 - init_mask) * init_latents_proper + init_mask * latents\n\
+  \nand the same file records the measurement that kills the middle of the range:\nadding an object the\
+  \ init lacks got **0 of 12 at strength 0.35 or 0.55**.\n\n1. WHY NOT 0.30, THE HOUSE DEFAULT (66 of\
+  \ the specs in this tree).\n   `composite-init-pattern.md`: an inpaint pass runs only `int(steps x\n\
+  \   strength)` of its schedule -- at 40 steps, 0.30 is TWELVE steps. That is\n   the regime chosen precisely\
+  \ because it PRESERVES structure, and every\n   sibling that used it was INTEGRATING something already\
+  \ drawn into the init\n   (b13's sapling, b15/b19's clone fills, beat 03's ramp given blade texture).\n\
+  \   NONE of them had to DELETE a fully-inked object with its own dark outline\n   and CREATE a forearm\
+  \ that is not in the plate at all. 0.30 hands the fist\n   twelve steps and a latent that still contains\
+  \ it, and gets a dented fist.\n\n2. WHY 0.99 IS NOT THE RISK IT LOOKS LIKE, AND THIS IS THE PART I HAD\
+  \ BACKWARDS.\n   I worried a near-fresh draw would wreck the copied digits. It cannot: the\n   digits\
+  \ are OUTSIDE the mask, and the latent blend above restores every\n   unmasked pixel AT EVERY STEP.\
+  \ So they are safe by construction of the\n   sampler, not by the size of the knob -- a strictly stronger\
+  \ guarantee than\n   the one K3 was written to give, and it holds at any strength. The 12 px\n   contact\
+  \ rim IS inside the mask and IS redrawn, which is what it was opened\n   for, and it is redrawn with\
+  \ the restored digits visible as context on every\n   step rather than against a neighbour the model\
+  \ cannot see.\n\n3. THE ONE LEAK, NAMED. `--blur 8` softens the mask edge, so the outermost few\n  \
+  \ px of the protected digits take a fraction of the pass. That is wanted --\n   a hard protect boundary\
+  \ is how you get a seam -- but it is a leak and it is\n   stated rather than denied. If the digits come\
+  \ back mushy at their rim, the\n   next rung lowers `--blur`, not the strength.\n\n4. WHAT IT COSTS\
+  \ AGAINST B6, B8 AND THE WARDROBE -- AND WHY \xA721'S FEAR IS\n   SMALLER THAN IT LOOKED, MEASURED.\
+  \ \xA721 warned a higher strength \"re-opens\n   the exact clauses (B6, B8, the wardrobe) the 0.30 number\
+  \ was bought with\".\n   Those clauses were bought at the CONDITIONING scale (`--scale2`) on a\n   WHOLE-FRAME\
+  \ txt2img render -- \xA719's table is scale2 0.3/0.5/0.8, not a\n   denoise strength. A MASKED pass\
+  \ cannot write one pixel outside its mask at\n   ANY strength -- that is the same latent-blend property\
+  \ as part 2, and it is\n   the pipeline's behaviour rather than a hope -- so the price is not a guess\n\
+  \   about the knob; it is the item's overlap with 1.82% of the frame, and K15\n   prints it:\n\n   \
+  \    B8 canon hair          0 of 18200 px reachable  -- 0.0%, at any strength\n       gold chest clasp\
+  \      11 of   994 px            --  1.1%, all of it\n                                             \
+  \             inside the fist's own\n                                                          6 px\
+  \ deletion margin\n       gold belt buckle     382 of  5366 px            --  7.1%\n       B6 white\
+  \ sash        108 of   332 px            -- 32.5%\n       B6 cream shirt      5750 of 28573 px     \
+  \       -- 20.1%\n\n   B8 IS UNTOUCHABLE AND THAT WAS THE LOUDEST OF THE THREE. What is genuinely\n\
+  \   at risk is B6: a fifth of the cream shirt and a third of the white sash sit\n   in the corridor\
+  \ the arm has to be drawn through, and at 0.99 the sampler\n   redraws that fifth from near-noise --\
+  \ it may merge shirt into wrap the way\n   `--scale2` 0.5 did, inside the corridor. THAT IS THE REAL\
+  \ PRICE OF THIS\n   RUNG, it is the reason the corridor was widened knowingly, and it is\n   pre-registered\
+  \ as a named fail mode rather than discovered afterwards."
+derivation:
+  parent: pipeline/jobs/ep2-b13-tallcomp-0820.yaml
+  by: pipeline/derive_b08_fistcopy_0820.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - init_provenance
+  - owner
+  - pre_registered_fail_modes
+  - sample_declaration
+  - scope_limits
+  - strength_argument
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - init_provenance
+  - is_show_content
+  - is_show_content_why
+  - mask_provenance
+  - negative_ordering
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - the_one_variable
+  retokened:
+  - b13tallcomp-0820 -> b08fistcopy-0820
+  - 13-the-shade-tallcomp-mask-0820 -> 08-first-citizen-fistcopy-mask-0820
+  - 13-the-shade-tallcomp-0820 -> 08-first-citizen-fistcopy-0820
+  - b13-tallcomp -> b08-fistcopy
+  - s20260820 -> s20260820
+  - ep2-b13-tallcomp-0820 -> ep2-b08-fistcopy-0820
+  overrides_applied_and_asserted:
+    argv:--init-sha256:
+    - step dry --init-sha256 (bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f -> 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45)
+    - step s20260820 --init-sha256 (bf2d258b7f007173bc9c9b898f382d03625f97cdea943cce9381f66baf84cd0f ->
+      7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45)
+    argv:--note:
+    - 'step dry --note (MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a
+      wrong mask costs seconds instead of a GPU fire. THIS MASK IS TWICE THE PARENT''S: 80592 px, 7.97
+      percent of the frame, against the sapcomp parent''s 41497 px and 4.10 percent -- because the plant
+      is 921 px tall here instead of 485. Like the parent''s it is the DRAWN PLANT''S FOOTPRINT ALONE
+      dilated, and the composite is purely additive: there was no wrong plant near him to erase. WHAT
+      TO CHECK ON THE DRY PNG: that the white region is a tall narrow column up the left of the frame
+      and that it does NOT touch his FACE (box x 250..570 y 60..500), his hands or his folded arms. The
+      compositor measured 37224 drawn px above y=640 -- the guard the founder-option deliberately lifted
+      -- and ZERO of them inside his face box, with C2 face-box maxdiff 0 armed and passing. If the dry
+      mask reaches his face, the composite is wrong and this job stops here at $0. -> MASK GEOMETRY CHECK.
+      Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU
+      fire. THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730). IT IS THREE REGIONS
+      AND ONE HOLE. (1) the guard''s ORIGINAL left fist at the harness strap, grown 14 px -- the pass
+      DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored wrist (622,668),
+      24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the copied fist at
+      the board''s top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the copied fist''s
+      interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one thing in this
+      rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region does NOT
+      reach the guard''s FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140), or the
+      guard''s pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor''s K12
+      and all three pass -- and that there is a clearly BLACK island inside the white rim at the board''s
+      top edge. If that island is missing the digits are unprotected and this job must stop here at $0.)'
+    - 'step s20260820 --note (ONE SAMPLE, ONE SEED, ONE VARIABLE. Every sampler number is the sapcomp
+      parent''s, unchanged: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, seed 20260820, animagine-xl-3.1
+      base weights in the SDXL inpaint pipeline, and the prompt and negative byte-for-byte (the negative
+      is 72 of 77 CLIP tokens; a single added word silently drops the tail). THE ONE VARIABLE IS THE INIT:
+      the taller-than-canon composite replaces the canon-height one. 0.30 runs int(40 * 0.30) = 12 of
+      40 denoising steps from a latent that still carries the drawn structure, which is the setting that
+      converted the parent''s flat vector plant into the frame''s own line quality. WHETHER IT DOES THE
+      SAME OVER TWICE THE AREA, AGAINST SKY AND BACKGROUND FOLIAGE RATHER THAN GRASS, IS THE WHOLE QUESTION
+      AND IT IS NOT ASSUMED. This is card evidence for /review/ep2-b13-shade-0820. It is not a cut init,
+      it is not a pick, and passing a bar is not a licence to enter a cut. -> MASK GEOMETRY CHECK. Writes
+      the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire.
+      THIS MASK IS 18408 px, 1.82 percent of the frame, bbox (548,518)-(691,730). IT IS THREE REGIONS
+      AND ONE HOLE. (1) the guard''s ORIGINAL left fist at the harness strap, grown 14 px -- the pass
+      DELETES it; (2) the forearm corridor from the authored elbow (627,580) to the authored wrist (622,668),
+      24 px half-width -- the pass DRAWS an arm through it; (3) a 12 px rim around the copied fist at
+      the board''s top edge -- the pass draws CONTACT and occlusion there. THE HOLE is the copied fist''s
+      interior, 2852 px, held OUT of the mask so its drawn digits survive: they are the one thing in this
+      rung that must not be re-invented. WHAT TO CHECK ON THE DRY PNG: that the white region does NOT
+      reach the guard''s FACE (box x 531..601 y 355..420), the goblin (x 60..260 y 430..1140), or the
+      guard''s pointing hand (x 255..360 y 640..730) -- all three are asserted by the compositor''s K12
+      and all three pass -- and that there is a clearly BLACK island inside the white rim at the board''s
+      top edge. If that island is missing the digits are unprotected and this job must stop here at $0.)'
+    argv:--seed:
+    - step dry --seed (20260820 -> 20260820)
+    - step s20260820 --seed (20260820 -> 20260820)
+    argv:--strength:
+    - step dry --strength (0.30 -> 0.99)
+    - step s20260820 --strength (0.30 -> 0.99)
+    key:beat:
+    - key beat = 8
+    key:est_minutes:
+    - key est_minutes = 7
+    key:priority:
+    - key priority = 34
+    key:script_authority:
+    - 'key script_authority = "Node 002b-first-citizen, approved_by: founder. THIS PRODUCES A PLATE, NOT
+      AN EPISODE: STEWARDSHIP 6 gates voice, footage and assembly, and a still init for an approved beat
+      is none of those. inpaint_fruit.py writes approved: false and a provisional: block into its own
+      sidecar. Beat 08''s script line is ''lowers the clipboard and points'' and this rung touches only
+      the LOWERING hand -- the pointing arm is outside the mask and byte-restored every step. No authoring
+      call is made here: the hand that grips is the plate''s own drawn fist, translated, so not one digit
+      is invented."'
+    payload:fetch_init.py:
+    - payload fetch_init.py (1846 -> 1975 chars)
+    payload:negative.txt:
+    - payload negative.txt (272 -> 275 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (314 -> 271 chars)
