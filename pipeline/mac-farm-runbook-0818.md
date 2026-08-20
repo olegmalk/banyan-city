@@ -15,7 +15,8 @@ one pass); macbook4 added 2026-08-19:
 | macbook2 | M1 Pro | `READY` | 137.7 s |
 | macbook3 | M1 Pro | `READY` | 137.3 s |
 | macbook4 | M1 Pro, 32 GB | `READY` (2026-08-19) | 139.6 s |
-| macbook5 | M1 Pro | not checked | **no python3** — Xcode CLT never installed |
+| macbook5 | M1 Pro, macOS 26.4 | provisioning 2026-08-20 | see "Onboarding 5 and 6" |
+| macbook6 | M1 Pro, macOS 26.6.1 | provisioning 2026-08-20 | see "Onboarding 5 and 6" |
 | rtx5070  | — | — | 192.168.3.153 times out |
 
 **macbook4, onboarded 2026-08-19.** It needed no provisioning: the venv
@@ -41,7 +42,88 @@ Three beats finished in ~2.3 min wall clock against ~5.7 min if they had been
 queued one after another on one machine. That ratio is the whole argument for
 using them.
 
+## Onboarding 5 and 6 — what a Mac that was NEVER provisioned costs
+
+macbook4's bring-up was three commands because its venv and its 6.5 GB cache
+were already on disk. macbook5 and macbook6 (2026-08-20) were bare, and a bare
+Mac is a **five**-part job, not a three-part one. In order, with the traps:
+
+**1. Xcode CLT, headless.** Neither had `python3` at all. The GUI-less install
+works and needs no keyboard:
+
+    ssh <host> 'touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress'
+    ssh <host> 'softwareupdate -l'          # read the exact label
+    # then, DETACHED -- it runs 20-60 min and an ssh session that drops kills it:
+    ssh <host> "cat > /tmp/clt.sh <<'EOS'
+    touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    printf '%s\n' '<sudo-pw>' | sudo -S -p '' softwareupdate -i '<label>' --verbose
+    rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    echo DONE
+    EOS
+    chmod +x /tmp/clt.sh; nohup caffeinate -dimsu /tmp/clt.sh > /tmp/clt.log 2>&1 &"
+
+Both machines offered `Command Line Tools for Xcode 26.6-26.6`. Verify with
+`python3 --version` (3.9.6) and `xcode-select -p`. The touch file is what makes
+`softwareupdate` list CLT at all; remove it after or the machine keeps thinking
+an install is pending.
+
+**2. CLT python is NOT the render python.** `/usr/bin/python3` is 3.9.6.
+macbook4's venv is **uv-managed CPython 3.11.16** — `pyvenv.cfg` says
+`uv = 0.12.5`, `home = ~/.local/share/uv/python/cpython-3.11-macos-aarch64-none`.
+There is no `pip` module in that venv; `pip freeze` returns
+`No module named pip` and reads as an empty venv when it is nothing of the kind.
+Enumerate it with `importlib.metadata` instead. CLT is still needed — `python3`
+is what starts `mac_worker` and `mac_preflight` — but torch never touches it.
+
+**3. The 31-package lockfile.** Copy macbook4's exact versions, not "latest":
+torch 2.13.0, diffusers 0.29.2, transformers 4.44.2, accelerate 0.33.0,
+tokenizers 0.19.1, numpy 1.26.4, safetensors 0.8.0, pillow 12.3.0.
+
+    ssh <host> 'curl -LsSf https://astral.sh/uv/install.sh | sh'
+    ssh <host> 'uv venv --python 3.11 ~/banyan-farm-<host>/venv'
+    ssh <host> 'uv pip install --python ~/banyan-farm-<host>/venv/bin/python3 -r /tmp/reqs.txt'
+
+**`export UV_HTTP_TIMEOUT=600` OR THIS STEP LIES TO YOU.** uv's default HTTP
+timeout is 30 s. On the farm's link that is not enough for the transformers
+wheel, and the failure mode is the dangerous kind: `uv pip install` exits 1
+with `Failed to download distribution due to network timeout`, but the venv
+directory and its `bin/python3` **still exist**, so every `test -x` and every
+`--version` check passes on a venv with no torch in it. Gate on
+`python3 -c 'import torch, diffusers, transformers'`, never on the path.
+Wrap the install in a retry loop as well; one uv installer download died with
+`curl: (35) Recv failure` purely from link contention.
+
+**4. The 6.5 GB HF cache comes over the LAN, never from the internet.** It is
+`models--cagliostrolab--animagine-xl-3.1` (unet 5.1 GB, text_encoder_2 1.39 GB,
+vae 246 MB, text_encoder 167 MB — no fat to trim) plus
+`models--openai--clip-vit-large-patch14` (3.6 MB):
+
+    rsync -a ~/.cache/huggingface/hub/models--cagliostrolab--animagine-xl-3.1 \
+             ~/.cache/huggingface/hub/models--openai--clip-vit-large-patch14 \
+             <host>:~/.cache/huggingface/hub/
+    rsync -a ~/.cache/huggingface/version.txt \
+             ~/.cache/huggingface/version_diffusers_cache.txt <host>:~/.cache/huggingface/
+
+**Budget hours, and do not run two of these at once.** Measured 2026-08-20:
+**every Mac in the farm is associated to 2.4 GHz 802.11n, channel 6, 20 MHz** —
+1-4 included — and the whole farm shares that one medium. Two parallel cache
+copies plus a CLT download measured **887 KB/s and 546 KB/s**, i.e. ~1.4 MB/s
+aggregate, so 13 GB of provisioning is a ~2.5 hour physical dependency. The
+machines are all a/b/g/n/**ax** capable and 5 GHz APs are visible to them, so
+the ceiling is an association choice, not hardware — but re-homing a headless
+Mac's Wi-Fi over its own ssh session risks losing the machine to a room nobody
+is in, so it was not attempted. Serialize instead: `kill -STOP` the second
+rsync while the first machine's toolchain lands, `kill -CONT` it after.
+
+**5. `HOSTS` in `mac_enqueue.py` AND `~/.ssh/config`.** The registration step
+is two files, not one: `mac_enqueue` ssh's by the *short* name, so a host that
+is only reachable as `macbook6s-macbook-pro.local` is invisible to it. macbook6
+had no `~/.ssh/config` alias at all.
+
 ## Bring-up, per Mac — three commands, no clone
+
+*(this is the macbook4 path — a machine that already has venv + cache; a bare
+Mac needs the five steps above first)*
 
 **Do not `git clone`.** The repo now carries 38 mp4s and hundreds of frames;
 a `--depth 50` clone was still running when two separate attempts were killed.

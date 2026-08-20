@@ -31,7 +31,10 @@ import subprocess
 import sys
 import time
 
-HOSTS = ("macbook1", "macbook2", "macbook3", "macbook4")
+HOSTS = ("macbook1", "macbook2", "macbook3", "macbook4", "macbook5", "macbook6")
+# Adding a host here is HALF the job -- it must also be an ssh alias in
+# ~/.ssh/config (this file ssh's by the short name, not the .local hostname)
+# and it must have ~/banyan-farm-<host>/venv. macbook5/6 joined 2026-08-20.
 # Beats plate_scratch.py carries an inline prompt for. Read from the file rather
 # than duplicated, so adding a beat there does not silently fail here.
 PLATE_SCRIPT = "~/banyan-city/pipeline/plate_scratch.py"
