@@ -720,30 +720,116 @@ beats:
       ONE OPEN QUESTION AND IT IS R4: the leaf that tilts is not the leaf in
       the plate. Silent by design.
 
+# ---------------------------------------------------- the goblin design audit --
+#
+# EVERY BEAT OF THIS CUT, LOOKED AT, AGAINST THE B TILE. Run 2026-08-20 night by
+# the goblin-design audit lane after the founder's correction ("all of the goblin
+# clips today has had him as an adult. very bad character consistency"). Method:
+# one frame pulled at f060 from each source mp4 at native 704x1280 and read at
+# 1:1 beside review/ep2-goblin-design-0819/adult-b19-0819.jpg. NOT from the 240px
+# proof thumbnails, which is how the two beats below got missed the first time.
+#
+# THE HEADLINE, AND IT IS A COUNTING ERROR NOBODY HAS CAUGHT UNTIL TONIGHT:
+# THE GOBLIN IS IN ELEVEN BEATS OF THIS CUT, NOT NINE. The 08-19 split sheet
+# (`the-split-0819c.jpg`, "nine frames from the cut") and every record built on
+# it — including canon.yaml's own list of beats to re-render — enumerate 03, 04,
+# 07, 08, 13, 14, 17, 19, 20 and omit BEAT 02 and BEAT 15. The sheet was built
+# from the beats someone remembered as goblin beats rather than from the cut, so
+# the two beats nobody thought of are the two the design ruling never reached.
+# They are also, awkwardly, the best and the worst frames in the whole set.
+goblin_design_audit_0820:
+  method: >-
+    f060 of each source mp4 at 704x1280, read at 1:1 against the B tile. Ten tile
+    attributes (blank white slit eyes / no nose bridge / one lipless line / short
+    low flange ears / dome with no neck / two-tone chartreuse-over-green /
+    no age modelling / small folded stance / purple cowl / patchwork cloak).
+    Nothing here is a taste verdict — it is a comparison against a picture the
+    founder ruled, and every row says what is visibly different.
+  counts:
+    beats_in_cut: 21
+    goblin_present: 11
+    tile_faithful: 2
+    near_tile_one_named_break: 1
+    man_read: 5
+    child_read: 2
+    unjudgeable_face_not_visible: 1
+    no_goblin: 10
+  the_two_that_were_never_audited:
+    beat_02: >-
+      THE WORST IDENTITY BREAK IN THE CUT AND IT IS NOT AN AGE PROBLEM. He is not
+      green. The figure is bone-grey/white with a huge round cranium, low pointed
+      ears, closed eyes, a chubby child body, grey shirt and shorts, barefoot. So
+      beat 02 breaks the tile on SPECIES COLOUR and on BUILD at once, and it has
+      never appeared on a design sheet, in the split, or in the re-render list.
+      Its ship_status has read "UNJUDGED — no bar has ever been answered" since
+      08-17 and that is exactly why: nobody looked.
+    beat_15: >-
+      THE SECOND-BEST TILE MATCH IN THE CUT, and it was not on the sheet either.
+      Blank white eyes with no iris, no nose bridge, one lipless line, big
+      chartreuse dome grading to deeper green, seated small and folded, BAREFOOT
+      (which matches the steward lower-half pick). Its named break is COSTUME —
+      a plaid blanket-cloak, no purple cowl — not anatomy. Whatever produced this
+      frame is closer to the answer than anything in the re-render wave.
+  beats:
+    1:  {goblin: false, read: '-', note: fig and grass only}
+    2:  {goblin: true,  read: CHILD (AND GREY), tile_breaks: 'not green at all; round child cranium and body; no cloak', in_08_19_split: false}
+    3:  {goblin: true,  read: ADULT MAN, tile_breaks: 'human nose with nostrils; rounded human ear; nasolabial folds; flat olive not two-tone', in_08_19_split: true}
+    4:  {goblin: true,  read: ADULT MAN, tile_breaks: 'iris and pupil in a human eye; full human nose; long swept-back elf spikes; brow furrows and cheekbones', in_08_19_split: true, note: 'the tightest crop in the cut and the worst offender - see the framing finding'}
+    5:  {goblin: false, read: '-', note: two guards}
+    6:  {goblin: false, read: '-', note: one guard with the board}
+    7:  {goblin: true,  read: ADULT MAN, tile_breaks: 'WHITE HAIR ON A CHARACTER WHOSE CANON IS BALD; the guard round spectacles; human nose; adult male height beside the guard', in_08_19_split: true, note: 'listed as an ADULT-B beat on 08-19, i.e. as one of the four that were RIGHT. It is not. Bald is canon and this frame has hair.'}
+    8:  {goblin: true,  read: CHILD, tile_breaks: 'small body, big head, closed sad eyes, buttoned coat; the pre-ruling round one', in_08_19_split: true}
+    9:  {goblin: false, read: '-', note: guard close-up}
+    10: {goblin: false, read: '-', note: two guards and the board}
+    11: {goblin: false, read: '-', note: two guards walking away}
+    12: {goblin: false, read: '-', note: sapling and cloud}
+    13: {goblin: true,  read: ADULT MAN, tile_breaks: 'human eye and lid; human nose; small human ear; lined male face; normal head-to-shoulder ratio', in_08_19_split: true, note: 'THIS IS THE FRAME HE RULED ON: "this is one of the images where the goblin looks like an adult, which is wrong."'}
+    14: {goblin: true,  read: NEAR TILE - ONE NAMED BREAK, tile_breaks: 'LONG TAPERING ELF SPIKES where the tile has short low flanges; red-and-white striped scarf, no purple cowl', in_08_19_split: true, note: 'eyes, dome, two-tone skin and folded stance all match the tile. The ears are the whole gap.'}
+    15: {goblin: true,  read: TILE-FAITHFUL, tile_breaks: 'costume only - plaid blanket-cloak, no purple cowl', in_08_19_split: false}
+    16: {goblin: false, read: '-', note: SLATE, no footage}
+    17: {goblin: true,  read: UNJUDGEABLE - BACK VIEW, tile_breaks: 'face not visible; legs render blue-teal rather than green', in_08_19_split: true, note: 'barefoot, which matches the steward lower-half pick. Silhouette is tile-compatible; no face claim can be made from this frame either way.'}
+    18: {goblin: false, read: '-', note: the fig alone}
+    19: {goblin: true,  read: TILE-FAITHFUL - IT IS THE TILE, tile_breaks: none, in_08_19_split: true, note: '19-the-drop-dropcomp-0819.mp4 is a deterministic composite over b19-sapgloss-s20260819.png, which IS adult-b19-0819.jpg. This beat is not LIKE the tile, it is the tile with the fig moved.'}
+    20: {goblin: true,  read: OLD MAN, tile_breaks: 'wrinkled forehead and jowls; heavy human nose; ear with no point at all; pupils', in_08_19_split: true, note: 'the 08-18 result "the adult goblin draws, the chibi child is gone" was recorded as a FIX. Measured against the tile it is a different failure, not a repair.'}
+    21: {goblin: false, read: '-', note: one leaf against the sky}
+  what_this_changes_in_the_re_render_wave: >-
+    canon.yaml's 08-19 list said "beats 03, 04, 08, 13 and 20" need re-rendering.
+    On this audit the wave is SEVEN beats, not five: add 02 (grey child, never
+    audited) and 07 (white hair on a bald character, wrongly filed as one of the
+    four that were right). Beats 15 and 19 come OUT of any wave — they are the
+    reference. Beat 14 needs one attribute changed, the ears, not a re-render.
+    Beat 17 needs nothing until a frame shows his face.
+  nothing_here_moves_a_frame_before_the_cutoff: >-
+    This is an audit, not a swap. No beat below changes in the 2026-08-21 cut:
+    every re-render it names is a post-ship patch, and the two beats it newly
+    condemns (02, 07) have no candidate to swap to. It is filed now because the
+    wave that follows the ship is authored off this table, and because two of
+    eleven goblin beats were invisible to every previous record.
+
 # One word per beat for the founder-facing table, so the page renders the
 # manifest instead of a second opinion about it. `class` drives the colour
 # only: fail = red, warn = amber, pass = green, new = blue.
 ship_status:
   1:  {word: "7 OF 8, ONE BAND",   class: warn, of: G5a — the grass floor still moves with the fig}
-  2:  {word: UNJUDGED,             class: warn, of: no bar has ever been answered}
-  3:  {word: FAIL NAMED,           class: fail, of: H1 — 0.79 s freeze at the tail}
+  2:  {word: FAIL NAMED,           class: fail, of: "HE IS GREY, NOT GREEN, AND A CHILD - and no bar was ever answered"}
+  3:  {word: FAIL NAMED,           class: fail, of: "H1 - 0.79 s freeze at the tail; and he reads as an adult man"}
   4:  {word: FAIL NAMED,           class: fail, of: "the glance is a head turn, not the pupils; and he reads as an adult man"}
   5:  {word: FAIL NAMED,           class: fail, of: 4 of 7 clauses + a frozen cast ruling}
   6:  {word: FAIL NAMED,           class: fail, of: the bark board is the wrong size}
-  7:  {word: "PASS, PLATE FAULT",  class: warn, of: scavenger dressed as a second official}
-  8:  {word: UNJUDGED,             class: warn, of: "two green figures, identity open"}
+  7:  {word: "PASS, DESIGN FAIL",  class: fail, of: "scavenger dressed as a second official; AND THE GOBLIN HAS WHITE HAIR on a character whose canon is bald"}
+  8:  {word: UNJUDGED,             class: warn, of: "two green figures, identity open; and he reads as a child"}
   9:  {word: SHIP-MODE ENTRY,      class: new,  of: 4/4 on its bar — VETO-ABLE ON WATCH}
   10: {word: FAIL NAMED,           class: fail, of: the board faces the camera}
   11: {word: NO STANDING VERDICT,  class: fail, of: an earlier pass was retired}
   12: {word: UNJUDGED,             class: warn, of: colour shifts warm-to-cool}
   13: {word: FAIL NAMED,           class: fail, of: "no shade reaches his eyes; and this is the frame you called an adult, which is wrong"}
   14: {word: FAIL NAMED,           class: fail, of: M2 and M3}
-  15: {word: PASS BUT S3,          class: warn, of: 3-frame freeze; face 160 px from the leaves}
+  15: {word: PASS BUT S3,          class: warn, of: "3-frame freeze; face 160 px from the leaves. DESIGN: the second-best tile match in the cut"}
   16: {word: SLATE,                class: fail, of: the only footage is the leaf you ruled out}
   17: {word: PASS,                 class: pass, of: two costs no clause covers; script line unread}
   18: {word: PASS,                 class: pass, of: 5.9 s held frame — the longest in the cut}
   19: {word: "8/8, ONE UNASKED",   class: warn, of: he does not notice}
-  20: {word: NOT A PASS,           class: fail, of: never looks up; wrong tree; darkens}
+  20: {word: NOT A PASS,           class: fail, of: "never looks up; wrong tree; darkens; and he reads as an OLD MAN"}
   21: {word: PASS,                 class: pass, of: the leaf that tilts is not the leaf in the plate}
 
 # ---------------------------------------------------------------- the audio --
