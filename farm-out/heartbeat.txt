@@ -3370,3 +3370,5 @@
 20:21:08Z FAIL task=ep2-b16-sapcomp-0820-1787257235 rc=3 step=dry
 20:27:03Z STARTED task=ep2-jerry-face-h1-0821-1787257549 attempt=1 on box-runner
 20:27:27Z DONE task=ep2-jerry-face-h1-0821-1787257549 rc=0 artifacts=1
+20:27:37Z STARTED task=ep2-jerry-face-h2-0821-1787257552 attempt=1 on box-runner
+20:28:01Z DONE task=ep2-jerry-face-h2-0821-1787257552 rc=0 artifacts=1
