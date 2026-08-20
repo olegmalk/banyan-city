@@ -474,3 +474,76 @@ what_this_licenses_after_the_instrument_rung: 'THE RING-GEOMETRY ROUTE IS CLOSED
 
   STILL NOT LICENSED: choosing an encode. The sweep above makes crf 18 and 23 look free and they are
   not; it is the same move as picking the instrument, and it is named here twice for that reason.'
+
+# --- appended 2026-08-20 by the beat-01 composite lane, BEFORE the chromaticity build exists.
+#     Written first on purpose: the cost of this rung is fixed here, with the pre-flight numbers
+#     already measured, so that neither a pass nor a fail can be re-described after the pixels.
+bar_chromaticity_rung_PRE_REGISTERED_0820:
+  the_one_variable: The single scalar ring gain becomes THREE per-channel ring gains (median held /
+    median grow, per channel, over the same ring, same clamp). Nothing else changes -- same matte, same
+    dilation, same feather, same ingredients at the same shas, same encode.
+  why_this_and_not_the_ring: 'Measured on 2026-08-20: excluding the blend zone moved f001 by 0.017 the
+    WRONG way and cost ten live frames, so ring geometry is closed. Both ingredients clear the same
+    gate at the same frame on their own pixels (grow 2.27, held 2.90) and only the composite sits on
+    it. The gain match is multiplicative by design and therefore leaves chromaticity untouched, so any
+    colour-balance offset between the two renders is carried straight into the statistic the gate
+    reads. This rung removes that offset. It is a PICTURE change, not an instrument change.'
+  all_eight_scored_clauses: Carried unchanged from this spec's `bar`, conjunctive. Not one threshold is
+    relaxed.
+  G2_ABSOLUTE_carried_unchanged: fig hue 270-320 deg and saturation >= 0.60 at a LIVE final frame,
+    scored exactly as every earlier beat-01 verdict scored it -- median RGB of the detector's own mask,
+    converted to HSV.
+  G2_DELTA_THE_PRE_REGISTERED_COST:
+    reference: 'the luma-only build, measured on its encoded clip: hue 294.4 deg, saturation 0.789.'
+    bound: '|delta hue| <= 12.0 deg AND delta saturation >= -0.10. BOTH must hold, AND the absolute
+      clause above must also hold. Either one failing fails the rung.'
+    why_these_numbers_and_not_others: 'Set from the clause''s own geometry, not from what the build is
+      expected to produce. The G2 hue window is 50 deg wide and the control sits at 294.4, essentially
+      its centre, so a 12.0 deg bound still leaves at least 12 deg of window at the bound -- the
+      surviving margin is no smaller than the bound itself, so a pass AT the bound is not luck. Same
+      construction on saturation: the floor is 0.60, the control is 0.789, and a 0.10 bound leaves
+      0.089 -- again margin >= bound. A looser bound would let the rung pass G2 on fumes while claiming
+      it kept it.'
+  LEAK_CHECK_the_matcher_must_not_reach_outside_the_matte:
+    rule: the four field bands' median hue and saturation must match the luma-only control to within
+      0.5 deg and 0.005. The per-channel gain is applied inside the feathered matte only; anything
+      moving out in the field is a bug, not a result.
+    control_f000: {shaft: [11.79, 0.5333], sapling: [18.0, 0.7097], fig_box: [24.73, 0.7048],
+      grass: [26.0, 0.4688]}
+    control_f120: {shaft: [10.43, 0.4792], sapling: [18.6, 0.6803], fig_box: [21.64, 0.6321],
+      grass: [25.38, 0.4062]}
+  G1_SCORABILITY_OPERATIONALISED: 'THE CLAUSE THIS RUNG EXISTS FOR, and it is defined here so it cannot
+    be argued afterwards. G1 counts as SCORABLE only if the live/dead answer is IDENTICAL for every
+    frame across the whole encode sweep -- PNG, libx264 crf 0, 10, 14, 18 and 23. If f001 (or any
+    frame) still flips with the CRF, G1 is VOID again and THE RUNG HAS FAILED, whatever else improved.
+    Choosing an encode remains unlicensed and this clause is the reason it cannot be smuggled in.'
+  the_verdict_rule_stated_in_advance: A rung that buys G1 by spending G2 has bought nothing. PASS
+    requires G1 scorable AND passing AND G2 within both the absolute clause and the delta bound. Any
+    other outcome is a FAIL, and per the session coordinator's standing instruction a FAIL CLOSES THE
+    COMPOSITE ROUTE for beat 01 -- no third instrument-adjacent rung.
+  pre_flight_measured_before_the_build:
+    per_channel_ring_gains_this_rung_would_apply:
+      f000: [1.0096, 1.0082, 0.9846]
+      f001: [1.0144, 1.0081, 1.0]
+      f060: [0.9895, 1.0, 0.9552]
+      f090: [1.071, 1.0636, 1.0]
+      f120: [1.1462, 1.0849, 0.9839]
+    channel_spread: 'f001 0.0144, f060 0.0448, f090 0.0710, f120 0.1623 -- the correction is SMALLEST
+      exactly where the problem is and LARGEST exactly where G2 is scored.'
+  failure_predicted_in_advance: 'F1 IS THE LIKELIEST AND THE PRE-FLIGHT NUMBERS SAY SO OUT LOUD. At
+    f001 the per-channel spread is 0.0144 -- a 1.4% differential -- while the separability gap to close
+    is 1.76 to 2.00, or 14%. The correction is an order of magnitude too small to move the frame the
+    rung exists to fix. Meanwhile at f120 the spread is 0.1623, so it WILL move the end state, which is
+    where G2 is scored. The predicted shape is therefore: costs G2 margin, buys nothing on G1 -- the
+    exact trade this spec has already said is worth nothing. It is written here BEFORE the build so
+    that if it fires, it reads as a test that was worth running once and is now closed, and not as a
+    surprise.'
+  pre_registered_fail_modes:
+    F1_spends_G2_and_buys_no_G1: The likeliest, for the reason above. Rung FAILS and the composite route
+      closes for this beat.
+    F2_moves_f001_at_some_encodes_but_not_all: G1 still VOID by the scorability rule. FAILS.
+    F3_it_works: G1 identical across the whole encode sweep and passing, G2 inside both bounds. Then the
+      composite is proposed as a VETO-ABLE STEWARD SWAP with pixels, on the full comparison.
+    F4_it_moves_the_growth_arc: the recoloured fig segments differently and total growth, the f90% frame
+      or the max single-frame step shift. Scored as G1/G4 failures on their own terms, not excused.
+  cost: $0, no GPU, ~1 minute of a Mac.
