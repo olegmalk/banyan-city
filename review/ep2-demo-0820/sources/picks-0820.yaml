@@ -6,37 +6,162 @@
 #   carry-forward    — the 0819c pick, kept because nothing newer earned the slot
 #   slate            — no footage that a verdict lets into a cut
 #
-# THIS CUT CHANGES NO PICK. Every one of the eighteen footage beats is the same
-# file at the same sha as 0819c — verified, not asserted: all 18 mp4 and all 18
-# sidecars were hashed against review/ep2-demo-0819c/sources/ and 36 of 36 match.
-# Beat 16 stays a slate per the founder's 2026-08-16 ruling; beat 19's fall stays
-# best-available on a steward ruling. No verdict has landed since 0819c that
-# moves any slot.
+# REVISED 2026-08-20 (revision b, in place — same path, same URL, NEW BYTES).
+# TWO PICKS MOVED AND THEY ARE THE FIRST PICKS THIS CUT HAS MADE. Everything
+# below the `revision_b` block still describes the first assembly and is left
+# standing, because the sixteen beats it describes did not move.
 #
-# WHAT IS DIFFERENT IS THE TWO THINGS THAT WERE FINISHED AND NEVER SHIPPED:
+#   BEAT 03 — the chibi CHILD holding a leafy TREE is out of the cut. It had
+#     ridden five consecutive assemblies. Replaced by ep2-b03-covermid-0820's
+#     take, which is an ADULT goblin (the founder's ratified design) crouching
+#     behind a two-leaf seedling on a composite plate.
+#   BEAT 15 — NO LONGER A SLATE. ep2-b15-listenmid-s2-0820's take is the beat's
+#     first footage in any cut. Steward pick between two passing clips at two
+#     seeds; ratified by the coordinator; R4 VETO-ABLE IN ONE LINE.
 #
-#   1. THE VOICES. Six re-voiced guard takes (beats 05-10) enacting the founder's
-#      2026-08-19 "B" ruling. GUARD 2 was 1.7 Hz from the sapling in 0819c — the
-#      defect he heard while watching it. Provenance: sources/guards-revoice-0819.yaml.
-#   2. THE PALINDROME FIX. render_t3's fill branch (af863c0b) now HOLDS the last
-#      frame instead of playing the clip forwards-then-backwards. 0819c played
-#      eight of its eighteen footage beats partly in reverse and printed nothing
-#      while doing it. This is that commit's first published use.
+# Three slates became two. Nineteen footage beats, the most this episode has had.
 #
-# Both were on disk and unpublished at the close of 08-19. Neither needed a
-# founder gate, a GPU or a dollar.
+# THE ORIGINAL 0820 HEADER FOLLOWS AND ITS FIRST SENTENCE IS NOW FALSE. It is
+# kept rather than rewritten so the two assemblies can be told apart:
+#
+# > THIS CUT CHANGES NO PICK. Every one of the eighteen footage beats is the same
+# > file at the same sha as 0819c — verified, not asserted: all 18 mp4 and all 18
+# > sidecars were hashed against review/ep2-demo-0819c/sources/ and 36 of 36 match.
+# > Beat 16 stays a slate per the founder's 2026-08-16 ruling; beat 19's fall stays
+# > best-available on a steward ruling. No verdict has landed since 0819c that
+# > moves any slot.
+# >
+# > WHAT IS DIFFERENT IS THE TWO THINGS THAT WERE FINISHED AND NEVER SHIPPED:
+# >
+# >   1. THE VOICES. Six re-voiced guard takes (beats 05-10) enacting the founder's
+# >      2026-08-19 "B" ruling. GUARD 2 was 1.7 Hz from the sapling in 0819c — the
+# >      defect he heard while watching it. Provenance: sources/guards-revoice-0819.yaml.
+# >   2. THE PALINDROME FIX. render_t3's fill branch (af863c0b) now HOLDS the last
+# >      frame instead of playing the clip forwards-then-backwards. 0819c played
+# >      eight of its eighteen footage beats partly in reverse and printed nothing
+# >      while doing it. This is that commit's first published use.
+# >
+# > Both were on disk and unpublished at the close of 08-19. Neither needed a
+# > founder gate, a GPU or a dollar.
+#
+# Both of those are still true of this revision: the voices and the hold fix are
+# untouched, and no VO was re-synthesised.
 
 cut: review/ep2-demo-0820/ep2-demo-0820.mp4
-sha256: b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486
-duration_s: 113.33
+sha256: 2d7533a5676c4f87857fe820e8353f391982ce331a924628a9f10dbbdde66361
+sha256_superseded_in_place: b243dbd79efafd1f051ba7d69896769c0c1fc8190d63b9b2f6d651a3cd965486
+duration_s: 113.84
 size: 720x1280
-footage_beats: 18
-slate_beats: 3
-which_slates: [9, 15, 16]
+footage_beats: 19
+slate_beats: 2
+which_slates: [9, 16]
 supersedes: review/ep2-demo-0819c/ep2-demo-0819c.mp4
 readiness_ledger: review/ep2-picks/cut-readiness-0819.yaml
 cost_usd: 0.0
 gpu_seconds: 0
+
+# ---------------------------------------------------------------------------
+# REVISION B — the two picks, their provenance, and how to veto either one.
+# ---------------------------------------------------------------------------
+revision_b:
+  date: '2026-08-20'
+  by: the composite-plate motion lane, acting on the coordinator's direction
+  cost_usd: 0.0
+  gpu_seconds: 0
+  what_it_cost: one ffmpeg assembly and four local file copies. No render, no
+    voice synthesis, no GPU, no network, no spend.
+  authority: >-
+    BOTH ENTRIES BELOW ARE STEWARD PICKS, NOT TASTE VERDICTS. A steward pick is
+    mechanical selection among takes with a stated reason; taste is R4 and stays
+    R4. Neither clip has been screened by the founder, and putting a clip in a
+    REVIEW cut is how it gets screened — this file is the record of what he is
+    being shown and why, not a claim that he has accepted it. Each pick is
+    veto-able in one line and the line is written out below it.
+  beat_15_pick:
+    take: 15-good-listener-LTX-mid-s20260821-0820.mp4
+    sha256: 3ee36f170386a815a9e3f98c687741099756cd2adaac02f667bd798b9720171c
+    job: pipeline/jobs/ep2-b15-listenmid-s2-0820.yaml
+    decided_by: >-
+      the steward (this lane), 2026-08-20; ratified by the session coordinator.
+      NOT the founder — he has never seen either candidate.
+    the_choice_that_was_open: >-
+      Beat 15 produced TWO passing clips in one evening, at two seeds, off the
+      same recipe. ep2-b15-listenmid-0820 (seed 20260820) leans in and STAYS at
+      the leaves, closer to the script's sustained staging, and pays with a
+      drooped bent leaf pair at f120 and a visible eye that simplifies to a
+      blank almond. ep2-b15-listenmid-s2-0820 (seed 20260821) leans in and comes
+      back out, and keeps the plant and the face clean.
+    why_the_s2_take: >-
+      Three reasons, in order of weight. (1) CLEAN LEAVES. The plant is the
+      thing eight beats of this episode keep getting wrong, and this is the one
+      candidate where f090 and f120 show two clean ovate blades on a straight
+      stem. (2) LIVE EYES. His irises survive to f120 where the sibling's
+      collapse — beat 04 is already in this cut FAILING on exactly that clause,
+      and shipping a second dead-eye beat next to it is a compounding defect.
+      (3) STRONGER MOTION, MEASURED: f009..f084 all-pairs whole-frame interframe
+      0.761 against the sibling's 0.623, mouth band 3.441 against 1.759, against
+      a pre-registered floor of 0.30 / 0.80 calibrated on this beat's own
+      history before either clip existed.
+    what_the_pick_COSTS_and_it_is_named: >-
+      A 3-frame exact freeze at the tail from f118 (the sibling has none), and
+      the sustained lean the script arguably wants. The freeze is 3 frames out
+      of 121 at HOLD strength 0.362 — the loosest reading this beat has ever
+      produced, below the 0.508 the ladder had called the loosest of six. The
+      lean is the one axis on which the sibling is genuinely better and it is a
+      TASTE axis, which is why this pick is veto-able rather than final.
+    the_judder_is_engine_wide_and_matches_the_episode: >-
+      This clip reads judge_clip period 3 / 40 distinct pictures / 8.0 effective
+      fps. So do all six other clips in this family and so does the rest of the
+      episode. The sibling alone read period 2 / 60 / 12.0, and its confirmation
+      seed proved that doubling was THE DRAW and not the recipe. Picking the
+      sibling for its smoothness would have been picking a lottery ticket, and
+      it would have put one beat at twice the temporal resolution of its
+      neighbours.
+    how_to_veto_it_in_one_line: >-
+      "beat 15: use the other seed" — the sibling take is committed at
+      farm-out/ep2-b15-listenmid-0820/15-good-listener-LTX-mid-0820.mp4; copy it
+      into sources/, delete this one, re-run the command in `assembled_by`.
+      Or "beat 15: back to a slate", same procedure with no copy.
+  beat_03_swap:
+    take: 03-bad-cover-LTX-midend-0820.mp4
+    sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
+    job: pipeline/jobs/ep2-b03-covermid-0820.yaml
+    replaces: 03-bad-cover-b03-refire-0814.mp4 (sha 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc)
+    decided_by: >-
+      the founder's ratified adult-goblin design, applied. The DESIGN call is
+      his and is already made; choosing which of two clips enacts it is the
+      mechanical part and that is this lane's.
+    why: >-
+      THE INCUMBENT CONTRADICTS A RATIFIED DESIGN AND ITS OWN NEGATIVE. It is a
+      chibi CHILD in a buttoned shirt — `child, chibi, round head` is in this
+      beat's own negative prompt — holding the trunk of a whole leafy TREE from
+      f018, which is the exact plant miss the composite route was built to
+      close. The replacement is the ratified lean adult goblin crouching behind
+      a two-leaf seedling. It also beats the incumbent on every measurable axis
+      the record holds: 46 dead pairs of 120 against 60 of 96, last live pair
+      f072->f073 against f035->f036, and no assembler hold at all against the
+      incumbent's 0.34 s.
+    what_it_does_NOT_fix_and_this_is_on_the_page: >-
+      The clip's own last stretch is a near-frozen picture. Live content ends at
+      f073 (3.083 s of 5.042 s); judge_clip reads 7 frames EXACTLY duplicated
+      from f114 against its job's bar of "none, or shorter than 6", so the clip
+      FAILS its own pre-registered H1 by one frame. The slot is 5.042 s and the
+      spoken line is 3.982 s, so what the viewer sees under the last second of
+      the line is a held picture that is IN THE FOOTAGE, not an assembler fill —
+      no hold branch fires on this beat, which is itself an improvement on the
+      incumbent. Stated plainly here and on the review page rather than left for
+      him to catch.
+    how_to_veto_it_in_one_line: >-
+      "beat 03: back to the old clip" — it was never deleted; it lives at
+      review/ep2-demo-0819c/sources/03-bad-cover-b03-refire-0814.mp4 and in this
+      repo's history. Copy it in, delete the new one, re-run `assembled_by`.
+  a_seed_re_roll_is_in_flight_on_beat_03: >-
+    ep2-b03-covermid-s2-0820, backlogged 2026-08-20, $0, ~12 minutes: the same
+    prompt, init, sha, anchor and flags at seed 20260821, asking whether the
+    7-frame tail run is the recipe or the draw. Bars carried forward byte-
+    identical. If it clears H1 it takes this slot by the same mechanical rule
+    that put covermid in it, and this file will say so. It is named here so the
+    swap above cannot be read as a claim that beat 03 is finished.
 what_it_cost: >-
   one ffmpeg assembly and twelve local file copies. No render, no voice
   synthesis, no GPU, no network, no spend. Every clip in it was made by another
@@ -264,18 +389,35 @@ beats:
 
   - beat: 3
     slug: BAD COVER
-    take: 03-bad-cover-b03-refire-0814.mp4
-    sha256: 1d3992569bf969757fbd608e9f4f7cf5433e9ec0487403661aa238500795b1bc
-    why: carry-forward
+    take: 03-bad-cover-LTX-midend-0820.mp4
+    sha256: 06446b9e6306a779e0b545748cbf58f5f5fb9697a87b2aa296e5a7440519903e
+    why: new
     verdict_quoted: >-
-      FAIL — "THE COVER ARRIVES MID-CLIP." Frames 000-014 hold him standing in
-      an open field with nothing he could be behind; at f015 a dark rod
-      materialises unattached to the ground and becomes the sapling he is
-      supposed to already be hiding behind.
-    verdict: pipeline/jobs/ep2-b03-refire-0814.yaml verdict / verdict_clauses / verdict_addendum_terminal_freeze_measured_after_the_read
+      FAIL on the clause the rung exists for, and the first real evidence that a
+      MIDDLE placement buys motion the terminal one had killed. The named bar
+      missed by one frame — judge_clip FREEZE reads 7 frames dead from f114
+      against a bar of "none, or shorter than 6" — and the honest reading is
+      worse than the bar and better than the parent at the same time.
+    verdict: pipeline/jobs/ep2-b03-covermid-0820.yaml verdict_0820 / verdict_measured
     detail: >-
-      Unchanged from 0819c. In the cut as best-available with the fault named.
-      Its 0.34s tail is now a hold rather than a reversal.
+      SWAPPED IN REVISION B, 2026-08-20. See `revision_b.beat_03_swap` for the
+      whole warrant. In the cut as best-available with its fault named: it fails
+      its own H1 by one frame and it is still the better clip on every axis the
+      record measures. What it FIXES is not a measurement, it is a
+      contradiction — the clip it replaces is a chibi child holding a leafy
+      tree, both of which the founder's ratified design and this beat's own
+      negative prompt exclude. Passes A1 (plant: one stem, two leaves, rooted,
+      at all five checkpoints), H4 (the cover is comically inadequate, which the
+      beat requires) and H2 on position.
+    the_freeze_the_viewer_will_see: >-
+      NAMED BECAUSE IT IS VISIBLE. Live content ends at f073 — 3.083 s of a
+      5.042 s slot — and the last 47 frames are a held picture, 7 of them
+      byte-identical. The spoken line runs 3.982 s, so roughly the last second
+      of the line plays over a frozen frame. IT IS IN THE FOOTAGE, NOT IN THE
+      ASSEMBLY: the clip is longer than the slot floor so render_t3's
+      hold-last-frame fill never fires on this beat, where the incumbent needed
+      a 0.34 s hold. The untested hypothesis in the record is that the action
+      simply COMPLETES at f073; that is a staging question, not a GPU fire.
 
   - beat: 4
     slug: THE FOOTNOTE
@@ -470,17 +612,38 @@ beats:
 
   - beat: 15
     slug: GOOD LISTENER
-    take: null
-    why: slate
-    verdict_quoted: NO FOOTAGE. No ep2-b15 motion job dated 0817 or later that any verdict lets into a cut.
-    verdict: pipeline/plate_scratch.py REVS[(15,2)] verdict; pipeline/work-ladder-0819.md
+    take: 15-good-listener-LTX-mid-s20260821-0820.mp4
+    sha256: 3ee36f170386a815a9e3f98c687741099756cd2adaac02f667bd798b9720171c
+    why: new
+    verdict_quoted: >-
+      THE RECIPE REPRODUCES AND THE HEADLINE NUMBER DID NOT. S1 passes at a NEW
+      SEED and passes harder than the clip it was filed to confirm — f009..f084
+      all-pairs whole-frame interframe 0.761 against rung 5's 0.623 and rung 2's
+      0.079, mouth band 3.441 against 1.759 and 0.200 — so the middle placement
+      buys MOTION and that is a property of the recipe, not of one draw. It
+      fails S3's freeze clause by 3 frames.
+    verdict: pipeline/jobs/ep2-b15-listenmid-s2-0820.yaml verdict_0820 / verdict_measured
     detail: >-
-      Unchanged, and still the ONLY slate in this cut where nothing whatever
-      exists to consider. What is left is THE LEAF COUNT: done_when needs him and
-      the sapling in one frame and the growth ladder allows exactly two
-      cotyledons; the wording ladder is CLOSED at two rungs with the count still
-      wrong. Named route is a composite init — the same instrument beat 19 used,
-      which worked.
+      THE SLATE IS CLOSED. This is beat 15's first footage in any cut, and the
+      first clip in seven rungs where he tips his head down and over until his
+      face is AT the two leaves — which is what node.md:98 says the beat IS.
+      Passes S1, S2 (goblin in all 121 frames on a 121-tile sheet; plant one
+      stem, two rooted leaves, no hand on it), S4 and S5. Fails S3's freeze
+      clause by 3 frames from f118 at HOLD 0.362, the loosest reading this beat
+      has produced. Steward pick between two passing seeds — the warrant, the
+      cost and the one-line veto are in `revision_b.beat_15_pick`.
+    the_leaf_count_route_that_was_blocking_it: >-
+      CLOSED BY THE COMPOSITE INIT, which is what the record named. The wording
+      ladder had been shut at two rungs with the count still wrong; the
+      composite plate put a two-cotyledon sapling at canon scale in the frame
+      and the motion rungs then had to be taught not to break it. Two of them
+      did break it — rung 2 lost the plant to one phrase and rung 3 lost the
+      goblin to one noun — and neither loss returns at this seed, so those were
+      the WORDS and not the draw.
+    the_gap_this_clip_does_not_close: >-
+      The plate puts his face roughly 160 px from the leaves where the script
+      says "a hand's width". That is a PLATE property, it belongs to the plate
+      lane, and no motion rung can buy it. Named, not fixed.
     a_defect_carried_forward_unfixed: >-
       review/ep2-picks/b15-0819-verdict.yaml DOES NOT PARSE — line 59 carries an
       unquoted mapping-shaped fragment inside a plain scalar, so yaml.safe_load
@@ -678,11 +841,29 @@ known_issues_carried_forward:
     depends on it.
 
 what_this_assembly_did_not_do:
+  # REVISION B AMENDS THE FIRST BULLET AND NOTHING ELSE. Two picks were written
+  # (beats 03 and 15), both steward picks with their warrants and their vetoes
+  # in `revision_b`. It is still a bench assembly via --out: no leaf, nothing in
+  # lineage.yaml, no plate_ack, and review/inbox.yaml gained one beat-13 entry
+  # that is a founder QUESTION, not a pick.
   - No pick was written, changed or promoted. Bench assembly via --out: no leaf, nothing in lineage.yaml, no plate_ack.
   - No render, no voice synthesis, no GPU, no network, no spend. $0.
   - No script text was touched. The re-voice is a re-synthesis of lines the founder had already read and approved (the ruled-legal class, 003b precedent); §6 is satisfied and render_t3's gate was passed, not bypassed.
   - No verdict was authored, edited or reinterpreted. Every verdict_quoted above is 0819c's, carried forward verbatim.
   - review/inbox.yaml was not touched.
+
+assembled_by_revision_b: >-
+  pipeline/render_t3.py in bench mode on 2026-08-20, the SAME invocation as
+  below, after four copies into sources/ and one deletion out of it:
+  `python3 pipeline/render_t3.py sapling 002b --clips review/ep2-demo-0820/sources
+  --out review/ep2-demo-0820/ep2-demo-0820.mp4`. THE DELETION MATTERS: get_clip()
+  globs `NN-*.mp4` and takes the sorted first, so leaving the old beat 03 file in
+  the directory beside the new one would have been a coin flip on filename
+  ordering rather than a swap. The old file was removed from the directory and
+  from the index; it survives in review/ep2-demo-0819c/sources/ and in history.
+  No NN-vo.mp3 was copied because both beats already had theirs in the directory
+  — beat 15's has been sitting there through three cuts, playing over a slate
+  card. Output: 21 beats, 19 footage, 2 slate, 113.84 s.
 
 assembled_by: >-
   pipeline/render_t3.py in bench mode on 2026-08-19, invoked as:

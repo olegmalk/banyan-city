@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1523,
+ "commits_in_window": 1611,
  "covers_window": true,
  "cut": "ep2-demo-0820",
  "cut_files": [
@@ -9,12 +9,13 @@
   "review/ep2-demo-0818/ep2-demo-0818.mp4",
   "review/ep2-demo-0819/ep2-demo-0819.mp4",
   "review/ep2-demo-0819b/ep2-demo-0819b.mp4",
-  "review/ep2-demo-0819c/ep2-demo-0819c.mp4"
+  "review/ep2-demo-0819c/ep2-demo-0819c.mp4",
+  "review/ep2-demo-0820/ep2-demo-0820.mp4"
  ],
- "cuts_shipped": 7,
- "generated": "2026-08-19",
+ "cuts_shipped": 8,
+ "generated": "2026-08-20",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "5d7dd9267",
+ "head": "ce6aefbc0",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -46,9 +47,9 @@
    "sha": "da953466",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b03-refire-0814.yaml": {
-   "date": "2026-08-19",
-   "sha": "f190b5ae",
+  "pipeline/jobs/ep2-b03-covermid-0820.yaml": {
+   "date": "2026-08-20",
+   "sha": "7dae6314",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b04-refire-0814.yaml": {
@@ -96,6 +97,11 @@
    "sha": "fea977d9",
    "what": "last commit that touched the spec"
   },
+  "pipeline/jobs/ep2-b15-listenmid-s2-0820.yaml": {
+   "date": "2026-08-20",
+   "sha": "225bc8db",
+   "what": "last commit that touched the spec"
+  },
   "pipeline/jobs/ep2-b16-anim-0814.yaml": {
    "date": "2026-08-19",
    "sha": "f2790402",
@@ -117,9 +123,9 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "fc9f0529",
- "resolved_blocks_added": 85,
+ "range_base": "6fd79ce4",
+ "resolved_blocks_added": 86,
  "shallow": true,
- "verdict_lines_added": 231,
+ "verdict_lines_added": 274,
  "window_days": 14
 }
