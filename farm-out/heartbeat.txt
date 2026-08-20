@@ -3176,3 +3176,5 @@
 14:24:02Z STARTED task=ep2-b08-str70-0820-1787235679 attempt=1 on box-runner
 14:24:25Z DONE task=ep2-b08-str70-0820-1787235679 rc=0 artifacts=2
 14:34:32Z box-runner idle ready=0 failed=45
+14:39:07Z STARTED task=ep2-b08-nostrap2-0820-1787236582 attempt=1 on box-runner
+14:39:31Z DONE task=ep2-b08-nostrap2-0820-1787236582 rc=0 artifacts=2

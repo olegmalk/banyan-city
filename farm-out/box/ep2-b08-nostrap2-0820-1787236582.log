@@ -1,0 +1,40 @@
+#### job ep2-b08-nostrap2-0820-1787236582 attempt 1 start 2026-08-20T14:39:07Z
+
+==== step fetch START 2026-08-20T14:39:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08nostrap2-0820\\fetch_init.py"]
+fetched 08-first-citizen-eraseonly-0820.png 959598 bytes sha 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45 OK
+fetched 08-first-citizen-eraseonly-mask-0820.png 1653 bytes sha 8c94f1403c3e13839fe2351c70e494f9f2961c0b5a718db3f786d2a341a2d505 OK
+==== step fetch END rc=0 2026-08-20T14:39:14Z ====
+
+==== step dry START 2026-08-20T14:39:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08nostrap2-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08nostrap2-0820\\08-first-citizen-eraseonly-0820.png", "--init-sha256", "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45", "--mask-png", "C:\\banyan-farm\\b08nostrap2-0820\\08-first-citizen-eraseonly-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b08nostrap2-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08nostrap2-0820\\negative.txt", "--out", "C:\\banyan-farm\\b08nostrap2-0820\\b08-nostrap2-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.70", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "MASK GEOMETRY CHECK -- AND IT MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the NEGATIVE and nothing else: same init sha, same mask sha, same seed 20260822, same strength 0.70, same 40 steps, same cfg 7.5, same positive. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY PNG: one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, NO white at the board's top edge near y~670, and no white on the guard's FACE (x 531..601 y 355..420) or the goblin (x 60..260 y 430..1140). If it differs from ep2-b08-str70-0820's dry mask at all, something other than the negative moved and this job must stop here at $0.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45
+mask png corners=- bbox=[552, 522, 654, 640]  0.1226 x 0.0970 of 832x1216
+WROTE C:\banyan-farm\b08nostrap2-0820\b08-nostrap2-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-20T14:39:14Z ====
+
+==== step s20260822 START 2026-08-20T14:39:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b08nostrap2-0820\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b08nostrap2-0820\\08-first-citizen-eraseonly-0820.png", "--init-sha256", "7cc1a4cb12ca14a3628eb9ba8b8257ccc1f07f7cf9a9727d8ce769e1d5de8d45", "--mask-png", "C:\\banyan-farm\\b08nostrap2-0820\\08-first-citizen-eraseonly-mask-0820.png", "--prompt-file", "C:\\banyan-farm\\b08nostrap2-0820\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b08nostrap2-0820\\negative.txt", "--out", "C:\\banyan-farm\\b08nostrap2-0820\\b08-nostrap2-s20260822.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.70", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "MASK GEOMETRY CHECK -- AND IT MUST BE BYTE-IDENTICAL TO THE PARENT'S. This rung changes the NEGATIVE and nothing else: same init sha, same mask sha, same seed 20260822, same strength 0.70, same 40 steps, same cfg 7.5, same positive. The mask is the guard's original left fist grown 10, 10020 px, largest component 9956 px in a 102x118 box at the CHEST. WHAT TO CHECK ON THE DRY PNG: one compact white blob at roughly x 555..660 y 528..635 with the strap running through it, NO white at the board's top edge near y~670, and no white on the guard's FACE (x 531..601 y 355..420) or the goblin (x 60..260 y 430..1140). If it differs from ep2-b08-str70-0820's dry mask at all, something other than the negative moved and this job must stop here at $0."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.92it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:02<00:05,  1.19s/it]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.52it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.86it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.76it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b08nostrap2-0820\b08-nostrap2-s20260822.png
+WROTE C:\banyan-farm\b08nostrap2-0820\b08-nostrap2-s20260822-mask.png
+WROTE C:\banyan-farm\b08nostrap2-0820\b08-nostrap2-s20260822.png.meta.yaml
+rc=0 render_s=7.3
+==== step s20260822 END rc=0 2026-08-20T14:39:31Z ====
+
+==== step publish START 2026-08-20T14:39:31Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b08nostrap2-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-nostrap2-0820\"\nNAMES = [\n    \"b08-nostrap2-s20260822.png\",\n    \"b08-nostrap2-s20260822-mask.png\",\n    \"b08-nostrap2-s20260822.png.meta.yaml\",\n    \"08-first-citizen-eraseonly-0820.png\",\n    \"08-first-citizen-eraseonly-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b08-nostrap2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b08-nostrap2-0820
+==== step publish END rc=0 2026-08-20T14:39:31Z ====
+#### job ep2-b08-nostrap2-0820-1787236582 finished rc=0 2026-08-20T14:39:31Z
