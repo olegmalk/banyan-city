@@ -194,3 +194,59 @@ what_the_trained_set_will_look_like_if_a_face_rung_passes: >-
   trained on both learns the union -- provided the full-body half stops being a
   mask, which is what the face rungs are for. This is written down now so the
   next lane does not read "7 keeps" as "the set is nearly there".
+
+# --------------------------------------------------------------------------
+# UPDATE 3, 2026-08-21 night, after the FACE wording rungs f4/g1/g2/h1/h2/j1/j2.
+#
+# THE WORDING ROUTE FOR THE FACE IS CLOSED AND THE GATE IS STILL HELD.
+# White-eye pixels over the head bounding box, the ladder's ruler, re-derived
+# and calibrated against the published h-series (reproduces h1 0.042 -> 0.0430,
+# h2 0.041 -> 0.0419):
+#     TILE 0.0143 (eye 23x12, aspect 0.52 -- a slit)
+#     f4   0.1112   g1 0.1054   g2 0.0996
+#     h1   0.0430   h2 0.0419
+#     j1   0.0388   j2 0.0353      bar was <= 0.030 AND slit-shaped
+# Pixels: review/ep2-goblin-design-0819/FACE-J-STOP-0821.png
+#
+# THE RESIDUAL IS EYE HEIGHT AND ONLY EYE HEIGHT. Scaled to a common head
+# height, the tile's eye is 28.9 x 15.1 px and j2's is 27 x 27: the right width
+# to within 7%, and 79% too tall. Four positive shape tags moved eye height
+# 34 -> 27 against a target of 15 -- 7 px of the 19 px needed.
+#
+# P1 IS STILL 0 OF 7. `thick eyebrows` in the POSITIVE (j1) did draw new dark
+# pixels, but they are a LASH/LID ARC WELDED TO THE EYE RIM, thickest in j2 at
+# 10 px (5.4% of head height) against h1's 5 px. The tile's brow is a separate
+# heavy mass with green skin between it and the slit. An eyelid is not a brow.
+#
+# The named risk did NOT fire: T1 held on both. `thick eyebrows` is safe on
+# this wording, it is simply inert for P1.
+#
+# EVERYTHING ELSE HELD ON BOTH RUNGS -- T1, T3, T8 (5.59 / 5.56 heads,
+# head_frac 0.179 / 0.180 against the skeleton's authored 0.190), P3, P4. P2
+# fails, the lower face reads flat. Six of eight, and the two that fail are the
+# two this gate is made of.
+#
+# THE OTHER DOOR IS REFUSED ON THE RECORD. Training on tile-true-except-brow
+# frames with canon marking the brow known-missing is NOT taken, for the reason
+# this file has now written three times: a LoRA learns what it is shown. Ten
+# beat-20 man-reads would have taught a human face, twelve bobbleheads a mascot,
+# six blank eggs a blank egg -- and sixteen browless round-eyed frames teach a
+# browless round-eyed creature, after which the trigger token OUTRANKS the
+# wording and the defect stops being arguable per-beat. And marking canon's
+# "loudest cue after the eyes themselves" known-missing is a change to what the
+# character looks like: the design axis, R4, the founder's, not the steward's.
+#
+# NEXT INSTRUMENT, ONE SAMPLE, FILED: ep2-jerry-face-k1-0821 -- IP-Adapter off
+# the tile's own head crop, masked to the head box, over the same h19 skeleton
+# with j2's exact wording, seed and scale. Verified before authoring:
+# controlnet_plate.py carries --ip-ref/--ip-mask/--ip-scale and the box has
+# h94/IP-Adapter cached.
+gate_status_2026_08_21_face_wording: >-
+  HELD. The wording route for the FACE is CLOSED at four tags of affordance
+  (`blank eyes`, `tsurime`, `jitome`, `half-closed eyes`; `thick eyebrows`
+  proven inert-but-harmless). Two clauses remain open and they are the gate:
+  T1b eye shape (0.0353 against a 0.030 bar, and a circle where the tile has a
+  slit) and P1 brow bar (0 of 7 rungs). train-jerry-0820 REMAINS UNFILED. The
+  set is still 7 frames in 4 poses; nothing from the face, skel, pose, tileset
+  or prop families enters it. The instrument now under test is IP-Adapter off
+  adult-b19-0819.jpg itself -- ep2-jerry-face-k1-0821.

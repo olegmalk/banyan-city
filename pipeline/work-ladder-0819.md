@@ -6379,3 +6379,158 @@ gate then passed with the clip actually served. Verified by sha off the wire:
 cut `46749b28…`, clip `99d46d96…`, both matching disk and the manifest. *Passing
 the gate is not the same as being served, and only fetching the artifact tells
 you which one you have.*
+
+---
+
+## Appended 2026-08-21 by the goblin reference-route lane — THE WORDING ROUTE FOR THE FACE IS DONE, and the residual is one number
+
+`ep2-jerry-face-j1-0821` and `j2-0821`, judged. Both **FAIL** their bar. The
+brow was not bought, the slit was not bought, **`train-jerry-0820` stays
+UNFILED**, and the reason is now a measurement rather than an impression.
+
+### THE RULER, REBUILT, BECAUSE THE ONE THAT PRODUCED 0.097 AND 0.042 WAS NEVER COMMITTED
+
+The h-series measurement lives in this file as a table and nowhere else as code
+— same shape as `the span deriver was a docstring with no generator under it`,
+and `derive_jerry_face_eyeshape_0821.py`, cited in the j-series `derivation:`
+block, is likewise not in the repo. So the ruler was re-derived from its
+description (white-eye pixels over the head bounding box) and **calibrated by
+reproducing the published numbers before it was allowed to produce a new one**:
+
+| rung | published | re-derived | delta |
+|---|---|---|---|
+| f4 | 0.097 | 0.1112 | +0.014 |
+| g1 | 0.090 | 0.1054 | +0.015 |
+| g2 | 0.085 | 0.0996 | +0.015 |
+| **h1** | **0.042** | **0.0430** | **+0.001** |
+| **h2** | **0.041** | **0.0419** | **+0.001** |
+
+Rank order identical, and **dead on where it matters** — the h-series, which is
+the family the j rungs are one variable from. It reads high on the f/g series
+because those frames carry a second bright blob inside the head box that the
+original evidently excluded. Head box is stable across all seven at 170x185 +/-
+3 px, which it should be: the same skeleton, the same seed. Ruler:
+`min(RGB) > 190 AND max-min < 60`, inside the largest chartreuse blob in the
+top half of the frame.
+
+### THE NUMBERS
+
+| rung | change | eye area | eye box | aspect h/w |
+|---|---|---|---|---|
+| **TILE** | adult-b19-0819.jpg | **0.0143** | **23x12** (head 115x148) | **0.52** |
+| f4 | baseline | 0.1112 | 27x34 | 1.26 |
+| g1 | `nose` -> negative | 0.1054 | 27x32 | 1.19 |
+| g2 | drop `thick eyebrows` from negative | 0.0996 | 27x32 | 1.19 |
+| h1 | +`tsurime, jitome` | 0.0430 | 27x33 | 1.22 |
+| h2 | +`closed mouth, expressionless` | 0.0419 | 28x30 | 1.07 |
+| **j1** | **+`thick eyebrows` in the POSITIVE** | **0.0388** | 29x28 | 0.97 |
+| **j2** | **j1 +`half-closed eyes`** | **0.0353** | 27x27 | 1.00 |
+
+Bar was **0.030 or lower AND slit-shaped by eye**. j1 **0.0388 FAIL**, j2
+**0.0353 FAIL**. Both moves are 0.004 and 0.008 off h1 — inside the 0.007-0.012
+band this ladder already ruled **noise** two entries ago. Pixels, all five faces
+at a common head height beside the tile:
+`review/ep2-goblin-design-0819/FACE-J-STOP-0821.png`
+
+### THE RESIDUAL IS NOT "THE EYE IS TOO BIG". IT IS **EYE HEIGHT, AND ONLY EYE HEIGHT**
+
+Normalise the tile's eye to j2's head height (148 -> 186):
+
+| | width | height |
+|---|---|---|
+| tile, scaled | **28.9 px** | **15.1 px** |
+| j2, measured | **27 px** | **27 px** |
+
+**j2's eye is the RIGHT WIDTH — 27 against 28.9, seven percent narrow — and
+seventy-nine percent TOO TALL.** Every rung on this axis has been buying
+height and nothing else: 34 -> 33 -> 30 -> 28 -> **27**, against a target of
+**15**. Four positive shape tags bought **7 px of the 19 px needed (37%)**, and
+the last two bought 3 between them. That is the shape of an axis running out,
+stated as a number instead of as a feeling — which is the correction this
+ladder made to itself last entry, applied in the other direction.
+
+### P1: THE BROW BAR IS STILL 0 OF 7, AND THE THING j1/j2 DREW INSTEAD HAS A NAME
+
+`thick eyebrows` in the positive **did draw new dark pixels**, and at 5x they
+are legible: **a lash/lid arc fused to the eye's upper rim**, thickest in j2 at
+**10 px on the viewer-right eye (5.4% of head height) against h1's 5 px (2.7%)**.
+It is not the tile's brow. **The tile's brow is a heavy dark mass with the slit
+set UNDER it and green skin between the two**; j1's and j2's dark run touches
+the eye with no skin gap at all. A brow that is welded to the eyeball is an
+eyelid. **P1 FAIL on both, and the clause remains something nothing has ever
+scored.**
+
+### THE NAMED RISK DID NOT FIRE, AND THAT IS A RESULT WORTH KEEPING
+
+j1's `failure_predicted_in_advance` said `thick eyebrows` is a 200k-post
+human-face tag, that the wedge had put it in the negative precisely to kill a
+man's face, and that **T1 might regress to pupils**. It did not. j1 and j2 are
+**pure blank cream, no iris, no pupil, no sclera structure** — T1 intact at 1:1
+on both. So the tag is *safe* on this wording; it simply does not buy a brow.
+A negative slot freed for no cost is still a fact about the dialect.
+
+### EVERYTHING ELSE HELD, ON BOTH
+
+| clause | j1 | j2 |
+|---|---|---|
+| T1 no iris / no pupil | **PASS** | **PASS** |
+| T3 no age modelling | **PASS** | **PASS** |
+| T8 4.5+ heads | **PASS** — 5.59 heads, head 185 px over 1,035 px crown-to-sole, head_frac 0.179 against the skeleton's authored 0.190 | **PASS** — 5.56 heads, head_frac 0.180 |
+| P3 a mouth line | **PASS** | **PASS** |
+| P4 any facial shading | **PASS** — jaw and neck shadow, dome highlight | **PASS** |
+| P2 forward muzzle | **FAIL** — the lower face reads flat | **FAIL** |
+| **T1b eye** | **FAIL 0.0388** | **FAIL 0.0353** |
+| **P1 brow bar** | **FAIL** | **FAIL** |
+
+**Six of eight on both rungs, and the two that fail are the two the gate is
+made of.** Body and pose stay discharged: the skeleton span rule holds, the
+proportion dial holds at 0.190 authored / 0.179-0.180 drawn.
+
+### THE STOP, WRITTEN AS j1'S OWN SPEC ASKED FOR IT
+
+> *"IF NEITHER GETS T1b UNDER 0.030, the wording route for the FACE is done at
+> four tags of affordance and the remainder is IP-Adapter."*
+
+Neither did. **THE WORDING ROUTE FOR THE FACE IS CLOSED** at four tags —
+`blank eyes`, `tsurime`, `jitome`, `half-closed eyes` — plus `thick eyebrows`
+proven inert-but-harmless. Six rungs, two axes, three nights.
+`pipeline/lora/curation-tile-0820.yaml` gets the same entry.
+
+### **`train-jerry-0820` REMAINS UNFILED**, AND THE OTHER DOOR IS REFUSED ON THE RECORD
+
+The tempting move is the one the brief named: train on **tile-true-except-brow**
+frames and have canon mark the brow *known-missing*. **Refused, twice over.**
+
+**Because a LoRA learns what it is shown, and this file has now refused that
+same mistake three times** — ten beat-20 man-reads would have taught a human
+face, twelve bobbleheads would have taught a mascot, six blank eggs would have
+taught a blank egg. A set with no brow and a circular eye teaches a browless,
+round-eyed creature, and then the trigger token **outranks the wording** in
+every beat that uses it. Today a prompt can still argue with this defect. After
+training it cannot: the LoRA becomes the thing you would have to argue against.
+Shipping the defect into the weights is strictly worse than shipping it into a
+prompt, because one is revisable per-beat and the other is not.
+
+**And because it is not a steward's call to make.** Canon has the brow bar as
+*"the character's loudest cue after the eyes themselves"*. Marking it
+known-missing is a change to **what the character looks like** — the design
+axis, R4, the founder's. Not a defect rate, not a route, not a tradeoff. The
+steward decides how to reach the tile; he does not get to move the tile.
+
+### NEXT INSTRUMENT, FILED AS ONE SAMPLE — `ep2-jerry-face-k1-0821`
+
+IP-Adapter off **the tile's own head**, masked to the head box, over the same
+h19 skeleton, with **j2's exact wording, seed and scale**. One variable. This is
+the route named independently by three documents that did not consult each
+other: `curation-tile-0820.yaml` (*"an ATTRIBUTE instrument for an attribute
+problem"*), j1's `failure_predicted_in_advance`, and the span deriver's own
+stop. `controlnet_plate.py` already carries `--ip-ref`/`--ip-mask`/`--ip-scale`
+and the box has `h94/IP-Adapter` cached — verified, both, before the spec was
+written. **BACKLOG**, `$0`, ~3 min.
+
+The named risk, in advance: **the reference is a SEATED figure in a cloak, and
+IPA leaks composition as well as attribute.** The head-box mask is what is
+supposed to stop that, and the ref is a head crop rather than the full tile for
+the same reason. If k1 comes back seated, or in the tile's purple cowl, or with
+the tile's background, the mask is not holding and the next variable is the
+mask, not the scale.
