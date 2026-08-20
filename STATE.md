@@ -9600,23 +9600,27 @@ Lanes may stop hand-carrying by scp when a normal pull from the branch works —
 verify freshness per use, don't assume either way. The Finished-page staleness
 was two dead hand-run steps (ledger rebuild + thumbs), now wired into qa_local.
 
-## 2026-08-20 — macbook5 is a render node; macbook6 provisioning behind it
+## 2026-08-20 — the Mac farm is SIX nodes; macbook5 and macbook6 are live
 Acting on the founder's "all six Macs are shared, use them fully". Both were
-bare: no Xcode CLT, no `python3` at all.
+bare: no Xcode CLT, no `python3` at all. Both are now render nodes, provisioned
+end to end in one unattended pass (18:52 → 21:01).
 
-**macbook5 is live and proven.** CLT 26.6 installed headlessly (no keyboard),
-uv-managed CPython 3.11.16 venv at `~/banyan-farm-macbook5/venv` pinned to
-macbook4's exact 31 packages (torch 2.13.0 / MPS True, diffusers 0.29.2,
-transformers 4.44.2), 6.5 GB HF cache copied over the LAN from this Mac.
-`mac_preflight` → `verdict: READY`, `problems: []`, `zero_mib: 0`, 4/4 blobs
-hash-clean. Beat 19 r1 came back **byte-identical to the plate the repo already
-owns** — `png_sha256 3cc0b6bc…`, 147.6 s. `mac_worker` is running under
-caffeinate and `mac_enqueue.py --status` shows **five ALIVE hosts**.
+Each got: CLT 26.6 installed **headlessly**, no keyboard; a uv-managed CPython
+3.11.16 venv at `~/banyan-farm-<host>/venv` pinned to macbook4's exact 31
+packages (torch 2.13.0 / MPS True, diffusers 0.29.2, transformers 4.44.2); and
+the 6.5 GB HF cache copied over the LAN from this Mac, never re-downloaded.
 
-**macbook6** has CLT and an identical verified venv; its cache copy is the only
-thing outstanding and it is chained to run preflight and the same beat-19 proof
-on its own, unattended. It stays out of the rotation until that sha lands — no
-worker is started, and `mac_enqueue` refuses hosts without a live heartbeat.
+| | macbook5 | macbook6 |
+|---|---|---|
+| macOS | 26.4 | 26.6.1 |
+| `mac_preflight` | `READY`, `problems: []`, 4/4 blobs clean | same |
+| beat 19 r1 sha | `3cc0b6bc…` **byte-identical** | `3cc0b6bc…` **byte-identical** |
+| plate time | 147.6 s | 147.9 s |
+
+`mac_worker` runs under caffeinate on both, and `mac_enqueue.py --status` shows
+**six ALIVE hosts**. That sha now reproduces on an M1 Max and four separate M1
+Pros across three macOS versions, so it is a genuine cross-machine invariant —
+a future mismatch is a defect, not a machine-class difference.
 
 **The farm's real ceiling is its Wi-Fi, and it is worth someone's attention.**
 All six Macs are associated to **2.4 GHz 802.11n, channel 6, 20 MHz**, sharing

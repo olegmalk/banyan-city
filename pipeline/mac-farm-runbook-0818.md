@@ -6,8 +6,9 @@ rediscovered the slow way and the next session should not have to.
 
 ## What is real
 
-Four Macs render stills in parallel today. Measured 2026-08-18 (four beats in
-one pass); macbook4 added 2026-08-19:
+**Six** Macs render stills in parallel today. Measured 2026-08-18 (four beats
+in one pass); macbook4 added 2026-08-19; macbook5 and macbook6 added
+2026-08-20, both from bare machines with no Xcode CLT and no `python3` at all:
 
 | host | chip | weights | one 832x1216 / 40-step plate |
 |---|---|---|---|
@@ -16,7 +17,7 @@ one pass); macbook4 added 2026-08-19:
 | macbook3 | M1 Pro | `READY` | 137.3 s |
 | macbook4 | M1 Pro, 32 GB | `READY` (2026-08-19) | 139.6 s |
 | macbook5 | M1 Pro, 32 GB, macOS 26.4 | `READY` (2026-08-20) | 147.6 s |
-| macbook6 | M1 Pro, macOS 26.6.1 | provisioning 2026-08-20 | see "Onboarding 5 and 6" |
+| macbook6 | M1 Pro, 32 GB, macOS 26.6.1 | `READY` (2026-08-20) | 147.9 s |
 | rtx5070  | — | — | 192.168.3.153 times out |
 
 **macbook4, onboarded 2026-08-19.** It needed no provisioning: the venv
@@ -30,11 +31,13 @@ truthfully, and it is worth asking for on every future onboard: file a beat
 whose plate the repo already owns and compare the sha, rather than eyeballing
 a picture nothing can be diffed against.
 
-**macbook5 passed the same proof on 2026-08-20** — beat 19 r1, seed 20260819,
-`png_sha256` `3cc0b6bc…` again, 147.6 s. So that sha is now reproduced on an M1
-Max and three separate M1 Pros across macOS 26.4 and 26.6, which retires the
-"maybe it is only stable per machine" caveat: a mismatch on a new Mac is a real
-defect, not a machine-class difference, and should be treated as one.
+**macbook5 and macbook6 both passed the same proof on 2026-08-20** — beat 19
+r1, seed 20260819, `png_sha256` `3cc0b6bc…` again, 147.6 s and 147.9 s. So that
+sha is now reproduced on an M1 Max and four separate M1 Pros across macOS 26.4,
+26.6 and 26.6.1, which retires the "maybe it is only stable per machine"
+caveat: a mismatch on a new Mac is a real defect, not a machine-class
+difference, and should be treated as one. Note the corollary — the proof render
+is a *duplicate*, so do not commit its png; record the sha and delete it.
 
 **It was NOT dead, it was asleep on WiFi.** `hostname does not resolve` above
 was measured during one of the association drops STATE.md 2026-08-16 already
