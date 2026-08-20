@@ -1,0 +1,217 @@
+id: ep2-jerry-face-k1-0821
+task: ep2-jerry-face-k1-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 28
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin reference-route lane, 2026-08-21
+consumer: THE JERRY LoRA'S LAST OPEN GATE, second instrument. train-jerry-0820 is UNFILED and stays that
+  way until a rung passes P1 and T1b with T1/T3/T8/P3/P4 intact; the set is still 7 frames in 4 poses.
+  No beat plate, no pick, nothing promoted.
+success: ONE 832x1216 png at seed 20260823 on the h19 skeleton at scale 1.0, j2's prompt and negative
+  byte-identical, plus --ip-ref jerry-tile-head-0821.png --ip-mask 315,130,515,350 --ip-scale 0.7. Scored
+  on T1b and P1 with T1, T3, T8, P3, P4 held and the standing/cloak/grass containment scored.
+why: 'RUNG k1: the same j2 frame with an IP-ADAPTER REFERENCE THAT IS THE TILE''S OWN HEAD, masked to
+  the head box. One variable, and the variable is the instrument. The wording route closed at four tags
+  of affordance with the residual measured as a single number -- j2''s eye is the right WIDTH to within
+  7% and 79% too TALL, and the brow bar is 0 of 7 -- and canon''s own curation file says why no word will
+  fix it: Danbooru has no tag for this creature''s eye slit or brow mass any more than it has one for
+  its ear. An attribute the dialect cannot name needs an instrument that does not name, which is what
+  IPA is.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryface-k1-0821\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    lean wiry adult goblin man, green skin, bald head, patchwork cloak, blank eyes, tsurime, jitome, thick
+    eyebrows, half-closed eyes, standing, arms at sides, in tall grass, full body
+  C:\banyan-farm\jerryface-k1-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, hair, beard, child, chibi, grey skin, pale skin
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- and k1 has THREE, because the\n# IP-Adapter reference is as much this frame's condition as the\n\
+    # skeleton is. The job dirs on this card carry a hand-staged\n# src\\pipeline\\controlnet_plate.py\
+    \ and nothing else.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryface-k1-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"aff188907fa03914b30a8cec2e5f739a5c4941f5d4246f4b2e220a9cc047c66a\"),\n\
+    \        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\"),\n        (\"jerry-tile-head-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryface-k1-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryface-k1-0821\src
+  - --repo-commit
+  - 29939faba45625c647bb05da9573c4151b8b259d
+  - --task
+  - ep2-jerry-face-k1-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19-0820.png
+  - --control-sha256
+  - 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-tile-head-0821.png
+  - --ip-mask
+  - 315,130,515,350
+  - --ip-ref-sha256
+  - 6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c
+  - --ip-scale
+  - '0.7'
+  - --prompt-file
+  - C:\banyan-farm\jerryface-k1-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryface-k1-0821\negative.txt
+  - --out
+  - C:\banyan-farm\jerryface-k1-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems: the courier pushes from\n# farm-out and from nowhere\
+    \ else, and ep2-cnet-probe-0817 rendered\n# perfectly and was invisible for two days for want of this\
+    \ step.\n# THE REFERENCE TRAVELS WITH THE FRAME. A reader scoring whether the\n# adapter carried the\
+    \ brow needs the brow it was shown.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryface-k1-0821/out\"\
+    \npay_dir = \"C:/banyan-farm/jerryface-k1-0821\"\nctl_dir = \"C:/banyan-farm/jerryface-k1-0821/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-face-k1-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    files = sorted(glob.glob(out_dir + \"/ep2-jerry-face-k1-0821-ipahead.png*\")\n               + glob.glob(pay_dir\
+    \ + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir\
+    \ + \"/jerry-skel-h19-0820.png\")\n               + glob.glob(ctl_dir + \"/jerry-tile-head-0821.png\"\
+    ))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-face-k1-0821.sha256\"),\
+    \ \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\jerryface-k1-0821\out\ep2-jerry-face-k1-0821-ipahead.png
+bar: "T1b EYE SHAPE and P1 BROW BAR, the two clauses the wording route could\nnot reach, scored exactly\
+  \ as they were on j1/j2 so the numbers are comparable.\n  T1b  white-eye pixels over the head bounding\
+  \ box. TILE 0.0143, j2 0.0353.\n       PASS is 0.030 or lower AND reading as an upward-slanting slit\
+  \ at 1:1 --\n       eye HEIGHT is the whole residual, 27 px where the tile scales to 15.\n  P1   a dark\
+  \ brow bar ABOVE the eyes with green skin between it and the eye.\n       0 of 7 rungs have ever scored\
+  \ it. A lash arc welded to the eye rim is\n       an eyelid and does not count.\nHELD, and a regression\
+  \ on any of these is a FAIL of the instrument even if the\nface improves: T1 no iris and no pupil, T3\
+  \ no age modelling, T8 4.5+ heads\n(j1/j2 measured 5.59 / 5.56), P3 a mouth line, P4 facial shading.\n\
+  CONTAINMENT, and it is scored: the figure must still be STANDING, in the\npatchwork cloak, in tall grass.\
+  \ A seated figure, a purple cowl or the tile's\nfield background means the head-box mask is not holding."
+failure_predicted_in_advance: 'TWO WAYS THIS FAILS AND THEY POINT DIFFERENT DIRECTIONS.
+
+
+  CONTAINMENT BREAK -- the frame comes back seated, or cowled in purple, or standing in the tile''s open
+  field. IPA leaks composition and the ref is a crop of a seated figure. Then the mask is the next variable,
+  not the scale, and the tightest available mask is the head box itself (330,145,502,330) with the ref
+  repainted onto flat ground.
+
+
+  ATTRIBUTE MISS -- the containment holds and the face is still j2''s. That would mean 0.7 is too weak
+  against a controlnet running at scale 1.0 for the full denoise, and the next rung is an ip-scale ladder,
+  NOT a second reference and NOT a wording edit.
+
+
+  AND THE THIRD OUTCOME IS THE ONE TO WATCH FOR: the brow and slit arrive AND T1 regresses to pupils,
+  because the tile''s slits sit in a modelled socket and IPA carries what it is shown. That is a partial
+  win and it is scored as a FAIL of this rung, because a LoRA trained on a pupilled face teaches pupils.'
+ip_adapter:
+  ref: farm-out/jerry-skel-assets-0820/jerry-tile-head-0821.png
+  ref_sha256: 6dbb27a82b1b03e426030a07ae14d4013af6b866be661ea4fcca1160947d374c
+  ref_provenance: review/ep2-goblin-design-0819/adult-b19-0819.jpg cropped (176,280)-(332,432), 156x152,
+    no resample
+  mask: 315,130,515,350
+  mask_frame: RENDER pixels, 832x1216
+  scale: '0.7'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors (cached on the box; the -FACE
+    variant is 847 MB and is NOT cached)
+one_sample_rule: ONE rung. The wording ladder's stop names IP-Adapter as the route and this is the first
+  sample on it; no scale sweep, no second reference, no second seed until this one has been looked at.
+the_one_variable: an IP-Adapter reference that is the tile's own head crop, masked to the head box, at
+  --ip-scale 0.7. Prompt, negative, skeleton, --scale and seed are j2's, unchanged.
+the_rung_this_is_one_variable_from: ep2-jerry-face-j2-0821
+derivation:
+  parent: pipeline/jobs/ep2-jerry-face-j2-0821.yaml
+  by: pipeline/derive_jerry_face_ipa_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - jerryface-j2-0821 -> jerryface-k1-0821
+  - ep2-jerry-face-j2-0821 -> ep2-jerry-face-k1-0821
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step posehint --arm (posehint -> ipahead)
+    argv:--repo-commit:
+    - step posehint --repo-commit (8b1dd656324509562b2d65c35f677505b2375f89 -> 29939faba45625c647bb05da9573c4151b8b259d)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 4
+    key:priority:
+    - key priority = 28
