@@ -5947,3 +5947,30 @@ not, and that is the plate to fetch.
 **No pick from this batch. Beat 16 stays a slate.** The founder's card
 `/review/ep2-b16-leaf-0820` is still open and unanswered, and nothing here
 forecloses `licence`.
+
+### The input plate is named, and so is the one thing that stops it being a drop-in
+
+`farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png`,
+sha256 `8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe`,
+832x1216 — the PRE-composite parent of the b15 plate above, so it is the same
+flat cel dialect and the same palette with **no finished sapling in it**. He is
+seated, centred, mid-frame and already reads as depth, which is the clause all
+four field plates were being asked for and two of them failed. And the near
+foreground is the clean drawable ground plane the field batch never produced:
+**the bottom third is 17.2% inked**, i.e. grass and a few blades, nothing
+structural to paint over.
+
+**THE OBSTACLE, MEASURED SO THE NEXT RUNG DOES NOT DISCOVER IT: the plate
+already carries the thin weed, at x 163–339, y 276–649** (15,018 px on a
+dark-green rule). Beat 16 drawing a second plant in front of it puts TWO plants
+in frame against `sapling-two-leaves`, and **masking it is not enough** — 0.30
+runs 12 of 40 steps from a latent that still carries the init's structure, so
+the pass PRESERVES a weed, it does not remove one. b19 handled exactly this with
+an explicit boundary fill before the mask (`fill_from_boundary`, and its mask is
+`dilate(plant,9) | dilate(whip,5)` precisely so the erased vacancy is repainted
+too).
+
+So `beat16_sapling_composite.py` needs one addition before it can take this
+plate: an erase-then-fill of that box, on b19's pattern. That is the whole gap
+between the tool as written and beat 16's plate — no GPU, no new recipe, and the
+reference implementation is already in this repo.
