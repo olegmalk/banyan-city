@@ -3338,3 +3338,5 @@
 19:49:34Z DONE task=ep2-b16-field-f4-0820-1787251987 rc=0 artifacts=1
 19:49:46Z STARTED task=ep2-jerry-pose-point-0820-1787251931 attempt=1 on box-runner
 19:50:10Z DONE task=ep2-jerry-pose-point-0820-1787251931 rc=0 artifacts=1
+19:50:20Z STARTED task=ep2-jerry-pose-reach-0820-1787251927 attempt=1 on box-runner
+19:50:46Z DONE task=ep2-jerry-pose-reach-0820-1787251927 rc=0 artifacts=1
