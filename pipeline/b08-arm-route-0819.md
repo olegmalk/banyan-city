@@ -1878,3 +1878,115 @@ controlnet (`inpaint_fruit.py` has none) or a hand-authored matte (R4 — the
 author's, not the steward's). Both sit outside what §26 closed.
 
 **`ep2-b08-scale30-0820` remains beat 08's frame. Nothing staged, no pick.**
+
+## 28. The ControlNet landed, the alignment was exact, and the crop made the hint mean something else (2026-08-20)
+
+`ep2-b08-cnetfill-0820`, rc=0, **13.2 s of render**, $0. One variable against §25:
+two ControlNets INSIDE the inpaint — the xinsir openpose `twins` weights at 1.0
+on `b08-openpose-nat-0819.png`, composed as a MultiControlNetModel with
+xinsir/controlnet-scribble-sdxl-1.0 at 0.3 on `b08-board-0820.png`. Same init
+sha, same mask sha, same seed 20260822, same 40 steps, same cfg 7.5, same
+strength 0.70, prompt and negative byte-identical. Both hints are the ones
+`ep2-b08-scale30-0820` — the txt2img frame this init descends from — was rendered
+with, so neither is new work and both are already in the init's coordinate frame.
+
+**The stack is what it claims (B0 passed all four clauses).** The log carries
+`PIPELINE StableDiffusionXLControlNetInpaintPipeline, 2 net(s), scales
+[1.0, 0.3]`, the sidecar names both nets, both scales and both hint sha256s, and
+the crop box was read back from the live method: **`CROP REGION (468, 384, 739,
+780) — vendored == live`**. There is no version of this verdict in which the net
+did not load or the hint did not reach it.
+
+### THE FINDING, AND IT IS A PROPERTY OF THE TOOL AND NOT OF THIS BEAT
+
+> **`padding_mask_crop` RESCALES THE HINT ALONG WITH THE INIT. THE ALIGNMENT IS
+> EXACT AND THE CONDITIONING IS STILL WRONG.**
+
+diffusers derives ONE `crops_coords` from the mask and applies it to the init,
+the mask **and every control image**. That is what makes alignment
+by-construction, and it worked perfectly: the box above is 271 x 396 px, and it
+is the same box for all four images. Then all four are resized to 832 x 1216 —
+**a 3.07x magnification** — and what the pose net was handed is no longer the
+hint that was authored. The authored hint is two whole figures at frame scale,
+8.52 % of its pixels lit. What the net actually saw is **one torso filling the
+frame, 22.18 % lit**: a different instruction, saying "a body THIS BIG, HERE",
+inside a 10020 px hole that is a chest region.
+
+The sampler obeyed it. The fill came back with the strap severed rather than
+running, a navy wedge where the magnified skeleton's collar sits, a salmon smear
+where its shoulder does, and pale diagonal streaks along its arm. **The picture
+is the worst on the route** — worse than the wedge fan, worse than the green
+goblin fist.
+
+### AND EVERY AUTOMATIC CLAUSE PASSED IT
+
+Re-measured on one instrument across all four frames so the columns are
+comparable to each other (they are not identical to §25-§26's absolute values,
+which came from `fill_quality.py`; the ORDERING is the point):
+
+| | shard | ink | in-mask G−R | px > +20 | out-of-mask | band signature | the picture |
+|---|---|---|---|---|---|---|---|
+| init (the plate) | 2.06 % | 12.7 % | −28.59 | 0 | 0 | 5 / 14 | the guard's own fist |
+| `str70` | 0.67 % | 9.6 % | −23.11 | 0 | 8600 | 10 / 14 | strap runs + crossing band |
+| **`cnetfill`** | **0.65 %** | **10.4 %** | **−28.77** | **0** | 8570 | **4 / 14** | **wrecked** |
+| `cnetfill` restore-only | 0.65 % | 10.4 % | −28.77 | 0 | 985 (0 beyond feather) | 4 / 14 | wrecked |
+
+**Shard indistinguishable from the best frame on the route. Ink better than it.
+G−R −28.77 with zero green pixels — the closest to the plate's own −28.59 that
+any frame has come, on the measurement that made three earlier verdicts
+checkable. B8 hair maxdiff 0 for the fifth run. Out-of-mask drift 8570, inside
+the crop box, and the `--restore-only` composite took it to 0 beyond the feather
+exactly as §27 promised.** And the band signature — the instrument filed this
+morning specifically for this clause — returned **4 / 14, at its pre-registered
+bar of ≤ 4**, because the crossing band really is gone: the strap it crossed is
+gone too.
+
+> **§27's LESSON REPEATED ONE RUNG LATER, ON THE INSTRUMENT I BUILT TO FIX IT.**
+> The shard clause was added because C4' passed a goblin fist. It then passed a
+> posterised frame. The band signature was added because the shard clause could
+> not see a shape — and its own registration said, in writing and before this
+> frame existed, that it has **no negative control** and that a pass on it is
+> weak evidence. That warning is the only reason this verdict is right. Every
+> number on this row is a pass and the frame is unusable at a glance.
+
+`EVIDENCE-b08-cnetfill-verdict-0820.png` — the three frames at 4x, plus the pose
+hint as authored beside the pose hint as the net actually received it.
+
+### THE ROUTE IS CLOSED, AND ON A MECHANISM RATHER THAN A TALLY
+
+The pre-registered fail modes said the route closes if the band survives, or if
+the hint holds the old fist in place. **Neither is what happened, and what did is
+stronger**: the two things this pass needs are mutually exclusive in this tool.
+
+- `padding_mask_crop` is **why the region is inpaintable at all** — it renders a
+  102 x 118 px hole at full model resolution instead of at ~1.3 % of the frame.
+  §25's own docstring records 0.30-class values as insufficient without it.
+- The same crop **destroys the hint's meaning**, because a pose hint's semantics
+  are scale-dependent in a way an init image's are not. There is no value of
+  that flag that satisfies both: at 64 the net is handed a magnified fragment, at
+  0 the region goes back to being too small to draw.
+
+The remaining move would be to author a hint pre-warped to survive the crop —
+which is a hand-drawn spatial artifact for one region of one frame. **That is the
+matte, and the matte is R4.** So the steward's levers are now exhausted by
+measurement rather than by opinion: prompt (a kind, not a count), mask size (not
+the noun), strength (symmetric, neither end lands), negative (a kind, not a
+count), compositor (cannot remove a shape), and spatial conditioning (cannot
+survive the crop that makes the region drawable).
+
+**Six samples, about seventy-five seconds of card, $0.**
+
+**BEAT 08 SHIPS AS-IS ON `ep2-b08-scale30-0820`.** No cut change, nothing staged,
+no pick, and no motion sample — its pre-condition was a passing fill and the fill
+did not pass. The one lever left is a hand-authored matte over the guard's strap
+region, and it belongs to the author.
+
+### WHAT THE DRIVER KEEPS, BECAUSE IT IS NOT BEAT 08's
+
+`inpaint_fruit.py` now takes ControlNet hints in an inpaint pipeline, with the
+hint-size refusal, the vendored-vs-live crop check and a selftest that reproduces
+a filed verdict's sidecar byte for byte. The finding above is the first thing any
+future caller of it needs to read: **it is usable at `--pad-crop 0`, on a region
+large enough not to need the crop, and it is not usable on a small region.**
+`pipeline/b08_band_signature.py` keeps its five registered references and its
+written warning that it has no negative control.
