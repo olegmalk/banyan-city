@@ -38,10 +38,22 @@ every option that has one — a job spec, a script, a checklist.
 
 | card | dir | options |
 |---|---|---|
-| `/review/ep2-guards-0818` | `ep2-guards-0818/` | pass → the beat-09 cut swap, written and runnable · recast → a casting rung · stage → nothing to file |
-| `/review/ep2-b13-shade-0820` | `ep2-b13-shade-0820/` | A "ship it" → file nothing · B "draw it taller" → the motion spec, written |
-| `/review/ep2-b16-leaf-0820` | `ep2-b16-leaf-0820/` | restage → file nothing (R4 writes it) · licence → the motion spec, written |
+| `/review/ep2-guards-0818` | `ep2-guards-0818/` | **pass** → `swap-b09-into-cut.sh`, written and runnable · **recast** → nothing to file, and why · **stage** → fires the same swap |
+| `/review/ep2-b13-shade-0820` | `ep2-b13-shade-0820/` | **A** → nothing to file, and why · **B** → canon exception first, then `derive-b13-tallmotion.py`, written |
+| `/review/ep2-b16-leaf-0820` | `ep2-b16-leaf-0820/` | **restage** → nothing to file (R4 writes the staging) · **licence** → canon exception first; the motion spec is *not yet written* and the README says why |
 
-Beat 04's card (`/review/ep2-b04-action-0820`) deliberately has **no** directory
-here: it asks the author to pick among three action lines, and the pick *is* the
-spec. Pre-staging three of them would be pre-staging three different episodes.
+`/review/ep2-b04-action-0820` deliberately has **no** directory here: it asks the
+author to pick among three action lines, and the pick *is* the spec. Pre-staging
+three of them would be pre-staging three different episodes.
+
+**Rule 3 is doing real work in two of these four**, and that is the point rather
+than a shortfall. "Nothing fires, and here is why" took as long to write as a
+spec would have, and it is the entry that stops the next lane inventing one.
+
+## The failure this directory is designed to make impossible
+
+On 2026-08-20 three taste cards were open and every one of them would, on being
+answered, have started a fresh round of *"right — so what do I do now?"* Two of
+the three also had an option the author could not see, only read about. Both are
+the same defect: **the machine stopping at the question instead of at the human.**
+A card is finished when the only thing missing is a word.
