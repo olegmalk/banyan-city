@@ -6204,3 +6204,77 @@ wide: an oval where the tile has a slit, and a missing brow bar.** The reason fo
 not splitting the difference is unchanged and now has three precedents behind it:
 ten beat-20 man-reads, twelve bobbleheads, and an egg. **A dataset teaches what
 it contains.**
+
+---
+
+## Appended 2026-08-21 by the beat-16 restage lane — beat 16 has a plate, and the ceiling is AREA not SPAN
+
+`ep2-b16-sapcomp-0820` and `-r2-0820`. The canon two-leaf sapling drawn LARGE in
+the near foreground of `ep2-b15-mac-plate-0819`'s pre-composite plate — the
+b15 plate's own weed erased first — then ONE 0.30 pass. Recipe untouched from
+`ep2-b03-sapcomp-0820`: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8,
+seed 20260820. **The one variable is the init.**
+
+### THE BET IS WON: mask AREA is what the pass cares about, not the object's SPAN
+
+The big-leaf composite on `/review/ep2-b16-leaf-0820` failed because the pass did
+nothing across 60–80% of the picture — detail inside the region **10.45 → 9.41**
+across a mask eight times a working one. This plant **spans 62% of the frame's
+width and 59% of its height** and its mask is **9.84%**, because a seedling is
+thin. Measured on the drawn plant:
+
+| | detail (mean grad. magnitude) | movement (mean abs delta/px) |
+|---|---|---|
+| big-leaf attempt | 10.45 → **9.41** | 6.65 (vs 6.23 working) |
+| b16 sapcomp r1 | 3.771 → **3.845** | 14.5 |
+| b16 sapcomp **r2** | 5.751 → **5.836** | 16.0 |
+
+**Detail goes UP and the pass moves the working band's worth of pixel.** A thin
+object can be a close-up's subject without asking the pass to re-render the
+picture. That closes the question the big-leaf attempt opened, and it does NOT
+license large-area composites — it licenses large-EXTENT, small-area ones.
+
+### r1 FAILED BY EYE WHILE PASSING EVERY NUMBER, AND THE CAUSE WAS ONE PIXEL WIDE
+
+r1's leaves came back beautifully graded and **with no outline at all** — soft
+airbrushed shapes in front of a hard-inked cel drawing, which is the decal read
+arriving through LINE WEIGHT instead of through colour. Measured: the plate's
+character ink is **median RGB (25,31,35), luma 30**, and its outlines run a
+**median of 4 px**. r1 drew the blades with PIL's 1 px `outline=` in the erased
+weed's darkest green, **(49,72,50), luma 63** — half the darkness at a quarter of
+the width. At 0.30 with pad-crop 64 and blur 8 that line dissolves. **b19 §5
+already says it: in this dialect a strong dark line IS an edge, and a weak one is
+nothing.** r2 inks from the plate's CHARACTER ink at the plate's own 4 px and the
+line survives the pass.
+
+**This is the third time today an instrument agreed with a picture that was
+wrong** (the b08 row of five passing metrics, beat 04's s5 pan, and now r1's
+detail and movement both in band on a leaf with no edge). Eye first, every time.
+
+### THE ERASE, and three things the port had to learn
+
+`fill_from_boundary` + a vacancy mask came over from b19. Each of these was
+caught by a check, not by luck: **C0** — 1,686 px of ink within 24 px of the hole
+at x 250–288 y 533–635 is HIS KNEE, so the within-class loop is load-bearing, not
+theoretical (b19's v11 left a 22 px grey smear doing this). **One rectangle is
+not a class map** — a single x≥250 body box protected the weed's top-right leaf
+as if it were him and it stood in the output; his true left edge is x≈322 above
+y 420 and x≈254 below. **A threshold is not a matte** — `lum<170` separates weed
+from field up top (field median 212.6) but the field darkens toward the near
+foreground (p05 120.5), so widening the box grew the matte 4,292 → 7,319 →
+12,427 → 15,904. b19's flood-from-a-dark-seed gives 3,988 px, identical at box
+bottoms 620 and 640. **And the flood leaves a stencil** — it takes the ink and
+leaves the lit edge, so the first clean run returned a pale ghost of the whole
+plant, dark gone and outline intact. The fringe is brighter than any sane
+threshold and darker than the field; it comes off geometrically.
+
+**PLATE VERDICT: all six clauses pass on r2** — two leaves on one stem, average
+ovate shape, one plant in frame, he survives unchanged, the pass drew the blades,
+and it reads as the shot. **S1 passes with a reservation carried forward:** the
+relation is unambiguous but the eye still goes to his FACE first, because he is a
+face and the plant is a shape. The named lever is a tighter crop (beat 09 proved
+crop-and-condition survives i2v at 105% of frame 1's high-frequency energy) and
+it is NOT taken yet, because cropping and animating in one job leaves two causes.
+
+**No pick, no `plate_ack`. Beat 16 is still a slate and the founder's card
+`/review/ep2-b16-leaf-0820` is still open with `licence` still available to him.**
