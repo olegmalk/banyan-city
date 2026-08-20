@@ -3833,3 +3833,155 @@ the spec's prose, not in its argv. The honest fix is the guard reading refs from
 a declared field rather than from argv; until then this is a **read-the-prose**
 rung and it is written here so the next lane does not re-derive it from a
 confident-looking pass.
+
+## 2026-08-20, evening — C4 IS REPLACED. THE BAR THAT CERTIFIED A CORDUROY COMB NOW FAILS IT, AND 200 REAL WINDOWS SAY IT COSTS 3%
+
+`b08-arm-route-0819.md` §21 closed with the reason beat 08's next rung was
+named and **not filed**: *"the instrument that would score its vacancy has just
+been shown to certify artifacts at twice its bar. Filing a render whose verdict
+cannot be trusted is filing work with no consumer."* This rung is that
+instrument. **`pipeline/fill_quality.py`, selftest PASS, 15 of 15 cases as
+expected, 14 seconds.** Evidence at 6x:
+`farm-out/ep2-b08-gripcomp-0820/EVIDENCE-c4prime-instrument-0820.png`.
+
+### THE DIAGNOSIS IS NOT "THE BAR WAS TOO LOW", AND THAT MATTERS FOR WHAT COMES NEXT
+
+The outside literature names the failure better than the retraction did. Mean
+|gradient| and its `|gy|/|gx|` extension are both **marginal** statistics: they
+summarise the *distribution* of gradient values and throw away *where the values
+sit relative to each other*. A comb and real fabric can therefore have identical
+gradient histograms **and** identical anisotropy — that is the defining blind
+spot of the statistic class, not a tuning miss, and **no fifth marginal
+statistic fixes it.** Any replacement has to read across the arrangement.
+
+Second import, from textile defect inspection (Chan & Pang, Fourier analysis of
+fabric): *"periodic = bad"* is wrong and *"the fill's periodicity is unlike the
+neighbourhood's"* is right. Real ribbed fabric exists. Every number below is a
+**ratio to the same material's own ring**, for that reason.
+
+### WHAT IT MEASURES — THREE BARS, THREE DISTINCT FAILURE SHAPES
+
+All three read the mean absolute first difference along each of 8 directions
+`(0,1) (1,2) (1,1) (2,1) (1,0) (2,-1) (1,-1) (1,-2)`, step-normalised, on luma.
+
+| | | bar |
+|---|---|---|
+| **D** DETAIL | mean\|grad\| fill / ring, **isotropic — C4's own formula, unchanged**, so its numbers stay comparable to everything published | ≥ 0.45 |
+| **N** NULL AXIS | **min** over directions of `fill[d]/ring[d]` — "is there a direction the fill is dead along while the material around it is alive?" | ≥ 0.25 |
+| **F** FABRICATION | `aniso(fill)/aniso(ring)`, aniso = max/min over directions — "is the fill more directional than its own material is?" | ≤ 2.60 |
+
+**C4 is not deleted, it is completed: it was one of three questions.** D is
+literally the old statistic. What C4 lacked is that a fill can be wrong in
+**two** directions and it only had one of them:
+
+* **TOO FLAT** — a smear. D sees this and always did. It is also the
+  **recoverable** failure: a low-strength pass *adds* texture, which is exactly
+  why beat 03 shipped a deliberately smooth per-row ramp and argued the 0.30
+  pass would put blade texture back. It did.
+* **FABRICATED** — structure the material does not have. C4 scores this **well**,
+  because fabricated structure is still structure. It is also the
+  **unrecoverable** failure, for the same reason 0.30 was chosen in the first
+  place: a low-strength pass *preserves* structure. **Hand the sampler a comb
+  and it keeps the comb.** That asymmetry is the whole argument for N and F.
+
+N is GMSD's lesson (Xue et al., TIP 2014 — std-pooling beats mean-pooling)
+applied one level up: **C4 took the MEAN over directions of what N takes the
+MINIMUM of.**
+
+### THE NUMBERS
+
+| case | D | N | F | |
+|---|---|---|---|---|
+| **`ep2-b08-gripcomp-0820` fill, ON DISK** | 0.888 | **0.084** | **7.87** | **FAIL** — eye agrees |
+| the same vacancy, isotropic diffusion (source) | **0.182** | **0.121** | 0.89 | **FAIL** — eye agrees |
+| the same footprint, REAL plate pixels | 0.815 | 0.562 | 0.81 | PASS — control |
+| real strap 110 px up / higher | 0.991 / 1.447 | 0.881 / 1.024 | 0.77 / 0.56 | PASS |
+| real cream shirt / wrap skirt | 1.236 / 0.970 | 0.691 / 0.971 | 1.78 / 1.13 | PASS |
+| real shoulder+clasp / board+cuff | 2.156 / 1.486 | 2.082 / 1.545 | 0.42 / 0.70 | PASS |
+| b03 sapcomp, 44k-px cover vacancy | 0.810 | 0.553 | 1.08 | PASS |
+| **b03 sapcomp, 6.8k-px second vacancy** | 0.556 | **0.311** | 1.17 | PASS — tightest |
+| b13 sapcomp | 1.843 | 1.329 | 0.87 | PASS |
+| b15 sapcomp, listener vacancy | 4.713 | 2.841 | 0.47 | PASS |
+| b19 sapcomp, whip vacancies 1 / 2 | 1.047 / 0.925 | 0.888 / 0.759 | 0.88 / 0.67 | PASS |
+
+The corduroy's own **D is 0.888 — it still passes the old bar at twice the
+threshold.** N and F are what turn it. The tightest honest case is b03's second
+vacancy at N 0.311 against a 0.25 bar; the artifact is at 0.084. The bar sits in
+a **3.7x gap**, at the middle of it, not against either edge.
+
+**N and F are not redundant, and this beat's own two failures prove it.** The
+corduroy has a null axis AND excess anisotropy. The isotropic-diffusion fill
+that silently replaced it in source has **neither** (F 0.89, dead in every
+direction equally) and is caught only by D. Three shapes, three bars.
+
+### THE NUMBER THAT MATTERS MORE THAN ANY THRESHOLD: 3.0%
+
+Every bar in this tree has been a constant somebody chose. This one is also run
+against **200 windows of beat 08's exact footprint moved at random to places on
+the plate where it lands wholly on untouched pixels** — real material, all 200
+of which should pass. That is the a-contrario wrapper (Desolneux–Moisan–Morel;
+review arXiv:1808.02564), and it buys the false-positive rate:
+
+```
+false FAIL on D 2.0%    on N 1.0%    on F 1.0%    ON ANY OF THE THREE 3.0%
+```
+
+**And the corduroy sits at percentile 0.0 of that null on N and 100.0 on F —
+more extreme than all 200 real windows, on both new statistics, at once.**
+The selftest FAILS if the rate ever climbs above 5%, so a future tightening of a
+bar cannot be bought silently with real work condemned.
+
+**This measurement also changed the design, which is why it was worth running.**
+The first build used the ring's **mean** as the baseline and its false-positive
+rate was **12.5%** — because the largest real dead zone of any ring baseline is
+that the annulus is *not one material*: a hard cel outline through one sector
+sets the bar for all eight and condemns the flat interior it surrounds. Taking
+the ring baseline as the **median over 8 angular sectors** drops it to 3.0%
+(D 9.5→2.0, N 5.5→1.0) and moves the corduroy not at all (N 0.096→0.084).
+Without the null this would have shipped at 12.5% looking exactly as confident.
+
+### FOUR IDEAS TRIED OR RESEARCHED AND REJECTED — MEASURED, SO NOBODY RE-DERIVES THEM
+
+* **PATCH COHERENCE** (Simakov et al., bidirectional similarity, CVPR 2008 — for
+  every 7x7 patch of the fill, SSD to its best match among the real patches
+  around it). The literature's default instrument for exactly this question, and
+  on this vacancy **it runs backwards**: corduroy 17.86 RMS, the real plate
+  pixels in the same footprint 15.07, and real strap 90 px higher **17.03 —
+  worse than the artifact.** A garment junction is unique in its own
+  neighbourhood, so *"no real patch nearby looks like this"* is true of the real
+  thing too.
+* **WHOLE-PATCH SPECTRAL PEAK / AUTOCORRELATION PEAK.** Corduroy peak-share
+  0.056, real pixels same footprint 0.048, real strap 170 px higher **0.107**.
+  The rib period is close to the fabric's own fold period and 67 px is too small
+  for the spike to be narrow.
+* **HOG orientation chi-square** — the literature predicts and §21 already
+  measured that it matches, because the streaks run along the material's own
+  grain. It is a coarser view of the `0.64 / 0.64` that already failed.
+* **GLCM/Haralick, Portilla–Simoncelli, LBP, absolute BRISQUE/NIQE** — reasons
+  in the module docstring. Short form: GLCM's one useful view is the
+  autocorrelation with quantisation damage added; PS's own point is
+  **metamerism**, so "stats match" is weak evidence and the wrong shape for a
+  gate; LBP is contrast-invariant by construction and reads dither on a flat
+  fill as texture; and natural-scene priors were fit on photographs, not
+  cel-shaded anime.
+
+### DEAD ZONES, PUBLISHED
+
+Full list in the module docstring. The four that will bite first:
+
+1. **It judges VACANCY FILLS, NOT SPRITES.** A composited drawn object is
+   *supposed* not to match the material around it. The tool skips components the
+   composite made **inkier** (new ink) and scores only the ones it **quieted**
+   (removal). Point it at a sprite and it reports nonsense with a straight face.
+2. **No colour, no semantics.** Everything is luma. A fill that continues the
+   strap straight through where the gold clasp belongs has no null axis, no
+   excess anisotropy, and passes clean. C4' judges **material**, never meaning.
+3. **The residual 3% is real** — three of 200 real windows are condemned, the
+   worst at D 0.104: a flat interior whose whole ring lands on cel outline. **A
+   FAIL on a small, flat, outlined region is worth a look before a re-render.**
+4. **It says nothing about whether the vacancy should EXIST.** §21's ruling —
+   that this particular hole is not fillable and the operation is wrong — stands.
+   A fill scoring 0.9/0.9/0.9 would not overturn it.
+
+`python3 pipeline/fill_quality.py --selftest`, or
+`--plate P.png --image I.png [--region M.png]` to judge a landed job.
