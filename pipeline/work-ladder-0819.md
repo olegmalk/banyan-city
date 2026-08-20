@@ -5027,7 +5027,7 @@ rewritten.
 
 `review/ep2-demo-0820` **revision d**. `01-cold-open-COMP-chroma-s20260840.mp4`
 (`12e256fd…1e28`) replaces `01-cold-open-LTX-fignonly-s20260840.mp4`, which held
-the slot for one evening. Cut sha `173179f4…c16a0`, same path, same URL, five sets
+the slot for one evening. Cut sha `6f12302d…8d1f`, same path, same URL, six sets
 of bytes today.
 
 | | leaving | entering |
@@ -5148,3 +5148,33 @@ stays in.
 
 **After 12:00.** The patch list is a real destination, not a bin — a revision cut is
 cheap ($0, one `render_t3` run). What it is not is a reason to hold the ship.
+
+### The guard that was missing: every gate this swap passed would have passed it at half speed
+
+Twenty minutes after revision d went up, the ship lane — assembling tomorrow's cut
+from its own copies — found that `render_t3` was playing the new cold open at
+**0.53× speed**, 5.04 s of clip stretched across a 9.47 s slot, the fig growing in
+slow motion. It reported it across instead of reaching into `review/ep2-demo-0820`
+to patch it, which is why the fix is in their commit (`ba412265`) and the
+re-assembly is in mine.
+
+**The cause is my sidecar being honest.** `held_still()` classified clips by
+substring-matching `model: none`, and `fig_composite.py` writes that line truthfully
+because *no sampler ran*. `model: none` means **no sampler**; it does not mean **no
+video**. The composite is 121 real frames at a real 24 fps. The fix asks the right
+question instead: a clip that declares its own `fps:` is footage and plays once then
+holds its last frame; a `hold_still` product is a computed camera move with no true
+frame rate, writes `seconds:` and deliberately no `fps:`, and still stretches.
+
+> **THE FINDING IS THE SHAPE OF THE HOLE, NOT THE FIX.** The licence gate, the
+> proof-receipt sha recheck, `qa_local`'s 83 routes, `qa_episode`'s 15 checks and
+> this lane's own six-encode G1 sweep **all passed the stretched cut**. Not one of
+> them looks at playback rate, and a clip at half speed hashes, serves, links and
+> measures exactly like one at full speed. What caught it was a person reading an
+> assembler's own log line — in a different directory, on a different cut.
+
+Re-assembled on the fixed tool: same 21 beats, same 115.42 s, same audio at
+−16.8 LUFS, beat 01 now *"plays once then HOLDS its last frame to fill 9.47 s"*.
+Cut sha `6f12302d…8d1f`; the stretched bytes are recorded as superseded in
+`picks-0820.yaml` with the reason, and the review page says so above the fold rather
+than quietly shipping a sixth set of bytes at the same URL.

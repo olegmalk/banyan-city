@@ -1231,7 +1231,8 @@ amended_0820e:
   by: the beat-01 composite lane (finished by the lane that verified it)
   what_moved: 'THE CUT MOVED. Beat 01 = 01-cold-open-COMP-chroma-s20260840.mp4, sha
     12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28, in review/ep2-demo-0820
-    revision d (cut sha 173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0). It
+    revision d (cut sha 6f12302d0bebe9f0e2e370cba9c61253c27b1cf7c66839b5f5343099c0868d1f, after a re-assembly
+    described in the ladder -- the first one played this clip at 0.53x). It
     replaces 01-cold-open-LTX-fignonly-s20260840.mp4, which held the slot for one evening.'
   the_prediction_in_amended_0820d_came_true_and_the_one_in_the_spec_did_not: 'amended_0820d named the
     next candidate exactly right -- a PICTURE rung matching the imported patch''s chromaticity, with

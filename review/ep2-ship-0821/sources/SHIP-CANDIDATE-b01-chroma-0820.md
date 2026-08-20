@@ -8,7 +8,9 @@ provenance and the verdict behind it, so the assembly does not have to go lookin
     landed   2026-08-20, evening — inside the 12:00 2026-08-21 ship cutoff
     job      pipeline/jobs/ep2-b01-figcomp-heldfield-0820.yaml
     verdict  verdict_chromaticity_rung_0820 / _measured / verdict_cut_swapped_0820
-    also in  review/ep2-demo-0820 revision d (cut sha 173179f4…c16a0), qa_local PASS
+    also in  review/ep2-demo-0820 revision d (cut sha 6f12302d…8d1f), qa_local PASS
+    NOTE     render_t3 must read this clip's `fps:`, not its `model: none`. Before ba412265
+             it stretched the clip to 0.53x -- your lane found that, this line records it.
 
 ## What it is
 

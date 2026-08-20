@@ -680,7 +680,11 @@ verdict_chromaticity_rung_0820_measured:
 verdict_cut_swapped_0820: 'THE SWAP HAPPENED, under the coordinator''s standing decision rule: G1
   scorable and passing WITH G2 intact -> veto-able steward swap. review/ep2-demo-0820 revision d,
   beat 01 = 01-cold-open-COMP-chroma-s20260840.mp4, sha 12e256fd...1e28, cut sha
-  173179f4e7d3a7d5c7f19112e59e46bab974ea29e1bbff257b537072ec0c16a0.
+  6f12302d0bebe9f0e2e370cba9c61253c27b1cf7c66839b5f5343099c0868d1f. That cut was re-assembled once,
+  20 minutes after it went up: the first assembly, sha 173179f4...c16a0, played this clip at 0.53x
+  because render_t3 read this sidecar''s honest `model: none` as "no video" rather than "no sampler".
+  Fixed in the tool by ba412265, not in the sidecar; found and reported by the ship lane, and by no
+  gate this rung ran -- none of them looks at playback rate.
 
 
   IT IS A STEWARD PICK AND NOT A TASTE VERDICT. Mechanical selection between two takes that score the
