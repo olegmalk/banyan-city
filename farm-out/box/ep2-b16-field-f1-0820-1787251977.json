@@ -67,12 +67,14 @@
     "filed_by": "box_enqueue --backlog"
   },
   "spec_sha256": "344eda80d2a1ec54eeadb3ca3ca4517e289b57426112f83d181451ac74ec6a47",
-  "started_at": "2026-08-20T19:19:19Z",
-  "attempts": 1,
+  "started_at": "2026-08-20T19:47:49Z",
+  "attempts": 2,
   "runner_pid": 8768,
   "runner_host": "MSI",
-  "finished_at": "2026-08-20T19:19:19Z",
-  "rc": 2,
-  "failed_step": "hintskel",
-  "artifacts_present": []
+  "finished_at": "2026-08-20T19:48:08Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b16field-f1-0820\\out\\ep2-b16-field-f1-0820-nocontrol.png"
+  ]
 }
