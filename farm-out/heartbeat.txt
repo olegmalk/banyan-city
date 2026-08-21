@@ -4252,3 +4252,5 @@
 23:22:56Z FAIL task=ep2-b06-guard1-0822-1787354108 rc=12 step=dry
 23:23:00Z STARTED task=ep2-b06-guard1-0822-1787354385-againa6e748 attempt=1 on box-runner
 23:23:02Z FAIL task=ep2-b06-guard1-0822-1787354385-againa6e748 rc=1 step=dry
+23:23:07Z STARTED task=ep2-b16-w4motion-0822-1787349815 attempt=1 on box-runner
+23:28:59Z DONE task=ep2-b16-w4motion-0822-1787349815 rc=0 artifacts=1
