@@ -2,17 +2,939 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "6b6cb249ce7e4c079afb5bf905f52f267c608ea4",
-  "measured_at": "2026-08-21T22:45:42Z",
-  "job_count": 1497,
-  "ok": 1413,
-  "failed": 84,
-  "upcoming_count": 117,
+  "source_commit": "e3de87fb49e413aee56607a69b99b33e7d3a582a",
+  "measured_at": "2026-08-21T23:43:01Z",
+  "job_count": 1511,
+  "ok": 1424,
+  "failed": 87,
+  "upcoming_count": 110,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b05-guards-f-0822-1787355214-again0a6d10",
+   "task": "ep2-b05-guards-f-0822",
+   "node": "002b-first-citizen",
+   "beat": 5,
+   "kind": "still-ipa",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:41:22Z",
+   "finished_at": "2026-08-21T23:41:51Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b05-guards-f-0822-1787355214-again0a6d10.json",
+   "spec_file": "pipeline/jobs/ep2-b05-guards-f-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 05's SLOT IN /review/ep2-beats-0821, which has carried four failing clauses and ZERO candidates since the page was built. If the frame passes the bar it is staged as this beat's first candidate -- marked PROVISIONAL on guard 2, whose casting is R4 and open at /review/ep2-guardcast2-0822 -- and it becomes the init for the beat's motion rung. If it fails, it answers the question nothing in this tree has asked: what one man's reference does to the second figure in a two-figure frame. Three GP…",
+    "why": "BEAT 05 CONTRADICTS A FINAL RULING IN ITS OWN PICTURE: 'neither guard wears the sash you froze for the cast'. Both sashes are asserted here, positively, in one clause covering both men, and both men are PLACED left and right -- the wording shape that finally got a second figure into beat 07 after two empty attempts. Guard 1 is the ratified man; guard 2 is NOT cast and this draft takes casting cell F provisionally, chosen because a thick grey moustache is the only feature in the sentence the oth…",
+    "success": "ONE 832x1216 png, judged AT 1:1 and on a MATCHED-SCALE two-face sheet beside taste/refs/guard1-canon-founder-0822.png -- the r11a lesson, where a pick was declared off full frames at different head sizes and flipped the moment the crops were the same height. PRE-REGISTERED, BEFORE THE PIXELS EXIST: (1) TWO MEN, side by side, both whole and both facing out -- one is a DROP and three is a DROP. This beat's one existing win is two figures for 117 frames and the plate may not lose it. (2) THEY ARE…",
+    "owner": "night iteration lane, 2026-08-22 -- beat 05's first plate with both guards and both sashes",
+    "est_minutes": 3,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b05-guards-f-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b05-guards-f-0822/05-the-patrol-ipa-r0-w015-s0.png",
+     "name": "05-the-patrol-ipa-r0-w015-s0.png",
+     "bytes": 1104044,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b05_guards_f_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "prompt_absent": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b05_guards_f_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot rea…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 5,
+    "episode": null,
+    "label": "Beat 05",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-w4motion-0822-1787349945",
+   "task": "ep2-b19-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:35:10Z",
+   "finished_at": "2026-08-21T23:41:14Z",
+   "duration_s": 364,
+   "sidecar": "farm-out/box/ep2-b19-w4motion-0822-1787349945.json",
+   "spec_file": "pipeline/jobs/ep2-b19-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 19 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b19-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b19-w4motion-0822/19-the-drop-LTX-ep2-b19-w4motion-0822.mp4",
+     "name": "19-the-drop-LTX-ep2-b19-w4motion-0822.mp4",
+     "bytes": 265442,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b19-w4motion-0822/b19-init-704x1280.png",
+     "name": "b19-init-704x1280.png",
+     "bytes": 1131118,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing mid-stride, looking back down at the ground, in tall grass, full body. THE ACTION: his lifted foot comes down, his weight settles back over it, and he leans a little further down toward the grass at his heel -- foot down, weight back, lean in. HALFWAY THROUGH the foot has landed, his weight is still shifting and his head is already low.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260889,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b19-canon-w4-0821/ep2-b19-canon-w4-0821-ipahead.png",
+    "sha256": "b763a62cc182c88511d37e2c12eeea9a4dd21a2378f5cf80fc78899f41263ba0"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. \"Not renderable until the plate exists\" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordin…",
+    "gate": "rendering now (1 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b17-w4motion-0822-1787349939",
+   "task": "ep2-b17-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 17,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:29:05Z",
+   "finished_at": "2026-08-21T23:35:04Z",
+   "duration_s": 359,
+   "sidecar": "farm-out/box/ep2-b17-w4motion-0822-1787349939.json",
+   "spec_file": "pipeline/jobs/ep2-b17-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 17 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b17-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b17-w4motion-0822/17-goodbye-LTX-ep2-b17-w4motion-0822.mp4",
+     "name": "17-goodbye-LTX-ep2-b17-w4motion-0822.mp4",
+     "bytes": 233701,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b17-w4motion-0822/b17-init-704x1280.png",
+     "name": "b17-init-704x1280.png",
+     "bytes": 1099078,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing, turning away, in tall grass, full body. THE ACTION: he carries the turn through, settles onto the far foot and takes one step away -- turn through, plant, step. HALFWAY THROUGH his back is most of the way to camera and his leading foot is lifting.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260887,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b17-canon-w4-0821/ep2-b17-canon-w4-0821-ipahead.png",
+    "sha256": "938d4494e4aff7640649a690d88ae871d90ec80d72c407a61507f201ad8158e3"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT, NEW, AND PASSING ALL FIVE CLAUSES: S1 stand, S2 the shake (the hem travels one full out-and-back across roughly a third of the frame, feet planted), S3 turn and walk away, P1 plate fidelity (12.5 at f008 against a ceiling of 40), and P2 — the garment clause added after the previous take…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 17,
+    "episode": null,
+    "label": "Beat 17",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-w4motion-0822-1787349815",
+   "task": "ep2-b16-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:23:07Z",
+   "finished_at": "2026-08-21T23:28:59Z",
+   "duration_s": 352,
+   "sidecar": "farm-out/box/ep2-b16-w4motion-0822-1787349815.json",
+   "spec_file": "pipeline/jobs/ep2-b16-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 16 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b16-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-w4motion-0822/16-why-LTX-ep2-b16-w4motion-0822.mp4",
+     "name": "16-why-LTX-ep2-b16-w4motion-0822.mp4",
+     "bytes": 394249,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b16-w4motion-0822/b16-init-704x1280.png",
+     "name": "b16-init-704x1280.png",
+     "bytes": 950455,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, in tall grass, full body. THE ACTION: he breathes -- his shoulders rise and settle twice -- and his head drifts slowly to one side and back to centre over the whole clip. Nothing else moves. HALFWAY THROUGH his head is over to one side, shoulders down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260886,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b16-canon-w4-0821/ep2-b16-canon-w4-0821-ipahead.png",
+    "sha256": "6849fcd1a2fe451f7f61a40ffd4fe0be64b3294330fc30aa9795a82642ceb2e2"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b06-guard1-0822-1787354385-againa6e748",
+   "task": "ep2-b06-guard1-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "still-ipa",
+   "rc": 1,
+   "failed_step": "dry",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:23:00Z",
+   "finished_at": "2026-08-21T23:23:02Z",
+   "duration_s": 2,
+   "sidecar": "farm-out/box/ep2-b06-guard1-0822-1787354385-againa6e748.json",
+   "spec_file": "pipeline/jobs/ep2-b06-guard1-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 06's SLOT IN /review/ep2-beats-0821, which has carried two named faults and ZERO candidates since the page was built. If the frame passes the bar it is staged as this beat's first candidate and becomes the init for the motion rung that answers the beat's second fault -- 4.5 s of a 6.5 s slot is one frozen frame, the worst ratio in the episode. If it fails, the failure names the next rung and costs three GPU minutes.",
+    "why": "BEAT 06's INIT IS A CHARACTER WHO NO LONGER EXISTS. Every b06 draft before this one draws a round bald bureaucrat in mismatched armour; on 2026-08-22 the founder ratified guard 1 as a specific man -- dark cropped hair, round wire-rim glasses, cream shirt, white shoulder sash -- by posting one of our own frames back at us. A motion pass cannot fix a wrong man, so the plate is first. Same job also answers the beat's board-size fault, positively, in the words. Route: the cinematic stack the 08-22…",
+    "success": "ONE 832x1216 png, judged AT 1:1 against taste/refs/guard1-canon-founder-0822.png on a MATCHED-SCALE face sheet -- the r11a lesson from the goblin lane, where a pick was declared off two full frames at different head sizes and flipped the moment the crops were the same height. PRE-REGISTERED, BEFORE THE PIXELS EXIST: (1) HE IS GUARD 1 -- dark cropped hair, round wire-rim glasses, the same face. Unlike the casting sheet, a clone of the reference is a PASS here. (2) A GROWN MAN. A child, teenager…",
+    "owner": "night iteration lane, 2026-08-22 -- beat 06's first plate on the ratified guard",
+    "est_minutes": 3,
+    "priority": 6
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b06_guard1canon_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "prompt_absent": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b06_guard1canon_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b06-guard1-0822-1787354108",
+   "task": "ep2-b06-guard1-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "still-ipa",
+   "rc": 12,
+   "failed_step": "dry",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:22:56Z",
+   "finished_at": "2026-08-21T23:22:56Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b06-guard1-0822-1787354108.json",
+   "spec_file": "pipeline/jobs/ep2-b06-guard1-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 06's SLOT IN /review/ep2-beats-0821, which has carried two named faults and ZERO candidates since the page was built. If the frame passes the bar it is staged as this beat's first candidate and becomes the init for the motion rung that answers the beat's second fault -- 4.5 s of a 6.5 s slot is one frozen frame, the worst ratio in the episode. If it fails, the failure names the next rung and costs three GPU minutes.",
+    "why": "BEAT 06's INIT IS A CHARACTER WHO NO LONGER EXISTS. Every b06 draft before this one draws a round bald bureaucrat in mismatched armour; on 2026-08-22 the founder ratified guard 1 as a specific man -- dark cropped hair, round wire-rim glasses, cream shirt, white shoulder sash -- by posting one of our own frames back at us. A motion pass cannot fix a wrong man, so the plate is first. Same job also answers the beat's board-size fault, positively, in the words. Route: the cinematic stack the 08-22…",
+    "success": "ONE 832x1216 png, judged AT 1:1 against taste/refs/guard1-canon-founder-0822.png on a MATCHED-SCALE face sheet -- the r11a lesson from the goblin lane, where a pick was declared off two full frames at different head sizes and flipped the moment the crops were the same height. PRE-REGISTERED, BEFORE THE PIXELS EXIST: (1) HE IS GUARD 1 -- dark cropped hair, round wire-rim glasses, the same face. Unlike the casting sheet, a clone of the reference is a PASS here. (2) A GROWN MAN. A child, teenager…",
+    "owner": "night iteration lane, 2026-08-22 -- beat 06's first plate on the ratified guard",
+    "est_minutes": 3,
+    "priority": 6
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b06_guard1canon_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "prompt_absent": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b06_guard1canon_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b05-guards-f-0822-1787354387",
+   "task": "ep2-b05-guards-f-0822",
+   "node": "002b-first-citizen",
+   "beat": 5,
+   "kind": "still-ipa",
+   "rc": 1,
+   "failed_step": "dry",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:22:48Z",
+   "finished_at": "2026-08-21T23:22:51Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep2-b05-guards-f-0822-1787354387.json",
+   "spec_file": "pipeline/jobs/ep2-b05-guards-f-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 05's SLOT IN /review/ep2-beats-0821, which has carried four failing clauses and ZERO candidates since the page was built. If the frame passes the bar it is staged as this beat's first candidate -- marked PROVISIONAL on guard 2, whose casting is R4 and open at /review/ep2-guardcast2-0822 -- and it becomes the init for the beat's motion rung. If it fails, it answers the question nothing in this tree has asked: what one man's reference does to the second figure in a two-figure frame. Three GP…",
+    "why": "BEAT 05 CONTRADICTS A FINAL RULING IN ITS OWN PICTURE: 'neither guard wears the sash you froze for the cast'. Both sashes are asserted here, positively, in one clause covering both men, and both men are PLACED left and right -- the wording shape that finally got a second figure into beat 07 after two empty attempts. Guard 1 is the ratified man; guard 2 is NOT cast and this draft takes casting cell F provisionally, chosen because a thick grey moustache is the only feature in the sentence the oth…",
+    "success": "ONE 832x1216 png, judged AT 1:1 and on a MATCHED-SCALE two-face sheet beside taste/refs/guard1-canon-founder-0822.png -- the r11a lesson, where a pick was declared off full frames at different head sizes and flipped the moment the crops were the same height. PRE-REGISTERED, BEFORE THE PIXELS EXIST: (1) TWO MEN, side by side, both whole and both facing out -- one is a DROP and three is a DROP. This beat's one existing win is two figures for 117 frames and the plate may not lose it. (2) THEY ARE…",
+    "owner": "night iteration lane, 2026-08-22 -- beat 05's first plate with both guards and both sashes",
+    "est_minutes": 3,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b05-guards-f-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b05-guards-f-0822/05-the-patrol-ipa-r0-w015-s0.png",
+     "name": "05-the-patrol-ipa-r0-w015-s0.png",
+     "bytes": 1104044,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b05_guards_f_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "prompt_absent": "prompt built on the box by `goblin_ipa_beat.py` from `--draft-key authored_b05_guards_f_0822` — it is assembled from that selector at render time, so no prompt text exists in the spec or on the results branch to quote here",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot rea…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 5,
+    "episode": null,
+    "label": "Beat 05",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b15-w4motion-0822-1787349811",
+   "task": "ep2-b15-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 15,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:16:42Z",
+   "finished_at": "2026-08-21T23:22:42Z",
+   "duration_s": 360,
+   "sidecar": "farm-out/box/ep2-b15-w4motion-0822-1787349811.json",
+   "spec_file": "pipeline/jobs/ep2-b15-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 15 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b15-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b15-w4motion-0822/15-good-listener-LTX-ep2-b15-w4motion-0822.mp4",
+     "name": "15-good-listener-LTX-ep2-b15-w4motion-0822.mp4",
+     "bytes": 320355,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b15-w4motion-0822/b15-init-704x1280.png",
+     "name": "b15-init-704x1280.png",
+     "bytes": 1044862,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is squatting, head tilted down and sideways, in tall grass, full body. THE ACTION: he tips his head further down and over to one side, bringing it low and close to the ground in front of him, holds it there while he talks -- his jaw moving -- and then lifts it part of the way back. HALFWAY THROUGH his head is at its lowest and most tilted, mouth moving.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260885,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b15-canon-w4-0821/ep2-b15-canon-w4-0821-ipahead.png",
+    "sha256": "b163d604b487fe40fc62649ffa77d7a8a292dbdb743de1898c183b1b5570aba5"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE — no footage has ever existed for this beat — AND ITS BLOCKER IS NOW NAMED. It was unknown until 2026-08-19: done_when needs HIM AND THE SAPLING IN THE SAME FRAME, and the acting was never the problem. 24 artifacts from the large 0815 inventory were judged, two MPS plates drawn, r1 scored 6 o…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 15,
+    "episode": null,
+    "label": "Beat 15",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-w4motion-0822-1787349806",
+   "task": "ep2-b14-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:10:32Z",
+   "finished_at": "2026-08-21T23:16:36Z",
+   "duration_s": 364,
+   "sidecar": "farm-out/box/ep2-b14-w4motion-0822-1787349806.json",
+   "spec_file": "pipeline/jobs/ep2-b14-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 14 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b14-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b14-w4motion-0822/14-the-defense-LTX-ep2-b14-w4motion-0822.mp4",
+     "name": "14-the-defense-LTX-ep2-b14-w4motion-0822.mp4",
+     "bytes": 300631,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b14-w4motion-0822/b14-init-704x1280.png",
+     "name": "b14-init-704x1280.png",
+     "bytes": 937712,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is kneeling, picking at the dirt with one hand, in tall grass, full body. THE ACTION: he scratches at the dirt in front of him with the fingers of one hand, twice, and between the two he glances up and away to his side and back down again. HALFWAY THROUGH his head is up and turned away, his hand still down in the dirt.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260884,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b14-canon-w4b-0821/ep2-b14-canon-w4b-0821-ipahead.png",
+    "sha256": "301ef9a4e5e0c1240156e4dde276bdf427948717b08bffa12ebd4e4a5a313029"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "FIRST FOOTAGE THIS BEAT HAS EVER HAD IS IN THE CUT, AND IT DOES NOT PASS: M1 (hands to the dirt) and M4 (same figure, camera locked) PASS, M2 (the glance never returns) and M3 (the face reads sullen, not embarrassed) FAIL. It is in the cut because real footage of a beat beats a slate for review pur…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-w4motioncurl-0822-1787350510",
+   "task": "ep2-b13-w4motioncurl-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T23:04:26Z",
+   "finished_at": "2026-08-21T23:10:25Z",
+   "duration_s": 359,
+   "sidecar": "farm-out/box/ep2-b13-w4motioncurl-0822-1787350510.json",
+   "spec_file": "pipeline/jobs/ep2-b13-w4motioncurl-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 13 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b13-w4motioncurl-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-w4motioncurl-0822/13-the-shade-LTX-ep2-b13-w4motioncurl-0822.mp4",
+     "name": "13-the-shade-LTX-ep2-b13-w4motioncurl-0822.mp4",
+     "bytes": 317988,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b13-w4motioncurl-0822/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 985154,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is hunched forward, head tipped down and to one side, in tall grass, full body. THE ACTION: his shoulders drop and he settles lower over his knees, his head sinking a little further down and to the side -- settle, sink, still. HALFWAY THROUGH his shoulders are down and his head is lower than it started, still tipping. HE NEVER RISES, he never straightens up and his head never comes back up.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260883,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b13-canon-w4curl-0821/ep2-b13-canon-w4curl-0821-ipahead.png",
+    "sha256": "f753f8d680a662c23cf548b50ba10d480b6d995951ab41dc90747bbc8b02c4d3"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-w4motion-0822-1787352645-again2b0c48",
+   "task": "ep2-b07-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:58:22Z",
+   "finished_at": "2026-08-21T23:04:20Z",
+   "duration_s": 358,
+   "sidecar": "farm-out/box/ep2-b07-w4motion-0822-1787352645-again2b0c48.json",
+   "spec_file": "pipeline/jobs/ep2-b07-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 07 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b07-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-w4motion-0822/07-confiscate-LTX-ep2-b07-w4motion-0822.mp4",
+     "name": "07-confiscate-LTX-ep2-b07-w4motion-0822.mp4",
+     "bytes": 376344,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b07-w4motion-0822/b07-init-704x1280.png",
+     "name": "b07-init-704x1280.png",
+     "bytes": 992017,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: TWO figures, both present in the very first frame and in every frame after it. ONE small green goblin with a bare hairless scalp, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots, standing at the left. ONE TALL CITY GUARD, a grown man with near-black cropped hair and round wire-rimmed glasses, wearing HIS OWN uniform and not the goblin's: a tan wrap tunic with a wide turned-down tan collar and a WHITE SASH OVER ONE SHOULDER, no mandarin collar and no frog buttons. He stands at the right, facing the goblin, a full head taller. Both faces, both costumes and the goblin's skin colour DO NOT CHANGE for the whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION: the guard's arm comes up and points at him; he flinches back a half step -- TWO figures the whole clip, and the point is aimed AT him. HALFWAY THROUGH the guard's arm is up and level, pointing at him, and he is leaning away.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260877,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b07-canon-w4-0821/ep2-b07-canon-w4-0821-ipahead.png",
+    "sha256": "975d61499fd49e57723bd95c6636956ca1e31a84b06c40fe4bea6482d3d50b3d"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-w4motion-0822-1787349802",
+   "task": "ep2-b08-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:52:16Z",
+   "finished_at": "2026-08-21T22:58:14Z",
+   "duration_s": 358,
+   "sidecar": "farm-out/box/ep2-b08-w4motion-0822-1787349802.json",
+   "spec_file": "pipeline/jobs/ep2-b08-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 08 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b08-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-w4motion-0822/08-inside-him-LTX-ep2-b08-w4motion-0822.mp4",
+     "name": "08-inside-him-LTX-ep2-b08-w4motion-0822.mp4",
+     "bytes": 253904,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b08-w4motion-0822/b08-init-704x1280.png",
+     "name": "b08-init-704x1280.png",
+     "bytes": 1064535,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing, head bowed, looking down, in tall grass, full body. THE ACTION: he lowers his head and looks down at his own belly, shoulders sinking -- the look DOWN completes, and it completes early. HALFWAY THROUGH his chin is already down and his eyes are on his own belly.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260878,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b08-canon-w4-0821/ep2-b08-canon-w4-0821-ipahead.png",
+    "sha256": "451c4f5eb76821002b2c5d1cd2cd8d8188e78de72e18a0e6ee7420a78f7870a1"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-w4motion-0822-1787352104-againfc6530",
+   "task": "ep2-b04-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:46:08Z",
+   "finished_at": "2026-08-21T22:52:10Z",
+   "duration_s": 362,
+   "sidecar": "farm-out/box/ep2-b04-w4motion-0822-1787352104-againfc6530.json",
+   "spec_file": "pipeline/jobs/ep2-b04-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 04 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b04-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-w4motion-0822/04-the-footnote-LTX-ep2-b04-w4motion-0822.mp4",
+     "name": "04-the-footnote-LTX-ep2-b04-w4motion-0822.mp4",
+     "bytes": 296138,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b04-w4motion-0822/b04-init-704x1280.png",
+     "name": "b04-init-704x1280.png",
+     "bytes": 956409,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing, arms at sides, in tall grass, full body. THE ACTION: he leans his head and shoulders out to one side, looks, and pulls straight back upright -- out, look, back -- the pull-back is the joke and must land. HALFWAY THROUGH he is leaned out sideways at full extension, looking, not yet back. HIS FEET STAY PLANTED and he stays upright: he never tips over, never lies down and never leaves his feet.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260874,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b04-canon-w4-0821/ep2-b04-canon-w4-0821-ipahead.png",
+    "sha256": "5c103f73ca32b4eb0994babd376c5efc8993dee6b4771393fcc89d81f2cebfa2"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-w4motion-0822-1787350349",
+   "task": "ep2-b07-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:40:04Z",
+   "finished_at": "2026-08-21T22:46:02Z",
+   "duration_s": 358,
+   "sidecar": "farm-out/box/ep2-b07-w4motion-0822-1787350349.json",
+   "spec_file": "pipeline/jobs/ep2-b07-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 07 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b07-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-w4motion-0822/07-confiscate-LTX-ep2-b07-w4motion-0822.mp4",
+     "name": "07-confiscate-LTX-ep2-b07-w4motion-0822.mp4",
+     "bytes": 376344,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b07-w4motion-0822/b07-init-704x1280.png",
+     "name": "b07-init-704x1280.png",
+     "bytes": 992017,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: TWO figures, both present in the very first frame and in every frame after it. ONE small green goblin with a bare hairless scalp, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots, standing at the left. ONE TALL CITY GUARD, a grown man with near-black cropped hair and round wire-rimmed glasses, wearing HIS OWN uniform and not the goblin's: a tan wrap tunic with a wide turned-down tan collar and a WHITE SASH OVER ONE SHOULDER, no mandarin collar and no frog buttons. He stands at the right, facing the goblin, a full head taller. Both faces, both costumes and the goblin's skin colour DO NOT CHANGE for the whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION: the guard's arm comes up and points at him; he flinches back a half step -- TWO figures the whole clip, and the point is aimed AT him. HALFWAY THROUGH the guard's arm is up and level, pointing at him, and he is leaning away.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260877,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b07-canon-w4-0821/ep2-b07-canon-w4-0821-ipahead.png",
+    "sha256": "975d61499fd49e57723bd95c6636956ca1e31a84b06c40fe4bea6482d3d50b3d"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b04-w4motion-0822-1787349793",
    "task": "ep2-b04-w4motion-0822",
@@ -106333,177 +107255,23 @@
    }
   },
   {
-   "id": "ep2-b13-w4motioncurl-0822",
+   "id": "ep2-b18-celfig-0822",
    "node": "002b-first-citizen",
-   "beat": 13,
-   "kind": "motion",
+   "beat": 18,
+   "kind": "other",
    "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 13 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "priority": 7,
+   "est_minutes": 2,
+   "consumer": "THE FOUNDER, on /review/ep2-beats-0821 beat 18, as a SECOND OPTION beside the frame already in the cut. The only question filed against him on this beat is a material one -- matte or gloss -- and he has never been shown the fig drawn in any dialect but the rendered one. A pass here changes nothing…",
+   "why_first": "BEAT 18 PASSES AND IS NOT BEING FIXED.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b13-w4motioncurl-0822.yaml",
-   "authored_at": 1787350526,
+   "spec_file": "pipeline/jobs/ep2-b18-celfig-0822.yaml",
+   "authored_at": 1787355672,
    "story": {
     "kind": "beat",
-    "beat": 13,
+    "beat": 18,
     "episode": null,
-    "label": "Beat 13",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b07-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 7,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 07 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b07-w4motion-0822.yaml",
-   "authored_at": 1787350381,
-   "story": {
-    "kind": "beat",
-    "beat": 7,
-    "episode": null,
-    "label": "Beat 07",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b17-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 17,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 17 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b17-w4motion-0822.yaml",
-   "authored_at": 1787349974,
-   "story": {
-    "kind": "beat",
-    "beat": 17,
-    "episode": null,
-    "label": "Beat 17",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b19-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 19,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 19 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b19-w4motion-0822.yaml",
-   "authored_at": 1787349974,
-   "story": {
-    "kind": "beat",
-    "beat": 19,
-    "episode": null,
-    "label": "Beat 19",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b08-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 8,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 08 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b08-w4motion-0822.yaml",
-   "authored_at": 1787349459,
-   "story": {
-    "kind": "beat",
-    "beat": 8,
-    "episode": null,
-    "label": "Beat 08",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b14-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 14,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 14 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b14-w4motion-0822.yaml",
-   "authored_at": 1787349459,
-   "story": {
-    "kind": "beat",
-    "beat": 14,
-    "episode": null,
-    "label": "Beat 14",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b15-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 15,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 15 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b15-w4motion-0822.yaml",
-   "authored_at": 1787349459,
-   "story": {
-    "kind": "beat",
-    "beat": 15,
-    "episode": null,
-    "label": "Beat 15",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b16-w4motion-0822",
-   "node": "002b-first-citizen",
-   "beat": 16,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 13,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 16 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
-   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b16-w4motion-0822.yaml",
-   "authored_at": 1787349459,
-   "story": {
-    "kind": "beat",
-    "beat": 16,
-    "episode": null,
-    "label": "Beat 16",
+    "label": "Beat 18",
     "moment": null,
     "why": "the script on main has no beat by this number"
    }
