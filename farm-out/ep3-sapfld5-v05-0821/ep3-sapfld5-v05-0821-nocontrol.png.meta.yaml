@@ -1,0 +1,29 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep3-sapfld5-v05-0821
+arm: nocontrol
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLPipeline (text2img, NO control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260955
+cost_usd: 0
+controlnet: none (the control arm; same seed, same prompt)
+repo_commit: d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+model_load_seconds: 4.9
+render_seconds: 9.6
+rendered_utc: 2026-08-21T16:57:55Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  masterpiece, best quality, very aesthetic, no humans, in a green field, distant hills, rain, wet ground, grey sky, wide shot
+negative: |-
+  lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture
