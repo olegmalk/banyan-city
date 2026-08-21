@@ -10,13 +10,13 @@ owner: goblin standard lane, 2026-08-21
 consumer: 'A CANDIDATE for beat 07''s post-ship patch. review/ep2-ship-0821 is NOT touched by this job
   and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement
   with its own bar.'
-success: ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b07-tilefix-p1-0821
+success: ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b07-ageb-r2-0821
   with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.
-why: 'MOTION for beat 07 off the patch wave''s picked plate (ep2-b07-tilefix-p1-0821, round p1).
+why: 'MOTION for beat 07 off the patch wave''s picked plate (ep2-b07-ageb-r2-0821, round r2).
 
 
-  WHY THIS PLATE: round one, and this is the beat the whole wave was worth. BALD. No white hair, no guard
-  spectacles, which was the entire complaint.
+  WHY THIS PLATE: age-B round two. Bald, blank-eyed, sweatdrop and a heavy frown. Apprehension without
+  panic, which is the read this beat wants.
 
 
   The seven plates are the first frames in this tree where the goblin reads as the B tile''s CREATURE
@@ -55,10 +55,11 @@ payload:
     \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
   C:\banyan-farm\ep2-b07-tilemotion-s1-0821\b07-motion-prompt.txt: '2D anime, hand-drawn cel animation,
     static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
-    Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak,
-    standing in tall grass, arms at his sides, seen full body. HE IS BEING TOLD SOMETHING AND HE DOES
-    NOT LIKE IT: his head turns a little toward the sound, his shoulders drop, and his hands close at
-    his sides. He stays where he is. HALFWAY THROUGH his head is turned, shoulders low, hands closed.'
+    Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken
+    tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body. HE IS BEING TOLD
+    SOMETHING AND HE DOES NOT LIKE IT: his head turns a little toward the sound, his shoulders drop, and
+    his hands close at his sides. He stays where he is. HALFWAY THROUGH his head is turned, shoulders
+    low, hands closed.'
   C:\banyan-farm\ep2-b07-tilemotion-s1-0821\b07-negative.txt: second face, second goblin, two goblins,
     2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face,
     face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human
@@ -79,9 +80,9 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b07-tilemotion-s1-0821\cover_crop.py
   - --src
-  - C:\banyan-farm\courier-box\farm-out\ep2-b07-tilefix-p1-0821\ep2-b07-tilefix-p1-0821-ipahead.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b07-ageb-r2-0821\ep2-b07-ageb-r2-0821-ipahead.png
   - --sha256
-  - f246bf847ebeec970d7b20a2321f89f85a53eda3ce0714b42d476d1d59a9bd86
+  - 02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15
   - --out
   - C:\banyan-farm\ep2-b07-tilemotion-s1-0821\b07-init-704x1280.png
   - --size
@@ -202,7 +203,7 @@ one_sample_rule: 'SATISFIED BY THE SHAPE OF THE BATCH, and worth stating because
   and its own action, at two seeds. The recipe under them was sampled by ep2-b16-motion-0820 and shipped.
   The plates under them were each sampled and judged by eye at 1:1 before any motion was filed -- that
   judgement is what picked round two for beats 04, 08 and 20.'
-plate_provenance: farm-out/ep2-b07-tilefix-p1-0821/ep2-b07-tilefix-p1-0821-ipahead.png, sha256 f246bf847ebeec970d7b20a2321f89f85a53eda3ce0714b42d476d1d59a9bd86,
+plate_provenance: farm-out/ep2-b07-ageb-r2-0821/ep2-b07-ageb-r2-0821-ipahead.png, sha256 02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15,
   drawn at the k6a goblin standard (pipeline/jerry_standard_0821.py, steward ruling 2026-08-21). cover_crop.py
   asserts that digest before it writes an init frame, so an edited or re-rendered plate stops this job
   rather than quietly animating a different character.
@@ -268,10 +269,10 @@ derivation:
   - ep2-b16-motion-0820 -> ep2-b07-tilemotion-s1-0821
   overrides_applied_and_asserted:
     argv:--sha256:
-    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> f246bf847ebeec970d7b20a2321f89f85a53eda3ce0714b42d476d1d59a9bd86)
+    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> 02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15)
     argv:--src:
     - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b07-sapcomp-r2-0820\b07-sapcomp-s20260820.png
-      -> C:\banyan-farm\courier-box\farm-out\ep2-b07-tilefix-p1-0821\ep2-b07-tilefix-p1-0821-ipahead.png)
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b07-ageb-r2-0821\ep2-b07-ageb-r2-0821-ipahead.png)
     key:beat:
     - key beat = 7
     key:est_minutes:
@@ -279,6 +280,6 @@ derivation:
     key:priority:
     - key priority = 24
     payload:b07-motion-prompt.txt:
-    - payload b07-motion-prompt.txt (1355 -> 529 chars)
+    - payload b07-motion-prompt.txt (1355 -> 552 chars)
     payload:b07-negative.txt:
     - payload b07-negative.txt (780 -> 746 chars)

@@ -10,13 +10,15 @@ owner: goblin standard lane, 2026-08-21
 consumer: 'A CANDIDATE for beat 13''s post-ship patch. review/ep2-ship-0821 is NOT touched by this job
   and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement
   with its own bar.'
-success: ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b13-tilefix-p1-0821
+success: ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b13-ageb-r2-0821
   with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.
-why: 'MOTION for beat 13 off the patch wave''s picked plate (ep2-b13-tilefix-p1-0821, round p1).
+why: 'MOTION for beat 13 off the patch wave''s picked plate (ep2-b13-ageb-r2-0821, round r2).
 
 
-  WHY THIS PLATE: round one, and the best frame in the wave: seated, hands clasped between the knees,
-  head low. It is the tile''s own stance.
+  WHY THIS PLATE: age-B round two, AND IT IS THE FRAME OF THE DAY. `closed eyes, smile, parted lips` gives
+  a real smile with the tusks showing. Four earlier samples on this beat could not produce warmth and
+  an expressive-reference build was started to chase it; two stronger tags did it instead. CARRIES THE
+  C1 COLLAR FAULT.
 
 
   The seven plates are the first frames in this tree where the goblin reads as the B tile''s CREATURE
@@ -55,11 +57,11 @@ payload:
     \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
   C:\banyan-farm\ep2-b13-tilemotion-s2-0821\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation,
     static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
-    Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak,
-    sitting on the grass, small and folded, hands clasped between his knees, head low, seen full body.
-    HE SETTLES AND SPEAKS ONCE: his shoulders drop as he lets a breath out, his head lifts a little, his
-    mouth opens and closes on a short line, and his head lowers again. The daylight slides slowly across
-    the grass. HALFWAY THROUGH his head is up and his mouth is open on the line.'
+    Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken
+    tusk, patchwork cloak, sitting on the grass, small and folded, hands clasped between his knees, head
+    low, seen full body. HE SETTLES AND SPEAKS ONCE: his shoulders drop as he lets a breath out, his head
+    lifts a little, his mouth opens and closes on a short line, and his head lowers again. The daylight
+    slides slowly across the grass. HALFWAY THROUGH his head is up and his mouth is open on the line.'
   C:\banyan-farm\ep2-b13-tilemotion-s2-0821\b13-negative.txt: second face, second goblin, two goblins,
     2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face,
     face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human
@@ -80,9 +82,9 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b13-tilemotion-s2-0821\cover_crop.py
   - --src
-  - C:\banyan-farm\courier-box\farm-out\ep2-b13-tilefix-p1-0821\ep2-b13-tilefix-p1-0821-ipahead.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-ageb-r2-0821\ep2-b13-ageb-r2-0821-ipahead.png
   - --sha256
-  - 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3
+  - 30a79995bf4682698386f713bd95ac0eba584c1491cb58b4e08b1c09e9541d93
   - --out
   - C:\banyan-farm\ep2-b13-tilemotion-s2-0821\b13-init-704x1280.png
   - --size
@@ -203,7 +205,7 @@ one_sample_rule: 'SATISFIED BY THE SHAPE OF THE BATCH, and worth stating because
   and its own action, at two seeds. The recipe under them was sampled by ep2-b16-motion-0820 and shipped.
   The plates under them were each sampled and judged by eye at 1:1 before any motion was filed -- that
   judgement is what picked round two for beats 04, 08 and 20.'
-plate_provenance: farm-out/ep2-b13-tilefix-p1-0821/ep2-b13-tilefix-p1-0821-ipahead.png, sha256 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3,
+plate_provenance: farm-out/ep2-b13-ageb-r2-0821/ep2-b13-ageb-r2-0821-ipahead.png, sha256 30a79995bf4682698386f713bd95ac0eba584c1491cb58b4e08b1c09e9541d93,
   drawn at the k6a goblin standard (pipeline/jerry_standard_0821.py, steward ruling 2026-08-21). cover_crop.py
   asserts that digest before it writes an init frame, so an edited or re-rendered plate stops this job
   rather than quietly animating a different character.
@@ -269,10 +271,10 @@ derivation:
   - ep2-b16-motion-0820 -> ep2-b13-tilemotion-s2-0821
   overrides_applied_and_asserted:
     argv:--sha256:
-    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3)
+    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> 30a79995bf4682698386f713bd95ac0eba584c1491cb58b4e08b1c09e9541d93)
     argv:--src:
     - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b13-sapcomp-r2-0820\b13-sapcomp-s20260820.png
-      -> C:\banyan-farm\courier-box\farm-out\ep2-b13-tilefix-p1-0821\ep2-b13-tilefix-p1-0821-ipahead.png)
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b13-ageb-r2-0821\ep2-b13-ageb-r2-0821-ipahead.png)
     key:beat:
     - key beat = 13
     key:est_minutes:
@@ -280,6 +282,6 @@ derivation:
     key:priority:
     - key priority = 24
     payload:b13-motion-prompt.txt:
-    - payload b13-motion-prompt.txt (1355 -> 613 chars)
+    - payload b13-motion-prompt.txt (1355 -> 636 chars)
     payload:b13-negative.txt:
     - payload b13-negative.txt (780 -> 746 chars)

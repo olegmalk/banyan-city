@@ -10,14 +10,13 @@ owner: goblin standard lane, 2026-08-21
 consumer: 'A CANDIDATE for beat 04''s post-ship patch. review/ep2-ship-0821 is NOT touched by this job
   and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement
   with its own bar.'
-success: ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b04-tilefix-r2-0821
+success: ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b04-ageb-r2-0821
   with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.
-why: 'MOTION for beat 04 off the patch wave''s picked plate (ep2-b04-tilefix-r2-0821, round r2).
+why: 'MOTION for beat 04 off the patch wave''s picked plate (ep2-b04-ageb-r2-0821, round r2).
 
 
-  WHY THIS PLATE: ROUND TWO. p1 stood bolt upright under a dark arch; r2 is a cleaner figure on open ground.
-  Neither leans out, and the lean is handed to the motion prompt below rather than re-asked of the plate
-  -- which is what the 08-20 ruling `the peek is the beat now` already implies.
+  WHY THIS PLATE: age-B round two. `parted lips, looking to the side` -- the peek is in the face now,
+  and the lean is still handed to the motion prompt below rather than re-asked of the plate.
 
 
   The seven plates are the first frames in this tree where the goblin reads as the B tile''s CREATURE
@@ -56,12 +55,12 @@ payload:
     \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
   C:\banyan-farm\ep2-b04-tilemotion-s1-0821\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation,
     static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
-    Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak,
-    standing in tall grass, arms at his sides, seen full body, the grass blades crossing in front of him.
-    HE PEEKS AND PULLS BACK, ON A LOOP: he leans his head and one shoulder out sideways past the grass
-    to look, holds it a moment, then pulls straight back in behind the blades the same way he came, and
-    leans out again -- the same trip repeating, and STILL GOING when the shot ends. HALFWAY THROUGH he
-    is leaned out to one side, head clear of the grass, looking.'
+    Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken
+    tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body, the grass blades
+    crossing in front of him. HE PEEKS AND PULLS BACK, ON A LOOP: he leans his head and one shoulder out
+    sideways past the grass to look, holds it a moment, then pulls straight back in behind the blades
+    the same way he came, and leans out again -- the same trip repeating, and STILL GOING when the shot
+    ends. HALFWAY THROUGH he is leaned out to one side, head clear of the grass, looking.'
   C:\banyan-farm\ep2-b04-tilemotion-s1-0821\b04-negative.txt: second face, second goblin, two goblins,
     2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face,
     face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human
@@ -82,9 +81,9 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-b04-tilemotion-s1-0821\cover_crop.py
   - --src
-  - C:\banyan-farm\courier-box\farm-out\ep2-b04-tilefix-r2-0821\ep2-b04-tilefix-r2-0821-ipahead.png
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-ageb-r2-0821\ep2-b04-ageb-r2-0821-ipahead.png
   - --sha256
-  - 522c579b8ca3c5897f0a6da8c7ff9f971b0888f3a853f4cee5885dbac204056a
+  - eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937
   - --out
   - C:\banyan-farm\ep2-b04-tilemotion-s1-0821\b04-init-704x1280.png
   - --size
@@ -205,7 +204,7 @@ one_sample_rule: 'SATISFIED BY THE SHAPE OF THE BATCH, and worth stating because
   and its own action, at two seeds. The recipe under them was sampled by ep2-b16-motion-0820 and shipped.
   The plates under them were each sampled and judged by eye at 1:1 before any motion was filed -- that
   judgement is what picked round two for beats 04, 08 and 20.'
-plate_provenance: farm-out/ep2-b04-tilefix-r2-0821/ep2-b04-tilefix-r2-0821-ipahead.png, sha256 522c579b8ca3c5897f0a6da8c7ff9f971b0888f3a853f4cee5885dbac204056a,
+plate_provenance: farm-out/ep2-b04-ageb-r2-0821/ep2-b04-ageb-r2-0821-ipahead.png, sha256 eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937,
   drawn at the k6a goblin standard (pipeline/jerry_standard_0821.py, steward ruling 2026-08-21). cover_crop.py
   asserts that digest before it writes an init frame, so an edited or re-rendered plate stops this job
   rather than quietly animating a different character.
@@ -271,10 +270,10 @@ derivation:
   - ep2-b16-motion-0820 -> ep2-b04-tilemotion-s1-0821
   overrides_applied_and_asserted:
     argv:--sha256:
-    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> 522c579b8ca3c5897f0a6da8c7ff9f971b0888f3a853f4cee5885dbac204056a)
+    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937)
     argv:--src:
     - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b04-sapcomp-r2-0820\b04-sapcomp-s20260820.png
-      -> C:\banyan-farm\courier-box\farm-out\ep2-b04-tilefix-r2-0821\ep2-b04-tilefix-r2-0821-ipahead.png)
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b04-ageb-r2-0821\ep2-b04-ageb-r2-0821-ipahead.png)
     key:beat:
     - key beat = 4
     key:est_minutes:
@@ -282,6 +281,6 @@ derivation:
     key:priority:
     - key priority = 24
     payload:b04-motion-prompt.txt:
-    - payload b04-motion-prompt.txt (1355 -> 696 chars)
+    - payload b04-motion-prompt.txt (1355 -> 719 chars)
     payload:b04-negative.txt:
     - payload b04-negative.txt (780 -> 746 chars)

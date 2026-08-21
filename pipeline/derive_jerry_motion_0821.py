@@ -54,21 +54,30 @@ BOX_OUT = r"C:\banyan-farm\courier-box\farm-out"
 SEEDS = [20260821, 20260822]
 
 # beat: (round picked, plate path in repo, sha256)
+#
+# REPOINTED 2026-08-21 TO THE AGE-B ROUND-TWO PLATES. The `tilefix` plates these
+# used to name are the ADULT goblin with the mannequin face, and every one of
+# them is superseded by a founder ruling: the age is Option B (his pick off the
+# ladder), the faces carry each beat's own emotion (his "lifeless" correction),
+# the blank slit eye is back (his ratified tile), and the broken tusk is in the
+# prompt at last (his "what happened to the original design"). The old table is
+# not deleted from history -- the tilefix plates rendered, were judged, and are
+# the evidence the FRAMING half of this problem was solved before the face was.
 PICKS = {
-    "02": ("p1", "ep2-b02-tilefix-p1-0821",
-           "f1940886a723b063d350b04afb4811c9676a3a19476ba4950964909d06f4465b"),
-    "03": ("p1", "ep2-b03-tilefix-p1-0821",
-           "dff0295524b0f2d8adb29dbce535e872e5c88118876951ee807d4739dda752b7"),
-    "04": ("r2", "ep2-b04-tilefix-r2-0821",
-           "522c579b8ca3c5897f0a6da8c7ff9f971b0888f3a853f4cee5885dbac204056a"),
-    "07": ("p1", "ep2-b07-tilefix-p1-0821",
-           "f246bf847ebeec970d7b20a2321f89f85a53eda3ce0714b42d476d1d59a9bd86"),
-    "08": ("r2", "ep2-b08-tilefix-r2-0821",
-           "92b4208162c80fb02c9dfdfde4ec579f672a86e9ac4884f1932720452d28b042"),
-    "13": ("p1", "ep2-b13-tilefix-p1-0821",
-           "36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3"),
-    "20": ("r2", "ep2-b20-tilefix-r2-0821",
-           "bfcc23521f8977e6bdc9efdc3f1e472ebe7aae569431d70a524a1a791a8de671"),
+    "02": ("r2", "ep2-b02-ageb-r2-0821",
+           "0240e8986947d77fcf238743984f5fc98395ce462b3e94f8413120533467d757"),
+    "03": ("r2", "ep2-b03-ageb-r2-0821",
+           "b342803b06b8a102be37d9d802064513a2fe93445a4e0e19e696f98c1d25fcbb"),
+    "04": ("r2", "ep2-b04-ageb-r2-0821",
+           "eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937"),
+    "07": ("r2", "ep2-b07-ageb-r2-0821",
+           "02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15"),
+    "08": ("r2", "ep2-b08-ageb-r2-0821",
+           "a6f696b67588b417760a5001751cee4f1503f5c9657229ea4e22a786e3663667"),
+    "13": ("r2", "ep2-b13-ageb-r2-0821",
+           "30a79995bf4682698386f713bd95ac0eba584c1491cb58b4e08b1c09e9541d93"),
+    "20": ("r2", "ep2-b20-ageb-r2-0821",
+           "73bccac699ec666985c830dc3322ca2bc877dbc3e985b7c6572c7e38865fdd32"),
 }
 
 SLUG = {"02": "the-sprint", "03": "bad-cover", "04": "the-footnote",
@@ -76,30 +85,38 @@ SLUG = {"02": "the-sprint", "03": "bad-cover", "04": "the-footnote",
         "20": "evidence"}
 
 WHY_PICKED = {
-    "02": "round one. Running, leaning forward, face true, no cowl.",
-    "03": "round one. The seed rung (r2) came back MORE lilac at the collar, "
-          "not less, so p1 is the pick and the magenta finding stands.",
-    "04": "ROUND TWO. p1 stood bolt upright under a dark arch; r2 is a cleaner "
-          "figure on open ground. Neither leans out, and the lean is handed to "
-          "the motion prompt below rather than re-asked of the plate -- which "
-          "is what the 08-20 ruling `the peek is the beat now` already implies.",
-    "07": "round one, and this is the beat the whole wave was worth. BALD. No "
-          "white hair, no guard spectacles, which was the entire complaint.",
-    "08": "ROUND TWO, and it is a clean fix. p1 drew a bare protruding pot "
-          "belly -- the chubby CHILD read this beat exists to remove, drawn "
-          "because the pose words named the belly. r2 asks only for the look "
-          "down and the cloak covers him.",
-    "13": "round one, and the best frame in the wave: seated, hands clasped "
-          "between the knees, head low. It is the tile's own stance.",
-    "20": "ROUND TWO. The seed did not clear the collar (finding below) but it "
-          "put a RED fruit in his hands where p1 had a green blob, and beat "
-          "20 is the fig beat.",
+    "02": "age-B round two. Blank slit eyes, mouth wide open on `scared, open "
+          "mouth` -- the alarm is on the face, not just in the stride.",
+    "03": "age-B round two. Sweatdrop on the brow, frown, gaze off to the "
+          "side. Furtive, which is the beat. CARRIES THE C1 COLLAR FAULT.",
+    "04": "age-B round two. `parted lips, looking to the side` -- the peek is "
+          "in the face now, and the lean is still handed to the motion prompt "
+          "below rather than re-asked of the plate.",
+    "07": "age-B round two. Bald, blank-eyed, sweatdrop and a heavy frown. "
+          "Apprehension without panic, which is the read this beat wants.",
+    "08": "age-B round two. `blush, frown` lands a full orange blush -- caught "
+          "out, with the cloak still covering the belly that made round one of "
+          "the adult wave read as a chubby child.",
+    "13": "age-B round two, AND IT IS THE FRAME OF THE DAY. `closed eyes, "
+          "smile, parted lips` gives a real smile with the tusks showing. Four "
+          "earlier samples on this beat could not produce warmth and an "
+          "expressive-reference build was started to chase it; two stronger "
+          "tags did it instead. CARRIES THE C1 COLLAR FAULT.",
+    "20": "age-B round two. Open mouth, blank eyes, red fruit in both hands. "
+          "CARRIES THE C1 COLLAR FAULT.",
 }
 
+# The subject clause must describe THE PLATE THE MOTION STARTS FROM, or the
+# video model drifts the face back toward its own prior over the clip. Two words
+# are added for the age pivot -- `young` and the broken tusk -- because both are
+# now in every init frame and neither was in the adult plates this text was
+# written for. `blank white eyes` was already correct and is why round two put
+# `blank eyes` back in the plates: the motion prompt had been asking for an eye
+# the plates had stopped drawing.
 HEAD = ("2D anime, hand-drawn cel animation, static locked framing, the frame "
         "never moves, flat cel shading, clean ink linework, anime key art. "
-        "Subject already in frame: ONE lean green goblin alone, bald head, "
-        "blank white eyes, patchwork cloak, ")
+        "Subject already in frame: ONE lean young green goblin alone, bald "
+        "head, blank white eyes, one broken tusk, patchwork cloak, ")
 
 # beat: (what is already in frame, THE ONE THING THAT MOVES, halfway clause)
 ACTION = {
