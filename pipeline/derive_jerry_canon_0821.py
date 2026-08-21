@@ -125,8 +125,18 @@ def _fresh(beat, rnd, sample):
     }
 
 
+# ROUND TWO'S BASELINE NEGATIVE, added to every rung after the sample. The two
+# hard fails on ep2-b13-canon-s1-0821 were a SECOND FLOATING HEAD and orange
+# irises; `2boys` was already in the negative and did not touch the head,
+# because a second head is not a second character and the tag for a character
+# does not name it.
+NEG_R2 = ("extra head, disembodied head, multiple heads, floating head, "
+          "orange eyes, glowing eyes, red eyes, saturated, high contrast")
+
+
 def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
-         extra_keys=None):
+         extra_keys=None, neg_add=None, ip_scale=None, ip_ref=None,
+         pos_add=None):
     if beat not in C.WAVE:
         raise SystemExit("!! beat %r is not in the wave" % beat)
     pose, pose_words, default_emotion, stage = C.WAVE[beat]
@@ -134,6 +144,14 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     stem = C.SKELETONS[pose]
     mask = C.head_box(pose)
     prompt = C.prompt_for(pose_words, emotion)
+    if pos_add:
+        # Inserted into the IDENTITY half, before the emotion and the pose, so
+        # the pose and location stay at the tail where CLIP-77 protects them.
+        prompt = prompt.replace(C.IDENTITY, C.IDENTITY + ", " + pos_add, 1)
+    negative = C.NEGATIVE + ((", " + neg_add) if neg_add else "")
+    ip_scale = ip_scale or C.IP_SCALE
+    ip_ref = ip_ref or C.IP_REF
+    ip_ref_sha = C.REF_SHA[ip_ref]
 
     new_id = "ep2-b%02d-canon-%s-0821" % (beat, rnd)
     job_dir = "b%02dcanon-%s-0821" % (beat, rnd)
@@ -141,10 +159,12 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     # CLIP-77, MEASURED PER SPEC, not trusted from the module's selftest. A
     # caller may pass an --emotion the cross-product never covered.
     n_pos = _clip77("%s prompt" % new_id, prompt)
-    n_neg = _clip77("%s negative" % new_id, C.NEGATIVE)
+    n_neg = _clip77("%s negative" % new_id, negative)
 
     extra = {
-        "ip_adapter": C.ip_adapter_block(pose),
+        "ip_adapter": dict(C.ip_adapter_block(pose),
+                           ref="%s/%s.png" % (C.ASSET_DIR, ip_ref),
+                           ref_sha256=ip_ref_sha, scale=ip_scale),
         "stage_direction": stage,
         "bar": BAR,
         "the_one_variable": (
@@ -216,13 +236,13 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     overrides = {
         "argv:--control": "pipeline/control/%s.png" % stem,
         "argv:--control-sha256": C.SKELETON_SHA[stem],
-        "argv:--ip-ref": "pipeline/control/%s.png" % C.IP_REF,
-        "argv:--ip-ref-sha256": C.IP_REF_SHA,
+        "argv:--ip-ref": "pipeline/control/%s.png" % ip_ref,
+        "argv:--ip-ref-sha256": ip_ref_sha,
         "argv:--ip-mask": mask,
-        "argv:--ip-scale": C.IP_SCALE,
+        "argv:--ip-scale": ip_scale,
         "argv:--repo-commit": C.ASSET_COMMIT,
         "payload:prompt.txt": prompt,
-        "payload:negative.txt": C.NEGATIVE,
+        "payload:negative.txt": negative,
         "key:beat": int(beat),
         "key:node": NODE,
         "key:priority": priority,
@@ -235,10 +255,12 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
         extra=extra, by="pipeline/derive_jerry_canon_0821.py")
 
     child["steps"][0] = {"name": "stage",
-                         "argv": [PY, "-c", C.stage_step(job_dir, stem)]}
+                         "argv": [PY, "-c",
+                                  C.stage_step(job_dir, stem, ip_ref)]}
     child["steps"][-1] = {"name": "publish",
                           "argv": [PY, "-c",
-                                   C.publish_step(job_dir, new_id, stem)]}
+                                   C.publish_step(job_dir, new_id,
+                                                  stem, ip_ref)]}
     child["artifacts"] = [r"C:\banyan-farm\%s\out\%s-%s.png"
                           % (job_dir, new_id, C.ARM)]
 
@@ -246,10 +268,10 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     argv = [t for s in child["steps"] for t in s.get("argv", [])]
     for flag, want in (("--control", "pipeline/control/%s.png" % stem),
                        ("--control-sha256", C.SKELETON_SHA[stem]),
-                       ("--ip-ref", "pipeline/control/%s.png" % C.IP_REF),
-                       ("--ip-ref-sha256", C.IP_REF_SHA),
+                       ("--ip-ref", "pipeline/control/%s.png" % ip_ref),
+                       ("--ip-ref-sha256", ip_ref_sha),
                        ("--ip-mask", mask),
-                       ("--ip-scale", C.IP_SCALE),
+                       ("--ip-scale", ip_scale),
                        ("--ip-weight", C.IP_WEIGHT),
                        ("--scale", C.CONTROL_SCALE),
                        ("--seed", str(C.SEED)),
@@ -290,7 +312,7 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     derive_spec.write(child, out, force=force)
     derive_fetch_guard.assert_fetch_urls_resolve(
         os.path.join(REPO, out),
-        must_hold=(C.DRIVER, stem + ".png", C.IP_REF + ".png"))
+        must_hold=(C.DRIVER, stem + ".png", ip_ref + ".png"))
     print("wrote %s\n   skel=%-26s mask=%-19s clip77=%d/%d\n   +  %s"
           % (out, stem, mask, n_pos, n_neg, pay))
     return out
@@ -331,6 +353,10 @@ def main(argv=None):
     ap.add_argument("--beat", type=int)
     ap.add_argument("--round", default="p1")
     ap.add_argument("--emotion")
+    ap.add_argument("--neg-add", help="appended to the negative")
+    ap.add_argument("--pos-add", help="appended to the IDENTITY clause")
+    ap.add_argument("--ip-scale")
+    ap.add_argument("--ip-ref")
     ap.add_argument("--commit", help="the asset commit to pin as --repo-commit")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
@@ -353,7 +379,9 @@ def main(argv=None):
             emit(beat, rnd=a.round, force=a.force)
         return 0
     if a.beat:
-        emit(a.beat, rnd=a.round, emotion=a.emotion, force=a.force)
+        emit(a.beat, rnd=a.round, emotion=a.emotion, force=a.force,
+             neg_add=a.neg_add, pos_add=a.pos_add, ip_scale=a.ip_scale,
+             ip_ref=a.ip_ref)
         return 0
     ap.error("pass --sample, --wave or --beat N")
 

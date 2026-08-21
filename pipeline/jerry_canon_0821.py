@@ -158,11 +158,22 @@ MEASURED = {
 IDENTITY = ("masterpiece, best quality, 1boy, solo, goblin, green skin, bald, "
             "pointy ears, large ears, slit pupils, eyebags, thin eyebrows, "
             "mandarin collar, green shirt, black shorts, boots, muted color")
+# TRIMMED ON THE SAME BUDGET AS THE POSITIVE, and for a reason the sample
+# supplied: round two has to ADD terms to the negative (the second floating head,
+# the orange irises) and the 60-token draft left no room -- the first r2 attempt
+# measured 88 of 77 and the guard refused all four rungs. Three terms came out:
+#   `pointy nose`, `dot nose`  Inherited from the tile recipe, whose canon was
+#                              "THERE IS NO HUMAN NOSE ... no drawn nostrils".
+#                              The founder's image HAS a small drawn nose with
+#                              two nostril dashes, so these two were negating a
+#                              feature that is now canon.
+#   `scarf`                    Redundant beside `cloak, hood` for a costume the
+#                              image draws with a bare neck.
 NEGATIVE = ("lowres, worst quality, low quality, text, watermark, "
             "blank eyes, no pupils, thick eyebrows, "
-            "cloak, hood, scarf, patchwork, "
+            "cloak, hood, patchwork, "
             "human face, wrinkled skin, old man, hair, beard, "
-            "child, chibi, pointy nose, dot nose, 2boys")
+            "child, chibi, 2boys")
 SEED = 20260823                    # the wave's seed, held so takes compare
 
 # The per-beat lever, and the whole per-beat lever. One mouth tag, one brow tag.
@@ -241,6 +252,16 @@ IP_REF = "jerry-canon-sq22-0821"
 IP_REF_HEAD_FRAC = 0.22
 IP_REF_SHA = "bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e"
 IP_REF_ENCODED_PCT = 6.7
+# Every reference on disk, so a rung may name one by stem and the fetch step
+# still sha-asserts it. Built by REF_BUILDER at the head-frac in the name.
+REF_SHA = {
+    "jerry-canon-sq20-0821":
+        "abdd9fcfee8dfb3ba99929799bf2301598a75b2b8ab07ed92d813190ddd11a1c",
+    "jerry-canon-sq22-0821":
+        "bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e",
+    "jerry-canon-sq25-0821":
+        "04692a1a0756dd8e6e5d44d2875a72cbe2f7f3c0d6ed5f1b53811ff15949df01",
+}
 IP_SCALE = "0.7"                   # k6a's, unchanged: the reference moved, not
                                    # the strength, so this stays a fixed point.
 IP_WEIGHT = "ip-adapter-plus-face_sdxl_vit-h.safetensors"
@@ -336,7 +357,7 @@ SKELETON_SHA = {
 }
 
 
-def stage_step(job_dir, stem):
+def stage_step(job_dir, stem, ip_ref=None):
     """Fetch + sha-assert driver, skeleton and reference before a GPU second."""
     return (
         '# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n'
@@ -364,10 +385,11 @@ def stage_step(job_dir, stem):
         '        fh.write(blob)\n'
         '    print("staged", name, got, "->", dst)\n'
         % (ASSET_URL, job_dir, DRIVER, DRIVER_SHA,
-           stem, SKELETON_SHA[stem], IP_REF, IP_REF_SHA))
+           stem, SKELETON_SHA[stem], ip_ref or IP_REF,
+           REF_SHA[ip_ref or IP_REF]))
 
 
-def publish_step(job_dir, new_id, stem):
+def publish_step(job_dir, new_id, stem, ip_ref=None):
     """farm-out or it never happened; the conditions travel with the frame."""
     return (
         '# The courier pushes from farm-out and from nowhere else.\n'
@@ -395,7 +417,8 @@ def publish_step(job_dir, new_id, stem):
         '    fh.write("\\n".join(sorted(lines)) + "\\n")\n'
         'print("published", len(files), "file(s) + manifest ->", dst)\n'
         'raise SystemExit(0 if len(files) >= 6 else 1)\n'
-        % {"d": job_dir, "i": new_id, "a": ARM, "h": stem, "r": IP_REF})
+        % {"d": job_dir, "i": new_id, "a": ARM, "h": stem,
+           "r": ip_ref or IP_REF})
 
 
 def ip_adapter_block(pose):
