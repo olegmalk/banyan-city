@@ -938,6 +938,123 @@ subjects:
     >>> THE OPEN QUESTION IS HIS AND IT IS ONE QUESTION WITH PIXELS:
     >>> /review/ep2-goblin-age-0821, three options off a nine-sample ladder.
 
+    >>> ///// AND IT IS ANSWERED THE SAME DAY, 2026-08-21, IN THREE RULINGS.
+    >>> ///// The founder answered the age question by DECLINING to answer it
+    >>> ///// and delegating the pick, and in the same breath named a defect
+    >>> ///// nobody had put on a card. VERBATIM, both halves:
+    >>> /////     "younger, not chibi"
+    >>> /////     "these are practically the same and they look lifeless...
+    >>> /////      i already approved enough goblin images for you to decide"
+    >>> ///// Two of the three rulings below are therefore STEWARD PICKS made
+    >>> ///// under an explicit delegation, and both are veto-able in one line
+    >>> ///// (R4). The third is his, and it is a restoration.
+    >>>
+    >>> RULING 1 -- AGE IS OPTION B, AND THE PICK IS THE STEWARD'S BECAUSE HE
+    >>> SAID SO. head_frac 0.240, 4.17 heads. B is not a re-derivation of the
+    >>> ladder: review/ep2-goblin-age-0821/B-h240-kid.png is sha-identical to
+    >>> farm-out/ep2-jerry-age-h240w2-0821/ep2-jerry-age-h240w2-0821-ipahead.png,
+    >>> so the frame he was shown is the w2 wording at that geometry. Its mask,
+    >>> 289,101,541,379, is carried unchanged for the same reason.
+    >>>   THE WORDING SHIPS AS w1 (`young goblin, slim`) AND NOT AS THE w2 THAT
+    >>>   DREW IT, and the swap is recorded here rather than made quietly. What
+    >>>   pays for it is CLIP's 77-token ceiling: `controlnet_plate.
+    >>>   token_overflow` REFUSES a prompt past 77 because diffusers truncates
+    >>>   SILENTLY and what falls off the tail is the POSE, so a truncated frame
+    >>>   looks like a failed recipe. Rulings 2 and 3 add ~16 tokens to a
+    >>>   72-token prompt and something had to come out. It came out of the axis
+    >>>   this tree MEASURED as decorative -- the ladder's own finding is that
+    >>>   inside a row the three wordings were nearly indistinguishable and "the
+    >>>   age you are looking at is carried by proportion, not by adjectives".
+    >>>   All three h240 columns are published under farm-out/, so that is
+    >>>   checkable rather than assertable. The GEOMETRY, which is what carries
+    >>>   the read, is byte-identical to the picked frame's.
+    >>>   WHY B AND NOT A OR C. His own words bound it from both ends:
+    >>>   "younger, not chibi -- a kid/teen goblin". A (4.65 heads) is the
+    >>>   adolescent end and is the least change from the adult he rejected; C
+    >>>   (3.77) did NOT break his round-chibi floor but is the rung authored
+    >>>   AS the far end. B is the middle and the most literal reading of
+    >>>   "a kid/teen goblin". Choosing the middle of a range he defined is a
+    >>>   pick, not a taste ruling, which is why the steward may make it.
+    >>>   AND THE LADDER'S OWN FINDING SURVIVES INTO THE STANDARD: inside a row
+    >>>   the three wordings were nearly indistinguishable. THE AGE IS CARRIED
+    >>>   BY GEOMETRY, NOT BY ADJECTIVES. That is why B is a NUMBER we can hit
+    >>>   repeatably rather than a phrasing to be re-argued, and it is why the
+    >>>   age dial now lives in code as
+    >>>   `author_jerry_skel_0820.AGE_B_HEAD_FRAC`.
+    >>>
+    >>> RULING 2 -- THE BLANK-FACE BLOCK IS STRUCK AS THE DEFAULT, AND THIS IS
+    >>> THE ONE THAT REVERSES A FINDING THIS FILE SPENT FOURTEEN SAMPLES ON.
+    >>> Canon says above, in as many words, "`blank eyes` IS THE WHOLE GAME and
+    >>> `no nose` IS THE SECOND HALF". That sentence is not wrong and it is not
+    >>> deleted. It was measured in the era when WORDING WAS THE ONLY LEVER on
+    >>> the face -- before the IP-Adapter, before the reference crop, before the
+    >>> pose skeleton -- and identity is now held by the ADAPTER, the SKELETON
+    >>> and the AGE GEOMETRY. The block was identity scaffolding, it has been
+    >>> replaced by instruments, and left standing it produces mannequins. The
+    >>> founder's word for frames that passed every clause of the k6a bar was
+    >>> LIFELESS, which is a BAR problem and not a draw problem: nothing in that
+    >>> bar ever asked whether the character was doing anything.
+    >>>   STRUCK: `blank eyes`, `jitome`, `half-closed eyes`, and from the older
+    >>>     tile recipe `expressionless`, `:|`, `closed mouth`.
+    >>>   KEPT, AND THE DISTINCTION IS THE WHOLE CARE OF THIS RULING: `tsurime`
+    >>>     and `thick eyebrows`. Those are SHAPE -- the tile's upward-slanting
+    >>>     slit and the brow the P1 clause scores -- not mood. Striking them
+    >>>     would move the face's geometry under cover of a ruling about its
+    >>>     expression.
+    >>>   IN THEIR PLACE, PER BEAT: each plate carries ITS OWN emotion, read off
+    >>>     that beat's stage direction in node.md and written as Danbooru tags.
+    >>>     The seven are tabulated in `pipeline/derive_jerry_ageb_0821.WAVE`
+    >>>     with the stage direction each was read from, so the emotion is
+    >>>     auditable against the script rather than invented per render.
+    >>>   THE BAR GROWS THREE CLAUSES TO MATCH -- E1 the beat's emotion is
+    >>>     legible with the caption covered, E2 the mouth is doing something
+    >>>     (P3 only ever asked that a line EXIST, because `closed mouth, :|`
+    >>>     kept drawing none), E3 it is still him. A ruling that adds a
+    >>>     capability without adding a clause that can fail is prose.
+    >>>   THE PREDICTED COST IS T1, said before the render: with `blank eyes`
+    >>>     gone, no-iris-no-pupil is carried by the adapter alone. If it comes
+    >>>     back with irises the old finding survived the instrument change, and
+    >>>     the answer is NOT a fourth wording -- it is to restore `blank eyes`
+    >>>     and carry the emotion in the mouth and brow only.
+    >>>
+    >>> RULING 3 -- THE BROKEN TUSK RETURNS, AND IT IS A RESTORATION RATHER THAN
+    >>> A DESIGN CHANGE. node.md, THE SPRINT, first draft and never revised:
+    >>> "A SCAVENGER -- goblin-ish, enormous ears, one broken tusk, patchwork
+    >>> cloak". It has been in the script the entire time and in a PROMPT never
+    >>> once. The founder asked what happened to the original design; this is
+    >>> what happened to it. Positive tag `tusks, broken tusk`, and the honest
+    >>> half is that `tusks` is a Danbooru tag with posts behind it while
+    >>> `broken tusk` is the script's own English -- so the COUNT and the BREAK
+    >>> are the parts expected to be ignored, and bar clause K1 scores exactly
+    >>> that rather than letting a two-intact-tusk frame pass as "the tusk
+    >>> landed".
+    >>>
+    >>> WHAT NONE OF THE THREE TOUCH, because the last three corrections here
+    >>> were all over-read: the adapter, its weight digest, its reference crop
+    >>> (still the ADULT tile's head -- it supplies the CREATURE while the
+    >>> skeleton supplies the AGE), ip-scale 0.7, the openpose net at 1.0, the
+    >>> seed 20260823, the checkpoint, and every creature attribute the tile
+    >>> owns. THE SHORT LOW SWEPT-BACK EAR ESPECIALLY, which now has to survive
+    >>> a bigger head AND an expression on nothing but absence-plus-suppression,
+    >>> and is therefore scored FIRST in the new bar instead of last.
+    >>>
+    >>> THE ONE SAMPLE THAT GATES ALL THREE: ep2-b13-ageb-s1-0821, beat 13 at
+    >>> age B with THE SHADE's own exhausted relief and the tusk. Beat 13
+    >>> because it is the frame he ruled the adult read on ("this is one of the
+    >>> images where the goblin looks like an adult, which is wrong") and it was
+    >>> the adult wave's best pass, so a break is attributable to the three new
+    >>> things. Nothing scales until it is judged at 1:1. If it breaks,
+    >>> `derive_jerry_ageb_0821.py isolate` emits the two one-variable rungs and
+    >>> the wave waits.
+    >>>
+    >>> THE ADULT WAVE THAT THIS SUPERSEDES IS NOT DELETED. Its seven plates
+    >>> rendered and were judged this morning (b02/b03/b07/b13/b20 round one,
+    >>> b04/b08 round two) and they are the evidence that the FRAMING half of
+    >>> the problem is solved; they are simply the wrong age wearing a mannequin
+    >>> face. `derive_jerry_wave_0821.py` is likewise not edited -- overwriting
+    >>> the deriver that produced those verdicts would make them
+    >>> unreproducible, so the rulings live in a new file beside it.
+
     WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
     it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
     832x1216). `pipeline/plate_scratch.py` is the MAC authoring path and its own

@@ -78,6 +78,11 @@ TPL = {"elb": 0.66, "wri": 0.48, "hip": 0.53, "kne": 0.285, "ank": 0.035}
 TILE_HEAD_FRAC = 0.190          # 5.26 heads standing
 BOBBLE_HEAD_FRAC = 0.320        # what all twelve tile-set poses actually drew
 LEAN_HEAD_FRAC = 0.160          # 6.25 heads -- the overshoot rung
+AGE_B_HEAD_FRAC = 0.240         # 4.17 heads -- OPTION B, the age the tree draws
+                                # from 2026-08-21. Not a candidate any more: the
+                                # founder ruled the axis younger and B is the
+                                # decided rung, so this is the head_frac every
+                                # new Jerry skeleton is authored at.
 
 
 def figure(head_frac, pose="stand", cx_frac=0.5,
@@ -336,6 +341,25 @@ HINTS = [
      "authored heads-over-span at 4.72 instead of 3.63. If the net normalises "
      "head size to the skeleton's span rather than reading the head keypoints, "
      "this is the rung that lands and the plain one does not."),
+    # ---- AGE B, 2026-08-21. The founder ruled the age axis younger and the
+    # ---- steward picked OPTION B off the nine-frame ladder: head_frac 0.240,
+    # ---- 4.17 heads. `jerry-skel-h240-0821.png` is that dial in the STAND pose
+    # ---- and it is the frame he looked at; the four below are the SAME NUMBER
+    # ---- in the four other stances the seven-beat wave needs, so the wave can
+    # ---- move the age dial without also moving the pose instrument. Authored
+    # ---- by the same build() as every other skeleton in the tree; the five
+    # ---- head keypoints still translate as one rigid block, which is what lets
+    # ---- the adapter mask follow a pose by translation at this head_frac too.
+    ("jerry-skel-h240seat-0821.png", AGE_B_HEAD_FRAC, "seatspan",
+     "AGE B, THE TILE'S OWN STANCE. Beat 13 -- THE SHADE. This is the sample "
+     "pose: beat 13 is the frame the founder ruled the adult read on, and it "
+     "was round one's best pass, so it is where the age pivot is sampled."),
+    ("jerry-skel-h240stride-0821.png", AGE_B_HEAD_FRAC, "stride",
+     "AGE B, striding. Beat 02 -- THE SPRINT."),
+    ("jerry-skel-h240crouch-0821.png", AGE_B_HEAD_FRAC, "crouch",
+     "AGE B, squatting. Beats 03 (BAD COVER) and 20 (EVIDENCE)."),
+    ("jerry-skel-h240hunch-0821.png", AGE_B_HEAD_FRAC, "hunch",
+     "AGE B, hunched. Beat 04 -- THE FOOTNOTE, the peek."),
 ]
 
 
