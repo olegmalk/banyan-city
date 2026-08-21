@@ -1,0 +1,113 @@
+{
+  "id": "ep2-b04-canonmotion-0821-1787324443",
+  "task": "ep2-b04-canonmotion-0821",
+  "node": "002b-first-citizen",
+  "beat": 4,
+  "worker": "box-runner",
+  "priority": 24,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b04-canon-w2-0821\\ep2-b04-canon-w2-0821-ipahead.png",
+        "--sha256",
+        "98e20fd2f39bd5afdcc62b5945fda1b1c03167d7420a2ae76ffcab5dae280816",
+        "--out",
+        "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\b04-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\b04-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\b04-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "105",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b04-canonmotion-0821",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\bench-ep2-b04-canonmotion-0821.jsonl",
+        "--bench-label",
+        "ep2-b04-canonmotion-0821"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-canonmotion-0821\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-canonmotion-0821/04-evidence-LTX-ep2-b04-canonmotion-0821.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b04-canonmotion-0821/b04-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b04-canonmotion-0821/bench-ep2-b04-canonmotion-0821.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-canonmotion-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\04-evidence-LTX-ep2-b04-canonmotion-0821.mp4"
+  ],
+  "backlog": {
+    "filed_at": 1787324443,
+    "filed_at_iso": "2026-08-21T15:00:43Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b04-canonmotion-0821.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "e9e4b1e2eb9b96676c46f424b8f58b5b47a4feb0a6b9fd04bcff2ea877d7b0f6",
+  "started_at": "2026-08-21T15:25:29Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T15:31:23Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b04-canonmotion-0821\\04-evidence-LTX-ep2-b04-canonmotion-0821.mp4"
+  ]
+}
