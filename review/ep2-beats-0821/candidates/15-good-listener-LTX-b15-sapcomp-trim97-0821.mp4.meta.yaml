@@ -1,0 +1,29 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 15-good-listener-LTX-sapcomp-0820.mp4
+source_path: farm-out/ep2-b15-listenmotion-0820/15-good-listener-LTX-sapcomp-0820.mp4
+source_sha256: 679c13312d2d0a70cb298b384802360eb4305d8ecef7d674ed30d5b5eef31620
+source_frames: 121
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 15
+size: 704x1280
+fps: 24.0
+frames: 97
+seconds: 4.042
+edit: ffmpeg select frames 0..96 of 121, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 24
+seed: 20260820
+guidance: 2.0
+steps: 8@352x640+3@704x1280
+task: ep2-b15-sapcomp-trim-0822
+cost_usd: 0
+mode: production
+why_trimmed: 'REBUILT 2026-08-22: the file that has been on the beats page under this name
+  since 08-21 is CORRUPT -- 786480 bytes with no moov atom, so ffprobe and every browser refuse
+  it. It was linked as a beat-15 candidate the whole time and would have played as nothing
+  for the founder. Re-cut from the same source at the same 97 frames.'
