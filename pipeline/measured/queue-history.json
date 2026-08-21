@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "402858bb96c1f3aa2996676ca5c382589f29baed",
-  "measured_at": "2026-08-21T14:57:21Z",
-  "job_count": 1339,
-  "ok": 1258,
+  "source_commit": "ce3fd63a27e6cdc32a3ab6ef1f682a65650b55a4",
+  "measured_at": "2026-08-21T15:51:41Z",
+  "job_count": 1346,
+  "ok": 1265,
   "failed": 81,
   "upcoming_count": 85,
   "skipped_sidecars": null,
@@ -13,6 +13,510 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b20-canonmotion-0821-1787324453",
+   "task": "ep2-b20-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:37:32Z",
+   "finished_at": "2026-08-21T15:43:33Z",
+   "duration_s": 361,
+   "sidecar": "farm-out/box/ep2-b20-canonmotion-0821-1787324453.json",
+   "spec_file": "pipeline/jobs/ep2-b20-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 20 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 20 ON THE FOUNDER-IMAGE CANON PLATE, round w2, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he lifts the fig in both hands and looks up from it to the branch beside him. Done when the LOOK UP completes -- the outgoing take never did it. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 121 frames (5.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded this…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260920, init cover-cropped from the canon w2 plate with sha256 8575b7e55c5b73e2 asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 26
+   },
+   "artifacts_dir": "farm-out/ep2-b20-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-canonmotion-0821/20-evidence-LTX-ep2-b20-canonmotion-0821.mp4",
+     "name": "20-evidence-LTX-ep2-b20-canonmotion-0821.mp4",
+     "bytes": 437736,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b20-canonmotion-0821/b20-init-704x1280.png",
+     "name": "b20-init-704x1280.png",
+     "bytes": 1017283,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is squatting, holding a small fruit, looking up, in tall grass, full body. THE ACTION: he lifts the fig in both hands and looks up from it to the branch beside him -- the LOOK UP completes -- the outgoing take never did it. HALFWAY THROUGH his head is up off the fruit, the fruit still closed in both hands.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260920,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b20-canon-w2-0821/ep2-b20-canon-w2-0821-ipahead.png",
+    "sha256": "8575b7e55c5b73e263d1a6bcfc684a6435865376e528500ac7859ba09d427535"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canonmotion-0821-1787324448",
+   "task": "ep2-b07-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:31:29Z",
+   "finished_at": "2026-08-21T15:37:26Z",
+   "duration_s": 357,
+   "sidecar": "farm-out/box/ep2-b07-canonmotion-0821-1787324448.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 07 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 07 ON THE FOUNDER-IMAGE CANON PLATE, round w2b, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: the guard's arm comes up and points at him; he flinches back a half step. Done when TWO figures the whole clip, and the point is aimed AT him. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 97 frames (4.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded this on…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260907, init cover-cropped from the canon w2b plate with sha256 d6a27d2686eef97e asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 25
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canonmotion-0821/07-evidence-LTX-ep2-b07-canonmotion-0821.mp4",
+     "name": "07-evidence-LTX-ep2-b07-canonmotion-0821.mp4",
+     "bytes": 478436,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b07-canonmotion-0821/b07-init-704x1280.png",
+     "name": "b07-init-704x1280.png",
+     "bytes": 1147260,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: TWO figures, both present in the very first frame and in every frame after it. ONE small green goblin, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots, standing at the left. ONE TALL ARMOURED CITY GUARD in a helmet, standing at the right, facing the goblin, a full head taller. Both faces, both costumes and the goblin's skin colour DO NOT CHANGE for the whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION: the guard's arm comes up and points at him; he flinches back a half step -- TWO figures the whole clip, and the point is aimed AT him. HALFWAY THROUGH the guard's arm is up and level, pointing at him, and he is leaning away.",
+   "negative": "extra head, disembodied head, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark, only one figure, solo, empty background, missing guard",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260907,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b07-canon-w2b-0821/ep2-b07-canon-w2b-0821-ipahead.png",
+    "sha256": "d6a27d2686eef97e161da6ec6154b4639ebc2409d4fdb91568efa74b0ab97c87"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-canonmotion-0821-1787324443",
+   "task": "ep2-b04-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:25:29Z",
+   "finished_at": "2026-08-21T15:31:23Z",
+   "duration_s": 354,
+   "sidecar": "farm-out/box/ep2-b04-canonmotion-0821-1787324443.json",
+   "spec_file": "pipeline/jobs/ep2-b04-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 04 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 04 ON THE FOUNDER-IMAGE CANON PLATE, round w2, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he leans out sideways from behind the trunk, looks, and pulls straight back. Done when out, look, back -- the pull-back is the joke and must land. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 97 frames (4.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded this…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260904, init cover-cropped from the canon w2 plate with sha256 98e20fd2f39bd5af asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b04-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-canonmotion-0821/04-evidence-LTX-ep2-b04-canonmotion-0821.mp4",
+     "name": "04-evidence-LTX-ep2-b04-canonmotion-0821.mp4",
+     "bytes": 476449,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b04-canonmotion-0821/b04-init-704x1280.png",
+     "name": "b04-init-704x1280.png",
+     "bytes": 1131877,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is hunched over, leaning out sideways, in tall grass, full body. THE ACTION: he leans out sideways from behind the trunk, looks, and pulls straight back -- out, look, back -- the pull-back is the joke and must land. HALFWAY THROUGH he is leaned out sideways at full extension, looking, not yet back.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260904,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b04-canon-w2-0821/ep2-b04-canon-w2-0821-ipahead.png",
+    "sha256": "98e20fd2f39bd5afdcc62b5945fda1b1c03167d7420a2ae76ffcab5dae280816"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-canonmotion-0821-1787324439",
+   "task": "ep2-b03-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:19:26Z",
+   "finished_at": "2026-08-21T15:25:23Z",
+   "duration_s": 357,
+   "sidecar": "farm-out/box/ep2-b03-canonmotion-0821-1787324439.json",
+   "spec_file": "pipeline/jobs/ep2-b03-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 03 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 03 ON THE FOUNDER-IMAGE CANON PLATE, round w2, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he crouches low behind the thin trunk and holds still, eyes flicking sideways. Done when the cover is comically inadequate and he believes it is working. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 121 frames (5.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that prece…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260903, init cover-cropped from the canon w2 plate with sha256 b937a6fe7a5f542e asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 23
+   },
+   "artifacts_dir": "farm-out/ep2-b03-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-canonmotion-0821/03-evidence-LTX-ep2-b03-canonmotion-0821.mp4",
+     "name": "03-evidence-LTX-ep2-b03-canonmotion-0821.mp4",
+     "bytes": 450619,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b03-canonmotion-0821/b03-init-704x1280.png",
+     "name": "b03-init-704x1280.png",
+     "bytes": 986075,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is squatting, hiding behind a thin trunk, in tall grass, full body. THE ACTION: he crouches low behind the thin trunk and holds still, eyes flicking sideways -- the cover is comically inadequate and he believes it is working. HALFWAY THROUGH he is all the way down behind the trunk and still, eyes turned to one side.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260903,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b03-canon-w2-0821/ep2-b03-canon-w2-0821-ipahead.png",
+    "sha256": "b937a6fe7a5f542ec6c0cd1de0645c8a7dfe59b39bf6d6cbe2c4b5cefbcf7b85"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-canonmotion-0821-1787324433",
+   "task": "ep2-b02-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:13:19Z",
+   "finished_at": "2026-08-21T15:19:20Z",
+   "duration_s": 361,
+   "sidecar": "farm-out/box/ep2-b02-canonmotion-0821-1787324433.json",
+   "spec_file": "pipeline/jobs/ep2-b02-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 02 ON THE FOUNDER-IMAGE CANON PLATE, round w2, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he runs into frame from the left, skids, and drops behind a thin sapling trunk. Done when entry, skid, dive, in that order, as one continuous move. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 97 frames (4.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded thi…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260902, init cover-cropped from the canon w2 plate with sha256 b33a3b2fddee4603 asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b02-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-canonmotion-0821/02-evidence-LTX-ep2-b02-canonmotion-0821.mp4",
+     "name": "02-evidence-LTX-ep2-b02-canonmotion-0821.mp4",
+     "bytes": 351675,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-canonmotion-0821/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 1081379,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is walking, arm outstretched, in tall grass, full body. THE ACTION: he runs into frame from the left, skids, and drops behind a thin sapling trunk -- entry, skid, dive, in that order, as one continuous move. HALFWAY THROUGH he is mid-skid, still upright, leaning back, not yet down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260902,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-canon-w2-0821/ep2-b02-canon-w2-0821-ipahead.png",
+    "sha256": "b33a3b2fddee4603c95cd86bedb8df62df51378d44804e9d6b12c567e3637e57"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-canonmotion-0821-1787324428",
+   "task": "ep2-b08-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:07:12Z",
+   "finished_at": "2026-08-21T15:13:13Z",
+   "duration_s": 361,
+   "sidecar": "farm-out/box/ep2-b08-canonmotion-0821-1787324428.json",
+   "spec_file": "pipeline/jobs/ep2-b08-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 08 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 08 ON THE FOUNDER-IMAGE CANON PLATE, round w2b, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he lowers his head and looks down at his own belly, shoulders sinking. Done when the look DOWN completes, and it completes early. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 121 frames (5.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded this one rendered 1…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260908, init cover-cropped from the canon w2b plate with sha256 b4b41077abca1213 asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 21
+   },
+   "artifacts_dir": "farm-out/ep2-b08-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-canonmotion-0821/08-evidence-LTX-ep2-b08-canonmotion-0821.mp4",
+     "name": "08-evidence-LTX-ep2-b08-canonmotion-0821.mp4",
+     "bytes": 234595,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b08-canonmotion-0821/b08-init-704x1280.png",
+     "name": "b08-init-704x1280.png",
+     "bytes": 1208966,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing, head bowed, looking down, in tall grass, full body. THE ACTION: he lowers his head and looks down at his own belly, shoulders sinking -- the look DOWN completes, and it completes early. HALFWAY THROUGH his chin is already down and his eyes are on his own belly.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260908,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b08-canon-w2b-0821/ep2-b08-canon-w2b-0821-ipahead.png",
+    "sha256": "b4b41077abca121394815d8277e7eb44d936426358ae8c292c72e5288f6f1748"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canonmotion-0821-1787324424",
+   "task": "ep2-b13-canonmotion-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T15:01:08Z",
+   "finished_at": "2026-08-21T15:07:05Z",
+   "duration_s": 357,
+   "sidecar": "farm-out/box/ep2-b13-canonmotion-0821-1787324424.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canonmotion-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 13 of the canon patch wave, and evidence on the frame-count question for the other six. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: the swap is the founder's word on the plate sheet plus a separate judgement with its own bar.",
+    "why": "MOTION FOR BEAT 13 ON THE FOUNDER-IMAGE CANON PLATE, round w2, filed as INFORMATION while the plate sheet is unanswered. THE BEAT: he sits, his shoulders drop, and his head tips sideways into the shade. Done when exhaustion resolving into relief; the head-tip completes. WHY 105 FRAMES AND NOT 121. This beat's slot in the cut is 97 frames (4.042 s), ffprobed off the clip review/ep2-ship-0821 is shipping right now, not read off the script's paper timing. The 14-clip wave that preceded this one re…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 at seed 20260913, init cover-cropped from the canon w2 plate with sha256 740d9d1b77f50a9b asserted before a frame is written. Scored on M1/M2/W1/W2/A1/C1/C2 in `bar`, and the frame number at which the face-dissolve begins is RECORDED WHETHER OR NOT IT PASSES -- a clean clip's answer to the frame-count question is the number 'never', and that is a datum, not an absence.",
+    "owner": "canon-motion filer/judge lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 20
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canonmotion-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canonmotion-0821/13-evidence-LTX-ep2-b13-canonmotion-0821.mp4",
+     "name": "13-evidence-LTX-ep2-b13-canonmotion-0821.mp4",
+     "bytes": 244458,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b13-canonmotion-0821/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 954429,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, hands clasped between knees, in tall grass, full body. THE ACTION: he sits, his shoulders drop, and his head tips sideways into the shade -- exhaustion resolving into relief; the head-tip completes. HALFWAY THROUGH his shoulders are down and his head has begun to tip sideways.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260913,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b13-canon-w2-0821/ep2-b13-canon-w2-0821-ipahead.png",
+    "sha256": "740d9d1b77f50a9b21e2dd49c7cefd5b9d7ebce74eaf8fca8cf5c72e2246f4f6"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b01-clearing-d02-0821-1787322799",
    "task": "ep2-b01-clearing-d02-0821",
