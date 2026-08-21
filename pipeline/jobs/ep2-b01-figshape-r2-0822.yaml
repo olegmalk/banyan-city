@@ -1,0 +1,243 @@
+id: ep2-b01-figshape-r2-0822
+task: ep2-b01-figshape-r2-0822
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 14
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the per-beat iteration lane, 2026-08-22
+consumer: A CANDIDATE for beat 01 on review/ep2-beats-0821, replacing a round 1 that is not offerable.
+  review/ep2-ship-0821 is not touched.
+success: 'ONE 704x1280 121-frame 24fps mp4. T1 THE FRUIT IS DEEP PURPLE at the end -- round 1 lost this
+  and it is the beat''s whole event; T2 the silhouette is a fig: wider across its bottom half than its
+  top, with no bare stalk standing clear above it and NO horns or stalks growing out of the fruit itself,
+  which is round 1''s other fault; T3 the fruit is one clean body, not a blob with a second colour inside
+  it; T4 the growth is continuous and is still the only thing moving.'
+why: 'ROUND 1 CAME BACK TEAL, AND THAT IS THIS LANE''S OWN MISTAKE RATHER THAN A FINDING. Rewriting the
+  prompt to describe the silhouette dropped the words ''deep purple'' out of it, so the beat''s only colour
+  instruction left with them and the fruit ripened to teal. The rung claimed one variable and moved two.
+  Round 2 restores the colour words and keeps the silhouette clause, so the question round 1 was supposed
+  to ask actually gets asked.
+
+
+  THE SHAPE ALSO FAILED, and that half WAS predicted: round 1''s spec says in as many words that banning
+  ''sphere'' and ''perfect circle'' risks the model reading a ban on roundness generally and returning
+  something lumpy. It did -- a flat blob with two stalk-like horns out of the top. A fig IS round; what
+  the founder objected to is the LOLLIPOP reading, so round 2 bans that and nothing else about roundness.
+
+
+  WHAT DID NOT CHANGE: the plate, 704x1280, 121 frames at 24fps, guidance, sampler, sigmas, two-stage,
+  crf 33, offload.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp the clip's\
+    \ provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for the cut (the\
+    \ cold open), so is_show_content is\ntrue. Still approved: false / provisional: true -- nothing is\
+    \ cut until the\n121 frames are opened against the pre-registered bar, and R4 is the\nfounder's.\n\
+    \"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"!! no sidecar\
+    \ at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"utf-8\", newline=\"\
+    \\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b01-figshape-r2-0822 after the render.\\\
+    n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n        \"is_show_content:\
+    \ true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR THE EPISODE 2 COLD OPEN. It\
+    \ animates the\\n\"\n        \"  founder's own 2026-08-13 route -- a small inpainted nub, grown by\\\
+    n\"\n        \"  the motion prompt -- on the frame-1 plate that passed its bar 7 of\\n\"\n       \
+    \ \"  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered\\n\"\n        \"  in pipeline/jobs/ep2-b01-figshape-r2-0822.yaml\
+    \ BEFORE this render\\n\"\n        \"  existed. Not approved and not cut until those frames are opened.\\\
+    n\")\nprint(\"stamped %s\" % META, flush=True)"
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-motion-prompt.txt: On the thinnest branch of the tiny two-leaf
+    sapling, the small green nub swells, darkens and ripens into a single deep purple fig -- teardrop
+    shaped, heavy and rounded at the bottom, narrowing to a short thick neck where it meets the branch.
+    It is the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus
+    grassy field, soft glowing light, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-negative.txt: lollipop, ball on a stick, bare thin stalk
+    above the fruit, long stem, pin, antenna, two fruit, teal fruit, blue fruit, camera pan, camera tilt,
+    zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split
+    screen, still image, freeze frame, growing plant, sprouting, unfurling leaves, stem lengthening, leaves
+    enlarging, plant enlarging, blooming, brightening, exposure change, overexposed, blown highlights,
+    changing background
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-jobs-encode.json: "[\n {\n  \"beat\": 1,\n  \"embeds\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b01-figshape-r2-0822-out\\\\b01-embeds.pt\",\n  \"prompt_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b01-figshape-r2-0822\\\\b01-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\
+    \\banyan-farm\\\\ep2-b01-figshape-r2-0822\\\\b01-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-jobs-render.json: "[\n {\n  \"beat\": 1,\n  \"seed\": 20260823,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-figshape-r2-0822-out\\\\b01-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-figshape-r2-0822-out\\\\b01-nub-init-704x1280.png\",\n  \"out\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b01-figshape-r2-0822-out\\\\01-cold-open-LTX-figshape-r2-0822.mp4\"\n\
+    \ }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-figshape-r2-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-figshape-r2-0822
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-figshape-r2-0822-out\01-cold-open-LTX-figshape-r2-0822.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its\
+    \ files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-figshape-r2-0822-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b01-figshape-r2-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-figshape-r2-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-figshape-r2-0822.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b01-figshape-r2-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) +\
+    \ manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b01-figshape-r2-0822-out\01-cold-open-LTX-figshape-r2-0822.mp4
+- C:\banyan-farm\ep2-b01-figshape-r2-0822-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. The motion
+  prompt IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13
+  verdict. Sidecar stamped approved: false / provisional: true; nothing is cut until the frames are opened
+  against the pre-registered bar, and the taste call is the founder''s under R4. Silent, $0, no voice
+  synthesis, no episode assembly.'
+failure_predicted_in_advance: THE COLOUR COMES BACK AND THE SHAPE DOES NOT. 'Teardrop' is a weaker signal
+  than 'deep purple' and the checkpoint's prior for a small fruit on a branch is a sphere. If T1 passes
+  and T2 fails, wording is exhausted for this beat and the composite is the answer.
+next_rung_if_this_fails: THE COMPOSITE. pipeline/nub_composite.py draws the frame-1 nub as an ellipse
+  and the naturalise pass shades whatever it finds; a fig-shaped alpha there puts the silhouette in the
+  pixels the way the fruit's COLOUR had to be put there in 2026-08-18 when the prompt route failed on
+  colour. Two rounds of wording is the budget; this is round 2.
+the_one_variable: 'THE WORDING, again, and this time honestly one thing: the silhouette clause, with the
+  colour instruction the beat has always had left in place. Round 1''s negative is rewritten in the same
+  pass because half of it was the cause of round 1''s other fault -- leaving a ban that has been measured
+  misfiring, in order to keep a tidy one-variable story, would be spending a render to re-confirm a known
+  failure.'
+derivation:
+  parent: pipeline/jobs/ep2-b01-figshape-0822.yaml
+  by: pipeline/file_beatfix_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - failure_predicted_in_advance
+  - next_rung_if_this_fails
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - colour_is_canon_and_is_deliberately_left_alone
+  - derivation
+  - failure_predicted_in_advance
+  - next_rung_if_this_fails
+  - the_one_variable
+  retokened:
+  - figshape-0822 -> figshape-r2-0822
+  - ep2-b01-figshape-0822 -> ep2-b01-figshape-r2-0822
+  overrides_applied_and_asserted:
+    key:est_minutes:
+    - key est_minutes = 12
+    key:priority:
+    - key priority = 14
+    payload:b01-motion-prompt.txt:
+    - payload b01-motion-prompt.txt (535 -> 426 chars)
+    payload:b01-negative.txt:
+    - payload b01-negative.txt (500 -> 469 chars)
+    seed:
+    - payload b01-jobs-render.json (20260822 -> 20260823, re-parsed)
+  seed: 20260823

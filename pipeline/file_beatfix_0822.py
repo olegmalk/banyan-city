@@ -591,6 +591,239 @@ ROWS = [
 ]
 
 
+
+# --------------------------------------------------------------------------
+# BEAT 01, ROUND 2. Round 1 was opened at 1:1 against the take in the cut and
+# it is WORSE, in two ways, and one of them is this lane's own fault.
+#
+#   THE COLOUR: round 1's fruit is TEAL. Not a taste call -- a mistake in the
+#   rung. Rewriting the prompt to describe the silhouette dropped the words
+#   "deep purple" out of it, so the only colour instruction the beat had went
+#   with them. That is two variables in a rung that claimed one, it is
+#   recorded here rather than quietly repaired, and it is why round 2 exists.
+#   THE SHAPE: lumpy, with two stalk-like horns growing out of the top -- the
+#   second failure round 1 predicted by name ("if the model reads 'sphere' and
+#   'perfect circle' as a ban on roundness generally, the fruit can come back
+#   lumpy"). A fig IS round; the thing to ban is the LOLLIPOP, not roundness.
+#
+# So round 2 restores the colour words verbatim, keeps a shorter silhouette
+# clause, and bans only the ball-on-a-stick reading.
+# --------------------------------------------------------------------------
+B01_R2_PROMPT = (
+    "On the thinnest branch of the tiny two-leaf sapling, the small green nub "
+    "swells, darkens and ripens into a single deep purple fig -- teardrop "
+    "shaped, heavy and rounded at the bottom, narrowing to a short thick neck "
+    "where it meets the branch. It is the only thing in frame that moves. "
+    "Detailed cinematic anime, warm amber backlight, hazy out-of-focus grassy "
+    "field, soft glowing light, masterpiece, best quality, very aesthetic.")
+
+B01_R2_NEGATIVE = (
+    "lollipop, ball on a stick, bare thin stalk above the fruit, long stem, "
+    "pin, antenna, two fruit, teal fruit, blue fruit, camera pan, camera "
+    "tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, "
+    "scene change, different location, split screen, still image, freeze "
+    "frame, growing plant, sprouting, unfurling leaves, stem lengthening, "
+    "leaves enlarging, plant enlarging, blooming, brightening, exposure "
+    "change, overexposed, blown highlights, changing background")
+
+B01_R2_ROW = {
+    "beat": 1,
+    "parent": "pipeline/jobs/ep2-b01-figshape-0822.yaml",
+    "new_id": "ep2-b01-figshape-r2-0822",
+    "retoken": [("figshape-0822", "figshape-r2-0822")],
+    "seed": 20260823,
+    "est": 12,
+    "overrides": {
+        "payload:b01-motion-prompt.txt": B01_R2_PROMPT,
+        "payload:b01-negative.txt": B01_R2_NEGATIVE,
+    },
+    "fresh": {
+        "owner": "the per-beat iteration lane, 2026-08-22",
+        "consumer":
+            "A CANDIDATE for beat 01 on review/ep2-beats-0821, replacing a "
+            "round 1 that is not offerable. review/ep2-ship-0821 is not "
+            "touched.",
+        "success":
+            "ONE 704x1280 121-frame 24fps mp4. T1 THE FRUIT IS DEEP PURPLE at "
+            "the end -- round 1 lost this and it is the beat's whole event; "
+            "T2 the silhouette is a fig: wider across its bottom half than "
+            "its top, with no bare stalk standing clear above it and NO horns "
+            "or stalks growing out of the fruit itself, which is round 1's "
+            "other fault; T3 the fruit is one clean body, not a blob with a "
+            "second colour inside it; T4 the growth is continuous and is "
+            "still the only thing moving.",
+        "why":
+            "ROUND 1 CAME BACK TEAL, AND THAT IS THIS LANE'S OWN MISTAKE "
+            "RATHER THAN A FINDING. Rewriting the prompt to describe the "
+            "silhouette dropped the words 'deep purple' out of it, so the "
+            "beat's only colour instruction left with them and the fruit "
+            "ripened to teal. The rung claimed one variable and moved two. "
+            "Round 2 restores the colour words and keeps the silhouette "
+            "clause, so the question round 1 was supposed to ask actually "
+            "gets asked.\n\nTHE SHAPE ALSO FAILED, and that half WAS "
+            "predicted: round 1's spec says in as many words that banning "
+            "'sphere' and 'perfect circle' risks the model reading a ban on "
+            "roundness generally and returning something lumpy. It did -- a "
+            "flat blob with two stalk-like horns out of the top. A fig IS "
+            "round; what the founder objected to is the LOLLIPOP reading, so "
+            "round 2 bans that and nothing else about roundness.\n\nWHAT "
+            "DID NOT CHANGE: the plate, 704x1280, 121 frames at 24fps, "
+            "guidance, sampler, sigmas, two-stage, crf 33, offload.",
+    },
+    "extra": {
+        "the_one_variable":
+            "THE WORDING, again, and this time honestly one thing: the "
+            "silhouette clause, with the colour instruction the beat has "
+            "always had left in place. Round 1's negative is rewritten in the "
+            "same pass because half of it was the cause of round 1's other "
+            "fault -- leaving a ban that has been measured misfiring, in "
+            "order to keep a tidy one-variable story, would be spending a "
+            "render to re-confirm a known failure.",
+        "next_rung_if_this_fails":
+            "THE COMPOSITE. pipeline/nub_composite.py draws the frame-1 nub "
+            "as an ellipse and the naturalise pass shades whatever it finds; "
+            "a fig-shaped alpha there puts the silhouette in the pixels the "
+            "way the fruit's COLOUR had to be put there in 2026-08-18 when "
+            "the prompt route failed on colour. Two rounds of wording is the "
+            "budget; this is round 2.",
+        "failure_predicted_in_advance":
+            "THE COLOUR COMES BACK AND THE SHAPE DOES NOT. 'Teardrop' is a "
+            "weaker signal than 'deep purple' and the checkpoint's prior for "
+            "a small fruit on a branch is a sphere. If T1 passes and T2 "
+            "fails, wording is exhausted for this beat and the composite is "
+            "the answer.",
+    },
+}
+
+
+# --------------------------------------------------------------------------
+# BEAT 02, STRENGTH RUNG. 0.42 was looked at at 1:1 and it did not do the job:
+# the brows came back FAINTER rather than raised -- the pass washed the two
+# existing strokes out instead of drawing new ones -- and the mouth opened
+# only slightly. That is the failure this spec's own
+# `failure_predicted_in_advance` named before the pixels ("0.42 is not enough
+# to move a face drawn with this much ink ... the answer is a strength rung,
+# not a new mask"), so the mask is untouched and only the number moves.
+# TWO strengths in one job, which is the same trade ep2-jerry-expref-r2-0821
+# made on this exact question: the band is 0.55-0.80, the cost of bracketing
+# it is four minutes, and one sample per rung would spend two round trips
+# finding out what one job can say.
+# --------------------------------------------------------------------------
+def b02_strength_steps(child: dict) -> None:
+    root = r"C:\banyan-farm\b02panicstr-0822"
+    mask = root + r"\b02-panic-mask.png"
+
+    def face(tag, strength):
+        return {"name": "face" + tag, "argv": [
+            BOXPY, root + r"\inpaint_fruit.py",
+            "--init", B02_PLATE, "--init-sha256", B02_PLATE_SHA,
+            "--mask-png", mask,
+            "--prompt-file", root + r"\b02-face-prompt.txt",
+            "--negative-file", root + r"\b02-face-negative.txt",
+            "--out", root + ("\\b02-panic-s%s.png" % tag),
+            "--steps", "40", "--cfg", "7.5", "--strength", strength,
+            "--pad-crop", "64", "--blur", "8", "--seed", "20260822",
+            "--note", "STRENGTH RUNG. Same plate, same two bands, same seed, "
+                      "same everything as the 0.42 pass that came back with "
+                      "washed-out brows. Only the denoise moves."]}
+
+    publish_code = (
+        "import hashlib, os, shutil\n"
+        "from_dir = 'C:/banyan-farm/b02panicstr-0822'\n"
+        "dst = 'C:/banyan-farm/courier-box/farm-out/ep2-b02-panicstr-0822'\n"
+        "NAMES = ['b02-panic-s060.png', 'b02-panic-s060.png.meta.yaml',\n"
+        "         'b02-panic-s075.png', 'b02-panic-s075.png.meta.yaml',\n"
+        "         'b02-panic-mask.png', 'b02-face-prompt.txt',\n"
+        "         'b02-face-negative.txt']\n"
+        "os.makedirs(dst, exist_ok=True)\n"
+        "lines = []\n"
+        "for name in NAMES:\n"
+        "    f = os.path.join(from_dir, name)\n"
+        "    if not os.path.isfile(f):\n"
+        "        raise SystemExit('!! missing %s -- refusing to call the job "
+        "clean.' % f)\n"
+        "    shutil.copy2(f, dst)\n"
+        "    with open(os.path.join(dst, name), 'rb') as fh:\n"
+        "        lines.append(hashlib.sha256(fh.read()).hexdigest() + '  ' + name)\n"
+        "with open(os.path.join(dst, 'ep2-b02-panicstr-0822.sha256'), 'w',\n"
+        "          newline='\\n') as fh:\n"
+        "    fh.write('\\n'.join(sorted(lines)) + '\\n')\n"
+        "print('published', len(lines), 'file(s) + manifest ->', dst)\n"
+        "raise SystemExit(0 if len(lines) == len(NAMES) else 1)\n")
+
+    steps = [s for s in child["steps"] if s.get("name") in ("mask", "dry")]
+    if len(steps) != 2:
+        raise SystemExit("!! beat 02 strength rung: the parent lost its mask "
+                         "or dry step")
+    child["steps"] = steps + [face("060", "0.60"), face("075", "0.75"),
+                              {"name": "publish", "argv": [BOXPY, "-c",
+                                                           publish_code]}]
+    child["artifacts"] = [root + r"\b02-panic-s060.png",
+                          root + r"\b02-panic-s075.png"]
+
+
+B02_STRENGTH_ROW = {
+    "beat": 2,
+    "parent": "pipeline/jobs/ep2-b02-panicface-0822.yaml",
+    "new_id": "ep2-b02-panicstr-0822",
+    "retoken": [("b02panicface-0822", "b02panicstr-0822")],
+    "seed": 20260822,
+    "est": 6,
+    "post": b02_strength_steps,
+    "overrides": {},
+    "fresh": {
+        "owner": "the per-beat iteration lane, 2026-08-22",
+        "consumer":
+            "THE PLATE beat 02's motion round runs on, second attempt. Two "
+            "strengths so the band is bracketed in one job rather than two "
+            "round trips. Nothing downstream is filed until one of them is "
+            "looked at at 1:1.",
+        "success":
+            "TWO 832x1216 pngs, and at least one of them has BROWS THAT READ "
+            "AS RAISED -- angled up and away from the eyes, drawn, not washed "
+            "out -- and a mouth open wider than the small oval the source "
+            "plate has. G1 brows raised and drawn; G2 mouth open wide; G3 the "
+            "eyes are byte-identical to the source plate, because they are "
+            "outside the mask; G4 nothing outside the two bands moved; G5 no "
+            "human brow ridge, no hairline, no teeth. If BOTH overshoot G5, "
+            "the answer is a smaller mask, not a third strength.",
+        "why":
+            "0.42 WAS LOOKED AT AND IT WASHED THE BROWS OUT INSTEAD OF "
+            "RAISING THEM. Opened at 1:1 against its own source: the two brow "
+            "strokes came back FAINTER and slightly angled, the mouth opened "
+            "a little, and the result reads no more panicked than the plate "
+            "it started from -- which is the founder's whole note on this "
+            "beat. Everything else the plate job asked for passed: the eyes "
+            "are untouched because they are outside the mask, nothing outside "
+            "the two bands moved, and no human brow ridge or hairline "
+            "appeared.\n\nThat outcome was written down before the pixels: "
+            "the plate job's own failure_predicted_in_advance says '0.42 is "
+            "not enough to move a face that is drawn with this much ink and "
+            "the brows come back as the same two flat strokes ... the answer "
+            "is a strength rung, not a new mask'. So the mask does not move, "
+            "the prompt does not move, the seed does not move, and the "
+            "denoise goes to 0.60 and 0.75.",
+    },
+    "extra": {
+        "the_one_variable":
+            "THE DENOISE, at two values. Same source plate, same two bands to "
+            "the pixel, same prompt, same negative, same 40 steps, same cfg "
+            "7.5, same pad-crop 64 and blur 8, same seed 20260822. Two "
+            "strengths is a bracket, not a second question -- the range worth "
+            "trying is 0.55-0.80 and finding out costs four minutes.",
+        "failure_predicted_in_advance":
+            "0.75 REDRAWS THE FACE RATHER THAN ITS EXPRESSION. At that "
+            "denoise the pass is running most of its steps from noise inside "
+            "the mask, and the named degenerate outcome is a human brow "
+            "ridge, a hairline creeping down the forehead, or a mouth with "
+            "teeth and a tongue in it -- all in the negative, and G5 is what "
+            "catches them. If 0.75 overshoots and 0.60 undershoots, the "
+            "reading is that this face's ink is stronger than the band and "
+            "the next lever is a tighter mask around the brows alone.",
+    },
+}
+
+
 # --------------------------------------------------------------------------
 # THE SECOND HALF OF BEAT 02, filed only once the repainted plate is on disk
 # and has been looked at. It is a row like any other; it just cannot be
@@ -726,11 +959,44 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--b01-r2", action="store_true",
+                    help="file beat 01's round 2 after round 1 has been "
+                         "looked at.")
+    ap.add_argument("--b02-strength", action="store_true",
+                    help="file beat 02's strength rung on the repainted "
+                         "plate, after the 0.42 pass has been looked at.")
     ap.add_argument("--b02-motion", action="store_true",
                     help="file beat 02's MOTION job instead of the three "
                          "first-round jobs. Refuses until the repainted plate "
                          "is on disk, because its digest is half the spec.")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
+
+    if a.b01_r2:
+        child = build(B01_R2_ROW)
+        print("%-26s beat 01  %d step(s)  est %d min"
+              % (B01_R2_ROW["new_id"], len(child["steps"]), B01_R2_ROW["est"]))
+        if a.write:
+            path = derive_spec.write(
+                child, "pipeline/jobs/%s.yaml" % B01_R2_ROW["new_id"],
+                force=a.force)
+            print("   wrote %s" % os.path.relpath(path, REPO))
+        else:
+            print("\n-- dry run. re-run with --write.")
+        return 0
+
+    if a.b02_strength:
+        child = build(B02_STRENGTH_ROW)
+        print("%-26s beat 02  %d step(s)  est %d min"
+              % (B02_STRENGTH_ROW["new_id"], len(child["steps"]),
+                 B02_STRENGTH_ROW["est"]))
+        if a.write:
+            path = derive_spec.write(
+                child, "pipeline/jobs/%s.yaml" % B02_STRENGTH_ROW["new_id"],
+                force=a.force)
+            print("   wrote %s" % os.path.relpath(path, REPO))
+        else:
+            print("\n-- dry run. re-run with --write.")
+        return 0
 
     if a.b02_motion:
         if not os.path.isfile(os.path.join(REPO, B02_MOTION_PLATE_REL)):
