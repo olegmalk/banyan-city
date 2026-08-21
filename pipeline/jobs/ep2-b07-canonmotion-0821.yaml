@@ -330,3 +330,26 @@ derivation:
     seed:
     - payload b07-jobs-render.json (20260822 -> 20260907, re-parsed)
   seed: 20260907
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the canonmotion filer/judge lane, BY EYE off a labelled
+# contact sheet at 1:1 (full frames plus a head crop at f000/024/048/055/072/
+# 096/104, with the 97-frame trim point marked). The clip was sha-verified
+# against the box's own manifest before a frame was opened. No metric decided
+# anything: a whole-frame difference number was computed and DISCARDED as a
+# re-staging test, because beat 04 scores high on it from honest subject motion
+# while its frame never moves.
+# NOTHING IS SWAPPED. review/ep2-ship-0821 is untouched and every line here is
+# a steward reading, R4-veto-able.
+# ---------------------------------------------------------------------------
+verdict_canonmotion_0821: >-
+  FAIL ON THE BEAT, AND THE PRE-REGISTERED PREDICTION IN THIS SPEC WAS WRONG -- which is the
+  most useful result in the tranche. THE GUARD ARRIVED. From f024 a tall armoured guard in a
+  helmet stands at the right facing him and stays. Both prior seeds at 121 frames drew no guard
+  at all. So i2v DOES place a second figure from wording alone on a one-figure init, once both
+  figures are named before anything is asked of either AND the four second-figure terms are
+  struck from the negative. THE FAILURE MOVED RATHER THAN CLEARED: the point completes -- arm up
+  at f072, fully extended by f096 -- but THE GOBLIN IS GONE BY f096, so the guard points at
+  empty grass. The camera also pulls back at f024 to fit the second figure. Next rung is still a
+  two-figure plate, for a new reason: not because wording cannot summon the guard, but to remove
+  the re-stage and keep the goblin in frame at the moment of the point.

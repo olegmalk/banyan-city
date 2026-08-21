@@ -326,3 +326,21 @@ derivation:
     seed:
     - payload b03-jobs-render.json (20260822 -> 20260903, re-parsed)
   seed: 20260903
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the canonmotion filer/judge lane, BY EYE off a labelled
+# contact sheet at 1:1 (full frames plus a head crop at f000/024/048/055/072/
+# 096/104, with the 97-frame trim point marked). The clip was sha-verified
+# against the box's own manifest before a frame was opened. No metric decided
+# anything: a whole-frame difference number was computed and DISCARDED as a
+# re-staging test, because beat 04 scores high on it from honest subject motion
+# while its frame never moves.
+# NOTHING IS SWAPPED. review/ep2-ship-0821 is untouched and every line here is
+# a steward reading, R4-veto-able.
+# ---------------------------------------------------------------------------
+verdict_canonmotion_0821: >-
+  FAIL, M2 AND C1. A curved horn or topknot grows from the crown of a bald canon head from about
+  f072 and is still there at f104 -- a new appendage, not a lighting read. The camera pulls back
+  from ~f072 and his height roughly halves by f104. No trunk is ever drawn, so the beat's cover
+  does not exist. Face features are drawn for all 105 frames -- no dissolve. Same root cause as
+  beat 02: the action names a trunk the plate does not contain.

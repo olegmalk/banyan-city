@@ -325,3 +325,23 @@ derivation:
     seed:
     - payload b13-jobs-render.json (20260822 -> 20260913, re-parsed)
   seed: 20260913
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the canonmotion filer/judge lane, BY EYE off a labelled
+# contact sheet at 1:1 (full frames plus a head crop at f000/024/048/055/072/
+# 096/104, with the 97-frame trim point marked). The clip was sha-verified
+# against the box's own manifest before a frame was opened. No metric decided
+# anything: a whole-frame difference number was computed and DISCARDED as a
+# re-staging test, because beat 04 scores high on it from honest subject motion
+# while its frame never moves.
+# NOTHING IS SWAPPED. review/ep2-ship-0821 is untouched and every line here is
+# a steward reading, R4-veto-able.
+# ---------------------------------------------------------------------------
+verdict_canonmotion_0821: >-
+  PASS 6/7, A1 MARGINAL. No dissolve anywhere in 105 frames -- brow, eyes, nose and mouth are
+  drawn at f104, where the prior wave's seed 1 egged at f065. Identity, wardrobe and the waist
+  boundary hold; the frame is locked. A1: the head-tip starts ~f072 and is STILL TRAVELLING at
+  f096, the last frame a 97-frame trim keeps, resolving only at ~f104. The done_when says the
+  head-tip completes; inside the slot it reads as begun, not completed. NOTE: the eyes close
+  from ~f048 and stay closed, which is defensible for exhaustion-into-relief but means the canon
+  eye -- the whole point of the founder's image -- is legible only for the first two seconds.
