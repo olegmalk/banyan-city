@@ -4105,3 +4105,4 @@
 21:12:26Z FAIL task=ep2-b15-canonmotion-0822-1787346274 rc=1 step=encode
 21:12:30Z STARTED task=ep2-b16-canonmotion-0822-1787346280 attempt=1 on box-runner
 21:13:21Z FAIL task=ep2-b16-canonmotion-0822-1787346280 rc=1 step=encode
+21:13:25Z box-runner idle ready=0 failed=82
