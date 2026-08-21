@@ -996,8 +996,10 @@ amended_0820e:
 amended_0821:
   date: '2026-08-21'
   by: the sapling / ship-fault lane
-  what_moved: NOTHING IN THE CUT YET. Two CANDIDATE files exist and are recorded here so a finished rung
-    is not lost -- the failure amended_0820c was opened to fix. Every row above is left exactly as written.
+  what_moved: THE CUT MOVED. Applied on the coordinator's order 2026-08-21. Beat 12 = 12-related-b12-tightB-trim13-0821.mp4
+    and beat 21 = 21-the-answer-b21-daylight-trim8-0821.mp4, both in review/ep2-ship-0821/sources, cut
+    re-assembled by render_t3 (sha df2df8095a75c223ff8f4fd1f8a7178b4e7c1363e10126549fe61c0fc989faaa, 115.61
+    s, 21 footage 0 slate, was 5037a714.../116.33 s). Every row above is left as written.
   beat_12: best-available -> best-available, DIFFERENT FILE PROPOSED. review/ep2-b12-trim-0821/12-related-b12-tightB-trim13-0821.mp4
     (sha f14703e9442ede3253e4c7d611c92204c02ad349097eb04fe2b11e8553aa43ce), the shipped crf-33 take with
     its first 13 frames removed. This is the upgrade THIS LEDGER ALREADY NAMED on 08-19 -- 'the TRIMMED
@@ -1024,3 +1026,14 @@ amended_0821:
   authority: STEWARD PICK under the 2026-08-18 widening -- an edit that applies rulings already on this
     ledger. VETO-ABLE IN ONE LINE. No taste call is made and no cut was re-assembled.
   evidence: review/ep2-b12-trim-0821/verdict-0821.yaml and CONTACT-b12-trim-0821.png
+  verification: 'proof_receipts --cut ep2-ship-0821 --write: 21/21 sha match, 0 differs, 0 missing. qa_local:
+    QA-GATE PASS routes=87. Served bytes re-hashed off the local server and equal to disk and to the manifest
+    for the cut and both takes; the two superseded source paths return 404.'
+  neither_status_changed: Both beats stay best-available. Beat 12 still has the growth fault (apex up
+    140 px on a 'perfectly still' beat); beat 21 still has the wrong-plant R4 question (one lance leaf,
+    not two cotyledons). The files moved, the statuses did not.
+  the_declined_fix_was_a_different_trim: 'ship-manifest''s beat-12 row recorded a fix that was declined
+    -- a trim TO 1.38 s, rejected because it left ''3.33 s of held frame'' in the slot. That objection
+    does not apply: this is a 13-frame HEAD trim leaving 4.50 s, seated in a 4.50 s slot with no held
+    frame, VO 2.68 s well inside. The 0815 ''UNTRIMMED on purpose'' sidecar ruling is also untouched --
+    it protects the TAIL (''motion runs to f120'') and every frame through f120 survives.'

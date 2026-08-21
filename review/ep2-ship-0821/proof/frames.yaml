@@ -130,15 +130,15 @@ frames:
   frame_sha256: 7fb2366aa2d867e40157cf4f8fe2879565f62df11ac576d433798fc9ffb32000
   frame_bytes: 15949
 - beat: 12
-  take: 12-related-b12-tightB-untrimmed.mp4
+  take: 12-related-b12-tightB-trim13-0821.mp4
   frame: b12.jpg
   width: 240
   height: 436
-  at_seconds: 2.52
-  clip_duration_s: 5.04
-  clip_sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
-  frame_sha256: a5e17d83350a7071c94223867cda47d4f00947f50048720bd2de3f04c167aa57
-  frame_bytes: 18967
+  at_seconds: 2.25
+  clip_duration_s: 4.5
+  clip_sha256: f14703e9442ede3253e4c7d611c92204c02ad349097eb04fe2b11e8553aa43ce
+  frame_sha256: 6a31f65d12795f89e2c197200c54a08bcbd9e600439f4d80fa88c371e4c475e0
+  frame_bytes: 18989
 - beat: 13
   take: 13-the-shade-b13-shadelit-0820.mp4
   frame: b13.jpg
@@ -220,12 +220,12 @@ frames:
   frame_sha256: 05c05ea438ae9a6b15da86b9a6b273de41eecd4d23d38abd345360385e1e3d2e
   frame_bytes: 17586
 - beat: 21
-  take: 21-the-answer-b21-daylight-0814.mp4
+  take: 21-the-answer-b21-daylight-trim8-0821.mp4
   frame: b21.jpg
   width: 240
   height: 436
-  at_seconds: 2.52
-  clip_duration_s: 5.04
-  clip_sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
-  frame_sha256: 6cb0c0a83b58221a1bd63d6e69a4190f6e8f60a43639ba21b236dd9d2a08daa6
-  frame_bytes: 21607
+  at_seconds: 2.35
+  clip_duration_s: 4.71
+  clip_sha256: d2023098493666c800aae3ec6c949a4156e3d5794591ca1af92ab01d1c77b039
+  frame_sha256: 578ce152ed9035d32dff77c987b1bf9ce73b79a2a8e92306a0c051b5d537d4ea
+  frame_bytes: 21450

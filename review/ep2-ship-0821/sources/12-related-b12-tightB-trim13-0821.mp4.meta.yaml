@@ -1,0 +1,45 @@
+# Shot provenance (7.2) — EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none — no sampler ran for this clip
+model_licence: n/a — the edit adds no model output
+source_clip: 12-related-b12-tightB-untrimmed.mp4
+source_sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 12
+size: 704x1280
+seconds: 4.5
+frames: 108
+edit: ffmpeg trim=start_frame=13, re-encoded libx264 crf 10 from a crf-33 source
+steps: 8@352x640+3@704x1280 (the SOURCE's; nothing was re-sampled)
+guidance: 2.0
+seed: 20260813
+task: ep2-b12-tightB-0813 (source) + ep2-b12-b21-trim-0821 (this edit)
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+why_trimmed: >-
+  Frames 000-012 of the source are A DIFFERENT SHOT — a tight warm macro of four
+  or five large POINTED leaves against a sunset — cutting at f006 to the wide
+  two-leaf seedling the beat actually is. The pointed leaves violate canon.yaml
+  sapling-cotyledon-shape ("no lance shapes, no exaggerated silhouette"), so the
+  take that rode five cuts opened on a canon violation. Measured: whole-frame
+  luma drift +60.44 -> +3.06, saturation-weighted hue swing 40.75 deg -> 1.20
+  deg. Instruments: pipeline/luma_drift.py and pipeline/hue_drift.py.
+this_does_NOT_reverse_the_0815_ruling: >-
+  The source sidecar read "UNTRIMMED on purpose: the trim_pass_0815 1.38s output
+  rests on the window coldread_period_caveat_0815 invalidated. Re-measured
+  2026-08-15 — motion runs to f120, tail quartile mean 2.96 vs 2.13 mid-clip."
+  THAT RULING IS ABOUT THE TAIL AND IT STILL STANDS. This edit removes 13 frames
+  from the HEAD and leaves every frame through f120 intact, so the motion the
+  0815 re-measurement protected is untouched. Recorded here rather than dropped,
+  because a trim landing on a clip whose own sidecar says "untrimmed on purpose"
+  must say which trim it is.
+fault_that_remains: >-
+  The sapling GROWS across the shot — apex up 140 px, 11% of frame height,
+  monotone — against an approved line of "perfectly still" and canon
+  sapling-height, which pins 002b at ~40 cm. Not fixed here and not claimed to
+  be. Beat 12 stays best-available; the file moved, the status did not.
+evidence: review/ep2-b12-trim-0821/verdict-0821.yaml

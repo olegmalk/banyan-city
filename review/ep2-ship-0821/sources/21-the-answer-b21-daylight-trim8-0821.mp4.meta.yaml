@@ -1,0 +1,38 @@
+# Shot provenance (7.2) — EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none — no sampler ran for this clip
+model_licence: n/a — the edit adds no model output
+source_clip: 21-the-answer-b21-daylight-0814.mp4
+source_sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 21
+size: 704x1280
+seconds: 4.708
+frames: 113
+edit: ffmpeg trim=start_frame=8, re-encoded libx264 crf 10
+steps: 8@352x640+3@704x1280 (the SOURCE's; nothing was re-sampled)
+guidance: 2.0
+seed: 20260902
+task: ep2-b21-daylight-0814 (source) + ep2-b12-b21-trim-0821 (this edit)
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+why_trimmed: >-
+  The same opening-frame defect as beat 12, from the same shared plate: both
+  clips open within 0.11 luma levels of each other (b12 f000 125.53, b21 f000
+  125.42) on a warm macro that is not the shot, then jump to the real render.
+  Measured: whole-frame luma drift +29.46 -> +0.85, hue swing 9.16 deg -> 2.14
+  deg. Found by sweeping all 21 clips in this cut; b12 and b21 are the only two
+  that carry it.
+fault_that_remains: >-
+  The plant is a single tall LANCE-shaped leaf on a curved stem, not two average
+  cotyledons — failing canon.yaml sapling-two-leaves and sapling-cotyledon-shape
+  both, the same wrong-plant fault done-definitions names for beats 16 and 20.
+  That is instrument-gated on the CLOSED sapling wording ladder, so no re-roll is
+  filed. The trim is taken because it is free and strictly positive; beat 21
+  stays best-available.
+demo_note: 'used as-is; leg A of the A/B pair (leg undetermined in the record) — carried forward from the source sidecar'
+evidence: review/ep2-b12-trim-0821/verdict-0821.yaml

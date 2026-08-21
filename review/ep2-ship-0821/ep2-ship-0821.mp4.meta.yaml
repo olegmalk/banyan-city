@@ -52,11 +52,11 @@ footage_beats:
 - 20
 - 21
 slate_beats: []
-duration_s: 116.08
+duration_s: 115.61
 size: 720x1280
 source_platforms: local-mac (CPU, no GPU)+local-gpu (NVIDIA GeForce RTX 5090 Laptop
-  GPU @ rtx5090)+local-deterministic (pipeline/beat19_drop_animate.py, PIL/numpy,
-  ffmpeg)
+  GPU @ rtx5090)+local-deterministic (ffmpeg trim of a rendered mp4)+local-deterministic
+  (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)
 ingredients:
 - beat: 1
   kind: clip
@@ -170,8 +170,8 @@ ingredients:
   publishable: true
 - beat: 12
   kind: clip
-  path: review/ep2-ship-0821/sources/12-related-b12-tightB-untrimmed.mp4
-  sha256: 2c7e4f6c95007660b6fd44194afef6c856ba0a8cc97613378bc85e703881e095
+  path: review/ep2-ship-0821/sources/12-related-b12-tightB-trim13-0821.mp4
+  sha256: f14703e9442ede3253e4c7d611c92204c02ad349097eb04fe2b11e8553aa43ce
   publishable: true
 - beat: 12
   kind: audio
@@ -261,8 +261,8 @@ ingredients:
   publishable: true
 - beat: 21
   kind: clip
-  path: review/ep2-ship-0821/sources/21-the-answer-b21-daylight-0814.mp4
-  sha256: b4f53b646f3a59f555ac2131aad8a87af24bc06cd242ae05e9eec79584903857
+  path: review/ep2-ship-0821/sources/21-the-answer-b21-daylight-trim8-0821.mp4
+  sha256: d2023098493666c800aae3ec6c949a4156e3d5794591ca1af92ab01d1c77b039
   publishable: true
 sources:
 - beat: 1
@@ -387,14 +387,14 @@ sources:
   cost_usd: 0.0
 - beat: 12
   slug: RELATED — 0:55–1:00
-  clip: 12-related-b12-tightB-untrimmed.mp4
+  clip: 12-related-b12-tightB-trim13-0821.mp4
   audio: 12-vo.mp3
   fill: once
-  clip_s: 5.042
-  slot_s: 4.68
+  clip_s: 4.5
+  slot_s: 4.5
   voice_engine: chatterbox-0.5B
-  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
-  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  platform: local-deterministic (ffmpeg trim of a rendered mp4)
+  model: none — no sampler ran for this clip
   cost_usd: 0.0
 - beat: 13
   slug: THE SHADE — 1:00–1:04
@@ -485,11 +485,11 @@ sources:
   cost_usd: 0.0
 - beat: 21
   slug: THE ANSWER — 1:42–1:47
-  clip: 21-the-answer-b21-daylight-0814.mp4
+  clip: 21-the-answer-b21-daylight-trim8-0821.mp4
   audio: none
-  fill: once
-  clip_s: 5.042
-  slot_s: 5.0
-  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
-  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  fill: stretch
+  clip_s: 4.708
+  slot_s: 4.71
+  platform: local-deterministic (ffmpeg trim of a rendered mp4)
+  model: none — no sampler ran for this clip
   cost_usd: 0.0
