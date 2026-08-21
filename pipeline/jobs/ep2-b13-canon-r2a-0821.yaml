@@ -1,20 +1,20 @@
-id: ep2-b13-canon-s1-0821
-task: ep2-b13-canon-s1-0821
+id: ep2-b13-canon-r2a-0821
+task: ep2-b13-canon-r2a-0821
 node: 002b-first-citizen
 beat: 13
 runner: box
-priority: 9
+priority: 6
 needs_gpu: true
 max_attempts: 1
-sample: true
+sample: false
 owner: canon lane, 2026-08-21
-consumer: THE JUDGEMENT THAT RELEASES THE CANON WAVE, and nothing else renders until it is made. On this
-  one frame depend six more plates, seven motion tranches and the swap into review/ep2-ship-0821. If it
-  fails, the round-2 variable is named in `round_2_lever` and the wave waits.
+consumer: The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is
+  a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched
+  by this job.
 success: ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png
   on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec,
   not against a general impression.
-why: 'THE ONE SAMPLE FOR THE WHOLE CANON RECIPE, ROUND s1.
+why: 'BEAT 13 OF THE CANON PATCH WAVE, ROUND r2a.
 
 
   THE SHADE -- ''The scavenger''s legs give out and he drops to sit in the grass at the base of the stem,
@@ -48,13 +48,13 @@ env:
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 payload:
-  C:\banyan-farm\b13canon-s1-0821\prompt.txt: masterpiece, best quality, 1boy, solo, goblin, green skin,
+  C:\banyan-farm\b13canon-r2a-0821\prompt.txt: masterpiece, best quality, 1boy, solo, goblin, green skin,
     bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt,
     black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees,
     in tall grass, full body
-  C:\banyan-farm\b13canon-s1-0821\negative.txt: lowres, worst quality, low quality, text, watermark, blank
-    eyes, no pupils, thick eyebrows, cloak, hood, scarf, patchwork, human face, wrinkled skin, old man,
-    hair, beard, child, chibi, pointy nose, dot nose, 2boys
+  C:\banyan-farm\b13canon-r2a-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man,
+    hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes
 steps:
 - name: stage
   argv:
@@ -63,7 +63,7 @@ steps:
   - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
     \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
     import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
-    \nroot = r\"C:\\banyan-farm\\b13canon-s1-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \nroot = r\"C:\\banyan-farm\\b13canon-r2a-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
     \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
     \        (\"jerry-canon-h37sit-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n      \
     \   \"5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb\"),\n        (\"jerry-canon-sq22-0821.png\"\
@@ -76,13 +76,13 @@ steps:
 - name: posehint
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\b13canon-s1-0821\src\pipeline\controlnet_plate.py
+  - C:\banyan-farm\b13canon-r2a-0821\src\pipeline\controlnet_plate.py
   - --root
-  - C:\banyan-farm\b13canon-s1-0821\src
+  - C:\banyan-farm\b13canon-r2a-0821\src
   - --repo-commit
   - 7596da13302774ac5963ee8f3315e9fb5d4ab64d
   - --task
-  - ep2-b13-canon-s1-0821
+  - ep2-b13-canon-r2a-0821
   - --arm
   - ipahead
   - --controlnet
@@ -106,30 +106,30 @@ steps:
   - --ip-weight
   - ip-adapter-plus-face_sdxl_vit-h.safetensors
   - --prompt-file
-  - C:\banyan-farm\b13canon-s1-0821\prompt.txt
+  - C:\banyan-farm\b13canon-r2a-0821\prompt.txt
   - --negative-file
-  - C:\banyan-farm\b13canon-s1-0821\negative.txt
+  - C:\banyan-farm\b13canon-r2a-0821\negative.txt
   - --out
-  - C:\banyan-farm\b13canon-s1-0821\out
+  - C:\banyan-farm\b13canon-r2a-0821\out
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
   - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
     \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
-    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b13canon-s1-0821/out\"\npay_dir = \"C:/banyan-farm/b13canon-s1-0821\"\
-    \nctl_dir = \"C:/banyan-farm/b13canon-s1-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-canon-s1-0821\"\
-    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b13-canon-s1-0821-ipahead.png*\"\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b13canon-r2a-0821/out\"\npay_dir = \"C:/banyan-farm/b13canon-r2a-0821\"\
+    \nctl_dir = \"C:/banyan-farm/b13canon-r2a-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-canon-r2a-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b13-canon-r2a-0821-ipahead.png*\"\
     )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
     /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37sit-0821.png\")\n       \
     \        + glob.glob(ctl_dir + \"/jerry-canon-sq22-0821.png\"))\nlines = []\nfor f in files:\n   \
     \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
     \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
-    with open(os.path.join(dst, \"ep2-b13-canon-s1-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n  \
-    \  fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest\
-    \ ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+    with open(os.path.join(dst, \"ep2-b13-canon-r2a-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n \
+    \   fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) +\
+    \ manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
 artifacts:
-- C:\banyan-farm\b13canon-s1-0821\out\ep2-b13-canon-s1-0821-ipahead.png
+- C:\banyan-farm\b13canon-r2a-0821\out\ep2-b13-canon-r2a-0821-ipahead.png
 bar: "THE CANON BAR. Read at 1:1 against taste/refs/goblin-canon-founder-0821.png\n-- THE FOUNDER'S OWN\
   \ IMAGE -- and against nothing else. Tile B\n(adult-b19-0819.jpg) is SUPERSEDED and is no longer the\
   \ thing to match; a frame\nthat looks like the tile now FAILS.\n\n  IDENTITY -- five clauses, and three\
@@ -158,7 +158,7 @@ bar: "THE CANON BAR. Read at 1:1 against taste/refs/goblin-canon-founder-0821.pn
   \ image\n      is watercolour-adjacent and its background is genuinely out of focus.\n\nA frame failing\
   \ ANY of F1-F5, P1-P2 or W2 is REJECTED and is not a candidate.\nNear-misses are what made the 31-frame\
   \ LoRA set untrainable."
-clip77_measured_not_estimated: positive 69 of 77, negative 60 of 77, counted with animagine-xl-3.1's OWN
+clip77_measured_not_estimated: positive 69 of 77, negative 65 of 77, counted with animagine-xl-3.1's OWN
   vocab by pipeline/clip_token_count.py. The first draft of the identity clause measured 84-90 and the
   tail it was dropping was THE POSE AND THE LOCATION on all seven beats.
 founder_ruling_verbatim: dude, this is how the goblin should look
@@ -274,8 +274,8 @@ derivation:
   - the_one_variable
   - the_rung_this_is_one_variable_from
   retokened:
-  - jerryface-k6a-0821 -> b13canon-s1-0821
-  - ep2-jerry-face-k6a-0821 -> ep2-b13-canon-s1-0821
+  - jerryface-k6a-0821 -> b13canon-r2a-0821
+  - ep2-jerry-face-k6a-0821 -> ep2-b13-canon-r2a-0821
   overrides_applied_and_asserted:
     argv:--control:
     - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-canon-h37sit-0821.png)
@@ -300,75 +300,10 @@ derivation:
     key:node:
     - key node = '002b-first-citizen'
     key:priority:
-    - key priority = 9
+    - key priority = 6
     key:sample:
-    - key sample = True
+    - key sample = False
     payload:negative.txt:
-    - payload negative.txt (208 -> 214 chars)
+    - payload negative.txt (208 -> 245 chars)
     payload:prompt.txt:
     - payload prompt.txt (235 -> 281 chars)
-verdict_canon_s1_0821: |-
-  FAIL, judged by eye at 1:1 on the frame itself, 2026-08-21 13:35Z. The wave is
-  HELD and round two is four one-variable rungs, listed at the bottom.
-
-  WHAT THE NEW RECIPE WON, and it is the half nobody had ever got:
-    F1 EARS -- PASS, and this is the ruling that inverted this morning. Large,
-       lateral, pointed, clear of the skull on both sides, dominating the
-       silhouette. Striking `pointy ears`/`long pointy ears`/`elf` from the
-       negative and putting `pointy ears` in the positive did exactly what the
-       measurement said it would.
-    W1 COSTUME -- PASS. A mandarin-collar shirt with frog closures, dark
-       shorts, dark boots. The founder's "3 outfit" ruling is on the frame.
-    W2 NO CLOAK -- PASS. No cloak, no hood, no patches, no stitch lines.
-    F3 BALD -- PASS. Smooth unbroken dome, no hair, no horns, no cowl.
-    F5 NO AGE MODELLING -- PASS. Smooth face, no furrows, no folds, no jowls.
-    B1 POSE -- PASS. Sitting, hands clasped between the knees.
-    P1/P2 -- PASS on the evidence available. Large head on an ordinary child
-       body, not a mascot, not round-bellied. Seated, so the 2.7-head number is
-       not directly measurable off this frame and is not claimed to be.
-
-  WHAT FAILED, in descending order of severity:
-    C1 CONTAINMENT -- HARD FAIL AND THE REASON NOTHING SCALES. There is a
-       SECOND GOBLIN HEAD, roughly twice life size, floating in the upper right
-       of the frame. One subject was asked for. `2boys` is already in the
-       negative and did not touch it, which is the point: this is not a second
-       CHARACTER, it is a second HEAD, and the tag for a character does not
-       name it. A frame with two heads is not a candidate for anything.
-    F2 EYES -- FAIL, and it is the clause the whole pupil ruling turned on.
-       The founder's image has an off-white sclera (#ABA9A1) with a SMALL DARK
-       VERTICAL SLIT pupil about 10% of the eye's width. This frame has large
-       ORANGE-RED IRISES filling the eye with a round pupil. `slit pupils`
-       bought a pupil -- which is progress, `blank eyes` is genuinely dead --
-       but it bought the wrong one, and nothing in the recipe names the COLOUR,
-       so the checkpoint picked its favourite.
-    F4 SKIN / L1 PALETTE -- FAIL. Saturated apple green where the measurement
-       is #7C806D, a muted grey-olive, and the whole frame is higher contrast
-       and more saturated than the founder's watercolour-adjacent image.
-       `muted color` is in the positive and lost.
-    B3 EMOTION -- FAIL. The beat is THE SHADE and the emotion asked for was
-       `relief` = `closed mouth, slight smile`. The face is stern and deadpan.
-       Consistent with every prior finding that this face scowls through
-       expression tags; NOT scored as the reason for the hold, because the
-       three failures above have to be fixed first and any of them could be
-       what is eating the mouth.
-    B2 WORLD -- MARGINAL. Tall grass is present and in frame, which is the bar,
-       but it is foreground blur against a blank cream void with no depth.
-
-  ONE THING THAT AROSE UNASKED: small hoop EARRINGS on both ears. Not in the
-  prompt, not in the founder's image. Noted, not yet fought -- it may be the
-  `pointy ears` prior dragging its usual companions in, and it may vanish when
-  the containment fix lands.
-
-  ROUND TWO IS FOUR RUNGS, ONE VARIABLE EACH, off this exact spec. The
-  containment and colour-word additions are in ALL FOUR because a two-headed
-  frame cannot be judged on anything else -- that makes r2a the new baseline
-  and r2b/r2c/r2d one variable off r2a, not off this frame.
-    r2a  NEGATIVE += extra head, disembodied head, multiple heads, floating
-         head, orange eyes, glowing eyes, red eyes, saturated, high contrast.
-         Named for the two hard fails; nothing else moves.
-    r2b  r2a + IP_SCALE 0.7 -> 0.9. The reference HAS the right eye and the
-         right skin and only 6.7% of the encoder's pixels are carrying it.
-    r2c  r2a + reference sq22 -> sq25 (already built, sha in the module). More
-         encoded head, same strength.
-    r2d  r2a + `constricted pupils` restored to the positive. It was cut by the
-         CLIP-77 budget and there are 3 spare tokens.
