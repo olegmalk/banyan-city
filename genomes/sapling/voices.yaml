@@ -15,7 +15,11 @@ cast:
   FARMER:     { voice: bm_george,   speed: 0.98 }  # gruff, unhurried, few words
   ASSESSOR:   { voice: bm_daniel,   speed: 1.0 }   # metronome precision
   MAGISTRATE: { voice: bf_isabella, speed: 1.05 }  # unhurried authority
-  GUARD 1:    { voice: am_adam,     speed: 1.08 }  # dogged, literal; shaped down out of the tree's band 2026-08-19
+  # 2026-08-21, FOUNDER REVERSAL: "guard 1 sounds like a little kid — why did
+  # you change his voice?" The 08-20 pass had shaped him UP +9st (192 Hz) to
+  # dodge the tree; he never needed to (the tree separates by timbre, not
+  # pitch) and it made him a child. Now -9st, rendering 99.6-122.8 Hz.
+  GUARD 1:    { voice: am_adam,     speed: 1.08 }  # dogged, literal; adult register restored 2026-08-21
   # 2026-08-19, FOUNDER PICK "B" (review/ep2-guard2-voice-0819): am_echo sat
   # 1.7 Hz from the sapling in the rendered cut. am_michael +4st is his voice.
   GUARD 2:    { voice: am_michael,  speed: 1.05 }  # the rules-lawyer — mid-bright, brisk, prim

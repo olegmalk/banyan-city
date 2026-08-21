@@ -66,31 +66,49 @@ VOICE_SHAPING = {
         "me the correct form, and the correct form will be considered, in "
         "the correct order, at the correct time. That is how a kingdom works.")},
     # GUARD 1 — dogged, literal, chases first and reasons second. NOT a taste
-    # recast: his voice stays am_adam, this only moves his BAND. He was cast
-    # after the 2026-07-25 shaping pass too, so his ref was the shared REF_TEXT
-    # at pitch 0.0 — measured 117.6 Hz against bm_fable's 116.5, i.e. 1.1 Hz
-    # from the tree. He passed 0819c at 131.9 Hz purely because chatterbox
-    # happened to push that take up; takes are unseeded on MPS, so the next
-    # re-voice could have landed him on the sapling with nothing changed.
+    # recast: his voice stays am_adam, this only moves his BAND.
     #
-    # +9st is MEASURED, not chosen for tidiness. Sixteen rendered takes of his
-    # beat-05 line across seven offsets (the ref number predicts nothing —
-    # engine finding 2 on the picker page):
-    #   -9st (ref  77.2) -> 117.1, 91.6, 73.7          erratic; 117 is ON the tree
-    #   -8st (ref  81.1) -> 77.7-126.0 over 7 takes    43% inside the bar
-    #   -7st (ref  83.9) -> 77.9, 90.1, 103.4, 110.1   erratic
-    #   -6st (ref  87.9) -> 92.7                       14.7 Hz from the tree
-    #   +6st (ref 160.0) -> 145.9                      lands on GUARD 2
-    #   +7st (ref 170.8) -> 175.2                      10.7 Hz from the scavenger
-    #   +8st (ref 181.8) -> 157.9, 167.2, 187.5, 193.5 spread 35.6
-    #   +9st (ref 192.0) -> 181.1, 183.2, 189.0        spread 7.9, all clear
-    # Down is unusable BECAUSE the engine's attractor sits at ~110 Hz, which is
-    # exactly where the tree is: every deep ref that slips gets pulled onto the
-    # sapling, which is the defect being fixed. Up is the only direction where
-    # a slip lands nowhere. Episode 2's occupied bands are tree 107, GUARD 2
-    # 147, scavenger 164 — so >20 Hz from the tree AND from GUARD 2 leaves
-    # exactly two windows, <87 and >167, and only one of them holds still.
-    "am_adam":     {"speed": 1.08, "pitch": +9.0, "text": (
+    # -9st, 2026-08-21. THE FOUNDER REVERSED THE +9st THAT USED TO BE HERE:
+    # "guard 1 sounds like a little kid — why did you change his voice?" He is
+    # right and the number says so — +9st shipped him at 192.0/181.8/212.4 Hz,
+    # which is not an adult man. +9st was never his pick; it was taken on the
+    # steward's own metric on 08-20, which is the thing the ONE SAMPLE rule
+    # exists to stop.
+    #
+    # WHY THE OLD REASONING PICKED A CHILD. It applied a flat ">20 Hz from
+    # every other character" bar, and against a tree at ~110 that bar leaves
+    # only <87 or >167. But that is not the bar this show actually uses:
+    # qa_voices.py flags a pair only when the pitch bands overlap AND the
+    # centroids sit close, because two voices a listener can tell apart by
+    # timbre are not confusable at any pitch. The tree measures centroid 3991
+    # against every other character's 1900-2800 — it is the brightest thing in
+    # the cast by 1100 Hz and nobody is confusable with it on pitch alone.
+    # GUARD 2/VO already passes the gate at 22.4 Hz, ASSESSOR/VO at 19.0. So
+    # GUARD 1 never needed to clear the tree, and clearing it is what pushed
+    # him into the child register.
+    #
+    # THE BAND THAT IS ACTUALLY FREE. The voices GUARD 1 can be confused with
+    # are the ones sharing his timbre — GUARD 2 above all (Δcentroid 28 Hz, so
+    # pitch is the ONLY cue), then ASSESSOR, FARMER, SCAVENGER. Their measured
+    # bands: FARMER 86.2 (68.8-90.9), ASSESSOR 132.2 (123.7-150.0), GUARD 2
+    # 135.6, SCAVENGER 170.2 (151.5-189.0). That leaves one adult window,
+    # 95-122 Hz, between the farmer's ceiling and the assessor's floor — and
+    # the deep <90 window the old note reached for is the FARMER's, not empty.
+    #
+    # -9st IS MEASURED, nine rendered takes of all three of his lines:
+    #   -9st (ref 77.2) b05 -> 97.6, 108.6, 104.3
+    #                   b07 -> 134.8, 124.6,  96.4
+    #                   b09 -> 120.6, 110.1, 113.7   7/9 inside 95-122
+    #   -8st (ref 81.1) b05 -> 104.3, 85.4  b09 -> 116.5, 96.3   3/4
+    #   -7st (ref 83.9) b05 ->  77.8, 102.4 b09 -> 103.0, 125.0  2/4
+    # The attractor at ~110 Hz is the REASON a deep ref works rather than the
+    # reason it fails: the deeper the ref, the more the attractor dominates and
+    # the tighter the takes land — -9st's spread on b05 is 11 Hz where -7st's
+    # is 47. The old note read that same pull as a defect only because it was
+    # trying to escape a band it did not need to escape. b07 is the one line
+    # that strays (5 words; short lines have too little voiced material to hold
+    # a ref — measured and known since 08-19), so b07 is rolled until it lands.
+    "am_adam":     {"speed": 1.08, "pitch": -9.0, "text": (
         "He went this way. I saw him do it. I know what I saw. If it is not "
         "theft then what is it, because he took the apple and now the apple is "
         "gone. We can go back and look at the cart again. I do not mind "

@@ -38,38 +38,60 @@ recipes:
       guard2sw-M2.wav he auditioned, so what shipped is what he heard.
   GUARD 1:
     base_voice: am_adam         # UNCHANGED — this is a band move, not a recast
-    pitch_semitones: +9.0
+    pitch_semitones: -9.0       # was +9.0; REVERSED BY THE FOUNDER 2026-08-21
     speed: 1.08
-    ref_measured: { f0: 192.0, centroid: 2681 }
+    ref_measured: { f0: 77.2, centroid: 1289 }
     note: >-
-      Not asked for by the founder; taken because his ref sat 1.1 Hz from
-      bm_fable's and he cleared 0819c only by MPS luck. +9st chosen off sixteen
-      rendered takes across seven offsets — the sweep table is in
-      pipeline/build_refs.py beside the entry.
+      SUPERSEDED THE +9st THIS FILE ORIGINALLY RECORDED. The founder watched
+      ep2-ship-0821 and said "guard 1 sounds like a little kid — why did you
+      change his voice?" He is right: +9st shipped him at 192.0/181.8/212.4 Hz,
+      which is not an adult man. The +9st was never his pick — it was taken on
+      this lane's own metric on 08-20, without a sample.
+      WHY THE METRIC PICKED A CHILD: it applied a flat ">20 Hz from every
+      character" bar, and against a tree at ~110 that bar leaves only <87 or
+      >167. But qa_voices.py flags a pair only when the pitch bands overlap AND
+      the centroids sit close — the tree measures centroid 3991 against every
+      other character's 1900-2800, so nobody is confusable with it on pitch
+      alone and GUARD 1 never needed to clear it. Chasing that phantom is what
+      pushed him up. The genuinely free adult window is 95-122 Hz, between the
+      FARMER's ceiling (90.9) and the ASSESSOR's floor (123.7); the deep <90
+      window the +9st note reached for is the FARMER's, not empty.
+      -9st measured off nine takes across all three of his lines (7/9 inside
+      95-122) — sweep table in pipeline/build_refs.py beside the entry.
 
 # EVERY take measured on the RENDERED audio (qa_voices.py estimators: median F0
 # by autocorrelation, spectral centroid). Refs predict nothing here — the engine
 # pulls pitch toward ~110 Hz by a noisy +4..+20 and refuses extremes — and MPS
 # is unseeded, so a sibling take is not evidence for this one.
 takes:
-  - { beat: 5,  who: GUARD 1, f0: 192.0, centroid: 2155, seconds: 3.8 }
+  # GUARD 1 re-rendered 2026-08-21 at -9st (the +9st takes are archived at
+  # vo-archive/05-vo.v7, 07-vo.v7, 09-vo.v4). GUARD 2 untouched.
+  - { beat: 5,  who: GUARD 1, f0:  99.6, centroid: 1622, seconds: 5.3 }
   - { beat: 6,  who: GUARD 2, f0: 135.6, centroid: 2319, seconds: 6.0 }
-  - { beat: 7,  who: GUARD 1, f0: 181.8, centroid: 2543, seconds: 2.6 }
+  - { beat: 7,  who: GUARD 1, f0: 101.7, centroid: 1766, seconds: 2.0 }
   - { beat: 8,  who: GUARD 2, f0: 134.1, centroid: 3044, seconds: 2.1 }
-  - { beat: 9,  who: GUARD 1, f0: 212.4, centroid: 2346, seconds: 1.9 }
+  - { beat: 9,  who: GUARD 1, f0: 122.8, centroid: 1638, seconds: 2.1 }
   - { beat: 10, who: GUARD 2, f0: 135.6, centroid: 1562, seconds: 3.7 }
 
-# Character medians across the whole episode, on the takes now on disk.
+# Show-wide, from qa_voices.py on the takes now on disk (2026-08-21).
 separation_after:
-  medians: { VO: 109.6, GUARD 2: 135.6, SCAVENGER: 167.8, GUARD 1: 192.0 }
-  pairs_hz:
-    GUARD 2/VO: 26.0          # was 1.7 — the defect he heard, fixed
-    GUARD 1/VO: 82.4          # was 22.8 by luck, now by construction
-    GUARD 1/GUARD 2: 56.4
-    GUARD 2/SCAVENGER: 32.2
-    GUARD 1/SCAVENGER: 24.2
-    SCAVENGER/VO: 58.2
-  verdict: all six character pairs clear the 20 Hz bar; worst is 24.2
+  medians: { GUARD 1: 101.7, VO: 113.2, ASSESSOR: 132.2, GUARD 2: 135.6,
+             SCAVENGER: 170.2, FARMER: 86.2, MAGISTRATE: 212.4 }
+  guard1_pairs: # Δpitch · Δcentroid · band overlap
+    GUARD 1/GUARD 2:   { d_pitch:  33.9, d_centroid: 521, overlap_pct: 0 }
+    GUARD 1/VO:        { d_pitch:  11.5, d_centroid: 2194, overlap_pct: 0 }
+    GUARD 1/FARMER:    { d_pitch:  15.5, d_centroid: 185, overlap_pct: 0 }
+    GUARD 1/ASSESSOR:  { d_pitch:  30.5, d_centroid: 351, overlap_pct: 0 }
+    GUARD 1/SCAVENGER: { d_pitch:  68.5, d_centroid: 111, overlap_pct: 0 }
+  verdict: >-
+    Every GUARD 1 pair sits at 0% band overlap, which is the bar qa_voices
+    actually enforces. GUARD 1/VO is only 11.5 Hz apart on medians and still
+    clears, because the tree is 2194 Hz brighter — the pair a listener
+    separates by tone, not pitch. GUARD 1/SCAVENGER went 70% -> 0% overlap,
+    which retires the defect the 08-19 pass filed below as not-fixed.
+    Still one confusable pair show-wide, ASSESSOR/GUARD 2 (3.4 Hz, 100%
+    overlap) — PRE-EXISTING, untouched by this pass, and GUARD 2 is the
+    founder's own R4 pick so it is not this lane's to re-tune.
 
 known_and_not_hidden:
   short_lines_undershoot: >-

@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1845,
+ "commits_in_window": 1867,
  "covers_window": true,
  "cut": "ep2-ship-0821",
  "cut_files": [
@@ -15,7 +15,7 @@
  "cuts_shipped": 8,
  "generated": "2026-08-21",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "1ac3c0fab",
+ "head": "f3916ae95",
  "landed": {
   "08-inside-him-b08-twohander.mp4": {
    "date": "2026-08-15",
@@ -39,17 +39,17 @@
   },
   "pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "7ac6a0b7",
+   "sha": "d79d3f8c",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "7ac6a0b7",
+   "sha": "d79d3f8c",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "7ac6a0b7",
+   "sha": "d79d3f8c",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b05-standB-0814.yaml": {
@@ -84,7 +84,7 @@
   },
   "pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "7ac6a0b7",
+   "sha": "d79d3f8c",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b14-mac-motion-0818.yaml": {
@@ -114,7 +114,7 @@
   },
   "pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "7ac6a0b7",
+   "sha": "d79d3f8c",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b21-daylight-0814.yaml": {
@@ -123,7 +123,7 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "9ae20605",
+ "range_base": "5bc2f9f4",
  "resolved_blocks_added": 90,
  "shallow": true,
  "verdict_lines_added": 311,

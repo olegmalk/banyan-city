@@ -7,16 +7,16 @@
    "who": "GUARD 1",
    "text": "So we confiscate the apple.",
    "start": 0.0,
-   "end": 2.633,
+   "end": 1.645,
    "chunks": [
     {
      "text": "So we confiscate the apple.",
      "start": 0.0,
-     "end": 2.633
+     "end": 1.645
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.933
+ "total_s": 1.945
 }

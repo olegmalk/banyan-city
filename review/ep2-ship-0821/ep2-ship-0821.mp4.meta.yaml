@@ -10,20 +10,23 @@
 # this tree. It is a separate question from `publishable:`, which is the
 # licence gate's word and says nothing about taste either way.
 platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)
-model: none — no sampler ran for this clip+diffusers/LTX-2.3-Distilled-Diffusers (Lightricks
-  LTX-2.3 distilled, bf16)+none -- no model was loaded
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)+none
+  — no sampler ran for this clip+none -- no model was loaded
 cost_usd: 0.0
 node: 002b
 leaf: bench (--out) — no leaf, not canon
 provisional: true
 provisional_beats:
 - 1
+- 2
+- 3
 - 7
 - 11
 - 14
 - 15
 - 16
 - 19
+- 20
 beats: 21
 footage_beats:
 - 1
@@ -48,16 +51,16 @@ footage_beats:
 - 20
 - 21
 slate_beats: []
-duration_s: 115.61
+duration_s: 116.46
 size: 720x1280
-source_platforms: local-mac (CPU, no GPU)+local-deterministic (ffmpeg trim of a rendered
-  mp4)+local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)+local-deterministic
-  (pipeline/beat19_drop_animate.py, PIL/numpy, ffmpeg)
+source_platforms: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)+local-deterministic
+  (ffmpeg trim of a rendered mp4)+local-deterministic (pipeline/beat19_drop_animate.py,
+  PIL/numpy, ffmpeg)
 ingredients:
 - beat: 1
   kind: clip
-  path: review/ep2-ship-0821/sources/01-cold-open-COMP-chroma-s20260840.mp4
-  sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
+  path: review/ep2-ship-0821/sources/01-cold-open-LTX-fignonly-s20260840.mp4
+  sha256: 4ec39e0fb6318815be4fedfc8e7a3848b56c9ca29f9096bb04729fe43fe0949d
   publishable: true
   provisional: true
 - beat: 1
@@ -67,14 +70,16 @@ ingredients:
   publishable: true
 - beat: 2
   kind: clip
-  path: review/ep2-ship-0821/sources/02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4
-  sha256: a70235c49dab049cb1a5b9aa5dd9705521d951cf393c9fd94d8d8f3609860d8c
+  path: review/ep2-ship-0821/sources/02-the-sprint-b02-anchor-s20260834-0817.mp4
+  sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
   publishable: true
+  provisional: true
 - beat: 3
   kind: clip
-  path: review/ep2-ship-0821/sources/03-bad-cover-LTX-b03-ageb-s2-0821.mp4
-  sha256: 63127e52c0b60ab3cb0aafd644bbb37d1d2a3edd8c7f0ab3bd03486461a30f65
+  path: review/ep2-ship-0821/sources/03-bad-cover-LTX-midend-s20260821-0820.mp4
+  sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
   publishable: true
+  provisional: true
 - beat: 3
   kind: audio
   path: review/ep2-ship-0821/sources/03-vo.mp3
@@ -82,8 +87,8 @@ ingredients:
   publishable: true
 - beat: 4
   kind: clip
-  path: review/ep2-ship-0821/sources/04-the-footnote-LTX-b04-ageb-s1-0821.mp4
-  sha256: d0102928365ee7ae464ba56d6ff8476dbbead25bfda2ab2aa0177520308fd243
+  path: review/ep2-ship-0821/sources/04-the-footnote-b04-refire-0814.mp4
+  sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
   publishable: true
 - beat: 4
   kind: audio
@@ -98,7 +103,7 @@ ingredients:
 - beat: 5
   kind: audio
   path: review/ep2-ship-0821/sources/05-vo.mp3
-  sha256: e9fc7d5530fac09f17280fa2b7e77db0ca8e2d6483b0353be5679b779be1636d
+  sha256: 6a102f286cb6da4f664e72050f66f2d5efb0fef378d22efa3e8e69e961d0082b
   publishable: true
 - beat: 6
   kind: clip
@@ -119,7 +124,7 @@ ingredients:
 - beat: 7
   kind: audio
   path: review/ep2-ship-0821/sources/07-vo.mp3
-  sha256: f5c7d0fa57daaf7d63bcfdf3486ac113e8379812031c034b052a4f51d5042727
+  sha256: 2d9023fc88758438d042fc11f7db4cfe6ede49bc01be82c506ed7bea01def990
   publishable: true
 - beat: 8
   kind: clip
@@ -139,7 +144,7 @@ ingredients:
 - beat: 9
   kind: audio
   path: review/ep2-ship-0821/sources/09-vo.mp3
-  sha256: c6c956b762468c1581470a105962eb2a5db4870d4ae414606922cad20dc4c73c
+  sha256: 2824b7f9019c496a8952802e94f54e345b3586d4801d60ba6850c50f9d66ecd9
   publishable: true
 - beat: 10
   kind: clip
@@ -174,8 +179,8 @@ ingredients:
   publishable: true
 - beat: 13
   kind: clip
-  path: review/ep2-ship-0821/sources/13-the-shade-LTX-b13-ageb-s2-0821.mp4
-  sha256: edbffd0a3c45cedee96b8507b755ae8a98050b66e6c48e06f03d81152f166ab4
+  path: review/ep2-ship-0821/sources/13-the-shade-b13-refire-0814.mp4
+  sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
   publishable: true
 - beat: 13
   kind: audio
@@ -243,9 +248,10 @@ ingredients:
   provisional: true
 - beat: 20
   kind: clip
-  path: review/ep2-ship-0821/sources/20-evidence-LTX-b20-ageb-s2-0821.mp4
-  sha256: d05d5f72598b5925f4c48710ef5e37fb26e7d1b78033e881890139cc31888297
+  path: review/ep2-ship-0821/sources/20-evidence-LTX-macplate-r1s1.mp4
+  sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
   publishable: true
+  provisional: true
 - beat: 20
   kind: audio
   path: review/ep2-ship-0821/sources/20-vo.mp3
@@ -259,28 +265,28 @@ ingredients:
 sources:
 - beat: 1
   slug: COLD OPEN — 0:00–0:06
-  clip: 01-cold-open-COMP-chroma-s20260840.mp4
+  clip: 01-cold-open-LTX-fignonly-s20260840.mp4
   audio: 01-vo.mp3
   fill: hold
   clip_s: 5.042
   slot_s: 9.47
   voice_engine: chatterbox-0.5B
-  platform: local-mac (CPU, no GPU)
-  model: none — no sampler ran for this clip
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
   cost_usd: 0.0
 - beat: 2
   slug: THE SPRINT — 0:06–0:11
-  clip: 02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4
+  clip: 02-the-sprint-b02-anchor-s20260834-0817.mp4
   audio: none
   fill: once
   clip_s: 4.042
   slot_s: 4.04
-  platform: local-deterministic (ffmpeg trim of a rendered mp4)
-  model: none — no sampler ran for this clip
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
   cost_usd: 0.0
 - beat: 3
   slug: BAD COVER — 0:11–0:16
-  clip: 03-bad-cover-LTX-b03-ageb-s2-0821.mp4
+  clip: 03-bad-cover-LTX-midend-s20260821-0820.mp4
   audio: 03-vo.mp3
   fill: once
   clip_s: 5.042
@@ -291,10 +297,10 @@ sources:
   cost_usd: 0.0
 - beat: 4
   slug: THE FOOTNOTE — 0:16–0:22
-  clip: 04-the-footnote-LTX-b04-ageb-s1-0821.mp4
+  clip: 04-the-footnote-b04-refire-0814.mp4
   audio: 04-vo.mp3
   fill: hold
-  clip_s: 5.042
+  clip_s: 4.042
   slot_s: 6.16
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
@@ -304,9 +310,9 @@ sources:
   slug: THE PATROL — 0:22–0:27
   clip: 05-the-patrol-b05-standB-trim.mp4
   audio: 05-vo.mp3
-  fill: once
+  fill: hold
   clip_s: 4.917
-  slot_s: 4.92
+  slot_s: 5.67
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -328,7 +334,7 @@ sources:
   audio: 07-vo.mp3
   fill: once
   clip_s: 4.042
-  slot_s: 4.04
+  slot_s: 3.95
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -350,7 +356,7 @@ sources:
   audio: 09-vo.mp3
   fill: once
   clip_s: 5.042
-  slot_s: 3.88
+  slot_s: 4.07
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
   model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
@@ -390,10 +396,10 @@ sources:
   cost_usd: 0.0
 - beat: 13
   slug: THE SHADE — 1:00–1:04
-  clip: 13-the-shade-LTX-b13-ageb-s2-0821.mp4
+  clip: 13-the-shade-b13-refire-0814.mp4
   audio: 13-vo.mp3
   fill: once
-  clip_s: 5.042
+  clip_s: 4.042
   slot_s: 3.56
   voice_engine: chatterbox-0.5B
   platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
@@ -466,7 +472,7 @@ sources:
   cost_usd: 0.0
 - beat: 20
   slug: EVIDENCE — 1:39–1:42
-  clip: 20-evidence-LTX-b20-ageb-s2-0821.mp4
+  clip: 20-evidence-LTX-macplate-r1s1.mp4
   audio: 20-vo.mp3
   fill: once
   clip_s: 5.042

@@ -19,16 +19,6 @@
 cut: ep2-ship-0821
 generated_by: pipeline/proof_receipts.py --frames
 frames:
-- beat: 1
-  take: 01-cold-open-COMP-chroma-s20260840.mp4
-  frame: b01.jpg
-  width: 240
-  height: 436
-  at_seconds: 2.52
-  clip_duration_s: 5.04
-  clip_sha256: 12e256fd35f1b10119da67909bfa3fb0d15f1be44b1323c73f47e174af501e28
-  frame_sha256: 4bf90bc15ad42e6590a32bf0a22badb46b522514eed3723495817feecf385e5a
-  frame_bytes: 7458
 - beat: 2
   take: 02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4
   frame: b02.jpg
@@ -36,7 +26,7 @@ frames:
   height: 436
   at_seconds: 2.02
   clip_duration_s: 4.04
-  clip_sha256: a70235c49dab049cb1a5b9aa5dd9705521d951cf393c9fd94d8d8f3609860d8c
+  clip_sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
   frame_sha256: 40687ae02943f854bae9667abaae06b4817481fb96b14635395b452147528c35
   frame_bytes: 14287
 - beat: 3
@@ -46,7 +36,7 @@ frames:
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 63127e52c0b60ab3cb0aafd644bbb37d1d2a3edd8c7f0ab3bd03486461a30f65
+  clip_sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
   frame_sha256: d6ad96787b40115d5eb1e1c0130661b5445d5d3d8277a5f77800b1cc516b1d3a
   frame_bytes: 13004
 - beat: 4
@@ -56,7 +46,7 @@ frames:
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: d0102928365ee7ae464ba56d6ff8476dbbead25bfda2ab2aa0177520308fd243
+  clip_sha256: 490b718ce4f4c0029a429702155a7022232fc1185f0578f460ed77269385102e
   frame_sha256: b4507062f7fc7232d6b54640847a45026ab7fc5eb4d3b66d1776e42c22645df6
   frame_bytes: 15952
 - beat: 5
@@ -146,7 +136,7 @@ frames:
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: edbffd0a3c45cedee96b8507b755ae8a98050b66e6c48e06f03d81152f166ab4
+  clip_sha256: 36a122a88083d8b86dfa2d49722a11b339f0b94028b1fb90bfa9d72f1520524e
   frame_sha256: 855870d25d3bc28ec12831d88a7639cdd477e2a2f644ef9c0b5d97c4b3764758
   frame_bytes: 14334
 - beat: 14
@@ -216,7 +206,7 @@ frames:
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: d05d5f72598b5925f4c48710ef5e37fb26e7d1b78033e881890139cc31888297
+  clip_sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
   frame_sha256: ecd9fdb47946ce331347ed7e39eae9ffc04820b641e623576488548c113e30f2
   frame_bytes: 18124
 - beat: 21
