@@ -4007,3 +4007,5 @@
 18:57:23Z DONE task=ep3-saplora-s39-0821-1787338601 rc=0 artifacts=2
 18:57:29Z STARTED task=ep3-saplora-s40-0821-1787338605 attempt=1 on box-runner
 18:57:43Z DONE task=ep3-saplora-s40-0821-1787338605 rc=0 artifacts=2
+18:57:49Z STARTED task=ep3-saplora-s41-0821-1787338610 attempt=1 on box-runner
+18:58:03Z DONE task=ep3-saplora-s41-0821-1787338610 rc=0 artifacts=2
