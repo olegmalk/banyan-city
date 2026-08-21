@@ -3568,3 +3568,4 @@
 09:06:27Z FAIL task=ep3-sapfield-p03-0821-1787303077 rc=9 step=hintskel
 09:06:32Z STARTED task=ep3-sapfield-p04-0821-1787303079 attempt=1 on box-runner
 09:06:35Z FAIL task=ep3-sapfield-p04-0821-1787303079 rc=9 step=hintskel
+09:06:39Z box-runner idle ready=0 failed=71
