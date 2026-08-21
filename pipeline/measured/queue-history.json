@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "ebfeb04cc358290c7dedeece11cff62e07471329",
-  "measured_at": "2026-08-21T07:38:07Z",
-  "job_count": 1178,
-  "ok": 1110,
+  "source_commit": "dfcc1ae913f045d1da45a6c5580f1e95c4b99b31",
+  "measured_at": "2026-08-21T08:02:16Z",
+  "job_count": 1187,
+  "ok": 1119,
   "failed": 68,
   "upcoming_count": 82,
   "skipped_sidecars": null,
@@ -13,6 +13,510 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-jerry-age-h265w2-0821-1787298082",
+   "task": "ep2-jerry-age-h265w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:48:09Z",
+   "finished_at": "2026-08-21T07:48:37Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h265w2-0821-1787298082.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h265w2-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h265 x w2. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h265 (3.77 heads, THE NAMED FAR END) x the age clause `teenage goblin boy, slim, soft rounded jaw` (the ruling's direction with a FACE cue, because he asked for a younger READ an…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h265w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h265w2-0821/ep2-jerry-age-h265w2-0821-ipahead.png",
+     "name": "ep2-jerry-age-h265w2-0821-ipahead.png",
+     "bytes": 1471607,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w2-0821/jerry-skel-h265-0821.png",
+     "name": "jerry-skel-h265-0821.png",
+     "bytes": 7754,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h265w1-0821-1787298079",
+   "task": "ep2-jerry-age-h265w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:46:49Z",
+   "finished_at": "2026-08-21T07:47:16Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-jerry-age-h265w1-0821-1787298079.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h265w1-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h265 x w1. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h265 (3.77 heads, THE NAMED FAR END) x the age clause `young goblin, slim` (the ruling's direction, minimally worded). Two axes, three points each, nine frames, one batch, seeds…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h265w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h265w1-0821/ep2-jerry-age-h265w1-0821-ipahead.png",
+     "name": "ep2-jerry-age-h265w1-0821-ipahead.png",
+     "bytes": 1416807,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w1-0821/jerry-skel-h265-0821.png",
+     "name": "jerry-skel-h265-0821.png",
+     "bytes": 7754,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h265w0-0821-1787298077",
+   "task": "ep2-jerry-age-h265w0-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:46:15Z",
+   "finished_at": "2026-08-21T07:46:43Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h265w0-0821-1787298077.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h265w0-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h265 x w0. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h265 (3.77 heads, THE NAMED FAR END) x the age clause `lean wiry goblin` (the age word simply REMOVED from k6a's clause -- the CONTROL, which isolates how much of the adult read…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h265w0-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h265w0-0821/ep2-jerry-age-h265w0-0821-ipahead.png",
+     "name": "ep2-jerry-age-h265w0-0821-ipahead.png",
+     "bytes": 1513709,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w0-0821/jerry-skel-h265-0821.png",
+     "name": "jerry-skel-h265-0821.png",
+     "bytes": 7754,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h265w0-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h240w2-0821-1787298074",
+   "task": "ep2-jerry-age-h240w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:45:41Z",
+   "finished_at": "2026-08-21T07:46:09Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h240w2-0821-1787298074.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h240w2-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h240 x w2. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h240 (4.17 heads, the kid end) x the age clause `teenage goblin boy, slim, soft rounded jaw` (the ruling's direction with a FACE cue, because he asked for a younger READ and not…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h240w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h240w2-0821/ep2-jerry-age-h240w2-0821-ipahead.png",
+     "name": "ep2-jerry-age-h240w2-0821-ipahead.png",
+     "bytes": 1567846,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w2-0821/jerry-skel-h240-0821.png",
+     "name": "jerry-skel-h240-0821.png",
+     "bytes": 7736,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h240w1-0821-1787298071",
+   "task": "ep2-jerry-age-h240w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:45:08Z",
+   "finished_at": "2026-08-21T07:45:36Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h240w1-0821-1787298071.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h240w1-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h240 x w1. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h240 (4.17 heads, the kid end) x the age clause `young goblin, slim` (the ruling's direction, minimally worded). Two axes, three points each, nine frames, one batch, seeds pinned…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h240w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h240w1-0821/ep2-jerry-age-h240w1-0821-ipahead.png",
+     "name": "ep2-jerry-age-h240w1-0821-ipahead.png",
+     "bytes": 1340245,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w1-0821/jerry-skel-h240-0821.png",
+     "name": "jerry-skel-h240-0821.png",
+     "bytes": 7736,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h240w0-0821-1787298068",
+   "task": "ep2-jerry-age-h240w0-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:43:54Z",
+   "finished_at": "2026-08-21T07:44:22Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h240w0-0821-1787298068.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h240w0-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h240 x w0. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h240 (4.17 heads, the kid end) x the age clause `lean wiry goblin` (the age word simply REMOVED from k6a's clause -- the CONTROL, which isolates how much of the adult read was th…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h240w0-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h240w0-0821/ep2-jerry-age-h240w0-0821-ipahead.png",
+     "name": "ep2-jerry-age-h240w0-0821-ipahead.png",
+     "bytes": 1503385,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w0-0821/jerry-skel-h240-0821.png",
+     "name": "jerry-skel-h240-0821.png",
+     "bytes": 7736,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h240w0-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h215w2-0821-1787298066",
+   "task": "ep2-jerry-age-h215w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:43:20Z",
+   "finished_at": "2026-08-21T07:43:48Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h215w2-0821-1787298066.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h215w2-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h215 x w2. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h215 (4.65 heads, the teen end) x the age clause `teenage goblin boy, slim, soft rounded jaw` (the ruling's direction with a FACE cue, because he asked for a younger READ and not…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h215w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h215w2-0821/ep2-jerry-age-h215w2-0821-ipahead.png",
+     "name": "ep2-jerry-age-h215w2-0821-ipahead.png",
+     "bytes": 1560167,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w2-0821/jerry-skel-h215-0821.png",
+     "name": "jerry-skel-h215-0821.png",
+     "bytes": 7680,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h215w1-0821-1787298063",
+   "task": "ep2-jerry-age-h215w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:42:46Z",
+   "finished_at": "2026-08-21T07:43:14Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-jerry-age-h215w1-0821-1787298063.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h215w1-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h215 x w1. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h215 (4.65 heads, the teen end) x the age clause `young goblin, slim` (the ruling's direction, minimally worded). Two axes, three points each, nine frames, one batch, seeds pinne…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h215w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h215w1-0821/ep2-jerry-age-h215w1-0821-ipahead.png",
+     "name": "ep2-jerry-age-h215w1-0821-ipahead.png",
+     "bytes": 1497393,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w1-0821/jerry-skel-h215-0821.png",
+     "name": "jerry-skel-h215-0821.png",
+     "bytes": 7680,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-age-h215w0-0821-1787298060",
+   "task": "ep2-jerry-age-h215w0-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:42:05Z",
+   "finished_at": "2026-08-21T07:42:41Z",
+   "duration_s": 36,
+   "sidecar": "farm-out/box/ep2-jerry-age-h215w0-0821-1787298060.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-age-h215w0-0821.yaml",
+   "purpose": {
+    "consumer": "/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every adult-design job in the queue is already held.",
+    "why": "AGE LADDER h215 x w0. FOUNDER RULING 2026-08-21, VERBATIM: \"Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the killed round-chibi design.\" TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the tile's and is not on the table. THIS RUNG: head_frac h215 (4.65 heads, the teen end) x the age clause `lean wiry goblin` (the age word simply REMOVED from k6a's clause -- the CONTROL, which isolates how much of the adult read was t…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 4
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-age-h215w0-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-age-h215w0-0821/ep2-jerry-age-h215w0-0821-ipahead.png",
+     "name": "ep2-jerry-age-h215w0-0821-ipahead.png",
+     "bytes": 1517169,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w0-0821/jerry-skel-h215-0821.png",
+     "name": "jerry-skel-h215-0821.png",
+     "bytes": 7680,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-age-h215w0-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
   {
    "id": "ep2-b02-tilemotion-s2-0821-1787296927",
    "task": "ep2-b02-tilemotion-s2-0821",
