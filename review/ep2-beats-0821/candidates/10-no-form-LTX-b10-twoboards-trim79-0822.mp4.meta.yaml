@@ -1,0 +1,34 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 10-no-form-LTX-world-0813.mp4
+source_path: farm-out/ep2-b10-twoboards-0822/10-no-form-LTX-world-0813.mp4
+source_sha256: 980b32266f2b6a7d6a8eb2a46c324538390c1f7bf7991e56e1a33b02c8d7ec04
+source_frames: 121
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 10
+size: 704x1280
+fps: 24.0
+frames: 79
+seconds: 3.292
+edit: ffmpeg select frames 0..78 of 121, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 42
+seed: 20260882
+guidance: 2.0
+steps: 8@352x640+3@704x1280
+task: ep2-b10-twoboards-trim-0822
+cost_usd: 0
+mode: production
+why_trimmed: 'THE PLACEMENT FIX HOLDS FOR 79 FRAMES AND THEN GIVES OUT. Stepped at 26-frame
+  intervals: f0 through f78 carry TWO separate boards throughout -- the near guard''s grey-blue
+  one and his partner''s dark teal one, in different hands, never touching -- which is the
+  founder''s ''the 2 things they were holding shapeshift into 1'' fixed for three quarters
+  of the clip. At f104 the near guard holds ONE large pale board flat to camera and the partner''s
+  teal board is gone, so the merge still arrives, just late. This is the per-clip usable-window
+  pattern this wave has already named on beat 02 rather than a wording failure: the words
+  demonstrably place both boards, and they hold until the model runs out of agreement with
+  its own init. Cut where the two boards are still two.'

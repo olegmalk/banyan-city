@@ -388,11 +388,32 @@ BEATS = {
     10: dict(
         goblin=False,
         faults=[
+            "The two things they are holding shapeshift into one. Two separate boards at the first frame — a grey-blue one and a dark teal one — drifting together by frame 48 and gone by frame 72, leaving a single tan board held between them.",
             "He holds the blank board out to the CAMERA instead of to his partner. From frame 65 to 96 it is flat to the lens, so his partner would be seeing it edge-on. That is the clause that IS the beat, and it fails.",
         ],
         wins=[],
-        faults_from="ship-manifest.yaml beat 10 + pipeline/jobs/ep2-b10-pairB-0814.yaml",
-        candidates=[],
+        note=(
+            "Your note found a bug in the sentence, not in the picture. The word \"board\" was in "
+            "that prompt five times and every one of them was the NEAR guard's — his partner was "
+            "never given anything to hold. So the plate handed the model two boards, the words "
+            "handed it one, and it resolved the disagreement by deleting one. The partner now has "
+            "his own board, named and coloured, and the same sentence turns the blank side toward "
+            "him instead of toward the lens."),
+        faults_from="ship-manifest.yaml beat 10 + pipeline/jobs/ep2-b10-pairB-0814.yaml + founder note 2026-08-22",
+        candidates=[
+            dict(file=f"{CAND_URL}/10-no-form-LTX-b10-twoboards-trim79-0822.mp4",
+                 poster=f"{POSTER_URL}/10-no-form-LTX-b10-twoboards-trim79-0822.jpg",
+                 label="TWO BOARDS THAT STAY TWO — tonight, newest", tag="pass",
+                 verdict="Two separate boards the whole way through: the near man's grey-blue one and his partner's dark teal one, in different hands, never touching and never merging. Both men stay in frame, nobody walks off, and the boards stay hand-sized. Cut at frame 79, which is 3.3 s of a 4.1 s slot, so the assembly will hold the last frame for about eight tenths of a second.",
+                 diff="Two changes, both in the wording, no new plate. His partner was given his OWN board — named, and named a different colour, because the two boards in the picture already ARE different colours and a difference the sentence admits to is one the model has a reason to keep. And the blank side of the near man's board is now angled at his partner rather than flat to the camera, which is your older note on this beat.",
+                 src="pipeline/jobs/ep2-b10-twoboards-0822.yaml + review/ep2-beats-0821/candidates/10-no-form-LTX-b10-twoboards-trim79-0822.mp4.meta.yaml"),
+            dict(file=f"{CAND_URL}/10-no-form-LTX-b10-twoboards-full-0822.mp4",
+                 poster=f"{POSTER_URL}/10-no-form-LTX-b10-twoboards-full-0822.jpg",
+                 label="the same take, uncut — the merge comes back at the end", tag="warn",
+                 verdict="Identical to the clip above for its first 79 frames. Between frame 78 and frame 86 the teal board disappears and the two of them end up holding one big pale board between them — the old fault, arriving late instead of early. Shown so the cut above is not hiding anything: this is what the last second looks like.",
+                 diff="No trim. Same render, all 121 frames.",
+                 src="pipeline/jobs/ep2-b10-twoboards-0822.yaml"),
+        ],
     ),
     11: dict(
         goblin=False,
