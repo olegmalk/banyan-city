@@ -258,6 +258,45 @@ WAVE = {
          "the grass at the base of the stem, then tips his head sideways into "
          "the sapling's hand-sized patch of shade'. Line: '...Thanks for the "
          "shade.' EXHAUSTED, and the first moment he is not being chased."),
+    # ── ADDED 2026-08-22, on the founder's beat-by-beat verdicts of 08-21
+    # night: "old man goblin. very wrong" on 14, 15, 16, 17, 19 and 20. The
+    # patch wave was seven beats chosen by an audit; his verdicts extend it to
+    # every beat the goblin is visible in, so the five that were never in it
+    # are added here rather than given a second recipe of their own. Nothing
+    # about the recipe moves -- same reference, same proportion, same seed,
+    # same geometry. Each row is the beat's own staging from node.md and one
+    # emotion key out of the table above.
+    14: ("kneel", "kneeling, picking at the dirt with one hand, in tall grass, "
+         "full body", "sheepish",
+         "THE DEFENSE -- 'He picks at the dirt, embarrassed, glancing around.' "
+         "Line: 'It was ONE apple. It fell off the cart...' He is arguing a "
+         "case nobody asked him to argue, to a plant. Embarrassed, not sad."),
+    15: ("crouch", "squatting, head tilted down and sideways, in tall grass, "
+         "full body", "relief",
+         "GOOD LISTENER -- 'He tips his head down and sideways until his eyes "
+         "are level with the two leaves, and talks to them from a hand's "
+         "width away; both of them share the frame.' Line: 'You're a good "
+         "listener.' Fond, and the warmest he is in the episode."),
+    16: ("sit", "sitting, in tall grass, full body", "deadpan",
+         "WHY -- 'Close on the sapling's leaf; the scavenger sits blurred "
+         "behind it.' NOTE ON STAGING, and it is why this row exists at all: "
+         "the shot is a leaf close-up and he is the blurred figure behind it, "
+         "so this plate is the FIGURE, not the framing. The founder's verdict "
+         "on this beat was 'old man goblin. very wrong', which means he is "
+         "legible enough in the take to be judged, so the design has to be "
+         "right even at this depth."),
+    17: ("stand", "standing, turning away, in tall grass, full body",
+         "deadpan",
+         "GOODBYE -- 'The scavenger pushes himself up, gives his cloak a "
+         "shake, and turns to go.' (Restaged 2026-08-18: the brush gesture is "
+         "a measured engine limit, 0 of 8; whole-body stand-and-turn is 8 of "
+         "8.) Line: 'If anyone asks -- you didn't see me.' Dry."),
+    19: ("stride", "standing mid-stride, looking back down at the ground, in "
+         "tall grass, full body", "alarmed",
+         "THE DROP -- 'the sapling low in frame and the scavenger standing "
+         "beside it, mid-stride away: the stem lets go and the fig drops the "
+         "short distance into the grass by his heel. He stops mid-step and "
+         "looks back down at it.' No line. Surprise, caught mid-step."),
     20: ("crouch", "squatting, holding a small fruit, looking up, in tall "
          "grass, full body", "alarmed",
          "EVIDENCE -- 'crouches back down, picks the fig up with both hands, "
