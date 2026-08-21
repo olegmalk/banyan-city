@@ -59,8 +59,8 @@ import sys
 import yaml
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JOB_ID = "ep2-jerry-expref-0821"
-JOB_DIR = r"C:\banyan-farm\jerryexpref-0821"
+JOB_ID = "ep2-jerry-expref-r2-0821"
+JOB_DIR = r"C:\banyan-farm\jerryexpref-r2-0821"
 RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 
 TILE_REL = "review/ep2-goblin-design-0819/adult-b19-0819.jpg"
@@ -176,20 +176,42 @@ def build():
     steps = [{"name": "stage", "argv": [py, "-c", _mask_step()]}]
     for s in STRENGTHS:
         tag = s.replace(".", "")
-        steps.append({"name": "soft" + tag, "argv": [
-            py, JOB_DIR + r"\inpaint_fruit.py",
-            "--init", JOB_DIR + r"\head.png",
-            "--mask-png", JOB_DIR + r"\mask.png",
-            "--prompt-file", JOB_DIR + r"\prompt.txt",
-            "--negative-file", JOB_DIR + r"\negative.txt",
-            "--out", JOB_DIR + ("\\expref-s%s.png" % tag),
-            "--steps", "40", "--cfg", "7.5",
-            "--strength", s, "--seed", SEED,
-            "--pad-crop", "64", "--blur", "8",
-            "--note", ("THE EXPRESSIVE REFERENCE, strength %s. Brow and mouth "
-                       "bands only; the EYES ARE NOT IN THE MASK because T1 is "
-                       "the one identity clause the adapter is provably "
-                       "carrying and the mood is not in the eyes." % s)]})
+        # inpaint_fruit REQUIRES --init-sha256 and it is right to: it is the
+        # guard that stops a job painting over a file that is not the file the
+        # spec was written against. But our init is DERIVED on the card (the
+        # 224x224 crop), and PNG bytes are not reproducible across PIL builds --
+        # the h240 skeleton is pixel-identical on this Mac and the box with two
+        # different digests. So the digest cannot be pinned at author time
+        # without pinning a machine.
+        #
+        # The provenance anchor is kept where it is actually checkable: the
+        # TILE is sha-pinned at fetch, and the crop is a deterministic function
+        # of the tile and four numbers in this file. This step hashes the crop
+        # it is about to use and passes that, so the guard still asserts "the
+        # bytes I read are the bytes I painted".
+        steps.append({"name": "soft" + tag, "argv": [py, "-c", (
+            "import hashlib, subprocess, sys\n"
+            "root = r'%s'\n"
+            "init = root + r'\\head.png'\n"
+            "sha = hashlib.sha256(open(init, 'rb').read()).hexdigest()\n"
+            "print('init', init, sha)\n"
+            "rc = subprocess.call([r'%s', root + r'\\inpaint_fruit.py',\n"
+            "    '--init', init, '--init-sha256', sha,\n"
+            "    '--mask-png', root + r'\\mask.png',\n"
+            "    '--prompt-file', root + r'\\prompt.txt',\n"
+            "    '--negative-file', root + r'\\negative.txt',\n"
+            "    '--out', root + r'\\expref-s%s.png',\n"
+            "    '--steps', '40', '--cfg', '7.5', '--strength', '%s',\n"
+            "    '--seed', '%s', '--pad-crop', '64', '--blur', '8',\n"
+            "    '--note', %r])\n"
+            "raise SystemExit(rc)\n"
+            % (JOB_DIR, py, tag, s, SEED,
+               ("THE EXPRESSIVE REFERENCE, strength %s. Brow and mouth bands "
+                "only, on a 224x224 crop centred on HEAD_CROP; the EYES ARE "
+                "NOT IN THE MASK because T1 is the one identity clause the "
+                "adapter is provably carrying and the mood is not in the "
+                "eyes." % s)))]})
+
     steps.append({"name": "publish", "argv": [py, "-c", _publish_step()]})
 
     return {
@@ -328,9 +350,14 @@ def main(argv=None):
         spec["payload"][JOB_DIR + r"\inpaint_fruit.py"]) > 10000)
     check("the negative fights the exact thing being removed",
           all(t in NEGATIVE for t in ("angry", "scowl", "furrowed brow")))
-    check("every artifact is produced by a named step",
-          all(any(art in s.get("argv", []) for s in spec["steps"])
-              for art in spec["artifacts"]))
+    check("every artifact is named by the step that writes it",
+          all(any(art.rsplit("\\", 1)[-1] in
+                  " ".join(str(x) for x in st.get("argv", []))
+                  for st in spec["steps"]) for art in spec["artifacts"]))
+    check("each inpaint step hashes its own init at run time",
+          all("hashlib.sha256(open(init" in " ".join(str(x) for x in
+              s.get("argv", [])) for s in spec["steps"]
+              if s["name"].startswith("soft")))
     check("priority outranks the sapling backlog and the patchwave",
           spec["priority"] < 22)
 

@@ -8045,3 +8045,54 @@ lane**, exactly as `ep3-sapfield-p0*` flagged it. Training stays behind the
 motion tranche regardless, and the dataset cannot be re-curated at age B with
 expression variety until the expression question above is answered, because a
 LoRA learns what it is shown and today it would be shown seven scowls.
+
+## THE TRADE IS WON: `blank eyes` restored AND every beat's emotion legible (2026-08-21, round two)
+
+Pixels: `review/ep2-goblin-age-0821/EVIDENCE-r2-trade-won.png` (before/after on
+three beats) and `CONTACT-wave-r2-heads.png` (all seven at 1:1).
+
+**Round one of the wave overturned my own conclusion.** Four samples on beat 13
+had said the expression was invariant. Six beats with *strong* tags said
+otherwise: b02 open-mouthed and frightened, b08 blushing, b03 with a sweatdrop,
+b20 open-mouthed in surprise. **Ruling 2 was right and my generalisation from one
+beat was wrong** — beat 13's emotion (`tired, half-closed eyes, light smile`) was
+simply the three weakest tags in the episode.
+
+**And round one lost T1 in all six** — every eye came back with an iris and a
+pupil. That is not a second problem, it is the same one: with `blank eyes` struck
+nothing argued for the tile's blank slit while `wide-eyed` actively asked for an
+ordinary eye. Beat 13 kept its eyes and lost its face; the six gained a face and
+lost their eyes.
+
+**Round two took the fix the original sample had already predicted in writing** —
+*"restore `blank eyes` and carry the emotion in the MOUTH and BROW"* — and it
+lands on all seven:
+
+| beat | emotion tags | T1 | E1 |
+|---|---|---|---|
+| 02 | scared, open mouth | blank | shouting alarm |
+| 03 | sweatdrop, looking to the side | blank | furtive |
+| 04 | parted lips, looking to the side | blank | wary peek |
+| 07 | nervous, sweatdrop, frown | blank | apprehensive |
+| 08 | blush, frown | blank | caught out |
+| 13 | closed eyes, smile, parted lips | blank slits | **a real smile** |
+| 20 | open mouth | blank | surprise |
+
+**Beat 13 is the headline.** The beat that clashed, that got routed to an
+expressive-reference build, that four samples could not move — it smiles. Warmth
+was never unreachable; its tags were too weak. `smile` has orders of magnitude
+more Danbooru posts behind it than `light smile`, and `closed eyes` is
+unambiguous geometry where `half-closed eyes` is a mannequin tag.
+
+**What this retires.** The expressive-reference route (`ep2-jerry-expref-*`) is
+**superseded before it rendered** — it was built to solve beat 13 and beat 13 is
+solved by two words. Recorded rather than quietly dropped, because the reasoning
+that led to it was sound on the evidence available and the evidence changed.
+
+**Two faults carried, not chased**, both on the ship page's fault table:
+
+- **T4 EAR SPIKES.** Metal studs/spikes have grown on the ear flanges across the
+  wave. The short low swept-back flange is still there underneath. This is new
+  since the age pivot and is not in either ruler.
+- **C1 MAGENTA COLLAR** on folded poses (03, 13, 20), per the standing decision.
+
