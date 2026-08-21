@@ -136,6 +136,29 @@ SCENES = {
                 scene="a green plain after rain, puddles, breaking cloud",
                 light="bright breaking cloud, wet specular puddles",
                 ground="green lobes BETWEEN the puddles, y~850..1216"),
+    # ---- ROUND 6 / v3, added 2026-08-21. Two plates out of a four-cell WORD
+    # ---- PROBE, not a breadth batch: each cell deleted one suspect word from a
+    # round-5 failure. w03 is the control (moonlight, already known to work) and
+    # it is the greenest plate the set has ever had; w02 is the one that moved
+    # the finding -- `golden hour` deleted from v04, the warm light kept, and
+    # the tan macro grass did not come back. w01 (dusk, grey key) REFUSED at
+    # this tool with ZERO green-dominant pixels and w04 (cold light, no season
+    # word) came back a snowfield; both are judged in plates-0821.yaml.
+    "w03": dict(plate="ep3-sapfld6-w03-0821.png",
+                scene="a green meadow at night, distant hills, a tall moonlit "
+                      "cumulus beyond",
+                light="moonlight through broken cloud, patches of shadow, cool "
+                      "blue key",
+                ground="the open emerald plane from y~880, the cleanest in the "
+                       "set -- no rock, no puddle, no wedge"),
+    "w02": dict(plate="ep3-sapfld6-w02-0821.png",
+                scene="rolling green downland, a low sun on the horizon, "
+                      "distant hills",
+                light="low sun behind thin cloud, warm diffuse backlight, lit "
+                      "blade tips against shadowed slopes",
+                ground="the lit crest from y~940. THE WHOLE FOREGROUND IS A "
+                       "BLADED SWARD -- the small tier would be swallowed by "
+                       "it, so this plate carries m/l/xl only"),
 }
 
 # tier -> the caption's SCALE clause. Four tiers, and they are apparent size in
@@ -217,6 +240,24 @@ ROWS = [
     ("s35", "v12", "l",  (200, 1160),  500,  6.0, 0.50, 62.0),
     ("s36", "v05", "s",  (300,  980),  170,  4.0, 0.57, 70.0),
     ("s37", "v05", "l",  (480, 1140),  420, -6.0, 0.50, 61.0),
+    # ---- ROUND 6 / v3. TIERS ARE CHOSEN OFF THE MANIFEST'S OWN THIN END, not
+    # spread evenly: v2 is s=10 m=11 l=9 xl=7, so l and xl are what seven new
+    # frames should buy. w03's plane is clean enough to carry all four tiers;
+    # w02 gets m/l/xl only because its foreground is a bladed sward and a
+    # 180px sprout in it is a plant behind a fence, not a plant in a field.
+    # s38 was aimed at (300,950) first and C5 REFUSED it: the palette sampled
+    # 205.2 fill luma against a 142.2 field, because w03's plane is a moonlit
+    # gradient that darkens UPHILL and a sprout rooted high is built out of the
+    # brighter greens further down. Dropped to y1080 -- the sample goes 14.9k ->
+    # 25.7k px and the luma agrees. Same law as the v1 table's bottom-edge
+    # finding, arriving from the other end of the plate.
+    ("s38", "w03", "s",  (280, 1080),  180,  5.0, 0.56, 70.0),
+    ("s39", "w03", "m",  (330, 1050),  300, -6.0, 0.52, 64.0),
+    ("s40", "w03", "l",  (400, 1130),  500,  6.0, 0.50, 62.0),
+    ("s41", "w03", "xl", (360, 1160),  640, -5.0, 0.48, 57.0),
+    ("s42", "w02", "m",  (300, 1000),  280,  5.0, 0.52, 64.0),
+    ("s43", "w02", "l",  (350, 1130),  490, -6.0, 0.50, 61.0),
+    ("s44", "w02", "xl", (380, 1160),  630,  5.0, 0.48, 57.0),
 ]
 
 
@@ -306,9 +347,18 @@ def sheet(fids=None) -> int:
         # A FILTERED SHEET GETS ITS OWN NAME. Writing a 11-cell subset over
         # CONTACT-init-0821.png would replace the 26-cell record of v1 with a
         # picture that looks like the whole dataset and is not.
+        # AND EVERY FILTERED SHEET GETS A DIFFERENT ONE. `-subset` was a
+        # constant, so round 6's 7-cell sheet would have silently overwritten
+        # round 5's committed 11-cell sheet -- the same clobber one level down
+        # from the one this comment was written about. The name now carries the
+        # first and last fid in the filter, so two rounds cannot collide.
+        tag = ""
+        if want:
+            fids_seen = [r[0] for r in ROWS if r[0] in want]
+            tag = "-%s" % fids_seen[0] if len(fids_seen) == 1 else \
+                  "-%s-%s" % (fids_seen[0], fids_seen[-1])
         out = os.path.join(REPO, "review/ep3-sapling-dataset-0821",
-                           "CONTACT-%s%s-0821.png"
-                           % (kind, "-subset" if want else ""))
+                           "CONTACT-%s%s-0821.png" % (kind, tag))
         s.save(out)
         print("wrote %s (%d cells)" % (out, len(imgs)))
     return 0

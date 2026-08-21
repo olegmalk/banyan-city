@@ -455,3 +455,136 @@ round_5_dataset_after: >-
   built environment, no close ground texture, because the recipe that buys a
   drawable plane is a distant-landform clause and a landform is outdoors by
   construction. Nothing is trained. DECISIONS.md item 18 is open.
+
+# ---------------------------------------------------------------------------
+# ROUND 6, FILED AND JUDGED 2026-08-21. A four-cell WORD PROBE, not a breadth
+# batch: each cell deletes one suspect word from a round-5 failure and changes
+# nothing else, the way round 2 did. All four landed on the box at 22:44 and
+# were unjudged; the PNGs live on origin/farm-results-rtx5090 at
+# farm-out/ep3-sapfld6-wNN-0821/, and w01/w02/w03 are copied onto main.
+
+round_6_the_rule_under_test: >-
+  A LIGHTING WORD THAT NAMES A SEASON, A TEMPERATURE OR A TIME OF YEAR CARRIES
+  ITS OWN GROUND MATERIAL INTO THE FRAME; A LIGHTING WORD THAT NAMES ONLY A
+  STATE OF THE SKY DOES NOT. Round 5 filed "a lighting word on this checkpoint
+  carries a whole scene", which is true and not actionable. The ground clause
+  was frozen at `in a green meadow, distant hills` -- round 2's depth lever,
+  and the one phrasing that names no material -- and the lighting clause was
+  the single variable.
+
+round_6_verdict_on_the_hypothesis: >-
+  HALF TRUE, AND THE HALF THAT IS FALSE IS THE MORE USEFUL HALF. The
+  season/sky split is NOT the axis. WARM/COLD IS.
+  ON THE WARM SIDE THE RULE HELD, CLEANLY. w02 deleted `golden hour` and `long
+  shadows` from v04 and kept the photons (`low sun behind thin cloud, warm
+  diffuse glow`). v04 returned magnified tan grass with no plane; w02 returned
+  a green rolling downland with 146k-167k green-dominant pixels in its lower
+  half and a real receding plane. The season word WAS the carrier of the dry
+  grass, and warm low light on its own does not bring it.
+  ON THE COLD SIDE THE RULE FAILED, AND PRE-REGISTERED FAILURE ONE IS WHY IT
+  WAS WRITTEN DOWN FIRST. w04 deleted `winter` and `snow peaks` from v10 and
+  kept `cold clear air, pale blue light, long shadows`. It came back a
+  SNOWFIELD anyway, over the same `green meadow` clause. Nothing in that prompt
+  names a season, a month or a frozen material. So on the cold side the season
+  word was a PASSENGER and the carrier is the light temperature itself.
+  ON THE DIM SIDE IT FAILED TOO, ONE ROUND LATER THAN IT SHOULD HAVE. w01
+  deleted `deep blue twilight sky` from v01 and asked for a grey key instead
+  (`overcast at dusk, the last grey light, no sun`). v01 sampled ONE
+  green-dominant pixel; w01 SAMPLES ZERO, in the region and in the whole lower
+  half, and beat16_sapling_composite refuses it with its own reason. The word
+  `blue` was not what made v01 blue. DUSK IS NOW CLOSED FOR THIS INSTRUMENT --
+  two rounds, two wordings, two refusals at the same tool -- and the dark end
+  of the dataset is night and storm, exactly as pre-registered failure two
+  said it would be.
+  THE ACTIONABLE FORM, WHICH IS WHAT THE ROUND WAS FOR: on this checkpoint a
+  lighting clause predicts the GROUND MATERIAL by its colour temperature and
+  its level, not by whether it names a season. WARM keeps green (w02, v03's
+  shaft, v12's breaking cloud). COOL-AND-BRIGHT brings frozen ground whatever
+  else the words say (w04, v10, v14). DIM-AND-GREY desaturates the ground until
+  there is no green left to sample (w01, v01). Cool-and-DARK is the exception
+  that pays: moonlight (v02, w03) is the greenest thing this instrument draws.
+
+round_6_verdicts:
+  - id: w01
+    scene: overcast at dusk, the last grey light, no sun
+    deletes: '`deep blue twilight sky` from v01'
+    verdict: REFUSED AT STEP 2
+    law: D5
+    note: >-
+       By eye it is the most beautiful plate of the four and it is unusable.
+       Cel, straight horizon, receding grey-blue hill bands, no figure. THE
+       PALETTE SAMPLER FINDS ZERO GREEN-DOMINANT PIXELS in the whole lower half
+       -- v01 found one -- and the tool refuses with its reason rather than
+       inventing a colour. Reproduce with:
+       `python3 pipeline/beat16_sapling_composite.py --plate
+       farm-out/ep3-sapling-dataset-0821/plates/ep3-sapfld6-w01-0821.png
+       --root 400,1050 --height 300 --dry-run`. Kept on main for exactly that,
+       the same as v01.
+  - id: w02
+    scene: low sun behind thin cloud, warm diffuse glow
+    deletes: '`golden hour` and `long shadows` from v04'
+    verdict: PASS with a caveat
+    law: D2
+    note: >-
+       THE CELL THAT MOVED THE FINDING. v04's tan macro grass did not come
+       back: rolling green downland, lit blade tips against shadowed slopes,
+       a low sun disc on the horizon, 146k-167k green px, strong measurable
+       light direction for D4. THE CAVEAT IS D2 AND IT COSTS A TIER -- the
+       whole foreground is a BLADED SWARD rather than a smooth plane, so a
+       180 px sprout in it would read as a plant behind a fence. Carried at
+       m/l/xl only; the small tier comes from w03.
+  - id: w03
+    scene: moonlight through broken cloud, patches of shadow
+    deletes: nothing -- this is the CONTROL, extending v02's known-good words
+    verdict: PASS
+    law: all
+    note: >-
+       READ FIRST, AS THE SPEC SAID TO, BECAUSE A FAILURE HERE WOULD HAVE MEANT
+       ROUND 5'S PASSES WERE SEED LUCK. It passed and it is the best plate the
+       set has: 224k green-dominant px in the lower half, the largest count of
+       any plate in the dataset, and the CLEANEST DRAWABLE PLANE -- no rock, no
+       puddle, no dark corner wedge, no blade field. Flat cel fills, hard edges,
+       a moonlit cumulus for the D4 gradient. Moonlight is confirmed twice now
+       and is this instrument's most reliable non-daylit cell.
+  - id: w04
+    scene: cold clear air, pale blue light, long shadows
+    deletes: '`winter` and `snow peaks` from v10'
+    verdict: REJECT
+    law: D5
+    note: >-
+       A SNOWFIELD, with no season word anywhere in the prompt. This is the cell
+       that kills the season/temperature half of the rule. WORTH RECORDING
+       BECAUSE THE COUNTER WOULD HAVE PASSED IT: 40k pixels clear the
+       green-dominant test at the +4 threshold, well over the tool's 400-pixel
+       floor, and the palette they produce is (232,243,237) / (238,245,236) /
+       (239,247,241) -- a near-white mint. A sapling built out of that is a
+       decal. The 400-px floor is a COUNT gate and not a COLOUR gate, and the
+       eye is what caught this one.
+
+round_6_what_the_predictions_got_right_and_wrong: >-
+  PREDICTION ONE (w02 and w04 come back tan and pale anyway, killing the rule)
+  IS HALF RIGHT AND THE SPLIT IS THE RESULT. It named both cells together and
+  they diverged: w04 came back frozen, w02 came back green. The prediction's own
+  alternative -- "what actually carries the ground is the LIGHT TEMPERATURE
+  itself, warm light means dry, cold light means frozen" -- is HALF confirmed
+  and half falsified by the same batch: cold light does mean frozen, warm light
+  does NOT mean dry.
+  PREDICTION TWO (w01 comes back blue, dusk is closed) IS RIGHT ON THE OUTCOME
+  AND WRONG ON THE MECHANISM. w01 is not blue, it is GREY -- the deletion
+  worked, the sky lost its blue -- and it refuses anyway, harder than v01 did.
+  What kills dusk is not a hue, it is the light LEVEL: a ground plane that dim
+  has no dominant channel left. Dusk is closed either way.
+  PREDICTION THREE (the control fails and the batch is invalidated) DID NOT
+  HAPPEN. w03 is the strongest plate in the whole set.
+
+round_6_licensed: >-
+  Step 2 on the two passers: seven composites (s38..s44) via
+  pipeline/build_sapling_lora_composites_0821.py --fids s38..s44, tiers picked
+  off the manifest's THIN end rather than spread evenly -- v2 is s=10 m=11 l=9
+  xl=7, so w03 carries all four tiers and w02 carries m/l/xl. Then step 3, all
+  seven in one filing pass through the same 0.30 recipe. s38 was re-aimed once:
+  C5 refused it at (300,950) with a 205.2 fill luma against a 142.2 field,
+  because w03's moonlit plane darkens UPHILL and a sprout rooted high is built
+  out of the brighter greens further down; dropped to y1080 it passes and the
+  sample goes 14.9k -> 25.7k px. Still nothing trained; DECISIONS.md item 18 is
+  open and is not touched by building the set the question is about.

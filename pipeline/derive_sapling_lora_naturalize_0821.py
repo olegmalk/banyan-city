@@ -58,6 +58,15 @@ recipe moves for them either: same 40 steps, cfg 7.5, strength 0.30, pad-crop
 the no-clobber guard at the write, and it exists because extending B.ROWS is
 exactly the move that would otherwise have rewritten the drained twenty-six.
 
+ROUND 6 / v3, 2026-08-21. Seven more rows (s38..s44) on TWO more non-daylit
+plates -- w03 (moonlight through broken cloud) and w02 (a low sun behind thin
+cloud) -- from a four-cell word probe whose other two cells are judged and
+rejected in plates-0821.yaml. Still no recipe change: the same 40 steps, cfg
+7.5, strength 0.30, pad-crop 64, blur 8, the same seed. The tiers are picked off
+the manifest's thin end (l and xl) rather than spread evenly, and the
+no-clobber guard below is what makes extending B.ROWS a safe move for the
+second time.
+
   python3 pipeline/derive_sapling_lora_naturalize_0821.py            # dry
   python3 pipeline/derive_sapling_lora_naturalize_0821.py --write
   python3 pipeline/derive_sapling_lora_naturalize_0821.py --write --regen
