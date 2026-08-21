@@ -1,0 +1,93 @@
+{
+  "id": "ep2-b02-canon-w1-0821-1787321189",
+  "task": "ep2-b02-canon-w1-0821",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 6,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "stage",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\nroot = r\"C:\\banyan-farm\\b02canon-w1-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n        (\"jerry-canon-h37fstride-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"677ee4904bc54b823eee45cb592d4ca10618920fbb238d9718dd5394a1e1b24a\"),\n        (\"jerry-canon-sq45-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+      ]
+    },
+    {
+      "name": "posehint",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b02canon-w1-0821\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\b02canon-w1-0821\\src",
+        "--repo-commit",
+        "2b27b8c3",
+        "--task",
+        "ep2-b02-canon-w1-0821",
+        "--arm",
+        "ipahead",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "pipeline/control/jerry-canon-h37fstride-0821.png",
+        "--control-sha256",
+        "677ee4904bc54b823eee45cb592d4ca10618920fbb238d9718dd5394a1e1b24a",
+        "--scale",
+        "1.0",
+        "--seed",
+        "20260823",
+        "--ip-ref",
+        "pipeline/control/jerry-canon-sq45-0821.png",
+        "--ip-mask",
+        "154,35,678,480",
+        "--ip-ref-sha256",
+        "066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c",
+        "--ip-scale",
+        "1.0",
+        "--ip-weight",
+        "ip-adapter-plus-face_sdxl_vit-h.safetensors",
+        "--prompt-file",
+        "C:\\banyan-farm\\b02canon-w1-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b02canon-w1-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b02canon-w1-0821\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame: a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b02canon-w1-0821/out\"\npay_dir = \"C:/banyan-farm/b02canon-w1-0821\"\nctl_dir = \"C:/banyan-farm/b02canon-w1-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-canon-w1-0821\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b02-canon-w1-0821-ipahead.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37fstride-0821.png\")\n               + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-canon-w1-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b02canon-w1-0821\\out\\ep2-b02-canon-w1-0821-ipahead.png"
+  ],
+  "spec_sha256": "89dae21882123a72f96d07c9d231d55fdc63b12dd0f39799910fe88a5bb0dba9",
+  "started_at": "2026-08-21T14:06:36Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T14:07:03Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b02canon-w1-0821\\out\\ep2-b02-canon-w1-0821-ipahead.png"
+  ]
+}
