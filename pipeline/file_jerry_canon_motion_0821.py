@@ -499,7 +499,12 @@ def verify_plates_on_box() -> list:
             ["ssh", "-o", "ConnectTimeout=25", "-o", "BatchMode=yes", "rtx5090",
              'powershell -NoProfile -Command "(Get-FileHash \'%s\' '
              '-Algorithm SHA256).Hash.ToLower()"' % row["plate_box_path"]],
-            capture_output=True, text=True)
+            # encoding is NAMED, not defaulted: the box's console is cp1252 and
+            # a text-mode read that does not say so decodes it as whatever the
+            # reading machine happens to be. This is a sha256 hex string, so
+            # errors="replace" can only ever corrupt a digest into a MISMATCH,
+            # which refuses -- it cannot turn a bad digest into a passing one.
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         have = (r.stdout or "").strip().splitlines()
         have = have[-1].strip() if have else ""
         ok = have == row["plate_sha256"]
