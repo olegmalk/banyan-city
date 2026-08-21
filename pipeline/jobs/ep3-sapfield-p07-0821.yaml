@@ -1,0 +1,236 @@
+id: ep3-sapfield-p07-0821
+task: ep3-sapfield-p07-0821
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 38
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: sapling-dataset lane, 2026-08-21
+consumer: 'pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling
+  gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass
+  scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane
+  for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off
+  the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field with no plant
+  in it is not a shot.'
+success: One 832x1216 png at seed 20260907, cel dialect, of in tall grass, morning, mist, backlighting
+  framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1
+  against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any
+  figure is deleted rather than curated.
+why: 'LIGHTING, the cool end. Backlight is the hardest case for the composite''s crescent highlight --
+  b19 authored that highlight against a front-lit plate -- so it is the cell most likely to expose the
+  instrument rather than the words.
+
+
+  The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the
+  word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing
+  -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing
+  frame twenty of a training set onto the same tall-grass backdrop as frames one to nineteen.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\sapfield-p07-0821\prompt.txt: masterpiece, best quality, very aesthetic, no humans, in
+    tall grass, morning, mist, backlighting, close-up, low angle, ground level
+  C:\banyan-farm\sapfield-p07-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys, 1boy, 1girl, 1other,
+    solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, potted plant,
+    scenery, landscape, bokeh, blurry, depth of field, painterly, photorealistic, photo, 3d, realistic,
+    architecture, ruins, building
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfield-p07-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\sapfield-p07-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\sapfield-p07-0821\src
+  - --repo-commit
+  - d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+  - --task
+  - ep3-sapfield-p07-0821
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260907'
+  - --prompt-file
+  - C:\banyan-farm\sapfield-p07-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\sapfield-p07-0821\negative.txt
+  - --out
+  - C:\banyan-farm\sapfield-p07-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/sapfield-p07-0821/out\"\
+    \npay_dir = \"C:/banyan-farm/sapfield-p07-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-sapfield-p07-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep3-sapfield-p07-0821-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep3-sapfield-p07-0821.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\sapfield-p07-0821\out\ep3-sapfield-p07-0821-nocontrol.png
+derivation:
+  parent: pipeline/jobs/ep2-b04-tilefix-w2-0820.yaml
+  by: pipeline/derive_sapling_field_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - publish_glob_fixed_here
+  - the_one_variable
+  retokened:
+  - b04tilefix-w2-0820 -> sapfield-p07-0821
+  - ep2-b04-tilefix-w2-0820 -> ep3-sapfield-p07-0821
+  overrides_applied_and_asserted:
+    key:beat:
+    - key beat = 16
+    key:est_minutes:
+    - key est_minutes = 3
+    key:priority:
+    - key priority = 38
+    payload:negative.txt:
+    - payload negative.txt (231 -> 485 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (208 -> 131 chars)
+    seed:
+    - step hintskel --seed (20260820 -> 20260907)
+  seed: 20260907
+bar: "TEN PLATES, JUDGED AS ONE CONTACT SHEET, BY EYE AT 1:1. THERE IS NO\nPLANT AND NO FIGURE IN ANY\
+  \ OF THESE PICTURES AND BOTH ABSENCES ARE CORRECT.\n  D1 CEL, NOT PHOTO, NOT PAINTING. Flat fills, clean\
+  \ ink linework, the\n     episode's dialect. This is the clause the ep2-b16-field batch lost all\n \
+  \    four on, and it is the first one read. Bokeh, painterly rendering or a\n     photographic ground\
+  \ plane REJECTS the plate -- you cannot draw a sharp\n     cel seedling into a soft foreground without\
+  \ it reading as a decal.\n  D2 A CLEAN DRAWABLE GROUND PLANE in the lower centre, wide and tall enough\n\
+  \     to root a sapling at plate scale. Blades of grass crossing it are fine.\n     A rock, a flower,\
+  \ a shrub, a drawn plant or any structure is NOT: the\n     0.30 pass PRESERVES a structure it finds\
+  \ in the init (12 of 40 steps from\n     a latent that still carries it), so the composite would have\
+  \ to fight it.\n  D3 ZERO FIGURES. Not a goblin, not a human, not an animal, not a silhouette\n    \
+  \ on the horizon. A plate with any figure in it is REJECTED AND DELETED,\n     not cropped -- this lane\
+  \ may not render the scavenger and a frame that\n     contains him is not curated into a training set.\n\
+  \  D4 THE LIGHT HAS A DIRECTION. beat16_sapling_composite.py measures the\n     plate's own low-pass\
+  \ luminance gradient and carries it into the drawn\n     plant. A flat, directionless plate makes that\
+  \ measurement a no-op and\n     the composite reads as pasted.\n  D5 THE PALETTE IS THIS SHOW'S. The\
+  \ composite samples its greens FROM THE\n     PLATE, so an off-palette plate produces an off-palette\
+  \ sapling and the\n     frame teaches the LoRA the wrong colour.\nNOT SCORED: whether the picture is\
+  \ a good shot. None of these is a shot, none\nenters a cut, and none goes near review/ep2-ship-0821.\
+  \ They are ground planes\nfor an instrument.\nNOT SCORED: variety WITHIN a cell. The variety this batch\
+  \ is bought for is\nBETWEEN cells and it is measured at the manifest, not here."
+the_one_variable: THE SCENE/LIGHTING CLAUSE ('in tall grass, morning, mist, backlighting') AND THE SCALE
+  CLAUSE ('close-up, low angle, ground level'). The quality prefix, `no humans`, the negative, the checkpoint,
+  the size, the steps, the cfg, the nocontrol arm and its 0.45 scale are ep2-b04-tilefix-w2-0820's. The
+  seed walks so the set is not seed-degenerate.
+this_cell: LIGHTING, the cool end. Backlight is the hardest case for the composite's crescent highlight
+  -- b19 authored that highlight against a front-lit plate -- so it is the cell most likely to expose
+  the instrument rather than the words.
+not_a_beat: 'beat: 16 is carried for the queue''s bookkeeping and for one honest reason beyond it -- beat
+  16''s own restage needs a goblin-free cel field plate and has never had one, so a passing plate here
+  is reusable there. It does not make this a beat render: no shot is authored, no script line is served,
+  nothing is promoted and the founder''s card /review/ep2-b16-leaf-0820 is untouched.'
+goblin_free_by_construction: 'THE SCAVENGER''S AGE IS R4-GATED AND THIS LANE RENDERS NOTHING THAT CONTAINS
+  HIM. The positive prompt carries `no humans` and not one figure tag -- no `1other`, no `colored skin`,
+  no `green skin`, no `bald`, no cloak, none of the seven face tags. The negative names the figure as
+  a second line of defence only; negatives have failed to hold position in this tree three for three,
+  so the guard that is actually load-bearing is bar clause D3: a frame with any figure in it is REJECTED
+  AND DELETED rather than curated.'
+one_sample_rule: 'SATISFIED BY THE PARENT ON THE RECIPE, AND THE BATCH IS THE SAMPLE ON THE WORDS. ep2-b04-tilefix-w2-0820
+  is the ratified still recipe, sampled fourteen times on 2026-08-20 and re-used unchanged across twelve
+  Jerry tileset poses and four b16 field plates that are all on disk. Nothing about the recipe moves here.
+  What moves is the PROMPT, and a batch of ten backdrops is the plate batch episode-loop-v2 step 1 asks
+  for, at the breadth the gate asks for. THE DIALECT RISK IS REAL AND IS PRICED: if all ten break cel
+  the loss is 30 minutes of otherwise-idle card and the route moves to cropping the pre-composite beat
+  plates, which is written into failure_predicted_in_advance rather than discovered. p01 is the control
+  cell and it is the first one read.'
+failure_predicted_in_advance: 'FIRST AND MOST LIKELY: `no humans` DOES NOT BUY AN EMPTY FRAME, IT BUYS
+  A LANDSCAPE. It is the same gravity `scenery` had -- both are tags that in the base model''s training
+  data label vistas -- and if all six come back as wide painterly country, the fix is not a seventh wording:
+  it is to composite onto the PRE-composite beat plates that are already in the right dialect and crop
+  the figure out, which costs a crop and no GPU.
+
+  SECOND: D2, THE CLEAN GROUND PLANE, on the close cells. `tall grass` at 832x1216 puts its biggest sharpest
+  blades exactly in the near foreground and that is where the sapling roots. p01/p03/p05 are the exposed
+  cells; if all three lose D2 and the medium cells hold it, the dataset''s close scale comes from CROPPING
+  a medium plate, which beat 09 proved survives downstream at 2.157x LANCZOS.
+
+  THIRD, AND IT WOULD CHANGE THE GATE READING RATHER THAN THE RECIPE: p05 the creek comes back with water
+  the composite cannot light against. That is a real answer about how far the scene axis can be pushed
+  and it is why the furthest cell is in the first six instead of being discovered at frame twenty.'
+gate_this_serves: 'pipeline/lora/README.md, the sapling section: ''>=20 composited saplings spanning distinct
+  scenes, scales and lighting'', with scale and leaf count kept as caption VARIABLES (trigger `bnysapling`,
+  pipeline/research/character-lora-sdxl-0820.md section 4) so one LoRA serves a protagonist who grows
+  15cm -> 1.6m across seven episodes. TEN PLATES IS NOT THE GATE and this batch does not claim to clear
+  it; it is the first ten ground planes of the scene/lighting breadth the gate asks for and the existing
+  ~23 do not have. Seven distinct scenes, five lighting states and three scales -- against five near-identical
+  tall-grass scenes today.'
+governance_flag_not_resolved_here: 'DECISIONS.md item 18 reads ''Never train on the output. No LoRA, no
+  finetune, no distillation.'' The Jerry LoRA is in training under a later ruling and pipeline/lora/README.md
+  writes the sapling gate as live work, so item 18 appears superseded in practice -- but this lane did
+  not resolve it and must not. NOTHING FILED HERE TRAINS ANYTHING: these are $0 plates, and the composites
+  and captions that follow are $0 files. Training is a separate, gated act and the contradiction is raised
+  for the founder before it happens.'
