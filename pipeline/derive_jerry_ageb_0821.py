@@ -536,10 +536,22 @@ def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
         raise SystemExit("!! %s does not record the adapter digest" % new_id)
     # The rulings have to be IN the payload, not only in the prose around it.
     pay = child["payload"][r"C:\banyan-farm\%s\prompt.txt" % job_dir]
+    # RULING 2 STRUCK THE BLOCK AS THE *DEFAULT*, NOT AS VOCABULARY, and this
+    # guard has to encode that difference or it forbids the ruling's own point.
+    # Beat 13's emotion is `tired, half-closed eyes, light smile` -- THE SHADE is
+    # a man whose legs gave out, and half-closed eyes is what exhaustion looks
+    # like. A struck tag arriving because a BEAT EARNED IT is the mechanism
+    # working; the same tag arriving in the identity clause on every plate is the
+    # mannequin coming back. So: absent from the identity clause always, allowed
+    # in the expression group, and never both.
+    ident = ", ".join([PROMPT_LEAD, AGE_B_CLAUSE, IDENTITY, TUSK])
     for t in STRUCK:
-        if t in pay:
-            raise SystemExit("!! %s: struck tag %r is still in the positive"
-                             % (new_id, t))
+        if t in ident:
+            raise SystemExit("!! %s: struck tag %r is back in the DEFAULT "
+                             "identity clause" % (new_id, t))
+        if t in pay and t not in (expression or ""):
+            raise SystemExit("!! %s: struck tag %r is in the positive but is "
+                             "not this beat's emotion" % (new_id, t))
     if TUSK not in pay:
         raise SystemExit("!! %s: the tusk is not in the positive" % new_id)
     if expression and expression not in pay:
