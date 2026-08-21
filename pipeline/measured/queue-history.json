@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "3d66c586b5f9d57a62784fa827b92c04e89c02c1",
-  "measured_at": "2026-08-21T19:00:53Z",
-  "job_count": 1393,
-  "ok": 1312,
+  "source_commit": "6276aeaa489e12d0e5fcd81aeecd51235a8946a9",
+  "measured_at": "2026-08-21T19:41:35Z",
+  "job_count": 1401,
+  "ok": 1320,
   "failed": 81,
   "upcoming_count": 85,
   "skipped_sidecars": null,
@@ -13,6 +13,454 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b05-decontra-s20260818-0821-1787339915",
+   "task": "ep2-b05-decontra-s20260818-0821",
+   "node": "002b-first-citizen",
+   "beat": 5,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:33:13Z",
+   "finished_at": "2026-08-21T19:39:23Z",
+   "duration_s": 370,
+   "sidecar": "farm-out/box/ep2-b05-decontra-s20260818-0821-1787339915.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/ep2-b05-decontra-s20260818-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b05-decontra-s20260818-0821/05-the-patrol-LTX-ep2-b05-decontra-s20260818-0821.mp4",
+     "name": "05-the-patrol-LTX-ep2-b05-decontra-s20260818-0821.mp4",
+     "bytes": 807476,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b05-decontra-s20260818-0821/b05-init-704x1280.png",
+     "name": "b05-init-704x1280.png",
+     "bytes": 1099021,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260818,
+    "seconds": 5.042
+   },
+   "reference": null,
+   "prompt_from": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot rea…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 5,
+    "episode": null,
+    "label": "Beat 05",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-lookup-s3-0821-1787339672",
+   "task": "ep2-b20-lookup-s3-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:27:12Z",
+   "finished_at": "2026-08-21T19:33:07Z",
+   "duration_s": 355,
+   "sidecar": "farm-out/box/ep2-b20-lookup-s3-0821-1787339672.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/ep2-b20-lookup-s3-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-lookup-s3-0821/20-evidence-LTX-ep2-b20-lookup-s3-0821.mp4",
+     "name": "20-evidence-LTX-ep2-b20-lookup-s3-0821.mp4",
+     "bytes": 219894,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b20-lookup-s3-0821/b20-init-704x1280.png",
+     "name": "b20-init-704x1280.png",
+     "bytes": 1037221,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260922,
+    "seconds": 4.375
+   },
+   "reference": null,
+   "prompt_from": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-lookup-s2-0821-1787339666",
+   "task": "ep2-b20-lookup-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:21:08Z",
+   "finished_at": "2026-08-21T19:27:06Z",
+   "duration_s": 358,
+   "sidecar": "farm-out/box/ep2-b20-lookup-s2-0821-1787339666.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/ep2-b20-lookup-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-lookup-s2-0821/20-evidence-LTX-ep2-b20-lookup-s2-0821.mp4",
+     "name": "20-evidence-LTX-ep2-b20-lookup-s2-0821.mp4",
+     "bytes": 319426,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b20-lookup-s2-0821/b20-init-704x1280.png",
+     "name": "b20-init-704x1280.png",
+     "bytes": 1037221,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260921,
+    "seconds": 4.375
+   },
+   "reference": null,
+   "prompt_from": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-lookup-s1-0821-1787339661",
+   "task": "ep2-b20-lookup-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:15:05Z",
+   "finished_at": "2026-08-21T19:21:02Z",
+   "duration_s": 357,
+   "sidecar": "farm-out/box/ep2-b20-lookup-s1-0821-1787339661.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/ep2-b20-lookup-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-lookup-s1-0821/20-evidence-LTX-ep2-b20-lookup-s1-0821.mp4",
+     "name": "20-evidence-LTX-ep2-b20-lookup-s1-0821.mp4",
+     "bytes": 221904,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b20-lookup-s1-0821/b20-init-704x1280.png",
+     "name": "b20-init-704x1280.png",
+     "bytes": 1037221,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260920,
+    "seconds": 4.375
+   },
+   "reference": null,
+   "prompt_from": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep3-sapfld7-x04-0821-1787339369",
+   "task": "ep3-sapfld7-x04-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:13:19Z",
+   "finished_at": "2026-08-21T19:13:39Z",
+   "duration_s": 20,
+   "sidecar": "farm-out/box/ep3-sapfld7-x04-0821-1787339369.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld7-x04-0821.yaml",
+   "purpose": {
+    "consumer": "THE LAST THIN AXIS IN pipeline/lora/manifest-sapling.yaml THAT A PLATE ROUND CAN MOVE. v3 is 44 frames over 17 plates and every one of those plates is an open landscape or a wood -- its own record says so, and says why: the recipe that buys a drawable plane is a distant-landform clause and a landform is outdoors by construction. This tests whether that is the recipe or just the habit. What eats a passing plate is step 2 (pipeline/beat16_sapling_composite.py) and step 3 (pipeline/derive_sapling_…",
+    "why": "THE CONTROL, AND IT IS w02'S EXACT WORDS AT A NEW SEED. Round 6 turned on w02 -- warm light with the season word deleted returning a green plane where `golden hour` returned tan macro grass -- and w02 is one picture. This re-runs it. If x04 comes back tan or plane-less, w02 was seed luck, round 6's warm-light finding is unsupported, and the other three cells cannot be read at all. READ THIS ONE FIRST. THE RECIPE IS NOT UNDER TEST AND NEITHER IS THE LIGHT. Rounds 1-4 settled the recipe, round 5…",
+    "success": "One 832x1216 png at seed 20260984, cel dialect, of 'in a green meadow, distant hills' under 'low sun behind thin cloud, warm diffuse glow' at 'wide shot': STRAIGHT horizon, a clean drawable ground plane in the lower centre with NO built structure standing in it, no plant, NO FIGURE, and a GREEN-DOMINANT region in the lower half. Three of these four cells name stone, and stone is grey: w01 came back grey and the palette sampler found ZERO green-dominant pixels in its whole lower half and refused…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 7 (the built-scene probe)",
+    "est_minutes": 3,
+    "priority": 120
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld7-x04-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld7-x04-0821/ep3-sapfld7-x04-0821-nocontrol.png",
+     "name": "ep3-sapfld7-x04-0821-nocontrol.png",
+     "bytes": 1070575,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, distant hills, low sun behind thin cloud, warm diffuse glow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld7-x04-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld7-x03-0821-1787339366",
+   "task": "ep3-sapfld7-x03-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:12:55Z",
+   "finished_at": "2026-08-21T19:13:14Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld7-x03-0821-1787339366.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld7-x03-0821.yaml",
+   "purpose": {
+    "consumer": "THE LAST THIN AXIS IN pipeline/lora/manifest-sapling.yaml THAT A PLATE ROUND CAN MOVE. v3 is 44 frames over 17 plates and every one of those plates is an open landscape or a wood -- its own record says so, and says why: the recipe that buys a drawable plane is a distant-landform clause and a landform is outdoors by construction. This tests whether that is the recipe or just the habit. What eats a passing plate is step 2 (pipeline/beat16_sapling_composite.py) and step 3 (pipeline/derive_sapling_…",
+    "why": "THE ONE THAT SHOULD BE HARDEST AND IS WORTH THE MOST. Two failure modes at once: the ground is named COBBLES, which is grey, and grey is what starved w01 to zero green-dominant pixels; and a village lane is the strongest figure prime this tree has ever been asked for. `grass verges` is the rootable strip and it is the whole hope of the cell. It is filed anyway because r08 -- `on a dirt path, green field` -- is one of the best ground planes in the entire set, and a lane is that plate with buildi…",
+    "success": "One 832x1216 png at seed 20260983, cel dialect, of 'on a cobbled lane between old stone houses, grass verges' under 'low sun behind thin cloud, warm diffuse glow' at 'wide shot': STRAIGHT horizon, a clean drawable ground plane in the lower centre with NO built structure standing in it, no plant, NO FIGURE, and a GREEN-DOMINANT region in the lower half. Three of these four cells name stone, and stone is grey: w01 came back grey and the palette sampler found ZERO green-dominant pixels in its whol…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 7 (the built-scene probe)",
+    "est_minutes": 3,
+    "priority": 120
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld7-x03-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld7-x03-0821/ep3-sapfld7-x03-0821-nocontrol.png",
+     "name": "ep3-sapfld7-x03-0821-nocontrol.png",
+     "bytes": 1125917,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, on a cobbled lane between old stone houses, grass verges, low sun behind thin cloud, warm diffuse glow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld7-x03-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld7-x02-0821-1787339363",
+   "task": "ep3-sapfld7-x02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:12:30Z",
+   "finished_at": "2026-08-21T19:12:49Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld7-x02-0821-1787339363.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld7-x02-0821.yaml",
+   "purpose": {
+    "consumer": "THE LAST THIN AXIS IN pipeline/lora/manifest-sapling.yaml THAT A PLATE ROUND CAN MOVE. v3 is 44 frames over 17 plates and every one of those plates is an open landscape or a wood -- its own record says so, and says why: the recipe that buys a drawable plane is a distant-landform clause and a landform is outdoors by construction. This tests whether that is the recipe or just the habit. What eats a passing plate is step 2 (pipeline/beat16_sapling_composite.py) and step 3 (pipeline/derive_sapling_…",
+    "why": "THE MINIMAL BUILT FEATURE. One object, no interior, no enclosure -- a wall is a line in perspective and little else, so this cell separates RECESSION from ENCLOSURE. If x01 fails and x02 passes, what the checkpoint needs is a perspective line rather than a place; if both fail, recession without a landform draws nothing and the axis closes. THE RECIPE IS NOT UNDER TEST AND NEITHER IS THE LIGHT. Rounds 1-4 settled the recipe, round 5 spent it and round 6 found the one lighting clause that keeps a…",
+    "success": "One 832x1216 png at seed 20260982, cel dialect, of 'beside a low stone wall running into the distance, green field' under 'low sun behind thin cloud, warm diffuse glow' at 'wide shot': STRAIGHT horizon, a clean drawable ground plane in the lower centre with NO built structure standing in it, no plant, NO FIGURE, and a GREEN-DOMINANT region in the lower half. Three of these four cells name stone, and stone is grey: w01 came back grey and the palette sampler found ZERO green-dominant pixels in it…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 7 (the built-scene probe)",
+    "est_minutes": 3,
+    "priority": 120
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld7-x02-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld7-x02-0821/ep3-sapfld7-x02-0821-nocontrol.png",
+     "name": "ep3-sapfld7-x02-0821-nocontrol.png",
+     "bytes": 858038,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, beside a low stone wall running into the distance, green field, low sun behind thin cloud, warm diffuse glow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld7-x02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld7-x01-0821-1787339359",
+   "task": "ep3-sapfld7-x01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T19:12:04Z",
+   "finished_at": "2026-08-21T19:12:25Z",
+   "duration_s": 21,
+   "sidecar": "farm-out/box/ep3-sapfld7-x01-0821-1787339359.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld7-x01-0821.yaml",
+   "purpose": {
+    "consumer": "THE LAST THIN AXIS IN pipeline/lora/manifest-sapling.yaml THAT A PLATE ROUND CAN MOVE. v3 is 44 frames over 17 plates and every one of those plates is an open landscape or a wood -- its own record says so, and says why: the recipe that buys a drawable plane is a distant-landform clause and a landform is outdoors by construction. This tests whether that is the recipe or just the habit. What eats a passing plate is step 2 (pipeline/beat16_sapling_composite.py) and step 3 (pipeline/derive_sapling_…",
+    "why": "THE STRONGEST FORM OF THE QUESTION. A colonnade is pure recession and nothing else -- repeated verticals marching away from camera, no landform anywhere in the words. `grassy courtyard` comes FIRST so the near ground is named before the architecture, which is the word order round 5 used on the water cells (and which did not save them; that is recorded, not hidden). If any cell draws a plane on recession alone it is this one. THE RECIPE IS NOT UNDER TEST AND NEITHER IS THE LIGHT. Rounds 1-4 sett…",
+    "success": "One 832x1216 png at seed 20260981, cel dialect, of 'in a grassy courtyard, a long stone colonnade receding' under 'low sun behind thin cloud, warm diffuse glow' at 'wide shot': STRAIGHT horizon, a clean drawable ground plane in the lower centre with NO built structure standing in it, no plant, NO FIGURE, and a GREEN-DOMINANT region in the lower half. Three of these four cells name stone, and stone is grey: w01 came back grey and the palette sampler found ZERO green-dominant pixels in its whole…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 7 (the built-scene probe)",
+    "est_minutes": 3,
+    "priority": 120
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld7-x01-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld7-x01-0821/ep3-sapfld7-x01-0821-nocontrol.png",
+     "name": "ep3-sapfld7-x01-0821-nocontrol.png",
+     "bytes": 923469,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a grassy courtyard, a long stone colonnade receding, low sun behind thin cloud, warm diffuse glow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld7-x01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
   {
    "id": "ep3-saplora-s44-0821-1787338625",
    "task": "ep3-saplora-s44-0821",
