@@ -3883,3 +3883,4 @@
 14:27:53Z DONE task=ep2-b08-canon-w2b-0821-1787322384 rc=0 artifacts=1
 14:30:29Z STARTED task=ep2-b01-clearing-c01-0821-1787322627 attempt=1 on box-runner
 14:30:50Z DONE task=ep2-b01-clearing-c01-0821-1787322627 rc=0 artifacts=1
+14:30:55Z box-runner idle ready=0 failed=80
