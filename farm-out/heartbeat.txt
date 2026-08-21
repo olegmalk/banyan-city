@@ -4039,3 +4039,5 @@
 19:52:02Z DONE task=ep2-b10-reroll-s20260818-0821-1787339922 rc=0 artifacts=1
 19:52:09Z STARTED task=ep2-b10-reroll-s20260871-0821-1787339910 attempt=1 on box-runner
 19:58:28Z DONE task=ep2-b10-reroll-s20260871-0821-1787339910 rc=0 artifacts=1
+19:58:34Z STARTED task=ep2-b01-fignonly-s20260818-0821-1787339937 attempt=1 on box-runner
+20:04:47Z DONE task=ep2-b01-fignonly-s20260818-0821-1787339937 rc=0 artifacts=2
