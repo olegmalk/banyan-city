@@ -2220,3 +2220,17 @@
     moved, because one openpose skeleton at scale 1.0 fixes the silhouette and burly-vs-lean shows
     only in the face; and cell K came back BALD with `light sandy hair` in its prompt, so the sandy
     variants are really only J and L. Both are one-variable next rounds if he wants them.'
+  resolved:
+    date: '2026-08-22'
+    verdict: 'none of them are right, the style is wrong. (Verbatim, 2026-08-22, posted with the
+      beat-09 guard close-up attached as the contrast — dark hair, round wire glasses, detailed
+      cinematic anime.) TWO RULINGS, both recorded in pipeline/canon.yaml as
+      `ep2-guard1-canon-founder-0822` and `ep2-human-style-cinematic-anime`. (1) THE ATTACHED FRAME
+      IS GUARD 1 — a founder-SELECTED generation, the same provenance pattern as the goblin
+      (canon.yaml ep2-goblin-design-adult, "i didnt draw the goblin.. i just used an old
+      generation"): R4 is taste, and choosing which of our own frames is the character is his call.
+      Committed as taste/refs/guard1-canon-founder-0822.png. So the sheet''s guard-1 half is
+      ANSWERED, not re-asked. (2) THE STYLE FOR HUMANS is the July-ruled DETAILED CINEMATIC ANIME,
+      not the flat goblin-era tag recipe those twelve cells were drawn with. Guard 2 is the only
+      question left open and it is re-cast at the corrected recipe on
+      /review/ep2-guardcast2-0822.'

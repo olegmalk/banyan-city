@@ -8166,3 +8166,57 @@ the first three-quarters is shippable footage — and the remaining 13 clips wil
 say whether the window is consistent enough to cut on. **Recorded before the
 tranche finished so the pattern is named in advance rather than rationalised
 after.**
+
+---
+
+### FOUNDER RULING 2026-08-22 — THE HUMAN STYLE RUNG, AND THE ONE THIS LADDER MAY NOT REACH FOR AGAIN
+
+Verbatim, on the twelve-cell guard-casting sheet at `/review/ep2-guardcast-0822`:
+
+> **"none of them are right, the style is wrong"**
+
+Posted with the **beat-09 guard close-up attached as the contrast** — dark hair,
+round wire glasses, detailed cinematic anime. Two rulings came out of that one
+sentence and both are registered in `pipeline/canon.yaml`
+(`ep2-guard1-canon-founder-0822`, `ep2-human-style-cinematic-anime`).
+
+**1. That frame IS guard 1.** A founder-*selected* generation of our own — the
+same provenance pattern as the goblin on 08-21, and the same authority: R4 is
+taste, and picking which of our own frames is the character is his call. It is
+committed at `taste/refs/guard1-canon-founder-0822.png` (832x1216,
+sha256 `420fc2c0…`), chosen over the b09 motion clip's frame 0 after a 1:1
+comparison — laplacian std 18.19 vs 12.95 over the same face box, and the h264
+frame softens the wire rims. **The guards now have a reference image.** Every
+record still saying they do not is stale, and the canon checker fails on it.
+
+**2. Humans are drawn in DETAILED CINEMATIC ANIME.** This is the July ruling
+(CLAUDE.md, 2026-07-27: v2 low-detail killed, "current look = detailed cinematic
+anime"), re-applied to a lane that had drifted off it. **The flat goblin-era
+recipe was wrong for guards** and this ladder should stop offering it as a rung
+for human subjects. Both stacks sit on `animagine-xl-3.1`; the difference is
+everything above the checkpoint:
+
+| | flat stack — **ruled off for humans** | cinematic stack — **use this** |
+|---|---|---|
+| driver | `pipeline/controlnet_plate.py` via `derive_guardcast_0822.py` | `pipeline/goblin_ipa_beat.py --character guard --arm window4` |
+| prompt | booru tag list ending `muted color, … full body` | prose, closing on `cinematic lighting, masterpiece, best quality, very aesthetic` |
+| conditioning | openpose skeleton, **no reference** | **IP-Adapter window @ w=0.15** over a reference set |
+| negative | `photorealistic, 3d` | `No photorealism, no 3D render look` |
+| reference rung | the twelve `ep2-guardcast-{a..l}-0822` specs | `pipeline/jobs/ep2-b09-cast-0817.yaml` — **the recipe that drew the frame he just called canon** |
+
+Why the flat stack looked reasonable and was not: it was built for a **creature**
+with big flat colour fields, where a style tail costs tokens and buys little. On
+a human face it is the whole difference between a character and a costume card,
+and the founder saw it at a glance in a sheet we had scored as a pass.
+
+**What it cost.** The twelve cells were authored under the sentence *"there is no
+guard reference to condition on … making one is what the sheet is for."* That was
+**already false** — the beat-09 close-up had existed since 08-20 and he had been
+watching it in the ep2 cut. He answered the sheet by posting our own frame back
+at us. The lesson is a canon entry now, not a paragraph: before a casting rung
+fires, check the register for a reference that already exists.
+
+**Next rung, running:** guard 2 re-cast on the cinematic stack, IP-Adapter at
+0.15 over `taste/refs/guard1-canon-founder-0822.png` so the costume family and
+the style come from guard 1 while the prompt varies hair and build. Sheet at
+`/review/ep2-guardcast2-0822`. Guard 1 is **not** re-asked.

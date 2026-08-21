@@ -1397,6 +1397,170 @@ subjects:
   - retires the
   - the hold this
 
+# --- INSTANCE 7 ------------------------------------------------------------
+# THE GUARDS GOT THEIR OWN 08-21. On 2026-08-21 the goblin stopped being a
+# described character and became a PICTURE the founder selected (instance 6's
+# headline). On 2026-08-22 the same thing happened to guard 1, in the same
+# sentence shape and with the same provenance — an EARLIER GENERATION OF OURS
+# that the founder picked out and pointed at, not a drawing of his. Registered
+# as its own subject rather than folded into `ep2-guard-cast` for instance 6's
+# reason: instance 1 registers WHO WAS CAST off the 08-16 sheet, and this ruling
+# is about WHICH PIXELS ARE HIM. A register entry catches only the attribute it
+# names.
+#
+# WHAT IT COST TO NOT HAVE THIS. Twelve guard-casting cells were rendered on the
+# night of 08-21/22 (pipeline/jobs/ep2-guardcast-{a..l}-0822.yaml, sheet at
+# review/ep2-guardcast-0822) against a brief that had no reference image in it,
+# because "there is no guard reference to condition on" was true when the sheet
+# was authored. It was ALREADY FALSE: the beat-09 close-up had existed since
+# 08-20 and the founder had been looking at it in the ep2 cut. He answered the
+# sheet by posting that frame back at us.
+
+- id: ep2-guard1-canon-founder-0822
+  what: >-
+    WHICH IMAGE IS GUARD 1. Settled 2026-08-22 by a founder SELECTION, verbatim:
+
+      "none of them are right, the style is wrong"
+
+    — said of the twelve-cell sheet at /review/ep2-guardcast-0822, and posted
+    WITH THE BEAT-09 GUARD CLOSE-UP ATTACHED as the contrast: dark hair, round
+    wire glasses, detailed cinematic anime. That frame is not a counterexample
+    to the sheet, it is the answer to it. THAT GUARD IS GUARD 1 AND THAT GUARD
+    IS THE STYLE.
+
+    PROVENANCE, STATED IN FULL BECAUSE THE GOBLIN'S WAS STATED WRONG ONCE AND
+    HAD TO BE CORRECTED A DAY LATER (see ep2-goblin-design-adult's
+    "Provenance corrected 2026-08-22"). This is NOT a founder drawing and it is
+    NOT a new render. It is AN EARLIER GENERATION OF OUR OWN THAT THE FOUNDER
+    SELECTED — exactly the goblin's pattern, exactly the goblin's authority. R4
+    is taste; choosing which of our own frames is the character is precisely the
+    call that belongs to him and to nobody else.
+
+    THE IMAGE IS THE REFERENCE AND IT IS IN THE REPO:
+
+      taste/refs/guard1-canon-founder-0822.png   832x1216 RGB
+      sha256 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
+
+    WHICH FILE, AND WHY THIS ONE. Two carriers of the same pixels were offered:
+    frame 0 of review/ep2-ship-0821/sources/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4
+    (704x1280, h264) and the platecrop still
+    farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png (832x1216,
+    lossless). COMPARED AT 1:1 AND LOOKED AT, not assumed: laplacian std over
+    the same normalised face box is 18.19 on the still against 12.95 on the
+    video frame, the still carries ~40% more pixels across the face, and the
+    h264 frame softens the wire-rim line and the hair edges. The STILL is
+    committed. Its sha256 is the platecrop sidecar's own `png_sha256`, so the
+    ref is byte-traceable back through
+    09-the-pause-platecrop-r2s2.yaml -> farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r2-w015-s2.png
+    -> pipeline/jobs/ep2-b09-cast-0817.yaml, which is the recipe that drew it.
+
+    WHAT THE IMAGE SETTLES: guard 1's face, hair (near-black, cropped), eyewear
+    (round wire rims), skin, wardrobe collar (tan tunic, white shoulder sash)
+    and the RENDER STYLE for human characters. WHAT IT DOES NOT SETTLE: guard
+    2, who is a different man and is re-cast at /review/ep2-guardcast2-0822;
+    full-body proportion, since this is a head-and-shoulders frame and a
+    head_frac measured off a close-up cannot be carried to a standing plate
+    (the goblin canon made exactly this caveat about its high camera and it
+    applies here with more force).
+  kind: founder_decision
+  registered: '2026-08-22'
+  resolved_by:
+    card_url_contains: /review/ep2-guardcast-0822
+    verdict_matches: none of them are right, the style is wrong
+  evidence:
+    file: review/inbox.yaml
+    contains: 'none of them are right, the style is wrong'
+  # NARROW ON PURPOSE. Every phrase below is one a RECORD would use to assert
+  # that the guards still have no reference image — the exact claim the twelve
+  # 0822 cells were authored under, which is now false. Deliberately absent:
+  # any bare form of `guard`, `reference`, `cast` or `sheet`. Those are the
+  # working vocabulary of six beats and a rule built on them fires on every
+  # honest sentence in the lane.
+  open_phrases:
+  - there is no guard reference to condition on
+  - no guard reference (?:image )?exists
+  - the guards have never had
+  - guards? (?:have|has) no reference image
+  - making one is what (?:this|the) sheet is for
+  - what the goblin got on 08-21 and what the guards
+  negation_cues:
+  - CORRECTION
+  - no longer
+  - superseded
+  - stale
+  - discharged
+  - ruled 2026-08-22
+  - guard1-canon-founder-0822
+
+# --- INSTANCE 8 ------------------------------------------------------------
+# THE STYLE HALF OF THE SAME SENTENCE, split out because it is a DIFFERENT
+# SUBJECT WITH A WIDER SCOPE. Instance 7 says which frame is guard 1. This says
+# what every HUMAN in the show is drawn in, and it binds beats guard 1 is not
+# in. Folding them together would mean a lane fixing a style violation on a
+# goblin-free crowd beat has to argue about casting to do it.
+
+- id: ep2-human-style-cinematic-anime
+  what: >-
+    THE RENDER STYLE FOR HUMAN CHARACTERS IS DETAILED CINEMATIC ANIME. Ruled
+    2026-08-22 in the second half of the guard-cast verdict — "none of them are
+    right, THE STYLE IS WRONG" — with the beat-09 close-up posted as what right
+    looks like.
+
+    THIS IS NOT A NEW RULING. It is the JULY ONE, re-applied to a lane that had
+    quietly left it. CLAUDE.md's standing constraint since 2026-07-27: "v2
+    low-detail was KILLED by the founder (unreadable on screening); current look
+    = detailed cinematic anime". The guard-casting sheet of 08-22 was drawn on
+    the FLAT GOBLIN-ERA TAG RECIPE instead — a bare booru tag list carrying
+    `muted color`, no style tail, no cinematic-lighting anchor, an openpose
+    skeleton for proportion and no IP-Adapter at all. That recipe was built for
+    a CREATURE with big flat colour fields and it is wrong for a human face,
+    which is what the founder saw at a glance and we did not.
+
+    THE TWO RECIPES, NAMED SO THE NEXT LANE PICKS THE RIGHT ONE. Both sit on
+    cagliostrolab/animagine-xl-3.1; the difference is everything above the
+    checkpoint.
+      * WRONG FOR HUMANS — pipeline/controlnet_plate.py driven by
+        pipeline/derive_guardcast_0822.py: tag-list prompt ending `muted color,
+        standing, arms at sides, in tall grass, full body`, openpose skeleton
+        control, no reference conditioning.
+      * RIGHT FOR HUMANS — pipeline/goblin_ipa_beat.py at `--character guard
+        --arm window4`, i.e. an IP-ADAPTER WINDOW AT WEIGHT 0.15 over a
+        reference set, and a PROSE prompt closing on the 14-token style tail
+        `cinematic lighting, masterpiece, best quality, very aesthetic`. This is
+        the recipe of pipeline/jobs/ep2-b09-cast-0817.yaml, and it is the recipe
+        that drew the frame the founder just called canon. Its negative carries
+        `No photorealism, no 3D render look`.
+
+    THE LADDER NOTE THIS RULING IS ALSO WRITTEN INTO, per the founder's second
+    instruction: pipeline/work-ladder-0819.md. A rung that reaches for the
+    flat stack on a human subject is reaching for a rung that has been ruled
+    off.
+  kind: founder_decision
+  registered: '2026-08-22'
+  resolved_by:
+    card_url_contains: /review/ep2-guardcast-0822
+    verdict_matches: the style is wrong
+  evidence:
+    file: review/inbox.yaml
+    contains: 'THE STYLE FOR HUMANS is the July-ruled DETAILED CINEMATIC ANIME'
+  # Only phrases that ASSERT the flat stack is the human recipe. `muted color`
+  # itself is deliberately NOT here: it is a legitimate tag on creature and
+  # landscape prompts across the corpus, and banning the string would fire on
+  # every one of them. What is banned is the CLAIM, in a record, that the flat
+  # stack is what humans are drawn with.
+  open_phrases:
+  - ratified k6a-era still stack with the IP-Adapter (?:and every goblin term )?removed
+  - flat (?:goblin-era |goblin )?(?:tag )?(?:recipe|stack) for (?:the )?(?:guards|humans)
+  - humans? (?:are|is) drawn (?:with|on) the (?:flat|tag)
+  negation_cues:
+  - CORRECTION
+  - no longer
+  - superseded
+  - stale
+  - discharged
+  - ruled 2026-08-22
+  - was wrong for guards
+
 # ---------------------------------------------------------------------------
 # AXES — attributes the prompts describe INCONSISTENTLY WITH EACH OTHER.
 #
