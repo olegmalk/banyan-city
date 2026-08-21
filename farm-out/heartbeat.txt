@@ -4194,3 +4194,4 @@
 21:49:32Z DONE task=ep2-b20-canon-w4-0821-1787348595 rc=0 artifacts=1
 21:49:38Z STARTED task=ep2-guardcast2c-a-0822-1787348663 attempt=1 on box-runner
 21:49:56Z DONE task=ep2-guardcast2c-a-0822-1787348663 rc=0 artifacts=1
+21:50:01Z box-runner idle ready=0 failed=83
