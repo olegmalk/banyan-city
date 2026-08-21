@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "ce3fd63a27e6cdc32a3ab6ef1f682a65650b55a4",
-  "measured_at": "2026-08-21T15:51:41Z",
-  "job_count": 1346,
-  "ok": 1265,
+  "source_commit": "8be8da79274b8c0a5b7778dad86c361c19ea0c0c",
+  "measured_at": "2026-08-21T16:55:44Z",
+  "job_count": 1349,
+  "ok": 1268,
   "failed": 81,
   "upcoming_count": 85,
   "skipped_sidecars": null,
@@ -13,6 +13,219 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b20-sapnat-0821-1787331211",
+   "task": "ep2-b20-sapnat-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T16:54:13Z",
+   "finished_at": "2026-08-21T16:54:26Z",
+   "duration_s": 13,
+   "sidecar": "farm-out/box/ep2-b20-sapnat-0821-1787331211.json",
+   "spec_file": "pipeline/jobs/ep2-b20-sapnat-0821.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 20'S RE-DERIVED MOTION SPEC, and nothing else until then. Named consumer: the canon-motion lane, which cannot file beat 20's next i2v rung until a plate exists that contains the sapling's thinnest branch beside him -- because the wave proved that naming it in the prompt alone re-frames the shot. Nothing in review/ep2-ship-0821 reads this file, and no cut changes because it landed.",
+    "why": "BEAT 20'S MOTION FAILED PLATE-SIDE, AND THIS DRAWS THE MISSING OBJECT INTO THE PLATE INSTEAD OF REWORDING THE PROMPT AT IT. The canon-motion verdict for this beat reads, in its own spec: the branch the action names is absent, so it entered on its own at top right from ~f048 and the frame drifted to accommodate it. That is one instance of a law the wave measured four times -- a prompt naming an object ABSENT from the init makes the model build the object and pull the camera back hunting for it,…",
+    "success": "ONE 832x1216 png in which the sapling's thinnest branch beside him IS DRAWN INTO THE PLATE AND HAS NOT MOVED, judged by eye at 1:1 and not by a metric. P1 the stem and both leaves carry cel shading and the plate's ink line weight, not the compositor's flat fill; P2 root, height and leaf tips are within a few px of where they were composited; P3 exactly two leaves on one stem; P4 the goblin's face, ears, skin colour, wardrobe and pose are the canon plate's, untouched -- the mask is local and the…",
+    "owner": "canon-motion plate-fix lane, 2026-08-21",
+    "est_minutes": 5,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b20-sapnat-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-sapnat-0821/b20-sapnat-in-0821.png",
+     "name": "b20-sapnat-in-0821.png",
+     "bytes": 1173641,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-sapnat-0821/b20-sapnat-in-mask-0821.png",
+     "name": "b20-sapnat-in-mask-0821.png",
+     "bytes": 4312,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-sapnat-0821/b20-sapnat-s20260820-mask.png",
+     "name": "b20-sapnat-s20260820-mask.png",
+     "bytes": 4312,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-sapnat-0821/b20-sapnat-s20260820.png",
+     "name": "b20-sapnat-s20260820.png",
+     "bytes": 1214204,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass in the foreground, with one small green goblin squatting in tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b20-sapnat-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-sapnat-0821-1787331207",
+   "task": "ep2-b03-sapnat-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T16:53:53Z",
+   "finished_at": "2026-08-21T16:54:06Z",
+   "duration_s": 13,
+   "sidecar": "farm-out/box/ep2-b03-sapnat-0821-1787331207.json",
+   "spec_file": "pipeline/jobs/ep2-b03-sapnat-0821.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 03'S RE-DERIVED MOTION SPEC, and nothing else until then. Named consumer: the canon-motion lane, which cannot file beat 03's next i2v rung until a plate exists that contains the trunk that hides roughly one-sixth of him -- because the wave proved that naming it in the prompt alone re-frames the shot. Nothing in review/ep2-ship-0821 reads this file, and no cut changes because it landed.",
+    "why": "BEAT 03'S MOTION FAILED PLATE-SIDE, AND THIS DRAWS THE MISSING OBJECT INTO THE PLATE INSTEAD OF REWORDING THE PROMPT AT IT. The canon-motion verdict for this beat reads, in its own spec: the action names a trunk the plate does not contain -- same root cause as beat 02, and the b03 verdict says so. That is one instance of a law the wave measured four times -- a prompt naming an object ABSENT from the init makes the model build the object and pull the camera back hunting for it, while the three b…",
+    "success": "ONE 832x1216 png in which the trunk that hides roughly one-sixth of him IS DRAWN INTO THE PLATE AND HAS NOT MOVED, judged by eye at 1:1 and not by a metric. P1 the stem and both leaves carry cel shading and the plate's ink line weight, not the compositor's flat fill; P2 root, height and leaf tips are within a few px of where they were composited; P3 exactly two leaves on one stem; P4 the goblin's face, ears, skin colour, wardrobe and pose are the canon plate's, untouched -- the mask is local an…",
+    "owner": "canon-motion plate-fix lane, 2026-08-21",
+    "est_minutes": 5,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b03-sapnat-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-sapnat-0821/b03-sapnat-in-0821.png",
+     "name": "b03-sapnat-in-0821.png",
+     "bytes": 1155311,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-sapnat-0821/b03-sapnat-in-mask-0821.png",
+     "name": "b03-sapnat-in-mask-0821.png",
+     "bytes": 3416,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-sapnat-0821/b03-sapnat-s20260820-mask.png",
+     "name": "b03-sapnat-s20260820-mask.png",
+     "bytes": 3416,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-sapnat-0821/b03-sapnat-s20260820.png",
+     "name": "b03-sapnat-s20260820.png",
+     "bytes": 1184664,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass in the foreground, with one small green goblin crouching low in tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b03-sapnat-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-sapnat-0821-1787331203",
+   "task": "ep2-b02-sapnat-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T16:53:28Z",
+   "finished_at": "2026-08-21T16:53:47Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b02-sapnat-0821-1787331203.json",
+   "spec_file": "pipeline/jobs/ep2-b02-sapnat-0821.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 02'S RE-DERIVED MOTION SPEC, and nothing else until then. Named consumer: the canon-motion lane, which cannot file beat 02's next i2v rung until a plate exists that contains the thin sapling trunk he dives behind -- because the wave proved that naming it in the prompt alone re-frames the shot. Nothing in review/ep2-ship-0821 reads this file, and no cut changes because it landed.",
+    "why": "BEAT 02'S MOTION FAILED PLATE-SIDE, AND THIS DRAWS THE MISSING OBJECT INTO THE PLATE INSTEAD OF REWORDING THE PROMPT AT IT. The canon-motion verdict for this beat reads, in its own spec: the action names a thin sapling trunk, the canon b02 plate contains none, and LTX built the tree and re-framed the shot to fit it. That is one instance of a law the wave measured four times -- a prompt naming an object ABSENT from the init makes the model build the object and pull the camera back hunting for it…",
+    "success": "ONE 832x1216 png in which the thin sapling trunk he dives behind IS DRAWN INTO THE PLATE AND HAS NOT MOVED, judged by eye at 1:1 and not by a metric. P1 the stem and both leaves carry cel shading and the plate's ink line weight, not the compositor's flat fill; P2 root, height and leaf tips are within a few px of where they were composited; P3 exactly two leaves on one stem; P4 the goblin's face, ears, skin colour, wardrobe and pose are the canon plate's, untouched -- the mask is local and the p…",
+    "owner": "canon-motion plate-fix lane, 2026-08-21",
+    "est_minutes": 5,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b02-sapnat-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-sapnat-0821/b02-sapnat-in-0821.png",
+     "name": "b02-sapnat-in-0821.png",
+     "bytes": 1238832,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-sapnat-0821/b02-sapnat-in-mask-0821.png",
+     "name": "b02-sapnat-in-mask-0821.png",
+     "bytes": 3725,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820-mask.png",
+     "name": "b02-sapnat-s20260820-mask.png",
+     "bytes": 3725,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820.png",
+     "name": "b02-sapnat-s20260820.png",
+     "bytes": 1265858,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass in the foreground, with one small green goblin running through tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b02-sapnat-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b20-canonmotion-0821-1787324453",
    "task": "ep2-b20-canonmotion-0821",
