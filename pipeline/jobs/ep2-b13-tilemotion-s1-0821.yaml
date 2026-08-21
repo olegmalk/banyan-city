@@ -1,0 +1,285 @@
+id: ep2-b13-tilemotion-s1-0821
+task: ep2-b13-tilemotion-s1-0821
+node: 002b-first-citizen
+beat: 13
+runner: box
+priority: 24
+needs_gpu: true
+max_attempts: 1
+owner: goblin standard lane, 2026-08-21
+consumer: 'A CANDIDATE for beat 13''s post-ship patch. review/ep2-ship-0821 is NOT touched by this job
+  and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement
+  with its own bar.'
+success: ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b13-tilefix-p1-0821
+  with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.
+why: 'MOTION for beat 13 off the patch wave''s picked plate (ep2-b13-tilefix-p1-0821, round p1).
+
+
+  WHY THIS PLATE: round one, and the best frame in the wave: seated, hands clasped between the knees,
+  head low. It is the tile''s own stance.
+
+
+  The seven plates are the first frames in this tree where the goblin reads as the B tile''s CREATURE
+  at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found
+  in five of seven and the founder ruled on directly at beat 13. The stills question is closed; this asks
+  the only question left, which is whether the face survives 121 frames of LTX.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b13-tilemotion-s1-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak,
+    sitting on the grass, small and folded, hands clasped between his knees, head low, seen full body.
+    HE SETTLES AND SPEAKS ONCE: his shoulders drop as he lets a breath out, his head lifts a little, his
+    mouth opens and closes on a short line, and his head lowers again. The daylight slides slowly across
+    the grass. HALFWAY THROUGH his head is up and his mouth is open on the line.'
+  C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-negative.txt: second face, second goblin, two goblins,
+    2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face,
+    face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human
+    nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed
+    stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera
+    pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera,
+    camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change,
+    new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-jobs-encode.json: '[{"beat": 13, "embeds": "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\b13-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\b13-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\b13-negative.txt"}]'
+  C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-jobs-render.json: '[{"beat": 13, "seed": 20260821, "embeds":
+    "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\b13-embeds.pt", "init": "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\b13-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b13-tilemotion-s1-0821\\13-the-shade-LTX-ep2-b13-tilemotion-s1-0821.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b13-tilemotion-s1-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b13-tilefix-p1-0821\ep2-b13-tilefix-p1-0821-ipahead.png
+  - --sha256
+  - 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3
+  - --out
+  - C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b13-tilemotion-s1-0821\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b13-tilemotion-s1-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b13-tilemotion-s1-0821\bench-ep2-b13-peek-s3-0820.jsonl
+  - --bench-label
+  - ep2-b13-tilemotion-s1-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-tilemotion-s1-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b13-tilemotion-s1-0821/13-the-shade-LTX-ep2-b13-tilemotion-s1-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b13-tilemotion-s1-0821/b13-init-704x1280.png\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b13-tilemotion-s1-0821/bench-ep2-b13-peek-s3-0820.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b13-tilemotion-s1-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b13-tilemotion-s1-0821\13-the-shade-LTX-ep2-b13-tilemotion-s1-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched; the staging is a stage direction, logged by the coordinator lane
+  on 2026-08-20 as the option satisfying both the brief and the founder''s own 08-17 canon ruling. His
+  card /review/ep2-b13-leaf-0820 remains open and unanswered.'
+script_line: 'Beat 16 WHY (1:15-1:22), node.md verbatim: "Close on the sapling''s leaf; the scavenger
+  sits blurred behind it." RESTAGED 2026-08-20 to CLOSE ON THE WHOLE CANON SAPLING with him behind it.
+  The VO is the SAPLING''S and is unchanged -- the founder''s own 2026-08-19 word to keep it: "He talks
+  to me because I''m the only thing here that won''t file a report. Buddy, I wish I could. I can''t even
+  wave." THAT LINE IS WHY THE PLANT MUST NOT MOVE.'
+bar: "SCORED AS A CANDIDATE FOR A POST-SHIP SWAP, not as a shipped clip.\n  M1 IDENTITY HELD FOR 121 FRAMES.\
+  \ The face at f000, f060 and f120 is the same\n     creature: blank white eyes with no iris or pupil,\
+  \ no human nose, bald,\n     green. A frame where he acquires a pupil or a nose bridge FAILS, and it\n\
+  \     fails even if only one third of the clip does it -- the still already\n     passed, so the only\
+  \ thing this job can add is drift.\n  M2 THE ACTION IS THE ONE ASKED FOR, and it is legible without\
+  \ the caption.\n  M3 THE FRAME NEVER MOVES. Locked camera. Any pan, tilt, push or drift FAILS.\n  M4\
+  \ NO SECOND FIGURE and no purple cowl arriving in motion.\n  M5 NO FREEZE. A clip whose subject is static\
+  \ for its whole length is a still\n     with a runtime, and this tree has shipped that mistake before.\n\
+  Two seeds a beat: if BOTH fail the same way it is the recipe, if ONE fails it is\nthe draw and the other\
+  \ is the candidate."
+failure_predicted_in_advance: 'M1 IS THE ONE I EXPECT TO COST BEATS, and the reason is specific
+
+  rather than nervous: every plate here was drawn by an IP-Adapter holding a face
+
+  that the base checkpoint does not otherwise produce -- thirteen ladder rungs
+
+  established that the wording alone returns a human male. LTX has no adapter. It
+
+  is being handed the face as PIXELS in the init frame and asked to keep it for 121
+
+  frames against its own prior, and its own prior is the man-read. So drift, if it
+
+  comes, will be TOWARD A HUMAN FACE and will show up late in the clip.
+
+
+  IF THAT FIRES ON MOST BEATS, the finding is large and it is not a motion finding:
+
+  it says the LoRA is the only durable fix, because a LoRA moves the prior itself
+
+  where an init frame only argues with it. That would raise train-jerry-0820 from
+
+  enabler work for ep3 to the blocker for ep2''s patch wave, and it is filed BEHIND
+
+  this tranche on purpose so the tranche''s answer arrives first.
+
+
+  BEAT 04 IS THE OTHER RISK AND IT IS M2. The plate does not lean -- two rounds
+
+  failed to make it -- so the peek is being asked of the motion model alone, from a
+
+  standing init. If LTX will not produce a repeating lean-and-return from that, the
+
+  answer is a two-plate approach and not a third wording.'
+one_sample_rule: 'SATISFIED BY THE SHAPE OF THE BATCH, and worth stating because fourteen jobs looks like
+  a scaled recipe. It is not: it is SEVEN beats, each an independent question with its own init frame
+  and its own action, at two seeds. The recipe under them was sampled by ep2-b16-motion-0820 and shipped.
+  The plates under them were each sampled and judged by eye at 1:1 before any motion was filed -- that
+  judgement is what picked round two for beats 04, 08 and 20.'
+plate_provenance: farm-out/ep2-b13-tilefix-p1-0821/ep2-b13-tilefix-p1-0821-ipahead.png, sha256 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3,
+  drawn at the k6a goblin standard (pipeline/jerry_standard_0821.py, steward ruling 2026-08-21). cover_crop.py
+  asserts that digest before it writes an init frame, so an edited or re-rendered plate stops this job
+  rather than quietly animating a different character.
+post_ship_patch: review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB.
+the_one_variable: the SEED (20260821 of the two this beat gets). Everything else -- init plate, prompt,
+  negative, size, frames, fps, guidance, sampler -- is held across the pair, so a split between the two
+  seeds is a draw and a matched failure is the recipe.
+the_rung_this_is_one_variable_from: ep2-b16-motion-0820, the only motion spec in this tree that shipped
+  a goblin into the cut on its first sample -- 7/7 on its own bar, into review/ep2-ship-0821 at 01:05
+  on 2026-08-21. Its size, frame count, guidance, sampler settings and prompt SHAPE are inherited unchanged;
+  the init, the action and the seed are what move.
+derivation:
+  parent: pipeline/jobs/ep2-b16-motion-0820.yaml
+  by: pipeline/derive_jerry_motion_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - one_sample_rule
+  - owner
+  - plate_provenance
+  - post_ship_patch
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - the_one_variable
+  - the_plate_reservation_carried_forward
+  - why_the_word_wave_is_not_in_the_prompt
+  retokened:
+  - ep2-b16-motion-0820 -> ep2-b13-tilemotion-s1-0821
+  - b16- -> b13-
+  - 16-why-LTX- -> 13-the-shade-LTX-
+  - bench-ep2-b16-peek-s3-0820 -> bench-ep2-b13-tilemotion-s1-0821
+  - ep2-b16-motion-0820 -> ep2-b13-tilemotion-s1-0821
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (8f4e9ba31c42130c4cc5fef841bb368b005ad7b4667ef9d648360bf9c2aabc71 -> 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b13-sapcomp-r2-0820\b13-sapcomp-s20260820.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b13-tilefix-p1-0821\ep2-b13-tilefix-p1-0821-ipahead.png)
+    key:beat:
+    - key beat = 13
+    key:est_minutes:
+    - key est_minutes = 8
+    key:priority:
+    - key priority = 24
+    payload:b13-motion-prompt.txt:
+    - payload b13-motion-prompt.txt (1355 -> 613 chars)
+    payload:b13-negative.txt:
+    - payload b13-negative.txt (780 -> 746 chars)
