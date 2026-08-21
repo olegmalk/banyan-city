@@ -2,17 +2,255 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "ff77fac493224a21a396bc73910e8f4a17ac0698",
-  "measured_at": "2026-08-21T07:07:59Z",
-  "job_count": 1174,
-  "ok": 1106,
+  "source_commit": "ebfeb04cc358290c7dedeece11cff62e07471329",
+  "measured_at": "2026-08-21T07:38:07Z",
+  "job_count": 1178,
+  "ok": 1110,
   "failed": 68,
-  "upcoming_count": 63,
+  "upcoming_count": 82,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b02-tilemotion-s2-0821-1787296927",
+   "task": "ep2-b02-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:30:17Z",
+   "finished_at": "2026-08-21T07:36:26Z",
+   "duration_s": 369,
+   "sidecar": "farm-out/box/ep2-b02-tilemotion-s2-0821-1787296927.json",
+   "spec_file": "pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 02 off the patch wave's picked plate (ep2-b02-tilefix-p1-0821, round p1). WHY THIS PLATE: round one. Running, leaning forward, face true, no cowl. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The stills question is closed; this asks the only question left, which i…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b02-tilefix-p1-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b02-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s2-0821/02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4",
+     "name": "02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4",
+     "bytes": 541771,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s2-0821/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 1231530,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak, mid-stride in tall grass on open ground, leaning forward, seen full body at a distance. HE IS RUNNING AND THEN HE GOES DOWN: he drives forward two more strides, plants a foot, and skids low into the grass with his weight dropping, arms coming forward to break the fall, the grass flattening and springing where he passes. HALFWAY THROUGH he is low and still moving forward, one arm out, the grass bent around him.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-tilefix-p1-0821/ep2-b02-tilefix-p1-0821-ipahead.png",
+    "sha256": "f1940886a723b063d350b04afb4811c9676a3a19476ba4950964909d06f4465b"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b02-tilemotion-s1-0821-1787296922",
+   "task": "ep2-b02-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:24:03Z",
+   "finished_at": "2026-08-21T07:30:12Z",
+   "duration_s": 369,
+   "sidecar": "farm-out/box/ep2-b02-tilemotion-s1-0821-1787296922.json",
+   "spec_file": "pipeline/jobs/ep2-b02-tilemotion-s1-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 02 off the patch wave's picked plate (ep2-b02-tilefix-p1-0821, round p1). WHY THIS PLATE: round one. Running, leaning forward, face true, no cowl. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The stills question is closed; this asks the only question left, which i…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b02-tilefix-p1-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b02-tilemotion-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s1-0821/02-the-sprint-LTX-ep2-b02-tilemotion-s1-0821.mp4",
+     "name": "02-the-sprint-LTX-ep2-b02-tilemotion-s1-0821.mp4",
+     "bytes": 399906,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s1-0821/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 1231530,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean green goblin alone, bald head, blank white eyes, patchwork cloak, mid-stride in tall grass on open ground, leaning forward, seen full body at a distance. HE IS RUNNING AND THEN HE GOES DOWN: he drives forward two more strides, plants a foot, and skids low into the grass with his weight dropping, arms coming forward to break the fall, the grass flattening and springing where he passes. HALFWAY THROUGH he is low and still moving forward, one arm out, the grass bent around him.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260821,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-tilefix-p1-0821/ep2-b02-tilefix-p1-0821-ipahead.png",
+    "sha256": "f1940886a723b063d350b04afb4811c9676a3a19476ba4950964909d06f4465b"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b20-tilefix-r2-0821-1787295962",
+   "task": "ep2-b20-tilefix-r2-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:07:55Z",
+   "finished_at": "2026-08-21T07:08:23Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b20-tilefix-r2-0821-1787295962.json",
+   "spec_file": "pipeline/jobs/ep2-b20-tilefix-r2-0821.yaml",
+   "purpose": {
+    "consumer": "The ep2 patch wave's plate for beat 20. Round one is judged and this rung either replaces its plate or confirms it. POST-SHIP: review/ep2-ship-0821 is not touched by this job.",
+    "why": "ROUND TWO for beat 20, and the LAST round for this question. THE SAME SEED QUESTION AS b03-r2, on the second frame that showed the magenta neck. Two frames at one new seed is what separates a mechanism from a draw; one would not. The fig's COLOUR and the branch remain beat 20's own canon question and are untouched here.",
+    "success": "ONE 832x1216 png, the k6a standard entire, with only the named variable moved. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. There is no round three: if this misses, the finding is recorded and the beat keeps round one's plate or none.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 20
+   },
+   "artifacts_dir": "farm-out/ep2-b20-tilefix-r2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-tilefix-r2-0821/ep2-b20-tilefix-r2-0821-ipahead.png",
+     "name": "ep2-b20-tilefix-r2-0821-ipahead.png",
+     "bytes": 1384437,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-tilefix-r2-0821/jerry-skel-h19crouch-0820.png",
+     "name": "jerry-skel-h19crouch-0820.png",
+     "bytes": 8332,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-tilefix-r2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   }
+  },
+  {
+   "id": "ep2-b08-tilefix-r2-0821-1787295955",
+   "task": "ep2-b08-tilefix-r2-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:07:18Z",
+   "finished_at": "2026-08-21T07:07:46Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b08-tilefix-r2-0821-1787295955.json",
+   "spec_file": "pipeline/jobs/ep2-b08-tilefix-r2-0821.yaml",
+   "purpose": {
+    "consumer": "The ep2 patch wave's plate for beat 08. Round one is judged and this rung either replaces its plate or confirms it. POST-SHIP: review/ep2-ship-0821 is not touched by this job.",
+    "why": "ROUND TWO for beat 08, and the LAST round for this question. ROUND ONE DREW A BARE ROUND POT BELLY. `looking down at his own belly` named the belly and the model drew one -- uncovered, protruding, and reading as a chubby CHILD, which is precisely the defect the audit logged against this beat ('small body, big head, closed sad eyes'). A positive draws what it names; the beat's belly is the GUARD'S line and the guard's pointing finger, not something the goblin's plate has to show. The words now a…",
+    "success": "ONE 832x1216 png, the k6a standard entire, with only the named variable moved. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. There is no round three: if this misses, the finding is recorded and the beat keeps round one's plate or none.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 20
+   },
+   "artifacts_dir": "farm-out/ep2-b08-tilefix-r2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-tilefix-r2-0821/ep2-b08-tilefix-r2-0821-ipahead.png",
+     "name": "ep2-b08-tilefix-r2-0821-ipahead.png",
+     "bytes": 1439962,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilefix-r2-0821/jerry-skel-h19-0820.png",
+     "name": "jerry-skel-h19-0820.png",
+     "bytes": 9175,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilefix-r2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   }
+  },
   {
    "id": "ep2-b04-tilefix-r2-0821-1787295952",
    "task": "ep2-b04-tilefix-r2-0821",
@@ -6502,15 +6740,9 @@
    "finished_at": "2026-08-20T17:12:24Z",
    "duration_s": 379,
    "sidecar": "farm-out/box/ep2-b04-tightcrop-0820-1787245395.json",
-   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-0820.yaml",
-   "purpose": {
-    "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is carried by a head turn, not the pupils'). This rung is what would clear that fault: the same character, at a framing where the movement the engine gives actually reads. If it lands before 12:00 it swap…",
-    "why": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired. The card measured 0 ready / 0 running / 0 backlog at 20:57 tonight -- the exact state that wasted last night -- and this is zero-dependency work whose plate is already on the box and whose consumer is a beat the founder complained about today. Filed to backlog so autofill runs it with no session alive.",
-    "success": "One 704x1280 121-frame mp4 of the ratified adult goblin in which A GLANCE READS AT 1:1 -- he looks away and back -- with his mouth shut, the camera locked, both ears in frame and no drift toward a child. The primary, on rung 1's own seed so the framing is the only difference. The instrument for the head-band number is rung 1's, unchanged, so the three rungs sit on one scale; the number is PUBLISHED and NOT SCORED, because rungs 1 and 2 already proved that scoring it is what closes the wording l…",
-    "owner": "goblin-design audit lane, 2026-08-20 (beat 04, rung 3 -- staging)",
-    "est_minutes": 7,
-    "priority": 22
-   },
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
    "artifacts_dir": "farm-out/ep2-b04-tightcrop-0820",
    "outputs": [
     {
@@ -6526,9 +6758,9 @@
      "kind": "image"
     }
    ],
-   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed ears, patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face and shoulders. HE IS HOLDING HIS BREATH AND ONLY HIS EYES MOVE: his eyes flick to one side, hold, then travel slowly back across to the other side. HIS MOUTH STAYS SHUT the whole time and his jaw stays set -- he is listening for something, not speaking, and no word is said. His head and shoulders stay STILL. He stays THE SAME GOBLIN from the first frame to the last: the same green skin, the same bald head, the same long pointed ears, one face and one figure only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
-   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
-   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -6539,10 +6771,6 @@
     "steps": "8@352x640+3@704x1280",
     "seed": 20260819,
     "seconds": 5.042
-   },
-   "init": {
-    "path": "farm-out/ep2-b04-mac-plate-0819/04-the-footnote-mac-plate-r1s1.png",
-    "sha256": "5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350"
    },
    "reference": null,
    "verdict": {
@@ -25255,15 +25483,9 @@
    "finished_at": "2026-08-16T08:47:42Z",
    "duration_s": 1041,
    "sidecar": "farm-out/box/motion-poscontrol-r2-0816-1786869003.json",
-   "spec_file": "pipeline/jobs/motion-poscontrol-r2-0816.yaml",
-   "purpose": {
-    "consumer": "This lane's report to the founder, answering the question underneath every motion experiment we have run and that none of them has tested: can LTX-2.3 distilled make a figure ACT at all. Six lanes have moved CADENCE -- how often a new picture arrives -- and in every arm of every one of them the figure holds the same pose from f0 to f96. This job asks the capability question directly under conditions rigged for the engine to succeed, and it is the gate on whether spending disk and hours on non-d…",
-    "why": "Every intervention this investigation has made was measured against cadence. Prompt wording (5 wordings x 3 seeds), the init plate as an onset lever, the 13-latent count, the whole VAE/decode side, STG at upstream's recommended setting, the 200-word ceiling and the negative's content are all eliminated by measurement, and guidance turned out to be a STEP at the CFG on/off boundary rather than a ramp. Two levers reached period 2 / 48 pictures and BOTH were rejected on the cold read: guidance 1.0…",
-    "success": "Four 704x1280 97-frame mp4s from three crops of three asserted plate shas and ONE encoder process, with four render argvs the generator proves differ by NO recipe flag. THE BAR IS WRITTEN ABOVE THE FRAMES. A0 is the tripwire: beat 13's control has returned clip sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a five times across four nights and must do so a sixth; a non-matching control INVALIDATES this job rather than being explained away. A1 (waterfall) establishes whethe…",
-    "owner": "motion lane (can the engine act a body at all), 2026-08-16",
-    "est_minutes": 35,
-    "priority": 45
-   },
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
    "artifacts_dir": "farm-out/motion-poscontrol-r2-0816",
    "outputs": [
     {
@@ -25322,10 +25544,6 @@
     "steps": "8@352x640+3@704x1280",
     "seed": 20260815,
     "seconds": 4.042
-   },
-   "init": {
-    "path": "farm-out/ep2-b13-plate-0814/13-the-shade-ipa-r0-w015-s0.png",
-    "sha256": "1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921"
    },
    "reference": null,
    "verdict": {
@@ -36957,15 +37175,9 @@
    "finished_at": "2026-08-14T21:28:53Z",
    "duration_s": 378,
    "sidecar": "farm-out/box/ep2-b18-loop1B-0814-1786733501.json",
-   "spec_file": "pipeline/jobs/ep2-b18-loop1B-0814.yaml",
-   "purpose": {
-    "consumer": "His morning screening, and the answer to whether beat 18 is solved or seed-luck.",
-    "why": "Twenty-six live prompts mention a fig and exactly one carries the shape language I proved a day ago; he is seeing the other twenty-five.",
-    "success": "A 704x1280 mp4 of beat 18 in which the fig reads as a FIG — a teardrop with a narrow neck and matte skin — and NOT as a green ball, in BOTH seeds. The failure worth reporting is the fruit staying spherical after explicit teardrop wording plus a sphere ban, which would mean fig shape is not reachable by words and needs a plate.",
-    "owner": "ep2 motion lane, 2026-08-12",
-    "est_minutes": 6,
-    "priority": 19
-   },
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
    "artifacts_dir": "farm-out/ep2-b18-loop1B",
    "outputs": [
     {
@@ -36981,9 +37193,9 @@
      "kind": "image"
     }
    ],
-   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: The fruit is a small deep PURPLE-BLACK fruit on a short woody stem. It PINCHES IN just below the stem into a narrow neck and FLARES OUT into a broad body wider than it is tall, with a flat underside. In the CENTRE OF THAT FLAT UNDERSIDE, facing down, is one small dark PUCKERED EYE - a closed round opening in the skin. The surface is otherwise completely SMOOTH and PLAIN: no ribs, no lines, no bands, no speckles, no pattern of any kind. MATTE skin and a faint pale bloom. Its surface is SMOOTH and PLAIN — no ribs, no ridges, no grooves, no pattern, no markings. ONE SINGLE PURPLE FIG and the few centimetres of thin stem it hangs from are the whole of the shot, and EXACTLY ONE FIG IS IN THIS SHOT AND THERE IS NO OTHER FRUIT ANYWHERE IN THE FRAME - not beside it, not behind it, not drifting in at an edge, not out of focus: no second fruit, no branch, no leaves, no plant. It is an extreme close-up of ONE SINGLE PURPLE FIG — one fruit, not a leaf — hanging from the end of one very thin branch, lit warmly from behind. No creature and no person is in this shot. THE THIN STEM TREMBLES: the branch it hangs from quivers and shivers finely, and the heavy fig sways a little on it, trembling as though it is about to let go. The fig stays ONE fruit the whole time and stays attached to the stem. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
-   "negative": "ribbed, ribbing, ridges, bands, banded, stripes, striped, lines on the skin, segmented, melon, pumpkin, gourd, planet, speckles, spots, mould, white patch, plum, ribbed, ribbing, ridges, grooves, fluted, segmented, pumpkin, gourd, squash, melon, striped fruit, patterned skin, spiral, target, bullseye, mouldy, rotten, white patch, green fig, green fruit, unripe green, all green, featureless, smooth blank surface, flat even colour, glossy, shiny, glowing, backlit glow, light bulb, lamp, lantern, balloon, plastic, billiard ball, leaf, leaves, foliage, midrib, apple, creature, goblin, person, face, hands, dark, dusk, dim lighting, low key, night, two figs, second fig, a second fruit, another fruit, cluster of fruit, bunch of fruit, fruit at the edge of frame, green ball, round ball, sphere, spherical fruit, apple, marble, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
-   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -36994,10 +37206,6 @@
     "steps": "8@352x640+3@704x1280",
     "seed": 20260991,
     "seconds": 5.042
-   },
-   "init": {
-    "path": "farm-out/ep2-b18-plantneg-0812/18-the-decision-wave1-s3.png",
-    "sha256": "ef48879d61fa93e4102b2d73714a9524b087f5ed72789657658e42a5303aef61"
    },
    "reference": null,
    "verdict": {
@@ -37961,15 +38169,9 @@
    "finished_at": "2026-08-14T19:49:45Z",
    "duration_s": 375,
    "sidecar": "farm-out/box/ep2-b18-loop1-0814-1786733498.json",
-   "spec_file": "pipeline/jobs/ep2-b18-loop1-0814.yaml",
-   "purpose": {
-    "consumer": "His morning screening, and the answer to whether beat 18 is solved or seed-luck.",
-    "why": "Twenty-six live prompts mention a fig and exactly one carries the shape language I proved a day ago; he is seeing the other twenty-five.",
-    "success": "A 704x1280 mp4 of beat 18 in which the fig reads as a FIG — a teardrop with a narrow neck and matte skin — and NOT as a green ball, in BOTH seeds. The failure worth reporting is the fruit staying spherical after explicit teardrop wording plus a sphere ban, which would mean fig shape is not reachable by words and needs a plate.",
-    "owner": "ep2 motion lane, 2026-08-12",
-    "est_minutes": 6,
-    "priority": 19
-   },
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
    "artifacts_dir": "farm-out/ep2-b18-loop1",
    "outputs": [
     {
@@ -37985,9 +38187,9 @@
      "kind": "image"
     }
    ],
-   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: The fruit is a small deep PURPLE-BLACK fruit on a short woody stem. It PINCHES IN just below the stem into a narrow neck and FLARES OUT into a broad body wider than it is tall, with a flat underside. In the CENTRE OF THAT FLAT UNDERSIDE, facing down, is one small dark PUCKERED EYE - a closed round opening in the skin. The surface is otherwise completely SMOOTH and PLAIN: no ribs, no lines, no bands, no speckles, no pattern of any kind. MATTE skin and a faint pale bloom. Its surface is SMOOTH and PLAIN — no ribs, no ridges, no grooves, no pattern, no markings. ONE SINGLE PURPLE FIG and the few centimetres of thin stem it hangs from are the whole of the shot, and EXACTLY ONE FIG IS IN THIS SHOT AND THERE IS NO OTHER FRUIT ANYWHERE IN THE FRAME - not beside it, not behind it, not drifting in at an edge, not out of focus: no second fruit, no branch, no leaves, no plant. It is an extreme close-up of ONE SINGLE PURPLE FIG — one fruit, not a leaf — hanging from the end of one very thin branch, lit warmly from behind. No creature and no person is in this shot. THE THIN STEM TREMBLES: the branch it hangs from quivers and shivers finely, and the heavy fig sways a little on it, trembling as though it is about to let go. The fig stays ONE fruit the whole time and stays attached to the stem. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
-   "negative": "ribbed, ribbing, ridges, bands, banded, stripes, striped, lines on the skin, segmented, melon, pumpkin, gourd, planet, speckles, spots, mould, white patch, plum, ribbed, ribbing, ridges, grooves, fluted, segmented, pumpkin, gourd, squash, melon, striped fruit, patterned skin, spiral, target, bullseye, mouldy, rotten, white patch, green fig, green fruit, unripe green, all green, featureless, smooth blank surface, flat even colour, glossy, shiny, glowing, backlit glow, light bulb, lamp, lantern, balloon, plastic, billiard ball, leaf, leaves, foliage, midrib, apple, creature, goblin, person, face, hands, dark, dusk, dim lighting, low key, night, two figs, second fig, a second fruit, another fruit, cluster of fruit, bunch of fruit, fruit at the edge of frame, green ball, round ball, sphere, spherical fruit, apple, marble, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
-   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — spec missing or carries no payload",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -37998,10 +38200,6 @@
     "steps": "8@352x640+3@704x1280",
     "seed": 20260806,
     "seconds": 5.042
-   },
-   "init": {
-    "path": "farm-out/ep2-b18-plantneg-0812/18-the-decision-wave1-s3.png",
-    "sha256": "ef48879d61fa93e4102b2d73714a9524b087f5ed72789657658e42a5303aef61"
    },
    "reference": null,
    "verdict": {
@@ -76371,32 +76569,480 @@
    "authored_at": 1786333067
   },
   {
-   "id": "ep2-b08-tilefix-r2-0821",
+   "id": "ep2-b14-tilefix-p1-0821",
    "node": "002b-first-citizen",
-   "beat": 8,
+   "beat": 14,
    "kind": "other",
    "state": "authored",
-   "priority": 20,
+   "priority": 26,
    "est_minutes": 4,
-   "consumer": "The ep2 patch wave's plate for beat 08. Round one is judged and this rung either replaces its plate or confirms it. POST-SHIP: review/ep2-ship-0821 is not touched by this job.",
-   "why_first": "ROUND TWO for beat 08, and the LAST round for this question.",
+   "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 14, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked…",
+   "why_first": "BEAT 14 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b08-tilefix-r2-0821.yaml",
-   "authored_at": 1787295950
+   "spec_file": "pipeline/jobs/ep2-b14-tilefix-p1-0821.yaml",
+   "authored_at": 1787297299
   },
   {
-   "id": "ep2-b20-tilefix-r2-0821",
+   "id": "ep2-b17-tilefix-p1-0821",
    "node": "002b-first-citizen",
-   "beat": 20,
+   "beat": 17,
    "kind": "other",
    "state": "authored",
-   "priority": 20,
+   "priority": 26,
    "est_minutes": 4,
-   "consumer": "The ep2 patch wave's plate for beat 20. Round one is judged and this rung either replaces its plate or confirms it. POST-SHIP: review/ep2-ship-0821 is not touched by this job.",
-   "why_first": "ROUND TWO for beat 20, and the LAST round for this question.",
+   "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 17, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked…",
+   "why_first": "BEAT 17 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b20-tilefix-r2-0821.yaml",
-   "authored_at": 1787295950
+   "spec_file": "pipeline/jobs/ep2-b17-tilefix-p1-0821.yaml",
+   "authored_at": 1787297299
+  },
+  {
+   "id": "ep2-jerry-scene-fieldfcr-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-fieldfcr-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE FIELD x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-fieldfcr-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-fieldfkn-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-fieldfkn-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE FIELD x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-fieldfkn-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-fieldwse-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-fieldwse-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE FIELD x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-fieldwse-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-fieldwsi-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-fieldwsi-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE FIELD x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-fieldwsi-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-grassfpt-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-grassfpt-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE GRASS x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-grassfpt-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-grassfrc-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-grassfrc-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE GRASS x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-grassfrc-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-grasswhn-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-grasswhn-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE GRASS x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-grasswhn-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-grasswsd-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-grasswsd-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJE…",
+   "why_first": "SCENE GRASS x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-grasswsd-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-hillfrc-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-hillfrc-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE HILL x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-hillfrc-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-hillfst-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-hillfst-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE HILL x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-hillfst-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-hillwpt-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-hillwpt-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE HILL x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-hillwpt-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-hillwsd-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-hillwsd-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE HILL x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-hillwsd-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-noonfse-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-noonfse-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE NOON x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-noonfse-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-noonfst-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-noonfst-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE NOON x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-noonfst-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-noonwpt-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-noonwpt-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE NOON x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-noonwpt-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-noonwrc-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-noonwrc-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJEC…",
+   "why_first": "SCENE NOON x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-noonwrc-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-skyfcr-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-skyfcr-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJECT…",
+   "why_first": "SCENE SKY x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-skyfcr-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-skyfhn-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-skyfhn-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJECT…",
+   "why_first": "SCENE SKY x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-skyfhn-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-skywkn-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-skywkn-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJECT…",
+   "why_first": "SCENE SKY x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-skywkn-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-jerry-scene-skywsi-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 46,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else -- these are DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns `ep2-jerry-scene-skywsi-0821` and `curation-tile-0820.yaml` scores every frame on the k6a bar and decides what joins the set; a frame failing any clause is REJECT…",
+   "why_first": "SCENE SKY x SCALE FULL BODY, WIDE SHOT, a DATASET-GATE FILLER and nothing else.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-jerry-scene-skywsi-0821.yaml",
+   "authored_at": 1787297280
+  },
+  {
+   "id": "ep2-b03-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b03-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b04-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b04-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b07-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b07-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b08-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b08-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b13-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 13's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 13 off the patch wave's picked plate (ep2-b13-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b13-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b13-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 13's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 13 off the patch wave's picked plate (ep2-b13-tilefix-p1-0821, round p1).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b20-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 20's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 20 off the patch wave's picked plate (ep2-b20-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b20-tilemotion-s1-0821.yaml",
+   "authored_at": 1787296920
+  },
+  {
+   "id": "ep2-b20-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 24,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 20's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+   "why_first": "MOTION for beat 20 off the patch wave's picked plate (ep2-b20-tilefix-r2-0821, round r2).",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml",
+   "authored_at": 1787296920
   },
   {
    "id": "ep2-b01-figcomp-heldfield-0820",
@@ -76411,62 +77057,6 @@
    "hold_reason": null,
    "spec_file": "pipeline/jobs/ep2-b01-figcomp-heldfield-0820.yaml",
    "authored_at": 1787241257
-  },
-  {
-   "id": "ep2-b14-s49-0815",
-   "node": "002b-first-citizen",
-   "beat": 14,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 19,
-   "est_minutes": 6,
-   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
-   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b14-s49-0815.yaml",
-   "authored_at": 1787090420
-  },
-  {
-   "id": "ep2-b14-s49B-0815",
-   "node": "002b-first-citizen",
-   "beat": 14,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 19,
-   "est_minutes": 6,
-   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
-   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b14-s49B-0815.yaml",
-   "authored_at": 1787090420
-  },
-  {
-   "id": "ep2-b15-s49-0815",
-   "node": "002b-first-citizen",
-   "beat": 15,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 19,
-   "est_minutes": 6,
-   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
-   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b15-s49-0815.yaml",
-   "authored_at": 1787090420
-  },
-  {
-   "id": "ep2-b15-s49B-0815",
-   "node": "002b-first-citizen",
-   "beat": 15,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 19,
-   "est_minutes": 6,
-   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
-   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b15-s49B-0815.yaml",
-   "authored_at": 1787090420
   },
   {
    "id": "ep2-b01-growmotion-b9-0818",
@@ -76845,132 +77435,6 @@
    "hold_reason": null,
    "spec_file": "pipeline/jobs/cancelled-by-founder/ep1-b15-v36-motion-r1b-g20.yaml",
    "authored_at": 1786379051
-  },
-  {
-   "id": "ep2-b04-tightcrop-s2-0820",
-   "node": "002b-first-citizen",
-   "beat": 4,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
-   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-s2-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b04-tightcrop-s3-0820",
-   "node": "002b-first-citizen",
-   "beat": 4,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
-   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-s3-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b04-tightcrop-z24-0820",
-   "node": "002b-first-citizen",
-   "beat": 4,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
-   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-z24-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260820-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260820-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260821-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260821-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260822-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260822-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260823-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260823-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260824-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260824-0820.yaml",
-   "authored_at": null
-  },
-  {
-   "id": "ep2-b02-adultplate-s20260825-0820",
-   "node": "002b-first-citizen",
-   "beat": 2,
-   "kind": "other",
-   "state": "authored",
-   "priority": 34,
-   "est_minutes": 3,
-   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
-   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260825-0820.yaml",
-   "authored_at": null
   }
  ]
 }
