@@ -1,0 +1,252 @@
+id: ep2-b07-twofig-r5-0821
+task: ep2-b07-twofig-r5-0821
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 15
+needs_gpu: true
+max_attempts: 1
+sample: false
+owner: canon-motion plate-fix lane, 2026-08-21
+consumer: 'THE PLATE BEAT 07''S MOTION SPEC GETS FILED OFF IF IT IS NINE OF NINE -- that is the standing
+  agreement and the motion rung is written the moment a human confirms this plate. Beat 07 is the only
+  one of the wave''s four failed beats with no round-2 clip at all, because no plate has yet been good
+  enough to animate. SECOND CONSUMER: the finding itself. Round 4 showed the adapter carries eye SHAPE
+  and words carry eye COLOUR; if putting exactly those two words back closes the gap without costing the
+  guard, that division of labour becomes a reusable rule for every two-character plate in this show.'
+success: 'ONE 832x1216 png that is NINE OF NINE. THE TWO THIS ROUND IS FOR: E1 off-white sclera, not a
+  green iris filling the eye; E2 eyebags present under both eyes. THE SEVEN ROUND 4 ALREADY WON, and a
+  regression on any of them FAILS this round even if E1 and E2 land, because round 4 would then be the
+  better plate: E3 narrow vertical slit pupils; A2 no bobblehead at an identical crop box; A3 no containment
+  bleed beyond round 4''s faint pre-existing ring ghosting; G1 exactly two whole figures on one ground
+  line; G2 THE GUARD IN A CLOSED HELMET, human; G3 five heads, a full head taller, full plate; G4 armoured
+  gauntlet, no green hand; P1 muted sage palette, no mask halo, dark boots. The named degenerate outcome
+  is THE GUARD PAYING AGAIN: six tokens of goblin went back into a 77-token budget and one came out of
+  the goblin''s own pose clause, but if the guard loses his helmet or his species anyway, the budget is
+  the cause and the answer is not a sixth wording round.'
+why: 'ROUND 4 SPLIT THE FACE INTO WHAT THE ADAPTER HOLDS AND WHAT THE WORDS HELD, AND THIS PUTS BACK EXACTLY
+  THE SECOND HALF.
+
+
+  With every goblin face word deleted and ip-scale at 1.25, round 4 returned the species, the bald skull,
+  the large pointed ears, the skin AND narrow vertical slit pupils -- the hardest feature in the canon,
+  which six k-ladder wording rungs never reached. It did not return the off-white sclera, which came back
+  as a green iris, or the eyebags. That is a clean decomposition and it names its own next rung: `white
+  eyes, eyebags`, and nothing else.
+
+
+  IP-SCALE STAYS AT 1.25. Round 4 was gated on k2''s bobblehead and it DID NOT FIRE -- at an identical
+  crop box the head is the same size relative to the body as at 1.0, if anything smaller, and the faint
+  ring ghosting is equally present in round 3 at 1.0 so it is not a scale artefact. The scale is what
+  is buying the slit pupil now that the words are gone, so walking it back would undo the thing that worked.
+
+
+  ONE TOKEN HAD TO MOVE AND IT IS DISCLOSED. `white eyes, eyebags` measures SIX tokens, not the four this
+  lane estimated when it reported five free; 72 + 6 is 78, one over. `arms at sides` is dropped to make
+  room because the openpose skeleton states it outright -- the goblin''s arms hang at his sides in the
+  canvas at controlnet scale 1.0 -- and because that is the SAME argument round 4 used to shorten the
+  guard''s clause, which came back correct. Dropping it lands at 74 of 77 instead of sitting exactly on
+  the ceiling with no margin, and a silently dropped tail has already cost this lane a round today.
+
+
+  EVERYTHING ELSE IS BYTE-IDENTICAL to round 4: the negative, the skeleton and its sha, controlnet scale
+  1.0, the reference, the mask, the adapter weight, ip-scale and the seed.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b07twofig-r5-0821\prompt.txt: 2boys, goblin, green skin, bald, pointy ears, white eyes,
+    eyebags, mandarin collar, green shirt, black shorts, boots, standing at left, and one tall human city
+    guard in full armor and a closed helmet at right, a full head taller, facing him, arm rising to point,
+    muted color, tall grass, full body
+  C:\banyan-farm\b07twofig-r5-0821\negative.txt: lowres, worst quality, low quality, text, blank eyes,
+    no pupils, round pupils, big round eyes, thick eyebrows, cloak, hood, patchwork, human face on the
+    goblin, two goblins, goblin guard, bare head, old man, hair, beard, child, chibi, 3boys, crowd, multiple
+    heads, disembodied head
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
+    import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
+    \nroot = r\"C:\\banyan-farm\\b07twofig-r5-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-guard-twofig-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n      \
+    \   \"48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8\"),\n        (\"jerry-canon-sq45-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b07twofig-r5-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b07twofig-r5-0821\src
+  - --repo-commit
+  - a4d49f06
+  - --task
+  - ep2-b07-twofig-r5-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-guard-twofig-0821.png
+  - --control-sha256
+  - 48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260899'
+  - --ip-ref
+  - pipeline/control/jerry-canon-sq45-0821.png
+  - --ip-mask
+  - 87,485,412,763
+  - --ip-ref-sha256
+  - 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  - --ip-scale
+  - '1.25'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\b07twofig-r5-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b07twofig-r5-0821\negative.txt
+  - --out
+  - C:\banyan-farm\b07twofig-r5-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b07twofig-r5-0821/out\"\npay_dir = \"C:/banyan-farm/b07twofig-r5-0821\"\
+    \nctl_dir = \"C:/banyan-farm/b07twofig-r5-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-twofig-r5-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b07-twofig-r5-0821-ipahead.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-guard-twofig-0821.png\")\n       \
+    \        + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b07-twofig-r5-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n \
+    \   fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) +\
+    \ manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\b07twofig-r5-0821\out\ep2-b07-twofig-r5-0821-ipahead.png
+script_line: 'CONFISCATE -- ''Guard 1 points at the scavenger, decisive.'' He is the object of the sentence
+  and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice.'
+bar: "JUDGED BY EYE AT 1:1, BOTH IDENTITIES, AGAINST ROUND 4 SIDE BY SIDE.\nNINE BARS. Round 4 scored\
+  \ seven of them and this round must not trade any away.\n\n  THE TWO THIS ROUND IS FOR\n  E1  OFF-WHITE\
+  \ SCLERA. The eye white is off-white, not a green iris filling\n      the eye. Read at 1:1 against taste/refs/goblin-canon-founder-0821.png.\n\
+  \  E2  EYEBAGS. Present under both eyes, as in round 3 and the founder's image.\n\n  THE SEVEN ROUND\
+  \ 4 ALREADY WON -- a regression on ANY of these is a FAIL of\n  this round even if E1 and E2 both land,\
+  \ because round 4 is then the better\n  plate and this was a bad trade:\n  E3  NARROW VERTICAL SLIT\
+  \ PUPILS. Round 4 got these from the adapter alone.\n  A2  NO BOBBLEHEAD. Head no larger relative to\
+  \ body than round 4 at the same\n      identical crop box. ip-scale is unchanged at 1.25 so this should\
+  \ hold,\n      and it is still scored because it is the k2 risk.\n  A3  NO CONTAINMENT BLEED beyond\
+  \ round 4's faint pre-existing ring ghosting.\n  G1  EXACTLY TWO FIGURES, whole, one ground line, goblin\
+  \ left.\n  G2  THE GUARD WEARS A CLOSED HELMET AND IS HUMAN. Round 4 won this back and\n      it is\
+  \ the single most expensive thing in the prompt.\n  G3  FIVE HEADS, A FULL HEAD TALLER, FULL PLATE.\n\
+  \  G4  ARMOURED GAUNTLET, no green hand.\n  P1  MUTED SAGE PALETTE, no mask halo, dark boots.\n\nNINE\
+  \ OF NINE IS A PASS AND THE MOTION SPEC GETS FILED OFF IT. Anything else is\nrecorded against the four-round\
+  \ table and beat 07 goes to the founder as it\nstands. NOTE ONE KNOWN GAP THAT IS NOT ON THIS LIST:\
+  \ round 4's collar frog\nclosures degraded into plain round buttons. No token was spent on them, so\n\
+  they are watched and reported, not scored -- adding a term for them would have\ncost the guard, and\
+  \ the guard is worth more than the frogging."
+failure_predicted_in_advance: 'THE GUARD PAYS AGAIN, and it is the whole risk of this round. Six tokens
+  of goblin went back into a fixed budget. One came out of the goblin''s own pose clause rather than the
+  guard''s, which is the entire reason `arms at sides` was chosen -- but the guard clause is long and
+  it is the first thing a tokeniser squeeze has taken twice already (round 3 lost his helmet and his species
+  that way). IF HE COMES BACK BARE-HEADED OR GREEN, the trade failed and round 4 is the better plate.
+  SECOND: the adapter at 1.25 and `white eyes` may now DOUBLE UP on the eye and flatten it -- the negative
+  still carries `blank eyes, no pupils`, and a sclera pushed too hard with the slit pupil lost would be
+  an E1 win that fails E3, which is why E3 is on the scored list and not assumed.'
+ip_scale_1_25_carried_from_round_4: IP-SCALE 1.25 IS SAFE ON THIS REFERENCE AND THIS MASK, and that is
+  round 4's most transferable result. k2 (ep2-jerry-face-k2-0821) predicted that raising adapter strength
+  against a reference that is 100% head would inflate the head, and named containment breaking as the
+  outcome that stops the route. NEITHER FIRED. Measured the way the bar asked -- an IDENTICAL crop box
+  across rounds 1, 3 and 4 so head size cannot be a framing artefact -- round 4's head at 1.25 is the
+  same size relative to his body as rounds 1 and 3 at 1.0, if anything marginally smaller. The faint concentric
+  ring ghosting around his head is equally present in round 3 at 1.0, so it is pre-existing rather than
+  scale-induced. The dial has more room than the k-ladder's 0.7 -> 0.9 experience implied.
+not_done_on_purpose: 'THE COLLAR FROGGING IS NOT BOUGHT. Round 4''s frog closures degraded into plain
+  round buttons, and a term for them would have cost the guard''s clause, which is worth more. It is watched
+  and reported rather than scored. THE SKELETON IS NOT TOUCHED, so G5 -- the arm reading more extended
+  than the authored mid-raise -- remains open and remains not this round''s question. AND NO MOTION SPEC
+  IS FILED BY THIS JOB: it is filed AFTER a human confirms nine of nine, which is the rule that has kept
+  the card off an off-canon character for four rounds.'
+the_one_variable: 'THE TWO WORDS ROUND 4 PROVED THE ADAPTER DOES NOT CARRY: `white eyes` and `eyebags`,
+  added to the positive. HELD BYTE-FOR-BYTE: the entire negative, the two-figure skeleton jerry-guard-twofig-0821.png
+  at the same sha, xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0, jerry-canon-sq45-0821.png, the IP
+  mask 87,485,412,763, ip-adapter-plus-face_sdxl_vit-h, --ip-scale 1.25, and seed 20260899. ONE FURTHER
+  CHANGE, DISCLOSED RATHER THAN BURIED: `arms at sides` is removed, because the two words cost SIX tokens
+  and not the four estimated, and 72 + 6 = 78 is over the ceiling. It is the phrase openpose states most
+  explicitly and it is the same cut round 4 made to the guard''s clause and got away with. Result 74 of
+  77.'
+derivation:
+  parent: pipeline/jobs/ep2-b07-twofig-r4-0821.yaml
+  by: pipeline/derive_b07_twofig_r5_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - ip_scale_1_25_carried_from_round_4
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - not_done_on_purpose
+  - stop_rule
+  - the_one_variable
+  - the_step_size_and_why_it_is_that_size
+  - verdict_b07_twofig_r4_0821
+  retokened:
+  - b07twofig-r4-0821 -> b07twofig-r5-0821
+  - ep2-b07-twofig-r4-0821 -> ep2-b07-twofig-r5-0821
+  overrides_applied_and_asserted:
+    key:priority:
+    - key priority = 15
+    payload:prompt.txt:
+    - payload prompt.txt (291 -> 297 chars)
