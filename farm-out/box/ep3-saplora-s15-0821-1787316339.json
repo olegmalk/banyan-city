@@ -1,0 +1,120 @@
+{
+  "id": "ep3-saplora-s15-0821-1787316339",
+  "task": "ep3-saplora-s15-0821",
+  "node": "001-capability-inventory",
+  "beat": 0,
+  "worker": "box-runner",
+  "priority": 55,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-s15-0821\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-s15-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-0821.png",
+        "--init-sha256",
+        "89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359",
+        "--mask-png",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-mask-0821.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\saplora-s15-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\saplora-s15-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THERE IS NO FIGURE AND NO ERASED PLANT IN THIS FRAME -- the plate is plant-free and person-free by construction -- so the mask is exactly the drawn sapling plus its contact shadow, dilated 9. WHAT TO CHECK: (1) it is ONE connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame, which would mean the plant was drawn taller than the picture; (3) nothing is masked below the root at y=1060 except the contact ellipse. If any of those is wrong the fix is --root/--height in build_sapling_lora_composites_0821.py, not the mask.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-s15-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-0821.png",
+        "--init-sha256",
+        "89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359",
+        "--mask-png",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-mask-0821.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\saplora-s15-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\saplora-s15-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ONE PASS, ONE SEED, TWENTY-SIX SIBLINGS. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and the sapling's wording ladders are CLOSED on the second half of that (0 of 16 frames with two leaves from the strongest wording available). This frame is row s15: plate u08, small, at middle distance, stem 300 px, mask small and local. It is a LoRA training frame and is judged against its siblings on a contact sheet, not as a shot."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/saplora-s15-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-sap-s15-r2-0820\"\nNAMES = [\n    \"sap-s15-s20260820.png\",\n    \"sap-s15-s20260820-mask.png\",\n    \"sap-s15-s20260820.png.meta.yaml\",\n    \"sap-s15-u08-0821.png\",\n    \"sap-s15-u08-mask-0821.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-sap-s15-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-s20260820.png",
+    "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-0821.png"
+  ],
+  "spec_sha256": "38cde3a4256c2d51a13e92034f3a83ee70d2e3c4945f3c42cc9532dd4203721f",
+  "started_at": "2026-08-21T12:49:52Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T12:50:07Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-s20260820.png",
+    "C:\\banyan-farm\\saplora-s15-0821\\sap-s15-u08-0821.png"
+  ]
+}
