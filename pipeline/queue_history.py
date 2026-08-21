@@ -847,6 +847,288 @@ def load_verdicts():
     return beat_state, gates, picks, notes
 
 
+# ------------------------------------------------- what the clip is FOR
+# The founder's ask, 2026-08-21, verbatim: "in the queue history it should also
+# show what the clip is supposed to express, like what part of the story it is,
+# it helps alot." A card that says `beat 13` names a slot in a list; it does not
+# say that a goblin whose legs have gone sits down in a tree's shade and thanks
+# it. Everything below is READ from the tree — the beat's own stage direction and
+# spoken line out of node.md, the bar out of done-definitions.yaml — and nothing
+# is composed. A job shape this cannot place gets NO story key at all, because a
+# guessed story on a render page is worse than a blank one.
+
+NODES_DIR = REPO / "genomes" / "sapling" / "nodes"
+LINEAGE_FILE = REPO / "genomes" / "sapling" / "lineage.yaml"
+# Per-episode "what has to be visible" bars, where a shipping lane wrote them.
+DONE_DEFS = {2: REPO / "review" / "ep2-picks" / "done-definitions.yaml"}
+
+# **THE SHADE — 1:00–1:04**  → a beat header. The em dash and the timecode are
+# both required: `**Format:**` and the restage notes are bold too.
+_BEAT_HEAD = re.compile(r"^\*\*\s*([^*]+?)\s+—\s+\d+:\d\d–\d+:\d\d\s*\*\*\s*$")
+# > **SCAVENGER:** …Thanks for the shade.
+_SPEECH = re.compile(r"^>\s*\*\*([^*:]+?)\s*:?\*\*:?\s*(.*)$")
+
+_STORY_CACHE: dict = {}
+
+# Card-sized. The detail pane gets the whole thing.
+STORY_CARD_CAP = 150
+# Below this a lone first sentence is not a story moment — beat 06 of episode 1
+# opens "Blinding green blur." and beat 01 of episode 3 opens "Dawn." Keep
+# taking sentences until the line actually says something.
+STORY_MIN_USEFUL = 60
+
+
+def story_short(text, cap=STORY_CARD_CAP):
+    """One card line: whole sentences up to `cap`, never a bare fragment."""
+    t = " ".join(str(text or "").split())
+    if not t:
+        return None
+    if len(t) <= cap:
+        return t
+    out = ""
+    for part in re.findall(r".+?(?:[.!?](?:\s|$)|$)", t):
+        if out and len(out) + len(part) > cap:
+            break
+        out += part
+        if len(out.strip()) >= STORY_MIN_USEFUL:
+            break
+    out = out.strip()
+    if not out or len(out) > cap:
+        out = t[: cap - 1].rstrip() + "…"
+    return out
+
+
+def _strip_md(text) -> str:
+    """Markdown out, words in. Struck text (`~~old~~`) is REMOVED rather than
+    unwrapped — a retired stage direction lives on beside its replacement in
+    these files and must not read as what the clip shows."""
+    t = re.sub(r"~~.*?~~", "", str(text or ""), flags=re.S)
+    t = re.sub(r"\*\*(.+?)\*\*", r"\1", t)
+    t = re.sub(r"\*(.+?)\*", r"\1", t, flags=re.S)
+    t = t.replace("`", "")
+    return " ".join(t.split())
+
+
+def parse_node_script(path):
+    """node.md → [{n, title, action, speaker, line}], one entry per beat, in
+    script order. `n` is 1-based because that is how the whole tree — job ids,
+    done-definitions, the founder — counts beats."""
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError:
+        return []
+    beats, cur = [], None
+    for raw in text.splitlines():
+        head = _BEAT_HEAD.match(raw.strip())
+        if head:
+            cur = {"n": len(beats) + 1, "title": _strip_md(head.group(1)).title(),
+                   "action": "", "speaker": None, "line": None}
+            beats.append(cur)
+            continue
+        if cur is None:
+            continue
+        line = raw.strip()
+        if not line:
+            continue
+        sp = _SPEECH.match(line)
+        if sp:
+            if cur["line"] is None:
+                who = _strip_md(sp.group(1))
+                said = _strip_md(sp.group(2))
+                if said:
+                    cur["speaker"], cur["line"] = who, said
+            continue
+        if line.startswith((">", "#", "```", "|", "---")):
+            continue
+        if not cur["action"]:
+            # The first prose paragraph after the header IS the stage
+            # direction. Later italic paragraphs are restage provenance notes,
+            # which belong in the record and not on a card.
+            body = _strip_md(line)
+            if body:
+                cur["action"] = body
+    return beats
+
+
+def trunk_episodes():
+    """episode number → node slug, from lineage.yaml's trunk in file order.
+    Hardcoding {2: '002b-first-citizen'} would be a second place to update the
+    day the trunk moves; the tree already states its own spine."""
+    import yaml
+    try:
+        d = yaml.safe_load(LINEAGE_FILE.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return {}
+    out, n = {}, 0
+    for node in d.get("nodes") or []:
+        if node.get("trunk") and node.get("slug"):
+            n += 1
+            out[n] = str(node["slug"])
+    return out
+
+
+def _node_slug(node_id):
+    """'002b' → '002b-first-citizen'. Exact directory prefix only."""
+    if not node_id:
+        return None
+    for p in sorted(NODES_DIR.glob(f"{node_id}-*")):
+        if p.is_dir():
+            return p.name
+    return None
+
+
+def _episode_of(slug):
+    for ep, s in trunk_episodes().items():
+        if s == slug:
+            return ep
+    return None
+
+
+def _script(slug):
+    if slug not in _STORY_CACHE:
+        _STORY_CACHE[slug] = parse_node_script(NODES_DIR / slug / "node.md")
+    return _STORY_CACHE[slug]
+
+
+_DONE_CACHE: dict = {}
+
+
+def _done_when(ep, beat):
+    """The shipping lane's bar for this beat, if one was written. This is the
+    most literal answer to 'what is the clip supposed to show' we own, because
+    somebody wrote it to judge clips against."""
+    if ep not in DONE_DEFS:
+        return None
+    if ep not in _DONE_CACHE:
+        import yaml
+        try:
+            d = yaml.safe_load(DONE_DEFS[ep].read_text(encoding="utf-8")) or {}
+        except (OSError, yaml.YAMLError):
+            d = {}
+        _DONE_CACHE[ep] = {int(k): v for k, v in (d.get("beats") or {}).items()
+                           if str(k).isdigit() and isinstance(v, dict)}
+    entry = _DONE_CACHE[ep].get(int(beat))
+    return clip(entry.get("done_when"), 400) if entry else None
+
+
+# Jobs that are not a beat and never were. Each entry is (pattern, what, why) and
+# the label says both — "not a story beat" is the load-bearing half, because a
+# goblin face sheet sitting in a grid of beats reads as a beat unless the card
+# says otherwise. First match wins, so the specific rows come first.
+SUPPORT_JOBS = [
+    (r"jerry|goblin",
+     "Character design work — the goblin",
+     "Not a story beat. These build the reference pictures of him that the "
+     "real shots are drawn from, so he looks like the same creature twice."),
+    (r"guards?-(sheet|derived)|charref-guards?",
+     "Character design work — the two patrol guards",
+     "Not a story beat. Reference pictures of the guards, so the pair look "
+     "like the same two men in every shot they appear in."),
+    (r"charref-assessor",
+     "Character design work — the assessor",
+     "Not a story beat. Reference pictures of a character from a later "
+     "episode, drawn ahead of the shots that need him."),
+    (r"charref-farmer",
+     "Character design work — the farmer",
+     "Not a story beat. Reference pictures of a character from a later "
+     "episode, drawn ahead of the shots that need him."),
+    (r"charref-magistrate",
+     "Character design work — the magistrate",
+     "Not a story beat. Reference pictures of a character from a later "
+     "episode, drawn ahead of the shots that need him."),
+    (r"sapfield|sapfld|sapling-reference",
+     "Sapling dataset — episode 3 prep",
+     "Not a story beat. Pictures of the sapling in many places, sizes and "
+     "lights, collected to teach the model to draw it the same way every time."),
+    (r"bark-plates?",
+     "Prop work — the guards' bark clipboard",
+     "Not a story beat. A picture of the prop itself, so the shots that use "
+     "it start from something that already looks right."),
+    (r"ipa-\w*-fetch|preflight|autofill|heartbeat|probe|poscontrol|"
+     r"nohumans|clip-measure",
+     "Pipeline test — no story in it",
+     "Not a story beat. A check on the machinery itself: does the box pick "
+     "the job up, does the model load, how fast does it run."),
+]
+SUPPORT_JOBS = [(re.compile(p, re.I), what, why) for p, what, why in SUPPORT_JOBS]
+
+# ep2-b13-…, 001-b06-…, ep3-003b-b01-…, ep2-b0708-twofig-… (one job, two beats).
+_BEAT_IN_TASK = re.compile(r"(?:^|[-_])(?:(\d{3}[a-z]?)-)?b(\d{2})(\d{2})?(?![0-9])",
+                           re.I)
+_EP_IN_TASK = re.compile(r"(?:^|[-_])ep(\d+)(?![0-9])", re.I)
+
+
+def story_context(task, node=None):
+    """What part of the story this job is, in plain words — or None.
+
+    Reads the BEAT OUT OF THE JOB ID, never out of the sidecar's `beat` field:
+    the box stamps non-beat work with whatever beat the spec was copied from
+    (`ep3-sapfld2-r04-0821`, a LoRA dataset cell, is filed under beat 16), and a
+    dataset tile captioned "Beat 16 — WHY" is a lie told confidently.
+    """
+    task = str(task or "")
+    if not task:
+        return None
+
+    m = _BEAT_IN_TASK.search(task)
+    if m:
+        slug = _node_slug(m.group(1)) if m.group(1) else None
+        ep = _episode_of(slug) if slug else None
+        if slug is None:
+            epm = _EP_IN_TASK.search(task)
+            if epm:
+                ep = int(epm.group(1))
+                slug = trunk_episodes().get(ep)
+        if slug is None and node:
+            slug, ep = str(node), _episode_of(str(node))
+        beats = [int(m.group(2))] + ([int(m.group(3))] if m.group(3) else [])
+        script = _script(slug) if slug else []
+        found = [b for b in script if b["n"] in beats]
+        if found:
+            first = found[0]
+            nums = " and ".join(f"{b['n']:02d}" for b in found)
+            titles = " / ".join(b["title"] for b in found)
+            expresses = _done_when(ep, first["n"])
+            out = {
+                "kind": "beat",
+                "episode": ep,
+                "beat": first["n"],
+                "beats": beats if len(beats) > 1 else None,
+                "label": f"Beat{'s' if len(found) > 1 else ''} {nums} — {titles}",
+                "moment": first["action"] or None,
+                "moment_short": story_short(first["action"]),
+                "line": first["line"],
+                "speaker": first["speaker"],
+                "expresses": expresses,
+                "expresses_short": story_short(expresses),
+            }
+            return {k: v for k, v in out.items() if v not in (None, "", [])}
+        # The id names a beat this episode's script does not have. Say the
+        # number and stop — no invented moment.
+        if beats:
+            return {"kind": "beat", "beat": beats[0], "episode": ep,
+                    "label": f"Beat {beats[0]:02d}",
+                    "moment": None,
+                    "why": "the script on main has no beat by this number"}
+
+    for pat, what, why in SUPPORT_JOBS:
+        if pat.search(task):
+            return {"kind": "support", "label": what, "moment": why}
+    return None
+
+
+def attach_story(rows):
+    """Stamp every row — refreshed and freshly read alike, which is why this is
+    a pass over the finished list and not a line inside build_job_row."""
+    for row in rows:
+        st = story_context(row.get("task") or row.get("id"), row.get("node"))
+        if st:
+            row["story"] = st
+        else:
+            row.pop("story", None)
+    return rows
+
+
 def build_job_row(sidecar_path, sc, specs, pubdirs, files_by_dir, blobs, shamap,
                   beat_state, gates, picks):
     task = sc.get("task") or sc.get("id")
@@ -1099,6 +1381,8 @@ def main(argv=None):
     hb = read_blobs(commit, ["farm-out/heartbeat.txt"]).get("farm-out/heartbeat.txt")
     done_tasks |= heartbeat_tasks(hb)
     upcoming = build_upcoming(specs, done_tasks, spec_commit_dates())
+    attach_story(jobs)
+    attach_story(upcoming)
 
     ok = sum(1 for j in jobs if j.get("rc") == 0)
     doc = {
