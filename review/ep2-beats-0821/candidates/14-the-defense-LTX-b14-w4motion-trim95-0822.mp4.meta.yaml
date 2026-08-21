@@ -1,0 +1,23 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 14
+size: 704x1280
+seconds: 4.375
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260884
+task: ep2-b14-w4motion-0822
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0171
+compute_s_per_video_s: 58.6
+frames_kept: 95
+seconds_after_trim: 3.958
+why_trimmed: 'HE TURNS HIS FACE COMPLETELY AWAY AT f102. The single largest interframe step in the clip is 26.51 at f102, against a median of 0.26 and no other step above 8.3; stepping f94/f98/f100/f102 shows the head rotating from three-quarter to fully away, and by f102 there is no face in frame at all -- a bald dome and one ear. The assembly freezes on the last frame, so that frame cannot be the back of his head. Cut at 95, where the canon face is fully legible -- small off-white almond eyes, dark pupils, broad dome, near-horizontal ears, mandarin collar -- the blush is on both cheeks and the look-away has begun without having thrown the face out. 95 frames is 3.96 s into a 5.08 s slot.'

@@ -1,0 +1,23 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 13
+size: 704x1280
+seconds: 4.375
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260883
+task: ep2-b13-w4motioncurl-0822
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0173
+compute_s_per_video_s: 57.7
+frames_kept: 58
+seconds_after_trim: 2.417
+why_trimmed: 'THE CLIP DOES ALL ITS MOVING IN THE FIRST 58 FRAMES AND THEN STOPS DEAD. Mean interframe difference per ten-frame block, whole clip: 3.89 5.05 3.50 3.41 4.01 1.18 0.07 0.15 0.11 0.03 1.25. Frames 60-99 are a hard freeze -- forty frames at 0.03-0.15, an order of magnitude under anything earlier -- and the 1.25 at the very end is his eyes reopening, not the body. 76 of 104 frame pairs are under 0.5 across the full take. Cut at 58, the last frame before the dead zone, where he is folded down with his knees up and his hands between them, which is the beat''s own done_when. The assembly holds the last frame for the remaining 1.1 s of the 3.56 s slot, which is a settled pose rather than a stalled one.'
