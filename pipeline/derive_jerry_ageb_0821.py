@@ -953,6 +953,102 @@ def round2(force=False):
     return written
 
 
+ROUND2_VERDICT = """m1 AND m2 BOTH MISSED E1, AND THE MISS IS THE FINDING.
+Judged 1:1 against the sample, 2026-08-21.
+
+  m1  HEAD-FIT MASK   E1 unchanged -- still scowling. C1 WORSE, 7.36% in mask
+                      against the sample's 1.17%. Ear spikes worse. FAIL.
+  m2  IP-SCALE 0.45   E1 unchanged -- still scowling. C1 WORSE, 6.69%. T1 still
+                      holds. FAIL.
+
+WHAT THAT FALSIFIES IS MY OWN HYPOTHESIS, and it is worth more than a pass would
+have been. Both rungs were built on "the adapter owns the expression". Cutting
+the adapter's grip by a THIRD -- 0.7 to 0.45 -- did not move the mouth or the
+brow one pixel toward the exhausted relief the beat asks for. An instrument that
+is not doing the pinning does not stop pinning when you loosen it. THE ADAPTER IS
+NOT WHAT MAKES THIS FACE ANGRY, measured twice, and that question is closed at
+its two-round cap.
+
+C1 GOT WORSE IN BOTH DIRECTIONS AT ONCE -- bigger mask and smaller mask, stronger
+adapter and weaker adapter -- which says the magenta is not adapter coverage
+either. On a FOLDED pose the neck and chest sit right under the jaw and the
+checkpoint dresses them. That is a real regression on folded poses, it is
+reported rather than solved here, and it belongs to the same investigation the
+adult wave's b03/b20 seed pair opened.
+
+WHERE THE EVIDENCE NOW POINTS, and it points at something I wrote and defended.
+Ruling 2 struck the mannequin block but KEPT `tsurime` and `thick eyebrows`, on
+the argument that they are SHAPE and not MOOD. On this checkpoint that argument
+looks wrong: `tsurime` is the sharp upswept eye of a severe character and
+`thick eyebrows` is the brow that furrows over it, and the three frames differ in
+mask and in adapter strength while sharing exactly those two tags -- and exactly
+one expression."""
+
+
+E1_NOTE = """A NEW QUESTION'S FIRST ROUND, NOT THIS QUESTION'S THIRD, and the
+distinction is load-bearing rather than a way around the cap. m1 and m2 asked IS
+IT THE ADAPTER -- where it acts, how hard it acts -- and the answer came back NO
+twice. That question is closed. What sets the mood is a DIFFERENT question, it
+was raised by m2's own result, and this is its first rung.
+
+ONE VARIABLE: `tsurime, thick eyebrows` OUT of the identity clause. Everything
+else is the sample's to the byte -- the sample's mask, ip-scale 0.7, the same
+seed, the same skeleton, the same beat words, the same tusk, the same emotion
+tags that have so far done nothing.
+
+AND THE COST IS NAMED IN ADVANCE, because these two tags were kept for reasons
+that were not empty. P1 wants a brow above the lid with skin between it, and
+`thick eyebrows` is what has been drawing that; T1b wants the tile's narrow
+upward-slanting slit and `tsurime` is the tag for it. If the scowl clears and
+P1/T1b go with it, the answer is not to put both back -- it is that the brow and
+the eye shape have to come from the ADAPTER, which is the one instrument these
+three frames have proven does hold the eyes (T1 passed in all three with
+`blank eyes` struck).
+
+IF THIS MISSES TOO, the finding is recorded and the wave ships at the sample's
+recipe with E1 logged as an engine limit rather than a defect we keep re-asking.
+That was pre-committed before m1 and m2 rendered and it still stands."""
+
+
+def e1(force=False):
+    beat, hint, pose_words, expression, direction = WAVE_BY_BEAT["13"]
+    ident = "green skin, bald head, patchwork cloak"
+    prompt = ", ".join([PROMPT_LEAD, AGE_B_CLAUSE, ident, TUSK,
+                        expression, pose_words])
+    n = tokens(prompt)
+    if n > MAX_TOKENS:
+        raise SystemExit("!! e1 prompt is %d tokens" % n)
+    return [_emit(
+        new_id="ep2-b13-ageb-e1-0821",
+        job_dir="b13ageb-e1-0821",
+        hint=hint, pose_words=pose_words, expression=expression,
+        prompt=prompt,
+        why=("THE TWO TAGS I KEPT AND DEFENDED ARE THE SUSPECT.\n\n%s\n\n%s"
+             % (E1_NOTE, ROUND2_VERDICT)),
+        consumer=("THE SEVEN-BEAT WAVE, still held on one clause. Everything "
+                  "else the age pivot needed is settled: the age reads, the "
+                  "identity holds with `blank eyes` struck, the tusk arrives. "
+                  "This is the last open question before the wave is emitted "
+                  "-- and it is emitted either way, because a recorded engine "
+                  "limit is an answer and an unrendered wave is not."),
+        success=("ONE 832x1216 png. Judged on THREE clauses against the sample "
+                 "at 1:1: E1 (did the exhausted relief arrive), T1 (did the "
+                 "blank eyes survive losing `tsurime`) and P1 (is there still "
+                 "a brow). C1 is measured and reported but is NOT this rung's "
+                 "question."),
+        variable=("ONE: `tsurime, thick eyebrows` out of the identity clause. "
+                  "The mask, the ip-scale, the seed, the skeleton, the tusk "
+                  "and the emotion tags are all the sample's to the byte."),
+        beat="13", priority=2,
+        extra_keys={"round": (
+            "ROUND ONE of the question 'what sets the mood', which m2's result "
+            "opened by closing the question 'is it the adapter'. NOT round "
+            "three of the adapter question -- that one is answered NO and is "
+            "shut."),
+            "failure_predicted_in_advance": E1_NOTE},
+        force=force)]
+
+
 def _refuses(fn):
     """True if fn() raises. A guard nobody has watched fail is not a guard."""
     try:
@@ -1088,6 +1184,8 @@ def main(argv=None):
             written += sample(force=force)
         elif m == "wave":
             written += wave(force=force)
+        elif m == "e1":
+            written += e1(force=force)
         elif m == "round2":
             written += round2(force=force)
         elif m == "isolate":
