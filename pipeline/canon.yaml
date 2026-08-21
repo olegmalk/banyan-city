@@ -895,6 +895,49 @@ subjects:
     >>> (the crop AND the <CLOAK> tag this entry already measures as
     >>> framing-dependent).
 
+    >>> ///// TILE B IS SUPERSEDED ON THE AGE AXIS. FOUNDER RULING,
+    >>> 2026-08-21, VERBATIM: "Younger, not chibi -- a kid/teen goblin, younger
+    >>> read than tile B, but NOT the killed round-chibi design".
+    >>>
+    >>> WHAT THIS CHANGES AND WHAT IT DOES NOT, because a ruling on one axis is
+    >>> not a ruling on all of them and the last two corrections here were both
+    >>> over-read:
+    >>>   SUPERSEDED -- THE AGE READ ONLY. adult-b19-0819.jpg is no longer the
+    >>>     reference for how OLD he is. Everything derived from it that asserts
+    >>>     an adult read is retired: the wording clause `lean wiry adult goblin
+    >>>     man`, the T8 target of 5.2 heads / head_frac 0.190, and the k6a
+    >>>     standard's claim to be THE recipe.
+    >>>   STILL THE TILE, UNTOUCHED -- every CREATURE attribute. Blank white
+    >>>     slit eyes with no iris or pupil, no nose bridge, one lipless line,
+    >>>     SHORT BROAD LOW-SET SWEPT-BACK EAR FLANGES, bald smooth dome, green
+    >>>     skin, patchwork cloak, purple cowl, no age modelling. The tile is
+    >>>     still the reference for all of it, and the ear especially: Danbooru
+    >>>     has no tag for it, so the only thing that has ever produced it is
+    >>>     absence-plus-suppression, and that must survive the age pivot.
+    >>>   AND THE FLOOR IS EXPLICIT IN HIS OWN WORDS: "NOT the killed
+    >>>     round-chibi design". This does NOT reinstate the design killed on
+    >>>     2026-08-20, and it does not reopen `chibi`, `round-bellied` or
+    >>>     `squat`. Younger is a DIRECTION with a named far end, not a return.
+    >>>
+    >>> WHAT WAS PULLED THE MOMENT HE SAID IT, recorded because a ruling with no
+    >>> enforcement is prose: 14 motion jobs, 20 dataset-filler scene jobs, 2
+    >>> plate jobs and the LoRA training job were renamed
+    >>> `.HOLD-age-pivot-0821` out of the box's ready/ and backlog/ within
+    >>> minutes -- every one of them would have rendered the now-wrong adult.
+    >>> The one job already claimed was left to finish rather than killed.
+    >>> `train-jerry-0820` IS RE-HELD: its dataset is 15 frames of the adult
+    >>> read and a LoRA learns what it is shown.
+    >>>
+    >>> NO LANE RENDERS THE ADULT DESIGN FROM THIS DATE. The k6a standard in
+    >>> `pipeline/jerry_standard_0821.py` is NOT deleted and NOT wrong about
+    >>> what it measures -- it is the instrument that produced the first
+    >>> tile-true creature faces in this tree, and the age pivot is authored ON
+    >>> TOP of it by moving head_frac and the age clause of the wording. What it
+    >>> loses is the word STANDARD until the founder picks an age rung.
+    >>>
+    >>> THE OPEN QUESTION IS HIS AND IT IS ONE QUESTION WITH PIXELS:
+    >>> /review/ep2-goblin-age-0821, three options off a nine-sample ladder.
+
     WHAT THIS RECIPE HAS NOT BEEN TESTED ON, said out loud so nobody assumes:
     it was measured on the BOX (rtx5090, animagine-xl-3.1, 40 steps, cfg 7.5,
     832x1216). `pipeline/plate_scratch.py` is the MAC authoring path and its own

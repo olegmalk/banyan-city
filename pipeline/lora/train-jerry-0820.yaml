@@ -1,7 +1,41 @@
 # JERRY CHARACTER LoRA — SDXL / animagine-xl-3.1 — the training run
 #
 # ══════════════════════════════════════════════════════════════════════════
-# ███ THE HOLD IS LIFTED, 2026-08-21. BOTH GATES DISCHARGED. ███
+# ███ RE-HELD 2026-08-21 — AGE PIVOT. DO NOT FILE. ███
+#
+# FOUNDER RULING, 2026-08-21, verbatim: "Younger, not chibi -- a kid/teen
+# goblin, younger read than tile B, but NOT the killed round-chibi design."
+#
+# WHY THAT STOPS THIS JOB AGAIN, HOURS AFTER ITS HOLD WAS LIFTED. The dataset
+# below (manifest-jerry-0821.yaml, 15 frames in 9 poses) was curated and
+# captioned against the ADULT read: every frame is drawn at head_frac 0.190 --
+# the tile's measured 5.2 heads -- through wording that says `lean wiry adult
+# goblin man`. It is a good dataset for a character the founder has just
+# superseded on the age axis. A LoRA does not average out a wrong premise, it
+# LEARNS it, and after training the trigger token outranks every prompt that
+# would argue with the age.
+#
+# THIS IS THE SAME FAILURE MODE AS THE 08-20 HOLD, ARRIVING ON A DIFFERENT AXIS,
+# and it is worth saying plainly: on 08-20 the dataset was wrong about SPECIES
+# READ (man vs creature) and today it is wrong about AGE. The curation machinery
+# built for the first one is exactly what catches the second.
+#
+# WHAT SURVIVES AND SHOULD NOT BE REDONE: the trainer install, the staged-input
+# plumbing, the sha256 discipline, the caption RULE (name pose/framing/setting/
+# style, never the character attributes), the 4->8 repeat arithmetic, and all
+# five bars. What does NOT survive is the frame set, because every frame is the
+# wrong age.
+#
+# THE GATE TO REFILE: the founder picks an age rung on
+# /review/ep2-goblin-age-0821, that rung becomes the standard, and the pose set
+# is re-rendered through it. The seven old mac-plate survivors are ALSO suspect
+# now and must be re-read on age before they are kept a second time.
+#
+# The backlog file lora-jerry-0820-1787297223.json is parked on the box as
+# `.HOLD-age-pivot-0821`. It never ran; no GPU-second, no weight file.
+# ══════════════════════════════════════════════════════════════════════════
+#
+# ███ (SUPERSEDED) THE HOLD IS LIFTED, 2026-08-21. BOTH GATES DISCHARGED. ███
 #
 # THE HOLD, for the record, because it is the reason this spec is trustworthy
 # now: on 2026-08-20 the founder ruled that the goblin must read as the B TILE's
