@@ -156,3 +156,44 @@ what_this_licenses: >-
   nothing is a beat. DECISIONS.md item 18 ("never train on the output") is
   still on the books and still unresolved -- raised for the founder, not
   decided here.
+
+# ---------------------------------------------------------------------------
+# ROUNDS 3 AND 4, JUDGED 2026-08-21 by the sapling-dataset lane. Both batches
+# had already drained on the box when this was written; nobody had pulled them.
+
+round_3_result: >-
+  8 of 8 returned, and the pre-registered failure did NOT happen -- the treeline
+  stayed out of the foreground on every cell that named one. A DIFFERENT defect
+  showed instead, and it was in all eight: A CURVED HORIZON. t01, t02, t04, t05,
+  t06 and t08 came back as fisheye bowls, the ground plane bending up at both
+  edges; t03 was a dark grass silhouette at sunset with no plane; t07 was dry
+  orange grass. The landform rule from round 2 HELD -- every cell that named a
+  distant feature got a ground plane -- and the plane it got was bent.
+  Kept: t04 only (green field below distant misty mountains, straight horizon).
+
+round_4_the_finding: >-
+  `low angle` WAS CARGO, CARRIED FROM p09 SINCE ROUND 1, AND IT WAS DRAWING THE
+  FISHEYE. u01 is t02 with `low angle` removed and nothing else touched; it came
+  back with a straight horizon. So did the other seven. 8 OF 8 USABLE, against
+  1 of 10 in round 1 and 4 of 8 in round 2, and the eight span sunset, heavy
+  overcast, dawn mist, alpine midday, forest dapple and a backlit avenue -- the
+  lighting axis rounds 2 and 3 could not score because their cells lost the
+  ground plane before their light was readable.
+
+plates_kept_for_the_dataset: >-
+  ELEVEN. All eight round-4 u-cells, plus t04 from round 3 and r05, r08 and p09
+  from earlier rounds. u05 (dry tan plain) was rendered and is usable as a
+  picture but was DROPPED: beat16_sapling_composite samples the plant's palette
+  from the plate's own greens, and that plate has no green-dominant pixel
+  anywhere, in the region or in its whole lower half. It crashed the tool on an
+  IndexError; that is now a refusal with a reason, because inventing a palette
+  is decal tell #2 by definition.
+
+what_this_licensed_and_what_happened: >-
+  Step 2 and step 3, both DONE the same day. 26 composites
+  (pipeline/build_sapling_lora_composites_0821.py), 26 x 0.30 inpaint on the box
+  (pipeline/derive_sapling_lora_naturalize_0821.py), 26 of 26 returned, 0
+  failed, 26 of 26 passed the D bars. Dataset at pipeline/lora/manifest-sapling.yaml,
+  frames at farm-out/ep3-saplora-frames-0821/, contact sheet
+  CONTACT-dataset-0821.png beside this file. STILL NOTHING TRAINED, and
+  DECISIONS.md item 18 is still open.

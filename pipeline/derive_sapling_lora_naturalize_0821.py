@@ -39,6 +39,16 @@ and all ten died rc=9 with the card idle. Both payloads of all twenty-six jobs
 are counted on animagine's own vocab here, and a term the checkpoint does not
 carry is a refusal too.
 
+THE SPECS ON DISK ARE THE AS-RUN SPECS AND A RE-DERIVE WILL DIFFER. All
+twenty-six were filed and drained before the retoken ordering below was fixed,
+so each committed `pipeline/jobs/ep3-saplora-sNN-0821.yaml` publishes into a
+courier directory called `ep2-sap-sNN-r2-0820` -- a name that is wrong about the
+episode, the round and the date, and that no check catches because every check
+here asks whether a value is THIS CHILD'S, not whether a name is TRUE. Re-running
+this deriver emits the corrected name. The committed files are deliberately NOT
+regenerated: they are the record of what the card actually did, and the frames
+they produced are re-published under their real names by the dataset builder.
+
   python3 pipeline/derive_sapling_lora_naturalize_0821.py            # dry
   python3 pipeline/derive_sapling_lora_naturalize_0821.py --write
 """
@@ -259,11 +269,24 @@ for name, want in WANT.items():
                     "dataset gate and the canon rulings `sapling-two-leaves` "
                     "(2026-08-16) and `sapling-cotyledon-shape` (2026-08-17)."),
             },
-            retoken=[(PARENT_DIRTOK, dirtok),
+            # ORDER IS LOAD-BEARING AND THE FIRST FILING GOT IT WRONG.
+            # derive_spec applies these pairs IN ORDER and appends its own
+            # (parent_id -> new_id) LAST, so a SHORTER pattern that is a
+            # substring of the parent id runs first and eats it. `b16-sapcomp`
+            # is a substring of `ep2-b16-sapcomp-r2-0820`, so the outtok rule
+            # rewrote the id into `ep2-sap-sNN-r2-0820` before the id rule could
+            # see it -- and that string is a publish DIRECTORY NAME, so all
+            # twenty-six jobs published into courier dirs claiming episode 2,
+            # round 2, and the date 0820. Wrong on three counts and none of them
+            # caught by a check, because every check here asks whether a value
+            # is THIS CHILD'S, not whether a name is true.
+            # THE PARENT ID GOES FIRST. Longest-first is the general rule; the
+            # id is the longest string any of these can hide inside.
+            retoken=[(PARENT_ID, new_id),
+                     (PARENT_DIRTOK, dirtok),
                      (PARENT_INIT, init),
                      (PARENT_MASK, mask),
-                     (PARENT_OUTTOK, "sap-%s" % fid),
-                     (PARENT_ID, new_id)],
+                     (PARENT_OUTTOK, "sap-%s" % fid)],
             extra={
                 "bar": BAR,
                 "failure_predicted_in_advance": PREDICTED,
