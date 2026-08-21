@@ -1,0 +1,509 @@
+id: ep3-saplora-s15-0821
+task: ep3-saplora-s15-0821
+node: 001-capability-inventory
+beat: 0
+runner: box
+priority: 55
+needs_gpu: true
+max_attempts: 1
+sample: true
+est_minutes: 3
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\saplora-s15-0821\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\"\"Paint ONE object into\
+    \ ONE masked region of an approved plate. SDXL, $0, local.\n\nWHY THIS EXISTS. Beat 01 asks for \"\
+    one small round green fruit hanging from the\nstem\" and the prompt cannot deliver it: 0 of 24 across\
+    \ the wording rounds, and\n0 of 12 in round 8's img2img -- which is the decisive one, because r8's\
+    \ init\ncarried no fruit at all and so was a clean test of whether img2img will ADD an\nobject the\
+    \ init lacks. It will not, at strength 0.35 or 0.55. The founder chose\n`inpaint` over `drop` on 2026-08-10\
+    \ (ledger `ep2-b01-fig-route-0810`), so the\nfruit becomes its own step and this is that step.\n\n\
+    THE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.\n\n  * animagine-xl-3.1 has NO\
+    \ inpainting variant, so this loads the BASE weights\n    into StableDiffusionXLInpaintPipeline. diffusers\
+    \ 0.29.2 supports that\n    explicitly -- its own check is \"The unet should have either 4 or 9 input\n\
+    \    channels\", and at 4 (a normal SDXL checkpoint) it takes the latent-blend\n    branch instead\
+    \ of concatenating mask channels:\n        latents = (1 - init_mask) * init_latents_proper + init_mask\
+    \ * latents\n    HF's docs name the trade-off in their own words: \"the overall image quality\n  \
+    \  may be lower, but it generally tends to preserve the mask area (that is why\n    you can see the\
+    \ mask outline)\". Preserving the unmasked area is exactly what\n    we want here -- the plate is\
+    \ the founder's and must come back unchanged\n    outside the mask.\n  * `padding_mask_crop` is the\
+    \ countermeasure for the failure mode this beat has:\n    a SMALL object in a LARGE frame. It crops\
+    \ the masked region with padding,\n    upscales that crop to the pipeline resolution, inpaints there,\
+    \ and pastes it\n    back -- so the fruit is drawn at full model resolution instead of at the ~5%\n\
+    \    of the frame it will occupy. Verified present in 0.29.2's __call__ on the box.\n  * `strength`\
+    \ must be high to ADD something. It is not the img2img case; the\n    unmasked region is restored\
+    \ every step by the blend above, so a high strength\n    costs nothing outside the mask.\n\n    diffusers\
+    \ 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py\n\
+    \    inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint\n\
+    \    model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1\n    padding_mask_crop\
+    \ issue: https://github.com/huggingface/diffusers/issues/6345\n\nWHAT THIS SCRIPT REFUSES TO DO. It\
+    \ will not run on an init whose sha256 does not\nmatch the one named on the command line. G1 says\
+    \ a conditioned render starts from\na frame the founder has passed, and the only way that gate means\
+    \ anything is if\nthe bytes are asserted rather than the filename. It also never writes a canon\n\
+    filename and always writes `approved: false` in the sidecar.\n\nTHE MASK IS GEOMETRY AND IT IS THE\
+    \ STEWARD'S, NOT HIS. He approved a method, not\na size or a position. The ellipse is passed in on\
+    \ the command line, drawn to a\nPNG beside the output so it can be looked at, and reported in the\
+    \ sidecar in both\npixels and as a fraction of the frame, so the first correction he makes can be\n\
+    \"lower\", \"smaller\", \"other side\" and it is one number.\n\nSECOND CALLER, 2026-08-15: THE BARK\
+    \ BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.\nA prop -- a clipboard made of bark -- gates three\
+    \ beats of 002b (06 \"turns over a\nclipboard made of bark and reads\", 08 \"lowers the clipboard\
+    \ and points\", 10\n\"flips the clipboard around: the back is blank\"). Four wording attempts closed\n\
+    the wording lever for good (see `a5e61487`, `c7a11ff0`): they established that\nwording reaches the\
+    \ prop's MATERIAL -- deleting the noun killed the chrome clip\nand white paper in 12 frames of 12\
+    \ -- and that wording does NOT reach its\nGEOMETRY. `large flat rectangular` was in the positive of\
+    \ a clean, uncontested\nprompt and all four seeds still rounded the object into a lozenge, a dome,\
+    \ a\nsurfboard blank and a basket lid. So the geometry has to come from the mask, and\nan ELLIPSE\
+    \ MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four\nprompts already failed against,\
+    \ and masking a board with one would re-draw the\ndefect under test. Hence `--quad`, four corners\
+    \ and four straight edges. A\nrectangle is a quad; a rectangular board held at an angle is a quad\
+    \ in\nperspective, which an axis-aligned rectangle would not fit either.\n\nTHIRD CALLER, 2026-08-17:\
+    \ EYEWEAR ON ONE MAN OF TWO, AND WHY THE MASK BECAME\nARBITRARY. `glasses` named in ONE man's clause\
+    \ lands on BOTH men, 5 of 5 -- a\ndifferent failure from the prop above, which goes to ONE WRONG figure.\
+    \ The\nfounder ruled \"draw the second man without glasses. we need to have control.\"\nThe published\
+    \ cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its\nEOS carries global prompt semantics,\
+    \ so the token steers the whole frame and no\nwording says WHICH face; a negative cannot unbind it.\
+    \ The mask is therefore the\nonly lever, and the region that matters here is a THIN BAND along a spectacle\n\
+    frame -- neither a blob nor a convex polygon, so neither `--ellipse` nor `--quad`\ncan express it.\
+    \ Hence `--mask-png`, which also retires the board-MINUS-the-hand\nlimitation recorded against this\
+    \ script in wave-drafts.yaml. The band is authored\nby pipeline/attribute_mask.py, a $0 step with\
+    \ no GPU and no sampler in it, which\nis what makes \"control\" checkable instead of asserted.\n\n\
+    \    python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \\\n        (--ellipse cx,cy,rx,ry\
+    \ | --quad x0,\u2026,y3 | --mask-png m.png) \\\n        --prompt-file p.txt --negative-file n.txt\
+    \ \\\n        --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \\\n        [--seed N] [--pad-crop\
+    \ 64] [--blur 8] [--dry-run]\n\"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport\
+    \ datetime as _dt\nimport hashlib\nimport os\nimport sys\nimport time\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\
+    \nBASE_LICENCE = \"CreativeML Open RAIL++-M (use restrictions travel; D15)\"\n\n\ndef sha256_of(path:\
+    \ str) -> str:\n    h = hashlib.sha256()\n    with open(path, \"rb\") as fh:\n        for chunk in\
+    \ iter(lambda: fh.read(1 << 20), b\"\"):\n            h.update(chunk)\n    return h.hexdigest()\n\n\
+    \ndef read_text(path: str) -> str:\n    with open(path, \"r\", encoding=\"utf-8\") as fh:\n      \
+    \  return fh.read().strip()\n\n\ndef yaml_block(text: str, indent: str = \"  \") -> str:\n    return\
+    \ \"\\n\".join(indent + line for line in text.splitlines())\n\n\ndef module_version(name: str) ->\
+    \ str:\n    try:\n        return __import__(name).__version__\n    except Exception:\n        return\
+    \ \"unresolved\"\n\n\ndef main() -> int:\n    ap = argparse.ArgumentParser(description=__doc__,\n\
+    \                                 formatter_class=argparse.RawDescriptionHelpFormatter)\n    ap.add_argument(\"\
+    --init\", required=True)\n    ap.add_argument(\"--init-sha256\", required=True,\n                \
+    \    help=\"asserted before anything loads; a mismatch is a hard stop\")\n    ap.add_argument(\"--ellipse\"\
+    , default=\"\",\n                    help=\"cx,cy,rx,ry in pixels of the init image\")\n    ap.add_argument(\"\
+    --quad\", default=\"\",\n                    help=\"x0,y0,x1,y1,x2,y2,x3,y3 -- four corners in order,\
+    \ a \"\n                         \"STRAIGHT-EDGED mask. A rectangle is a quad, and a \"\n        \
+    \                 \"rectangular board seen at an angle is a quad and is NOT \"\n                 \
+    \        \"an ellipse. Exactly one of --ellipse/--quad/--mask-png \"\n                         \"\
+    is required.\")\n    ap.add_argument(\"--mask-png\", default=\"\",\n                    help=\"an\
+    \ 8-bit mask PNG the same size as --init: white is \"\n                         \"redrawn, black is\
+    \ preserved. This is the general case \"\n                         \"the two shape flags are special\
+    \ cases of. It exists \"\n                         \"because a region worth masking is often neither\
+    \ a blob \"\n                         \"nor a convex polygon -- a THIN BAND along a spectacle \"\n\
+    \                         \"frame, or a board MINUS the hand holding it (a \"\n                  \
+    \       \"limitation recorded against this script in \"\n                         \"wave-drafts.yaml\
+    \ and not expressible as one ellipse or \"\n                         \"one quad). Authoring the geometry\
+    \ is a separate $0 step \"\n                         \"with no GPU and no sampler in it, which is\
+    \ the point: \"\n                         \"WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND\
+    \ \"\n                         \"CAN DIFF, not something the model gets a vote on. See \"\n      \
+    \                   \"pipeline/attribute_mask.py.\")\n    ap.add_argument(\"--dry-run\", action=\"\
+    store_true\",\n                    help=\"assert the sha, draw the mask PNG beside --out and stop\
+    \ \"\n                         \"BEFORE loading any model. Costs nothing and is the step \"\n    \
+    \                     \"where a misplaced mask gets caught by eye.\")\n    ap.add_argument(\"--prompt-file\"\
+    , required=True)\n    ap.add_argument(\"--negative-file\", required=True)\n    ap.add_argument(\"\
+    --out\", required=True)\n    ap.add_argument(\"--steps\", type=int, default=40)\n    ap.add_argument(\"\
+    --cfg\", type=float, default=7.5)\n    ap.add_argument(\"--strength\", type=float, default=0.99)\n\
+    \    ap.add_argument(\"--seed\", type=int, default=20260810)\n    ap.add_argument(\"--pad-crop\",\
+    \ type=int, default=64,\n                    help=\"padding_mask_crop; 0 disables it\")\n    ap.add_argument(\"\
+    --blur\", type=int, default=8, help=\"mask blur_factor\")\n    ap.add_argument(\"--note\", default=\"\
+    \")\n    a = ap.parse_args()\n\n    if not os.path.isfile(a.init):\n        print(\"!! init not found:\
+    \ %s\" % a.init, flush=True)\n        return 2\n    have = sha256_of(a.init)\n    if have != a.init_sha256:\n\
+    \        print(\"!! INIT SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\"\n              % (a.init_sha256,\
+    \ have), flush=True)\n        return 3\n\n    if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if\
+    \ v) != 1:\n        print(\"!! pass exactly one of --ellipse, --quad or --mask-png\", flush=True)\n\
+    \        return 2\n\n    cx = cy = rx = ry = 0\n    corners: list = []\n    mask_sha = \"\"\n    if\
+    \ a.mask_png:\n        if not os.path.isfile(a.mask_png):\n            print(\"!! --mask-png not found:\
+    \ %s\" % a.mask_png, flush=True)\n            return 2\n        mask_sha = sha256_of(a.mask_png)\n\
+    \        shape = \"png\"\n        bbox = []\n    elif a.ellipse:\n        try:\n            cx, cy,\
+    \ rx, ry = (int(v) for v in a.ellipse.split(\",\"))\n        except Exception:\n            print(\"\
+    !! --ellipse wants cx,cy,rx,ry\", flush=True)\n            return 2\n        shape = \"ellipse\"\n\
+    \        bbox = [cx - rx, cy - ry, cx + rx, cy + ry]\n    else:\n        try:\n            vals =\
+    \ [int(v) for v in a.quad.split(\",\")]\n        except Exception:\n            vals = []\n      \
+    \  if len(vals) != 8:\n            print(\"!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3 (8 integers)\"\
+    , flush=True)\n            return 2\n        corners = list(zip(vals[0::2], vals[1::2]))\n       \
+    \ xs = [p[0] for p in corners]\n        ys = [p[1] for p in corners]\n        shape = \"quad\"\n \
+    \       bbox = [min(xs), min(ys), max(xs), max(ys)]\n\n    from PIL import Image, ImageDraw\n\n  \
+    \  plate = Image.open(a.init).convert(\"RGB\")\n    W, H = plate.size\n    mask = Image.new(\"L\"\
+    , (W, H), 0)\n    if shape == \"png\":\n        supplied = Image.open(a.mask_png).convert(\"L\")\n\
+    \        if supplied.size != (W, H):\n            print(\"!! MASK SIZE MISMATCH -- refusing.\\n  \
+    \ init %dx%d\\n   mask %dx%d\"\n                  % (W, H, supplied.size[0], supplied.size[1]), flush=True)\n\
+    \            return 6\n        mask = supplied\n        box = mask.point(lambda v: 255 if v > 0 else\
+    \ 0).getbbox()\n        if box is None:\n            print(\"!! mask is entirely black -- nothing\
+    \ would be redrawn.\", flush=True)\n            return 7\n        # getbbox()'s right/bottom are exclusive;\
+    \ the sidecar reports inclusive px.\n        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]\n   \
+    \ elif shape == \"ellipse\":\n        ImageDraw.Draw(mask).ellipse(bbox, fill=255)\n    else:\n  \
+    \      ImageDraw.Draw(mask).polygon(corners, fill=255)\n\n    os.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\n    mask_png = os.path.splitext(a.out)[0] + \"-mask.png\"\n    mask.save(mask_png)\n\
+    \n    prompt = read_text(a.prompt_file)\n    negative = read_text(a.negative_file)\n\n    if a.dry_run:\n\
+    \        print(\"DRY RUN -- no model loaded, nothing rendered.\", flush=True)\n        print(\"init_sha256\
+    \ OK %s\" % have, flush=True)\n        print(\"mask %s corners=%s bbox=%s  %.4f x %.4f of %dx%d\"\n\
+    \              % (shape, corners or \"-\", bbox,\n                 (bbox[2] - bbox[0]) / float(W),\n\
+    \                 (bbox[3] - bbox[1]) / float(H), W, H), flush=True)\n        print(\"WROTE %s\" %\
+    \ mask_png, flush=True)\n        print(\"rc=0 dry_run=1\", flush=True)\n        return 0\n\n    import\
+    \ torch\n    from diffusers import StableDiffusionXLInpaintPipeline\n\n    if not torch.cuda.is_available():\n\
+    \        print(\"!! no CUDA. This is the box's job; stopping.\", flush=True)\n        return 4\n\n\
+    \    t0 = time.time()\n    pipe = StableDiffusionXLInpaintPipeline.from_pretrained(\n        BASE,\
+    \ torch_dtype=torch.bfloat16, use_safetensors=True)\n    pipe = pipe.to(\"cuda\")\n    pipe.set_progress_bar_config(disable=True)\n\
+    \    in_ch = int(pipe.unet.config.in_channels)\n    print(\"MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d\
+    \ in %.0fs\"\n          % (BASE, in_ch, time.time() - t0), flush=True)\n    if in_ch not in (4, 9):\n\
+    \        print(\"!! unexpected unet.in_channels=%d\" % in_ch, flush=True)\n        return 5\n\n  \
+    \  blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask\n\n    kwargs\
+    \ = dict(prompt=prompt, negative_prompt=negative, image=plate,\n                  mask_image=blurred,\
+    \ width=W, height=H,\n                  num_inference_steps=a.steps, guidance_scale=a.cfg,\n     \
+    \             strength=a.strength,\n                  generator=torch.Generator(\"cuda\").manual_seed(a.seed))\n\
+    \    if a.pad_crop:\n        kwargs[\"padding_mask_crop\"] = a.pad_crop\n\n    t1 = time.time()\n\
+    \    out = pipe(**kwargs).images[0]\n    render_s = time.time() - t1\n\n    out.save(a.out)\n\n  \
+    \  versions = {\"python\": sys.version.split()[0], \"torch\": module_version(\"torch\"),\n       \
+    \         \"diffusers\": module_version(\"diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"\
+    %Y-%m-%dT%H:%M:%SZ\")\n    mask_lines = [\"mask_shape: %s\" % shape]\n    if shape == \"png\":\n \
+    \       mask_lines += [\"mask_png_source: %s\" % a.mask_png.replace(\"\\\\\", \"/\"),\n          \
+    \             \"mask_png_sha256: %s\" % mask_sha,\n                       \"mask_white_px: %d\"\n\
+    \                       % (W * H - mask.point(lambda v: 255 if v > 0 else 0)\n                   \
+    \       .histogram()[0])]\n    elif shape == \"ellipse\":\n        mask_lines += [\"mask_centre_px:\
+    \ [%d, %d]\" % (cx, cy),\n                       \"mask_radii_px: [%d, %d]\" % (rx, ry)]\n    else:\n\
+    \        mask_lines += [\"mask_corners_px: %s\"\n                       % str([[int(x), int(y)] for\
+    \ x, y in corners])]\n    mask_lines += [\n        \"mask_bbox_px: [%d, %d, %d, %d]\" % tuple(bbox),\n\
+    \        \"mask_width_frac: %.4f\" % ((bbox[2] - bbox[0]) / float(W)),\n        \"mask_height_frac:\
+    \ %.4f\" % ((bbox[3] - bbox[1]) / float(H)),\n    ]\n    sidecar = a.out + \".meta.yaml\"\n    with\
+    \ open(sidecar, \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\"\\n\".join([\n\
+    \            \"# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py\",\n         \
+    \   \"# on the rtx5090. The plate outside the mask is the founder's own\",\n            \"# pixels;\
+    \ only the region described below was redrawn.\",\n            \"platform: local-gpu (rtx5090)\",\n\
+    \            \"model: %s\" % BASE,\n            \"model_licence: %s\" % BASE_LICENCE,\n          \
+    \  \"pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=%d)\" % in_ch,\n \
+    \           \"size: %dx%d\" % (W, H),\n            \"steps: %d\" % a.steps,\n            \"guidance:\
+    \ %s\" % a.cfg,\n            \"strength: %s\" % a.strength,\n            \"seed: %d\" % a.seed,\n\
+    \            \"padding_mask_crop: %s\" % (a.pad_crop or \"null\"),\n            \"mask_blur_factor:\
+    \ %d\" % a.blur,\n            \"init_image: %s\" % a.init.replace(\"\\\\\", \"/\"),\n            \"\
+    init_sha256: %s\" % have,\n            \"mask_png: %s\" % os.path.basename(mask_png),\n        ] +\
+    \ mask_lines + [\n            \"mask_is_the_stewards: >-\",\n            yaml_block(\"THE FOUNDER\
+    \ APPROVED A METHOD, NOT THIS GEOMETRY. He said \"\n                       \"`inpaint` and named no\
+    \ size, no position, no colour and no \"\n                       \"shape. The mask above is the steward's\
+    \ and is the first \"\n                       \"thing his correction should move -- 'lower', 'smaller',\
+    \ \"\n                       \"'other side' is one number here; the words in the prompt \"\n     \
+    \                  \"are his own approved shots.md wording.\"),\n            \"rendered_utc: %s\"\
+    \ % stamp,\n            \"render_seconds: %.1f\" % render_s,\n            \"wall_seconds: %.1f\" %\
+    \ (time.time() - t0),\n            \"cost_usd: 0\",\n            \"python_version: %s\" % versions[\"\
+    python\"],\n            \"torch_version: %s\" % versions[\"torch\"],\n            \"diffusers_version:\
+    \ %s\" % versions[\"diffusers\"],\n            \"approved: false\",\n            \"provisional: >-\"\
+    ,\n            yaml_block(\"PROVISIONAL. A steward-rendered SAMPLE, not a pick and not \"\n      \
+    \                 \"canon. Never takes a canon filename, is not published, not \"\n              \
+    \         \"posted, and not assembled into an episode. Ground truth is \"\n                      \
+    \ \"the founder (R4).\"),\n            \"note: >-\",\n            yaml_block(a.note or \"one inpainted\
+    \ sample; the fruit question.\"),\n            \"prompt: |-\",\n            yaml_block(prompt),\n\
+    \            \"negative: |-\",\n            yaml_block(negative),\n            \"\",\n        ]))\n\
+    \n    print(\"WROTE %s\" % a.out, flush=True)\n    print(\"WROTE %s\" % mask_png, flush=True)\n  \
+    \  print(\"WROTE %s\" % sidecar, flush=True)\n    print(\"rc=0 render_s=%.1f\" % render_s, flush=True)\n\
+    \    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
+  C:\banyan-farm\saplora-s15-0821\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch this dataset frame's\
+    \ composited init and its mask, refusing on any sha\nmismatch. Both are on origin/main under farm-out/ep3-saplora-init-0821/,\
+    \ so\nthese sha256s are verifiable against the repo by anyone who clones it. They\nwere drawn on a\
+    \ Mac by pipeline/beat16_sapling_composite.py, so they are NOT on\nthe box's courier worktree -- the\
+    \ courier only holds what the box produced.\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT\
+    \ = r\"C:\\banyan-farm\\saplora-s15-0821\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \n       \"farm-out/ep3-saplora-init-0821/\")\nUA = {\"User-Agent\": \"banyan-city-saplora/1.0 (albert.numbro@gmail.com)\"\
+    }\nWANT = {\n    \"sap-s15-u08-0821.png\":\n        \"89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359\"\
+    ,\n    \"sap-s15-u08-mask-0821.png\":\n        \"37cbd3eadaa61d08139df633f56599ea4320fb6bcc26d8362db194b85faa7172\"\
+    ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
+    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
+    \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
+    \ flush=True)\n"
+  C:\banyan-farm\saplora-s15-0821\prompt.txt: a young sapling with exactly two wide oval leaves with soft
+    round tips on one thin bare stem, rooted in the ground, small, at middle distance, dirt path running
+    through a forest avenue, even bright daylight, pale sky down the avenue, no humans, detailed cinematic
+    anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\saplora-s15-0821\negative.txt: three leaves, four leaves, many leaves, extra stalk, branching
+    stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant,
+    two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\saplora-s15-0821\fetch_init.py
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\saplora-s15-0821\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-u08-0821.png
+  - --init-sha256
+  - 89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359
+  - --mask-png
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-u08-mask-0821.png
+  - --prompt-file
+  - C:\banyan-farm\saplora-s15-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\saplora-s15-0821\negative.txt
+  - --out
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-DRY.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260820'
+  - --note
+  - 'MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds
+    instead of a GPU fire. THERE IS NO FIGURE AND NO ERASED PLANT IN THIS FRAME -- the plate is plant-free
+    and person-free by construction -- so the mask is exactly the drawn sapling plus its contact shadow,
+    dilated 9. WHAT TO CHECK: (1) it is ONE connected blob shaped like a stem with two leaves, not two
+    blobs and not a rectangle; (2) it does not reach the top of the frame, which would mean the plant
+    was drawn taller than the picture; (3) nothing is masked below the root at y=1060 except the contact
+    ellipse. If any of those is wrong the fix is --root/--height in build_sapling_lora_composites_0821.py,
+    not the mask.'
+  - --dry-run
+- name: s20260820
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\saplora-s15-0821\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-u08-0821.png
+  - --init-sha256
+  - 89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359
+  - --mask-png
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-u08-mask-0821.png
+  - --prompt-file
+  - C:\banyan-farm\saplora-s15-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\saplora-s15-0821\negative.txt
+  - --out
+  - C:\banyan-farm\saplora-s15-0821\sap-s15-s20260820.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --seed
+  - '20260820'
+  - --note
+  - 'ONE PASS, ONE SEED, TWENTY-SIX SIBLINGS. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a
+    latent that still carries the drawn structure, so the high-sigma steps where global layout is decided
+    never run -- which is why ''finish this structure'' succeeds where ''invent this structure'' failed,
+    and the sapling''s wording ladders are CLOSED on the second half of that (0 of 16 frames with two
+    leaves from the strongest wording available). This frame is row s15: plate u08, small, at middle distance,
+    stem 300 px, mask small and local. It is a LoRA training frame and is judged against its siblings
+    on a contact sheet, not as a shot.'
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while\
+    \ returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses\
+    \ a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing\
+    \ ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\n\
+    from_dir = \"C:/banyan-farm/saplora-s15-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-sap-s15-r2-0820\"\
+    \nNAMES = [\n    \"sap-s15-s20260820.png\",\n    \"sap-s15-s20260820-mask.png\",\n    \"sap-s15-s20260820.png.meta.yaml\"\
+    ,\n    \"sap-s15-u08-0821.png\",\n    \"sap-s15-u08-mask-0821.png\",\n    \"prompt.txt\",\n    \"\
+    negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir,\
+    \ name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call\
+    \ the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\")\
+    \ as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\n\
+    with open(os.path.join(dst, \"ep2-sap-s15-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as\
+    \ fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+artifacts:
+- C:\banyan-farm\saplora-s15-0821\sap-s15-s20260820.png
+- C:\banyan-farm\saplora-s15-0821\sap-s15-u08-0821.png
+script_authority: "NOT A SCRIPTED SHOT, so \xA76 narrative approval is not the gate that applies and is\
+  \ not being claimed. The node is named only because the queue's approval check reads a leaf; `001-capability-inventory`\
+  \ is live and founder-approved, and this job renders no line from it. What governs this frame is pipeline/lora/README.md's\
+  \ dataset gate and the canon rulings `sapling-two-leaves` (2026-08-16) and `sapling-cotyledon-shape`\
+  \ (2026-08-17)."
+script_line: NONE. This frame illustrates no beat and no line. It is a LoRA training frame; the beat/script
+  fields exist because the queue schema wants them, and inheriting beat 16's line here would be a false
+  claim about what this picture is for.
+owner: sapling-dataset lane, 2026-08-21
+consumer: THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it
+  at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s15 of 26, drawn
+  on plate u08 (dirt path running through a forest avenue). It is not a beat, it does not enter a cut,
+  and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved;
+  this builds the dataset the question is ABOUT and decides nothing.
+success: One 832x1216 png of the canon two-leaf sapling STANDING IN dirt path running through a forest
+  avenue under even bright daylight, pale sky down the avenue, with the plant NATURALIZED into the plate's
+  cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it --
+  and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only,
+  and the background unchanged outside the mask. Judged at contact-sheet level with its twenty-five siblings,
+  as a training frame and not as a shot. A frame with a figure in it is DELETED under bar D3.
+why: $0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has
+  finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset
+  is. The plant is 300 px tall rooted at (540, 1060) with leaves 0.52 of the stem, so the mask is small
+  and local and the pass is being asked to finish a structure rather than invent one.
+bar: "JUDGED BY EYE AT CONTACT-SHEET LEVEL, AS A DATASET AND NOT AS A SHOT.\nThis frame is never cut into\
+  \ anything; its only consumer is the sapling LoRA's\ntraining set, so the bars are the ones a training\
+  \ frame has to clear.\n  D1 EXACTLY TWO LEAVES ON ONE STEM. Canon `sapling-two-leaves`. Three is a\n\
+  \     delete, so is one. The init has two by construction, so a three here means\n     the 0.30 pass\
+  \ invented one and the finding is about the pass.\n  D2 AVERAGE LEAVES. Canon `sapling-cotyledon-shape`\
+  \ -- ordinary, plain, no\n     lobes, no lance, no exaggerated silhouette.\n  D3 NO FIGURE, NO CREATURE,\
+  \ ANYWHERE IN FRAME. A frame carrying one is\n     DELETED, not cropped. This tree's negatives have\
+  \ failed to hold position\n     five times and the plates exist precisely because the ~23 existing\n\
+  \     composites all carry the scavenger.\n  D4 THE PLANT IS DRAWN, NOT PASTED. Line weight and cel\
+  \ shading in the plate's\n     dialect. The named degenerate outcome has a number: on the b16 big-leaf\n\
+  \     attempt detail inside the region fell 10.45 -> 9.41 and the two pictures\n     were the same picture.\
+  \ If nothing visibly happened to the blades, the\n     frame is a reject and the finding is about mask\
+  \ size.\n  D5 THE SCENE SURVIVES. The pass may not repaint the plate around the mask --\n     the whole\
+  \ point of eleven plates is eleven backgrounds.\n  D6 ONE PLANT. No second sapling grown out of the\
+  \ grass beside it."
+clip_budget: prompt 65 tokens, negative 67 tokens, both counted on animagine's own vocab by derive_sapling_field_0821.assert_under_clip77
+  BEFORE this file was written. Ten specs on this tree died rc=9 at 135 tokens with the card idle on 2026-08-21;
+  overflow is SILENT and drops the TAIL, so a long negative does not ban harder, it bans nothing.
+dataset_row: 'frame_id s15 | plate u08 | tier m | scene: dirt path running through a forest avenue | light:
+  even bright daylight, pale sky down the avenue | root (540, 1060) | stem_px 300 | leaf_frac 0.52'
+failure_predicted_in_advance: 'FIRST AND MOST LIKELY, AND IT IS A DATASET RISK RATHER THAN A
+
+  PICTURE RISK: the pass works and every frame is fine, and the set is still
+
+  short of the gate on the LEAF-COUNT axis, because all twenty-six have two
+
+  leaves. That is stated in the manifest rather than hidden -- there is no tool
+
+  here that ADDS a leaf, only one that removes them -- and it is the honest
+
+  reading of "leaf count stays a caption variable": the token is present and
+
+  explicit in every caption so it can never fuse into the trigger, but its VALUE
+
+  never changes in v1.
+
+  SECOND: D3, the figure. Five failures in a row on this tree''s negatives say the
+
+  ban does not hold, and `1boy` and `goblin` are in the negative here for
+
+  completeness only. The defence is that the mask is 1.3-11% of the frame and a
+
+  figure would have to be painted inside it.
+
+  THIRD, AND IT IS THE ONE THAT WOULD CLOSE THE ROUTE: the tiny rows. s01''s mask
+
+  is 1.28% of the frame and the plant is 150 px tall. Every previous success in
+
+  this family was 4-10%; a mask this small may be below the pad-crop''s useful
+
+  resolution and come back untouched. If the small tier fails and the large tier
+
+  passes, the finding is a FLOOR on this method and the dataset''s scale axis
+
+  narrows to what survives.'
+init_provenance: farm-out/ep3-saplora-init-0821/sap-s15-u08-0821.png, drawn by pipeline/beat16_sapling_composite.py
+  via pipeline/build_sapling_lora_composites_0821.py row s15 on plate farm-out/ep3-sapling-dataset-0821/plates/ep3-sapfld4-u08-0821.png.
+  Root (540, 1060), stem 300 px, tilt 4.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg. No plant was erased
+  -- the plate is plant-free by construction, which is the whole reason the plate round was run. Palette
+  sampled from the plate's own greens, light direction measured from its low-pass luminance gradient;
+  full numbers in the .geometry.json beside it.
+not_done_on_purpose: 'No recipe change of any kind. No second seed per frame -- the variety this dataset
+  needs is across SCENES, not across seeds of one scene. No leaf-count variation: beat16_sapling_composite
+  draws the canon two, leaf_count_composite only REMOVES leaves from a plate that has too many, and inventing
+  a third here would break `sapling-two-leaves` to satisfy a dataset axis. No training is started, no
+  trainer is installed, and DECISIONS.md item 18 is left open for the founder.'
+the_one_variable: 'THE INIT. Every sampler number is ep2-b16-sapcomp-r2-0820''s by copy: 40 steps, cfg
+  7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline,
+  the whole inpaint_fruit.py payload, the env block, the needs, the dry-run-before-any-model gate and
+  the no-glob publish. The SEED moves to 20260820 for the whole batch so no frame shares a seed with the
+  beat-16 sample it descends from. The prompt and negative change because they describe a different picture.'
+derivation:
+  parent: pipeline/jobs/ep2-b16-sapcomp-r2-0820.yaml
+  by: pipeline/derive_sapling_lora_naturalize_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - clip_budget
+  - consumer
+  - dataset_row
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - anti_decal_choices
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - the_mask_is_the_bet
+  - the_one_variable
+  retokened:
+  - b16sapcomp-r2-0820 -> saplora-s15-0821
+  - 16-why-sapcomp-0820.png -> sap-s15-u08-0821.png
+  - 16-why-sapcomp-mask-0820.png -> sap-s15-u08-mask-0821.png
+  - b16-sapcomp -> sap-s15
+  - ep2-b16-sapcomp-r2-0820 -> ep3-saplora-s15-0821
+  - ep2-b16-sapcomp-r2-0820 -> ep3-saplora-s15-0821
+  overrides_applied_and_asserted:
+    argv:--init-sha256:
+    - step dry --init-sha256 (1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d -> 89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359)
+    - step s20260820 --init-sha256 (1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d ->
+      89144579a6d0c1f8354cae1ad651cc11268c0619e1837182ae1846f8eab7d359)
+    key:beat:
+    - key beat = 0
+    key:est_minutes:
+    - key est_minutes = 3
+    key:node:
+    - key node = '001-capability-inventory'
+    key:priority:
+    - key priority = 55
+    key:script_authority:
+    - "key script_authority = \"NOT A SCRIPTED SHOT, so \xA76 narrative approval is not the gate that\
+      \ applies and is not being claimed. The node is named only because the queue's approval check reads\
+      \ a leaf; `001-capability-inventory` is live and founder-approved, and this job renders no line\
+      \ from it. What governs this frame is pipeline/lora/README.md's dataset gate and the canon rulings\
+      \ `sapling-two-leaves` (2026-08-16) and `sapling-cotyledon-shape` (2026-08-17).\""
+    key:script_line:
+    - key script_line = "NONE. This frame illustrates no beat and no line. It is a LoRA training frame;
+      the beat/script fields exist because the queue schema wants them, and inheriting beat 16's line
+      here would be a false claim about what this picture is for."
+    payload:fetch_init.py:
+    - payload fetch_init.py (1383 -> 1416 chars)
+    payload:negative.txt:
+    - payload negative.txt (322 -> 264 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (374 -> 312 chars)
