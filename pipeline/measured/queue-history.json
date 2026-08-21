@@ -2,17 +2,593 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "3dd66b5ec1d2475af47265bca1b6be6f45db6660",
-  "measured_at": "2026-08-21T10:51:49Z",
-  "job_count": 1252,
-  "ok": 1172,
+  "source_commit": "ca4b6d329634a56b21919345af67eeddad574e21",
+  "measured_at": "2026-08-21T11:45:58Z",
+  "job_count": 1261,
+  "ok": 1181,
   "failed": 80,
-  "upcoming_count": 82,
+  "upcoming_count": 74,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b08-tilemotion-s2-0821-1787308865",
+   "task": "ep2-b08-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:37:28Z",
+   "finished_at": "2026-08-21T11:43:35Z",
+   "duration_s": 367,
+   "sidecar": "farm-out/box/ep2-b08-tilemotion-s2-0821-1787308865.json",
+   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. `blush, frown` lands a full orange blush -- caught out, with the cloak still covering the belly that made round one of the adult wave read as a chubby child. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b08-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b08-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-tilemotion-s2-0821/08-inside-him-LTX-ep2-b08-tilemotion-s2-0821.mp4",
+     "name": "08-inside-him-LTX-ep2-b08-tilemotion-s2-0821.mp4",
+     "bytes": 210412,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilemotion-s2-0821/b08-init-704x1280.png",
+     "name": "b08-init-704x1280.png",
+     "bytes": 1225338,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, head slightly bowed, arms at his sides, seen full body. HE LOOKS DOWN AT HIMSELF: his chin comes down, his head tips forward to look at his own middle, his shoulders round, and he holds the look. HALFWAY THROUGH his chin is down and he is looking at his own middle.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b08-ageb-r2-0821/ep2-b08-ageb-r2-0821-ipahead.png",
+    "sha256": "a6f696b67588b417760a5001751cee4f1503f5c9657229ea4e22a786e3663667"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b08-tilemotion-s1-0821-1787308860",
+   "task": "ep2-b08-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:31:08Z",
+   "finished_at": "2026-08-21T11:37:22Z",
+   "duration_s": 374,
+   "sidecar": "farm-out/box/ep2-b08-tilemotion-s1-0821-1787308860.json",
+   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. `blush, frown` lands a full orange blush -- caught out, with the cloak still covering the belly that made round one of the adult wave read as a chubby child. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b08-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b08-tilemotion-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-tilemotion-s1-0821/08-inside-him-LTX-ep2-b08-tilemotion-s1-0821.mp4",
+     "name": "08-inside-him-LTX-ep2-b08-tilemotion-s1-0821.mp4",
+     "bytes": 190136,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilemotion-s1-0821/b08-init-704x1280.png",
+     "name": "b08-init-704x1280.png",
+     "bytes": 1225338,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, head slightly bowed, arms at his sides, seen full body. HE LOOKS DOWN AT HIMSELF: his chin comes down, his head tips forward to look at his own middle, his shoulders round, and he holds the look. HALFWAY THROUGH his chin is down and he is looking at his own middle.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260821,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b08-ageb-r2-0821/ep2-b08-ageb-r2-0821-ipahead.png",
+    "sha256": "a6f696b67588b417760a5001751cee4f1503f5c9657229ea4e22a786e3663667"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b07-tilemotion-s2-0821-1787308855",
+   "task": "ep2-b07-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:24:48Z",
+   "finished_at": "2026-08-21T11:31:02Z",
+   "duration_s": 374,
+   "sidecar": "farm-out/box/ep2-b07-tilemotion-s2-0821-1787308855.json",
+   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. Bald, blank-eyed, sweatdrop and a heavy frown. Apprehension without panic, which is the read this beat wants. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The s…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b07-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b07-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-tilemotion-s2-0821/07-confiscate-LTX-ep2-b07-tilemotion-s2-0821.mp4",
+     "name": "07-confiscate-LTX-ep2-b07-tilemotion-s2-0821.mp4",
+     "bytes": 198697,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b07-tilemotion-s2-0821/b07-init-704x1280.png",
+     "name": "b07-init-704x1280.png",
+     "bytes": 1357853,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body. HE IS BEING TOLD SOMETHING AND HE DOES NOT LIKE IT: his head turns a little toward the sound, his shoulders drop, and his hands close at his sides. He stays where he is. HALFWAY THROUGH his head is turned, shoulders low, hands closed.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b07-ageb-r2-0821/ep2-b07-ageb-r2-0821-ipahead.png",
+    "sha256": "02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b07-tilemotion-s1-0821-1787308850",
+   "task": "ep2-b07-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:18:28Z",
+   "finished_at": "2026-08-21T11:24:42Z",
+   "duration_s": 374,
+   "sidecar": "farm-out/box/ep2-b07-tilemotion-s1-0821-1787308850.json",
+   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. Bald, blank-eyed, sweatdrop and a heavy frown. Apprehension without panic, which is the read this beat wants. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The s…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b07-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b07-tilemotion-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-tilemotion-s1-0821/07-confiscate-LTX-ep2-b07-tilemotion-s1-0821.mp4",
+     "name": "07-confiscate-LTX-ep2-b07-tilemotion-s1-0821.mp4",
+     "bytes": 243760,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b07-tilemotion-s1-0821/b07-init-704x1280.png",
+     "name": "b07-init-704x1280.png",
+     "bytes": 1357853,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body. HE IS BEING TOLD SOMETHING AND HE DOES NOT LIKE IT: his head turns a little toward the sound, his shoulders drop, and his hands close at his sides. He stays where he is. HALFWAY THROUGH his head is turned, shoulders low, hands closed.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260821,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b07-ageb-r2-0821/ep2-b07-ageb-r2-0821-ipahead.png",
+    "sha256": "02a41be4ebf4d34e85cb283f2794858b68120e53102ba8f82ddf767f83305f15"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b04-tilemotion-s2-0821-1787308845",
+   "task": "ep2-b04-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:12:13Z",
+   "finished_at": "2026-08-21T11:18:21Z",
+   "duration_s": 368,
+   "sidecar": "farm-out/box/ep2-b04-tilemotion-s2-0821-1787308845.json",
+   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. `parted lips, looking to the side` -- the peek is in the face now, and the lean is still handed to the motion prompt below rather than re-asked of the plate. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b04-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b04-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-tilemotion-s2-0821/04-the-footnote-LTX-ep2-b04-tilemotion-s2-0821.mp4",
+     "name": "04-the-footnote-LTX-ep2-b04-tilemotion-s2-0821.mp4",
+     "bytes": 412384,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b04-tilemotion-s2-0821/b04-init-704x1280.png",
+     "name": "b04-init-704x1280.png",
+     "bytes": 1440597,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body, the grass blades crossing in front of him. HE PEEKS AND PULLS BACK, ON A LOOP: he leans his head and one shoulder out sideways past the grass to look, holds it a moment, then pulls straight back in behind the blades the same way he came, and leans out again -- the same trip repeating, and STILL GOING when the shot ends. HALFWAY THROUGH he is leaned out to one side, head clear of the grass, looking.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b04-ageb-r2-0821/ep2-b04-ageb-r2-0821-ipahead.png",
+    "sha256": "eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b04-tilemotion-s1-0821-1787308840",
+   "task": "ep2-b04-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T11:05:47Z",
+   "finished_at": "2026-08-21T11:12:06Z",
+   "duration_s": 379,
+   "sidecar": "farm-out/box/ep2-b04-tilemotion-s1-0821-1787308840.json",
+   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. `parted lips, looking to the side` -- the peek is in the face now, and the lean is still handed to the motion prompt below rather than re-asked of the plate. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b04-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b04-tilemotion-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-tilemotion-s1-0821/04-the-footnote-LTX-ep2-b04-tilemotion-s1-0821.mp4",
+     "name": "04-the-footnote-LTX-ep2-b04-tilemotion-s1-0821.mp4",
+     "bytes": 490077,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b04-tilemotion-s1-0821/b04-init-704x1280.png",
+     "name": "b04-init-704x1280.png",
+     "bytes": 1440597,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, standing in tall grass, arms at his sides, seen full body, the grass blades crossing in front of him. HE PEEKS AND PULLS BACK, ON A LOOP: he leans his head and one shoulder out sideways past the grass to look, holds it a moment, then pulls straight back in behind the blades the same way he came, and leans out again -- the same trip repeating, and STILL GOING when the shot ends. HALFWAY THROUGH he is leaned out to one side, head clear of the grass, looking.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260821,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b04-ageb-r2-0821/ep2-b04-ageb-r2-0821-ipahead.png",
+    "sha256": "eaa1e79adf1bcf7ee09683bfc8fad73e4286aff9f00f846ae65758b09076b937"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b03-tilemotion-s2-0821-1787308836",
+   "task": "ep2-b03-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T10:59:28Z",
+   "finished_at": "2026-08-21T11:05:41Z",
+   "duration_s": 373,
+   "sidecar": "farm-out/box/ep2-b03-tilemotion-s2-0821-1787308836.json",
+   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. Sweatdrop on the brow, frown, gaze off to the side. Furtive, which is the beat. CARRIES THE C1 COLLAR FAULT. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The st…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b03-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b03-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-tilemotion-s2-0821/03-bad-cover-LTX-ep2-b03-tilemotion-s2-0821.mp4",
+     "name": "03-bad-cover-LTX-ep2-b03-tilemotion-s2-0821.mp4",
+     "bytes": 202860,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b03-tilemotion-s2-0821/b03-init-704x1280.png",
+     "name": "b03-init-704x1280.png",
+     "bytes": 1219321,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, squatting low behind a thin upright trunk in tall grass, hands on his knees, seen full body. HE IS TRYING TO HIDE AND FAILING: he shifts his weight from one side to the other trying to fit behind the thin trunk, pulls his shoulders in, glances to one side and then the other, and settles back exactly as exposed as he began. HALFWAY THROUGH he is leaning to one side, shoulders drawn in, still plainly visible past the trunk.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b03-ageb-r2-0821/ep2-b03-ageb-r2-0821-ipahead.png",
+    "sha256": "b342803b06b8a102be37d9d802064513a2fe93445a4e0e19e696f98c1d25fcbb"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b03-tilemotion-s1-0821-1787308831",
+   "task": "ep2-b03-tilemotion-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T10:53:11Z",
+   "finished_at": "2026-08-21T10:59:22Z",
+   "duration_s": 371,
+   "sidecar": "farm-out/box/ep2-b03-tilemotion-s1-0821-1787308831.json",
+   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s1-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. Sweatdrop on the brow, frown, gaze off to the side. Furtive, which is the beat. CARRIES THE C1 COLLAR FAULT. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The st…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260821, init cover-cropped from ep2-b03-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b03-tilemotion-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-tilemotion-s1-0821/03-bad-cover-LTX-ep2-b03-tilemotion-s1-0821.mp4",
+     "name": "03-bad-cover-LTX-ep2-b03-tilemotion-s1-0821.mp4",
+     "bytes": 296312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b03-tilemotion-s1-0821/b03-init-704x1280.png",
+     "name": "b03-init-704x1280.png",
+     "bytes": 1219321,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, squatting low behind a thin upright trunk in tall grass, hands on his knees, seen full body. HE IS TRYING TO HIDE AND FAILING: he shifts his weight from one side to the other trying to fit behind the thin trunk, pulls his shoulders in, glances to one side and then the other, and settles back exactly as exposed as he began. HALFWAY THROUGH he is leaning to one side, shoulders drawn in, still plainly visible past the trunk.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260821,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b03-ageb-r2-0821/ep2-b03-ageb-r2-0821-ipahead.png",
+    "sha256": "b342803b06b8a102be37d9d802064513a2fe93445a4e0e19e696f98c1d25fcbb"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b02-tilemotion-s2-0821-1787308826",
+   "task": "ep2-b02-tilemotion-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T10:46:50Z",
+   "finished_at": "2026-08-21T10:53:05Z",
+   "duration_s": 375,
+   "sidecar": "farm-out/box/ep2-b02-tilemotion-s2-0821-1787308826.json",
+   "spec_file": "pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
+    "why": "MOTION for beat 02 off the patch wave's picked plate (ep2-b02-ageb-r2-0821, round r2). WHY THIS PLATE: age-B round two. Blank slit eyes, mouth wide open on `scared, open mouth` -- the alarm is on the face, not just in the stride. The seven plates are the first frames in this tree where the goblin reads as the B tile's CREATURE at these beats rather than as an adult man, a child or an old man -- the defect the 08-20 audit found in five of seven and the founder ruled on directly at beat 13. The s…",
+    "success": "ONE 704x1280 121-frame 24fps mp4 at seed 20260822, init cover-cropped from ep2-b02-ageb-r2-0821 with its sha256 asserted before a frame is written. Scored on M1-M5 in `bar`.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 8,
+    "priority": 24
+   },
+   "artifacts_dir": "farm-out/ep2-b02-tilemotion-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s2-0821/02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4",
+     "name": "02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4",
+     "bytes": 541771,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-tilemotion-s2-0821/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 1231530,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean young green goblin alone, bald head, blank white eyes, one broken tusk, patchwork cloak, mid-stride in tall grass on open ground, leaning forward, seen full body at a distance. HE IS RUNNING AND THEN HE GOES DOWN: he drives forward two more strides, plants a foot, and skids low into the grass with his weight dropping, arms coming forward to break the fall, the grass flattening and springing where he passes. HALFWAY THROUGH he is low and still moving forward, one arm out, the grass bent around him.",
+   "negative": "second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, human face, human nose, wrinkled skin, old man, hair, wig, beard, glasses, purple cowl, purple scarf, bare belly, exposed stomach, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260822,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-ageb-r2-0821/ep2-b02-ageb-r2-0821-ipahead.png",
+    "sha256": "0240e8986947d77fcf238743984f5fc98395ce462b3e94f8413120533467d757"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
   {
    "id": "ep2-b02-tilemotion-s1-0821-1787308821",
    "task": "ep2-b02-tilemotion-s1-0821",
@@ -82154,118 +82730,6 @@
    "hold_reason": null,
    "spec_file": "pipeline/jobs/ep1-b14-v34-motion-r3.yaml",
    "authored_at": 1786333067
-  },
-  {
-   "id": "ep2-b03-tilemotion-s1-0821",
-   "node": "002b-first-citizen",
-   "beat": 3,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s1-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b03-tilemotion-s2-0821",
-   "node": "002b-first-citizen",
-   "beat": 3,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 03's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 03 off the patch wave's picked plate (ep2-b03-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b04-tilemotion-s1-0821",
-   "node": "002b-first-citizen",
-   "beat": 4,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b04-tilemotion-s2-0821",
-   "node": "002b-first-citizen",
-   "beat": 4,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 04's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 04 off the patch wave's picked plate (ep2-b04-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b04-tilemotion-s2-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b07-tilemotion-s1-0821",
-   "node": "002b-first-citizen",
-   "beat": 7,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b07-tilemotion-s2-0821",
-   "node": "002b-first-citizen",
-   "beat": 7,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 07's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 07 off the patch wave's picked plate (ep2-b07-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b07-tilemotion-s2-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b08-tilemotion-s1-0821",
-   "node": "002b-first-citizen",
-   "beat": 8,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml",
-   "authored_at": 1787308739
-  },
-  {
-   "id": "ep2-b08-tilemotion-s2-0821",
-   "node": "002b-first-citizen",
-   "beat": 8,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 24,
-   "est_minutes": 8,
-   "consumer": "A CANDIDATE for beat 08's post-ship patch. review/ep2-ship-0821 is NOT touched by this job and no clip is swapped by it: a passing take becomes a candidate, and the swap is a separate judgement with its own bar.",
-   "why_first": "MOTION for beat 08 off the patch wave's picked plate (ep2-b08-ageb-r2-0821, round r2).",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b08-tilemotion-s2-0821.yaml",
-   "authored_at": 1787308739
   },
   {
    "id": "ep2-b13-tilemotion-s1-0821",
