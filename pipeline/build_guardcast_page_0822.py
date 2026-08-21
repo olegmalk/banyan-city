@@ -36,10 +36,15 @@ OUT = os.path.join(REPO, "review", "ep2-guardcast-0822")
 # letter -> reason. Scored at 1:1 by the steward on the bar in the specs.
 # R1 female read / R2 child read / R3 not one whole man -> dropped outright.
 DROPPED = {
-    "H": "reads late-teen, not a grown man (slight build, small features, "
-         "barefoot) -- fails the founder's own bar",
-    "I": "reads late-teen, not a grown man -- fails the founder's own bar",
+    "H": "reads late-teen",
+    "I": "reads late-teen",
 }
+# One sentence, second person, on the page. The per-letter reasons above are
+# the record; this is what he reads.
+DROPPED_LINE = ("Not shown: H and I. Both read late-teen rather than grown "
+                "men, so I cut them at 1:1 rather than spend your eye on the "
+                "defect you already ruled on. Say the word and I will show "
+                "them.")
 
 # THE LABEL DESCRIBES THE PIXELS, NOT THE PROMPT. Filled in after scoring at
 # 1:1, and it overrides the cell's INTENDED description wherever the two
@@ -133,12 +138,7 @@ def build():
 
     dropped_line = ""
     if DROPPED:
-        dropped_line = (
-            '<p class="note">Not shown: %s — cut at 1:1 before you saw them '
-            '(%s).</p>'
-            % (", ".join(sorted(DROPPED)),
-               "; ".join("%s %s" % (k, html.escape(v))
-                         for k, v in sorted(DROPPED.items()))))
+        dropped_line = ('<p class="note">%s</p>' % html.escape(DROPPED_LINE))
 
     page = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
