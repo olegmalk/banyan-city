@@ -1,0 +1,73 @@
+{
+  "id": "ep2-b01-field-s3-0821-1787321813",
+  "task": "ep2-b01-field-s3-0821",
+  "node": "002b-first-citizen",
+  "beat": 16,
+  "worker": "box-runner",
+  "priority": 32,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "hintskel",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b01field-s3-0821\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\b01field-s3-0821\\src",
+        "--repo-commit",
+        "d1d559d2a475b6d6260ac18a345bd2f65546b0f6",
+        "--task",
+        "ep2-b01-field-s3-0821",
+        "--arm",
+        "nocontrol",
+        "--control",
+        "pipeline/control/b08-pose-skel-0819.png",
+        "--control-sha256",
+        "09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3",
+        "--scale",
+        "0.45",
+        "--seed",
+        "20260853",
+        "--prompt-file",
+        "C:\\banyan-farm\\b01field-s3-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b01field-s3-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b01field-s3-0821\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b01field-s3-0821/out\"\npay_dir = \"C:/banyan-farm/b01field-s3-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-field-s3-0821\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b01-field-s3-0821-nocontrol.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b01-field-s3-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 4 else 1)"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b01field-s3-0821\\out\\ep2-b01-field-s3-0821-nocontrol.png"
+  ],
+  "spec_sha256": "3f4c307b7207e4c6efb8181445d9c83e6b05a2ece0407198b42d245b8ae19aa9",
+  "started_at": "2026-08-21T14:19:24Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T14:19:43Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b01field-s3-0821\\out\\ep2-b01-field-s3-0821-nocontrol.png"
+  ]
+}
