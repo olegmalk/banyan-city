@@ -7456,3 +7456,132 @@ ruling, and the cure is not silence but a dated quote with its channel named.
   `gh run list -L1` cannot see that — it is exactly what lanes 2-6 pushed into.
 - Prose said "check main is green before pushing" in three documents and was
   followed 0 of 5 times. That is the whole argument for the wrapper.
+
+---
+
+## Appended 2026-08-21 by the goblin standard lane — THE RULING, AND THE RECIPE STOPS BEING PROSE
+
+The k-ladder's own last entry closed with one question for the founder: **k4a vs
+k6a, and it is about what Jerry's eye looks like, which belongs to the author.**
+That question has been answered by the **STEWARD**, coordinator, 2026-08-21, and
+it is recorded as a **PICK, veto-able in one line**, not as a founder ruling. The
+reason it was not held for him: the card was measuring 0 ready / 0 running / 0
+backlog with seven ep2 beats waiting on a recipe, and the standing directive is
+that machine work is scheduled by dependencies and not by who is awake.
+
+### THE STANDARD IS k6a, AND IT IS NOW A MODULE RATHER THAN A YAML
+
+`pipeline/jerry_standard_0821.py`. Every value the ruling names in one importable
+place, **with 45 selftest clauses that fail if any of them drifts** — and three
+of those clauses are the point rather than ceremony:
+
+1. `prompt_for(POSE_STAND)` and `mask_for('stand')` are compared **against the
+   committed `ep2-jerry-face-k6a-0821.yaml` payload and argv**, byte-for-byte. The
+   module cannot describe a recipe the tree did not render.
+2. The reference **REBUILDS**. `author_jerry_squareref_0821.build(0.20)` is
+   re-run in memory and its digest checked against the pin, so a changed builder
+   or a changed tile fails here instead of silently conditioning the next hundred
+   frames on a different face.
+3. The **ear span** is asserted at 136.0 px across all nine published skeletons,
+   because the mask rule below rests on the head moving as a rigid block, and a
+   rule whose premise is unasserted is a rule that breaks quietly.
+
+### WHY k6a, ON THE NUMBERS THE LADDER ALREADY MEASURED
+
+| rung | eye vs TILE | aspect | mouth | brow | heads | head_frac | cowl |
+|---|---|---|---|---|---|---|---|
+| TILE | 1.00x | **0.52** | yes | bar | 5.2 | 0.190 | — |
+| j2 (no adapter) | 1.40x | 1.00 | yes | lash arc | 5.56 | 0.181 | 0.0% |
+| k4a | 1.40x | 0.59 | yes | fuller | 5.13 | **0.195** | 0.0% |
+| k5a | 1.26x | 0.53 | **NONE** | stroke | 5.31 | 0.188 | 0.0% |
+| **k6a** | **1.07x** | 0.63 | yes | stroke | **5.51** | 0.181 | 0.0% |
+
+k6a is **the first frame in thirteen rungs whose eye is not oversized**. It keeps
+the mouth k5a lost. Its cost against k4a is a thinner brow and head_frac drifting
+the wrong way by 0.014. On the axis the whole reference route was built to move —
+eye size — it is 33 percentage points better than anything else that has a mouth.
+
+### THE T1b SHAPE BAR IS RECALIBRATED 0.52–0.54 → ≤ 0.65, AND THAT HALF IS NOT TASTE
+
+It is a correction to our own instrument. **In the entire ladder exactly three
+frames ever met 0.52–0.54, and every one of them failed something worse:**
+
+- **k1** at 0.54 — eye **1.87x** the tile's.
+- **k3** at 0.54 — **horns**, and the tile's purple cowl back at his neck.
+- **k5a** at 0.53 — **no mouth at all**, confirmed at 1:1 and at contrast ×2.6.
+
+Meanwhile the frames at 0.59–0.63 read as the tile. **A bar that only defective
+frames have ever passed is measuring something other than what it was written to
+measure.** What it was actually selecting for is now known: k3's "best in tree"
+1.24x was a *crippled embedding* transferring less of everything, the same defect
+that grew its horns — the k4 band showed eye size and aspect both rising
+monotonically with encoder coverage. The bar was rewarding starvation.
+
+**EYE SIZE IS NOT WIDENED.** The ≤ 1.4x clause stands untouched and k6a passes it
+at 1.07x with room. Widening shape does not widen size, and saying so here is the
+guard against this recalibration being cited later as general permission.
+
+### THE MASK NOW FOLLOWS THE POSE, AND THIS WOULD HAVE SHIPPED AS A BUG
+
+`315,130,515,350` was authored at k1 around a **standing** head box. Every one of
+the thirteen rungs was a standing figure, so nothing ever tested it elsewhere.
+Pointed at the crouch skeleton it masks **the sky above his head** — and a mask
+says WHERE the adapter acts, so the face would have been applied to grass.
+
+The fix is not a new mask, it is a derivation. The five head keypoints
+(nose, both eyes, both ears) translate as one rigid block when a pose lowers
+them, so the box translates with them:
+
+| pose | mask | Δy |
+|---|---|---|
+| stand / stride / reach / point | `315,130,515,350` | 0 (legs move, head does not) |
+| hunch | `315,176,515,396` | +46 |
+| seatspan | `315,398,515,618` | +268 |
+| kneel | `315,399,515,619` | +269 |
+| crouch | `315,484,515,704` | +354 |
+
+`mask_for('stand')` returns k6a's mask byte-for-byte, which is the calibration.
+
+### WHAT WAS FILED OFF IT, IMMEDIATELY, ONTO AN IDLE CARD
+
+`pipeline/derive_jerry_wave_0821.py` — one deriver, two consumers, so the
+eighteen values are copied zero times.
+
+- **`poseset`** — 7 specs, `ep2-jerry-set-{stride,reach,point,hunch,crouch,kneel,seat}-0821`.
+  The LoRA dataset gate has been HELD since 08-20 on **seven frames in four
+  poses, three of them seated**. `stand` is deliberately absent: at this recipe
+  the standing frame **is k6a**, already rendered, and `derive_spec` refused it
+  as byte-identical to its own parent — the guard working.
+- **`patchwave`** — 7 specs, `ep2-b{02,03,04,07,08,13,20}-tilefix-p1-0821`, one
+  plate per beat, pose words read off each beat's own line in `shots.md`.
+
+**ONE FRAME PER QUESTION, NOT A SEED FAN.** Fourteen specs are fourteen distinct
+questions with one variable each, which is not the same object as fourteen copies
+of one recipe — that distinction is the whole of the one-sample rule and the K
+recipe is what happens when it is ignored. Seeds fan in round two, on the rungs
+that miss.
+
+### TWO SPECS CARRY A NAMED FRAMING GAP AND WERE FILED ANYWAY
+
+- **BEAT 04 is a CLOSE-UP and the standard has no close-up rung.** Every ladder
+  frame and every published skeleton is a full-body figure; the mask is a head
+  box sized for one; and canon's own measured finding is that `patchwork cloak`
+  paints the **skull** at a head-and-shoulders crop while `ragged cloak` does
+  not. So the round-one frame answers a narrower question — does the k6a face
+  survive a hunched lean-out — and the close-up is a rung of its own at **two**
+  variables. Filing it as if the standard covered it would have been the
+  fifteenth confident guess on this ladder.
+- **BEAT 07's subject is a guard**; the goblin stands beside him. The plate
+  supplies THE GOBLIN ONLY and the two-shot is composed downstream. Beat 08 the
+  same. Named in each spec's `framing_gap` key rather than discovered on the
+  contact sheet.
+
+### THE CONTRADICTION IS RECORDED, NOT SMOOTHED
+
+The frozen positive still says `lean wiry adult goblin man` while canon's
+`correction_2026_08_20` retired "adult" as drift. **Both stand.** The words are
+the clause this checkpoint conditions on while the *adapter* supplies the face,
+and the k6a pixels pass T1, T2, T3, P1, P2, P3, P4 and T8 at 1:1 against the
+tile. Swapping canon's vocabulary into that slot is a new rung on a route already
+closed for six wordings — not a tidy-up — and it would move the one variable in
+every frame derived from the standard. If it is ever done, it is done as a rung.
