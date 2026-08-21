@@ -261,6 +261,12 @@ REF_SHA = {
         "bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e",
     "jerry-canon-sq25-0821":
         "04692a1a0756dd8e6e5d44d2875a72cbe2f7f3c0d6ed5f1b53811ff15949df01",
+    # 28.3% encoded coverage. Built for round three's reference-composition
+    # rung: at 0.22 the reference is a small head on a wide flat field, which is
+    # a picture of a DISEMBODIED HEAD IN GRASS, and that is one of the two
+    # hypotheses for the ghost head every round-two rung drew.
+    "jerry-canon-sq45-0821":
+        "066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c",
 }
 IP_SCALE = "0.7"                   # k6a's, unchanged: the reference moved, not
                                    # the strength, so this stays a fixed point.
