@@ -4219,3 +4219,4 @@
 21:56:20Z DONE task=ep2-guardcast2d-j20-0822-1787349158 rc=0 artifacts=1
 21:57:06Z STARTED task=ep2-b13-w4motion-0822-1787349418 attempt=1 on box-runner
 22:02:23Z DONE task=ep2-b13-w4motion-0822-1787349418 rc=0 artifacts=1
+22:02:27Z box-runner idle ready=0 failed=83
