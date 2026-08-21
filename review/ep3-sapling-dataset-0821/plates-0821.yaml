@@ -588,3 +588,41 @@ round_6_licensed: >-
   out of the brighter greens further down; dropped to y1080 it passes and the
   sample goes 14.9k -> 25.7k px. Still nothing trained; DECISIONS.md item 18 is
   open and is not touched by building the set the question is about.
+
+round_6_step3_result: >-
+  7 OF 7 RETURNED, 0 FAILED, 7 OF 7 PASSED THE D BARS. Judged at contact-sheet
+  level against their thirty-seven siblings (CONTACT-dataset-v3-0821.png beside
+  this file) and at 1:1 init-vs-output on the three that carried a risk: s38
+  (the smallest mask of the batch, 1.58%, against the standing floor question),
+  s42 (the plant standing in w02's blade field) and s41 (the largest, on the
+  dark plate). Exactly two leaves on one stem in every frame (D1), plain
+  cotyledons (D2), no figure and no creature anywhere (D3), the pass visibly
+  worked the ink and put interior shading in the leaves rather than handing the
+  init back (D4), background unchanged outside the mask (D5), one plant (D6).
+  THE PRE-LIT PATTERN ROUND 5 NAMED IS NOW FOUR FRAMES AND IS STILL NOT A
+  REJECT. s29 and s32 were the first two; s40 and s41 join them -- the xl and
+  large rows on dark plates come back with leaves reading brighter than the
+  field they stand in. It is defensible per frame (the palette is sampled from
+  the plate's own greens and w03's field IS a bright emerald), and it is a
+  dataset risk in aggregate: a set that teaches `bnysapling` to arrive pre-lit
+  is a subject that will not sit in a night shot. Recorded with a count rather
+  than smoothed over, because the count is the thing that will decide it.
+
+round_6_dataset_after: >-
+  v3 is 44 FRAMES OVER 17 DISTINCT PLATES, tiers s=11 m=13 l=11 xl=9, at $0.
+  The lighting ratio the round was filed to move went 26:11 to 26:18 -- still
+  daylit-majority, and no longer close to two to one. WHAT IS STILL THIN, in
+  the same order round 5 stated it: (1) LEAF COUNT IS STILL 1 VALUE, all 44
+  frames two-leaf, and this is now the ONLY axis in the gate that no plate
+  round can move -- it needs a tool that draws three, five and six leaves and
+  that tool still does not exist; (2) NO WATER, unchanged and closed as a
+  question for this recipe; (3) NO INTERIOR, NO BUILT ENVIRONMENT, NO CLOSE
+  GROUND TEXTURE -- every one of the seventeen plates is an open landscape or a
+  wood. This is the one thin axis a round 7 could actually attack, and round 2's
+  rule says how: what buys a drawable plane is a RECEDING FEATURE, and a
+  colonnade, a wall running away from camera or a paved path between buildings
+  is a receding feature that is not a landform. It is untested -- rounds 1-6
+  asked for a landform every single time -- and round 6's own finding says to
+  ask for it under WARM light with no season word, which is now the one
+  lighting shape proved to keep a green ground. Nothing is trained.
+  DECISIONS.md item 18 is open.

@@ -95,6 +95,16 @@ SETTING = {
     "v03": "green plain under storm cloud, a shaft of light, dark sky",
     "v05": "wet green moor in the rain, grey hills, flat rain light",
     "v12": "green plain after rain, puddles, breaking cloud",
+    # ---- v3, 2026-08-21. Two more non-daylit settings, from a four-cell word
+    # probe rather than a breadth batch. w03 is moonlight CONFIRMED A SECOND
+    # TIME (v02 was the first) and it produced the cleanest ground plane in the
+    # whole set; w02 is warm low light with no season word in it, which is the
+    # cell that showed `golden hour` -- not warmth -- was what dragged tan macro
+    # grass into v04. The other two cells of the probe are rejected and judged
+    # in plates-0821.yaml: a grey dusk with ZERO green-dominant pixels, and a
+    # cold-light cell that returned a snowfield over a `green meadow` clause.
+    "w03": "green meadow at night, distant hills, moonlight through broken cloud",
+    "w02": "rolling green downland, a low sun on the horizon, warm backlight",
 }
 
 STYLE = "anime style, cel shading, detailed background"
@@ -194,6 +204,21 @@ def main() -> int:
         "# The verdicts on all fourteen, including the two the round predicted",
         "# would fail and the one that actually did, are in",
         "# review/ep3-sapling-dataset-0821/plates-0821.yaml.",
+        "#",
+        "# WHAT v3 BOUGHT, 2026-08-21. Two more non-daylit plates and, more",
+        "# usefully, the RULE for asking for them. Round 6 was a four-cell word",
+        "# probe: each cell deleted one suspect word from a round-5 failure and",
+        "# changed nothing else. The finding is that on this checkpoint a",
+        "# lighting clause predicts the GROUND MATERIAL by its colour",
+        "# temperature and its level, not by whether it names a season -- warm",
+        "# light keeps green (`golden hour` deleted, the tan macro grass did not",
+        "# come back), cool-and-bright brings frozen ground even with no season",
+        "# word anywhere in the prompt (a snowfield over `green meadow`), and",
+        "# dim-and-grey desaturates until the palette sampler finds ZERO",
+        "# green-dominant pixels and refuses. Cool-and-DARK is the exception",
+        "# that pays: moonlight is now confirmed twice and is the greenest thing",
+        "# this instrument draws. Seven frames on the two passers, with tiers",
+        "# picked off v2's thin end (l and xl) rather than spread evenly.",
         "#",
         "# WHAT THIS SET STILL DOES NOT HAVE. All frames are TWO-leaf.",
         "# beat16_sapling_composite draws the canon two; leaf_count_composite only",

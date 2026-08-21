@@ -352,9 +352,11 @@ def sheet(fids=None) -> int:
         # picture that looks like the whole dataset and is not.
         # AND EVERY FILTERED SHEET GETS A DIFFERENT ONE. `-subset` was a
         # constant, so round 6's 7-cell sheet would have silently overwritten
-        # round 5's committed 11-cell sheet -- the same clobber one level down
-        # from the one this comment was written about. The name now carries the
-        # first and last fid in the filter, so two rounds cannot collide.
+        # round 5's 11-cell sheet -- the same clobber one level down from the
+        # one this comment was written about, and harder to notice because
+        # `review/**/*.png` is gitignored, so these sheets exist ONLY in the
+        # working tree and an overwrite is not recoverable from git. The name
+        # now carries the first and last fid in the filter.
         tag = ""
         if want:
             fids_seen = [r[0] for r in ROWS if r[0] in want]
