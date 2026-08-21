@@ -4119,3 +4119,5 @@
 21:26:48Z FAIL task=ep2-guardcast2b-a-0822-1787347596 rc=6 step=cast
 21:27:02Z STARTED task=ep2-b13-canon-r10a-0821-1787347613 attempt=1 on box-runner
 21:27:30Z DONE task=ep2-b13-canon-r10a-0821-1787347613 rc=0 artifacts=1
+21:27:36Z STARTED task=ep2-b13-canon-r10b-0821-1787347616 attempt=1 on box-runner
+21:28:04Z DONE task=ep2-b13-canon-r10b-0821-1787347616 rc=0 artifacts=1
