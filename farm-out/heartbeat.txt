@@ -4266,3 +4266,4 @@
 23:42:47Z DONE task=ep2-b18-celfig-0822-1787355709 rc=0 artifacts=1
 23:42:54Z STARTED task=ep2-b20-w4motion-0822-1787349820 attempt=1 on box-runner
 23:48:55Z DONE task=ep2-b20-w4motion-0822-1787349820 rc=0 artifacts=1
+23:49:00Z box-runner idle ready=0 failed=86
