@@ -369,6 +369,24 @@ def foliage_palette(a: np.ndarray, region: np.ndarray) -> dict:
         low = np.zeros(a.shape[:2], bool)
         low[h // 2:, :] = True
         green = low & (G > R + 4) & (G > B + 4)
+    if int(green.sum()) < 1:
+        # A PLATE WITH NO GREEN PIXEL AT ALL. Caught 2026-08-21 on the sapling
+        # LoRA plate set: `ep3-sapfld4-u05` is a DRY TAN grass plain, so both
+        # the region sample and the whole-lower-half fallback returned zero
+        # pixels and pct() died on `index 0 is out of bounds for axis 0 with
+        # size 0` -- a traceback where the tool's whole design is to refuse with
+        # a reason. There is no honest repair here: "the plant is made of the
+        # FIELD'S OWN GREENS" has no greens to be made of, and inventing a
+        # palette is decal tell #2 by definition. So it refuses, and the plate
+        # is dropped from the set rather than composited badly.
+        raise SystemExit(
+            "!! this plate has NO green-dominant pixel, in the plant's region "
+            "or in its whole lower half, so the palette cannot be sampled from "
+            "it. The plant would have to be given an invented colour, which is "
+            "decal tell #2 (a pattern that ignores the frame's light) arriving "
+            "through colour. Use a plate with living green in it, or extend "
+            "this function ON PURPOSE with a non-green foliage rule and say "
+            "what it samples.")
     px = a[green].astype(np.float32)
     lum = 0.299 * px[:, 0] + 0.587 * px[:, 1] + 0.114 * px[:, 2]
     order = np.argsort(lum)
