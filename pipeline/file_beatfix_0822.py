@@ -697,6 +697,117 @@ B01_R2_ROW = {
 
 
 # --------------------------------------------------------------------------
+# BEAT 04, SECOND SEED. Same argument as beat 03's: the recipe is judged good
+# (6 of 7, and the founder's own design), the clip is already staged trimmed
+# to the slot, and what the beat lacks is a SECOND finished option to choose
+# between. No fault is being chased here.
+# --------------------------------------------------------------------------
+B04_S2_ROW = {
+    "beat": 4,
+    "parent": "pipeline/jobs/ep2-b04-canonmotion-0821.yaml",
+    "new_id": "ep2-b04-canonmotion-s2-0822",
+    "retoken": [("canonmotion-0821", "canonmotion-s2-0822")],
+    "seed": 20260845,
+    "est": 9,
+    "overrides": {},
+    "fresh": {
+        "owner": "the per-beat iteration lane, 2026-08-22",
+        "consumer":
+            "A SECOND FINISHED OPTION for beat 04, so the founder picks "
+            "between two clips of his own design rather than approving the "
+            "only one that exists. The first is already staged on "
+            "review/ep2-beats-0821, trimmed to the slot.",
+        "success":
+            "ONE 704x1280 105-frame 24fps mp4 that is a DIFFERENT good take. "
+            "E1 he leans out and comes back inside the clip -- the pull-back "
+            "is the joke and it has to land; E2 the frame does not pull back "
+            "and he does not shrink; E3 identity holds to the last frame: "
+            "bald, big lateral pointed ears, off-white eyes with slit "
+            "pupils, mandarin collar, boots. If it is worse than seed 1 it "
+            "is simply not offered.",
+        "why":
+            "THE FOUNDER'S NOTE ON BEAT 04 IS ANSWERED AND THE ANSWER IS A "
+            "SAMPLE OF ONE. 'Wouldn't be bad if he didnt look so chibi in "
+            "this' is the take in the cut -- a teal head filling the frame "
+            "with red eyes and no ears. The canon-motion clip is his design "
+            "instead and scored 6 of 7, and it is now trimmed to the slot "
+            "and staged. But one clip is not a selection, and his 08-21 "
+            "amendment asks for a selection. ONE VARIABLE, and it is the "
+            "seed: this is the same plate, the same wording and the same "
+            "recipe that produced the take he is being shown.",
+    },
+    "extra": {
+        "the_one_variable":
+            "THE SEED. Everything else -- plate, prompt, negative, size, "
+            "frames, fps, guidance, sampler, sigmas, two-stage, crf, offload "
+            "-- is the judged clip's.",
+        "failure_predicted_in_advance":
+            "THE DRAW IS WORSE, or the one gap seed 1 has gets bigger: with "
+            "no trunk in frame there is nothing to lean out FROM, so the "
+            "peek can read as a stumble. A different seed can make that "
+            "worse as easily as better. The cost of finding out is nine "
+            "minutes on a card that would otherwise be idle, and the "
+            "downside is a clip nobody is shown.",
+    },
+}
+
+
+# --------------------------------------------------------------------------
+# BEAT 03, SECOND SEED. Not a fix -- a SECOND GOOD OPTION. The founder's
+# 2026-08-21 amendment is that a beat arrives as 2-4 finished versions to
+# choose between, not as one take and a fault list, and the crouchlife recipe
+# has now been judged good once. One more seed on a judged-good recipe is the
+# cheapest way there is to turn one option into a choice.
+# --------------------------------------------------------------------------
+B03_S2_ROW = {
+    "beat": 3,
+    "parent": "pipeline/jobs/ep2-b03-crouchlife-0822.yaml",
+    "new_id": "ep2-b03-crouchlife-s2-0822",
+    "retoken": [("crouchlife-0822", "crouchlife-s2-0822")],
+    "seed": 20260844,
+    "est": 9,
+    "overrides": {},
+    "fresh": {
+        "owner": "the per-beat iteration lane, 2026-08-22",
+        "consumer":
+            "A SECOND FINISHED OPTION for beat 03, so the founder picks "
+            "between two clips rather than approving one. Nothing about the "
+            "recipe is in question here -- seed 20260843 was judged good by "
+            "eye before this was filed.",
+        "success":
+            "ONE 704x1280 105-frame 24fps mp4 that is a DIFFERENT good take, "
+            "not a better one. D1 the head drops and returns, as seed 1's "
+            "does; D2 identity holds -- no horn, no old-man nose, features "
+            "drawn wherever the face is toward camera; D3 the stem is there "
+            "and unmoved; D4 the last frame is one the assembly can freeze "
+            "on. If it comes back worse than seed 1 it is simply not "
+            "offered; a second seed cannot fail this beat, it can only fail "
+            "to add to it.",
+        "why":
+            "THE RECIPE IS SETTLED AND THE CHOICE IS NOT. Seed 20260843 was "
+            "opened at 1:1 and it does what the previous round would not: "
+            "the head drops away behind the stem, comes back up centred, "
+            "goes again and returns face-to-camera on the last frame, with "
+            "the identity the canon plate carries. There is nothing left to "
+            "diagnose on this beat, so the card's next best use is a second "
+            "draw from the same bag. ONE VARIABLE, and it is the seed.",
+    },
+    "extra": {
+        "the_one_variable":
+            "THE SEED. Same plate, same prompt to the byte, same negative, "
+            "same 704x1280, same 105 frames at 24fps, same guidance, "
+            "sampler, sigmas, two-stage, crf and offload.",
+        "failure_predicted_in_advance":
+            "THE DRAW IS WORSE. Seed variance on this engine is real and a "
+            "second sample of a good recipe is not guaranteed to be good. "
+            "That is priced in: the outcome of this job is either a second "
+            "option on the page or nothing on the page, and neither costs "
+            "the beat anything.",
+    },
+}
+
+
+# --------------------------------------------------------------------------
 # BEAT 02, STRENGTH RUNG. 0.42 was looked at at 1:1 and it did not do the job:
 # the brows came back FAINTER rather than raised -- the pass washed the two
 # existing strokes out instead of drawing new ones -- and the mouth opened
@@ -963,6 +1074,12 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--b04-s2", action="store_true",
+                    help="file a second seed of the judged-good beat 04 "
+                         "recipe, so that beat arrives as a choice.")
+    ap.add_argument("--b03-s2", action="store_true",
+                    help="file a second seed of the judged-good beat 03 "
+                         "recipe, so that beat arrives as a choice.")
     ap.add_argument("--b01-r2", action="store_true",
                     help="file beat 01's round 2 after round 1 has been "
                          "looked at.")
@@ -974,6 +1091,32 @@ def main(argv=None) -> int:
                          "first-round jobs. Refuses until the repainted plate "
                          "is on disk, because its digest is half the spec.")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
+
+    if a.b04_s2:
+        child = build(B04_S2_ROW)
+        print("%-26s beat 04  %d step(s)  est %d min"
+              % (B04_S2_ROW["new_id"], len(child["steps"]), B04_S2_ROW["est"]))
+        if a.write:
+            path = derive_spec.write(
+                child, "pipeline/jobs/%s.yaml" % B04_S2_ROW["new_id"],
+                force=a.force)
+            print("   wrote %s" % os.path.relpath(path, REPO))
+        else:
+            print("\n-- dry run. re-run with --write.")
+        return 0
+
+    if a.b03_s2:
+        child = build(B03_S2_ROW)
+        print("%-26s beat 03  %d step(s)  est %d min"
+              % (B03_S2_ROW["new_id"], len(child["steps"]), B03_S2_ROW["est"]))
+        if a.write:
+            path = derive_spec.write(
+                child, "pipeline/jobs/%s.yaml" % B03_S2_ROW["new_id"],
+                force=a.force)
+            print("   wrote %s" % os.path.relpath(path, REPO))
+        else:
+            print("\n-- dry run. re-run with --write.")
+        return 0
 
     if a.b01_r2:
         child = build(B01_R2_ROW)
