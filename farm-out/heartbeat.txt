@@ -3638,3 +3638,5 @@
 10:00:39Z DONE task=ep2-b04-ageb-p1-0821-1787306345 rc=0 artifacts=1
 10:00:45Z STARTED task=ep2-b07-ageb-p1-0821-1787306348 attempt=1 on box-runner
 10:01:13Z DONE task=ep2-b07-ageb-p1-0821-1787306348 rc=0 artifacts=1
+10:01:19Z STARTED task=ep2-b08-ageb-p1-0821-1787306351 attempt=1 on box-runner
+10:01:47Z DONE task=ep2-b08-ageb-p1-0821-1787306351 rc=0 artifacts=1
