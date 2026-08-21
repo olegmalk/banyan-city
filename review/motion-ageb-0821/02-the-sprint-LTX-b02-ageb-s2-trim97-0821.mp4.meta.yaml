@@ -1,0 +1,51 @@
+# Shot provenance (7.2) — EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none — no sampler ran for this clip
+model_licence: n/a — the edit adds no model output
+source_clip: 02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4
+source_sha256: 8e86a1f5f78263526137f676baf5ba9db2712f9a5d4739f67f2f583957877f19
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 2
+size: 704x1280
+seconds: 4.042
+frames: 97
+# THIS FILE STATES ITS OWN FRAME RATE ON PURPOSE. `model: none` above is honest —
+# ffmpeg ran, no sampler did — and render_t3.held_still() reads that substring.
+# A held still is a COMPUTED camera move with no true frame rate and may be
+# stretched to its slot; this is real footage at a real 24 fps and must not be.
+# The declared fps is the discriminator that keeps it on the footage path
+# (play once, hold the last frame). Beat 01 played at 0.53x for a whole day in
+# ep2-demo-0820 because a composite had no fps line to state.
+fps: 24
+edit: ffmpeg -frames:v 97, re-encoded libx264 crf 10 preset slow from a crf-10 source
+steps: 8@352x640+3@704x1280 (the SOURCE's; nothing was re-sampled)
+guidance: 2.0
+seed: 20260822
+task: ep2-b02-tilemotion-s2-0821 (source) + ep2-b02-ageb-trim-0821 (this edit)
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+why_trimmed: >-
+  THE FACE STOPS BEING DRAWN AT f106. From frame 106 to frame 120 the head keeps
+  its silhouette and its green, and the slit eyes, brow bar and mouth line are
+  simply absent — a featureless ovoid. It is the failure mode six of this wave's
+  fourteen clips share. Frames 000-096 are clean: the sprint, the push off and
+  the dive into the grass all complete inside them, and the face is intact
+  through f101.
+  THE TRIM IS NOT WHAT KEEPS THE EGG OFF SCREEN — the slot would have.
+  Beat 02 is silent, so fit_duration gives it min(clip, script_s) and the
+  outgoing 4.042 s take was already slotted at 4.04 s. What the trim removes is
+  the DEPENDENCE on that: an untrimmed 5.042 s clip would slot at min(5.042,
+  script_s), and if the script's paper timing for beat 02 is longer than 4.04 s
+  the dissolved frames would play. Cutting at 97 makes the window a property of
+  the file instead of a property of a number in another document.
+fault_that_remains: >-
+  THE EARS ARE WRONG. canon.yaml ep2-goblin-design-adult/correction_2026_08_20
+  reads the B tile as "SHORT, BROAD, LOW-SET FLANGES swept back and sitting
+  almost flush at the jawline ... NOT long tapering elf spikes." This clip draws
+  long tapering spikes, as every clip in the age-B wave does. Also C1, the
+  magenta collar. Neither is fixed here and neither is claimed to be.
+evidence: review/motion-ageb-0821/JUDGING-0821.md, STRIP-b02.png, STRIP-b02-s2-tail.png
