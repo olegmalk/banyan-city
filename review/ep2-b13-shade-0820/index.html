@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sapling — beat 13, THE SHADE: one question, with the pixels</title>
+<title>ANSWERED — beat 13, THE SHADE: A, that's the shade</title>
 <style>
   :root {
     --bg: #17181a; --panel: #1f2124; --line: #33363b;
@@ -47,6 +47,13 @@
            color: var(--muted); font-size: 13.5px; }
   a { color: var(--new); }
   .q { font-size: 19px; line-height: 1.5; }
+  .answered { background: #16241a; border: 1px solid var(--pass); border-radius: 10px;
+              padding: 18px 20px; margin: 26px 0 10px; }
+  .answered h2 { margin-top: 0; color: var(--pass); }
+  .answered blockquote { margin: 12px 0; padding: 10px 16px; border-left: 3px solid var(--pass);
+              background: #101a13; font-size: 17px; color: var(--ink); }
+  .answered ul { margin: 12px 0; } .answered li { margin: 5px 0; }
+  .answered .muted { color: var(--muted); font-size: 14.5px; }
 </style>
 </head>
 <body>
@@ -60,6 +67,36 @@
 </header>
 
 <p class="stamp">PRIVATE REVIEW PAGE · A TASTE CALL (R4) · NOTHING IS BLOCKED WHILE IT WAITS</p>
+
+<div class="answered">
+  <h2>ANSWERED — 2026-08-20</h2>
+  <p>The founder answered <strong>A</strong>, and said one more thing in the same breath. Verbatim:</p>
+  <blockquote>&ldquo;this does satisfy it but this is one of the images where the goblin looks like an
+  adult, which is wrong&rdquo;</blockquote>
+  <ul>
+    <li><strong>THE STAGING IS SATISFIED AND THE SHADE CLAUSE CLOSES.</strong> &ldquo;Tips his head
+    sideways into the sapling's hand-sized patch of shade&rdquo; is met by what is already in the cut.
+    The clause is retired <em>by ruling</em>, not by measurement — nothing renders, no picture moves,
+    and canon is unchanged: the sapling is still ~40&nbsp;cm and still shorter than he is in every beat.</li>
+    <li><strong>No one-shot exception is filed.</strong> Option B is dead — which is what section 5
+    below argued for, and the founder reached the same place without needing the argument.</li>
+    <li><strong>The goblin reading as an adult is a SEPARATE fault and is not beat 13's.</strong> It is
+    a design fault, it is on many frames rather than this one, and it belongs to the tile-correction
+    wave. It does not reopen the staging question this page asked, and this page is not the place it
+    gets fixed.</li>
+    <li><strong>Nothing is pre-staged any more.</strong> A's chain was &ldquo;file nothing, enqueue
+    nothing, record the verdict, delete this directory&rdquo;;
+    <code>pipeline/decisions-pending/ep2-b13-shade-0820/</code> has fired and is deleted in the same
+    commit as this banner. A pre-staged chain left armed is a trap for the next lane.</li>
+  </ul>
+  <p class="muted"><strong>Provenance, recorded rather than smoothed over:</strong> these words were
+  <em>relayed</em> by the orchestrating lane on 2026-08-21, quoting the founder's multi-answer message of
+  2026-08-20 evening — the same message that answered <a href="/review/ep2-guards-0818">the guards
+  card</a> (&ldquo;they should look like grown men. yes. dumb grown men.&rdquo;) and beat 04's action
+  (A, the peek). They are not read out of a transcript held in this tree. If a session transcript is
+  ever indexed, corroborate against 2026-08-20 evening and drop this note. Everything below this banner
+  is the question as it stood before the answer, left standing unedited.</p>
+</div>
 
 <div class="callout">
   <p class="q"><strong>THE QUESTION.</strong> Does this satisfy <em>"tips his head sideways into the
@@ -189,8 +226,9 @@ otherwise.</p>
   Option B's build: <code>pipeline/beat13_shade_composite.py --founder-option</code> (the guard it lifts,
   and the two it keeps armed, are documented in the flag itself),
   <code>farm-out/ep2-b13-tallcomp-0820/</code>, spec
-  <code>pipeline/jobs/ep2-b13-tallcomp-0820.yaml</code>. What fires on each answer:
-  <code>pipeline/decisions-pending/ep2-b13-shade-0820/README.md</code>.
+  <code>pipeline/jobs/ep2-b13-tallcomp-0820.yaml</code>. What used to fire on each answer was
+  <code>pipeline/decisions-pending/ep2-b13-shade-0820/README.md</code>; the card is answered (A), that
+  chain has fired, and the directory is deleted — it is in git history at any commit before 2026-08-21.
 </footer>
 
 </div>

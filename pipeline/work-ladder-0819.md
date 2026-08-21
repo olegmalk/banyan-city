@@ -7331,3 +7331,98 @@ The ruling then arrived verbatim with a date and is now recorded on the card and
 in `review/inbox.yaml` **with a provenance note saying it was relayed**. See
 `correction_0821` in each spec. Verifying it also turned up that beat 13's and
 beat 04's rulings from the same message were recorded nowhere either.
+
+## Appended 2026-08-21 by the hygiene lane — TWO CARDS CLOSE, ONE CHAIN IS DISARMED, AND BEAT 04 GETS A NEW ACTION IN THE RECORD
+
+**No render, no GPU, $0.** This is bookkeeping the two answered cards owed, plus
+the one deletion their own chain asked for.
+
+### Beat 13 — the shade clause is retired by ruling, not by measurement
+
+`/review/ep2-b13-shade-0820` is ANSWERED. Founder, 2026-08-20, verbatim and in
+full:
+
+> "this does satisfy it but this is one of the images where the goblin looks like
+> an adult, which is wrong"
+
+**A.** The staging satisfies *"tips his head sideways into the sapling's
+hand-sized patch of shade"*. No one-shot exception is filed, canon is unchanged
+(~40 cm, always shorter than he is, every beat of 002b), nothing renders and the
+take in the cut does not move. Section 5 of that card had argued the answer was
+neither A nor B — a half-metre plant carrying exactly two seed leaves is a
+lollipop by construction — and the ruling arrived at the same place without
+needing the argument.
+
+**THREE FAULTS, ONE CLOSED.** Worth separating, because this row is easy to read
+as a clean bill and is not one:
+
+1. the shade clause — **closed by this ruling**;
+2. beat 13's standing contradiction in the cut (`b13-refire-0814` grows a mature
+   forked tree and he climbs it, against "thats ridiculous, lmao. the sapling is
+   tiny") — **untouched, still named in
+   `review/ep2-demo-0820/sources/picks-0820.yaml`**;
+3. the goblin reading as an adult — a **design** fault, on many frames rather
+   than this one, owned by the tile-correction wave and explicitly not settled on
+   a staging card.
+
+**THE CHAIN FIRED AND THE DIRECTORY IS GONE.** A's chain was, in its own words,
+"file nothing, enqueue nothing, record the verdict … and delete this directory".
+All five bookkeeping items are done — banner, `review/inbox.yaml`, the beat-13
+row of `picks-0820.yaml`, this entry — and
+`pipeline/decisions-pending/ep2-b13-shade-0820/` is deleted in the same commit.
+That directory also carried `derive-b13-tallmotion.py`, the emitter for answer
+**B**, which the ruling kills; it is in git history at any commit before
+2026-08-21 and nothing points at it. This is the second pre-staged chain removed
+in two days for the same reason: a chain left armed after its card is answered is
+a trap for whoever reads it next as live work.
+
+### Beat 04 — THE PEEK is written into the record, verbatim
+
+`/review/ep2-b04-action-0820` is ANSWERED: **"A"**. The card said the pick *is*
+the spec, so the pick went into the record rather than into a plan:
+
+| file | what it now carries |
+|---|---|
+| `genomes/.../002b-first-citizen/node.md` beat 04 | A's sentence, old line struck through beneath a dated note |
+| `review/ep2-picks/done-definitions.yaml` | `beats.'04'.script_RESTAGE_CORRECTION_0820`, with the card's scoring line as `done_when_now` |
+| `.../leaves/002b-t0-c.yaml` | the pick in `revisions`, the first entry there whose `quote` is the decision itself rather than a delegation |
+| `.../002b-first-citizen/shots.md` beat 04 | corrected prompt, superseded prompt kept verbatim |
+
+**What forced the one edit nobody asked for.** shots.md beat 04 read *"Slow
+push-in"*. The peek scores only if the travel is **his** — P4 on the peek specs is
+CAMERA LOCKED — and a push-in reads as a lean at a glance and fails at 1:1. So
+`Slow push-in` → `Static locked camera` came with the action clause. Leaving it
+would have pointed the next beat-04 render at a camera move the picked action
+cannot survive, which is the same failure mode the 08-18 beat-17 correction was
+written to prevent.
+
+**`trunk` is in the script line and deliberately not in the prompt.** The beat-04
+plate is a close crop on his face and shoulders in deep grass and has no trunk in
+it; the trunk belongs to beat 03. Naming a noun the init does not contain is how a
+noun gets drawn mid-clip, so the cover he leans out from is the tall grass the
+plate actually shows. Same action, same joke, same score, one fewer invented
+object. `pipeline/derive_b04_peek_0820.py` reached this first and its five seed
+clones (`ep2-b04-peek-s1..s5-0820`) were already authored off this wording.
+
+**Nothing spoken moved and nothing re-rendered.** The VO line is unchanged and is
+not re-recorded, so this is a stage direction and the approved leaf `002b-t0-c`
+still governs. Beat 04 keeps shipping in `review/ep2-demo-0820` as best-available.
+
+**STILL OWED AND DELIBERATELY NOT DONE HERE.** Beat 04's shot prompt still opens
+"A small round goblin" — the killed child design — and so do beats 02, 03, 05 and
+06. That is board-wide staleness, not beat 04's, and its target wording is
+contested between two of his own rulings: 08-19 made `lean wiry adult goblin man`
+canon, and 08-20 said of a beat-13 frame that the goblin looking like an adult "is
+wrong". Choosing between them to unstick a stage direction would be the wrong lane
+doing it, so it rides with the tile-correction wave.
+
+### Provenance, on all three rulings
+
+All of it — the guards card, beat 13, beat 04 — came from **one** founder message
+of 2026-08-20 evening, **relayed** by the orchestrating lane on 2026-08-21. None
+of it is read out of a transcript held in this tree. Every place it is now written
+down carries that note in the same words, and the note says what would discharge
+it: if a session transcript is ever indexed, corroborate against 2026-08-20
+evening and delete the note. This is the discipline the previous entry in this
+file paid for the hard way — a lane may not promote its own tasking to a founder
+ruling, and the cure is not silence but a dated quote with its channel named.

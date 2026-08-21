@@ -38,17 +38,28 @@ every option that has one — a job spec, a script, a checklist.
 
 | card | dir | options |
 |---|---|---|
-| `/review/ep2-guards-0818` | `ep2-guards-0818/` | **pass** → `swap-b09-into-cut.sh`, written and runnable · **recast** → nothing to file, and why · **stage** → fires the same swap |
-| `/review/ep2-b13-shade-0820` | `ep2-b13-shade-0820/` | **A** → nothing to file, and why · **B** → canon exception first, then `derive-b13-tallmotion.py`, written |
 | `/review/ep2-b16-leaf-0820` | `ep2-b16-leaf-0820/` | **restage** → nothing to file (R4 writes the staging) · **licence** → canon exception first; the motion spec is *not yet written* and the README says why |
 
-`/review/ep2-b04-action-0820` deliberately has **no** directory here: it asks the
-author to pick among three action lines, and the pick *is* the spec. Pre-staging
-three of them would be pre-staging three different episodes.
+`/review/ep2-b04-action-0820` deliberately had **no** directory here: it asked the
+author to pick among three action lines, and the pick *was* the spec. Pre-staging
+three of them would have been pre-staging three different episodes. He answered
+**A** (the peek) on 2026-08-20 and the line is now in `node.md`,
+`done-definitions.yaml`, the approved leaf and `shots.md`.
 
-**Rule 3 is doing real work in two of these four**, and that is the point rather
-than a shortfall. "Nothing fires, and here is why" took as long to write as a
-spec would have, and it is the entry that stops the next lane inventing one.
+## Fired and deleted — 2026-08-20/21
+
+Rule 4 in practice, recorded because the deletions are the only evidence it was
+followed:
+
+| card | answer | what happened to the dir |
+|---|---|---|
+| `/review/ep2-guards-0818` | **pass** ("they should look like grown men. yes. dumb grown men.") | deleted 2026-08-21. `swap-b09-into-cut.sh` had been overtaken twice — beat 09 entered `review/ep2-ship-0821` on 08-20 under a steward override, and its live successor is `pipeline/swap_b09_r2s2_into_ship.sh`, which takes the take id as an argument and asserts the traps the old script only listed |
+| `/review/ep2-b13-shade-0820` | **A** ("this does satisfy it…") | deleted 2026-08-21. A's chain was "file nothing, enqueue nothing, record the verdict, delete this directory", and the four records it named are written. `derive-b13-tallmotion.py`, the emitter for **B**, went with it — the ruling kills B |
+
+Both sat armed for a day after their cards were answered, which is exactly the
+failure rule 4 names. **Rule 3 is doing real work here too**: "nothing fires, and
+here is why" was the right entry for A, and it is what stopped a lane inventing a
+rung after the answer arrived.
 
 ## The failure this directory is designed to make impossible
 

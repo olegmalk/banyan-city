@@ -9711,3 +9711,42 @@ transcript.** Still owed by the lanes that own those cards: an answered banner o
 /review/ep2-b13-shade-0820, deletion of `pipeline/decisions-pending/ep2-b13-shade-0820/`
 and of `pipeline/decisions-pending/ep2-guards-0818/` (both have fired), and beat
 04's action written into node.md and done-definitions.yaml.
+
+**Everything owed on those three cards is now written down — 2026-08-21, hygiene
+lane, $0, no GPU.** The paragraph above listed what was still owed; this closes
+it.
+
+- **/review/ep2-b13-shade-0820 has its ANSWERED banner**, and the quote on it is
+  now the founder's full sentence rather than the half that had been relayed
+  first: *"this does satisfy it but this is one of the images where the goblin
+  looks like an adult, which is wrong."* The staging is satisfied and the shade
+  clause closes; the goblin-reads-adult half is a **design** fault on many frames,
+  not this staging question, and it rides with the tile-correction wave. Beat 13's
+  *other* standing fault — the mature forked tree in `b13-refire-0814`, against
+  "the sapling is tiny" — is untouched and still named in the cut. Three faults,
+  one closed.
+- **Both fired chains are deleted.** `pipeline/decisions-pending/ep2-b13-shade-0820/`
+  went today (its own A-chain said to; `derive-b13-tallmotion.py`, the emitter for
+  the now-dead option B, went with it) and `ep2-guards-0818/` went on 08-21 with
+  the beat-09 lane. `pipeline/decisions-pending/README.md` no longer lists either
+  as open and records both under "Fired and deleted". One directory is left armed:
+  `ep2-b16-leaf-0820/`, whose card is genuinely still open.
+- **Beat 04's action is in the record, verbatim.** `node.md` beat 04 now reads A's
+  sentence — *"The scavenger leans out from behind the trunk to look, and pulls
+  straight back the moment he has looked — the whole head and shoulder make the
+  trip, twice, and he is still doing it when the shot ends"* — with the old line
+  struck through beneath a dated note; `done-definitions.yaml` carries
+  `beats.'04'.script_RESTAGE_CORRECTION_0820` with the card's own scoring line as
+  the new `done_when`; the approved leaf `002b-t0-c` has the pick in `revisions`;
+  and `shots.md` beat 04 was corrected the same day with the superseded prompt kept
+  verbatim. One edit the pick forced: `Slow push-in` → `Static locked camera`, because
+  the peek only scores if the travel is his. The five seed clones
+  `ep2-b04-peek-s1..s5-0820` were already authored off this wording.
+- **No spoken line moved, nothing was re-rendered, no take or pick changed.** Beats
+  04 and 13 both keep shipping in `review/ep2-demo-0820` as best-available.
+- **Still owed, and named rather than quietly skipped:** beat 04's shot prompt
+  still opens "A small round goblin", the killed child design — as do beats 02, 03,
+  05 and 06. Board-wide staleness, and its target is contested between his 08-19
+  ruling (`lean wiry adult goblin man` is canon) and his 08-20 note that the goblin
+  looking like an adult is wrong. The tile-correction wave owns it; a stage-direction
+  lane picking between two of his rulings would be the wrong lane doing it.

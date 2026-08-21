@@ -550,7 +550,54 @@ A small round goblin — enormous ears, one broken tusk, patchwork cloak — cro
 
 ## Beat 04 — THE FOOTNOTE (0:16–0:22) ⬜ needs footage
 
-Line: the architect/footnote joke. Camera close on the held breath.
+Line: the architect/footnote joke. Camera locked while he keeps peeking out of cover and pulling back.
+
+```
+A small round goblin leans his head and one shoulder out past the tall grass blades crossing in front of him to look, then pulls straight back in behind them the same way he came, and leans out again — the same trip repeating, and still going when the shot ends. Static locked camera, soft morning light, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+```
+
+**CORRECTION 2026-08-21 — THE HELD BREATH IS RESTAGED AS A PEEK, by the founder's
+own pick, and this board was the last place still asking a render for the old
+action.** `/review/ep2-b04-action-0820` offered three replacement actions and he
+answered **"A"** on 2026-08-20; node.md beat 04 now reads *"The scavenger leans
+out from behind the trunk to look, and pulls straight back the moment he has
+looked — the whole head and shoulder make the trip, twice, and he is still doing
+it when the shot ends."* The record is
+`review/ep2-picks/done-definitions.yaml` beats.'04'.`script_RESTAGE_CORRECTION_0820`,
+which marks the eye-only bar **superseded for rendering purposes** — no new
+beat-04 job may ask for darting eyes on a held head and no take is failed for not
+having them. PROVENANCE: the word "A" was relayed by the orchestrating lane on
+2026-08-21 quoting his 2026-08-20 message; it is not read out of a transcript
+held in this tree.
+
+**Why the old prompt could not simply be left.** It asked for the one thing this
+engine has now been measured refusing from both directions: rung 1
+(`ep2-b04-eyes-crf10-0819`) was told his head and shoulders stay still and moved
+the gaze by swinging his head 64.7 px; rung 2 (`ep2-b04-headlock-0820`) locked the
+head to 4.7 px and eye motion fell 0.356 → 0.126. Holding the head holds the eyes.
+
+**What changed above, and what it forced.** The action clause is A's, and
+~~Slow push-in~~ → `Static locked camera` came with it and is not a free edit: the
+peek scores only if the travel is HIS, so a push-in reads as a lean at a glance and
+fails at 1:1. **`trunk` is deliberately not in the prompt**, though it is in the
+script line — this beat's plate (`04-the-footnote-mac-plate-r1s1.png`) is a close
+crop on his face and shoulders in deep grass and contains no trunk; the trunk
+belongs to beat 03. Naming a noun the init does not contain is how a noun gets drawn
+mid-clip, so the cover he leans out from is the cover the plate actually shows.
+Same action, same joke, same score.
+
+**The design wording is NOT corrected here and that is on purpose.** "A small round
+goblin" is the killed child design, and beats 02, 03, 05 and 06 open the same way —
+board-wide staleness, not beat 04's. Its target is contested between two of his own
+rulings (08-19 `lean wiry adult goblin man` is canon; 08-20, of a beat-13 frame,
+"the goblin looks like an adult, which is wrong"), so it belongs to the
+tile-correction wave. Picking between them to unstick a stage direction would be the
+wrong lane doing it.
+
+**Superseded 2026-08-21, kept verbatim — the two rungs are measurements OF this
+string**, and they stop being interpretable the moment it is gone. **VETO-ABLE in
+one line**: he restores the prompt below and the struck sentence in node.md beat 04,
+and nothing else has to be undone.
 
 ```
 A small round goblin's face fills the frame as he holds his breath, cheeks puffed, huge expressive eyes darting left and right, enormous ears twitching at every sound. Slow push-in, soft morning light, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.

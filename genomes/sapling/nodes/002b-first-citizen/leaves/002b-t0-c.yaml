@@ -293,6 +293,69 @@ revisions:
       unchanged — it gates the whole node and every other beat is untouched — and
       this entry is the per-beat record. STEWARDSHIP.md §6 gates media from beats he
       has not read; nothing was voiced, rendered or enqueued for this pass. $0, no GPU.
+  - date: 2026-08-20
+    beat: '04'
+    quote: "A"
+    recorded_on: '2026-08-21'
+    author: THE FOUNDER — his pick off /review/ep2-b04-action-0820, not a steward staging edit
+    what: |-
+      THE FOOTNOTE IS RESTAGED AS THE PEEK, AND THIS ONE IS HIS SENTENCE. The card
+      `/review/ep2-b04-action-0820` put three replacement actions in front of him and
+      he answered "A". Unlike the 08-18 beat-17 entry above, the `quote` here is not a
+      grant of authority — it is the decision itself, so nothing has to be argued from
+      a delegation.
+      04 THE FOOTNOTE — "The scavenger holds his breath, eyes darting." → "The
+      scavenger leans out from behind the trunk to look, and pulls straight back the
+      moment he has looked — the whole head and shoulder make the trip, twice, and he
+      is still doing it when the shot ends." That is the card's wording for A, copied
+      verbatim rather than paraphrased. Stage direction only. NO SPOKEN LINE MOVED —
+      "Worst stealth plan I have ever seen — and I once watched an architect hide an
+      outage in a footnote." is unchanged and is NOT re-recorded — so beat 04's VO take
+      stays valid and this leaf still governs. The superseded line is kept struck
+      through beneath a dated note in node.md beat 04.
+      WHY THE OLD LINE HAD TO GO, MEASURED FROM BOTH SIDES. Rung 1
+      `ep2-b04-eyes-crf10-0819` asked for darting eyes and stated in as many words that
+      his head and shoulders stay STILL: head travel 64.7 px, eye motion 0.356 — the
+      gaze moved, and it moved by swinging his whole head. Rung 2
+      `ep2-b04-headlock-0820` locked the head to 4.7 px and eye motion fell to 0.126 —
+      the head stopped and the eyes stopped with it. ON THIS ENGINE, HOLDING THE HEAD
+      HOLDS THE EYES. The old `done_when` asked for the one thing it will not do, and
+      A turns rung 1's defect into the beat.
+    provenance: |-
+      RELAYED, NOT READ OUT OF A TRANSCRIPT IN THIS TREE, and recorded rather than
+      smoothed over. The word "A" came from the orchestrating lane on 2026-08-21,
+      quoting his multi-answer message of 2026-08-20 evening — the same message that
+      answered /review/ep2-guards-0818 ("they should look like grown men. yes. dumb
+      grown men.") and beat 13's staging ("this does satisfy it"). All three carry this
+      same note. If a session transcript is ever indexed, corroborate against 2026-08-20
+      evening and delete this key.
+    veto: |-
+      ONE LINE UNDOES IT. The original sentence is preserved struck through in node.md
+      beat 04 and quoted verbatim in done-definitions.yaml
+      beats.'04'.script_RESTAGE_CORRECTION_0820.superseded_for_rendering. Restoring it
+      means putting that sentence back and deleting that key; no take, pick or verdict
+      was changed, so nothing else has to be undone.
+    what_it_costs: |-
+      NOTHING RE-RENDERS AND NOTHING IS STRANDED. Beat 04 ships in review/ep2-demo-0820
+      as best-available with its fault named and that take does not move. The five seed
+      clones already authored for A — `pipeline/jobs/ep2-b04-peek-s1..s5-0820.yaml`,
+      from `pipeline/derive_b04_peek_0820.py` — were written against this exact wording.
+      THE PROMPT MOVED WITH THE SCRIPT, same day: `shots.md` beat 04 carries a dated
+      CORRECTION 2026-08-21 note with the superseded prompt kept verbatim, because
+      leaving it would point the next beat-04 render at the action the script no longer
+      contains — and at a "Slow push-in" the picked action cannot survive, since the
+      peek scores only if the travel is HIS and the camera is locked.
+      STILL OWED AND NOT SETTLED HERE: the design. Beat 04's shot prompt still opens
+      "A small round goblin", the killed child design, and so do beats 02, 03, 05 and
+      06 — board-wide staleness whose target wording is itself contested between his
+      08-19 ruling (`lean wiry adult goblin man` is canon) and his 08-20 note on a
+      beat-13 frame ("the goblin looks like an adult, which is wrong"). That belongs to
+      the tile-correction wave, not to this stage direction.
+    approval_status: |-
+      THIS LINE IS HIS OWN. `approved_by: founder` above is unchanged and still gates
+      the node; this entry is the per-beat record of a pick he made, so STEWARDSHIP.md
+      §6 is satisfied for beat 04's action by the answer itself. Nothing was voiced,
+      rendered or enqueued for this pass. $0, no GPU.
 approval_scope: |-
   Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
   It is NOT approval of the shot prompts: all 21 were found written in the v2

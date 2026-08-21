@@ -1943,15 +1943,27 @@
     motion rung fires) / name a third staging - AND SECTION 5 OF THE CARD IS MY ARGUMENT THAT YOU SHOULD.'
   resolved:
     date: '2026-08-20'
-    verdict: '2026-08-20, verbatim: ''this does satisfy it.'' ANSWER A -- that is the shade. The clause
-      "tips his head sideways into the sapling''s hand-sized patch of shade" is satisfied by the take
-      already in the cut, the beat closes as best-available with its fault named, canon is unchanged and
-      no one-shot exception is filed. Nothing renders and no picture moves.'
+    verdict: '2026-08-20, VERBATIM AND IN FULL: ''this does satisfy it but this is one of the images where
+      the goblin looks like an adult, which is wrong.'' ANSWER A -- that is the shade. The clause "tips
+      his head sideways into the sapling''s hand-sized patch of shade" is satisfied by the take already
+      in the cut, the beat closes as best-available with its fault named, canon is unchanged and no one-shot
+      exception is filed. Nothing renders and no picture moves. THE SECOND HALF IS A SEPARATE FAULT AND
+      IS NOT BEAT 13''s: the goblin reading as an adult is a DESIGN fault, it is on many frames rather
+      than this one, and it belongs to the tile-correction wave. It does not reopen the staging question
+      this card asked. (The first half of this quote was recorded here on 2026-08-21 before the rest of
+      the sentence had been relayed; the full wording replaced it the same day, which is why the earlier
+      text was shorter.)'
     provenance: 'RELAYED, NOT READ OUT OF A TRANSCRIPT IN THIS TREE. It came from the orchestrating lane on
       2026-08-21, quoting the founder''s multi-answer message of 2026-08-20 evening -- the same
-      message that answered the guards card. The lane that wrote this block CHECKED FIRST and the
-      ruling was recorded nowhere: no resolved block here, no banner on the card. It is written
-      down now rather than left to be relayed a third time.'
+      message that answered the guards card and beat 04''s action. The lane that wrote this block CHECKED
+      FIRST and the ruling was recorded nowhere: no resolved block here, no banner on the card. It is
+      written down now rather than left to be relayed a third time. If a session transcript is ever indexed,
+      corroborate against 2026-08-20 evening and delete this note.'
+    chain_fired: 'A''s chain was "file nothing, enqueue nothing, record the verdict, delete this directory".
+      Done 2026-08-21: ANSWERED banner on /review/ep2-b13-shade-0820, this block, the beat-13 row of
+      review/ep2-demo-0820/sources/picks-0820.yaml, pipeline/work-ladder-0819.md, and
+      pipeline/decisions-pending/ep2-b13-shade-0820/ DELETED. A pre-staged chain left armed is a trap for
+      the next lane.'
   note_for_lanes: 'NOT BLOCKING. Beat 13 already ships in review/ep2-demo-0820 as
     best-available with its fault named, so nothing waits on this. NO NEW RENDER WAS
     MADE FOR THIS CARD and none should be: the two suspects with a mechanism were both
@@ -2062,9 +2074,23 @@
       review/ep2-picks/done-definitions.yaml are written from this line, and the render follows that.'
     provenance: 'RELAYED, NOT READ OUT OF A TRANSCRIPT IN THIS TREE. It came from the orchestrating lane on
       2026-08-21, quoting the founder''s multi-answer message of 2026-08-20 evening -- the same
-      message that answered the guards card. The lane that wrote this block CHECKED FIRST and the
-      ruling was recorded nowhere: no resolved block here, no banner on the card. It is written
-      down now rather than left to be relayed a third time.'
+      message that answered the guards card and beat 13''s staging. The lane that wrote this block CHECKED
+      FIRST and the ruling was recorded nowhere: no resolved block here, no banner on the card. It is
+      written down now rather than left to be relayed a third time. If a session transcript is ever indexed,
+      corroborate against 2026-08-20 evening and delete this note.'
+    written_into_the_record: 'DONE 2026-08-21, and A''s wording is copied verbatim from the card rather
+      than paraphrased. genomes/sapling/nodes/002b-first-citizen/node.md beat 04 now reads "The scavenger
+      leans out from behind the trunk to look, and pulls straight back the moment he has looked -- the
+      whole head and shoulder make the trip, twice, and he is still doing it when the shot ends.", with
+      the superseded sentence kept struck through beneath a dated note. review/ep2-picks/done-definitions.yaml
+      carries beats.''04''.script_RESTAGE_CORRECTION_0820 with the card''s scoring line as done_when_now.
+      The approved leaf leaves/002b-t0-c.yaml has the pick in its revisions list. shots.md beat 04 was
+      corrected the same day, superseded prompt kept verbatim -- and "Slow push-in" became "Static locked
+      camera", which the peek forces, since the travel has to be his. An ANSWERED banner is on the card.
+      NO SPOKEN LINE MOVED and nothing was re-rendered. STILL OWED, deliberately not done here: the "small
+      round goblin" design wording, which is board-wide (beats 02, 03, 05, 06 too) and whose target is
+      contested between the 08-19 adult ruling and his 08-20 "the goblin looks like an adult, which is
+      wrong" -- it belongs to the tile-correction wave.'
   note_for_lanes: 'NOT BLOCKING. Beat 04 ships in review/ep2-demo-0820 as best-available with its
     fault named, so nothing waits on this. NO RENDER WAS MADE FOR THIS CARD and none should be -
     script writing is free and STEWARDSHIP 6 legal, rendering an unpicked action is not. NOTHING IS

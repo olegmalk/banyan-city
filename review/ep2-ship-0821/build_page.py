@@ -377,11 +377,15 @@ without it.</p>
   is not acceptance here either. Answering <a href="/review/ep2-b16-leaf-0820">/review/ep2-b16-leaf-0820</a>
   with <b>restage</b> ratifies what you are watching; <b>licence</b> reopens the macro and needs a
   render nobody has made.</li>
-  <li><strong>Beat 09: in or out.</strong> “beat 09: back to a slate” removes it. Silence is
-  <em>not</em> acceptance here — it is a steward override of a written declaration, so I would
-  rather have the word. Answering <a href="/review/ep2-guards-0818">/review/ep2-guards-0818</a>
-  with <b>pass</b> / <b>recast</b> / <b>stage</b> settles it and four other beats at the same
-  time.</li>
+  <li><strong>Beat 09: in or out — and this one is no longer a question I am pressing.</strong>
+  “beat 09: back to a slate” still removes it, like any other row. But when this list was written
+  beat 09 was a steward override of a written declaration and I said silence was not acceptance;
+  <a href="/review/ep2-guards-0818">/review/ep2-guards-0818</a> has since been answered
+  <b>pass</b> — “they should look like grown men. yes. dumb grown men.” — so the override is
+  discharged and beat 09 is an ordinary pick you can veto in one line like the rest. Nothing about
+  the picture changed; the answer was the one the cut was already staged for. <span class="sub">The
+  words were relayed by the orchestrating lane on 08-21, quoting his 08-20 message — provenance
+  noted on the card and in <code>review/inbox.yaml</code>.</span></li>
   <li><strong>Any other beat you want out.</strong> Every row above has a one-line veto in the
   manifest; each one is a file swap and a re-assemble, minutes, $0.</li>
   <li><strong>Then say “publish”.</strong> On that word, and not before: the cut is promoted from

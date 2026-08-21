@@ -40,9 +40,28 @@ The scavenger crouches behind a trunk that hides roughly one-sixth of him.
 > **VO:** A creature is using me as cover. I am forty centimeters tall.
 
 **THE FOOTNOTE — 0:16–0:22**
-The scavenger holds his breath, eyes darting.
+The scavenger leans out from behind the trunk to look, and pulls straight back the moment he has looked — the whole head and shoulder make the trip, twice, and he is still doing it when the shot ends.
 
 > **VO:** Worst stealth plan I have ever seen — and I once watched an architect hide an outage in a *footnote*.
+
+*restaged 2026-08-20 — THE FOUNDER'S OWN PICK, not a steward staging edit.
+`/review/ep2-b04-action-0820` offered three replacement actions and he answered
+**"A"** (THE PEEK); the sentence above is the card's wording for A, verbatim. The
+old line asked for the one thing this engine will not do, measured refusing it
+from both directions: rung 1 (`ep2-b04-eyes-crf10-0819`) was told in as many
+words that his head and shoulders stay still and moved the gaze by swinging his
+head 64.7 px; rung 2 (`ep2-b04-headlock-0820`) locked the head to 4.7 px and the
+eyes stopped with it, eye-band interframe 0.356 → 0.126. On this engine, holding
+the head holds the eyes. Nothing spoken moved — the VO line above is unchanged
+and is not re-recorded — so this is a stage direction and the approved leaf
+`002b-t0-c` still governs. Record:
+`review/ep2-picks/done-definitions.yaml` beats.'04'.`script_RESTAGE_CORRECTION_0820`.
+PROVENANCE, recorded rather than smoothed over: the word "A" was **relayed** by
+the orchestrating lane on 2026-08-21, quoting his multi-answer message of
+2026-08-20 evening — the same message that answered the guards card and beat 13.
+It is not read out of a transcript held in this tree. VETO-ABLE in one line; the
+original text is right here:*
+~~The scavenger holds his breath, eyes darting.~~
 
 **THE PATROL — 0:22–0:27**
 Two PATROL GUARDS jog in and halt, scanning the field. Their armor doesn't match.
