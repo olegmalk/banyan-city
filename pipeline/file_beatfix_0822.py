@@ -829,9 +829,9 @@ B02_STRENGTH_ROW = {
 # and has been looked at. It is a row like any other; it just cannot be
 # written before its input exists, because its input's digest is half of it.
 # --------------------------------------------------------------------------
-B02_MOTION_PLATE_REL = ("farm-out/ep2-b02-panicface-0822/b02-panic-plate.png")
+B02_MOTION_PLATE_REL = "farm-out/ep2-b02-panicstr-0822/b02-panic-s060.png"
 B02_MOTION_PLATE_BOX = (r"C:\banyan-farm\courier-box\farm-out"
-                        r"\ep2-b02-panicface-0822\b02-panic-plate.png")
+                        r"\ep2-b02-panicstr-0822\b02-panic-s060.png")
 
 
 def b02_motion_row(plate_sha: str) -> dict:
@@ -906,12 +906,16 @@ def b02_motion_row(plate_sha: str) -> dict:
                 "because they answer one note and neither can be judged from "
                 "a still.",
             "plate_provenance":
-                "%s, sha256 %s.., produced by ep2-b02-panicface-0822 from "
+                "%s, sha256 %s.., produced by ep2-b02-panicstr-0822 from "
                 "farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820.png by a "
-                "0.42 masked i2i over two face bands, published through that "
-                "job's own farm-out directory and opened at 1:1 before this "
-                "spec was written. cover_crop.py asserts the digest above "
-                "before it writes an init frame."
+                "0.60 masked i2i over two face bands (brow and mouth; the "
+                "eyes are outside the mask and are byte-identical to the "
+                "source). THE STRENGTH WAS PICKED BY EYE FROM A BRACKET, not "
+                "assumed: 0.42 washed the brows out, 0.60 draws them raised "
+                "and arched with the mouth open, and 0.75 overshot into a "
+                "scowl with sweat drops and a jagged mouth eating the collar. "
+                "cover_crop.py asserts the digest above before it writes an "
+                "init frame."
                 % (B02_MOTION_PLATE_REL, plate_sha[:8]),
             "failure_predicted_in_advance":
                 "THE MODEL TAKES THE EASY HALF OF A COMPOUND ACTION, which is "

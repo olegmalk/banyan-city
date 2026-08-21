@@ -114,7 +114,7 @@ BEATS = {
             "08-20 and you ruled it back out on 08-21. This is the take you kept, and that decision is "
             "closed unless you reopen it."),
         faults_from="ship-manifest.yaml beat 1 (the row for the take this one replaced) + verdict_chromaticity_rung_0820",
-        inflight="ep2-b01-figshape-0822 is on the box now — same plate, same recipe, same everything, one clause of fig silhouette added to the wording and the ball vocabulary banned. If words will not bind the shape, the next rung is drawing the fig-shaped nub into the plate instead of the ellipse the tool draws today; that is written down and deliberately not fired alongside this one.",
+        inflight="Round 1 of that re-render came back and is NOT being offered to you, for two reasons and one of them was my mistake: rewriting the prompt to describe the silhouette dropped the words \"deep purple\" out of it, so the fig ripened TEAL — and the shape came back lumpy with two little stalks growing out of the top, because banning \"sphere\" read as a ban on roundness generally. A fig is round; the thing to ban is the lollipop. Round 2 (ep2-b01-figshape-r2-0822) is on the box now with the colour words restored and only the ball-on-a-stick reading banned. If wording will not carry the shape in two rounds, the next lever is drawing the fig-shaped nub into the plate instead of the ellipse the tool draws today — the same way the fruit's COLOUR had to be made structural in August when words failed on it.",
         candidates=[],
     ),
     2: dict(
@@ -139,7 +139,7 @@ BEATS = {
             "adjective: forearms take it, chin off the ground, and he ends lying flat behind the stem with "
             "his head up. Your script says he dives BEHIND the trunk, not into the dirt."),
         faults_from="ship-manifest.yaml goblin_design_audit_0820 beats.2 + ship_status.2",
-        inflight="Two jobs, in order. ep2-b02-panicface-0822 repaints the brow and mouth of the round-2 plate (queued, 4 min); the motion job then runs on it with the prone-landing wording. The plate gets looked at at 1:1 first — the queue refused to let one job do both, and it was right to.",
+        inflight="The repainted face is done and the clip is rendering now (ep2-b02-panic-0822). Three strengths were tried on the plate and looked at side by side before any of them was animated: 0.42 washed the eyebrows out instead of raising them, 0.75 overshot into an angry scowl with sweat drops and a jagged mouth eating his collar, and 0.60 is the one — brows drawn, raised and arched, mouth open wide, eyes untouched because they were never in the mask. That is the face the clip is being built on, with the prone-landing wording.",
         candidates=[
             dict(file=f"{CAND_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4",
                  poster=f"{POSTER_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.jpg",
@@ -180,10 +180,15 @@ BEATS = {
             "your own tile — no horn, no dissolve, features held in all 105 frames — and it also finally "
             "has the trunk this beat is supposed to be hiding behind. Its one fault is that nothing "
             "happens in it. That is a wording problem, not a design one: the instruction told a motion "
-            "model to hold still, and it did. A re-render is running with an action that has a start, a "
-            "bottom and a return."),
-        inflight="ep2-b03-crouchlife-0822 is queued on the box — the round-2 candidate's exact plate and recipe, with \"crouch low and hold still, eyes flicking sideways\" replaced by three head-and-shoulder moves. The eye flicks are dropped on purpose: this engine was measured refusing gaze-only motion from both directions on beat 04, and asking again would be re-running a closed experiment.",
+            "model to hold still, and it did. The first clip below is that same picture with an action "
+            "that has a start, a bottom and a return — it is the one to watch."),
         candidates=[
+            dict(file=f"{CAND_URL}/03-evidence-LTX-ep2-b03-crouchlife-0822.mp4",
+                 poster=f"{POSTER_URL}/03-evidence-LTX-ep2-b03-crouchlife-0822.jpg",
+                 label="THE OLD-MAN FIX, with something happening in it — tonight, newest", tag="pass",
+                 verdict="Your design, and it moves. He drops his head down and away behind the stem, brings it back up and centred, drops it away again, and is back up with his face to camera on the last frame — which is the frame the assembly freezes on, so the beat ends on a face rather than the top of a skull. No horn, no old-man nose, no melting; the stem is there, unmoved, hiding about the sixth of him the script asks for; and he does not shrink across the clip. His face is turned away for parts of two of the four moves — on a beat about a creature trying to hide, that reads as looking around rather than as a defect, but it is your call.",
+                 diff="Same plate and same recipe as the round-2 clip below. The only change is the instruction: \"crouch low and hold still, eyes flicking sideways\" became three head-and-shoulder moves with a bottom and a return. The eye flicks were dropped rather than re-asked — this engine was measured twice on beat 04 refusing to move eyes without moving the head.",
+                 src="pipeline/jobs/ep2-b03-crouchlife-0822.yaml"),
             dict(file=f"{CAND_URL}/03-evidence-LTX-ep2-b03-canonmotion-r2-0821.mp4",
                  poster=f"{POSTER_URL}/03-evidence-LTX-ep2-b03-canonmotion-r2-0821.jpg",
                  label="canon-motion, round 2 — your design, and the trunk is there", tag="warn",
