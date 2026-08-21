@@ -3539,3 +3539,5 @@
 07:43:14Z DONE task=ep2-jerry-age-h215w1-0821-1787298063 rc=0 artifacts=1
 07:43:20Z STARTED task=ep2-jerry-age-h215w2-0821-1787298066 attempt=1 on box-runner
 07:43:48Z DONE task=ep2-jerry-age-h215w2-0821-1787298066 rc=0 artifacts=1
+07:43:54Z STARTED task=ep2-jerry-age-h240w0-0821-1787298068 attempt=1 on box-runner
+07:44:22Z DONE task=ep2-jerry-age-h240w0-0821-1787298068 rc=0 artifacts=1
