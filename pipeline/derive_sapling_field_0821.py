@@ -68,8 +68,37 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import derive_spec  # noqa: E402
+import clip_token_count  # noqa: E402
 import derive_fetch_guard  # noqa: E402
+import derive_spec  # noqa: E402
+
+
+def assert_under_clip77(label: str, text: str) -> int:
+    """Refuse to WRITE a spec the box will refuse to RUN.
+
+    Learned the expensive way on 2026-08-21: ten specs were written, committed,
+    pushed and enqueued with a 135-token negative, and all ten died rc=9 in
+    seconds on box_preflight's clip77 guard while the card sat idle. Every step
+    between the deriver and the queue was happy; the only thing that could have
+    caught it was counting, and counting is free and offline. The guard on the
+    box is the backstop, not the check -- a deriver that can emit an unrunnable
+    spec will emit one.
+    """
+    clip = clip_token_count.Clip()
+    n_bpe, unknown = clip.count(text)
+    n = n_bpe + clip_token_count.SPECIALS
+    if unknown:
+        raise SystemExit(
+            "!! %s uses %d term(s) this checkpoint's vocab does not have: %s"
+            % (label, len(unknown), ", ".join(sorted(set(unknown))[:12])))
+    if n > clip_token_count.CEILING:
+        raise SystemExit(
+            "!! %s is %d tokens against CLIP's %d. The overflow is SILENT at "
+            "the sampler -- everything past the limit is dropped FROM THE "
+            "TAIL, so a negative that is too long does not ban harder, it "
+            "bans nothing. Shorten it before writing, not after the card has "
+            "claimed the job." % (label, n, clip_token_count.CEILING))
+    return n
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARENT = "pipeline/jobs/ep2-b04-tilefix-w2-0820.yaml"
@@ -83,22 +112,37 @@ CNET_SHA = "ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32"
 
 QUALITY = "masterpiece, best quality, very aesthetic, no humans"
 
+# WHY THE PARENT'S FACE BANS ARE GONE, AND IT COST A ROUND TO LEARN.
+# The first ten specs carried the parent's negative byte-for-byte and appended
+# this job's own bans on the end. That ran 135 tokens against CLIP's 77 and
+# box_preflight's clip77 guard refused all ten, rc=9, in seconds -- correctly,
+# because the overflow is SILENT at the sampler: everything past token 77 is
+# dropped from the TAIL, which is exactly where the bans that matter here were
+# sitting. A negative that is too long does not ban harder, it bans nothing.
+#
+# So the cut is the MIDDLE, not the tail. Everything dropped below --
+# `pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose,
+# human face, wrinkled skin, old man, thick eyebrows, hair, beard, child,
+# chibi, grey skin, pale skin, 2boys` -- describes A FACE, and these plates
+# have no figure in them at all. Fifteen tokens spent forbidding features of a
+# character who is not in the frame, while the dialect bans that ARE this
+# batch's whole finding fell off the end. The quality head stays because it is
+# universal; the tail stays because it is the anchor that makes the picture
+# look like the show.
 NEGATIVE = (
-    # the parent's, byte for byte, up to `pale skin` --
-    "lowres, worst quality, low quality, text, watermark, pointy ears, "
-    "long pointy ears, elf, monster boy, pointy nose, dot nose, human face, "
-    "wrinkled skin, old man, thick eyebrows, hair, beard, child, chibi, "
-    "grey skin, pale skin, 2boys, "
-    # -- and then the two bans this job's own constraints buy:
-    # FIGURE, because the goblin is R4-gated and no frame here may carry him.
-    "1boy, 1girl, 1other, solo, people, silhouette, goblin, animal, "
-    # PLANT, because a plate whose foreground already holds a structure makes
+    # the parent's quality head, byte for byte --
+    "lowres, worst quality, low quality, text, watermark, "
+    # -- FIGURE, because the goblin is R4-gated and no frame here may carry him
+    "1boy, 1other, solo, people, silhouette, goblin, animal, "
+    # -- PLANT, because a plate whose foreground already holds a structure makes
     # the 0.30 pass argue with it instead of finishing the drawn sapling
-    # (composite-init-pattern, and b15's weed cost beat 16 an erase-and-fill).
-    "flower, tree, bush, shrub, sapling, seedling, potted plant, "
-    # DIALECT, the measured cause of the ep2-b16-field-f1..f4 batch failure.
+    # (composite-init-pattern, and b15's weed cost beat 16 an erase-and-fill)
+    "flower, tree, bush, shrub, sapling, seedling, "
+    # -- DIALECT, the measured cause of the ep2-b16-field-f1..f4 batch failure,
+    # and the tail that anchors the look. `scenery` is banned here as well as
+    # absent from the positive.
     "scenery, landscape, bokeh, blurry, depth of field, painterly, "
-    "photorealistic, photo, 3d, realistic, architecture, ruins, building"
+    "photo, realistic, 3d, architecture"
 )
 
 # scene/lighting x scale. One variable moves per cell from p01, which is the
@@ -233,6 +277,8 @@ def build(tag, seed, scene, scale, cell_why):
     new_id = "ep3-sapfield-%s-0821" % tag
     dirtok = "sapfield-%s-0821" % tag
     prompt = "%s, %s, %s" % (QUALITY, scene, scale)
+    n_p = assert_under_clip77("%s prompt" % new_id, prompt)
+    n_n = assert_under_clip77("%s negative" % new_id, NEGATIVE)
 
     child = derive_spec.derive(
         PARENT, new_id,
@@ -286,6 +332,17 @@ def build(tag, seed, scene, scale, cell_why):
         "ep2-b04-tilefix-w2-0820's. The seed walks so the set is not "
         "seed-degenerate." % (scene, scale))
     child["this_cell"] = cell_why
+    child["clip77_measured_not_estimated"] = (
+        "prompt %d of 77, negative %d of 77, counted offline with "
+        "pipeline/clip_token_count.py on animagine's OWN tokenizer vocab, by "
+        "pipeline/derive_sapling_field_0821.assert_under_clip77 BEFORE this "
+        "file was written. The first ten specs of this batch carried the "
+        "parent's face bans plus this job's own and ran 135 of 77; all ten "
+        "died rc=9 on box_preflight's clip77 guard with the card idle. The "
+        "overflow is SILENT at the sampler -- the tail is dropped -- so the "
+        "bans that got cut were the dialect bans this batch exists to test. "
+        "The fifteen tokens removed all describe A FACE, and there is no "
+        "figure in these plates." % (n_p, n_n))
     child["not_a_beat"] = (
         "beat: 16 is carried for the queue's bookkeeping and for one honest "
         "reason beyond it -- beat 16's own restage needs a goblin-free cel "

@@ -45,11 +45,8 @@ payload:
   C:\banyan-farm\sapfield-p01-0821\prompt.txt: masterpiece, best quality, very aesthetic, no humans, in
     tall grass, sunlight, day, close-up, low angle, ground level
   C:\banyan-farm\sapfield-p01-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
-    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
-    old man, thick eyebrows, hair, beard, child, chibi, grey skin, pale skin, 2boys, 1boy, 1girl, 1other,
-    solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, potted plant,
-    scenery, landscape, bokeh, blurry, depth of field, painterly, photorealistic, photo, 3d, realistic,
-    architecture, ruins, building
+    1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling,
+    scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture
 steps:
 - name: stage
   argv:
@@ -156,7 +153,7 @@ derivation:
     key:priority:
     - key priority = 38
     payload:negative.txt:
-    - payload negative.txt (231 -> 485 chars)
+    - payload negative.txt (231 -> 251 chars)
     payload:prompt.txt:
     - payload prompt.txt (208 -> 117 chars)
     seed:
@@ -189,6 +186,13 @@ the_one_variable: THE SCENE/LIGHTING CLAUSE ('in tall grass, sunlight, day') AND
 this_cell: CONTROL. The ratified recipe's own location clause and the tightest scale. Nearest cell to
   a picture this checkpoint has returned fourteen times; if THIS one breaks dialect the cause is `no humans`,
   not the scene words, and the whole route changes.
+clip77_measured_not_estimated: prompt 30 of 77, negative 71 of 77, counted offline with pipeline/clip_token_count.py
+  on animagine's OWN tokenizer vocab, by pipeline/derive_sapling_field_0821.assert_under_clip77 BEFORE
+  this file was written. The first ten specs of this batch carried the parent's face bans plus this job's
+  own and ran 135 of 77; all ten died rc=9 on box_preflight's clip77 guard with the card idle. The overflow
+  is SILENT at the sampler -- the tail is dropped -- so the bans that got cut were the dialect bans this
+  batch exists to test. The fifteen tokens removed all describe A FACE, and there is no figure in these
+  plates.
 not_a_beat: 'beat: 16 is carried for the queue''s bookkeeping and for one honest reason beyond it -- beat
   16''s own restage needs a goblin-free cel field plate and has never had one, so a passing plate here
   is reusable there. It does not make this a beat render: no shot is authored, no script line is served,
