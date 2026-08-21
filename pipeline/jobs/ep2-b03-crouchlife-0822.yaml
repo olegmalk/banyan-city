@@ -1,0 +1,233 @@
+id: ep2-b03-crouchlife-0822
+task: ep2-b03-crouchlife-0822
+node: 002b-first-citizen
+beat: 3
+runner: box
+priority: 14
+needs_gpu: true
+max_attempts: 1
+owner: the per-beat iteration lane, 2026-08-22
+consumer: A CANDIDATE for beat 03 on review/ep2-beats-0821. The founder's note is about the shipped take's
+  FACE; the fix for that face already exists in round 2's pixels and its only fault is that nothing happens
+  in it. This job is that clip with an action. review/ep2-ship-0821 is not touched.
+success: ONE 704x1280 105-frame 24fps mp4 that is NOT a still with a runtime. C1 his head is measurably
+  lower at the midpoint than at f000 and back up by f096 -- the move has a start, a bottom and a return,
+  and it is judged by eye on a frame strip; C2 the head turns off-centre at least once and comes back;
+  C3 the identity round 2 won is kept -- no horn, no dissolve, features drawn in every frame, collar and
+  ears intact; C4 the composited stem is still there, unmoved and un-multiplied; C5 the recede is no worse
+  than round 2's 27% -- the fault this job is allowed to leave open, not one it may make worse.
+why: 'HE IS OBJECTING TO A FACE THAT IS ALREADY FIXED IN A CLIP HE HAS NOT BEEN SHOWN. ''Wouldn''t be
+  that bad, if the goblin didn''t look like an old man'' is the shipped take, and the 08-20 design audit
+  says the same thing in its own words -- human nose with nostrils, a rounded human ear, folds either
+  side of the mouth, flat olive skin. Round 2 of the canon-motion recipe drew his own tile''s face instead
+  and its verdict is unambiguous: R4 PASS, the horn from round 1 gone, features drawn in all 105 frames,
+  collar and ears held, and R2 PASS on the trunk that beat 03 never used to have. Its one failure is R3:
+  ''the pose barely changes from f000 to f104, there is no crouch and no sideways eye flick, and the only
+  event in the clip is that his eyes CLOSE from about f096''. That job pre-registered A STILL WITH A RUNTIME
+  by name and then hit it, and wrote down why -- it had asked a motion model to HOLD STILL.
+
+
+  So the design does not need another round. The action does. Same plate, same recipe, same identity clause
+  byte-for-byte, and ''crouches low and holds still, eyes flicking sideways'' replaced by three head-and-shoulder
+  moves with a start, a bottom and a return. Eye flicks are dropped entirely: this engine was measured
+  refusing gaze-only motion from both directions on beat 04 (rung 1 moved the whole head 64.7 px when
+  told not to, rung 2 locked the head to 4.7 px and the eyes stopped with it), and asking for them again
+  would be re-running a closed experiment.'
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b03-crouchlife-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b03-crouchlife-0822\b03-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow
+    vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour
+    and clothes DO NOT CHANGE for the whole clip. He is squatting, hiding behind a thin trunk, in tall
+    grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the
+    grass directly in front of him and crossing his body, and it stays where it is for the whole clip.
+    THE ACTION: three separate moves, one after the other, and he is still moving when the clip ends.
+    FIRST he drops his head and shoulders down and sideways behind the thin stem that is already there,
+    hunching until his shoulders are up around his ears. THEN his head comes back up and turns to look
+    off to his left, away from the stem. THEN it snaps back to centre. His body stays where it is and
+    only his head, neck and shoulders travel. HALFWAY THROUGH his head is at its lowest, tucked down and
+    tilted, shoulders hunched up around it.'
+  C:\banyan-farm\ep2-b03-crouchlife-0822\b03-negative.txt: second face, second goblin, two goblins, extra
+    head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
+    melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
+    cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b03-crouchlife-0822\b03-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\b03-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\b03-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\b03-negative.txt"}]'
+  C:\banyan-farm\ep2-b03-crouchlife-0822\b03-jobs-render.json: '[{"beat": 20, "seed": 20260843, "embeds":
+    "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\b03-embeds.pt", "init": "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\b03-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b03-crouchlife-0822\\03-evidence-LTX-ep2-b03-crouchlife-0822.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-crouchlife-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b03-sapnat-0821\b03-sapnat-s20260820.png
+  - --sha256
+  - e59f177e01891bd32962dfd861478ab3ece74af248038a0e4fd8df34d6f4637f
+  - --out
+  - C:\banyan-farm\ep2-b03-crouchlife-0822\b03-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b03-crouchlife-0822\b03-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b03-crouchlife-0822\b03-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b03-crouchlife-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b03-crouchlife-0822\bench-ep2-b03-crouchlife-0822.jsonl
+  - --bench-label
+  - ep2-b03-crouchlife-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-crouchlife-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b03-crouchlife-0822/03-evidence-LTX-ep2-b03-crouchlife-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b03-crouchlife-0822/b03-init-704x1280.png\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/ep2-b03-crouchlife-0822/bench-ep2-b03-crouchlife-0822.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-crouchlife-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b03-crouchlife-0822\03-evidence-LTX-ep2-b03-crouchlife-0822.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 03''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[3],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 03 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: BAD COVER -- 'crouches behind a trunk that hides roughly one-sixth of him'. The comedy is
+  that he believes it is working, so the face is furtive rather than terrified -- held breath, not a scream.
+failure_predicted_in_advance: 'THE DRIFT, NOT THE STILLNESS. Round 2 held its frame on beat 02 -- whose
+  action gives him somewhere to go -- and receded 27% here, where the action was ''hold still''. Adding
+  real body motion should help, and if C5 comes back WORSE than 27% that reading is falsified and the
+  lever for this beat is frames or motion strength, not wording. SECOND: three sequential moves in 105
+  frames is a lot to ask; the cheap failure is the model doing the first one and holding, which C1 passes
+  and C2 fails.'
+the_one_variable: THE ACTION WORDING. The init is round 2's plate unchanged, and so are 704x1280, 105
+  frames at 24fps, guidance, sampler, sigmas, two-stage, crf, offload, the cover-crop sha assert and the
+  trim plan. The seed moves because an identical seed on an identical prompt returns the same file.
+what_the_body_can_actually_do_from_this_plate: 'He is already squatting, front-on, knees apart, with the
+  stem crossing his chest. Nothing in this action asks him to travel, stand, or reach past the stem --
+  it is head, neck and shoulders only, which is motion the plate has a body for. That distinction is what
+  round 1 of the wave measured: the three beats that passed asked only for motion their plates could make,
+  and the four that failed named something the picture did not contain.'
+derivation:
+  parent: pipeline/jobs/ep2-b03-canonmotion-r2-0821.yaml
+  by: pipeline/file_beatfix_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - failure_predicted_in_advance
+  - owner
+  - success
+  - the_one_variable
+  - what_the_body_can_actually_do_from_this_plate
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - derivation
+  - failure_predicted_in_advance
+  - not_done_on_purpose
+  - plate_provenance
+  - the_one_variable
+  - verdict_canonmotion_r2_0821
+  retokened:
+  - ep2-b03-canonmotion-r2-0821 -> ep2-b03-crouchlife-0822
+  overrides_applied_and_asserted:
+    key:est_minutes:
+    - key est_minutes = 9
+    key:priority:
+    - key priority = 14
+    payload:b03-motion-prompt.txt:
+    - payload b03-motion-prompt.txt (913 -> 1179 chars)
+    seed:
+    - payload b03-jobs-render.json (20260903 -> 20260843, re-parsed)
+  seed: 20260843
