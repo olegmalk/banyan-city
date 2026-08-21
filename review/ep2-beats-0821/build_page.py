@@ -148,10 +148,22 @@ BEATS = {
             "ON \"HE JUST FACEPLANTS\": the last round's own notes say the same thing from the other side — "
             "the dive \"reads as a duck\". The landing is now written as a placement rather than an "
             "adjective: forearms take it, chin off the ground, and he ends lying flat behind the stem with "
-            "his head up. Your script says he dives BEHIND the trunk, not into the dirt."),
+            "his head up. Your script says he dives BEHIND the trunk, not into the dirt. "
+            "Both are in the first clip below."),
         faults_from="ship-manifest.yaml goblin_design_audit_0820 beats.2 + ship_status.2",
-        inflight="The repainted face is done and the clip is rendering now (ep2-b02-panic-0822). Three strengths were tried on the plate and looked at side by side before any of them was animated: 0.42 washed the eyebrows out instead of raising them, 0.75 overshot into an angry scowl with sweat drops and a jagged mouth eating his collar, and 0.60 is the one — brows drawn, raised and arched, mouth open wide, eyes untouched because they were never in the mask. That is the face the clip is being built on, with the prone-landing wording.",
         candidates=[
+            dict(file=f"{CAND_URL}/02-the-sprint-LTX-b02-panic-trim78-0822.mp4",
+                 poster=f"{POSTER_URL}/02-the-sprint-LTX-b02-panic-trim78-0822.jpg",
+                 label="THE PANIC + THE LANDING, cut to end behind the sapling — tonight, newest", tag="pass",
+                 verdict="He is not a soldier any more: brows up and arched, mouth open, all the way through. And he does not faceplant — he runs in, skids, and goes down flat on his chest behind the sapling with his chin off the ground and his head up, which is where this cut ends and freezes. Green, canon ears, slit pupils, collar and boots hold to the last frame, and the sapling stays put.",
+                 diff="Two changes, both aimed at your note. The face was repainted into the picture before anything moved — three strengths were tried and looked at side by side, and 0.60 is the one that draws raised brows instead of washing the old ones out. The landing was written as a placement rather than an adjective: forearms take it, chin off the ground, head up. Then cut at frame 77 — the full take stands him back up afterwards, and the assembly freezes on the last frame, so an uncut version would end on him standing in the open.",
+                 src="pipeline/jobs/ep2-b02-panic-0822.yaml + review/ep2-beats-0821/candidates/02-the-sprint-LTX-b02-panic-trim78-0822.mp4.meta.yaml"),
+            dict(file=f"{CAND_URL}/02-evidence-LTX-ep2-b02-panic-0822.mp4",
+                 poster=f"{POSTER_URL}/02-evidence-LTX-ep2-b02-panic-0822.jpg",
+                 label="the same take, uncut — he gets back up at the end", tag="warn",
+                 verdict="Identical to the clip above for its first 78 frames, then he pushes back up onto his feet and is standing in the open when it ends. Shown so the cut above is not hiding anything from you: if you want him to come back up, this is what that looks like, and the slot would freeze on it.",
+                 diff="No trim. Same render, all 105 frames.",
+                 src="pipeline/jobs/ep2-b02-panic-0822.yaml"),
             dict(file=f"{CAND_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4",
                  poster=f"{POSTER_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.jpg",
                  label="canon-motion, round 2 — tonight, newest", tag="fail",

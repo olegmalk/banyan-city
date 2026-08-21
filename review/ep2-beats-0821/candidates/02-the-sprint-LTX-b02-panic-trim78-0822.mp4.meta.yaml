@@ -1,0 +1,33 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 02-evidence-LTX-ep2-b02-panic-0822.mp4
+source_path: review/ep2-beats-0821/candidates/02-evidence-LTX-ep2-b02-panic-0822.mp4
+source_sha256: ee3c13776f540a8734a35c1ad4cad6d7015b0beeaeb05256d817af5bdd74cd84
+source_frames: 105
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 20
+size: 704x1280
+fps: 24.0
+frames: 78
+seconds: 3.25
+edit: ffmpeg select frames 0..77 of 105, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 27
+seed: 20260842
+guidance: 2.0
+steps: 8@352x640+3@704x1280
+task: ep2-b02-panic-trim78-0822
+cost_usd: 0
+mode: production
+why_trimmed: 'THE CLIP DELIVERS THE DIVE AND THEN UNDOES IT. Opened at 1:1 frame by frame:
+  he is upright and running to about f024, skids, is fully PRONE on his chest with his chin
+  off the ground and his head up from about f044 to f077, and then stands back up from f080.
+  The beat ends with him hidden behind the sapling, not standing in the open, and the assembly
+  freezes on the last frame -- so a 105-frame cut would freeze on him standing up, which is
+  the opposite of the script. Cutting at f077 keeps the entry, the skid and the whole dive
+  and ends on the prone frame. 78 frames is 3.25s in a 5.0s slot; the remaining 1.75s freezes
+  on a goblin lying behind a sapling with his head up, which is the picture the beat is about.'
