@@ -3804,3 +3804,5 @@
 13:45:32Z STARTED task=ep2-b13-canon-r3c-0821-1787319864 attempt=1 on box-runner
 13:45:59Z DONE task=ep2-b13-canon-r3c-0821-1787319864 rc=0 artifacts=1
 13:46:04Z box-runner idle ready=0 failed=79
+13:48:28Z STARTED task=ep2-b13-canon-r4-0821-1787320098 attempt=1 on box-runner
+13:48:29Z FAIL task=ep2-b13-canon-r4-0821-1787320098 rc=1 step=stage
