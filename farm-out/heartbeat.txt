@@ -4086,3 +4086,5 @@
 20:56:40Z DONE task=ep2-b04-canonmotion-s2-0822-1787344305 rc=0 artifacts=1
 20:56:46Z STARTED task=ep2-b14-canon-w2-0821-1787345717 attempt=1 on box-runner
 20:57:22Z DONE task=ep2-b14-canon-w2-0821-1787345717 rc=0 artifacts=1
+20:57:28Z STARTED task=ep2-b15-canon-w2-0821-1787345719 attempt=1 on box-runner
+20:57:57Z DONE task=ep2-b15-canon-w2-0821-1787345719 rc=0 artifacts=1
