@@ -100,6 +100,15 @@ REF_REPO_PATH = "taste/refs/guard1-canon-founder-0822-sq.png"
 RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
        + REF_REPO_PATH)
 REF_PREFIX = "guard1sq"
+# ARM IS A VARIABLE NOW, AND THE REASON IS A MEASUREMENT. The window4 run of
+# this spec came back with the REFERENCE'S composition -- a face close-up --
+# on a request that asked for something else, which the spec had argued could
+# not happen. `content` scopes the adapter to down block_2 instead of every
+# block, which is the standard way to take identity from a reference without
+# taking its framing, and it is already an arm this sampler offers. Set with
+# --arm on the deriver; the spec id and the box work dir move with it so the
+# two runs cannot collide or overwrite each other's publish dir.
+ARM = "window4"
 # The sampler prepends this before encoding -- see assert_compiled_positive_fits.
 COUNT_TAG = "1boy"
 WORK = r"C:\banyan-farm\ep2-b06-guard1-0822"
@@ -171,6 +180,27 @@ def assert_compiled_positive_fits(label, positive, count_tag):
     return n
 
 
+# When the deriver is run with --arm content the prose above describes a recipe
+# the job is not running, so this paragraph is appended to `why` and the arm is
+# named in `owner`. Cheaper than two derivers, and honest: a spec whose why
+# claims window4 while its argv says content is exactly the class of defect the
+# 08-19 audit found when three crf-10 children inherited their parents' verdicts.
+CONTENT_NOTE = (
+    " ARM OVERRIDE, --arm content: this is the SECOND run of this job and it is "
+    "not window4. The window4 run came back with the REFERENCE'S composition -- a "
+    "tight face close-up -- on a request that asked for something else, which its "
+    "own spec had argued could not happen. `content` scopes the adapter to down "
+    "block_2 for the whole denoise instead of putting it on every block for the "
+    "first 15%, which is the standard way to take identity from a reference "
+    "without taking its framing. ONE VARIABLE against the window4 run: the arm. "
+    "Same reference bytes, same prompt, same seed, same size, same driver. NAMED "
+    "FAIL MODE, from this sampler's own header: arms 1 and 2 'bought identity with "
+    "colour or colour with identity', so a washed-out or off-key frame is the "
+    "thing to look for here, and it is a different failure from the framing one "
+    "this run exists to fix."
+)
+
+
 def refs_sha():
     with open(os.path.join(REPO, REF_REPO_PATH), "rb") as fh:
         return hashlib.sha256(fh.read()).hexdigest()
@@ -190,7 +220,13 @@ def draft_text():
 
 def frame_name():
     """The exact file the sampler writes. NOT A GLOB -- see the parent's note."""
-    return "%02d-%s-ipa-r0-w015-s0.png" % (BEAT, SLUG)
+    # THE TAG IS THE ARM'S, NOT A CONSTANT. goblin_ipa_sample names the file
+    # `{beat}-{slug}-ipa-{tag}-s{i}` and builds tag per arm: `r0-w015` for the
+    # 15%% window, `r0-content` for the block-scoped arm. Hardcoding the window
+    # tag on a content run means the publish step globs for a file the run never
+    # writes, which is how six rendered plates read as six failures on 08-14.
+    tag = "r0-content" if ARM == "content" else "r0-w015"
+    return "%02d-%s-ipa-%s-s0.png" % (BEAT, SLUG, tag)
 
 
 def _stage_step():
@@ -230,7 +266,7 @@ def _sample_argv():
         "--ref-prefix", REF_PREFIX,
         "--out", OUT,
         "--draft-key", DRAFT_KEY,
-        "--arm", "window4",
+        "--arm", ARM,
         "--seeds", "1",
         "--seed-start", "0",
         "--expect-drafts-sha256", drafts_sha(),
@@ -279,7 +315,7 @@ def build():
         "est_minutes": 3,
         "needs": ["cuda", "vram20", "farm-venv"],
         "owner": ("night iteration lane, 2026-08-22 -- beat 06's first plate on the "
-                  "ratified guard"),
+                  "ratified guard, --arm " + ARM),
         "consumer": (
             "BEAT 06's SLOT IN /review/ep2-beats-0821, which has carried two named "
             "faults and ZERO candidates since the page was built. If the frame passes "
@@ -288,6 +324,7 @@ def build():
             "6.5 s slot is one frozen frame, the worst ratio in the episode. If it "
             "fails, the failure names the next rung and costs three GPU minutes."),
         "success": BAR,
+
         "why": (
             "BEAT 06's INIT IS A CHARACTER WHO NO LONGER EXISTS. Every b06 draft "
             "before this one draws a round bald bureaucrat in mismatched armour; on "
@@ -300,7 +337,9 @@ def build():
             "guard --arm window4, IP-Adapter 0.6 off after the first 15%% of the "
             "denoise, over a box-resident refs dir holding the ratified frame, prose "
             "prompt out of wave-drafts.yaml closing on the ratified style tail. "
-            "Minutes of local GPU, $0. Full trace: pipeline/derive_b06_guard1_0822.py."),
+            "Minutes of local GPU, $0. Full trace: "
+            "pipeline/derive_b06_guard1_0822.py."
+            + (CONTENT_NOTE if ARM == "content" else "")),
         "script_authority": (
             "Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, "
             "`approved_on: 2026-08-03`. A STILL PLATE on an approved node: no voice, "
@@ -377,7 +416,10 @@ def _selftest():
                                           text[:i].strip(), COUNT_TAG)
 
     argv = spec["steps"][2]["argv"]
-    assert "--arm" in argv and argv[argv.index("--arm") + 1] == "window4"
+    assert "--arm" in argv and argv[argv.index("--arm") + 1] == ARM
+    # THE ARM STRING IS A LITERAL IN THE DRIVER and a plausible synonym is a
+    # one-second rc-6 death; only names the sampler actually offers may pass.
+    assert ARM in ("window4", "content"), ARM
     assert argv[argv.index("--draft-key") + 1] == DRAFT_KEY
     assert argv[argv.index("--character") + 1] == "guard"
     assert argv[argv.index("--refs") + 1] == REFS
@@ -407,11 +449,22 @@ def _selftest():
 
 
 def main():
+    global ARM, SPEC_ID, WORK, REFS, OUT
     ap = argparse.ArgumentParser()
+    ap.add_argument("--arm", choices=("window4", "content"), default=ARM,
+                    help="window4 = the 15%% window on every block (the run "
+                         "that handed over the reference's framing); content "
+                         "= the adapter scoped to down block_2 only")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
+    if a.arm != ARM:
+        ARM = a.arm
+        SPEC_ID = SPEC_ID.replace("-0822", "-%s-0822" % ARM)
+        WORK = WORK.replace("-0822", "-%s-0822" % ARM)
+        REFS = WORK + r"\refs"
+        OUT = WORK + r"\out"
     _selftest()
     if not a.write:
         print("dry run -- nothing written. Pass --write.")

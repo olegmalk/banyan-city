@@ -1,0 +1,194 @@
+id: ep2-b05-guards-f-content-0822
+task: ep2-b05-guards-f-content-0822
+node: 002b-first-citizen
+beat: 5
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: night iteration lane, 2026-08-22 -- beat 05's first plate with both guards and both sashes, --arm
+  content
+consumer: 'BEAT 05''s SLOT IN /review/ep2-beats-0821, which has carried four failing clauses and ZERO
+  candidates since the page was built. If the frame passes the bar it is staged as this beat''s first
+  candidate -- marked PROVISIONAL on guard 2, whose casting is R4 and open at /review/ep2-guardcast2-0822
+  -- and it becomes the init for the beat''s motion rung. If it fails, it answers the question nothing
+  in this tree has asked: what one man''s reference does to the second figure in a two-figure frame. Three
+  GPU minutes either way.'
+success: 'ONE 832x1216 png, judged AT 1:1 and on a MATCHED-SCALE two-face sheet beside taste/refs/guard1-canon-founder-0822.png
+  -- the r11a lesson, where a pick was declared off full frames at different head sizes and flipped the
+  moment the crops were the same height. PRE-REGISTERED, BEFORE THE PIXELS EXIST: (1) TWO MEN, side by
+  side, both whole and both facing out -- one is a DROP and three is a DROP. This beat''s one existing
+  win is two figures for 117 frames and the plate may not lose it. (2) THEY ARE DIFFERENT MEN. The left
+  is guard 1 as ratified (dark cropped hair, round wire-rim glasses); the right has a THICK GREY MOUSTACHE
+  and a jowly face and has neither the cropped hair nor the glasses. Two copies of guard 1 is the headline
+  failure of this job and it is not a note, it is a FAIL. (3) BOTH WEAR A WHITE SHOULDER SASH -- the beat''s
+  own standing fault, ''neither guard wears the sash you froze for the cast'', and the reason this plate
+  exists. A sash on one man only is a HALF PASS and is reported as one. (4) BOTH ARE GROWN MEN; a child,
+  teenager or female read on either is a DROP. (5) DETAILED CINEMATIC ANIME, the look of the reference.
+  Flat, muted or tag-sheet fails however good the casting is. (6) A real tall-grass-and-hedgerow field,
+  not a plain ground. (7) NOTHING GOBLIN on either man: no green skin, no pointed ears -- tonight''s b07
+  re-run put a pointed ear on this same guard, so this is a live defect and not a formality. PRE-REGISTERED
+  FAIL MODES, recorded whether or not they fire, MOST LIKELY FIRST: TWO GUARD ONES -- the adapter holds
+  one man''s face and nothing in this tree has ever measured what that does to the SECOND figure in a
+  two-figure frame, which is the whole reason this is one cell and not three; the moustache landing on
+  the wrong man, which is the b07 attribute-binding failure with the figures swapped; the adapter handing
+  over the reference''s face-close-up COMPOSITION, measured to happen when reference and request geometries
+  agree, which here they do not; a third figure, which four rounds of rewording on this beat did eventually
+  beat and which `no third man, no crowd` is carrying.'
+why: 'BEAT 05 CONTRADICTS A FINAL RULING IN ITS OWN PICTURE: ''neither guard wears the sash you froze
+  for the cast''. Both sashes are asserted here, positively, in one clause covering both men, and both
+  men are PLACED left and right -- the wording shape that finally got a second figure into beat 07 after
+  two empty attempts. Guard 1 is the ratified man; guard 2 is NOT cast and this draft takes casting cell
+  F provisionally, chosen because a thick grey moustache is the only feature in the sentence the other
+  man cannot also have -- tonight''s b07 finding, where the sash bound and the collar did not. Route:
+  the cinematic stack the 08-22 ladder names by file -- goblin_ipa_beat.py --character guard --arm window4,
+  IP-Adapter 0.6 off after the first 15%% of the denoise, over a box-resident refs dir holding the ratified
+  frame. Identical to pipeline/jobs/ep2-b06-guard1-0822.yaml filed an hour ago, so a b06 pass beside a
+  b05 fail isolates THE SECOND FIGURE as the cause. $0, minutes of local GPU. Full trace: pipeline/derive_b05_guards_0822.py.
+  ARM OVERRIDE, --arm content: this is the SECOND run of this job and it is not window4. The window4 run
+  came back with the REFERENCE''S composition -- a tight face close-up -- on a request that asked for
+  something else, which its own spec had argued could not happen. `content` scopes the adapter to down
+  block_2 for the whole denoise instead of putting it on every block for the first 15%, which is the standard
+  way to take identity from a reference without taking its framing. ONE VARIABLE against the window4 run:
+  the arm. Same reference bytes, same prompt, same seed, same size, same driver. NAMED FAIL MODE, from
+  this sampler''s own header: arms 1 and 2 ''bought identity with colour or colour with identity'', so
+  a washed-out or off-key frame is the thing to look for here, and it is a different failure from the
+  framing one this run exists to fix.'
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b05-guards-f-content-0822\\\
+    refs\"\nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\
+    \nwith urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\"\
+    , timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n\
+    \    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing\
+    \ to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst,\
+    \ \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n\
+    \    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\"\
+    , got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\"\
+    )\n"
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\ep2-b05-guards-f-content-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\ep2-b05-guards-f-content-0822\out
+  - --draft-key
+  - authored_b05_guards_f_0822
+  - --arm
+  - content
+  - --seeds
+  - '1'
+  - --seed-start
+  - '0'
+  - --expect-drafts-sha256
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
+  - --task
+  - ep2-b05-guards-f-content-0822
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\ep2-b05-guards-f-content-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\ep2-b05-guards-f-content-0822\out
+  - --draft-key
+  - authored_b05_guards_f_0822
+  - --arm
+  - content
+  - --seeds
+  - '1'
+  - --seed-start
+  - '0'
+  - --expect-drafts-sha256
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
+  - --task
+  - ep2-b05-guards-f-content-0822
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\ep2-b05-guards-f-content-0822\\out\"\
+    \ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b05-guards-f-content-0822\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nwant = \"05-the-patrol-ipa-r0-content-s0.png\"\npng = os.path.join(srcdir, want)\n\
+    if not os.path.isfile(png):\n    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"\
+    /*.png\"))\n    raise SystemExit(\"!! %s was not written; the dir holds %s\" % (want, have))\nsrc\
+    \ = [png] + sorted(glob.glob(png + \".*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest()\
+    \ + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b05-guards-f-content-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) ->\", dst)\n"
+artifacts:
+- C:\banyan-farm\ep2-b05-guards-f-content-0822\out\05-the-patrol-ipa-r0-content-s0.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL PLATE on an approved node: no voice, no motion, no episode assembly, no publication.
+  review/ep2-ship-0821 is not touched by this job.'
+script_line: 'Beat 05 THE PATROL: two guards halt and scan an empty morning field. Drawn here standing
+  side by side and looking out, because the beat''s fault is the costume and the cast, not the movement.'
+recipe_trace: 'driver + conditioning: pipeline/jobs/ep2-guardcast2-a-0822.yaml (same beat, same reference,
+  same arm, ran 2026-08-22); the recipe''s own parent is pipeline/jobs/ep2-b09-cast-0817.yaml, which drew
+  the frame the founder ratified. Reference taste/refs/guard1-canon-founder-0822-sq.png sha f78336496ce9d1c7,
+  a top-anchored 832x832 crop of taste/refs/guard1-canon-founder-0822.png. Prompt pipeline/wave-drafts.yaml
+  beats.5.authored_b05_guards_f_0822, file sha 0f103d85cc3afbaf, enforced at RUN time by --expect-drafts-sha256
+  so a hand-sync between filing and firing cannot swap the wording underneath it.'
+one_sample_rule: 'ONE CELL, ONE SEED, AND THE OTHER TWO CASTING READS ARE HELD. The night order names
+  cells B, F and J as the sheet''s strongest reads; only F is fired. The reason is not thrift: running
+  TWO identities through a single-identity adapter window has never been sampled in this tree, and if
+  it collapses into two guard ones then B and J would have produced two more pictures of guard 1 and taught
+  nothing. One cell answers that, and B and J are a wave the moment it comes back clean. Everything else
+  -- driver, reference bytes, arm, scale, window, size, seed arithmetic -- is the b06 job''s, unchanged.'
+next_rung: 'NAMED, NOT FIRED, so every outcome has somewhere to go: (a) clean two-man frame -> cells B
+  and J as siblings, same everything, so the founder picks guard 2 off three plates of the actual beat
+  rather than three casting heads; (b) TWO GUARD ONES -> the adapter cannot serve two identities from
+  one reference and the answer is per-figure conditioning (--ip-ref twice with --ip-mask-capsules on controlnet_plate.py,
+  which the b08 lane already wired), not another wording; (c) moustache on the wrong man -> the b07 attribute-binding
+  problem, and the lever is the same one: give guard 1 a feature guard 2 cannot have, rather than banning
+  the crossover; (d) clean -> i2v motion off THIS plate, the halt-and-scan.'
+seed_note: 'Seed is the sampler''s arithmetic, pinned by construction: wg.SEED (20260719) + beat (5) +
+  seed_start (0) * 1000 = 20260724. It differs from the b06 job''s by exactly one, which is the beat number,
+  and that is the sampler''s arithmetic rather than a choice -- the two jobs are otherwise seed-identical
+  and neither can collide with any casting cell.'
+frame_count: ONE png. window4 enumerates four reference slots and the stage step writes four byte-identical
+  copies of the single reference, so dedup_cells drops three and one cell is drawn at one seed. Stated
+  rather than discovered by the artifact check.

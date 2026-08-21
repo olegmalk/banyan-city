@@ -1,5 +1,5 @@
-id: ep2-b06-guard1-0822
-task: ep2-b06-guard1-0822
+id: ep2-b06-guard1-content-0822
+task: ep2-b06-guard1-content-0822
 node: 002b-first-citizen
 beat: 6
 runner: box
@@ -7,7 +7,7 @@ priority: 6
 needs_gpu: true
 max_attempts: 1
 sample: true
-owner: night iteration lane, 2026-08-22 -- beat 06's first plate on the ratified guard, --arm window4
+owner: night iteration lane, 2026-08-22 -- beat 06's first plate on the ratified guard, --arm content
 consumer: BEAT 06's SLOT IN /review/ep2-beats-0821, which has carried two named faults and ZERO candidates
   since the page was built. If the frame passes the bar it is staged as this beat's first candidate and
   becomes the init for the motion rung that answers the beat's second fault -- 4.5 s of a 6.5 s slot is
@@ -37,7 +37,16 @@ why: 'BEAT 06''s INIT IS A CHARACTER WHO NO LONGER EXISTS. Every b06 draft befor
   the beat''s board-size fault, positively, in the words. Route: the cinematic stack the 08-22 ladder
   entry names by file -- goblin_ipa_beat.py --character guard --arm window4, IP-Adapter 0.6 off after
   the first 15%% of the denoise, over a box-resident refs dir holding the ratified frame, prose prompt
-  out of wave-drafts.yaml closing on the ratified style tail. Minutes of local GPU, $0. Full trace: pipeline/derive_b06_guard1_0822.py.'
+  out of wave-drafts.yaml closing on the ratified style tail. Minutes of local GPU, $0. Full trace: pipeline/derive_b06_guard1_0822.py.
+  ARM OVERRIDE, --arm content: this is the SECOND run of this job and it is not window4. The window4 run
+  came back with the REFERENCE''S composition -- a tight face close-up -- on a request that asked for
+  something else, which its own spec had argued could not happen. `content` scopes the adapter to down
+  block_2 for the whole denoise instead of putting it on every block for the first 15%, which is the standard
+  way to take identity from a reference without taking its framing. ONE VARIABLE against the window4 run:
+  the arm. Same reference bytes, same prompt, same seed, same size, same driver. NAMED FAIL MODE, from
+  this sampler''s own header: arms 1 and 2 ''bought identity with colour or colour with identity'', so
+  a washed-out or off-key frame is the thing to look for here, and it is a different failure from the
+  framing one this run exists to fix.'
 est_minutes: 3
 needs:
 - cuda
@@ -57,8 +66,8 @@ steps:
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b06-guard1-0822\\refs\"\
-    \nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\
+  - "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b06-guard1-content-0822\\\
+    refs\"\nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\
     \nwith urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\"\
     , timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n\
     \    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing\
@@ -80,15 +89,15 @@ steps:
   - --root
   - C:\banyan-farm\wave-goblin-prep\repo
   - --refs
-  - C:\banyan-farm\ep2-b06-guard1-0822\refs
+  - C:\banyan-farm\ep2-b06-guard1-content-0822\refs
   - --ref-prefix
   - guard1sq
   - --out
-  - C:\banyan-farm\ep2-b06-guard1-0822\out
+  - C:\banyan-farm\ep2-b06-guard1-content-0822\out
   - --draft-key
   - authored_b06_guard1canon_0822
   - --arm
-  - window4
+  - content
   - --seeds
   - '1'
   - --seed-start
@@ -96,7 +105,7 @@ steps:
   - --expect-drafts-sha256
   - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
-  - ep2-b06-guard1-0822
+  - ep2-b06-guard1-content-0822
   - --dry
 - name: sample
   argv:
@@ -111,15 +120,15 @@ steps:
   - --root
   - C:\banyan-farm\wave-goblin-prep\repo
   - --refs
-  - C:\banyan-farm\ep2-b06-guard1-0822\refs
+  - C:\banyan-farm\ep2-b06-guard1-content-0822\refs
   - --ref-prefix
   - guard1sq
   - --out
-  - C:\banyan-farm\ep2-b06-guard1-0822\out
+  - C:\banyan-farm\ep2-b06-guard1-content-0822\out
   - --draft-key
   - authored_b06_guard1canon_0822
   - --arm
-  - window4
+  - content
   - --seeds
   - '1'
   - --seed-start
@@ -127,23 +136,23 @@ steps:
   - --expect-drafts-sha256
   - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
-  - ep2-b06-guard1-0822
+  - ep2-b06-guard1-content-0822
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\ep2-b06-guard1-0822\\out\"\ndst =\
-    \ r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b06-guard1-0822\"\nos.makedirs(dst, exist_ok=True)\n\
-    want = \"06-the-clipboard-ipa-r0-w015-s0.png\"\npng = os.path.join(srcdir, want)\nif not os.path.isfile(png):\n\
-    \    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"/*.png\"))\n    raise SystemExit(\"\
-    !! %s was not written; the dir holds %s\" % (want, have))\nsrc = [png] + sorted(glob.glob(png + \"\
-    .*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
-    \    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"\
-    \  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-guard1-0822.sha256\"\
+  - "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\ep2-b06-guard1-content-0822\\out\"\
+    \ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b06-guard1-content-0822\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nwant = \"06-the-clipboard-ipa-r0-content-s0.png\"\npng = os.path.join(srcdir, want)\n\
+    if not os.path.isfile(png):\n    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"\
+    /*.png\"))\n    raise SystemExit(\"!! %s was not written; the dir holds %s\" % (want, have))\nsrc\
+    \ = [png] + sorted(glob.glob(png + \".*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest()\
+    \ + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-guard1-content-0822.sha256\"\
     ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
     , len(src), \"file(s) ->\", dst)\n"
 artifacts:
-- C:\banyan-farm\ep2-b06-guard1-0822\out\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\ep2-b06-guard1-content-0822\out\06-the-clipboard-ipa-r0-content-s0.png
 script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
   2026-08-03`. A STILL PLATE on an approved node: no voice, no motion, no episode assembly, no publication.
   review/ep2-ship-0821 is not touched by this job.'
