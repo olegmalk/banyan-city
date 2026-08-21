@@ -3964,3 +3964,5 @@
 17:52:45Z STARTED task=ep2-b07-twofig-r4-0821-1787334763 attempt=1 on box-runner
 17:53:14Z DONE task=ep2-b07-twofig-r4-0821-1787334763 rc=0 artifacts=1
 17:54:18Z box-runner idle ready=0 failed=80
+18:02:43Z STARTED task=ep2-b07-twofig-r5-0821-1787335353 attempt=1 on box-runner
+18:03:12Z DONE task=ep2-b07-twofig-r5-0821-1787335353 rc=0 artifacts=1
