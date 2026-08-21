@@ -1,0 +1,29 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-guardcast2d-j20-0822
+arm: nocontrol
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLPipeline (text2img, NO control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20289725
+cost_usd: 0
+controlnet: none (the control arm; same seed, same prompt)
+repo_commit: unknown
+model_load_seconds: 4.7
+render_seconds: 9.6
+rendered_utc: 2026-08-21T21:56:19Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  1boy, a grown guard man, mature male face, short red hair, freckles, heavy brow, blunt chin, blank stare, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up
