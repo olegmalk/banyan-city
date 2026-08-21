@@ -4226,3 +4226,5 @@
 22:15:21Z DONE task=ep2-b03-w4motion-0822-1787349788 rc=0 artifacts=1
 22:15:27Z STARTED task=ep2-b10-twoboards-0822-1787350196 attempt=1 on box-runner
 22:21:39Z DONE task=ep2-b10-twoboards-0822-1787350196 rc=0 artifacts=1
+22:21:45Z STARTED task=ep2-b02-w4motion-0822-1787350634-again754dd0 attempt=1 on box-runner
+22:27:46Z DONE task=ep2-b02-w4motion-0822-1787350634-again754dd0 rc=0 artifacts=1
