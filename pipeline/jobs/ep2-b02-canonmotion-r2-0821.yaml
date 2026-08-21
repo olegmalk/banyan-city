@@ -316,3 +316,32 @@ verdict_canonmotion_r2_0821: |
   NOT ESCALATED TO A ROUND 3. The plate-fix budget is two rounds and this is
   round 2; R3 is an action-wording change, which is a new question and the
   founder's to green-light. review/ep2-ship-0821 is untouched and no cut moved.
+third_metric_tried_and_disqualified_do_not_quote_on_this_beat: |
+  EYE SEPARATION IS VALID ON BEAT 03 AND INVALID HERE, and the difference is
+  worth writing down because the number it returns on this clip is confident,
+  monotonic, and wrong.
+
+  The metric takes the top 30% of the frame, thresholds dark ink, splits at the
+  vertical midline and measures the distance between the mean x of each half --
+  a stand-in for the gap between the two eyes, and therefore for camera scale.
+  On beat 03 it is clean: he sits centred and fully in frame for all 105
+  frames, and it reads 339.7 px falling monotonically to 246.9.
+
+  ON THIS BEAT IT READS 231.9 px at f000 falling to 83.0 at f104 -- 36%, which
+  would mean a pull-back worse than round 1's. THAT READING IS AN ARTEFACT. The
+  goblin does not stay centred here: he drifts left, goes behind the stem and
+  comes back bent over at frame right, so from about f048 the "left cluster" is
+  no longer an eye, it is grass. The asymmetry proves it -- at f000 the two
+  halves hold 6081 and 7910 dark pixels, roughly balanced as a face is; at f096
+  they hold 3060 and 12790, a 4:1 split dominated by the single heavy diagonal
+  grass blade on the right. The metric is measuring the distance from a grass
+  stroke to a grass stroke and reporting it as a face.
+
+  SO IT IS NOT QUOTED IN THIS BEAT'S VERDICT, and no lane should re-derive it
+  here. R1 was decided by eye against three constant-scale references that ARE
+  in every frame -- the small green critter at bottom centre, the sapling's
+  stem thickness and leaf size, and the grass-blade stroke width -- none of
+  which changes. This is the same pathology pipeline/body_motion.py's
+  RETIRED_METRICS docstring documents for p90 displacement and depth: a number
+  that is sound on the material it was validated against and silently
+  nonsense one beat over. A metric is a filter, never a verdict.
