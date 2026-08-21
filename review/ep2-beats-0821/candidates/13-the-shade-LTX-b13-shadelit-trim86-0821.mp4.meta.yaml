@@ -1,0 +1,32 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 13-the-shade-LTX-lit-0820.mp4
+source_path: farm-out/ep2-b13-shadelit-0820/13-the-shade-LTX-lit-0820.mp4
+source_sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
+source_frames: 121
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 13
+size: 704x1280
+fps: 24.0
+frames: 86
+seconds: 3.583
+edit: ffmpeg select frames 0..85 of 121, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 35
+seed: 20260820
+guidance: 2.0
+steps: 8@352x640+3@704x1280
+task: ep2-b13-shadelit-trim-0821
+cost_usd: 0
+mode: production
+why_trimmed: 'THE FACE COMES APART IN THE LAST QUARTER AND EVERYTHING BEFORE IT IS THE BEST-STAGED
+  BEAT 13 IN THE TREE. Stepped at 5-frame intervals from f060: the head tips onto the knees
+  and the face is coherent - one brow, one eye, nose, mouth - through f085. At f090 a stray
+  line crosses the cheek, and from f095 to f120 a SECOND eye and a second jawline draw themselves
+  over the first, so the last 35 frames are a face dissolving. The fold-into-the-shade the
+  beat exists for is already complete at f085, so the tail is 1.5s of defect after the action
+  has landed. Nothing is cut from the head.'

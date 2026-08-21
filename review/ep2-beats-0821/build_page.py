@@ -212,6 +212,12 @@ BEATS = {
             "model to hold still, and it did. The first clip below is that same picture with an action "
             "that has a start, a bottom and a return — it is the one to watch."),
         candidates=[
+            dict(file=f"{CAND_URL}/03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/03-bad-cover-LTX-ep2-b03-w4motion-0822.jpg",
+                 label="YOUR GOBLIN'S FACE, on this beat's best action — tonight, newest", tag="warn",
+                 verdict="The face is the one you approved and it stays that face for all 105 frames — small off-white eyes with dark pupils, broad head, ears low and sideways, no old-man folds. That part is done. What is still weak is the same thing as before: he barely moves. A stalk grows in beside him and the camera drifts a little, and that is the whole clip. Crouching badly hidden is a quiet beat, but this is quieter than a beat should be.",
+                 diff="New plate on the corrected eye, and the sentence describing him no longer says \"slit pupils\". The action is unchanged from the clip below — it is this beat's best one, and swapping it at the same time as the face would have told us nothing about either.",
+                 src="pipeline/jobs/ep2-b03-w4motion-0822.yaml + review/ep2-goblin-eye-0822"),
             dict(file=f"{CAND_URL}/03-evidence-LTX-ep2-b03-crouchlife-0822.mp4",
                  poster=f"{POSTER_URL}/03-evidence-LTX-ep2-b03-crouchlife-0822.jpg",
                  label="THE OLD-MAN FIX, with something happening in it — tonight, newest", tag="pass",
