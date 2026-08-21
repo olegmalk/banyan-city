@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The age-B expressive wave, judged — 14 clips, 7 beats</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 16px; margin: 26px 0 4px; font-weight: 650; }
+  p { max-width: 78ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #26282c; padding: 1px 5px; border-radius: 3px; }
+  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
+  ul, ol { max-width: 78ch; }
+  li { margin: 5px 0; }
+  .pass { color: var(--pass); font-weight: 700; }
+  .fail { color: var(--fail); font-weight: 700; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; margin: 14px 0; font-size: 14.5px; }
+  th, td { border: 1px solid var(--line); padding: 6px 11px; text-align: left; }
+  th { background: var(--panel); }
+  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>The age-B expressive wave, judged &mdash; 14 clips, 7 beats</h1>
+  <p class="sub">2026-08-21. The full ledger behind the five face swaps in
+  <a href="/review/ep2-ship-0821">the ship cut</a>. All fourteen
+  <code>ep2-b*-tilemotion-s{1,2}-0821</code> clips landed on the rtx5090 box, were pulled to
+  <code>review/motion-ageb-0821/</code> and <strong>verified against the box's own
+  <code>.sha256</code> manifest before a frame was opened</strong> &mdash; 28 of 28 files OK
+  (mp4 + sidecar for each).</p>
+</header>
+
+<p class="stamp">PRIVATE REVIEW PAGE &middot; STEWARD PICKS ON THE DESIGN AXIS &middot; EVERY SWAP R4-VETO-ABLE IN ONE LINE</p>
+
+<p>Every clip is 121 frames at 24 fps = <strong>5.04 s</strong>, 704x1280, LTX-2.3-Distilled,
+two-stage, image-crf 10, guidance 2.0, $0 (local GPU).</p>
+
+<h2>The bar these were judged against</h2>
+
+<p>Not a metric. <code>pipeline/canon.yaml</code> &rarr; <code>ep2-goblin-design-adult</code> &rarr;
+<code>correction_2026_08_20</code>, which is the founder's own correction and reads the B tile's
+pixels as the authority:</p>
+
+<ul>
+  <li><strong>EYES</strong> &mdash; blank white, no iris, no pupil; two narrow upward-slanting
+  slits under one heavy dark brow bar. "The single loudest creature cue and the first thing a
+  close-up destroys."</li>
+  <li><strong>NOSE</strong> &mdash; no human nose, a blunt forward muzzle.</li>
+  <li><strong>MOUTH</strong> &mdash; one wide thin lipless line.</li>
+  <li><strong>EARS</strong> &mdash; short, broad, low-set flanges swept back, almost flush at the
+  jawline. <strong>NOT long tapering elf spikes.</strong></li>
+  <li><strong>SKULL</strong> &mdash; large smooth dome, ~1/5 of the seated figure's height.</li>
+</ul>
+
+<p>Plus, per beat: does the beat's action read, and is the <strong>usable window</strong> at least
+as long as the slot <code>render_t3.fit_duration</code> will give it &mdash;
+<code>max(min(clip, vo+2.0), vo+0.4)</code> with voice, <code>min(clip, script_s)</code> without.</p>
+
+<div class="tw">
+<table>
+  <tr><th>beat</th><th>VO</th><th>slot</th><th>must be clean through</th></tr>
+  <tr><td>02</td><td>silent</td><td>4.04 s</td><td>f096</td></tr>
+  <tr><td>03</td><td>3.98 s</td><td>5.04 s</td><td>f120</td></tr>
+  <tr><td>04</td><td>5.76 s</td><td>6.16 s</td><td>f120 <strong>+ the last frame holds 1.12 s</strong></td></tr>
+  <tr><td>07</td><td>2.93 s</td><td>4.04 s</td><td>f096</td></tr>
+  <tr><td>08</td><td>2.12 s</td><td>4.12 s</td><td>f099</td></tr>
+  <tr><td>13</td><td>1.56 s</td><td>3.56 s</td><td>f085</td></tr>
+  <tr><td>20</td><td>1.74 s</td><td>3.74 s</td><td>f089</td></tr>
+</table>
+</div>
+
+<h2>The one failure mode this wave has, named once</h2>
+
+<div class="callout">
+  <p><strong>THE FACE DISSOLVES INTO A GREEN EGG.</strong> It is not drift and it is not a freeze:
+  the head keeps its silhouette and its colour, and the eyes, brow bar and mouth line simply stop
+  being drawn, leaving a featureless ovoid. It arrives suddenly, always in the second half, and it
+  never recovers. Six of the fourteen clips have it. <strong>It is the whole judging axis</strong>
+  &mdash; every pick below is the seed whose face survives its own slot.</p>
+</div>
+
+<h2>Per beat</h2>
+
+<h3>BEAT 02 THE SPRINT &mdash; SWAP, seed 2, trimmed to 4.04 s</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; face intact to <strong>f048 (2.0 s)</strong>, green egg from f055
+  onward. This is the clip the wave lane flagged PARTIAL. Slot needs f096. <span class="fail">FAIL.</span></li>
+  <li><strong>s2</strong> &mdash; face, slit eyes and open mouth intact to <strong>f101 (4.21 s)</strong>;
+  the run, the push off and the dive into the grass all happen inside that. Egg only from f106.
+  <span class="pass">PASS</span> with 0.17 s of margin over a 4.04 s slot.</li>
+  <li>Trimmed to 97 frames so the slot can never reach past the window regardless of the script's
+  paper timing. <strong>PICK: s2-trim.</strong></li>
+</ul>
+
+<h3>BEAT 03 BAD COVER &mdash; SWAP, seed 2</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; face holds all 121 f, and it has the most real body motion in the
+  wave (he shifts, comes up onto a knee, turns). But <strong>the costume morphs on screen</strong>:
+  a dark cloak becomes a brown plaid blanket between f065 and f076, i.e. at 3.0 s, well inside a
+  5.04 s slot. That is a continuity break the viewer sees. <span class="fail">FAIL.</span></li>
+  <li><strong>s2</strong> &mdash; face holds all 121 f, no morph, no freeze. Motion is small: seated,
+  hands on knees, a lean at the end. For a beat whose content is <em>hiding badly and not moving</em>,
+  small is defensible. <strong>PICK: s2.</strong></li>
+  <li>Replaces a take whose recorded fault is a <strong>0.79 s dead freeze at the end of the slot,
+  15 frames byte-identical</strong>. s2 has no dead frames.</li>
+</ul>
+
+<h3>BEAT 04 THE FOOTNOTE &mdash; SWAP, seed 1</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; face holds all 121 f and stays large in frame; the head tilts and
+  turns down through the clip. <strong>The last frame is clean, which this beat specifically
+  needs</strong> &mdash; its 6.16 s slot is longer than the 5.04 s clip, so <code>render_t3</code>
+  plays it once and holds frame 120 for 1.12 s. <strong>PICK: s1.</strong></li>
+  <li><strong>s2</strong> &mdash; also holds, but the camera drifts back and the head is meaningfully
+  smaller by f120; the frame that would be held for 1.12 s is the weaker of the two.</li>
+</ul>
+
+<h3>BEAT 07 CONFISCATE &mdash; KEPT, both seeds fail the action</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; identity holds to ~f095, then the slit structure smears; the only
+  gesture is hands clasping at f098.</li>
+  <li><strong>s2</strong> &mdash; identity holds, motion is very close to zero.</li>
+  <li><strong>Neither clip contains a guard.</strong> Beat 07 is an authority taking something off
+  the scavenger; both age-B seeds are a solo standing portrait, so the beat's action is not merely
+  weak, it is <strong>absent</strong>. The take in the cut earns its place on exactly this axis:
+  "the guard raises his OWN arm at f045 and the point holds to f096."</li>
+  <li><strong>Beat 07 keeps <code>07-confiscate-b07-point-crf10-0819.mp4</code>, and keeps its named
+  fault:</strong> the plate dresses the scavenger in the guard's pale wrap tunic and white sash, so
+  the shot reads as two officials in matching kit. <strong>Age-B did not fix it and this round did
+  not try</strong> &mdash; the age-B plate never staged a second figure.</li>
+</ul>
+
+<h3>BEAT 08 INSIDE HIM &mdash; KEPT, both seeds fail identity</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; green egg from <strong>f055 (2.29 s)</strong>. Slot needs f099.
+  <span class="fail">FAIL.</span></li>
+  <li><strong>s2</strong> &mdash; green egg from <strong>f055</strong> too, with a detached brow bar
+  floating below it from f065. <span class="fail">FAIL.</span></li>
+  <li>Same beat, both seeds, same frame. <strong>Beat 08 keeps
+  <code>08-inside-him-b08-twohander.mp4</code> and keeps its fault:</strong> unjudged, and its
+  identity is open &mdash; every geometric-conditioning rung returns two green figures, because
+  <code>green skin</code> enters the pooled embedding and lands on both bodies.</li>
+</ul>
+
+<h3>BEAT 13 THE SHADE &mdash; SWAP, seed 2</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; carries the win the wave was chasing: <strong>a real smile,
+  f000&ndash;f044</strong>. Then the face is an egg from <strong>f065 (2.71 s)</strong> &mdash;
+  inside a 3.56 s slot. The expression this wave exists to get is in a clip that cannot hold it.
+  <span class="fail">FAIL.</span></li>
+  <li><strong>s2</strong> &mdash; face holds all 121 f. Through the slot (f000&ndash;f085) he is
+  seated, head down, eyes closed, settling. <strong>PICK: s2.</strong></li>
+  <li><strong>Named honestly:</strong> s2's own expressive lift &mdash; head up, blank slit eyes,
+  mouth open &mdash; begins at <strong>f087 / 3.62 s</strong>, which is <strong>0.06 s past the end
+  of its slot</strong>. The cut will not show it. That is the beat's fault going out, and the cheap
+  next rung is staging the lift earlier, not another seed.</li>
+  <li>Replaces the frame the founder was literally shown when he said <em>"this is one of the images
+  where the goblin looks like an adult, which is wrong."</em></li>
+</ul>
+
+<h3>BEAT 20 EVIDENCE &mdash; SWAP, seed 2</h3>
+<ul>
+  <li><strong>s1</strong> &mdash; face holds all 121 f, cleanest identity in the wave, but he never
+  lifts his head, which is the outgoing take's own unmet clause.</li>
+  <li><strong>s2</strong> &mdash; face holds all 121 f <strong>and he looks up</strong>: the head
+  rises from f055 and is up, slit eyes open and mouth parted, by f076 &mdash; completed at 3.17 s,
+  inside a 3.74 s slot. <strong>PICK: s2</strong>, because it is the only clip in the wave that
+  closes a <code>done_when</code> clause the cut has been failing.</li>
+  <li>Outgoing verdict for the record: "STILL NOT A PASS ON THE BEAT ... HE NEVER LOOKS UP, and the
+  tree is still the wrong tree."</li>
+</ul>
+
+<h2>Faults that travel with the five swapped beats</h2>
+<ol>
+  <li><strong>THE EARS ARE WRONG, IN ALL FIVE.</strong> Canon's B tile says short, broad, low-set
+  flanges almost flush at the jawline. Every age-B clip draws <strong>long tapering pointed
+  ears</strong>. This is the wrong-ears defect already named in <code>bfcc7c99</code> and it is now
+  shipping on five beats instead of being confined to plates.</li>
+  <li><strong>C1 &mdash; the magenta/pink collar</strong> is present on beats 02, 03, 04 and 13.</li>
+  <li><strong>T4 &mdash; the magenta ear-stud</strong> is present on beats 03, 04 and 13.</li>
+  <li><strong>BEAT 20's FRUIT IS RED.</strong> Canon has the fig purple (the 08-13/14 ruling). The
+  outgoing take carried the same fault, so this is a carry-across, not a regression.</li>
+  <li><strong>THE CUT IS STILL MIXED.</strong> <code>canon.yaml</code> counts the goblin in TWELVE of
+  the twenty-one beats (2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20). This wave covered seven and five
+  of them pass, so the shipped cut has <strong>five beats on one face and seven on the old assorted
+  ones</strong>. It is more consistent than it was &mdash; five beats now share one exact design,
+  where before no two goblin beats matched &mdash; and it is not consistent. Beats 07, 08, 14, 15,
+  16, 17 and 19 are the remaining work, and it is post-ship work.</li>
+</ol>
+
+<h2>Ledger</h2>
+<div class="tw">
+<table>
+  <tr><th>beat</th><th>s1</th><th>s2</th><th>pick</th><th>why</th></tr>
+  <tr><td>02</td><td>FAIL egg f055</td><td>PASS to f101</td><td><strong>s2, trimmed 97f</strong></td><td>window</td></tr>
+  <tr><td>03</td><td>FAIL costume morph f076</td><td>PASS 121f</td><td><strong>s2</strong></td><td>continuity</td></tr>
+  <tr><td>04</td><td>PASS 121f, face large</td><td>PASS 121f, face recedes</td><td><strong>s1</strong></td><td>the held last frame</td></tr>
+  <tr><td>07</td><td>FAIL no action</td><td>FAIL no action</td><td><em>keep current</em></td><td>no guard in either</td></tr>
+  <tr><td>08</td><td>FAIL egg f055</td><td>FAIL egg f055</td><td><em>keep current</em></td><td>identity</td></tr>
+  <tr><td>13</td><td>FAIL egg f065</td><td>PASS 121f</td><td><strong>s2</strong></td><td>window</td></tr>
+  <tr><td>20</td><td>PASS 121f, no lift</td><td>PASS 121f, lifts</td><td><strong>s2</strong></td><td>closes a done_when</td></tr>
+</table>
+</div>
+
+<p><strong>5 swapped, 2 kept.</strong> Every swap is a <strong>STEWARD PICK on the design axis and is
+R4-veto-able in one line</strong> &mdash; the founder has screened none of these fourteen clips.</p>
+
+<footer>
+  <p>Judged by eye at a contact strip per seed, not by a metric. The strips are working files and are
+  not published with this page &mdash; they are in the repo at <code>review/motion-ageb-0821/</code>:
+  <code>STRIP-b02.png</code>, <code>STRIP-b02-s2-tail.png</code>, <code>STRIP-b03.png</code>,
+  <code>STRIP-b04.png</code>, <code>STRIP-b07.png</code>, <code>STRIP-b08.png</code>,
+  <code>STRIP-b13.png</code>, <code>STRIP-b20.png</code>, and <code>STRIP-CURRENT-shipping.png</code>
+  (the seven outgoing takes side by side, which is the picture that makes the design argument on its
+  own). This page is the rendering of <code>review/motion-ageb-0821/JUDGING-0821.md</code>, which
+  stays the source record.</p>
+  <p><a href="/review/ep2-ship-0821">&larr; back to the ship cut</a></p>
+</footer>
+
+</div>
+</body>
+</html>
